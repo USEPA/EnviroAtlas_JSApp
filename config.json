@@ -1,0 +1,262 @@
+{
+	"theme" : {
+		"name" : "TabTheme",
+		"styles" : ["default", "red", "purple", "simpleblue"],
+		"version" : "1.2"
+	},
+	"portalUrl" : "http://epa.maps.arcgis.com",
+	"appId" : "",
+	"title" : "EnviroAtlas",
+	"subtitle" : "with Web AppBuilder for ArcGIS",
+	"logo" : "images/app-logo.png",
+	"geometryService" : "http://utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer",
+	"links" : [],
+	"widgetOnScreen" : {
+		"widgets" : [{
+				"uri" : "themes/TabTheme/widgets/Header/Widget",
+				"positionRelativeTo" : "browser",
+				"position" : {
+					"left" : 0,
+					"top" : 0,
+					"right" : 0,
+					"height" : 44
+				},
+				"version" : "1.2",
+				"id" : "themes/TabTheme/widgets/Header/Widget_17",
+				"name" : "Header",
+				"label" : "Header"
+			}, {
+				"uri" : "themes/TabTheme/widgets/Footer/Widget",
+				"positionRelativeTo" : "browser",
+				"position" : {
+					"left" : 0,
+					"right" : 0,
+					"bottom" : 0,
+					"height" : 24
+				},
+				"version" : "1.2",
+				"id" : "themes/TabTheme/widgets/Footer/Widget_18",
+				"name" : "Footer",
+				"label" : "Footer"
+			}, {
+				"uri" : "themes/TabTheme/widgets/SidebarController/Widget",
+				"positionRelativeTo" : "browser",
+				"position" : {
+					"left" : 0,
+					"top" : 44,
+					"bottom" : 24
+				},
+				"version" : "1.2",
+				"id" : "themes/TabTheme/widgets/SidebarController/Widget_19",
+				"name" : "SidebarController",
+				"label" : "Sidebar Controller"
+			}, {
+				"uri" : "widgets/HomeButton/Widget",
+				"position" : {
+					"left" : 7,
+					"top" : 75
+				},
+				"version" : "1.2",
+				"id" : "widgets/HomeButton/Widget_20",
+				"positionRelativeTo" : "map",
+				"name" : "HomeButton",
+				"label" : "Home Button"
+			}, {
+				"uri" : "widgets/Scalebar/Widget",
+				"position" : {
+					"left" : 10,
+					"bottom" : 10
+				},
+				"version" : "1.2",
+				"id" : "widgets/Scalebar/Widget_21",
+				"positionRelativeTo" : "map",
+				"name" : "Scalebar",
+				"label" : "Scalebar"
+			}, {
+				"uri" : "widgets/Geocoder/Widget",
+				"position" : {
+					"left" : 45,
+					"top" : 5
+				},
+				"version" : "1.2",
+				"id" : "widgets/Geocoder/Widget_22",
+				"positionRelativeTo" : "map",
+				"name" : "Geocoder",
+				"label" : "Geocoder"
+			}, {
+				"uri" : "widgets/Coordinate/Widget",
+				"position" : {
+					"left" : 160,
+					"bottom" : 5
+				},
+				"version" : "1.2",
+				"id" : "widgets/Coordinate/Widget_23",
+				"positionRelativeTo" : "map",
+				"name" : "Coordinate",
+				"label" : "Coordinate"
+			}, {
+				"position" : {
+					"right" : 110,
+					"top" : 10,
+					"width" : 400,
+					"height" : 410
+				},
+				"placeholderIndex" : 1,
+				"id" : "_24",
+				"positionRelativeTo" : "map"
+			}, {
+				"position" : {
+					"right" : 60,
+					"top" : 10,
+					"width" : 380,
+					"height" : 410
+				},
+				"placeholderIndex" : 2,
+				"id" : "_25",
+				"positionRelativeTo" : "map"
+			}, {
+				"position" : {
+					"right" : 10,
+					"top" : 10,
+					"width" : 380,
+					"height" : 410
+				},
+				"placeholderIndex" : 3,
+				"id" : "_26",
+				"positionRelativeTo" : "map"
+			}, {
+				"uri" : "widgets/OverviewMap/Widget",
+				"position" : {
+					"right" : 0,
+					"bottom" : 0
+				},
+				"version" : "1.2",
+				"id" : "widgets/OverviewMap/Widget_27",
+				"positionRelativeTo" : "map",
+				"name" : "OverviewMap",
+				"label" : "Overview Map"
+			}, {
+				"uri" : "widgets/MyLocation/Widget",
+				"position" : {
+					"left" : 7,
+					"top" : 110
+				},
+				"version" : "1.2",
+				"id" : "widgets/MyLocation/Widget_28",
+				"positionRelativeTo" : "map",
+				"name" : "MyLocation",
+				"label" : "My Location"
+			}, {
+				"uri" : "widgets/AttributeTable/Widget",
+				"positionRelativeTo" : "browser",
+				"position" : {
+					"bottom" : 24
+				},
+				"version" : "1.2",
+				"id" : "widgets/AttributeTable/Widget_29",
+				"name" : "AttributeTable",
+				"label" : "Attribute Table"
+			}, {
+				"uri" : "widgets/Splash/Widget",
+				"visible" : false,
+				"positionRelativeTo" : "browser",
+				"version" : "1.2",
+				"id" : "widgets/Splash/Widget_30",
+				"position" : {
+					"left" : 0,
+					"top" : 0
+				},
+				"name" : "Splash",
+				"label" : "Splash"
+			}, {
+				"uri" : "widgets/TimeSlider/Widget",
+				"visible" : false,
+				"position" : {
+					"bottom" : 55,
+					"left" : 7
+				},
+				"version" : "1.2",
+				"id" : "widgets/TimeSlider/Widget_31",
+				"positionRelativeTo" : "map",
+				"name" : "TimeSlider",
+				"label" : "Time Slider"
+			}, {
+				"uri" : "widgets/Swipe/Widget",
+				"visible" : false,
+				"position" : {
+					"top" : 145,
+					"left" : 7
+				},
+				"version" : "1.2",
+				"id" : "widgets/Swipe/Widget_32",
+				"positionRelativeTo" : "map",
+				"name" : "Swipe",
+				"label" : "Swipe"
+			}
+		],
+		"panel" : {
+			"uri" : "jimu/PreloadWidgetIconPanel",
+			"positionRelativeTo" : "map"
+		}
+	},
+	"map" : {
+		"3D" : false,
+		"2D" : true,
+		"position" : {
+			"top" : 44,
+			"right" : 0,
+			"bottom" : 24,
+			"left" : 55
+		},
+		"itemId" : "6e03e8c26aad4b9c92a87c1063ddb0e3",
+		"mapOptions" : {
+			"extent" : {
+				"type" : "extent",
+				"xmin" : -13997646.730812214,
+				"ymin" : 2652348.078734892,
+				"xmax" : -7306788.73668556,
+				"ymax" : 6622708.952128619,
+				"spatialReference" : {
+					"wkid" : 102100
+				}
+			}
+		},
+		"id" : "map",
+		"portalUrl" : "http://epa.maps.arcgis.com/"
+	},
+	"widgetPool" : {
+		"panel" : {
+			"uri" : "themes/TabTheme/panels/TabPanel/Panel",
+			"positionRelativeTo" : "browser",
+			"position" : {
+				"top" : 44,
+				"left" : 0,
+				"bottom" : 22
+			}
+		},
+		"widgets" : [{
+				"uri" : "widgets/Legend/Widget",
+				"version" : "1.2",
+				"id" : "widgets/Legend/Widget_15",
+				"name" : "Legend",
+				"label" : "Legend",
+				"index" : 0
+			}, {
+				"uri" : "widgets/LayerList/Widget",
+				"version" : "1.2",
+				"id" : "widgets/LayerList/Widget_16",
+				"name" : "LayerList",
+				"label" : "Layer List",
+				"index" : 1
+			}
+		]
+	},
+	"wabVersion" : "1.2",
+	"isWebTier" : false,
+	"httpProxy" : {
+		"useProxy" : true,
+		"alwaysUseProxy" : false,
+		"url" : "",
+		"rules" : []
+	}
+}
