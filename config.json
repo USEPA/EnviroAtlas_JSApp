@@ -248,6 +248,13 @@
 				"name" : "LayerList",
 				"label" : "Layer List",
 				"index" : 1
+			}, {
+				"uri" : "widgets/ElevationProfile/Widget",
+				"version" : "1.2",
+				"id" : "widgets/ElevationProfile/Widget",
+				"name" : "ElevationProfile",
+				"label" : "Elevation Data",
+				"index" : 2
 			}
 		]
 	},
