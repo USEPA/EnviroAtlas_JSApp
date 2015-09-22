@@ -103,6 +103,11 @@
 				},
 				"placeholderIndex" : 1,
 				"id" : "_24",
+                "name": "ElevationProfile",
+                "label": "Elevation Profile",
+                "version": "1.2",
+                "IsController": false,
+                "uri": "widgets/ElevationProfile/Widget",
 				"positionRelativeTo" : "map"
 			}, {
 				"position" : {
