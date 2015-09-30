@@ -1,5 +1,5 @@
 ﻿define(
    ({
-    showLayerLabels: "Layer-Namen im Widget für zeitbezogene Layer anzeigen."
+    showLayerLabels: "Zeigen Sie Namen für zeitbezogene Layer im Widget an."
   })
 );

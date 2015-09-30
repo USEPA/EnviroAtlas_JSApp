@@ -54,7 +54,6 @@ function (declare, lang, array, dojoConfig, cookie,
     constructor: function (urlParams, options) {
       this._removeHash(urlParams);
       this.urlParams = urlParams || {};
-      this.isRunInPortal = false;
       this.widgetManager = WidgetManager.getInstance();
       lang.mixin(this, options);
     },
@@ -107,27 +106,31 @@ function (declare, lang, array, dojoConfig, cookie,
             if(appConfig.title){
               document.title = appConfig.title;
             }
-            return this.getConfig();
+            return this.getAppConfig();
           }));
         }else{
           tokenUtils.setPortalUrl(appConfig.portalUrl);
           return this._proesssWebTierAndSignin(appConfig).then(lang.hitch(this, function() {
             if(this.urlParams.appid){
               //url has appid parameter means open app as an app created from AGOL template
-
-              if(!this.isRunInPortal){
+              if(!window.appInfo.isRunInPortal){
                 return this._processNotInPortalAppProtocol(appConfig).
                 then(lang.hitch(this, function(appConfig){
-                  return this._getAppDataFromTemplateAppId
+                  return this._getAppDataAddTemplateDataFromTemplateAppId
                   (appConfig.portalUrl, this.urlParams.appid).
-                  then(lang.hitch(this, function(itemData){
-                    appConfig._itemData = itemData;
+                  then(lang.hitch(this, function(result){
+                    if(result.appData.appConfig){
+                      appConfig = result.appData.appConfig;
+                    }
+                    appConfig._appData = result.appData;
+                    appConfig.templateConfig = result.templateData;
                     return appConfig;
                   }));
                 }));
               }else{
                 return this._getAppConfigFromTemplateAppId(appConfig.portalUrl,
                 this.urlParams.appid).then(lang.hitch(this, function(appConfig){
+                  this._tryUpdateAppConfigByLocationUrl(appConfig);
                   return this._processInPortalAppProtocol(appConfig);
                 }));
               }
@@ -148,13 +151,21 @@ function (declare, lang, array, dojoConfig, cookie,
           })).then(lang.hitch(this, function(appConfig) {
             return this.loadWidgetsManifest(appConfig);
           })).then(lang.hitch(this, function(appConfig) {
-            //if opened from template, the appConfig will have one property:_itemData
-            if(appConfig._itemData){
-              appConfig.getConfigElementById = function(id){
-                return sharedUtils.getConfigElementById(appConfig, id);
-              };
-              return this._mergeTemplateAppConfigToAppConfig(appConfig._itemData, appConfig);
-            } else {
+            //if it's an AGOL template app, the appConfig will have one property:_appData
+            //if it's an WAB template app, the appConfig will have one property:isTemplateApp
+            if(appConfig._appData){
+              if(appConfig._appData.values && appConfig._appData.values.webmap){
+                return portalUtils.getPortal(appConfig.portalUrl)
+                .getItemById(appConfig._appData.values.webmap)
+                .then(lang.hitch(this, function(webmapInfo){
+                  return jimuUtils.template
+                    .mergeTemplateAppConfigToAppConfig(appConfig, appConfig._appData, webmapInfo);
+                }));
+              }else{
+                return jimuUtils.template
+                    .mergeTemplateAppConfigToAppConfig(appConfig, appConfig._appData);
+              }
+            }else {
               return appConfig;
             }
           })).then(lang.hitch(this, function() {
@@ -164,15 +175,27 @@ function (declare, lang, array, dojoConfig, cookie,
             if(appConfig.title){
               document.title = appConfig.title;
             }
-            return this.getConfig();
+            return this.getAppConfig();
           }));
         }
       }));
     },
 
-    getConfig: function(){
-      this.appConfig.rawAppConfig = this.rawAppConfig;
-      return this.appConfig;
+    getAppConfig: function(){
+      var c = lang.clone(this.appConfig);
+      c.getConfigElementById = function(id){
+        return jimuUtils.getConfigElementById(this, id);
+      };
+
+      c.getConfigElementsByName = function(name){
+        return jimuUtils.getConfigElementsByName(this, name);
+      };
+
+      c.visitElement = function(cb){
+        jimuUtils.visitElement(this, cb);
+      };
+
+      return c;
     },
 
     checkConfig: function(config){
@@ -221,7 +244,7 @@ function (declare, lang, array, dojoConfig, cookie,
         return xhr(this.configFile, {handleAs: 'json'});
       }else if(this.urlParams.id){
         //app is hosted in portal
-        this.isRunInPortal = true;
+        window.appInfo.isRunInPortal = true;
         var portalUrl = portalUrlUtils.getPortalUrlFromLocation();
         var def = new Deferred();
         tokenUtils.setPortalUrl(portalUrl);
@@ -229,10 +252,17 @@ function (declare, lang, array, dojoConfig, cookie,
         var portal = portalUtils.getPortal(portalUrl);
         portal.loadSelfInfo().then(lang.hitch(this, function(portalSelf){
           this.portalSelf = portalSelf;
+          //if the portal uses web-tier authorization, we can get allSSL info here
+          if(portalSelf.allSSL && window.location.protocol === "http:"){
+            window.location.href = portalUrlUtils.setHttpsProtocol(window.location.href);
+            def.reject();
+            return;
+          }
           this._processSignIn(portalUrl).then(lang.hitch(this, function(){
             //integrated in portal, open as a WAB app
             this._getAppConfigFromAppId(portalUrl, this.urlParams.id)
             .then(lang.hitch(this, function(appConfig){
+              this._tryUpdateAppConfigByLocationUrl(appConfig);
               return this._processInPortalAppProtocol(appConfig);
             })).then(function(appConfig){
               def.resolve(appConfig);
@@ -283,10 +313,7 @@ function (declare, lang, array, dojoConfig, cookie,
         }
         if(e.config){
           //if widget is configured, let's upgrade it
-          var upgradeDef = this.widgetManager.tryLoadWidgetConfig(e)
-          .then(lang.hitch(this, function(widgetConfig){
-            e.config = widgetConfig;
-          }));
+          var upgradeDef = this.widgetManager.tryLoadWidgetConfig(e);
           defs.push(upgradeDef);
         }else{
           e.version = e.manifest.version;
@@ -302,6 +329,7 @@ function (declare, lang, array, dojoConfig, cookie,
 
     _processAfterTryLoad: function(appConfig){
       this._setPortalUrl(appConfig);
+      this._tryUpdateAppConfigByLocationUrl(appConfig);
       this._processUrlParams(appConfig);
 
       this.addNeedValues(appConfig);
@@ -309,6 +337,30 @@ function (declare, lang, array, dojoConfig, cookie,
 
       IdentityManager.tokenValidity = 60 * 24 * 7;//token is valid in 7 days
       return appConfig;
+    },
+
+    _tryUpdateAppConfigByLocationUrl: function(appConfig){
+      //app is hosted in portal
+      //we process protalUrl specially because user in a group owned by two orgs should
+      //open the app correctly if the app is shared to this kind of group.
+      //so we need to keep main protalUrl consistent with portalUrl browser location.
+      var portalUrlFromLocation = portalUrlUtils.getPortalUrlFromLocation();
+      var processedPortalUrl = portalUrlUtils.getStandardPortalUrl(portalUrlFromLocation);
+      if(portalUrlUtils.isOnline(processedPortalUrl)){
+        processedPortalUrl = portalUrlUtils.updateUrlProtocolByOtherUrl(processedPortalUrl,
+                                                                        appConfig.portalUrl);
+        if(appConfig.map.portalUrl){
+          if(portalUrlUtils.isSamePortalUrl(appConfig.portalUrl, appConfig.map.portalUrl)){
+            appConfig.map.portalUrl = processedPortalUrl;
+          }
+        }
+        appConfig.portalUrl = processedPortalUrl;
+
+        //update proxy url
+        if(appConfig.httpProxy && appConfig.httpProxy.url){
+          appConfig.httpProxy.url = portalUrlUtils.getPortalProxyUrl(processedPortalUrl);
+        }
+      }
     },
 
     _processWidgetJsons: function(appConfig){
@@ -336,6 +388,9 @@ function (declare, lang, array, dojoConfig, cookie,
         if(!e.id){
           return;
         }
+        //fix element id
+        e.id = e.id.replace(/\//g, '_');
+
         var li = e.id.lastIndexOf('_');
         if(li > -1){
           i = e.id.substr(li + 1);
@@ -346,25 +401,36 @@ function (declare, lang, array, dojoConfig, cookie,
       sharedUtils.visitElement(appConfig, function(e){
         if(!e.id){
           maxId ++;
-          e.id = e.uri? (e.uri + '_' + maxId): (''  + '_' + maxId);
+          e.id = e.uri? (e.uri.replace(/\//g, '_') + '_' + maxId): (''  + '_' + maxId);
         }
       });
     },
 
     _setPortalUrl: function(appConfig){
       if(appConfig.portalUrl){
+        //we can judge the app is running in portal or not now.
+        //we should consider this case: the app is running in arcgis.com and the app is shared to
+        //an cross-org group and the member of another org of this group is opening this app.
+        //In this case, appConfig.portalUrl is different with portalUrlByLocation, but the app is
+        //running in portal(arcgis.com).
+        var portalUrlByLocation = portalUrlUtils.getPortalUrlFromLocation();
+        var isOnline = portalUrlUtils.isOnline(portalUrlByLocation);
+        if(!portalUrlUtils.isSamePortalUrl(appConfig.portalUrl, portalUrlByLocation) && !isOnline){
+          //app is deployed outside of portal
+          window.appInfo.isRunInPortal = false;
+        }
         return;
       }
       //if there is no portalUrl in appConfig, try to check whether the app
       //is launched from XT version builder
-      if(cookie('wab_portalurl')){
+      if(window.isXT && cookie('wab_portalurl')){
         appConfig.portalUrl = cookie('wab_portalurl');
         return;
       }
 
-      //if not launched from XT builder and has no portalurl is set,
+      //if not launched from XT builder and has no portalUrl is set,
       //let's assume it's hosted in portal, use the browser location
-      this.isRunInPortal = true;
+      window.appInfo.isRunInPortal = true;
       appConfig.portalUrl = portalUrlUtils.getPortalUrlFromLocation();
       return;
     },
@@ -518,7 +584,7 @@ function (declare, lang, array, dojoConfig, cookie,
       var sharingUrl = portalUrlUtils.getSharingUrl(portalUrl);
       var defSignIn;
 
-      if(this.isRunInPortal){
+      if(window.appInfo.isRunInPortal){
         //we don't register oauth info for app run in portal.
         defSignIn = IdentityManager.checkSignInStatus(sharingUrl);
         defSignIn.promise.always(lang.hitch(this, function(){
@@ -563,38 +629,59 @@ function (declare, lang, array, dojoConfig, cookie,
     },
 
     _getAppConfigFromTemplateAppId: function(portalUrl, appId){
+      var portal = portalUtils.getPortal(portalUrl);
       //the appid means: the app created by AGOL template.
-      var def = new Deferred();
-      this._getWabAppIdAndDataFromTemplateAppId(portalUrl, appId).
+      return this._getWabAppIdAndDataFromTemplateAppId(portalUrl, appId).
       then(lang.hitch(this, function(response){
         var wabAppId = response.appId;
-        var itemData = response.itemData;
+        var appData = response.appData;
 
-        this._getAppConfigFromAppId(portalUrl, wabAppId).then(function(appConfig){
-          appConfig._itemData = itemData;
-          def.resolve(appConfig);
-        });
+        return all([this._getAppConfigFromAppId(portalUrl, wabAppId),
+          portal.getItemData(appData.source)]).then(lang.hitch(this, function(results){
+          var appConfig;
+          if(appData.appConfig){//appConfig is stored in template app
+            appConfig = appData.appConfig;
+            delete appData.appConfig;
+          }else{//appConfig is in template
+            appConfig = results[0];
+          }
+
+          appConfig = this._upgradeAppConfig(appConfig);
+
+          var templateConfig = results[1];
+
+          appConfig._appData = appData;
+          appConfig.templateConfig = templateConfig;
+          return appConfig;
+        }));
       }));
-      return def;
     },
 
-    _getAppDataFromTemplateAppId: function(portalUrl, appId){
+    _getAppDataAddTemplateDataFromTemplateAppId: function(portalUrl, appId){
       //the appid means: the app created by AGOL template.
       var portal = portalUtils.getPortal(portalUrl);
-      return portal.getItemData(appId);
+      return portal.getItemData(appId).then(function(appData){
+        //appData.source means template id
+        return portal.getItemData(appData.source).then(function(templateData){
+          return {
+            appData: appData,
+            templateData: templateData
+          };
+        });
+      });
     },
 
     _getWabAppIdAndDataFromTemplateAppId: function(portalUrl, appId){
       //the appid means: the app created by AGOL template.
       var def = new Deferred();
       var portal = portalUtils.getPortal(portalUrl);
-      portal.getItemData(appId).then(lang.hitch(this, function(itemData) {
-      //itemData.source means template id
-        portal.getItemById(itemData.source).then(lang.hitch(this, function(item) {
+      portal.getItemData(appId).then(lang.hitch(this, function(appData) {
+        //appData.source means template id
+        portal.getItemById(appData.source).then(lang.hitch(this, function(item) {
           var urlObject = esriUrlUtils.urlToObject(item.url);
           def.resolve({
             appId: urlObject.query.id,
-            itemData: itemData
+            appData: appData
           });
         }));
       }), function(err){
@@ -606,82 +693,6 @@ function (declare, lang, array, dojoConfig, cookie,
     _getAppConfigFromAppId: function(portalUrl, appId){
       //the appid means: the app created by app builder.
       return portalUtils.getPortal(portalUrl).getItemData(appId);
-    },
-
-    _mergeTemplateAppConfigToAppConfig: function(itemData, _appConfig){
-      //url has appid parameter means open app in AGOL's template config page
-      //merge the AGOL's template config parameters into the config.json
-      var i;
-      var screenSectionConfig = _appConfig.widgetOnScreen;
-      var portalUrl = _appConfig.portalUrl;
-      _appConfig.agolConfig = itemData;
-      _appConfig.map.itemId = itemData.values.webmap;
-      _appConfig.map.portalUrl = portalUrl;
-      // use default mapOptions of current webmap.
-      delete _appConfig.map.mapOptions;
-
-      function reorderWidgets(widgetArray) {
-        var tempWidgets = [];
-        array.forEach(widgetArray, function(widget) {
-          if (widget) {
-            tempWidgets.push(widget);
-          }
-        }, this);
-        return tempWidgets;
-      }
-
-      var title = null, subtitle = null;
-      for (var key in itemData.values) {
-        if (key !== "webmap") {
-          jimuUtils.setConfigByTemplateWithId(_appConfig, key, itemData.values[key]);
-        }
-        if (key === "app_title") {
-          title = itemData.values[key];
-        }
-        if (key === "app_subtitle") {
-          subtitle = itemData.values[key];
-        }
-      }
-
-      var defRet = new Deferred();
-      if (!title || !subtitle) {
-        var portal = portalUtils.getPortal(portalUrl);
-        portal.getItemById(itemData.values.webmap).then(lang.hitch(this, function(item){
-          // merge title
-          if (!title) {
-            _appConfig.title = item.title;
-          }
-          // subtitle
-          if (!subtitle) {
-            _appConfig.subtitle = item.snippet;
-          }
-          reorder();
-          defRet.resolve();
-        }));
-      } else {
-        reorder();
-        defRet.resolve();
-      }
-
-      function reorder() {
-        //reorderWidgets
-        _appConfig.widgetPool.widgets = reorderWidgets(_appConfig.widgetPool.widgets);
-        screenSectionConfig.widgets = reorderWidgets(screenSectionConfig.widgets);
-        if (_appConfig.widgetPool.groups) {
-          for (i = 0; i < _appConfig.widgetPool.groups.length; i++) {
-            _appConfig.widgetPool.groups[i].widgets =
-            reorderWidgets(_appConfig.widgetPool.groups[i].widgets);
-          }
-        }
-        if (screenSectionConfig.groups) {
-          for (i = 0; i < screenSectionConfig.groups.length; i++) {
-            screenSectionConfig.groups[i].widgets =
-            reorderWidgets(screenSectionConfig.groups[i].widgets);
-          }
-        }
-      }
-      return defRet;
-
     },
 
     _removeHash: function(urlParams){
@@ -757,8 +768,12 @@ function (declare, lang, array, dojoConfig, cookie,
     //After loaded, if user changes app config through builder,
     //we'll use the configuration in builder.
     _processUrlParams: function(appConfig){
-      if(this.urlParams.itemid || this.urlParams.webmap){
-        appConfig.map.itemId = this.urlParams.itemid || this.urlParams.webmap;
+      var urlWebmap = this.urlParams.itemid || this.urlParams.webmap;
+      if(urlWebmap && appConfig.map.itemId !== urlWebmap){
+        if(appConfig.map.mapOptions){
+          jimuUtils.deleteMapOptions(appConfig.map.mapOptions);
+        }
+        appConfig.map.itemId = urlWebmap;
       }
       if(this.urlParams.mode){
         appConfig.mode = this.urlParams.mode;

@@ -60,13 +60,13 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
     },
 
     toJson:function(){
-      var nodes = query('.jimu-single-filter',this.allExpsBox);
-      var parts = array.map(nodes,lang.hitch(this,function(node){
+      var nodes = query('.jimu-single-filter', this.allExpsBox);
+      var parts = array.map(nodes, lang.hitch(this, function(node){
         var filter = registry.byNode(node);
         return filter.toJson();
       }));
-      var validParts = array.every(parts,lang.hitch(this,function(part){
-        return part;
+      var validParts = array.every(parts, lang.hitch(this, function(part){
+        return !!part;
       }));
       if(validParts && parts.length > 0){
         var result = {
@@ -81,18 +81,18 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
     },
 
     showDelteIcon:function(){
-      html.setStyle(this.btnDelete,'display','block');
+      html.setStyle(this.btnDelete, 'display', 'block');
     },
 
     hideDeleteIcon:function(){
-      html.setStyle(this.btnDelete,'display','none');
+      html.setStyle(this.btnDelete, 'display', 'none');
     },
 
     _initSelf:function(){
-      this.own(on(this.btnAdd,'click',lang.hitch(this,this._addSingleFilter)));
+      this.own(on(this.btnAdd, 'click', lang.hitch(this, this._addSingleFilter)));
       if(this.partsObj){
         this.allAnySelect.value = this.partsObj.logicalOperator;
-        var parts = this.partsObj.parts||[];
+        var parts = this.partsObj.parts || [];
         if(parts.length === 0){
           this._addSingleFilter();
           this._addSingleFilter();
@@ -102,7 +102,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
           this._addSingleFilter();
         }
         else{
-          array.forEach(parts,lang.hitch(this,function(part){
+          array.forEach(parts, lang.hitch(this, function(part){
             this._addSingleFilter(part);
           }));
         }
@@ -133,14 +133,16 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       var singleFilter = new SingleFilter(args);
       singleFilter.placeAt(this.allExpsBox);
       singleFilter.startup();
-      this.own(aspect.after(singleFilter,'_destroySelf',lang.hitch(this,this._checkFilterNumbers)));
+      this.own(aspect.after(singleFilter,
+                            '_destroySelf',
+                            lang.hitch(this, this._checkFilterNumbers)));
       this._checkFilterNumbers();
     },
 
     _checkFilterNumbers:function(){
-      var nodes = query('.jimu-single-filter',this.allExpsBox);
+      var nodes = query('.jimu-single-filter', this.allExpsBox);
       var isShowIcon = nodes.length > 2;
-      array.forEach(nodes,lang.hitch(this,function(node){
+      array.forEach(nodes, lang.hitch(this, function(node){
         var filter = registry.byNode(node);
         if(isShowIcon){
           filter.showDelteIcon();

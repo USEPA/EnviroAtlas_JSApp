@@ -22,22 +22,27 @@ define(['dojo/_base/declare',
     'dojo/on',
     'dojo/_base/Color',
     'dijit/TooltipDialog',
-    'dijit/ColorPalette',
-    'dijit/popup'
+    'dijit/popup',
+    'dojox/widget/ColorPicker'
   ],
   function(declare, _WidgetBase, _TemplatedMixin, lang, html, on, Color, TooltipDialog,
-    ColorPalette, dojoPopup) {
+    dojoPopup, DojoColorPicker) {
     return declare([_WidgetBase, _TemplatedMixin], {
       baseClass: 'jimu-color-picker',
       declaredClass: 'jimu.dijit.ColorPicker',
       templateString: '<div></div>',
+      _isTooltipDialogOpened: false,
 
       //options:
       color: null,//dojo.Color or hex string
+      showHex: true,
+      showHsv: true,
+      showRgb: true,
 
       //public methods:
       //setColor
       //getColor
+      //isPartOfPopup
 
       //events:
       //change
@@ -53,63 +58,79 @@ define(['dojo/_base/declare',
           this.color = new Color('#ccc');
         }
 
-        html.setStyle(this.domNode,'backgroundColor',this.color.toHex());
-        this.tooltipDialog = this._createTooltipDialog(this.domNode);
+        html.setStyle(this.domNode, 'backgroundColor', this.color.toHex());
+        this._createTooltipDialog(this.domNode);
+        this._hideTooltipDialog();
       },
 
       destroy: function(){
         dojoPopup.close(this.tooltipDialog);
-        this.palette.destroy();
+        this.picker.destroy();
         this.tooltipDialog.destroy();
         this.inherited(arguments);
       },
 
-      _createTooltipDialog: function(dom) {
+      isPartOfPopup: function(target){
+        var node = this.tooltipDialog.domNode;
+        var isInternal = target === node || html.isDescendant(target, node);
+        return isInternal;
+      },
+
+      _showTooltipDialog: function(){
+        dojoPopup.open({
+          parent: this.getParent(),
+          popup: this.tooltipDialog,
+          around: this.domNode
+        });
+        this._isTooltipDialogOpened = true;
+      },
+
+      _hideTooltipDialog: function(){
+        dojoPopup.close(this.tooltipDialog);
+        this._isTooltipDialogOpened = false;
+      },
+
+      _createTooltipDialog: function(){
         var ttdContent = html.create("div");
-        var tooltipDialog = new TooltipDialog({
-          style: "width: 250px;cursor:pointer",
+        this.tooltipDialog = new TooltipDialog({
+          style: "width: 350px;",
           content: ttdContent
         });
-        var myPalette = new ColorPalette({
-          palette: "7x10",
-          cellClass: "cursor:pointer",
-          onChange: lang.hitch(this, function(val) {
-            html.setStyle(dom,'backgroundColor',val);
-            dojoPopup.close(tooltipDialog);
-            this.color = new Color(val);
-            this.onChange(this.color);
+        var picker = new DojoColorPicker({
+          showHex: this.showHex,
+          showRgb: this.showRgb,
+          showHsv: this.showHsv,
+          value: this.color.toHex(),
+          onChange: lang.hitch(this, function(newHex){
+            var color = new Color(newHex);
+            this.setColor(color);
           })
         });
+        picker.placeAt(ttdContent);
+        picker.startup();
 
-        myPalette.placeAt(ttdContent);
-        myPalette.startup();
-
-        this.own(on(dom, 'click', lang.hitch(this, function(event){
+        this.own(on(this.domNode, 'click', lang.hitch(this, function(event){
           event.stopPropagation();
           event.preventDefault();
 
-          dojoPopup.open({
-            parent: this.getParent(),
-            popup: tooltipDialog,
-            around: dom
-          });
-        })));
-
-        this.own(on(document.body,'click',lang.hitch(this,function(event){
-          var target = event.target || event.srcElement;
-          var node = tooltipDialog.domNode;
-          var isInternal = target === node || html.isDescendant(target, node);
-          if(!isInternal){
-            dojoPopup.close(tooltipDialog);
+          if(this._isTooltipDialogOpened){
+            this._hideTooltipDialog();
+          }else{
+            this._showTooltipDialog();
           }
         })));
 
-        this.palette = myPalette;
+        this.own(on(document.body, 'click', lang.hitch(this, function(event){
+          var target = event.target || event.srcElement;
+          if(!this.isPartOfPopup(target)){
+            this._hideTooltipDialog();
+          }
+        })));
 
-        return tooltipDialog;
+        this.picker = picker;
       },
 
-      setColor:function(newColor){
+      setColor: function(newColor){
         if(!(newColor instanceof Color)){
           return;
         }
@@ -120,7 +141,7 @@ define(['dojo/_base/declare',
         }
         var newHex = newColor.toHex();
         this.color = newColor;
-        html.setStyle(this.domNode,'backgroundColor',newHex);
+        html.setStyle(this.domNode, 'backgroundColor', newHex);
         if(oldHex !== newHex){
           this.onChange(new Color(newHex));
         }

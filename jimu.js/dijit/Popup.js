@@ -21,13 +21,14 @@ define(['dojo/_base/declare',
     'dojo/_base/fx',
     'dojo/on',
     'dojo/sniff',
+    'dojo/touch',
     'dojo/query',
     'dojo/dnd/move',
     'dijit/_WidgetBase'
   ],
-  function(declare, lang, array, html, baseFx, on, has,
+  function(declare, lang, array, html, baseFx, on, has, touch,
     query, Move, _WidgetBase) {
-    var history = 0;
+    var count = 0;
     /* global jimuConfig */
     return declare(_WidgetBase, {
       //summary:
@@ -101,7 +102,10 @@ define(['dojo/_base/declare',
 
         html.place(this.domNode, this.container);
 
-        this._moveToMiddle();
+        setTimeout(lang.hitch(this, function() {
+          this._moveToMiddle();
+        }), 50);
+        // this._moveToMiddle();
         // this._limitButtonsMaxWidth();
 
         this.own(on(window, 'resize', lang.hitch(this, function() {
@@ -115,7 +119,7 @@ define(['dojo/_base/declare',
         })));
 
         this.overlayNode = html.create('div', {
-          'class': 'popup-overlay'
+          'class': 'jimu-overlay'
         }, this.container);
 
         this._increaseZIndex();
@@ -152,7 +156,7 @@ define(['dojo/_base/declare',
           innerHTML: this.titleLabel || '&nbsp'
         }, this.titleNode);
         this.closeBtnNode = html.create('div', {
-          'class': 'close-btn jimu-float-trailing'
+          'class': 'close-btn jimu-icon jimu-icon-close jimu-float-trailing'
         }, this.titleNode);
         this.own(on(this.closeBtnNode, 'click', lang.hitch(this, this.close)));
         // }
@@ -206,7 +210,7 @@ define(['dojo/_base/declare',
         btnMaxWidth = (btnContainerBox.w -
           (btnMarginBox.l + btnMarginBox.r + _ie8hackWidth) *
           btnLength) / btnLength;
-        
+
         if (btnMaxWidth > 0) {
           array.forEach(this.enabledButtons, lang.hitch(this, function(btn) {
             html.setStyle(btn, 'maxWidth', btnMaxWidth + 'px');
@@ -351,9 +355,10 @@ define(['dojo/_base/declare',
       },
 
       _increaseZIndex: function() {
-        html.setStyle(this.domNode, 'zIndex', history + 501);
-        html.setStyle(this.overlayNode, 'zIndex', history + 500);
-        history++;
+        var baseIndex = 200;
+        html.setStyle(this.domNode, 'zIndex', count + baseIndex + 1);
+        html.setStyle(this.overlayNode, 'zIndex', count + baseIndex);
+        count++;
       },
 
       onMoving: function(mover) {
@@ -395,13 +400,13 @@ define(['dojo/_base/declare',
 
       _createButton: function(button) {
         var node = html.create('div', {
-          'class': 'jimu-popup-btn jimu-float-trailing jimu-leading-margin1',
+          'class': 'jimu-btn jimu-float-trailing jimu-leading-margin1',
           'innerHTML': button.label
         }, this.buttonContainer);
         this.enabledButtons.unshift(node);
 
         var disableNode = html.create('div', {
-          'class': 'jimu-popup-btn jimu-state-disabled jimu-float-trailing jimu-leading-margin1',
+          'class': 'jimu-btn jimu-state-disabled jimu-float-trailing jimu-leading-margin1',
           'innerHTML': button.label,
           'style': {
             display: 'none'
@@ -409,13 +414,12 @@ define(['dojo/_base/declare',
         }, this.buttonContainer);
         this.disabledButtons.unshift(disableNode);
 
-        var eventName = 'click';
-
-        if ('ontouchend' in node) {
-          //fix a bug that can't bind click event in Mobile Safari
-          eventName = 'touchend';
+        var eventName = null;
+        if ('ontouchstart' in document) {
+          eventName = touch.press;
+        } else {
+          eventName = 'click';
         }
-
         this.own(on(node, eventName, lang.hitch(this, function(evt) {
           //we don't close popup because that maybe the
           //listener function is async

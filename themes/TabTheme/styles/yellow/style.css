@@ -1,0 +1,19 @@
+.jimu-main-background{
+  background-color: #d07d0e;
+}
+.jimu-preload-widget-icon-panel>.jimu-panel-title{
+  color: white;
+  background-color: #d07d0e;
+}
+.popup-links {
+background-color: #d07d0e;
+}
+.popup-links .link-section {
+  background-color: #d07d0e;
+}
+.jimu-widget-sidebar-controller .max-pane,
+.jimu-widget-sidebar-controller .tab-resizer,
+.jimu-widget-sidebar-controller .min-pane,
+.jimu-widget-sidebar-controller .other-group-pane{
+  border-style: none;
+}

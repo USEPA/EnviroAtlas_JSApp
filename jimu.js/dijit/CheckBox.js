@@ -18,10 +18,11 @@ define(['dojo/_base/declare',
   'dijit/_WidgetBase',
   'dojo/_base/lang',
   'dojo/_base/html',
-  'dojo/on'
+  'dojo/on',
+  'dojo/Evented'
 ],
-function(declare, _WidgetBase, lang, html, on) {
-  return declare(_WidgetBase, {
+function(declare, _WidgetBase, lang, html, on, Evented) {
+  return declare([_WidgetBase, Evented], {
     'baseClass': 'jimu-checkbox',
     declaredClass: 'jimu.dijit.CheckBox',
 
@@ -65,7 +66,7 @@ function(declare, _WidgetBase, lang, html, on) {
           }))
         );
       }
-      
+
     },
 
     setValue: function(value){
@@ -83,12 +84,21 @@ function(declare, _WidgetBase, lang, html, on) {
       return this.checked;
     },
 
-    setStatus: function(status){
-      this.status = status;
+    setStatus: function(newStatus){
+      newStatus = !!newStatus;
+
+      var isStatusChanged = this.status !== newStatus;
+
+      this.status = newStatus;
+
+      if(isStatusChanged){
+        this.emit('status-change', newStatus);
+      }
+
       if(!this.labelNode){
         return;
       }
-      if(status){
+      if(this.status){
         html.setStyle(this.labelNode, "color", "#000000");
       }else{
         html.setStyle(this.labelNode, "color", "#818181");

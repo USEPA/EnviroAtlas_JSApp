@@ -39,9 +39,9 @@ LayerInfo, LayerInfoFactory) {
       var visible = false, i;
       var mapService = this.originOperLayer.mapService;
       if(this.originOperLayer.mapService) {
-      // layer or group in map service.
+        // layer or group in map service.
         if(this.originOperLayer.subLayers.length > 0) {
-        //group in map service.
+          //group in map service.
           /*
           for(i=0; i<this.newSubLayers.length; i++) {
             visible = visible || this.newSubLayers[i].isVisible();
@@ -51,7 +51,7 @@ LayerInfo, LayerInfoFactory) {
             visible = true;
           }
         } else {
-        //layer in map service.
+          //layer in map service.
           if(mapService.layerInfo.subLayerVisible[mapService.subId] > 0) {
             visible = true;
           }

@@ -20,19 +20,23 @@ define(['dojo/_base/declare',
     'dojo/Evented',
     'dojo/_base/lang',
     'dojo/_base/html',
+    'dojo/_base/array',
     'dojo/on',
+    'dojo/query',
     'dijit/TooltipDialog',
     'dijit/popup',
+    'dijit/registry',
     'jimu/dijit/SymbolChooser',
     'jimu/symbolUtils'
   ],
-  function(declare, _WidgetBase, _TemplatedMixin, Evented, lang, html, on, TooltipDialog,
-    dojoPopup, SymbolChooser, jimuSymUtils) {
+  function(declare, _WidgetBase, _TemplatedMixin, Evented, lang, html, array, on, query,
+    TooltipDialog, dojoPopup, registry, SymbolChooser, jimuSymUtils) {
     return declare([_WidgetBase, _TemplatedMixin, Evented], {
       baseClass: 'jimu-symbol-picker',
       declaredClass: 'jimu.dijit.SymbolPicker',
       templateString: '<div></div>',
       tooltipDialog: null,
+      _isTooltipDialogOpened: false,
 
       //options:
       //you must set symbol or type
@@ -50,7 +54,8 @@ define(['dojo/_base/declare',
 
       postCreate: function() {
         this.inherited(arguments);
-        this._createTooltipDialog(this.domNode);
+        this._createTooltipDialog();
+        this._hideTooltipDialog();
         var symbol = this.symbolChooser.getSymbol();
         if(symbol){
           this._drawSymbol(symbol);
@@ -66,10 +71,9 @@ define(['dojo/_base/declare',
         this.inherited(arguments);
       },
 
-      _createTooltipDialog: function(dom) {
+      _createTooltipDialog: function() {
         var ttdContent = html.create("div");
         this.tooltipDialog = new TooltipDialog({
-          // style: "width: 250px;cursor:pointer",
           content: ttdContent
         });
 
@@ -86,14 +90,27 @@ define(['dojo/_base/declare',
           this.emit('change', newSymbol);
         })));
 
-        this.own(on(dom, 'click', lang.hitch(this, function(event){
+        this.own(on(this.domNode, 'click', lang.hitch(this, function(event){
           event.stopPropagation();
           event.preventDefault();
-          this._showTooltipDialog();
+          if(this._isTooltipDialogOpened){
+            this._hideTooltipDialog();
+          }else{
+            this._showTooltipDialog();
+          }
         })));
 
         this.own(on(document.body, 'click', lang.hitch(this, function(event){
           var target = event.target || event.srcElement;
+          var colorPickers = this._getColorPickers();
+          if(colorPickers.length > 0){
+            var isClickColorPicker = array.some(colorPickers, function(colorPicker){
+              return colorPicker.isPartOfPopup(target);
+            });
+            if(isClickColorPicker){
+              return;
+            }
+          }
           var node = this.tooltipDialog.domNode;
           var isInternal = target === node || html.isDescendant(target, node);
           if(!isInternal){
@@ -102,12 +119,19 @@ define(['dojo/_base/declare',
         })));
 
         this.own(on(this.symbolChooser, 'resize', lang.hitch(this, function(){
-          var isOpendNow = !!this.tooltipDialog.isOpendNow;
-          if(isOpendNow){
+          if(this._isTooltipDialogOpened){
             this._hideTooltipDialog();
             this._showTooltipDialog();
           }
         })));
+      },
+
+      _getColorPickers: function(){
+        var doms = query('.jimu-color-picker', this.symbolChooser.domNode);
+        var colorPickers = array.map(doms, lang.hitch(this, function(dom){
+          return registry.byNode(dom);
+        }));
+        return colorPickers;
       },
 
       reset: function(){
@@ -155,14 +179,14 @@ define(['dojo/_base/declare',
             popup: this.tooltipDialog,
             around: this.domNode
           });
-          this.tooltipDialog.isOpendNow = true;
+          this._isTooltipDialogOpened = true;
         }
       },
 
       _hideTooltipDialog: function(){
         if(this.tooltipDialog){
           dojoPopup.close(this.tooltipDialog);
-          this.tooltipDialog.isOpendNow = false;
+          this._isTooltipDialogOpened = false;
         }
       }
 

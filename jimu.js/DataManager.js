@@ -37,7 +37,7 @@ define(['dojo/_base/declare',
 
     onDataPublished: function (name, id, data, keepHistory) {
       // jshint unused:false
-      
+
       if(typeof keepHistory === 'undefined') {
         keepHistory = false;
       }
@@ -55,7 +55,7 @@ define(['dojo/_base/declare',
           }else{
             this._dataStore[id].history = [data];
           }
-          
+
         }
       }
     },
@@ -77,8 +77,10 @@ define(['dojo/_base/declare',
       }else{
         for(var p in this._dataStore){
           w = this.widgetManager.getWidgetById(p);
-          topic.publish('dataFetched', w.name, p,
-            this._dataStore[p].current, this._dataStore[p].history);
+          if(w){
+            topic.publish('dataFetched', w.name, p,
+              this._dataStore[p].current, this._dataStore[p].history);
+          }
         }
       }
     },

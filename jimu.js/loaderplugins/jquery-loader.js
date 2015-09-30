@@ -35,7 +35,7 @@ define([
   loadjQuery = function( /*String*/ jQueryUrl) {
     // summary:
     //      returns a promise to return the requested version
-    //      of jQuery 
+    //      of jQuery
     //
     // jQueryUrl:
     //      (String) the fully-qualified jQuery URL
@@ -54,10 +54,10 @@ define([
       def.resolve(jqueryCache[jQueryUrl]);
       return def;
     }
-   
+
     jqueryCache.locked = true;
-    
-    // load the jQuery version, run noConflict(), 
+
+    // load the jQuery version, run noConflict(),
     require([jQueryUrl], function() {
       jqueryCache[jQueryUrl] = window.jQuery;
       def.resolve(jqueryCache[jQueryUrl]);
@@ -70,7 +70,7 @@ define([
   loadPlugin = function(/*String*/ pluginUrls, i, def) {
     // summary:
     //      load the given jQuery plugin into the jQuery object
-    
+
     require([pluginUrls[i]], function() {
       if(i === pluginUrls.length - 1){
         def.resolve();
@@ -124,7 +124,7 @@ define([
 
   return {
     load: function(id, _require, callback){
-      var parts= id.split(","), jqueryUrl, plugins = [];
+      var parts = id.split(","), jqueryUrl, plugins = [];
       require = _require;
       if(parts.length === 0){
         callback(null);

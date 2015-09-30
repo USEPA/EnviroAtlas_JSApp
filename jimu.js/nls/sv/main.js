@@ -1,66 +1,66 @@
 ﻿define(
    ({
     common: {
-      ok: 'OK',
-      cancel: 'Avbryt',
-      next: 'Nästa',
-      back: 'Bakåt'
+      ok: "OK",
+      cancel: "Avbryt",
+      next: "Nästa",
+      back: "Bakåt"
     },
     errorCode: "Kod",
     errorMessage: "Meddelande",
     errorDetail: "Information",
     widgetPlaceholderTooltip: "Ställ in detta genom att gå till Widgetar och klicka på motsvarande platshållare",
     symbolChooser: {
-      preview: 'Förhandsgranska',
-      basic: 'Grundläggande',
-      arrows: 'Pilar',
-      business: 'Företag',
-      cartographic: 'Kartografisk',
-      nationalParkService: 'National Park Service',
-      outdoorRecreation: 'Utomhusrekreation',
-      peoplePlaces: 'Personplatser',
-      safetyHealth: 'Säkerhet och hälsa',
-      shapes: 'Objekt',
-      transportation: 'Transport',
-      symbolSize: 'Symbolstorlek',
-      color: 'Färg',
-      alpha: 'Alfa',
-      outlineColor: 'Konturfärg',
-      outlineWidth: 'Konturbredd',
-      style: 'Format',
-      width: 'Bredd',
-      text: 'Text',
-      fontColor: 'Teckenfärg',
-      fontSize: 'Teckenstorlek',
-      transparency: 'Transparens',
-      solid: 'Heldragen',
-      dash: 'Streck',
-      dot: 'Punkt',
-      dashDot: 'Streck punkt',
-      dashDotDot: 'Streck punkt punkt'
+      preview: "Förhandsgranska",
+      basic: "Grundläggande",
+      arrows: "Pilar",
+      business: "Företag",
+      cartographic: "Kartografisk",
+      nationalParkService: "National Park Service",
+      outdoorRecreation: "Utomhusrekreation",
+      peoplePlaces: "Personplatser",
+      safetyHealth: "Säkerhet och hälsa",
+      shapes: "Objekt",
+      transportation: "Transport",
+      symbolSize: "Symbolstorlek",
+      color: "Färg",
+      alpha: "Alfa",
+      outlineColor: "Konturfärg",
+      outlineWidth: "Konturbredd",
+      style: "Format",
+      width: "Bredd",
+      text: "Text",
+      fontColor: "Teckenfärg",
+      fontSize: "Teckenstorlek",
+      transparency: "Transparens",
+      solid: "Heldragen",
+      dash: "Streck",
+      dot: "Punkt",
+      dashDot: "Streck punkt",
+      dashDotDot: "Streck punkt punkt"
     },
     transparency: {
-      opaque: 'Opak',
-      transparent: 'Transparent'
+      opaque: "Opak",
+      transparent: "Transparent"
     },
     rendererChooser: {
-      domain: 'Värdemängd',
-      use: 'Använda',
-      singleSymbol: 'En symbol',
-      uniqueSymbol: 'Unika symboler',
-      color: 'Färg',
-      size: 'Storlek',
-      toShow: 'För att visa',
-      colors: 'Färger',
-      classes: 'Klasser',
-      symbolSize: 'Symbolstorlek',
-      addValue: 'Lägg till värde',
-      setDefaultSymbol: 'Ange standardsymbol',
-      defaultSymbol: 'Standardsymbol',
-      selectedSymbol: 'Vald symbol',
-      value: 'Värde',
-      label: 'Etikett',
-      range: 'Intervall'
+      domain: "Värdemängd",
+      use: "Använda",
+      singleSymbol: "En symbol",
+      uniqueSymbol: "Unika symboler",
+      color: "Färg",
+      size: "Storlek",
+      toShow: "För att visa",
+      colors: "Färger",
+      classes: "Klasser",
+      symbolSize: "Symbolstorlek",
+      addValue: "Lägg till värde",
+      setDefaultSymbol: "Ange standardsymbol",
+      defaultSymbol: "Standardsymbol",
+      selectedSymbol: "Vald symbol",
+      value: "Värde",
+      label: "Etikett",
+      range: "Intervall"
     },
     drawBox: {
       point: "Punkt",
@@ -93,17 +93,17 @@
       loading: "Läser in"
     },
     basicServiceBrowser: {
-      noServicesFound: 'Ingen tjänst hittades.',
-      unableConnectTo: 'Det gick inte att ansluta till',
-      invalidUrlTip: 'Den URL du har angett är ogiltig eller går inte att komma åt.'
+      noServicesFound: "Ingen tjänst hittades.",
+      unableConnectTo: "Det gick inte att ansluta till",
+      invalidUrlTip: "Den URL du har angett är ogiltig eller går inte att komma åt."
     },
     serviceBrowser: {
-      noGpFound: 'Ingen geobearbetningstjänst hittades.',
-      unableConnectTo: 'Det gick inte att ansluta till'
+      noGpFound: "Ingen geobearbetningstjänst hittades.",
+      unableConnectTo: "Det gick inte att ansluta till"
     },
     layerServiceBrowser: {
-      noServicesFound: 'Inga karttjänster eller geoobjekttjänster hittades',
-      unableConnectTo: 'Det gick inte att ansluta till'
+      noServicesFound: "Inga karttjänster eller geoobjekttjänster hittades",
+      unableConnectTo: "Det gick inte att ansluta till"
     },
     basicServiceChooser: {
       validate: "Validera",
@@ -111,10 +111,10 @@
       set: "Ange"
     },
     urlInput: {
-      invalidUrl: 'Ogiltig URL.'
+      invalidUrl: "Ogiltig URL."
     },
     urlComboBox: {
-      invalidUrl: 'Ogiltig URL.'
+      invalidUrl: "Ogiltig URL."
     },
     filterBuilder: {
       addAnotherExpression: "Lägg till ett filteruttryck",
@@ -131,7 +131,7 @@
       valueTooltip: "Ange värde",
       fieldTooltip: "Välj i befintligt fält",
       uniqueValueTooltip: "Välj bland unika värden i det valda fältet",
-      stringOperatorIs: "är", // e.g. <stringFieldName> is 'California'
+      stringOperatorIs: "är", // e.g. <stringFieldName> is "California"
       stringOperatorIsNot: "är inte",
       stringOperatorStartsWith: "börjar med",
       stringOperatorEndsWith: "slutar med",
@@ -139,7 +139,7 @@
       stringOperatorDoesNotContain: "innehåller inte",
       stringOperatorIsBlank: "är tomt",
       stringOperatorIsNotBlank: "är inte tomt",
-      dateOperatorIsOn: "är", // e.g. <dateFieldName> is on '1/1/2012'
+      dateOperatorIsOn: "är", // e.g. <dateFieldName> is on "1/1/2012"
       dateOperatorIsNotOn: "är inte",
       dateOperatorIsBefore: "är före",
       dateOperatorIsAfter: "är efter",
@@ -192,6 +192,19 @@
       selectFromOnline: "Lägg till från ArcGIS Online",
       chooseLayer: "Välj ett geoobjektslager."
     },
+    queryableLayerSource: {
+      layer: "Lager",
+      browse: "Bläddra",
+      selectFromMap: "Välj från karta",
+      selectFromPortal: "Lägg till från Portal for ArcGIS",
+      addServiceUrl: "Lägg till tjänst-URL",
+      inputLayerUrl: "Indatalager-URL",
+      selectLayer: "Välj ett lager i den aktuella kartan.",
+      chooseItem: "Välj ett objekt.",
+      setServiceUrl: "Ange webbadressen till tjänsten.",
+      selectFromOnline: "Lägg till från ArcGIS Online",
+      chooseLayer: "Välj ett lager."
+    },
     gpSource: {
       selectFromPortal: "Lägg till från Portal for ArcGIS",
       addServiceUrl: "Lägg till tjänst-URL",
@@ -227,35 +240,37 @@
       notSupportQuery: "Tjänsten stöder inte frågor."
     },
     basicLayerChooserFromMap: {
-      noLayersTip: "Det finns inget lager tillgängligt i kartan."
+      noLayersTip: "Det finns inget lämpligt lager tillgängligt i kartan."
     },
     layerInfosMenu: {
-      titleBasemap: 'Baskartor',
-      titleLayers: 'Funktionslager',
-      labelLayer: 'Lagernamn',
-      itemZoomTo: 'Zooma till',
-      itemTransparency: 'Transparens',
-      itemTransparent: 'Transparent',
-      itemOpaque: 'Opak',
-      itemMoveUp: 'Flytta uppåt',
-      itemMoveDown: 'Flytta nedåt',
-      itemDesc: 'Beskrivning',
-      itemDownload: 'Hämta',
-      itemToAttributeTable: 'Öppna attributtabell'
+      titleBasemap: "Baskartor",
+      titleLayers: "Funktionslager",
+      labelLayer: "Lagernamn",
+      itemZoomTo: "Zooma till",
+      itemTransparency: "Transparens",
+      itemTransparent: "Transparent",
+      itemOpaque: "Opak",
+      itemMoveUp: "Flytta uppåt",
+      itemMoveDown: "Flytta nedåt",
+      itemDesc: "Beskrivning",
+      itemDownload: "Hämta",
+      itemToAttributeTable: "Öppna attributtabell"
     },
     imageChooser: {
       unsupportReaderAPI: "TODO: webbläsaren har inte stöd för filläsnings-API",
       readError: "Det gick inte att läsa filen.",
+      unknowError: "det gick inte att slutföra åtgärderna",
       invalidType: "Ogiltig filtyp.",
       exceed: "Filstorleken får inte överskrida 1 024 KB",
       enableFlash: "TODO: aktivera flash.",
+      cropWaining: "Välj ett foto som är på minst ${width} x ${height} pixlar.",
       toolTip: "För bästa resultat ska bilden vara ${width} bildpunkter bred och ${height} bildpunkter hög. Andra storlekar justeras för att passa in. Tillåtna bildformat är: PNG, GIF och JPEG."
     },
     simpleTable: {
-      moveUp: 'Flytta uppåt',
-      moveDown: 'Flytta nedåt',
-      deleteRow: 'Ta bort',
-      edit: 'Redigera'
+      moveUp: "Flytta uppåt",
+      moveDown: "Flytta nedåt",
+      deleteRow: "Ta bort",
+      edit: "Redigera"
     }
   })
 );

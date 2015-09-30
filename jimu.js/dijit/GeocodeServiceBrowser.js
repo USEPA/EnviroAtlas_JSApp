@@ -14,18 +14,17 @@
 // limitations under the License.
 ///////////////////////////////////////////////////////////////////////////
 
-define(['dojo/_base/declare',
+define([
+  'dojo/_base/declare',
   './_BasicServiceBrowser',
   'dojo/_base/lang',
-  'dojo/_base/array'
+  'dojo/_base/array',
+  'jimu/serviceBrowserRuleUtils'
 ],
-function(declare, _BasicServiceBrowser, lang, array) {
+function(declare, _BasicServiceBrowser, lang, array, serviceBrowserRuleUtils) {
   return declare([_BasicServiceBrowser], {
     baseClass: 'jimu-geocode-service-browser',
     declaredClass: 'jimu.dijit.GeocodeServiceBrowser',
-    
-    _leafType:'GeocodeServer',
-    _serviceTypes:['GeocodeServer'],
 
     //options:
     url: '',
@@ -38,7 +37,12 @@ function(declare, _BasicServiceBrowser, lang, array) {
     //https://gis.lmi.is/arcgis/rest/services/GP_service
     //https://gis.lmi.is/arcgis/rest/services/GP_service/geocode_thjonusta_single/GeocodeServer
 
-    //to be override
+    postMixInProperties:function(){
+      this.inherited(arguments);
+      this.rule = serviceBrowserRuleUtils.getGeocodeServiceBrowserRule();
+    },
+
+    //override
     getSelectedItems: function(){
       var items = this.inherited(arguments);
       items = array.map(items, lang.hitch(this, function(item){
@@ -48,10 +52,7 @@ function(declare, _BasicServiceBrowser, lang, array) {
         };
       }));
       return items;
-    },
-    
-    //to be override
-    _getIconImageName: function(item, opened){/*jshint unused: false*/}
+    }
 
   });
 });

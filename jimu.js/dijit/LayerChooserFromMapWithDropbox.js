@@ -23,82 +23,78 @@ define(['dojo/_base/declare',
     'dojo/Evented',
     'dijit/_WidgetBase',
     'dijit/_TemplatedMixin',
-    'dojo/text!./templates/LayerChooserFromMapWithDropbox.html',
-    'jimu/dijit/LayerChooserFromMap'
+    'dojo/text!./templates/LayerChooserFromMapWithDropbox.html'
   ],
   function(declare, lang, array, domStyle, domConstruct, on, Evented,
-    _WidgetBase, _TemplatedMixin, template, LayerChooserFromMap) {
+    _WidgetBase, _TemplatedMixin, template) {
     return declare([_WidgetBase, _TemplatedMixin, Evented], {
-      templateString:template,
+      templateString: template,
       baseClass: 'jimu-layer-chooser-from-map-withdropbox',
       declaredClass: 'jimu.dijit.LayerChooserFromMapWithDropbox',
+
+      //options:
+      layerChooser: null,//instance of LayerChooserFromMap
 
       postCreate: function() {
         this.inherited(arguments);
 
-        var args = {
-          multiple: this.multiple,
-          createMapResponse: this.createMapResponse,
-          showLayerTypes: this.showLayerTypes,
-          geometryTypes: this.geometryTypes
-        };
-        this.layerChooserFromMap = new LayerChooserFromMap(args);
-        this.layerChooserFromMap.placeAt(this.layerChooseNode);
-        this.layerChooserFromMap.startup();
-
-        this.own(on(this.layerChooserFromMap, 'tree-click', lang.hitch(this, this._onTreeClick)));
+        if(this.layerChooser){
+          this.layerChooser.domNode.style.zIndex = 1;
+          this.layerChooser.placeAt(this.layerChooseNode);
+          this.own(on(this.layerChooser, 'tree-click', lang.hitch(this, this._onTreeClick)));
+        }
       },
 
-      _onDropDownClick: function(){
-        if(domStyle.get(this.layerChooseNode, 'display') === 'none'){
+      _onDropDownClick: function() {
+        if (domStyle.get(this.layerChooseNode, 'display') === 'none') {
           this.showChooseNode();
-        }else{
+        } else {
           this.hideChooseNode();
         }
       },
 
-      showChooseNode: function(){
+      showChooseNode: function() {
         domStyle.set(this.layerChooseNode, 'display', '');
       },
 
-      hideChooseNode: function(){
+      hideChooseNode: function() {
         domStyle.set(this.layerChooseNode, 'display', 'none');
       },
 
-      _onTreeClick: function(){
+      _onTreeClick: function() {
         domConstruct.empty(this.layerNameNode);
         var selections = [];
 
-        array.forEach(this.layerChooserFromMap.getSelectedItems(), function(item) {
-          domConstruct.place('<span>'+item.layerInfo.title+'</span>', this.layerNameNode);
+        array.forEach(this.layerChooser.getSelectedItems(), function(item) {
+          domConstruct.place('<span>' + item.layerInfo.title + '</span>', this.layerNameNode);
           selections.push(item.layerInfo.layerObject);
         }, this);
 
         var changed = false;
 
-        if(!this.selectedLayers || this.selectedLayers.length !== selections.length){
+        if (!this.selectedLayers || this.selectedLayers.length !== selections.length) {
           this.selectedLayers = selections;
           changed = true;
-        }else{
+        } else {
           //compare current selection and previous
-          var currentIds = array.map(selections,function(item){
+          var currentIds = array.map(selections, function(item) {
             return item.id;
           });
-          var previousIds = array.map(this.selectedLayers,function(item){
+          var previousIds = array.map(this.selectedLayers, function(item) {
             return item.id;
           });
-          var isSame = array.every(currentIds, function(id){
+          var isSame = array.every(currentIds, function(id) {
             return previousIds.indexOf(id) > -1;
           });
-          if(!isSame){
+          if (!isSame) {
             this.selectedLayers = selections;
             changed = true;
           }
         }
 
-        if(changed && this.selectedLayers.length > 0){
+        if (changed && this.selectedLayers.length > 0) {
           domStyle.set(this.layerChooseNode, 'display', 'none');
-          this.emit('selection-change',this.selectedLayers);
+          this.emit('selection-change', this.selectedLayers);
         }
       }
     });

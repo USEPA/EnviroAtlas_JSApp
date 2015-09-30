@@ -23,7 +23,14 @@ var ie = (function() {
     var ieNotes = document.getElementById('ie-note');
     appLoading.style.display = 'none';
     ieNotes.style.display = 'block';
-    mainLoading.style.backgroundColor="#fff";
+    mainLoading.style.backgroundColor = "#fff";
+    return;
+  }
+
+  //handle edit=true parameter
+  if(!window.isXT && window.location.pathname.indexOf('/apps/webappviewer') > -1 &&
+    window.queryObject.edit === 'true' && window.queryObject.appid){
+    window.location.href = window.location.href.replace('webappviewer', 'webappbuilder');
     return;
   }
 
@@ -88,7 +95,7 @@ var ie = (function() {
       window.apiUrl + 'dijit/themes/claro/claro.css',
       window.apiUrl + 'esri/css/esri.css',
       window.apiUrl + 'dojox/layout/resources/ResizeHandle.css',
-      window.path + 'jimu.js/css/jimu.css'
+      window.path + 'jimu.js/css/jimu-theme.css'
     ]);
 
     if (window.apiUrl.substr(window.apiUrl.length - 'arcgis-js-api/'.length,
@@ -184,9 +191,9 @@ var ie = (function() {
         }
 
         _loadPolyfills("", function() {
-          window.appInfo = {appPath: window.path};
+          window.appInfo.appPath = window.path;
           require(['jimu/main', 'libs/main', 'dynamic-modules/preload'], function(jimuMain) {
-            loadingCallback('jimu', resources.length + 1, resources.length);
+            //loadingCallback('jimu', resources.length + 1, resources.length);
             jimuMain.initApp();
           });
         });
