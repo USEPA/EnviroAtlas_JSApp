@@ -19,16 +19,21 @@ define(['./basePortalUrlUtils'], function(basePortalUrlUtils) {
 
   var widgetProperties = ['inPanel', 'hasLocale', 'hasStyle', 'hasConfig', 'hasUIFile',
   'hasSettingPage', 'hasSettingUIFile', 'hasSettingLocale', 'hasSettingStyle',
-  'keepConfigAfterMapSwithched', 'isController', 'hasVersionManager', 'isThemeWidget'];
+  'keepConfigAfterMapSwithched', 'isController', 'hasVersionManager', 'isThemeWidget',
+  'supportMultiInstance'];
 
   mo.visitElement = visitElement;
 
   mo.getConfigElementById = getConfigElementById;
-  
+
+  mo.getConfigElementByLabel = getConfigElementByLabel;
+
+  mo.getConfigElementsByName = getConfigElementsByName;
+
   mo.getWidgetNameFromUri = getWidgetNameFromUri;
 
   mo.getAmdFolderFromUri = getAmdFolderFromUri;
-  
+
   mo.widgetProperties = widgetProperties;
 
   mo.processWidgetProperties = processWidgetManifestProperties;
@@ -37,7 +42,7 @@ define(['./basePortalUrlUtils'], function(basePortalUrlUtils) {
     //http://services.arcgis.com/XXX/arcgis/rest/services/s/FeatureServer
     var server = basePortalUrlUtils.getServerByUrl(url);
     var r = server + "/[^/]+/[^/]+/rest/services";
-    var regExp = new RegExp(r,"gi");
+    var regExp = new RegExp(r, "gi");
     var isHosted = regExp.test(url);
     return isHosted;
   };
@@ -60,12 +65,12 @@ define(['./basePortalUrlUtils'], function(basePortalUrlUtils) {
       }
     });
   }
-  
+
   function visitElement(appConfig, cb) {
     /*the cb signature: cb(element, info), the info object:
       {
         index:
-        isWidget: 
+        isWidget:
         groupId: the groupId can be: groupId, widgetOnScreen, widgetPool
         isThemeWidget:
         isOnScreen:
@@ -88,6 +93,9 @@ define(['./basePortalUrlUtils'], function(basePortalUrlUtils) {
               isThemeWidget: false,
               isOnScreen: isOnScreen
             });
+            if(!appConfig[section].groups[i].widgets){
+              continue;
+            }
             for (j = 0; j < appConfig[section].groups[i].widgets.length; j++) {
               widget = appConfig[section].groups[i].widgets[j];
               cb(widget, {
@@ -131,6 +139,33 @@ define(['./basePortalUrlUtils'], function(basePortalUrlUtils) {
       }
     });
     return c;
+  }
+
+  function getConfigElementByLabel(appConfig, label){
+    var c;
+    if(label === 'map'){
+      return appConfig.map;
+    }
+    visitElement(appConfig, function(e){
+      if(e.label || e.name === label){
+        c = e;
+        return true;
+      }
+    });
+    return c;
+  }
+
+  function getConfigElementsByName(appConfig, name){
+    var elements = [];
+    if(name === 'map'){
+      return [appConfig.map];
+    }
+    visitElement(appConfig, function(e){
+      if(e.name === name){
+        elements.push(e);
+      }
+    });
+    return elements;
   }
 
   function getWidgetNameFromUri(uri) {

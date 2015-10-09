@@ -21,12 +21,13 @@ define(['dojo/_base/declare',
   'dojo/_base/html'
 ],
 function(declare, _WidgetBase, _TemplatedMixin, template, html) {
-  return declare([_WidgetBase,_TemplatedMixin], {
+  return declare([_WidgetBase, _TemplatedMixin], {
     'baseClass': 'jimu-loading-shelter',
     declaredClass: 'jimu.dijit.LoadingShelter',
     templateString: template,
     loadingText:null,
     hidden:false,
+    showLoading: true,
 
     postMixInProperties:function(){
       this.nls = window.jimuNls.loadingShelter;
@@ -35,10 +36,13 @@ function(declare, _WidgetBase, _TemplatedMixin, template, html) {
     postCreate: function(){
       this.inherited(arguments);
       if(this.hidden){
-        html.setStyle(this.domNode,'display','none');
+        html.setStyle(this.domNode, 'display', 'none');
       }
       html.setStyle(this.domNode, {width: '100%', height: '100%'});
       this.loadingImg.src = require.toUrl('jimu') + '/images/loading.gif';
+      if(!this.showLoading){
+        html.setStyle(this.loadingImg, 'display', 'none');
+      }
       if(typeof this.loadingText === 'string'){
         this.textNode.innerHTML = this.loadingText;
       }
@@ -52,7 +56,7 @@ function(declare, _WidgetBase, _TemplatedMixin, template, html) {
         if(typeof loadingText === 'string'){
           this.textNode.innerHTML = loadingText;
         }
-        html.setStyle(this.domNode,'display','block');
+        html.setStyle(this.domNode, 'display', 'block');
         this.hidden = false;
       }
     },
@@ -62,7 +66,7 @@ function(declare, _WidgetBase, _TemplatedMixin, template, html) {
         return;
       }
       if (!this.hidden){
-        html.setStyle(this.domNode,'display','none');
+        html.setStyle(this.domNode, 'display', 'none');
         this.hidden = true;
       }
     }

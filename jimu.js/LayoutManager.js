@@ -26,19 +26,21 @@ define([
   'dojo/dom-geometry',
   'dojo/Deferred',
   'dojo/promise/all',
+  'dojo/when',
   'require',
   './WidgetManager',
   './PanelManager',
   './MapManager',
   './utils',
-  './PreloadWidgetIcon',
+  './OnScreenWidgetIcon',
   './WidgetPlaceholder',
   './dijit/LoadingShelter'
 ],
 
 function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domGeometry,
-  Deferred, all, require, WidgetManager, PanelManager,
-  MapManager, utils, PreloadWidgetIcon, WidgetPlaceholder, LoadingShelter) {
+  Deferred, all, when, require, WidgetManager, PanelManager,
+  MapManager, utils, OnScreenWidgetIcon, WidgetPlaceholder, LoadingShelter) {
+  /* global jimuConfig:true */
   var instance = null, clazz;
 
   clazz = declare([_WidgetBase], {
@@ -57,10 +59,13 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
       this.own(topic.subscribe("builder/actionTriggered",
         lang.hitch(this, this.onActionTriggered)));
 
-      this.widgetPlaceholders = [];
-      this.preloadWidgetIcons = []; //preload widgets that in panel
-      this.preloadGroupPanels = [];
+      //If a widget want to open another widget, please publish this message with widgetId as a
+      //parameter
+      this.own(topic.subscribe("openWidget", lang.hitch(this, this._onOpenWidgetRequest)));
 
+      this.widgetPlaceholders = [];
+      this.preloadWidgetIcons = [];
+      this.preloadGroupPanels = [];
       this.invisibleWidgetIds = [];
 
       this.own(on(window, 'resize', lang.hitch(this, this.resize)));
@@ -116,10 +121,13 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
         this._onGroupChange(appConfig, changeData);
         break;
       case 'widgetPoolChange':
-        this._onWidgetPoolChange(appConfig);
+        this._onWidgetPoolChange(appConfig, changeData);
         break;
       case 'resetConfig':
         this._onResetConfig(appConfig);
+        break;
+      case 'loadingPageChange':
+        this._onLoadingPageChange(appConfig, changeData);
         break;
       }
       this.appConfig = appConfig;
@@ -142,7 +150,7 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
       //when map changed, use destroy and then create to simplify the widget development
       //destroy widgets before map, because the widget may use map in thire destory method
       this.panelManager.destroyAllPanels();
-      this._destroyPreloadPanelessWidgets();
+      this._destroyOffPanelWidgets();
       this._destroyWidgetPlaceholders();
       this._destroyPreloadWidgetIcons();
     },
@@ -159,14 +167,27 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
             this._highLight(widgetIcon);
           }
         }, this);
-        array.forEach(this.widgetManager.getPreloadPanelessWidgets(), function(panelessWidget){
+        array.forEach(this.widgetManager.getOnScreenOffPanelWidgets(), function(panelessWidget){
           if (panelessWidget.configId === info.elementId){
             this._highLight(panelessWidget);
+          }
+        }, this);
+        array.forEach(this.preloadGroupPanels, function(panel){
+          if (panel.configId === info.elementId){
+            this._highLight(panel);
           }
         }, this);
       }
       if(info.action === 'removeHighLight'){
         this._removeHighLight();
+      }
+      if(info.action === 'showLoading'){
+        html.setStyle(jimuConfig.loadingId, 'display', 'block');
+        html.setStyle(jimuConfig.mainPageId, 'display', 'none');
+      }
+      if(info.action === 'showApp'){
+        html.setStyle(jimuConfig.loadingId, 'display', 'none');
+        html.setStyle(jimuConfig.mainPageId, 'display', 'block');
       }
     },
 
@@ -202,13 +223,13 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
     _onWidgetChange: function(appConfig, widgetConfig){
       widgetConfig = appConfig.getConfigElementById(widgetConfig.id);
       if(widgetConfig.isController){
-        this._reloadControllerWidget(appConfig);
+        this._reloadControllerWidget(appConfig, widgetConfig.id);
         return;
       }
       array.forEach(this.widgetPlaceholders, function(placeholder){
         if(placeholder.configId === widgetConfig.id){
           placeholder.destroy();
-          this._loadPreloadWidget(widgetConfig);
+          this._loadPreloadWidget(widgetConfig, appConfig);
         }
       }, this);
       this._removeDestroyed(this.widgetPlaceholders);
@@ -217,8 +238,8 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
         if(icon.configId === widgetConfig.id){
           var state = icon.state;
           icon.destroy();
-          this._loadPreloadWidget(widgetConfig).then(function(iconNew){
-            if(state === 'opened'){
+          this._loadPreloadWidget(widgetConfig, appConfig).then(function(iconNew){
+            if(widgetConfig.uri && state === 'opened'){
               iconNew.onClick();
             }
           });
@@ -226,7 +247,7 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
       }, this);
       this._removeDestroyed(this.preloadWidgetIcons);
 
-      array.forEach(this.widgetManager.getPreloadPanelessWidgets(), function(widget){
+      array.forEach(this.widgetManager.getOnScreenOffPanelWidgets(), function(widget){
         if(widget.configId === widgetConfig.id){
           widget.destroy();
           if(widgetConfig.visible === false){
@@ -235,7 +256,7 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
             }
             return;
           }
-          this._loadPreloadWidget(widgetConfig);
+          this._loadPreloadWidget(widgetConfig, appConfig);
         }
       }, this);
 
@@ -249,28 +270,42 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
       //so, load it here
       array.forEach(this.invisibleWidgetIds, function(widgetId){
         if(widgetId === widgetConfig.id && widgetConfig.visible !== false){
-          this._loadPreloadWidget(widgetConfig);
+          this._loadPreloadWidget(widgetConfig, appConfig);
           var i = this.invisibleWidgetIds.indexOf(widgetConfig.id);
           this.invisibleWidgetIds.splice(i, 1);
         }
       }, this);
 
-      if(!widgetConfig.isPreload){
-        this._reloadControllerWidget(appConfig);
+      if(!widgetConfig.isOnScreen){
+        array.forEach(this.widgetManager.getControllerWidgets(), function(controllerWidget){
+          if(controllerWidget.widgetIsControlled(widgetConfig.id)){
+            this._reloadControllerWidget(appConfig, controllerWidget.id);
+          }
+        }, this);
       }
     },
 
     _onGroupChange: function(appConfig, groupConfig){
       groupConfig = appConfig.getConfigElementById(groupConfig.id);
-      //for now, we support group label change only.
-      array.forEach(this.panelManager.panels, function(panel){
-        if(panel.config.id === groupConfig.id){
-          panel.updateConfig(groupConfig);
-        }
-      }, this);
 
-      if(!groupConfig.isPreload){
-        this._reloadControllerWidget(appConfig);
+      if(groupConfig.isOnScreen){
+        //for now, onscreen group can change widgets in it only
+        this.panelManager.destroyPanel(groupConfig.id + '_panel');
+        this._removeDestroyed(this.preloadGroupPanels);
+        this._loadPreloadGroup(groupConfig);
+      }else{
+        //for now, we support group label change only in widget pool
+        array.forEach(this.widgetManager.getControllerWidgets(), function(controllerWidget){
+          if(controllerWidget.isControlled(groupConfig.id)){
+            this._reloadControllerWidget(appConfig, controllerWidget.id);
+          }
+        }, this);
+
+        array.forEach(this.panelManager.panels, function(panel){
+          if(panel.config.id === groupConfig.id){
+            panel.updateConfig(groupConfig);
+          }
+        }, this);
       }
     },
 
@@ -280,51 +315,55 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
       }, this);
     },
 
-    _onWidgetPoolChange: function(appConfig){
-      this._reloadControllerWidget(appConfig);
+    _onWidgetPoolChange: function(appConfig, changeData){
+      this._reloadControllerWidget(appConfig, changeData.controllerId);
     },
 
-    _reloadControllerWidget: function(appConfig){
-      /*jshint unused:false*/
-      //destroy controller widget
-      //for now, support only one controller
-
-      var controllerWidget = this.widgetManager.getControllerWidgets().length > 0?
-       this.widgetManager.getControllerWidgets()[0]: null;
-      if(controllerWidget){
-        //get old info
-        var openedIds = controllerWidget.getOpenedIds();
-        var windowState = controllerWidget.windowState;
-        var widgetConfig = this.appConfig.getConfigElementById(controllerWidget.id);
-
-        //destory all panels controlled by the controller.
-        //we can't destroy the opened only, because some panels are closed but the
-        //instance is still exists
-
-        //we use this.appConfig(the old app config) here
-        this.appConfig.visitElement(lang.hitch(this, function(element, info){
-          if(info.isOnScreen){
-            return;
-          }
-          //we support only one controller, so all pool widgets will be reload
-          this.panelManager.destroyPanel(element.id + '_panel');
-        }));
-        this.widgetManager.destroyWidget(controllerWidget);
-      }
-
-      //load widget
-      var newWidgetConfig;
-      appConfig.visitElement(lang.hitch(this, function(element, info){
-        if(element.isController){
-          ////we support only one controller
-          newWidgetConfig = element;
-          return;
-        }
-      }));
-      if(newWidgetConfig.visible === false){
+    _reloadControllerWidget: function(appConfig, controllerId){
+      var controllerWidget = this.widgetManager.getWidgetById(controllerId);
+      if(!controllerWidget){
         return;
       }
-      this._loadPreloadWidget(newWidgetConfig).then(lang.hitch(this, function(widget){
+
+      //get old info
+      var openedIds = controllerWidget.getOpenedIds();
+      var windowState = controllerWidget.windowState;
+
+      //destory all panels controlled by the controller.
+      //we can't destroy the opened only, because some panels are closed but the
+      //instance is still exists
+
+      //destroy controlled widgets
+      array.forEach(controllerWidget.getAllConfigs(), function(configJson){
+        if(configJson.widgets){//it's group
+          this.panelManager.destroyPanel(configJson.id + '_panel');
+          array.forEach(configJson.widgets, function(widgetItem){
+            //Group items must be in panel
+            this.panelManager.destroyPanel(widgetItem.id + '_panel');
+          }, this);
+        }else{
+          var widget = this.widgetManager.getWidgetById(configJson.id);
+          if(!widget){
+            return;
+          }
+          if(configJson.inPanel){
+            this.panelManager.destroyPanel(widget.getPanel());
+          }else{
+            this.widgetManager.destroyWidget(widget);
+          }
+        }
+
+      }, this);
+
+      //destroy controller itself
+      this.widgetManager.destroyWidget(controllerWidget);
+
+      //load widget
+      var newControllerJson = appConfig.getConfigElementById(controllerId);
+      if(newControllerJson.visible === false){
+        return;
+      }
+      this._loadPreloadWidget(newControllerJson, appConfig).then(lang.hitch(this, function(widget){
         this.widgetManager.changeWindowStateTo(widget, windowState);
         if(openedIds){
           widget.setOpenedIds(openedIds);
@@ -352,8 +391,8 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
       this.preloadWidgetIcons = [];
     },
 
-    _destroyPreloadPanelessWidgets: function(){
-      array.forEach(this.widgetManager.getPreloadPanelessWidgets(), function(widget){
+    _destroyOffPanelWidgets: function(){
+      array.forEach(this.widgetManager.getOffPanelWidgets(), function(widget){
         this.widgetManager.destroyWidget(widget);
       }, this);
     },
@@ -373,20 +412,18 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
     },
 
     _changeMapPosition: function(appConfig){
-      var style;
       if(!this.map){
         return;
       }
-      style = utils.getPositionStyle(appConfig.map.position);
-      html.setStyle(this.mapId, style);
-      this.map.resize();
-      return;
+      if(!utils.isEqual(this.mapManager.getMapPosition(), appConfig.map.position)){
+        this.mapManager.setMapPosition(appConfig.map.position);
+      }
     },
 
     _onThemeChange: function(appConfig){
       this._destroyPreloadWidgetIcons();
       this._destroyWidgetPlaceholders();
-      this._destroyPreloadPanelessWidgets();
+      this._destroyOffPanelWidgets();
 
       this.panelManager.destroyAllPanels();
 
@@ -404,6 +441,39 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
         this._changeMapPosition(appConfig);
       }else{
         this._onThemeChange(appConfig);
+      }
+    },
+
+    _onLoadingPageChange: function(appConfig, changeData){
+      if('backgroundColor' in changeData){
+        html.setStyle(jimuConfig.loadingId, 'background-color',
+            appConfig.loadingPage.backgroundColor);
+      }else if('backgroundImage' in changeData){
+        var bgImage = appConfig.loadingPage.backgroundImage;
+        if(bgImage.visible && bgImage.uri){
+          html.setStyle(jimuConfig.loadingImageId, 'background-image',
+            'url(\'' + bgImage.uri + '\')');
+          html.setStyle(jimuConfig.loadingImageId, 'width', bgImage.width + 'px');
+          html.setStyle(jimuConfig.loadingImageId, 'height', bgImage.height + 'px');
+        }else{
+          html.setStyle(jimuConfig.loadingImageId, 'background-image',
+            'url(\'\')');
+          html.setStyle(jimuConfig.loadingImageId, 'width', '0px');
+          html.setStyle(jimuConfig.loadingImageId, 'height', '0px');
+        }
+      }else if('loadingGif' in changeData){
+        var gifImage = appConfig.loadingPage.loadingGif;
+        if(gifImage.visible && gifImage.uri){
+          html.setStyle(jimuConfig.loadingGifId, 'background-image',
+              'url(\'' + gifImage.uri + '\')');
+          html.setStyle(jimuConfig.loadingGifId, 'width', gifImage.width + 'px');
+          html.setStyle(jimuConfig.loadingGifId, 'height', gifImage.height + 'px');
+        }else{
+          html.setStyle(jimuConfig.loadingGifId, 'background-image',
+              'url(\'\')');
+          html.setStyle(jimuConfig.loadingGifId, 'width', '0px');
+          html.setStyle(jimuConfig.loadingGifId, 'height', '0px');
+        }
       }
     },
 
@@ -431,51 +501,38 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
     },
 
     _onLayoutChange: function(appConfig){
-      var style = utils.getPositionStyle(appConfig.map.position);
-      html.setStyle(this.mapId, style);
-      this.map.resize();
+      this._changeMapPosition(appConfig);
 
       //relayout placehoder
       array.forEach(this.widgetPlaceholders, function(placeholder){
-        placeholder.moveTo(appConfig.getConfigElementById(placeholder.configId).panel.position);
+        placeholder.moveTo(appConfig.getConfigElementById(placeholder.configId).position);
       }, this);
 
       //relayout icons
       array.forEach(this.preloadWidgetIcons, function(icon){
-        icon.moveTo(appConfig.getConfigElementById(icon.configId).panel.position);
+        icon.moveTo(appConfig.getConfigElementById(icon.configId).position);
       }, this);
 
       //relayout paneless widget
-      array.forEach(this.widgetManager.getPreloadPanelessWidgets(), function(widget){
-        var position = appConfig.getConfigElementById(widget.id).panel.position;
-        style = utils.getPositionStyle(position);
-        html.setStyle(widget.domNode, style);
-        //because change the position style of the widget will make the widget's dimension
-        //will not conform the widget state,
-        //so, change state here
-
-        // if(widget.defaultState){
-        //   this.widgetManager.changeWindowStateTo(widget, widget.defaultState);
-        // }else{
-        //   widget.resize();
-        // }
-
-        widget.onPositionChange(position);
-
+      array.forEach(this.widgetManager.getOnScreenOffPanelWidgets(), function(widget){
+        if(widget.closeable){
+          //this widget position is controlled by icon
+          return;
+        }
+        var position = appConfig.getConfigElementById(widget.id).position;
+        widget.setPosition(position);
       }, this);
 
       //relayout groups
       array.forEach(this.preloadGroupPanels, function(panel){
-        style = utils.getPositionStyle(
-          appConfig.getConfigElementById(panel.config.id).panel.position);
-        html.setStyle(panel.domNode, style);
-        panel.resize();
+        var position = appConfig.getConfigElementById(panel.config.id).panel.position;
+        panel.setPosition(position);
       }, this);
     },
 
     _loadTheme: function(theme) {
-    //summary:
-    //    load theme style, including common and current style(the first)
+      //summary:
+      //    load theme style, including common and current style(the first)
       require(['themes/' + theme.name + '/main'], lang.hitch(this, function(){
         this._loadThemeCommonStyle(theme);
         this._loadThemeCurrentStyle(theme);
@@ -505,7 +562,7 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
     },
 
     _loadMap: function() {
-      var mapDiv = html.create('div', {
+      html.create('div', {
         id: this.mapId,
         style: lang.mixin({
           position: 'absolute',
@@ -513,17 +570,17 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
           overflow: 'hidden',
           minWidth:'1px',
           minHeight:'1px'
-        }, utils.getPositionStyle(this.appConfig.map.position))
-      });
+        })
+      }, this.id);
+      this.mapManager = MapManager.getInstance(this.appConfig, this.mapId);
+      this.mapManager.setMapPosition(this.appConfig.map.position);
 
-      html.place(mapDiv, this.id);
-
-      MapManager.getInstance(this.appConfig, this.mapId).showMap();
+      this.mapManager.showMap();
     },
 
     _createPreloadWidgetPlaceHolder: function(widgetConfig){
       var pid;
-      if(widgetConfig.panel.positionRelativeTo === 'map'){
+      if(widgetConfig.position.relativeTo === 'map'){
         pid = this.mapId;
       }else{
         pid = this.id;
@@ -544,14 +601,15 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
     },
 
     _createPreloadWidgetIcon: function(widgetConfig){
-      var iconDijit = new PreloadWidgetIcon({
+      var iconDijit = new OnScreenWidgetIcon({
         panelManager: this.panelManager,
+        widgetManager: this.widgetManager,
         widgetConfig: widgetConfig,
         configId: widgetConfig.id,
         map: this.map
       });
 
-      if(widgetConfig.panel.positionRelativeTo === 'map'){
+      if(widgetConfig.position.relativeTo === 'map'){
         html.place(iconDijit.domNode, this.mapId);
       }else{
         html.place(iconDijit.domNode, this.id);
@@ -587,7 +645,7 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
           this.invisibleWidgetIds.push(widgetConfig.id);
           return;
         }
-        defs.push(this._loadPreloadWidget(widgetConfig));
+        defs.push(this._loadPreloadWidget(widgetConfig, appConfig));
       }, this);
 
       //load groups
@@ -629,10 +687,10 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
       require(['dynamic-modules/postload']);
     },
 
-    _loadPreloadWidget: function(widgetConfig) {
+    _loadPreloadWidget: function(widgetConfig, appConfig) {
       var def = new Deferred();
 
-      if(this.appConfig.mode === 'config' && !widgetConfig.uri){
+      if(appConfig.mode === 'config' && !widgetConfig.uri){
         var placeholder = this._createPreloadWidgetPlaceHolder(widgetConfig);
         def.resolve(placeholder);
         return def;
@@ -643,20 +701,16 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
       }
 
       var iconDijit;
-      if(widgetConfig.inPanel){
+      if(widgetConfig.inPanel || widgetConfig.closeable){//TODO closeable rename
+        //in panel widget or closeable off panel widget
         iconDijit = this._createPreloadWidgetIcon(widgetConfig);
         def.resolve(iconDijit);
       }else{
+        //off panel
         this.widgetManager.loadWidget(widgetConfig).then(lang.hitch(this, function(widget){
-          if(widget.panel.positionRelativeTo === 'map'){
-            html.place(widget.domNode, this.mapId);
-          }else{
-            html.place(widget.domNode, this.id);
-          }
-          html.setStyle(widget.domNode, utils.getPositionStyle(widget.position));
-          html.setStyle(widget.domNode, 'position', 'absolute');
           try{
-            widget.startup();
+            widget.setPosition(widget.position);
+            this.widgetManager.openWidget(widget);
           }catch(err){
             console.log(console.error('fail to startup widget ' + widget.name + '. ' + err.stack));
           }
@@ -671,15 +725,33 @@ function(declare, lang, array, html, _WidgetBase, topic, on,  domConstruct, domG
       return def;
     },
 
-    _loadPreloadGroup: function(groupConfig) {
-      var def = new Deferred();
-      this.panelManager.showPanel(groupConfig).then(lang.hitch(this, function(panel){
+    _loadPreloadGroup: function(groupJson) {
+      if(!this.appConfig.mode && (!groupJson.widgets || groupJson.widgets.length === 0)){
+        return when(null);
+      }
+      return this.panelManager.showPanel(groupJson).then(lang.hitch(this, function(panel){
+        panel.configId = groupJson.id;
         this.preloadGroupPanels.push(panel);
-        def.resolve(panel);
-      }), function(err){
-        def.reject(err);
-      });
-      return def;
+        return panel;
+      }));
+    },
+
+    _onOpenWidgetRequest: function(widgetId){
+      //if widget is in group, we just ignore it
+
+      //check on screen widgets, we don't check not-closeable off-panel widget
+      array.forEach(this.preloadWidgetIcons, function(widgetIcon){
+        if(widgetIcon.configId === widgetId){
+          widgetIcon.switchToOpen();
+        }
+      }, this);
+
+      //check controllers
+      array.forEach(this.widgetManager.getControllerWidgets(), function(controllerWidget){
+        if(controllerWidget.widgetIsControlled(widgetId)){
+          controllerWidget.setOpenedIds([widgetId]);
+        }
+      }, this);
     }
   });
 

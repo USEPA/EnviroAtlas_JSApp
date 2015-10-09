@@ -33,7 +33,7 @@ define(['dojo/_base/declare',
 function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang, html, array,
   dojoEvent, query, aspect, on, Evented, registry, DojoTree, jimuUtils) {
   /*jshint unused: false*/
-  var JimuTreeNode = declare([DojoTree._TreeNode, Evented],{
+  var JimuTreeNode = declare([DojoTree._TreeNode, Evented], {
     templateString: tnTemplate,
     declaredClass: 'jimu._TreeNode',
 
@@ -111,7 +111,7 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang, html, array,
     },
 
     _onClick: function(evt){
-      var target = evt.target||evt.srcElement;
+      var target = evt.target || evt.srcElement;
       if(target === this.checkNode){
         this.tree._onCheckNodeClick(this, this.checkNode.checked, evt);
       }
@@ -129,7 +129,7 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang, html, array,
           else{
             this.emit('tn-unselect', this);
           }
-        }),100);
+        }), 100);
       }
     },
 
@@ -144,9 +144,9 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang, html, array,
     openOnClick: true,
 
     //options:
-    leafType:"",
     multiple: true,
     uniqueId: '',
+    showRoot: false,
 
     //public methods:
     //getSelectedItems
@@ -156,6 +156,9 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang, html, array,
     //removeItem
     //getAllLeafTreeNodeWidgets
     //getAllTreeNodeWidgets
+
+    //method need to be override
+    //isLeafItem
 
     postMixInProperties: function(){
       this.inherited(arguments);
@@ -167,6 +170,9 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang, html, array,
       html.addClass(this.domNode, 'jimu-tree');
       this.own(aspect.before(this, 'onClick', lang.hitch(this, this._jimuBeforeClick)));
       //this.own(aspect.before(this, 'onOpen', lang.hitch(this, this._jimuBeforeOpen)));
+      if(this.rootLoadingIndicator){
+        html.setStyle(this.rootLoadingIndicator, 'display', 'none');
+      }
     },
 
     removeItem: function(id){
@@ -176,7 +182,7 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang, html, array,
     getAllItems: function(){
       var allTNs = this.getAllTreeNodeWidgets();
       var items = array.map(allTNs, lang.hitch(this, function(tn){
-        var a = lang.mixin({}, tn.item);//lang.clone(tn.item);
+        var a = tn.item;//lang.clone(tn.item);
         a.selected = tn.checkNode.checked;
         return a;
       }));
@@ -200,7 +206,7 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang, html, array,
     getFilteredItems: function(func){
       var allTNs = this.getAllTreeNodeWidgets();
       var allItems = array.map(allTNs, lang.hitch(this, function(tn){
-        var a = lang.mixin({}, tn.item);//lang.clone(tn.item);
+        var a = tn.item;//lang.clone(tn.item);
         a.selected = tn.checkNode.checked;
         return a;
       }));
@@ -212,7 +218,7 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang, html, array,
 
     getTreeNodeByItemId: function(itemId){
       var doms = this._getAllTreeNodeDoms();
-      for(var i=0;i<doms.length;i++){
+      for(var i = 0; i < doms.length; i++){
         var d = doms[i];
         var tn = registry.byNode(d);
         if(tn.item.id.toString() === itemId.toString()){
@@ -251,8 +257,9 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang, html, array,
       }));
     },
 
+    //to be override
     isLeafItem: function(item){
-      return item && item.type === this.leafType;
+      return item && item.isLeaf;
     },
 
     _getAllTreeNodeDoms: function(){
@@ -271,7 +278,7 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang, html, array,
     },
 
     _onTreeNodeSelect: function(/*TreeNode*/ nodeWidget){
-      var item = lang.mixin({}, nodeWidget.item);
+      var item = nodeWidget.item;
       var args = {
         item: item,
         treeNode: nodeWidget
@@ -280,7 +287,7 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang, html, array,
     },
 
     _onTreeNodeUnselect: function(/*TreeNode*/ nodeWidget){
-      var item = lang.mixin({}, nodeWidget.item);
+      var item = nodeWidget.item;
       var args = {
         item: item,
         treeNode: nodeWidget
@@ -297,12 +304,18 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang, html, array,
 
     _jimuBeforeClick: function(item, node, evt){
       /*jshint unused: false*/
+      //only handle leaf node
       if(node.isLeaf){
-        if(this.multiple){
-          node.toggleSelect();
-        }else{
-          //node.select();
-          this.selectNodeWidget(node);
+        var target = evt.target || evt.srcElement;
+        //if click <input> in node, we don't handle it
+        //only handle it when click the row
+        if(!html.hasClass(target, 'jimu-tree-check-node')){
+          if(this.multiple){
+            node.toggleSelect();
+          }else{
+            //node.select();
+            this.selectNodeWidget(node);
+          }
         }
       }
       return arguments;

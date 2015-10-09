@@ -83,7 +83,7 @@ LayerInfoFactory) {
       /*jshint unused: false*/
       var newSubLayerInfos = [];
       var operLayer = this.originOperLayer;
-      // getFeatureLayers() method can not get sub layers if GroRSS layer has not.
+      // getFeatureLayers() method can not get sub layers if GroRSS's sublayer has not been loaded.
       var layerObjects = this.layerObject.getFeatureLayers();
       array.forEach(layerObjects, function(layerObject) {
         var subLayerInfo;
@@ -97,7 +97,6 @@ LayerInfoFactory) {
           // template use 'collection', because it same with collection
           collection: {"layerInfo": this},
           selfType: 'geo_rss',
-          url: layerObject.url,
           parentLayerInfo: this
         });
         newSubLayerInfos.push(subLayerInfo);

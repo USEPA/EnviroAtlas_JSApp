@@ -43,7 +43,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
     baseClass: 'jimu-gp-chooser-from-portal',
 
     _serviceDef: null,
-    
+
     //options:
     portalUrl: null,
     multiple: false,

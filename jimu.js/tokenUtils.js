@@ -24,15 +24,16 @@ define([
   'dojo/topic',
   'dojo/request/script',
   'esri/kernel',
+  'esri/config',
   'esri/request',
+  'esri/urlUtils',
   'esri/IdentityManager',
   'esri/arcgis/OAuthInfo',
   'jimu/portalUrlUtils',
   'jimu/utils'
 ],
-function(lang, array, aspect, Deferred, cookie, json, topic,
-  dojoScript, esriNS, esriRequest, IdentityManager, OAuthInfo,
-  portalUrlUtils, jimuUtils) {
+function(lang, array, aspect, Deferred, cookie, json, topic, dojoScript, esriNS, esriConfig,
+  esriRequest, esriUrlUtils, IdentityManager, OAuthInfo, portalUrlUtils, jimuUtils) {
   /*jshint -W069 */
 
   //patch for JS API 3.10
@@ -78,19 +79,15 @@ function(lang, array, aspect, Deferred, cookie, json, topic,
     },
 
     isInConfigOrPreviewWindow: function(){
-      var b = false;
-      try{
-        b=!window.isBuilder && window.parent && window.parent !== window && window.parent.isBuilder;
-      }
-      catch(e){
-        console.log(e);
-        b = false;
-      }
-      return !!b;
-    },
-
-    isRunInPortal: function(){
-      return window.isRunInPortal;
+      var b = false;
+      try{
+        b = !window.isBuilder && window.parent && window.parent !== window &&
+        window.parent.isBuilder;
+      }catch(e){
+        console.log(e);
+        b = false;
+      }
+      return !!b;
     },
 
     isStringStartWith: function(str, prefix){
@@ -142,7 +139,7 @@ function(lang, array, aspect, Deferred, cookie, json, topic,
 
           //we should not save cookie of web-tier authorization
           this.removeWabAuthCookie();
-          
+
           //if portal uses LDAP authorization and HTTPS-Only enabled,
           //esriNS.id.getCredential will fail if uses http protocol
           //so we should use https sharing url here
@@ -150,6 +147,31 @@ function(lang, array, aspect, Deferred, cookie, json, topic,
             if(!credential.token){
               credential.token = response.token;
             }
+
+            //#releated issue 4096
+            /*****************************************
+             * Workaround to fix API 3.14 bug that doesn't use withCredential when web-tier.
+             *****************************************/
+            //var portalInfo = esriNS.id.findServerInfo(credential.server);
+
+            // If the portal uses web-tier authentication, add the server host
+            // to cors list and specify that withCredentials flag must be enabled.
+            //if (portalInfo.webTierAuth) {//portalInfo.webTierAuth should be true here
+
+            // REMOVE the current entry in CORS list for this portal.
+            var corsListIndex = esriUrlUtils.canUseXhr(credential.server, true);
+            if (corsListIndex > -1) {
+              esriConfig.defaults.io.corsEnabledServers.splice(corsListIndex, 1);
+            }
+
+            // ADD a new entry for this portal in CORS list.
+            esriConfig.defaults.io.corsEnabledServers.push({
+              host: portalUrlUtils.getServerByUrl(thePortalUrl),
+              withCredentials: true
+            });
+            //}
+            /*****************************************/
+
             //should not save credential of iwa to cookie because the cookie is not useful
             def.resolve(true);
           }), lang.hitch(this, function(){
@@ -173,7 +195,7 @@ function(lang, array, aspect, Deferred, cookie, json, topic,
       if(!this.isValidCredential(credential)){
         return false;
       }
-      
+
       var isExist = array.some(esriNS.id.credentials, lang.hitch(this, function(c) {
         return credential.token === c.token;
       }));
@@ -192,7 +214,7 @@ function(lang, array, aspect, Deferred, cookie, json, topic,
 
     signInPortal: function(_portalUrl){
       var def = new Deferred();
-      
+
       if(!this._isInvalidPortalUrl(_portalUrl)){
         setTimeout(lang.hitch(this, function(){
           def.reject("Invalid portalurl.");
@@ -254,7 +276,7 @@ function(lang, array, aspect, Deferred, cookie, json, topic,
       var sharingRest = portalUrl + '/sharing/rest';
       var cre = esriNS.id.findCredential(sharingRest);
       var isPublishEvent = !!cre;
-      if(this.isRunInPortal()){
+      if(window.appInfo.isRunInPortal){
         this.removeEsriAuthCookieStorage();
       }
       else{
@@ -277,7 +299,7 @@ function(lang, array, aspect, Deferred, cookie, json, topic,
 
       if(credential){
         var token = credential.token;
-        var server =credential.server;
+        var server = credential.server;
         var theScope = credential['scope'];
         var isValidToken = token && typeof token === "string" && lang.trim(token);
         var isValidServer = server && typeof server === "string" && lang.trim(server);
@@ -318,7 +340,7 @@ function(lang, array, aspect, Deferred, cookie, json, topic,
 
       //var sharingUrl = thePortalUrl + '/sharing';
       //c = esriNS.id.findCredential(sharingUrl);
-      
+
       //find portal credential from esriNS.id.credentials
       credential = this._filterPortalCredential(thePortalUrl, esriNS.id.credentials);
 
@@ -372,7 +394,7 @@ function(lang, array, aspect, Deferred, cookie, json, topic,
     saveWabCookie: function(wabAuth){
       var cookieName = "wab_auth";
       this.removeCookie(cookieName);
-      cookie(cookieName, JSON.stringify(wabAuth), {
+      cookie(cookieName, json.stringify(wabAuth), {
         expires: new Date(wabAuth.expires),
         path: '/'
       });
@@ -601,7 +623,8 @@ function(lang, array, aspect, Deferred, cookie, json, topic,
 
     _signInSuccess: function(/* esri.Credential */ credential /*, persist*/) {
       try{
-        var isCreOfCurrentPortal=this.isValidPortalCredentialOfPortalUrl(this.portalUrl,credential);
+        var isCreOfCurrentPortal = this.isValidPortalCredentialOfPortalUrl(this.portalUrl,
+                                                                           credential);
 
         if(isCreOfCurrentPortal){
           this._publishCurrentPortalUserSignIn(credential);

@@ -22,7 +22,8 @@ define([
     "esri/geometry/Extent",
     'dojo/_base/html',
     'dojo/dom-construct',
-    'dojo/topic'
+    'dojo/topic',
+    'dojo/on'
   ],
   function(
     declare,
@@ -32,7 +33,8 @@ define([
     Extent,
     html,
     domConstruct,
-    topic) {
+    topic,
+    on) {
     var clazz = declare([BaseWidget], {
 
       name: 'HomeButton',
@@ -44,6 +46,7 @@ define([
 
       startup: function() {
         this.inherited(arguments);
+        this.own(on(this.map, 'extent-change', lang.hitch(this, 'onExtentChange')));
 
         this.createHomeDijit({
           map: this.map,
@@ -53,6 +56,7 @@ define([
 
       createHomeDijit: function(options) {
         this.homeDijit = new HomeButton(options, domConstruct.create("div"));
+        this.own(on(this.homeDijit, 'home', lang.hitch(this, 'onHome')));
         html.place(this.homeDijit.domNode, this.domNode);
         this.homeDijit.startup();
       },
@@ -62,6 +66,16 @@ define([
           changedData.extent) {
           var extent = new Extent(changedData.extent);
           this.homeDijit.set("extent", extent);
+        }
+      },
+
+      onExtentChange: function() {
+        html.removeClass(this.domNode, 'inHome');
+      },
+
+      onHome: function(evt) {
+        if (!(evt && evt.error)) {
+          html.addClass(this.domNode, 'inHome');
         }
       }
     });

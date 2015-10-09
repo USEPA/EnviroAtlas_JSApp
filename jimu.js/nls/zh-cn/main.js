@@ -1,66 +1,66 @@
 ﻿define(
    ({
     common: {
-      ok: '确定',
-      cancel: '取消',
-      next: '下一步',
-      back: '返回'
+      ok: "确定",
+      cancel: "取消",
+      next: "下一步",
+      back: "返回"
     },
     errorCode: "代码",
     errorMessage: "消息",
     errorDetail: "详细信息",
     widgetPlaceholderTooltip: "要进行设置，请转到微件并单击相应占位控件",
     symbolChooser: {
-      preview: '预览',
-      basic: '基本形状',
-      arrows: '箭头',
-      business: '商业',
-      cartographic: '制图',
-      nationalParkService: '国家公园管理局',
-      outdoorRecreation: '户外娱乐',
-      peoplePlaces: '人员位置',
-      safetyHealth: '安全健康',
-      shapes: '形状',
-      transportation: '交通运输',
-      symbolSize: '符号大小',
-      color: '颜色',
-      alpha: '透明度',
-      outlineColor: '轮廓颜色',
-      outlineWidth: '轮廓宽度',
-      style: '样式',
-      width: '宽度',
-      text: '文本',
-      fontColor: '字体颜色',
-      fontSize: '字号',
-      transparency: '透明度',
-      solid: '实线',
-      dash: '虚线',
-      dot: '点',
-      dashDot: '点划线',
-      dashDotDot: '双点划线'
+      preview: "预览",
+      basic: "基本形状",
+      arrows: "箭头",
+      business: "商业",
+      cartographic: "制图",
+      nationalParkService: "国家公园管理局",
+      outdoorRecreation: "户外娱乐",
+      peoplePlaces: "人员位置",
+      safetyHealth: "安全健康",
+      shapes: "形状",
+      transportation: "交通运输",
+      symbolSize: "符号大小",
+      color: "颜色",
+      alpha: "透明度",
+      outlineColor: "轮廓颜色",
+      outlineWidth: "轮廓宽度",
+      style: "样式",
+      width: "宽度",
+      text: "文本",
+      fontColor: "字体颜色",
+      fontSize: "字号",
+      transparency: "透明度",
+      solid: "实线",
+      dash: "虚线",
+      dot: "点",
+      dashDot: "点划线",
+      dashDotDot: "双点划线"
     },
     transparency: {
-      opaque: '不透明',
-      transparent: '透明'
+      opaque: "不透明",
+      transparent: "透明"
     },
     rendererChooser: {
-      domain: '属性域',
-      use: '使用',
-      singleSymbol: '单一符号',
-      uniqueSymbol: '唯一符号',
-      color: '颜色',
-      size: '大小',
-      toShow: '显示',
-      colors: '颜色',
-      classes: '类别',
-      symbolSize: '符号大小',
-      addValue: '添加值',
-      setDefaultSymbol: '设置默认符号',
-      defaultSymbol: '默认符号',
-      selectedSymbol: '所选符号',
-      value: '值',
-      label: '标注',
-      range: '范围'
+      domain: "属性域",
+      use: "使用",
+      singleSymbol: "单一符号",
+      uniqueSymbol: "唯一符号",
+      color: "颜色",
+      size: "大小",
+      toShow: "显示",
+      colors: "颜色",
+      classes: "类别",
+      symbolSize: "符号大小",
+      addValue: "添加值",
+      setDefaultSymbol: "设置默认符号",
+      defaultSymbol: "默认符号",
+      selectedSymbol: "所选符号",
+      value: "值",
+      label: "标注",
+      range: "范围"
     },
     drawBox: {
       point: "点",
@@ -93,17 +93,17 @@
       loading: "正在加载"
     },
     basicServiceBrowser: {
-      noServicesFound: '未找到任何服务。',
-      unableConnectTo: '无法连接至',
-      invalidUrlTip: '您输入的 URL 无效或不可访问。'
+      noServicesFound: "未找到任何服务。",
+      unableConnectTo: "无法连接至",
+      invalidUrlTip: "您输入的 URL 无效或不可访问。"
     },
     serviceBrowser: {
-      noGpFound: '未找到任何地理处理服务。',
-      unableConnectTo: '无法连接至'
+      noGpFound: "未找到任何地理处理服务。",
+      unableConnectTo: "无法连接至"
     },
     layerServiceBrowser: {
-      noServicesFound: '未找到任何地图服务或要素服务',
-      unableConnectTo: '无法连接至'
+      noServicesFound: "未找到任何地图服务或要素服务",
+      unableConnectTo: "无法连接至"
     },
     basicServiceChooser: {
       validate: "验证",
@@ -111,10 +111,10 @@
       set: "集合"
     },
     urlInput: {
-      invalidUrl: 'URL 无效。'
+      invalidUrl: "URL 无效。"
     },
     urlComboBox: {
-      invalidUrl: 'URL 无效。'
+      invalidUrl: "URL 无效。"
     },
     filterBuilder: {
       addAnotherExpression: "添加过滤表达式",
@@ -131,7 +131,7 @@
       valueTooltip: "输入值",
       fieldTooltip: "从现有字段中选择",
       uniqueValueTooltip: "从所选字段的唯一值中选择",
-      stringOperatorIs: "等于", // e.g. <stringFieldName> is 'California'
+      stringOperatorIs: "等于", // e.g. <stringFieldName> is "California"
       stringOperatorIsNot: "不等于",
       stringOperatorStartsWith: "开头是",
       stringOperatorEndsWith: "结尾是",
@@ -139,7 +139,7 @@
       stringOperatorDoesNotContain: "不包含",
       stringOperatorIsBlank: "为空",
       stringOperatorIsNotBlank: "不为空",
-      dateOperatorIsOn: "在", // e.g. <dateFieldName> is on '1/1/2012'
+      dateOperatorIsOn: "在", // e.g. <dateFieldName> is on "1/1/2012"
       dateOperatorIsNotOn: "不在",
       dateOperatorIsBefore: "早于",
       dateOperatorIsAfter: "晚于",
@@ -192,6 +192,19 @@
       selectFromOnline: "从 ArcGIS Online 添加",
       chooseLayer: "选择要素图层。"
     },
+    queryableLayerSource: {
+      layer: "图层",
+      browse: "浏览",
+      selectFromMap: "从地图中选择",
+      selectFromPortal: "从 Portal for ArcGIS 添加",
+      addServiceUrl: "添加服务 URL",
+      inputLayerUrl: "输入图层 URL",
+      selectLayer: "从当前地图中选择图层。",
+      chooseItem: "选择项目。",
+      setServiceUrl: "输入服务的 URL。",
+      selectFromOnline: "从 ArcGIS Online 添加",
+      chooseLayer: "选择图层。"
+    },
     gpSource: {
       selectFromPortal: "从 Portal for ArcGIS 添加",
       addServiceUrl: "添加服务 URL",
@@ -227,35 +240,37 @@
       notSupportQuery: "服务不支持查询。"
     },
     basicLayerChooserFromMap: {
-      noLayersTip: "地图中不存在可用图层。"
+      noLayersTip: "地图中不存在可用的相应图层。"
     },
     layerInfosMenu: {
-      titleBasemap: '底图',
-      titleLayers: '业务图层',
-      labelLayer: '图层名称',
-      itemZoomTo: '缩放至',
-      itemTransparency: '透明度',
-      itemTransparent: '透明',
-      itemOpaque: '不透明',
-      itemMoveUp: '上移',
-      itemMoveDown: '下移',
-      itemDesc: '描述',
-      itemDownload: '下载',
-      itemToAttributeTable: '打开属性表'
+      titleBasemap: "底图",
+      titleLayers: "业务图层",
+      labelLayer: "图层名称",
+      itemZoomTo: "缩放至",
+      itemTransparency: "透明度",
+      itemTransparent: "透明",
+      itemOpaque: "不透明",
+      itemMoveUp: "上移",
+      itemMoveDown: "下移",
+      itemDesc: "描述",
+      itemDownload: "下载",
+      itemToAttributeTable: "打开属性表"
     },
     imageChooser: {
       unsupportReaderAPI: "注释: 浏览器不支持 FileReader API",
       readError: "读取文件失败。",
+      unknowError: "无法完成操作",
       invalidType: "无效的文件类型。",
       exceed: "文件大小不得超过 1024 KB",
       enableFlash: "需执行的操作: 请启用闪烁。",
+      cropWaining: "请选择至少拥有 ${width} x ${height} 像素的照片。",
       toolTip: "为获得最佳效果，图像的宽度应为 ${width} 像素，高度应为 ${height} 像素。其他大小将调整为适应此大小。可接受的图像格式包括: PNG、GIF 和 JPEG。"
     },
     simpleTable: {
-      moveUp: '上移',
-      moveDown: '下移',
-      deleteRow: '删除',
-      edit: '编辑'
+      moveUp: "上移",
+      moveDown: "下移",
+      deleteRow: "删除",
+      edit: "编辑"
     }
   })
 );

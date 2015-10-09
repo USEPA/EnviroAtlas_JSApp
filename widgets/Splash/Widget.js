@@ -27,11 +27,8 @@ define(['dojo/_base/declare',
   ],
   function(declare, lang, html, on, query, cookie, _WidgetsInTemplateMixin, BaseWidget,
     CheckBox, TokenUtils) {
-    var criticality = jimuConfig.widthBreaks[0];
-    /* global jimuConfig */
     function isFullWindow() {
-      var layoutBox = html.getMarginBox(jimuConfig.layoutId);
-      if (layoutBox.w <= criticality) {
+      if (window.appInfo.isRunInMobile) {
         return true;
       } else {
         return false;
@@ -40,35 +37,54 @@ define(['dojo/_base/declare',
 
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
       baseClass: 'jimu-widget-splash',
-      clasName: 'esri.widgets.Splash',
 
       _hasContent: null,
-      _requireCinfirm: null,
+      _requireConfirm: null,
       _isClosed: false,
 
       postCreate: function() {
         this.inherited(arguments);
         this._hasContent = this.config.splash && this.config.splash.splashContent;
-        this._requireCinfirm = this.config.splash && this.config.splash.requireConfirm;
+        this._requireConfirm = this.config.splash && this.config.splash.requireConfirm;
+        this._showOption = this.config.splash && this.config.splash.showOption;
+
         if (this._hasContent) {
           this.customContentNode.innerHTML = this.config.splash.splashContent;
         }
 
-        var hint = this.nls.notShowAgain;
-        if (this._requireCinfirm) {
-          hint = this.config.splash.confirmText;
+        if (!this._requireConfirm && !this._showOption) {
+          html.setStyle(this.confirmCheck, 'display', 'none');
           html.addClass(this.okNode, 'enable-btn');
         } else {
-          hint = this.nls.notShowAgain;
+          var hint = "";
+          if (this._requireConfirm) {
+            hint = this.config.splash.confirmText;
+            html.addClass(this.okNode, 'disable-btn');
+          } else {
+            hint = this.nls.notShowAgain;
+            html.addClass(this.okNode, 'enable-btn');
+          }
+          this.confirmCheck = new CheckBox({
+            label: hint,
+            checked: false
+          }, this.confirmCheck);
+          this.own(on(this.confirmCheck.domNode, 'click', lang.hitch(this, this.onCheckBoxClick)));
+          html.setAttr(this.confirmCheck.domNode, 'title', hint);
+          this.confirmCheck.startup();
         }
+      },
 
-        this.confirmCheck = new CheckBox({
-          label: hint,
-          checked: false
-        }, this.confirmCheck);
-        this.own(on(this.confirmCheck.domNode, 'click', lang.hitch(this, this.onCheckBoxClick)));
-        html.setAttr(this.confirmCheck.domNode, 'title', hint);
-        this.confirmCheck.startup();
+      onOpen: function() {
+        if (!TokenUtils.isInConfigOrPreviewWindow()) {
+          var isfirst = cookie('isfirst');
+          if (isfirst.toString() === 'false') {
+            this.close();
+          }
+        }
+      },
+
+      onClose: function() {
+        this.close();
       },
 
       startup: function() {
@@ -76,18 +92,13 @@ define(['dojo/_base/declare',
 
         this._normalizeDomNodePosition();
         this.resize();
-        if (this._requireCinfirm) {
-          html.addClass(this.okNode, 'disable-btn');
-          html.removeClass(this.okNode, 'enable-btn');
-        }
-
         this.own(on(window, 'resize', lang.hitch(this, function() {
           this.resize();
         })));
 
         if (!TokenUtils.isInConfigOrPreviewWindow()) {
           var isfirst = cookie('isfirst');
-          if (isfirst === 'false') {
+          if (isfirst.toString() === 'false') {
             this.close();
           }
         }
@@ -95,11 +106,21 @@ define(['dojo/_base/declare',
         this._resizeContentImg();
       },
 
-      _normalizeDomNodePosition: function(){
+      _normalizeDomNodePosition: function() {
         html.setStyle(this.domNode, 'top', 0);
         html.setStyle(this.domNode, 'left', 0);
         html.setStyle(this.domNode, 'right', 0);
         html.setStyle(this.domNode, 'bottom', 0);
+      },
+
+      setPosition: function(position){
+        this.position = position;
+
+        html.place(this.domNode, window.jimuConfig.layoutId);
+        this._normalizeDomNodePosition();
+        if(this.started){
+          this.resize();
+        }
       },
 
       resize: function() {
@@ -121,7 +142,7 @@ define(['dojo/_base/declare',
               contentImgs.style({
                 maxWidth: (customBox.w - 20) + 'px' // prevent x scroll
               });
-            }else if (splashContent.nodeName.toUpperCase() === 'IMG'){
+            } else if (splashContent.nodeName.toUpperCase() === 'IMG') {
               html.setStyle(splashContent, 'maxWidth', (customBox.w - 20) + 'px');
             }
           }
@@ -142,12 +163,11 @@ define(['dojo/_base/declare',
           html.setStyle(this.customContentNode, 'marginTop', '20px');
           html.setStyle(this.customContentNode, 'height', 'auto');
 
-          // this._moveToMiddle();
           var box = html.getContentBox(this.splashContainerNode);
           if (box && box.w > 0) {
             html.setStyle(this.envelopeNode, 'width', box.w + 'px');
           }
-          if (box && box.h > 0){
+          if (box && box.h > 0) {
             html.setStyle(this.envelopeNode, 'height', box.h + 'px');
           }
         } else {
@@ -157,47 +177,33 @@ define(['dojo/_base/declare',
           html.setStyle(this.envelopeNode, 'height', 'auto');
 
           this._moveContentToMiddle();
-          this.fixedContentHeight();
         }
         this._resizeContentImg();
       },
 
-      _moveToMiddle: function() { // desktop
-        // var envelopeBox = html.getContentBox(this.envelopeNode);
-        // var containerBox = html.getContentBox(this.splashContainerNode);
-        // var top = (envelopeBox.h - containerBox.h) / 2;
-        // var left = (envelopeBox.w - containerBox.w) / 2;
-        // if (typeof top === 'number' && top > 0) {
-        //   html.setStyle(this.splashContainerNode, 'top', top + 'px');
-        // }
-        // if (typeof left === 'number' && left > 0) {
-        //   html.setStyle(this.splashContainerNode, 'left', left + 'px');
-        // }
-      },
-
       _moveContentToMiddle: function() { // mobile
+        html.setStyle(this.customContentNode, {
+          marginTop: 0,
+          height: 'auto'
+        });
         var containerBox = html.getMarginBox(this.splashContainerNode);
-        var customContentNode = html.getMarginBox(this.customContentNode);
+        var containerContent = html.getContentBox(this.splashContainerNode);
+        var customContentNode = html.getContentBox(this.customContentNode);
         var footerBox = html.getMarginBox(this.footerNode);
         var mTop = (containerBox.h - footerBox.h - customContentNode.h) / 2;
         if (typeof mTop === 'number' && mTop > 10) { // when customContentNode.h < containerBox.h
           html.setStyle(this.customContentNode, 'marginTop', mTop + 'px');
         } else { // when customContentNode.h > containerBox.h
           html.setStyle(this.customContentNode, 'marginTop', '10px');
-        }
-      },
-
-      fixedContentHeight: function() {
-        var containerContent = html.getContentBox(this.splashContainerNode);
-        var footerBox = html.getMarginBox(this.footerNode);
-        var customContentHeight = containerContent.h - footerBox.h - 10; // margin-bottom:20px
-        if (typeof customContentHeight === 'number' && customContentHeight > 0) {
-          html.setStyle(this.customContentNode, 'height', customContentHeight + 'px');
+          var customContentHeight = containerContent.h - footerBox.h - 10; // margin-bottom:20px
+          if (typeof customContentHeight === 'number' && customContentHeight > 0) {
+            html.setStyle(this.customContentNode, 'height', customContentHeight + 'px');
+          }
         }
       },
 
       onCheckBoxClick: function() {
-        if (this.config.splash && this.config.splash.requireConfirm) {
+        if (this._requireConfirm) {
           if (this.confirmCheck.getValue()) {
             html.addClass(this.okNode, 'enable-btn');
             html.removeClass(this.okNode, 'disable-btn');
@@ -209,7 +215,7 @@ define(['dojo/_base/declare',
       },
 
       onOkClick: function() {
-        if (this._requireCinfirm) {
+        if (this._requireConfirm) {
           if (!this.confirmCheck.getValue()) {
             return;
           } else {
@@ -222,13 +228,15 @@ define(['dojo/_base/declare',
             this.close();
           }
         } else {
-          if (this.confirmCheck.getValue()) {
-            if (!TokenUtils.isInConfigOrPreviewWindow()) {
+          if (this._showOption) {
+            if (!TokenUtils.isInConfigOrPreviewWindow() && this.confirmCheck.getValue()) {
               cookie('isfirst', false, {
                 expires: 1000,
                 path: '/'
               });
             }
+          } else {
+            cookie("isfirst", null, {expires: -1});
           }
           this.close();
         }

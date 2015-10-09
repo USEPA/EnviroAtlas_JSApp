@@ -41,7 +41,7 @@ define(['dojo/_base/declare',
     },
 
     resize: function(){
-      if(this.widget && this.widget.state === 'opened' &&
+      if(this.widget && this.widget.state !== 'closed' &&
         lang.isFunction(this.widget.resize)){
         this.widget.resize();
       }
