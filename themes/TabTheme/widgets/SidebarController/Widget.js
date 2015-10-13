@@ -25,18 +25,18 @@ define([
     'dojo/on',
     'dojo/mouse',
     'dojo/fx',
-    'dojo/dom-geometry',
     'jimu/BaseWidget',
     'jimu/PoolControllerMixin',
     'jimu/utils',
     'dojo/NodeList-manipulate',
     'dojo/NodeList-fx'
   ],
-  function(declare, lang, array, html, topic, aspect, query, on, mouse, fx, domGeometry,
+  function(declare, lang, array, html, topic, aspect, query, on, mouse, fx,
     BaseWidget, PoolControllerMixin, utils) {
+
     var clazz = declare([BaseWidget, PoolControllerMixin], {
 
-      baseClass: 'jimu-widget-sidebar-controller jimu-main-background',
+      baseClass: 'jimu-widget-sidebar-controller jimu-main-bgcolor',
 
       maxWidth: 365,
       minWidth: 55,
@@ -62,16 +62,8 @@ define([
 
       startup: function() {
         this.inherited(arguments);
-
-        var openAtStartId = this.createTabs();
-
-        if(openAtStartId === ''){
-          this.widgetManager.minimizeWidget(this);
-        }else{
-          //open the first openatstart widget
-          this.widgetManager.maximizeWidget(this);
-          this.setOpenedIds([openAtStartId]);
-        }
+        this.createTabs();
+        this.widgetManager.minimizeWidget(this);
       },
 
       getOpenedIds: function() {
@@ -99,26 +91,7 @@ define([
         this._resizeToMax();
       },
 
-      getWidth: function(){
-        var box = html.getContentBox(window.jimuConfig.layoutId);
-        var w;
-        if(box.w * 0.8 > this.maxWidth){
-          w = this.maxWidth;
-        }else{
-          w = box.w * 0.8;
-        }
-        return w;
-      },
-
       resize: function() {
-        if(this.windowState === 'minimized'){
-          this._resizeMinTitleNode();
-          return;
-        }
-        this._resizeToMax();
-      },
-
-      _resizePanels: function() {
         array.forEach(this.tabs, function(tab) {
           if (!tab.selected) {
             return;
@@ -129,40 +102,13 @@ define([
         }, this);
       },
 
-      _resizeTitleNode: function(){
-        var nodeWidth = (this.getWidth() - 2 - 21 - 18 * 4) / 5;
-        array.forEach(query('.title-node', this.maxStateNode), function(titleNode){
-          html.setStyle(titleNode, 'width', nodeWidth + 'px');
-        }, this);
-      },
-
-      _resizeMinTitleNode: function(){
-        var box = html.getContentBox(this.minStateNode);
-        var margin = 34;
-        if(box.h < 390){
-          margin = box.h / 5 - 44;
-        }
-
-        margin = margin + 2;//because marginTop=-2
-        array.forEach(query('.title-node', this.minStateNode), function(titleNode){
-          html.setStyle(titleNode, 'marginBottom', margin + 'px');
-        }, this);
-      },
-
-      setPosition: function(position) {
-        this.position = position;
-        var style = utils.getPositionStyle(this.position);
-        style.position = 'absolute';
-        html.place(this.domNode, window.jimuConfig.layoutId);
-        html.setStyle(this.domNode, style);
-        if(this.started){
-          this.widgetManager.minimizeWidget(this);
-        }
+      onPositionChange: function() {
+        this.widgetManager.minimizeWidget(this);
       },
 
       createTabs: function() {
         var allIconConfigs = this.getAllConfigs(),
-          iconConfigs = [], openAtStartId = '';
+          iconConfigs = [];
         if (allIconConfigs.length <= 5) {
           iconConfigs = allIconConfigs;
           this.moreTab = false;
@@ -172,9 +118,6 @@ define([
         }
         array.forEach(iconConfigs, function(iconConfig) {
           this.createTab(iconConfig);
-          if(iconConfig.openAtStart === true){
-            openAtStartId = iconConfig.id;
-          }
         }, this);
         if (this.moreTab) {
           this.createTab({
@@ -183,15 +126,7 @@ define([
             icon: this.folderUrl + 'images/more_tab_icon.png',
             groups: allIconConfigs
           });
-          if(openAtStartId === ''){
-            array.forEach(allIconConfigs, function(iconConfig) {
-              if(iconConfig.openAtStart === true){
-                openAtStartId = iconConfig.id;
-              }
-            });
-          }
         }
-        return openAtStartId;
       },
 
       createTab: function(g) {
@@ -241,9 +176,6 @@ define([
           } else {
             if (tab.selected) {
               tab.selected = false;
-              if(tab.panel){
-                this.panelManager.closePanel(tab.panel);
-              }
             }
           }
         }, this);
@@ -262,7 +194,7 @@ define([
             this.showTabContent(this.tabs[index]);
           }
         }
-        this._resizePanels();
+        this.resize();
       },
 
       onAction: function(action, data) {
@@ -409,11 +341,7 @@ define([
         var g = tab.config;
         this.showGroupContent(g, tab);
 
-        if(g.inPanel === false){
-          this.currentTab = null;
-        }else{
-          this.currentTab = tab;
-        }
+        this.currentTab = tab;
       },
 
       showGroupContent: function(g, tab) {
@@ -422,57 +350,26 @@ define([
           query('.content-title', tab.content).text(g.label);
         }
 
-        if(g.inPanel === false){
-          this.widgetManager.loadWidget(g).then(lang.hitch(this, function(widget) {
-            var settingId;
-            if (tab.flag === 'more') {
-              settingId = 'undefined';
-            }else{
-              settingId = g.id;
-            }
-            this._resizeToMin();
-
-            var position = this._getOffPanelPosition(settingId,
-                this.widgetManager.getWidgetMarginBox(widget));
-            widget.setPosition(position);
-            this.widgetManager.openWidget(widget);
+        this.panelManager.showPanel(g).then(lang.hitch(this, function(panel) {
+          var tabPane = panel;
+          query(panel.domNode).style(utils.getPositionStyle({
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0
           }));
-        }else{
-          this.panelManager.showPanel(g).then(lang.hitch(this, function(panel) {
-            var tabPane = panel;
-            query(panel.domNode).style(utils.getPositionStyle({
-              left: 0,
-              right: 0,
-              top: 0,
-              bottom: 0
-            }));
-            if (tab.flag === 'more') {
-              groupPane = query('.more-group-pane[label="' + g.label + '"]', tab.contentPane);
-              groupPane.append(tabPane.domNode);
-            } else {
-              query(tab.contentPane).append(tabPane.domNode);
-            }
+          if (tab.flag === 'more') {
+            groupPane = query('.more-group-pane[label="' + g.label + '"]', tab.contentPane);
+            groupPane.append(tabPane.domNode);
+          } else {
+            query(tab.contentPane).append(tabPane.domNode);
+          }
 
-            if (array.indexOf(tab.panels, panel) === -1) {
-              tab.panels.push(panel);
-            }
-            tab.panel = panel;
-          }));
-        }
-      },
-
-      _getOffPanelPosition: function(settingId, widgetBox){
-        var position = {},
-            node = query('div[settingid="' + settingId + '"]', this.stateNode)[0],
-            iconBox = domGeometry.position(node);
-
-        position.top = iconBox.y;
-        if (window.isRTL) {
-          position.right = iconBox.x - widgetBox.w - 10;
-        } else {
-          position.left = iconBox.x + iconBox.w + 10;
-        }
-        return position;
+          if (array.indexOf(tab.panels, panel) === -1) {
+            tab.panels.push(panel);
+          }
+          tab.panel = panel;
+        }));
       },
 
       showMoreTabContent: function(tab) {
@@ -488,8 +385,8 @@ define([
 
         if (!window.isRTL) {
           animP1 = {
-            left: this.minWidth - this.getWidth(),
-            right: this.getWidth() - this.minWidth
+            left: this.minWidth - this.maxWidth,
+            right: this.maxWidth - this.minWidth
           };
           animP2 = {
             left: this.minWidth,
@@ -497,8 +394,8 @@ define([
           };
         } else {
           animP1 = {
-            left: this.getWidth() - this.minWidth,
-            right: this.minWidth - this.getWidth()
+            left: this.maxWidth - this.minWidth,
+            right: this.minWidth - this.maxWidth
           };
           animP2 = {
             left: 0,
@@ -588,13 +485,13 @@ define([
         var animP2 = null;
         if (!window.isRTL) {
           animP2 = {
-            left: this.getWidth(),
-            right: 0 - this.getWidth()
+            left: this.maxWidth,
+            right: 0 - this.maxWidth
           };
         } else {
           animP2 = {
-            left: 0 - this.getWidth(),
-            right: this.getWidth()
+            left: 0 - this.maxWidth,
+            right: this.maxWidth
           };
         }
 
@@ -622,13 +519,13 @@ define([
           var animP1 = null;
           if (!window.isRTL) {
             animP1 = {
-              left: 0 - this.getWidth(),
-              right: this.getWidth()
+              left: 0 - this.maxWidth,
+              right: this.maxWidth
             };
           } else {
             animP1 = {
-              left: this.getWidth(),
-              right: 0 - this.getWidth()
+              left: this.maxWidth,
+              right: 0 - this.maxWidth
             };
           }
           var anim = fx.combine([
@@ -653,9 +550,6 @@ define([
 
       _addGroupToMoreTab: function(group) {
         var tab = this.tabs[4];
-        if(tab.panel){
-          this.panelManager.closePanel(tab.panel);
-        }
         query('.content-node', this.domNode).style({
           display: 'none'
         });
@@ -686,7 +580,7 @@ define([
         });
 
         this._hideOtherGroupPane();
-        this._resizePanels();
+        this.resize();
       },
 
       _getGroupFromMoreTab: function(tab, group) {
@@ -700,17 +594,13 @@ define([
 
       _createTitleNode: function(config) {
         /*jshint unused:false*/
-        var nodeWidth = (this.getWidth() - 2 - 21 - 18 * 4) / 5;
         var title = config.label,
           iconUrl = config.icon,
           node = html.create('div', {
             title: title,
             'class': 'title-node jimu-float-leading jimu-leading-margin15',
             'settingid': config.id,
-            i: this.tabs.length,
-            style: {
-              width: nodeWidth + 'px'
-            }
+            i: this.tabs.length
           }, this.titleListNode),
 
           indicator = html.create('div', {
@@ -747,44 +637,9 @@ define([
       },
 
       _onMinIconClick: function(minNode) {
-        var index = query(minNode).attr('i')[0],
-            tab = this.tabs[index],
-            config = tab.config;
-
-        if(config.inPanel === false){
-          if(!tab.selected){
-            this._hideOffPanelWidgets();
-            this.selectTab(parseInt(index, 10));
-          }else{
-            tab.selected = false;
-            this.widgetManager.closeWidget(config.id);
-          }
-        }else{
-          this._hideOffPanelWidgets();
-          this.widgetManager.maximizeWidget(this);
-          this.selectTab(parseInt(index, 10));
-        }
-      },
-
-      /**
-       *hide all off panel widgets
-       */
-      _hideOffPanelWidgets: function(){
-        array.forEach(this.tabs, function(tab){
-          if(tab.flag !== 'more'){
-            if(!tab.config.inPanel){
-              tab.selected = false;
-              this.widgetManager.closeWidget(tab.config.id);
-            }
-          }else{
-            array.forEach(tab.config.groups, function(g){
-              if(!g.inPanel){
-                tab.selected = false;
-                this.widgetManager.closeWidget(g.id);
-              }
-            }, this);
-          }
-        }, this);
+        var index = query(minNode).attr('i')[0];
+        this.widgetManager.maximizeWidget(this);
+        this.selectTab(parseInt(index, 10));
       },
 
       _createContentNode: function(config) {
@@ -817,27 +672,20 @@ define([
         if (this.windowState === 'maximized') {
           this.widgetManager.minimizeWidget(this.id);
         } else {
-          this._hideOffPanelWidgets();
           this.widgetManager.maximizeWidget(this.id);
         }
       },
 
       _resizeToMin: function() {
+        topic.publish('relayout');
         query(this.domNode).style('width', this.minWidth + 'px');
         query(this.minStateNode).style('display', 'block');
         query(this.maxStateNode).style('display', 'none');
-
-        if(this.currentTab && this.currentTab.panel){
-          this.panelManager.closePanel(this.currentTab.panel);
-        }
-
         if (window.isRTL) {
           query('div', this.doResizeNode).removeClass('right-arrow').addClass('left-arrow');
         } else {
           query('div', this.doResizeNode).removeClass('left-arrow').addClass('right-arrow');
         }
-
-        this._resizeMinTitleNode();
 
         topic.publish('changeMapPosition', {
           left: this.minWidth
@@ -845,10 +693,9 @@ define([
 
         this.stateNode = this.minStateNode;
       },
-
       _resizeToMax: function() {
-        query(this.domNode).style('width', this.getWidth() + 'px');
-        this._resizeTitleNode();
+        topic.publish('relayout');
+        query(this.domNode).style('width', this.maxWidth + 'px');
         query(this.minStateNode).style('display', 'none');
         query(this.maxStateNode).style('display', 'block');
         if (window.isRTL) {
@@ -856,14 +703,21 @@ define([
         } else {
           query('div', this.doResizeNode).removeClass('right-arrow').addClass('left-arrow');
         }
-        this._resizePanels();
+        this.resize();
 
         topic.publish('changeMapPosition', {
-          left: this.getWidth()
+          left: this.maxWidth
         });
 
         if (this.currentTab) {
           this.showGroupContent(this.currentTab.config, this.currentTab);
+        }
+
+        var firstOpen = array.every(this.tabs, function(tab) {
+          return !tab.panel;
+        });
+        if (firstOpen && this.tabs) {
+          this.selectTab(0);
         }
 
         this.stateNode = this.maxStateNode;

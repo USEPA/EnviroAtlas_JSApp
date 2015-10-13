@@ -21,7 +21,6 @@ define([
     'dojo/_base/html',
     'dojo/query',
     'dojo/on',
-    'dojo/topic',
     'jimu/BaseWidget',
     'jimu/tokenUtils',
     'jimu/portalUtils',
@@ -30,13 +29,13 @@ define([
     'dojo/NodeList-dom',
     'dojo/NodeList-manipulate'
   ],
-  function(declare, lang, array, html, query, on, topic,
+  function(declare, lang, array, html, query, on,
     BaseWidget, tokenUtils, portalUtils, utils, Message) {
     /* global jimuConfig */
     /*jshint scripturl:true*/
     var clazz = declare([BaseWidget], {
 
-      baseClass: 'jimu-widget-header jimu-main-background',
+      baseClass: 'jimu-widget-header jimu-main-bgcolor',
       name: 'Header',
 
       switchableElements: {},
@@ -54,9 +53,9 @@ define([
         }
 
         this.switchableElements.logo = query('.logo', this.domNode);
-        this.switchableElements.title = query('.jimu-title', this.domNode);
+        this.switchableElements.title = query('.title', this.domNode);
         this.switchableElements.links = query('.links', this.domNode);
-        this.switchableElements.subtitle = query('.jimu-subtitle', this.domNode);
+        this.switchableElements.subtitle = query('.subtitle', this.domNode);
 
         this.switchableElements.logo.style({
           // width: logoH,
@@ -70,23 +69,15 @@ define([
         // }
 
         this._setElementsSize();
-        this.own(topic.subscribe('changeMapPosition', lang.hitch(this, this._onMapResize)));
       },
 
       startup: function() {
         this.inherited(arguments);
 
-        // this.switchableElements.logo.attr(
-        //   'src',
-        //   this.appConfig.logo ? this.appConfig.logo : this.folderUrl + 'images/app-logo.png'
-        // );
-        if (this.appConfig && this.appConfig.logo) {
-          this.logoNode.src = this.appConfig.logo;
-          html.removeClass(this.logoNode, 'hide-logo');
-        } else {
-          this.logoNode.src = "";
-          html.addClass(this.logoNode, 'hide-logo');
-        }
+        this.switchableElements.logo.attr(
+          'src',
+          this.appConfig.logo ? this.appConfig.logo : this.folderUrl + 'images/app-logo.png'
+        );
         this.switchableElements.title.innerHTML(
           this.appConfig.title ? this.appConfig.title : 'ArcGIS Web Application'
         );
@@ -111,48 +102,21 @@ define([
         default:
           return;
         }
-        this.appConfig = appConfig;
-        this.resize();
-      },
-
-      _onMapResize: function(){
-        if(!window.appInfo.isRunInMobile){
-          return;
-        }
-        var sideBar = this.widgetManager.getWidgetsByName('SidebarController');
-        if(sideBar.length === 0){
-          return;
-        }
-        sideBar = sideBar[0];
-
-        if(sideBar.windowState === 'minimized'){
-          this.width = sideBar.minWidth;
-        }else{
-          this.width = sideBar.getWidth();
-        }
-        html.setStyle(this.domNode, 'width', this.width + 'px');
         this.resize();
       },
 
       _onAttributeChange: function(appConfig, changedData) {
         /*jshint unused: false*/
-        if ('title' in changedData && changedData.title !== this.appConfig.title) {
+        if (changedData.title && changedData.title !== this.appConfig.title) {
           this.switchableElements.title.innerHTML(changedData.title);
         }
-        if ('subtitle' in changedData && changedData.subtitle !== this.appConfig.subtitle) {
+        if (changedData.subtitle && changedData.subtitle !== this.appConfig.subtitle) {
           this.switchableElements.subtitle.innerHTML(changedData.subtitle);
         }
-        if ('logo' in changedData && changedData.logo !== this.appConfig.logo) {
-          if(changedData.logo){
-            html.setAttr(this.logoNode, 'src', changedData.logo);
-            html.removeClass(this.logoNode, 'hide-logo');
-          }else{
-            html.removeAttr(this.logoNode, 'src');
-            html.setStyle(this.logoNode, 'display', '');
-            html.addClass(this.logoNode, 'hide-logo');
-          }
+        if (changedData.logo) {
+          this.switchableElements.logo.attr('src', changedData.logo);
         }
-        if ('links' in changedData) {
+        if (changedData.links) {
           this._createDynamicLinks(changedData.links);
         }
       },
@@ -267,13 +231,11 @@ define([
         //links is hidden
         if (this.logoClickHandle) {
           this.logoClickHandle.remove();
-          html.setStyle(this.logoNode, 'cursor', 'default');
         }
 
         if (showElement.indexOf('links') < 0) {
           this.linksVisible = false;
           this.logoClickHandle = on(es.logo[0], 'click', lang.hitch(this, this.switchPopupLinks));
-          html.setStyle(this.logoNode, 'cursor', 'pointer');
         } else {
           if (this.linksVisible) {
             this.switchPopupLinks();
@@ -292,9 +254,6 @@ define([
       },
 
       switchPopupLinks: function() {
-        if(!this.appConfig.links || this.appConfig.links.length === 0){
-          return;
-        }
         html.destroy(this.popupLinkNode);
 
         this.popupLinkNode = this.createPopupLinkNode();
@@ -306,29 +265,75 @@ define([
         if (this.linksVisible) {
           this.linksVisible = false;
           html.setStyle(this.popupLinkNode, 'display', 'none');
+          if (window.isRTL) {
+            html.setStyle(jimuConfig.layoutId, {
+              right: 0
+            });
+          } else {
+            html.setStyle(jimuConfig.layoutId, {
+              left: 0
+            });
+          }
         } else {
           this.linksVisible = true;
           html.setStyle(this.popupLinkNode, 'display', 'block');
+          if (window.isRTL) {
+            html.setStyle(jimuConfig.layoutId, {
+              right: html.getContentBox(this.popupLinkNode).w + 'px'
+            });
+          } else {
+            html.setStyle(jimuConfig.layoutId, {
+              left: html.getContentBox(this.popupLinkNode).w + 'px'
+            });
+          }
         }
       },
 
       createPopupLinkNode: function() {
-        var node;
-        var box = html.getContentBox(jimuConfig.layoutId);
+        var node, titleNode, box;
+        box = html.getContentBox(jimuConfig.mainPageId);
 
         node = html.create('div', {
           'class': 'popup-links',
           style: {
+            position: 'absolute',
+            zIndex: 100,
+            // left: 0,
             top: 0,
-            width: (box.w - this.width) + 'px'
+            bottom: 0,
+            width: (box.w - 50) + 'px'
           }
-        }, this.domNode);
+        }, jimuConfig.mainPageId);
 
         if (window.isRTL) {
-          html.setStyle(node, 'right', this.width + 'px');
+          html.setStyle(node, 'right', 0);
         } else {
-          html.setStyle(node, 'left', this.width + 'px');
+          html.setStyle(node, 'left', 0);
         }
+
+        titleNode = html.create('div', {
+          'class': 'popup-title',
+          style: {
+            height: this.getHeaderHeight() + 'px',
+            width: '100%'
+          }
+        }, node);
+
+        html.create('img', {
+          'class': 'logo jimu-vcenter jimu-float-leading jimu-leading-margin1',
+          src: this.appConfig.logo ? this.appConfig.logo : this.folderUrl + 'images/app-logo.png',
+          style: {
+            width: this.getLogoHeight() + 'px',
+            height: this.getLogoHeight() + 'px'
+          }
+        }, titleNode);
+
+        html.create('div', {
+          'class': 'title jimu-vcenter jimu-float-leading jimu-leading-margin1',
+          innerHTML: this.appConfig.title
+        }, titleNode);
+
+        utils.setVerticalCenter(titleNode);
 
         array.forEach(this.appConfig.links, function(link) {
           this.createLinkNode(node, link, false);
@@ -419,16 +424,17 @@ define([
         var titlesBox = html.getMarginBox(this.titlesNode);
         var linksBox = html.getMarginBox(this.linksNode);
 
-        this.width = box.w;
-        if (box.w <= titlesBox.w + linksBox.w + logoBox.w){
+        if (box.w <= jimuConfig.widthBreaks[0]) {
+          //full screen
+          this.switchElements([]);
+        } else if (box.w <= titlesBox.w + linksBox.w + logoBox.w) {
           this.switchElements(['title', 'links']);
           titlesBox = html.getMarginBox(this.titlesNode);
           if (box.w <= titlesBox.w + linksBox.w + logoBox.w) {
             this.switchElements(['title']);
-            if (box.w <= titlesBox.w + logoBox.w) {
-              this.switchElements([]);
-            }
           }
+        } else {
+          this.switchElements(['title', 'links', 'subtitle']);
         }
       },
 

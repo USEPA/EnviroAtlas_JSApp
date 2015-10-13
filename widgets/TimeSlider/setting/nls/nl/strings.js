@@ -1,5 +1,5 @@
 ﻿define(
    ({
-    showLayerLabels: "Toon tijdgebonden laagnamen op de widget."
+    showLayerLabels: "Geef laagnamen weer op de widget voor lagen met tijdfunctionaliteit."
   })
 );

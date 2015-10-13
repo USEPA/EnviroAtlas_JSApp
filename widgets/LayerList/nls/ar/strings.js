@@ -15,7 +15,7 @@
     itemToAttributeTable: "فتح جدول البيانات الجدولية",
     itemShowItemDetails: "إظهار تفاصيل العنصر",
     empty: "فارغ",
-    removePopup: "تعطيل النافذة المنبثقة",
+    removePopup: "إزالة العنصر المنبثق",
     enablePopup: "تمكين العنصر المنبثق"
   })
 );

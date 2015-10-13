@@ -47,7 +47,6 @@ SpatialReference, webMercatorUtils) {
       this.id = this.originOperLayer.id;
       this.parentLayerInfo = operLayer.parentLayerInfo ? operLayer.parentLayerInfo : null;
       this.nls = window.jimuNls.layerInfosMenu;
-      this._bindEvent();
     },
 
     init: function() {
@@ -252,7 +251,7 @@ SpatialReference, webMercatorUtils) {
         if(visible && this.originOperLayer.featureCollection) {
           this._visible = visible;
         }
-      }
+      } 
       this.responseVisibleChage = true;
     },*/
 
@@ -292,16 +291,27 @@ SpatialReference, webMercatorUtils) {
       // implemented by sub class.
     },
 
+    // loadLegends: function(portalUrl) {
+    //   /*jshint unused: false*/
+    //   // implemented by sub class.
+    //   var retDef = new Deferred();
+    //   retDef.resolve();
+    //   return retDef;
+    // },
+
+    initLegendsNode: function(legendsNode) {
+      /*jshint unused: false*/
+      // implemented by sub class.
+    },
+
     _getLayerTypesOfSupportTable: function() {
-      var layerTypesOfSupportTable =
-          "FeatureLayer,CSVLayer,Table,ArcGISImageServiceLayer,StreamLayer," +
-          "ArcGISImageServiceVectorLayer";
+      var layerTypesOfSupportTable = "FeatureLayer,CSVLayer,Table";
       return layerTypesOfSupportTable;
     },
 
     // return itemId if the layer is added from an item of Portal.
-    // there is _itemId attribute of LayerObject which is added by widget's
-    // result(such as Analysis)
+    // there is _itemId attribute fo LayerObject be added by widget's
+    // result(such as Analysis) 
     _isItemLayer: function() {
       return this.originOperLayer.itemId || this.layerObject._itemId;
     },
@@ -358,45 +368,18 @@ SpatialReference, webMercatorUtils) {
 
     // now it is used for Attribute.
     getPopupInfo: function() {
-      // summary:
-      //   get popupInfo from webmap defination.
-      // description:
-      //   return null directly if the has not configured popupInfo in webmap.
       return this.originOperLayer.popupInfo;
     },
 
     loadInfoTemplate: function() {
-      // summary:
-      //   get info template by asyn.
-      // description:
-      //   load default fields and return default infoTemplate if the layer has no infoTemplate.
       // implemented by sub class.
       var def = new Deferred();
       def.resolve(null);
       return def;
     },
 
-    getInfoTemplate: function() {
-      // summary:
-      //   get info template.
-      // description:
-      //   return null directly if the Layer has no infoTemplate.
-      // implemented by sub class.
-      return null;
-    },
-
-    getFilterOfWebmap: function() {
-      // summary:
-      //   get filter from webmap defination.
-      // description:
-      //   return null directly if the has not configured filter in webmap.
-      return this.originOperLayer.layerDefinition ?
-             this.originOperLayer.layerDefinition.definitionExpression :
-             null;
-    },
-
     getUrl: function() {
-      return this.layerObject.url;
+      return this.originOperLayer.url;
     },
 
     // search types on all sublayers by recursion
@@ -433,42 +416,16 @@ SpatialReference, webMercatorUtils) {
         if (this._getLayerTypesOfSupportTable().indexOf(layerType) >= 0) {
           resultValue.isSupportedLayer = true;
         }
-
-        if(!layerObject) {
-          resultValue.isSupportQuery = false;
-        }else if (!layerObject.url ||
-                  (layerObject.capabilities && layerObject.capabilities.indexOf("Query") >= 0)) {
+        if (!layerObject.url ||
+            (layerObject.capabilities && layerObject.capabilities.indexOf("Query") >= 0)) {
           resultValue.isSupportQuery = true;
         }
-        
         def.resolve(resultValue);
       }), function() {
         def.resolve(resultValue);
       });
       return def;
-    },
-
-    removeSubLayerById: function(id) {
-      var tempSubLayerInfos = [];
-      array.forEach(this.newSubLayers, function(subLayerInfo) {
-        if(subLayerInfo.id !== id) {
-          tempSubLayerInfos.push(subLayerInfo);
-        }
-      });
-      this.newSubLayers = tempSubLayerInfos;
-    },
-
-    /****************
-     * Event
-     ***************/
-    _bindEvent: function() {
-      if(this.layerObject && !this.layerObject.empty) {
-        this.layerObject.on('visibility-change', lang.hitch(this, this._onVisibilityChanged));
-      }
-    },
-
-    _onVisibilityChanged: function() {
-
     }
+
   });
 });

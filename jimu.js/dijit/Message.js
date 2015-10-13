@@ -22,7 +22,6 @@ define(['dojo/_base/declare',
     'jimu/dijit/Popup'
   ],
   function(declare, lang, html, keys, on, Popup) {
-    var count = 0;
     return declare(Popup, {
       //summary:
       //  show a popup message
@@ -34,7 +33,7 @@ define(['dojo/_base/declare',
       //  the popup messge type, can be: message/question/error
       type: 'message',
 
-      //type:String
+      //type:String    
       message: '',
 
       autoHeight: true,
@@ -73,9 +72,8 @@ define(['dojo/_base/declare',
       },
 
       _increaseZIndex: function() {
-        var baseIndex = 500;
-        html.setStyle(this.domNode, 'zIndex', count + baseIndex + 1);
-        html.setStyle(this.overlayNode, 'zIndex', count + baseIndex);
+        html.setStyle(this.domNode, 'zIndex', 9999);
+        html.setStyle(this.overlayNode, 'zIndex', 9998);
       }
     });
   });

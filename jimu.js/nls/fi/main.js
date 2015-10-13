@@ -1,66 +1,66 @@
 ﻿define(
    ({
     common: {
-      ok: "OK",
-      cancel: "Peruuta",
-      next: "Seuraava",
-      back: "Takaisin"
+      ok: 'OK',
+      cancel: 'Peruuta',
+      next: 'Seuraava',
+      back: 'Takaisin'
     },
     errorCode: "Koodi",
     errorMessage: "Viesti",
     errorDetail: "Yksityiskohta",
     widgetPlaceholderTooltip: "Kun haluat asettaa tähän pienoisohjelman, mene Pienoisohjelmat-välilehdelle ja napsauta vastaavaa paikkamerkkiä",
     symbolChooser: {
-      preview: "Esikatselu",
-      basic: "Perus",
-      arrows: "Nuolet",
-      business: "Yritystoiminta",
-      cartographic: "Kartografinen",
-      nationalParkService: "puistolaitos",
-      outdoorRecreation: "Ulkovirkistys",
-      peoplePlaces: "Ihmiset Paikat",
-      safetyHealth: "Turv., terveys",
-      shapes: "Muodot",
-      transportation: "Kuljetus",
-      symbolSize: "Symbolin koko",
-      color: "Väri",
-      alpha: "Alfa",
-      outlineColor: "Reunaviivan väri",
-      outlineWidth: "Ääriviivan leveys",
-      style: "Tyyli",
-      width: "Leveys",
-      text: "Teksti",
-      fontColor: "Fontin väri",
-      fontSize: "Fontin koko",
-      transparency: "Läpinäkyvyys",
-      solid: "Yhtenäinen",
-      dash: "Viiva",
-      dot: "Piste",
-      dashDot: "Viiva-piste",
-      dashDotDot: "Viiva-piste-piste"
+      preview: 'Esikatselu',
+      basic: 'Perus',
+      arrows: 'Nuolet',
+      business: 'Yritystoiminta',
+      cartographic: 'Kartografinen',
+      nationalParkService: 'puistolaitos',
+      outdoorRecreation: 'Ulkovirkistys',
+      peoplePlaces: 'Ihmiset Paikat',
+      safetyHealth: 'Turv., terveys',
+      shapes: 'Muodot',
+      transportation: 'Kuljetus',
+      symbolSize: 'Symbolin koko',
+      color: 'Väri',
+      alpha: 'Alfa',
+      outlineColor: 'Reunaviivan väri',
+      outlineWidth: 'Ääriviivan leveys',
+      style: 'Tyyli',
+      width: 'Leveys',
+      text: 'Teksti',
+      fontColor: 'Fontin väri',
+      fontSize: 'Fontin koko',
+      transparency: 'Läpinäkyvyys',
+      solid: 'Yhtenäinen',
+      dash: 'Viiva',
+      dot: 'Piste',
+      dashDot: 'Viiva-piste',
+      dashDotDot: 'Viiva-piste-piste'
     },
     transparency: {
-      opaque: "Läpinäkymätön",
-      transparent: "Läpinäkyvä"
+      opaque: 'Läpinäkymätön',
+      transparent: 'Läpinäkyvä'
     },
     rendererChooser: {
-      domain: "Arvoalue",
-      use: "Käytä",
-      singleSymbol: "Yksi symboli",
-      uniqueSymbol: "Yksilölliset symbolit",
-      color: "Väri",
-      size: "Koko",
-      toShow: "Näytä",
-      colors: "Värit",
-      classes: "Luokkaa",
-      symbolSize: "Symbolin koko",
-      addValue: "Lisää arvo",
-      setDefaultSymbol: "Aseta oletussymboli",
-      defaultSymbol: "Oletussymboli",
-      selectedSymbol: "Valittu symboli",
-      value: "Arvo",
-      label: "Tunnusteksti",
-      range: "Vaihteluväli"
+      domain: 'Arvoalue',
+      use: 'Käytä',
+      singleSymbol: 'Yksi symboli',
+      uniqueSymbol: 'Yksilölliset symbolit',
+      color: 'Väri',
+      size: 'Koko',
+      toShow: 'Näytä',
+      colors: 'Värit',
+      classes: 'Luokkaa',
+      symbolSize: 'Symbolin koko',
+      addValue: 'Lisää arvo',
+      setDefaultSymbol: 'Aseta oletussymboli',
+      defaultSymbol: 'Oletussymboli',
+      selectedSymbol: 'Valittu symboli',
+      value: 'Arvo',
+      label: 'Tunnusteksti',
+      range: 'Vaihteluväli'
     },
     drawBox: {
       point: "Piste",
@@ -93,17 +93,17 @@
       loading: "Ladataan"
     },
     basicServiceBrowser: {
-      noServicesFound: "Palvelua ei löytynyt.",
-      unableConnectTo: "Yhteyttä kohteeseen ei voi muodostaa.",
-      invalidUrlTip: "Syötetty URL on virheellinen, tai se ei ole käytettävissä."
+      noServicesFound: 'Palvelua ei löytynyt.',
+      unableConnectTo: 'Yhteyttä kohteeseen ei voi muodostaa.',
+      invalidUrlTip: 'Syötetty URL on virheellinen, tai se ei ole käytettävissä.'
     },
     serviceBrowser: {
-      noGpFound: "Geoprosessointipalvelua ei löytynyt.",
-      unableConnectTo: "Yhteyttä kohteeseen ei voi muodostaa"
+      noGpFound: 'Geoprosessointipalvelua ei löytynyt.',
+      unableConnectTo: 'Yhteyttä kohteeseen ei voi muodostaa'
     },
     layerServiceBrowser: {
-      noServicesFound: "Karttapalvelua tai kohdepalvelua ei löytynyt.",
-      unableConnectTo: "Yhteyttä kohteeseen ei voi muodostaa"
+      noServicesFound: 'Karttapalvelua tai kohdepalvelua ei löytynyt.',
+      unableConnectTo: 'Yhteyttä kohteeseen ei voi muodostaa'
     },
     basicServiceChooser: {
       validate: "Vahvista",
@@ -111,10 +111,10 @@
       set: "Aseta"
     },
     urlInput: {
-      invalidUrl: "Virheellinen URL-osoite."
+      invalidUrl: 'Virheellinen URL-osoite.'
     },
     urlComboBox: {
-      invalidUrl: "Virheellinen URL-osoite."
+      invalidUrl: 'Virheellinen URL-osoite.'
     },
     filterBuilder: {
       addAnotherExpression: "Lisää suodatinlauseke",
@@ -131,7 +131,7 @@
       valueTooltip: "Syötä arvo",
       fieldTooltip: "Poimi olemassa olevasta kentästä",
       uniqueValueTooltip: "Poimi valitun kentän yksilöllisistä arvoista",
-      stringOperatorIs: "on", // e.g. <stringFieldName> is "California"
+      stringOperatorIs: "on", // e.g. <stringFieldName> is 'California'
       stringOperatorIsNot: "ei ole",
       stringOperatorStartsWith: "alkaa merkillä",
       stringOperatorEndsWith: "päättyy merkkiin",
@@ -139,7 +139,7 @@
       stringOperatorDoesNotContain: "ei sisällä",
       stringOperatorIsBlank: "on tyhjä",
       stringOperatorIsNotBlank: "ei ole tyhjä",
-      dateOperatorIsOn: "on päällä", // e.g. <dateFieldName> is on "1/1/2012"
+      dateOperatorIsOn: "on päällä", // e.g. <dateFieldName> is on '1/1/2012'
       dateOperatorIsNotOn: "ei ole päällä",
       dateOperatorIsBefore: "on ennen",
       dateOperatorIsAfter: "on jälkeen",
@@ -192,19 +192,6 @@
       selectFromOnline: "Lisää ArcGIS Online -palvelusta",
       chooseLayer: "Valitse kohdekarttataso."
     },
-    queryableLayerSource: {
-      layer: "Karttataso",
-      browse: "Selaa",
-      selectFromMap: "Valitse kartasta",
-      selectFromPortal: "Lisää Portal for ArcGIS:stä",
-      addServiceUrl: "Lisää palvelun URL-osoite",
-      inputLayerUrl: "Anna karttatason URL-osoite",
-      selectLayer: "Valitse karttataso nykyisestä kartasta.",
-      chooseItem: "Valitse kohde.",
-      setServiceUrl: "Anna palvelun URL-osoite.",
-      selectFromOnline: "Lisää ArcGIS Online -palvelusta",
-      chooseLayer: "Valitse karttataso."
-    },
     gpSource: {
       selectFromPortal: "Lisää Portal for ArcGIS:stä",
       addServiceUrl: "Lisää palvelun URL-osoite",
@@ -240,37 +227,35 @@
       notSupportQuery: "Palvelu ei tue kyselyä."
     },
     basicLayerChooserFromMap: {
-      noLayersTip: "Kartassa ei ole käytettävissä soveltuvaa karttatasoa."
+      noLayersTip: "Kartassa ei ole käytettävissä karttatasoa."
     },
     layerInfosMenu: {
-      titleBasemap: "Taustakartat",
-      titleLayers: "Toiminnalliset karttatasot",
-      labelLayer: "Karttatason nimi",
-      itemZoomTo: "Tarkenna kohteeseen",
-      itemTransparency: "Läpinäkyvyys",
-      itemTransparent: "Läpinäkyvä",
-      itemOpaque: "Läpinäkymätön",
-      itemMoveUp: "Siirrä ylös",
-      itemMoveDown: "Siirrä alas",
-      itemDesc: "Kuvaus",
-      itemDownload: "Lataa",
-      itemToAttributeTable: "Avaa ominaisuustietotaulu"
+      titleBasemap: 'Taustakartat',
+      titleLayers: 'Toiminnalliset karttatasot',
+      labelLayer: 'Karttatason nimi',
+      itemZoomTo: 'Tarkenna kohteeseen',
+      itemTransparency: 'Läpinäkyvyys',
+      itemTransparent: 'Läpinäkyvä',
+      itemOpaque: 'Läpinäkymätön',
+      itemMoveUp: 'Siirrä ylös',
+      itemMoveDown: 'Siirrä alas',
+      itemDesc: 'Kuvaus',
+      itemDownload: 'Lataa',
+      itemToAttributeTable: 'Avaa ominaisuustietotaulu'
     },
     imageChooser: {
       unsupportReaderAPI: "TEHTÄVÄT: Selain ei tue tiedoston lukuohjelman ohjelmointirajapintaa",
       readError: "Tiedoston luku epäonnistui.",
-      unknowError: "toimintoja ei voi suorittaa loppuun",
       invalidType: "Invalid file type.",
       exceed: "Tiedoston koko ei saa ylittää 1024 kt",
       enableFlash: "TODO: Ota käyttöön Flash.",
-      cropWaining: "Valitse valokuva, joka on kooltaan vähintään ${width} x ${height} pikseliä.",
       toolTip: "Parhaan tuloksen saamiseksi kuvan tulisi olla leveydeltään ${width} pikseliä ja korkeudeltaan ${height} pikseliä. Muut koot säädetään sopivaksi. Hyväksyttyjä kuvamuotoja ovat PNG, GIF ja JPEG."
     },
     simpleTable: {
-      moveUp: "Siirrä ylös",
-      moveDown: "Siirrä alas",
-      deleteRow: "Poista",
-      edit: "Muokkaa"
+      moveUp: 'Siirrä ylös',
+      moveDown: 'Siirrä alas',
+      deleteRow: 'Poista',
+      edit: 'Muokkaa'
     }
   })
 );

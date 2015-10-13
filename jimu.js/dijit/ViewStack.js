@@ -23,7 +23,7 @@ define(['dojo/_base/declare',
 
 function(declare, lang, html, array, _WidgetBase) {
   return declare(_WidgetBase, {
-    // summary:
+    // summary: 
     //    a dijit which can hold many views but display only one at on time
     // description:
     //    the constructor params is {views: []}, every view should have a property: label.
@@ -37,16 +37,14 @@ function(declare, lang, html, array, _WidgetBase) {
       if(!this.views){
         this.views = [];
       }
-      array.forEach(this.views, lang.hitch(this, function(view){
+      array.forEach(this.views,lang.hitch(this,function(view){
         if(view.nodeType === 1){
           html.place(view, this.domNode);
           html.addClass(view, 'view');
-          html.setStyle(view, 'display', 'none');
         }
         else if(view.domNode){
           html.place(view.domNode, this.domNode);
           html.addClass(view.domNode, 'view');
-          html.setStyle(view.domNode, 'display', 'none');
         }
       }));
     },
@@ -94,7 +92,7 @@ function(declare, lang, html, array, _WidgetBase) {
 
     removeView: function(view){
       var c1 = this.views.length;
-      this.views = array.filter(this.views, function(v){
+      this.views = array.filter(this.views,function(v){
         return view !== v;
       });
       var c2 = this.views.length;
@@ -118,7 +116,7 @@ function(declare, lang, html, array, _WidgetBase) {
         view = v;
       }
 
-      this.views.forEach(lang.hitch(this, function(_v){
+      this.views.forEach(lang.hitch(this,function(_v){
         if(!_v){
           return;
         }

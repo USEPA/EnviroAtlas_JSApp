@@ -15,7 +15,7 @@ define({
     itemToAttributeTable: "Open Attribute Table",
     itemShowItemDetails: "Show Item Details",
     empty: "empty",
-    removePopup: "Disable Pop-up",
+    removePopup: "Remove Pop-up",
     enablePopup: "Enable Pop-up"
   }),
   "ar": 1,
@@ -44,7 +44,5 @@ define({
   "th": 1,
   "tr": 1,
   "vi": 1,
-  "zh-cn": 1,
-  "zh-hk": 1,
-  "zh-tw": 1
+  "zh-cn": 1
 });

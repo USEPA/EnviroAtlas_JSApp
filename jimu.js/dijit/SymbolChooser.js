@@ -77,7 +77,6 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
 
     postCreate:function(){
       this.inherited(arguments);
-      this.own(on(document.body, 'click', lang.hitch(this, this._onBodyClicked)));
       this._isIE8 = has('ie') === 8;
       if(this._isIE8){
         html.addClass(this.domNode, 'ie8');
@@ -100,12 +99,12 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       this.reset();
 
       var declaredClass = symbol && symbol.declaredClass;
-      var isValid = declaredClass && typeof declaredClass === 'string' &&
-        declaredClass.indexOf('esri.symbol') >= 0;
-      if (!isValid) {
+      var isValid = declaredClass &&typeof declaredClass === 'string' &&
+                    declaredClass.indexOf('esri.symbol') >= 0;
+      if(!isValid){
         return;
       }
-
+      
       this.symbol = this._cloneSymbol(symbol);
 
       if(this.isSimpleMarkerSymbol(this.symbol) || this.isPictureMarkerSymbol(this.symbol)){
@@ -173,36 +172,19 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       return result;
     },
 
-    _onBodyClicked: function(event){
-      var target = event.target || event.srcElement;
-      this._tryHideDropDownOfSelectDijit(target, this.pointSymClassSelect);
-      this._tryHideDropDownOfSelectDijit(target, this.lineStylesSelect);
-    },
-
-    _tryHideDropDownOfSelectDijit: function(target, selectDijit){
-      var d = selectDijit.domNode;
-      var d2 = selectDijit.dropDown.domNode;
-      var isClickSelectDitjit = target === d || html.isDescendant(target, d);
-      var isClickDropDown = target === d2 || html.isDescendant(target, d2);
-
-      if(!isClickSelectDitjit && !isClickDropDown){
-        selectDijit.dropDown.onCancel();
-      }
-    },
-
     _onChange:function(newSymbol){
       var cloneSym = this._cloneSymbol(newSymbol);
       this.emit('change', cloneSym);
     },
 
     _hideAllSections: function(){
-      query('.symbol-section', this.domNode).style('display', 'none');
+      query('.symbol-section',this.domNode).style('display','none');
     },
 
     _showSection:function(type){
       this._hideAllSections();
       var s = '.' + type + '-symbol-section';
-      query(s, this.domNode).style('display', 'block');
+      query(s,this.domNode).style('display','block');
     },
 
     _getAncestor:function(dom, checkFunc, maxLoop){
@@ -225,50 +207,51 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       catch(e){
         console.error(e);
       }
-
+      
       return clone;
     },
 
-    _createSymbolIconTable: function(fileName, jsonSyms, type) {
+    _createSymbolIconTable:function(fileName,jsonSyms, type){
       var countPerRow = 8;
       var class0 = 'icon-table';
-      var class1 = this.type + "-icon-table";
-      var class2 = class1 + "-" + fileName;
-      var className = class0 + " " + class1 + " " + class2;
-      var table = html.toDom('<table class="' + className + '"><tbody></tbody></table>');
-      var tbody = query('tbody', table)[0];
+      var class1 = this.type+"-icon-table";
+      var class2 = class1+"-"+fileName;
+      var className = class0 + " " + class1+" "+class2;
+      var table = html.toDom('<table class="'+className+'"><tbody></tbody></table>');
+      var tbody = query('tbody',table)[0];
       var rowCount = Math.ceil(jsonSyms.length / countPerRow);
-      for (var i = 0; i < rowCount; i++) {
-        html.create('tr', {}, tbody);
+      for(var i=0;i<rowCount;i++){
+        html.create('tr',{},tbody);
       }
-      var trs = query('tr', table);
-      array.forEach(jsonSyms, lang.hitch(this, function(jsonSym, index) {
+      var trs = query('tr',table);
+      array.forEach(jsonSyms,lang.hitch(this,function(jsonSym,index){
         var jsonSymClone = lang.clone(jsonSym);
         var sym = esriSymJsonUtils.fromJson(jsonSym);
         var rowIndex = Math.floor(index / countPerRow);
         var tr = trs[rowIndex];
-        var td = html.create('td', {}, tr);
-        html.addClass(td, 'symbol-td-item');
+        var td = html.create('td',{},tr);
+        html.addClass(td,'symbol-td-item');
         var symNode = this._createSymbolNode(sym);
-        html.addClass(symNode, 'symbol-div-item');
+        html.addClass(symNode,'symbol-div-item');
         var svgNode = symNode.firstChild;
         html.addClass(svgNode, 'svg-node');
-        if (this._isIE8) {
-          if (type === 'point') {
-            if (window.isRTL) {
-              if (jsonSym.name === 'Cross' || jsonSym.name === 'X') {
+        if(this._isIE8){
+          if(type === 'point'){
+            if(window.isRTL){
+              if(jsonSym.name === 'Cross' || jsonSym.name === 'X'){
                 html.setStyle(svgNode, 'right', '-20px');
                 html.setStyle(symNode, 'marginTop', '20px');
               }
-            } else {
-              if (jsonSym.name === 'Cross' || jsonSym.name === 'X') {
+            }
+            else{
+              if(jsonSym.name === 'Cross' || jsonSym.name === 'X'){
                 html.setStyle(symNode, 'marginTop', '20px');
               }
             }
           }
         }
         symNode.symbol = jsonSymClone;
-        html.place(symNode, td);
+        html.place(symNode,td);
       }));
       return table;
     },
@@ -295,7 +278,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       if (!symbolNode){
         symbolNode = html.create('div');
       }
-      html.setStyle(symbolNode, {
+      html.setStyle(symbolNode,{
         width: '36px',
         height: '36px'
       });
@@ -327,7 +310,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         this._bindPointEvents();
         this._onPointSymClassSelectChange();
       }
-
+      
       if(this.isPictureMarkerSymbol(this.symbol)){
         this._showPictureMarkerSymSettings();
       }
@@ -357,18 +340,18 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       this.own(
         on(this.pointIconTables,
           '.symbol-div-item:click',
-          lang.hitch(this, this._onPointSymIconItemClick))
+          lang.hitch(this,this._onPointSymIconItemClick))
       );
       this.own(
         on(this.pointSymClassSelect,
           'Change',
-          lang.hitch(this, this._onPointSymClassSelectChange))
+          lang.hitch(this,this._onPointSymClassSelectChange))
       );
-      this.own(on(this.pointSize, 'change', lang.hitch(this, this._onPointSymbolChange)));
-      this.own(on(this.pointColor, 'change', lang.hitch(this, this._onPointSymbolChange)));
-      this.own(on(this.pointAlpha, 'change', lang.hitch(this, this._onPointSymbolChange)));
-      this.own(on(this.pointOutlineColor, 'change', lang.hitch(this, this._onPointSymbolChange)));
-      this.own(on(this.pointOutlineWidth, 'change', lang.hitch(this, this._onPointSymbolChange)));
+      this.own(on(this.pointSize,'change',lang.hitch(this,this._onPointSymbolChange)));
+      this.own(on(this.pointColor,'change',lang.hitch(this,this._onPointSymbolChange)));
+      this.own(on(this.pointAlpha,'change',lang.hitch(this,this._onPointSymbolChange)));
+      this.own(on(this.pointOutlineColor,'change',lang.hitch(this,this._onPointSymbolChange)));
+      this.own(on(this.pointOutlineWidth,'change',lang.hitch(this,this._onPointSymbolChange)));
     },
 
     _onPointSymbolChange:function(){
@@ -385,18 +368,18 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       this._invokeSymbolChangeEvent = false;
 
       if(this.isSimpleMarkerSymbol(symbol)){
-        this.pointSize.set('value', symbol.size);
+        this.pointSize.set('value',symbol.size);
         this.pointColor.setColor(symbol.color);
         this.pointAlpha.setAlpha(parseFloat(symbol.color.a.toFixed(2)));
         //this.pointAlpha.set('value',parseFloat(symbol.color.a.toFixed(2)));
         var outlineSymbol = symbol.outline;
         if(outlineSymbol){
           this.pointOutlineColor.setColor(outlineSymbol.color);
-          this.pointOutlineWidth.set('value', parseFloat(outlineSymbol.width.toFixed(0)));
+          this.pointOutlineWidth.set('value',parseFloat(outlineSymbol.width.toFixed(0)));
         }
       }
       else if(this.isPictureMarkerSymbol(symbol)){
-        this.pointSize.set('value', symbol.width);
+        this.pointSize.set('value',symbol.width);
       }
       this._invokeSymbolChangeEvent = true;
     },
@@ -421,39 +404,39 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
 
     _showSelectedPointSymIconTable:function(){
       var fileName = this.pointSymClassSelect.get('value');
-      query('.marker-icon-table', this.pointIconTables).style('display', 'none');
-      var tables = query('.marker-icon-table-' + fileName, this.pointIconTables);
-      if (tables.length > 0) {
-        tables.style('display', 'table');
+      query('.marker-icon-table',this.pointIconTables).style('display','none');
+      var tables = query('.marker-icon-table-'+fileName,this.pointIconTables);
+      if(tables.length > 0){
+        tables.style('display','table');
       }
     },
 
     _requestPointSymJson:function(fileName){
-      var defName = 'def' + fileName;
+      var defName = 'def'+fileName;
       var def = this.pointSymClassSelect[defName];
-      if (def) {
+      if(def){
         return;
       }
-      var module = "jimu/dijit/SymbolsInfo/" + fileName + ".json";
+      var module = "jimu/dijit/SymbolsInfo/"+fileName+".json";
       var url = this._getAbsoluteUrl(module);
       def = xhr(url, {
-        handleAs: 'json'
+        handleAs:'json'
       });
       this.pointSymClassSelect[defName] = def;
-      def.then(lang.hitch(this, function(jsonSyms) {
-        var table = this._createSymbolIconTable(fileName, jsonSyms, 'point');
-        html.place(table, this.pointIconTables);
+      def.then(lang.hitch(this,function(jsonSyms){
+        var table = this._createSymbolIconTable(fileName,jsonSyms,'point');
+        html.place(table,this.pointIconTables);
         this._showSelectedPointSymIconTable();
-      }), lang.hitch(this, function(error) {
-        console.error('get point symbol failed', error);
+      }),lang.hitch(this,function(error){
+        console.error('get point symbol failed',error);
       }));
     },
 
     _onPointSymIconItemClick:function(event){
-      var target = event.target || event.srcElement;
-      var symDivItem = this._getAncestor(target, function(dom){
-        return html.hasClass(dom, 'symbol-div-item');
-      }, 5);
+      var target = event.target||event.srcElement;
+      var symDivItem = this._getAncestor(target,function(dom){
+        return html.hasClass(dom,'symbol-div-item');
+      },5);
 
       if(!symDivItem){
         return;
@@ -462,8 +445,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       var td = symDivItem.parentNode;
       var tr = td.parentNode;
       var tbody = tr.parentNode;
-      query('.selected-symbol-div-item', tbody).removeClass('selected-symbol-div-item');
-      html.addClass(symDivItem, 'selected-symbol-div-item');
+      query('.selected-symbol-div-item',tbody).removeClass('selected-symbol-div-item');
+      html.addClass(symDivItem,'selected-symbol-div-item');
 
       var jsonSym = symDivItem.symbol;
       if(!jsonSym){
@@ -485,17 +468,17 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     },
 
     _showSimpleMarkerSymSettings:function(){
-      html.setStyle(this.pointColorTr, 'display', '');
-      html.setStyle(this.pointOpacityTr, 'display', '');
-      html.setStyle(this.pointOutlineColorTr, 'display', '');
-      html.setStyle(this.pointOulineWidthTr, 'display', '');
+      html.setStyle(this.pointColorTr,'display','');
+      html.setStyle(this.pointOpacityTr,'display','');
+      html.setStyle(this.pointOutlineColorTr,'display','');
+      html.setStyle(this.pointOulineWidthTr,'display','');
     },
 
     _showPictureMarkerSymSettings:function(){
-      html.setStyle(this.pointColorTr, 'display', 'none');
-      html.setStyle(this.pointOpacityTr, 'display', 'none');
-      html.setStyle(this.pointOutlineColorTr, 'display', 'none');
-      html.setStyle(this.pointOulineWidthTr, 'display', 'none');
+      html.setStyle(this.pointColorTr,'display','none');
+      html.setStyle(this.pointOpacityTr,'display','none');
+      html.setStyle(this.pointOutlineColorTr,'display','none');
+      html.setStyle(this.pointOulineWidthTr,'display','none');
     },
 
     _getPointSymbolBySetting:function(){
@@ -533,7 +516,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         this._bindLineEvents();
         this._requestLineSymJson('line');
       }
-
+      
       this._initLineSettings(this.symbol);
       this._getLineSymbolBySetting();
     },
@@ -542,12 +525,12 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       this.own(
         on(this.lineIconTables,
           '.symbol-div-item:click',
-          lang.hitch(this, this._onLineSymIconItemClick))
+          lang.hitch(this,this._onLineSymIconItemClick))
       );
-      this.own(on(this.lineColor, 'change', lang.hitch(this, this._onLineSymbolChange)));
-      this.own(on(this.lineStylesSelect, 'change', lang.hitch(this, this._onLineSymbolChange)));
-      this.own(on(this.lineAlpha, 'change', lang.hitch(this, this._onLineSymbolChange)));
-      this.own(on(this.lineWidth, 'change', lang.hitch(this, this._onLineSymbolChange)));
+      this.own(on(this.lineColor,'change',lang.hitch(this,this._onLineSymbolChange)));
+      this.own(on(this.lineStylesSelect,'change',lang.hitch(this,this._onLineSymbolChange)));
+      this.own(on(this.lineAlpha,'change',lang.hitch(this,this._onLineSymbolChange)));
+      this.own(on(this.lineWidth,'change',lang.hitch(this,this._onLineSymbolChange)));
     },
 
     _onLineSymbolChange:function(){
@@ -565,8 +548,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       this.lineColor.setColor(symbol.color);
       this.lineAlpha.setAlpha(parseFloat(symbol.color.a.toFixed(2)));
       //this.lineAlpha.set('value',parseFloat(symbol.color.a.toFixed(2)));
-      this.lineWidth.set('value', parseFloat(symbol.width.toFixed(0)));
-      this.lineStylesSelect.set('value', symbol.style);
+      this.lineWidth.set('value',parseFloat(symbol.width.toFixed(0)));
+      this.lineStylesSelect.set('value',symbol.style);
       this._invokeSymbolChangeEvent = true;
     },
 
@@ -579,24 +562,24 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     },
 
     _requestLineSymJson:function(fileName){
-      var module = "jimu/dijit/SymbolsInfo/" + fileName + ".json";
+      var module = "jimu/dijit/SymbolsInfo/"+fileName+".json";
       var url = this._getAbsoluteUrl(module);
       var def = xhr(url, {
         handleAs:'json'
       });
-      def.then(lang.hitch(this, function(jsonSyms){
-        var table = this._createSymbolIconTable(fileName, jsonSyms, 'line');
-        html.place(table, this.lineIconTables);
-      }), lang.hitch(this, function(error){
-        console.error('get line symbol failed', error);
+      def.then(lang.hitch(this,function(jsonSyms){
+        var table = this._createSymbolIconTable(fileName,jsonSyms,'line');
+        html.place(table,this.lineIconTables);
+      }),lang.hitch(this,function(error){
+        console.error('get line symbol failed',error);
       }));
     },
 
     _onLineSymIconItemClick:function(event){
-      var target = event.target || event.srcElement;
-      var symDivItem = this._getAncestor(target, function(dom){
-        return html.hasClass(dom, 'symbol-div-item');
-      }, 5);
+      var target = event.target||event.srcElement;
+      var symDivItem = this._getAncestor(target,function(dom){
+        return html.hasClass(dom,'symbol-div-item');
+      },5);
 
       if(!symDivItem){
         return;
@@ -605,8 +588,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       var td = symDivItem.parentNode;
       var tr = td.parentNode;
       var tbody = tr.parentNode;
-      query('.selected-symbol-div-item', tbody).removeClass('selected-symbol-div-item');
-      html.addClass(symDivItem, 'selected-symbol-div-item');
+      query('.selected-symbol-div-item',tbody).removeClass('selected-symbol-div-item');
+      html.addClass(symDivItem,'selected-symbol-div-item');
 
       var jsonSym = symDivItem.symbol;
       if(!jsonSym){
@@ -640,7 +623,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         this._bindFillEvents();
         this._requestFillSymJson('fill');
       }
-
+      
       this._initFillSettings(this.symbol);
       this._getFillSymbolBySetting();
     },
@@ -649,12 +632,12 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       this.own(
         on(this.fillIconTables,
           '.symbol-div-item:click',
-          lang.hitch(this, this._onFillSymIconItemClick))
+          lang.hitch(this,this._onFillSymIconItemClick))
       );
-      this.own(on(this.fillColor, 'change', lang.hitch(this, this._onFillSymbolChange)));
-      this.own(on(this.fillAlpha, 'change', lang.hitch(this, this._onFillSymbolChange)));
-      this.own(on(this.fillOutlineColor, 'change', lang.hitch(this, this._onFillSymbolChange)));
-      this.own(on(this.fillOutlineWidth, 'change', lang.hitch(this, this._onFillSymbolChange)));
+      this.own(on(this.fillColor,'change',lang.hitch(this,this._onFillSymbolChange)));
+      this.own(on(this.fillAlpha,'change',lang.hitch(this,this._onFillSymbolChange)));
+      this.own(on(this.fillOutlineColor,'change',lang.hitch(this,this._onFillSymbolChange)));
+      this.own(on(this.fillOutlineWidth,'change',lang.hitch(this,this._onFillSymbolChange)));
     },
 
     _onFillSymbolChange:function(){
@@ -674,7 +657,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       //this.fillAlpha.set('value',parseFloat(symbol.color.a.toFixed(2)));
       if(symbol.outline){
         this.fillOutlineColor.setColor(symbol.outline.color);
-        this.fillOutlineWidth.set('value', parseInt(symbol.outline.width, 10));
+        this.fillOutlineWidth.set('value',parseInt(symbol.outline.width,10));
       }
       this._invokeSymbolChangeEvent = true;
     },
@@ -684,34 +667,34 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     },
 
     _requestFillSymJson:function(fileName){
-      var module = "jimu/dijit/SymbolsInfo/" + fileName + ".json";
+      var module = "jimu/dijit/SymbolsInfo/"+fileName+".json";
       var url = this._getAbsoluteUrl(module);
       var def = xhr(url, {
-        handleAs: 'json'
+        handleAs:'json'
       });
-      def.then(lang.hitch(this, function(jsonSyms) {
-        var table = this._createSymbolIconTable(fileName, jsonSyms, 'fill');
-        html.place(table, this.fillIconTables);
-      }), lang.hitch(this, function(error) {
-        console.error('get fill symbol failed', error);
+      def.then(lang.hitch(this,function(jsonSyms){
+        var table = this._createSymbolIconTable(fileName,jsonSyms,'fill');
+        html.place(table,this.fillIconTables);
+      }),lang.hitch(this,function(error){
+        console.error('get fill symbol failed',error);
       }));
     },
 
     _onFillSymIconItemClick:function(event){
-      var target = event.target || event.srcElement;
-      var symDivItem = this._getAncestor(target, function(dom) {
-        return html.hasClass(dom, 'symbol-div-item');
-      }, 5);
+      var target = event.target||event.srcElement;
+      var symDivItem = this._getAncestor(target,function(dom){
+        return html.hasClass(dom,'symbol-div-item');
+      },5);
 
-      if (!symDivItem) {
+      if(!symDivItem){
         return;
       }
 
       var td = symDivItem.parentNode;
       var tr = td.parentNode;
       var tbody = tr.parentNode;
-      query('.selected-symbol-div-item', tbody).removeClass('selected-symbol-div-item');
-      html.addClass(symDivItem, 'selected-symbol-div-item');
+      query('.selected-symbol-div-item',tbody).removeClass('selected-symbol-div-item');
+      html.addClass(symDivItem,'selected-symbol-div-item');
 
       var jsonSym = symDivItem.symbol;
       if(!jsonSym){
@@ -727,7 +710,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       var color = this.fillColor.getColor();
       color.a = this.fillAlpha.getAlpha();//parseFloat(this.fillAlpha.get('value').toFixed(2));
       var outlineColor = this.fillOutlineColor.getColor();
-      var outlineWidth = parseInt(this.fillOutlineWidth.get('value'), 10);
+      var outlineWidth = parseInt(this.fillOutlineWidth.get('value'),10);
       this.symbol.setColor(color);
       this.symbol.setStyle(SimpleFillSymbol.STYLE_SOLID);
       var outlineSym = new SimpleLineSymbol();
@@ -747,15 +730,15 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         this._textEventBinded = true;
         this._bindTextEvents();
       }
-
+      
       this._initTextSettings();
       this._getTextSymbolBySetting();
     },
 
     _bindTextEvents:function(){
-      this.own(on(this.inputText, 'change', lang.hitch(this, this._onTextSymbolChange)));
-      this.own(on(this.textColor, 'change', lang.hitch(this, this._onTextSymbolChange)));
-      this.own(on(this.textFontSize, 'change', lang.hitch(this, this._onTextSymbolChange)));
+      this.own(on(this.inputText,'change',lang.hitch(this,this._onTextSymbolChange)));
+      this.own(on(this.textColor,'change',lang.hitch(this,this._onTextSymbolChange)));
+      this.own(on(this.textFontSize,'change',lang.hitch(this,this._onTextSymbolChange)));
     },
 
     _onTextSymbolChange:function(){
@@ -772,8 +755,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       this._invokeSymbolChangeEvent = false;
       this.inputText.value = symbol.text;
       this.textColor.setColor(symbol.color);
-      var size = parseInt(symbol.font.size, 10);
-      this.textFontSize.set('value', size);
+      var size = parseInt(symbol.font.size,10);
+      this.textFontSize.set('value',size);
       this._invokeSymbolChangeEvent = true;
     },
 
@@ -783,11 +766,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
 
     _updateTextPreview:function(){
       var colorHex = this.textColor.getColor().toHex();
-      var size = parseInt(this.textFontSize.get('value'), 10) + 'px';
-      html.setStyle(this.textPreview, {
-        color: colorHex,
-        fontSize: size
-      });
+      var size = parseInt(this.textFontSize.get('value'),10)+'px';
+      html.setStyle(this.textPreview,{color:colorHex,fontSize:size});
       this.textPreview.innerHTML = this.inputText.value;
     },
 
@@ -795,7 +775,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       this.symbol = new TextSymbol();
       var text = this.inputText.value;
       var color = this.textColor.getColor();
-      var size = parseInt(this.textFontSize.get('value'), 10);
+      var size = parseInt(this.textFontSize.get('value'),10);
       var font = new Font();
       font.setSize(size);
       this.symbol.setText(text);

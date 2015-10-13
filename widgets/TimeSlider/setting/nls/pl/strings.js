@@ -1,5 +1,5 @@
 ﻿define(
    ({
-    showLayerLabels: "Wyświetl nazwy warstw czasowych na widżecie."
+    showLayerLabels: "W przypadku warstw czasowych wyświetl nazwy warstw na widżecie."
   })
 );

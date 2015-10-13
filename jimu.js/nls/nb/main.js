@@ -1,66 +1,66 @@
 ﻿define(
    ({
     common: {
-      ok: "OK",
-      cancel: "Avbryt",
-      next: "Neste",
-      back: "Bak"
+      ok: 'OK',
+      cancel: 'Avbryt',
+      next: 'Neste',
+      back: 'Bak'
     },
     errorCode: "Kode",
     errorMessage: "Melding",
     errorDetail: "Detaljer",
     widgetPlaceholderTooltip: "For å konfigurere går du til Widgeter og klikker på tilsvarende plassholder",
     symbolChooser: {
-      preview: "Forhåndsvisning",
-      basic: "Grunnleggende",
-      arrows: "Piler",
-      business: "Næringsliv",
-      cartographic: "Kartografisk",
-      nationalParkService: "National Park Service",
-      outdoorRecreation: "Utendørsaktiviteter",
-      peoplePlaces: "Folk og steder",
-      safetyHealth: "Helse og sikkerhet",
-      shapes: "Former",
-      transportation: "Transport",
-      symbolSize: "Symbolstørrelse",
-      color: "Farge",
-      alpha: "Alfa",
-      outlineColor: "Omrissfarge",
-      outlineWidth: "Omrissbredde",
-      style: "Stil",
-      width: "Bredde",
-      text: "Tekst",
-      fontColor: "Skriftfarge",
-      fontSize: "Skriftstørrelse",
-      transparency: "Gjennomsiktighet",
-      solid: "Heltrukket",
-      dash: "Strek",
-      dot: "Prikk",
-      dashDot: "Strek prikk",
-      dashDotDot: "Strek prikk prikk"
+      preview: 'Forhåndsvisning',
+      basic: 'Grunnleggende',
+      arrows: 'Piler',
+      business: 'Næringsliv',
+      cartographic: 'Kartografisk',
+      nationalParkService: 'National Park Service',
+      outdoorRecreation: 'Utendørsaktiviteter',
+      peoplePlaces: 'Folk og steder',
+      safetyHealth: 'Helse og sikkerhet',
+      shapes: 'Former',
+      transportation: 'Transport',
+      symbolSize: 'Symbolstørrelse',
+      color: 'Farge',
+      alpha: 'Alfa',
+      outlineColor: 'Omrissfarge',
+      outlineWidth: 'Omrissbredde',
+      style: 'Stil',
+      width: 'Bredde',
+      text: 'Tekst',
+      fontColor: 'Skriftfarge',
+      fontSize: 'Skriftstørrelse',
+      transparency: 'Gjennomsiktighet',
+      solid: 'Heltrukket',
+      dash: 'Strek',
+      dot: 'Prikk',
+      dashDot: 'Strek prikk',
+      dashDotDot: 'Strek prikk prikk'
     },
     transparency: {
-      opaque: "Ugjennomsiktig",
-      transparent: "Gjennomsiktighet"
+      opaque: 'Ugjennomsiktig',
+      transparent: 'Gjennomsiktighet'
     },
     rendererChooser: {
-      domain: "Domene",
-      use: "Bruke",
-      singleSymbol: "Et enkeltsymbol",
-      uniqueSymbol: "Unike symboler",
-      color: "Farge",
-      size: "Størrelse",
-      toShow: "Å vise",
-      colors: "Farger",
-      classes: "Klasser:",
-      symbolSize: "Symbolstørrelse",
-      addValue: "Legg til verdi",
-      setDefaultSymbol: "Angi standardsymbol",
-      defaultSymbol: "Standardsymbol",
-      selectedSymbol: "Valgt symbol",
-      value: "Verdi",
-      label: "Etikett",
-      range: "Område"
+      domain: 'Domene',
+      use: 'Bruke',
+      singleSymbol: 'Et enkeltsymbol',
+      uniqueSymbol: 'Unike symboler',
+      color: 'Farge',
+      size: 'Størrelse',
+      toShow: 'Å vise',
+      colors: 'Farger',
+      classes: 'Klasser:',
+      symbolSize: 'Symbolstørrelse',
+      addValue: 'Legg til verdi',
+      setDefaultSymbol: 'Angi standardsymbol',
+      defaultSymbol: 'Standardsymbol',
+      selectedSymbol: 'Valgt symbol',
+      value: 'Verdi',
+      label: 'Etikett',
+      range: 'Område'
     },
     drawBox: {
       point: "Punkt",
@@ -93,17 +93,17 @@
       loading: "Laster inn"
     },
     basicServiceBrowser: {
-      noServicesFound: "Ingen tjeneste funnet.",
-      unableConnectTo: "Kan ikke koble til",
-      invalidUrlTip: "URL-en du har angitt, er ugyldig eller ikke tilgjengelig."
+      noServicesFound: 'Ingen tjeneste funnet.',
+      unableConnectTo: 'Kan ikke koble til',
+      invalidUrlTip: 'URL-en du har angitt, er ugyldig eller ikke tilgjengelig.'
     },
     serviceBrowser: {
-      noGpFound: "Fant ingen geoprosesseringstjeneste.",
-      unableConnectTo: "Kan ikke koble til"
+      noGpFound: 'Fant ingen geoprosesseringstjeneste.',
+      unableConnectTo: 'Kan ikke koble til'
     },
     layerServiceBrowser: {
-      noServicesFound: "Fant ingen karttjeneste eller geoobjektstjeneste",
-      unableConnectTo: "Kan ikke koble til"
+      noServicesFound: 'Fant ingen karttjeneste eller geoobjektstjeneste',
+      unableConnectTo: 'Kan ikke koble til'
     },
     basicServiceChooser: {
       validate: "Valider",
@@ -111,10 +111,10 @@
       set: "Angi"
     },
     urlInput: {
-      invalidUrl: "Ugyldig URL."
+      invalidUrl: 'Ugyldig URL.'
     },
     urlComboBox: {
-      invalidUrl: "Ugyldig URL."
+      invalidUrl: 'Ugyldig URL.'
     },
     filterBuilder: {
       addAnotherExpression: "Legg til et filteruttrykk",
@@ -131,7 +131,7 @@
       valueTooltip: "Angi verdi",
       fieldTooltip: "Velg fra eksisterende felt",
       uniqueValueTooltip: "Velg blant unike verdier i det valgte feltet",
-      stringOperatorIs: "er", // e.g. <stringFieldName> is "California"
+      stringOperatorIs: "er", // e.g. <stringFieldName> is 'California'
       stringOperatorIsNot: "er ikke",
       stringOperatorStartsWith: "begynner på",
       stringOperatorEndsWith: "slutter på",
@@ -139,7 +139,7 @@
       stringOperatorDoesNotContain: "inneholder ikke",
       stringOperatorIsBlank: "er tomt",
       stringOperatorIsNotBlank: "er ikke tomt",
-      dateOperatorIsOn: "er den", // e.g. <dateFieldName> is on "1/1/2012"
+      dateOperatorIsOn: "er den", // e.g. <dateFieldName> is on '1/1/2012'
       dateOperatorIsNotOn: "er ikke den",
       dateOperatorIsBefore: "er før",
       dateOperatorIsAfter: "er etter",
@@ -192,19 +192,6 @@
       selectFromOnline: "Legg til fra ArcGIS Online",
       chooseLayer: "Velg et geoobjektslag."
     },
-    queryableLayerSource: {
-      layer: "Lag",
-      browse: "Bla gjennom",
-      selectFromMap: "Velg fra kart",
-      selectFromPortal: "Legg til fra Portal for ArcGIS",
-      addServiceUrl: "Legg til tjeneste-URL",
-      inputLayerUrl: "Angi kartlag-URL",
-      selectLayer: "Velg et lag fra det gjeldende kartet.",
-      chooseItem: "Velg et element.",
-      setServiceUrl: "Angi URL-adressen til tjenesten.",
-      selectFromOnline: "Legg til fra ArcGIS Online",
-      chooseLayer: "Velg et lag."
-    },
     gpSource: {
       selectFromPortal: "Legg til fra Portal for ArcGIS",
       addServiceUrl: "Legg til tjeneste-URL",
@@ -240,37 +227,35 @@
       notSupportQuery: "Denne tjenesten støtter ikke spørringer."
     },
     basicLayerChooserFromMap: {
-      noLayersTip: "Det er ingen aktuelle lag tilgjengelig i kartet."
+      noLayersTip: "Det er ingen tilgjengelige lag i kartet."
     },
     layerInfosMenu: {
-      titleBasemap: "Bakgrunnskart",
-      titleLayers: "Operative kartlag",
-      labelLayer: "Lagnavn",
-      itemZoomTo: "Zoom til",
-      itemTransparency: "Gjennomsiktighet",
-      itemTransparent: "Gjennomsiktighet",
-      itemOpaque: "Ugjennomsiktig",
-      itemMoveUp: "Flytt opp",
-      itemMoveDown: "Flytt ned",
-      itemDesc: "Beskrivelse",
-      itemDownload: "Last ned",
-      itemToAttributeTable: "Åpne attributtabell"
+      titleBasemap: 'Bakgrunnskart',
+      titleLayers: 'Operative kartlag',
+      labelLayer: 'Lagnavn',
+      itemZoomTo: 'Zoom til',
+      itemTransparency: 'Gjennomsiktighet',
+      itemTransparent: 'Gjennomsiktighet',
+      itemOpaque: 'Ugjennomsiktig',
+      itemMoveUp: 'Flytt opp',
+      itemMoveDown: 'Flytt ned',
+      itemDesc: 'Beskrivelse',
+      itemDownload: 'Last ned',
+      itemToAttributeTable: 'Åpne attributtabell'
     },
     imageChooser: {
       unsupportReaderAPI: "GJØREMÅL: Leseren støtter ikke filleser-API",
       readError: "Kan ikke lese filen.",
-      unknowError: "kan ikke fullføre operasjonene",
       invalidType: "Ugyldig filtype.",
       exceed: "Filstørrelsen må ikke overskride 1 024 kB",
       enableFlash: "TODO: aktiver flash.",
-      cropWaining: "Velg et bilde som er minst ${width} x ${height} piksler.",
       toolTip: "Resultatet blir best hvis bildet er ${width} piksler bredt og ${height} piksler høyt. Andre størrelser må justeres for at de skal passe. Godkjente bildeformater er: PNG, GIF og JPEG."
     },
     simpleTable: {
-      moveUp: "Flytt opp",
-      moveDown: "Flytt ned",
-      deleteRow: "Slett",
-      edit: "Rediger"
+      moveUp: 'Flytt opp',
+      moveDown: 'Flytt ned',
+      deleteRow: 'Slett',
+      edit: 'Rediger'
     }
   })
 );

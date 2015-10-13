@@ -15,7 +15,7 @@
     itemToAttributeTable: "Attributtabelle öffnen",
     itemShowItemDetails: "Elementdetails anzeigen",
     empty: "leer",
-    removePopup: "Pop-up deaktivieren",
+    removePopup: "Pop-up entfernen",
     enablePopup: "Pop-up aktivieren"
   })
 );

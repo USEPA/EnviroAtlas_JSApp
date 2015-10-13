@@ -1,7 +1,7 @@
 ﻿define(
    ({
     _widgetLabel: "タイム スライダー",
-    enableTips: "クリックして、タイム スライダーを表示します。",
+    enableTips: "タイム スライダーをクリックして再生します。",
     disableTips: "時間対応レイヤーが表示されません。",
     timeExtent: "${FROMTIME} から ${ENDTIME} まで",
     layers: "レイヤー: ",

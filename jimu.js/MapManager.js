@@ -34,6 +34,7 @@ define(['dojo/_base/declare',
 ], function(declare, lang, array, html, topic, on, aspect, keys, InfoWindow,
   PopupMobile, InfoTemplate, esriRequest, Extent, Point, require,
   jimuUtils, LoadingShelter) {
+  /* global jimuConfig */
   var instance = null,
     clazz = declare(null, {
       appConfig: null,
@@ -105,11 +106,13 @@ define(['dojo/_base/declare',
           new PopupMobile(null, html.create("div", null, null, this.map.root));
           this.isMobileInfoWindow = false;
         }
-        if (window.appInfo.isRunInMobile && !this.isMobileInfoWindow) {
+        var width = jimuConfig.widthBreaks[0];
+        if (html.getContentBox(jimuConfig.layoutId).w < width && !this.isMobileInfoWindow) {
           this.map.infoWindow.hide();
           this.map.setInfoWindow(this._mapMobileInfoWindow);
           this.isMobileInfoWindow = true;
-        } else if (!window.appInfo.isRunInMobile && this.isMobileInfoWindow) {
+        } else if (html.getContentBox(jimuConfig.layoutId).w >= width &&
+            this.isMobileInfoWindow) {
           this.map.infoWindow.hide();
           this.map.setInfoWindow(this._mapInfoWindow);
           this.isMobileInfoWindow = false;
@@ -117,23 +120,24 @@ define(['dojo/_base/declare',
       },
 
       onChangeMapPosition: function(position) {
-        var pos = lang.clone(this.mapPosition);
-        lang.mixin(pos, position);
-        this.setMapPosition(pos);
-      },
-
-      setMapPosition: function(position){
-        this.mapPosition = position;
-
-        var posStyle = jimuUtils.getPositionStyle(position);
+        var mapStyle = html.getComputedStyle(html.byId(this.map.id));
+        var oldPosStyle = {
+          top: mapStyle.top,
+          bottom: mapStyle.bottom
+        };
+        if(window.isRTL){
+          oldPosStyle.left = mapStyle.right;
+          oldPosStyle.right = mapStyle.left;
+        }else{
+          oldPosStyle.left = mapStyle.left;
+          oldPosStyle.right = mapStyle.right;
+        }
+        var pos = lang.mixin(oldPosStyle, position);
+        var posStyle = jimuUtils.getPositionStyle(pos);
         html.setStyle(this.mapDivId, posStyle);
         if (this.map && this.map.resize) {
           this.map.resize();
         }
-      },
-
-      getMapPosition: function(){
-        return this.mapPosition;
       },
 
       onSyncExtent: function(map){
@@ -233,8 +237,7 @@ define(['dojo/_base/declare',
         if(!appConfig.map.mapOptions){
           appConfig.map.mapOptions = {};
         }
-        var mapOptions = this._processMapOptions(appConfig.map.mapOptions) || {};
-        mapOptions.isZoomSlider = false;
+        var mapOptions = this._processMapOptions(appConfig.map.mapOptions);
 
         var webMapPortalUrl = appConfig.map.portalUrl;
         var webMapItemId = appConfig.map.itemId;
@@ -249,10 +252,6 @@ define(['dojo/_base/declare',
 
         mapDeferred.then(lang.hitch(this, function(response) {
           var map = response.map;
-
-          //hide the default zoom slider
-          map.hideZoomSlider();
-
           // set default size of infoWindow.
           map.infoWindow.resize(270, 316);
           //var extent;
@@ -265,7 +264,6 @@ define(['dojo/_base/declare',
           };
           map.enableSnapping(options);
 
-          html.setStyle(map.root, 'zIndex', 0);
           this._publishMapEvent(map);
         }), lang.hitch(this, function() {
           if (this.loading) {

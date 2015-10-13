@@ -75,25 +75,24 @@
 									<tr>
 										<td>
 											<input type="radio" data-dojo-attach-point="valueRadio" checked="true" disabled  title="${nls.valueTooltip}" />
-											<label data-dojo-attach-point="valueLabel" title="${nls.valueTooltip}">${nls.value}</label>
+											<label title="${nls.valueTooltip}">${nls.value}</label>
 										</td>
 										<td>
 											<input type="radio" data-dojo-attach-point="fieldRadio" disabled title="${nls.fieldTooltip}" />
-											<label data-dojo-attach-point="fieldLabel" title="${nls.fieldTooltip}">${nls.field}</label>
+											<label title="${nls.fieldTooltip}">${nls.field}</label>
 										</td>
 										<td data-dojo-attach-point="uniqueTd">
 											<input type="radio" data-dojo-attach-point="uniqueRadio" disabled title="${nls.uniqueValueTooltip}" />
-											<label data-dojo-attach-point="uniqueLabel" title="${nls.uniqueValueTooltip}">${nls.unique}</label>
+											<label title="${nls.uniqueValueTooltip}">${nls.unique}</label>
 										</td>
 									</tr>
 								</tbody>
 							</table>
-						</div>
-					</div>
+						</div>						
+					</div>					
 				</td>
 				<td class="delete-td" nowrap>
-					<div class="jimu-icon jimu-icon-delete" data-dojo-attach-point="btnDelete"
-					 data-dojo-attach-event="click:_destroySelf"></div>
+					<div class="delete" data-dojo-attach-point="btnDelete" data-dojo-attach-event="click:_destroySelf"></div>
 				</td>
 			</tr>
 		</tbody>
@@ -118,7 +117,7 @@
 						<span>${nls.hint}</span>
 					</td>
 					<td class="second-td">
-						<div data-dojo-attach-point="hintTB" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="trim:true" style="width:100%;" class="dijit-form-ValidationTextBox" ></div>
+						<div data-dojo-attach-point="hintTB" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="required:true,trim:true" style="width:100%;" class="dijit-form-ValidationTextBox" ></div>
 					</td>
 				</tr>
 			</tbody>

@@ -45,7 +45,7 @@ define([
           'class': 'jimu-service-valid'
         }, this.domNode);
         this._inValidNode = html.create('div', {
-          'class': 'jimu-service-invalid jimu-icon jimu-icon-error'
+          'class': 'jimu-service-invalid'
         }, this.domNode);
 
         html.addClass(this.domNode, 'jimu-serviceurl-input');
@@ -145,7 +145,7 @@ define([
         html.setStyle(this._validatingNode, {
           'display': 'inline-block'
         });
-
+        
         html.removeClass(this.domNode, 'jimu-serviceurl-input-invalid');
       },
 

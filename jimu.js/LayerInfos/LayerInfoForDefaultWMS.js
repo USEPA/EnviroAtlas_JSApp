@@ -108,10 +108,10 @@ define([
     // };
 
     drawLegends: function(legendsNode) {
-      this._initLegendsNode(legendsNode);
+      this.initLegendsNode(legendsNode);
     },
 
-    _initLegendsNode: function(legendsNode) {
+    initLegendsNode: function(legendsNode) {
       if(this.originOperLayer.wms.wmsLayerInfo.legendURL) {
         var legendImg = domConstruct.create("img", {
           "class": "legend-div-image",
@@ -128,7 +128,7 @@ define([
         domConstruct.empty(legendsNode);
       }
     },
-    //backgroundImage', "url(" + webMap.thumbnailUrl + ")"
+//backgroundImage', "url(" + webMap.thumbnailUrl + ")"
     obtainNewSubLayers: function() {
       var newSubLayers = [];
       return newSubLayers;

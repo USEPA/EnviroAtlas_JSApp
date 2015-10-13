@@ -1,66 +1,66 @@
 define({
   root: ({
     common: {
-      ok: "OK",
-      cancel: "Cancel",
-      next: "Next",
-      back: "Back"
+      ok: 'OK',
+      cancel: 'Cancel',
+      next: 'Next',
+      back: 'Back'
     },
     errorCode: "Code",
     errorMessage: "Message",
     errorDetail: "Detail",
     widgetPlaceholderTooltip: "To set it up, go to Widgets and click corresponding placeholder",
     symbolChooser: {
-      preview: "Preview",
-      basic: "Basic",
-      arrows: "Arrows",
-      business: "Business",
-      cartographic: "Cartographic",
-      nationalParkService: "National Park Service",
-      outdoorRecreation: "Outdoor Recreation",
-      peoplePlaces: "People Places",
-      safetyHealth: "Safety Health",
-      shapes: "Shapes",
-      transportation: "Transportation",
-      symbolSize: "Symbol Size",
-      color: "Color",
-      alpha: "Alpha",
-      outlineColor: "Outline Color",
-      outlineWidth: "Outline Width",
-      style: "Style",
-      width: "Width",
-      text: "Text",
-      fontColor: "Font Color",
-      fontSize: "Font Size",
-      transparency: "Transparency",
-      solid: "Solid",
-      dash: "Dash",
-      dot: "Dot",
-      dashDot: "Dash Dot",
-      dashDotDot: "Dash Dot Dot"
+      preview: 'Preview',
+      basic: 'Basic',
+      arrows: 'Arrows',
+      business: 'Business',
+      cartographic: 'Cartographic',
+      nationalParkService: 'National Park Service',
+      outdoorRecreation: 'Outdoor Recreation',
+      peoplePlaces: 'People Places',
+      safetyHealth: 'Safety Health',
+      shapes: 'Shapes',
+      transportation: 'Transportation',
+      symbolSize: 'Symbol Size',
+      color: 'Color',
+      alpha: 'Alpha',
+      outlineColor: 'Outline Color',
+      outlineWidth: 'Outline Width',
+      style: 'Style',
+      width: 'Width',
+      text: 'Text',
+      fontColor: 'Font Color',
+      fontSize: 'Font Size',
+      transparency: 'Transparency',
+      solid: 'Solid',
+      dash: 'Dash',
+      dot: 'Dot',
+      dashDot: 'Dash Dot',
+      dashDotDot: 'Dash Dot Dot'
     },
     transparency: {
-      opaque: "Opaque",
-      transparent: "Transparent"
+      opaque: 'Opaque',
+      transparent: 'Transparent'
     },
     rendererChooser: {
-      domain: "Domain",
-      use: "Use",
-      singleSymbol: "A Single Symbol",
-      uniqueSymbol: "Unique Symbols",
-      color: "Color",
-      size: "Size",
-      toShow: "To Show",
-      colors: "Colors",
-      classes: "Classes",
-      symbolSize: "Symbol Size",
-      addValue: "Add Value",
-      setDefaultSymbol: "Set Default Symbol",
-      defaultSymbol: "Default Symbol",
-      selectedSymbol: "Selected Symbol",
-      value: "Value",
-      label: "Label",
-      range: "Range"
+      domain: 'Domain',
+      use: 'Use',
+      singleSymbol: 'A Single Symbol',
+      uniqueSymbol: 'Unique Symbols',
+      color: 'Color',
+      size: 'Size',
+      toShow: 'To Show',
+      colors: 'Colors',
+      classes: 'Classes',
+      symbolSize: 'Symbol Size',
+      addValue: 'Add Value',
+      setDefaultSymbol: 'Set Default Symbol',
+      defaultSymbol: 'Default Symbol',
+      selectedSymbol: 'Selected Symbol',
+      value: 'Value',
+      label: 'Label',
+      range: 'Range'
     },
     drawBox: {
       point: "Point",
@@ -93,17 +93,17 @@ define({
       loading: "Loading"
     },
     basicServiceBrowser: {
-      noServicesFound: "No service found.",
-      unableConnectTo: "Unable to connect to",
-      invalidUrlTip: "The URL you have entered is invalid or inaccessible."
+      noServicesFound: 'No service found.',
+      unableConnectTo: 'Unable to connect to',
+      invalidUrlTip: 'The URL you have entered is invalid or inaccessible.'
     },
     serviceBrowser: {
-      noGpFound: "No geoprocessing service found.",
-      unableConnectTo: "Unable to connect to"
+      noGpFound: 'No geoprocessing service found.',
+      unableConnectTo: 'Unable to connect to'
     },
     layerServiceBrowser: {
-      noServicesFound: "No map service or feature service found",
-      unableConnectTo: "Unable to connect to"
+      noServicesFound: 'No map service or feature service found',
+      unableConnectTo: 'Unable to connect to'
     },
     basicServiceChooser: {
       validate: "Validate",
@@ -111,14 +111,14 @@ define({
       set: "Set"
     },
     urlInput: {
-      invalidUrl: "Invalid URL."
+      invalidUrl: 'Invalid URL.'
     },
     urlComboBox: {
-      invalidUrl: "Invalid URL."
+      invalidUrl: 'Invalid URL.'
     },
     filterBuilder: {
       addAnotherExpression: "Add a filter expression",
-      addSet: "Add an expression set",
+      addSet: "Add a expression set",
       matchMsg: "Get features in the layer that match ${any_or_all} of the following expressions",
       matchMsgSet: "${any_or_all} of the following expressions in this set are true",
       all: "All",
@@ -131,7 +131,7 @@ define({
       valueTooltip: "Enter value",
       fieldTooltip: "Pick from existing field",
       uniqueValueTooltip: "Pick from unique values in selected field",
-      stringOperatorIs: "is", // e.g. <stringFieldName> is "California"
+      stringOperatorIs: "is", // e.g. <stringFieldName> is 'California'
       stringOperatorIsNot: "is not",
       stringOperatorStartsWith: "starts with",
       stringOperatorEndsWith: "ends with",
@@ -139,7 +139,7 @@ define({
       stringOperatorDoesNotContain: "does not contain",
       stringOperatorIsBlank: "is blank",
       stringOperatorIsNotBlank: "is not blank",
-      dateOperatorIsOn: "is on", // e.g. <dateFieldName> is on "1/1/2012"
+      dateOperatorIsOn: "is on", // e.g. <dateFieldName> is on '1/1/2012'
       dateOperatorIsNotOn: "is not on",
       dateOperatorIsBefore: "is before",
       dateOperatorIsAfter: "is after",
@@ -192,19 +192,6 @@ define({
       selectFromOnline: "Add from ArcGIS Online",
       chooseLayer: "Choose a feature layer."
     },
-    queryableLayerSource: {
-      layer: "Layer",
-      browse: "Browse",
-      selectFromMap: "Select from Map",
-      selectFromPortal: "Add from Portal for ArcGIS",
-      addServiceUrl: "Add Service URL",
-      inputLayerUrl: "Input Layer URL",
-      selectLayer: "Select a layer from current map.",
-      chooseItem: "Choose an item.",
-      setServiceUrl: "Enter the URL of the service.",
-      selectFromOnline: "Add from ArcGIS Online",
-      chooseLayer: "Choose a layer."
-    },
     gpSource: {
       selectFromPortal: "Add from Portal for ArcGIS",
       addServiceUrl: "Add Service URL",
@@ -240,37 +227,35 @@ define({
       notSupportQuery: "The service doesn't support query."
     },
     basicLayerChooserFromMap: {
-      noLayersTip: "There is no appropriate layer available in the map."
+      noLayersTip: "There is no layer available in the map."
     },
     layerInfosMenu: {
-      titleBasemap: "Basemaps",
-      titleLayers: "Operational Layers",
-      labelLayer: "Layer Name",
-      itemZoomTo: "Zoom to",
-      itemTransparency: "Transparency",
-      itemTransparent: "Transparent",
-      itemOpaque: "Opaque",
-      itemMoveUp: "Move up",
-      itemMoveDown: "Move down",
-      itemDesc: "Description",
-      itemDownload: "Download",
-      itemToAttributeTable: "Open Attribute Table"
+      titleBasemap: 'Basemaps',
+      titleLayers: 'Operational Layers',
+      labelLayer: 'Layer Name',
+      itemZoomTo: 'Zoom to',
+      itemTransparency: 'Transparency',
+      itemTransparent: 'Transparent',
+      itemOpaque: 'Opaque',
+      itemMoveUp: 'Move up',
+      itemMoveDown: 'Move down',
+      itemDesc: 'Description',
+      itemDownload: 'Download',
+      itemToAttributeTable: 'Open Attribute Table'
     },
     imageChooser: {
       unsupportReaderAPI: "TODO: The browser does not suport file reader API",
       readError: "Failed to read the file.",
-      unknowError: "unable to complete operations",
       invalidType: "Invalid file type.",
       exceed: "File size cannot exceed 1024 KB",
       enableFlash: "TODO: please enable flash.",
-      cropWaining: "Please choose a photo that's at least ${width} x ${height} pixels.",
       toolTip: "For the best result, the image should be ${width} pixels wide by ${height} pixels high. Other sizes will be adjusted to fit. Acceptable image formats are: PNG, GIF and JPEG."
     },
     simpleTable: {
-      moveUp: "Move up",
-      moveDown: "Move down",
-      deleteRow: "Delete",
-      edit: "Edit"
+      moveUp: 'Move up',
+      moveDown: 'Move down',
+      deleteRow: 'Delete',
+      edit: 'Edit'
     }
   }),
   "ar": 1,
@@ -299,7 +284,5 @@ define({
   "th": 1,
   "tr": 1,
   "vi": 1,
-  "zh-cn": 1,
-  "zh-hk": 1,
-  "zh-tw": 1
+  "zh-cn": 1
 });

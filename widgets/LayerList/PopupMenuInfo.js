@@ -22,11 +22,8 @@ define([
   'dojo/promise/all',
   'jimu/portalUrlUtils',
   'jimu/WidgetManager',
-  'esri/lang',
-  'esri/graphicsUtils',
   './NlsStrings'
-], function(declare, array, lang, Deferred, all, portalUrlUtils, WidgetManager, esriLang,
-  graphicsUtils, NlsStrings) {
+], function(declare, array, lang, Deferred, all, portalUrlUtils, WidgetManager, NlsStrings) {
   var clazz = declare([], {
 
     _candidateMenuItems: null,
@@ -36,11 +33,11 @@ define([
     _layerType: null,
     _appConfig: null,
 
-    constructor: function(layerInfo, displayItemInfos, layerType, layerListWidget) {
+    constructor: function(layerInfo, displayItemInfos, layerType, appConfig) {
       this.nls = NlsStrings.value;
       this._layerInfo = layerInfo;
       this._layerType = layerType;
-      this.layerListWidget = layerListWidget;
+      this._appConfig = appConfig;
       this._initCandidateMenuItems();
       this._initDisplayItems(displayItemInfos);
     },
@@ -50,17 +47,17 @@ define([
       var label;
       var itemLayerId = this._layerInfo._isItemLayer && this._layerInfo._isItemLayer();
 
-      if (itemLayerId) {
-        url = portalUrlUtils.getItemDetailsPageUrl(
-                portalUrlUtils.getStandardPortalUrl(this.layerListWidget.appConfig.portalUrl),
-                itemLayerId);
+      if(itemLayerId) {
+        url = portalUrlUtils.
+              getItemDetailsPageUrl(portalUrlUtils.getStandardPortalUrl(this._appConfig.portalUrl),
+                                    itemLayerId);
         label = this.nls.itemShowItemDetails;
-      } else if (this._layerInfo.layerObject &&
-        this._layerInfo.layerObject.url &&
-        (this._layerType === "CSVLayer" || this._layerType === "KMLLayer")) {
+      } else if(this._layerInfo.layerObject &&
+                this._layerInfo.layerObject.url &&
+                (this._layerType === "CSVLayer" || this._layerType === "KMLLayer")) {
         url = this._layerInfo.layerObject.url;
         label = this.nls.itemDownload;
-      } else if (this._layerInfo.layerObject && this._layerInfo.layerObject.url) {
+      } else if(this._layerInfo.layerObject && this._layerInfo.layerObject.url) {
         url = this._layerInfo.layerObject.url;
         label = this.nls.itemDesc;
       } else {
@@ -81,28 +78,28 @@ define([
       this._candidateMenuItems = [{
         key: 'separator',
         label: ''
-      }, {
+      },{
         key: 'empty',
         label: this.nls.empty
-      }, {
+      },{
         key: 'zoomto',
         label: this.nls.itemZoomTo
-      }, {
+      },{
         key: 'transparency',
         label: this.nls.itemTransparency
-      }, {
+      },{
         key: 'moveup',
         label: this.nls.itemMoveUp
-      }, {
+      },{
         key: 'movedown',
         label: this.nls.itemMoveDown
-      }, {
+      },{
         key: 'table',
         label: this.nls.itemToAttributeTable
-      }, {
+      },{
         key: 'controlPopup',
         label: this.nls.removePopup
-      }, {
+      },{
         key: 'url',
         label: this._getATagLabel()
       }];
@@ -112,10 +109,10 @@ define([
       this._displayItems = [];
       // according to candidate itmes to init displayItems
       array.forEach(displayItemInfos, function(itemInfo) {
-        array.forEach(this._candidateMenuItems, function(item) {
-          if (itemInfo.key === item.key) {
+        array.forEach(this._candidateMenuItems, function(item){
+          if(itemInfo.key === item.key) {
             this._displayItems.push(lang.clone(item));
-            if (itemInfo.onClick) {
+            if(itemInfo.onClick) {
               this._displayItem.onClick = itemInfo.onClick;
             }
           }
@@ -124,34 +121,17 @@ define([
     },
 
     getDeniedItems: function() {
-      // summary:
-      //    the items that will be denied.
-      // description:
-      //    return Object = [{
-      //   key: String, popupMenuInfo key,
-      //   denyType: String, "disable" or "hidden"
-      // }]
       var defRet = new Deferred();
       var dynamicDeniedItems = [];
 
       if (this._layerInfo.isFirst) {
-        dynamicDeniedItems.push({
-          'key': 'moveup',
-          'denyType': 'disable'
-        });
-      }
-      if (this._layerInfo.isLast) {
-        dynamicDeniedItems.push({
-          'key': 'movedown',
-          'denyType': 'disable'
-        });
+        dynamicDeniedItems.push('moveup');
+      } else if (this._layerInfo.isLast) {
+        dynamicDeniedItems.push('movedown');
       }
 
-      if (!this._layerInfo.layerObject || !this._layerInfo.layerObject.url) {
-        dynamicDeniedItems.push({
-          'key': 'url',
-          'denyType': 'disable'
-        });
+      if(!this._layerInfo.layerObject || !this._layerInfo.layerObject.url) {
+        dynamicDeniedItems.push('url');
       }
 
       var loadInfoTemplateDef = this._layerInfo.loadInfoTemplate();
@@ -160,37 +140,26 @@ define([
       all({
         infoTemplate: loadInfoTemplateDef,
         supportTableInfo: getSupportTableInfoDef
-      }).then(lang.hitch(this, function(result) {
+      }).then(lang.hitch(this._layerInfo, function(result){
 
         // deny controlPopup
-        if (!result.infoTemplate) {
-          dynamicDeniedItems.push({
-            'key': 'controlPopup',
-            'denyType': 'disable'
-          });
+        if(!result.infoTemplate) {
+          dynamicDeniedItems.push('controlPopup');
         }
 
         // deny table.
         var supportTableInfo = result.supportTableInfo;
-        var attributeTableWidget =
-              this.layerListWidget.appConfig.getConfigElementsByName("AttributeTable")[0];
-
-        if (!attributeTableWidget || !attributeTableWidget.visible) {
-          dynamicDeniedItems.push({
-            'key': 'table',
-            'denyType': 'hidden'
-          });
-        } else if (!supportTableInfo.isSupportedLayer ||
-                   !supportTableInfo.isSupportQuery ||
-                   supportTableInfo.otherReasonCanNotSupport) {
-          dynamicDeniedItems.push({
-            'key': 'table',
-            'denyType': 'disable'
-          });
+        var attributeTableWidgets = WidgetManager.getInstance().getWidgetsByName("AttributeTable");
+        var hasAttributeTable = attributeTableWidgets.length > 0 &&
+                                attributeTableWidgets[0].visible;
+        if (!hasAttributeTable ||
+            !supportTableInfo.isSupportedLayer ||
+            !supportTableInfo.isSupportQuery) {
+          dynamicDeniedItems.push('table');
         }
-        defRet.resolve(dynamicDeniedItems);
+        defRet.resolve(dynamicDeniedItems/*this.***.deniedItems.concat(dynamicDeniedItems)*/);
       }), function() {
-        defRet.resolve(dynamicDeniedItems);
+        defRet.resolve(dynamicDeniedItems/*this.***.deniedItems.concat(dynamicDeniedItems)*/);
       });
 
       return defRet;
@@ -205,25 +174,25 @@ define([
         closeMenu: true
       };
       switch (evt.itemKey) {
-        case 'zoomto' /*this.nls.itemZoomTo'Zoom to'*/ :
-          this._onItemZoomToClick(evt);
-          break;
-        case 'moveup' /*this.nls.itemMoveUp'Move up'*/ :
-          this._onMoveUpItemClick(evt);
-          break;
-        case 'movedown' /*this.nls.itemMoveDown'Move down'*/ :
-          this._onMoveDownItemClick(evt);
-          break;
-        case 'table' /*this.nls.itemToAttributeTable'Open attribute table'*/ :
-          this._onTableItemClick(evt);
-          break;
-        case 'transparencyChanged':
-          this._onTransparencyChanged(evt);
-          result.closeMenu = false;
-          break;
-        case 'controlPopup':
-          this._onControlPopup();
-          break;
+      case 'zoomto'/*this.nls.itemZoomTo'Zoom to'*/:
+        this._onItemZoomToClick(evt);
+        break;
+      case 'moveup'/*this.nls.itemMoveUp'Move up'*/:
+        this._onMoveUpItemClick(evt);
+        break;
+      case 'movedown'/*this.nls.itemMoveDown'Move down'*/:
+        this._onMoveDownItemClick(evt);
+        break;
+      case 'table'/*this.nls.itemToAttributeTable'Open attribute table'*/:
+        this._onTableItemClick(evt);
+        break;
+      case 'transparencyChanged':
+        this._onTransparencyChanged(evt);
+        result.closeMenu = false;
+        break;
+      case 'controlPopup':
+        this._onControlPopup();
+        break;
 
       }
       return result;
@@ -244,43 +213,8 @@ define([
       /*jshint unused: false*/
       //this.map.setExtent(this.getExtent());
       this._layerInfo.getExtent().then(lang.hitch(this, function(geometries) {
-        var ext = null;
-        var a = geometries && geometries.length > 0 && geometries[0];
-        if(this._isValidExtent(a)){
-          ext = a;
-        }
-        if(ext){
-          this._layerInfo.map.setExtent(ext);
-        }else if(this._layerInfo.map.graphicsLayerIds.indexOf(this._layerInfo.id)){
-          //if fullExtent doesn't exist and the layer is (or sub class of) GraphicsLayer,
-          //we can calculate the full extent
-          this._layerInfo.getLayerObject().then(lang.hitch(this, function(layerObject){
-            if(layerObject.graphics && layerObject.graphics.length > 0){
-              try{
-                ext = graphicsUtils.graphicsExtent(layerObject.graphics);
-              }catch(e){
-                console.error(e);
-              }
-              if(ext){
-                this._layerInfo.map.setExtent(ext);
-              }
-            }
-          }));
-        }
+        this._layerInfo.map.setExtent(geometries[0]);
       }));
-    },
-
-    _isValidExtent: function(extent){
-      var isValid = false;
-      if(esriLang.isDefined(extent)){
-        if(esriLang.isDefined(extent.xmin) && isFinite(extent.xmin) &&
-           esriLang.isDefined(extent.ymin) && isFinite(extent.ymin) &&
-           esriLang.isDefined(extent.xmax) && isFinite(extent.xmax) &&
-           esriLang.isDefined(extent.ymax) && isFinite(extent.ymax)){
-          isValid = true;
-        }
-      }
-      return isValid;
     },
 
     _onMoveUpItemClick: function(evt) {
@@ -296,40 +230,13 @@ define([
     },
 
     _onTableItemClick: function(evt) {
-      this._layerInfo.getSupportTableInfo().then(lang.hitch(this, function(supportTableInfo) {
-        var widgetManager;
-        var attributeTableWidgets;
-        var attributeTableHasLoaded;
-        if(supportTableInfo.isSupportedLayer &&
-           supportTableInfo.isSupportQuery) {
-          widgetManager = WidgetManager.getInstance();
-          attributeTableWidgets = widgetManager.getWidgetsByName("AttributeTable");
-          attributeTableHasLoaded = attributeTableWidgets.length > 0;
-          if(attributeTableHasLoaded) {
-            if(attributeTableWidgets[0].state !== 'closed') {
-              // publish data
-              evt.layerListWidget.publishData({
-                'target': 'AttributeTable',
-                'layer': this._layerInfo
-              });
-            } else {
-              widgetManager.openWidget(attributeTableWidgets[0].id);
-              evt.layerListWidget.publishData({
-                'target': 'AttributeTable',
-                'layer': this._layerInfo
-              });
-            }
-          } else {
-            var attributeTableWidget =
-                      this.layerListWidget.appConfig.getConfigElementsByName("AttributeTable")[0];
-            evt.layerListWidget.openWidgetById(attributeTableWidget.id)
-            .then(lang.hitch(this, function() {
-              evt.layerListWidget.publishData({
-                'target': 'AttributeTable',
-                'layer': this._layerInfo
-              });
-            }));
-          }
+      // new version, send layerInfo object.
+      this._layerInfo.getLayerType().then(lang.hitch(this, function(layerType){
+        if (this._layerInfo._getLayerTypesOfSupportTable().indexOf(layerType) >= 0) {
+          evt.layerListWidget.publishData({
+            'target': 'AttributeTable',
+            'layer': this._layerInfo
+          });
         }
       }));
     },
@@ -340,7 +247,7 @@ define([
 
     _onControlPopup: function(evt) {
       /*jshint unused: false*/
-      if (this._layerInfo.controlPopupInfo.enablePopup) {
+      if(this._layerInfo.controlPopupInfo.enablePopup) {
         this._layerInfo.disablePopup();
       } else {
         this._layerInfo.enablePopup();
@@ -349,28 +256,28 @@ define([
     }
   });
 
-  clazz.create = function(layerInfo, layerListWidget) {
+  clazz.create = function(layerInfo, appConfig) {
     var retDef = new Deferred();
     var isRootLayer = layerInfo.isRootLayer();
     var defaultItemInfos = [{
-      key: 'url',
-      onClick: null
-    }];
+        key: 'url',
+        onClick: null
+      }];
 
     var itemInfoCategoreList = {
       'RootLayer': [{
         key: 'zoomto'
-      }, {
+      },{
         key: 'transparency'
-      }, {
-        key: 'separator'
-      }, {
+      },{
+        key:'separator'
+      },{
         key: 'moveup'
-      }, {
+      },{
         key: 'movedown'
-      }, {
-        key: 'separator'
-      }, {
+      },{
+        key:'separator'
+      },{
         key: 'url'
       }],
       'RootLayerAndFeatureLayer': [{
@@ -378,32 +285,32 @@ define([
       }, {
         key: 'transparency'
       }, {
-        key: 'separator'
-      }, {
+        key:'separator'
+      },{
         key: 'controlPopup'
       }, {
-        key: 'separator'
-      }, {
+        key:'separator'
+      },{
         key: 'moveup'
       }, {
         key: 'movedown'
       }, {
-        key: 'separator'
+        key:'separator'
       }, {
         key: 'table'
       }, {
-        key: 'separator'
-      }, {
+        key:'separator'
+      },{
         key: 'url'
       }],
       'FeatureLayer': [{
         key: 'controlPopup'
       }, {
-        key: 'separator'
+        key:'separator'
       }, {
         key: 'table'
       }, {
-        key: 'separator'
+        key:'separator'
       }, {
         key: 'url'
       }],
@@ -413,43 +320,38 @@ define([
       'Table': [{
         key: 'table'
       }, {
-        key: 'separator'
+        key:'separator'
       }, {
         key: 'url'
       }],
       'default': defaultItemInfos
     };
 
-    layerInfo.getLayerType().then(lang.hitch(this, function(layerType) {
+    layerInfo.getLayerType().then(lang.hitch(this, function(layerType){
       var itemInfoCategory = "";
-      if (isRootLayer &&
-          (layerType === "FeatureLayer" ||
-            layerType === "CSVLayer" ||
-            layerType === "ArcGISImageServiceLayer" ||
-            layerType === "StreamLayer" ||
-            layerType === "ArcGISImageServiceVectorLayer")) {
+      if(isRootLayer && (layerType === "FeatureLayer" ||
+                         layerType === "CSVLayer" ||
+                         layerType ==="ArcGISImageServiceLayer")) {
         itemInfoCategory = "RootLayerAndFeatureLayer";
-      } else if (isRootLayer) {
+      } else if(isRootLayer ) {
         itemInfoCategory = "RootLayer";
-      } else if (layerType === "FeatureLayer" || layerType === "CSVLayer") {
+      } else if(layerType === "FeatureLayer" || layerType === "CSVLayer") {
         itemInfoCategory = "FeatureLayer";
-      } else if (layerType === "GroupLayer") {
+      } else if(layerType === "GroupLayer") {
         itemInfoCategory = "GroupLayer";
-      } else if (layerType === "Table") {
+      } else if(layerType === "Table") {
         itemInfoCategory = "Table";
       } else {
         //default condition
         itemInfoCategory = "default";
       }
       retDef.resolve(new clazz(layerInfo,
-        itemInfoCategoreList[itemInfoCategory],
-        layerType,
-        layerListWidget));
+                               itemInfoCategoreList[itemInfoCategory],
+                               layerType,
+                               appConfig));
     }), lang.hitch(this, function() {
       //return default popupmenu info.
-      retDef.resolve(new clazz(layerInfo, [{
-        key: 'empty'
-      }]));
+      retDef.resolve(new clazz(layerInfo, [{key:'empty'}]));
     }));
     return retDef;
   };

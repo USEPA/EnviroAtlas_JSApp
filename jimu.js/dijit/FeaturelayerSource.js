@@ -22,6 +22,7 @@ define([
   'dojo/text!./templates/FeaturelayerSource.html',
   'dojo/_base/lang',
   'dojo/_base/html',
+  'dojo/_base/array',
   'dojo/on',
   'dojo/Evented',
   'jimu/dijit/FeaturelayerChooserFromMap',
@@ -30,23 +31,23 @@ define([
   'jimu/portalUrlUtils'
 ],
 function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
-  template, lang, html, on, Evented, FeaturelayerChooserFromMap,
+  template, lang, html, array, on, Evented, FeaturelayerChooserFromMap,
   FeaturelayerChooserFromPortal, _FeaturelayerServiceChooserContent, portalUrlUtils) {
   //define private dijit FeaturelayerChooserWithButtons
-  var baseClassArr = [_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented];
-  var FeaturelayerChooserWithButtons = declare(baseClassArr, {
-    baseClass: 'jimu-layer-chooser-with-buttons jimu-featurelayer-chooser-with-buttons',
+  var baseClassArr = [_WidgetBase,_TemplatedMixin,_WidgetsInTemplateMixin,Evented];
+  var FeaturelayerChooserWithButtons = declare(baseClassArr,{
+    baseClass: 'jimu-featurelayer-chooser-with-buttons',
     declaredClass: 'jimu.dijit.FeaturelayerChooserWithButtons',
     templateString: '<div>' +
-      '<div class="chooser-container" data-dojo-attach-point="flcDiv"></div>' +
-      '<div class="footer">' +
-        '<div class="jimu-btn jimu-float-trailing cancel" data-dojo-attach-point="btnCancel">' +
-          '${nls.cancel}' +
-        '</div>' +
-        '<div class="jimu-btn jimu-float-trailing ok jimu-trailing-margin1 jimu-state-disabled"' +
-        ' data-dojo-attach-point="btnOk">' +
-          '${nls.ok}' +
-        '</div>' +
+      '<div class="flc-container" data-dojo-attach-point="flcDiv"></div>' +
+      '<div class="footer">'+
+        '<div class="jimu-btn jimu-float-trailing cancel" data-dojo-attach-point="btnCancel">'+
+          '${nls.cancel}'+
+        '</div>'+
+        '<div class="jimu-btn jimu-float-trailing ok jimu-trailing-margin1 jimu-state-disabled"'+
+        ' data-dojo-attach-point="btnOk">'+
+          '${nls.ok}'+
+        '</div>'+
       '</div>' +
     '</div>',
 
@@ -105,24 +106,24 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     }
   });
 
-  return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+  return declare([_WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin, Evented], {
     templateString: template,
-    baseClass: 'jimu-layer-source jimu-featurelayer-source',
+    baseClass: 'jimu-featurelayer-source',
     declaredClass: 'jimu.dijit.FeaturelayerSource',
     nls: null,
 
     //common options:
     multiple: false,
+    types: null, //available values:point,polyline,polygon
 
     //FeaturelayerChooserFromMap options
     createMapResponse: null,
-
+    
     //FeaturelayerChooserFromPortal options
     portalUrl: null,
 
     //public methods:
     //getSelectedItems
-    //getSelectedRadioType
 
     //events:
     //ok
@@ -131,21 +132,12 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     postMixInProperties: function(){
       this.nls = window.jimuNls.featureLayerSource;
       this.portalUrl = portalUrlUtils.getStandardPortalUrl(this.portalUrl);
+      this._initTypes();
     },
 
     postCreate: function(){
       this.inherited(arguments);
       this._initSelf();
-    },
-
-    getSelectedRadioType: function(){
-      if(this.mapRadio.checked){
-        return "map";
-      }else if(this.portalRadio.checked){
-        return "portal";
-      }else if(this.urlRadio.checked){
-        return "url";
-      }
     },
 
     getSelectedItems: function(){
@@ -169,6 +161,21 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       this.flcUrl.startup();
     },
 
+    _initTypes:function(){
+      var allTypes = ['point','polyline','polygon'];
+      if(this.types && this.types.length > 0){
+        this.types = array.filter(this.types,lang.hitch(this,function(type){
+          return allTypes.indexOf(type) >= 0;
+        }));
+        if(this.types.length === 0){
+          this.types = allTypes;
+        }
+      }
+      else{
+        this.types = allTypes;
+      }
+    },
+
     _initSelf: function(){
       this._initRadios();
 
@@ -186,12 +193,13 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
 
     _createFeaturelayerChooserWithButtons: function(){
       var args1 = {
+        multiple: this.multiple,
+        types: this.types,
         style: {
           width: '100%',
           height: '100%'
         },
         featureLayerChooserArgs:{
-          multiple: this.multiple,
           createMapResponse: this.createMapResponse
         }
       };
@@ -213,6 +221,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     _createFeaturelayerChooserFromPortal: function(){
       var args2 = {
         multiple: this.multiple,
+        types: this.types,
         portalUrl: this.portalUrl,
         style: {
           width: '100%',
@@ -223,12 +232,12 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       this.flcPortal.operationTip = this.nls.chooseItem;
       this.flcPortal.placeAt(this.hflcContainer);
 
-      this.own(on(this.flcPortal, 'next', lang.hitch(this, function(){
-        this.flcPortal.operationTip = this.nls.chooseItem + " -> " + this.nls.chooseLayer;
+      this.own(on(this.flcPortal, 'next',lang.hitch(this, function(){
+        this.flcPortal.operationTip = this.nls.chooseItem +" -> " + this.nls.chooseLayer;
         this._updateOperationTip();
       })));
 
-      this.own(on(this.flcPortal, 'back', lang.hitch(this, function(){
+      this.own(on(this.flcPortal, 'back',lang.hitch(this, function(){
         this.flcPortal.operationTip = this.nls.chooseItem;
         this._updateOperationTip();
       })));
@@ -243,7 +252,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         this.emit('cancel');
       })));
 
-      var portalUrl = this.portalUrl || '';
+      var portalUrl = this.portalUrl||'';
       if(portalUrl.toLowerCase().indexOf('.arcgis.com') >= 0){
         this.portalLabel.innerHTML = this.nls.selectFromOnline;
       }
@@ -278,21 +287,21 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     _initRadios: function(){
       var name = "featureLayerSourceRadios_" + this._getRandomString();
       this.mapRadio.name = name;
-      html.setAttr(this.mapRadio, 'id', "mapRadio_" + this._getRandomString());
+      html.setAttr(this.mapRadio, 'id', "mapRadio_"+this._getRandomString());
       html.setAttr(this.mapLabel, 'for', this.mapRadio.id);
 
       this.portalRadio.name = name;
-      html.setAttr(this.portalRadio, 'id', "portalRadio_" + this._getRandomString());
+      html.setAttr(this.portalRadio, 'id', "portalRadio_"+this._getRandomString());
       html.setAttr(this.portalLabel, 'for', this.portalRadio.id);
 
       this.urlRadio.name = name;
-      html.setAttr(this.urlRadio, 'id', "urlRadio_" + this._getRandomString());
+      html.setAttr(this.urlRadio, 'id', "urlRadio_"+this._getRandomString());
       html.setAttr(this.urlLabel, 'for', this.urlRadio.id);
     },
 
     _getRandomString: function(){
       var str = Math.random().toString();
-      str = str.slice(2, str.length);
+      str = str.slice(2,str.length);
       return str;
     },
 

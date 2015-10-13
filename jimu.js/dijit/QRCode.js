@@ -21,7 +21,7 @@ define(['dojo/_base/declare',
 function(declare, _WidgetBase) {
   return declare([_WidgetBase], {
     /* global QRCode*/
-    // summary:
+    // summary: 
     //    the params format:
     //       {
     //         text: "content",
@@ -31,7 +31,7 @@ function(declare, _WidgetBase) {
     //         colorLight:   default value "#ffffff"
     //         correctLevel: default value QRCode.CorrectLevel.H
     //       }
-
+  
     'baseClass': 'jimu-qrcode',
     declaredClass: 'jimu.dijit.QRCode',
 

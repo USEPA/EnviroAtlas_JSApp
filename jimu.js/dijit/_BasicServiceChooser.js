@@ -46,7 +46,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
     //events:
     //ok
     //cancel
-
+    
     postMixInProperties:function(){
       this.nls = lang.mixin({}, window.jimuNls.common);
       this.nls = lang.mixin(this.nls, window.jimuNls.basicServiceChooser);
@@ -88,15 +88,15 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
         url: this.url
       };
       this.scc = this._createServiceChooserContent(args);
-      this.own(on(this.scc, 'ok', lang.hitch(this, this._onOk)));
-      this.own(on(this.scc, 'cancel', lang.hitch(this, this._onCancel)));
+      this.own(on(this.scc,'ok',lang.hitch(this,this._onOk)));
+      this.own(on(this.scc,'cancel',lang.hitch(this,this._onCancel)));
       var ttdContent = html.create("div");
       this.tooltipDialog = new TooltipDialog({
         content: ttdContent
       });
       this.scc.placeAt(ttdContent);
-
-      if (this.url && typeof this.url === 'string') {
+      
+      if(this.url && typeof this.url === 'string'){
         this.urlTextBox.set('value', this.url);
       }
     },

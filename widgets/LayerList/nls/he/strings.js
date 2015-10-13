@@ -15,7 +15,7 @@
     itemToAttributeTable: "פתח טבלת מאפיינים",
     itemShowItemDetails: "הצג פרטי פריט",
     empty: "ריק",
-    removePopup: "השבת חלון קופץ",
+    removePopup: "‏‫הסר חלון קופץ‬",
     enablePopup: "הפעל חלון קופץ"
   })
 );

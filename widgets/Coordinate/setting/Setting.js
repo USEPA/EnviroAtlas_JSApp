@@ -144,12 +144,10 @@ define([
           actions: ['edit', 'up', 'down', 'delete']
         }];
         var args = {
-          autoHeight: false,
           fields: fields,
           selectable: false
         };
         this.outputCoordinateTable = new Table(args);
-        html.setStyle(this.outputCoordinateTable.domNode, 'height', '100%');
         this.outputCoordinateTable.placeAt(this.tableCoordinate);
         this.outputCoordinateTable.startup();
 
@@ -275,7 +273,7 @@ define([
         query('.row-edit-div', row).style('display', 'block');
 
         aspect.after(this.outputCoordinateTable, 'onBeforeRowUp', lang.hitch(this, function(tr) {
-          if (query(".body-section .simple-table-row")[1] === tr) {
+          if (query(".body-section .simple-table-tr")[1] === tr) {
             return false;
           }
         }), true);

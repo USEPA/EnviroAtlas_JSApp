@@ -132,18 +132,16 @@ define(["./ConfigManager",
     }
     jimuConfig = lang.mixin({
       loadingId: 'main-loading',
-      loadingImageId: 'app-loading',
-      loadingGifId: 'loading-gif',
       layoutId: 'jimu-layout-manager',
       mapId: 'map',
       mainPageId: 'main-page',
       timeout: 5000,
-      breakPoints: [600, 1280]
+      widthBreaks: [600, 1280]
     }, jimuConfig);
 
-    window.wabVersion = '1.3';
-    window.productVersion = 'Web AppBuilder for ArcGIS (Developer Edition) 1.2';
-    // window.productVersion = 'Online 3.8';
+    window.wabVersion = '1.2';
+    window.productVersion = 'Web AppBuilder for ArcGIS (Developer Edition) 1.1';
+    //window.productVersion = 'Online 3.7';
 
     function initApp() {
       var urlParams, configManager, layoutManager;

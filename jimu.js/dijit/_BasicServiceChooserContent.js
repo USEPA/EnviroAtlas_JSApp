@@ -60,7 +60,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
     getSelectedItems: function(){
       return this.serviceBrowser.getSelectedItems();
     },
-
+    
     postMixInProperties:function(){
       this.nls = lang.mixin({}, window.jimuNls.common);
       this.nls = lang.mixin(this.nls, window.jimuNls.basicServiceChooser);
@@ -93,7 +93,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       //set examples
       if(this._examples && this._examples.length > 0){
         array.forEach(this._examples, lang.hitch(this, function(example){
-          html.create('div', {
+          html.create('div',{
             innerHTML: example,
             'class': 'example-url'
           }, this.exampleTd);
@@ -130,7 +130,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
         //"/rest/services/SampleWorldCities/MapServer/"
         var url2 = matchResult[0];
         //"SampleWorldCities/MapServer/"
-        var url3 = url2.replace(/\/rest\/services\/*/, "");
+        var url3 = url2.replace(/\/rest\/services\/*/,"");
         if(url3){
           var splits = url3.split("/");
           if(splits.length === 1){
@@ -194,7 +194,6 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
           }
           def.reject();
         }));
-        this.emit('validate-click');
       }
       else{
         def.reject();

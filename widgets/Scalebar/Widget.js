@@ -39,8 +39,8 @@ define([
     domStyle,
     query) {
     var clazz = declare([BaseWidget], {
-      baseClass: "jimu-widget-scalebar",
-      name: "Scalebar",
+
+      name: 'Scalebar',
       scalebar: null,
 
       startup: function() {

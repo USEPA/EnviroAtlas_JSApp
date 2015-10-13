@@ -57,6 +57,7 @@ Global functions:
 *******************************/
 /*global testLoad, ActiveXObject */
 var
+  //apiUrl: String
   //    the URL of the ArcGIS API for JavaScript, you can change it to point to your own API.
   apiUrl = null,
 
@@ -87,22 +88,23 @@ var
   //init API URL
   var queryObject = getQueryObject();
 
-  ////////uncomment the following line when downloading the app
+  //////Replace the following line with the jsapi you prefer after download the app,
+  //////including the comment
 
-  //apiUrl = '//js.arcgis.com/3.14';
+  apiUrl = "//js.arcgis.com/3.13";
 
   //////////////////////////////////////////////////////////////
   allCookies = getAllCookies();
-  window.appInfo = {isRunInPortal: !isXT};
+  window.isRunInPortal = !isXT;
   if (!apiUrl) {
     if (queryObject.apiurl) {
       apiUrl = queryObject.apiurl;
     } else if (isXT) {
-      apiUrl = '//js.arcgis.com/3.14';
+      apiUrl = '//js.arcgis.com/3.13';
     } else {
       var portalUrl = getPortalUrlFromLocation();
       if (portalUrl.indexOf('arcgis.com') > -1) {
-        apiUrl = '//js.arcgis.com/3.14';
+        apiUrl = '//js.arcgis.com/3.13';
       } else {
         apiUrl = portalUrl + 'jsapi/jsapi/';
       }
@@ -123,7 +125,7 @@ var
       for(var i = 0; i < strCookies.length; i++){
         var splits = strCookies[i].split('=');
         if(splits && splits.length > 1){
-          cookies[splits[0].replace(/^\s+|\s+$/gm, '')] = splits[1];
+          cookies[splits[0].replace(/^\s+|\s+$/gm,'')] = splits[1];
         }
       }
     }
@@ -223,7 +225,7 @@ var
   }
 
   function localeIsSame(locale1, locale2){
-    return locale1.split('-')[0] === locale2.split('-')[0];
+    return locale1.indexOf(locale2) > -1 || locale2.indexOf(locale1) > -1;
   }
 
   function _setRTL(locale){

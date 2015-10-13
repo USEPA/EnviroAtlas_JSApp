@@ -14,8 +14,7 @@
 // limitations under the License.
 ///////////////////////////////////////////////////////////////////////////
 
-define([
-    'dojo/_base/lang',
+define(['dojo/_base/lang',
     'dojo/_base/array',
     'dojo/_base/html',
     'dojo/_base/sniff',
@@ -32,22 +31,19 @@ define([
     'esri/arcgis/utils',
     'esri/SpatialReference',
     'esri/geometry/Extent',
-    'esri/geometry/Multipoint',
-    'esri/geometry/Polyline',
-    'esri/geometry/Polygon',
     'esri/geometry/webMercatorUtils',
     'esri/tasks/GeometryService',
     'esri/tasks/ProjectParameters',
+    'jimu/portalUrlUtils',
     'esri/urlUtils',
     'esri/request',
-    'jimu/portalUrlUtils',
     './shared/utils'
   ],
 
 function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json, cookie,
-  dojoNumber, dateLocale, arcgisUtils, SpatialReference, Extent, Multipoint, Polyline, Polygon,
-  webMercatorUtils, GeometryService, ProjectParameters, esriUrlUtils, esriRequest,
-  portalUrlUtils, sharedUtils) {
+  dojoNumber, dateLocale, arcgisUtils,
+  SpatialReference, Extent, webMercatorUtils, GeometryService, ProjectParameters,
+  portalUrlUtils, esriUrlUtils, esriRequest, sharedUtils) {
   /* global esriConfig, dojoConfig, ActiveXObject */
   var mo = {};
 
@@ -86,7 +82,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
 
       if(styleNode.styleSheet && !styleNode.sheet){
         //for IE
-        styleNode.styleSheet.cssText = cssStr;
+        styleNode.styleSheet.cssText=cssStr;
       }else{
         styleNode.appendChild(html.toDom(cssStr));
       }
@@ -188,7 +184,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
    * The placeholder syntax is: ${prop}
    */
   mo.replacePlaceHolder = function(obj, props) {
-    var str = json.stringify(obj),
+    var str = JSON.stringify(obj),
       m = str.match(/\$\{(\w)+\}/g),
       i;
 
@@ -201,7 +197,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
         str = str.replace(m[i], props[p]);
       }
     }
-    return json.parse(str);
+    return JSON.parse(str);
   };
 
   /***
@@ -270,9 +266,8 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
     }
     var position = lang.clone(_position);
     if(window.isRTL){
-      var temp;
       if(typeof position.left !== 'undefined' && typeof position.right !== 'undefined'){
-        temp = position.left;
+        var temp = position.left;
         position.left = position.right;
         position.right = temp;
       }else if(typeof position.left !== 'undefined'){
@@ -282,23 +277,9 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
         position.left = position.right;
         delete position.right;
       }
-
-      if(typeof position.paddingLeft !== 'undefined' &&
-        typeof position.paddingRight !== 'undefined'){
-        temp = position.paddingLeft;
-        position.paddingLeft = position.paddingRight;
-        position.paddingRight = temp;
-      }else if(typeof position.paddingLeft !== 'undefined'){
-        position.paddingRight = position.paddingLeft;
-        delete position.paddingLeft;
-      }else if(typeof position.paddingRight !== 'undefined'){
-        position.paddingLeft = position.paddingRight;
-        delete position.paddingRight;
-      }
     }
 
-    var ps = ['left', 'top', 'right', 'bottom', 'width', 'height',
-      'padding', 'paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom'];
+    var ps = ['left', 'top', 'right', 'bottom', 'width', 'height'];
     for (var i = 0; i < ps.length; i++) {
       var p = ps[i];
       if (typeof position[p] === 'number') {
@@ -306,20 +287,8 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
       } else if (typeof position[p] !== 'undefined') {
         style[p] = position[p];
       }else{
-        if(p.substr(0, 7) === 'padding'){
-          style[p] = 0;
-        }else{
-          style[p] = 'auto';
-        }
+        style[p] = 'auto';
       }
-    }
-
-    if(typeof position.zIndex === 'undefined'){
-      //set zindex=auto instead of 0, because inner dom of widget may need to overlay other widget
-      //that has the same zindex.
-      style.zIndex = 'auto';
-    }else{
-      style.zIndex = position.zIndex;
     }
     return style;
   };
@@ -663,7 +632,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
   };
 
   mo.getTypeByGeometryType = function(esriType) {
-    var type = '';
+    var type = null;
     var _pointTypes = ['esriGeometryPoint', 'esriGeometryMultipoint'];
     var _lineTypes = ['esriGeometryLine', 'esriGeometryCircularArc', 'esriGeometryEllipticArc',
     'esriGeometryBezier3Curve', 'esriGeometryPath', 'esriGeometryPolyline'];
@@ -866,7 +835,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
   mo.getAllItemTypes = function() {
     var allTypes = [];
     //Web Content
-    var maps1 = ['Web Map', 'Web Scene', 'CityEngine Web Scene'];
+    var maps1 = ['Web Map','Web Scene', 'CityEngine Web Scene'];
     var layers1 = ['Feature Service', 'Map Service', 'Image Service', 'KML', 'WMS',
     'Feature Collection', 'Feature Collection Template', 'Geodata Service', 'Globe Service'];
     var tools1 = ['Geometry Service', 'Geocoding Service', 'Network Analysis Service',
@@ -927,7 +896,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
     //must use double quotation marks around typeKeywords
     //typekeywords:"Web AppBuilder" or typekeywords:"Web AppBuilder,Web Map"
     if(typeKeywords && typeKeywords.length > 0){
-      queryStr = ' typekeywords:"' + typeKeywords.join(',') + '" ';
+      queryStr = ' typekeywords:"'+typeKeywords.join(',')+'" ';
     }
     return queryStr;
   };
@@ -943,10 +912,6 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
     } else {
       return false;
     }
-  };
-
-  mo.isValidNumber = function(num){
-    return typeof num === 'number' && !isNaN(num);
   };
 
   mo.isObject = function(o) {
@@ -968,7 +933,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
     return str;
   };
 
-  mo._getDomainsByServerName = function(serverName){
+  mo._getDomainsByServerName= function(serverName){
     var splits = serverName.split('.');
     var length = splits.length;
     var domains = array.map(splits, lang.hitch(this, function(v, index){
@@ -1082,7 +1047,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
   mo.changeLocation = function(newUrl){
     // debugger;
     if (window.history.pushState) {
-      window.history.pushState({path:newUrl}, '', newUrl);
+      window.history.pushState({path:newUrl},'',newUrl);
     }/*else{
       window.location.href = newUrl;
     }*/
@@ -1103,6 +1068,157 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
     return obj;
   };
 
+  // reset some field of config by template config.
+  mo.setConfigByTemplate = function(config, key, value) {
+    //config: Object
+    //  the destination config object
+    //key: String
+    //  the key value relative to the config object, like this: app_p1_p2[0], app_p1_p2[1]--
+
+    var keyArray = convertToKeyArray(key);
+
+    var obj = config;
+    for (var i = 1; i < keyArray.length - 1; i++) {
+      obj = getSubObj(obj, keyArray[i]);
+      if (!obj) {
+        return;
+      }
+    }
+
+    if (keyArray[keyArray.length - 1].deleteFlag) {
+      if (value === true) {
+        if (lang.isArray(obj[keyArray[keyArray.length - 1].key])) {
+          delete obj[keyArray[keyArray.length - 1].key][keyArray[keyArray.length - 1].index];
+        } else {
+          delete obj[keyArray[keyArray.length - 1].key];
+        }
+      }
+    } else {
+      if (lang.isArray(obj[keyArray[keyArray.length - 1].key])) {
+        obj[keyArray[keyArray.length - 1].key][keyArray[keyArray.length - 1].index] = value;
+      } else {
+        obj[keyArray[keyArray.length - 1].key] = value;
+      }
+    }
+
+    function getSubObj(obj, keyInfo) {
+      if (lang.isArray(obj[keyInfo.key])) {
+        return obj[keyInfo.key][keyInfo.index];
+      } else {
+        return obj[keyInfo.key];
+      }
+    }
+
+    function convertToKeyArray(str) {
+      var arrayKey = [];
+      str.split('_').forEach(function(str) {
+        var deleteFlag = false;
+        var pos;
+        if (str.slice(str.length - 2) === "--") {
+          deleteFlag = true;
+          str = str.slice(0, str.length - 2);
+        }
+        pos = str.search(/\[[0-9]+\]/);
+        if (pos === -1) {
+          (pos = str.length);
+        }
+        arrayKey.push({
+          "key": str.slice(0, pos),
+          "index": Number(str.slice(pos + 1, -1)),
+          "deleteFlag": deleteFlag
+        });
+      });
+      return arrayKey;
+    }
+  };
+
+  // reset some field of config by template config.
+  mo.setConfigByTemplateWithId = function(config, key, value) {
+    //config: Object
+    //  the destination config object
+    //key: String
+    //  the key value relative to the config object, like this: app_p1_p2[0], app_p1_p2[1]--
+    //  howover, if the key is a wiget element, the key like this: app_p1_p2[widgetId]
+
+    // section means widget or group
+    var groupSearchStr  = "groups\\[.+\\]";
+    var widgetSearchStr = "widgets\\[.+\\]";
+    var sectionConfig = config;
+    var sectionKey    = key;
+
+    // Do not merge fields that in the widget config,
+    // beacuse widgetConfig has not been loaded before open
+    // widget if the widget has not been edited yet.
+    // Merge it when first open widget(In Widgetmanager.js).
+    if(key.search("widgets\\[.+\\]_config") >= 0) {
+      return;
+    }
+
+    // handle groups
+    var groupInfo = getSectionObject(groupSearchStr);
+    if (groupInfo.state === "deleted") {
+      return;
+    } else if (groupInfo.state === "isSection") {
+      sectionConfig = groupInfo.object;
+      sectionKey = groupInfo.key;
+    }
+
+    // handle widgets
+    var widgetInfo = getSectionObject(widgetSearchStr);
+    if (widgetInfo.state === "delete") {
+      return;
+    } else if (widgetInfo.state === "isSection") {
+      sectionConfig = widgetInfo.object;
+      sectionKey = widgetInfo.key;
+    }
+
+    mo.setConfigByTemplate(sectionConfig, sectionKey, value);
+
+    function getSectionObject(sectionSearchStr) {
+      var sectionRange = getSearchRange(key, sectionSearchStr, "]");
+      var sectionStr   = key.slice(sectionRange.firstPos, sectionRange.lastPos);// section[abcd]
+      // It's section node.
+      if (sectionRange.firstPos !== -1) {
+        var sectionId = key.slice(sectionRange.firstPos + sectionStr.indexOf('[') + 1,
+          sectionRange.lastPos - 1);
+        var subKey   = key.slice(sectionRange.lastPos + 1);
+        var sectionObject = config.getConfigElementById(sectionId);
+        if (sectionObject) {
+          return {
+            object: sectionObject,
+            key:  "section_" + subKey,
+            state: "isSection"
+          };
+        } else {
+          // means the section had been deleted.
+          return {
+            state: "deleted"
+          };
+        }
+      } else {
+        //It is not a section node.
+        return {
+          state: "isNotSection"
+        };
+      }
+    }
+
+    function getSearchRange(srcStr, searchStr, lastString) {
+      // return last position;
+      var posResult = -1, regExp, pos1, pos2, tempStr;
+      regExp = new RegExp(searchStr);
+      pos1 = srcStr.search(regExp);
+      if (pos1 >= 0 ) {
+        tempStr = srcStr.slice(pos1, srcStr.length);
+        pos2 = tempStr.indexOf(lastString);
+        posResult = pos1 + pos2 + lastString.length;
+      }
+      return {
+        firstPos: pos1,
+        lastPos: posResult
+      };
+    }
+  };
 
   mo.addManifestProperies = function(manifest) {
     manifest.icon = manifest.url + 'images/icon.png';
@@ -1117,7 +1233,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
   mo.getUniqueValues = function(url, fieldName){
     var def = new Deferred();
     var reqUrl = url.replace(/\/*$/g, '') + "/generateRenderer";
-    var classificationDef = {"type":"uniqueValueDef", "uniqueValueFields":[fieldName]};
+    var classificationDef = {"type":"uniqueValueDef","uniqueValueFields":[fieldName]};
     var str = json.stringify(classificationDef);
     esriRequest({
       url: reqUrl,
@@ -1142,10 +1258,10 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
     return def;
   };
 
-  mo.combineRadioCheckBoxWithLabel = function(inputDom, labelDom){
+  mo.combineRadioCheckBoxWithLabel = function(inputDom,labelDom){
     var isValidInput = false;
     if(inputDom && inputDom.nodeType === 1 && inputDom.tagName.toLowerCase() === 'input'){
-      var inputType = inputDom.getAttribute('type') || '';
+      var inputType = inputDom.getAttribute('type')||'';
       inputType = inputType.toLowerCase();
       if(inputType === 'radio' || inputType === 'checkbox'){
         isValidInput = true;
@@ -1164,155 +1280,6 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
       labelDom.setAttribute('for', inputId);
       html.setStyle(labelDom, 'cursor', 'pointer');
     }
-  };
-
-  mo.convertExtentToPolygon = function(extent){
-    //order: left-top right-top right-bottom left-bottom left-top
-    var xLeft = extent.xmin;
-    var xRight = extent.xmax;
-    var yBottom = extent.ymin;
-    var yTop = extent.ymax;
-
-    var polygon = new Polygon({
-      "rings": [
-        [
-          [xLeft, yTop],
-          [xRight, yTop],
-          [xRight, yBottom],
-          [xLeft, yBottom],
-          [xLeft, yTop]
-        ]
-      ],
-      "spatialReference": extent.toJson()
-    });
-    return polygon;
-  };
-
-  //combine multiple geometries into one geometry
-  mo.combineGeometries = function(geometries){
-    //geometries must have same geometryType: point,multipoint,polyline,polygon,extent
-    //geometries must have same spatialReference
-    function combinePoints(geos){
-      //geos is an array of point or multipoint
-      var mpJson = {
-        "points": [],
-        "spatialReference": geos[0].spatialReference.toJson()
-      };
-      array.forEach(geos, function(geo){
-        mpJson.points = mpJson.points.concat(geo.points);
-      });
-      var multipoint = new Multipoint(mpJson);
-      return multipoint;
-    }
-
-    function combinePolylines(geos){
-      //geos is an array of polyline
-      var polylineJson = {
-        "paths":[],
-        "spatialReference": geos[0].spatialReference.toJson()
-      };
-      array.forEach(geos, function(geo){
-        polylineJson.paths = polylineJson.paths.concat(geo.paths);
-      });
-      var polyline = new Polyline(polylineJson);
-      return polyline;
-    }
-
-    function combinePolygons(geos){
-      //geos is an array of polygon or extent
-      var polygonJson = {
-        "rings": [],
-        "spatialReference": geos[0].spatialReference.toJson()
-      };
-      array.forEach(geos, function(geo){
-        if(geo.type === 'polygon'){
-          polygonJson.rings = polygonJson.rings.concat(geo.rings);
-        }else if(geo.type === 'extent'){
-          var plg = mo.convertExtentToPolygon(geo);
-          polygonJson.rings = polygonJson.rings.concat(plg.rings);
-        }
-      });
-      var polygon = new Polygon(polygonJson);
-      return polygon;
-    }
-
-    var geometry = null;
-    if(geometries && geometries.length > 0){
-      if(geometries.length === 1){
-        geometry = geometries[0];
-      }else{
-        var g1 = null;
-        var g2 = null;
-        var geometryType = null;
-        var type = null;
-        for(var i = 0; i < geometries.length; i++){
-          g1 = geometries[i];
-          switch(g1.type){
-            case 'point':
-            case 'multipoint':
-              type = 'point';
-              break;
-            case 'polyline':
-              type = 'polyline';
-              break;
-            case 'polygon':
-            case 'extent':
-              type = 'polygon';
-              break;
-            default:
-              //invalid type
-              return null;
-          }
-
-          if(i === 0){
-            geometryType = type;
-          }else{
-            if(geometryType !== type){
-              return null;
-            }
-          }
-
-          if(i !== geometries.length - 1){
-            g2 = geometries[i + 1];
-            if(!g1.spatialReference.equals(g2.spatialReference)){
-              return null;
-            }
-          }
-        }
-
-        if(type === 'point'){
-          geometry = combinePoints(geometries);
-        }else if(type === 'polyline'){
-          geometry = combinePolylines(geometries);
-        }else if(type === 'polygon'){
-          geometry = combinePolygons(geometries);
-        }
-      }
-    }
-    return geometry;
-  };
-
-  mo.isFeaturelayerUrlSupportQuery = function(featureLayerUrl, capabilities){
-    var isSupportQuery = false;
-    var isFeatureService = (/\/featureserver\//gi).test(featureLayerUrl);
-    var isMapService = (/\/mapserver\//gi).test(featureLayerUrl);
-    capabilities = capabilities || '';
-    capabilities = capabilities.toLowerCase();
-    if (isFeatureService) {
-      isSupportQuery = capabilities.indexOf('query') >= 0;
-    } else if (isMapService) {
-      isSupportQuery = capabilities.indexOf('data') >= 0;
-    }
-    return isSupportQuery;
-  };
-
-  mo.isImageServiceSupportQuery = function(capabilities){
-    capabilities = capabilities || '';
-    return capabilities.toLowerCase().indexOf('catalog') >= 0;
-  };
-
-  mo.isStringEndWith = function(s, endS){
-    return (s.lastIndexOf(endS) + endS.length === s.length);
   };
 
   function addThemeManifestProperies(manifest) {
@@ -1541,7 +1508,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
       fullYear: true
     };
     lang.mixin(_options, options || {});
-
+    
     try {
       var ld = dateLocale.format(d, _options);
       return ld;
@@ -1643,562 +1610,5 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json
     return require.toUrl('jimu/images/webmap.png');
   };
 
-  mo.invertColor = function(hexTripletColor) {
-    var color = hexTripletColor;
-    color = color.substring(1);           // remove #
-    if (color.length === 3) {
-      color = color.slice(0, 1) +
-              color.slice(0, 1) +
-              color.slice(1, 1) +
-              color.slice(1, 1) +
-              color.slice(2, 1) +
-              color.slice(2, 1);
-    }
-    color = parseInt(color, 16);          // convert to integer
-    if(color > 7829367) {
-      return "#000000";
-    } else {
-      return "#ffffff";
-    }
-  };
-
-  /*
-  Mixin config2 to config1, return the mixed object, but do not modify config1.
-  What to mixin:
-    replace widget's position, group's panel position, map's position.
-  */
-  mo.mixinAppConfigPosition = function(config1, config2){
-    var mixinConfig = lang.clone(config1);
-    if(!config2){
-      return mixinConfig;
-    }
-    config2 = lang.clone(config2);
-    var os1 = mixinConfig.widgetOnScreen;
-    var os2 = config2.widgetOnScreen;
-    if(os2 && os2.widgets){
-      if(Object.prototype.toString.call(os2.widgets) ===
-        '[object Object]'){
-
-        array.forEach(os1.widgets, function(widget1, i){
-          var k;
-          if(widget1.uri){
-            k = widget1.uri;
-          }else{
-            k = 'ph_' + i;
-          }
-
-          if(os2.widgets[k] && os2.widgets[k].position){
-            if(!os2.widgets[k].position.relativeTo){
-              os2.widgets[k].position.relativeTo = 'map';
-            }
-            widget1.position = os2.widgets[k].position;
-          }
-        }, this);
-      }else{
-        array.forEach(os2.widgets, function(widget2, i){
-          if(widget2.position && !widget2.position.relativeTo){
-            widget2.position.relativeTo = 'map';
-          }
-          if(os1.widgets[i] && widget2.position){
-            os1.widgets[i].position = widget2.position;
-          }
-        });
-      }
-    }
-
-    if(os2 && os2.groups){
-      if(Object.prototype.toString.call(os2.groups) ===
-        '[object Object]'){
-
-        array.forEach(os1.groups, function(group1, i){
-          var k;
-          if(group1.label){
-            k = group1.label;
-          }else{
-            k = 'g_' + i;
-          }
-
-          if(os2.groups[k] && os2.groups[k].panel && os2.groups[k].panel.position){
-            if(!os2.groups[k].panel.position.relativeTo){
-              os2.groups[k].panel.position.relativeTo = 'map';
-            }
-            group1.panel.position = os2.groups[k].panel.position;
-          }
-        }, this);
-      }else{
-        array.forEach(os2.groups, function(group2, i){
-          if(group2.panel && group2.panel.position &&
-            !group2.panel.position.relativeTo){
-            group2.panel.position.relativeTo = 'map';
-          }
-          if(os1.groups[i] && group2.panel.position){
-            os1.groups[i].panel.position = group2.panel.position;
-          }
-        });
-      }
-    }
-
-    if(config2.map && config2.map.position){
-      if(mixinConfig.map){
-        mixinConfig.map.position = config2.map.position;
-      }else{
-        mixinConfig.map = {position: config2.map.position};
-      }
-    }
-
-    if(config2.widgetPool && config2.widgetPool.panel){
-      if(config2.widgetPool.panel.position && !config2.widgetPool.panel.position.relativeTo){
-        config2.widgetPool.panel.position.relativeTo = 'map';
-      }
-      mixinConfig.widgetPool.panel.position = config2.widgetPool.panel.position;
-    }
-
-    //mobileLayout is used to override it's main config, so replace totally
-    if(config2.mobileLayout){
-      mixinConfig.mobileLayout = config2.mobileLayout;
-    }
-    return mixinConfig;
-  };
-  /**********************************
-   * About template
-   **********************************/
-
-  // reset some field of config by template config.
-  function getOrSetConfigByTemplate(config, key, value) {
-    //config: Object
-    //  the destination config object
-    //key: String
-    //  the key value relative to the config object, like this: app_p1_p2[0], app_p1_p2[1]--
-    //value: String
-    // value is undefined: get the value correspond to the key and save to 'value' param.
-    // value is not undefined: set the value of key.
-    var keyArray = convertToKeyArray(key);
-
-    var obj = config;
-    for (var i = 1; i < keyArray.length - 1; i++) {
-      obj = getSubObj(obj, keyArray[i]);
-      if (!obj) {
-        return;
-      }
-    }
-
-    if (keyArray[keyArray.length - 1].deleteFlag) {
-      if (value === true) {
-        if (lang.isArray(obj[keyArray[keyArray.length - 1].key])) {
-          delete obj[keyArray[keyArray.length - 1].key][keyArray[keyArray.length - 1].index];
-        } else {
-          delete obj[keyArray[keyArray.length - 1].key];
-        }
-      }
-    } else {
-      if (lang.isArray(obj[keyArray[keyArray.length - 1].key])) {
-        if(value === undefined) {
-          // get value to valueParam
-          return obj[keyArray[keyArray.length - 1].key][keyArray[keyArray.length - 1].index];
-        } else {
-          // set value to config
-          obj[keyArray[keyArray.length - 1].key][keyArray[keyArray.length - 1].index] = value;
-        }
-      } else {
-        if(value === undefined) {
-          return obj[keyArray[keyArray.length - 1].key];
-        } else {
-          obj[keyArray[keyArray.length - 1].key] = value;
-        }
-      }
-    }
-
-    function getSubObj(obj, keyInfo) {
-      if (lang.isArray(obj[keyInfo.key])) {
-        return obj[keyInfo.key][keyInfo.index];
-      } else {
-        return obj[keyInfo.key];
-      }
-    }
-
-    function convertToKeyArray(str) {
-      var arrayKey = [];
-      str.split('_').forEach(function(str) {
-        var deleteFlag = false;
-        var pos;
-        if (str.slice(str.length - 2) === "--") {//Builder will not export this kind of key.
-          deleteFlag = true;
-          str = str.slice(0, str.length - 2);
-        }
-        pos = str.search(/\[[0-9]+\]/);
-        if (pos === -1) {
-          (pos = str.length);
-        }
-        arrayKey.push({
-          "key": str.slice(0, pos),
-          "index": Number(str.slice(pos + 1, -1)),
-          "deleteFlag": deleteFlag
-        });
-      });
-      return arrayKey;
-    }
-  }
-
-
-
-  // reset some field of config by template config.
-  function getOrSetConfigByTemplateWithId(config, key, value) {
-    //config: Object
-    //  the destination config object
-    //key: String
-    //  the key value relative to the config object, like this: app_p1_p2[0], app_p1_p2[1]--;
-    //  howover, if the key is a wiget element, the key like this: app_p1_p2[widgetId];
-    //  does not set anything if the key is not valid.
-    //value: String
-    // value is undefined: get the value correspond to the key and return value.
-    // value is not undefined: set the value of key.
-
-
-
-    // section means widget or group
-    var groupSearchStr  = "groups\\[.+\\]";
-    var widgetSearchStr = "widgets\\[.+\\]";
-    var sectionConfig = config;
-
-    key = key.replace(/\//g, '_');
-    var sectionKey    = key;
-
-    // Do not merge fields that in the widget config,
-    // beacuse widgetConfig has not been loaded before open
-    // widget if the widget has not been edited yet.
-    // Merge it when first open widget(In Widgetmanager.js).
-    //
-    // if(key.search("widgets\\[.+\\]_config") >= 0) {
-    //   return;
-    // }
-    // does not neet to "return null", regarde widget_config_key as invalid key.
-
-    // handle groups
-    var groupInfo = getSectionObject(groupSearchStr);
-    if (groupInfo.state === "deleted") {
-      return;
-    } else if (groupInfo.state === "isSection") {
-      sectionConfig = groupInfo.object;
-      sectionKey = groupInfo.key;
-    }
-
-    // handle widgets
-    var widgetInfo = getSectionObject(widgetSearchStr);
-    if (widgetInfo.state === "delete") {
-      return;
-    } else if (widgetInfo.state === "isSection") {
-      sectionConfig = widgetInfo.object;
-      sectionKey = widgetInfo.key;
-    }
-
-    return getOrSetConfigByTemplate(sectionConfig, sectionKey, value);
-
-    function getSectionObject(sectionSearchStr) {
-      var sectionRange = mo.template.getSearchRange(key, sectionSearchStr, "]");
-      var sectionStr   = key.slice(sectionRange.firstPos, sectionRange.lastPos);// section[abcd]
-      // It's section node.
-      if (sectionRange.firstPos !== -1) {
-        var sectionId = key.slice(sectionRange.firstPos + sectionStr.indexOf('[') + 1,
-          sectionRange.lastPos - 1);
-        var subKey   = key.slice(sectionRange.lastPos + 1);
-        var sectionObject = mo.getConfigElementById(config, sectionId);
-        if (sectionObject) {
-          return {
-            object: sectionObject,
-            key:  "section_" + subKey,
-            state: "isSection"
-          };
-        } else {
-          // means the section had been deleted.
-          return {
-            state: "deleted"
-          };
-        }
-      } else {
-        //It is not a section node.
-        return {
-          state: "isNotSection"
-        };
-      }
-    }
-  }
-
-
-  mo.template = {
-    groupIdentification: "groups\\[.+\\]",
-
-    widgetIdentification: "widgets\\[.+\\]",
-
-    getSearchRange: function(srcStr, searchStr, lastString) {
-      // return value:{
-      //   firstPos:
-      //   lastPos:
-      //}
-      // if firstPos === -1: does not find searchStr from srcStr
-      var posResult = -1, regExp, pos1, pos2, tempStr;
-      regExp = new RegExp(searchStr);
-      pos1 = srcStr.search(regExp);
-      if (pos1 >= 0 ) {
-        tempStr = srcStr.slice(pos1, srcStr.length);
-        pos2 = tempStr.indexOf(lastString);
-        posResult = pos1 + pos2 + lastString.length;
-      }
-      return {
-        firstPos: pos1,
-        lastPos: posResult
-      };
-    },
-
-    setConfigValue: function(config, key, value) {
-      //config: Object
-      //  the destination config object
-      //key: String
-      //  the key value relative to the config object, like this: app_p1_p2[0], app_p1_p2[1]--
-      getOrSetConfigByTemplate(config, key, value);
-    },
-
-    getConfigValue: function(config, key) {
-      //config: Object
-      //  the destination config object
-      //key: String
-      //  the key value relative to the config object, like this: app_p1_p2[0], app_p1_p2[1]--
-      // return value:
-      //  return value of key of config.
-      //  return 'undefined' if the key is invalid.
-      return getOrSetConfigByTemplate(config, key);
-    },
-
-    setConfigValueWithId: function(config, key, value) {
-      //config: Object
-      //  the destination config object
-      //key: String
-      //  the key value relative to the config object, like this: app_p1_p2[0], app_p1_p2[1]--
-      //  howover, if the key is a wiget element, the key like this: app_p1_p2[widgetId]
-      getOrSetConfigByTemplateWithId(config, key, value);
-    },
-
-    getConfigValueWithId: function(config, key) {
-      //config: Object
-      //  the destination config object
-      //key: String
-      //  the key value relative to the config object, like this: app_p1_p2[0], app_p1_p2[1]--
-      //  howover, if the key is a wiget element, the key like this: app_p1_p2[widgetId]
-      // return value:
-      //  return value of key of config.
-      //  return 'undefined' if the key is invalid.
-      return getOrSetConfigByTemplateWithId(config, key);
-    },
-
-    getKeyInfo: function(key){
-      var widgetId = this.getWidgetIdByKey(key);
-      if(widgetId !== null){
-        return {
-          type: 'widget',
-          id: widgetId
-        };
-      }else{
-        var groupId = this.getGroupIdByKey(key);
-        if(groupId !== null){
-          return {
-            type: 'group',
-            id: groupId
-          };
-        }else{
-          return {
-            type: 'unknow', //TODO
-            id: null
-          };
-        }
-      }
-    },
-
-    getWidgetIdByKey: function(key) {
-      //key: String
-      //  the key value relative to the config object, like this: app_p1_p2[0], app_p1_p2[1]--
-      // id: if its a widget.
-      // null: it is not a widget
-      var widgetId;
-      var widgetRange = mo.template.getSearchRange(key,
-                                                   mo.template.widgetIdentification, "]");
-      if(widgetRange.firstPos === -1) {
-        widgetId = null;
-      } else {
-        // widget[widget_id]
-        var widgetStr  = key.slice(widgetRange.firstPos, widgetRange.lastPos);
-        widgetId = key.slice(widgetRange.firstPos + widgetStr.indexOf('[') + 1,
-                                       widgetRange.lastPos - 1);
-      }
-      return widgetId;
-
-    },
-
-    getGroupIdByKey: function(key) {
-      //key: String
-      //  the key value relative to the config object, like this: app_p1_p2[0], app_p1_p2[1]--
-      //return value:
-      // id: if its a group.
-      // null: it is not a group
-
-      //TODO widget in group should be widget
-      var groupId;
-      var groupRange = mo.template.getSearchRange(key,
-                                                   mo.template.groupIdentification, "]");
-      if(groupRange.firstPos === -1) {
-        groupId = null;
-      } else {
-        // group[group_id]
-        var groupStr  = key.slice(groupRange.firstPos, groupRange.lastPos);
-        groupId = key.slice(groupRange.firstPos + groupStr.indexOf('[') + 1,
-                                       groupRange.lastPos - 1);
-      }
-      return groupId;
-    },
-
-
-    getConfigedWidgetsByTemplateConfig: function(templateConfig) {
-      var widgetIds = [];
-      var widgetConfigIdentification = mo.template.widgetIdentification + "_config";
-      var widgetConfigRange;
-
-      array.forEach(templateConfig.configurationSettings, function(category) {
-        array.forEach(category.fields, function(field) {
-          if(field.fieldName) {
-            widgetConfigRange = mo.template.getSearchRange(field.fieldName,
-                                            widgetConfigIdentification, "]");
-            if(widgetConfigRange.firstPos >= 0) {
-              // the widget has config property.
-              pushWithoutRepeat(widgetIds, mo.template.getWidgetIdByKey(field.fieldName));
-            }
-          }
-        }, this);
-      }, this);
-
-      return widgetIds;
-
-      function pushWithoutRepeat(desArray, value) {
-        if(desArray.indexOf(value) === -1) {
-          desArray.push(value);
-        }
-      }
-    },
-
-    // getConfigedWidgetsByTemplateAppConfig: function(templateAppConfig) {
-    //   // return value.
-    //   //   widget IDs arrary that contain all widgets which have been configed.
-
-    //   var widgetIds = [];
-    //   var widgetConfigIdentification = mo.template.widgetIdentification + "_config";
-    //   var widgetConfigRange;
-
-    //   for (var key in templateAppConfig.values) {
-    //     if(templateAppConfig.values.hasOwnProperty(key) &&
-    //        (typeof templateAppConfig.values[key] !== 'function')) {
-    //       widgetConfigRange = mo.template.getSearchRange(key,
-    //                                       widgetConfigIdentification, "]");
-    //       if(widgetConfigRange.firstPos >= 0) {
-    //         // the widget has config property.
-    //         pushWithoutRepeat(widgetIds, mo.template.getWidgetIdByKey(key));
-    //       }
-    //     }
-    //   }
-
-    //   return widgetIds;
-
-    //   function pushWithoutRepeat(desArray, value) {
-    //     if(desArray.indexOf(value) === -1) {
-    //       desArray.push(value);
-    //     }
-    //   }
-    // },
-
-    mergeTemplateAppConfigToAppConfig: function(appConfig, templateAppConfig, webmapInfo){
-      //webmapInfo != undefined means templateAppConfig is from AGOL,
-      //use this webmap info in appConfig
-      var i;
-      var screenSectionConfig = appConfig.widgetOnScreen;
-      var portalUrl = appConfig.portalUrl;
-
-      //Both WAB template app and AGOL template app have webmap value
-      if(templateAppConfig.values.webmap){
-        //app created from mycontent has no webmap
-        appConfig.map.itemId = templateAppConfig.values.webmap;
-      }
-
-      if(webmapInfo){
-        // use default mapOptions of current webmap.
-        if(appConfig.map.mapOptions){
-          mo.deleteMapOptions(appConfig.map.mapOptions);
-        }
-        appConfig.map.portalUrl = portalUrl;
-
-        if (!templateAppConfig.values.app_title) {
-          templateAppConfig.values.app_title = webmapInfo.title;
-        }
-        if (!templateAppConfig.values.app_subtitle) {
-          templateAppConfig.values.app_subtitle = webmapInfo.snippet;
-        }
-      }
-
-      //merge values
-      for (var key in templateAppConfig.values) {
-        if (key !== "webmap") {
-          mo.template.setConfigValueWithId(appConfig, key, templateAppConfig.values[key]);
-        }
-      }
-
-      reorder();
-
-      function reorder() {
-        //reorderWidgets
-        appConfig.widgetPool.widgets = reorderWidgets(appConfig.widgetPool.widgets);
-        screenSectionConfig.widgets = reorderWidgets(screenSectionConfig.widgets);
-        if (appConfig.widgetPool.groups) {
-          for (i = 0; i < appConfig.widgetPool.groups.length; i++) {
-            appConfig.widgetPool.groups[i].widgets =
-            reorderWidgets(appConfig.widgetPool.groups[i].widgets);
-          }
-        }
-        if (screenSectionConfig.groups) {
-          for (i = 0; i < screenSectionConfig.groups.length; i++) {
-            screenSectionConfig.groups[i].widgets =
-            reorderWidgets(screenSectionConfig.groups[i].widgets);
-          }
-        }
-      }
-
-      function reorderWidgets(widgetArray) {
-        var tempWidgets = [];
-        array.forEach(widgetArray, function(widget) {
-          if (widget) {
-            tempWidgets.push(widget);
-          }
-        }, this);
-        return tempWidgets;
-      }
-
-      return appConfig;
-    }
-  };
-
-  //remove the options that are relative to map's display
-  //this method should be called when map is changed.
-  mo.deleteMapOptions = function(mapOptions){
-    if(!mapOptions){
-      return;
-    }
-    delete mapOptions.extent;
-    delete mapOptions.lods;
-    delete mapOptions.center;
-    delete mapOptions.scale;
-    delete mapOptions.zoom;
-    delete mapOptions.maxScale;
-    delete mapOptions.maxZoom;
-    delete mapOptions.minScale;
-    delete mapOptions.minZoom;
-  };
-
-  mo.localeIsSame = function(locale1, locale2){
-    return locale1.split('-')[0] === locale2.split('-')[0];
-  };
   return mo;
 });

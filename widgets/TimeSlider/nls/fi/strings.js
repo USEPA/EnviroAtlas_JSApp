@@ -1,7 +1,7 @@
 ﻿define(
    ({
     _widgetLabel: "Aikaliukusäädin",
-    enableTips: "Tuo ajan liukusäädin näkyviin napsauttamalla.",
+    enableTips: "Toista ajan liukusäädin napsauttamalla.",
     disableTips: "Yhtään ajan huomioivaa karttatasoa ei ole näkyvissä.",
     timeExtent: "${FROMTIME} - ${ENDTIME}",
     layers: "Karttatasot: ",

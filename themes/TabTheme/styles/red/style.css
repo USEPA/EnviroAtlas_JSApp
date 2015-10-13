@@ -1,12 +1,12 @@
-.jimu-main-background{
-  background-color: #c82f47;
+.jimu-main-bgcolor{
+  background-color: #c92e49;
 }
 
-.TabTheme .jimu-widget-header .jimu-subtitle{
+.TabTheme .jimu-widget-header .subtitle{
   color: #f3cfd5;
 }
-.TabTheme .jimu-widget-header .links .jimu-link{
-  color: #f3cfd5;
+.TabTheme .jimu-widget-header .links .link{
+  color: #f3cfd5; 
 }
 .jimu-widget-sidebar-controller .max-pane,
 .jimu-widget-sidebar-controller .tab-resizer,
@@ -29,12 +29,12 @@
 	color: #d83f59;
 }
 .popup-links {
-background-color: #c82f47;
+background-color: #c92e49;
 }
 .popup-links .link-section {
-	background-color: #c82f47;
+	background-color: #c92e49;
 }
-.jimu-preload-widget-icon-panel>.jimu-panel-title{
+.jimu-preload-widget-icon-panel>.title{
   color: #fff;
-  background-color: #c82f47;
+  background-color: #c92e49;
 }

@@ -1,66 +1,66 @@
 ﻿define(
    ({
     common: {
-      ok: "OK",
-      cancel: "Storno",
-      next: "Další",
-      back: "Zpět"
+      ok: 'OK',
+      cancel: 'Storno',
+      next: 'Další',
+      back: 'Zpět'
     },
     errorCode: "Kód",
     errorMessage: "Zpráva",
     errorDetail: "Podrobnosti",
     widgetPlaceholderTooltip: "Chcete-li jej nastavit, přejděte do nabídky Widgety a klikněte na odpovídající zástupný znak.",
     symbolChooser: {
-      preview: "Náhled",
-      basic: "Základní",
-      arrows: "Šipky",
-      business: "Obchod",
-      cartographic: "Kartografický",
-      nationalParkService: "úřad National Park Service",
-      outdoorRecreation: "Rekreace ve volné přírodě",
-      peoplePlaces: "Lidé a místa",
-      safetyHealth: "Bezpečnost a zdraví",
-      shapes: "Tvary",
-      transportation: "Doprava",
-      symbolSize: "Velikost symbolu",
-      color: "Barva",
-      alpha: "Alfa",
-      outlineColor: "Barva obrysu",
-      outlineWidth: "Šířka obrysu",
-      style: "Styl",
-      width: "Šířka",
-      text: "Text",
-      fontColor: "Barva písma",
-      fontSize: "Velikost písma",
-      transparency: "Průhlednost",
-      solid: "Plná",
-      dash: "Přerušovaná",
-      dot: "Tečkovaná",
-      dashDot: "Čerchovaná",
-      dashDotDot: "Dvojčerchovaná"
+      preview: 'Náhled',
+      basic: 'Základní',
+      arrows: 'Šipky',
+      business: 'Obchod',
+      cartographic: 'Kartografický',
+      nationalParkService: 'úřad National Park Service',
+      outdoorRecreation: 'Rekreace ve volné přírodě',
+      peoplePlaces: 'Lidé a místa',
+      safetyHealth: 'Bezpečnost a zdraví',
+      shapes: 'Tvary',
+      transportation: 'Doprava',
+      symbolSize: 'Velikost symbolu',
+      color: 'Barva',
+      alpha: 'Alfa',
+      outlineColor: 'Barva obrysu',
+      outlineWidth: 'Šířka obrysu',
+      style: 'Styl',
+      width: 'Šířka',
+      text: 'Text',
+      fontColor: 'Barva písma',
+      fontSize: 'Velikost písma',
+      transparency: 'Průhlednost',
+      solid: 'Plná',
+      dash: 'Přerušovaná',
+      dot: 'Tečkovaná',
+      dashDot: 'Čerchovaná',
+      dashDotDot: 'Dvojčerchovaná'
     },
     transparency: {
-      opaque: "Neprůhledná",
-      transparent: "Průhledná"
+      opaque: 'Neprůhledná',
+      transparent: 'Průhledná'
     },
     rendererChooser: {
-      domain: "Doména",
-      use: "Použít",
-      singleSymbol: "Jeden symbol",
-      uniqueSymbol: "Unikátní symboly",
-      color: "Barva",
-      size: "Velikost",
-      toShow: "Zobrazit",
-      colors: "Barvy",
-      classes: "třídami",
-      symbolSize: "Velikost symbolu",
-      addValue: "Přidat hodnotu",
-      setDefaultSymbol: "Nastavit výchozí symbol",
-      defaultSymbol: "Výchozí symbol",
-      selectedSymbol: "Vybraný symbol",
-      value: "Hodnota",
-      label: "Štítek",
-      range: "Rozmezí"
+      domain: 'Doména',
+      use: 'Použít',
+      singleSymbol: 'Jeden symbol',
+      uniqueSymbol: 'Unikátní symboly',
+      color: 'Barva',
+      size: 'Velikost',
+      toShow: 'Zobrazit',
+      colors: 'Barvy',
+      classes: 'třídami',
+      symbolSize: 'Velikost symbolu',
+      addValue: 'Přidat hodnotu',
+      setDefaultSymbol: 'Nastavit výchozí symbol',
+      defaultSymbol: 'Výchozí symbol',
+      selectedSymbol: 'Vybraný symbol',
+      value: 'Hodnota',
+      label: 'Štítek',
+      range: 'Rozmezí'
     },
     drawBox: {
       point: "Bod",
@@ -93,17 +93,17 @@
       loading: "Načítání"
     },
     basicServiceBrowser: {
-      noServicesFound: "Nebyly nalezeny žádné služby.",
-      unableConnectTo: "Nelze se připojit k",
-      invalidUrlTip: "Zadaná adresa URL je neplatná nebo nepřístupná."
+      noServicesFound: 'Nebyly nalezeny žádné služby.',
+      unableConnectTo: 'Nelze se připojit k',
+      invalidUrlTip: 'Zadaná adresa URL je neplatná nebo nepřístupná.'
     },
     serviceBrowser: {
-      noGpFound: "Nebyly nalezeny žádné geoprocessingové služby",
-      unableConnectTo: "Nelze se připojit k"
+      noGpFound: 'Nebyly nalezeny žádné geoprocessingové služby',
+      unableConnectTo: 'Nelze se připojit k'
     },
     layerServiceBrowser: {
-      noServicesFound: "Nebyly nalezeny žádné mapové služby ani služby prvků.",
-      unableConnectTo: "Nelze se připojit k"
+      noServicesFound: 'Nebyly nalezeny žádné mapové služby ani služby prvků.',
+      unableConnectTo: 'Nelze se připojit k'
     },
     basicServiceChooser: {
       validate: "Ověřit",
@@ -111,10 +111,10 @@
       set: "Nastavit"
     },
     urlInput: {
-      invalidUrl: "Neplatná adresa URL"
+      invalidUrl: 'Neplatná adresa URL'
     },
     urlComboBox: {
-      invalidUrl: "Neplatná adresa URL"
+      invalidUrl: 'Neplatná adresa URL'
     },
     filterBuilder: {
       addAnotherExpression: "Přidat výraz filtru",
@@ -131,7 +131,7 @@
       valueTooltip: "Vložit hodnotu",
       fieldTooltip: "Vybrat z existujícího pole",
       uniqueValueTooltip: "Vybrat z unikátních hodnot ve vybraném poli",
-      stringOperatorIs: "je", // e.g. <stringFieldName> is "California"
+      stringOperatorIs: "je", // e.g. <stringFieldName> is 'California'
       stringOperatorIsNot: "není",
       stringOperatorStartsWith: "začíná na",
       stringOperatorEndsWith: "končí na",
@@ -139,7 +139,7 @@
       stringOperatorDoesNotContain: "neobsahuje",
       stringOperatorIsBlank: "je prázdný",
       stringOperatorIsNotBlank: "není prázdný",
-      dateOperatorIsOn: "je na", // e.g. <dateFieldName> is on "1/1/2012"
+      dateOperatorIsOn: "je na", // e.g. <dateFieldName> is on '1/1/2012'
       dateOperatorIsNotOn: "není na",
       dateOperatorIsBefore: "je před",
       dateOperatorIsAfter: "je za",
@@ -192,22 +192,9 @@
       selectFromOnline: "Přidat z ArcGIS Online",
       chooseLayer: "Zvolte vrstvu prvků."
     },
-    queryableLayerSource: {
-      layer: "Vrstva",
-      browse: "Procházet",
-      selectFromMap: "Vybrat z mapy",
-      selectFromPortal: "Přidat z Portal for ArcGIS",
-      addServiceUrl: "Přidat adresu URL služby",
-      inputLayerUrl: "Adresa URL vstupní vrstvy",
-      selectLayer: "Zvolte vrstvu ze současné mapy.",
-      chooseItem: "Zvolte položku.",
-      setServiceUrl: "Zadejte adresu URL služby.",
-      selectFromOnline: "Přidat z ArcGIS Online",
-      chooseLayer: "Zvolte vrstvu."
-    },
     gpSource: {
       selectFromPortal: "Přidat z Portal for ArcGIS",
-      addServiceUrl: "Přidat URL adresu služby",
+      addServiceUrl: "Přidat adresu URL služby",
       selectFromOnline: "Přidat z ArcGIS Online",
       setServiceUrl: "Zadejte adresu URL geoprocessingové služby.",
       chooseItem: "Zvolte položku geoprocessingové služby.",
@@ -240,37 +227,35 @@
       notSupportQuery: "Tato služba nepodporuje dotazování."
     },
     basicLayerChooserFromMap: {
-      noLayersTip: "V mapě není k dispozici žádná vhodná vrstva."
+      noLayersTip: "V mapě není k dispozici žádná vrstva."
     },
     layerInfosMenu: {
-      titleBasemap: "Podkladové mapy",
-      titleLayers: "Operační vrstvy",
-      labelLayer: "Název vrstvy",
-      itemZoomTo: "Přiblížit na",
-      itemTransparency: "Průhlednost",
-      itemTransparent: "Průhledná",
-      itemOpaque: "Neprůhledná",
-      itemMoveUp: "Přesunout nahoru",
-      itemMoveDown: "Přesunout dolů",
-      itemDesc: "Popis",
-      itemDownload: "Stáhnout",
-      itemToAttributeTable: "Otevřít atributovou tabulku"
+      titleBasemap: 'Podkladové mapy',
+      titleLayers: 'Operační vrstvy',
+      labelLayer: 'Název vrstvy',
+      itemZoomTo: 'Přiblížit na',
+      itemTransparency: 'Průhlednost',
+      itemTransparent: 'Průhledná',
+      itemOpaque: 'Neprůhledná',
+      itemMoveUp: 'Přesunout nahoru',
+      itemMoveDown: 'Přesunout dolů',
+      itemDesc: 'Popis',
+      itemDownload: 'Stáhnout',
+      itemToAttributeTable: 'Otevřít atributovou tabulku'
     },
     imageChooser: {
       unsupportReaderAPI: "ÚKOL: Prohlížeč nepodporuje API průzkumníka souborů.",
       readError: "Soubor se nepodařilo načíst.",
-      unknowError: "Operace nelze dokončit",
       invalidType: "Neplatný typ souboru.",
       exceed: "Velikost souboru nesmí překročit 1024 KB.",
       enableFlash: "ÚKOL: Povolit Flash.",
-      cropWaining: "Zvolte prosím fotografii s rozměry alespoň ${width}×${height} pixelů.",
       toolTip: "V zájmu dosažení nejlepších výsledků by měl být obrázek ${width} pixelů široký a ${height} pixelů vysoký. Obrázky jiných rozměrů budou upraveny. Lze použít následující formáty: PNG, GIF a JPEG."
     },
     simpleTable: {
-      moveUp: "Přesunout nahoru",
-      moveDown: "Přesunout dolů",
-      deleteRow: "Odstranit",
-      edit: "Upravit"
+      moveUp: 'Přesunout nahoru',
+      moveDown: 'Přesunout dolů',
+      deleteRow: 'Odstranit',
+      edit: 'Upravit'
     }
   })
 );

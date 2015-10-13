@@ -102,11 +102,12 @@ LayerInfo, LayerInfoForDefaultWMS, LayerInfoFactory, FeatureLayer) {
       array.forEach(this.layerObject.layerInfos, function(layerInfo){
         var subLayerInfo;
         subLayerInfo = LayerInfoFactory.getInstance().create({
-          layerObject: this.layerObject, //the subLayerObject is WMS layer also.
+          layerObject: this.layerObject, //the subLayerObject is WMS layer also. 
           title: layerInfo.label || layerInfo.title || layerInfo.name || " ",
           id: layerInfo.name || " ", // WMS sub layer does not has id, the name is id.
           wms: {"layerInfo": this, "subId": layerInfo.name, "wmsLayerInfo": layerInfo},
           selfType: 'wms',
+          url: this.layerObject.url,
           parentLayerInfo: this
         });
 

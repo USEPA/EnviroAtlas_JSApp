@@ -172,7 +172,7 @@ require([
 					var rows = outputCoordinateTable.getRows();
 					var selecthandle = on(outputCoordinateTable, 'row-select', function(tr) {
 						d.getTestCallback(function() {
-							var trs = query('.simple-table-row.selected', outputCoordinateTable.tbody);
+							var trs = query('.simple-table-tr.selected', outputCoordinateTable.tbody);
 
 							t.t(trs.length === 1);
 							t.t(utils.isEqual(trs[0], tr));
@@ -252,7 +252,7 @@ require([
 						})();
 					});
 					handles.push(handle);
-					var actionsEditNode = query('.simple-table-row .actions-td .row-edit-div', outputCoordinateTable.tbody)[0];
+					var actionsEditNode = query('.simple-table-tr .actions-td .row-edit-div', outputCoordinateTable.tbody)[0];
 					console.log(actionsEditNode);
 					robot.mouseMoveAt(actionsEditNode, 200, 100);
 					robot.mouseClick({
@@ -289,7 +289,7 @@ require([
 						return false;
 					});
 					handles.push(handle2);
-					var actionsEditNode = query('.simple-table-row .actions-td .row-edit-div', outputCoordinateTable.tbody)[2];
+					var actionsEditNode = query('.simple-table-tr .actions-td .row-edit-div', outputCoordinateTable.tbody)[2];
 					console.log(actionsEditNode);
 					robot.mouseMoveAt(actionsEditNode, 200, 100);
 					robot.mouseClick({
@@ -325,7 +325,7 @@ require([
 						return false;
 					});
 					handles.push(handle);
-					var actionsUpNode = query('.simple-table-row .actions-td .row-up-div', outputCoordinateTable.tbody)[1];
+					var actionsUpNode = query('.simple-table-tr .actions-td .row-up-div', outputCoordinateTable.tbody)[1];
 					robot.mouseMoveAt(actionsUpNode, 200, 100);
 					robot.mouseClick({
 						left: true,
@@ -333,7 +333,7 @@ require([
 						right: false
 					}, 100);
 					robot.sequence(d.getTestCallback(function() {
-						var trs = query('.simple-table-row', outputCoordinateTable.tbody);
+						var trs = query('.simple-table-tr', outputCoordinateTable.tbody);
 						var ftrData = outputCoordinateTable.getRowData(trs[0]),
 							strData = outputCoordinateTable.getRowData(trs[1]);
 
@@ -365,7 +365,7 @@ require([
 						return false;
 					});
 					handles.push(handle);
-					var actionsUpNode = query('.simple-table-row .actions-td .row-down-div', outputCoordinateTable.tbody)[1];
+					var actionsUpNode = query('.simple-table-tr .actions-td .row-down-div', outputCoordinateTable.tbody)[1];
 					robot.mouseMoveAt(actionsUpNode, 200, 100);
 					robot.mouseClick({
 						left: true,
@@ -373,7 +373,7 @@ require([
 						right: false
 					}, 100);
 					robot.sequence(d.getTestCallback(function() {
-						var trs = query('.simple-table-row', outputCoordinateTable.tbody);
+						var trs = query('.simple-table-tr', outputCoordinateTable.tbody);
 						var ttrData = outputCoordinateTable.getRowData(trs[2]),
 							strData = outputCoordinateTable.getRowData(trs[1]);
 
@@ -405,7 +405,7 @@ require([
 						return false;
 					});
 					handles.push(handle);
-					var actionsUpNode = query('.simple-table-row .actions-td .row-delete-div', outputCoordinateTable.tbody)[1];
+					var actionsUpNode = query('.simple-table-tr .actions-td .row-delete-div', outputCoordinateTable.tbody)[1];
 					robot.mouseMoveAt(actionsUpNode, 200, 100);
 					robot.mouseClick({
 						left: true,
@@ -444,7 +444,7 @@ require([
 						})();
 					});
 					handles.push(handle);
-					var trNode = query('.simple-table-row', outputCoordinateTable.tbody)[1];
+					var trNode = query('.simple-table-tr', outputCoordinateTable.tbody)[1];
 					console.log(trNode);
 					robot.mouseMoveAt(trNode, 200, 100);
 					robot.mouseClick({
@@ -479,7 +479,7 @@ require([
 						})();
 					});
 					handles.push(handle);
-					var trNode = query('.simple-table-row', outputCoordinateTable.tbody)[2];
+					var trNode = query('.simple-table-tr', outputCoordinateTable.tbody)[2];
 					console.log(trNode);
 					robot.mouseMoveAt(trNode, 200, 100);
 					robot.mouseClick({

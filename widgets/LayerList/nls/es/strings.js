@@ -15,7 +15,7 @@
     itemToAttributeTable: "Abrir tabla de atributos",
     itemShowItemDetails: "Mostrar detalles del elemento",
     empty: "vacío",
-    removePopup: "Deshabilitar ventana emergente",
+    removePopup: "Quitar elemento emergente",
     enablePopup: "Habilitar elemento emergente"
   })
 );

@@ -32,32 +32,21 @@ define([
     init: function() {
     },
 
+    getUrl: function() {
+      return this.layerObject.url;
+    },
+
     getLayerObject: function() {
       var def = new Deferred();
       if(this.layerObject.empty) {
-        if(this.layerObject.url) {
-          this.layerObject = new FeatureLayer(this.layerObject.url,
-                                              this.layerObject.options || {});
-          this.layerObject.on('load', lang.hitch(this, function() {
-            def.resolve(this.layerObject);
-          }));
-          this.layerObject.on('error', lang.hitch(this, function(/*err*/) {
-            //def.reject(err);
-            def.resolve(null);
-          }));
-        } else if(this.layerObject.featureCollectionData){
-          this.layerObject = new FeatureLayer(this.layerObject.featureCollectionData,
-                                              this.layerObject.options || {});
-          this.layerObject.on('load', lang.hitch(this, function() {
-            def.resolve(this.layerObject);
-          }));
-          this.layerObject.on('error', lang.hitch(this, function(/*err*/) {
-            //def.reject(err);
-            def.resolve(null);
-          }));
-        } else {
+        this.layerObject = new FeatureLayer(this.layerObject.url);
+        this.layerObject.on('load', lang.hitch(this, function() {
+          def.resolve(this.layerObject);
+        }));
+        this.layerObject.on('error', lang.hitch(this, function(/*err*/) {
+          //def.reject(err);
           def.resolve(null);
-        }
+        }));
       } else {
         def.resolve(this.layerObject);
       }

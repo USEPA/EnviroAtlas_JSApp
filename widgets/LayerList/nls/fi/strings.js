@@ -15,7 +15,7 @@
     itemToAttributeTable: "Avaa ominaisuustietotaulu",
     itemShowItemDetails: "Näytä kohteen tiedot",
     empty: "tyhjä",
-    removePopup: "Poista popup-ikkuna käytöstä",
+    removePopup: "Poista ponnahdusikkuna",
     enablePopup: "Ota ponnahdusikkunat käyttöön"
   })
 );

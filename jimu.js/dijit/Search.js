@@ -21,17 +21,17 @@ define(['dojo/_base/declare',
   'dijit/_TemplatedMixin'
 ],
 function(declare, html, string, _WidgetBase, _TemplatedMixin) {
-  return declare([_WidgetBase, _TemplatedMixin], {
+  return declare([_WidgetBase,_TemplatedMixin], {
     baseClass: 'jimu-search',
     declaredClass: 'jimu.dijit.Search',
     templateString:
-    '<div>' +
-      '<span class="jimu-input-wrapper" style="left:0;right:0;">' +
-      '<input class="jimu-input" style="background:#fafafc;"' +
-      ' data-dojo-attach-point="inputSearch"' +
-      ' data-dojo-attach-event="onKeydown: _onKeyDown, onKeyUp: _onKeyUp"/></span>' +
-      '<div class="search-btn jimu-icon jimu-icon-search" data-dojo-attach-point="searchBtn"' +
-      ' data-dojo-attach-event="onClick: _onBtnClick"></div>' +
+    '<div>'+
+      '<span class="jimu-input-wrapper" style="left:0;right:0;">'+
+      '<input class="jimu-input" style="background:#fafafc;"'+
+      ' data-dojo-attach-point="inputSearch"'+
+      ' data-dojo-attach-event="onKeydown: _onKeyDown, onKeyUp: _onKeyUp"/></span>'+
+      '<div class="search-btn" data-dojo-attach-point="searchBtn"'+
+      ' data-dojo-attach-event="onClick: _onBtnClick"></div>'+
     '</div>',
 
     //placeholder: String

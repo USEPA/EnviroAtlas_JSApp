@@ -15,7 +15,7 @@
     itemToAttributeTable: "Открыть таблицу атрибутов",
     itemShowItemDetails: "Показать информацию об элементе",
     empty: "пусто",
-    removePopup: "Отключить всплывающее окно",
+    removePopup: "Удалить всплывающее окно",
     enablePopup: "Включить всплывающее окно"
   })
 );

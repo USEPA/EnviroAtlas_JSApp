@@ -25,13 +25,13 @@ define(['dojo/_base/declare',
 ],
 function(declare, _WidgetBase, lang, array, html, on, Evented, utils) {
   return declare([_WidgetBase, Evented], {
-    // summary:
+    // summary: 
     //    the params format:
     //    items: [{
     //      key:
     //      label: <as innerHTML set to UI>
     //    }]
-    //    box: String|DomNode.
+    //    box: String|DomNode. 
     //      if not set, use the menu's parent node to calculate the menu's position.
     'baseClass': 'jimu-dropmenu',
     declaredClass: 'jimu.dijit.DropMenu',
@@ -84,18 +84,17 @@ function(declare, _WidgetBase, lang, array, html, on, Evented, utils) {
         var node;
         if(item.key && item.key === 'separator'){
           html.create('hr', {
-            'class': 'menu-item-identification menu-item-line',
-            'itemId': item.key
+            'class': 'menu-item-line'
           }, this.dropMenuNode);
         }else if(item.key) {
           node = html.create('div', {
-            'class': 'menu-item-identification menu-item',
+            'class': 'menu-item',
             'itemId': item.key,
             innerHTML: item.label
           }, this.dropMenuNode);
 
-          this.own(on(node, 'click', lang.hitch(this, function(evt){
-            this.selectItem(item, evt);
+          this.own(on(node, 'click', lang.hitch(this, function(){
+            this.selectItem(item);
           })));
         }
       }, this);

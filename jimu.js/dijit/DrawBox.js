@@ -31,10 +31,10 @@ define([
   'esri/toolbars/draw',
   'esri/symbols/jsonUtils'
 ],
-function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
+function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
   template, lang, html, array, on, query, Evented,
   GraphicsLayer, Graphic, Draw, jsonUtils) {
-  return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+  return declare([_WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin, Evented], {
     templateString:template,
     baseClass: 'jimu-draw-box',
     declaredClass: 'jimu.dijit.DrawBox',
@@ -42,18 +42,9 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     drawLayer:null,
     drawLayerId:null,
     drawToolBar:null,
-
+    
     //options:
     types:null,//['point','polyline','polygon','text']
-    /**
-     * For 'point' type, geoTypes can be ["POINT"]
-     * For 'polyline' type, geoTypes can be ["LINE", "POLYLINE", "FREEHAND_POLYLINE"]
-     * For 'polygon' type, geoTypes can be ["TRIANGLE", "EXTENT", "CIRCLE",
-     * "ELLIPSE", "POLYGON", "FREEHAND_POLYGON"]
-     * For 'text' type, geoTypes can be ["POINT"]
-     * @type {[type]}
-     */
-    geoTypes:null,
     map:null,
     pointSymbol:null,
     polylineSymbol:null,
@@ -78,22 +69,6 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     //events:
     //icon-selected
     //draw-end
-    //clear
-
-    //css classes:
-    //draw-item
-    //point-icon
-    //line-icon
-    //polyline-icon
-    //freehand-polyline-icon
-    //triangle-icon
-    //extent-icon
-    //circle-icon
-    //ellipse-icon
-    //polygon-icon
-    //freehand-polygon-icon
-    //text-icon
-    //drawings-clear
 
     postMixInProperties:function(){
       this.nls = window.jimuNls.drawBox;
@@ -108,14 +83,14 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       this.drawLayer = new GraphicsLayer(layerArgs);
       this._initDefaultSymbols();
       this._initTypes();
-      var items = query('.draw-item', this.domNode);
-      this.own(items.on('click', lang.hitch(this, this._onItemClick)));
-      this.own(on(this.btnClear, 'click', lang.hitch(this, this.clear)));
+      var items = query('.draw-item',this.domNode);
+      this.own(items.on('click',lang.hitch(this,this._onItemClick)));
+      this.own(on(this.btnClear,'click',lang.hitch(this,this.clear)));
       if(this.map){
         this.setMap(this.map);
       }
       var display = this.showClear === true ? 'block' : 'none';
-      html.setStyle(this.btnClear, 'display', display);
+      html.setStyle(this.btnClear,'display',display);
     },
 
     disableWebMapPopup:function(){
@@ -155,7 +130,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         this.drawToolBar.setMarkerSymbol(this.pointSymbol);
         this.drawToolBar.setLineSymbol(this.polylineSymbol);
         this.drawToolBar.setFillSymbol(this.polygonSymbol);
-        this.own(on(this.drawToolBar, 'draw-end', lang.hitch(this, this._onDrawEnd)));
+        this.own(on(this.drawToolBar,'draw-end',lang.hitch(this,this._onDrawEnd)));
       }
     },
 
@@ -188,11 +163,11 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       if(this.drawToolBar){
         this.drawToolBar.deactivate();
       }
-      query('.draw-item', this.domNode).removeClass('jimu-state-active');
+      query('.draw-item',this.domNode).removeClass('selected');
     },
 
     activate: function(tool){
-      //tool available values:
+      //tool available values: 
       //POINT
       //LINE,POLYLINE,FREEHAND_POLYLINE
       //TRIANGLE,EXTENT,CIRCLE,ELLIPSE,POLYGON,FREEHAND_POLYGON
@@ -223,9 +198,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       this.emit('draw-end', graphic, geotype, commontype);
     },
 
-    onClear:function(){
-      this.emit("clear");
-    },
+    onClear:function(){},
 
     addGraphic:function(g){
       if(this.keepOneGraphic){
@@ -281,24 +254,20 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
 
     _initTypes:function(){
       if(!(this.types instanceof Array)){
-        this.types = ['point', 'polyline', 'polygon'];
+        this.types = ['point','polyline','polygon'];
       }
-      var items = query('.draw-item', this.domNode);
-      items.style('display', 'none');
-      array.forEach(items, lang.hitch(this, function(item){
+      var items = query('.draw-item',this.domNode);
+      items.style('display','none');
+      array.forEach(items,lang.hitch(this,function(item){
         var commonType = item.getAttribute('data-commontype');
-        var display = array.indexOf(this.types, commonType) >= 0;
-        if(this.geoTypes !== null){
-          var geoType = item.getAttribute('data-geotype');
-          display = display && array.indexOf(this.geoTypes, geoType) >= 0;
-        }
-        html.setStyle(item, 'display', display ? 'block' : 'none');
+        var display = array.indexOf(this.types,commonType) >= 0 ? 'block' : 'none';
+        html.setStyle(item,'display',display);
       }));
     },
 
     _onItemClick:function(event){
-      var target = event.target || event.srcElement;
-      var isSelected = html.hasClass(target, 'jimu-state-active');
+      var target = event.target||event.srcElement;
+      var isSelected = html.hasClass(target, 'selected');
 
       //toggle tools on and off
       if(isSelected){
@@ -310,8 +279,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
 
     _activate: function(itemIcon){
       var items = query('.draw-item', this.domNode);
-      items.removeClass('jimu-state-active');
-      html.addClass(itemIcon, 'jimu-state-active');
+      items.removeClass('selected');
+      html.addClass(itemIcon, 'selected');
       var geotype = itemIcon.getAttribute('data-geotype');
       var commontype = itemIcon.getAttribute('data-commontype');
       var tool = Draw[geotype];
@@ -321,14 +290,14 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     },
 
     _onDrawEnd:function(event){
-      var selectedItem = query('.draw-item.jimu-state-active', this.domNode)[0];
+      var selectedItem = query('.draw-item.selected',this.domNode)[0];
       var geotype = selectedItem.getAttribute('data-geotype');
       var commontype = selectedItem.getAttribute('data-commontype');
       var geometry = event.geometry;
       var type = geometry.type;
       var symbol = null;
       if (type === "point" || type === "multipoint") {
-        if(html.hasClass(this.textIcon, 'jimu-state-active')){
+        if(html.hasClass(this.textIcon,'selected')){
           symbol = this.textSymbol;
         }
         else{
@@ -339,7 +308,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       } else {
         symbol = this.polygonSymbol;
       }
-      var g = new Graphic(geometry, symbol, null, null);
+      var g = new Graphic(geometry,symbol,null,null);
       if(this.keepOneGraphic){
         this.drawLayer.clear();
       }
@@ -347,7 +316,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       if(this.deactivateAfterDrawing){
         this.deactivate();
       }
-      this.onDrawEnd(g, geotype, commontype);
+      this.onDrawEnd(g,geotype,commontype);
     }
 
   });

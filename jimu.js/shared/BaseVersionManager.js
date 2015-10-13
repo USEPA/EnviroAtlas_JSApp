@@ -8,7 +8,7 @@ define(function() {
       {
         //the version you want to upgrade to. version format: 1.0.0
         version: '',
-
+        
         //the version discription
         description: '',
 
@@ -45,7 +45,7 @@ define(function() {
     this.getVersionIndex = function(_version){
       var version = this.fixVersion(_version);
       var versionIndex, i;
-
+      
       for(i = 0; i < this.versions.length; i++){
         if(this.versions[i].version === version){
           versionIndex = i;

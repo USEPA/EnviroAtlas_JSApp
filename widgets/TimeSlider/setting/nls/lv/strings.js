@@ -1,5 +1,5 @@
 ﻿define(
    ({
-    showLayerLabels: "Parādīt logrīkā laiku attēlojošo slāņu nosaukumus."
+    showLayerLabels: "Parādīt slāņu nosaukumus logrīkā laiku attēlojošiem slāņiem."
   })
 );

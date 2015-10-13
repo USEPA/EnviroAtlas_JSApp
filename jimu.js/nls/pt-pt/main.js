@@ -1,66 +1,66 @@
 ﻿define(
    ({
     common: {
-      ok: "Ok",
-      cancel: "Cancelar",
-      next: "Seguinte",
-      back: "Regressar"
+      ok: 'Ok',
+      cancel: 'Cancelar',
+      next: 'Seguinte',
+      back: 'Regressar'
     },
     errorCode: "Código",
     errorMessage: "Mensagem",
     errorDetail: "Detalhe",
     widgetPlaceholderTooltip: "Para configurar, vá a Widgets e clique no placehorlder correspondente",
     symbolChooser: {
-      preview: "Pré-Visualizar",
-      basic: "Básico",
-      arrows: "Setas",
-      business: "Negócio",
-      cartographic: "Cartográfico",
-      nationalParkService: "Serviço Parque Nacional",
-      outdoorRecreation: "Lazer Outdoor",
-      peoplePlaces: "Locais de Pessoas",
-      safetyHealth: "Segurança Saúde",
-      shapes: "Formas",
-      transportation: "Transportes",
-      symbolSize: "Tamanho de Símbolos",
-      color: "Cor",
-      alpha: "Alfa",
-      outlineColor: "Cor de Contorno",
-      outlineWidth: "Largura do Contorno",
-      style: "Estilo",
-      width: "Largura",
-      text: "Texto",
-      fontColor: "Cor da Letra",
-      fontSize: "Tamanho de letra",
-      transparency: "Transparência",
-      solid: "Sólido",
-      dash: "Traço",
-      dot: "Ponto",
-      dashDot: "Traço Ponto",
-      dashDotDot: "Traço Ponto Ponto"
+      preview: 'Pré-Visualizar',
+      basic: 'Básico',
+      arrows: 'Setas',
+      business: 'Negócio',
+      cartographic: 'Cartográfico',
+      nationalParkService: 'Serviço Parque Nacional',
+      outdoorRecreation: 'Lazer Outdoor',
+      peoplePlaces: 'Locais de Pessoas',
+      safetyHealth: 'Segurança Saúde',
+      shapes: 'Formas',
+      transportation: 'Transportes',
+      symbolSize: 'Tamanho de Símbolos',
+      color: 'Cor',
+      alpha: 'Alfa',
+      outlineColor: 'Cor de Contorno',
+      outlineWidth: 'Largura do Contorno',
+      style: 'Estilo',
+      width: 'Largura',
+      text: 'Texto',
+      fontColor: 'Cor da Letra',
+      fontSize: 'Tamanho de letra',
+      transparency: 'Transparência',
+      solid: 'Sólido',
+      dash: 'Traço',
+      dot: 'Ponto',
+      dashDot: 'Traço Ponto',
+      dashDotDot: 'Traço Ponto Ponto'
     },
     transparency: {
-      opaque: "Opaco",
-      transparent: "Transparente"
+      opaque: 'Opaco',
+      transparent: 'Transparente'
     },
     rendererChooser: {
-      domain: "Domínio",
-      use: "Utilize",
-      singleSymbol: "Um Único Símbolo",
-      uniqueSymbol: "Símbolos Únicos",
-      color: "Cor",
-      size: "Tamanho",
-      toShow: "Para Exibir",
-      colors: "Cores",
-      classes: "Classes",
-      symbolSize: "Tamanho de Símbolos",
-      addValue: "Adicionar Valor",
-      setDefaultSymbol: "Definir Símbolo Padrão",
-      defaultSymbol: "Símbolo Padrão",
-      selectedSymbol: "Símbolo Selecionado",
-      value: "Valor",
-      label: "Rótulo",
-      range: "Intervalo"
+      domain: 'Domínio',
+      use: 'Utilize',
+      singleSymbol: 'Um Único Símbolo',
+      uniqueSymbol: 'Símbolos Únicos',
+      color: 'Cor',
+      size: 'Tamanho',
+      toShow: 'Para Exibir',
+      colors: 'Cores',
+      classes: 'Classes',
+      symbolSize: 'Tamanho de Símbolos',
+      addValue: 'Adicionar Valor',
+      setDefaultSymbol: 'Definir Símbolo Padrão',
+      defaultSymbol: 'Símbolo Padrão',
+      selectedSymbol: 'Símbolo Selecionado',
+      value: 'Valor',
+      label: 'Rótulo',
+      range: 'Intervalo'
     },
     drawBox: {
       point: "Ponto",
@@ -93,17 +93,17 @@
       loading: "A carregar"
     },
     basicServiceBrowser: {
-      noServicesFound: "Não foram encontrados serviços.",
-      unableConnectTo: "Impossível ligar a",
-      invalidUrlTip: "O URL que introduziu é inválido ou encontra-se inacessível."
+      noServicesFound: 'Não foram encontrados serviços.',
+      unableConnectTo: 'Impossível ligar a',
+      invalidUrlTip: 'O URL que introduziu é inválido ou encontra-se inacessível.'
     },
     serviceBrowser: {
-      noGpFound: "Não foram encontrados serviços de geoprocessamento.",
-      unableConnectTo: "Impossível ligar a"
+      noGpFound: 'Não foram encontrados serviços de geoprocessamento.',
+      unableConnectTo: 'Impossível ligar a'
     },
     layerServiceBrowser: {
-      noServicesFound: "Não foram encontrados serviços MapServer ou FeatureServer",
-      unableConnectTo: "Impossível ligar a"
+      noServicesFound: 'Não foram encontrados serviços MapServer ou FeatureServer',
+      unableConnectTo: 'Impossível ligar a'
     },
     basicServiceChooser: {
       validate: "Validar",
@@ -111,14 +111,14 @@
       set: "Definir"
     },
     urlInput: {
-      invalidUrl: "Url inválido."
+      invalidUrl: 'Url inválido.'
     },
     urlComboBox: {
-      invalidUrl: "Url inválido."
+      invalidUrl: 'Url inválido.'
     },
     filterBuilder: {
       addAnotherExpression: "Adicionar uma expressão de filtro",
-      addSet: "Adicionar uma expressão definida",
+      addSet: "Adicionar um conjunto de expressões",
       matchMsg: "Obter elementos na camada que correspondam a ${any_or_all} das expressões seguintes",
       matchMsgSet: "${any_or_all} (d)as expressões seguintes neste conjunto são verdadeiras",
       all: "Todas",
@@ -131,7 +131,7 @@
       valueTooltip: "Introduzir valor",
       fieldTooltip: "Escolher a partir de campo existente",
       uniqueValueTooltip: "Escolher a partir de valores únicos no campo selecionado",
-      stringOperatorIs: "é", // e.g. <stringFieldName> is "California"
+      stringOperatorIs: "é", // e.g. <stringFieldName> is 'California'
       stringOperatorIsNot: "não é",
       stringOperatorStartsWith: "começa por",
       stringOperatorEndsWith: "acaba em",
@@ -139,7 +139,7 @@
       stringOperatorDoesNotContain: "não contém",
       stringOperatorIsBlank: "está vazio",
       stringOperatorIsNotBlank: "não está vazio",
-      dateOperatorIsOn: "é em", // e.g. <dateFieldName> is on "1/1/2012"
+      dateOperatorIsOn: "é em", // e.g. <dateFieldName> is on '1/1/2012'
       dateOperatorIsNotOn: "não é em",
       dateOperatorIsBefore: "é anterior a",
       dateOperatorIsAfter: "é posterior a",
@@ -192,19 +192,6 @@
       selectFromOnline: "Adicionar de ArcGIS Online",
       chooseLayer: "Escolha uma camada de elementos."
     },
-    queryableLayerSource: {
-      layer: "Camada",
-      browse: "Procurar",
-      selectFromMap: "Selecionar do Mapa",
-      selectFromPortal: "Adicionar do Portal for ArcGIS",
-      addServiceUrl: "Adicionar URL de Serviço",
-      inputLayerUrl: "Url da Camada de Entrada",
-      selectLayer: "Seleccionar uma camada do mapa actual.",
-      chooseItem: "Escolher um item.",
-      setServiceUrl: "Introduza o URL do serviço.",
-      selectFromOnline: "Adicionar de ArcGIS Online",
-      chooseLayer: "Escolher uma camada."
-    },
     gpSource: {
       selectFromPortal: "Adicionar do Portal for ArcGIS",
       addServiceUrl: "Adicionar URL de Serviço",
@@ -240,37 +227,35 @@
       notSupportQuery: "O serviço não suporta consultas."
     },
     basicLayerChooserFromMap: {
-      noLayersTip: "Não existe uma camada apropriada disponível no mapa."
+      noLayersTip: "Não existe nenhuma camada disponível no mapa."
     },
     layerInfosMenu: {
-      titleBasemap: "Mapas base",
-      titleLayers: "Camadas Operacionais",
-      labelLayer: "Nome da Camada",
-      itemZoomTo: "Efetuar zoom para",
-      itemTransparency: "Transparência",
-      itemTransparent: "Transparente",
-      itemOpaque: "Opaco",
-      itemMoveUp: "Mover para cima",
-      itemMoveDown: "Mover para baixo",
-      itemDesc: "Descrição",
-      itemDownload: "Descarregar",
-      itemToAttributeTable: "Abrir tabela de atributos"
+      titleBasemap: 'Mapas base',
+      titleLayers: 'Camadas Operacionais',
+      labelLayer: 'Nome da Camada',
+      itemZoomTo: 'Efetuar zoom para',
+      itemTransparency: 'Transparência',
+      itemTransparent: 'Transparente',
+      itemOpaque: 'Opaco',
+      itemMoveUp: 'Mover para cima',
+      itemMoveDown: 'Mover para baixo',
+      itemDesc: 'Descrição',
+      itemDownload: 'Descarregar',
+      itemToAttributeTable: 'Abrir tabela de atributos'
     },
     imageChooser: {
       unsupportReaderAPI: "TODO: O navegador não suporta o API de leitor de ficheiros",
       readError: "Falha ao ler o ficheiro.",
-      unknowError: "impossível completar operações",
       invalidType: "Tipo de ficheiro inválido.",
       exceed: "O tamanho do ficheiro não pode exceder 1024 KB",
       enableFlash: "TODO: por favor, ative o flash.",
-      cropWaining: "Por favor escolha uma fotografa que tenha pelo menos ${largura} x ${altura} pixels.",
       toolTip: "Para obter melhores resultados, a imagem deverá ter ${width} pixéis de largura por ${height} pixéis de altura. Outros tamanhos serão ajustados para caberem. Os formatos de imagem aceitáveis são: PNG, GIF e JPEG."
     },
     simpleTable: {
-      moveUp: "Mover para cima",
-      moveDown: "Mover para baixo",
-      deleteRow: "Eliminar",
-      edit: "Editar"
+      moveUp: 'Mover para cima',
+      moveDown: 'Mover para baixo',
+      deleteRow: 'Eliminar',
+      edit: 'Editar'
     }
   })
 );

@@ -1,7 +1,7 @@
-.jimu-main-background{
-  background-color: #292929;
+.jimu-main-bgcolor{
+  background-color: #336699;
 }
-.jimu-preload-widget-icon-panel>.jimu-panel-title{
+.jimu-preload-widget-icon-panel>.title{
   color: white;
-  background-color: #292929;
+  background-color: #336699;
 }

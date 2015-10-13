@@ -1,18 +1,18 @@
 /*
 Copyright ©2014 Esri. All rights reserved.
-
+ 
 TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
 Unpublished material - all rights reserved under the
 Copyright Laws of the United States and applicable international
 laws, treaties, and conventions.
-
+ 
 For additional information, contact:
 Attn: Contracts and Legal Department
 Environmental Systems Research Institute, Inc.
 380 New York Street
 Redlands, California, 92373
 USA
-
+ 
 email: contracts@esri.com
 */
 
@@ -80,18 +80,13 @@ define([
     typeKeywords: '',//array, such as ['Web AppBuilder'] or ['Web AppBuilder','Web Map']...
     showOnlineItems: true,
     onlyShowOnlineFeaturedItems: false,
-
+    
     //public methods:
     //getSelectedItem
 
     //events:
     //item-selected
     //none-item-selected
-
-    //css classes:
-    //signin-tip
-    //search-none-icon
-    //search-none-tip
 
     postMixInProperties: function(){
       this.portalUrl = portalUrlUtils.getStandardPortalUrl(this.portalUrl);
@@ -102,27 +97,27 @@ define([
         this.itemTypes = [];
       }
       this._itemTypes = '';
-      array.forEach(this.itemTypes, lang.hitch(this, function(type, index){
-        this._itemTypes += '"' +  type + '"';
-        if(index !== this.itemTypes.length - 1){
+      array.forEach(this.itemTypes,lang.hitch(this,function(type,index){
+        this._itemTypes += '"'+ type +'"';
+        if(index !== this.itemTypes.length-1){
           this._itemTypes += ',';
         }
       }));
-      this._itemTypes = '[' + this._itemTypes + ']';
+      this._itemTypes = '['+this._itemTypes+']';
 
       //handle typeKeywords
       if(!(this.typeKeywords && this.typeKeywords.length > 0)){
         this.typeKeywords = [];
       }
       this._typeKeywords = '';
-      array.forEach(this.typeKeywords, lang.hitch(this, function(keyword, index){
-        this._typeKeywords += '"' + keyword + '"';
-        if(index !== this.typeKeywords.length - 1){
+      array.forEach(this.typeKeywords,lang.hitch(this,function(keyword,index){
+        this._typeKeywords += '"'+keyword+'"';
+        if(index !== this.typeKeywords.length-1){
           this._typeKeywords += ',';
         }
       }));
-      this._typeKeywords = '[' + this._typeKeywords + ']';
-
+      this._typeKeywords = '['+this._typeKeywords+']';
+      
       this.nls = window.jimuNls.itemSelector;
     },
 
@@ -188,12 +183,12 @@ define([
       var selector = '.organization-tab-content-main,' +
                      '.group-tab-content-main,' +
                      '.mycontent-tab-content-main';
-      var contentMains = query(selector, this.domNode);
+      var contentMains = query(selector,this.domNode);
       var signIn = tokenUtils.userHaveSignInPortal(this._getPortalUrl());
       if (signIn) {
-        contentMains.style('display', 'block');
+        contentMains.style('display','block');
       } else {
-        contentMains.style('display', 'none');
+        contentMains.style('display','none');
         if(!this._isPublicTabShow){
           html.setStyle(this.signinSection, 'display', 'block');
         }
@@ -217,7 +212,7 @@ define([
       else{
         this.portalPublicLabel.innerHTML = portalServer;
         if(this.showOnlineItems){
-          shouldHidePublicArcGIScom = false;
+          shouldHidePublicArcGIScom= false;
         }
         else{
           shouldHidePublicArcGIScom = true;
@@ -231,7 +226,7 @@ define([
     },
 
     _initSearchQuery: function(){
-      var culture = dojoConfig.locale && dojoConfig.locale.slice(0, 2) || 'en';
+      var culture = dojoConfig.locale && dojoConfig.locale.slice(0,2) || 'en';
       var currentLocaleOwner = 'esri_' + culture.toLowerCase();
 
       var allLocaleOwners = ["esri_he", "esri_fr", "esri_ja", "esri_nl",
@@ -247,7 +242,7 @@ define([
 
       var ownerStr = '';
       array.forEach(removedOwners, lang.hitch(this, function(owner){
-        ownerStr += ' -owner:' + owner + ' ';
+        ownerStr += ' -owner:'+owner+' ';
       }));
 
       var orgStr = " ";
@@ -255,8 +250,7 @@ define([
         orgStr = " orgid:" + this.portal.user.orgId + " ";
       }
 
-      var strPublicPortalQuery = orgStr + this._itemTypeQueryString + ' AND access:public ' +
-      ownerStr + ' ' + this._typeKeywordQueryString;
+      var strPublicPortalQuery=orgStr+this._itemTypeQueryString+' AND access:public '+ownerStr+ ' ' +this._typeKeywordQueryString;
 
       //portal public
       this._allPublicPortalQuery = this._getQuery({
@@ -277,8 +271,7 @@ define([
       this._allPublicOnlineQuery = this._getQuery({
         sortField:'numViews',
         sortOrder:'desc',
-        q: strGroup + this._itemTypeQueryString +
-        ' AND access:public ' + this._typeKeywordQueryString
+        q: strGroup + this._itemTypeQueryString + ' AND access:public ' + this._typeKeywordQueryString
       });
 
       this._filterPublicOnlineQuery = this._getQuery({
@@ -299,12 +292,12 @@ define([
     },
 
     _getQuery: function(other){
-      var other2 = other || {};
+      var other2 = other||{};
       var query = lang.mixin({
         start:1,
         num:16,
         f:'json'
-      }, other2);
+      },other2);
       return query;
     },
 
@@ -333,22 +326,22 @@ define([
       var portalUrl = this._getPortalUrl();
       //portal public
       if(!this.portalPublicRaido.disabled){
-        this.publicPortalItemTable.set('portalUrl', portalUrl);
+        this.publicPortalItemTable.set('portalUrl',portalUrl);
         this.publicPortalItemTable.searchAllItems(this._allPublicPortalQuery);
-        this.publicPortalItemTable.set('filteredQuery', this._filterPublicPortalQuery);
+        this.publicPortalItemTable.set('filteredQuery',this._filterPublicPortalQuery);
       }
 
       //ArcGIS.com public
       if(!this.onlinePublicRaido.disabled){
         this.publicOnlineItemTable.set('portalUrl', window.location.protocol + '//www.arcgis.com');
         this.publicOnlineItemTable.searchAllItems(this._allPublicOnlineQuery);
-        this.publicOnlineItemTable.set('filteredQuery', this._filterPublicOnlineQuery);
+        this.publicOnlineItemTable.set('filteredQuery',this._filterPublicOnlineQuery);
       }
     },
 
     _initPublic: function(){
-      this.own(on(this.portalPublicRaido, 'click', lang.hitch(this, this._onPublicRaidoClicked)));
-      this.own(on(this.onlinePublicRaido, 'click', lang.hitch(this, this._onPublicRaidoClicked)));
+      this.own(on(this.portalPublicRaido,'click',lang.hitch(this,this._onPublicRaidoClicked)));
+      this.own(on(this.onlinePublicRaido,'click',lang.hitch(this,this._onPublicRaidoClicked)));
       this._onPublicRaidoClicked();
     },
 
@@ -376,8 +369,7 @@ define([
           this._filterPublicPortalQuery.start = 1;
           this.publicPortalItemTable.searchFilteredItems(this._filterPublicPortalQuery);
         } else if (this.onlinePublicRaido.checked) {
-          this._filterPublicOnlineQuery.q = text + ' ' + this._itemTypeQueryString +
-          ' AND access:public ' + this._typeKeywordQueryString;
+          this._filterPublicOnlineQuery.q=text+' '+this._itemTypeQueryString+' AND access:public ' + this._typeKeywordQueryString;
           this._filterPublicOnlineQuery.start = 1;
           this.publicOnlineItemTable.searchFilteredItems(this._filterPublicOnlineQuery);
         }
@@ -492,23 +484,21 @@ define([
     _searchOrganization: function(user) {
       this.organizationItemTable.clear();
       var strPublicOrg = " AND (access:org OR access:public) ";
-      var q = " orgid:" + user.orgId + " AND " + this._itemTypeQueryString +
-      strPublicOrg + this._typeKeywordQueryString;
+      var q = " orgid:" + user.orgId + " AND " + this._itemTypeQueryString + strPublicOrg + this._typeKeywordQueryString;
       var portalUrl = this._getPortalUrl();
       this._allOrganizationQuery = this._getQuery({q:q});
       this._filterOrganizationQuery = this._getQuery({q:q});
-      this.organizationItemTable.set('portalUrl', portalUrl);
+      this.organizationItemTable.set('portalUrl',portalUrl);
       this.organizationItemTable.searchAllItems(this._allOrganizationQuery);
     },
 
     _searchMyContent: function(user) {
       this.mycontentItemTable.clear();
       var portalUrl = this._getPortalUrl();
-      var q = "owner:" + user.username + " AND " + this._itemTypeQueryString + ' ' +
-      this._typeKeywordQueryString;
+      var q = "owner:" + user.username + " AND " + this._itemTypeQueryString + ' ' +this._typeKeywordQueryString;
       this._allMyContentQuery = this._getQuery({q:q});
       this._filterMyContentQuery = this._getQuery({q:q});
-      this.mycontentItemTable.set('portalUrl', portalUrl);
+      this.mycontentItemTable.set('portalUrl',portalUrl);
       this.mycontentItemTable.searchAllItems(this._allMyContentQuery);
     },
 
@@ -540,17 +530,17 @@ define([
         innerHTML: this.nls.noneGroups
       }, this.groupsSelect);
       this.groupItemTable.clear();
-      html.setStyle(this.groupSearch.domNode, 'display', 'none');
+      html.setStyle(this.groupSearch.domNode,'display','none');
       this.groupItemTable.hide();
       this._updateUIbyGroups(0);
     },
 
     _updateUIbyGroups: function(groupIdsCount){
       if(groupIdsCount === 0){
-        html.setStyle(this.groupsSection, 'top', '15px');
+        html.setStyle(this.groupsSection,'top','15px');
       }
       else{
-        html.setStyle(this.groupsSection, 'top', '50px');
+        html.setStyle(this.groupsSection,'top','50px');
       }
     },
 
@@ -558,27 +548,26 @@ define([
       var groupId = this.groupsSelect.value;
       this.groupItemTable.clear();
       if (groupId === 'nodata') {
-        html.setStyle(this.groupSearch, 'display', 'none');
+        html.setStyle(this.groupSearch,'display','none');
         this.groupItemTable.hide();
       }
       else{
-        html.setStyle(this.groupSearch, 'display', 'block');
+        html.setStyle(this.groupSearch,'display','block');
         this.groupItemTable.show();
         var portalUrl = this._getPortalUrl();
-        var q = "group:" + groupId + " AND " + this._itemTypeQueryString + ' ' +
-        this._typeKeywordQueryString;
+        var q = "group:" + groupId + " AND " + this._itemTypeQueryString + ' ' + this._typeKeywordQueryString;
         this._allGroupQuery = this._getQuery({q:q});
         this._filterGroupQuery = this._getQuery({q:q});
-        this.groupItemTable.set('portalUrl', portalUrl);
+        this.groupItemTable.set('portalUrl',portalUrl);
         this.groupItemTable.searchAllItems(this._allGroupQuery);
       }
     },
 
     _onItemDomClicked: function(itemDiv){
-      var isSelected = html.hasClass(itemDiv, 'jimu-state-active');
-      query('.item.jimu-state-active', this.domNode).removeClass('jimu-state-active');
+      var isSelected = html.hasClass(itemDiv, 'selected');
+      query('.item-div.selected', this.domNode).removeClass('selected');
       if(isSelected){
-        html.addClass(itemDiv, 'jimu-state-active');
+        html.addClass(itemDiv, 'selected');
       }
       var item = this.getSelectedItem();
       if(item){
@@ -591,7 +580,7 @@ define([
 
     getSelectedItem: function(){
       var item = null;
-      var itemDivs = query('.item.jimu-state-active', this.domNode);
+      var itemDivs = query('.item-div.selected', this.domNode);
       if(itemDivs.length > 0){
         var itemDiv = itemDivs[0];
         item = lang.mixin({}, itemDiv.item);

@@ -1,66 +1,66 @@
 ﻿define(
    ({
     common: {
-      ok: "확인",
-      cancel: "취소",
-      next: "다음",
-      back: "뒤로"
+      ok: '확인',
+      cancel: '취소',
+      next: '다음',
+      back: '뒤로'
     },
     errorCode: "코드",
     errorMessage: "메시지",
     errorDetail: "세부정보",
     widgetPlaceholderTooltip: "설정하려면, 위젯으로 이동한 다음 해당 개체 틀을 클릭",
     symbolChooser: {
-      preview: "미리보기",
-      basic: "기본",
-      arrows: "화살표",
-      business: "비즈니스",
-      cartographic: "지도",
-      nationalParkService: "국립공원관리청",
-      outdoorRecreation: "야외 활동",
-      peoplePlaces: "사람 장소",
-      safetyHealth: "안전 보건",
-      shapes: "모양",
-      transportation: "교통",
-      symbolSize: "심볼 크기",
-      color: "색상",
-      alpha: "알파",
-      outlineColor: "윤곽선 색상",
-      outlineWidth: "윤곽선 두께",
-      style: "스타일",
-      width: "너비",
-      text: "텍스트",
-      fontColor: "글꼴 색상",
-      fontSize: "글꼴 크기",
-      transparency: "투명도",
-      solid: "실선",
-      dash: "대시",
-      dot: "점",
-      dashDot: "대시 점",
-      dashDotDot: "대시 점 점"
+      preview: '미리보기',
+      basic: '기본',
+      arrows: '화살표',
+      business: '비즈니스',
+      cartographic: '지도',
+      nationalParkService: '국립공원관리청',
+      outdoorRecreation: '야외 활동',
+      peoplePlaces: '사람 장소',
+      safetyHealth: '안전 보건',
+      shapes: '모양',
+      transportation: '교통',
+      symbolSize: '심볼 크기',
+      color: '색상',
+      alpha: '알파',
+      outlineColor: '윤곽선 색상',
+      outlineWidth: '윤곽선 두께',
+      style: '스타일',
+      width: '너비',
+      text: '텍스트',
+      fontColor: '글꼴 색상',
+      fontSize: '글꼴 크기',
+      transparency: '투명도',
+      solid: '실선',
+      dash: '대시',
+      dot: '점',
+      dashDot: '대시 점',
+      dashDotDot: '대시 점 점'
     },
     transparency: {
-      opaque: "불투명",
-      transparent: "투명"
+      opaque: '불투명',
+      transparent: '투명'
     },
     rendererChooser: {
-      domain: "도메인",
-      use: "사용",
-      singleSymbol: "단일 심볼",
-      uniqueSymbol: "고유한 심볼",
-      color: "색상",
-      size: "크기",
-      toShow: "표시할",
-      colors: "색상",
-      classes: "클래스",
-      symbolSize: "심볼 크기",
-      addValue: "값 추가",
-      setDefaultSymbol: "기본 심볼 설정",
-      defaultSymbol: "기본 심볼",
-      selectedSymbol: "선택한 심볼",
-      value: "값",
-      label: "레이블",
-      range: "범위"
+      domain: '도메인',
+      use: '사용',
+      singleSymbol: '단일 심볼',
+      uniqueSymbol: '고유한 심볼',
+      color: '색상',
+      size: '크기',
+      toShow: '표시할',
+      colors: '색상',
+      classes: '클래스',
+      symbolSize: '심볼 크기',
+      addValue: '값 추가',
+      setDefaultSymbol: '기본 심볼 설정',
+      defaultSymbol: '기본 심볼',
+      selectedSymbol: '선택한 심볼',
+      value: '값',
+      label: '레이블',
+      range: '범위'
     },
     drawBox: {
       point: "포인트",
@@ -93,17 +93,17 @@
       loading: "불러오는 중"
     },
     basicServiceBrowser: {
-      noServicesFound: "서비스를 찾을 수 없습니다.",
-      unableConnectTo: "다음과 연결할 수 없습니다.",
-      invalidUrlTip: "입력한 URL이 잘못되었거나 접근할 수 없습니다."
+      noServicesFound: '서비스를 찾을 수 없습니다.',
+      unableConnectTo: '다음과 연결할 수 없습니다.',
+      invalidUrlTip: '입력한 URL이 잘못되었거나 접근할 수 없습니다.'
     },
     serviceBrowser: {
-      noGpFound: "지오프로세싱 서비스를 찾을 수 없습니다.",
-      unableConnectTo: "다음과 연결할 수 없습니다."
+      noGpFound: '지오프로세싱 서비스를 찾을 수 없습니다.',
+      unableConnectTo: '다음과 연결할 수 없습니다.'
     },
     layerServiceBrowser: {
-      noServicesFound: "맵 서비스 또는 피처 서비스를 찾을 수 없습니다.",
-      unableConnectTo: "다음과 연결할 수 없습니다."
+      noServicesFound: '맵 서비스 또는 피처 서비스를 찾을 수 없습니다.',
+      unableConnectTo: '다음과 연결할 수 없습니다.'
     },
     basicServiceChooser: {
       validate: "유효성 검사",
@@ -111,14 +111,14 @@
       set: "설정"
     },
     urlInput: {
-      invalidUrl: "잘못된 URL입니다."
+      invalidUrl: '잘못된 URL입니다.'
     },
     urlComboBox: {
-      invalidUrl: "잘못된 URL입니다."
+      invalidUrl: '잘못된 URL입니다.'
     },
     filterBuilder: {
       addAnotherExpression: "필터 식 추가",
-      addSet: "식 집합 추가",
+      addSet: "식 세트 추가",
       matchMsg: "다음 식 ${any_or_all}와 일치하는 레이어의 피처를 가져옵니다.",
       matchMsgSet: "이 세트의 다음 식 ${any_or_all}가 true입니다.",
       all: "모두",
@@ -131,7 +131,7 @@
       valueTooltip: "값 입력",
       fieldTooltip: "기존 필드에서 선택",
       uniqueValueTooltip: "선택한 필드에서 고유한 값 선택",
-      stringOperatorIs: "다음과 같음", // e.g. <stringFieldName> is "California"
+      stringOperatorIs: "다음과 같음", // e.g. <stringFieldName> is 'California'
       stringOperatorIsNot: "다음과 같지 않음",
       stringOperatorStartsWith: "다음으로 시작함",
       stringOperatorEndsWith: "다음으로 끝남",
@@ -139,7 +139,7 @@
       stringOperatorDoesNotContain: "다음을 포함하지 않음",
       stringOperatorIsBlank: "비어 있음",
       stringOperatorIsNotBlank: "비어 있지 않음",
-      dateOperatorIsOn: "다음 날짜임", // e.g. <dateFieldName> is on "1/1/2012"
+      dateOperatorIsOn: "다음 날짜임", // e.g. <dateFieldName> is on '1/1/2012'
       dateOperatorIsNotOn: "다음 날짜가 아님",
       dateOperatorIsBefore: "다음 이전 날짜임",
       dateOperatorIsAfter: "다음 이후 날짜임",
@@ -192,19 +192,6 @@
       selectFromOnline: "ArcGIS Online에서 추가",
       chooseLayer: "피처 레이어를 선택합니다."
     },
-    queryableLayerSource: {
-      layer: "레이어",
-      browse: "찾아보기",
-      selectFromMap: "맵에서 선택",
-      selectFromPortal: "Portal for ArcGIS에서 추가",
-      addServiceUrl: "서비스 URL 추가",
-      inputLayerUrl: "입력 레이어 URL",
-      selectLayer: "현재 맵에서 레이어를 선택합니다.",
-      chooseItem: "항목을 선택합니다.",
-      setServiceUrl: "서비스 URL을 입력합니다.",
-      selectFromOnline: "ArcGIS Online에서 추가",
-      chooseLayer: "레이어를 선택합니다."
-    },
     gpSource: {
       selectFromPortal: "Portal for ArcGIS에서 추가",
       addServiceUrl: "서비스 URL 추가",
@@ -240,37 +227,35 @@
       notSupportQuery: "서비스가 쿼리를 지원하지 않습니다."
     },
     basicLayerChooserFromMap: {
-      noLayersTip: "맵에서 사용할 수 있는 적합한 레이어가 없습니다."
+      noLayersTip: "맵에서 사용할 수 있는 레이어가 없습니다."
     },
     layerInfosMenu: {
-      titleBasemap: "베이스맵",
-      titleLayers: "운영 레이어",
-      labelLayer: "레이어 이름",
-      itemZoomTo: "확대",
-      itemTransparency: "투명도",
-      itemTransparent: "투명",
-      itemOpaque: "불투명",
-      itemMoveUp: "위로 이동",
-      itemMoveDown: "아래로 이동",
-      itemDesc: "설명",
-      itemDownload: "다운로드",
-      itemToAttributeTable: "속성 테이블 열기"
+      titleBasemap: '베이스맵',
+      titleLayers: '운영 레이어',
+      labelLayer: '레이어 이름',
+      itemZoomTo: '확대',
+      itemTransparency: '투명도',
+      itemTransparent: '투명',
+      itemOpaque: '불투명',
+      itemMoveUp: '위로 이동',
+      itemMoveDown: '아래로 이동',
+      itemDesc: '설명',
+      itemDownload: '다운로드',
+      itemToAttributeTable: '속성 테이블 열기'
     },
     imageChooser: {
       unsupportReaderAPI: "TODO: 브라우저가 파일 리더 API를 지원하지 않습니다.",
       readError: "파일을 읽지 못했습니다.",
-      unknowError: "작업을 완료할 수 없음",
       invalidType: "잘못된 파일 유형입니다.",
       exceed: "파일 크기는 1024KB를 넘을 수 없습니다.",
       enableFlash: "TODO: 깜박이기를 활성화하세요.",
-      cropWaining: "${가로} x ${세로} 픽셀 이상의 사진을 선택하세요.",
       toolTip: "최상의 결과를 얻으려면 이미지의 폭은 ${width}픽셀, 높이는 ${height}픽셀이어야 합니다. 그 밖의 다른 크기는 맞게 조정됩니다. PNG, GIF 및 JPEG 형식의 이미지를 사용할 수 있습니다."
     },
     simpleTable: {
-      moveUp: "위로 이동",
-      moveDown: "아래로 이동",
-      deleteRow: "삭제",
-      edit: "편집"
+      moveUp: '위로 이동',
+      moveDown: '아래로 이동',
+      deleteRow: '삭제',
+      edit: '편집'
     }
   })
 );

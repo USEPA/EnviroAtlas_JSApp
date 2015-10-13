@@ -1,3 +1,6 @@
+.jimu-widget-coordinate{
+  z-index: 99;
+}
 .jimu-widget-coordinate .coordinate-background{
 	padding: 2px 5px 2px 5px;
   line-height: 20px;
@@ -25,6 +28,10 @@
 }
 .jimu-widget-coordinate .coordinate-info{
   margin: 0 5px;
+}
+.jimu-widget-coordinate .coordinate-info-menu{
+  overflow: hidden;
+  z-index: 999;
 }
 .jimu-widget-coordinate .coordinate-foldable{
   background: url(images/unfold01.png) center no-repeat;

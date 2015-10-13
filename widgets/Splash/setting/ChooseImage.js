@@ -1,124 +1,122 @@
 define([
-  "dojo",
-  "dijit",
-  "dijit/_editor/_Plugin",
-  "jimu/dijit/ImageChooser",
-  "dojo/_base/html",
-  "dojo/_base/connect",
-  "dojo/_base/declare",
-  "dojox/form/FileUploader",
-  "dijit/_editor/_Plugin"
+	"dojo",
+	"dijit",
+	"dijit/_editor/_Plugin",
+	"jimu/dijit/ImageChooser",
+	"dojo/_base/html",
+	"dojo/_base/connect",
+	"dojo/_base/declare",
+	"dojox/form/FileUploader",
+	"dijit/_editor/_Plugin"
 ], function(
-  dojo, dijit, _Plugin, ImageChooser, html
+	dojo, dijit, _Plugin, ImageChooser, html
 ) {
-  dojo.experimental("dojox.editor.plugins.ChooseImage");
 
-  var ChooseImage = dojo.declare("dojox.editor.plugins.ChooseImage", _Plugin, {
-    // summary:
-    //Adds an icon to the Editor toolbar that when clicked, opens a system dialog
-    //Although the toolbar icon is a tiny "image" the uploader could be used for
-    //any file type
+	dojo.experimental("dojox.editor.plugins.ChooseImage");
 
-    tempImageUrl: "",
-    iconClassPrefix: "editorIcon",
-    useDefaultCommand: false,
-    uploadUrl: "",
-    button: null,
-    label: "Upload",
+	var ChooseImage = dojo.declare("dojox.editor.plugins.ChooseImage", _Plugin, {
+		// summary:
+		//Adds an icon to the Editor toolbar that when clicked, opens a system dialog
+		//Although the toolbar icon is a tiny "image" the uploader could be used for
+		//any file type
 
-    setToolbar: function(toolbar) {
-      this.button.destroy();
-      this.createFileInput();
-      toolbar.addChild(this.button);
-    },
-    _initButton: function() {
-      this.command = "uploadImage";
-      this.editor.commands[this.command] = "Upload Image";
-      this.inherited("_initButton", arguments);
-      delete this.command;
-    },
+		tempImageUrl: "",
+		iconClassPrefix: "editorIcon",
+		useDefaultCommand: false,
+		uploadUrl: "",
+		button: null,
+		label: "Upload",
 
-    updateState: function() {
-      // summary:
-      //    Over-ride for button state control for disabled to work.
-      this.button.set("disabled", this.get("disabled"));
-    },
+		setToolbar: function(toolbar) {
+			this.button.destroy();
+			this.createFileInput();
+			toolbar.addChild(this.button);
+		},
+		_initButton: function() {
+			this.command = "uploadImage";
+			this.editor.commands[this.command] = "Upload Image";
+			this.inherited("_initButton", arguments);
+			delete this.command;
+		},
 
-    createFileInput: function() {
-      var node = dojo.create('span', {
-        innerHTML: "."
-      }, document.body);
-      dojo.style(node, {
-        width: "40px",
-        height: "20px",
-        paddingLeft: "8px",
-        paddingRight: "8px"
-      });
-      this.button = new ImageChooser({
-        showSelfImg: false,
-        cropImage: false,
-        format: [ImageChooser.GIF, ImageChooser.JPEG, ImageChooser.PNG]
-      }, node);
-      html.setStyle(this.button.domNode, {
-        width: "29px",
-        height: "24px",
-        top: 0,
-        position: "absolute"
-      });
+		updateState: function() {
+			// summary:
+			//		Over-ride for button state control for disabled to work.
+			this.button.set("disabled", this.get("disabled"));
+		},
 
-      if (window.isRTL) {
-        html.setStyle(this.button.domNode, 'left', '391px');
-      } else {
-        html.setStyle(this.button.domNode, 'right', '387px');
-      }
+		createFileInput: function() {
+			var node = dojo.create('span', {
+				innerHTML: "."
+			}, document.body);
+			dojo.style(node, {
+				width: "40px",
+				height: "20px",
+				paddingLeft: "8px",
+				paddingRight: "8px"
+			});
+			this.button = new ImageChooser({
+				showSelfImg: false
+			}, node);
+			html.setStyle(this.button.domNode, {
+				width: "29px",
+				height: "24px",
+				top: 0
+			});
 
-      this.connect(this.button, "onImageChange", "insertTempImage");
-      // this.connect(this.button, "onComplete", "onComplete");
-    },
+			if (window.isRTL){
+				html.setStyle(this.button.domNode, 'left', '391px');
+			}else {
+				html.setStyle(this.button.domNode, 'right', '387px');
+			}
 
-    onComplete: function(data /*,ioArgs,widgetRef*/ ) {
-      data = data[0];
-      // Image is ready to insert
-      var tmpImgNode = dojo.byId(this.currentImageId, this.editor.document);
-      var file;
-      // download path is mainly used so we can access a PHP script
-      // not relative to this file. The server *should* return a qualified path.
-      if (this.downloadPath) {
-        file = this.downloadPath + data.name;
-      } else {
-        file = data.file;
-      }
+			this.connect(this.button, "onImageChange", "insertTempImage");
+			// this.connect(this.button, "onComplete", "onComplete");
+		},
 
-      tmpImgNode.src = file;
-      dojo.attr(tmpImgNode, '_djrealurl', file);
+		onComplete: function(data /*,ioArgs,widgetRef*/ ) {
+			data = data[0];
+			// Image is ready to insert
+			var tmpImgNode = dojo.byId(this.currentImageId, this.editor.document);
+			var file;
+			// download path is mainly used so we can access a PHP script
+			// not relative to this file. The server *should* return a qualified path.
+			if (this.downloadPath) {
+				file = this.downloadPath + data.name;
+			} else {
+				file = data.file;
+			}
 
-      if (data.width) {
-        tmpImgNode.width = data.width;
-        tmpImgNode.height = data.height;
-      }
-    },
+			tmpImgNode.src = file;
+			dojo.attr(tmpImgNode, '_djrealurl', file);
 
-    insertTempImage: function(fileData) {
-      // summary:
-      //    inserting a "busy" image to show something is hapening
-      //    during upload and download of the image.
-      this.currentImageId = "img_" + (new Date().getTime());
-      var iTxt = '<img id="' + this.currentImageId + '" src="' + fileData + '" />';
-      this.editor.execCommand('inserthtml', iTxt);
-    }
-  });
+			if (data.width) {
+				tmpImgNode.width = data.width;
+				tmpImgNode.height = data.height;
+			}
+		},
 
-  dojo.subscribe(dijit._scopeName + ".Editor.getPlugin", null, function(o) {
-    if (o.plugin) {
-      return;
-    }
-    switch (o.args.name) {
-      case "chooseImage":
-        o.plugin = new ChooseImage({
-          url: o.args.url
-        });
-    }
-  });
+		insertTempImage: function(fileData) {
+			// summary:
+			//		inserting a "busy" image to show something is hapening
+			//		during upload and download of the image.
+			this.currentImageId = "img_" + (new Date().getTime());
+			var iTxt = '<img id="' + this.currentImageId + '" src="' + fileData + '" />';
+			this.editor.execCommand('inserthtml', iTxt);
+		}
+	});
 
-  return ChooseImage;
+	dojo.subscribe(dijit._scopeName + ".Editor.getPlugin", null, function(o) {
+		if (o.plugin) {
+			return;
+		}
+		switch (o.args.name) {
+			case "chooseImage":
+				o.plugin = new ChooseImage({
+					url: o.args.url
+				});
+		}
+	});
+
+	return ChooseImage;
 });

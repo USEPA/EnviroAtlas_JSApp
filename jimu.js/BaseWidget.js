@@ -18,15 +18,10 @@ define([
   'dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/_base/array',
-  'dojo/_base/html',
   'dojo/topic',
-  'dojo/Deferred',
   'dijit/_WidgetBase',
-  'dijit/_TemplatedMixin',
-  'jimu/utils',
-  './PanelManager'
-], function(declare, lang, array, html, topic, Deferred, _WidgetBase, _TemplatedMixin,
-  utils, PanelManager){
+  'dijit/_TemplatedMixin'
+], function(declare, lang, array, topic, _WidgetBase, _TemplatedMixin){
   var clazz = declare([_WidgetBase, _TemplatedMixin], {
     //type: String
     //    the value shoulb be widget
@@ -61,7 +56,7 @@ define([
     //    preload widget should config position property if it's not in group.
     //    the meaning of the property is the same as of the CSS
     position: {},
-
+    
     //config: Object|String
     //    config info in config.json, url or json object
     //    if url is configured in the config.json, json file is parsed and stored in this property
@@ -69,7 +64,7 @@ define([
 
     //defaultState: Boolean
     openAtStart: false,
-
+    
     /***************************************************************/
 
     /*********these properties is set by the framework**************/
@@ -86,7 +81,7 @@ define([
 
     //state: String
     //    the current state of the widget, the available states are:
-    //    opened, closed, active
+    //    opened, closed, active(TBD, when widget get focus)
     state: 'closed',
 
     //windowState: String
@@ -111,9 +106,7 @@ define([
     //templateString: String
     //    widget UI part, the content of the file Widget.html will be set to this property
     templateString: '<div></div>',
-
-    moveTopOnActive: true,
-
+    
     /***************************************************************/
 
     constructor: function(){
@@ -140,11 +133,6 @@ define([
       this.own(topic.subscribe('publishData', lang.hitch(this, this._onReceiveData)));
       this.own(topic.subscribe('dataFetched', lang.hitch(this, this._onReceiveData)));
       this.own(topic.subscribe('noData', lang.hitch(this, this._onNoData)));
-    },
-
-    startup: function(){
-      this.inherited(arguments);
-      this.started = true;
     },
 
     onOpen: function(){
@@ -185,15 +173,6 @@ define([
       //    windowState has been changed to "maximized" when call this method.
     },
 
-    onActive: function(){
-      // summary:
-      //    this function will be called when widget is clicked.
-    },
-
-    onDeActive: function(){
-      // summary:
-      //    this function will be called when another widget is clicked.
-    },
 
     onSignIn: function(credential){
       // summary:
@@ -212,40 +191,7 @@ define([
       //  this function will be called when position change,
       //  widget's position will be changed when layout change
       //  the position object may contain w/h/t/l/b/r
-
-      this.setPosition(position);
-    },
-
-    setPosition: function(position, containerNode){
-      //For on-screen off-panel widget, layout manager will call this function
-      //to set widget's position after load widget. If your widget will position by itself,
-      //please override this function.
       this.position = position;
-      var style = utils.getPositionStyle(this.position);
-      style.position = 'absolute';
-
-      if(!containerNode){
-        if(position.relativeTo === 'map'){
-          containerNode = this.map.id;
-        }else{
-          containerNode = window.jimuConfig.layoutId;
-        }
-      }
-
-      html.place(this.domNode, containerNode);
-      html.setStyle(this.domNode, style);
-      if(this.started){
-        this.resize();
-      }
-    },
-
-    getPosition: function(){
-      return this.position;
-    },
-
-    getMarginBox: function() {
-      var box = html.getMarginBox(this.domNode);
-      return box;
     },
 
     setMap: function( /*esri.Map*/ map){
@@ -274,25 +220,6 @@ define([
 
     onAction: function(action, data){
       /*jshint unused: false*/
-    },
-
-    getPanel: function(){
-      //get panel of the widget. return null for off-panel widget.
-      if(this.inPanel === false){
-        return null;
-      }
-      if(this.gid === 'widgetOnScreen' || this.gid === 'widgetPool'){
-        return PanelManager.getInstance().getPanelById(this.id + '_panel');
-      }else{
-        //it's in group
-        var panel = PanelManager.getInstance().getPanelById(this.gid + '_panel');
-        if(panel){
-          //open all widgets in group together
-          return panel;
-        }else{
-          return PanelManager.getInstance().getPanelById(this.id + '_panel');
-        }
-      }
     },
 
     publishData: function(data, keepHistory){
@@ -329,26 +256,6 @@ define([
       }, this);
     },
 
-    openWidgetById: function(widgetId){
-      //this method will publish openWidget message, so onscreen or pool widget can be opened.
-      var def = new Deferred();
-      if(this.widgetManager.getWidgetById(widgetId)){
-        def.resolve(this.widgetManager.getWidgetById(widgetId));
-        return def;
-      }
-
-      var handle = topic.subscribe('widgetCreated', lang.hitch(this, function(widget){
-        if(widget.id === widgetId){
-          handle.remove();
-          def.resolve(widget);
-        }
-      }));
-
-      topic.publish('openWidget', widgetId);
-
-      return def;
-    },
-
     _onReceiveData: function(name, widgetId, data, historyData){
       //the data is what I published
       if(widgetId === this.id){
@@ -365,13 +272,9 @@ define([
       /* jshint unused: false */
       // console.log('onReceiveData: ' + name + ',' + widgetId + ',data:' + data);
 
-      /****************About historyData:
-      The historyData maybe: undefined, true, object(data)
-        undefined: means data published without history
-        true: means data published with history. If this widget want to fetch history data,
-            Please call fetch data.
-        object: the history data.
-      *********************************/
+      //About historyData:
+      //If you call fetchData and the widget that published the data with "keepHistory"
+      //this historyData will be availble, or the historyData will be undefined.
     },
 
     _onNoData: function(name, widgetId){

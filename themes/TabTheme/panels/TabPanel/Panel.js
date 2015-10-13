@@ -25,7 +25,7 @@ define(['dojo/_base/declare',
   ) {
 
     return declare([BaseWidgetPanel], {
-      baseClass: 'jimu-panel jimu-tab-panel jimu-main-background jimu-panel-content',
+      baseClass: 'jimu-widget-panel jimu-tab-panel jimu-main-bgcolor',
 
       createFrame: function(widgetConfig) {
         var frame = new TabWidgetFrame({

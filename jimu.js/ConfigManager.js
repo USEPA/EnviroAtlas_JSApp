@@ -18,20 +18,19 @@ define([
   'dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/_base/array',
-  'dojo/_base/html',
   'dojo/topic',
   'dojo/Deferred',
-  'dojo/on',
   './utils',
   './WidgetManager',
   './shared/AppVersionManager',
+  './shared/utils',
   './ConfigLoader',
   './tokenUtils',
   'esri/config',
   'esri/tasks/GeometryService'
 ],
-function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetManager,
-  AppVersionManager, ConfigLoader, tokenUtils, esriConfig, GeometryService) {
+function (declare, lang, array, topic, Deferred, jimuUtils, WidgetManager,
+  AppVersionManager, sharedUtils, ConfigLoader, tokenUtils, esriConfig, GeometryService) {
   var instance = null, clazz;
 
   clazz = declare(null, {
@@ -44,6 +43,7 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
     constructor: function (urlParams) {
       this.urlParams = urlParams || {};
       this.listenBuilderEvents();
+      this.isRunInPortal = false;
       this.versionManager = new AppVersionManager();
       this.widgetManager = WidgetManager.getInstance();
       this.configLoader = ConfigLoader.getInstance(this.urlParams, {
@@ -58,8 +58,6 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
         lang.isFunction(window.parent.setPreviewViewerTopic)){
         window.parent.setPreviewViewerTopic(topic);
       }
-
-      on(window, 'resize', lang.hitch(this, this._onWindowResize));
     },
 
     listenBuilderEvents: function(){
@@ -74,7 +72,6 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
       topic.subscribe('builder/widgetChanged', lang.hitch(this, this._onWidgetChanged));
       topic.subscribe('builder/groupChanged', lang.hitch(this, this._onGroupChanged));
       topic.subscribe('builder/widgetPoolChanged', lang.hitch(this, this._onWidgetPoolChanged));
-      topic.subscribe('builder/openAtStartChange', lang.hitch(this, this._onOpenAtStartChanged));
 
       topic.subscribe('builder/mapChanged', lang.hitch(this, this._onMapChanged));
       topic.subscribe('builder/mapOptionsChanged', lang.hitch(this, this._onMapOptionsChanged));
@@ -90,11 +87,6 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
       topic.subscribe('builder/styleChanged', lang.hitch(this, this._onStyleChanged));
 
       topic.subscribe('builder/syncExtent', lang.hitch(this, this._onSyncExtent));
-
-      topic.subscribe('builder/loadingPageChanged', lang.hitch(this, this._onLoadingPageChanged));
-
-      topic.subscribe('builder/templateConfigChanged',
-        lang.hitch(this, this._onTemplateConfigChanged));
     },
 
     loadConfig: function(){
@@ -106,106 +98,35 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
       return this.configLoader.loadConfig().then(lang.hitch(this, function(appConfig){
         this.portalSelf = this.configLoader.portalSelf;
         this.appConfig = this._addDefaultValues(appConfig);
-
-        window.appInfo.isRunInMobile = this._isRunInMobile();
-
         console.timeEnd('Load Config');
-
-        var _ac = this.getAppConfig();
-        topic.publish("appConfigLoaded", _ac);
-        return _ac;
-      }), lang.hitch(this, function(err){
+        topic.publish("appConfigLoaded", this.getConfig());
+        return this.getConfig();
+      }), function(err){
         console.error(err);
-        if(err && err.message && typeof err.message === 'string'){
-          this._showErrorMessage(err.message);
-        }
-      }));
+      });
     },
 
-    _showErrorMessage: function(msg){
-      var str = "Unable to create map: " + msg;
-      html.create('div', {
-        'class': 'create-map-error',
-        innerHTML: str
-      }, document.body);
-    },
-
-    getAppConfig: function () {
-      var c;
-      if(window.appInfo.isRunInMobile){
-        console.log('Switch to mobile mode.');
-        c = lang.clone(this._getMobileConfig(this.appConfig));
-        c._originConfig = lang.clone(this.appConfig);
-      }else{
-        console.log('Switch to desktop mode.');
-        c = lang.clone(this.appConfig);
-      }
+    getConfig: function () {
+      var c = lang.clone(this.appConfig);
 
       c.getConfigElementById = function(id){
-        return jimuUtils.getConfigElementById(this, id);
-      };
-
-      c.getConfigElementByLabel = function(label){
-        return jimuUtils.getConfigElementByLabel(this, label);
-      };
-
-      c.getConfigElementsByName = function(name){
-        return jimuUtils.getConfigElementsByName(this, name);
+        return sharedUtils.getConfigElementById(this, id);
       };
 
       c.getCleanConfig = function(){
-        if(this._originConfig){
-          return getCleanConfig(this._originConfig);
-        }else{
-          return getCleanConfig(this);
-        }
+        return getCleanConfig(this);
       };
 
       c.visitElement = function(cb){
-        jimuUtils.visitElement(this, cb);
+        sharedUtils.visitElement(this, cb);
       };
       return c;
-    },
-
-    _onWindowResize: function () {
-      var runInMobile = this._isRunInMobile();
-      if(window.appInfo.isRunInMobile === runInMobile){
-        return;
-      }
-
-      window.appInfo.isRunInMobile = runInMobile;
-
-      if(this.appConfig){
-        topic.publish("appConfigChanged", this.getAppConfig(), 'layoutChange');
-      }
-    },
-
-    _isRunInMobile: function(){
-      var layoutBox = html.getMarginBox(window.jimuConfig.layoutId);
-      if (layoutBox.w <= window.jimuConfig.breakPoints[0] ||
-        layoutBox.h <= window.jimuConfig.breakPoints[0]) {
-        html.addClass(window.jimuConfig.layoutId, 'jimu-ismobile');
-        return true;
-      } else {
-        html.removeClass(window.jimuConfig.layoutId, 'jimu-ismobile');
-        return false;
-      }
-    },
-
-    _getMobileConfig: function(appConfig) {
-      return jimuUtils.mixinAppConfigPosition(appConfig, appConfig.mobileLayout);
     },
 
     _onWidgetChanged: function(_newJson){
       // transfer obj to another iframe may cause problems on IE8
       var newJson = jimuUtils.reCreateObject(_newJson);
-      var oldJson = jimuUtils.getConfigElementById(this.appConfig, _newJson.id);
-
-      //for placeholder, add off panel
-      if(newJson.inPanel === false && !oldJson.uri){
-        newJson.closeable = true;
-      }
-
+      var oldJson = sharedUtils.getConfigElementById(this.appConfig, _newJson.id);
       //for now, we can add/update property only
       for(var p in newJson){
         oldJson[p] = newJson[p];
@@ -213,13 +134,13 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
 
       this.configLoader.addNeedValues(this.appConfig);
       this._addDefaultValues(this.appConfig);
-      topic.publish('appConfigChanged', this.getAppConfig(), 'widgetChange', newJson);
+      topic.publish('appConfigChanged', this.getConfig(), 'widgetChange', newJson);
     },
 
     _onGroupChanged: function(_newJson){
       // transfer obj to another iframe may cause problems on IE8
       var newJson = jimuUtils.reCreateObject(_newJson);
-      var oldJson = jimuUtils.getConfigElementById(this.appConfig, _newJson.id);
+      var oldJson = sharedUtils.getConfigElementById(this.appConfig, _newJson.id);
       //for now, we can add/update property only
       for(var p in newJson){
         oldJson[p] = newJson[p];
@@ -227,114 +148,19 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
 
       this.configLoader.addNeedValues(this.appConfig);
       this._addDefaultValues(this.appConfig);
-      topic.publish('appConfigChanged', this.getAppConfig(), 'groupChange', newJson);
+      topic.publish('appConfigChanged', this.getConfig(), 'groupChange', newJson);
     },
 
     _onWidgetPoolChanged: function(_newJson){
       // transfer obj to another iframe may cause problems on IE8
       var newJson = jimuUtils.reCreateObject(_newJson);
+      //TODO we support only one controller for now, so we don't do much here
+      this.appConfig.widgetPool.widgets = newJson.widgets;
+      this.appConfig.widgetPool.groups = newJson.groups;
 
-      var controllerWidgets = this.widgetManager.getControllerWidgets();
-      if(controllerWidgets.length === 1){
-        this.appConfig.widgetPool.widgets = newJson.widgets;
-        this.appConfig.widgetPool.groups = newJson.groups;
-      }else{
-        var controllerJson = jimuUtils.getConfigElementById(this.appConfig, newJson.controllerId);
-
-        //remove old jsons from pool
-        array.forEach(controllerJson.controlledWidgets, function(widgetId){
-          this._removeWidgetOrGroupFromPoolById(this.appConfig, widgetId);
-        }, this);
-
-        array.forEach(controllerJson.controlledGroups, function(groupId){
-          this._removeWidgetOrGroupFromPoolById(this.appConfig, groupId);
-        }, this);
-
-        //add new jsons into pool
-        if(typeof this.appConfig.widgetPool.widgets === 'undefined'){
-          this.appConfig.widgetPool.widgets = newJson.widgets;
-        }else{
-          this.appConfig.widgetPool.widgets =
-            this.appConfig.widgetPool.widgets.concat(newJson.widgets);
-        }
-        if(typeof this.appConfig.widgetPool.groups === 'undefined'){
-          this.appConfig.widgetPool.groups = newJson.groups;
-        }else{
-          this.appConfig.widgetPool.groups =
-            this.appConfig.widgetPool.groups.concat(newJson.groups);
-        }
-
-        //add this line because we need id below
-        this.configLoader.addNeedValues(this.appConfig);
-
-        //update controller setting
-        controllerJson.controlledWidgets = array.map(newJson.widgets, function(widgetJson){
-          return widgetJson.id;
-        });
-        controllerJson.controlledGroups = array.map(newJson.groups, function(groupJson){
-          return groupJson.id;
-        });
-      }
       this.configLoader.addNeedValues(this.appConfig);
       this._addDefaultValues(this.appConfig);
-      topic.publish('appConfigChanged', this.getAppConfig(), 'widgetPoolChange', newJson);
-    },
-
-    _removeWidgetOrGroupFromPoolById: function(appConfig, id){
-      array.some(appConfig.widgetPool.widgets, function(widget, i){
-        if(widget.id === id){
-          appConfig.widgetPool.widgets.splice(i, 1);
-          return true;
-        }
-      });
-
-      array.some(appConfig.widgetPool.groups, function(group, i){
-        if(group.id === id){
-          appConfig.widgetPool.groups.splice(i, 1);
-          return true;
-        }
-      });
-    },
-
-    _onOpenAtStartChanged: function(_newJson) {
-      // transfer obj to another iframe may cause problems on IE8
-      var newJson = jimuUtils.reCreateObject(_newJson);
-      //TODO we support only one controller for now, so we don't do much here
-      var appConfig = this.appConfig;
-      if (_newJson.isOnScreen) {
-        var onScreenWidgets = appConfig.widgetOnScreen && appConfig.widgetOnScreen.widgets;
-        if (onScreenWidgets && onScreenWidgets.length > 0) {
-          array.forEach(onScreenWidgets, lang.hitch(this, function(w) {
-            if (w.id === _newJson.id) {
-              w.openAtStart = !w.openAtStart;
-            } else {
-              delete w.openAtStart;
-            }
-          }));
-        }
-      } else {
-        var pool = appConfig.widgetPool;
-        if (pool && pool.groups && pool.groups.length > 0) {
-          array.forEach(pool.groups, lang.hitch(this, function(g) {
-            if (g.id === _newJson.id) {
-              g.openAtStart = !g.openAtStart;
-            } else {
-              delete g.openAtStart;
-            }
-          }));
-        }
-        if (pool && pool.widgets && pool.widgets.length > 0) {
-          array.forEach(pool.widgets, lang.hitch(this, function(w) {
-            if (w.id === _newJson.id) {
-              w.openAtStart = !w.openAtStart;
-            } else {
-              delete w.openAtStart;
-            }
-          }));
-        }
-      }
-
-      topic.publish('appConfigChanged', this.getAppConfig(), 'openAtStartChange', newJson);
+      topic.publish('appConfigChanged', this.getConfig(), 'widgetPoolChange', newJson);
     },
 
     _onAppAttributeChanged: function(_newJson){
@@ -347,38 +173,7 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
 
       this.configLoader.addNeedValues(this.appConfig);
       this._addDefaultValues(this.appConfig);
-      topic.publish('appConfigChanged', this.getAppConfig(), 'attributeChange', newJson);
-    },
-
-    _onLoadingPageChanged: function(_newJson){
-      // transfer obj to another iframe may cause problems on IE8
-      var newJson = jimuUtils.reCreateObject(_newJson);
-      var oldConfig;
-
-      if('backgroundColor' in newJson){
-        this.appConfig.loadingPage.backgroundColor = newJson.backgroundColor;
-      }else if('backgroundImage' in newJson){
-        oldConfig = this.appConfig.loadingPage.backgroundImage || {};
-        this.appConfig.loadingPage.backgroundImage =
-            lang.mixin(oldConfig, newJson.backgroundImage);
-      }else if('loadingGif' in newJson){
-        oldConfig = this.appConfig.loadingPage.loadingGif || {};
-        this.appConfig.loadingPage.loadingGif =
-            lang.mixin(oldConfig, newJson.loadingGif);
-      }
-
-      this.configLoader.addNeedValues(this.appConfig);
-      this._addDefaultValues(this.appConfig);
-      topic.publish('appConfigChanged', this.getAppConfig(), 'loadingPageChange', newJson);
-    },
-
-    _onTemplateConfigChanged: function(_newJson){
-      var newJson = jimuUtils.reCreateObject(_newJson);
-      this.appConfig.templateConfig = newJson;
-
-      this.configLoader.addNeedValues(this.appConfig);
-      this._addDefaultValues(this.appConfig);
-      topic.publish('appConfigChanged', this.getAppConfig(), 'templateConfigChange', newJson);
+      topic.publish('appConfigChanged', this.getConfig(), 'attributeChange', newJson);
     },
 
     _onMapChanged: function(_newJson){
@@ -386,16 +181,20 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
       var newJson = jimuUtils.reCreateObject(_newJson);
 
       if(newJson.itemId && newJson.itemId !== this.appConfig.map.itemId){
-        //remove the options that are relative to map's display when map is changed.
+        //delete initial extent and lods when change map
         if(this.appConfig.map.mapOptions){
-          jimuUtils.deleteMapOptions(this.appConfig.map.mapOptions);
+          delete this.appConfig.map.mapOptions.extent;
+          delete this.appConfig.map.mapOptions.lods;
+          delete this.appConfig.map.mapOptions.center;
+          delete this.appConfig.map.mapOptions.scale;
+          delete this.appConfig.map.mapOptions.zoom;
         }
       }
       lang.mixin(this.appConfig.map, newJson);
 
       this.configLoader.addNeedValues(this.appConfig);
       this._addDefaultValues(this.appConfig);
-      topic.publish('appConfigChanged', this.getAppConfig(), 'mapChange', newJson);
+      topic.publish('appConfigChanged', this.getConfig(), 'mapChange', newJson);
     },
 
     _onMapOptionsChanged: function(_newJson){
@@ -405,33 +204,83 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
         this.appConfig.map.mapOptions = {};
       }
       lang.mixin(this.appConfig.map.mapOptions, newJson);
-      topic.publish('appConfigChanged', this.getAppConfig(), 'mapOptionsChange', newJson);
+      topic.publish('appConfigChanged', this.getConfig(), 'mapOptionsChange', newJson);
     },
 
     _onThemeChanged: function(theme){
       this._getAppConfigFromTheme(theme).then(lang.hitch(this, function(config){
         this.appConfig = config;
-        topic.publish('appConfigChanged', this.getAppConfig(), 'themeChange', theme.getName());
+        topic.publish('appConfigChanged', this.getConfig(), 'themeChange', theme.getName());
       }));
     },
 
     _onLayoutChanged: function(layout){
       //summary:
-      //  * Layout contains widget/group position, panel uri.
-      //  * For default layout, use the same format with app config to define it.
-      //  * For other layouts, we support 2 ways:
-      //    * Use array, one by one
-      //    * Use object, key is widget uri, or ph_<index>(placeholder), or g_<index>(group)
+      //    layouts in the same theme should have the same:
+      //      1. count of preload widgets, count of widgetOnScreen groups
+      //        (if not same, we just ignore the others)
+      //      2. app properties (if not same, we just ignore the new layout properties)
+      //      3. map config (if not same, we just ignore the new layout properties)
+      //    can only have these differrences:
+      //      1. panel, 2. position, 3, predefined widgets
+      var layoutConfig = layout.layoutConfig;
+      var layoutConfigScreenSection = layoutConfig.widgetOnScreen;
+      var thisConfigScreenSection = this.appConfig.widgetOnScreen;
+      if(layoutConfigScreenSection){
+        //copy preload widget panel
+        if(layoutConfigScreenSection.panel && layoutConfigScreenSection.panel.uri){
+          thisConfigScreenSection.panel.uri = layoutConfigScreenSection.panel.uri;
+        }
 
-      this.appConfig = jimuUtils.mixinAppConfigPosition(this.appConfig, layout.layoutConfig);
+        //copy preload widget position
+        array.forEach(layoutConfigScreenSection.widgets, function(widget, i){
+          if(thisConfigScreenSection.widgets[i] && widget){
+            if(widget.position){
+              thisConfigScreenSection.widgets[i].position = widget.position;
+            }
+            if(widget.positionRelativeTo){
+              thisConfigScreenSection.widgets[i].positionRelativeTo = widget.positionRelativeTo;
+            }
 
-      this._addDefaultPanelAndPosition(this.appConfig);
-      topic.publish('appConfigChanged', this.getAppConfig(), 'layoutChange', layout.name);
+            thisConfigScreenSection.widgets[i].panel = {
+              uri: thisConfigScreenSection.panel.uri,
+              position: thisConfigScreenSection.widgets[i].position,
+              positionRelativeTo: thisConfigScreenSection.widgets[i].positionRelativeTo
+            };
+          }
+        }, this);
+        //copy preload group panel
+        array.forEach(layoutConfigScreenSection.groups, function(group, i){
+          if(thisConfigScreenSection.groups[i] && group && group.panel){
+            thisConfigScreenSection.groups[i].panel = group.panel;
+          }
+        }, this);
+      }
+
+      if(layoutConfig.map){
+        //copy map position
+        this.appConfig.map.position = layoutConfig.map.position;
+      }
+
+      if(layoutConfig.widgetPool){
+        //copy pool widget panel
+        if(layoutConfig.widgetPool.panel){
+          this.appConfig.widgetPool.panel = layoutConfig.widgetPool.panel;
+        }
+        //copy pool group panel
+        array.forEach(layoutConfig.widgetPool.groups, function(group, i){
+          if(this.appConfig.widgetPool.groups[i] && group && group.panel){
+            this.appConfig.widgetPool.groups[i].panel = group.panel;
+          }
+        }, this);
+      }
+
+      topic.publish('appConfigChanged', this.getConfig(), 'layoutChange', layout.name);
     },
 
     _onStyleChanged: function(style){
       this.appConfig.theme.styles = this._genStyles(this.appConfig.theme.styles, style.name);
-      topic.publish('appConfigChanged', this.getAppConfig(), 'styleChange', style.name);
+      topic.publish('appConfigChanged', this.getConfig(), 'styleChange', style.name);
     },
 
     _onSyncExtent: function(map){
@@ -457,7 +306,7 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
     _getAppConfigFromTheme: function(theme){
       var def = new Deferred();
       var config, styles = [];
-      var currentConfig = this.getAppConfig().getCleanConfig();
+      var currentConfig = this.getConfig().getCleanConfig();
 
       currentConfig.mode = this.urlParams.mode;
 
@@ -472,7 +321,12 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
         config = lang.clone(theme.appConfig);
         config.map = currentConfig.map;
         config.map.position = theme.appConfig.map.position;
-        this._copyPoolToThemePool(currentConfig, config);
+        if(currentConfig.widgetPool.widgets){
+          config.widgetPool.widgets = currentConfig.widgetPool.widgets;
+        }
+        if(currentConfig.widgetPool.groups){
+          config.widgetPool.groups = currentConfig.widgetPool.groups;
+        }
         if (currentConfig.links){
           config.links = currentConfig.links;
         }
@@ -482,29 +336,14 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
         var style = theme.getCurrentStyle();
 
         config = lang.clone(currentConfig);
-        var layoutConfig = lang.clone(layout.layoutConfig);
 
-        //use onscreen
-        config.widgetOnScreen = layoutConfig.widgetOnScreen;
-
-        //add flag
-        if(layoutConfig.widgetPool){
-          array.forEach(layoutConfig.widgetPool.widgets, function(w){
-            w.isPreconfiguredInTheme = true;
-          });
-          array.forEach(layoutConfig.widgetPool.groups, function(g){
-            g.isPreconfiguredInTheme = true;
-          });
+        config.widgetOnScreen = layout.layoutConfig.widgetOnScreen;
+        if(layout.layoutConfig.widgetPool && layout.layoutConfig.widgetPool.panel){
+          config.widgetPool.panel = layout.layoutConfig.widgetPool.panel;
         }
-
-        //copy pool
-        this._copyPoolToThemePool(currentConfig, layoutConfig);
-        config.widgetPool = layoutConfig.widgetPool;
-
-        if(layoutConfig.map && layoutConfig.map.position){
-          config.map.position = layoutConfig.map.position;
+        if(layout.layoutConfig.map && layout.layoutConfig.map.position){
+          config.map.position = layout.layoutConfig.map.position;
         }
-        config.mobileLayout = layoutConfig.mobileLayout;
 
         //put all styles into the style array, and the current style is the first element
         styles = this._genStyles(array.map(theme.getStyles(), function(style){
@@ -518,85 +357,17 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
       }
 
       this.configLoader.addNeedValues(config);
-      this.configLoader.loadWidgetsManifest(config).then(lang.hitch(this, function(){
-        this._addDefaultValues(config);
+      this._addDefaultValues(config);
+      this.configLoader.loadWidgetsManifest(config).then(function(){
         def.resolve(config);
-      }));
+      });
       return def;
-    },
-
-    _copyPoolToThemePool: function(currentAppConfig, themeAppConfig){
-      var cpool = currentAppConfig.widgetPool;
-
-      if(!themeAppConfig.widgetPool){
-        themeAppConfig.widgetPool = {};
-      }
-      var tpool = themeAppConfig.widgetPool;
-
-      //widgets/groups defined in theme
-      var themePoolWidgets = array.filter(tpool.widgets, function(tw){
-        if(tw.isPreconfiguredInTheme){
-          return true;
-        }
-
-        //widgets that exists in the theme only(added by user, not pre-configured)
-        if(!array.some(cpool.widgets, function(cw){
-          return cw.name === tw.name;
-        })){
-          return true;
-        }
-      });
-      var themePoolGroups = array.filter(tpool.groups, function(g){
-        return g.isPreconfiguredInTheme;
-      });
-
-      //widgets/groups are shared
-      var currentPoolWidgets = array.filter(cpool.widgets, function(w){
-        return !w.isPreconfiguredInTheme;
-      });
-      var currentPoolGroups = array.filter(cpool.groups, function(g){
-        return !g.isPreconfiguredInTheme;
-      });
-
-      currentPoolWidgets = this._getPoolWidgetsWithoutDuplicated(currentPoolWidgets,
-          themeAppConfig.widgetOnScreen.widgets || []);
-
-      tpool.widgets = currentPoolWidgets.concat(themePoolWidgets);
-      tpool.groups = currentPoolGroups.concat(themePoolGroups);
-    },
-
-    _getPoolWidgetsWithoutDuplicated: function(currentPoolWidgets, themeOnScreeWidgets){
-      var ret = lang.clone(currentPoolWidgets);
-      //we don't care groups and theme pool, because all in-panel widgets are not singleton
-      for(var i = currentPoolWidgets.length - 1; i >= 0; i --){
-        for(var j = themeOnScreeWidgets.length - 1; j >= 0; j --){
-          if(!themeOnScreeWidgets[j].uri){
-            continue;
-          }
-          var wname = themeOnScreeWidgets[j].name;
-          if(!wname){
-            wname = jimuUtils.getWidgetNameFromUri(themeOnScreeWidgets[j].uri);
-          }
-
-          var wid = currentPoolWidgets[i].id;
-          var wjson = this.getAppConfig().getConfigElementById(wid);
-          if(currentPoolWidgets[i] && currentPoolWidgets[i].name === wname &&
-            wjson.supportMultiInstance === false){
-            console.log('Widget', currentPoolWidgets[i].name,
-              'is not copied to new theme because this widget exists in new theme.');
-            ret.splice(i, 1);
-          }
-        }
-      }
-      return ret;
     },
 
     _onAppConfigSet: function(c){
       //summary:
       //  this method may be called by builder or UT
       c = jimuUtils.reCreateObject(c);
-
-      window.appInfo.isRunInMobile = this._isRunInMobile();
 
       this.configLoader.processProxy(c);
 
@@ -606,15 +377,17 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
       tokenUtils.setPortalUrl(c.portalUrl);
 
       if(this.appConfig){
-        //remove the options that are relative to map's display when map is changed.
+        //delete initial extent when change map
         if(c.map.itemId && c.map.itemId !== this.appConfig.map.itemId){
-          jimuUtils.deleteMapOptions(c.map.mapOptions);
+          if(c.map.mapOptions){
+            delete c.map.mapOptions.extent;
+          }
         }
         this.appConfig = c;
-        topic.publish('appConfigChanged', this.getAppConfig(), 'resetConfig', c);
+        topic.publish('appConfigChanged', this.getConfig(), 'resetConfig', c);
       }else{
         this.appConfig = c;
-        topic.publish("appConfigLoaded", this.getAppConfig());
+        topic.publish("appConfigLoaded", this.getConfig());
       }
     },
 
@@ -705,7 +478,7 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
     },
 
     _addDefaultVisible: function(config){
-      jimuUtils.visitElement(config, function(e){
+      sharedUtils.visitElement(config, function(e){
         if(e.visible === undefined){
           e.visible = true;
         }
@@ -713,141 +486,81 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
     },
 
     _addDefaultPanelAndPosition: function(config){
-      this._addOnScreenDefaultPanelAndPosition(config);
-      this._addPoolDefaultPanelAndPosition(config);
-    },
-
-    _addOnScreenDefaultPanelAndPosition: function(config){
-      var i, j, screenSectionConfig = config.widgetOnScreen;
-
-      if(!screenSectionConfig){
-        return;
-      }
-
-      var panelDefaultPositionR =
-        screenSectionConfig.panel && screenSectionConfig.panel.positionRelativeTo?
-        screenSectionConfig.panel.positionRelativeTo: 'map';
-
+      var i, j, screenSectionConfig = config.widgetOnScreen, poolSectionConfig = config.widgetPool;
+      //panel
       if(typeof screenSectionConfig.panel === 'undefined' ||
         typeof screenSectionConfig.panel.uri === 'undefined'){
-        screenSectionConfig.panel = {
-          uri: 'jimu/OnScreenWidgetPanel',
-          //positionRelativeTo: 'map',
-          position: {
-            //move positionRelativeTo to position.relativeTo
-            relativeTo: panelDefaultPositionR
-          }
-        };
-      }else if(typeof screenSectionConfig.panel.position === 'undefined'){
-        screenSectionConfig.panel.position = {relativeTo: panelDefaultPositionR};
-      }else if(typeof screenSectionConfig.panel.position.relativeTo === 'undefined'){
-        screenSectionConfig.panel.position.relativeTo = panelDefaultPositionR;
+        screenSectionConfig.panel = {uri: 'jimu/PreloadWidgetIconPanel', positionRelativeTo: 'map'};
+      }else if(typeof screenSectionConfig.panel.positionRelativeTo === 'undefined'){
+        screenSectionConfig.panel.positionRelativeTo = 'map';
+      }
+
+      if(typeof poolSectionConfig.panel === 'undefined' ||
+        typeof poolSectionConfig.panel.uri === 'undefined'){
+        poolSectionConfig.panel = {uri: 'jimu/PreloadWidgetIconPanel', positionRelativeTo: 'map'};
+      }else if(typeof poolSectionConfig.panel.positionRelativeTo === 'undefined'){
+        poolSectionConfig.panel.positionRelativeTo = 'map';
       }
 
       if(screenSectionConfig.widgets){
         for(i = 0; i < screenSectionConfig.widgets.length; i++){
           if(!screenSectionConfig.widgets[i].position){
-            screenSectionConfig.widgets[i].position = {};
+            screenSectionConfig.widgets[i].position = {
+              left: 0,
+              top: 0
+            };
           }
-          if(!screenSectionConfig.widgets[i].position.relativeTo){
-            screenSectionConfig.widgets[i].position.relativeTo =
-              screenSectionConfig.widgets[i] && screenSectionConfig.widgets[i].positionRelativeTo?
-              screenSectionConfig.widgets[i].positionRelativeTo: 'map';
+          if(!screenSectionConfig.widgets[i].positionRelativeTo){
+            screenSectionConfig.widgets[i].positionRelativeTo = 'map';
           }
-          if(screenSectionConfig.widgets[i].inPanel === true &&
-            !screenSectionConfig.widgets[i].panel){
+          if(!screenSectionConfig.widgets[i].panel){
             screenSectionConfig.widgets[i].panel = lang.clone(screenSectionConfig.panel);
             screenSectionConfig.widgets[i].panel.position = screenSectionConfig.widgets[i].position;
-            screenSectionConfig.widgets[i].panel.position.relativeTo =
-            screenSectionConfig.widgets[i].position.relativeTo;
+            screenSectionConfig.widgets[i].panel.positionRelativeTo =
+            screenSectionConfig.widgets[i].positionRelativeTo;
           }
         }
       }
 
       if(screenSectionConfig.groups){
         for(i = 0; i < screenSectionConfig.groups.length; i++){
+          if(!screenSectionConfig.groups[i].position){
+            screenSectionConfig.groups[i].position = {
+              left: 0,
+              top: 0
+            };
+          }
+
           if(!screenSectionConfig.groups[i].panel){
             screenSectionConfig.groups[i].panel = screenSectionConfig.panel;
           }
 
-          if(screenSectionConfig.groups[i].panel && !screenSectionConfig.groups[i].panel.position){
-            screenSectionConfig.groups[i].panel.position = {};
-          }
-
-          if(!screenSectionConfig.groups[i].panel.position.relativeTo){
-            screenSectionConfig.groups[i].panel.position.relativeTo =
-              screenSectionConfig.groups[i].panel.positionRelativeTo?
-              screenSectionConfig.groups[i].panel.positionRelativeTo:'map';
-          }
-
-          if(!screenSectionConfig.groups[i].widgets){
-            screenSectionConfig.groups[i].widgets = [];
-          }
           for(j = 0; j < screenSectionConfig.groups[i].widgets.length; j++){
             screenSectionConfig.groups[i].widgets[j].panel = screenSectionConfig.groups[i].panel;
           }
         }
       }
-    },
 
-    _addPoolDefaultPanelAndPosition: function(config){
-      var i, j, poolSectionConfig = config.widgetPool;
+      if(poolSectionConfig){
+        if(poolSectionConfig.groups){
+          for(i = 0; i < poolSectionConfig.groups.length; i++){
+            if(!poolSectionConfig.groups[i].panel){
+              poolSectionConfig.groups[i].panel = poolSectionConfig.panel;
+            }else if(!poolSectionConfig.groups[i].panel.positionRelativeTo){
+              poolSectionConfig.groups[i].panel.positionRelativeTo = 'map';
+            }
 
-      if(!poolSectionConfig){
-        return;
-      }
-
-      var panelDefaultPositionR =
-        poolSectionConfig.panel && poolSectionConfig.panel.positionRelativeTo?
-        poolSectionConfig.panel.positionRelativeTo: 'map';
-
-      if(typeof poolSectionConfig.panel === 'undefined' ||
-        typeof poolSectionConfig.panel.uri === 'undefined'){
-        poolSectionConfig.panel = {
-          uri: 'jimu/OnScreenWidgetPanel',
-          position: {
-            relativeTo: panelDefaultPositionR
-          }
-        };
-      }else if(typeof poolSectionConfig.panel.position === 'undefined'){
-        poolSectionConfig.panel.position = {relativeTo: panelDefaultPositionR};
-      }else if(typeof poolSectionConfig.panel.position.relativeTo === 'undefined'){
-        poolSectionConfig.panel.position.relativeTo = panelDefaultPositionR;
-      }
-
-      if(poolSectionConfig.groups){
-        for(i = 0; i < poolSectionConfig.groups.length; i++){
-          if(!poolSectionConfig.groups[i].panel){
-            poolSectionConfig.groups[i].panel = poolSectionConfig.panel;
-          }else if(!poolSectionConfig.groups[i].panel.position.relativeTo){
-            poolSectionConfig.groups[i].panel.position.relativeTo =
-              poolSectionConfig.groups[i].panel.positionRelativeTo?
-              poolSectionConfig.groups[i].panel.positionRelativeTo: 'map';
-          }
-
-          if(!poolSectionConfig.groups[i].widgets){
-            poolSectionConfig.groups[i].widgets = [];
-          }
-          for(j = 0; j < poolSectionConfig.groups[i].widgets.length; j++){
-            poolSectionConfig.groups[i].widgets[j].panel = poolSectionConfig.groups[i].panel;
+            for(j = 0; j < poolSectionConfig.groups[i].widgets.length; j++){
+              poolSectionConfig.groups[i].widgets[j].panel = poolSectionConfig.groups[i].panel;
+            }
           }
         }
-      }
 
-      if(poolSectionConfig.widgets){
-        for(i = 0; i < poolSectionConfig.widgets.length; i++){
-          if(poolSectionConfig.widgets[i].inPanel === false){
-            var defaultWidgetPositionR = poolSectionConfig.widgets[i].positionRelativeTo?
-                poolSectionConfig.widgets[i].positionRelativeTo: 'map';
-            if(!poolSectionConfig.widgets[i].position){
-              poolSectionConfig.widgets[i].position = {
-                relativeTo: defaultWidgetPositionR
-              };
-            }else if(!poolSectionConfig.widgets[i].position.relativeTo){
-              poolSectionConfig.widgets[i].position.relativeTo = defaultWidgetPositionR;
+        if(poolSectionConfig.widgets){
+          for(i = 0; i < poolSectionConfig.widgets.length; i++){
+            if(!poolSectionConfig.widgets[i].panel){
+              poolSectionConfig.widgets[i].panel = config.widgetPool.panel;
             }
-          }else if(!poolSectionConfig.widgets[i].panel){
-            poolSectionConfig.widgets[i].panel = config.widgetPool.panel;
           }
         }
       }
@@ -855,8 +568,8 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
 
     _addDefaultOfWidgetGroup: function(config){
       //group/widget labe, icon
-      jimuUtils.visitElement(config, lang.hitch(this, function(e, info){
-        e.isOnScreen = info.isOnScreen;
+      sharedUtils.visitElement(config, lang.hitch(this, function(e, info){
+        e.isPreload = info.isOnScreen;
         if(e.widgets){
           //it's group
           e.gid = e.id;
@@ -917,12 +630,10 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
     if(instance === null) {
       instance = new clazz(urlParams);
     }else{
-      if(urlParams){
-        instance.urlParams = urlParams;
-      }
+      instance.urlParams = urlParams;
     }
 
-    window.getAppConfig = lang.hitch(instance, instance.getAppConfig);
+    window.getAppConfig = lang.hitch(instance, instance.getConfig);
     return instance;
   };
 
@@ -932,9 +643,9 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
     var properties = jimuUtils.widgetProperties;
 
     delete newConfig.mode;
-    jimuUtils.visitElement(newConfig, function(e, info){
+    sharedUtils.visitElement(newConfig, function(e, info){
       if(e.widgets){
-        delete e.isOnScreen;
+        delete e.isPreload;
         delete e.gid;
         if(e.icon === 'jimu.js/images/group_icon.png'){
           delete e.icon;
@@ -958,7 +669,7 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
       delete e.thumbnail;
       delete e.configFile;
       delete e.gid;
-      delete e.isOnScreen;
+      delete e.isPreload;
 
       properties.forEach(function(p){
         delete e[p];
@@ -975,8 +686,6 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
     delete newConfig._ssl;
     //delete all of the methods
     delete newConfig.getConfigElementById;
-    delete newConfig.getConfigElementsByName;
-    delete newConfig.getConfigElementByLabel;
     delete newConfig.processNoUriWidgets;
     delete newConfig.addElementId;
     delete newConfig.getCleanConfig;

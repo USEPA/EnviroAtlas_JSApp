@@ -46,9 +46,6 @@ function(declare, lang, array, html, on, Evented, query,
 
     //event: tabChanged
 
-    //css classes:
-    //tab-item-td
-
     postCreate: function(){
       this.inherited(arguments);
       this._initSelf();
@@ -60,16 +57,26 @@ function(declare, lang, array, html, on, Evented, query,
     },
 
     selectTab: function(title){
-      var tds = query('td', this.tabTr);
-      array.forEach(tds, lang.hitch(this, function(td, index) {
-        html.removeClass(td, 'jimu-state-active');
-        if (td.label === title) {
-          html.addClass(td, 'jimu-state-active');
+      var tds = query('td',this.tabTr);
+      array.forEach(tds,lang.hitch(this,function(td, index){
+        html.removeClass(td,'selected');
+        if(td.label === title){
+          html.addClass(td,'selected');
+          td.style.borderLeft = '1px solid #ccc';
+          td.style.borderRight = '1px solid #ccc';
+          td.style.borderTop = '2px solid #15a4fa';
+          td.style.borderBottom = '0';
           this._currentIndex = index;
+        }
+        else{
+          td.style.borderLeft = '0';
+          td.style.borderRight = '0';
+          td.style.borderTop = '0';
+          td.style.borderBottom = '1px solid #ccc';
         }
       }));
       this.controlNode.removeChild(this.controlTable);
-      html.place(this.controlTable, this.controlNode);
+      html.place(this.controlTable,this.controlNode);
       this.viewStack.switchView(title);
       this.emit('tabChanged', title);
     },
@@ -77,14 +84,14 @@ function(declare, lang, array, html, on, Evented, query,
     addTab: function(tabConfig){
       if(!this.average){
         //remove last td int this.tabTr
-        var lastTd = query('td:last-child', this.tabTr);
+        var lastTd = query('td:last-child',this.tabTr);
         if(lastTd.length > 0){
           html.destroy(lastTd[0]);
         }
       }
 
       //create tab
-      var tabsHasSameTitle = array.filter(this.tabs, function(tab){
+      var tabsHasSameTitle = array.filter(this.tabs,function(tab){
         return tab.title === tabConfig.title;
       });
       if(tabsHasSameTitle.length > 0){
@@ -95,16 +102,16 @@ function(declare, lang, array, html, on, Evented, query,
       this._createTab(tabConfig);
 
       if(!this.average){
-        var strTabItemTd = '<td nowrap class="tab-item-td" style="border-bottom:1px solid #ccc;">' +
+        var strTabItemTd='<td nowrap class="tab-item-td" style="border-bottom:1px solid #ccc;">'+
         '<div class="tab-item-div"></div></td>';
         var tabItemTd = html.toDom(strTabItemTd);
-        html.place(tabItemTd, this.tabTr);
+        html.place(tabItemTd,this.tabTr);
       }
     },
 
     removeTab: function(title){
       var idx = -1;
-      var result = array.some(this.tabs, function(item, i){
+      var result = array.some(this.tabs,function(item,i){
         if(item.title === title){
           idx = i;
           return true;
@@ -113,11 +120,11 @@ function(declare, lang, array, html, on, Evented, query,
 
       if(result){
         //remove from this.tabs
-        var removedTab = this.tabs.splice(idx, 1)[0];
+        var removedTab = this.tabs.splice(idx,1)[0];
         //remove from this.tabTr
-        var tdItems = query('td', this.tabTr);
+        var tdItems = query('td',this.tabTr);
         var tdToRemove;
-        var tdSelected = array.some(tdItems, function(tdItem){
+        var tdSelected = array.some(tdItems,function(tdItem){
           if(tdItem.label === title){
             tdToRemove = tdItem;
             return true;
@@ -132,11 +139,11 @@ function(declare, lang, array, html, on, Evented, query,
     },
 
     showShelter: function(){
-      html.setStyle(this.shelter, 'display', 'block');
+      html.setStyle(this.shelter,'display','block');
     },
 
     hideShelter: function(){
-      html.setStyle(this.shelter, 'display', 'none');
+      html.setStyle(this.shelter,'display','none');
     },
 
     getSelectedIndex: function(){
@@ -156,10 +163,10 @@ function(declare, lang, array, html, on, Evented, query,
         this.controlTable.style.tableLayout = 'fixed';
       }
       else{
-        var strTabItemTd = '<td nowrap class="tab-item-td" style="border-bottom:1px solid #ccc;">' +
+        var strTabItemTd='<td nowrap class="tab-item-td" style="border-bottom:1px solid #ccc;">'+
         '<div class="tab-item-div"></div></td>';
         var tabItemTd = html.toDom(strTabItemTd);
-        html.place(tabItemTd, this.tabTr);
+        html.place(tabItemTd,this.tabTr);
       }
     },
 
@@ -171,14 +178,14 @@ function(declare, lang, array, html, on, Evented, query,
     _createTab:function(tabConfig){
       var strTabItemTd = '<td nowrap class="tab-item-td"><div class="tab-item-div"></div></td>';
       var tabItemTd = html.toDom(strTabItemTd);
-      tabItemTd.label = tabConfig.title || '';
-      html.place(tabItemTd, this.tabTr);
-      var tabItemDiv = query('.tab-item-div', tabItemTd)[0];
+      tabItemTd.label = tabConfig.title||'';
+      html.place(tabItemTd,this.tabTr);
+      var tabItemDiv = query('.tab-item-div',tabItemTd)[0];
       tabItemDiv.innerHTML = tabItemTd.label;
       tabItemDiv.label = tabItemTd.label;
       tabConfig.content.label = tabItemTd.label;
       this.viewStack.addView(tabConfig.content);
-      this.own(on(tabItemTd, 'click', lang.hitch(this, this._onSelect, tabConfig.title)));
+      this.own(on(tabItemTd,'click',lang.hitch(this,this._onSelect,tabConfig.title)));
     },
 
     _onSelect: function(title){

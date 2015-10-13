@@ -1,5 +1,5 @@
 ﻿define(
    ({
-    showLayerLabels: "Exibe nomes de camada com informações temporais no widget."
+    showLayerLabels: "Exibir nomes de camada no widget para camadas cientes ao tempo."
   })
 );

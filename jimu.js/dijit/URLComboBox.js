@@ -24,8 +24,8 @@ function(declare, html, ComboBox, regexp) {
     invalidMessage:"Invalid url.",
     trim: true,
     rest:true,
-    allowNamed: false,
-    allowLocal: false,
+    allowNamed: true,
+    allLocal: false,
     declaredClass: 'jimu.dijit.URLComboBox',
 
     postMixInProperties:function(){
@@ -41,16 +41,11 @@ function(declare, html, ComboBox, regexp) {
     },
 
     validator:function(value){
-      //invalid if value is a number or a number string(e.g. 5 or "5")
-      if(isFinite(value)){
-        return false;
-      }
-
       var strReg = '^' + regexp.url({
         allowNamed: this.allowNamed,
-        allowLocal: this.allowLocal
+        allLocal: this.allLocal
       });
-      var reg = new RegExp(strReg, 'g');
+      var reg = new RegExp(strReg,'g');
       var b1 = reg.test(value);
 
       if(this.rest){

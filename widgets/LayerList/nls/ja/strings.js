@@ -15,7 +15,7 @@
     itemToAttributeTable: "属性テーブルを開く",
     itemShowItemDetails: "アイテムの詳細を表示",
     empty: "空",
-    removePopup: "ポップアップの無効化",
+    removePopup: "ポップアップの削除",
     enablePopup: "ポップアップの有効化"
   })
 );

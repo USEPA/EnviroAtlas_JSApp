@@ -1,5 +1,5 @@
 ﻿define(
    ({
-    showLayerLabels: "Vis navn på tidsaktiverte lag i miniprogrammet."
+    showLayerLabels: "Vis lagnavn på miniprogrammet for tidsaktiverte lag."
   })
 );

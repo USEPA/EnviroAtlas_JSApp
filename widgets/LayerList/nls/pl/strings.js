@@ -15,7 +15,7 @@
     itemToAttributeTable: "Otwórz tabelę atrybutów",
     itemShowItemDetails: "Pokaż szczegóły elementu",
     empty: "puste",
-    removePopup: "Wyłącz okno podręczne",
+    removePopup: "Wyłącz okna podręczne",
     enablePopup: "Włącz okna podręczne"
   })
 );

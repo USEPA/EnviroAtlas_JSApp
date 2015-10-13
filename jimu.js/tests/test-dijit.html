@@ -5,12 +5,10 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>Jimu Dijit Demo</title>
-		<link rel="stylesheet" href="http://js.arcgis.com/3.13/dijit/themes/claro/claro.css">    
-    <link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
+		<link rel="stylesheet" href="/portal/jsapi/jsapi/dijit/themes/claro/claro.css">    
+    <link rel="stylesheet" href="/portal/jsapi/jsapi/esri/css/esri.css">
 		<link rel="stylesheet" type="text/css" href="../css/jimu.css">
 		<link rel="stylesheet" type="text/css" href="../css/dojo-override.css">
-		<link rel="stylesheet" type="text/css" href="http://yiweim2:3344/webappbuilder/stemapp/themes/LaunchpadTheme/styles/default/style.css">
-
 		<style type="text/css">
 			html,body{
 				width: 100%;
@@ -35,8 +33,7 @@
 				position: relative;
 			}
 		</style>
-		<script src="http://js.arcgis.com/3.13/"></script>
-		<script type="text/javascript" src="../../simpleLoader.js"></script>
+		<script src="/portal/jsapi/jsapi/init.js"></script>
 		<script type="text/javascript">
 			jimuConfig = {
 				layoutId: 'body'
@@ -44,7 +41,7 @@
 			require({
 			  packages : [{
 			    name : "jimu",
-			    location : "/webappbuilder/stemapp/jimu.js/"
+			    location : "/portal/apps/webappbuilder/stemapp/jimu.js/"
 			  }]
 			},['dojo/i18n!jimu/nls/main', 'dojo/_base/html', 'dojo/dom', 'dojo/aspect', 'dojo/on', 'dojo/domReady!', 'dijit/registry', 'dijit/layout/TabContainer', 'dijit/layout/ContentPane', 'jimu/dijit/LoadingShelter'],
 			function (jimuNls, html, dom, aspect, on, domReady, registry, TabContainer, ContentPane, LoadingShelter) {
@@ -52,7 +49,6 @@
 				var tab = new TabContainer({
 		      style: "height: 100%; width: 100%;"
 		    }, "dijits-tab");
-
 				//////////////////////////////
 		    var simplesTab = new ContentPane({
         	title: "SimpleDijits"
@@ -81,35 +77,6 @@
 				  	var select = new Select({}, 'stateSelect')
 				  	select.placeAt(simplesTab);
 				  	select.startup();
-				  });
-				};
-
-				///////////////////////////////
-				var cropImageTab = new ContentPane({
-					title: "CropImage"
-				});
-				tab.addChild(cropImageTab);
-				cropImageTab.selectHandle = function() {
-					if (cropImageTab.loaded) {
-						return;
-					}
-
-					showLoading(simplesTab);
-					require(['jimu/dijit/_CropImage', 'jimu/dijit/Popup'],
-					function(_CropImage, Popup){
-						cropImageTab.loaded = true;
-						hideLoading();
-				  	var _cropImage = new _CropImage();
-				  	// _cropImage.placeAt(cropImageTab);
-				  	new Popup({
-				  		content: _cropImage.domNode,
-				  		buttons: [{
-				  			label: 'ok'
-				  		}]
-				  	});
-				  	_cropImage.startup();
-
-				  	createLine(cropImageTab.domNode);
 				  });
 				};
 
@@ -421,10 +388,10 @@
 		    		//Image chooser is a transparent div, which is clickable and can be put over
 		    		//other element.
 				  	var ic = new ImageChooser({displayImg: dom.byId('previewImage')});
-				  	// html.setStyle(ic.domNode, {
-				  	// 	width: 40 + 'px',
-				  	// 	height: 40 + 'px'
-				  	// });
+				  	html.setStyle(ic.domNode, {
+				  		width: 40 + 'px',
+				  		height: 40 + 'px'
+				  	});
 				  	ic.placeAt('chooserContainer');
 
 				  	var infoDiv = html.create('div', {
@@ -706,9 +673,6 @@
 				<div id="tc3Node2">tab content 3-2</div>
 			</div>
 
-			<div id="cropImage">
-			</div>
-
 			<select id="stateSelect">
 	        <option value="" selected="selected">Select a state</option>
 	        <option value="AL">Alabama</option>
@@ -751,7 +715,7 @@
 			</div>
 
 			<div id="imageChooserContainer">
-				<div id="chooserContainer" style="position:absolute;width:40px;height:40px;z-index:999;"></div>
+				<div id="chooserContainer" style="position:absolute;width:40px;height:40px;"></div>
 				<img src="images/pic1.png" style="position:absolute;width:40px;height:40px;" id="previewImage">
 			</div>
 

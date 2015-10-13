@@ -23,13 +23,13 @@ define([
     // summary:
     //    this mixin process the widgets in the widget pool.
     // description:
-    //    the controller widget should have two properties setting:
-    //    controlledGroups, controlledWidgets. Both of them are optional.
-    //controlledGroups: String[]|String
-    //    If array, is array of gropus id. If String, "all" means read all of the groups.
+    //    the controller widget should have a config object, which has two properties: groups,
+    //    widgets. Both of them are optional.
+    //groups: String[]|String
+    //    If array, is array of gropus label. If String, "all" means read all of the groups.
     //    If not set, do not read any group.
-    //controlledWidgets: String[]|String
-    //    If array, is array of widgets id. If String, "all" means read all of the widgets.
+    //widgets: String[]|String
+    //    If array, is array of widgets label. If String, "all" means read all of the widgets.
     //    If not set, do not read any widget.
 
     constructor: function(){
@@ -77,22 +77,14 @@ define([
       });
     },
 
-    getAllConfigsIncludeInvisible: function(){
-      var ret = [];
-      ret = ret.concat(this.getWidgetConfigs(), this.getGroupConfigs());
-      return ret.sort(function(a, b){
-        return a.index - b.index;
-      });
-    },
-
     isControlled: function(id){
-      return array.some(this.getAllConfigsIncludeInvisible(), function(config){
+      return array.some(this.getAllConfigs(), function(config){
         return config.id === id;
       });
     },
 
     widgetIsControlled: function(widgetId){
-      return array.some(this.getAllConfigsIncludeInvisible(), function(config){
+      return array.some(this.getAllConfigs(), function(config){
         if(config.id === widgetId){
           return true;
         }else{
@@ -112,7 +104,7 @@ define([
         array.forEach(this.appConfig.widgetPool.groups, function(g){
           if(this.controlledGroups){
             if(Array.isArray(this.controlledGroups)){
-              if(this.controlledGroups.indexOf(g.id) > -1){
+              if(this.controlledGroups.indexOf(g.label) > -1){
                 ret.push(g);
               }
             }else if(this.controlledGroups === 'all'){
@@ -134,7 +126,7 @@ define([
         array.forEach(this.appConfig.widgetPool.widgets, function(w){
           if(this.controlledWidgets){
             if(Array.isArray(this.controlledWidgets)){
-              if(this.controlledWidgets.indexOf(w.id) > -1){
+              if(this.controlledWidgets.indexOf(w.label) > -1){
                 ret.push(w);
               }
             }else if(this.controlledWidgets === 'all'){

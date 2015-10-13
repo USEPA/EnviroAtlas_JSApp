@@ -25,7 +25,7 @@ function(declare, _BasicServiceChooserContent, GeocodeServiceBrowser) {
     _examples:['http://myserver/arcgis/rest/services',
     'http://myserver/arcgis/rest/services/folder',
     'http://myserver/arcgis/rest/services/myservice/GeocodeServer'],
-
+    
     //https://gis.lmi.is/arcgis/rest/services/GP_service/geocode_thjonusta_single/GeocodeServer
     //https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer
 

@@ -15,7 +15,7 @@
     itemToAttributeTable: "Otevřít atributovou tabulku",
     itemShowItemDetails: "Ukázat podrobnosti položky",
     empty: "prázdné",
-    removePopup: "Zakázat vyskakovací okna",
+    removePopup: "Odebrat vyskakovací okno",
     enablePopup: "Povolit vyskakovací okno"
   })
 );

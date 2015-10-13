@@ -79,7 +79,7 @@ function(declare, lang, html, on, Deferred, _WidgetBase,
           height: '100%'
         }
       }, this.domNode);
-
+      
       if(!this.portalUrl || !this.itemId){
         return;
       }
@@ -116,7 +116,7 @@ function(declare, lang, html, on, Deferred, _WidgetBase,
         }
         this.shelter.hide();
         this.emit('map-load', this.map);
-      }), lang.hitch(this, function(err){
+      }),lang.hitch(this,function(err){
         console.error(err);
       }));
     },
@@ -131,9 +131,9 @@ function(declare, lang, html, on, Deferred, _WidgetBase,
       }
       else{
         var def = new Deferred();
-        setTimeout(lang.hitch(this, function(){
+        setTimeout(lang.hitch(this,function(){
           def.reject('map is null.');
-        }), 0);
+        }),0);
         return def;
       }
     },

@@ -5,7 +5,7 @@
     licenceAgree: "אני מסכים",
     licenceTerm: "מונחי ArcGIS Web Application",
     labelContinue: "המשך",
-    errorString: "* עליך להסכים לתנאי הרשיון בכדי להמשיך.",
+    errorString: "* אתה צריך להסכים לרשיון בכדי להמשיך.",
     notShowAgain: "אל תציג מסך פתיחה זה שוב.",
     ok: "אישור",
     cancel: "ביטול"

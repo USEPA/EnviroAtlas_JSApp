@@ -79,13 +79,6 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     //expr: null,//optional
     //partsObj: null,//optional
 
-    //css classes:
-    //jimu-single-filter
-    //jimu-filter-set
-    //odd-filter
-    //even-filter
-    //no-filter-tip
-
     postMixInProperties:function(){
       this.nls = window.jimuNls.filterBuilder;
       var a = "${any_or_all}";
@@ -133,7 +126,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         this._def = this._init("expr");
         def = this._def;
       }
-
+      
       return def;
     },
 
@@ -154,7 +147,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         this._def = this._init("partsObj");
         def = this._def;
       }
-
+      
       return def;
     },
 
@@ -201,10 +194,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
           return;
         }
         this._validOptions = true;
-        html.removeClass(this.btnAddSet, 'jimu-state-disabled');
-        html.removeClass(this.btnAddExp, 'jimu-state-disabled');
-        html.removeClass(this.iconAddExp, 'jimu-state-disabled');
-        html.removeClass(this.iconAddSet, 'jimu-state-disabled');
+        html.addClass(this.btnAddSet, 'enable');
+        html.addClass(this.btnAddExp, 'enable');
         this.createFieldsStore();
 
         if (mode === 'expr') {
@@ -213,11 +204,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
             if (expression === '1=1') {
               this.removeAllFilters();
             }
-            if(this._parseExpr(this.expr)){
-              resolveDef();
-            }else{
-              def.reject();
-            }
+            this._parseExpr(this.expr);
+            resolveDef();
           }
           else{
             def.reject();
@@ -233,19 +221,14 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         } else{
           if (this._validatePartsObj(this.partsObj)) {
             this._parsePartsObj(this.partsObj);
-            resolveDef();
           } else if (this._isString(this.expr)) {
-            if(this._parseExpr(this.expr)){
-              resolveDef();
-            }else{
-              def.reject();
-            }
+            this._parseExpr(this.expr);
           }
           else{
             //default is '1=1'
             this.removeAllFilters();
-            resolveDef();
           }
+          resolveDef();
         }
       });
 
@@ -293,12 +276,12 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         json.expr = '1=1';
         return json;
       }
-      array.forEach(filters, lang.hitch(this, function(filter){
+      array.forEach(filters,lang.hitch(this,function(filter){
         var part = filter.toJson();
         json.parts.push(part);
       }));
-      var validParts = array.every(json.parts, lang.hitch(this, function(part){
-        return !!part;
+      var validParts = array.every(json.parts,lang.hitch(this,function(part){
+        return part;
       }));
       if(validParts && json.parts.length > 0){
         json.expr = this.getExprByFilterObj(json);
@@ -312,14 +295,14 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     /**************************************************/
     /****  lists                                   ****/
     /**************************************************/
-
+    
     createFieldsStore: function(){
       if(!this._layerDefinition.fields || this._layerDefinition.fields.length === 0){
         this._showErrorOptions(this.nls.error.noFilterFields);
         return;
       }
-
-      var copyLayerInfo = lang.clone(this._layerDefinition);
+      
+      var copyLayerInfo = lang.mixin({},this._layerDefinition);
       var layerInfoFields = copyLayerInfo.fields;
       // layerInfoFields = layerInfoFields.sort(function(a, b){
       //   a.label = a.alias || a.name;
@@ -346,57 +329,20 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     },
 
     _parseExpr:function(expr){
-      this._destroyAllFilters();
-      var partsObj = null;
       if(!this._validateLayerDefinition(this._layerDefinition)){
-        return partsObj;
+        return;
       }
-
+      this._destroyAllFilters();
       if(!expr || typeof expr !== 'string'){
         this._showErrorOptions(this.nls.error.invalidSQL);
-        return partsObj;
+        return;
       }
-
-      var expression = this.expr.replace(/\s/gi, '');
-      if(expression === "1=1"){
-        partsObj = {
-          "expr": "1=1",
-          "parts": [],
-          "logicalOperator": "AND"
-        };
-        return partsObj;
-      }
-
-      partsObj = this.getFilterObjByExpr(expr);
-      var isValidPartsObj = false;
-      if(partsObj){
-        if(partsObj.parts && partsObj.parts.length > 0){
-          isValidPartsObj = array.every(partsObj.parts, lang.hitch(this, function(part){
-            if(part.parts){
-              if(part.parts.length > 0){
-                return array.every(part.parts, lang.hitch(this, function(singlePart){
-                  return !singlePart.error;
-                }));
-              }else{
-                return false;
-              }
-            }else{
-              return !part.error;
-            }
-          }));
-        }else{
-          isValidPartsObj = false;
-        }
-      }
-
-      if(isValidPartsObj){
-        this._buildEditUIByPartsObj(partsObj);
-      }else{
-        partsObj = null;
+      var partsObj = this.getFilterObjByExpr(expr);
+      if(!partsObj){
         this._showErrorOptions(this.nls.error.cantParseSQL);
+        return;
       }
-
-      return partsObj;
+      this._buildEditUIByPartsObj(partsObj);
     },
 
     _buildEditUIByPartsObj:function(partsObj){
@@ -405,7 +351,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       }
       this._destroyAllFilters();
       this.allAnySelect.value = partsObj.logicalOperator;
-      array.forEach(partsObj.parts, lang.hitch(this, function(item){
+      array.forEach(partsObj.parts,lang.hitch(this,function(item){
         if(item.parts){
           //FilterSet
           this._addFilterSet(item);
@@ -436,9 +382,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       var singleFilter = new SingleFilter(args);
       singleFilter.placeAt(this.allExpsBox);
       singleFilter.startup();
-      this.own(aspect.after(singleFilter,
-                            '_destroySelf',
-                            lang.hitch(this, this._checkFilterNumbers)));
+      this.own(aspect.after(singleFilter,'_destroySelf',lang.hitch(this,this._checkFilterNumbers)));
       this._checkFilterNumbers();
     },
 
@@ -457,9 +401,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       var filterSet = new FilterSet(args);
       filterSet.placeAt(this.allExpsBox);
       filterSet.startup();
-      this.own(aspect.after(filterSet,
-                            '_destroySelf',
-                            lang.hitch(this, this._checkFilterNumbers)));
+      this.own(aspect.after(filterSet,'_destroySelf',lang.hitch(this,this._checkFilterNumbers)));
       this._checkFilterNumbers();
     },
 
@@ -468,7 +410,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       while(filters.length > 0){
         var f = filters[0];
         f.destroy();
-        filters.splice(0, 1);
+        filters.splice(0,1);
       }
       this._checkFilterNumbers();
     },
@@ -480,7 +422,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
 
     _getAllSingleFiltersAndFilterSets:function(){
       var nodes = this._getAllSingleFiltersAndFilterSetsDoms();
-      var filters = array.map(nodes, lang.hitch(this, function(node){
+      var filters = array.map(nodes,lang.hitch(this,function(node){
         return registry.byNode(node);
       }));
       return filters;
@@ -489,10 +431,10 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     _checkFilterNumbers:function(){
       var filterDoms = this._getAllSingleFiltersAndFilterSetsDoms();
       if(filterDoms.length > 1){
-        html.setStyle(this.matchMsg, 'display', 'block');
+        html.setStyle(this.matchMsg,'display','block');
       }
       else{
-        html.setStyle(this.matchMsg, 'display', 'none');
+        html.setStyle(this.matchMsg,'display','none');
       }
 
       if(filterDoms.length > 0){
@@ -505,14 +447,14 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       array.forEach(filterDoms, lang.hitch(this, function(filterDom, index){
         html.removeClass(filterDom, 'even-filter');
         html.removeClass(filterDom, 'odd-filter');
-        var cName = (index + 1) % 2 === 0 ? "even-filter" : "odd-filter";
+        var cName = index % 2 === 0 ? "even-filter" : "odd-filter";
         html.addClass(filterDom, cName);
       }));
     },
 
     _showErrorOptions:function(strError){
-      html.setStyle(this.contentSection, 'display', 'none');
-      html.setStyle(this.errorSection, 'display', 'none');//block
+      html.setStyle(this.contentSection,'display','none');
+      html.setStyle(this.errorSection,'display','none');//block
       this.errorTip.innerHTML = strError;
       this.loading.hide();
     },

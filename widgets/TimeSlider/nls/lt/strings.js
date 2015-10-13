@@ -1,7 +1,7 @@
 ﻿define(
    ({
     _widgetLabel: "Laiko šliaužiklis",
-    enableTips: "Spustelėkite, jei norite parodyti laiko slankiklį.",
+    enableTips: "Spustelėkite, jei norite leisti laiko šliaužiklį.",
     disableTips: "Nėra matomų laiku papildytų sluoksnių.",
     timeExtent: "${FROMTIME} iki ${ENDTIME}",
     layers: "Sluoksniai: ",

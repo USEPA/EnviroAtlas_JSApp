@@ -6,23 +6,20 @@
         "left": 0,
         "top": 0,
         "right": 0,
-        "height": 44,
-        "relativeTo": "browser"
+        "height": 44
       }
     }, {
       "position": {
         "left": 0,
         "right": 0,
         "bottom": 0,
-        "height": 24,
-        "relativeTo": "browser"
+        "height": 24
       }
     }, {
       "position": {
         "left": 0,
         "top": 44,
-        "bottom": 24,
-        "relativeTo": "browser"
+        "bottom": 24
       }
     }, {
       "position": {
@@ -47,17 +44,23 @@
     }, {
       "position": {
         "right": 110,
-        "top": 10
+        "top": 10,
+        "width": 400,
+        "height": 410
       }
     }, {
       "position": {
         "right": 60,
-        "top": 10
+        "top": 10,
+        "width": 380,
+        "height": 410
       }
     }, {
       "position": {
         "right": 10,
-        "top": 10
+        "top": 10,
+        "width": 380,
+        "height": 410
       }
     }, {
       "position": {
@@ -68,6 +71,10 @@
       "position": {
         "left": 7,
         "top": 110
+      }
+    }, {
+      "position": {
+        "bottom": 24
       }
     }]
   }

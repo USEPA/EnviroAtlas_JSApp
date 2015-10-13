@@ -1,18 +1,18 @@
 /*
 Copyright ©2014 Esri. All rights reserved.
-
+ 
 TRADE SECRETS: ESRI PROPRIETARY AND CONFIDENTIAL
 Unpublished material - all rights reserved under the
 Copyright Laws of the United States and applicable international
 laws, treaties, and conventions.
-
+ 
 For additional information, contact:
 Attn: Contracts and Legal Department
 Environmental Systems Research Institute, Inc.
 380 New York Street
 Redlands, California, 92373
 USA
-
+ 
 email: contracts@esri.com
 */
 
@@ -60,18 +60,6 @@ define([
     //showAllItemsSection
     //showFilterItemsSection
 
-    //css classes:
-    //item
-    //item-border
-    //item-thumbnail
-    //item-info
-    //item-name
-    //item-type-owner
-    //item-date
-    //item-details
-    //search-none-icon
-    //search-none-tip
-
     _defaultThumbnail:{
       "Web Mapping Application": "webapp.png",
       "Mobile Application": "mobileapp.png"
@@ -104,17 +92,17 @@ define([
     },
 
     show:function(){
-      html.setStyle(this.domNode, 'display', 'block');
+      html.setStyle(this.domNode,'display','block');
     },
 
     hide:function(){
-      html.setStyle(this.domNode, 'display', 'none');
+      html.setStyle(this.domNode,'display','none');
     },
 
     searchAllItems:function(newQuery){
       this.showAllItemsSection();
       if(newQuery){
-        this.query = lang.mixin({}, newQuery);
+        this.query = lang.mixin({},newQuery);
         this.query.start = 1;
         this.clearAllItemsSection();
       }
@@ -143,13 +131,10 @@ define([
       }
     },
 
-    searchFilteredItems:function(/*optional*/ newFilteredQuery){
-      //if newFilteredQuery is not null or undefined, it means the dijit will search a new query
-      //otherwise it means this method is called when scroll to bottom of this.filteredItemsTableDiv
+    searchFilteredItems:function(newFilteredQuery){
       this.showFilterItemsSection();
-
       if(newFilteredQuery){
-        this.filteredQuery = lang.clone(newFilteredQuery);
+        this.filteredQuery = lang.mixin({},newFilteredQuery);
         this.filteredQuery.start = 1;
         this.clearFilteredItemsSection();
       }
@@ -157,7 +142,6 @@ define([
       if(!this.portalUrl || !this.filteredQuery){
         return;
       }
-
       if(this.filteredQuery.start > 0){
         this.filteredItemShelter.show();
         var portal = portalUtils.getPortal(this.portalUrl);
@@ -167,32 +151,26 @@ define([
           if(!this.domNode){
             return;
           }
-          this.showFilterItemsSection();
-          if(newFilteredQuery){
-            this.clearFilteredItemsSection();
-          }
+          this.filteredItemShelter.hide();
           this.filteredQuery.start = response.nextStart;
           this._createItems(response, this.filteredItemsTbody);
-          this._filterItemCallback();
+          var count = this._getItemCount(this.filteredItemsTbody);
+          if(count === 0){
+            html.setStyle(this.filteredItemsTableDiv,'display','none');
+            html.setStyle(this.searchNoneTipSection,'display','block');
+          }
         }), lang.hitch(this, function(err){
           console.error(err);
           if(!this.domNode){
             return;
           }
-          this._filterItemCallback();
+          this.filteredItemShelter.hide();
+          var count = this._getItemCount(this.filteredItemsTbody);
+          if(count === 0){
+            html.setStyle(this.filteredItemsTableDiv,'display','none');
+            html.setStyle(this.searchNoneTipSection,'display','block');
+          }
         }));
-      }
-    },
-
-    _filterItemCallback: function(){
-      this.filteredItemShelter.hide();
-      var count = this._getItemCount(this.filteredItemsTbody);
-      if(count > 0){
-        html.setStyle(this.filteredItemsTableDiv, 'display', 'block');
-        html.setStyle(this.searchNoneTipSection, 'display', 'none');
-      }else{
-        html.setStyle(this.filteredItemsTableDiv, 'display', 'none');
-        html.setStyle(this.searchNoneTipSection, 'display', 'block');
       }
     },
 
@@ -210,15 +188,15 @@ define([
     },
 
     showAllItemsSection:function(){
-      html.setStyle(this.allItemsSection, 'display', 'block');
-      html.setStyle(this.filteredItemsSection, 'display', 'none');
+      html.setStyle(this.allItemsSection,'display','block');
+      html.setStyle(this.filteredItemsSection,'display','none');
     },
 
     showFilterItemsSection:function(){
-      html.setStyle(this.allItemsSection, 'display', 'none');
-      html.setStyle(this.filteredItemsSection, 'display', 'block');
-      html.setStyle(this.filteredItemsTableDiv, 'display', 'block');
-      html.setStyle(this.searchNoneTipSection, 'display', 'none');
+      html.setStyle(this.allItemsSection,'display','none');
+      html.setStyle(this.filteredItemsSection,'display','block');
+      html.setStyle(this.filteredItemsTableDiv,'display','block');
+      html.setStyle(this.searchNoneTipSection,'display','none');
     },
 
     _onAllItemsSectionScroll:function(){
@@ -237,21 +215,21 @@ define([
       return jimuUtils.isScrollToBottom(div);
     },
 
-    _createItems: function(response, tbody) {
+    _createItems: function(response,tbody) {
       var results = response.results;
       var typesLowerCase = array.map(this.types, lang.hitch(this, function(type){
         return type.toLowerCase();
       }));
       var items = array.filter(results, lang.hitch(this, function(item) {
-        var type = (item.type && item.type.toLowerCase()) || '';
+        var type = (item.type && item.type.toLowerCase())||'';
         return array.indexOf(typesLowerCase, type) >= 0;
       }));
       var countPerRow = 2;
       if (items.length === 0) {
         return;
       }
-      var itemsHash = {}, itemDiv;
-      var emptyTds = query('td.empty', tbody);
+      var itemsHash = {},itemDiv;
+      var emptyTds = query('td.empty',tbody);
       var i;
       if(emptyTds.length > 0){
         var usedEmptyTdCount = Math.min(items.length, emptyTds.length);
@@ -260,8 +238,8 @@ define([
           var emptyTd = emptyTds[i];
           itemDiv = this._createItem(ws[i]);
           itemsHash[itemDiv.item.id] = itemDiv;
-          html.place(itemDiv, emptyTd);
-          html.removeClass(emptyTd, 'empty');
+          html.place(itemDiv,emptyTd);
+          html.removeClass(emptyTd,'empty');
         }
       }
 
@@ -274,17 +252,17 @@ define([
         var trStr = "<tr><td></td><td></td></tr>";
         var trDom = html.toDom(trStr);
         html.place(trDom, tbody);
-        var tds = query('td', trDom);
-        for (var j = 0; j < tds.length; j++) {
+        var tds = query('td',trDom);
+        for(var j=0;j<tds.length;j++){
           var td = tds[j];
           var item = items[countPerRow * i + j];
           if(item){
             itemDiv = this._createItem(item);
             itemsHash[itemDiv.item.id] = itemDiv;
-            html.place(itemDiv, td);
+            html.place(itemDiv,td);
           }
           else{
-            html.addClass(td, 'empty');
+            html.addClass(td,'empty');
           }
         }
       }
@@ -292,14 +270,14 @@ define([
     },
 
     _getItemCount:function(tbody){
-      return query('.item', tbody).length;
+      return query('.item-div',tbody).length;
     },
 
     _createItem: function(item){
-      var str = '<div class="item">' +
+      var str = '<div class="item-div">' +
         '<div class="item-border"></div>' +
-        '<div class="item-thumbnail jimu-auto-vertical">' +
-          '<div class="none-thumbnail-tip jimu-auto-vertical-content"></div>' +
+        '<div class="item-thumbnail jimu-auto-vertical">'+
+          '<div class="none-thumbnail-tip jimu-auto-vertical-content"></div>'+
         '</div>' +
         '<div class="item-info">' +
           '<div class="item-name"></div>' +
@@ -319,7 +297,7 @@ define([
       if(!item.thumbnailUrl){
         var defaultThumbnail = this._defaultThumbnail[item.type];
         if(defaultThumbnail){
-          item.thumbnailUrl = require.toUrl('jimu') + '/images/' + defaultThumbnail;
+          item.thumbnailUrl = require.toUrl('jimu')+'/images/'+defaultThumbnail;
         }
       }
       if(item.thumbnailUrl){
@@ -337,14 +315,14 @@ define([
       itemDate.innerHTML = d.toLocaleString();
       itemDate.title = itemDate.innerHTML;
       itemDetails.innerHTML = this.nls.moreDetails;
-      itemDetails.href = item.detailsPageUrl || "#";
+      itemDetails.href = item.detailsPageUrl||"#";
       return itemDiv;
     },
 
     _onItemsTableClicked: function(event){
-      var target = event.target || event.srcElement;
+      var target = event.target||event.srcElement;
       var itemDiv = null;
-      if(html.hasClass(target, 'item-thumbnail')){
+      if(html.hasClass(target,'item-thumbnail')){
         itemDiv = target.parentNode;
       }
       else if(html.hasClass(target, 'none-thumbnail-tip')){
@@ -355,19 +333,19 @@ define([
         return;
       }
 
-      var isSelected = html.hasClass(itemDiv, 'jimu-state-active');
-      query('.item.jimu-state-active', this.domNode).removeClass('jimu-state-active');
+      var isSelected = html.hasClass(itemDiv, 'selected');
+      query('.item-div.selected', this.domNode).removeClass('selected');
       if (isSelected) {
-        html.removeClass(itemDiv, 'jimu-state-active');
+        html.removeClass(itemDiv, 'selected');
       } else {
-        html.addClass(itemDiv, 'jimu-state-active');
+        html.addClass(itemDiv, 'selected');
       }
       this.emit('item-dom-clicked', itemDiv);
     },
 
     getSelectedItem: function(){
       var item = null;
-      var itemDivs = query('.item.jimu-state-active', this.domNode);
+      var itemDivs = query('.item-div.selected', this.domNode);
       if(itemDivs.length > 0){
         var itemDiv = itemDivs[0];
         item = lang.mixin({}, itemDiv.item);

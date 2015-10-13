@@ -1,66 +1,66 @@
 ﻿define(
    ({
     common: {
-      ok: "OK",
-      cancel: "Отмена",
-      next: "Далее",
-      back: "Назад"
+      ok: 'OK',
+      cancel: 'Отмена',
+      next: 'Далее',
+      back: 'Назад'
     },
     errorCode: "Код",
     errorMessage: "Сообщение",
     errorDetail: "Подробности",
     widgetPlaceholderTooltip: "Чтобы настроить его, перейдите в Виджеты и щелкните соответствующий ограничитель",
     symbolChooser: {
-      preview: "Просмотр",
-      basic: "Базовый",
-      arrows: "Стрелки",
-      business: "Бизнес",
-      cartographic: "Картография",
-      nationalParkService: "Служба национальных парков",
-      outdoorRecreation: "Отдых на свежем воздухе",
-      peoplePlaces: "Общественные места",
-      safetyHealth: "Безопасность, здоровье",
-      shapes: "Формы",
-      transportation: "Транспорт",
-      symbolSize: "Размер символа",
-      color: "Цвет",
-      alpha: "Альфа",
-      outlineColor: "Цвет контура",
-      outlineWidth: "Ширина контура",
-      style: "Стиль",
-      width: "Ширина",
-      text: "Текст",
-      fontColor: "Цвет шрифта",
-      fontSize: "Размер шрифта",
-      transparency: "Прозрачность",
-      solid: "Заливка",
-      dash: "Тире",
-      dot: "Точка",
-      dashDot: "Тире-точка",
-      dashDotDot: "Тире-точка-точка"
+      preview: 'Просмотр',
+      basic: 'Базовый',
+      arrows: 'Стрелки',
+      business: 'Бизнес',
+      cartographic: 'Картография',
+      nationalParkService: 'Служба национальных парков',
+      outdoorRecreation: 'Отдых на свежем воздухе',
+      peoplePlaces: 'Общественные места',
+      safetyHealth: 'Безопасность, здоровье',
+      shapes: 'Формы',
+      transportation: 'Транспорт',
+      symbolSize: 'Размер символа',
+      color: 'Цвет',
+      alpha: 'Альфа',
+      outlineColor: 'Цвет контура',
+      outlineWidth: 'Ширина контура',
+      style: 'Стиль',
+      width: 'Ширина',
+      text: 'Текст',
+      fontColor: 'Цвет шрифта',
+      fontSize: 'Размер шрифта',
+      transparency: 'Прозрачность',
+      solid: 'Заливка',
+      dash: 'Тире',
+      dot: 'Точка',
+      dashDot: 'Тире-точка',
+      dashDotDot: 'Тире-точка-точка'
     },
     transparency: {
-      opaque: "Непрозрачный",
-      transparent: "Прозрачный"
+      opaque: 'Непрозрачный',
+      transparent: 'Прозрачный'
     },
     rendererChooser: {
-      domain: "Домен",
-      use: "Использовать",
-      singleSymbol: "Единый символ",
-      uniqueSymbol: "Уникальные символы",
-      color: "Цвет",
-      size: "Размер",
-      toShow: "Отображать",
-      colors: "Цвета",
-      classes: "Классы",
-      symbolSize: "Размер символа",
-      addValue: "Добавить значение",
-      setDefaultSymbol: "Настроить символ по умолчанию",
-      defaultSymbol: "Символ по умолчанию",
-      selectedSymbol: "Выбранный символ",
-      value: "Значение",
-      label: "Надпись",
-      range: "Диапазон"
+      domain: 'Домен',
+      use: 'Использовать',
+      singleSymbol: 'Единый символ',
+      uniqueSymbol: 'Уникальные символы',
+      color: 'Цвет',
+      size: 'Размер',
+      toShow: 'Отображать',
+      colors: 'Цвета',
+      classes: 'Классы',
+      symbolSize: 'Размер символа',
+      addValue: 'Добавить значение',
+      setDefaultSymbol: 'Настроить символ по умолчанию',
+      defaultSymbol: 'Символ по умолчанию',
+      selectedSymbol: 'Выбранный символ',
+      value: 'Значение',
+      label: 'Надпись',
+      range: 'Диапазон'
     },
     drawBox: {
       point: "Точка",
@@ -93,17 +93,17 @@
       loading: "Загрузка"
     },
     basicServiceBrowser: {
-      noServicesFound: "Сервисы не были найдены.",
-      unableConnectTo: "Не удается подключиться к",
-      invalidUrlTip: "Введенный URL-адрес недопустим или недоступен."
+      noServicesFound: 'Сервисы не были найдены.',
+      unableConnectTo: 'Не удается подключиться к',
+      invalidUrlTip: 'Введенный URL-адрес недопустим или недоступен.'
     },
     serviceBrowser: {
-      noGpFound: "Сервисы геообработки не найдены.",
-      unableConnectTo: "Не удается подключиться к"
+      noGpFound: 'Сервисы геообработки не найдены.',
+      unableConnectTo: 'Не удается подключиться к'
     },
     layerServiceBrowser: {
-      noServicesFound: "Картографические сервисы или сервисы пространственных объектов не найдены",
-      unableConnectTo: "Не удается подключиться к"
+      noServicesFound: 'Картографические сервисы или сервисы пространственных объектов не найдены',
+      unableConnectTo: 'Не удается подключиться к'
     },
     basicServiceChooser: {
       validate: "Проверить",
@@ -111,10 +111,10 @@
       set: "Задать"
     },
     urlInput: {
-      invalidUrl: "Недопустимый URL-адрес."
+      invalidUrl: 'Недопустимый URL-адрес.'
     },
     urlComboBox: {
-      invalidUrl: "Недопустимый URL-адрес."
+      invalidUrl: 'Недопустимый URL-адрес.'
     },
     filterBuilder: {
       addAnotherExpression: "Добавить выражение фильтра",
@@ -131,7 +131,7 @@
       valueTooltip: "Введите значение",
       fieldTooltip: "Выбрать из существующего поля",
       uniqueValueTooltip: "Выбрать из уникальных значений в выбранном поле",
-      stringOperatorIs: "соответствует", // e.g. <stringFieldName> is "California"
+      stringOperatorIs: "соответствует", // e.g. <stringFieldName> is 'California'
       stringOperatorIsNot: "не соответствует",
       stringOperatorStartsWith: "начинается с",
       stringOperatorEndsWith: "заканчивается",
@@ -139,7 +139,7 @@
       stringOperatorDoesNotContain: "не содержит",
       stringOperatorIsBlank: "является пустым",
       stringOperatorIsNotBlank: "не является пустым",
-      dateOperatorIsOn: "соответствует", // e.g. <dateFieldName> is on "1/1/2012"
+      dateOperatorIsOn: "соответствует", // e.g. <dateFieldName> is on '1/1/2012'
       dateOperatorIsNotOn: "не соответствует",
       dateOperatorIsBefore: "перед",
       dateOperatorIsAfter: "после",
@@ -192,22 +192,9 @@
       selectFromOnline: "Добавить с ArcGIS Online",
       chooseLayer: "Выберите векторный слой."
     },
-    queryableLayerSource: {
-      layer: "Слой (Layer)",
-      browse: "Просмотр (Browse)",
-      selectFromMap: "Выбрать с карты",
-      selectFromPortal: "Добавить с Portal for ArcGIS",
-      addServiceUrl: "Добавить URL-адрес сервиса",
-      inputLayerUrl: "URL-адрес входного слоя",
-      selectLayer: "Выбрать слой из текущей карты.",
-      chooseItem: "Выбрать элемент.",
-      setServiceUrl: "Ввести URL сервиса.",
-      selectFromOnline: "Добавить с ArcGIS Online",
-      chooseLayer: "Выбор слоя."
-    },
     gpSource: {
       selectFromPortal: "Добавить с Portal for ArcGIS",
-      addServiceUrl: "Добавить URL сервиса",
+      addServiceUrl: "Добавить URL-адрес сервиса",
       selectFromOnline: "Добавить с ArcGIS Online",
       setServiceUrl: "Введите URL-адрес сервиса геообработки.",
       chooseItem: "Выберите элемент сервиса геообработки.",
@@ -240,37 +227,35 @@
       notSupportQuery: "Сервис не поддерживает запросы."
     },
     basicLayerChooserFromMap: {
-      noLayersTip: "На карте нет доступного подходящего слоя."
+      noLayersTip: "Карта не содержит доступного слоя."
     },
     layerInfosMenu: {
-      titleBasemap: "Базовые карты",
-      titleLayers: "Рабочие слои",
-      labelLayer: "Имя слоя",
-      itemZoomTo: "Приблизить к",
-      itemTransparency: "Прозрачность",
-      itemTransparent: "Прозрачный",
-      itemOpaque: "Непрозрачный",
-      itemMoveUp: "Выше",
-      itemMoveDown: "Ниже",
-      itemDesc: "Описание",
-      itemDownload: "Загрузить",
-      itemToAttributeTable: "Открыть таблицу атрибутов"
+      titleBasemap: 'Базовые карты',
+      titleLayers: 'Рабочие слои',
+      labelLayer: 'Имя слоя',
+      itemZoomTo: 'Приблизить к',
+      itemTransparency: 'Прозрачность',
+      itemTransparent: 'Прозрачный',
+      itemOpaque: 'Непрозрачный',
+      itemMoveUp: 'Выше',
+      itemMoveDown: 'Ниже',
+      itemDesc: 'Описание',
+      itemDownload: 'Загрузить',
+      itemToAttributeTable: 'Открыть таблицу атрибутов'
     },
     imageChooser: {
       unsupportReaderAPI: "TODO: Браузер не поддерживает API чтения файлов",
       readError: "Не удалось считать файл.",
-      unknowError: "невозможно завершить операции",
       invalidType: "Недопустимый тип файла.",
       exceed: "Размер файла не может превышать 1024 КБ",
       enableFlash: "TODO: включите флеш.",
-      cropWaining: "Выберите фото размером как минимум ${ширина} x ${высота} пикселов.",
       toolTip: "Для получения наилучших результатов, изображение должно быть ${width} пикселов шириной и ${height} пикселов высотой. Изображения других размеров будут настроены. Допустимые форматы изображений: PNG, GIF и JPEG."
     },
     simpleTable: {
-      moveUp: "Выше",
-      moveDown: "Ниже",
-      deleteRow: "Удалить",
-      edit: "Редактировать"
+      moveUp: 'Выше',
+      moveDown: 'Ниже',
+      deleteRow: 'Удалить',
+      edit: 'Редактировать'
     }
   })
 );

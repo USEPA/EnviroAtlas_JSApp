@@ -59,7 +59,7 @@ function(declare, lang, array, html, on, Evented, _WidgetBase, _TemplatedMixin,
       }
       this.controlNodes = [];
       this.viewStack = new ViewStack(null, this.containerNode);
-      var width = 1 / this.tabs.length * 100;
+      var width = 1/this.tabs.length * 100;
       if(this.isNested){
         html.addClass(this.domNode, 'nested');
       }

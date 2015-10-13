@@ -24,7 +24,7 @@ function(declare, _BasicServiceChooserContent, GpServiceBrowser) {
 
     _examples:['http://myserver/arcgis/rest/services',
     'http://myserver/arcgis/rest/services/myservice/GpServer',
-    'http://sampleserver6.arcgisonline.com/arcgis/' +
+    'http://sampleserver6.arcgisonline.com/arcgis/'+
     'rest/services/Elevation/ESRI_Elevation_World/GPServer/Viewshed'],
 
     //methods need to override:

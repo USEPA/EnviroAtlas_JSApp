@@ -1,66 +1,66 @@
 ﻿define(
    ({
     common: {
-      ok: "אישור",
-      cancel: "ביטול",
-      next: "הבא",
-      back: "חזור"
+      ok: 'אישור',
+      cancel: 'ביטול',
+      next: 'הבא',
+      back: 'חזור'
     },
     errorCode: "קוד",
     errorMessage: "הודעה",
     errorDetail: "פרט",
     widgetPlaceholderTooltip: "כדי להגדיר זאת, עבור לוידג\'טים ולחץ על ממלא המקום המתאים",
     symbolChooser: {
-      preview: "תצוגה מקדימה",
-      basic: "בסיסי",
-      arrows: "חיצים",
-      business: "עסקים",
-      cartographic: "קרטוגרפיה",
-      nationalParkService: "שירות הפארקים הלאומיים",
-      outdoorRecreation: "יצירה מבחוץ",
-      peoplePlaces: "מקומות של אנשים",
-      safetyHealth: "בטחון הציבור",
-      shapes: "צורות",
-      transportation: "תחבורה",
-      symbolSize: "גודל סמל",
-      color: "צבע",
-      alpha: "אלפא",
-      outlineColor: "צבע קו תוחם",
-      outlineWidth: "רוחב קו תוחם",
-      style: "סגנון",
-      width: "רוחב",
-      text: "טקסט",
-      fontColor: "צבע גופן",
-      fontSize: "גודל גופן",
-      transparency: "שקיפות",
-      solid: "מלא",
-      dash: "מקווקו",
-      dot: "נקודה",
-      dashDot: "קו נקודה",
-      dashDotDot: "קו נקודה נקודה"
+      preview: 'תצוגה מקדימה',
+      basic: 'בסיסי',
+      arrows: 'חיצים',
+      business: 'עסקים',
+      cartographic: 'קרטוגרפיה',
+      nationalParkService: 'שירות הפארקים הלאומיים',
+      outdoorRecreation: 'יצירה מבחוץ',
+      peoplePlaces: 'מקומות של אנשים',
+      safetyHealth: 'בטחון הציבור',
+      shapes: 'צורות',
+      transportation: 'תחבורה',
+      symbolSize: 'גודל סמל',
+      color: 'צבע',
+      alpha: 'אלפא',
+      outlineColor: 'צבע קו תוחם',
+      outlineWidth: 'רוחב קו תוחם',
+      style: 'סגנון',
+      width: 'רוחב',
+      text: 'טקסט',
+      fontColor: 'צבע גופן',
+      fontSize: 'גודל גופן',
+      transparency: 'שקיפות',
+      solid: 'מלא',
+      dash: 'מקווקו',
+      dot: 'נקודה',
+      dashDot: 'קו נקודה',
+      dashDotDot: 'קו נקודה נקודה'
     },
     transparency: {
-      opaque: "אטום",
-      transparent: "שקוף"
+      opaque: 'אטום',
+      transparent: 'שקוף'
     },
     rendererChooser: {
-      domain: "דומיין",
-      use: "עם",
-      singleSymbol: "סמל יחיד",
-      uniqueSymbol: "סמלים ייחודיים",
-      color: "צבע",
-      size: "גודל",
-      toShow: "להציג",
-      colors: "צבעים",
-      classes: "קבוצות",
-      symbolSize: "גודל סמל",
-      addValue: "הוסף ערך",
-      setDefaultSymbol: "הגדר סמל ברירת מחדל",
-      defaultSymbol: "סימבול ברירת מחדל",
-      selectedSymbol: "בחר סמל",
-      value: "ערך",
-      label: "תווית",
-      range: "טווח"
+      domain: 'דומיין',
+      use: 'עם',
+      singleSymbol: 'סמל יחיד',
+      uniqueSymbol: 'סמלים ייחודיים',
+      color: 'צבע',
+      size: 'גודל',
+      toShow: 'להציג',
+      colors: 'צבעים',
+      classes: 'קבוצות',
+      symbolSize: 'גודל סמל',
+      addValue: 'הוסף ערך',
+      setDefaultSymbol: 'הגדר סמל ברירת מחדל',
+      defaultSymbol: 'סימבול ברירת מחדל',
+      selectedSymbol: 'בחר סמל',
+      value: 'ערך',
+      label: 'תווית',
+      range: 'טווח'
     },
     drawBox: {
       point: "נקודה",
@@ -93,17 +93,17 @@
       loading: "טוען"
     },
     basicServiceBrowser: {
-      noServicesFound: "לא נמצא שירות:",
-      unableConnectTo: "לא יכול להתחבר",
-      invalidUrlTip: "ה-URL שהזנת לא חוקי או שלא ניתן לגשת אליו."
+      noServicesFound: 'לא נמצא שירות:',
+      unableConnectTo: 'לא יכול להתחבר',
+      invalidUrlTip: 'ה-URL שהזנת לא חוקי או שלא ניתן לגשת אליו.'
     },
     serviceBrowser: {
-      noGpFound: "לא נמצא שרות geoprocessing.",
-      unableConnectTo: "לא יכול להתחבר"
+      noGpFound: 'לא נמצא שרות geoprocessing.',
+      unableConnectTo: 'לא יכול להתחבר'
     },
     layerServiceBrowser: {
-      noServicesFound: "לא נמצאו שירותי מפה או שירותי ישויות",
-      unableConnectTo: "לא יכול להתחבר"
+      noServicesFound: 'לא נמצאו שירותי מפה או שירותי ישויות',
+      unableConnectTo: 'לא יכול להתחבר'
     },
     basicServiceChooser: {
       validate: "אימות",
@@ -111,10 +111,10 @@
       set: "הגדר"
     },
     urlInput: {
-      invalidUrl: "URL לא חוקי."
+      invalidUrl: 'URL לא חוקי.'
     },
     urlComboBox: {
-      invalidUrl: "URL לא חוקי."
+      invalidUrl: 'URL לא חוקי.'
     },
     filterBuilder: {
       addAnotherExpression: "הוסף ביטוי לסינון",
@@ -131,7 +131,7 @@
       valueTooltip: "הכנס ערך",
       fieldTooltip: "בחר מתוך שדה קיים",
       uniqueValueTooltip: "בחר מתוך ערכים ייחודיים בשדה נבחר",
-      stringOperatorIs: "הוא", // e.g. <stringFieldName> is "California"
+      stringOperatorIs: "הוא", // e.g. <stringFieldName> is 'California'
       stringOperatorIsNot: "אינו",
       stringOperatorStartsWith: "מתחיל עם",
       stringOperatorEndsWith: "מסתיים ב",
@@ -139,7 +139,7 @@
       stringOperatorDoesNotContain: "לא מכיל",
       stringOperatorIsBlank: "ריק",
       stringOperatorIsNotBlank: "אינו ריק",
-      dateOperatorIsOn: "הוא ב-", // e.g. <dateFieldName> is on "1/1/2012"
+      dateOperatorIsOn: "הוא ב-", // e.g. <dateFieldName> is on '1/1/2012'
       dateOperatorIsNotOn: "אינו ב-",
       dateOperatorIsBefore: "הוא לפני",
       dateOperatorIsAfter: "הוא אחרי",
@@ -192,19 +192,6 @@
       selectFromOnline: "הוסף  מ-ArcGIS Online",
       chooseLayer: "בחר שכבת ישויות."
     },
-    queryableLayerSource: {
-      layer: "שכבה",
-      browse: "נתב",
-      selectFromMap: "בחר ממפה",
-      selectFromPortal: "הוסף מ- Portal for ArcGIS",
-      addServiceUrl: "הוסף כתובת URL של שירות",
-      inputLayerUrl: "URL של שכבת הקלט",
-      selectLayer: "בחר שכבה מהמפה הנוכחית.",
-      chooseItem: "בחר פריט.",
-      setServiceUrl: "הזן את כתובת ה-URL של השירות.",
-      selectFromOnline: "הוסף  מ-ArcGIS Online",
-      chooseLayer: "בחר שכבה."
-    },
     gpSource: {
       selectFromPortal: "הוסף מ- Portal for ArcGIS",
       addServiceUrl: "הוסף כתובת URL של שירות",
@@ -240,37 +227,35 @@
       notSupportQuery: "השירות אינו תומך בשאילתה."
     },
     basicLayerChooserFromMap: {
-      noLayersTip: "אין שכבה מתאימה זמינה במפה."
+      noLayersTip: "אין שכבה זמינה במפה."
     },
     layerInfosMenu: {
-      titleBasemap: "מפות בסיס",
-      titleLayers: "שכבות תפעוליות",
-      labelLayer: "שם שכבה",
-      itemZoomTo: "התמקד אל",
-      itemTransparency: "שקיפות",
-      itemTransparent: "שקוף",
-      itemOpaque: "אטום",
-      itemMoveUp: "הזז למעלה",
-      itemMoveDown: "הזז למטה",
-      itemDesc: "תיאור",
-      itemDownload: "הורד",
-      itemToAttributeTable: "פתח טבלת מאפיינים"
+      titleBasemap: 'מפות בסיס',
+      titleLayers: 'שכבות תפעוליות',
+      labelLayer: 'שם שכבה',
+      itemZoomTo: 'התמקד אל',
+      itemTransparency: 'שקיפות',
+      itemTransparent: 'שקוף',
+      itemOpaque: 'אטום',
+      itemMoveUp: 'הזז למעלה',
+      itemMoveDown: 'הזז למטה',
+      itemDesc: 'תיאור',
+      itemDownload: 'הורד',
+      itemToAttributeTable: 'פתח טבלת מאפיינים'
     },
     imageChooser: {
       unsupportReaderAPI: "לביצוע: הדפדפן לא תומך ב-API של קריאת קבצים",
       readError: "קריאת הקובץ נכשלה.",
-      unknowError: "לא ניתן להשלים את ביצוע הפעולות.",
       invalidType: "סוג קובץ לא חוקי.",
       exceed: "גודל הקובץ אינו יכול להיות יותר מ-‎1024 KB",
       enableFlash: "לביצוע: הפעל Flash.",
-      cropWaining: "בחר תמונה שגודלה לפחות ${width}‏ x‏ ${height} פיקסלים.",
       toolTip: "לקבלת תוצאות מיטביות, הקובץ צריך להיות ברוחב של ${width} פיקסלים ובגובה של ${height} פיקסלים. גדלים אחרים יותאמו. פורמטים של תמונות שיתקבלו הם: PNG,‏ GIF ו-JPEG."
     },
     simpleTable: {
-      moveUp: "הזז למעלה",
-      moveDown: "הזז למטה",
-      deleteRow: "מחק",
-      edit: "עריכה"
+      moveUp: 'הזז למעלה',
+      moveDown: 'הזז למטה',
+      deleteRow: 'מחק',
+      edit: 'עריכה'
     }
   })
 );

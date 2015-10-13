@@ -1,66 +1,66 @@
 ﻿define(
    ({
     common: {
-      ok: "OK",
-      cancel: "Anulare",
-      next: "Următor",
-      back: "Înapoi"
+      ok: 'OK',
+      cancel: 'Anulare',
+      next: 'Următor',
+      back: 'Înapoi'
     },
     errorCode: "Cod",
     errorMessage: "Mesaj",
     errorDetail: "Detaliu",
     widgetPlaceholderTooltip: "Pentru a-l configura, mergeţi la Widgeturi şi faceţi clic pe substituentul corespunzător",
     symbolChooser: {
-      preview: "Previzualizare",
-      basic: "De bază",
-      arrows: "Săgeţi",
-      business: "Afacere",
-      cartographic: "Cartografie",
-      nationalParkService: "Serviciul pentru parcuri naţionale",
-      outdoorRecreation: "Recreere în aer liber",
-      peoplePlaces: "Locaţii personale",
-      safetyHealth: "Siguranţă şi sănătate",
-      shapes: "Forme",
-      transportation: "Transport",
-      symbolSize: "Dimensiune simbol",
-      color: "Culoare",
-      alpha: "Alfa",
-      outlineColor: "Culoare contur",
-      outlineWidth: "Lăţime contur",
-      style: "Stil",
-      width: "Lăţime",
-      text: "Text",
-      fontColor: "Culoare font",
-      fontSize: "Dimensiune font",
-      transparency: "Transparenţă",
-      solid: "Continuu",
-      dash: "Linie",
-      dot: "Punct",
-      dashDot: "Linie punct",
-      dashDotDot: "Linie punct punct"
+      preview: 'Previzualizare',
+      basic: 'De bază',
+      arrows: 'Săgeţi',
+      business: 'Afacere',
+      cartographic: 'Cartografie',
+      nationalParkService: 'Serviciul pentru parcuri naţionale',
+      outdoorRecreation: 'Recreere în aer liber',
+      peoplePlaces: 'Locaţii personale',
+      safetyHealth: 'Siguranţă şi sănătate',
+      shapes: 'Forme',
+      transportation: 'Transport',
+      symbolSize: 'Dimensiune simbol',
+      color: 'Culoare',
+      alpha: 'Alfa',
+      outlineColor: 'Culoare contur',
+      outlineWidth: 'Lăţime contur',
+      style: 'Stil',
+      width: 'Lăţime',
+      text: 'Text',
+      fontColor: 'Culoare font',
+      fontSize: 'Dimensiune font',
+      transparency: 'Transparenţă',
+      solid: 'Continuu',
+      dash: 'Linie',
+      dot: 'Punct',
+      dashDot: 'Linie punct',
+      dashDotDot: 'Linie punct punct'
     },
     transparency: {
-      opaque: "Opac",
-      transparent: "Transparent"
+      opaque: 'Opac',
+      transparent: 'Transparent'
     },
     rendererChooser: {
-      domain: "Domeniu",
-      use: "Utilizare",
-      singleSymbol: "Un singur simbol",
-      uniqueSymbol: "Simboluri unice",
-      color: "Culoare",
-      size: "Dimensiune",
-      toShow: "Pentru afişare",
-      colors: "Culori",
-      classes: "Clase",
-      symbolSize: "Dimensiune simbol",
-      addValue: "Adăugare valoare",
-      setDefaultSymbol: "Setare simbol implicit",
-      defaultSymbol: "Simbol implicit",
-      selectedSymbol: "Simbol selectat",
-      value: "Valoare",
-      label: "Etichetă",
-      range: "Distanţă"
+      domain: 'Domeniu',
+      use: 'Utilizare',
+      singleSymbol: 'Un singur simbol',
+      uniqueSymbol: 'Simboluri unice',
+      color: 'Culoare',
+      size: 'Dimensiune',
+      toShow: 'Pentru afişare',
+      colors: 'Culori',
+      classes: 'Clase',
+      symbolSize: 'Dimensiune simbol',
+      addValue: 'Adăugare valoare',
+      setDefaultSymbol: 'Setare simbol implicit',
+      defaultSymbol: 'Simbol implicit',
+      selectedSymbol: 'Simbol selectat',
+      value: 'Valoare',
+      label: 'Etichetă',
+      range: 'Distanţă'
     },
     drawBox: {
       point: "Punct",
@@ -93,17 +93,17 @@
       loading: "Se încarcă"
     },
     basicServiceBrowser: {
-      noServicesFound: "Nu a fost găsit niciun serviciu.",
-      unableConnectTo: "Nu se poate efectua conectarea la",
-      invalidUrlTip: "Adresa URL pe care aţi introdus-o este nevalidă sau inaccesibilă."
+      noServicesFound: 'Nu a fost găsit niciun serviciu.',
+      unableConnectTo: 'Nu se poate efectua conectarea la',
+      invalidUrlTip: 'Adresa URL pe care aţi introdus-o este nevalidă sau inaccesibilă.'
     },
     serviceBrowser: {
-      noGpFound: "Nu a fost găsit niciun serviciu de geoprocesare.",
-      unableConnectTo: "Nu se poate efectua conectarea la"
+      noGpFound: 'Nu a fost găsit niciun serviciu de geoprocesare.',
+      unableConnectTo: 'Nu se poate efectua conectarea la'
     },
     layerServiceBrowser: {
-      noServicesFound: "Nu a fost găsit niciun serviciu de hărţi sau serviciu de obiecte spaţiale",
-      unableConnectTo: "Nu se poate efectua conectarea la"
+      noServicesFound: 'Nu a fost găsit niciun serviciu de hărţi sau serviciu de obiecte spaţiale',
+      unableConnectTo: 'Nu se poate efectua conectarea la'
     },
     basicServiceChooser: {
       validate: "Validare",
@@ -111,10 +111,10 @@
       set: "Setare"
     },
     urlInput: {
-      invalidUrl: "URL nevalid."
+      invalidUrl: 'URL nevalid.'
     },
     urlComboBox: {
-      invalidUrl: "URL nevalid."
+      invalidUrl: 'URL nevalid.'
     },
     filterBuilder: {
       addAnotherExpression: "Adăugare expresie de filtrare",
@@ -131,7 +131,7 @@
       valueTooltip: "Introducere valoare",
       fieldTooltip: "Alegere din câmpul existent",
       uniqueValueTooltip: "Alegeţi dintre valorile unice din câmpul selectat",
-      stringOperatorIs: "este", // e.g. <stringFieldName> is "California"
+      stringOperatorIs: "este", // e.g. <stringFieldName> is 'California'
       stringOperatorIsNot: "nu este",
       stringOperatorStartsWith: "începe cu",
       stringOperatorEndsWith: "se termină cu",
@@ -139,7 +139,7 @@
       stringOperatorDoesNotContain: "nu conţine",
       stringOperatorIsBlank: "este necompletat",
       stringOperatorIsNotBlank: "nu este necompletat",
-      dateOperatorIsOn: "este pe", // e.g. <dateFieldName> is on "1/1/2012"
+      dateOperatorIsOn: "este pe", // e.g. <dateFieldName> is on '1/1/2012'
       dateOperatorIsNotOn: "nu este pe",
       dateOperatorIsBefore: "este înainte de",
       dateOperatorIsAfter: "este după",
@@ -192,19 +192,6 @@
       selectFromOnline: "Adăugare din ArcGIS Online",
       chooseLayer: "Selectaţi un strat tematic de obiecte spaţiale."
     },
-    queryableLayerSource: {
-      layer: "Strat tematic",
-      browse: "Parcurgere",
-      selectFromMap: "Selectare din hartă",
-      selectFromPortal: "Adăugare din Portal for ArcGIS",
-      addServiceUrl: "Adăugare URL serviciu",
-      inputLayerUrl: "URL strat tematic de intrare",
-      selectLayer: "Selectaţi un strat tematic din harta actuală.",
-      chooseItem: "Selectaţi un element.",
-      setServiceUrl: "Introduceţi adresa URL a serviciului.",
-      selectFromOnline: "Adăugare din ArcGIS Online",
-      chooseLayer: "Alegeţi un strat tematic."
-    },
     gpSource: {
       selectFromPortal: "Adăugare din Portal for ArcGIS",
       addServiceUrl: "Adăugare URL serviciu",
@@ -240,37 +227,35 @@
       notSupportQuery: "Serviciul nu permite interogări."
     },
     basicLayerChooserFromMap: {
-      noLayersTip: "Nu există niciun strat tematic adecvat disponibil pe hartă."
+      noLayersTip: "Nu există niciun strat tematic disponibil pe hartă."
     },
     layerInfosMenu: {
-      titleBasemap: "Hărţi fundal",
-      titleLayers: "Straturi tematice operaţionale",
-      labelLayer: "Nume strat tematic",
-      itemZoomTo: "Transfocare la",
-      itemTransparency: "Transparenţă",
-      itemTransparent: "Transparent",
-      itemOpaque: "Opac",
-      itemMoveUp: "Deplasare în sus",
-      itemMoveDown: "Deplasare în jos",
-      itemDesc: "Descriere",
-      itemDownload: "Descărcare",
-      itemToAttributeTable: "Deschidere tabel de atribute"
+      titleBasemap: 'Hărţi fundal',
+      titleLayers: 'Straturi tematice operaţionale',
+      labelLayer: 'Nume strat tematic',
+      itemZoomTo: 'Transfocare la',
+      itemTransparency: 'Transparenţă',
+      itemTransparent: 'Transparent',
+      itemOpaque: 'Opac',
+      itemMoveUp: 'Deplasare în sus',
+      itemMoveDown: 'Deplasare în jos',
+      itemDesc: 'Descriere',
+      itemDownload: 'Descărcare',
+      itemToAttributeTable: 'Deschidere tabel de atribute'
     },
     imageChooser: {
       unsupportReaderAPI: "Acţiune: Browserul nu suportă API-ul pentru citirea fişierului",
       readError: "Nu s-a reuşit citirea fişierului.",
-      unknowError: "imposibil de finalizat operaţiunile",
       invalidType: "Tip de fişier nevalid.",
       exceed: "Dimensiunea fişierului nu poate depăşi 1024 KB",
       enableFlash: "Acţiune: activaţi funcţia flash.",
-      cropWaining: "Alegeţi o fotografie cu dimensiunea de cel puţin ${width} x ${height} pixeli.",
       toolTip: "Pentru cel mai bun rezultat, imaginea trebuie să aibă ${width} pixeli lăţime şi ${height} pixeli înălţime. Alte dimensiuni vor fi ajustate pentru a se încadra. Formatele de imagine acceptate sunt: PNG, GIF şi JPEG."
     },
     simpleTable: {
-      moveUp: "Deplasare în sus",
-      moveDown: "Deplasare în jos",
-      deleteRow: "Ştergere",
-      edit: "Editare"
+      moveUp: 'Deplasare în sus',
+      moveDown: 'Deplasare în jos',
+      deleteRow: 'Ştergere',
+      edit: 'Editare'
     }
   })
 );

@@ -54,7 +54,7 @@ define([
       catch(e){
         console.error(e);
       }
-
+      
       return cloneSym;
     };
 
@@ -189,7 +189,7 @@ define([
       var surface = gfx.createSurface(node, sWidth, sHeight);
       if (gfx.renderer === "vml") {
         // Fixes an issue in IE where the shape is partially drawn and
-        // positioned to the right of the table cell
+        // positioned to the right of the table cell  
         var source = surface.getEventSource();
         html.setStyle(source, "position", "relative");
         html.setStyle(source.parentNode, "position", "relative");
@@ -207,7 +207,7 @@ define([
           shapeDesc = esriSymJsonUtils.getShapeDescriptors(symbol);
         }
       }
-
+      
 
       var gfxShape;
       try {
@@ -226,7 +226,7 @@ define([
         surface.destroy();
         return;
       }
-
+      
       var dim = surface.getDimensions();
       var transform = {
         dx: dim.width / 2,
@@ -241,7 +241,7 @@ define([
         var actualSize = width > height ? width : height;
         var refSize = sWidth < sHeight ? sWidth : sHeight;
         var scaleBy = (refSize - 5) / actualSize;
-        lang.mixin(transform, {
+        lang.mixin(transform,{
           xx: scaleBy,
           yy: scaleBy
         });
@@ -270,11 +270,11 @@ define([
       return result;
     };
 
-    mo.isSimpleMarkerSymbol = function(symbol){
+    mo.isSimpleMarkerSymbol= function(symbol){
       return symbol && symbol.declaredClass === 'esri.symbol.SimpleMarkerSymbol';
     };
 
-    mo.isPictureMarkerSymbol = function(symbol){
+    mo.isPictureMarkerSymbol= function(symbol){
       return symbol && symbol.declaredClass === 'esri.symbol.PictureMarkerSymbol';
     };
 

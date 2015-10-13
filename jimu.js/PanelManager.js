@@ -21,13 +21,11 @@ define(['dojo/_base/declare',
   'dojo/_base/fx',
   'dojo/Deferred',
   'dojo/on',
-  'dojo/topic',
-  'dojo/when',
+  'dojo/aspect',
   'require',
   './utils',
   './WidgetManager'],
-function (declare, lang, array, html, baseFx, Deferred, on, topic, when,
-  require, utils, WidgetManager) {
+function (declare, lang, array, html, baseFx, Deferred, on, aspect, require, utils, WidgetManager) {
   var clazz, instance = null;
 
   clazz = declare(null, {
@@ -36,42 +34,49 @@ function (declare, lang, array, html, baseFx, Deferred, on, topic, when,
       this.panels = [];
       this.widgetManager = WidgetManager.getInstance();
       on(window, 'resize', lang.hitch(this, this.onWindowResize));
-
-      this.activePanel = null;
-
-      //because for moveable panel, we can't listen mousedown event of the mover,
-      //and because panel may re-create moveable so we also can't listen moveable's event,
-      //so, we list this topic event.
-      topic.subscribe('/dnd/move/start', lang.hitch(this, this._onMoveStart));
-
-      topic.subscribe('widgetActived', lang.hitch(this, this._onWidgetActived));
     },
 
     showPanel: function(config){
+      /*global jimuConfig*/
+      // summary:
+      //    show panel depends on the config object(widget/group's config)
       var def = new Deferred();
+      require([config.panel.uri], lang.hitch(this, function(Panel){
+        var pid = config.id + '_panel',  panel = this.getPanelById(pid);
+        if(panel){
+          if(panel.state === 'closed'){
+            this.openPanel(panel, config.panel.position);
+          }
 
-      var pid = config.id + '_panel',  panel = this.getPanelById(pid);
-      if(panel){
-        if(panel.state === 'closed'){
-          this.openPanel(panel);
-        }
-        def.resolve(panel);
-      }else{
-        require([config.panel.uri], lang.hitch(this, function(Panel){
-          var pid = config.id + '_panel',  panel = this.getPanelById(pid);
+          // if(panel.windowState){
+          //   this.changeWindowStateTo(panel, panel.windowState);
+          // }
+
+          def.resolve(panel);
+        }else{
+          var containerId;
+          if(config.panel.positionRelativeTo === 'map'){
+            containerId = jimuConfig.mapId;
+          }else{
+            containerId = jimuConfig.layoutId;
+          }
 
           var options = {
+            // widgetIcon: config.panel.widgetIcon,
             label: config.label,
             config: config,
             uri: config.panel.uri,
             position: config.panel.position,
+            positionRelativeTo: config.panel.positionRelativeTo,
             map: this.map,
             widgetManager: this.widgetManager,
             panelManager: this,
+            containerId: containerId,
             id: pid,
             gid: config.gid
           };
           lang.mixin(options, config.panel.options);
+          // var panel;
 
           try{
             panel = new Panel(options);
@@ -82,17 +87,32 @@ function (declare, lang, array, html, baseFx, Deferred, on, topic, when,
             return;
           }
 
-          panel.setPosition(config.panel.position);
+          html.setStyle(panel.domNode, 'opacity', 0);
+          aspect.before(panel, 'destroy', lang.hitch(this, this.onDestroyPanel, panel));
+
+          html.place(panel.domNode, containerId);
+
+          try{
+            panel.startup();
+          }catch(err){
+            console.log(console.error('fail to startup panel ' + panel.id + '. ' + err.stack));
+            def.reject(err);
+            return;
+          }
+
+          this.openPanel(panel);
+          //use the widget/group default state as the panel's default state
+          // if(config.defaultState){
+          //   panel.defaultState = config.defaultState;
+          // }
+          // this.changeWindowStateTo(panel, panel.defaultState);
 
           utils.setVerticalCenter(panel.domNode);
-          this.openPanel(panel);
           this.panels.push(panel);
-
-          on(panel.domNode, 'click', lang.hitch(this, this._onPanelClick, panel));
-
           def.resolve(panel);
-        }));
-      }
+        }
+      }));
+
       return def;
     },
 
@@ -102,24 +122,9 @@ function (declare, lang, array, html, baseFx, Deferred, on, topic, when,
     },
 
     closeOtherPanelsInTheSameGroup: function (panel){
-      if(typeof panel === 'string'){
-        panel = this.getPanelById(panel);
-        if(!panel){
-          return;
-        }
-      }
-
       for(var i = 0; i < this.panels.length; i++){
         if(this.panels[i].gid === panel.gid && this.panels[i].id !== panel.id){
-          this.closePanel(this.panels[i]);
-        }
-      }
-    },
-
-    closeAllPanelsInGroup: function (groupId){
-      for(var i = 0; i < this.panels.length; i++){
-        if(this.panels[i].gid === groupId){
-          this.closePanel(this.panels[i]);
+          this.closePanel(this.panels[i], false);
         }
       }
     },
@@ -130,38 +135,38 @@ function (declare, lang, array, html, baseFx, Deferred, on, topic, when,
       if(typeof panel === 'string'){
         panel = this.getPanelById(panel);
         if(!panel){
-          def.reject();
-          return def;
-        }
-      }
-
-      if(!panel.started){
-        try {
-          panel.started = true;
-          panel.startup();
-        } catch (err) {
-          console.error('fail to startup panel ' + panel.id + '. ' + err.stack);
+          return;
         }
       }
 
       if(panel.state === 'opened'){
-        def.resolve(panel);
-        return def;
+        def.resolve();
+        return;
       }
 
-      //set state here to avoid openPanel is called twice
-      panel.setState('opened');
+      try{
+        this.closeOtherPanelsInTheSameGroup(panel);
+        html.setStyle(panel.domNode, 'display', 'block');
+        // html.setStyle(panel.domNode, utils.getPositionStyle(position));
+        baseFx.animateProperty({
+          node: panel.domNode,
+          properties: {opacity: 1},
+          duration: 200,
+          onEnd: lang.hitch(this, function(){
+            panel.setState('opened');
+            panel.onOpen();
+            def.resolve();
+          })
+        }).play();
+      }catch(err){
+        console.log(console.error('fail to open panel ' + panel.id + '. ' + err.stack));
+      }
 
-      return this.playOpenPanelAnimation(panel).then(lang.hitch(this, function(){
-        html.setStyle(panel.domNode, 'display', '');
-        panel.onOpen();
 
-        this._activePanel(panel);
-        return panel;
-      }));
+      return def;
     },
 
-    closePanel: function(panel){
+    closePanel: function(panel, anim){
       var def = new Deferred();
 
       if(typeof panel === 'string'){
@@ -172,22 +177,39 @@ function (declare, lang, array, html, baseFx, Deferred, on, topic, when,
         }
       }
 
+      if(anim === undefined){
+        anim = true;
+      }
+
       if(panel.state === 'closed'){
         def.resolve();
         return def;
       }
 
-      return this.playClosePanelAnimation(panel).then(function(){
-        if(this.activePanel && this.activePanel.id === panel.id){
-          this.activePanel.onDeActive();
-          this.activePanel = null;
-        }
-        panel.setState('closed');
-        panel.onClose();
-        if(panel.domNode){
+      try{
+        if(anim){
+          baseFx.animateProperty({
+            node: panel.domNode,
+            properties: {opacity: 0},
+            duration: 200,
+            onEnd: function(){
+              panel.setState('closed');
+              panel.onClose();
+              html.setStyle(panel.domNode, 'display', 'none');
+              def.resolve();
+            }
+          }).play();
+        }else{
+          panel.setState('closed');
+          panel.onClose();
           html.setStyle(panel.domNode, 'display', 'none');
+          def.resolve();
         }
-      });
+      }catch(err){
+        console.log(console.error('fail to close panel ' + panel.id + '. ' + err.stack));
+      }
+
+      return def;
     },
 
     minimizePanel: function(panel){
@@ -281,7 +303,7 @@ function (declare, lang, array, html, baseFx, Deferred, on, topic, when,
     onWindowResize: function(){
       for(var i = 0; i < this.panels.length; i++){
         if(this.panels[i].state !== 'closed' &&
-          this.panels[i].position.relativeTo !== 'map'){
+          this.panels[i].positionRelativeTo !== 'map'){
           this.panels[i].resize();
         }
       }
@@ -290,7 +312,7 @@ function (declare, lang, array, html, baseFx, Deferred, on, topic, when,
     onMapResize: function(){
       for(var i = 0; i < this.panels.length; i++){
         if(this.panels[i].state !== 'closed' &&
-          this.panels[i].position.relativeTo === 'map'){
+          this.panels[i].positionRelativeTo === 'map'){
           this.panels[i].resize();
         }
       }
@@ -308,7 +330,7 @@ function (declare, lang, array, html, baseFx, Deferred, on, topic, when,
         return;
       }
       if(panel.state !== 'closed'){
-        this.closePanel(panel);
+        this.closePanel(panel, false);
       }
       this._removePanel(panel);
       try{
@@ -316,6 +338,14 @@ function (declare, lang, array, html, baseFx, Deferred, on, topic, when,
       }catch(err){
         console.log(console.error('fail to destroy panel ' + panel.id + '. ' + err.stack));
       }
+    },
+
+    onDestroyPanel: function(panel){
+      if(panel.state !== 'closed'){
+        this.closePanel(panel, false);
+      }
+      this._removePanel(panel);
+      console.log('destroy panel ' + panel.id);
     },
 
     destroyAllPanels: function(){
@@ -328,258 +358,16 @@ function (declare, lang, array, html, baseFx, Deferred, on, topic, when,
       this.panels = [];
     },
 
-    playOpenPanelAnimation: function(panel){
-      if(typeof panel === 'string'){
-        panel = this.getPanelById(panel);
-        if(!panel){
-          return when();
-        }
-      }
-
-      if(!panel.openAnimation || panel.animationDuration === 0){
-        return when();
-      }
-
-      var def = new Deferred();
-      if(typeof panel.openAnimation === 'string'){
-        if(panel.openAnimation === 'fadeIn'){
-          html.setStyle(panel.domNode, {
-            opacity: 0,
-            display: ''
-          });
-
-          baseFx.fadeIn({
-            node: panel.domNode,
-            duration: panel.animationDuration,
-            onEnd: function(){
-              def.resolve();
-            }
-          }).play();
-        }else{
-          def.resolve();
-        }
-      }else{
-        def.resolve();
-      }
-      return def;
-    },
-
-    playClosePanelAnimation: function(panel){
-      if(typeof panel === 'string'){
-        panel = this.getPanelById(panel);
-        if(!panel){
-          return when();
-        }
-      }
-
-      if(!panel.closeAnimation || panel.animationDuration === 0){
-        return when();
-      }
-
-      var def = new Deferred();
-      if(typeof panel.closeAnimation === 'string'){
-        if(panel.closeAnimation === 'fadeOut'){
-          baseFx.fadeOut({
-            node: panel.domNode,
-            duration: panel.animationDuration,
-            onEnd: function(){
-              def.resolve();
-            }
-          }).play();
-        }else{
-          def.resolve();
-        }
-      }
-      return def;
-    },
-
-    getPositionOnMobile: function(panel){
-      //the position is minimized as title, half widget/height, full screen
-      if(typeof panel === 'string'){
-        panel = this.getPanelById(panel);
-        if(!panel){
-          return {};
-        }
-      }
-
-      var box = html.getMarginBox(window.jimuConfig.layoutId);
-      var titleTop = box.h / 2;
-      var borderRadius = '4px';
-
-      if(!panel.titleHeight){
-        panel.titleHeight = 35;
-      }
-
-      if(panel.windowState === 'maximized'){
-        return {
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          width: 'auto',
-          height: 'auto',
-          contentHeight: box.h - panel.titleHeight,
-          borderRadiusStyle: {
-            borderTopLeftRadius: 0,
-            borderTopRightRadius: 0,
-            borderBottomLeftRadius: 0,
-            borderBottomRightRadius: 0
-          }
-        };
-      }else if(panel.windowState === 'minimized'){
-        if(box.h > box.w){ //portrait, stay at bottom
-          return {
-            left: 0,
-            right: 0,
-            top: 'auto',
-            bottom: 0,
-            width: 'auto',
-            height: panel.titleHeight,
-            contentHeight: 0,
-            borderRadiusStyle: {
-              borderTopLeftRadius: borderRadius,
-              borderTopRightRadius: borderRadius,
-              borderBottomLeftRadius: 0,
-              borderBottomRightRadius: 0
-            }
-          };
-        }else{//landscape, stay at right, half width
-          return {
-            left: box.w - box.w / 2,
-            right: 0,
-            top: 'auto',
-            bottom: 0,
-            width: box.w / 2,
-            height: panel.titleHeight,
-            contentHeight: box.h,
-            borderRadiusStyle: window.isRTL?
-              {//stay at left
-                borderTopLeftRadius: 0,
-                borderTopRightRadius: borderRadius,
-                borderBottomLeftRadius: 0,
-                borderBottomRightRadius: borderRadius
-              }: {//stay at left
-                borderTopLeftRadius: borderRadius,
-                borderTopRightRadius: 0,
-                borderBottomLeftRadius: borderRadius,
-                borderBottomRightRadius: 0
-              }
-          };
-        }
-      }else{//windowState=normal
-        if(box.h > box.w){ //portrait, stay at bottom
-          return {
-            left: 0,
-            right: 0,
-            top: titleTop,
-            bottom: 0,
-            width: 'auto',
-            height: 'auto',
-            contentHeight: box.h - titleTop - panel.titleHeight,
-            borderRadiusStyle: {
-              borderTopLeftRadius: borderRadius,
-              borderTopRightRadius: borderRadius,
-              borderBottomLeftRadius: 0,
-              borderBottomRightRadius: 0
-            }
-          };
-        }else{//landscape, stay at right, half width
-          return {
-            left: box.w - box.w / 2,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            width: box.w / 2,
-            height: 'auto',
-            contentHeight: box.h - titleTop - panel.titleHeight,
-            borderRadiusStyle: window.isRTL?
-              {//stay at left
-                borderTopLeftRadius: 0,
-                borderTopRightRadius: borderRadius,
-                borderBottomLeftRadius: 0,
-                borderBottomRightRadius: borderRadius
-              }: {//stay at left
-                borderTopLeftRadius: borderRadius,
-                borderTopRightRadius: 0,
-                borderBottomLeftRadius: borderRadius,
-                borderBottomRightRadius: 0
-              }
-          };
-        }
-      }
-    },
-
-    _onPanelClick: function(panel){
-      this._activePanel(panel);
-    },
-
-    _activePanel: function(panel){
-      if(this.activePanel){
-        if(this.activePanel.id === panel.id){
-          //zIndex may be reset by panel self
-          if(this.activePanel.moveTopOnActive){
-            html.setStyle(this.activePanel.domNode, 'zIndex', 101);
-          }
-          return;
-        }
-        if(this.activePanel.state === 'active'){
-          this.activePanel.setState('opened');
-          html.setStyle(this.activePanel.domNode, 'zIndex',
-            typeof this.activePanel.position.zIndex !== 'undefined'?
-              this.activePanel.position.zIndex: 'auto');
-          this.activePanel.onDeActive();
-        }
-      }
-
-      var aw = this.widgetManager.activeWidget;
-      if(aw && aw.state === 'active' && aw.getPanel() !== panel){
-        aw.setState('opened');
-        html.setStyle(aw.domNode, 'zIndex',
-          typeof aw.position.zIndex !== 'undefined'? aw.position.zIndex: 'auto');
-        aw.onDeActive();
-        this.widgetManager.activeWidget = null;
-      }
-
-      this.activePanel = panel;
-      if(this.activePanel.state === 'active'){
-        return;
-      }
-      this.activePanel.setState('active');
-      if(this.activePanel.moveTopOnActive){
-        html.setStyle(this.activePanel.domNode, 'zIndex', 101);
-      }
-      this.activePanel.onActive();
+    reloadWidgetInPanel: function(widgetConfig){
+      this.panels.forEach(function (panel) {
+        panel.reloadWidget(widgetConfig);
+      }, this);
     },
 
     _removePanel: function(panel){
       var index = this.panels.indexOf(panel);
       if(index > -1){
         this.panels.splice(index, 1);
-      }
-
-      if(this.activePanel && this.activePanel.id === panel.id){
-        this.activePanel = null;
-      }
-    },
-
-    _onMoveStart: function(mover){
-      array.forEach(this.panels, function(panel){
-        if(panel.domNode === mover.node){
-          this._activePanel(panel);
-        }
-      }, this);
-    },
-
-    _onWidgetActived: function(widget){
-      if(this.activePanel &&
-        this.activePanel.state === 'active' &&
-        widget.getPanel() !== this.activePanel){
-        this.activePanel.setState('opened');
-        html.setStyle(this.activePanel.domNode, 'zIndex',
-            typeof this.activePanel.position.zIndex !== 'undefined'?
-              this.activePanel.position.zIndex: 'auto');
-        this.activePanel.onDeActive();
-        this.activePanel = null;
       }
     }
 

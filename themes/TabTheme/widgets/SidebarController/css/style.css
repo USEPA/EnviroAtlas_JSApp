@@ -6,11 +6,12 @@
   left: 0;
   right: 0;
   top: 0;
-  height: 44px;
+  height: 44px;  
   border-top: 1px solid #3a3a3a;
   border-top: 1px solid rgba(255,255,255,0.08);
 }
 .jimu-widget-sidebar-controller .title-node{
+  width: 54px;
   height: 44px;
   cursor: pointer;
   margin-top: -2px;
@@ -20,15 +21,18 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 26px;
+  bottom: 16px;
   border: 1px solid #111111;
 }
 .jimu-widget-sidebar-controller .max-pane .title-node{
   /*margin-left: 19px;*/
   /*float: left;*/
 }
+.jimu-widget-sidebar-controller .min-pane .title-node{
+  margin-bottom: 36px;
+}
 .jimu-widget-sidebar-controller .min-pane .title-node:nth-child(1){
-  margin-top: -2px;
+  margin-top: -2px;  
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 .jimu-widget-sidebar-controller .max-pane .title-node:nth-child(1){
@@ -36,9 +40,9 @@
 }
 
 .jimu-widget-sidebar-controller .title-node img{
-  margin: 11px 29.62962962962963%;/*16/54*/
-  width: 40.74074074074074%; /*22/54*/
-  height: auto;
+  margin: 11px 16px;
+  width: 22px;
+  height: 22px;
 }
 .jimu-widget-sidebar-controller .tab-indicator{
   width: 0px;
@@ -96,7 +100,7 @@
   position: absolute;
   left: 0;
   top: 18px;
-  right: 0;
+  right: 0;    
   bottom: 0;
   overflow: hidden;
 }
@@ -104,7 +108,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  right: 0;
+  right: 0;    
   bottom: 0;
   overflow: hidden;
 }
@@ -113,7 +117,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 24px;
+  height: 14px;
   position: absolute;
   border: 1px solid #111111;
   border-top: 1px solid #333333;
@@ -122,7 +126,7 @@
 
 .jimu-widget-sidebar-controller .tab-resizer .action-node{
   width: 50px;
-  overflow: hidden;
+  overflow: hidden;  
   height: 100%;
   /*float: right;  */
   cursor: pointer;
@@ -130,11 +134,10 @@
 
 .jimu-widget-sidebar-controller .tab-resizer .action-node div{
   width: 11px;
-  height: 24px;
+  height: 8px;
+  margin-top: 3px;
   margin-left: auto;
   margin-right: auto;
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 .jimu-widget-sidebar-controller .tab-resizer .left-arrow{
@@ -153,7 +156,7 @@
 .jimu-widget-sidebar-controller .min-pane{
   position: absolute;
   top: 0;
-  bottom: 26px;
+  bottom: 16px;
   left: 0;
   right: 0;
   border: 1px solid #111111;
@@ -223,7 +226,7 @@
   font: 12px Arial bold;
 }
 .jimu-widget-sidebar-controller .other-group-choose{
-  margin: 15px 30px;
+  margin: 15px 30px; 
 }
 
 /*widget pane in the GroupTabContainer*/
@@ -259,7 +262,7 @@
 }
 
 /** for IE7/8, they don't support nth-child ***/
-.jimu-widget-sidebar-controller .min-pane .title-node:first-child{
+.jimu-widget-sidebar-controller .min-pane .title-node:first-child{  
   border-top: 1px solid #3a3a3a;
 }
 .jimu-widget-sidebar-controller .max-pane .title-node:first-child{

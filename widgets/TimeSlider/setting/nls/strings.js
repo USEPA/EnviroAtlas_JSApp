@@ -1,6 +1,6 @@
 define({
   root: ({
-    showLayerLabels: "Display time-aware layer names on the widget."
+    showLayerLabels: "Display layer names on the widget for time-aware layers."
   }),
   "ar": 1,
   "cs": 1,
@@ -28,7 +28,5 @@ define({
   "th": 1,
   "tr": 1,
   "vi": 1,
-  "zh-cn": 1,
-  "zh-hk": 1,
-  "zh-tw": 1
+  "zh-cn": 1
 });

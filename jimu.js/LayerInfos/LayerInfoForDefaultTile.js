@@ -29,7 +29,7 @@ define([
     //    collection: {layerInfo: }
     // };
     constructor: function( operLayer, map ) {
-      this.noLegend = true;
+      this.noLegend= true;
       /*jshint unused: false*/
     },
 

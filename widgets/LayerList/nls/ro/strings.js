@@ -15,7 +15,7 @@
     itemToAttributeTable: "Deschidere tabel de atribute",
     itemShowItemDetails: "Afişare detalii element",
     empty: "gol",
-    removePopup: "Dezactivare mesaje pop-up",
+    removePopup: "Eliminare pop-up",
     enablePopup: "Activare pop-up"
   })
 );
