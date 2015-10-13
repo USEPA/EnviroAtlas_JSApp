@@ -46,7 +46,7 @@ define(['dojo/_base/declare',
       query(this.containerNode).style({
         height: hContent
       });
-      if(this.widget){
+      if(this.widget && this.widget.state !== 'closed'){
         this.widget.resize();
       }
     }

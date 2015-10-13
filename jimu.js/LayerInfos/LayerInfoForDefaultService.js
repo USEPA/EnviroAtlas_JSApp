@@ -21,9 +21,10 @@ define([
   'dojo/Deferred',
   'dojo/dom-construct',
   './LayerInfoForDefault',
-  'esri/layers/FeatureLayer'
+  'esri/layers/FeatureLayer',
+  'esri/layers/RasterLayer'
 ], function(declare, array, lang, Deferred, domConstruct,
-LayerInfoForDefault, FeatureLayer) {
+LayerInfoForDefault, FeatureLayer, RasterLayer) {
   return declare(LayerInfoForDefault, {
     _legendsNode: null,
 
@@ -38,11 +39,11 @@ LayerInfoForDefault, FeatureLayer) {
 
     drawLegends: function(legendsNode, portalUrl) {
       this._loadLegends(portalUrl).then(lang.hitch(this, function(legendInfo) {
-        this.initLegendsNode(legendInfo, legendsNode);
+        this._initLegendsNode(legendInfo, legendsNode);
       }));
     },
 
-    initLegendsNode: function(legendInfo, legendsNode) {
+    _initLegendsNode: function(legendInfo, legendsNode) {
       var mapService = this.originOperLayer.mapService;
       //var loadingImg = query(".legends-loading-img", legendsNode)[0];
       if (legendInfo/*&& loadingImg*/) {
@@ -58,18 +59,25 @@ LayerInfoForDefault, FeatureLayer) {
         if (!legendLayer) {
           return;
         }
+
+        var legendsTable = domConstruct.create("table", {
+          "class": "legend-table",
+          "style": "font-size: 12px"
+        }, legendsNode);
+
         array.forEach(legendLayer.legend, function(legend) {
           if (legend.label === "<all other values>") {
             return;
           }
-          var legendDiv = domConstruct.create("div", {
-            "class": "legend-div"
-          }, legendsNode);
+          var legendTr = domConstruct.create("tr", {
+            "class": "legend-tr",
+            "style": "border: 1px solid"
+          }, legendsTable);
 
-          var symbolDiv = domConstruct.create("div", {
-            "class": "legend-symbol jimu-float-leading",
-            "style": "width:50px;height:50px;position:relative"
-          }, legendDiv);
+          var symbolTd = domConstruct.create("td", {
+            "class": "legend-symbol-td",
+            "style": ""
+          }, legendTr);
 
           var imgSrc = null;
           if (legend.imageData) {
@@ -79,14 +87,42 @@ LayerInfoForDefault, FeatureLayer) {
           }
           domConstruct.create("img", {
             "class": "legend-symbol-image",
-            "style": "overflow:auto;margin:auto;position:absolute;top:0;left:0;bottom:0;right:0",
+            "style": "overflow:auto;margin:auto;top:0;left:0;bottom:0;right:0",
             "src": imgSrc
-          }, symbolDiv);
+          }, symbolTd);
 
-          domConstruct.create("div", {
-            "class": "legend-label jimu-float-leading",
-            "innerHTML": legend.label || " "
-          }, legendDiv);
+          domConstruct.create("td", {
+            "class": "legend-label-td",
+            "innerHTML": legend.label || " ",
+            "style": "padding-left: 5px"
+          }, legendTr);
+
+
+          // var legendDiv = domConstruct.create("div", {
+          //   "class": "legend-div"
+          // }, legendsNode);
+
+          // var symbolDiv = domConstruct.create("div", {
+          //   "class": "legend-symbol jimu-float-leading",
+          //   "style": "width:50px;height:50px;position:relative"
+          // }, legendDiv);
+
+          // var imgSrc = null;
+          // if (legend.imageData) {
+          //   imgSrc = "data:" + legend.contentType + ";base64," + legend.imageData;
+          // } else {
+          //   imgSrc = legend.url;
+          // }
+          // domConstruct.create("img", {
+          //   "class": "legend-symbol-image",
+          //   "style": "overflow:auto;margin:auto;position:absolute;top:0;left:0;bottom:0;right:0",
+          //   "src": imgSrc
+          // }, symbolDiv);
+
+          // domConstruct.create("div", {
+          //   "class": "legend-label jimu-float-leading",
+          //   "innerHTML": legend.label || " "
+          // }, legendDiv);
         }, this);
       }
     },
@@ -113,23 +149,44 @@ LayerInfoForDefault, FeatureLayer) {
     //--------------public interface---------------------------
     getLayerObject: function() {
       var def = new Deferred();
-      if(this.layerObject.empty) {
-        this.layerObject = new FeatureLayer(this.layerObject.url);
-        this.layerObject.on('load', lang.hitch(this, function() {
+      this.getLayerType().then(lang.hitch(this, function(layerType) {
+        if(this.layerObject.empty) {
+          if(layerType === "RasterLayer") {
+            this.layerObject = new RasterLayer(this.layerObject.url);
+          } else  {
+            // default as FeatureLayer
+            this.layerObject = new FeatureLayer(this.layerObject.url);
+          }
+          this.layerObject.on('load', lang.hitch(this, function() {
+            def.resolve(this.layerObject);
+          }));
+          this.layerObject.on('error', lang.hitch(this, function(/*err*/) {
+            //def.reject(err);
+            def.resolve(null);
+          }));
+        } else if (!this.layerObject.loaded) {
+          this.layerObject.on('load', lang.hitch(this, function() {
+            def.resolve(this.layerObject);
+          }));
+          this.layerObject.on('error', lang.hitch(this, function(/*err*/) {
+            //def.reject(err);
+            def.resolve(null);
+          }));
+        } else {
           def.resolve(this.layerObject);
-        }));
-        this.layerObject.on('error', lang.hitch(this, function(/*err*/) {
-          //def.reject(err);
-          def.resolve(null);
-        }));
-      } else {
-        def.resolve(this.layerObject);
-      }
+        }
+      }), lang.hitch(this, function() {
+        def.resolve(null);
+      }));
       return def;
     },
 
     // now it is used for Attribute.
     getPopupInfo: function() {
+      // summary:
+      //   get popupInfo from webmap defination.
+      // description:
+      //   return null directly if the has not configured popupInfo in webmap.
       var popupInfo = null;
       var layers = this.originOperLayer.mapService.layerInfo.originOperLayer.layers;
       if(layers) {
@@ -141,6 +198,26 @@ LayerInfoForDefault, FeatureLayer) {
         }
       }
       return popupInfo;
+    },
+
+    getFilterOfWebmap: function() {
+      // summary:
+      //   get filter from webmap defination.
+      // description:
+      //   return null directly if the has not configured filter in webmap.
+      var filter = null;
+      var layers = this.originOperLayer.mapService.layerInfo.originOperLayer.layers;
+      if(layers) {
+        for(var i = 0; i < layers.length; i++) {
+          if(layers[i].id === this.originOperLayer.mapService.subId) {
+            filter = layers[i].layerDefinition ?
+                     layers[i].layerDefinition.definitionExpression :
+                     null;
+            break;
+          }
+        }
+      }
+      return filter;
     },
 
     getLayerType: function() {
@@ -244,6 +321,18 @@ LayerInfoForDefault, FeatureLayer) {
         }));
       }
       return def;
+    },
+
+    getInfoTemplate: function() {
+      var mapServiceLayerInfo = this.originOperLayer.mapService.layerInfo;
+      var subId = this.originOperLayer.mapService.subId;
+      if(mapServiceLayerInfo.controlPopupInfo.infoTemplates &&
+        mapServiceLayerInfo.controlPopupInfo.infoTemplates[subId] &&
+        mapServiceLayerInfo.controlPopupInfo.infoTemplates[subId].infoTemplate) {
+        return mapServiceLayerInfo.controlPopupInfo.infoTemplates[subId].infoTemplate;
+      } else {
+        return null;
+      }
     }
 
   });

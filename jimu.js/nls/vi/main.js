@@ -1,66 +1,66 @@
 ﻿define(
    ({
     common: {
-      ok: 'OK',
-      cancel: 'Hủy',
-      next: 'Tiếp',
-      back: 'Quay lại'
+      ok: "OK",
+      cancel: "Hủy",
+      next: "Tiếp",
+      back: "Quay lại"
     },
     errorCode: "Mã",
     errorMessage: "Thông báo",
     errorDetail: "Chi tiết",
     widgetPlaceholderTooltip: "Để thiết lập, đi tới Tiện ích và bấm vào trình giữ chỗ tương ứng",
     symbolChooser: {
-      preview: 'Xem trước',
-      basic: 'Cơ bản',
-      arrows: 'Mũi tên',
-      business: 'Kinh doanh',
-      cartographic: 'Bản đồ',
-      nationalParkService: 'Cục Công viên Quốc gia',
-      outdoorRecreation: 'Giải trí Ngoài trời',
-      peoplePlaces: 'Địa điểm Con người',
-      safetyHealth: 'Sức khỏe An toàn',
-      shapes: 'Các hình dạng',
-      transportation: 'Giao thông Vận tải',
-      symbolSize: 'Kích cỡ Ký hiệu',
-      color: 'Màu sắc',
-      alpha: 'Alpha',
-      outlineColor: 'Màu Đường viền',
-      outlineWidth: 'Độ rộng Đường viền',
-      style: 'Kiểu',
-      width: 'Chiều rộng',
-      text: 'Văn bản',
-      fontColor: 'Màu Phông chữ',
-      fontSize: 'Cỡ Chữ',
-      transparency: 'Độ trong suốt',
-      solid: 'Đậm',
-      dash: 'Gạch',
-      dot: 'Chấm',
-      dashDot: 'Chấm Gạch',
-      dashDotDot: 'Gạch Chấm Chấm'
+      preview: "Xem trước",
+      basic: "Cơ bản",
+      arrows: "Mũi tên",
+      business: "Kinh doanh",
+      cartographic: "Bản đồ",
+      nationalParkService: "Cục Công viên Quốc gia",
+      outdoorRecreation: "Giải trí Ngoài trời",
+      peoplePlaces: "Địa điểm Con người",
+      safetyHealth: "Sức khỏe An toàn",
+      shapes: "Các hình dạng",
+      transportation: "Giao thông Vận tải",
+      symbolSize: "Kích cỡ Ký hiệu",
+      color: "Màu sắc",
+      alpha: "Alpha",
+      outlineColor: "Màu Đường viền",
+      outlineWidth: "Độ rộng Đường viền",
+      style: "Kiểu",
+      width: "Chiều rộng",
+      text: "Văn bản",
+      fontColor: "Màu Phông chữ",
+      fontSize: "Cỡ Chữ",
+      transparency: "Độ trong suốt",
+      solid: "Đậm",
+      dash: "Gạch",
+      dot: "Chấm",
+      dashDot: "Chấm Gạch",
+      dashDotDot: "Gạch Chấm Chấm"
     },
     transparency: {
-      opaque: 'Độ mờ',
-      transparent: 'Độ trong suốt'
+      opaque: "Độ mờ",
+      transparent: "Độ trong suốt"
     },
     rendererChooser: {
-      domain: 'Miền',
-      use: 'Sử dụng',
-      singleSymbol: 'Một Ký hiệu Đơn',
-      uniqueSymbol: 'Ký hiệu theo Loại đối tượng',
-      color: 'Màu sắc',
-      size: 'Kích cỡ',
-      toShow: 'Để Hiển thị',
-      colors: 'Màu sắc',
-      classes: 'Các lớp',
-      symbolSize: 'Kích cỡ Ký hiệu',
-      addValue: 'Thêm Giá trị',
-      setDefaultSymbol: 'Thiết lập Ký hiệu Mặc định',
-      defaultSymbol: 'Ký hiệu Mặc định',
-      selectedSymbol: 'Ký hiệu Đã chọn',
-      value: 'Giá trị',
-      label: 'Nhãn',
-      range: 'Phạm vi'
+      domain: "Miền",
+      use: "Sử dụng",
+      singleSymbol: "Một Ký hiệu Đơn",
+      uniqueSymbol: "Ký hiệu theo Loại đối tượng",
+      color: "Màu sắc",
+      size: "Kích cỡ",
+      toShow: "Để Hiển thị",
+      colors: "Màu sắc",
+      classes: "Các lớp",
+      symbolSize: "Kích cỡ Ký hiệu",
+      addValue: "Thêm Giá trị",
+      setDefaultSymbol: "Thiết lập Ký hiệu Mặc định",
+      defaultSymbol: "Ký hiệu Mặc định",
+      selectedSymbol: "Ký hiệu Đã chọn",
+      value: "Giá trị",
+      label: "Nhãn",
+      range: "Phạm vi"
     },
     drawBox: {
       point: "Điểm",
@@ -93,17 +93,17 @@
       loading: "Đang tải"
     },
     basicServiceBrowser: {
-      noServicesFound: 'Không tìm thấy dịch vụ nào.',
-      unableConnectTo: 'Không thể kết nối với',
-      invalidUrlTip: 'URL bạn vừa nhập không hợp lệ hoặc không thể truy cập được.'
+      noServicesFound: "Không tìm thấy dịch vụ nào.",
+      unableConnectTo: "Không thể kết nối với",
+      invalidUrlTip: "URL bạn vừa nhập không hợp lệ hoặc không thể truy cập được."
     },
     serviceBrowser: {
-      noGpFound: 'Không tìm thấy dịch vụ địa xử lý nào.',
-      unableConnectTo: 'Không thể kết nối với'
+      noGpFound: "Không tìm thấy dịch vụ địa xử lý nào.",
+      unableConnectTo: "Không thể kết nối với"
     },
     layerServiceBrowser: {
-      noServicesFound: 'Không tìm thấy dịch vụ bản đồ hoặc dịch vụ đối tượng nào',
-      unableConnectTo: 'Không thể kết nối với'
+      noServicesFound: "Không tìm thấy dịch vụ bản đồ hoặc dịch vụ đối tượng nào",
+      unableConnectTo: "Không thể kết nối với"
     },
     basicServiceChooser: {
       validate: "Xác minh",
@@ -111,10 +111,10 @@
       set: "Thiết lập"
     },
     urlInput: {
-      invalidUrl: 'Url không hợp lệ.'
+      invalidUrl: "Url không hợp lệ."
     },
     urlComboBox: {
-      invalidUrl: 'Url không hợp lệ.'
+      invalidUrl: "Url không hợp lệ."
     },
     filterBuilder: {
       addAnotherExpression: "Thêm biểu thức lọc",
@@ -131,7 +131,7 @@
       valueTooltip: "Nhập vào giá trị",
       fieldTooltip: "Chọn từ trường hiện có",
       uniqueValueTooltip: "Lấy từ các giá trị duy nhất trong trường được chọn",
-      stringOperatorIs: "là", // e.g. <stringFieldName> is 'California'
+      stringOperatorIs: "là", // e.g. <stringFieldName> is "California"
       stringOperatorIsNot: "không phải là",
       stringOperatorStartsWith: "bắt đầu với",
       stringOperatorEndsWith: "kết thúc với",
@@ -139,7 +139,7 @@
       stringOperatorDoesNotContain: "không chứa",
       stringOperatorIsBlank: "trống",
       stringOperatorIsNotBlank: "không trống",
-      dateOperatorIsOn: "vào ngày", // e.g. <dateFieldName> is on '1/1/2012'
+      dateOperatorIsOn: "vào ngày", // e.g. <dateFieldName> is on "1/1/2012"
       dateOperatorIsNotOn: "không vào ngày",
       dateOperatorIsBefore: "trước",
       dateOperatorIsAfter: "sau",
@@ -192,6 +192,19 @@
       selectFromOnline: "Thêm từ ArcGIS Online",
       chooseLayer: "Chọn một lớp đối tượng."
     },
+    queryableLayerSource: {
+      layer: "Lớp",
+      browse: "Duyệt",
+      selectFromMap: "Chọn từ Bản đồ",
+      selectFromPortal: "Thêm từ Portal for ArcGIS",
+      addServiceUrl: "Thêm URL Dịch vụ",
+      inputLayerUrl: "URL Lớp Đầu vào",
+      selectLayer: "Chọn một lớp từ bản đồ hiện tại.",
+      chooseItem: "Chọn một mục.",
+      setServiceUrl: "Nhập URL của dịch vụ.",
+      selectFromOnline: "Thêm từ ArcGIS Online",
+      chooseLayer: "Chọn lớp."
+    },
     gpSource: {
       selectFromPortal: "Thêm từ Portal for ArcGIS",
       addServiceUrl: "Thêm URL Dịch vụ",
@@ -227,35 +240,37 @@
       notSupportQuery: "Dịch vụ không hỗ trợ truy vấn."
     },
     basicLayerChooserFromMap: {
-      noLayersTip: "Không có lớp nào trong bản đồ."
+      noLayersTip: "Không có lớp thích hợp nào trong bản đồ."
     },
     layerInfosMenu: {
-      titleBasemap: 'Bản đồ nền',
-      titleLayers: 'Các lớp hoạt động',
-      labelLayer: 'Tên lớp',
-      itemZoomTo: 'Phóng tới',
-      itemTransparency: 'Độ trong suốt',
-      itemTransparent: 'Độ trong suốt',
-      itemOpaque: 'Độ mờ',
-      itemMoveUp: 'Di chuyển lên trên',
-      itemMoveDown: 'Di chuyển xuống dưới',
-      itemDesc: 'Mô tả',
-      itemDownload: 'Tải xuống',
-      itemToAttributeTable: 'Mở Bảng Thuộc tính'
+      titleBasemap: "Bản đồ nền",
+      titleLayers: "Các lớp hoạt động",
+      labelLayer: "Tên lớp",
+      itemZoomTo: "Phóng tới",
+      itemTransparency: "Độ trong suốt",
+      itemTransparent: "Độ trong suốt",
+      itemOpaque: "Độ mờ",
+      itemMoveUp: "Di chuyển lên trên",
+      itemMoveDown: "Di chuyển xuống dưới",
+      itemDesc: "Mô tả",
+      itemDownload: "Tải xuống",
+      itemToAttributeTable: "Mở Bảng Thuộc tính"
     },
     imageChooser: {
       unsupportReaderAPI: "CẦN LÀM: Trình duyệt này không hỗ trợ API bộ đọc tệp",
       readError: "Không thể đọc tệp.",
+      unknowError: "không thể hoàn thành hoạt động",
       invalidType: "Loại tệp không hợp lệ.",
       exceed: "Kích cỡ tệp không được vượt quá 1024 KB",
       enableFlash: "CẦN LÀM: vui lòng bật flash.",
+      cropWaining: "Vui lòng chọn ảnh có kích thước tối thiểu ${width} x ${height} pixel.",
       toolTip: "Để có kết quả tốt nhất, hình ảnh phải rộng ${width} pixel và cao ${height} pixel. Các kích cỡ khác sẽ được điều chỉnh cho phù hợp. Các định dạng hình ảnh được chấp nhận là: PNG, GIF và JPEG."
     },
     simpleTable: {
-      moveUp: 'Di chuyển lên trên',
-      moveDown: 'Di chuyển xuống dưới',
-      deleteRow: 'Xóa',
-      edit: 'Chỉnh sửa'
+      moveUp: "Di chuyển lên trên",
+      moveDown: "Di chuyển xuống dưới",
+      deleteRow: "Xóa",
+      edit: "Chỉnh sửa"
     }
   })
 );

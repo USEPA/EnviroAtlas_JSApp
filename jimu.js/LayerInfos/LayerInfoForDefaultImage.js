@@ -19,12 +19,27 @@ define([
   'dojo/dom-construct',
   'dojo/_base/array',
   'dojo/_base/lang',
+  'dojo/Deferred',
+  'dojo/promise/all',
   'esri/request',
   './LayerInfoForDefault'
-], function(declare, domConstruct, array, lang, esriRequest, LayerInfoForDefault) {
+], function(declare, domConstruct, array, lang, Deferred, all, esriRequest, LayerInfoForDefault) {
   var clazz = declare(LayerInfoForDefault, {
+    constructor: function() {
+      this._addImageServiceLayerType();
+    },
 
-    initLegendsNode: function(legendsNode) {
+    _addImageServiceLayerType: function() {
+      if (this.layerObject.serviceDataType &&
+        (this.layerObject.serviceDataType === "esriImageServiceDataTypeVector-UV" ||
+          this.layerObject.serviceDataType === "esriImageServiceDataTypeVector-MagDir")) {
+        this.layerObject.type = "ArcGISImageServiceVectorLayer";
+      } else {
+        this.layerObject.type = "ArcGISImageServiceLayer";
+      }
+    },
+
+    _initLegendsNode: function(legendsNode) {
       // if(this.originOperLayer.wms.wmsLayerInfo.legendURL) {
       //   var legendImg = domConstruct.create("img", {
       //     "class": "legend-div-image",
@@ -77,9 +92,6 @@ define([
               }, legendDiv);
             }, this);
           }, this);
-
-
-
         }), lang.hitch(this, function() {
           domConstruct.empty(legendsNode);
         }));
@@ -97,7 +109,7 @@ define([
       if (this.layerObject._params.bandIds) {
         params.bandIds = this.layerObject._params.bandIds;
       }
-      
+
       if (this.layerObject._params.renderingRule) {
         params.renderingRule = this.layerObject._params.renderingRule;
       }
@@ -109,7 +121,67 @@ define([
         callbackParamName: 'callback'
       });
       return request;
+    },
+
+    // summary:
+    //    get support table info.
+    // description:
+    //    return value:{
+    //      isSupportedLayer: true/false,
+    //      isSupportQuery: true/false,
+    //      layerType: layerType.
+    //    }
+    getSupportTableInfo: function() {
+
+      // var def = new Deferred();
+      // var resultValue = {
+      //   isSupportedLayer: false,
+      //   isSupportQuery: true,
+      //   layerType: null
+      // };
+
+      // this.getLayerType().then(lang.hitch(this, function(layerType) {
+      //   resultValue.layerType = layerType;
+      //   if (this._getLayerTypesOfSupportTable().indexOf(layerType) >= 0) {
+      //     resultValue.isSupportedLayer = true;
+      //   }
+      //   def.resolve(resultValue);
+      // }), function() {
+      //   def.resolve(resultValue);
+      // });
+      // return def;
+
+      var def = new Deferred();
+      var resultValue = {
+        isSupportedLayer: false,
+        isSupportQuery: false,
+        layerType: null
+      };
+      var typeDef = this.getLayerType();
+      var layerObjectDef = this.getLayerObject();
+
+      all({
+        type: typeDef,
+        layerObject: layerObjectDef
+      }).then(lang.hitch(this, function(res){
+        var layerType = res.type;
+        var layerObject = res.layerObject;
+        resultValue.layerType = layerType;
+        if (this._getLayerTypesOfSupportTable().indexOf(layerType) >= 0) {
+          resultValue.isSupportedLayer = true;
+        }
+        if (layerObject.capabilities && layerObject.capabilities.indexOf("Catalog") >= 0) {
+          resultValue.isSupportQuery = true;
+        } else {
+          resultValue.isSupportedLayer = false;
+        }
+        def.resolve(resultValue);
+      }), function() {
+        def.resolve(resultValue);
+      });
+      return def;
     }
+
   });
   return clazz;
 });

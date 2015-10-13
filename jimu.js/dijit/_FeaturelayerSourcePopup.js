@@ -31,7 +31,7 @@ function(declare, Evented, on, lang, html, Popup, FeaturelayerSource, LoadingInd
     height: 560,
     titleLabel: '',
 
-    featureArgs: null,
+    dijitArgs: null,//refer to the parameters of dijit FeaturelayerSource
 
     //events:
     //ok return {name,url,definition}
@@ -39,13 +39,17 @@ function(declare, Evented, on, lang, html, Popup, FeaturelayerSource, LoadingInd
 
     postCreate: function(){
       this.inherited(arguments);
-      html.addClass(this.domNode, 'featurelayer-source-popup');
+      html.addClass(this.domNode, 'jimu-featurelayer-source-popup');
       this._initFls();
       this._initLoading();
     },
 
+    getSelectedRadioType: function(){
+      return this.fls.getSelectedRadioType();
+    },
+
     _initFls: function(){
-      this.fls = new FeaturelayerSource(this.featureArgs);
+      this.fls = new FeaturelayerSource(this.dijitArgs);
       this.fls.placeAt(this.contentContainerNode);
       this.fls.startup();
 

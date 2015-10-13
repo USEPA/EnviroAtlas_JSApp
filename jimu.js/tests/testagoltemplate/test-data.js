@@ -576,24 +576,24 @@ define([], function() {
 		// }
 
 		// function visitElement(config, cb) {
-		// 	//the cb signature: cb(element, index, groupId, isPreload), the groupId can be:
+		// 	//the cb signature: cb(element, index, groupId, isOnScreen), the groupId can be:
 		// 	//groupId, widgetOnScreen, widgetPool
 		// 	visitBigSection('widgetOnScreen', cb);
 		// 	visitBigSection('widgetPool', cb);
 
 		// 	function visitBigSection(section, cb) {
 		// 		var i, j, sectionConfig = config[section],
-		// 			isPreload = (section === 'widgetOnScreen');
+		// 			isOnScreen = (section === 'widgetOnScreen');
 		// 		if (!sectionConfig) {
 		// 			return;
 		// 		}
 		// 		if (sectionConfig.groups) {
 		// 			for (i = 0; i < sectionConfig.groups.length; i++) {
-		// 				if (cb(sectionConfig.groups[i], i, sectionConfig.groups[i].id, isPreload)) {
+		// 				if (cb(sectionConfig.groups[i], i, sectionConfig.groups[i].id, isOnScreen)) {
 		// 					break;
 		// 				}
 		// 				for (j = 0; j < sectionConfig.groups[i].widgets.length; j++) {
-		// 					if (cb(sectionConfig.groups[i].widgets[j], j, sectionConfig.groups[i].id, isPreload)) {
+		// 					if (cb(sectionConfig.groups[i].widgets[j], j, sectionConfig.groups[i].id, isOnScreen)) {
 		// 						break;
 		// 					}
 		// 				}
@@ -602,7 +602,7 @@ define([], function() {
 
 		// 		if (sectionConfig.widgets) {
 		// 			for (i = 0; i < sectionConfig.widgets.length; i++) {
-		// 				if (cb(sectionConfig.widgets[i], i, section, isPreload)) {
+		// 				if (cb(sectionConfig.widgets[i], i, section, isOnScreen)) {
 		// 					break;
 		// 				}
 		// 			}

@@ -15,18 +15,38 @@
     },
     {
       "name": "simpleblue",
-      "description": "this is default style",
-      "styleColor": "#3498db"
+      "description": "this is simpleblue style",
+      "styleColor": "#3499dc"
     },
     {
       "name": "purple",
       "description": "this is purple style",
-      "styleColor": "#ab6dae"
+      "styleColor": "#ab6ead"
     },
     {
       "name": "red",
       "description": "this is red style",
-      "styleColor": "#c92e49"
+      "styleColor": "#c82f47"
+    },
+    {
+      "name": "yellow",
+      "description": "this is yellow style",
+      "styleColor": "#d07d0e"
+    },
+    {
+      "name": "green",
+      "description": "this is green style",
+      "styleColor": "#05ab08"
+    },
+    {
+      "name": "blue",
+      "description": "this is blue style",
+      "styleColor": "#0057b9"
+    },
+    {
+      "name": "cyan",
+      "description": "this is cyan style",
+      "styleColor": "#2aaa8a"
     }
   ],
   "layouts": [
@@ -53,8 +73,8 @@
       "description": "this is theme footer widget"
     }
   ],
-  "version": "1.2",
-  "wabVersion": "1.2",
+  "version": "1.3",
+  "wabVersion": "1.3",
   "author": "Esri R&D Center Beijing",
   "description": "",
   "copyright": "",

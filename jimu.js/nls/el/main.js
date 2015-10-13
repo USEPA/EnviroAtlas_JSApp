@@ -1,66 +1,66 @@
 ﻿define(
    ({
     common: {
-      ok: 'ΟΚ',
-      cancel: 'Ακύρωση',
-      next: 'Επόμενο',
-      back: 'Πίσω'
+      ok: "ΟΚ",
+      cancel: "Ακύρωση",
+      next: "Επόμενο",
+      back: "Πίσω"
     },
     errorCode: "Κωδικός",
     errorMessage: "Μήνυμα",
     errorDetail: "Λεπτομέρεια",
     widgetPlaceholderTooltip: "Για να το ρυθμίσετε, μεταβείτε στα Widget και κάντε κλικ στο αντίστοιχο σύμβολο",
     symbolChooser: {
-      preview: 'Προεπισκόπηση',
-      basic: 'Βασικά',
-      arrows: 'Βέλη',
-      business: 'Επιχείρηση',
-      cartographic: 'Χαρτογραφικά',
-      nationalParkService: 'Εθνική Υπηρεσία Πάρκων',
-      outdoorRecreation: 'Υπαίθριες δραστηριότητες αναψυχής',
-      peoplePlaces: 'Άνθρωποι και μέρη',
-      safetyHealth: 'Ασφάλεια - Υγεία',
-      shapes: 'Σχήματα',
-      transportation: 'Μεταφορές',
-      symbolSize: 'Μέγεθος συμβόλου',
-      color: 'Χρώμα',
-      alpha: 'Άλφα',
-      outlineColor: 'Χρώμα περιγράμματος',
-      outlineWidth: 'Πλάτος περιγράμματος',
-      style: 'Στυλ',
-      width: 'Πλάτος',
-      text: 'Κείμενο',
-      fontColor: 'Χρώμα γραμματοσειράς',
-      fontSize: 'Μέγεθος γραμματοσειράς',
-      transparency: 'Διαφάνεια',
-      solid: 'Συμπαγές',
-      dash: 'Παύλα',
-      dot: 'Τελεία',
-      dashDot: 'Παύλα τελεία',
-      dashDotDot: 'Παύλα τελεία τελεία'
+      preview: "Προεπισκόπηση",
+      basic: "Βασικά",
+      arrows: "Βέλη",
+      business: "Επιχείρηση",
+      cartographic: "Χαρτογραφικά",
+      nationalParkService: "Εθνική Υπηρεσία Πάρκων",
+      outdoorRecreation: "Υπαίθριες δραστηριότητες αναψυχής",
+      peoplePlaces: "Άνθρωποι και μέρη",
+      safetyHealth: "Ασφάλεια - Υγεία",
+      shapes: "Σχήματα",
+      transportation: "Μεταφορές",
+      symbolSize: "Μέγεθος συμβόλου",
+      color: "Χρώμα",
+      alpha: "Άλφα",
+      outlineColor: "Χρώμα περιγράμματος",
+      outlineWidth: "Πλάτος περιγράμματος",
+      style: "Στυλ",
+      width: "Πλάτος",
+      text: "Κείμενο",
+      fontColor: "Χρώμα γραμματοσειράς",
+      fontSize: "Μέγεθος γραμματοσειράς",
+      transparency: "Διαφάνεια",
+      solid: "Συμπαγές",
+      dash: "Παύλα",
+      dot: "Τελεία",
+      dashDot: "Παύλα τελεία",
+      dashDotDot: "Παύλα τελεία τελεία"
     },
     transparency: {
-      opaque: 'Αδιαφανές',
-      transparent: 'Διαφανές'
+      opaque: "Αδιαφανές",
+      transparent: "Διαφανές"
     },
     rendererChooser: {
-      domain: 'Τομέας',
-      use: 'Χρήση',
-      singleSymbol: 'Ένα μόνο σύμβολο',
-      uniqueSymbol: 'Μοναδικά σύμβολα',
-      color: 'Χρώμα',
-      size: 'Μέγεθος',
-      toShow: 'Για εμφάνιση',
-      colors: 'Χρώματα',
-      classes: 'Κλάσεις',
-      symbolSize: 'Μέγεθος συμβόλου',
-      addValue: 'Προσθήκη τιμής',
-      setDefaultSymbol: 'Ορισμός προκαθορισμένου συμβόλου',
-      defaultSymbol: 'Προκαθορισμένο σύμβολο',
-      selectedSymbol: 'Επιλεγμένο σύμβολο',
-      value: 'Τιμή',
-      label: 'Ετικέτα',
-      range: 'Εύρος'
+      domain: "Τομέας",
+      use: "Χρήση",
+      singleSymbol: "Ένα μόνο σύμβολο",
+      uniqueSymbol: "Μοναδικά σύμβολα",
+      color: "Χρώμα",
+      size: "Μέγεθος",
+      toShow: "Για εμφάνιση",
+      colors: "Χρώματα",
+      classes: "Κλάσεις",
+      symbolSize: "Μέγεθος συμβόλου",
+      addValue: "Προσθήκη τιμής",
+      setDefaultSymbol: "Ορισμός προκαθορισμένου συμβόλου",
+      defaultSymbol: "Προκαθορισμένο σύμβολο",
+      selectedSymbol: "Επιλεγμένο σύμβολο",
+      value: "Τιμή",
+      label: "Ετικέτα",
+      range: "Εύρος"
     },
     drawBox: {
       point: "Σημείο",
@@ -93,17 +93,17 @@
       loading: "Φόρτωση"
     },
     basicServiceBrowser: {
-      noServicesFound: 'Δεν εντοπίστηκε υπηρεσία.',
-      unableConnectTo: 'Δεν ήταν δυνατή η σύνδεση σε',
-      invalidUrlTip: 'Το URL που εισαγάγατε δεν είναι έγκυρο ή δεν είναι προσβάσιμο.'
+      noServicesFound: "Δεν εντοπίστηκε υπηρεσία.",
+      unableConnectTo: "Δεν ήταν δυνατή η σύνδεση σε",
+      invalidUrlTip: "Το URL που εισαγάγατε δεν είναι έγκυρο ή δεν είναι προσβάσιμο."
     },
     serviceBrowser: {
-      noGpFound: 'Δεν εντοπίστηκε geoprocessing service.',
-      unableConnectTo: 'Δεν ήταν δυνατή η σύνδεση σε'
+      noGpFound: "Δεν εντοπίστηκε geoprocessing service.",
+      unableConnectTo: "Δεν ήταν δυνατή η σύνδεση σε"
     },
     layerServiceBrowser: {
-      noServicesFound: 'Δεν εντοπίστηκε map service ή feature service',
-      unableConnectTo: 'Δεν ήταν δυνατή η σύνδεση σε'
+      noServicesFound: "Δεν εντοπίστηκε map service ή feature service",
+      unableConnectTo: "Δεν ήταν δυνατή η σύνδεση σε"
     },
     basicServiceChooser: {
       validate: "Επικύρωση",
@@ -111,10 +111,10 @@
       set: "Ορισμός"
     },
     urlInput: {
-      invalidUrl: 'Μη έγκυρο URL.'
+      invalidUrl: "Μη έγκυρο URL."
     },
     urlComboBox: {
-      invalidUrl: 'Μη έγκυρο URL.'
+      invalidUrl: "Μη έγκυρο URL."
     },
     filterBuilder: {
       addAnotherExpression: "Προσθήκη έκφρασης φίλτρου",
@@ -131,7 +131,7 @@
       valueTooltip: "Εισαγωγή τιμής",
       fieldTooltip: "Επιλογή από υπάρχον πεδίο",
       uniqueValueTooltip: "Επιλογή από μοναδικές τιμές σε επιλεγμένο πεδίο",
-      stringOperatorIs: "είναι", // e.g. <stringFieldName> is 'California'
+      stringOperatorIs: "είναι", // e.g. <stringFieldName> is "California"
       stringOperatorIsNot: "δεν είναι",
       stringOperatorStartsWith: "ξεκινάει με",
       stringOperatorEndsWith: "τελειώνει με",
@@ -139,7 +139,7 @@
       stringOperatorDoesNotContain: "δεν περιέχει",
       stringOperatorIsBlank: "είναι κενό",
       stringOperatorIsNotBlank: "δεν είναι κενό",
-      dateOperatorIsOn: "είναι στις", // e.g. <dateFieldName> is on '1/1/2012'
+      dateOperatorIsOn: "είναι στις", // e.g. <dateFieldName> is on "1/1/2012"
       dateOperatorIsNotOn: "δεν είναι στις",
       dateOperatorIsBefore: "είναι πριν από",
       dateOperatorIsAfter: "είναι μετά από",
@@ -192,9 +192,22 @@
       selectFromOnline: "Προσθήκη από το ArcGIS Online",
       chooseLayer: "Επιλέξτε ένα feature layer."
     },
-    gpSource: {
+    queryableLayerSource: {
+      layer: "Θεματικό επίπεδο",
+      browse: "Αναζήτηση",
+      selectFromMap: "Επιλογή από το χάρτη",
       selectFromPortal: "Προσθήκη από το Portal for ArcGIS",
       addServiceUrl: "Προσθήκη Service URL",
+      inputLayerUrl: "URL θεματικού επιπέδου εισόδου",
+      selectLayer: "Επιλέξτε θεματικό επίπεδο από τον τρέχοντα χάρτη.",
+      chooseItem: "Διαλέξτε ένα αντικείμενο.",
+      setServiceUrl: "Καταχωρίστε το URL της υπηρεσίας.",
+      selectFromOnline: "Προσθήκη από το ArcGIS Online",
+      chooseLayer: "Διαλέξτε θεματικό επίπεδο."
+    },
+    gpSource: {
+      selectFromPortal: "Προσθήκη από το Portal for ArcGIS",
+      addServiceUrl: "Προσθήκη URL υπηρεσίας",
       selectFromOnline: "Προσθήκη από το ArcGIS Online",
       setServiceUrl: "Καταχωρίστε το URL του geoprocessing service.",
       chooseItem: "Επιλέξτε ένα αντικείμενο τύπου geoprocessing service.",
@@ -227,35 +240,37 @@
       notSupportQuery: "Η υπηρεσία δεν υποστηρίζει ερωτήματα."
     },
     basicLayerChooserFromMap: {
-      noLayersTip: "Δεν υπάρχει διαθέσιμο θεματικό επίπεδο στον χάρτη."
+      noLayersTip: "Δεν υπάρχει κατάλληλο θεματικό επίπεδο, διαθέσιμο στο χάρτη."
     },
     layerInfosMenu: {
-      titleBasemap: 'Υπόβαθρα',
-      titleLayers: 'Επιχειρησιακά επίπεδα',
-      labelLayer: 'Όνομα θεματικού επιπέδου',
-      itemZoomTo: 'Εστίαση',
-      itemTransparency: 'Διαφάνεια',
-      itemTransparent: 'Διαφανές',
-      itemOpaque: 'Αδιαφανές',
-      itemMoveUp: 'Μετακίνηση προς τα επάνω',
-      itemMoveDown: 'Μετακίνηση προς τα κάτω',
-      itemDesc: 'Περιγραφή',
-      itemDownload: 'Λήψη',
-      itemToAttributeTable: 'Άνοιγμα Πίνακα Περιγραφικών Γνωρισμάτων'
+      titleBasemap: "Υπόβαθρα",
+      titleLayers: "Επιχειρησιακά επίπεδα",
+      labelLayer: "Όνομα θεματικού επιπέδου",
+      itemZoomTo: "Εστίαση",
+      itemTransparency: "Διαφάνεια",
+      itemTransparent: "Διαφανές",
+      itemOpaque: "Αδιαφανές",
+      itemMoveUp: "Μετακίνηση προς τα επάνω",
+      itemMoveDown: "Μετακίνηση προς τα κάτω",
+      itemDesc: "Περιγραφή",
+      itemDownload: "Λήψη",
+      itemToAttributeTable: "Άνοιγμα Πίνακα Περιγραφικών Γνωρισμάτων"
     },
     imageChooser: {
       unsupportReaderAPI: "TODO: Το πρόγραμμα περιήγησης δεν υποστηρίζει το API του προγράμματος ανάγνωσης αρχείων",
       readError: "Απέτυχε η ανάγνωση του αρχείου.",
+      unknowError: "δεν είναι δυνατή η ολοκλήρωση ενεργειών",
       invalidType: "Μη έγκυρος τύπος αρχείου.",
       exceed: "Το μέγεθος αρχείου δεν μπορεί να υπερβαίνει τα 1024 KB",
       enableFlash: "TODO: ενεργοποιήστε το flash.",
+      cropWaining: "Διαλέξτε μια φωτογραφία με διαστάσεις τουλάχιστον ${πλάτος} x ${ύψος} pixel.",
       toolTip: "Για το καλύτερο αποτέλεσμα, η εικόνα πρέπει να έχει πλάτος ${width} pixel και ύψος ${height} pixel. Τα άλλα μεγέθη θα προσαρμοστούν αναλόγως για σωστή εμφάνιση. Οι αποδεκτοι μορφότυποι εικόνας είναι οι εξής: PNG, GIF και JPEG."
     },
     simpleTable: {
-      moveUp: 'Μετακίνηση προς τα επάνω',
-      moveDown: 'Μετακίνηση προς τα κάτω',
-      deleteRow: 'Διαγραφή',
-      edit: 'Επεξεργασία'
+      moveUp: "Μετακίνηση προς τα επάνω",
+      moveDown: "Μετακίνηση προς τα κάτω",
+      deleteRow: "Διαγραφή",
+      edit: "Επεξεργασία"
     }
   })
 );

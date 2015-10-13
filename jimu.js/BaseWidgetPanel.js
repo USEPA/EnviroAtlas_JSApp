@@ -17,34 +17,45 @@
 define(['dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/_base/array',
+  'dojo/_base/html',
   'dijit/_WidgetBase',
   'dijit/_Container',
   './dijit/LoadingIndicator',
-  './BaseWidgetFrame'],
-  function (declare, lang, array, _WidgetBase, _Container, LoadingIndicator,
-    BaseWidgetFrame) {
+  './BaseWidgetFrame',
+  './utils'],
+function (declare, lang, array, html, _WidgetBase, _Container, LoadingIndicator,
+    BaseWidgetFrame, utils) {
   return declare([_WidgetBase, _Container], {
-    baseClass: 'jimu-widget-panel jimu-container',
+    baseClass: 'jimu-panel jimu-container',
     started: false,
     state: 'closed',
     windowState: 'normal',
-    defaultState: 'normal',
-    type: 'panel',
 
-    constructor: function(){
-    },
+    moveTopOnActive: true,
 
-    postCreate: function(){
-      this.inherited(arguments);
-    },
+    /**************
+    *animations, can be:
+    * string:
+          For open animation: fadeIn, wipeIn ...
+          For close animation: fadeOut, wipeOut ...
+    * array: array of the above effects, will be played one by one
+    * function: an animation function
+    ***************/
+    openAnimation: null,
+    closeAnimation: null,
+
+    // onPositionChangeAnimation: null,
+
+    //
+    animationDuration: 0,
 
     startup: function(){
       this.inherited(arguments);
-      
+
       this.loadAllWidgetsInOrder();
       this.started = true;
     },
-    
+
     loadAllWidgetsInOrder: function(){
       var configs = this.getAllWidgetConfigs();
       if(Array.isArray(this.config.widgets)){
@@ -65,9 +76,6 @@ define(['dojo/_base/declare',
         this.widgetManager.loadWidget(widgetConfig).then(lang.hitch(this, function(widget){
           frame.setWidget(widget);
           widget.startup();
-          // if(widget.defaultState){
-          //   this.widgetManager.changeWindowStateTo(widget, widget.defaultState);
-          // }
         }));
       }, this);
     },
@@ -96,8 +104,38 @@ define(['dojo/_base/declare',
       return new BaseWidgetFrame();
     },
 
+    setPosition: function(position, containerNode){
+      this.position = position;
+      var style = utils.getPositionStyle(this.position);
+      style.position = 'absolute';
+
+      if(!containerNode){
+        if(position.relativeTo === 'map'){
+          containerNode = this.map.id;
+        }else{
+          containerNode = window.jimuConfig.layoutId;
+        }
+      }
+
+      if(this.started){
+        this.resize();
+      }else{
+        if(this.openAnimation){//hiden panel to play animation
+          style.display = 'none';
+        }
+      }
+
+      html.place(this.domNode, containerNode);
+      html.setStyle(this.domNode, style);
+    },
+
+    getPosition: function(){
+      return this.position;
+    },
+
     setState: function(state){
       this.state = state;
+      // console.log('Panel', this.id, 'state:', state);
     },
 
     setWindowState: function(state){
@@ -111,11 +149,7 @@ define(['dojo/_base/declare',
     },
 
     onPositionChange: function(position){
-      //summary:
-      //  this function will be called when position change,
-      //  panel's position will be changed when layout change
-      //  the position object may contain w/h/t/l/b/r
-      this.position = position;
+      this.setPosition(position);
     },
 
     onOpen: function(){
@@ -156,6 +190,16 @@ define(['dojo/_base/declare',
           this.widgetManager.normalizeWidget(frame.getWidget());
         }
       }, this);
+    },
+
+    onActive: function(){
+      // summary:
+      //    this function will be called when panel is clicked.
+    },
+
+    onDeActive: function(){
+      // summary:
+      //    this function will be called when another panel is clicked.
     },
 
     //update the config without reload the widget

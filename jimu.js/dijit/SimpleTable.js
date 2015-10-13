@@ -36,7 +36,7 @@ define(['dojo/_base/declare',
         '<div class="table-div" data-dojo-attach-point="tableDiv">' +
         '<table class="table" cellspacing="0" onselectstart="return false;">' +
         '<colgroup></colgroup>' +
-        '<thead class="simple-table-thead"></thead>' +
+        '<thead class="simple-table-thead simple-table-title"></thead>' +
         '<tbody class="simple-table-tbody"></tbody>' +
         '</table>' +
         '</div>' +
@@ -44,12 +44,21 @@ define(['dojo/_base/declare',
         '</div>',
       _name: null,
       _rowIndex: 0,
+      _rowHeight: 30,
+      _headHeight: 36,
       REPEATING_ERROR: "REPEATING_ERROR",
+      _classSimpleTableRow: 'simple-table-row',
+      _classFirstSimpleTableRow: 'first-simple-table-row',
+      _classLastSimpleTableRow: 'last-simple-table-row',
+      _classJimuStateDisabled: 'jimu-state-disabled',
+      _classRowUpDiv: 'row-up-div',
+      _classRowDownDiv: 'row-down-div',
 
       //options:
       autoHeight: true, //if true, automatically calculate the height
       selectable: false,
       fields: null,
+      /*
         //fieldInfo's attributes:
         //name:field name
         //title:field title
@@ -66,6 +75,7 @@ define(['dojo/_base/declare',
           //create //function
           //setValue //function
           //getValue //function
+      */
 
       //public methods:
       //clear
@@ -91,7 +101,15 @@ define(['dojo/_base/declare',
       //row-add
       //row-edit
       //row-delete
+      //row-up
+      //row-down
       //actions-edit
+
+      //css classes:
+      //simple-table-title
+      //simple-table-row
+      //simple-table-field
+      //simple-table-cell
 
       postMixInProperties: function(){
         this.nls = window.jimuNls.simpleTable;
@@ -107,39 +125,6 @@ define(['dojo/_base/declare',
         this._updateUI();
       },
 
-      _updateUI: function(){
-        if(this.autoHeight){
-          var rows = this.getRows();
-          var trCount = rows.length > 0 ? rows.length : 1;
-          var count = trCount + 1;
-          var height = 40 * count + 1;
-          html.setStyle(this.domNode, 'height', height+'px');
-          // this.bodyDiv.style.overflowY = 'hidden';
-        }
-
-        this._updateHeadDiv();
-      },
-
-      _updateHeadDiv: function() {
-        // html.empty(this.headDiv);
-        // var table = lang.clone(this.table);
-        // var radios = query("input[type=radio]", table);
-        // var random = 0;
-        // array.forEach(radios, function(radio) {
-        //   radio.name = "" + random;
-        // });
-        // html.place(table, this.headDiv);
-
-        html.empty(this.headDiv);
-        var tableDiv = lang.clone(this.tableDiv);
-        var radios = query("input[type=radio]", tableDiv);
-        var random = 0;
-        array.forEach(radios, function(radio) {
-          radio.name = "" + random;
-        });
-        html.place(tableDiv, this.headDiv);
-      },
-
       _initSelf: function() {
         this._initAttachPoints();
 
@@ -148,7 +133,7 @@ define(['dojo/_base/declare',
             lang.hitch(this, function(evt) {
               var target = evt.target || evt.srcElement;
               var tr = jimuUtils.getAncestorDom(target, function(dom) {
-                return html.hasClass(dom, 'simple-table-tr') && html.hasClass(dom, 'not-empty');
+                return html.hasClass(dom, 'simple-table-row') && html.hasClass(dom, 'not-empty');
               }, this.tbody);
               if(tr){
                 this.selectRow(tr);
@@ -157,7 +142,7 @@ define(['dojo/_base/declare',
             }), lang.hitch(this, function(evt) {
               var target = evt.target || evt.srcElement;
               var tr = jimuUtils.getAncestorDom(target, function(dom) {
-                return html.hasClass(dom, 'simple-table-tr') && html.hasClass(dom, 'not-empty');
+                return html.hasClass(dom, 'simple-table-row') && html.hasClass(dom, 'not-empty');
               }, this.tbody);
               if(tr){
                 this.selectRow(tr);
@@ -173,7 +158,7 @@ define(['dojo/_base/declare',
 
         if (this.fields && this.fields.length > 0) {
           var tr = html.create('tr', {}, this.thead);
-          array.forEach(this.fields,lang.hitch(this,function(item){
+          array.forEach(this.fields, lang.hitch(this, function(item){
             var width = 'auto';
             if(item.type === 'actions'){
               item.name = 'actions';
@@ -191,22 +176,29 @@ define(['dojo/_base/declare',
                 width = item.width;
               }
             }
-            
-            html.create('col', {width:width} ,this.colgroup);
+
+            html.create('col', {width:width}, this.colgroup);
             var th = html.create('th', {
               innerHTML: item.title,
               title: item.title
             }, tr);
 
+            html.addClass(th, 'simple-table-field');
+
             if(item.hidden){
               html.addClass(th, 'hidden-column');
             }
-            
+
             if (item['class']) {
               html.addClass(th, item['class']);
             }
-            html.addClass(th,item.name);
+            html.addClass(th, item.name);
           }));
+
+          //clone thead
+          html.empty(this.headDiv);
+          var tableDiv = lang.clone(this.tableDiv);
+          html.place(tableDiv, this.headDiv);
 
           //this.addEmptyRow();
         } else {
@@ -215,10 +207,10 @@ define(['dojo/_base/declare',
       },
 
       _initAttachPoints:function(){
-        this.table = query('table',this.bodyDiv)[0];
-        this.colgroup = query('colgroup',this.bodyDiv)[0];
-        this.head = query('thead',this.bodyDiv)[0];
-        this.tbody = query('tbody',this.bodyDiv)[0];
+        this.table = query('table', this.bodyDiv)[0];
+        this.colgroup = query('colgroup', this.bodyDiv)[0];
+        this.head = query('thead', this.bodyDiv)[0];
+        this.tbody = query('tbody', this.bodyDiv)[0];
       },
 
       clear: function() {
@@ -249,19 +241,19 @@ define(['dojo/_base/declare',
       //   this.clearEmptyRows();
       //   var length = this.fields.length;
       //   var tr = html.create('tr', {
-      //     'class': 'simple-table-tr empty'
+      //     'class': 'simple-table-row empty'
       //   }, this.tbody);
       //   for (var i = 0; i < length; i++) {
       //     html.create('td', {
-      //       'class': 'simple-table-td empty-td'
+      //       'class': 'simple-table-cell empty-td'
       //     }, tr);
       //   }
-      //   this._setRowOdevity();
+      //   this._updateRowClassName();
       // },
 
       addRows: function(rowsData) {
         var results = [];
-        if (this.fields && rowsData instanceof Array) {
+        if (this.fields && rowsData && rowsData.length > 0) {
           array.forEach(rowsData, lang.hitch(this, function(item) {
             results.push(this.addRow(item, true));
           }));
@@ -302,10 +294,10 @@ define(['dojo/_base/declare',
 
         // this.clearEmptyRows();
         var tr = html.create("tr", {
-          'class': "simple-table-tr not-empty"
+          'class': "simple-table-row not-empty"
         }, this.tbody);
-        var rowId = 'row'+this._rowIndex;
-        html.setAttr(tr,'rowId',rowId);
+        var rowId = 'row' + this._rowIndex;
+        html.setAttr(tr, 'rowId', rowId);
 
         array.forEach(this.fields, lang.hitch(this, function(fieldMeta) {
           var fieldData = rowData[fieldMeta.name];
@@ -332,7 +324,6 @@ define(['dojo/_base/declare',
           }
         }));
         if(!dontUpdateUI){
-          this._setRowOdevity();
           this._updateUI();
         }
         result.success = true;
@@ -345,7 +336,6 @@ define(['dojo/_base/declare',
       deleteRow:function(tr){
         if(tr){
           html.destroy(tr);
-          this._setRowOdevity();
           this._updateUI();
           this._onDeleteRow(tr);
           // var trs = this._getAllRows();
@@ -357,17 +347,52 @@ define(['dojo/_base/declare',
 
       selectRow:function(tr){
         if(this.selectable){
-          var trs = query('.simple-table-tr', this.tbody);
-          trs.removeClass('selected');
-          html.addClass(tr, 'selected');
+          var trs = query('.simple-table-row', this.tbody);
+          trs.removeClass('jimu-state-active');
+          html.addClass(tr, 'jimu-state-active');
           this._onSelectRow(tr);
         }
       },
 
-      _setRowOdevity: function() {
-        var trs = query('.simple-table-tr', this.tbody);
+      _updateUI: function(){
+        this._updateRowClassName();
+        this._updateHeight();
+      },
+
+      _updateHeight: function(){
+        if(this.autoHeight){
+          var rows = this.getRows();
+          var trCount = rows.length > 0 ? rows.length : 1;
+          // var count = trCount + 1;
+          var height = this._headHeight + this._rowHeight * trCount + 1;
+          html.setStyle(this.domNode, 'height', height + 'px');
+          // this.bodyDiv.style.overflowY = 'hidden';
+        }
+      },
+
+      _updateRowClassName: function() {
+        var originalFirtTr = query('.' + this._classFirstSimpleTableRow, this.tbody)[0];
+        if(originalFirtTr){
+          var originalFirstUpDiv = query('.' + this._classRowUpDiv, originalFirtTr)[0];
+          if(originalFirstUpDiv){
+            html.removeClass(originalFirstUpDiv, this._classJimuStateDisabled);
+          }
+        }
+
+        var originalLastTr = query('.' + this._classLastSimpleTableRow, this.tbody)[0];
+        if(originalLastTr){
+          var originalLastDownDiv = query('.' + this._classRowDownDiv, originalLastTr)[0];
+          if(originalLastDownDiv){
+            html.removeClass(originalLastDownDiv, this._classJimuStateDisabled);
+          }
+        }
+
+        var trs = query('.' + this._classSimpleTableRow, this.tbody);
         trs.removeClass('odd');
         trs.removeClass('even');
+        trs.removeClass(this._classFirstSimpleTableRow);
+        trs.removeClass(this._classLastSimpleTableRow);
+
         array.forEach(trs, lang.hitch(this, function(tr, index) {
           if (index % 2 === 0) {
             html.addClass(tr, 'odd');
@@ -375,6 +400,22 @@ define(['dojo/_base/declare',
             html.addClass(tr, 'even');
           }
         }));
+
+        if(trs.length > 0){
+          var firstTr = trs[0];
+          html.addClass(firstTr, this._classFirstSimpleTableRow);
+          var firstUpDiv = query('.' + this._classRowUpDiv, firstTr)[0];
+          if(firstUpDiv){
+            html.addClass(firstUpDiv, this._classJimuStateDisabled);
+          }
+
+          var lastTr = trs[trs.length - 1];
+          html.addClass(lastTr, this._classLastSimpleTableRow);
+          var lastDownDiv = query('.' + this._classRowDownDiv, lastTr)[0];
+          if(lastDownDiv){
+            html.addClass(lastDownDiv, this._classJimuStateDisabled);
+          }
+        }
       },
 
       _createTextTd: function(tr, fieldMeta, fieldData) {
@@ -388,12 +429,13 @@ define(['dojo/_base/declare',
       },
 
       _createNormalTextTd: function(tr, fieldMeta, fieldData) {
-        var strTd = '<td class="simple-table-td normal-text-td">'+
-        '<div class="normal-text-div"></div></td>';
+        var strTd = '<td class="simple-table-cell normal-text-td">' +
+          '<div class="normal-text-div"></div></td>';
         var td = html.toDom(strTd);
         html.addClass(td, fieldMeta.name);
-        var textDiv = query('div',td)[0];
+        var textDiv = query('div', td)[0];
         textDiv.innerHTML = fieldData || "";
+        textDiv.title = fieldData || "";
         if (fieldMeta['class']) {
           html.addClass(td, fieldMeta['class']);
         }
@@ -402,11 +444,11 @@ define(['dojo/_base/declare',
       },
 
       _createEditableTextTd: function(tr, fieldMeta, fieldData) {
-        var tdStr = '<td class="editable-text-td ' + fieldMeta.name +'">'+
-        '<div class="editable-div">'+
+        var tdStr = '<td class="editable-text-td ' + fieldMeta.name + '">' +
+        '<div class="editable-div">' +
         '</div><input class="editable-input" type="text" style="display:none;" /></td>';
         var td = html.toDom(tdStr);
-        html.addClass(td, 'simple-table-td');
+        html.addClass(td, 'simple-table-cell');
         html.place(td, tr);
         if (fieldMeta['class']) {
           html.addClass(td, fieldMeta['class']);
@@ -424,7 +466,6 @@ define(['dojo/_base/declare',
           html.setStyle(editableDiv, 'display', 'none');
           html.setStyle(editableInput, 'display', 'inline');
           editableInput.focus();
-          this._updateUI();
         })));
         this.own(on(editableInput, 'blur', lang.hitch(this, function() {
           editableInput.value = lang.trim(editableInput.value);
@@ -447,7 +488,6 @@ define(['dojo/_base/declare',
 
           html.setStyle(editableInput, 'display', 'none');
           html.setStyle(editableDiv, 'display', 'block');
-          this._updateUI();
         })));
         return td;
       },
@@ -455,7 +495,7 @@ define(['dojo/_base/declare',
       _createRadioTd: function(tr, fieldMeta, fieldData) {
         var tdStr = '<td class="radio-td ' + fieldMeta.name + '"><input type="radio" /></td>';
         var td = html.toDom(tdStr);
-        html.addClass(td, 'simple-table-td');
+        html.addClass(td, 'simple-table-cell');
         html.place(td, tr);
         if (fieldMeta['class']) {
           html.addClass(td, fieldMeta['class']);
@@ -474,7 +514,7 @@ define(['dojo/_base/declare',
       _createCheckboxTd: function(tr, fieldMeta, fieldData) {
         var tdStr = '<td class="checkbox-td ' + fieldMeta.name + '"><input type="checkbox" /></td>';
         var td = html.toDom(tdStr);
-        html.addClass(td, 'simple-table-td');
+        html.addClass(td, 'simple-table-cell');
         html.place(td, tr);
         if (fieldMeta['class']) {
           html.addClass(td, fieldMeta['class']);
@@ -485,18 +525,20 @@ define(['dojo/_base/declare',
       },
 
       _createActionsTd: function(tr, fieldMeta) {
-        var tdStr = '<td class="actions-td"><div class="action-item-parent"></div></td>';
+        var tdStr = '<td class="actions-td">' +
+        '<div class="action-item-parent jimu-float-leading"></div></td>';
         var td = html.toDom(tdStr);
-        html.addClass(td, 'simple-table-td');
+        html.addClass(td, 'simple-table-cell');
         var actionItemParent = query(".action-item-parent", td)[0];
         html.place(td, tr);
         if (fieldMeta['class']) {
           html.addClass(td, fieldMeta['class']);
         }
+
         array.forEach(fieldMeta.actions, lang.hitch(this, function(item) {
           if (item === 'up') {
             var moveupDiv = html.create('div', {
-              'class': 'action-item jimu-float-leading row-up-div'
+              'class': 'action-item jimu-float-leading row-up-div jimu-icon jimu-icon-up'
             }, actionItemParent);
             moveupDiv.title = this.nls.moveUp;
             this.own(on(moveupDiv, 'click', lang.hitch(this, function(event) {
@@ -505,21 +547,21 @@ define(['dojo/_base/declare',
               if (!this.onBeforeRowUp(tr)){
                 return;
               }
-              var trs = query('.simple-table-tr', this.tbody);
+              var trs = query('.simple-table-row', this.tbody);
               var index = array.indexOf(trs, tr);
               if (index > 0) {
                 var newIndex = index - 1;
                 var trRef = trs[newIndex];
                 if (trRef) {
                   html.place(tr, trRef, 'before');
+                  this._updateUI();
+                  this.emit('row-up', tr);
                 }
               }
-              this._setRowOdevity();
-              this._updateUI();
             })));
           } else if (item === 'down') {
             var movedownDiv = html.create('div', {
-              'class': 'action-item jimu-float-leading row-down-div'
+              'class': 'action-item jimu-float-leading row-down-div jimu-icon jimu-icon-down'
             }, actionItemParent);
             movedownDiv.title = this.nls.moveDown;
             this.own(on(movedownDiv, 'click', lang.hitch(this, function(event) {
@@ -528,21 +570,21 @@ define(['dojo/_base/declare',
               if (!this.onBeforeRowDown(tr)){
                 return;
               }
-              var trs = query('.simple-table-tr', this.tbody);
+              var trs = query('.simple-table-row', this.tbody);
               var index = array.indexOf(trs, tr);
               if (index < trs.length - 1) {
                 var newIndex = index + 1;
                 var trRef = trs[newIndex];
                 if (trRef) {
                   html.place(tr, trRef, 'after');
+                  this._updateUI();
+                  this.emit('row-down', tr);
                 }
               }
-              this._setRowOdevity();
-              this._updateUI();
             })));
           } else if (item === 'edit') {
             var editDiv = html.create('div', {
-              'class': 'action-item jimu-float-leading row-edit-div'
+              'class': 'action-item jimu-float-leading row-edit-div jimu-icon jimu-icon-edit'
             }, actionItemParent);
             editDiv.title = this.nls.edit;
             this.own(on(editDiv, 'click', lang.hitch(this, function(event) {
@@ -551,12 +593,11 @@ define(['dojo/_base/declare',
               if (!this.onBeforeRowEdit(tr)){
                 return;
               }
-              this._updateUI();
               this._onActionsEdit(tr);
             })));
           } else if (item === 'delete') {
             var deleteDiv = html.create('div', {
-              'class': 'action-item jimu-float-leading row-delete-div'
+              'class': 'action-item jimu-float-leading row-delete-div jimu-icon jimu-icon-delete'
             }, actionItemParent);
             deleteDiv.title = this.nls.deleteRow;
             this.own(on(deleteDiv, 'click', lang.hitch(this, function(event) {
@@ -570,12 +611,12 @@ define(['dojo/_base/declare',
           }
         }));
         var width = this._calculateActionsWidth(fieldMeta) + 'px';
-        html.setStyle(actionItemParent,'width',width);
+        html.setStyle(actionItemParent, 'width', width);
         return td;
       },
 
       _calculateActionsWidth:function(fieldMeta){
-        var items = array.map(fieldMeta.actions,function(item){
+        var items = array.map(fieldMeta.actions, function(item){
           return item === 'up' || item === 'down' || item === 'edit' || item === 'delete';
         });
         return items.length * 20;
@@ -585,7 +626,7 @@ define(['dojo/_base/declare',
         var td = html.create('td', {
           'class': fieldMeta.name
         }, tr);
-        html.addClass(td, 'simple-table-td');
+        html.addClass(td, 'simple-table-cell');
         html.addClass(td, 'empty-text-td');
         if (fieldMeta['class']) {
           html.addClass(td, fieldMeta['class']);
@@ -594,10 +635,10 @@ define(['dojo/_base/declare',
       },
 
       _createExtensionTd: function(tr, fieldMeta, fieldData){
-        var td = html.create('td',{
+        var td = html.create('td', {
           'class': fieldMeta.name
-        },tr);
-        html.addClass(td, 'simple-table-td');
+        }, tr);
+        html.addClass(td, 'simple-table-cell');
         html.addClass(td, 'extension-td');
         if (fieldMeta['class']){
           html.addClass(td, fieldMeta['class']);
@@ -641,7 +682,7 @@ define(['dojo/_base/declare',
           result.repeatFields = repeatFieldMetas;
           return result;
         }
-        var tds = query('.simple-table-td', tr);
+        var tds = query('.simple-table-cell', tr);
         array.forEach(this.fields, lang.hitch(this, function(fieldMeta, idx) {
           if (!rowData.hasOwnProperty(fieldMeta.name)) {
             return;
@@ -673,7 +714,7 @@ define(['dojo/_base/declare',
 
       _editNormalText: function(td, fieldMeta, fieldData) {
         /*jshint unused: false*/
-        var normalTextDiv = query('div',td)[0];
+        var normalTextDiv = query('div', td)[0];
         normalTextDiv.innerHTML = fieldData || "";
         normalTextDiv.title = normalTextDiv.innerHTML;
       },
@@ -705,7 +746,7 @@ define(['dojo/_base/declare',
       },
 
       _getAllRows: function(){
-        return query('.simple-table-tr', this.tbody);
+        return query('.simple-table-row', this.tbody);
       },
 
       _getNotEmptyRows: function() {
@@ -728,9 +769,9 @@ define(['dojo/_base/declare',
 
       getSelectedRow: function() {
         var result = null;
-        var trs = query('.simple-table-tr', this.tbody);
+        var trs = query('.simple-table-row', this.tbody);
         var filterTrs = array.filter(trs, lang.hitch(this, function(tr) {
-          return !html.hasClass(tr, 'empty') && html.hasClass(tr, 'selected');
+          return !html.hasClass(tr, 'empty') && html.hasClass(tr, 'jimu-state-active');
         }));
         if (filterTrs.length > 0) {
           result = filterTrs[0];
@@ -750,7 +791,7 @@ define(['dojo/_base/declare',
       getData: function(/*optional*/ ignoredTr) {
         var trs = this._getNotEmptyRows();
         if(ignoredTr){
-          trs = array.filter(trs,lang.hitch(this,function(tr){
+          trs = array.filter(trs, lang.hitch(this, function(tr){
             return tr !== ignoredTr;
           }));
         }
@@ -785,7 +826,7 @@ define(['dojo/_base/declare',
                 var editableDiv = query('div', td)[0];
                 rowData[name] = editableDiv.innerHTML;
               } else {
-                var normalTextDiv = query('div',td)[0];
+                var normalTextDiv = query('div', td)[0];
                 rowData[name] = normalTextDiv.innerHTML;
               }
             } else if (type === 'radio') {

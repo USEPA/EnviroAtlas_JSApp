@@ -77,9 +77,8 @@ define([
       }, this);
     },
     */
-    
+
     //---------------new section-----------------------------------------
-    
     obtainNewSubLayers: function() {
       var newSubLayerInfos = [];
       var layers = this.originOperLayer.layerObject.getLayers();
@@ -91,7 +90,6 @@ define([
             title: layerObj.label || layerObj.title || layerObj.name || layerObj.id || " ",
             id: layerObj.id || " ",
             selfType: 'kml',
-            url: layerObj.url,
             parentLayerInfo: this
           }, this.map);
           newSubLayerInfos.push(subLayerInfo);
