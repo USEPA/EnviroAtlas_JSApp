@@ -30,9 +30,9 @@ define(['dojo/_base/declare',
   'dijit/TooltipDialog',
   'dijit/Menu'
 ],
-function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
+function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
   template, lang, html, array, esriRequest, MenuItem) {
-  return declare([_WidgetBase,_TemplatedMixin,_WidgetsInTemplateMixin], {
+  return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
     _def:null,
     declaredClass: 'jimu.dijit.PopupConfig',
     baseClass:'jimu-dijit-popup-config',
@@ -50,7 +50,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
       this.inherited(arguments);
       this.clear();
       if(this.title){
-        this.titleTextBox.set('value',this.title);
+        this.titleTextBox.set('value', this.title);
       }
       if(this.fields){
         this.setFields(this.fields);
@@ -66,7 +66,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
         fields:[]
       };
       var trs = this.fieldsTable.getRows();
-      array.forEach(trs,lang.hitch(this,function(tr){
+      array.forEach(trs, lang.hitch(this, function(tr){
         var rowData = this.fieldsTable.getRowData(tr);
         if (rowData.visibility) {
           config.fields.push({
@@ -106,7 +106,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
 
     _resetMenu:function(){
       var menuItems = this.menu.getChildren();
-      array.forEach(menuItems,lang.hitch(this,function(menuItem){
+      array.forEach(menuItems, lang.hitch(this, function(menuItem){
         this.menu.removeChild(menuItem);
       }));
     },
@@ -114,9 +114,9 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
     _addEmptyMenuItem:function(){
       var menuItem = new MenuItem({
         label:this.nls.noField,
-        onClick:lang.hitch(this,function(){
+        onClick:lang.hitch(this, function(){
           var dialog = this.menu.getParent();
-          html.setStyle(dialog.domNode.parentNode,'display','none');
+          html.setStyle(dialog.domNode.parentNode, 'display', 'none');
         })
       });
       this.menu.addChild(menuItem);
@@ -147,12 +147,12 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
         handleAs:"json",
         callbackParamName:"callback"
       });
-      this._def.then(lang.hitch(this,function(response){
+      this._def.then(lang.hitch(this, function(response){
         if(response && response.fields){
           this._setFields(response.fields);
         }
-      }),lang.hitch(this,function(error){
-        console.error("request layer info failed",error);
+      }), lang.hitch(this, function(error){
+        console.error("request layer info failed", error);
       }));
       return this._def;
     },
@@ -161,12 +161,12 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
       var label = fieldInfo.name + " {" + fieldInfo.name + "}";
       var menuItem = new MenuItem({
         label:label,
-        onClick:lang.hitch(this,function(){
+        onClick:lang.hitch(this, function(){
           var a = this.titleTextBox.get('value');
           var b = a + "${" + fieldInfo.name + "}";
-          this.titleTextBox.set('value',b);
+          this.titleTextBox.set('value', b);
           var dialog = this.menu.getParent();
-          html.setStyle(dialog.domNode.parentNode,'display','none');
+          html.setStyle(dialog.domNode.parentNode, 'display', 'none');
         })
       });
       this.menu.addChild(menuItem);
@@ -176,7 +176,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
       var rowData = {
         visibility:fieldInfo.visible !== false,
         name:fieldInfo.name,
-        alias:fieldInfo.alias||fieldInfo.name
+        alias:fieldInfo.alias || fieldInfo.name
       };
       var result = this.fieldsTable.addRow(rowData);
       if(result.success){

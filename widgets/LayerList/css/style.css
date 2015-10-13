@@ -197,6 +197,7 @@
   border-spacing: 0px;
 }
 
+/*****************about legend begin*****************************/
 .jimu-widget-layerList .legend-node-td{
 }
 
@@ -214,6 +215,28 @@
   font-size: 11px;
 }
 
+
+/*********legend css from LegendDijit************/
+.jimu-widget-layerList .esriLegendService {
+  padding-bottom: 0;
+}
+.jimu-widget-layerList .esriLegendLayerLabel {
+  padding-top: 0;
+  height: 0;
+  display: none;
+}
+.jimu-widget-layerList .esriLegendServiceLabel {
+  display: none;
+}
+.jimu-widget-layerList .esriLegendLayer{
+  font-size: 12px;
+}
+
+.jimu-widget-layerList .esriLegendMsg{
+  display: none;
+}
+/*****************about legend end*****************************/
+
 .jimu-widget-layerList .layers-list-popupMenu-div{
   position: relative;
   width: 16px;
@@ -228,8 +251,8 @@
 }
 
 .jimu-widget-layerList .layers-list-popupMenu-div .jimu-loading{
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  /*height: 20px;*/
   margin-top: -11px;
   margin-left: -11px;
 }
@@ -364,9 +387,14 @@
   right: 0px;
 }
 
+.jimu-widget-layerList .jimu-dropmenu .drop-menu.no-border{
+  outline-style: none;
+}
+
 .jimu-rtl .jimu-widget-layerList .jimu-dropmenu .drop-menu{
   left: 0px;
 }
+
 
 .jimu-widget-layerList .jimu-dropmenu .menu-item{
   line-height: 25px;
@@ -377,9 +405,12 @@
   color:#c1c1c1;
 }
 
+.jimu-widget-layerList .jimu-dropmenu .menu-item-hidden{
+  display: none;
+}
+
 .jimu-widget-layerList .legends-loading-img{
-  width: 30px;
-  height: 30px;
+  width: 45px;
 }
 
 .jimu-widget-layerList .jimu-dropmenu .menu-item .menu-item-description{

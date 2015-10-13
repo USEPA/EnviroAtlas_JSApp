@@ -1,66 +1,66 @@
 ﻿define(
    ({
     common: {
-      ok: 'Labi',
-      cancel: 'Atcelt',
-      next: 'Tālāk',
-      back: 'Atpakaļ'
+      ok: "Labi",
+      cancel: "Atcelt",
+      next: "Tālāk",
+      back: "Atpakaļ"
     },
     errorCode: "Kods",
     errorMessage: "Ziņojums",
     errorDetail: "Detalizēta informācija",
     widgetPlaceholderTooltip: "Lai to iestatītu, pārejiet uz sadaļu Logrīki un noklikšķiniet uz atbilstošā viettura",
     symbolChooser: {
-      preview: 'Priekšskatījums',
-      basic: 'Pamata',
-      arrows: 'Bultiņas',
-      business: 'Bizness',
-      cartographic: 'Kartogrāfisks',
-      nationalParkService: 'Nacionālo parku pakalpojums',
-      outdoorRecreation: 'Aktīvā atpūta',
-      peoplePlaces: 'Personu vietas',
-      safetyHealth: 'Drošība un veselība',
-      shapes: 'Formas',
-      transportation: 'Transports',
-      symbolSize: 'Simbola lielums',
-      color: 'Krāsa',
-      alpha: 'Alfa',
-      outlineColor: 'Kontūras krāsa',
-      outlineWidth: 'Kontūras platums',
-      style: 'Stils',
-      width: 'Platums',
-      text: 'Teksts',
-      fontColor: 'Fonta krāsa',
-      fontSize: 'Fonta lielums',
-      transparency: 'Caurspīdīgums',
-      solid: 'Tīrtoņa',
-      dash: 'Svītra',
-      dot: 'Punkts',
-      dashDot: 'Svītra punkts',
-      dashDotDot: 'Svītra punkts punkts'
+      preview: "Priekšskatījums",
+      basic: "Pamata",
+      arrows: "Bultiņas",
+      business: "Bizness",
+      cartographic: "Kartogrāfisks",
+      nationalParkService: "Nacionālo parku pakalpojums",
+      outdoorRecreation: "Aktīvā atpūta",
+      peoplePlaces: "Personu vietas",
+      safetyHealth: "Drošība un veselība",
+      shapes: "Formas",
+      transportation: "Transports",
+      symbolSize: "Simbola lielums",
+      color: "Krāsa",
+      alpha: "Alfa",
+      outlineColor: "Kontūras krāsa",
+      outlineWidth: "Kontūras platums",
+      style: "Stils",
+      width: "Platums",
+      text: "Teksts",
+      fontColor: "Fonta krāsa",
+      fontSize: "Fonta lielums",
+      transparency: "Caurspīdīgums",
+      solid: "Tīrtoņa",
+      dash: "Svītra",
+      dot: "Punkts",
+      dashDot: "Svītra punkts",
+      dashDotDot: "Svītra punkts punkts"
     },
     transparency: {
-      opaque: 'Necaurredzams',
-      transparent: 'Caurspīdīgs'
+      opaque: "Necaurredzams",
+      transparent: "Caurspīdīgs"
     },
     rendererChooser: {
-      domain: 'Domēns',
-      use: 'Lietot',
-      singleSymbol: 'Atsevišķs simbols',
-      uniqueSymbol: 'Unikāli simboli',
-      color: 'Krāsa',
-      size: 'Lielums',
-      toShow: 'Lai rādītu',
-      colors: 'Krāsas',
-      classes: 'Klases',
-      symbolSize: 'Simbola lielums',
-      addValue: 'Pievienot vērtību',
-      setDefaultSymbol: 'Iestatīt noklusējuma simbolu',
-      defaultSymbol: 'Noklusējuma simbols',
-      selectedSymbol: 'Atlasītais simbols',
-      value: 'Vērtība',
-      label: 'Kartes teksts',
-      range: 'Diapazons'
+      domain: "Domēns",
+      use: "Lietot",
+      singleSymbol: "Atsevišķs simbols",
+      uniqueSymbol: "Unikāli simboli",
+      color: "Krāsa",
+      size: "Lielums",
+      toShow: "Lai rādītu",
+      colors: "Krāsas",
+      classes: "Klases",
+      symbolSize: "Simbola lielums",
+      addValue: "Pievienot vērtību",
+      setDefaultSymbol: "Iestatīt noklusējuma simbolu",
+      defaultSymbol: "Noklusējuma simbols",
+      selectedSymbol: "Atlasītais simbols",
+      value: "Vērtība",
+      label: "Kartes teksts",
+      range: "Diapazons"
     },
     drawBox: {
       point: "Virsotne",
@@ -93,17 +93,17 @@
       loading: "Ielādē"
     },
     basicServiceBrowser: {
-      noServicesFound: 'Nav atrasts neviens pakalpojums.',
-      unableConnectTo: 'Nevar izveidot savienojumu ar',
-      invalidUrlTip: 'Jūsu ievadītais URL nav derīgs vai tam nevar piekļūt.'
+      noServicesFound: "Nav atrasts neviens pakalpojums.",
+      unableConnectTo: "Nevar izveidot savienojumu ar",
+      invalidUrlTip: "Jūsu ievadītais URL nav derīgs vai tam nevar piekļūt."
     },
     serviceBrowser: {
-      noGpFound: 'Nav atrasts neviens ģeodatu apstrādes pakalpojums.',
-      unableConnectTo: 'Nevar izveidot savienojumu ar'
+      noGpFound: "Nav atrasts neviens ģeodatu apstrādes pakalpojums.",
+      unableConnectTo: "Nevar izveidot savienojumu ar"
     },
     layerServiceBrowser: {
-      noServicesFound: 'Nav atrasts neviens karšu serviss vai elementu serviss',
-      unableConnectTo: 'Nevar izveidot savienojumu ar'
+      noServicesFound: "Nav atrasts neviens karšu serviss vai elementu serviss",
+      unableConnectTo: "Nevar izveidot savienojumu ar"
     },
     basicServiceChooser: {
       validate: "Pārbaudīt",
@@ -111,10 +111,10 @@
       set: "Kopa"
     },
     urlInput: {
-      invalidUrl: 'Nederīgs URL.'
+      invalidUrl: "Nederīgs URL."
     },
     urlComboBox: {
-      invalidUrl: 'Nederīgs URL.'
+      invalidUrl: "Nederīgs URL."
     },
     filterBuilder: {
       addAnotherExpression: "Pievienot filtra izteiksmi",
@@ -131,7 +131,7 @@
       valueTooltip: "Ievadiet vērtību",
       fieldTooltip: "Izmeklēt no esošajiem laukiem",
       uniqueValueTooltip: "Izmeklēt unikālas vērtības no izvēlētā lauka",
-      stringOperatorIs: "ir", // e.g. <stringFieldName> is 'California'
+      stringOperatorIs: "ir", // e.g. <stringFieldName> is "California"
       stringOperatorIsNot: "nav",
       stringOperatorStartsWith: "sākas ar",
       stringOperatorEndsWith: "beidzas ar",
@@ -139,7 +139,7 @@
       stringOperatorDoesNotContain: "neietver",
       stringOperatorIsBlank: "ir tukšs",
       stringOperatorIsNotBlank: "nav tukšs",
-      dateOperatorIsOn: "ir šajā datumā", // e.g. <dateFieldName> is on '1/1/2012'
+      dateOperatorIsOn: "ir šajā datumā", // e.g. <dateFieldName> is on "1/1/2012"
       dateOperatorIsNotOn: "nav šajā datumā",
       dateOperatorIsBefore: "ir pirms",
       dateOperatorIsAfter: "ir pēc",
@@ -192,6 +192,19 @@
       selectFromOnline: "Pievienot no ArcGIS Online",
       chooseLayer: "Izvēlieties elementu slāni."
     },
+    queryableLayerSource: {
+      layer: "Slānis",
+      browse: "Pārlūks",
+      selectFromMap: "Izvēlēties no kartes",
+      selectFromPortal: "Pievienot no Portal for ArcGIS",
+      addServiceUrl: "Pievienot pakalpojuma vietrādi URL",
+      inputLayerUrl: "Ievadīt slāņa URL",
+      selectLayer: "Atlasiet slāni no pašreizējās kartes.",
+      chooseItem: "Izvēlieties vienumu.",
+      setServiceUrl: "Ievadiet pakalpojuma URL.",
+      selectFromOnline: "Pievienot no ArcGIS Online",
+      chooseLayer: "Izvēlieties slāni."
+    },
     gpSource: {
       selectFromPortal: "Pievienot no Portal for ArcGIS",
       addServiceUrl: "Pievienot pakalpojuma vietrādi URL",
@@ -227,35 +240,37 @@
       notSupportQuery: "Pakalpojums neatbalsta vaicājumu."
     },
     basicLayerChooserFromMap: {
-      noLayersTip: "Kartē nav pieejams neviens slānis."
+      noLayersTip: "Kartē nav pieejams neviens piemērots slānis."
     },
     layerInfosMenu: {
-      titleBasemap: 'Pamatkartes',
-      titleLayers: 'Operacionālie slāņi',
-      labelLayer: 'Slāņa nosaukums',
-      itemZoomTo: 'Pietuvināt',
-      itemTransparency: 'Caurspīdīgums',
-      itemTransparent: 'Caurspīdīgs',
-      itemOpaque: 'Necaurredzams',
-      itemMoveUp: 'Pārvietot uz augšu',
-      itemMoveDown: 'Pārvietot uz leju',
-      itemDesc: 'Apraksts',
-      itemDownload: 'Lejupielāde',
-      itemToAttributeTable: 'Atvērt atribūtu tabulu'
+      titleBasemap: "Pamatkartes",
+      titleLayers: "Operacionālie slāņi",
+      labelLayer: "Slāņa nosaukums",
+      itemZoomTo: "Pietuvināt",
+      itemTransparency: "Caurspīdīgums",
+      itemTransparent: "Caurspīdīgs",
+      itemOpaque: "Necaurredzams",
+      itemMoveUp: "Pārvietot uz augšu",
+      itemMoveDown: "Pārvietot uz leju",
+      itemDesc: "Apraksts",
+      itemDownload: "Lejupielāde",
+      itemToAttributeTable: "Atvērt atribūtu tabulu"
     },
     imageChooser: {
       unsupportReaderAPI: "TODO: pārlūks neatbalsta faila lasītāja API",
       readError: "Neizdevās nolasīt failu.",
+      unknowError: "nevar pabeigt darbības",
       invalidType: "Nederīgs faila tips.",
       exceed: "Faila lielums nedrīkst pārsniegt 1024 KB",
       enableFlash: "TODO: lūdzu, aktivizējiet flash.",
+      cropWaining: "Lūdzu, izvēlieties fotoattēlu, kura izmēri ir vismaz ${width} x ${height} pikseļi.",
       toolTip: "Lai sasniegtu labākos rezultātus, attēla platumam jābūt ${width} pikseļiem un tā augstumam jābūt ${height} pikseļiem. Citi izmēri tiks pielāgoti, lai atbilstu. Akceptētie attēla formāti ir: PNG, GIF un JPEG."
     },
     simpleTable: {
-      moveUp: 'Pārvietot uz augšu',
-      moveDown: 'Pārvietot uz leju',
-      deleteRow: 'Dzēst',
-      edit: 'Rediģēt'
+      moveUp: "Pārvietot uz augšu",
+      moveDown: "Pārvietot uz leju",
+      deleteRow: "Dzēst",
+      edit: "Rediģēt"
     }
   })
 );

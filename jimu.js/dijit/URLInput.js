@@ -25,13 +25,13 @@ function(declare, html, ValidationTextBox, regexp) {
     trim: true,
     rest:true,
     allowNamed: true,
-    allLocal: false,
+    allowLocal: true,
     declaredClass: 'jimu.dijit.URLInput',
 
     postMixInProperties:function(){
       this.inherited(arguments);
       this.nls = window.jimuNls.urlInput;
-      this.invalidMessage = this.nls.invalidUrl;
+      this.invalidMessage = this.nls ? this.nls.invalidUrl : 'Invalid Url';
     },
 
     postCreate: function(){
@@ -40,11 +40,17 @@ function(declare, html, ValidationTextBox, regexp) {
     },
 
     validator:function(value){
+      //invalid if value is a number or a number string(e.g. 5 or "5")
+      if(isFinite(value)){
+        return false;
+      }
+
       var strReg = '^' + regexp.url({
         allowNamed: this.allowNamed,
-        allLocal: this.allLocal
+        allowLocal: this.allowLocal
       });
-      var reg = new RegExp(strReg,'g');
+
+      var reg = new RegExp(strReg, 'g');
       var b1 = reg.test(value);
 
       if(this.rest){

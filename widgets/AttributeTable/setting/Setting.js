@@ -24,13 +24,11 @@ define([
     'dojo/_base/array',
     'dojo/on',
     'dojo/Deferred',
-    "dojo/dom-style",
     "dojo/query",
+    "jimu/dijit/Popup",
     'jimu/dijit/Message',
     "jimu/dijit/LoadingShelter",
-    "../utils",
-    "dijit/TooltipDialog",
-    "dijit/popup"
+    "../utils"
   ],
   function(
     declare,
@@ -42,21 +40,16 @@ define([
     array,
     on,
     Deferred,
-    domStyle,
     query,
+    Popup,
     Message,
     LoadingShelter,
-    utils,
-    TooltipDialog,
-    dijitPopup
+    utils
   ) {
     return declare([BaseWidgetSetting, _WidgetsInTemplateMixin], {
       //these two properties is defined in the BaseWidget
-      /* jshint maxlen: 150 */
       baseClass: 'jimu-widget-attributetable-setting',
       currentFieldTable: null,
-      tooltipDialogs: {},
-      fieldTables: {},
       _allLayerFields: null,
       _layerInfos: null,
       _tableInfos: null,
@@ -77,9 +70,15 @@ define([
         this._unSpportQueryCampsite = {};
 
         var fields = [{
+          name: 'show',
+          title: this.nls.show,
+          width: 'auto',
+          type: 'checkbox',
+          'class': 'show'
+        }, {
           name: 'label',
           title: this.nls.label,
-          width: '40%',
+          width: '60%',
           type: 'text'
         }, {
           name: 'url',
@@ -95,15 +94,9 @@ define([
           name: 'actions',
           title: this.nls.actions,
           type: 'actions',
-          width: '40%',
+          width: '20%',
           actions: ['edit'],
           'class': 'symbol'
-        }, {
-          name: 'show',
-          title: this.nls.show,
-          width: 'auto',
-          type: 'checkbox',
-          'class': 'show'
         }];
 
         var args = {
@@ -136,11 +129,11 @@ define([
             'actions-edit',
             lang.hitch(this, this.editFieldsClick)
           ));
-          this.own(on(this.displayFieldsTable, 'row-click', lang.hitch(this, this._verifiedOnShowClick)));
-          this.own(on(this.getParent().getParent().domNode, 'click', lang.hitch(this, function() {
-            dijitPopup.close();
-          })));
-          html.addClass(this.exportcsv.domNode, 'export-csv');
+          this.own(on(
+            this.displayFieldsTable,
+            'row-click',
+            lang.hitch(this, this._verifiedOnShowClick)
+          ));
 
           this.setConfig(this.config);
         }));
@@ -185,7 +178,9 @@ define([
         } else {
           layerInfo = this._layerInfos[idx];
         }
-        var unSupportQuery = this._unSpportQueryCampsite.layerNames.indexOf(layerInfo.name || layerInfo.title) > -1;
+
+        var _layerNames = this._unSpportQueryCampsite.layerNames;
+        var unSupportQuery = _layerNames.indexOf(layerInfo.name || layerInfo.title) > -1;
 
         if (rowData.show && unSupportQuery) {
           new Message({
@@ -218,47 +213,49 @@ define([
       },
 
       openFieldsDialog: function(tr, fields, idx) {
-        if (!this.tooltipDialogs[idx]) {
-          var table = this._createFieldsTable(fields, idx);
-          this.currentFieldTable = table;
-          this.fieldTables[idx] = table;
-          this.own(on(table, 'row-click', lang.hitch(this, function(tr) {
-            var fields = table.getData();
-            var atLeastOne = array.some(fields, lang.hitch(this, function(field) {
-              return field.show;
-            }));
-            if (!atLeastOne) {
-              new Message({
-                message: this.nls.fieldCheckWarning
-              });
-              var rowData = table.getRowData(tr);
-              if (rowData) {
-                rowData.show = true;
-                table.editRow(tr, rowData);
-              }
+        /*jshint unused:false*/
+        var table = this._createFieldsTable(fields, idx);
+        this.currentFieldTable = table;
+        this.own(on(table, 'row-click', lang.hitch(this, function(tr) {
+          var fields = table.getData();
+          var atLeastOne = array.some(fields, lang.hitch(this, function(field) {
+            return field.show;
+          }));
+          if (!atLeastOne) {
+            new Message({
+              message: this.nls.fieldCheckWarning
+            });
+            var rowData = table.getRowData(tr);
+            if (rowData) {
+              rowData.show = true;
+              table.editRow(tr, rowData);
             }
-          })));
+          }
+        })));
 
-          var tDialog = new TooltipDialog({
-            style: 'width: 400px;height:300px;',
-            content: table.domNode,
-            onClose: lang.hitch(this, function() {
+        var fieldsPopup = new Popup({
+          titleLabel: this.nls.configureLayerFields,
+          width: 640,
+          maxHeight: 600,
+          autoHeight: true,
+          content: table,
+          buttons: [{
+            label: this.nls.ok,
+            onClick: lang.hitch(this, function() {
               this._allLayerFields[idx] = table.getData();
-            }),
-            onCancel: lang.hitch(this, function() {
-              dijitPopup.close();
+              fieldsPopup.close();
+              fieldsPopup = null;
             })
-          });
-          this.tooltipDialogs[idx] = tDialog;
-        }
-
-        var editDiv = query('.row-edit-div', tr)[0];
-
-        dijitPopup.open({
-          parent: this,
-          popup: this.tooltipDialogs[idx],
-          around: editDiv,
-          orient: ['before-centered', "below", "below-alt", "above", "above-alt"]
+          }, {
+            label: this.nls.cancel,
+            onClick: lang.hitch(this, function() {
+              fieldsPopup.close();
+              fieldsPopup = null;
+            })
+          }],
+          onClose: function() {
+            fieldsPopup = null;
+          }
         });
       },
 
@@ -313,7 +310,6 @@ define([
         this.config = config;
         this.displayFieldsTable.clear();
         this._allLayerFields = [];
-        this.tooltipDialogs = {};
 
         this._processTableData().then(lang.hitch(this, function(layerInfos) {
           this._init(layerInfos);
@@ -393,12 +389,16 @@ define([
                 this.config.layerInfos = _cLayerInfos;
 
                 this._unSpportQueryCampsite.fromConfig = true;
-                this._unSpportQueryCampsite.layerNames = this._getUnsupportQueryLayerNames(this.config.layerInfos);
+                this._unSpportQueryCampsite.layerNames = this._getUnsupportQueryLayerNames(
+                  this.config.layerInfos
+                );
 
                 def.resolve(_cLayerInfos);
               } else {
                 this._unSpportQueryCampsite.fromConfig = false;
-                this._unSpportQueryCampsite.layerNames = this._getUnsupportQueryLayerNames(this._layerInfos);
+                this._unSpportQueryCampsite.layerNames = this._getUnsupportQueryLayerNames(
+                  this._layerInfos
+                );
 
                 def.resolve(utils.getConfigInfosFromLayerInfos(layerInfos));
               }
@@ -428,7 +428,8 @@ define([
       _init: function(layerInfos) {
         var unSupportQueryLayerNames = [];
         for (var i = 0; i < layerInfos.length; i++) {
-          var show = layerInfos[i].show && this._getSupportTableInfoById(layerInfos[i].id).isSupportQuery;
+          var show = layerInfos[i].show &&
+            this._getSupportTableInfoById(layerInfos[i].id).isSupportQuery;
           this.displayFieldsTable.addRow({
             label: layerInfos[i].name || layerInfos[i].title,
             url: layerInfos[i].layer.url,
@@ -438,10 +439,11 @@ define([
 
           this._allLayerFields.push(layerInfos[i].layer.fields);
 
-          if (this._unSpportQueryCampsite.fromConfig){
+          if (this._unSpportQueryCampsite.fromConfig) {
             var _layerNames = this._unSpportQueryCampsite.layerNames;
-            var nowUnsupport = _layerNames && (_layerNames.indexOf(layerInfos[i].name || layerInfos[i].title) > -1);
-            if (layerInfos[i].show && nowUnsupport){
+            var nowUnsupport = _layerNames &&
+              (_layerNames.indexOf(layerInfos[i].name || layerInfos[i].title) > -1);
+            if (layerInfos[i].show && nowUnsupport) {
               unSupportQueryLayerNames.push(layerInfos[i].name || layerInfos[i].title);
             }
           }
@@ -449,32 +451,39 @@ define([
 
         if (this._unSpportQueryCampsite.fromConfig && unSupportQueryLayerNames.length > 0) {
           new Message({
-            message: this.nls.unsupportQueryLayers + "<br><br>" + unSupportQueryLayerNames.toString()
+            message: this.nls.unsupportQueryLayers + "<br><br>" +
+              unSupportQueryLayerNames.toString()
           });
         }
 
-        if (layerInfos.length === 0) {
-          domStyle.set(this.tableEditInfosError, "display", "");
-          this.tableEditInfosError.innerHTML = this.nls.noLayers;
-        } else {
-          domStyle.set(this.tableEditInfosError, "display", "none");
-        }
         if (this.config.hideExportButton) {
           this.exportcsv.uncheck();
         } else {
           this.exportcsv.check();
         }
+
+        if (this.config.initiallyExpand) {
+          this.expand.check();
+        } else {
+          this.expand.uncheck();
+        }
+
+        // if attribute table can use openAtStart,
+        // keep initiallyExpand same with openAtStart and keep checkbox read only.
+        if (this._canUseOpenAtStart()) {
+          if (this.openAtStart) {
+            this.expand.check();
+          } else {
+            this.expand.uncheck();
+          }
+
+          this.expand.status = false;
+          html.addClass(this.expand.domNode, 'disable-checkbox');
+        }
       },
 
-      _destroyPopupDialog: function() {
-        dijitPopup.close();
-
-        for (var p in this.tooltipDialogs) {
-          if (this.tooltipDialogs[p] && this.tooltipDialogs[p].destroy) {
-            this.tooltipDialogs[p].destroy();
-            this.tooltipDialogs[p] = null;
-          }
-        }
+      _canUseOpenAtStart: function() {
+        return this.closeable || !this.isOnScreen;
       },
 
       _getLayerInfoById: function(layerId) {
@@ -494,8 +503,6 @@ define([
       },
 
       getConfig: function() {
-        dijitPopup.close();
-
         var data = this.displayFieldsTable.getData();
         var table = [];
         var len = data.length;
@@ -528,19 +535,13 @@ define([
 
 
         this.config.layerInfos = table;
-        if (this.exportcsv.getValue()) {
-          this.config.hideExportButton = false;
-        } else {
-          this.config.hideExportButton = true;
-        }
+        this.config.hideExportButton = !this.exportcsv.getValue();
+
+        if (!this._canUseOpenAtStart()) {
+          this.config.initiallyExpand = this.expand.getValue();
+        }// else never change the property.
 
         return this.config;
-      },
-
-      destroy: function() {
-        this._destroyPopupDialog();
-
-        this.inherited(arguments);
       }
     });
   });

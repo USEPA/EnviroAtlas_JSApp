@@ -1,0 +1,8 @@
+{
+  "splash": {
+    "splashContent": "<div style=\"text-align: center;\">This is the splash screen, update this text.</div>",
+    "requireConfirm": false,
+    "confirmText": "",
+    "showOption": true
+  }
+}

@@ -25,9 +25,10 @@ define([
   'dojo/dom-attr',
   'dojo/aspect',
   'esri/symbols/jsonUtils',
-  'esri/dijit/PopupTemplate'
+  'esri/dijit/PopupTemplate',
+  'esri/dijit/Legend'
 ], function(declare, array, lang, Deferred, LayerInfo, gfx, domConstruct,
-domAttr, aspect, jsonUtils, PopupTemplate) {
+domAttr, aspect, jsonUtils, PopupTemplate, Legend) {
   var clazz = declare(LayerInfo, {
     _legendsNode: null,
     controlPopupInfo: null,
@@ -41,7 +42,7 @@ domAttr, aspect, jsonUtils, PopupTemplate) {
     // };
     constructor: function() {
       /*
-      this.layerLoadedDef = new Deferred(); 
+      this.layerLoadedDef = new Deferred();
       if(this.layerObject) {
         this.layerObject.on('load', lang.hitch(this, function(){
           this.layerLoadedDef.resolve();
@@ -133,10 +134,10 @@ domAttr, aspect, jsonUtils, PopupTemplate) {
     //   });
 
     //   if (layer && layer.renderer) {
-    //     this.initLegendsNode(legendsNode);
+    //     this._initLegendsNode(legendsNode);
     //   } else {
     //     this.layerLoadedDef.then(lang.hitch(this, function(){
-    //       this.initLegendsNode(legendsNode);
+    //       this._initLegendsNode(legendsNode);
     //     }));
     //   }
     //   return legendsNode;
@@ -144,6 +145,8 @@ domAttr, aspect, jsonUtils, PopupTemplate) {
 
     createLegendsNode: function() {
       var legendsNode = domConstruct.create("div", {
+        // placeAt 'legendsNode' to document.body first, else can not
+        // show legend on IE8.
         "class": "legends-div jimu-leading-margin1"
       }, document.body);
       domConstruct.create("img", {
@@ -154,19 +157,46 @@ domAttr, aspect, jsonUtils, PopupTemplate) {
     },
 
     drawLegends: function(legendsNode) {
-      this.initLegendsNode(legendsNode);
+      var useLegendDijit = true;
+      if (useLegendDijit) {
+        this._initLegendsNodeByLegendDijit(legendsNode);
+      } else {
+        this._initLegendsNode(legendsNode);
+      }
     },
 
-    initLegendsNode: function(legendsNode) {
+    _initLegendsNodeByLegendDijit: function(legendsNode) {
+      if( this.layerObject &&
+      !this.layerObject.empty &&
+      (!this.originOperLayer.subLayer || this.originOperLayer.subLayers.length === 0) &&
+      this.layerObject.loaded) {
+        // delete loading image
+        domConstruct.empty(legendsNode);
+        var layerInfos = [{
+          layer: this.layerObject
+        }];
+        var legend = new Legend({
+          map: this.map,
+          layerInfos: layerInfos,
+          arrangement: Legend.ALIGN_LEFT,
+          respectCurrentMapScale: false,
+          respectVisibility: false
+        }, legendsNode);
+
+        legend.startup();
+      }
+    },
+
+    _initLegendsNode: function(legendsNode) {
       var legendInfos = [];
       var layer = this.layerObject;
 
       if( this.layerObject &&
           !this.layerObject.empty &&
           (!this.originOperLayer.subLayer || this.originOperLayer.subLayers.length === 0)) {
-        // delete loading image, this condition means the layer already loaded.
+        // delete loading image
         domConstruct.empty(legendsNode);
-        // layer has renderer that means the layer has loadded.
+        // layer has renderer that means layer has been loadded.
         if (layer.renderer) {
           if (layer.renderer.infos) {
             legendInfos = lang.clone(layer.renderer.infos); // todo
@@ -189,10 +219,10 @@ domAttr, aspect, jsonUtils, PopupTemplate) {
               "class": "legend-div"
             }, legendsNode);
 
-            legendInfo.symbolDiv= domConstruct.create("div", {
+            legendInfo.symbolDiv = domConstruct.create("div", {
               "class": "legend-symbol jimu-float-leading"
             }, legendInfo.legendDiv);
-            legendInfo.labelDiv= domConstruct.create("div", {
+            legendInfo.labelDiv = domConstruct.create("div", {
               "class": "legend-label jimu-float-leading",
               "innerHTML": legendInfo.label || " "
             }, legendInfo.legendDiv);
@@ -287,9 +317,11 @@ domAttr, aspect, jsonUtils, PopupTemplate) {
       }
       def.resolve(this.controlPopupInfo.infoTemplate);
       return def;
+    },
+
+    getInfoTemplate: function() {
+      return this.controlPopupInfo.infoTemplate;
     }
-
-
   });
   return clazz;
 });
