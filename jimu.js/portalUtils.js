@@ -21,13 +21,14 @@ define([
     'dojo/_base/config',
     'dojo/Deferred',
     'dojo/topic',
+    'dojo/json',
     'esri/request',
     './utils',
     './portalUrlUtils',
     './tokenUtils'
   ],
-  function(declare, lang, array, dojoConfig, Deferred,
-    topic, esriRequest, jimuUtils, portalUrlUtils, tokenUtils) {
+  function(declare, lang, array, dojoConfig, Deferred, topic, dojoJson, esriRequest, jimuUtils,
+    portalUrlUtils, tokenUtils) {
 
     //important attributes of portal relevant classes
     //attributes: portalUrl,credential,portal
@@ -305,7 +306,8 @@ define([
           content: content,
           callbackParamName: 'callback'
         }).then(lang.hitch(this, function(groupsResponse) {
-          groupsResponse.results=array.map(groupsResponse.results,lang.hitch(this,function(group){
+          groupsResponse.results = array.map(groupsResponse.results,
+            lang.hitch(this, function(group){
             group.portalUrl = this.portalUrl;
             group.credential = this.credential;
             group.portal = this;
@@ -332,7 +334,7 @@ define([
             content: {
               itemId: itemId,
               appType: appType,
-              redirect_uris: JSON.stringify(redirect_uris),
+              redirect_uris: dojoJson.stringify(redirect_uris),
               token: token,
               f: 'json'
             },
@@ -368,7 +370,8 @@ define([
               if (response.success) {
                 var itemId = response.id;
                 var appType = "browser";
-                this.registerApp(itemId, appType, redirect_uris).then(lang.hitch(this,function(res){
+                this.registerApp(itemId, appType, redirect_uris).then(
+                  lang.hitch(this, function(res){
                   //{itemId,client_id,client_secret,appType,redirect_uris,registered,modified}
                   def.resolve(res);
                 }), lang.hitch(this, function(err) {
@@ -475,7 +478,7 @@ define([
       getItemsByKeywords: function(typeKeywords, /*optional*/ start) {
         //must use double quotation marks around typeKeywords
         //such as typekeywords:"Web AppBuilder" or typekeywords:"Web AppBuilder,Web Map"
-        var q = 'owner:' + this.username + ' AND typekeywords:"' + typeKeywords+'"';
+        var q = 'owner:' + this.username + ' AND typekeywords:"' + typeKeywords + '"';
         var params = {
           start: start || 1,
           num: 100,
@@ -671,7 +674,7 @@ define([
             }
             var folder = item.ownerFolder;
             esriRequest({
-              url: portalUrlUtils.getUpdateItemUrl(this.portalUrl,this.username,itemId,folder),
+              url: portalUrlUtils.getUpdateItemUrl(this.portalUrl, this.username, itemId, folder),
               handleAs: 'json',
               callbackParamName: 'callback',
               timeout: 100000,
@@ -695,6 +698,21 @@ define([
         }
 
         return def;
+      },
+
+      isAdminRole: function(){
+        //use account_admin for back compability
+        return this.role === 'org_admin' || this.role === 'account_admin';
+      },
+
+      isPublisherRole: function(){
+        //use account_publisher for back compability
+        return this.role === 'org_publisher' || this.role === 'account_publisher';
+      },
+
+      isUserRole: function(){
+        //use account_user for back compability
+        return this.role === 'org_user' || this.role === 'account_user';
       }
     });
 

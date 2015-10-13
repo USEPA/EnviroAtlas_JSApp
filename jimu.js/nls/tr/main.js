@@ -1,66 +1,66 @@
 ﻿define(
    ({
     common: {
-      ok: 'Tamam',
-      cancel: 'İptal',
-      next: 'İleri',
-      back: 'Geri'
+      ok: "Tamam",
+      cancel: "İptal",
+      next: "İleri",
+      back: "Geri"
     },
     errorCode: "Kod",
     errorMessage: "İleti",
     errorDetail: "Ayrıntı",
     widgetPlaceholderTooltip: "Ayarlamak için Araçlar\'a gidin ve karşılık gelen yer tutucuyu tıklayın",
     symbolChooser: {
-      preview: 'Önizleme',
-      basic: 'Temel',
-      arrows: 'Oklar',
-      business: 'İş',
-      cartographic: 'Kartografik',
-      nationalParkService: 'Ulusal Park Hizmeti',
-      outdoorRecreation: 'Açık Havada Dinlenme',
-      peoplePlaces: 'İnsanların Bulunduğu Mekanlar',
-      safetyHealth: 'Güvenlik Sağlık',
-      shapes: 'Şekiller',
-      transportation: 'Taşımacılık',
-      symbolSize: 'Simge Boyutu',
-      color: 'Renk',
-      alpha: 'Alfa',
-      outlineColor: 'Dış Çizgi Rengi',
-      outlineWidth: 'Dış Çizgi Genişliği',
-      style: 'Stil',
-      width: 'Genişlik',
-      text: 'Metin',
-      fontColor: 'Yazı Tipi Rengi',
-      fontSize: 'Yazı Tipi Boyutu',
-      transparency: 'Saydamlık',
-      solid: 'Dolu',
-      dash: 'Tire',
-      dot: 'Nokta',
-      dashDot: 'Çizgi Nokta',
-      dashDotDot: 'Çizgi Nokta Nokta'
+      preview: "Önizleme",
+      basic: "Temel",
+      arrows: "Oklar",
+      business: "İş",
+      cartographic: "Kartografik",
+      nationalParkService: "Ulusal Park Hizmeti",
+      outdoorRecreation: "Açık Havada Dinlenme",
+      peoplePlaces: "İnsanların Bulunduğu Mekanlar",
+      safetyHealth: "Güvenlik Sağlık",
+      shapes: "Şekiller",
+      transportation: "Taşımacılık",
+      symbolSize: "Simge Boyutu",
+      color: "Renk",
+      alpha: "Alfa",
+      outlineColor: "Dış Çizgi Rengi",
+      outlineWidth: "Dış Çizgi Genişliği",
+      style: "Stil",
+      width: "Genişlik",
+      text: "Metin",
+      fontColor: "Yazı Tipi Rengi",
+      fontSize: "Yazı Tipi Boyutu",
+      transparency: "Saydamlık",
+      solid: "Dolu",
+      dash: "Tire",
+      dot: "Nokta",
+      dashDot: "Çizgi Nokta",
+      dashDotDot: "Çizgi Nokta Nokta"
     },
     transparency: {
-      opaque: 'Opak',
-      transparent: 'Saydam'
+      opaque: "Opak",
+      transparent: "Saydam"
     },
     rendererChooser: {
-      domain: 'Etki Alanı',
-      use: 'Kullan',
-      singleSymbol: 'Tek Bir Simge',
-      uniqueSymbol: 'Özel Simgeler',
-      color: 'Renk',
-      size: 'Boyut',
-      toShow: 'Gösterilecek',
-      colors: 'Renkler',
-      classes: 'Sınıflar',
-      symbolSize: 'Simge Boyutu',
-      addValue: 'Değer Ekle',
-      setDefaultSymbol: 'Varsayılan Simgeyi Ayarla',
-      defaultSymbol: 'Varsayılan Sembol',
-      selectedSymbol: 'Seçili Simge',
-      value: 'Değer',
-      label: 'Etiket',
-      range: 'Aralık'
+      domain: "Etki Alanı",
+      use: "Kullan",
+      singleSymbol: "Tek Bir Simge",
+      uniqueSymbol: "Özel Simgeler",
+      color: "Renk",
+      size: "Boyut",
+      toShow: "Gösterilecek",
+      colors: "Renkler",
+      classes: "Sınıflar",
+      symbolSize: "Simge Boyutu",
+      addValue: "Değer Ekle",
+      setDefaultSymbol: "Varsayılan Simgeyi Ayarla",
+      defaultSymbol: "Varsayılan Sembol",
+      selectedSymbol: "Seçili Simge",
+      value: "Değer",
+      label: "Etiket",
+      range: "Aralık"
     },
     drawBox: {
       point: "Nokta",
@@ -93,17 +93,17 @@
       loading: "Yükleniyor"
     },
     basicServiceBrowser: {
-      noServicesFound: 'Servis bulunamadı.',
-      unableConnectTo: 'Buraya bağlanılamıyor:',
-      invalidUrlTip: 'Girdiğiniz URL geçersiz veya erişilemez.'
+      noServicesFound: "Servis bulunamadı.",
+      unableConnectTo: "Buraya bağlanılamıyor:",
+      invalidUrlTip: "Girdiğiniz URL geçersiz veya erişilemez."
     },
     serviceBrowser: {
-      noGpFound: 'Coğrafi işlem servisi bulunamadı.',
-      unableConnectTo: 'Buraya bağlanılamıyor:'
+      noGpFound: "Coğrafi işlem servisi bulunamadı.",
+      unableConnectTo: "Buraya bağlanılamıyor:"
     },
     layerServiceBrowser: {
-      noServicesFound: 'Harita servisi ya da detay servisi bulunamadı',
-      unableConnectTo: 'Buraya bağlanılamıyor:'
+      noServicesFound: "Harita servisi ya da detay servisi bulunamadı",
+      unableConnectTo: "Buraya bağlanılamıyor:"
     },
     basicServiceChooser: {
       validate: "Doğrula",
@@ -111,14 +111,14 @@
       set: "Ayarla"
     },
     urlInput: {
-      invalidUrl: 'Geçersiz URL.'
+      invalidUrl: "Geçersiz URL."
     },
     urlComboBox: {
-      invalidUrl: 'Geçersiz URL.'
+      invalidUrl: "Geçersiz URL."
     },
     filterBuilder: {
       addAnotherExpression: "Bir filtre ifadesi ekle",
-      addSet: "Bir ifade seti ekle",
+      addSet: "İfade kümesi ekle",
       matchMsg: "Katmanda, aşağıdaki ifadenin ${any_or_all} kadarı ile eşleşen detayları al",
       matchMsgSet: "Bu setteki aşağıdaki ifadelerin ${any_or_all} doğru",
       all: "Tümü",
@@ -131,7 +131,7 @@
       valueTooltip: "Değer gir",
       fieldTooltip: "Mevcut alandan seç",
       uniqueValueTooltip: "Seçili alandaki tek değerlerden seç",
-      stringOperatorIs: "alanı şu olanlar", // e.g. <stringFieldName> is 'California'
+      stringOperatorIs: "alanı şu olanlar", // e.g. <stringFieldName> is "California"
       stringOperatorIsNot: "alanı şu olmayanlar",
       stringOperatorStartsWith: "alanı şununla başlayanlar",
       stringOperatorEndsWith: "alanı şununla bitenler",
@@ -139,7 +139,7 @@
       stringOperatorDoesNotContain: "alanı şunu içermeyenler",
       stringOperatorIsBlank: "alanı boş olanlar",
       stringOperatorIsNotBlank: "alanı boş olmayanlar",
-      dateOperatorIsOn: "alanı şu tarihte olanlar", // e.g. <dateFieldName> is on '1/1/2012'
+      dateOperatorIsOn: "alanı şu tarihte olanlar", // e.g. <dateFieldName> is on "1/1/2012"
       dateOperatorIsNotOn: "alanı şu tarihte olmayanlar",
       dateOperatorIsBefore: "alanı şu tarihten önce olanlar",
       dateOperatorIsAfter: "alanı şu tarihten sonra olanlar",
@@ -192,9 +192,22 @@
       selectFromOnline: "ArcGIS Online\'dan Ekle",
       chooseLayer: "Bir özellik katmanı seçin."
     },
-    gpSource: {
+    queryableLayerSource: {
+      layer: "Katman",
+      browse: "...",
+      selectFromMap: "Haritadan seç",
       selectFromPortal: "Portal for ArcGIS\'ten ekle",
       addServiceUrl: "Servis URL\'si ekle",
+      inputLayerUrl: "Girdi Katmanı URL\'si",
+      selectLayer: "Geçerli haritadan bir katman seçin.",
+      chooseItem: "Öğe seçin.",
+      setServiceUrl: "Hizmetin URL\'sini girin.",
+      selectFromOnline: "ArcGIS Online\'dan Ekle",
+      chooseLayer: "Katman seçmek için kullanılır."
+    },
+    gpSource: {
+      selectFromPortal: "Portal for ArcGIS\'ten ekle",
+      addServiceUrl: "Servis URL\'si Ekle",
       selectFromOnline: "ArcGIS Online\'dan Ekle",
       setServiceUrl: "Coğrafi işlem hizmetinin URL\'sini girin.",
       chooseItem: "Bir coğrafi işlem hizmet öğesi seçin.",
@@ -227,35 +240,37 @@
       notSupportQuery: "Hizmet sorgulamayı desteklemiyor."
     },
     basicLayerChooserFromMap: {
-      noLayersTip: "Haritada kullanılabilir katman yok."
+      noLayersTip: "Haritada kullanılabilir uygun katman yok."
     },
     layerInfosMenu: {
-      titleBasemap: 'Altlık haritaları',
-      titleLayers: 'Operasyonel Katmanlar',
-      labelLayer: 'Katman Adı',
-      itemZoomTo: 'Şuna Yakınlaştır',
-      itemTransparency: 'Saydamlık',
-      itemTransparent: 'Saydam',
-      itemOpaque: 'Opak',
-      itemMoveUp: 'Yukarı taşı',
-      itemMoveDown: 'Aşağı taşı',
-      itemDesc: 'Açıklama',
-      itemDownload: 'İndir',
-      itemToAttributeTable: 'Öznitelik Tablosunu Aç'
+      titleBasemap: "Altlık haritaları",
+      titleLayers: "Operasyonel Katmanlar",
+      labelLayer: "Katman Adı",
+      itemZoomTo: "Şuna Yakınlaştır",
+      itemTransparency: "Saydamlık",
+      itemTransparent: "Saydam",
+      itemOpaque: "Opak",
+      itemMoveUp: "Yukarı taşı",
+      itemMoveDown: "Aşağı taşı",
+      itemDesc: "Açıklama",
+      itemDownload: "İndir",
+      itemToAttributeTable: "Öznitelik Tablosunu Aç"
     },
     imageChooser: {
       unsupportReaderAPI: "YAPILACAK: Tarayıcı, dosya okuyucu API\'sini desteklemiyor",
       readError: "Dosya okunamadı.",
+      unknowError: "işlemler tamamlanamıyor",
       invalidType: "Geçersiz dosya türü.",
       exceed: "Dosya boyutu 1024 KB\'yi aşamaz",
       enableFlash: "YAPILACAK: Flash\'ı etkinleştirin.",
+      cropWaining: "Çözünürlüğü en az ${width} x ${height} piksel olan bir fotoğraf seçin.",
       toolTip: "En iyi sonuç için görüntü ${width} piksel genişliğinde ve ${height} piksel yüksekliğinde olmalıdır. Diğer boyutlar sığacak şekilde ayarlanır. Kabul edilen görüntü biçimleri: PNG, GIF ve JPEG."
     },
     simpleTable: {
-      moveUp: 'Yukarı taşı',
-      moveDown: 'Aşağı taşı',
-      deleteRow: 'Sil',
-      edit: 'Düzenle'
+      moveUp: "Yukarı taşı",
+      moveDown: "Aşağı taşı",
+      deleteRow: "Sil",
+      edit: "Düzenle"
     }
   })
 );

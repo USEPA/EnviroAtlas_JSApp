@@ -12,6 +12,9 @@ define({
     selectAll: "Select Records in All Pages",
     selectPage: "Select Records in Current Page",
     clearSelection: "Clear Selection",
+    filter: "Filter",
+    setFilterTip: "Please set filter correctly.",
+    noFilterTip: "Without filter expression defined, this query task will list all features in the specified data source.",
     filterByExtent: "Filter by Map Extent",
     showSelectedRecords: "Show Selected Records",
     showRelatedRecords: "Show Related Records",
@@ -54,5 +57,7 @@ define({
   "th": 1,
   "tr": 1,
   "vi": 1,
-  "zh-cn": 1
+  "zh-cn": 1,
+  "zh-hk": 1,
+  "zh-tw": 1
 });

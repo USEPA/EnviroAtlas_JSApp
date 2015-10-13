@@ -1,66 +1,66 @@
 ﻿define(
    ({
     common: {
-      ok: 'OK',
-      cancel: 'Annuleren',
-      next: 'Volgende',
-      back: 'Vorige'
+      ok: "OK",
+      cancel: "Annuleren",
+      next: "Volgende",
+      back: "Vorige"
     },
     errorCode: "Code",
     errorMessage: "Bericht",
     errorDetail: "Detail",
     widgetPlaceholderTooltip: "Om dit in te stellen, gaat u naar Widgets en klikt u op de overeenkomende tijdelijke aanduiding",
     symbolChooser: {
-      preview: 'Voorbeeld',
-      basic: 'Eenvoudig',
-      arrows: 'Pijlen',
-      business: 'Economie',
-      cartographic: 'Cartografisch',
-      nationalParkService: 'National Park Service',
-      outdoorRecreation: 'Recreatie in openlucht',
-      peoplePlaces: 'Openbare plaatsen',
-      safetyHealth: 'Veiligheid en gezondheid',
-      shapes: 'Vormen',
-      transportation: 'Vervoer',
-      symbolSize: 'Symboolgrootte',
-      color: 'Kleur',
-      alpha: 'Alpha',
-      outlineColor: 'Kleur omtreklijn',
-      outlineWidth: 'Breedte omtreklijn',
-      style: 'Stijl',
-      width: 'Breedte',
-      text: 'Tekst',
-      fontColor: 'Tekstkleur',
-      fontSize: 'Tekengrootte',
-      transparency: 'Transparant',
-      solid: 'Ononderbroken',
-      dash: 'Streep',
-      dot: 'Punt',
-      dashDot: 'Streep punt',
-      dashDotDot: 'Streep punt punt'
+      preview: "Voorbeeld",
+      basic: "Eenvoudig",
+      arrows: "Pijlen",
+      business: "Economie",
+      cartographic: "Cartografisch",
+      nationalParkService: "National Park Service",
+      outdoorRecreation: "Recreatie in openlucht",
+      peoplePlaces: "Openbare plaatsen",
+      safetyHealth: "Veiligheid en gezondheid",
+      shapes: "Vormen",
+      transportation: "Vervoer",
+      symbolSize: "Symboolgrootte",
+      color: "Kleur",
+      alpha: "Alpha",
+      outlineColor: "Kleur omtreklijn",
+      outlineWidth: "Breedte omtreklijn",
+      style: "Stijl",
+      width: "Breedte",
+      text: "Tekst",
+      fontColor: "Tekstkleur",
+      fontSize: "Tekengrootte",
+      transparency: "Transparant",
+      solid: "Ononderbroken",
+      dash: "Streep",
+      dot: "Punt",
+      dashDot: "Streep punt",
+      dashDotDot: "Streep punt punt"
     },
     transparency: {
-      opaque: 'Niet transparant',
-      transparent: 'Transparant'
+      opaque: "Niet transparant",
+      transparent: "Transparant"
     },
     rendererChooser: {
-      domain: 'Domein',
-      use: 'Gebruiken',
-      singleSymbol: 'Eén symbool',
-      uniqueSymbol: 'Unieke symbolen',
-      color: 'Kleur',
-      size: 'Grootte',
-      toShow: 'Om weer te geven',
-      colors: 'Kleuren',
-      classes: 'Klassen',
-      symbolSize: 'Symboolgrootte',
-      addValue: 'Waarde toevoegen',
-      setDefaultSymbol: 'Standaardsymbool instellen',
-      defaultSymbol: 'Standaard symbool',
-      selectedSymbol: 'Geselecteerd symbool',
-      value: 'Waarde',
-      label: 'Label',
-      range: 'Bereik'
+      domain: "Domein",
+      use: "Gebruiken",
+      singleSymbol: "Eén symbool",
+      uniqueSymbol: "Unieke symbolen",
+      color: "Kleur",
+      size: "Grootte",
+      toShow: "Om weer te geven",
+      colors: "Kleuren",
+      classes: "Klassen",
+      symbolSize: "Symboolgrootte",
+      addValue: "Waarde toevoegen",
+      setDefaultSymbol: "Standaardsymbool instellen",
+      defaultSymbol: "Standaard symbool",
+      selectedSymbol: "Geselecteerd symbool",
+      value: "Waarde",
+      label: "Label",
+      range: "Bereik"
     },
     drawBox: {
       point: "Punt",
@@ -93,17 +93,17 @@
       loading: "Laden"
     },
     basicServiceBrowser: {
-      noServicesFound: 'Er zijn geen services gevonden.',
-      unableConnectTo: 'Kan geen verbinding maken met',
-      invalidUrlTip: 'De URL die u hebt ingevoerd, is ongeldig of ontoegankelijk.'
+      noServicesFound: "Er zijn geen services gevonden.",
+      unableConnectTo: "Kan geen verbinding maken met",
+      invalidUrlTip: "De URL die u hebt ingevoerd, is ongeldig of ontoegankelijk."
     },
     serviceBrowser: {
-      noGpFound: 'Er zijn geen geoprocessingservices gevonden.',
-      unableConnectTo: 'Kan geen verbinding maken met'
+      noGpFound: "Er zijn geen geoprocessingservices gevonden.",
+      unableConnectTo: "Kan geen verbinding maken met"
     },
     layerServiceBrowser: {
-      noServicesFound: 'Er zijn geen mapservices of featureservices gevonden',
-      unableConnectTo: 'Kan geen verbinding maken met'
+      noServicesFound: "Er zijn geen mapservices of featureservices gevonden",
+      unableConnectTo: "Kan geen verbinding maken met"
     },
     basicServiceChooser: {
       validate: "Valideren",
@@ -111,14 +111,14 @@
       set: "Instellen"
     },
     urlInput: {
-      invalidUrl: 'Ongeldige URL.'
+      invalidUrl: "Ongeldige URL."
     },
     urlComboBox: {
-      invalidUrl: 'Ongeldige URL.'
+      invalidUrl: "Ongeldige URL."
     },
     filterBuilder: {
       addAnotherExpression: "Een filterexpressie toevoegen",
-      addSet: "Expressieset toevoegen",
+      addSet: "Een expressieset toevoegen",
       matchMsg: "Objecten in de kaartlaag ophalen die overeenkomen met ${any_or_all} van de volgende expressies",
       matchMsgSet: "${any_or_all} van de volgende expressies in deze set zijn waar",
       all: "Alle",
@@ -131,7 +131,7 @@
       valueTooltip: "Waarde invoeren",
       fieldTooltip: "Keuze maken uit bestaand veld",
       uniqueValueTooltip: "Keuze maken uit unieke waarden in geselecteerd veld",
-      stringOperatorIs: "is", // e.g. <stringFieldName> is 'California'
+      stringOperatorIs: "is", // e.g. <stringFieldName> is "California"
       stringOperatorIsNot: "is niet",
       stringOperatorStartsWith: "begint met",
       stringOperatorEndsWith: "eindigt met",
@@ -139,7 +139,7 @@
       stringOperatorDoesNotContain: "bevat niet",
       stringOperatorIsBlank: "is leeg",
       stringOperatorIsNotBlank: "is niet leeg",
-      dateOperatorIsOn: "is op", // e.g. <dateFieldName> is on '1/1/2012'
+      dateOperatorIsOn: "is op", // e.g. <dateFieldName> is on "1/1/2012"
       dateOperatorIsNotOn: "is niet op",
       dateOperatorIsBefore: "is voor",
       dateOperatorIsAfter: "is na",
@@ -192,6 +192,19 @@
       selectFromOnline: "Toevoegen vanuit ArcGIS Online",
       chooseLayer: "Kies een objectlaag."
     },
+    queryableLayerSource: {
+      layer: "Kaartlaag",
+      browse: "Bladeren",
+      selectFromMap: "Selecteren in kaart",
+      selectFromPortal: "Toevoegen vanuit Portal for ArcGIS",
+      addServiceUrl: "Service-URL toevoegen",
+      inputLayerUrl: "URL van invoerlaag",
+      selectLayer: "Selecteer een laag van huidige kaart.",
+      chooseItem: "Kies een item.",
+      setServiceUrl: "Voer de URL van de service in.",
+      selectFromOnline: "Toevoegen vanuit ArcGIS Online",
+      chooseLayer: "Kies een laag."
+    },
     gpSource: {
       selectFromPortal: "Toevoegen vanuit Portal for ArcGIS",
       addServiceUrl: "Service-URL toevoegen",
@@ -227,35 +240,37 @@
       notSupportQuery: "De service ondersteunt geen query\'s."
     },
     basicLayerChooserFromMap: {
-      noLayersTip: "Er is geen laag beschikbaar in de kaart."
+      noLayersTip: "Er is geen geschikte laag beschikbaar in de kaart."
     },
     layerInfosMenu: {
-      titleBasemap: 'Basiskaarten',
-      titleLayers: 'Operationele lagen',
-      labelLayer: 'Laagnaam',
-      itemZoomTo: 'Zoomen naar',
-      itemTransparency: 'Transparant',
-      itemTransparent: 'Transparant',
-      itemOpaque: 'Niet transparant',
-      itemMoveUp: 'Naar boven verplaatsen',
-      itemMoveDown: 'Naar beneden verplaatsen',
-      itemDesc: 'Beschrijving',
-      itemDownload: 'Downloaden',
-      itemToAttributeTable: 'Attribuuttabel openen'
+      titleBasemap: "Basiskaarten",
+      titleLayers: "Operationele lagen",
+      labelLayer: "Laagnaam",
+      itemZoomTo: "Zoomen naar",
+      itemTransparency: "Transparant",
+      itemTransparent: "Transparant",
+      itemOpaque: "Niet transparant",
+      itemMoveUp: "Naar boven verplaatsen",
+      itemMoveDown: "Naar beneden verplaatsen",
+      itemDesc: "Beschrijving",
+      itemDownload: "Downloaden",
+      itemToAttributeTable: "Attribuuttabel openen"
     },
     imageChooser: {
       unsupportReaderAPI: "TAAK: De browser biedt geen ondersteuning voor bestandslezer-API",
       readError: "Kan het bestand niet lezen.",
+      unknowError: "kan de bewerkingen niet voltooien",
       invalidType: "Ongeldig bestandstype.",
       exceed: "Bestandsgrootte mag niet groter zijn dan 1024 KB",
       enableFlash: "TAAK: schakel Flash in.",
+      cropWaining: "Kies een foto die minstens ${breedte}x ${hoogte} pixels is.",
       toolTip: "Voor de beste weergave moet de afbeelding ${width} pixels breed en ${height} pixels hoog zijn. Andere formaten worden passend gemaakt. Aanvaardbare afbeeldingsindelingen zijn: PNG, GIF en JPEG."
     },
     simpleTable: {
-      moveUp: 'Naar boven verplaatsen',
-      moveDown: 'Naar beneden verplaatsen',
-      deleteRow: 'Verwijderen',
-      edit: 'Bewerken'
+      moveUp: "Naar boven verplaatsen",
+      moveDown: "Naar beneden verplaatsen",
+      deleteRow: "Verwijderen",
+      edit: "Bewerken"
     }
   })
 );

@@ -14,7 +14,8 @@
 // limitations under the License.
 ///////////////////////////////////////////////////////////////////////////
 
-define(['dojo/_base/declare',
+define([
+  'dojo/_base/declare',
   'dijit/_WidgetBase',
   'dijit/_TemplatedMixin',
   'dijit/_WidgetsInTemplateMixin',
@@ -22,39 +23,31 @@ define(['dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/_base/html',
   'dojo/_base/array',
-  'dojo/query',
-  'dojo/on',
   'dojo/Deferred',
   'dojo/promise/all',
   'dojo/store/Memory',
   'dojo/store/Observable',
   'dijit/tree/ObjectStoreModel',
+  'jimu/utils',
   'jimu/dijit/_Tree',
-  'dijit/registry',
-  'esri/request',
   'jimu/dijit/Message',
   'jimu/dijit/LoadingShelter'
 ],
 function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented, lang, html,
- array, query, on, Deferred, all, Memory, Observable, ObjectStoreModel, Tree, registry, esriRequest,
- Message, LoadingShelter) {/*jshint unused: false*/
+ array, Deferred, all, Memory, Observable, ObjectStoreModel, jimuUtils, Tree, Message) {
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
-    templateString:'<div style="width:100%;"><div data-dojo-attach-point="shelter" '+
+    templateString:'<div style="width:100%;"><div data-dojo-attach-point="shelter" ' +
     ' data-dojo-type="jimu/dijit/LoadingShelter" data-dojo-props="hidden:true"></div></div>',
     _store: null,
     _id: 0,
     _currentUrl: '',
     _treeClass: 'service-browser-tree',
-
-    _leafType:'',
-    _serviceTypes:'',//such as['MapServer','FeatureServer'] or ['GPServer']...
     _def: null,
-    _restInfoCache: null,//{url1:info1,url2:info2...}
 
     //options:
     url:'',
     multiple: false,
-    
+    rule: null,//create rule by serviceBrowserRuleUtils
 
     //test urls
     //https://gis.lmi.is/arcgis/rest/services
@@ -66,24 +59,16 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
     //setUrl
     //getSelectedItems
     //reset
-    //isServiceTypeSupported
 
     //events:
     //tree-click
     //tree-open
 
-    //methods need to override:
-    //getSelectedItems
-    //_searchServiceUrlCallback
-    //_searchChildResource
-    //_getIconImageName
-    //_mayHaveChildren
-    //_onTreeOpen
-    //_onTreeClick
+
+    //item consist of {name,type,url,parent,isLeaf}
 
     postMixInProperties:function(){
       this.nls = window.jimuNls.basicServiceBrowser;
-      this._restInfoCache = {};
     },
 
     postCreate: function(){
@@ -101,7 +86,6 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
       this._clear();
     },
 
-    //to be override
     getSelectedItems: function(){
       var items = this.tree.getSelectedItems();
       return items;//lang.clone(items);
@@ -118,9 +102,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
 
       var validUrl = url && typeof url === 'string' && url.replace(/\/*$/g, '');
       if(!validUrl){
-        setTimeout(lang.hitch(this, function(){
-          this._def.reject();
-        }), 0);
+        this._def.reject();
       }
       url = url.replace(/\/*$/g, '');
 
@@ -128,17 +110,15 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
       var pattern1 = /^http(s?):\/\//gi;
       var matchResult = theUrl.match(pattern1);
       if(!(matchResult && matchResult.length > 0)){
-        theUrl = 'http://'+theUrl;
+        theUrl = 'http://' + theUrl;
       }
-      
+
       var pattern2 = /\/rest\/services/i;
       if(theUrl.search(pattern2) <= 0){
-        setTimeout(lang.hitch(this, function(){
-          this._def.reject();
-        }), 0);
+        this._def.reject();
         return;
       }
-      
+
       /*if(this._currentUrl === theUrl){
         return;
       }*/
@@ -146,14 +126,12 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
       this._clear();
       this._currentUrl = theUrl;
       if(!this._currentUrl){
-        setTimeout(lang.hitch(this, function(){
-          this._def.reject();
-        }), 0);
+        this._def.reject();
         return;
       }
       var root = this._getRootItem();
       var requestDef;
-      if(this._isStringEndWith(this._currentUrl,'rest/services')){
+      if(jimuUtils.isStringEndWith(this._currentUrl, 'rest/services')){
         //rest/services
         var baseUrl = this._currentUrl;
         requestDef = this._searchBaseServiceUrl(baseUrl, root);
@@ -165,16 +143,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
       }
       else{
         //service url contains ServiceType, such as 'MapServer','FeatureServer'...
-        if(this._isUrlEndWithServiceType(this._currentUrl)){
-          //service
-          var serviceUrl = this._currentUrl;
-          requestDef = this._searchServiceUrl(serviceUrl, root, true);
-        }
-        else{
-          //child resource
-          var childUrl = this._currentUrl;
-          requestDef = this._searchChildResource(childUrl, root, true);
-        }
+        var serviceUrl = this._currentUrl;
+        requestDef = this._searchServiceUrl(serviceUrl, root);
       }
 
       requestDef.then(lang.hitch(this, function(response){
@@ -184,7 +154,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
           tn.select();
         }
         this._def.resolve(response);
-      }),lang.hitch(this, function(err){
+      }), lang.hitch(this, function(err){
         var netErr = err && err.errorCode && err.errorCode === 'NETWORK_ERROR';
         if(netErr){
           this._showRequestError();
@@ -195,15 +165,50 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
       return this._def;
     },
 
-    isServiceTypeSupported: function(type){
-      return this._isServiceTypeSupported(type);
+    _getItem: function(url){
+      return this.rule.getItem(url);
     },
 
-    _isServiceTypeSupported: function(type){
-      type = type.toLowerCase();
-      return array.some(this._serviceTypes, lang.hitch(this, function(serviceType){
-        return serviceType.toLowerCase() === type;
+    _getSubItemUrls: function(url){
+      return this.rule.getSubItemUrls(url);
+    },
+
+    //resolve [{name,type,url}]
+    _getSubItems: function(parentUrl){
+      var def = new Deferred();
+      this._getSubItemUrls(parentUrl).then(lang.hitch(this, function(urls){
+        var defs = array.map(urls, lang.hitch(this, function(url){
+          return this._getItem(url);
+        }));
+        all(defs).then(lang.hitch(this, function(items){
+          var result = array.filter(items, lang.hitch(this, function(item){
+            //item maybe null because the url doesn't meet needs
+            return item && typeof item === 'object';
+          }));
+          def.resolve(result);
+        }), lang.hitch(this, function(err){
+          def.reject(err);
+        }));
+      }), lang.hitch(this, function(err){
+        def.reject(err);
       }));
+      return def;
+    },
+
+    _selectFirstLeafTreeNodeWidget: function(){
+      var tns = this.tree.getAllLeafTreeNodeWidgets();
+      if (tns.length === 1) {
+        var tn = tns[0];
+        tn.select();
+      }
+    },
+
+    isLeafItem: function(item){
+      return this.rule.leafTypes.indexOf(item.type) >= 0;
+    },
+
+    isServiceTypeSupported: function(type){
+      return this.rule.isServiceTypeSupported(type);
     },
 
     _getStringEndWith:function(str, endStr){
@@ -211,33 +216,23 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
       var index = str.indexOf(endStr);
       if(index >= 0){
         var a = index + endStr.length;
-        result = str.slice(0,a);
+        result = str.slice(0, a);
       }
       return result;
     },
 
     _isUrlContainsServiceType: function(url){
-      url = url.toLowerCase();
-      return array.some(this._serviceTypes, lang.hitch(this, function(type){
-        type = type.toLowerCase();
-        return url.indexOf('/'+type) >= 0;
-      }));
-    },
-
-    _isUrlEndWithServiceType: function(url){
-      return array.some(this._serviceTypes, lang.hitch(this, function(type){
-        return this._isStringEndWith(url,'/'+type);
-      }));
+      return this.rule.isUrlContainsServiceType(url);
     },
 
     _getBaseServiceUrl:function(){
-      return this._getStringEndWith(this._currentUrl,'rest/services');
+      return this._getStringEndWith(this._currentUrl, 'rest/services');
     },
 
     _getServiceName:function(serviceName){
       var result = '';
       var splits = serviceName.split('/');
-      result = splits[splits.length-1];
+      result = splits[splits.length - 1];
       return result;
     },
 
@@ -249,69 +244,77 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
         if(!this.domNode){
           return;
         }
-        array.forEach(response.services, lang.hitch(this, function(service){
-          if(this._isServiceTypeSupported(service.type)){
-            var item = {
-              name: this._getServiceName(service.name),
-              type: service.type,
-              url: baseUrl+'/'+service.name+'/'+service.type,
-              parent: root.id
-            };
-            this._addItem(item);
-          }
-        }));
-        var folders = array.map(response.folders,lang.hitch(this,function(folderName){
-          return {
+        var defs = [];
+
+        //handle folders
+        array.map(response.folders, lang.hitch(this, function(folderName){
+          var folderItem = {
             name: folderName,
             type:'folder',
-            url: baseUrl+"/"+folderName,
+            url: baseUrl + "/" + folderName,
             parent: root.id
           };
-        }));
 
-        if(folders.length === 0){
-          this.shelter.hide();
-          resultDef.resolve();
-          return;
-        }
-        var defs = array.map(folders,lang.hitch(this,function(folder){
-          return this._getRestInfo(folder.url);
-        }));
-        all(defs).then(lang.hitch(this,function(responses){
-          if(!this.domNode){
-            return;
-          }
-          this.shelter.hide();
-          array.forEach(responses,lang.hitch(this,function(response,index){
-            var folder = folders[index];
-            var specificServices = array.filter(response.services,lang.hitch(this,function(service){
-              return this._isServiceTypeSupported(service.type);
-            }));
-            if(specificServices.length > 0){
-              folder = this._addItem(folder);
-              array.forEach(specificServices,lang.hitch(this,function(service){
-                var item = {
-                  name: this._getServiceName(service.name),
-                  type: service.type,
-                  url: baseUrl+'/'+service.name+'/'+service.type,
-                  parent: folder.id
-                };
-                //service.name:Demographics/ESRI_Census_USA
+          //add folder
+          this._addItem(folderItem);
+
+          //traverse services under the folder
+          var def = new Deferred();
+          this._doSearchFolderServiceUrl(folderItem.url, folderItem.id).then(lang.hitch(this,
+            function(items){
+            if(items.length > 0){
+              //add service item under the folder
+              array.forEach(items, lang.hitch(this, function(item){
+                item.parent = folderItem.id;
                 this._addItem(item);
               }));
+            }else{
+              //if there are no proper services under folder, remove the folder
+              this._removeItem(folderItem.id);
             }
+            def.resolve();
+          }), lang.hitch(this, function(err){
+            def.reject(err);
           }));
-          resultDef.resolve();
-        }),lang.hitch(this,function(error){
-          console.error(error);
+          defs.push(def);
+          return def;
+        }));
+
+        //handle services
+        array.forEach(response.services, lang.hitch(this, function(service){
+          if(this.isServiceTypeSupported(service.type)){
+            var serviceUrl = baseUrl + '/' + service.name + '/' + service.type;
+            var def = new Deferred();
+            this.rule.getItem(serviceUrl).then(lang.hitch(this, function(item){
+              if(item){
+                item.parent = root.id;
+                this._addItem(item);
+              }
+              def.resolve();
+            }), lang.hitch(this, function(err){
+              console.error(err);
+              def.reject(err);
+            }));
+            defs.push(def);
+          }
+        }));
+
+        all(defs).then(lang.hitch(this, function(){
           if(!this.domNode){
             return;
           }
           this.shelter.hide();
           resultDef.resolve();
+        }), lang.hitch(this, function(err){
+          console.error(err);
+          if(!this.domNode){
+            return;
+          }
+          this.shelter.hide();
+          resultDef.reject(err);
         }));
-      }),lang.hitch(this,function(err){
-        console.error('request layer info failed',err);
+      }), lang.hitch(this, function(err){
+        console.error(err);
         if(!this.domNode){
           return;
         }
@@ -328,30 +331,20 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
     _searchFolderServiceUrl:function(folderUrl, parent){
       //url is end with folder name
       //http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics
+      //http://pslgis.cityofpsl.com/arcgis/rest/services/aerials/
       var resultDef = new Deferred();
-      var baseUrl = this._getBaseServiceUrl();
       this.shelter.show();
-      this._getRestInfo(folderUrl).then(lang.hitch(this,function(folderResponse){
+      this._doSearchFolderServiceUrl(folderUrl, parent).then(lang.hitch(this, function(items){
         if(!this.domNode){
           return;
         }
+        array.forEach(items, lang.hitch(this, function(item){
+          item.parent = parent.id;
+          this._addItem(item);
+        }));
         this.shelter.hide();
-        if(folderResponse.services && folderResponse.services.length > 0){
-          array.forEach(folderResponse.services,lang.hitch(this, function(service){
-            if(this._isServiceTypeSupported(service.type)){
-              var item = {
-                name: this._getServiceName(service.name),
-                type: service.type,
-                url: baseUrl+'/'+service.name+'/'+service.type,
-                parent: parent.id
-              };
-              //service.name:Demographics/ESRI_Census_USA
-              this._addItem(item);
-            }
-          }));
-        }
         resultDef.resolve();
-      }),lang.hitch(this,function(err){
+      }), lang.hitch(this, function(err){
         console.error(err);
         if(!this.domNode){
           return;
@@ -362,114 +355,94 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
           error: err
         };
         resultDef.reject(errObj);
+      }));
+      return resultDef;
+    },
+
+    //resolve items
+    _doSearchFolderServiceUrl: function(folderUrl){
+      //url is end with folder name
+      var resultDef = new Deferred();
+      var baseUrl = this._getBaseServiceUrl();
+      this._getRestInfo(folderUrl).then(lang.hitch(this, function(folderResponse){
+        var services = folderResponse.services;
+        var defs = [];
+        if(services && services.length > 0){
+          array.forEach(services, lang.hitch(this, function(service){
+            if(this.isServiceTypeSupported(service.type)){
+              //service.name:Demographics/ESRI_Census_USA
+              var serviceUrl = baseUrl + '/' + service.name + '/' + service.type;
+              var defItem = this.rule.getItem(serviceUrl);
+              defs.push(defItem);
+            }
+          }));
+        }
+        all(defs).then(lang.hitch(this, function(items){
+          var resultItems = array.filter(items, lang.hitch(this, function(item){
+            return item;
+          }));
+          resultDef.resolve(resultItems);
+        }), lang.hitch(this, function(err){
+          console.error(err);
+          resultDef.reject(err);
+        }));
+      }), lang.hitch(this, function(err){
+        console.error(err);
+        resultDef.reject(err);
       }));
       return resultDef;
     },
 
     _searchServiceUrl:function(serviceUrl, parent){
-      //serviceUrl is end with 'MapServer' or 'FeatureServer' ...
+      //serviceUrl contains 'MapServer' or 'FeatureServer' ...
       //http://servername/ArcGIS/rest/services/Demographics/ESRI_Census_USA/MapServer
+      //http://servername/ArcGIS/rest/services/Demographics/ESRI_Census_USA/MapServer/0
       var resultDef = new Deferred();
-      serviceUrl = serviceUrl.replace(/\/*$/g, '');
-      var splits = serviceUrl.split('/');
-      var serviceType = splits[splits.length-1];
-      var serviceName = splits[splits.length-2];
-      this.shelter.show();
-      this._getRestInfo(serviceUrl).then(lang.hitch(this,function(serviceMeta){
-        if(!this.domNode){
-          return;
-        }
-        serviceMeta.url = serviceUrl;
-        this.shelter.hide();
-        var serviceItem = {
-          name: serviceName,
-          type: serviceType,
-          url: serviceUrl,
-          parent: parent.id
-        };
-        serviceItem = this._addItem(serviceItem);
-        var callbackDef = this._searchServiceUrlCallback(serviceUrl, serviceItem, serviceMeta);
-        callbackDef.then(lang.hitch(this, function(){
-          if(!this.domNode){
-            return;
-          }
+      this._getSubItems(serviceUrl).then(lang.hitch(this, function(items) {
+        if (items && items.length > 0) {
+          array.forEach(items, lang.hitch(this, function(item) {
+            item.parent = parent.id;
+            this._addItem(item);
+          }));
           resultDef.resolve();
-        }), lang.hitch(this, function(err){
-          console.error(err);
-          if(!this.domNode){
-            return;
-          }
-        }));
-      }),lang.hitch(this,function(err){
-        console.error(err);
-        if(!this.domNode){
-          return;
+        } else {
+          this._getItem(serviceUrl).then(lang.hitch(this, function(item) {
+            //if serviceUrl doesn't pass rule, item will be null
+            if(item){
+              item.parent = parent.id;
+              this._addItem(item);
+            }
+            resultDef.resolve();
+          }), lang.hitch(this, function(err) {
+            resultDef.reject(err);
+          }));
         }
-        this.shelter.hide();
-        var errObj = {
-          errorCode: 'NETWORK_ERROR',
-          error: err
-        };
-        resultDef.reject(errObj);
+      }), lang.hitch(this, function(err) {
+        resultDef.reject(err);
       }));
+
       return resultDef;
-    },
-
-    //to be override, return a deferred
-    _searchServiceUrlCallback: function(serviceUrl, serviceItem, serviceMeta){
-      /*jshint unused: false*/
-      var def = new Deferred();
-      setTimeout(lang.hitch(this, function(){
-        def.resolve();
-      }), 0);
-      return def;
-    },
-
-    //to be override, return a deferred
-    _searchChildResource: function(url, parent, /* optional */ showError){/*jshint unused: false*/
-      var def = new Deferred();
-      setTimeout(lang.hitch(this, function(){
-        def.resolve();
-      }), 0);
-      return def;
     },
 
     _getRestInfo:function(url){
       var def = new Deferred();
-      
-      url = url.replace(/\/*$/g, '');
-      var info = this._restInfoCache[url];
-      if(info){
-        setTimeout(lang.hitch(this, function(){
-          def.resolve(info);
-        }));
-      }
-      else{
-        var args = {
-          url:url,
-          content:{f:"json"},
-          handleAs:"json",
-          callbackParamName:"callback",
-          timeout:20000
-        };
-        esriRequest(args).then(lang.hitch(this, function(response){
-          this._restInfoCache[url] = response;
-          def.resolve(response);
-        }), lang.hitch(this, function(err){
-          def.reject(err);
-        }));
-      }
-      
+      this.rule.getRestInfo(url).then(lang.hitch(this, function(response){
+        if(!this.domNode){
+          return;
+        }
+        def.resolve(response);
+      }), lang.hitch(this, function(err){
+        if(!this.domNode){
+          return;
+        }
+        def.reject(err);
+      }));
       return def;
-    },
-
-    _isStringEndWith:function(s,endS){
-      return (s.lastIndexOf(endS) + endS.length === s.length);
     },
 
     _clear:function(){
       var items = this._store.query({parent:'root'});
-      array.forEach(items, lang.hitch(this,function(item){
+      array.forEach(items, lang.hitch(this, function(item){
         if(item && item.id !== 'root'){
           this._store.remove(item.id);
         }
@@ -490,6 +463,10 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
       item.id = this._id.toString();
       this._store.add(item);
       return item;
+    },
+
+    _removeItem: function(itemId){
+      this._store.remove(itemId);
     },
 
     _getRootItem:function(){
@@ -518,10 +495,11 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
         multiple: this.multiple,
         model: myModel,
         showRoot: false,
-        leafType: this._leafType,
         style:{
           width:"100%"
         },
+
+        isLeafItem: lang.hitch(this, this.isLeafItem),
 
         onOpen: lang.hitch(this, function(item, node){
           this._onTreeOpen(item, node);
@@ -532,8 +510,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
           this._onTreeClick(item, node, evt);
           this.emit('tree-click', item, node, evt);
         }),
-        
-        getIconStyle:lang.hitch(this,function(item, opened){
+
+        getIconStyle:lang.hitch(this, function(item, opened){
           var icon = null;
           if (!item) {
             return null;
@@ -545,28 +523,29 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
             backgroundPosition: 'center center',
             backgroundImage: ''
           };
-          var baseUrl = window.location.protocol+"//"+window.location.host+require.toUrl("jimu");
+          var baseUrl = window.location.protocol + "//" + window.location.host +
+          require.toUrl("jimu");
           var imageName = this._getIconImageName(item, opened);
 
           if(!imageName){
             if (item.type === 'folder') {
               if (opened) {
-                imageName = 'folder_open.png';
+                imageName = 'folder_open_default.png';
               } else {
-                imageName = 'folder_close.png';
+                imageName = 'folder_close_default.png';
               }
             }
-            else if(this._isServiceTypeSupported(item.type)){
+            else if(this.isServiceTypeSupported(item.type)){
               if (opened) {
-                imageName = 'folder_open.png';
+                imageName = 'folder_open_default.png';
               } else {
-                imageName = 'folder_close.png';
+                imageName = 'folder_close_default.png';
               }
             }
           }
-          
+
           if(imageName){
-            a.backgroundImage = "url("+baseUrl+"/css/images/" + imageName + ")";
+            a.backgroundImage = "url(" + baseUrl + "/css/images/" + imageName + ")";
             icon = a;
           }
           return icon;
@@ -584,18 +563,50 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
       this.tree.placeAt(this.domNode);
     },
 
-    //to be override
-    _getIconImageName: function(item, opened){/*jshint unused: false*/},
-
-    //to be override
-    _mayHaveChildren:function(item){
-      return item.type !== this._leafType;
+    _getIconImageName: function(item, opened){
+      var imageName = "";
+      if(typeof this.rule.getIconImageName === 'function'){
+        imageName = this.rule.getIconImageName(item, opened);
+      }
+      return imageName;
     },
 
-    //to be override
-    _onTreeOpen:function(item, node){/*jshint unused: false*/},
+    _mayHaveChildren:function(item){
+      if(item.type === 'root'){
+        return true;
+      }else{
+        return !this.isLeafItem(item);
+      }
+    },
 
-    //to be override
+    _onTreeOpen:function(item, node){
+      /*jshint unused: false*/
+      if(item.id === 'root'){
+        return;
+      }
+      var children = this._store.query({parent:item.id});
+      if(children.length > 0){
+        return;
+      }
+      if(item.checking || item.checked){
+        return;
+      }
+
+      item.checking = true;
+      this._getSubItems(item.url).then(lang.hitch(this, function(childrenItems){
+        array.forEach(childrenItems, lang.hitch(this, function(childItem){
+          childItem.parent = item.id;
+          this._addItem(childItem);
+        }));
+        item.checking = false;
+        item.checked = true;
+      }), lang.hitch(this, function(err){
+        console.error(err);
+        item.checking = false;
+        item.checked = true;
+      }));
+    },
+
     _onTreeClick:function(item, node, evt){/*jshint unused: false*/},
 
     destroy:function(){

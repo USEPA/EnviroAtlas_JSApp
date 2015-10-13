@@ -21,16 +21,18 @@ define(['dojo/_base/declare',
     'dojo/Deferred',
     'dojo/topic',
     'dojo/Evented',
+    'dojo/on',
     'dojo/aspect',
     'dojo/json',
+    'dojo/query',
     'dojo/request/xhr',
     'dojo/promise/all',
     './utils',
     'jimu/tokenUtils',
     './dijit/Message'
   ],
-  function(declare, lang, array, html, Deferred, topic, Evented, aspect, json, xhr,
-    all, utils, tokenUtils, Message) {
+  function(declare, lang, array, html, Deferred, topic, Evented, on, aspect,
+    json, query, xhr, all, utils, tokenUtils, Message) {
     var instance = null,
       clazz = declare(Evented, {
 
@@ -41,6 +43,8 @@ define(['dojo/_base/declare',
           //action is triggered, but the widget has not been loaded
           //{id: widgetId, action: {}}
           this.missedActions = [];
+
+          this.activeWidget = null;
 
           if(window.isBuilder){
             topic.subscribe("app/mapLoaded", lang.hitch(this, this._onMapLoaded));
@@ -63,7 +67,10 @@ define(['dojo/_base/declare',
           topic.subscribe('userSignOut', lang.hitch(this, this._onUserSignOut));
 
           //events from builder
-          topic.subscribe('actionTriggered', lang.hitch(this, this._onActionTriggered));
+          topic.subscribe('builder/actionTriggered', lang.hitch(this, this._onActionTriggered));
+
+          //see panel manager
+          topic.subscribe('/dnd/move/start', lang.hitch(this, this._onMoveStart));
         },
 
         loadWidget: function(setting) {
@@ -109,6 +116,7 @@ define(['dojo/_base/declare',
                   setTimeout(lang.hitch(this, function() {
                     def.resolve(widget);
                     this.emit('widget-created', widget);
+                    topic.publish('widgetCreated', widget);
                   }), 50);
 
                 }), function(err) {
@@ -199,6 +207,31 @@ define(['dojo/_base/declare',
           return def;
         },
 
+        getWidgetMarginBox: function(widget) {
+          if (typeof widget === 'string') {
+            widget = this.getWidgetById(widget);
+            if (!widget) {
+              return {};
+            }
+          }
+          if(widget._marginBox){
+            return widget._marginBox;
+          }
+
+          var position = {
+            left: -9999,
+            top: -9999,
+            relativeTo: widget.position.relativeTo
+          };
+          widget.setPosition(position);
+          this.openWidget(widget);
+
+          widget._marginBox = widget.getMarginBox();
+
+          this.closeWidget(widget);
+          return widget._marginBox;
+        },
+
         _processManifest: function(manifest){
           utils.addManifestProperies(manifest);
           utils.processManifestLabel(manifest, window.dojoConfig.locale);
@@ -222,7 +255,7 @@ define(['dojo/_base/declare',
 
           setting.rawConfig = setting.config;
           setting.config = resouces.config || {};
-          if (this.appConfig.agolConfig) {
+          if (this.appConfig._appData) {
             this._mergeAgolConfig(setting);
           }
           setting.nls = resouces.i18n || {};
@@ -253,6 +286,9 @@ define(['dojo/_base/declare',
           widget.clazz = clazz;
           aspect.after(widget, 'startup', lang.hitch(this, this._postWidgetStartup, widget));
           aspect.before(widget, 'destroy', lang.hitch(this, this._onDestroyWidget, widget));
+
+          on(widget.domNode, 'click', lang.hitch(this, this._onClickWidget, widget));
+
           this.loaded.push(widget);
           return widget;
         },
@@ -370,6 +406,17 @@ define(['dojo/_base/declare',
           return ret;
         },
 
+        getWidgetByLabel: function(label) {
+          var ret;
+          array.some(this.loaded, function(w) {
+            if (w.label === label) {
+              ret = w;
+              return true;
+            }
+          }, this);
+          return ret;
+        },
+
         getWidgetsByName: function(name) {
           var ret = [];
           array.some(this.loaded, function(w) {
@@ -401,6 +448,11 @@ define(['dojo/_base/declare',
             }
           }
           if (widget.state !== 'closed') {
+            if(this.activeWidget && this.activeWidget.id === widget.id){
+              this.activeWidget.onDeActive();
+              this.activeWidget = null;
+            }
+            html.setStyle(widget.domNode, 'display', 'none');
             widget.setState('closed');
             try {
               widget.onClose();
@@ -417,12 +469,21 @@ define(['dojo/_base/declare',
               return;
             }
           }
+          if(!widget.started){
+            try {
+              widget.started = true;
+              widget.startup();
+            } catch (err) {
+              console.error('fail to startup widget ' + widget.name + '. ' + err.stack);
+            }
+          }
           if (widget.state === 'closed') {
+            html.setStyle(widget.domNode, 'display', '');
             widget.setState('opened');
             try {
               widget.onOpen();
             } catch (err) {
-              console.log(console.error('fail to open widget ' + widget.name + '. ' + err.stack));
+              console.error('fail to open widget ' + widget.name + '. ' + err.stack);
             }
           }
         },
@@ -506,7 +567,10 @@ define(['dojo/_base/declare',
 
         tryLoadWidgetConfig: function(setting) {
           return this._tryLoadWidgetConfig(setting).then(lang.hitch(this, function(config) {
-            return this._upgradeWidgetConfig(setting, config);
+            return this._upgradeWidgetConfig(setting, config).then(function(widgetConfig){
+              setting.config = widgetConfig;
+              return widgetConfig;
+            });
           }));
         },
 
@@ -676,10 +740,38 @@ define(['dojo/_base/declare',
           });
         },
 
-        getPreloadPanelessWidgets: function() {
+        getOffPanelWidgets: function() {
           return array.filter(this.loaded, function(widget) {
-            return widget.isPreload && !widget.inPanel;
+            return !widget.inPanel;
           });
+        },
+
+        getOnScreenOffPanelWidgets: function() {
+          return array.filter(this.loaded, function(widget) {
+            return widget.isOnScreen && !widget.inPanel;
+          });
+        },
+
+        closeOtherWidgetsInTheSameGroup: function(widget){
+          if (typeof widget === 'string') {
+            widget = this.getWidgetById(widget);
+            if (!widget) {
+              return;
+            }
+          }
+          for(var i = 0; i < this.loaded.length; i++){
+            if(this.loaded[i].gid === widget.gid && this.loaded[i].id !== widget.id){
+              this.closeWidget(this.loaded[i]);
+            }
+          }
+        },
+
+        closeAllWidgetsInGroup: function (groupId){
+          for(var i = 0; i < this.loaded.length; i++){
+            if(this.loaded[i].gid === groupId){
+              this.closeWidget(this.loaded[i]);
+            }
+          }
         },
 
         // Merge AGOL configs when first open widget (because the
@@ -687,13 +779,13 @@ define(['dojo/_base/declare',
         // This method only merge fields in widget config,
         // the other fields were merged in ConfigManager.js
         _mergeAgolConfig: function(setting) {
-          var values = this.appConfig.agolConfig.values;
+          var values = this.appConfig._appData.values;
           function doMerge(sectionKey) {
             for (var key in values) {
-              var sectionKeyIndex = key.indexOf(sectionKey + '_config');
+              var sectionKeyIndex = key.replace(/\//g, '_').indexOf(sectionKey + '_config');
               if (sectionKeyIndex >= 0){
-                utils.setConfigByTemplate(setting,
-                            key.substr(sectionKeyIndex, key.length).replace(sectionKey,'widget'),
+                utils.template.setConfigValue(setting,
+                            key.replace(/\//g, '_').substr(sectionKeyIndex, key.length).replace(sectionKey, 'widget'),
                             values[key]);
               }
             }
@@ -712,6 +804,55 @@ define(['dojo/_base/declare',
         _onUserSignOut: function() {
           array.forEach(this.loaded, function(m) {
             m.onSignOut();
+          }, this);
+        },
+
+        _activeWidget: function(widget){
+          if(this.activeWidget){
+            if(this.activeWidget.id === widget.id){
+              //zIndex may be reset by widget self
+              if(this.activeWidget.moveTopOnActive){
+                html.setStyle(this.activeWidget.domNode, 'zIndex', 101);
+              }
+              return;
+            }
+            if(this.activeWidget.state === 'active'){
+              this.activeWidget.setState('opened');
+              html.setStyle(widget.domNode, 'zIndex',
+                'zIndex' in widget.position? widget.position.zIndex: 'auto');
+              this.activeWidget.onDeActive();
+            }
+          }
+          this.activeWidget = widget;
+          if(this.activeWidget.state !== 'opened'){
+            return;
+          }
+          this.activeWidget.setState('active');
+          if(this.activeWidget.moveTopOnActive){
+            html.setStyle(this.activeWidget.domNode, 'zIndex', 101);
+          }
+          this.activeWidget.onActive();
+          topic.publish('widgetActived', widget);
+        },
+
+        _onClickWidget: function(widget, evt){
+          var childWidgets = query('.jimu-widget', widget.domNode);
+          if(childWidgets.length > 0){
+            for(var i = 0; i < childWidgets.length; i++){
+              if(evt.target === childWidgets[i] || html.isDescendant(evt.target, childWidgets[i])){
+                //click on the child widget or child widget's children dom
+                return;
+              }
+            }
+          }
+          this._activeWidget(widget);
+        },
+
+        _onMoveStart: function(mover){
+          array.forEach(this.loaded, function(widget){
+            if(widget.domNode === mover.node){
+              this._activeWidget(widget);
+            }
           }, this);
         },
 
@@ -741,7 +882,6 @@ define(['dojo/_base/declare',
             if (reason === 'widgetChange') {
               this._onConfigChanged(changedData.id, changedData.config, otherOptions);
             }
-            w.appConfig = appConfig;
           }, this);
         },
 
@@ -785,7 +925,7 @@ define(['dojo/_base/declare',
         },
 
         _postWidgetStartup: function(widgetObject) {
-          widgetObject.started = true;
+          widgetObject.started = true;//for backward compatibility
           utils.setVerticalCenter(widgetObject.domNode);
           aspect.after(widgetObject, 'resize', lang.hitch(this,
             utils.setVerticalCenter, widgetObject.domNode));
@@ -920,8 +1060,14 @@ define(['dojo/_base/declare',
               widget = m;
             }
           }
-          this.removeWidgetStyle(widget);
+
+          if(this.activeWidget && this.activeWidget.id === widget.id){
+            this.activeWidget = null;
+          }
           this._remove(widget.id);
+          if(this.getWidgetsByName(widget.name).length === 0){
+            this.removeWidgetStyle(widget);
+          }
         }
       });
 

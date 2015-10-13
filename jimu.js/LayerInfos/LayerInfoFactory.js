@@ -37,7 +37,8 @@ define([
           'jimu/LayerInfos/LayerInfoForDefaultTile',
           'jimu/LayerInfos/LayerInfoForDefaultWMS',
           'jimu/LayerInfos/LayerInfoForDefaultTable',
-          'jimu/LayerInfos/LayerInfoForDefaultImage'
+          'jimu/LayerInfos/LayerInfoForDefaultImage',
+          'jimu/LayerInfos/LayerInfoForDefaultStream'
         ], lang.hitch(this, function(
           LayerInfoForCollection,
           LayerInfoForMapService,
@@ -50,7 +51,8 @@ define([
           LayerInfoForDefaultTile,
           LayerInfoForDefaultWMS,
           LayerInfoForDefaultTable,
-          LayerInfoForDefaultImage) {
+          LayerInfoForDefaultImage,
+          LayerInfoForDefaultStream) {
           this.LayerInfoForCollection = LayerInfoForCollection;
           this.LayerInfoForMapService = LayerInfoForMapService;
           this.LayerInfoForKML = LayerInfoForKML;
@@ -63,6 +65,7 @@ define([
           this.LayerInfoForDefaultWMS = LayerInfoForDefaultWMS;
           this.LayerInfoForDefaultTable = LayerInfoForDefaultTable;
           this.LayerInfoForDefaultImage = LayerInfoForDefaultImage;
+          this.LayerInfoForDefaultStream = LayerInfoForDefaultStream;
           retDef.resolve();
         }));
         return retDef;
@@ -84,8 +87,11 @@ define([
             operLayer.layerObject.declaredClass === 'esri.layers.ArcGISTiledMapServiceLayer') {
           return new this.LayerInfoForMapService(operLayer, this.map);
           //} else if (operLayer.layerObject) {
-        } else if (operLayer.layerObject.declaredClass === 'esri.layers.ArcGISImageServiceLayer') {
+        } else if (operLayer.layerObject.declaredClass === 'esri.layers.ArcGISImageServiceLayer' ||
+         operLayer.layerObject.declaredClass === 'esri.layers.ArcGISImageServiceVectorLayer') {
           return new this.LayerInfoForDefaultImage(operLayer, this.map);
+        } else if (operLayer.layerObject.declaredClass === 'esri.layers.StreamLayer') {
+          return new this.LayerInfoForDefaultStream(operLayer, this.map);
         } else {
           if(operLayer.layerObject.type === "Table"){
             operLayer.selfType = "table";

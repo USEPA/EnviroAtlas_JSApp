@@ -35,15 +35,15 @@ define([
 ],
 function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template,
   lang, html, array, on, query, Deferred, Evented, promiseAll, ItemSelector,
-  FeaturelayerServiceBrowser, portalUrlUtils, esriRequest) {
+  ServiceBrowser, portalUrlUtils, esriRequest) {
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
     /*jshint unused: false*/
     templateString: template,
     declaredClass: 'jimu.dijit.FeaturelayerChooserFromPortal',
-    baseClass: 'jimu-featurelayer-chooser-from-portal',
+    baseClass: 'jimu-service-chooser-from-portal jimu-featurelayer-chooser-from-portal',
 
     _serviceBrowserDef:null,
-    
+
     //options:
     portalUrl: null,
     multiple: false,
@@ -77,7 +77,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       //init selector
       this.selector = new ItemSelector({
         portalUrl: this.portalUrl,
-        itemTypes: ['Feature Service','Map Service'],
+        itemTypes: ['Feature Service', 'Map Service'],
         onlyShowOnlineFeaturedItems: false
       });
       this.own(on(this.selector, 'item-selected', lang.hitch(this, this._onItemSelected)));
@@ -86,11 +86,13 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       this.selector.startup();
 
       //init service browser
-      this.serviceBrowser = new FeaturelayerServiceBrowser({
+      this.serviceBrowser = new ServiceBrowser({
         multiple: this.multiple
       });
-      this.own(on(this.serviceBrowser,'tree-click',lang.hitch(this,this._onServiceBrowserClicked)));
-      this.serviceBrowser.placeAt(this.layersSection);
+      this.own(on(this.serviceBrowser,
+                  'tree-click',
+                  lang.hitch(this, this._onServiceBrowserClicked)));
+      this.serviceBrowser.placeAt(this.serviceBrowserContainer);
       this.serviceBrowser.startup();
     },
 
@@ -111,7 +113,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       html.setStyle(this.btnBack, 'display', 'none');
       html.addClass(this.btnOk, 'jimu-state-disabled');
       html.setStyle(this.selectorContainer, 'display', 'block');
-      html.setStyle(this.layersSection, 'display', 'none');
+      html.setStyle(this.serviceBrowserContainer, 'display', 'none');
       this.serviceBrowser.reset();
       this.emit('back');
     },
@@ -133,19 +135,20 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       html.setStyle(this.btnOk, 'display', 'block');
       html.addClass(this.btnOk, 'jimu-state-disabled');
       html.setStyle(this.selectorContainer, 'display', 'none');
-      html.setStyle(this.layersSection, 'display', 'block');
+      html.setStyle(this.serviceBrowserContainer, 'display', 'block');
       this.serviceBrowser.reset();
       var url = item.url || item.item;
       this._serviceBrowserDef = this.serviceBrowser.setUrl(url);
       this._serviceBrowserDef.then(lang.hitch(this, function(){
         this._serviceBrowserDef = null;
+        this._setOkStateBySelectedItems();
       }), lang.hitch(this, function(){
         this._serviceBrowserDef = null;
       }));
       this.emit('next');
     },
 
-    _onServiceBrowserClicked: function(){
+    _setOkStateBySelectedItems: function(){
       var items = this.serviceBrowser.getSelectedItems();
       if(items.length > 0){
         html.removeClass(this.btnOk, 'jimu-state-disabled');
@@ -153,6 +156,10 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       else{
         html.addClass(this.btnOk, 'jimu-state-disabled');
       }
+    },
+
+    _onServiceBrowserClicked: function(){
+      this._setOkStateBySelectedItems();
     },
 
     _onBtnCancelClicked: function(){

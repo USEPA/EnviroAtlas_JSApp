@@ -21,7 +21,7 @@ define(function() {
 
     if(typeof String.prototype.trim !== 'function'){
       String.prototype.trim = function(){
-        return this.replace(/^\s*/gi,'').replace(/\s*$/gi,'');
+        return this.replace(/^\s*/gi, '').replace(/\s*$/gi, '');
       };
     }
 
@@ -44,13 +44,13 @@ define(function() {
       //test: http://www.arcgis.com/sharing/rest => www.arcgis.com
       //test: http://10.112.18.151:6080/arcgis/rest/services => 10.112.18.151:6080
       //test: //www.arcgis.com/sharing/rest => www.arcgis.com
-      _url = (_url||'').trim();
-      _url = _url.replace(/^(http(s?):?)\/\//gi,'');
+      _url = (_url || '').trim();
+      _url = _url.replace(/^(http(s?):?)\/\//gi, '');
 
       if(_url.indexOf('//') === 0){
         _url = _url.slice(2);
       }
-      
+
       return _url.split('/')[0];
     };
 
@@ -61,7 +61,7 @@ define(function() {
       //test: http://10.112.18.151:6080/arcgis/rest/services => http://10.112.18.151:6080
 
       var result = '';
-      _url = (_url||'').trim();
+      _url = (_url || '').trim();
 
       if(_url){
         var server = mo.getServerByUrl(_url);
@@ -83,9 +83,9 @@ define(function() {
       return result;
     };
 
-    mo.isSameServer = function(_url1,_url2){
-      _url1 = mo.getServerByUrl(_url1)||"";
-      _url2 = mo.getServerByUrl(_url2)||"";
+    mo.isSameServer = function(_url1, _url2){
+      _url1 = mo.getServerByUrl(_url1) || "";
+      _url2 = mo.getServerByUrl(_url2) || "";
       return _url1.toLowerCase() === _url2.toLowerCase();
     };
 
@@ -121,7 +121,7 @@ define(function() {
         }
         _portalUrl = mo.addProtocol(_portalUrl);
         var protocol = mo.getProtocol(_portalUrl);
-        _portalUrl = protocol + '://'+server;
+        _portalUrl = protocol + '://' + server;
       } else {
         _portalUrl = (_portalUrl || '').trim().replace(/sharing(.*)/gi, '').replace(/\/*$/g, '');
         _portalUrl = mo.addProtocol(_portalUrl);
@@ -132,20 +132,20 @@ define(function() {
           _portalUrl = _portalUrl + '/arcgis';
         }
       }
-      
+
       return _portalUrl;
     };
 
-    mo.isSamePortalUrl = function(_portalUrl1,_portalUrl2){
+    mo.isSamePortalUrl = function(_portalUrl1, _portalUrl2){
       //test: http://www.arcgis.com/sharing/rest === https://www.arcgis.com
       //test: http://www.arcgis.com/ === https://www.arcgis.com
       //test: //www.arcgis.com/sharing/rest === https://www.arcgis.com/
       var patt1 = /^http(s?):\/\//gi;
       var patt2 = /^\/\//gi;
       _portalUrl1 = mo.getStandardPortalUrl(_portalUrl1)
-      .toLowerCase().replace(patt1,'').replace(patt2, '');
+      .toLowerCase().replace(patt1, '').replace(patt2, '');
       _portalUrl2 = mo.getStandardPortalUrl(_portalUrl2)
-      .toLowerCase().replace(patt1,'').replace(patt2, '');
+      .toLowerCase().replace(patt1, '').replace(patt2, '');
       return _portalUrl1 === _portalUrl2;
     };
 
@@ -174,7 +174,7 @@ define(function() {
             url = defaultProtocol + url; //http: + //js.arcgis.com
           }
         }
-        
+
       }
       return url;
     };
@@ -194,10 +194,20 @@ define(function() {
       return protocol;
     };
 
+    mo.updateUrlProtocolByOtherUrl = function(url, otherUrl){
+      otherUrl = otherUrl.toLowerCase();
+      if(otherUrl.indexOf('https://') === 0){
+        url = mo.setHttpsProtocol(url);
+      }else if(otherUrl.indexOf('http://') === 0){
+        url = mo.setHttpProtocol(url);
+      }
+      return url;
+    };
+
     mo.removeProtocol = function(_url){
       //test: http://www.arcgis.com => //www.arcgis.com
       //test: https://www.arcgis.com => //www.arcgis.com
-      return _url.replace(/^http(s?):\/\//i,'//');
+      return _url.replace(/^http(s?):\/\//i, '//');
     };
 
     mo.setHttpProtocol = function(_url){
@@ -288,9 +298,9 @@ define(function() {
       return itemUrl;
     };
 
-    mo.getItemDataUrl = function(_portalUrl,_itemId){
+    mo.getItemDataUrl = function(_portalUrl, _itemId){
       var itemDataUrl = '';
-      var itemUrl = mo.getItemUrl(_portalUrl,_itemId);
+      var itemUrl = mo.getItemUrl(_portalUrl, _itemId);
       if(itemUrl){
         itemDataUrl = itemUrl + '/data';
       }
@@ -306,7 +316,7 @@ define(function() {
       return tokenUrl;
     };
 
-    mo.getItemDetailsPageUrl = function(_portalUrl,_itemId){
+    mo.getItemDetailsPageUrl = function(_portalUrl, _itemId){
       var url = '';
       if(_portalUrl && _itemId){
         _portalUrl = mo.getStandardPortalUrl(_portalUrl);
@@ -315,7 +325,7 @@ define(function() {
       return url;
     };
 
-    mo.getUserProfilePageUrl = function(_portalUrl,_user){
+    mo.getUserProfilePageUrl = function(_portalUrl, _user){
       var url = '';
       if(_portalUrl && _user){
         _portalUrl = mo.getStandardPortalUrl(_portalUrl);
@@ -335,7 +345,7 @@ define(function() {
 
     mo.getPortalSelfInfoUrl = function(_portalUrl){
       var url = '';
-      var thePortalUrl = _portalUrl||'';
+      var thePortalUrl = _portalUrl || '';
       thePortalUrl = mo.getStandardPortalUrl(thePortalUrl);
       if(thePortalUrl){
         url = thePortalUrl + '/sharing/portals/self';
@@ -345,7 +355,7 @@ define(function() {
 
     mo.getCommunitySelfUrl = function(_portalUrl){
       var url = '';
-      var thePortalUrl = _portalUrl||'';
+      var thePortalUrl = _portalUrl || '';
       thePortalUrl = mo.getStandardPortalUrl(thePortalUrl);
       if(thePortalUrl){
         url = thePortalUrl + '/sharing/rest/community/self';
@@ -378,6 +388,15 @@ define(function() {
         userTagsUrl = userUrl + '/tags';
       }
       return userTagsUrl;
+    };
+
+    mo.getUserThumbnailUrl = function(portalUrl, userId, thumbnail){
+      var thumbnailUrl = "";
+      var userUrl = mo.getUserUrl(portalUrl, userId);
+      if(userUrl && thumbnail){
+        thumbnailUrl = userUrl + '/info/' + thumbnail;
+      }
+      return thumbnailUrl;
     };
 
     mo.getContentUrl = function(_portalUrl){
@@ -517,11 +536,23 @@ define(function() {
       return url;
     };
 
-    mo.getPortalHelpUrl = function(_portalUrl){
+    //locale is optional, default value is 'en'
+    mo.getPortalHelpUrl = function(_portalUrl, locale){
       var url = '';
       var thePortalUrl = mo.getStandardPortalUrl(_portalUrl);
       if(thePortalUrl){
-        url = thePortalUrl + '/portalhelp/en/website/help/';
+        var l = locale || "en";
+        url = thePortalUrl + "/portalhelp/" + l + "/website/help/";
+      }
+      return url;
+    };
+
+    mo.getPortalAdminHelpUrl = function(_portalUrl, locale){
+      var url = '';
+      var thePortalUrl = mo.getStandardPortalUrl(_portalUrl);
+      if(thePortalUrl){
+        var l = locale || "en";
+        url = thePortalUrl + '/portalhelp/' + l + "/admin/help/";
       }
       return url;
     };
@@ -555,7 +586,7 @@ define(function() {
         url = thePortalUrl + '/sharing/tools/newPrint';
       }
       return url;
-    };
-    
+    };
+
     return mo;
   });

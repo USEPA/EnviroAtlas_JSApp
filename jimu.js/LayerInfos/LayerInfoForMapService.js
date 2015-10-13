@@ -43,7 +43,7 @@ esriRequest, LayerInfoFactory) {
         defLoad: new Deferred()
       };
       this._sublayerIdent.definitions[this.layerObject.layerInfos.length - 1] = null;
-      
+
       // init control popup
       this._initControlPopup();
     },
@@ -86,7 +86,6 @@ esriRequest, LayerInfoFactory) {
         this.setSubLayerVisible(subLayerId, true);
       }
 
-      
       // unvisible group and visible subLayers of group.
       for(i=0; i<this.layerObject.layerInfos.length; i++) {
         var layerInfo = this.layerObject.layerInfos[i];
@@ -275,7 +274,6 @@ esriRequest, LayerInfoFactory) {
           "subId": layerInfo.id
         },
         selfType: 'mapservice_' + serviceLayerType,
-        url: featureLayer.url,
         parentLayerInfo: this
       });
     },
@@ -398,7 +396,19 @@ esriRequest, LayerInfoFactory) {
       return dynLayerObjs;
     },
 
-    // about all layer and table
+    // about layer definition
+    _getLayerDefinition: function() {
+      var def = new Deferred();
+      var url = this.layerObject.url;
+      this._request(url).then(lang.hitch(this, function(result) {
+        def.resolve(result);
+      }), function(err) {
+        console.error(err.message || err);
+        def.resolve(null);
+      });
+      return def;
+    },
+
     _getSublayerDefinition: function(subId) {
       var def;
       if (this._sublayerIdent.definitions[subId]) {
@@ -418,9 +428,10 @@ esriRequest, LayerInfoFactory) {
       }
     },
 
+    // about all layer and table
     _allLayerAndTableServer: function(subId) {
       var def = new Deferred();
-      var url = this.originOperLayer.url + '/layers';
+      var url = this.layerObject.url + '/layers';
       if(this._sublayerIdent.empty) {
         this._sublayerIdent.empty = false;
         this._request(url).then(lang.hitch(this, function(results) {
@@ -447,7 +458,7 @@ esriRequest, LayerInfoFactory) {
 
     _allLayerAndTable: function(subId) {
       var def = new Deferred();
-      var url = this.originOperLayer.url + '/' + subId;
+      var url = this.layerObject.url + '/' + subId;
       this._request(url).then(lang.hitch(this, function(result) {
         this._sublayerIdent.definitions[subId] = result;
         def.resolve(result);

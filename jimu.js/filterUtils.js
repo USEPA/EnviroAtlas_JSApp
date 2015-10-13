@@ -19,11 +19,12 @@ define(['dojo/_base/declare',
   'dojo/_base/array',
   'dojo/date/locale',
   'esri/lang',
-  'dojo/data/ItemFileWriteStore'
+  'dojo/data/ItemFileWriteStore',
+  'jimu/utils'
 ],
-function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
+function(declare, lang, array, locale, esriLang, ItemFileWriteStore, jimuUtils) {
   //refer FilterDlg.js
-  return declare([],{
+  return declare([], {
     _stringFieldType: 'esriFieldTypeString',
     _dateFieldType: 'esriFieldTypeDate',
     _numberFieldTypes: ['esriFieldTypeSmallInteger',
@@ -114,9 +115,24 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
       dateOperatorNotInTheLast:'dateOperatorNotInTheLast'
     },
 
+    isAskForValues: function(partsObj){
+      var result = false;
+      var parts = partsObj.parts;
+      result = array.some(parts, lang.hitch(this, function(item) {
+        if (item.parts) {
+          return array.some(item.parts, lang.hitch(this, function(part) {
+            return !!part.interactiveObj;
+          }));
+        } else {
+          return !!item.interactiveObj;
+        }
+      }));
+      return result;
+    },
+
     setFieldsStoreByFieldInfos: function(allFieldsInfos){
-      var fieldsInfos = array.filter(allFieldsInfos, lang.hitch(this,function(fieldInfo){
-        return  this._supportFieldTypes.indexOf(fieldInfo.type) >= 0;
+      var fieldsInfos = array.filter(allFieldsInfos, lang.hitch(this, function(fieldInfo){
+        return this._supportFieldTypes.indexOf(fieldInfo.type) >= 0;
       }));
       var items = array.map(fieldsInfos, function(fieldInfo, idx){
         var shortType;
@@ -172,7 +188,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
       console.log(string);
       for (var k = 0; k < string.length; k++) {
         console.log(string.charCodeAt(k));
-      }    
+      }
       */
       for (var i = 0; i < string.length; i++) {
         if (string.charCodeAt(i) > 255) {
@@ -180,14 +196,35 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         }
       }
       return false;
-      
+
     },
 
     /**************************************************/
     /****  stringify                               ****/
     /**************************************************/
     //builtCompleteFilter
+    //1. if return null, it means partsObj is not invalid because some part is null.
+    //2. if return Object but the expr property is empty, it means 'Ask for values' option
+    //is checked and some values are missing, so it can't build a filter string.
+    //3. if return Object and the expr property is not null,
+    //it means it builds a valid filter string.
     getExprByFilterObj: function(partsObj) {
+      //check part if valid or not, if part is null, it is invalid
+      var isValidParts = array.every(partsObj.parts, function(part){
+        return !!part;
+      });
+      if(!isValidParts){
+        return null;
+      }
+
+      //before build filter string, we need to check it is ready or not to build
+      //because user maybe check 'Ask for values' option and place empty value(s)
+      if(!this.isPartsObjReadyToBuild(partsObj)){
+        partsObj.expr = "";
+        return partsObj.expr;
+      }
+
+      //real code to build filter string
       var filterString = "";
       if(partsObj.parts.length === 0){
         filterString = "1=1";
@@ -208,6 +245,74 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
       }
       partsObj.expr = filterString;
       return filterString;
+    },
+
+    //check it is ready or not to build filter string by askForValues opiton
+    isPartsObjReadyToBuild: function(partsObj){
+      var isReady = array.every(partsObj.parts, lang.hitch(this, function(part){
+        var result;
+        if(part.parts){
+          result = array.every(part.parts, lang.hitch(this, function(subPart){
+            return this._isPartReadyToBuild(subPart);
+          }));
+        }else{
+          result = this._isPartReadyToBuild(part);
+        }
+        return result;
+      }));
+      return isReady;
+    },
+
+    _isPartReadyToBuild: function(part){
+      var shortType = part.fieldObj.shortType;
+      var operator = part.operator;
+      var valueObj = part.valueObj;
+      var valueType = valueObj.type;
+      var value = valueObj.value;
+      var value1 = valueObj.value1;
+      var value2 = valueObj.value2;
+
+      if (valueType === 'value') {
+        if (shortType === 'string') {
+          if (operator === this.OPERATORS.stringOperatorIsBlank ||
+            operator === this.OPERATORS.stringOperatorIsNotBlank) {
+            return true;
+          } else {
+            return jimuUtils.isNotEmptyString(value);
+          }
+        } else if (shortType === 'number') {
+          if(operator === this.OPERATORS.numberOperatorIsBlank ||
+             operator === this.OPERATORS.numberOperatorIsNotBlank){
+            return true;
+          }else if(operator === this.OPERATORS.numberOperatorIsBetween ||
+                  operator === this.OPERATORS.numberOperatorIsNotBetween){
+            return jimuUtils.isValidNumber(value1) && jimuUtils.isValidNumber(value2);
+          }else{
+            return jimuUtils.isValidNumber(value);
+          }
+        } else if (shortType === 'date') {
+          if(operator === this.OPERATORS.dateOperatorIsBlank ||
+             operator === this.OPERATORS.dateOperatorIsNotBlank){
+            return true;
+          }
+          else if(operator === this.OPERATORS.dateOperatorIsBetween ||
+                  operator === this.OPERATORS.dateOperatorIsNotBetween){
+            return jimuUtils.isNotEmptyString(value1) && jimuUtils.isNotEmptyString(value2);
+          }else{
+            return jimuUtils.isNotEmptyString(value);
+          }
+        }
+      }else if(valueType === 'field'){
+        return jimuUtils.isNotEmptyString(value);
+      }else if(valueType === 'unique'){
+        if(shortType === 'string'){
+          return jimuUtils.isNotEmptyString(value);
+        }else if(shortType === 'number'){
+          return jimuUtils.isValidNumber(value);
+        }
+      }
+
+      return false;
     },
 
     builtFilterString: function(partsObj) {
@@ -251,11 +356,11 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
 
       var parameterizeValues = false;
       if (part.interactiveObj) {
-        if (!part.interactiveObj.prompt || !part.interactiveObj.hint) {
+        /*if (!part.interactiveObj.prompt || !part.interactiveObj.hint) {
           return {
             whereClause: null
           };
-        }
+        }*/
         if (esriLang.isDefined(parameterizeCount)) {
           parameterizeValues = true;
           if (esriLang.isDefined(part.valueObj.value)) {
@@ -496,7 +601,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
     },
 
     formatDate: function(value){
-      // see also parseDate() 
+      // see also parseDate()
       // to bypass the locale dependent connector character format date and time separately
       var s1 = locale.format(value, {
         datePattern: "yyyy-MM-dd",
@@ -530,7 +635,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
 
       var obj = this.replaceStrings(defExpr);
       defExpr = obj.defExpr;
-      
+
       var partsObj = this.findParts(defExpr, "AND");
       if (partsObj.parts.length === 1) {
         partsObj = this.findParts(defExpr, "OR");
@@ -539,12 +644,12 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
           partsObj.logicalOperator = "AND";
         }
       }
-      
+
       // only 2 levels
       array.forEach(partsObj.parts, function(part){
         part.expr = part.expr.trim();
         if (part.expr.startsWith('(') && (part.expr.search(/\)$/) > -1)) {
-          // part.expr.endsWith(')') -> Invalid regular expression: /)$/: Unmatched ')' 
+          // part.expr.endsWith(')') -> Invalid regular expression: /)$/: Unmatched ')'
           // (field = 1 AND field = 2)
           // (field = 1) AND (field = 2)
           var str = part.expr.substring(1, part.expr.length - 1);
@@ -554,7 +659,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
             part.expr = str;
           }
         }
-        
+
         var subPartsObj = this.findParts(part.expr, "AND");
         if (subPartsObj.parts.length === 1) {
           subPartsObj = this.findParts(part.expr, "OR");
@@ -564,18 +669,49 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
           part.logicalOperator = subPartsObj.logicalOperator;
         }
       }, this);
-      
+
       this.parseExpr(partsObj);
-      
+
       this.reReplaceStrings(obj, partsObj);
-      
-      // console.log(dojo.json.stringify(partsObj));
+
+      if(partsObj && partsObj.parts){
+        array.forEach(partsObj.parts, lang.hitch(this, function(partOrParts){
+          if(partOrParts){
+            if(partOrParts.parts){
+              array.forEach(partOrParts, lang.hitch(this, function(singlePart){
+                this._handleParsedPartValue(singlePart);
+              }));
+            }else{
+              this._handleParsedPartValue(partOrParts);
+            }
+          }
+        }));
+      }
+
       return partsObj;
+    },
+
+    _handleParsedPartValue: function(singlePart){
+      if(singlePart){
+        if(singlePart.fieldObj && singlePart.fieldObj.shortType === 'number'){
+          if(singlePart.valueObj){
+            if(singlePart.valueObj.hasOwnProperty('value')){
+              singlePart.valueObj.value = parseFloat(singlePart.valueObj.value);
+            }
+            if(singlePart.valueObj.hasOwnProperty('value1')){
+              singlePart.valueObj.value1 = parseFloat(singlePart.valueObj.value1);
+            }
+            if(singlePart.valueObj.hasOwnProperty('value2')){
+              singlePart.valueObj.value2 = parseFloat(singlePart.valueObj.value2);
+            }
+          }
+        }
+      }
     },
 
     replaceStrings: function(defExpr){
       var origDefExpr = defExpr;
-      
+
       // remove all strings from defExpr so parsing is easier
       // 'Bob' / '''Bob' / 'Bob''' / 'Bob''Fred' / ''
       var getEnd = function(defExpr, start, pos){
@@ -604,7 +740,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         }
         return end;
       };
-      
+
       var savedStrings = [];
       var pos = defExpr.indexOf("'");
       while (pos > -1) {
@@ -612,22 +748,22 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         var end = defExpr.indexOf("'", pos + 1);
         var endAdd = 0;
         end = getEnd(defExpr, start, end);
-        if (defExpr[start+1] === '%') {
+        if (defExpr[start + 1] === '%') {
           start++;
         }
-        if (defExpr[end-1] === '%') {
-          end = end-1;
+        if (defExpr[end - 1] === '%') {
+          end = end - 1;
           endAdd++;
         }
         var string = defExpr.substring(start + 1, end);
-        
+
         // non-latin strings have to start with N; supported only on hosted FS
-        if (defExpr[start-1] === 'N') {
-          defExpr = defExpr.substring(0,start-1) + defExpr.substring(start);
-          start = start-1;
-          end = end -1;
+        if (defExpr[start - 1] === 'N') {
+          defExpr = defExpr.substring(0, start - 1) + defExpr.substring(start);
+          start = start - 1;
+          end = end - 1;
         }
-      
+
         if (!this.isDateString(string) && string.indexOf("{") === -1) {
           // no dates and no parameterized values
           savedStrings.push(string);
@@ -638,7 +774,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
           pos = defExpr.indexOf("'", end + 1 + endAdd);
         }
       }
-      
+
       return {
         origDefExpr: origDefExpr,
         defExpr: defExpr,
@@ -651,7 +787,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
       if (!savedStrings.length) {
         return;
       }
-      
+
       if (savedStrings.length) {
         // put the strings back in
         var replace = function(part, savedStrings){
@@ -662,7 +798,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
           var end = part.valueObj.value.lastIndexOf("#");
           if (esriLang.isDefined(part.valueObj.value) && start > -1) {
             part.valueObj.value =
-              savedStrings[parseInt(part.valueObj.value.substring(start+1, end),10)]
+              savedStrings[parseInt(part.valueObj.value.substring(start + 1, end), 10)]
               .replace(/\'\'/g, "'");
             this.builtSingleFilterString(part);
             return true;
@@ -670,7 +806,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
           return false;
         };
         replace = lang.hitch(this, replace);
-        
+
         var replaced = false;
         array.forEach(partsObj.parts, function(part){
           if (part.parts) {
@@ -721,8 +857,8 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
       while (pos > 0) {
         var str = defExpr.substring(lastPos, pos);
         var lowerStr = str.toLowerCase();
-        // TODO don't count parenthesis within a string ....     
-        // TODO don't check between within a string ....     
+        // TODO don't count parenthesis within a string ....
+        // TODO don't check between within a string ....
         var oB = str.count('(');
         var cB = str.count(')');
         // single quotes within a string are used as 2 single quotes
@@ -743,7 +879,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
       parts.push({
         expr: defExpr.substring(lastPos)
       });
-      
+
       // make sure all parts have operators; if not add the part to the previous part
       var len = parts.length;
       for (var i = len - 1; i >= 0; i--) {
@@ -752,7 +888,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
           parts.splice(i, 1);
         }
       }
-      
+
       return {
         expr: defExpr,
         parts: parts,
@@ -762,7 +898,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
 
     hasOperator: function(str){
       str = str.toLowerCase();
-      
+
       if (str.indexOf("{") > -1 && str.indexOf("}") > -1) {
         // parameterized def Expr
         return true;
@@ -838,7 +974,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
             return null;
           }
 
-          part.expr = part.expr.replace(/^UPPER\((.*)\)\s+/i, fieldName+' ');
+          part.expr = part.expr.replace(/^UPPER\((.*)\)\s+/i, fieldName + ' ');
           part.expr = part.expr.replace(/UPPER\(N?'(.*)'\)$/i, value);
           part.caseSensitive = false;
           //return part;
@@ -897,7 +1033,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
       });
       str = str.substring(pos + 1).trim();
       var lStr = str.toLowerCase();
-      
+
       if (lStr.startsWith("= ")) {
 
         if (part.fieldObj.shortType === "date" && !this.isHosted) {
@@ -915,7 +1051,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         } else { // number
           part.operator = this.OPERATORS.numberOperatorIs;
         }
-        
+
       } else if (lStr.startsWith("< ")) {
         if (part.fieldObj.shortType === "date" && !this.isHosted) {
           // < timestamp '20014-01-01'
@@ -923,7 +1059,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         } else {
           str = str.substring(2).trim();
         }
-      
+
         this.storeValue(str, part);//this.storeValue(str.substring(2).trim(), part);
         if (part.fieldObj.shortType === "date") {
           part.operator = this.OPERATORS.dateOperatorIsBefore;
@@ -935,7 +1071,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
             code: 3
           };
         }
-        
+
       } else if (lStr.startsWith("> ")) {
         if (part.fieldObj.shortType === "date" && !this.isHosted) {
           // > timestamp '20014-01-01'
@@ -943,7 +1079,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         } else {
           str = str.substring(2).trim();
         }
-      
+
         this.storeValue(str, part);//this.storeValue(str.substring(2).trim(), part);
         if (part.fieldObj.shortType === "date") {
           part.operator = this.OPERATORS.dateOperatorIsAfter;
@@ -955,7 +1091,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
             code: 3
           };
         }
-        
+
       } else if (lStr.startsWith("<> ")) {
         if (part.fieldObj.shortType === "date" && !this.isHosted) {
           // <> timestamp '20014-01-01'
@@ -963,7 +1099,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         } else {
           str = str.substring(3).trim();
         }
-      
+
         this.storeValue(str, part);//this.storeValue(str.substring(3).trim(), part);
         if (part.fieldObj.shortType === "date") {
           part.operator = this.OPERATORS.dateOperatorIsNotOn;
@@ -972,19 +1108,19 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         } else { // number
           part.operator = this.OPERATORS.numberOperatorIsNot;
         }
-        
+
       } else if (lStr.startsWith("<= ")) {
-      
+
         this.storeValue(str.substring(3).trim(), part);
         part.operator = this.OPERATORS.numberOperatorIsAtMost;
-        
+
       } else if (lStr.startsWith(">= ")) {
-      
+
         this.storeValue(str.substring(3).trim(), part);
         part.operator = this.OPERATORS.numberOperatorIsAtLeast;
-        
+
       } else if (lStr.startsWith("like ")) {
-      
+
         // only string fields
         str = str.substring(5).trim();
         if (str.startsWith('N\'')) {
@@ -1005,9 +1141,9 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
             code: 3
           };
         }
-        
+
       } else if (lStr.startsWith("not like ")) {
-      
+
         // only string fields
         str = str.substring(9).trim();
         if (str.startsWith('N\'')) {
@@ -1023,7 +1159,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
             code: 3
           };
         }
-        
+
       } else if (lStr.startsWith("between ")) {
 
         if (part.fieldObj.shortType === "date" && !this.isHosted) {
@@ -1032,7 +1168,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         } else {
           str = str.substring(8).trim();
         }
-      
+
         pos = str.toLowerCase().indexOf(" and ");
         if (pos > -1) {
           this.storeValue1(str.substring(0, pos).trim(), part);
@@ -1048,7 +1184,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
             code: 3
           };
         }
-        
+
         if (part.fieldObj.shortType === "date") {
           if (typeof part.valueObj.value1 === "string") {
             // interactive placeholder
@@ -1070,7 +1206,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
             code: 3
           };
         }
-        
+
       } else if (lStr.startsWith("not between ")) {
 
         if (part.fieldObj.shortType === "date" && !this.isHosted) {
@@ -1079,7 +1215,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         } else {
           str = str.substring(12).trim();
         }
-      
+
         pos = str.toLowerCase().indexOf(" and ");
         if (pos > -1) {
           this.storeValue1(str.substring(0, pos).trim(), part);
@@ -1095,7 +1231,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
             code: 3
           };
         }
-        
+
         if (part.fieldObj.shortType === "date") {
           if (typeof part.valueObj.value1 === "string") {
             // interactive placeholder
@@ -1117,9 +1253,9 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
             code: 3
           };
         }
-        
+
       } else if (lStr === "is null") {
-      
+
         part.valueObj.value = null;
         if (part.fieldObj.shortType === "date") {
           part.operator = this.OPERATORS.dateOperatorIsBlank;
@@ -1128,9 +1264,9 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         } else { // number
           part.operator = this.OPERATORS.numberOperatorIsBlank;
         }
-        
+
       } else if (lStr === "is not null") {
-      
+
         part.valueObj.value = null;
         if (part.fieldObj.shortType === "date") {
           part.operator = this.OPERATORS.dateOperatorIsNotBlank;
@@ -1139,14 +1275,14 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         } else { // number
           part.operator = this.OPERATORS.numberOperatorIsNotBlank;
         }
-        
+
       } else {
         part.error = {
           msg: "unknown operator (" + lStr + ")",
           code: 2
         };
       }
-      
+
       if ((esriLang.isDefined(part.valueObj.value) && (typeof part.valueObj.value === "string") &&
         part.valueObj.value.startsWith("{") && part.valueObj.value.endsWith("}")) ||
       (esriLang.isDefined(part.valueObj.value1) && (typeof part.valueObj.value1 === "string") &&
@@ -1187,7 +1323,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
     },
 
     storeValue: function(str, part){
-    
+
       if (str.startsWith('{') && str.endsWith('}')) {
         // interactive placeholder
         part.valueObj.value = str;
@@ -1198,7 +1334,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         if (str.startsWith('\'') && str.endsWith('\'')) {
           var dateStr = str.substring(1, str.length - 1);
           part.valueObj.value = this.parseDate(dateStr);
-          //console.log("dateStr "+dateStr+" to Date "+part.valueObj.value.toString());        
+          //console.log("dateStr "+dateStr+" to Date "+part.valueObj.value.toString());
         } else {
           part.valueObj.value = str;
           part.valueObj.type = 'field';
@@ -1240,10 +1376,10 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         }
       }
     },
-    
+
     storeValue1: function(str, part){
       // not for string fields
-      
+
       if (str.startsWith('{') && str.endsWith('}')) {
         // interactive placeholder
         part.valueObj.value1 = str;
@@ -1254,7 +1390,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         if (str.startsWith('\'') && str.endsWith('\'')) {
           var dateStr = str.substring(1, str.length - 1);
           part.valueObj.value1 = this.parseDate(dateStr);
-          //console.log("dateStr "+dateStr+" to Date "+part.valueObj.value.toString());        
+          //console.log("dateStr "+dateStr+" to Date "+part.valueObj.value.toString());
         } else {
           part.valueObj.value1 = str;
           part.valueObj.type = 'field';
@@ -1266,10 +1402,10 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         }
       }
     },
-    
+
     storeValue2: function(str, part){
       // not for string fields
-      
+
       if (str.startsWith('{') && str.endsWith('}')) {
         // interactive placeholder
         part.valueObj.value2 = str;
@@ -1280,7 +1416,7 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         if (str.startsWith('\'') && str.endsWith('\'')) {
           var dateStr = str.substring(1, str.length - 1);
           part.valueObj.value2 = this.parseDate(dateStr);
-          //console.log("dateStr "+dateStr+" to Date "+part.valueObj.value.toString());        
+          //console.log("dateStr "+dateStr+" to Date "+part.valueObj.value.toString());
         } else {
           part.valueObj.value2 = str;
           part.valueObj.type = 'field';
@@ -1304,12 +1440,12 @@ function(declare, lang, array, locale, esriLang, ItemFileWriteStore) {
         timePattern: "HH:mm:ss"
       });
       if (!date) {
-        date = locale.parse(strValue.replace(" ",", "), {
+        date = locale.parse(strValue.replace(" ", ", "), {
           datePattern: "yyyy-MM-dd",
           timePattern: "HH:mm:ss"
         });
         if (!date) {
-          date = locale.parse(strValue.replace(" "," - "), {
+          date = locale.parse(strValue.replace(" ", " - "), {
             datePattern: "yyyy-MM-dd",
             timePattern: "HH:mm:ss"
           });

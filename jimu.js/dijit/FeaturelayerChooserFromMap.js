@@ -14,43 +14,31 @@
 // limitations under the License.
 ///////////////////////////////////////////////////////////////////////////
 
-define(['dojo/_base/declare',
-  './_BasicLayerChooserFromMap',
-  'dojo/_base/html',
-  'dojo/_base/lang',
-  'dojo/_base/array',
-  'dojo/promise/all',
-  'jimu/utils'
+define([
+  'dojo/_base/declare',
+  './LayerChooserFromMap',
+  'dojo/_base/html'
 ],
-function(declare, _BasicLayerChooserFromMap, html, lang, array, all, jimuUtils) {
-  return declare([_BasicLayerChooserFromMap], {
+function(declare, LayerChooserFromMap, html) {
+  return declare([LayerChooserFromMap], {
     baseClass: 'jimu-featurelayer-chooser-from-map',
     declaredClass: 'jimu.dijit.FeaturelayerChooserFromMap',
-    _leafType: 'Feature Layer',
-    _layerTypes: ['esri.layers.FeatureLayer',
-                  'esri.layers.ArcGISDynamicMapServiceLayer',
-                  'esri.layers.ArcGISTiledMapServiceLayer'],
-
 
     //options:
-    createMapResponse: null,
-    multiple: false,
     types: null,//available values:['point','polyline','polygon']
+    showLayerFromFeatureSet: false,
 
     //public methods:
-    //getSelectedItems return [{name,url}]
+    //getSelectedItems return [{name, url, layerInfo}]
 
-    //methods need to override:
-    //getSelectedItems
-    //_validateBeforeAddItem
-    //_getIconImageName
-    //_mayHaveChildren
-    //_onTreeOpen
-    //_onTreeClick
+    //methods need to be override:
+    //getHandledItem
+    //filter
 
     postMixInProperties:function(){
       this.inherited(arguments);
-      this._initTypes();
+      this.filter = LayerChooserFromMap.createFeaturelayerFilter(this.types,
+                                                                 this.showLayerFromFeatureSet);
     },
 
     postCreate: function(){
@@ -58,209 +46,15 @@ function(declare, _BasicLayerChooserFromMap, html, lang, array, all, jimuUtils) 
       html.addClass(this.domNode, 'jimu-basic-layer-chooser-from-map');
     },
 
-    //to be override
-    getSelectedItems: function(){
-      var items = this.inherited(arguments);
-      items = array.map(items, lang.hitch(this, function(item){
-        var layerObject = item && item.layerInfo && item.layerInfo.layerObject;
-        var url = (layerObject && layerObject.url) || '';
-        var name = (item && item.name) || '';
-        return {
-          url: url,
-          name: name
-        };
-      }));
-      return items;
-    },
-
-    _initTypes: function(){
-      var allTypes = ['point','polyline','polygon'];
-      if(this.types && this.types.length > 0){
-        this.types = array.filter(this.types, lang.hitch(this,function(type){
-          return allTypes.indexOf(type) >= 0;
-        }));
-        if(this.types.length === 0){
-          this.types = allTypes;
-        }
-      }
-      else{
-        this.types = allTypes;
-      }
-    },
-
-    _validateBeforeAddItem: function(layerInfo){
-      if(layerInfo) {
-        var layerObject = layerInfo.layerObject;
-        if(layerObject) {
-          if(layerObject.declaredClass === 'esri.layers.ArcGISDynamicMapServiceLayer'){
-            return true;
-          }
-          if(layerObject.declaredClass === 'esri.layers.ArcGISTiledMapServiceLayer'){
-            return true;
-          }
-          if(layerObject.type === 'Group Layer'){
-            return true;
-          }
-          if(layerObject.type === 'Feature Layer') {
-            var geoType = jimuUtils.getTypeByGeometryType(layerObject.geometryType);
-            //if layerObject.url exists, it means it it not FeatureCollection
-            var isValidUrl = layerObject.url && typeof layerObject.url === 'string';
-            var isValidGeoType = array.indexOf(this.types, geoType) >= 0;
-            if(isValidUrl && isValidGeoType) {
-              var isSupportQuery = false;
-              var isFeatureService = (/\/featureserver\//gi).test(layerObject.url);
-              var isMapService = (/\/mapserver\//gi).test(layerObject.url);
-              var capabilities = layerObject.capabilities || '';
-              capabilities = capabilities.toLowerCase();
-              if(isFeatureService) {
-                isSupportQuery = capabilities.indexOf('query') >= 0;
-              }
-              else if(isMapService) {
-                isSupportQuery = capabilities.indexOf('data') >= 0;
-              }
-              return isSupportQuery;
-            } else {
-              return false;
-            }
-          }
-        }
-      }
-      
-      return false;
-    },
-
-    //to be override
-    _getIconImageName: function(item, opened){
-      var imageName = '';
-      var layerObject = item.layerInfo.layerObject;
-      var layerClass = item.layerClass;
-      var type = item.type;
-      if(type === 'Group Layer'){
-        if(opened){
-          imageName = 'group_layer2.png';
-        }
-        else{
-          imageName = 'group_layer1.png';
-        }
-      }
-      else{
-        if(layerClass === 'esri.layers.ArcGISDynamicMapServiceLayer'){
-          if (opened) {
-            imageName = 'mapserver_open.png';
-          } else {
-            imageName = 'mapserver_close.png';
-          }
-        }
-        else if(layerClass === 'esri.layers.ArcGISTiledMapServiceLayer'){
-          if (opened) {
-            imageName = 'mapserver_open.png';
-          } else {
-            imageName = 'mapserver_close.png';
-          }
-        }
-        else if(layerClass === 'esri.layers.FeatureLayer'){
-          var geoType = jimuUtils.getTypeByGeometryType(layerObject.geometryType);
-          if(geoType === 'point'){
-            imageName = 'point_layer1.png';
-          }
-          else if(geoType === 'polyline'){
-            imageName = 'line_layer1.png';
-          }
-          else if(geoType === 'polygon'){
-            imageName = 'polygon_layer1.png';
-          }
-        }
-      }
-      return imageName;
-    },
-
-    //to be override
-    _mayHaveChildren: function(item){
-      return item.type !== this._leafType;
-    },
-
-    //to be override
-    _onTreeOpen: function(item, node){/*jshint unused: false*/
-      if(item.id === 'root'){
-        return;
-      }
-      if(node.item.checking || node.item.checked){
-        return;
-      }
-      var children = this._store.query({parent:item.id});
-      if(children.length > 0){
-        return;
-      }
-      var layerInfo = item.layerInfo;
-      var layerObject = layerInfo.layerObject;
-      var layerClass = item.layerClass;
-      var subLayerInfos = [];
-      var defs = [];
-      if(layerClass === 'esri.layers.ArcGISDynamicMapServiceLayer' ||
-         layerClass === 'esri.layers.ArcGISTiledMapServiceLayer'){
-        subLayerInfos = layerInfo.getSubLayers();
-        if(subLayerInfos.length === 0){
-          node.item.checking = false;
-          node.item.checked = true;
-          return;
-        }
-        node.item.checking = true;
-        this.shelter.show();
-        defs = array.map(subLayerInfos, lang.hitch(this, function(subLayerInfo){
-          return subLayerInfo.getLayerObject();
-        }));
-        all(defs).then(lang.hitch(this, function(){
-          if(!this.domNode){
-            return;
-          }
-          this.shelter.hide();
-          node.item.checking = false;
-          node.item.checked = true;
-          array.forEach(subLayerInfos, lang.hitch(this, function(subLayerInfo){
-            this._addItem(item.id, subLayerInfo);
-          }));
-        }),lang.hitch(this, function(err){
-          console.error(err);
-          if(!this.domNode){
-            return;
-          }
-          this.shelter.hide();
-          node.item.checking = false;
-          node.item.checked = true;
-        }));
-      }
-      else if(layerObject.type === 'Group Layer'){
-        subLayerInfos = layerInfo.getSubLayers();
-        if(subLayerInfos.length === 0){
-          node.item.checking = false;
-          node.item.checked = true;
-          return;
-        }
-        node.item.checking = true;
-        this.shelter.show();
-        defs = array.map(subLayerInfos, lang.hitch(this, function(subLayerInfo){
-          return subLayerInfo.getLayerObject();
-        }));
-        all(defs).then(lang.hitch(this, function(){
-          if(!this.domNode){
-            return;
-          }
-          this.shelter.hide();
-          node.item.checking = false;
-          node.item.checked = true;
-          array.forEach(subLayerInfos, lang.hitch(this, function(subLayerInfo){
-            this._addItem(item.id, subLayerInfo);
-          }));
-        }), lang.hitch(this, function(err){
-          console.error(err);
-          if(!this.domNode){
-            return;
-          }
-          this.shelter.hide();
-          node.item.checking = false;
-          node.item.checked = true;
-        }));
-      }
+    //both getSelectedItems and getAllItems return [{name, url, layerInfo}]
+    //return [{name, url, layerInfo}], if featurecollection, url is empty
+    getHandledItem: function(item){
+      var result = this.inherited(arguments);
+      var layerInfo = item && item.layerInfo;
+      var layerObject = layerInfo && layerInfo.layerObject;
+      var url = (layerObject && layerObject.url) || '';
+      result.url = url;
+      return result;
     }
 
   });

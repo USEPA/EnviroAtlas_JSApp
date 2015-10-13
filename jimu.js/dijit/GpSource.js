@@ -32,7 +32,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
   template, lang, html, on, Evented, GpChooserFromPortal,
   _GpServiceChooserContent, portalUrlUtils) {
 
-  return declare([_WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin, Evented], {
+  return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
     templateString: template,
     baseClass: 'jimu-gp-source',
     declaredClass: 'jimu.dijit.GpSource',
@@ -40,7 +40,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
 
     //common options:
     multiple: false,
-    
+
     //GpChooserFromPortal options
     portalUrl: null,
 
@@ -106,12 +106,12 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       this.gpcPortal.operationTip = this.nls.chooseItem;
       this.gpcPortal.placeAt(this.hflcContainer);
 
-      this.own(on(this.gpcPortal, 'next',lang.hitch(this, function(){
-        this.gpcPortal.operationTip = this.nls.chooseItem +" -> " + this.nls.chooseTask;
+      this.own(on(this.gpcPortal, 'next', lang.hitch(this, function(){
+        this.gpcPortal.operationTip = this.nls.chooseItem + " -> " + this.nls.chooseTask;
         this._updateOperationTip();
       })));
 
-      this.own(on(this.gpcPortal, 'back',lang.hitch(this, function(){
+      this.own(on(this.gpcPortal, 'back', lang.hitch(this, function(){
         this.gpcPortal.operationTip = this.nls.chooseItem;
         this._updateOperationTip();
       })));
@@ -126,7 +126,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         this.emit('cancel');
       })));
 
-      var portalUrl = this.portalUrl||'';
+      var portalUrl = this.portalUrl || '';
       if(portalUrl.toLowerCase().indexOf('.arcgis.com') >= 0){
         this.portalLabel.innerHTML = this.nls.selectFromOnline;
       }
@@ -161,17 +161,17 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     _initRadios: function(){
       var name = "gpSourceRadios_" + this._getRandomString();
       this.portalRadio.name = name;
-      html.setAttr(this.portalRadio, 'id', "portalRadio_"+this._getRandomString());
+      html.setAttr(this.portalRadio, 'id', "portalRadio_" + this._getRandomString());
       html.setAttr(this.portalLabel, 'for', this.portalRadio.id);
 
       this.urlRadio.name = name;
-      html.setAttr(this.urlRadio, 'id', "urlRadio_"+this._getRandomString());
+      html.setAttr(this.urlRadio, 'id', "urlRadio_" + this._getRandomString());
       html.setAttr(this.urlLabel, 'for', this.urlRadio.id);
     },
 
     _getRandomString: function(){
       var str = Math.random().toString();
-      str = str.slice(2,str.length);
+      str = str.slice(2, str.length);
       return str;
     },
 

@@ -40,11 +40,11 @@ define([
   'dijit/form/NumberTextBox',
   'jimu/dijit/SymbolChooser'
 ],
-function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
+function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
   template, lang, html, array, on, query, gfx, Color,
   symbolUtils, rendererUtils, SimpleRenderer, UniqueValueRenderer,
   ClassBreaksRenderer, jsonUtils, SimpleMarkerSymbol) {
-  return declare([_WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin], {
+  return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
     templateString:template,
     baseClass: 'jimu-renderer-chooser',
     declaredClass: 'jimu.dijit.RendererChooser',
@@ -60,24 +60,24 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
     //reset
 
     _uniqueColors:{
-      color1:['#fce138','#fff799','#fcd27e','#f1983c',
-              '#a553b7','#b1a9d0','#6ecffc','#4c81cd',
-              '#fc6f84','#fc3e5a','#69f488','#48885c'],
-      color2:['#102432','#144d59','#ffc754','#ea9010',
-              '#a54e1d','#661510','#d8341a','#b31515',
-              '#4a0932','#8c213f','#18382e','#2c6954'],
-      color3:['#be9626','#607100','#00734c','#704489',
-              '#01acca','#024e76','#f09100','#ea311f',
-              '#c6004b','#7570b3','#666666','#333333'],
-      color4:['#fffa00','#f5cb11','#9fd40c','#46e29c',
-              '#32b8a6','#7ff2fa','#ad00f2','#c461ea',
-              '#eb7200','#e8a784','#bf2e2e','#6c7000'],
-      color5:['#191921','#11495c','#78b1c2','#454f4b',
-              '#8f8f82','#99dbbc','#87b051','#f7ec88',
-              '#ebdcc1','#dbb658','#c43541','#75351e'],
-      color6:['#332424','#751555','#d47013','#d68989',
-              '#211173','#82aad6','#7bfaeb','#6ec9a8',
-              '#6b6408','#e9da40','#ccc54a','#1fc235']
+      color1:['#fce138', '#fff799', '#fcd27e', '#f1983c',
+              '#a553b7', '#b1a9d0', '#6ecffc', '#4c81cd',
+              '#fc6f84', '#fc3e5a', '#69f488', '#48885c'],
+      color2:['#102432', '#144d59', '#ffc754', '#ea9010',
+              '#a54e1d', '#661510', '#d8341a', '#b31515',
+              '#4a0932', '#8c213f', '#18382e', '#2c6954'],
+      color3:['#be9626', '#607100', '#00734c', '#704489',
+              '#01acca', '#024e76', '#f09100', '#ea311f',
+              '#c6004b', '#7570b3', '#666666', '#333333'],
+      color4:['#fffa00', '#f5cb11', '#9fd40c', '#46e29c',
+              '#32b8a6', '#7ff2fa', '#ad00f2', '#c461ea',
+              '#eb7200', '#e8a784', '#bf2e2e', '#6c7000'],
+      color5:['#191921', '#11495c', '#78b1c2', '#454f4b',
+              '#8f8f82', '#99dbbc', '#87b051', '#f7ec88',
+              '#ebdcc1', '#dbb658', '#c43541', '#75351e'],
+      color6:['#332424', '#751555', '#d47013', '#d68989',
+              '#211173', '#82aad6', '#7bfaeb', '#6ec9a8',
+              '#6b6408', '#e9da40', '#ccc54a', '#1fc235']
     },
     _classBreaksColors:{
       color1: ['#eaf0fd', '#03519e'],
@@ -120,11 +120,15 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
     postCreate:function(){
       this.inherited(arguments);
       this._initFields();
-      this.own(on(this.rendererSelect,'change',lang.hitch(this,this._onRendererSelectChange)));
-      this.own(on(this.btnDefaultSym,'click',lang.hitch(this,this._showDefaultSymbol)));
-      this.own(on(this.defaultSymbolChooser,'change',lang.hitch(this,this._onDefaultSymbolChange)));
+      this.own(on(this.rendererSelect, 'change', lang.hitch(this, this._onRendererSelectChange)));
+      this.own(on(this.btnDefaultSym, 'click', lang.hitch(this, this._showDefaultSymbol)));
+      this.own(on(this.defaultSymbolChooser,
+                  'change',
+                  lang.hitch(this, this._onDefaultSymbolChange)));
       this.own(
-        on(this.selectedSymbolChooser,'change',lang.hitch(this,this._onSelectedSymbolChange))
+        on(this.selectedSymbolChooser,
+           'change',
+           lang.hitch(this, this._onSelectedSymbolChange))
       );
       this._bindUniqueSettingEvents();
       this._bindClassBreaksEvents();
@@ -163,12 +167,12 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
       html.setStyle(this.domNode, 'display', 'block');
       this.renderer = renderer;
       this.type = null;
-      var defaultSymbol = this.renderer && (this.renderer.defaultSymbol||this.renderer.symbol);
+      var defaultSymbol = this.renderer && (this.renderer.defaultSymbol || this.renderer.symbol);
       this._setDefaultSymbol(defaultSymbol);
       this._updateRendererSelect();
 
       if(rendererUtils.isSimpleRenderer(this.renderer)){
-        this.rendererSelect.set('value','simple');
+        this.rendererSelect.set('value', 'simple');
       }
       else if(rendererUtils.isUniqueValueRenderer(this.renderer)){
         this._showUniqueValueRenderer(this.renderer);
@@ -241,7 +245,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
         else{
           symbolNode = symbolUtils.createSymbolNode(newSymbol);
         }
-        
+
         if(symbolNode){
           html.place(symbolNode, this.defaultSymPreviewDiv);
         }
@@ -268,7 +272,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
     _initFields:function(){
       if(this.fields && this.fields.length > 0){
         var first = '';
-        array.forEach(this.fields,lang.hitch(this,function(field){
+        array.forEach(this.fields, lang.hitch(this, function(field){
           if(field && typeof field === 'string'){
             if(!first){
               first = field;
@@ -277,7 +281,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
           }
         }));
         if(first && !this.fieldComboBox.get('displayedValue')){
-          this.fieldComboBox.set('displayedValue',first);
+          this.fieldComboBox.set('displayedValue', first);
         }
       }
     },
@@ -289,72 +293,72 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
     _onRendererSelectChange:function(){
       var value = this.rendererSelect.get('value');
       if(value === 'simple'){
-        html.setStyle(this.fieldSelectTr,'display','none');
-        html.setStyle(this.colorBlockTr,'display','none');
-        html.setStyle(this.colorBarTr,'display','none');
-        html.setStyle(this.domainTr,'display','none');
-        html.setStyle(this.classCountTr,'display','none');
-        html.setStyle(this.uniqueSetting,'display','none');
-        html.setStyle(this.classBreaksSetting,'display','none');
+        html.setStyle(this.fieldSelectTr, 'display', 'none');
+        html.setStyle(this.colorBlockTr, 'display', 'none');
+        html.setStyle(this.colorBarTr, 'display', 'none');
+        html.setStyle(this.domainTr, 'display', 'none');
+        html.setStyle(this.classCountTr, 'display', 'none');
+        html.setStyle(this.uniqueSetting, 'display', 'none');
+        html.setStyle(this.classBreaksSetting, 'display', 'none');
         html.setStyle(this.defaultSymPreview, 'display', 'none');
-        html.setStyle(this.symbolSizeDomainTr,'display','none');
+        html.setStyle(this.symbolSizeDomainTr, 'display', 'none');
       }
       else if(value === 'unique'){
-        html.setStyle(this.fieldSelectTr,'display','table-row');
-        html.setStyle(this.colorBlockTr,'display','table-row');
-        html.setStyle(this.colorBarTr,'display','none');
-        html.setStyle(this.domainTr,'display','none');
-        html.setStyle(this.classCountTr,'display','none');
-        html.setStyle(this.uniqueSetting,'display','block');
-        html.setStyle(this.classBreaksSetting,'display','none');
+        html.setStyle(this.fieldSelectTr, 'display', 'table-row');
+        html.setStyle(this.colorBlockTr, 'display', 'table-row');
+        html.setStyle(this.colorBarTr, 'display', 'none');
+        html.setStyle(this.domainTr, 'display', 'none');
+        html.setStyle(this.classCountTr, 'display', 'none');
+        html.setStyle(this.uniqueSetting, 'display', 'block');
+        html.setStyle(this.classBreaksSetting, 'display', 'none');
         html.setStyle(this.defaultSymPreview, 'display', 'block');
-        html.setStyle(this.symbolSizeDomainTr,'display','none');
+        html.setStyle(this.symbolSizeDomainTr, 'display', 'none');
         this._updateUniqueValueDivVisibility();
       }
       else if(value === 'color'){
-        html.setStyle(this.fieldSelectTr,'display','table-row');
-        html.setStyle(this.colorBlockTr,'display','none');
-        html.setStyle(this.classCountTr,'display','table-row');
-        html.setStyle(this.domainTr,'display','table-row');
-        html.setStyle(this.colorBarTr,'display','table-row');
-        html.setStyle(this.uniqueSetting,'display','none');
+        html.setStyle(this.fieldSelectTr, 'display', 'table-row');
+        html.setStyle(this.colorBlockTr, 'display', 'none');
+        html.setStyle(this.classCountTr, 'display', 'table-row');
+        html.setStyle(this.domainTr, 'display', 'table-row');
+        html.setStyle(this.colorBarTr, 'display', 'table-row');
+        html.setStyle(this.uniqueSetting, 'display', 'none');
         html.setStyle(this.defaultSymPreview, 'display', 'block');
-        html.setStyle(this.symbolSizeDomainTr,'display','none');
+        html.setStyle(this.symbolSizeDomainTr, 'display', 'none');
         this._updateClassBreaksSettingVisibility();
       }
       else if(value === 'size'){
-        html.setStyle(this.fieldSelectTr,'display','table-row');
-        html.setStyle(this.colorBlockTr,'display','none');
-        html.setStyle(this.colorBarTr,'display','none');
-        html.setStyle(this.domainTr,'display','table-row');
-        html.setStyle(this.classCountTr,'display','table-row');
-        html.setStyle(this.uniqueSetting,'display','none');
+        html.setStyle(this.fieldSelectTr, 'display', 'table-row');
+        html.setStyle(this.colorBlockTr, 'display', 'none');
+        html.setStyle(this.colorBarTr, 'display', 'none');
+        html.setStyle(this.domainTr, 'display', 'table-row');
+        html.setStyle(this.classCountTr, 'display', 'table-row');
+        html.setStyle(this.uniqueSetting, 'display', 'none');
         html.setStyle(this.defaultSymPreview, 'display', 'block');
-        html.setStyle(this.symbolSizeDomainTr,'display','table-row');
+        html.setStyle(this.symbolSizeDomainTr, 'display', 'table-row');
         this._updateClassBreaksSettingVisibility();
       }
     },
 
     _showDefaultSymbol:function(){
-      html.setStyle(this.defaultSymSection,'display','block');
-      html.setStyle(this.selectedSymSection,'display','none');
+      html.setStyle(this.defaultSymSection, 'display', 'block');
+      html.setStyle(this.selectedSymSection, 'display', 'none');
     },
 
     _showSelectedSymbol:function(symbol){
-      html.setStyle(this.defaultSymSection,'display','none');
-      html.setStyle(this.selectedSymSection,'display','block');
+      html.setStyle(this.defaultSymSection, 'display', 'none');
+      html.setStyle(this.selectedSymSection, 'display', 'block');
       var value = this.rendererSelect.get('value');
       if(value === 'simple'){
-        html.setStyle(this.uniqueSelectedSymInfoSet,'display','none');
-        html.setStyle(this.classBreaksSelectedInfoSet,'display','none');
+        html.setStyle(this.uniqueSelectedSymInfoSet, 'display', 'none');
+        html.setStyle(this.classBreaksSelectedInfoSet, 'display', 'none');
       }
       else if(value === 'unique'){
-        html.setStyle(this.uniqueSelectedSymInfoSet,'display','block');
-        html.setStyle(this.classBreaksSelectedInfoSet,'display','none');
+        html.setStyle(this.uniqueSelectedSymInfoSet, 'display', 'block');
+        html.setStyle(this.classBreaksSelectedInfoSet, 'display', 'none');
       }
       else if(value === 'color' || value === 'size'){
-        html.setStyle(this.uniqueSelectedSymInfoSet,'display','none');
-        html.setStyle(this.classBreaksSelectedInfoSet,'display','block');
+        html.setStyle(this.uniqueSelectedSymInfoSet, 'display', 'none');
+        html.setStyle(this.classBreaksSelectedInfoSet, 'display', 'block');
       }
       this.selectedSymbolChooser.showBySymbol(symbol);
     },
@@ -381,7 +385,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
       return clone;
     },
 
-    _drawSymbolPreview:function(previewNode,sym){
+    _drawSymbolPreview:function(previewNode, sym){
       var node = previewNode;
       var symbol = this._cloneSymbol(sym);
 
@@ -415,7 +419,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
       var surface = gfx.createSurface(node, sWidth, sHeight);
       if (gfx.renderer === "vml") {
         // Fixes an issue in IE where the shape is partially drawn and
-        // positioned to the right of the table cell  
+        // positioned to the right of the table cell
         var source = surface.getEventSource();
         html.setStyle(source, "position", "relative");
         html.setStyle(source.parentNode, "position", "relative");
@@ -471,33 +475,33 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
 
     /* unique symbols */
     _bindUniqueSettingEvents:function(){
-      this.own(on(this.btnAddUniqueValue,'click',lang.hitch(this,this._onAddUniqueValue)));
+      this.own(on(this.btnAddUniqueValue, 'click', lang.hitch(this, this._onAddUniqueValue)));
       this.own(
-        on(this.uniqueSelectedValue,'change',lang.hitch(this,this._onUniqueSelectedValueChange))
+        on(this.uniqueSelectedValue, 'change', lang.hitch(this, this._onUniqueSelectedValueChange))
       );
       this.own(
-        on(this.uniqueSelectedLabel,'change',lang.hitch(this,this._onUniqueSelectedLabelChange))
+        on(this.uniqueSelectedLabel, 'change', lang.hitch(this, this._onUniqueSelectedLabelChange))
       );
       this.own(
-        on(this.uniqueColorSelect,'change',lang.hitch(this,this._onUniqueColorSelectChange))
+        on(this.uniqueColorSelect, 'change', lang.hitch(this, this._onUniqueColorSelectChange))
       );
     },
 
     _showUniqueValueRenderer:function(renderer){
-      this.rendererSelect.set('value','unique');
-      this.fieldComboBox.set('displayedValue',renderer.attributeField);
+      this.rendererSelect.set('value', 'unique');
+      this.fieldComboBox.set('displayedValue', renderer.attributeField);
       html.empty(this.uniqueSysTbody);
-      array.forEach(renderer.infos,lang.hitch(this,function(info){
-        this._addUniqueValueTr(info.symbol,info.value,info.label||info.value);
+      array.forEach(renderer.infos, lang.hitch(this, function(info){
+        this._addUniqueValueTr(info.symbol, info.value, info.label || info.value);
       }));
     },
 
     _getUniqueValueRenderer:function(){
       var defaultSym = this.defaultSymbolChooser.getSymbol();
       var field = this.fieldComboBox.get('value');
-      var renderer = new UniqueValueRenderer(defaultSym,field);
-      var trs = query('.unique-symbol-tr',this.uniqueSysTbody);
-      array.forEach(trs,lang.hitch(this,function(tr){
+      var renderer = new UniqueValueRenderer(defaultSym, field);
+      var trs = query('.unique-symbol-tr', this.uniqueSysTbody);
+      array.forEach(trs, lang.hitch(this, function(tr){
         renderer.addValue({
           value: tr.value,
           symbol: tr.symbol,
@@ -510,15 +514,15 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
 
     _onUniqueColorSelectChange:function(){
       var colors = this._getSelectedUniqueColors();
-      var trs = query('.unique-symbol-tr',this.uniqueSysTbody);
-      array.forEach(trs,lang.hitch(this,function(tr,index){
+      var trs = query('.unique-symbol-tr', this.uniqueSysTbody);
+      array.forEach(trs, lang.hitch(this, function(tr, index){
         if(tr.symbol){
           if(!(symbolUtils.isPictureMarkerSymbol(tr.symbol))){
             var idx = index % colors.length;
             var color = colors[idx];
             tr.symbol.setColor(color);
-            var symbolDiv = query('.symbol-div',tr)[0];
-            this._drawSymbolPreview(symbolDiv,tr.symbol);
+            var symbolDiv = query('.symbol-div', tr)[0];
+            this._drawSymbolPreview(symbolDiv, tr.symbol);
             if(this._selectedUniqueValueTr === tr){
               this._showSelectedSymbol(tr.symbol);
             }
@@ -532,7 +536,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
       if(tr){
         tr.value = this.uniqueSelectedValue.value;
         tr.label = this.uniqueSelectedLabel.value;
-        var labelDiv = query('.label-div',tr)[0];
+        var labelDiv = query('.label-div', tr)[0];
         labelDiv.innerHTML = tr.label;
       }
     },
@@ -541,7 +545,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
       var tr = this._selectedUniqueValueTr;
       if(tr){
         tr.label = this.uniqueSelectedLabel.value;
-        var labelDiv = query('.label-div',tr)[0];
+        var labelDiv = query('.label-div', tr)[0];
         labelDiv.innerHTML = tr.label;
       }
     },
@@ -552,11 +556,11 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
         return;
       }
       tr.symbol = newSymbol;
-      var symbolDiv = query('.symbol-div',tr)[0];
+      var symbolDiv = query('.symbol-div', tr)[0];
       if(!symbolDiv){
         return;
       }
-      this._drawSymbolPreview(symbolDiv,newSymbol);
+      this._drawSymbolPreview(symbolDiv, newSymbol);
     },
 
     _onAddUniqueValue:function(){
@@ -572,31 +576,31 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
       this.uniqueEditValue.value = '';
     },
 
-    _addUniqueValueTr:function(symbol,value,label){
+    _addUniqueValueTr:function(symbol, value, label){
       value = lang.trim(value);
       var s = '';
-      s='<tr class="unique-symbol-tr">'+
-          '<td class="symbol-td">'+
-            '<div class="symbol-div"></div>'+
-          '</td>'+
-          '<td class="edit-td">'+
-            '<div wrap class="label-div"></div>'+
-          '</td>'+
-          '<td class="delete-td">'+
-            '<div class="delete-div"></div>'+
-          '</td>'+
+      s = '<tr class="unique-symbol-tr">' +
+          '<td class="symbol-td">' +
+            '<div class="symbol-div"></div>' +
+          '</td>' +
+          '<td class="edit-td">' +
+            '<div wrap class="label-div"></div>' +
+          '</td>' +
+          '<td class="delete-td">' +
+            '<div class="delete-div jimu-icon jimu-icon-delete"></div>' +
+          '</td>' +
         '</tr>';
       var trDom = html.toDom(s);
-      html.place(trDom,this.uniqueSysTbody);
+      html.place(trDom, this.uniqueSysTbody);
       this._updateUniqueSymTableStyle();
-      var symbolDiv = query('.symbol-div',trDom)[0];
-      var labelDiv = query('.label-div',trDom)[0];
-      var deleteDiv = query('.delete-div',trDom)[0];
+      var symbolDiv = query('.symbol-div', trDom)[0];
+      var labelDiv = query('.label-div', trDom)[0];
+      var deleteDiv = query('.delete-div', trDom)[0];
       labelDiv.innerHTML = value;
-      this.own(on(trDom,'click',lang.hitch(this,function(){
+      this.own(on(trDom, 'click', lang.hitch(this, function(){
         this._selectUniqueValueTr(trDom);
       })));
-      this.own(on(deleteDiv,'click',lang.hitch(this,function(event){
+      this.own(on(deleteDiv, 'click', lang.hitch(this, function(event){
         event.stopPropagation();
         if(this._selectedUniqueValueTr === trDom){
           this._selectedUniqueValueTr = null;
@@ -605,17 +609,17 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
         this._updateUniqueSymTableStyle();
         this._updateUniqueValueDivVisibility();
       })));
-      this._drawSymbolPreview(symbolDiv,symbol);
+      this._drawSymbolPreview(symbolDiv, symbol);
       trDom.symbol = symbol;
       trDom.value = value;
       trDom.label = label;
       this._selectUniqueValueTr(trDom);
-      html.setStyle(this.uniqueValueDiv,'display','block');
+      html.setStyle(this.uniqueValueDiv, 'display', 'block');
     },
 
     _selectUniqueValueTr:function(tr){
-      query('.unique-symbol-tr',this.uniqueSysTbody).removeClass('selected');
-      html.addClass(tr,'selected');
+      query('.unique-symbol-tr', this.uniqueSysTbody).removeClass('selected');
+      html.addClass(tr, 'selected');
       this._selectedUniqueValueTr = tr;
       this.uniqueSelectedValue.value = tr.value;
       this.uniqueSelectedLabel.value = tr.label;
@@ -628,7 +632,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
     _getSelectedUniqueColors:function(){
       var value = this.uniqueColorSelect.get('value');
       var strColors = this._uniqueColors[value];
-      var colors = array.map(strColors,lang.hitch(this,function(str){
+      var colors = array.map(strColors, lang.hitch(this, function(str){
         return new Color(str);
       }));
       return colors;
@@ -656,84 +660,84 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
         symbol = jsonUtils.fromJson(sym.toJson());
         symbol.setColor(color);
       }
-      
+
       return symbol;
     },
 
     _updateUniqueValueDivVisibility:function(){
-      var trs = query('.unique-symbol-tr',this.uniqueSysTbody);
+      var trs = query('.unique-symbol-tr', this.uniqueSysTbody);
       var display = trs.length === 0 ? 'none' : 'block';
-      html.setStyle(this.uniqueValueDiv,'display',display);
+      html.setStyle(this.uniqueValueDiv, 'display', display);
     },
 
     /* class breaks renderer */
     _bindClassBreaksEvents:function(){
-      this.own(on(this.minDomain,'change',lang.hitch(this,this._updateClassBreaksTable)));
-      this.own(on(this.maxDomain,'change',lang.hitch(this,this._updateClassBreaksTable)));
-      this.own(on(this.classCount,'change',lang.hitch(this,this._updateClassBreaksTable)));
-      this.own(on(this.selectedFrom,'change',lang.hitch(this,this._onSelectedRangeChange)));
-      this.own(on(this.selectedTo,'change',lang.hitch(this,this._onSelectedRangeChange)));
+      this.own(on(this.minDomain, 'change', lang.hitch(this, this._updateClassBreaksTable)));
+      this.own(on(this.maxDomain, 'change', lang.hitch(this, this._updateClassBreaksTable)));
+      this.own(on(this.classCount, 'change', lang.hitch(this, this._updateClassBreaksTable)));
+      this.own(on(this.selectedFrom, 'change', lang.hitch(this, this._onSelectedRangeChange)));
+      this.own(on(this.selectedTo, 'change', lang.hitch(this, this._onSelectedRangeChange)));
       this.own(
         on(this.classBreakSelectedLabel,
           'change',
-          lang.hitch(this,this._onClassBreakSelectedLabelChange))
+          lang.hitch(this, this._onClassBreakSelectedLabelChange))
       );
       //color
       this.own(
         on(this.classBreaksColorSelect,
           'change',
-          lang.hitch(this,this._updateClassBreaksTable))
+          lang.hitch(this, this._updateClassBreaksTable))
       );
       //size
-      this.own(on(this.minSymbolSize,'change',lang.hitch(this,this._updateClassBreaksTable)));
-      this.own(on(this.maxSymbolSize,'change',lang.hitch(this,this._updateClassBreaksTable)));
+      this.own(on(this.minSymbolSize, 'change', lang.hitch(this, this._updateClassBreaksTable)));
+      this.own(on(this.maxSymbolSize, 'change', lang.hitch(this, this._updateClassBreaksTable)));
     },
 
     _showClassBreaksRenderer:function(renderer){
       this._isDrawing = true;
-      this.rendererSelect.set('value','color');
+      this.rendererSelect.set('value', 'color');
       var min = Infinity, max = -Infinity;
-      this.fieldComboBox.set('displayedValue',renderer.attributeField);
-      this.classCount.set('value',renderer.infos.length);
+      this.fieldComboBox.set('displayedValue', renderer.attributeField);
+      this.classCount.set('value', renderer.infos.length);
       html.empty(this.classBreaksTbody);
-      array.forEach(renderer.infos,lang.hitch(this,function(info){
+      array.forEach(renderer.infos, lang.hitch(this, function(info){
         var minValue = info.minValue;
         var maxValue = info.maxValue;
         var symbol = info.symbol;
         var label = info.label ? info.label : info.minValue + ' —— ' + info.maxValue;
-        this._addClassBreaksTr(symbol,minValue,maxValue,label);
-        min = Math.min(min,minValue);
-        max = Math.max(max,maxValue);
+        this._addClassBreaksTr(symbol, minValue, maxValue, label);
+        min = Math.min(min, minValue);
+        max = Math.max(max, maxValue);
       }));
-      this.minDomain.set('value',min);
-      this.maxDomain.set('value',max);
+      this.minDomain.set('value', min);
+      this.maxDomain.set('value', max);
 
       if(this.type === 'marker'){
         var minSymSize = Infinity, maxSymSize = -Infinity;
-        array.forEach(renderer.infos,lang.hitch(this,function(info){
+        array.forEach(renderer.infos, lang.hitch(this, function(info){
           var symbol = info.symbol;
           var symbolSize = symbolUtils.isPictureMarkerSymbol(symbol) ? symbol.width : symbol.size;
-          minSymSize = Math.min(symbolSize,minSymSize);
-          maxSymSize = Math.max(symbolSize,maxSymSize);
+          minSymSize = Math.min(symbolSize, minSymSize);
+          maxSymSize = Math.max(symbolSize, maxSymSize);
         }));
-        this.minSymbolSize.set('value',minSymSize);
-        this.maxSymbolSize.set('value',maxSymSize);
+        this.minSymbolSize.set('value', minSymSize);
+        this.maxSymbolSize.set('value', maxSymSize);
         if(this.minSymSize !== this.maxSymSize){
-          this.rendererSelect.set('value','size');
+          this.rendererSelect.set('value', 'size');
         }
       }
       var that = this;
       setTimeout(function(){
         that._isDrawing = false;
-      },1000);
+      }, 1000);
     },
 
     _getClassBreaksRenderer:function(){
       var defaultSym = this.defaultSymbolChooser.getSymbol();
       var field = this.fieldComboBox.get('value');
-      var renderer = new ClassBreaksRenderer(defaultSym,field);
-      var trs = query('.class-breaks-tr',this.classBreaksTbody);
-      array.forEach(trs,lang.hitch(this,function(tr){
+      var renderer = new ClassBreaksRenderer(defaultSym, field);
+      var trs = query('.class-breaks-tr', this.classBreaksTbody);
+      array.forEach(trs, lang.hitch(this, function(tr){
         renderer.addBreak({
           minValue: tr.from,
           maxValue: tr.to,
@@ -748,8 +752,8 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
       var tr = this._selectedClassBreakTr;
       if(tr){
         tr.symbol = newSymbol;
-        var symbolDiv = query('.symbol-div',tr)[0];
-        this._drawSymbolPreview(symbolDiv,newSymbol);
+        var symbolDiv = query('.symbol-div', tr)[0];
+        this._drawSymbolPreview(symbolDiv, newSymbol);
       }
     },
 
@@ -760,8 +764,8 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
         var temp = from;
         from = to;
         to = temp;
-        this.selectedFrom.set('value',from);
-        this.selectedTo.set('value',to);
+        this.selectedFrom.set('value', from);
+        this.selectedTo.set('value', to);
       }
       var tr = this._selectedClassBreakTr;
       if(tr){
@@ -770,7 +774,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
         var label = from + " — " + to;
         tr.label = label;
         this.classBreakSelectedLabel.value = label;
-        var labelDiv = query('.label-div',tr)[0];
+        var labelDiv = query('.label-div', tr)[0];
         labelDiv.innerHTML = label;
       }
     },
@@ -780,7 +784,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
       if(tr){
         var label = this.classBreakSelectedLabel.value;
         tr.label = label;
-        var labelDiv = query('.label-div',tr)[0];
+        var labelDiv = query('.label-div', tr)[0];
         labelDiv.innerHTML = label;
       }
     },
@@ -789,7 +793,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
       if(this._isDrawing){
         return;
       }
-      html.setStyle(this.classBreaksSetting,'display','none');
+      html.setStyle(this.classBreaksSetting, 'display', 'none');
       html.empty(this.classBreaksTbody);
       var min = parseFloat(this.minDomain.get('value'));
       var max = parseFloat(this.maxDomain.get('value'));
@@ -797,8 +801,8 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
         var temp = min;
         min = max;
         max = temp;
-        this.minDomain.set('value',min);
-        this.maxDomain.set('value',max);
+        this.minDomain.set('value', min);
+        this.maxDomain.set('value', max);
       }
       else if(min === max){
         return;
@@ -809,14 +813,14 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
         var temp2 = minSymSize;
         minSymSize = maxSymSize;
         maxSymSize = temp2;
-        this.minSymbolSize.set('value',minSymSize);
-        this.maxSymbolSize.set('value',maxSymSize);
+        this.minSymbolSize.set('value', minSymSize);
+        this.maxSymbolSize.set('value', maxSymSize);
       }
-      var count = parseInt(this.classCount.get('value'),10);
-      var interval = (max-min)/count;
+      var count = parseInt(this.classCount.get('value'), 10);
+      var interval = (max - min) / count;
       var nums = [];//length=count+1
       var i;
-      for(i=0;i<=count;i++){
+      for(i = 0; i <= count; i++){
         var num = min + interval * i;
         num = parseFloat(num.toFixed(4));
         nums.push(num);
@@ -827,61 +831,61 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
         symbols = this._createColorClassBreaksSymbols(count);
       }
       else if(rendererType === 'size'){
-        symbols = this._createSizeClassBreaksSymbols(count,minSymSize,maxSymSize);
+        symbols = this._createSizeClassBreaksSymbols(count, minSymSize, maxSymSize);
       }
       //create count tr
-      for(i=0;i<count;i++){
+      for(i = 0; i < count; i++){
         var from = nums[i];
-        var to = nums[i+1];
+        var to = nums[i + 1];
         var label = from + " — " + to;
-        this._addClassBreaksTr(symbols[i],from,to,label);
+        this._addClassBreaksTr(symbols[i], from, to, label);
       }
       this._updateClassBreaksSettingVisibility();
     },
 
     _selectClassBreaksTr:function(tr){
-      var trs = query('.class-breaks-tr',this.classBreaksTbody);
+      var trs = query('.class-breaks-tr', this.classBreaksTbody);
       trs.removeClass('selected');
-      html.addClass(tr,'selected');
+      html.addClass(tr, 'selected');
       this._selectedClassBreakTr = tr;
       var symbol = tr.symbol;
       var from = parseFloat(tr.from);
       var to = parseFloat(tr.to);
       var label = tr.label;
-      this.selectedFrom.set('value',from);
-      this.selectedTo.set('value',to);
+      this.selectedFrom.set('value', from);
+      this.selectedTo.set('value', to);
       this.classBreakSelectedLabel.value = label;
       this._showSelectedSymbol(symbol);
     },
 
-    _addClassBreaksTr:function(symbol,from,to,label){
+    _addClassBreaksTr:function(symbol, from, to, label){
       var s = '';
-      s='<tr class="class-breaks-tr">'+
-          '<td class="symbol-td">'+
-            '<div class="symbol-div"></div>'+
-          '</td>'+
-          '<td class="label-td">'+
-            '<div wrap class="label-div"></div>'+
-          '</td>'+
-          '<td class="delete-td">'+
-            '<div class="delete-div"></div>'+
-          '</td>'+
+      s = '<tr class="class-breaks-tr">' +
+          '<td class="symbol-td">' +
+            '<div class="symbol-div"></div>' +
+          '</td>' +
+          '<td class="label-td">' +
+            '<div wrap class="label-div"></div>' +
+          '</td>' +
+          '<td class="delete-td">' +
+            '<div class="delete-div jimu-icon jimu-icon-delete"></div>' +
+          '</td>' +
         '</tr>';
       var tr = html.toDom(s);
-      html.place(tr,this.classBreaksTbody);
+      html.place(tr, this.classBreaksTbody);
       tr.symbol = symbol;
       tr.from = from;
       tr.to = to;
       tr.label = label;
-      var symbolDiv = query('.symbol-div',tr)[0];
-      var labelDiv = query('.label-div',tr)[0];
-      var deleteDiv = query('.delete-div',tr)[0];
-      this._drawSymbolPreview(symbolDiv,symbol);
+      var symbolDiv = query('.symbol-div', tr)[0];
+      var labelDiv = query('.label-div', tr)[0];
+      var deleteDiv = query('.delete-div', tr)[0];
+      this._drawSymbolPreview(symbolDiv, symbol);
       labelDiv.innerHTML = label;
-      this.own(on(tr,'click',lang.hitch(this,function(){
+      this.own(on(tr, 'click', lang.hitch(this, function(){
         this._selectClassBreaksTr(tr);
       })));
-      this.own(on(deleteDiv,'click',lang.hitch(this,function(event){
+      this.own(on(deleteDiv, 'click', lang.hitch(this, function(event){
         event.stopPropagation();
         if(this._selectClassBreaksTr === tr){
           this._selectClassBreaksTr = null;
@@ -891,22 +895,22 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
       })));
       this._updateClassBreaksTableStyle();
       this._showDefaultSymbol();
-      html.setStyle(this.classBreaksSetting,'display','block');
+      html.setStyle(this.classBreaksSetting, 'display', 'block');
     },
 
     _updateClassBreaksTableStyle:function(){},
 
     _updateClassBreaksSettingVisibility:function(){
-      var trs = query('.class-breaks-tr',this.classBreaksTbody);
+      var trs = query('.class-breaks-tr', this.classBreaksTbody);
       var display = trs.length === 0 ? 'none' : 'block';
-      html.setStyle(this.classBreaksSetting,'display',display);
+      html.setStyle(this.classBreaksSetting, 'display', display);
     },
 
     //color
     _createColorClassBreaksSymbols:function(count){
       var symbols = [];
       var colors = this._createClassBreaksColors(count);
-      for(var i=0;i<count;i++){
+      for(var i = 0; i < count; i++){
         var color = colors[i];
         var sym = null;
         if(this.type === 'marker'){
@@ -940,25 +944,25 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
       var c = this._classBreaksColors[value];
       var c1 = new Color(c[0]);
       var c2 = new Color(c[1]);
-      var deltaR = Math.floor((c2.r - c1.r)/count);
-      var deltaG = Math.floor((c2.g - c1.g)/count);
-      var deltaB = Math.floor((c2.b - c1.b)/count);
-      for(var i=0;i<count;i++){
+      var deltaR = Math.floor((c2.r - c1.r) / count);
+      var deltaG = Math.floor((c2.g - c1.g) / count);
+      var deltaB = Math.floor((c2.b - c1.b) / count);
+      for(var i = 0; i < count; i++){
         var r = c1.r + deltaR * i;
         var g = c1.g + deltaG * i;
         var b = c1.b + deltaB * i;
-        var color = new Color([r,g,b,255]);
+        var color = new Color([r, g, b, 255]);
         colors.push(color);
       }
       return colors;
     },
 
     //size
-    _createSizeClassBreaksSymbols:function(count,minSymSize,maxSymSize){
+    _createSizeClassBreaksSymbols:function(count, minSymSize, maxSymSize){
       var defaultSym = this.defaultSymbolChooser.getSymbol();
       var symbols = [];
-      var interval = (maxSymSize-minSymSize)/(count-1);
-      for(var i=0;i<count;i++){
+      var interval = (maxSymSize - minSymSize) / (count - 1);
+      for(var i = 0; i < count; i++){
         var size = Math.round(minSymSize + interval * i);
         var jsonSym = defaultSym.toJson();
         var sym = jsonUtils.fromJson(jsonSym);

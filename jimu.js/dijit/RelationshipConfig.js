@@ -23,9 +23,9 @@ define(['dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/_base/array'
 ],
-function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
+function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
   template, domConstruct, lang, array) {
-  return declare([_WidgetBase,_TemplatedMixin,_WidgetsInTemplateMixin], {
+  return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
     _def:null,
     declaredClass: 'jimu.dijit.RelationshipConfig',
     baseClass:'jimu-single-filter',
@@ -48,7 +48,7 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
         fields:[]
       };
       var trs = this.fieldsTable.getRows();
-      array.forEach(trs,lang.hitch(this,function(tr){
+      array.forEach(trs, lang.hitch(this, function(tr){
         var rowData = this.fieldsTable.getRowData(tr);
         if (rowData.visibility) {
           config.fields.push({
@@ -72,7 +72,9 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
     setTitle: function(val){
       this.title = val;
       domConstruct.empty(this.titleLabel);
-      domConstruct.create('div',{innerHTML:val},this.titleLabel);
+      domConstruct.create('div', {
+        innerHTML: val
+      }, this.titleLabel);
     },
 
     clear:function(){
@@ -87,19 +89,19 @@ function(declare, _WidgetBase, _TemplatedMixin,_WidgetsInTemplateMixin,
         array.forEach(this.fields, lang.hitch(this, function(fieldInfo) {
           var visible = false;
           if(visibleFields instanceof Array &&
-            array.indexOf(visibleFields,fieldInfo.name) >= 0){
+            array.indexOf(visibleFields, fieldInfo.name) >= 0){
             visible = true;
           }
-          this._addRow(fieldInfo,visible);
+          this._addRow(fieldInfo, visible);
         }));
       }
     },
 
-    _addRow:function(fieldInfo,visible){
+    _addRow:function(fieldInfo, visible){
       var rowData = {
         visibility: visible,
         name:fieldInfo.name,
-        alias:fieldInfo.alias||fieldInfo.name
+        alias:fieldInfo.alias || fieldInfo.name
       };
       var result = this.fieldsTable.addRow(rowData);
       if(result.success){

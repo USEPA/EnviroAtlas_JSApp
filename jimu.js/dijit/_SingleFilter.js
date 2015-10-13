@@ -71,6 +71,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
 
     toJson:function(){
       var part = null;
+      var isUseAskForvalues = this._isUseAskForValues();
       var fieldInfo = this._getSelectedFilteringItem(this.fieldsSelect);
       if(!fieldInfo){
         return null;
@@ -82,14 +83,11 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
         interactiveObj:'',
         caseSensitive: false
       };
-      if(this.cbxAskValues.status && this.cbxAskValues.checked){
+      if(isUseAskForvalues){
+        //prompt is required and hint is optional
         if(!this.promptTB.validate()){
           this._showValidationErrorTip(this.promptTB);
-          return;
-        }
-        if(!this.hintTB.validate()){
-          this._showValidationErrorTip(this.hintTB);
-          return;
+          return null;
         }
         part.interactiveObj = {
           prompt: this.promptTB.get('value'),
@@ -124,8 +122,13 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
                 this._showValidationErrorTip(this.stringCodedValuesFS);
                 return null;
               }
+              //stirngCodedItem maybe null
               var stirngCodedItem = this._getSelectedFilteringItem(this.stringCodedValuesFS);
-              part.valueObj.value = stirngCodedItem.code;
+              if(stirngCodedItem){
+                part.valueObj.value = stirngCodedItem.code;
+              }else{
+                part.valueObj.value = "";
+              }
             }
             else{
               if(!this.stringTextBox.validate()){
@@ -151,8 +154,10 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
               this._showValidationErrorTip(this.numberTextBox2);
               return null;
             }
-            part.valueObj.value1 = parseFloat(this.numberTextBox1.get('value'));
-            part.valueObj.value2 = parseFloat(this.numberTextBox2.get('value'));
+            part.valueObj.value1 = this._getValueForNumberTextBox(this.numberTextBox1);
+            part.valueObj.value2 = this._getValueForNumberTextBox(this.numberTextBox2);
+            part.valueObj.isValid = jimuUtils.isValidNumber(part.valueObj.value1) &&
+                                    jimuUtils.isValidNumber(part.valueObj.value2);
           }
           else{
             if(this._isFieldCoded(fieldInfo) && part.operator === this.OPERATORS.numberOperatorIs){
@@ -160,16 +165,22 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
                 this._showValidationErrorTip(this.numberCodedValuesFS);
                 return null;
               }
+              //numberCodedItem maybe null
               var numberCodedItem = this._getSelectedFilteringItem(this.numberCodedValuesFS);
-              part.valueObj.value = parseFloat(numberCodedItem.code);
+              if(numberCodedItem){
+                part.valueObj.value = parseFloat(numberCodedItem.code);
+              }else{
+                part.valueObj.value = null;
+              }
             }
             else{
               if(!this.numberTextBox.validate()){
                 this._showValidationErrorTip(this.numberTextBox);
                 return null;
               }
-              part.valueObj.value = parseFloat(this.numberTextBox.get('value'));
+              part.valueObj.value = this._getValueForNumberTextBox(this.numberTextBox);
             }
+            part.valueObj.isValid = jimuUtils.isValidNumber(part.valueObj.value);
           }
         }
         else if(shortType === 'date'){
@@ -212,16 +223,31 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       else if(this.uniqueRadio && this.uniqueRadio.checked){
         part.valueObj.type = 'unique';
         var uniqueItem = this._getSelectedFilteringItem(this.uniqueValuesSelect);
-        if(!uniqueItem){
+
+        /*if(!uniqueItem){
           this._showValidationErrorTip(this.uniqueValuesSelect);
           return null;
-        }
-        
-        if(shortType === 'string'){
-          part.valueObj.value = uniqueItem.value;
-        }
-        else if(shortType === 'number'){
-          part.valueObj.value = parseFloat(uniqueItem.value);
+        }*/
+
+        if(uniqueItem){
+          if(shortType === 'string'){
+            part.valueObj.value = uniqueItem.value;
+          }
+          else if(shortType === 'number'){
+            part.valueObj.value = parseFloat(uniqueItem.value);
+          }
+        }else{
+          if(isUseAskForvalues){
+            if(shortType === 'string'){
+              part.valueObj.value = "";
+            }else if(shortType === 'number'){
+              part.valueObj.value = null;
+              part.valueObj.isValid = false;
+            }
+          }else{
+            this._showValidationErrorTip(this.uniqueValuesSelect);
+            return null;
+          }
         }
       }
 
@@ -238,16 +264,16 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
           break;
         }
       }
-      
+
       return part;
     },
 
     showDelteIcon:function(){
-      html.setStyle(this.btnDelete,'display','inline-block');
+      html.setStyle(this.btnDelete, 'display', 'inline-block');
     },
 
     hideDeleteIcon:function(){
-      html.setStyle(this.btnDelete,'display','none');
+      html.setStyle(this.btnDelete, 'display', 'none');
     },
 
     _showCaseSensitive: function(){
@@ -258,6 +284,36 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       html.setStyle(this.cbxCaseSensitive.domNode, 'display', 'none');
     },
 
+    _getProcessedString: function(str){
+      if(jimuUtils.isNotEmptyString(str, true)){
+        return str;
+      }
+      return "";
+    },
+
+    _getProcessedNumber: function(num){
+      if(jimuUtils.isValidNumber(num)){
+        return num;
+      }
+      return null;
+    },
+
+    _setValueForStringTextBox: function(stringTextBox, str){
+      str = this._getProcessedString(str);
+      stringTextBox.set('value', str);
+    },
+
+    _setValueForNumberTextBox: function(numberTextBox, num){
+      if(jimuUtils.isValidNumber(num)){
+        numberTextBox.set('value', num);
+      }
+    },
+
+    _getValueForNumberTextBox: function(numberTextBox){
+      var value = numberTextBox.get('value');
+      return this._getProcessedNumber(value);
+    },
+
     _initSelf:function(){
       if(this.isHosted){
         this.cbxCaseSensitive.setValue(false);
@@ -265,12 +321,27 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
         this.cbxCaseSensitive.domNode.title = this.nls.notSupportCaseSensitiveTip;
       }
 
+      this.own(on(this.cbxAskValues,
+                  'status-change',
+                  lang.hitch(this, this._onCbxAskValuesStatusChanged)));
       this.cbxAskValues.onChange = lang.hitch(this, this._onCbxAskValuesClicked);
 
-      this.own(on(this.fieldsSelect, 'MouseEnter', lang.hitch(this, this._onEnterFieldsSelect)));
+      //update title for dijits when mouse enter
+      this.own(on(this.fieldsSelect,
+                  'MouseEnter',
+                  lang.hitch(this, this._updateFieldsSelectTitle)));
+      this.own(on(this.operatorsSelect,
+                  'MouseEnter',
+                  lang.hitch(this, this._updateOperatorsSelectTitle)));
+      this.own(on(this.dateTextBox1,
+                  'MouseEnter',
+                  lang.hitch(this, this._updateDateTextBox1Title)));
+      this.own(on(this.dateTextBox2,
+                  'MouseEnter',
+                  lang.hitch(this, this._updateDateTextBox2Title)));
 
       var store = new Memory({idProperty:'id', data:[]});
-      this.uniqueValuesSelect.set('store',store);
+      this.uniqueValuesSelect.set('store', store);
 
       if(this.enableAskForValues){
         html.setStyle(this.cbxAskValues.domNode, 'display', 'inline-block');
@@ -281,14 +352,15 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
         html.setStyle(this.promptSection, 'display', 'none');
       }
 
-      this.layerInfo = lang.mixin({},this.layerInfo);
+      this.layerInfo = lang.mixin({}, this.layerInfo);
       this._initRadios();
       var version = 0;
       if(this.layerInfo.currentVersion){
         version = parseFloat(this.layerInfo.currentVersion);
       }
-       
-      if (version < 10.1) {
+
+      //StreamServer doesn't provide API interface to get unique values
+      if (version < 10.1 || this._isStreamServer(this.url)) {
         html.destroy(this.uniqueTd);
         this.uniqueRadio = null;
       }
@@ -302,12 +374,40 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       }
     },
 
-    _onEnterFieldsSelect: function(){
+    _isStreamServer: function(url){
+      url = url || "";
+      url = url.replace(/\/*$/g, '');
+      var reg = /\/StreamServer$/gi;
+      return reg.test(url);
+    },
+
+    _updateFieldsSelectTitle: function(){
       this.fieldsSelect.domNode.title = "";
       var fieldInfo = this._getSelectedFilteringItem(this.fieldsSelect);
       if(fieldInfo){
-        this.fieldsSelect.domNode.title=fieldInfo.displayName||fieldInfo.alias||fieldInfo.name;
+        this.fieldsSelect.domNode.title = fieldInfo.displayName ||
+                                          fieldInfo.alias ||
+                                          fieldInfo.name;
       }
+    },
+
+    _updateOperatorsSelectTitle: function(){
+      this.operatorsSelect.domNode.title = "";
+      var value = this.operatorsSelect.get('value');
+      if(value){
+        var option = this.operatorsSelect.getOptions(value);
+        this.operatorsSelect.domNode.title = option.label;
+      }
+    },
+
+    _updateDateTextBox1Title: function(){
+      var title = this.dateTextBox1.get('displayedValue') || "";
+      this.dateTextBox1.domNode.title = title;
+    },
+
+    _updateDateTextBox2Title: function(){
+      var title = this.dateTextBox2.get('displayedValue') || "";
+      this.dateTextBox2.domNode.title = title;
     },
 
     _showValidationErrorTip:function(_dijit){
@@ -411,8 +511,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
     },
 
     _initFieldsSelect:function(fieldInfos){
-      var data = array.map(fieldInfos,lang.hitch(this,function(fieldInfo,index){
-        var item = lang.mixin({},fieldInfo);
+      var data = array.map(fieldInfos, lang.hitch(this, function(fieldInfo, index){
+        var item = lang.mixin({}, fieldInfo);
         item.id = index;
         item.shortType = this._getShortTypeByFieldType(fieldInfo.type);
         if(!item.alias){
@@ -431,11 +531,11 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
         item.displayName = item.alias + " (" + a + ")";
         return item;
       }));
-      
+
       if(data.length > 0){
         var store = new Memory({data:data});
-        this.fieldsSelect.set('store',store);
-        this.fieldsSelect.set('value',data[0].id);
+        this.fieldsSelect.set('store', store);
+        this.fieldsSelect.set('value', data[0].id);
       }
       this.fieldsSelect.focusNode.focus();
       this.fieldsSelect.focusNode.blur();
@@ -468,18 +568,18 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
         return;
       }
       this.fieldsSelect.set('value', fieldItem.id);
-      setTimeout(lang.hitch(this,function(){
+      setTimeout(lang.hitch(this, function(){
         if(!this.domNode){
           return;
         }
         this._onFieldsSelectChange();
         this.operatorsSelect.set('value', operator);
-        setTimeout(lang.hitch(this,function(){
+        setTimeout(lang.hitch(this, function(){
           if (!this.domNode) {
             return;
           }
           this._resetByFieldAndOperation(this.part);
-        }),50);
+        }), 50);
 
         setTimeout(lang.hitch(this, function() {
           if (!this.domNode) {
@@ -493,13 +593,14 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
             this.hintTB.set('value', interactiveObj.hint || '');
           }
         }), 100);
-        
-      }),0);
+
+      }), 0);
     },
 
     _onFieldsSelectChange:function(){
+      this._updateFieldsSelectTitle();
       this.operatorsSelect.removeOption(this.operatorsSelect.getOptions());
-      this.operatorsSelect.addOption({value:'none',label:this.nls.none});
+      this.operatorsSelect.addOption({value:'none', label:this.nls.none});
       this.valueRadio.checked = true;
       var fieldInfo = this._getSelectedFilteringItem(this.fieldsSelect);
       if (fieldInfo) {
@@ -508,24 +609,27 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
         this.operatorsSelect.removeOption(this.operatorsSelect.getOptions());
         array.forEach(operators, lang.hitch(this, function(operator) {
           var label = this.nls[operator];
-          this.operatorsSelect.addOption({value: operator,label: label});
+          this.operatorsSelect.addOption({value: operator, label: label});
         }));
       }
       this._onOperatorsSelectChange();
     },
 
     _onOperatorsSelectChange:function(){
+      this._updateOperatorsSelectTitle();
       this.valueRadio.checked = true;
       this._resetByFieldAndOperation();
     },
 
     _onRangeNumberBlur:function(){
       if(this.numberTextBox1.validate() && this.numberTextBox2.validate()){
-        var value1 = parseFloat(this.numberTextBox1.get('value'));
-        var value2 = parseFloat(this.numberTextBox2.get('value'));
-        if(value1 > value2){
-          this.numberTextBox1.set('value',value2);
-          this.numberTextBox2.set('value',value1);
+        var value1 = this._getValueForNumberTextBox(this.numberTextBox1);
+        var value2 = this._getValueForNumberTextBox(this.numberTextBox2);
+        if(jimuUtils.isValidNumber(value1) && jimuUtils.isValidNumber(value2)){
+          if(value1 > value2){
+            this._setValueForNumberTextBox(this.numberTextBox1, value2);
+            this._setValueForNumberTextBox(this.numberTextBox2, value1);
+          }
         }
       }
     },
@@ -537,28 +641,32 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
         var date2 = this.dateTextBox2.get('value');
         var time2 = date2.getTime();
         if(time1 > time2){
-          this.dateTextBox1.set('value',date2);
-          this.dateTextBox2.set('value',date1);
+          this.dateTextBox1.set('value', date2);
+          this.dateTextBox2.set('value', date1);
         }
       }
     },
 
     _initRadios:function(){
-      var group = "radio_"+Math.random();
+      var group = "radio_" + jimuUtils.getRandomString();
       this.valueRadio.name = group;
       this.fieldRadio.name = group;
 
-      this.own(on(this.valueRadio,'click',lang.hitch(this,function(){
+      jimuUtils.combineRadioCheckBoxWithLabel(this.valueRadio, this.valueLabel);
+      jimuUtils.combineRadioCheckBoxWithLabel(this.fieldRadio, this.fieldLabel);
+
+      this.own(on(this.valueRadio, 'click', lang.hitch(this, function(){
         this._resetByFieldAndOperation();
       })));
 
-      this.own(on(this.fieldRadio,'click',lang.hitch(this,function(){
+      this.own(on(this.fieldRadio, 'click', lang.hitch(this, function(){
         this._resetByFieldAndOperation();
       })));
 
       if(this.uniqueRadio){
         this.uniqueRadio.name = group;
-        this.own(on(this.uniqueRadio,'click',lang.hitch(this,function(){
+        jimuUtils.combineRadioCheckBoxWithLabel(this.uniqueRadio, this.uniqueLabel);
+        this.own(on(this.uniqueRadio, 'click', lang.hitch(this, function(){
           this._resetByFieldAndOperation();
         })));
       }
@@ -585,7 +693,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
     _resetByFieldAndOperation:function(/* optional */ part){
       //if part is not undefined, it means this function is invoked in postCreate
       var valueObj = part && part.valueObj;
-      html.setStyle(this.attributeValueContainer,'display','block');
+      html.setStyle(this.attributeValueContainer, 'display', 'block');
       this._enableRadios();
       this._hideCaseSensitive();
 
@@ -602,7 +710,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
           }
         }
       }
-      
+
       var fieldInfo = this._getSelectedFilteringItem(this.fieldsSelect);
       var shortType = fieldInfo && fieldInfo.shortType;
       var operator = this.operatorsSelect.get('value');
@@ -667,147 +775,160 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
                              shortType === 'number' ||
                              shortType === 'date';
       if(isShortTypeValid){
-        html.setStyle(this.attributeValueContainer,'display','block');
+        html.setStyle(this.attributeValueContainer, 'display', 'block');
       }
       else{
-        html.setStyle(this.attributeValueContainer,'display','none');
+        html.setStyle(this.attributeValueContainer, 'display', 'none');
         return;
       }
 
       if(this.valueRadio.checked){
-        html.setStyle(this.fieldsSelect2.domNode,'display','none');
-        html.setStyle(this.uniqueValuesSelect.domNode,'display','none');
+        html.setStyle(this.fieldsSelect2.domNode, 'display', 'none');
+        html.setStyle(this.uniqueValuesSelect.domNode, 'display', 'none');
         this._showAllValueBoxContainer();
         this._resetValueTextBox();
         if(shortType === 'string'){
-          html.setStyle(this.stringTextBoxContainer,'display','block');
-          html.setStyle(this.numberTextBoxContainer,'display','none');
-          html.setStyle(this.dateTextBoxContainer,'display','none');
+          html.setStyle(this.stringTextBoxContainer, 'display', 'block');
+          html.setStyle(this.numberTextBoxContainer, 'display', 'none');
+          html.setStyle(this.dateTextBoxContainer, 'display', 'none');
 
           if(this._isFieldCoded(fieldInfo) && operator === this.OPERATORS.stringOperatorIs){
-            html.setStyle(this.stringCodedValuesFS.domNode,'display','inline-block');
-            html.setStyle(this.stringTextBox.domNode,'display','none');
+            html.setStyle(this.stringCodedValuesFS.domNode, 'display', 'inline-block');
+            html.setStyle(this.stringTextBox.domNode, 'display', 'none');
             var stringDomain = fieldInfo.domain;
-            var stringCodedData=array.map(stringDomain.codedValues,lang.hitch(this,function(item,i){
+            var stringCodedData = array.map(stringDomain.codedValues,
+              lang.hitch(this, function(item, i){
               //item:{name,code},name is the code description and code is code value.
-              var dataItem = lang.mixin({},item);
+              var dataItem = lang.mixin({}, item);
               dataItem.id = i;
               return dataItem;
             }));
             var stringCodedStore = new Memory({data:stringCodedData});
             this.stringCodedValuesFS.set('store', stringCodedStore);
             if(valueObj){
-              var stringSelectedItems = array.filter(stringCodedData,lang.hitch(this,function(item){
+              var stringSelectedItems = array.filter(stringCodedData,
+                lang.hitch(this, function(item){
                 return item.code === valueObj.value;
               }));
               if(stringSelectedItems.length > 0){
-                this.stringCodedValuesFS.set('value',stringSelectedItems[0].id);
+                this.stringCodedValuesFS.set('value', stringSelectedItems[0].id);
               }
               else{
-                this.stringCodedValuesFS.set('value',stringCodedData[0].id);
+                this.stringCodedValuesFS.set('value', stringCodedData[0].id);
               }
             }
             else{
-              this.stringCodedValuesFS.set('value',stringCodedData[0].id);
+              this.stringCodedValuesFS.set('value', stringCodedData[0].id);
             }
           }
           else{
-            html.setStyle(this.stringTextBox.domNode,'display','inline-block');
-            html.setStyle(this.stringCodedValuesFS.domNode,'display','none');
+            html.setStyle(this.stringTextBox.domNode, 'display', 'inline-block');
+            html.setStyle(this.stringCodedValuesFS.domNode, 'display', 'none');
             if(valueObj){
-              this.stringTextBox.set('value',valueObj.value||'');
+              this._setValueForStringTextBox(this.stringTextBox, valueObj.value);
             }
           }
-          
+
           if(operator === this.OPERATORS.stringOperatorIsBlank ||
              operator === this.OPERATORS.stringOperatorIsNotBlank){
-            html.setStyle(this.attributeValueContainer,'display','none');
+            html.setStyle(this.attributeValueContainer, 'display', 'none');
           }
         }
         else if(shortType === 'number'){
-          html.setStyle(this.stringTextBoxContainer,'display','none');
-          html.setStyle(this.numberTextBoxContainer,'display','block');
-          html.setStyle(this.dateTextBoxContainer,'display','none');
+          html.setStyle(this.stringTextBoxContainer, 'display', 'none');
+          html.setStyle(this.numberTextBoxContainer, 'display', 'block');
+          html.setStyle(this.dateTextBoxContainer, 'display', 'none');
           if(operator === this.OPERATORS.numberOperatorIsBetween ||
              operator === this.OPERATORS.numberOperatorIsNotBetween){
-            html.setStyle(this.numberTextBox.domNode,'display','none');
-            html.setStyle(this.numberRangeTable,'display','table');
-            html.setStyle(this.numberCodedValuesFS.domNode,'display','none');
+            html.setStyle(this.numberTextBox.domNode, 'display', 'none');
+            html.setStyle(this.numberRangeTable, 'display', 'table');
+            html.setStyle(this.numberCodedValuesFS.domNode, 'display', 'none');
             if(valueObj){
-              if(!isNaN(valueObj.value1) && !isNaN(valueObj.value2)){
-                var num1 = parseFloat(valueObj.value1);
-                var num2 = parseFloat(valueObj.value2);
-                var min = Math.min(num1,num2);
-                var max = Math.max(num1,num2);
+              var num1, num2;
+              var isValidValue1 = jimuUtils.isValidNumber(valueObj.value1);
+              var isValidValue2 = jimuUtils.isValidNumber(valueObj.value2);
+
+              if(isValidValue1 && isValidValue2){
+                num1 = parseFloat(valueObj.value1);
+                num2 = parseFloat(valueObj.value2);
+                var min = Math.min(num1, num2);
+                var max = Math.max(num1, num2);
                 this.numberTextBox1.set('value', min);
                 this.numberTextBox2.set('value', max);
+              }else if(isValidValue1 && !isValidValue2){
+                num1 = parseFloat(valueObj.value1);
+                this.numberTextBox1.set('value', num1);
+              }else if(!isValidValue1 && isValidValue2){
+                num2 = parseFloat(valueObj.value2);
+                this.numberTextBox2.set('value', num2);
               }
             }
           }
           else{
-            html.setStyle(this.numberRangeTable,'display','none');
+            html.setStyle(this.numberRangeTable, 'display', 'none');
             if(this._isFieldCoded(fieldInfo) && operator === this.OPERATORS.numberOperatorIs){
-              html.setStyle(this.numberTextBox.domNode,'display','none');
-              html.setStyle(this.numberCodedValuesFS.domNode,'display','inline-block');
+              html.setStyle(this.numberTextBox.domNode, 'display', 'none');
+              html.setStyle(this.numberCodedValuesFS.domNode, 'display', 'inline-block');
               var numberDomain = fieldInfo.domain;
               var numberCodedData = array.map(numberDomain.codedValues,
-                lang.hitch(this,function(item,index){
+                lang.hitch(this, function(item, index){
                 //item:{name,code},name is the code description and code is code value.
-                var dataItem = lang.mixin({},item);
+                var dataItem = lang.mixin({}, item);
                 dataItem.id = index;
                 return dataItem;
               }));
               var numberCodedStore = new Memory({data:numberCodedData});
-              this.numberCodedValuesFS.set('store',numberCodedStore);
+              this.numberCodedValuesFS.set('store', numberCodedStore);
               if(valueObj && !isNaN(valueObj.value)){
                 var number = parseFloat(valueObj.value);
                 var numberSelectedItems = array.filter(numberCodedData,
-                  lang.hitch(this,function(item){
+                  lang.hitch(this, function(item){
                   return parseFloat(item.code) === number;
                 }));
                 if(numberSelectedItems.length > 0){
-                  this.numberCodedValuesFS.set('value',numberSelectedItems[0].id);
+                  this.numberCodedValuesFS.set('value', numberSelectedItems[0].id);
                 }
                 else{
-                  this.numberCodedValuesFS.set('value',numberCodedData[0].id);
+                  this.numberCodedValuesFS.set('value', numberCodedData[0].id);
                 }
               }
               else{
-                this.numberCodedValuesFS.set('value',numberCodedData[0].id);
+                this.numberCodedValuesFS.set('value', numberCodedData[0].id);
               }
             }
             else{
-              html.setStyle(this.numberTextBox.domNode,'display','inline-block');
-              html.setStyle(this.numberCodedValuesFS.domNode,'display','none');
+              html.setStyle(this.numberTextBox.domNode, 'display', 'inline-block');
+              html.setStyle(this.numberCodedValuesFS.domNode, 'display', 'none');
               if(valueObj){
-                if(!isNaN(valueObj.value)){
+                /*if(!isNaN(valueObj.value)){
                   this.numberTextBox.set('value',parseFloat(valueObj.value));
-                }
+                }*/
+                this._setValueForNumberTextBox(this.numberTextBox, valueObj.value);
               }
             }
           }
           if(operator === this.OPERATORS.numberOperatorIsBlank ||
              operator === this.OPERATORS.numberOperatorIsNotBlank){
-            html.setStyle(this.attributeValueContainer,'display','none');
+            html.setStyle(this.attributeValueContainer, 'display', 'none');
           }
         }
         else if(shortType === 'date'){
-          html.setStyle(this.stringTextBoxContainer,'display','none');
-          html.setStyle(this.numberTextBoxContainer,'display','none');
-          html.setStyle(this.dateTextBoxContainer,'display','block');
+          html.setStyle(this.stringTextBoxContainer, 'display', 'none');
+          html.setStyle(this.numberTextBoxContainer, 'display', 'none');
+          html.setStyle(this.dateTextBoxContainer, 'display', 'block');
 
           if(operator === this.OPERATORS.dateOperatorIsBetween ||
              operator === this.OPERATORS.dateOperatorIsNotBetween){
-            html.setStyle(this.dateTextBox.domNode,'display','none');
-            html.setStyle(this.dateRangeTable,'display','table');
+            html.setStyle(this.dateTextBox.domNode, 'display', 'none');
+            html.setStyle(this.dateRangeTable, 'display', 'table');
             if(valueObj && valueObj.value1 && valueObj.value2){
               this.dateTextBox1.set('value', new Date(valueObj.value1));
               this.dateTextBox2.set('value', new Date(valueObj.value2));
             }
           }
           else{
-            html.setStyle(this.dateTextBox.domNode,'display','inline-block');
-            html.setStyle(this.dateRangeTable,'display','none');
+            html.setStyle(this.dateTextBox.domNode, 'display', 'inline-block');
+            html.setStyle(this.dateRangeTable, 'display', 'none');
             if(valueObj && valueObj.value){
               this.dateTextBox.set('value', new Date(valueObj.value));
             }
@@ -815,15 +936,15 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
 
           if(operator === this.OPERATORS.dateOperatorIsBlank ||
              operator === this.OPERATORS.dateOperatorIsNotBlank){
-            html.setStyle(this.attributeValueContainer,'display','none');
+            html.setStyle(this.attributeValueContainer, 'display', 'none');
           }
           // this._focusValidationTextBox(this.dateTextBox);
         }
       }
       else if(this.fieldRadio.checked){
         this._hideAllValueBoxContainer();
-        html.setStyle(this.uniqueValuesSelect.domNode,'display','none');
-        html.setStyle(this.fieldsSelect2.domNode,'display','inline-block');
+        html.setStyle(this.uniqueValuesSelect.domNode, 'display', 'none');
+        html.setStyle(this.fieldsSelect2.domNode, 'display', 'inline-block');
         this._resetFieldsSelect2();
 
         if(valueObj && valueObj.value){
@@ -832,7 +953,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
             var fieldItem2 = fieldItems2[0];
             if(fieldItem2){
               var id = fieldItem2.id;
-              this.fieldsSelect2.set('value',id);
+              this.fieldsSelect2.set('value', id);
             }
           }
         }
@@ -841,8 +962,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       }
       else if(this.uniqueRadio && this.uniqueRadio.checked){
         this._hideAllValueBoxContainer();
-        html.setStyle(this.fieldsSelect2.domNode,'display','none');
-        html.setStyle(this.uniqueValuesSelect.domNode,'display','inline-block');
+        html.setStyle(this.fieldsSelect2.domNode, 'display', 'none');
+        html.setStyle(this.uniqueValuesSelect.domNode, 'display', 'inline-block');
         this._resetUniqueValuesSelect(valueObj);
         // this._focusValidationTextBox(this.uniqueValuesSelect);
         //this._showValidationErrorTip(this.uniqueValuesSelect);
@@ -850,34 +971,34 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
     },
 
     _showAllValueBoxContainer:function(){
-      html.setStyle(this.allValueBoxContainer,'display','block');
+      html.setStyle(this.allValueBoxContainer, 'display', 'block');
     },
 
     _hideAllValueBoxContainer:function(){
-      html.setStyle(this.allValueBoxContainer,'display','none');
+      html.setStyle(this.allValueBoxContainer, 'display', 'none');
     },
 
     _resetValueTextBox:function(){
-      this.stringTextBox.set('value','');
-      this.numberTextBox.set('value','');
-      this.dateTextBox.set('value',new Date());
+      this.stringTextBox.set('value', '');
+      this.numberTextBox.set('value', '');
+      this.dateTextBox.set('value', new Date());
     },
 
     _resetFieldsSelect2:function(){
-      this.fieldsSelect2.set('displayedValue','');
+      this.fieldsSelect2.set('displayedValue', '');
       var store = new Memory({data:[]});
-      this.fieldsSelect2.set('store',store);
+      this.fieldsSelect2.set('store', store);
       if(this.fieldsSelect.validate()){
         var selectedItem = this._getSelectedFilteringItem(this.fieldsSelect);
         if(selectedItem){
           var items = this.fieldsSelect.store.query({shortType:selectedItem.shortType});
-          var data = array.filter(items,lang.hitch(this,function(item){
+          var data = array.filter(items, lang.hitch(this, function(item){
             return item.id !== selectedItem.id;
           }));
           store = new Memory({data:data});
-          this.fieldsSelect2.set('store',store);
+          this.fieldsSelect2.set('store', store);
           if(data.length > 0){
-            this.fieldsSelect2.set('value',data[0].id);
+            this.fieldsSelect2.set('value', data[0].id);
           }
         }
       }
@@ -900,8 +1021,12 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
         if(version >= 10.1){
           var item = this._getSelectedFilteringItem(this.fieldsSelect);
           if(item){
-            var url = this.url+"/generateRenderer";
-            var classificationDef = {"type":"uniqueValueDef","uniqueValueFields":[item.name]};
+            //http://jonq/arcgis/rest/services/BugFolder/BUG_000087622_CodedValue/FeatureServer/0
+            var url = this.url + "/generateRenderer";
+            var classificationDef = {
+              "type": "uniqueValueDef",
+              "uniqueValueFields": [item.name]
+            };
             var str = json.stringify(classificationDef);
             esriRequest({
               url:url,
@@ -912,22 +1037,27 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
               handleAs:'json',
               callbackParamName:'callback',
               timeout:15000
-            }).then(lang.hitch(this,function(response){
+            }).then(lang.hitch(this, function(response){
               var uniqueValueInfos = response && response.uniqueValueInfos;
               var fieldInfo = this._getSelectedFilteringItem(this.fieldsSelect);
-              if(uniqueValueInfos && item.id === fieldInfo.id){
+              if(uniqueValueInfos && fieldInfo && item.id === fieldInfo.id){
                 this.uniqueValuesSelect.store.setData([]);
                 var selectedId = -1;
                 if(uniqueValueInfos.length > 0){
                   selectedId = 0;
                 }
 
-                var data = array.map(uniqueValueInfos,lang.hitch(this,function(info,index){
+                var hasCodedValues = this._hasCodedValues(fieldInfo);
+
+                var data = array.map(uniqueValueInfos, lang.hitch(this, function(info, index){
                   var value = info.value;
                   var label = value;
                   if(fieldInfo.shortType === 'number'){
                     value = parseFloat(value);
                     label = this._tryLocaleNumber(value);
+                  }
+                  if(hasCodedValues){
+                    label = this._getDisplayNameOfCodedValues(value, fieldInfo);
                   }
                   var dataItem = {
                     id: index,
@@ -943,7 +1073,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
                 }));
 
                 this.uniqueValuesSelect.store.setData(data);
-                
+
                 if(data.length > 0){
                   var selectedItem = this.uniqueValuesSelect.store.get(selectedId);
                   if(selectedItem){
@@ -951,7 +1081,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
                   }
                 }
               }
-            }),lang.hitch(this,function(error){
+            }), lang.hitch(this, function(error){
               console.error(error);
             }));
           }
@@ -959,16 +1089,73 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       }
     },
 
+    _hasCodedValues: function(fieldInfo){
+      var result = false;
+      if(fieldInfo.domain){
+        var codedValues = fieldInfo.domain.codedValues;
+        if(codedValues && codedValues.length > 0){
+          result = true;
+        }
+      }
+      return result;
+    },
+
+    _getDisplayNameOfCodedValues: function(codedValue, fieldInfo){
+      var result = codedValue;
+      array.some(fieldInfo.domain.codedValues, function(item){
+        if(item.code === codedValue){
+          result = item.name;
+          return true;
+        }else{
+          return false;
+        }
+      });
+      return result;
+    },
+
     _onCbxAskValuesClicked:function(){
+      this._updateRequiredProperty();
       this._updatePrompt();
     },
 
+    _onCbxAskValuesStatusChanged: function(){
+      this._updateRequiredProperty();
+    },
+
+    _isUseAskForValues: function(){
+      return this.cbxAskValues.status && this.cbxAskValues.checked;
+    },
+
+    _isValueRequired: function(){
+      var isUseAskForvalues = this._isUseAskForValues();
+      var isRequired = !isUseAskForvalues;
+      return isRequired;
+    },
+
+    _updateRequiredProperty: function(){
+      var isRequired = this._isValueRequired();
+      //string
+      this.stringTextBox.set('required', isRequired);
+      this.stringCodedValuesFS.set('required', isRequired);
+      //number
+      this.numberTextBox.set('required', isRequired);
+      this.numberTextBox1.set('required', isRequired);
+      this.numberTextBox2.set('required', isRequired);
+      this.numberCodedValuesFS.set('required', isRequired);
+      //date
+      /*this.dateTextBox.set('required', isRequired);
+      this.dateTextBox1.set('required', isRequired);
+      this.dateTextBox2.set('required', isRequired);*/
+      //uniqueValuesSelect
+      this.uniqueValuesSelect.set('required', isRequired);
+    },
+
     _updatePrompt:function(){
-      this.promptTB.set('value','');
-      this.hintTB.set('value','');
+      this.promptTB.set('value', '');
+      this.hintTB.set('value', '');
       //this.cbxAskValues.disabled = false;
       this.cbxAskValues.setStatus(true);
-      html.setStyle(this.promptTable,'display','table');
+      html.setStyle(this.promptTable, 'display', 'table');
 
       var operator = this.operatorsSelect.get('value');
       var label = this.nls[operator];
@@ -1002,18 +1189,18 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       }
 
       if(this.cbxAskValues.status && this.cbxAskValues.checked){
-        html.setStyle(this.promptTable,'display','table');
+        html.setStyle(this.promptTable, 'display', 'table');
         var fieldInfo = this._getSelectedFilteringItem(this.fieldsSelect);
         if(fieldInfo){
           if(operator !== 'none'){
-            var alias = fieldInfo.alias||fieldInfo.name;
+            var alias = fieldInfo.alias || fieldInfo.name;
             var prompt = alias + ' ' + label;
             this.promptTB.set('value', prompt);
           }
         }
       }
       else{
-        html.setStyle(this.promptTable,'display','none');
+        html.setStyle(this.promptTable, 'display', 'none');
       }
     },
 

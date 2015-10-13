@@ -29,10 +29,13 @@ function(declare, _WidgetBase, domStyle, domConstruct) {
       this.inherited(arguments);
       this.hidden = this.hidden === true;
       if(this.hidden){
-        domStyle.set(this.domNode,{display:'none'});
+        domStyle.set(this.domNode, {
+          display: 'none'
+        });
       }
       domStyle.set(this.domNode, {width: '100%', height: '100%'});
-      var str = '<img class="jimu-loading" src="'+require.toUrl('jimu')+'/images/loading.gif">';
+      var str = '<img class="jimu-loading" src="' + require.toUrl('jimu') +
+        '/images/loading.gif">';
       domConstruct.place(str, this.domNode);
     },
 
@@ -40,14 +43,14 @@ function(declare, _WidgetBase, domStyle, domConstruct) {
       if(!this.domNode){
         return;
       }
-      domStyle.set(this.domNode,'display','block');
+      domStyle.set(this.domNode, 'display', 'block');
     },
 
     hide:function(){
       if(!this.domNode){
         return;
       }
-      domStyle.set(this.domNode,'display','none');
+      domStyle.set(this.domNode, 'display', 'none');
     }
   });
 });

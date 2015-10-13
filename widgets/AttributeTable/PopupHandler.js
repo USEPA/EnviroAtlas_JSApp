@@ -8,9 +8,7 @@ define([
 ], function(
   declare, lang, _WidgetBase, on, LayerInfos, InfoWindowAction
 ) {
-
   return declare([_WidgetBase], {
-
     postCreate: function() {
       this.inherited(arguments);
       LayerInfos.getInstance(this.map, this.map.itemInfo)
