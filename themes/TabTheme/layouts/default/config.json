@@ -11,6 +11,9 @@
       },
       "version": "1.3"
     }, {
+       "uri": "widgets/LocalLayer/Widget",
+       "visible": false
+    },{
       "uri": "themes/TabTheme/widgets/Footer/Widget",
       "position": {
         "left": 0,
