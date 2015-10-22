@@ -18,15 +18,17 @@
               "label": "Agricultural water use (million gallons/day)"
             }
           ],
-          "showAttachments": false,
-        }
+          "showAttachments": false
+        },
         "eaScale" : "national",
         "eaDescription" : "This map estimates the millions of gallons of water used daily for agricultural irrigation for each subwatershed (HUC-12) in the contiguous United States. Estimates include self-supplied surface and groundwater, as well as water supplied by irrigation water providers, which may include governments, companies, or other organizations.",
-        "eaDfsLink" : "DataFactSheets\pdf\ESN\Agriculturalwateruse.pdf",
+        "eaMetric" : "Metric",
+        "eaDfsLink" : "DataFactSheets\\pdf\\ESN\\Agriculturalwateruse.pdf",
         "eaLyrNum" : 1,
         "eaCategory" : "Clean and Plentiful Water - Water Supply and Demand - Water Uses",
         "eaMetadata" : "https://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7BD5113083-CFCD-48EC-BC24-0ADA5B9BDDB7%7D"
-      }, {
+      },
+      {
         "type": "Dynamic",
         "name": "USDA/NRCS SSURGO",
         "imageformat": "png32",
@@ -34,11 +36,12 @@
         "opacity": 1,
         "url": "http://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer",
         "visible": false
-      }, {
+      },
+      {
         "type": "Basemap",
         "name": "DeLorme’s basemap",
         "layers": {
-          "layer":[
+          "layer": [
             {
               "url": "http://services.arcgisonline.com/arcgis/rest/services/Specialty/DeLorme_World_Base_Map/MapServer",
               "isReference": false,
@@ -46,7 +49,8 @@
             }
           ]
         }
-      }, {
+      },
+      {
         "type": "Dynamic",
         "name": "Public Safety Hazards and Risks",
         "url": "http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/PublicSafety/PublicSafetyHazardsandRisks/MapServer",
@@ -256,6 +260,17 @@
         },
         "imagedpi": 96,
         "disableclientcaching": false
+      },
+      {
+        "type": "Dynamic",
+        "name": "Agriculture",
+        "url": "http://gispub.epa.gov/arcgis/rest/services/AgSTAR/EPA_AgSTAR_AD_Projects/MapServer",
+        "opacity": 0.97,
+        "visible": true,
+        "imageformat": "png8",
+        "imagedpi": 96,
+        "disableclientcaching": false,
+        "hidelayers": "6"
       }
     ]
   }
