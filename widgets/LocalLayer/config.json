@@ -16,7 +16,8 @@
               "fieldName": "LANDUSE_NAME",
               "visible": true,
               "label": "Name"
-            }, {
+            },
+            {
               "fieldName": "LANDUSE_CODE",
               "visible": true,
               "label": "Code"
@@ -24,7 +25,8 @@
           ],
           "showAttachments": false
         }
-      }, {
+      },
+      {
         "type": "Dynamic",
         "name": "USDA/NRCS SSURGO",
         "imageformat": "png32",
@@ -32,11 +34,12 @@
         "opacity": 1,
         "url": "http://services.arcgisonline.com/arcgis/rest/services/Specialty/Soil_Survey_Map/MapServer",
         "visible": false
-      }, {
+      },
+      {
         "type": "Basemap",
         "name": "DeLorme’s basemap",
         "layers": {
-          "layer":[
+          "layer": [
             {
               "url": "http://services.arcgisonline.com/arcgis/rest/services/Specialty/DeLorme_World_Base_Map/MapServer",
               "isReference": false,
@@ -44,7 +47,8 @@
             }
           ]
         }
-      }, {
+      },
+      {
         "type": "Dynamic",
         "name": "Public Safety Hazards and Risks",
         "url": "http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/PublicSafety/PublicSafetyHazardsandRisks/MapServer",
@@ -254,6 +258,17 @@
         },
         "imagedpi": 96,
         "disableclientcaching": false
+      },
+      {
+        "type": "Dynamic",
+        "name": "Agriculture",
+        "url": "http://gispub.epa.gov/arcgis/rest/services/AgSTAR/EPA_AgSTAR_AD_Projects/MapServer",
+        "opacity": 0.97,
+        "visible": false,
+        "imageformat": "png8",
+        "imagedpi": 96,
+        "disableclientcaching": false,
+        "hidelayers": "6"
       }
     ]
   }
