@@ -1,0 +1,12 @@
+Column,jsonElem
+sort,	
+Scale/TOC,eaScale
+Layer Name,name
+Description,eaDescription
+Attribute (not alias),fieldName
+Foundational/Metric (all national are metrics),eaMetric
+Service Layer REST URL,url
+DFS Link,eaDfsLink
+Service Layer Number only,eaLyrNum
+Modified TOC Category Matrix or List of Categories as a set,eaCategory
+Metadata Link,eaMetadata
