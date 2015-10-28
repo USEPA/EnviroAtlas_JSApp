@@ -26,7 +26,7 @@
 				"label": "Local Layer Widget",
 				"version": "1.2",
 				"uri": "widgets/LocalLayer/Widget",
-				"config": "configs/LocalLayer/config_Local Layer Widget.json",
+				"config": "widgets/LocalLayer/config.json",
 				"id": "widgets_LocalLayer_Widget_18",
 				"position": {
 				  "relativeTo": "map"
