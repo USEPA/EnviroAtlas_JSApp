@@ -1,19 +1,26 @@
 ''' SpreadsheettoJSON.py
 
-This script is designed to produce a JSON file compliant with Project Open Data Schema 1.1
+This script is designed to produce a JSON file for use with the WAB Local Layer Widget
 using values from an Excel table.  
 Utilizes openpyxl, available here: https://openpyxl.readthedocs.org/en/latest/
-
+Tested using Python 3.4, might be backward compatible?
 Torrin Hultgren, October 2015
 '''
 import sys, json, csv, openpyxl
 
+# This is the spreadsheet that contains all the content
 inputSpreadsheet = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\EnviroAtlas2json.xlsx"
+# Just in case there are rows to ignore at the top - header is row 0
 startingRow = 2
+# This should be a csv table that maps spreadsheet column headers to json elements
+# no great reason it needs to be in a standalone file rather than embedded in this 
+# script as a dictionary.
 mapTablePath = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\jsonfieldmap.csv"  
+# Output json file
 outputFileName = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\config.json"
 errorLogFile = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\errors.log"
 
+# Empty rows cause python problems, remove them
 def removeEmptyRows(rows):
     rowsToKeep = []
     for row in rows:
@@ -46,10 +53,13 @@ def main(_argv):
     # Get row index numbers for non-empty rows:
     rowsToKeep = removeEmptyRows(inputWorksheet.rows[startingRow:])
     
+    # Nothing is being piped to the error file right now
     validationErrors = open(errorLogFile,'w+')
     
+    # Root structure of the JSON file
     fullJSON = {"layers": {"layer": []}}
     
+    # Base map layer
     fullJSON["layers"]["layer"].append({
         "type": "Basemap",
         "name": "DeLorme's basemap",
