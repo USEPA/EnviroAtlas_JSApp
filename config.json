@@ -114,8 +114,8 @@
 				"name" : "BasemapGallery",
 				"label" : "Basemap Gallery",
 				"version" : "1.3",
-				"uri" : "widgets/BasemapGallery/Widget",
-				"config" : "configs/BasemapGallery/config_Basemap Gallery.json"
+				"uri" : "widgets/eBasemapGallery/Widget",
+				"config" : "configs/eBasemapGallery/config_Enhanced Basemap Gallery.json"
 			}, {
 				"position" : {
 					"left" : 95,
