@@ -436,7 +436,7 @@ define([
 
     _getLayerTitle: function(layer) {
       var title = layer.label || layer.title || layer.name || "";
-      if (layer.url) {
+      /*if (layer.url) {
         var serviceName;
         var serviceKeyWord = "rest/services/";
         var index1 = layer.url.indexOf(serviceKeyWord);
@@ -449,7 +449,7 @@ define([
             title = serviceName;
           }
         }
-      }
+      }*/
       return title || layer.id;
     },
 
