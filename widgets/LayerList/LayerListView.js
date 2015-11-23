@@ -249,17 +249,7 @@ define([
         'class': 'legend-node-td'
       }, legendTrNode);
 
-      /*
-            array.forEach(layerInfo.legendInfos, function(legendInfo){
-              var i;
-              for (i = 0; i < level+1; i++) {
-                domConstruct.create('div', {
-                  'class': 'begin-blank-div'
-                }, legendTdNode);
-              }
-              domConstruct.place(legendInfo.legendDiv, legendTdNode);
-            }, this);
-      */
+
       //legendsDiv = layerInfo.obtainLegendsNode();
 
 
