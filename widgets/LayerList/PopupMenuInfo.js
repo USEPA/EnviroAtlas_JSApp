@@ -27,6 +27,25 @@ define([
   './NlsStrings'
 ], function(declare, array, lang, Deferred, all, portalUrlUtils, WidgetManager, esriLang,
   graphicsUtils, NlsStrings) {
+  var mapDescriptionStr = "";
+  var dataFactSheet = "http://leb.epa.gov/projects/EnviroAtlas/currentDevelopment/";
+  var loadJSON = function(callback){   
+
+        var xobj = new XMLHttpRequest();
+
+        xobj.overrideMimeType("application/json");
+        //xobj.open('GET', 'setting/Setting.js', true); // Replace 'my_data' with the path to your file//good
+        xobj.open('GET', 'widgets/LocalLayer/config.json', true); // Replace 'my_data' with the path to your file
+        //xobj.open('GET', 'LocalLayer/config.json', true); // Replace 'my_data' with the path to your file
+
+        xobj.onreadystatechange = function () {
+              if (xobj.readyState == 4 && xobj.status == "200") {
+                // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+                callback(xobj.responseText);
+              }
+        };
+        xobj.send(null);  
+    };
   var clazz = declare([], {
 
     _candidateMenuItems: null,
@@ -35,7 +54,7 @@ define([
     _layerInfo: null,
     _layerType: null,
     _appConfig: null,
-
+    
     constructor: function(layerInfo, displayItemInfos, layerType, layerListWidget) {
       this.nls = NlsStrings.value;
       this._layerInfo = layerInfo;
@@ -85,20 +104,29 @@ define([
         key: 'empty',
         label: this.nls.empty
       }, {
+        key: 'mapDescription',
+        label: this.nls.itemMapDescription
+      }, {
+        key: 'dataFactSheet',
+        label: this.nls.itemDataFactSheet
+      }, {
+        key: 'metadataDownload',
+        label: this.nls.itemMetadataDownload
+      }, {
         key: 'zoomto',
         label: this.nls.itemZoomTo
       }, {
         key: 'transparency',
         label: this.nls.itemTransparency
-      }, {
-        key: 'moveup',
-        label: this.nls.itemMoveUp
-      }, {
-        key: 'movedown',
-        label: this.nls.itemMoveDown
-      }, {
-        key: 'table',
-        label: this.nls.itemToAttributeTable
+      //}, {
+      //  key: 'moveup',
+      //  label: this.nls.itemMoveUp
+      //}, {
+      //  key: 'movedown',
+      //  label: this.nls.itemMoveDown
+      //}, {
+      //  key: 'table',
+      //  label: this.nls.itemToAttributeTable
       }, {
         key: 'controlPopup',
         label: this.nls.removePopup
@@ -205,6 +233,15 @@ define([
         closeMenu: true
       };
       switch (evt.itemKey) {
+        case 'mapDescription':
+          this._onItemMapDescriptionClick(evt);
+          break;
+        case 'dataFactSheet':
+          this._onItemDataFactSheetClick(evt);
+          break;
+        case 'metadataDownload':
+          this._onItemMetadataDownloadClick(evt);
+          break;                    
         case 'zoomto' /*this.nls.itemZoomTo'Zoom to'*/ :
           this._onItemZoomToClick(evt);
           break;
@@ -240,6 +277,9 @@ define([
       //   layerListView: layerListView
       // }, result;
      **********************************/
+    _onItemLinkClick: function(evt) {
+            window.open("http://www.google.com");
+    },
     _onItemZoomToClick: function(evt) {
       /*jshint unused: false*/
       //this.map.setExtent(this.getExtent());
@@ -295,45 +335,67 @@ define([
       }
     },
 
-    _onTableItemClick: function(evt) {
-      this._layerInfo.getSupportTableInfo().then(lang.hitch(this, function(supportTableInfo) {
-        var widgetManager;
-        var attributeTableWidgets;
-        var attributeTableHasLoaded;
-        if(supportTableInfo.isSupportedLayer &&
-           supportTableInfo.isSupportQuery) {
-          widgetManager = WidgetManager.getInstance();
-          attributeTableWidgets = widgetManager.getWidgetsByName("AttributeTable");
-          attributeTableHasLoaded = attributeTableWidgets.length > 0;
-          if(attributeTableHasLoaded) {
-            if(attributeTableWidgets[0].state !== 'closed') {
-              // publish data
-              evt.layerListWidget.publishData({
-                'target': 'AttributeTable',
-                'layer': this._layerInfo
-              });
-            } else {
-              widgetManager.openWidget(attributeTableWidgets[0].id);
-              evt.layerListWidget.publishData({
-                'target': 'AttributeTable',
-                'layer': this._layerInfo
-              });
+    _onItemMapDescriptionClick: function(evt) {
+        layerId = this._layerInfo.id;
+        loadJSON(function(response) {
+            var localLayerConfig = JSON.parse(response);
+            var arrLayers = localLayerConfig.layers.layer;
+           
+            for (index = 0, len = arrLayers.length; index < len; ++index) {
+                layer = arrLayers[index];
+                if(layer.hasOwnProperty('eaLyrNum')){
+                    if (layerId === ("eaLyrNum_" + layer.eaLyrNum.toString())) {
+                        if(layer.hasOwnProperty('eaDescription')){
+                            alert(layer.eaDescription);
+                            break;
+                        }
+                    }
+                }
             }
-          } else {
-            var attributeTableWidget =
-                      this.layerListWidget.appConfig.getConfigElementsByName("AttributeTable")[0];
-            evt.layerListWidget.openWidgetById(attributeTableWidget.id)
-            .then(lang.hitch(this, function() {
-              evt.layerListWidget.publishData({
-                'target': 'AttributeTable',
-                'layer': this._layerInfo
-              });
-            }));
-          }
-        }
-      }));
-    },
 
+        });
+    },
+    _onItemDataFactSheetClick: function(evt) {
+        layerId = this._layerInfo.id;
+        loadJSON(function(response) {
+            var localLayerConfig = JSON.parse(response);
+            var arrLayers = localLayerConfig.layers.layer;
+           
+            for (index = 0, len = arrLayers.length; index < len; ++index) {
+                layer = arrLayers[index];
+                if(layer.hasOwnProperty('eaLyrNum')){
+                    if (layerId === ("eaLyrNum_" + layer.eaLyrNum.toString())) {
+                        if(layer.hasOwnProperty('eaDfsLink')){
+                            //window.open(window.location.href + layer.eaDfsLink);
+                            window.open(dataFactSheet + layer.eaDfsLink);
+                            break;
+                        }
+                    }
+                }
+            }
+
+        });
+    },
+    _onItemMetadataDownloadClick: function(evt) {
+        layerId = this._layerInfo.id;
+        loadJSON(function(response) {
+            var localLayerConfig = JSON.parse(response);
+            var arrLayers = localLayerConfig.layers.layer;
+           
+            for (index = 0, len = arrLayers.length; index < len; ++index) {
+                layer = arrLayers[index];
+                if(layer.hasOwnProperty('eaLyrNum')){
+                    if (layerId === ("eaLyrNum_" + layer.eaLyrNum.toString())) {
+                        if(layer.hasOwnProperty('eaMetadata')){
+                            window.open(layer.eaMetadata);
+                            break;
+                        }
+                    }
+                }
+            }
+
+        });
+    },    
     _onTransparencyChanged: function(evt) {
       this._layerInfo.setOpacity(1 - evt.extraData.newTransValue);
     },
@@ -358,7 +420,10 @@ define([
     }];
 
     var itemInfoCategoreList = {
-      'RootLayer': [{
+      'RootLayer': [
+      {
+        key: 'mapDescription'
+      }, {
         key: 'zoomto'
       }, {
         key: 'transparency'
@@ -373,16 +438,23 @@ define([
       }, {
         key: 'url'
       }],
-      'RootLayerAndFeatureLayer': [{
+      'RootLayerAndFeatureLayer': [
+      {
+        key: 'mapDescription'
+      }, {
+        key: 'dataFactSheet'
+      }, {
+        key: 'url'
+      }, {
+        key: 'metadataDownload'
+      }, {
+        key: 'separator'
+      }, {
         key: 'zoomto'
       }, {
         key: 'transparency'
       }, {
-        key: 'separator'
-      }, {
         key: 'controlPopup'
-      }, {
-        key: 'separator'
       }, {
         key: 'moveup'
       }, {
@@ -391,10 +463,6 @@ define([
         key: 'separator'
       }, {
         key: 'table'
-      }, {
-        key: 'separator'
-      }, {
-        key: 'url'
       }],
       'FeatureLayer': [{
         key: 'controlPopup'
