@@ -4,25 +4,49 @@
       {
         "layers": [
           {
-            "id": "layer0",
-            "layerType": "ArcGISTiledMapServiceLayer",
+            "id": "BingMapsAerial",
             "opacity": 1,
             "visibility": true,
-            "url": "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"
-          },
-          {
-            "id": "World_Dark_Gray_Reference_8618",
-            "layerType": "ArcGISTiledMapServiceLayer",
-            "url": "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Reference/MapServer",
-            "visibility": true,
-            "opacity": 1,
-            "isReference": true
+            "type": "BingMapsAerial",
+            "portalUrl": "http://EPA.maps.arcgis.com/sharing/rest/portals/cJ9YHowT8TU7DUyn"
           }
         ],
-        "title": "Dark Gray Canvas",
-        "thumbnailUrl": "http://innovate.maps.arcgis.com/sharing/rest/content/items/25869b8718c0419db87dad07de5b02d8/info/thumbnail/DGCanvasBase.png",
+        "title": "Bing Maps Aerial",
+        "thumbnailUrl": "http://epa.maps.arcgis.com/sharing/rest/content/items/a130e8c1c02540d0aabfad6395ded6dd/info/thumbnail/tempbing_aerial_manchester2.png",
         "spatialReference": {
-          "wkid": 102100
+          "wkid": "102100"
+        }
+      },
+      {
+        "layers": [
+          {
+            "id": "BingMapsHybrid",
+            "opacity": 1,
+            "visibility": true,
+            "type": "BingMapsHybrid",
+            "portalUrl": "http://EPA.maps.arcgis.com/sharing/rest/portals/cJ9YHowT8TU7DUyn"
+          }
+        ],
+        "title": "Bing Maps Hybrid",
+        "thumbnailUrl": "http://epa.maps.arcgis.com/sharing/rest/content/items/a9ecd9030ddb4a9b96e13ce524447fdd/info/thumbnail/tempbing_hybrid_manchester2.png",
+        "spatialReference": {
+          "wkid": "102100"
+        }
+      },
+      {
+        "layers": [
+          {
+            "id": "BingMapsRoad",
+            "opacity": 1,
+            "visibility": true,
+            "type": "BingMapsRoad",
+            "portalUrl": "http://EPA.maps.arcgis.com/sharing/rest/portals/cJ9YHowT8TU7DUyn"
+          }
+        ],
+        "title": "Bing Maps Road",
+        "thumbnailUrl": "http://epa.maps.arcgis.com/sharing/rest/content/items/af993b1a076b4b878b63a327312c8025/info/thumbnail/tempbing_road_manchester2.png",
+        "spatialReference": {
+          "wkid": "102100"
         }
       },
       {
@@ -35,7 +59,7 @@
           }
         ],
         "title": "Imagery",
-        "thumbnailUrl": "http://innovate.maps.arcgis.com/sharing/rest/content/items/86de95d4e0244cba80f0fa2c9403a7b2/info/thumbnail/tempimagery.jpg",
+        "thumbnailUrl": "http://epa.maps.arcgis.com/sharing/rest/content/items/86de95d4e0244cba80f0fa2c9403a7b2/info/thumbnail/tempimagery.jpg",
         "spatialReference": {
           "wkid": 102100,
           "latestWkid": 3857
@@ -58,7 +82,7 @@
           }
         ],
         "title": "Imagery with Labels",
-        "thumbnailUrl": "http://innovate.maps.arcgis.com/sharing/rest/content/items/413fd05bbd7342f5991d5ec96f4f8b18/info/thumbnail/imagery_labels.jpg",
+        "thumbnailUrl": "http://epa.maps.arcgis.com/sharing/rest/content/items/413fd05bbd7342f5991d5ec96f4f8b18/info/thumbnail/imagery_labels.jpg",
         "spatialReference": {
           "wkid": 102100,
           "latestWkid": 3857
@@ -81,7 +105,7 @@
           }
         ],
         "title": "Light Gray Canvas",
-        "thumbnailUrl": "http://innovate.maps.arcgis.com/sharing/rest/content/items/8b3b470883a744aeb60e5fff0a319ce7/info/thumbnail/light_gray_canvas.jpg",
+        "thumbnailUrl": "http://epa.maps.arcgis.com/sharing/rest/content/items/8b3b470883a744aeb60e5fff0a319ce7/info/thumbnail/light_gray_canvas.jpg",
         "spatialReference": {
           "wkid": 102100,
           "latestWkid": 3857
@@ -97,7 +121,7 @@
           }
         ],
         "title": "National Geographic",
-        "thumbnailUrl": "http://innovate.maps.arcgis.com/sharing/rest/content/items/509e2d6b034246d692a461724ae2d62c/info/thumbnail/natgeo.jpg",
+        "thumbnailUrl": "http://epa.maps.arcgis.com/sharing/rest/content/items/509e2d6b034246d692a461724ae2d62c/info/thumbnail/natgeo.jpg",
         "spatialReference": {
           "wkid": 102100,
           "latestWkid": 3857
@@ -120,7 +144,7 @@
           }
         ],
         "title": "Oceans",
-        "thumbnailUrl": "http://innovate.maps.arcgis.com/sharing/rest/content/items/48b8cec7ebf04b5fbdcaf70d09daff21/info/thumbnail/tempoceans.jpg",
+        "thumbnailUrl": "http://epa.maps.arcgis.com/sharing/rest/content/items/48b8cec7ebf04b5fbdcaf70d09daff21/info/thumbnail/tempoceans.jpg",
         "spatialReference": {
           "wkid": 102100,
           "latestWkid": 3857
@@ -135,7 +159,7 @@
           }
         ],
         "title": "OpenStreetMap",
-        "thumbnailUrl": "http://innovate.maps.arcgis.com/sharing/rest/content/items/5d2bfa736f8448b3a1708e1f6be23eed/info/thumbnail/temposm.jpg",
+        "thumbnailUrl": "http://epa.maps.arcgis.com/sharing/rest/content/items/5d2bfa736f8448b3a1708e1f6be23eed/info/thumbnail/temposm.jpg",
         "spatialReference": {
           "wkid": "102100"
         }
@@ -150,7 +174,7 @@
           }
         ],
         "title": "Streets",
-        "thumbnailUrl": "http://innovate.maps.arcgis.com/sharing/rest/content/items/d8855ee4d3d74413babfb0f41203b168/info/thumbnail/world_street_map.jpg",
+        "thumbnailUrl": "http://epa.maps.arcgis.com/sharing/rest/content/items/d8855ee4d3d74413babfb0f41203b168/info/thumbnail/world_street_map.jpg",
         "spatialReference": {
           "wkid": 102100,
           "latestWkid": 3857
@@ -175,7 +199,7 @@
           }
         ],
         "title": "Terrain with Labels",
-        "thumbnailUrl": "http://innovate.maps.arcgis.com/sharing/rest/content/items/aab054ab883c4a4094c72e949566ad40/info/thumbnail/terrain_labels.jpg",
+        "thumbnailUrl": "http://epa.maps.arcgis.com/sharing/rest/content/items/aab054ab883c4a4094c72e949566ad40/info/thumbnail/terrain_labels.jpg",
         "spatialReference": {
           "wkid": 102100,
           "latestWkid": 3857
@@ -191,43 +215,10 @@
           }
         ],
         "title": "Topographic",
-        "thumbnailUrl": "http://innovate.maps.arcgis.com/sharing/rest/content/items/6e03e8c26aad4b9c92a87c1063ddb0e3/info/thumbnail/topo_map_2.jpg",
+        "thumbnailUrl": "http://epa.maps.arcgis.com/sharing/rest/content/items/6e03e8c26aad4b9c92a87c1063ddb0e3/info/thumbnail/topo_map_2.jpg",
         "spatialReference": {
           "wkid": 102100,
           "latestWkid": 3857
-        }
-      },
-      {
-        "layers": [
-          {
-            "id": "USA_Topo_Maps_4699",
-            "layerType": "ArcGISTiledMapServiceLayer",
-            "opacity": 1,
-            "visibility": true,
-            "url": "http://services.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer"
-          }
-        ],
-        "title": "USA Topo Maps",
-        "thumbnailUrl": "http://innovate.maps.arcgis.com/sharing/rest/content/items/931d892ac7a843d7ba29d085e0433465/info/thumbnail/usa_topo.jpg",
-        "spatialReference": {
-          "wkid": 102100,
-          "latestWkid": 3857
-        }
-      },
-      {
-        "layers": [
-          {
-            "id": "layer0",
-            "layerType": "ArcGISTiledMapServiceLayer",
-            "opacity": 1,
-            "visibility": true,
-            "url": "http://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer"
-          }
-        ],
-        "title": "USGS National Map",
-        "thumbnailUrl": "http://innovate.maps.arcgis.com/sharing/rest/content/items/6d9fa6d159ae4a1f80b9e296ed300767/info/thumbnail/national_map.jpg",
-        "spatialReference": {
-          "wkid": 102100
         }
       }
     ]
