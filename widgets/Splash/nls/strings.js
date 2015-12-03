@@ -6,8 +6,8 @@ define({
     licenceTerm: "ArcGIS Web Application Terms",
     labelContinue: "Continue",
     errorString: "* You need to agree to the license to continue.",
-    notShowAgain: "Do not show this splash screen again.",
-    ok: "OK",
+    notShowAgain: "Do not show the disclaimer again.",
+    ok: " I understand and agree to the terms and conditions of this disclaimer ",
     cancel: "Cancel"
   }),
   "ar": 1,

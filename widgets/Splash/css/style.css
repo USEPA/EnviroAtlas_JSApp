@@ -62,6 +62,9 @@
 .jimu-widget-splash-desktop .splash-container .enable-btn,
 .jimu-widget-splash-mobile .splash-container .enable-btn{
   background-color: #518dca;
+  width: 100%;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 .jimu-widget-splash-desktop .splash-container .disable-btn,
 .jimu-widget-splash-mobile .splash-container .disable-btn{
