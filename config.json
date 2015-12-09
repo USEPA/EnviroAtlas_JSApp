@@ -302,6 +302,13 @@
 				"index" : 4,
 				"id" : "widgets_Measurement_Widget_36",
 				"config" : "configs/Measurement/config_Measurement.json"
+			}, {
+				"name" : "SimpleSearchFilter",
+				"label" : "SimpleSearchFilter",
+				"version" : "1.3",
+				"uri" : "widgets/SimpleSearchFilter/Widget",
+				"index" : 5,
+				"id" : "widgets_SimpleSearchFilter_Widget_37"
 			}
 		],
 		"groups" : []
