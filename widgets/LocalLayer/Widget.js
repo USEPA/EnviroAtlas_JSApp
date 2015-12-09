@@ -37,8 +37,10 @@ define([
     Basemap,
     esriBasemaps,
     PopupTemplate) {
-        var layerIdPrefix = "eaLyrNum_";
-        var _addLayersBaseOrSelection = function(layersTobeAdded) {
+      var layerIdPrefix = "eaLyrNum_";
+        
+
+      var _addSelectedLayers = function(layersTobeAdded, selectedLayerNum) {
             var index, len;
             for (index = 0, len = layersTobeAdded.length; index < len; ++index) {
               layer = layersTobeAdded[index];
@@ -69,7 +71,6 @@ define([
                 if(layer.name){
                   lLayer._titleForLegend = layer.name;
                   lLayer.title = layer.name;
-                  //alert("layer.name:" + layer.name);
                   lLayer.noservicename = true; 
                 }
                 if (layer.popup){
@@ -144,14 +145,24 @@ define([
                 if(layer.name){
                   lLayer._titleForLegend = layer.name;
                   lLayer.title = layer.name;
-                  //alert("layer.name:" + layer.name);//this is called before user click each layer
                   lLayer.noservicename = true;
                 }
                 lLayer.on('load',function(evt){
                   evt.layer.name = lOptions.id;
                 });
                 lLayer.id = layerIdPrefix + layer.eaLyrNum;
-                this._viewerMap.addLayer(lLayer);
+                var bNeedToBeAdded = false;
+                var stringArray = selectedLayerNum.split(",");
+                	for (i in stringArray) {
+						if ((stringArray[i])==(layer.eaLyrNum)) {
+						    bNeedToBeAdded = true;
+						    break;
+						}
+
+					}   
+                if (bNeedToBeAdded) {
+                	this._viewerMap.addLayer(lLayer);
+                }
               }else if(layer.type.toUpperCase() === 'TILED'){
                 if(layer.displayLevels){
                   lOptions.displayLevels = layer.displayLevels;
@@ -208,7 +219,13 @@ define([
           }
       };
     var clazz = declare([BaseWidget], {
+	  onReceiveData: function(name, widgetId, data, historyData) {
+		  if(name !== 'SimpleSearchFilter'){
+		    return;
+		  }
+		  _addSelectedLayers(this.config.layers.layer, data.message);
 
+	  },
       constructor: function() {
         this._originalWebMap = null;
       },
@@ -251,167 +268,10 @@ define([
           });
         }
 
-        _addLayersBaseOrSelection(this.config.layers.layer);
-        /*this.config.layers.layer.forEach(function (layer) {
-          var lLayer;
-          var lOptions ={};
-          if(layer.hasOwnProperty('opacity')){
-            lOptions.opacity = layer.opacity;
-          }
-          if(layer.hasOwnProperty('visible') && !layer.visible){
-            lOptions.visible = false;
-          }else{
-            lOptions.visible = true;
-          }
-          if(layer.name){
-            lOptions.id = layer.name;
-          }
-          if(layer.type.toUpperCase() === 'DYNAMIC'){
-            if(layer.imageformat){
-              var ip = new ImageParameters();
-              ip.format = layer.imageformat;
-              if(layer.hasOwnProperty('imagedpi')){
-                ip.dpi = layer.imagedpi;
-              }
-              lOptions.imageParameters = ip;
-            }
-            lLayer = new ArcGISDynamicMapServiceLayer(layer.url, lOptions);
-            if(layer.name){
-              lLayer._titleForLegend = layer.name;
-              lLayer.title = layer.name;
-              lLayer.noservicename = true;
-            }
-            if (layer.popup){
-              var finalInfoTemp = {};
-              array.forEach(layer.popup.infoTemplates, function(_infoTemp){
-                var popupInfo = {};
-                popupInfo.title = _infoTemp.title;
-                if(_infoTemp.description){
-                  popupInfo.description = _infoTemp.description;
-                }else{
-                  popupInfo.description = null;
-                }
-                if(_infoTemp.fieldInfos){
-                  popupInfo.fieldInfos = _infoTemp.fieldInfos;
-                }
-                var _popupTemplate1 = new PopupTemplate(popupInfo);
-                finalInfoTemp[_infoTemp.layerId] = {infoTemplate: _popupTemplate1};
-              });
-              lLayer.setInfoTemplates(finalInfoTemp);
-            }
-            if(layer.disableclientcaching){
-              lLayer.setDisableClientCaching(true);
-            }
-            lLayer.on('load',function(evt){
-              var removeLayers = [];
-              array.forEach(evt.layer.visibleLayers,function(layer){
-                //remove any grouplayers
-                if (evt.layer.layerInfos[layer].subLayerIds){
-                  removeLayers.push(layer);
-                }else{
-                  var _layerCheck = dojo.clone(layer);
-                  while (evt.layer.layerInfos[_layerCheck].parentLayerId > -1){
-                    if (evt.layer.visibleLayers.indexOf(evt.layer.layerInfos[_layerCheck].parentLayerId) == -1){
-                      removeLayers.push(layer);
-                    }
-                    _layerCheck = dojo.clone(evt.layer.layerInfos[_layerCheck].parentLayerId);
-                  }
-                }
-              });
-              array.forEach(removeLayers,function(layerId){
-                evt.layer.visibleLayers.splice(evt.layer.visibleLayers.indexOf(layerId), 1);
-              });
-            });
-            this._viewerMap.addLayer(lLayer);
-            this._viewerMap.setInfoWindowOnClick(true);
-          }else if (layer.type.toUpperCase() === 'FEATURE') {
-            var _popupTemplate;
-            if (layer.popup){
-              _popupTemplate = new PopupTemplate(layer.popup);
-              lOptions.infoTemplate = _popupTemplate;
-            }
-            if(layer.hasOwnProperty('mode')){
-              var lmode;
-              if(layer.mode === 'ondemand'){
-                lmode = 1;
-              }else if(layer.mode === 'snapshot'){
-                lmode = 0;
-              }else if(layer.mode === 'selection'){
-                lmode = 2;
-              }
-              lOptions.mode = lmode;
-            }
-            lOptions.outFields = ['*'];
-            if(layer.hasOwnProperty('autorefresh')){
-              lOptions.refreshInterval = layer.autorefresh;
-            }
-            if(layer.hasOwnProperty('showLabels')){
-              lOptions.showLabels = true;
-            }
-            lLayer = new FeatureLayer(layer.url, lOptions);
-            if(layer.name){
-              lLayer._titleForLegend = layer.name;
-              lLayer.title = layer.name;
-              lLayer.noservicename = true;
-            }
-            lLayer.on('load',function(evt){
-              evt.layer.name = lOptions.id;
-            });
-            lLayer.id = layerIdPrefix + layer.eaLyrNum;
-            this._viewerMap.addLayer(lLayer);
-          }else if(layer.type.toUpperCase() === 'TILED'){
-            if(layer.displayLevels){
-              lOptions.displayLevels = layer.displayLevels;
-            }
-            if(layer.hasOwnProperty('autorefresh')){
-              lOptions.refreshInterval = layer.autorefresh;
-            }
-            lLayer = new ArcGISTiledMapServiceLayer(layer.url, lOptions);
-            if(layer.name){
-              lLayer._titleForLegend = layer.name;
-              lLayer.title = layer.name;
-              lLayer.noservicename = true;
-            }
-            if (layer.popup){
-              var finalInfoTemp2 = {};
-              array.forEach(layer.popup.infoTemplates, function(_infoTemp){
-                var popupInfo = {};
-                popupInfo.title = _infoTemp.title;
-                if(_infoTemp.content){
-                  popupInfo.description = _infoTemp.content;
-                }else{
-                  popupInfo.description = null;
-                }
-                if(_infoTemp.fieldInfos){
-                  popupInfo.fieldInfos = _infoTemp.fieldInfos;
-                }
-                var _popupTemplate2 = new PopupTemplate(popupInfo);
-                finalInfoTemp2[_infoTemp.layerId] = {infoTemplate: _popupTemplate2};
-              });
-              lLayer.setInfoTemplates(finalInfoTemp2);
-            }
-            this._viewerMap.addLayer(lLayer);
-          }else if(layer.type.toUpperCase() === 'BASEMAP'){
-            var bmLayers = array.map(layer.layers.layer, function(bLayer){
-              var bmLayerObj = {url:bLayer.url, isReference: false};
-              if(bLayer.displayLevels){
-                bmLayerObj.displayLevels = bLayer.displayLevels;
-              }
-              if(layer.hasOwnProperty('opacity')){
-                bmLayerObj.opacity = bLayer.opacity;
-              }
-              return new BasemapLayer(bmLayerObj);
-            });
-            var _newBasemap = new Basemap({id:'defaultBasemap', title:layer.name, layers:bmLayers});
-            var _basemapGallery = new BasemapGallery({
-              showArcGISBasemaps: false,
-              map: this._viewerMap
-            }, '_tmpBasemapGallery');
-            _basemapGallery.add(_newBasemap);
-            _basemapGallery.select('defaultBasemap');
-            _basemapGallery.destroy();
-          }
-        });*/
+        //_addLayersBaseOrSelection(this.config.layers.layer);//This is removed because layers are not added on startup
+        //prepare for receiving data from SimpleSearchFilter
+        this.inherited(arguments);
+      	this.fetchDataByName('SimpleSearchFilter');
       }
     });
     return clazz;
