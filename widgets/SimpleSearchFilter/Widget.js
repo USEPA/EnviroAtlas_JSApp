@@ -16,28 +16,14 @@ function(declare, lang, BaseWidget) {
         };
         xobj.send(null);  
     };
-    var SelectRow = function(row) {
-       //alert(row.name);
-              
-    };
-    var addEvent = function (element, evt, callback) {
-        if (element.addEventListener) {
-            element.addEventListener(evt, callback, false);
-        } else if (element.attachEvent) {
-            element.attachEvent("on" + evt, callback);
-        } else {
-            element["on" + evt] = callback;
-        }
-    };      
+
   return declare([BaseWidget], {
 
-     baseClass: 'jimu-widget-SimpleSearchFilter',
-
-    
+     baseClass: 'jimu-widget-SimpleSearchFilter',    
         
     startup: function(){
 		
-	    var tableOfRelationship = document.getElementById('coralRelationTable');
+	    var tableOfRelationship = document.getElementById('layersFilterTable');
 	    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
 	    tableRef.innerHTML = "";
 	                     
@@ -50,109 +36,105 @@ function(declare, lang, BaseWidget) {
                 var indexCheckbox = 0;
                 if(layer.hasOwnProperty('name')){
                    	var newRow   = tableRef.insertRow(tableRef.rows.length);
+                   	newRow.style.height = "38px";
                    	var newCheckboxCell  = newRow.insertCell(0);
 					var checkbox = document.createElement('input');
 					checkbox.type = "checkbox";
 					var eaLyrNum = "";
                     if(layer.hasOwnProperty('eaLyrNum')){
-                        //alert(layer.eaLyrNum);
                         eaLyrNum = layer.eaLyrNum.toString();
                     }
                     chkboxId = "ck" + eaLyrNum;
 					checkbox.name = chkboxId;
 					checkbox.value = 1;
 					checkbox.id = chkboxId;
-					checkbox.align="top";
-					newCheckboxCell.style.verticalAlign = "top";
-			        newCheckboxCell.appendChild(checkbox);    
-			              
+					newCheckboxCell.style.verticalAlign = "top";//this will put checkbox on first line
+			        newCheckboxCell.appendChild(checkbox);    			              
           	
                    	chkIdDictionary[chkboxId] = layer.name;
 			        var newCell  = newRow.insertCell(1);
-			        var strCategory = "Clean Air;Clean and Plentiful Water;Climate Stabilization;Natural Hazard Mitigation;Recreation, Culture, and Aesthetics;People and SupplementalBuilt Spaces;Biodiversity Conservation;";
-			        	//People and Built Spaces; Supplemental does not exist
-			        var stringArray = strCategory.split(";");
-			        var strCategoryOfThisLayer = "";
-					for (i in stringArray) {
+			        newCell.style.verticalAlign = "top";//this will put layer name on first line
+			        
+			        var photo = document.createElement("td");
+
+					var ulElem = document.createElement("ul");
+					ulElem.setAttribute("id", "navlist");
+					
+			        newCell.innerHTML = layer.name;
+					
+					//define the dictionary of mapping category names to sprite style id which is defined in css
+			        var categoryDic = {}
+			        categoryDic["Clean Air"] = "cair";
+			        categoryDic["Clean and Plentiful Water"] = "cpw";
+			        categoryDic["Climate Stabilization"] = "clim";
+			        categoryDic["Natural Hazard Mitigation"] = "nhm";
+			        categoryDic["Recreation, Culture, and Aesthetics"] = "rca";
+			        categoryDic["People and Built Spaces"] = "pbs";
+			        categoryDic["Supplemental"] = "sup";
+			        categoryDic["Food, Fuel, and Materials"] ="ffm";
+			        categoryDic["Biodiversity Conservation"] = "biod";
+					var liHomeElem = null;
+					var aHomeElem = null;
+					indexImage = 0;
+					for (var key in categoryDic) {
 						if(layer.hasOwnProperty('eaCategory')){
-							if (layer.eaCategory.indexOf(stringArray[i]) !=-1) {
-							    strCategoryOfThisLayer = strCategoryOfThisLayer + "Y;"
+						    liElem = document.createElement("li");
+							liElem.style.left = (indexImage*20).toString() + "px";
+							liElem.style.top = "-11px";
+							aElem = document.createElement("a");
+							liElem.appendChild(aElem);
+							ulElem.appendChild(liElem);							
+							if (layer.eaCategory.indexOf(key) !=-1) {
+								liElem.setAttribute("id",categoryDic[key]);
 							}
 							else {
-								strCategoryOfThisLayer = strCategoryOfThisLayer + "N;"
+								liElem.setAttribute("id",categoryDic[key] + "_bw");
 							}
 						}
-					}   
-					strCategoryOfThisLayer = strCategoryOfThisLayer.substring(0, strCategoryOfThisLayer.length - 1);
-			        newCell.innerHTML = layer.name+ "</br>" + strCategoryOfThisLayer;
-			        //var newText  = document.createTextNode(layer.name+ "</br>" + "my added line");
-			        //newCell.appendChild(newText);    
-			        
-			        var chkBox = tableRef.getElementsByTagName(chkboxId);
+						indexImage = indexImage + 1;
+					}
+			        photo.appendChild(ulElem);
+					newCell.appendChild(photo);
 
                 }
             }
 
         });
-	    
-	    
-	    /*var rows = tableRef.getElementsByTagName("tr");       
-	    for (var i = 0; i < rows.length; i++) {
-	        (function (idx) {
-	            addEvent(rows[idx], "click", function () {
-	                SelectRow(rows[idx]);
-	            });
-	        })(i);
-	    }*/                     
-	                                        
             
-    },
-        
-                    
+    },               
                     
     i: 0,
     j: 0,
 
-    _onPublishClick: function() {
-        layersToBeAdded = "";
+    _onAddLayersClick: function() {
+        layersToBeAdded = "a";
 		for (var key in chkIdDictionary) {
 		  if (chkIdDictionary.hasOwnProperty(key)) {
 		  	if (document.getElementById(key).checked) {
-            	layersToBeAdded = layersToBeAdded + key.replace("ck", "") + ",";
+            	layersToBeAdded = layersToBeAdded + "," + key.replace("ck", "");
         	}
 		  }
 		}
-        layersToBeAdded = layersToBeAdded.substring(0, layersToBeAdded.length - 1);
         this.publishData({
 	        message: layersToBeAdded
 	    });
 	    this.i ++;
-	    this.pubInfoNode.innerText = 'Publish ' + this.i;
+	    //this.pubInfoNode.innerText = 'Publish ' + this.i;
     },
-
-    /*_onPublishHisClick: function() {
-      this.publishData({
-        message: 'I am widget A.'
-      }, true);
-      this.j ++;
-      this.pubHisInfoNode.innerText = 'Publish ' + this.j;
+    _onRemoveLayersClick: function() {
+        layersToBeRemoved = "r";
+		for (var key in chkIdDictionary) {
+		  if (chkIdDictionary.hasOwnProperty(key)) {
+		  	if (document.getElementById(key).checked) {
+            	layersToBeRemoved = layersToBeRemoved + "," + key.replace("ck", "") ;
+        	}
+		  }
+		}
+        this.publishData({
+	        message: layersToBeRemoved
+	    });
+	    this.i ++;
+	    //this.pubInfoNode.innerText = 'Publish ' + this.i;
     },
-
-    _onLoadWidgetBClick: function(){
-      var widgets = this.appConfig.getConfigElementsByName('WidgetB');
-      if(widgets.length === 0){
-        this.loadWidgetBInfoNode.innerText = 'Widget B is not configured.';
-        return;
-      }
-
-      var widgetId = widgets[0].id;
-      if(this.widgetManager.getWidgetById(widgetId)){
-        this.loadWidgetBInfoNode.innerText = 'Widget B has been loaded.';
-        return;
-      }
-      this.openWidgetById(widgetId).then(lang.hitch(this, function(widget){
-        this.loadWidgetBInfoNode.innerText = widget.name + ' is loaded';
-      }));
-    }*/
   });
 });

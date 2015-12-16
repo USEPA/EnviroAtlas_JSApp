@@ -10,6 +10,6 @@
   "properties": {
     "hasConfig": false,
     "hasLocale": false,
-    "hasStyle": false
+    "hasStyle": true
   }
 }

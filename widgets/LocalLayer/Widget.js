@@ -218,13 +218,30 @@ define([
               }
           }
       };
+      var _removeSelectedLayers = function(selectedLayerNum) {
+        var bNeedToBeAdded = false;
+        var stringArray = selectedLayerNum.split(",");
+        
+    	for (i in stringArray) {
+    		lyr = this._viewerMap.getLayer(layerIdPrefix + stringArray[i]);
+			if(lyr){
+            	this._viewerMap.removeLayer(lyr);
+          	}
+        }
+
+      };
     var clazz = declare([BaseWidget], {
 	  onReceiveData: function(name, widgetId, data, historyData) {
 		  if(name !== 'SimpleSearchFilter'){
 		    return;
 		  }
-		  _addSelectedLayers(this.config.layers.layer, data.message);
-
+		  var stringArray = data.message.split(",");
+		  if (stringArray[0] == "a") {
+		  	_addSelectedLayers(this.config.layers.layer, data.message.substring(2));
+		  }
+		  if (stringArray[0] == "r") {
+		  	_removeSelectedLayers(data.message.substring(2));
+		  }
 	  },
       constructor: function() {
         this._originalWebMap = null;
@@ -241,7 +258,29 @@ define([
           MapManager.getInstance().onAppConfigChanged(this.appConfig,'mapChange', _changedData);
         }
       },
+      /*_removeSelectedLayers: function(selectedLayerNum) {
+      	alert(selectedLayerNum);
+        var bNeedToBeAdded = false;
+        var stringArray = selectedLayerNum.split(",");
+        
+    	for (i in stringArray) {
+    		alert(layerIdPrefix + stringArray[i]);
+    		for(var l = this.map.layerIds.length - 1; l>1; l--){
+    			
+	          var lyr = this._viewerMap.getLayer(this.map.layerIds[l]);
+	          alert("lyr.id: " + lyr.id);
+	          if(lyr.id == layerIdPrefix + stringArray[i]){
+	            this._viewerMap.removeLayer(lyr);
+	          }
+	        }
+    		//this.map.getLayer(layerIdPrefix + stringArray[i]);
+			//if(lyr){
+			//	alert("layer removed");
+            //	this.map.removeLayer(lyr);
+          	//}
+        }
 
+     },*/
       _removeAllLayersExceptBasemap: function(){
         for(var l = this.map.layerIds.length - 1; l>1; l--){
           var lyr = this.map.getLayer(this.map.layerIds[l]);
