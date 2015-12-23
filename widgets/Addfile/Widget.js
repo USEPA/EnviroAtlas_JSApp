@@ -59,7 +59,7 @@ define([
             startup: function () {
                 this.inherited(arguments);
 
-                this._initTabContainer();
+                //this._initTabContainer();
 
                 on(this.uploadForm, "change", lang.hitch(this, function (event) {
                     var fileName = event.target.value.toLowerCase();
@@ -235,7 +235,7 @@ define([
 
             //Begin processing csv data
             handleCSV: function (file) {
-                alert("CSV");
+                //alert("CSV");
                 console.log("Processing CSV: ", file, ", ", file.name, ", ", file.type, ", ", file.size);
                 if (file.data) {
                     var decoded = this.bytesToString(base64.decode(file.data));
