@@ -1,0 +1,38 @@
+<div style="margin:-14px -14px 0 -14.7px;">
+
+    <!--testing-->
+    <!--<div data-dojo-attach-point="tabMain">-->
+        <!--<div class="profile-tab-node" data-dojo-attach-point="tabNode1">-->
+            <!--<div>-->
+                <!--<div>-->
+                    <p style="padding:12px 8px 0 12px;">Add a zipped shapefile or .csv file to the map. The CSV file must store the location in fields with one of the following
+                        names:</p><br/>
+                    <div>
+                        <p style="padding-left: 30px;">
+                            <b>Latitude Fields:</b> lat, latitude, y, ycenter <br />
+                            <b>Longitude Fields:</b> lon, long, longitude, x, xcenter
+                        </p>
+                    </div>
+                    <br/>
+                <!--</div>-->
+            <!--</div>-->
+            <div>
+                <form enctype="multipart/form-data" method="post" data-dojo-attach-point="uploadForm">
+                    <div class="field">
+                        <label class="file-upload">
+                            <span><strong>Add File</strong></span>
+                            <input type="file" name="file" data-dojo-attach-point="inFile"/>
+                        </label>
+                    </div>
+                </form>
+                <span class="file-upload-status" style="opacity:1;" data-dojo-attach-point="uploadstatus"></span>
+            </div>
+            <div class="row">
+                <div id="fileInfo">&nbsp;</div>
+            </div>
+        <!--</div>-->
+        <!--<div class="profile-tab-node" data-dojo-attach-point="tabNode2">-->
+            <!--<h3>Add Url</h3>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>
