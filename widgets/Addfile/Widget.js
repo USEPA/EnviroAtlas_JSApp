@@ -19,6 +19,7 @@ define([
         'esri/geometry/webMercatorUtils',
         'esri/geometry/Point',
         'esri/geometry/Multipoint',
+        'jimu/dijit/TabContainer'
     ],
     function (declare,
               BaseWidget,
@@ -39,14 +40,15 @@ define([
               CsvStore,
               webMercatorUtils,
               Point,
-              Multipoint) {
+              Multipoint,
+              TabContainer) {
 
             var latFieldStrings = ["lat", "latitude", "y", "ycenter"];
             var longFieldStrings = ["lon", "long", "longitude", "x", "xcenter"];
 
         return declare([BaseWidget], {
 
-            baseClass: 'jimu-widget-addshapefile',
+            baseClass: 'jimu-widget-addfile',
             portalUrl: 'http://www.arcgis.com',
 
             // postCreate: function() {
@@ -56,6 +58,9 @@ define([
 
             startup: function () {
                 this.inherited(arguments);
+
+                this._initTabContainer();
+
                 on(this.uploadForm, "change", lang.hitch(this, function (event) {
                     var fileName = event.target.value.toLowerCase();
 
@@ -75,6 +80,32 @@ define([
                         this.uploadstatus.innerHTML = '<p style="color:red">Add shapefile as .zip file</p>';
                     }
                 }));
+            },
+
+            _initTabContainer: function () {
+                var tabs = [];
+                tabs.push({
+                    title: "Tab1",
+                    content: this.tabNode1
+                });
+                tabs.push({
+                    title: "Tab2",
+                    content: this.tabNode2
+                });
+                this.selTab = this.nls.measurelabel;
+                this.tabContainer = new TabContainer({
+                    tabs: tabs,
+                    selected: this.selTab
+                }, this.tabMain);
+
+                this.tabContainer.startup();
+                this.own(on(this.tabContainer, 'tabChanged', lang.hitch(this, function (title) {
+                    if (title !== this.nls.resultslabel) {
+                        this.selTab = title;
+                    }
+                    this._resizeChart();
+                })));
+                utils.setVerticalCenter(this.tabContainer.domNode);
             },
 
             onOpen: function () {
