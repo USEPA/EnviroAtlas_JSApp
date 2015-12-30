@@ -2,37 +2,65 @@
 
     <!--testing-->
     <!--<div data-dojo-attach-point="tabMain">-->
-        <!--<div class="profile-tab-node" data-dojo-attach-point="tabNode1">-->
-            <!--<div>-->
-                <!--<div>-->
-                    <p style="padding:12px 8px 0 12px;">Add a zipped shapefile or .csv file to the map. The CSV file must store the location in fields with one of the following
-                        names:</p><br/>
-                    <div>
-                        <p style="padding-left: 30px;">
-                            <b>Latitude Fields:</b> lat, latitude, y, ycenter <br />
-                            <b>Longitude Fields:</b> lon, long, longitude, x, xcenter
-                        </p>
-                    </div>
-                    <br/>
-                <!--</div>-->
-            <!--</div>-->
-            <div>
-                <form enctype="multipart/form-data" method="post" data-dojo-attach-point="uploadForm">
-                    <div class="field">
-                        <label class="file-upload">
-                            <span><strong>Add File</strong></span>
-                            <input type="file" name="file" data-dojo-attach-point="inFile"/>
-                        </label>
-                    </div>
-                </form>
-                <span class="file-upload-status" style="opacity:1;" data-dojo-attach-point="uploadstatus"></span>
+    <!--<div class="profile-tab-node" data-dojo-attach-point="tabNode1">-->
+    <!--<div>-->
+    <!--<div>-->
+    <p style="padding:12px 8px 0 12px;">Add a zipped shapefile or .csv file to the map. The CSV file must store the
+        location in fields with one of the following
+        names:</p><br/>
+
+    <!--<div>-->
+        <!--<p style="padding-left: 30px;">-->
+            <!--<b>Latitude Fields:</b> lat, latitude, y, ycenter <br/>-->
+            <!--<b>Longitude Fields:</b> lon, long, longitude, x, xcenter-->
+        <!--</p>-->
+    <!--</div>-->
+    <!--<div style="padding-left: 30px;">-->
+        <!--<input type="radio" name="filetype" data-dojo-attach-point="selectByShape"-->
+               <!--data-dojo-type="dijit/form/RadioButton" checked="checked" value="Shapefile" />-->
+        <!--<span>Shapefile</span>-->
+        <!--<input type="radio" name="filetype" data-dojo-attach-point="selectByShape1"-->
+               <!--data-dojo-type="dijit/form/RadioButton" value="CSV" />-->
+        <!--<span>CSV</span>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <div>
+        <form enctype="multipart/form-data" method="post" data-dojo-attach-point="uploadForm">
+            <div class="field">
+                <label class="file-upload">
+                    <span><strong>Add File</strong></span>
+                    <input type="file" name="file" data-dojo-attach-point="inFile"/>
+                </label>
             </div>
-            <div class="row">
-                <div id="fileInfo">&nbsp;</div>
-            </div>
-        <!--</div>-->
-        <!--<div class="profile-tab-node" data-dojo-attach-point="tabNode2">-->
-            <!--<h3>Add Url</h3>-->
-        <!--</div>-->
+        </form>
+        <span class="file-upload-status" style="opacity:1; margin: 5px;" data-dojo-attach-point="uploadstatus"></span>
+    </div>
+    <div id="fieldForm" data-dojo-attach-point="fieldForm" style="display: none">
+        <div data-dojo-attach-point="xCoordField" style="padding-left: 25px;">
+            <span>X Coord Field:</span>
+            <select class="dijitReset dijitSelect dijitInputField" style="width: 150px; margin: 5px"
+                    data-dojo-attach-point="longField"
+                    data-dojo-type="dijit/form/Select" >
+            </select>
+        </div>
+        <div data-dojo-attach-point="yCoordFields" style="padding-left: 25px;">
+            <span>Y Coord Field:</span>
+            <select class="dijitReset dijitSelect dijitInputField" style="width: 150px; margin: 5px"
+                    data-dojo-attach-point="latField"
+                    data-dojo-type="dijit/form/Select">
+            </select>
+        </div>
+        <div style="padding-left: 25px;">
+            <button class="jimu-btn" data-dojo-attach-point="addToMap">Add Data</button>
+        </div>
+    </div>
+    <div class="row">
+        <div id="fileInfo">&nbsp;</div>
+    </div>
+    <!--</div>-->
+    <!--<div class="profile-tab-node" data-dojo-attach-point="tabNode2">-->
+    <!--<h3>Add Url</h3>-->
+    <!--</div>-->
     <!--</div>-->
 </div>
