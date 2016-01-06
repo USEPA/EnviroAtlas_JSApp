@@ -19,7 +19,8 @@ define({
     removePopup: "Disable Pop-up",
     enablePopup: "Enable Pop-up",
     itemDataFactSheet: "Data Fact Sheet",
-    itemMetadataDownload: "Metadata/Download"    
+    itemMetadataDownload: "Metadata/Download",
+    itemRemove: "Remove"   
   }),
   "ar": 1,
   "cs": 1,

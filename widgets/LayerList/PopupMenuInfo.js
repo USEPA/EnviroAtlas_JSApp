@@ -113,6 +113,9 @@ define([
         key: 'metadataDownload',
         label: this.nls.itemMetadataDownload
       }, {
+        key: 'remove',
+        label: this.nls.itemRemove
+      }, {
         key: 'zoomto',
         label: this.nls.itemZoomTo
       }, {
@@ -242,6 +245,9 @@ define([
         case 'metadataDownload':
           this._onItemMetadataDownloadClick(evt);
           break;                    
+        case 'remove':
+          this._onItemRemoveClick(evt);
+          break;                            
         case 'zoomto' /*this.nls.itemZoomTo'Zoom to'*/ :
           this._onItemZoomToClick(evt);
           break;
@@ -344,7 +350,7 @@ define([
             for (index = 0, len = arrLayers.length; index < len; ++index) {
                 layer = arrLayers[index];
                 if(layer.hasOwnProperty('eaLyrNum')){
-                    if (layerId === ("eaLyrNum_" + layer.eaLyrNum.toString())) {
+                    if (layerId === (window.layerIdPrefix + layer.eaLyrNum.toString())) {
                         if(layer.hasOwnProperty('eaDescription')){
                             alert(layer.eaDescription);
                             break;
@@ -385,7 +391,7 @@ define([
             for (index = 0, len = arrLayers.length; index < len; ++index) {
                 layer = arrLayers[index];
                 if(layer.hasOwnProperty('eaLyrNum')){
-                    if (layerId === ("eaLyrNum_" + layer.eaLyrNum.toString())) {
+                    if (layerId === (window.layerIdPrefix + layer.eaLyrNum.toString())) {
                         if(layer.hasOwnProperty('eaMetadata')){
                             window.open(layer.eaMetadata);
                             break;
@@ -395,6 +401,13 @@ define([
             }
 
         });
+    },    
+    _onItemRemoveClick: function(evt) {
+        layerId = this._layerInfo.id;
+		lyr = this._layerInfo.map.getLayer(layerId);
+		if(lyr){
+        	this._layerInfo.map.removeLayer(lyr);
+      	}          
     },    
     _onTransparencyChanged: function(evt) {
       this._layerInfo.setOpacity(1 - evt.extraData.newTransValue);
@@ -447,6 +460,8 @@ define([
         key: 'url'
       }, {
         key: 'metadataDownload'
+      }, {
+        key: 'remove'
       }, {
         key: 'separator'
       }, {
