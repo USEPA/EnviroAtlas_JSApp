@@ -37,7 +37,6 @@ define([
     Basemap,
     esriBasemaps,
     PopupTemplate) {
-      var layerIdPrefix = "eaLyrNum_";
         
 
       var _addSelectedLayers = function(layersTobeAdded, selectedLayerNum) {
@@ -150,7 +149,7 @@ define([
                 lLayer.on('load',function(evt){
                   evt.layer.name = lOptions.id;
                 });
-                lLayer.id = layerIdPrefix + layer.eaLyrNum;
+                lLayer.id = window.layerIdPrefix + layer.eaLyrNum;
                 var bNeedToBeAdded = false;
                 var stringArray = selectedLayerNum.split(",");
                 	for (i in stringArray) {
@@ -223,25 +222,40 @@ define([
         var stringArray = selectedLayerNum.split(",");
         
     	for (i in stringArray) {
-    		lyr = this._viewerMap.getLayer(layerIdPrefix + stringArray[i]);
+    		lyr = this._viewerMap.getLayer(window.layerIdPrefix + stringArray[i]);
 			if(lyr){
             	this._viewerMap.removeLayer(lyr);
           	}
         }
 
       };
+      //function _removeAllLayers is not called currently, may be used later
+      var _removeAllLayers = function() {
+    	for (i in window.allLayerNumber) {
+    		lyr = this._viewerMap.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
+			if(lyr){
+            	this._viewerMap.removeLayer(lyr);
+          	}
+        }        
+      };
     var clazz = declare([BaseWidget], {
 	  onReceiveData: function(name, widgetId, data, historyData) {
-		  if(name !== 'SimpleSearchFilter'){
-		    return;
-		  }
+		  if (name == 'SimpleSearchFilter'){
 		  var stringArray = data.message.split(",");
 		  if (stringArray[0] == "a") {
 		  	_addSelectedLayers(this.config.layers.layer, data.message.substring(2));
 		  }
-		  if (stringArray[0] == "r") {
-		  	_removeSelectedLayers(data.message.substring(2));
+			  //removing selected layer function is deleted from SimpleSearchFilter
+			  //if (stringArray[0] == "r") {
+			  //	_removeSelectedLayers(data.message.substring(2));
+			  //}
 		  }
+		  //removing all layers function is not used in Layerlist currently
+		  //if (name == 'LayerList'){
+		  //	if (data.message ==window.removeAllMessage) {
+		  //		_removeAllLayers();
+		  //	}
+		  //}
 	  },
       constructor: function() {
         this._originalWebMap = null;
@@ -258,29 +272,9 @@ define([
           MapManager.getInstance().onAppConfigChanged(this.appConfig,'mapChange', _changedData);
         }
       },
-      /*_removeSelectedLayers: function(selectedLayerNum) {
-      	alert(selectedLayerNum);
-        var bNeedToBeAdded = false;
-        var stringArray = selectedLayerNum.split(",");
         
-    	for (i in stringArray) {
-    		alert(layerIdPrefix + stringArray[i]);
-    		for(var l = this.map.layerIds.length - 1; l>1; l--){
     			
-	          var lyr = this._viewerMap.getLayer(this.map.layerIds[l]);
-	          alert("lyr.id: " + lyr.id);
-	          if(lyr.id == layerIdPrefix + stringArray[i]){
-	            this._viewerMap.removeLayer(lyr);
-	          }
-	        }
-    		//this.map.getLayer(layerIdPrefix + stringArray[i]);
-			//if(lyr){
-			//	alert("layer removed");
-            //	this.map.removeLayer(lyr);
-          	//}
-        }
 
-     },*/
       _removeAllLayersExceptBasemap: function(){
         for(var l = this.map.layerIds.length - 1; l>1; l--){
           var lyr = this.map.getLayer(this.map.layerIds[l]);
@@ -311,6 +305,7 @@ define([
         //prepare for receiving data from SimpleSearchFilter
         this.inherited(arguments);
       	this.fetchDataByName('SimpleSearchFilter');
+      	this.fetchDataByName('LayerList');
       }
     });
     return clazz;
