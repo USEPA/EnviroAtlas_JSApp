@@ -43,7 +43,8 @@
 
 .jimu-widget-layerList .layer-row{
   background-color: #ffffff;
-  height: 70px;
+  height: 55px;
+  vertical-align: top;
 }
 
 .jimu-widget-layerList .layer-row-mouseover{
@@ -71,6 +72,8 @@
   border: 0px solid;/*remove*/
   border-bottom: 0px solid #ffffff;
   /*************/
+  padding-top: 2px;
+  padding-bottom: 4px;
 }
 
 .jimu-widget-layerList .col1{
