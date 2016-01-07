@@ -26,6 +26,7 @@
 
 .jimu-widget-layerList .layer-list-body {
   /*overflow: auto;*/
+  margin-top: 8px;
 }
 
 .jimu-widget-layerList .layer-list-table{
@@ -38,12 +39,12 @@
 }
 
 .jimu-widget-layerList .jimu-widget-row{
-
+	vertical-align: top;
 }
 
 .jimu-widget-layerList .layer-row{
   background-color: #ffffff;
-  height: 70px;
+  height: 52px;
 }
 
 .jimu-widget-layerList .layer-row-mouseover{
