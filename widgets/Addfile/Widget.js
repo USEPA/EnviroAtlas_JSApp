@@ -270,7 +270,7 @@ define([
                 var newLineIndex = data.indexOf("\n");
                 var firstLine = lang.trim(data.substr(0, newLineIndex));
                 var cFieldNames = firstLine.split(",");
-                alert(cFieldNames);
+                //alert(cFieldNames);
                 //thisWidget.latField.innerHTML="<a>Hello</a>";
 
                 arrayUtils.forEach(cFieldNames, function(col){
