@@ -34,6 +34,16 @@
         <span class="file-upload-status" style="opacity:1; margin: 5px;" data-dojo-attach-point="uploadstatus"></span>
     </div>
     <div id="fieldForm" data-dojo-attach-point="fieldForm" style="display: none">
+        <div data-dojo-attach-point="projectonField" style="padding-left: 25px;">
+            <span>Projection of data:</span>
+            <select class="dijitReset dijitSelect dijitInputField" style="width: 150px; margin: 5px"
+                    data-dojo-attach-point="projection"
+                    data-dojo-type="dijit/form/Select" >
+                <option value="Web Mercator" selected="selected">Web Mercator</option>
+                <option value="Lat/Long">Lat/Long</option>
+                <option value="US Albers">US Albers</option>
+            </select>
+        </div>
         <div data-dojo-attach-point="xCoordField" style="padding-left: 25px;">
             <span>X Coord Field:</span>
             <select class="dijitReset dijitSelect dijitInputField" style="width: 150px; margin: 5px"

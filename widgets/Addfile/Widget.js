@@ -313,7 +313,7 @@ define([
 
                         var latField = thisWidget.latField.value;
                         var longField = thisWidget.longField.value;
-                        alert(thisWidget.latField.value);
+                        var projection = thisWidget.projection.value;
                         var fieldNames = csvStore.getAttributes(items[0]);
                         //arrayUtils.forEach(fieldNames, function (fieldName) {
                         //    var matchId;
@@ -344,14 +344,27 @@ define([
                             attributes["__OBJECTID"] = objectId;
                             objectId++;
 
+                            var geometry;
+
                             var latitude = parseFloat(attributes[latField]);
                             var longitude = parseFloat(attributes[longField]);
 
                             if (isNaN(latitude) || isNaN(longitude)) {
                                 return;
                             }
-
-                            var geometry = webMercatorUtils.geographicToWebMercator(new Point(longitude, latitude));
+                            if(projection == "Web Mercator"){
+                                //alert("Web Mercator");
+                                geometry = new Point(longitude, latitude);
+                            }else if(projection == "Lat/Long"){
+                                //alert("Lat/Long");
+                                geometry = webMercatorUtils.geographicToWebMercator(new Point(longitude, latitude));
+                            }else if(projection == "US Albers") {
+                                //alert("US albers");
+                                //geometry = webMercatorUtils
+                            }else{
+                                //geometry = webMercatorUtils.geographicToWebMercator(new Point(longitude, latitude));
+                            }
+                            //geometry = webMercatorUtils.geographicToWebMercator(new Point(longitude, latitude));
                             var feature = {
                                 "geometry": geometry.toJson(),
                                 "attributes": attributes
@@ -361,7 +374,8 @@ define([
 
                         var featureLayerCSV = new FeatureLayer(featureCollection, {
                             infoTemplate: infoTemplate,
-                            id: 'csvLayer'
+                            id: 'csvLayer',
+                            name: 'DavidsTest'
                         });
                         featureLayerCSV.__popupInfo = popupInfo;
                         fileUpload.map.addLayer(featureLayerCSV);
