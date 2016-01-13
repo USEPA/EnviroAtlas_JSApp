@@ -1,16 +1,15 @@
 
-#navlist {
-    position: relative;
+#navlistSearchfilter {
+    position: absolute;
 }
-#navlist li {
+#navlistSearchfilter li {
     margin: 0;
     padding: 0;
     list-style: none;
     position: absolute;
-    top: 0;
 }
 
-#navlist li, #navlist a {
+#navlistSearchfilter li, #navlistSearchfilter a {
     height: 18px;
     width: 18px;
     display: block;

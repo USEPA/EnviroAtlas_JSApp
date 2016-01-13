@@ -43,6 +43,20 @@ define(["./ConfigManager",
     /* global jimuConfig:true */
     var mo = {};
 
+    window.layerIdPrefix = "eaLyrNum_";
+    window.removeAllMessage = "removeAll";
+    window.bFirstLoadFilterWidget = true;
+    window.allLayerNumber = [];
+    window.categoryDic = {};
+    window.categoryDic["Clean Air"] = "cair";
+    window.categoryDic["Clean and Plentiful Water"] = "cpw";
+    window.categoryDic["Climate Stabilization"] = "clim";
+    window.categoryDic["Natural Hazard Mitigation"] = "nhm";
+    window.categoryDic["Recreation, Culture, and Aesthetics"] = "rca";
+    window.categoryDic["Food, Fuel, and Materials"] ="ffm";
+    window.categoryDic["Biodiversity Conservation"] = "biod";
+    window.categoryDic["People and Built Spaces"] = "pbs";
+    window.categoryDic["Supplemental"] = "sup";
     //patch for JS API 3.10
     var hasMethod = typeof cookie.getAll === 'function';
     if (!hasMethod) {

@@ -103,8 +103,8 @@
 				"label" : "Coordinate"
 			}, {
 				"position" : {
-					"left" : 45,
-					"top" : 45,
+					"left" : 295,
+					"top" : 5,
 					"width" : 400,
 					"height" : 410,
 					"relativeTo" : "map"
@@ -118,8 +118,8 @@
 				"config" : "configs/eBasemapGallery/config_Enhanced Basemap Gallery.json"
 			}, {
 				"position" : {
-					"left" : 95,
-					"top" : 45,
+					"left" : 345,
+					"top" : 5,
 					"width" : 380,
 					"height" : 410,
 					"relativeTo" : "map"
@@ -133,8 +133,8 @@
 				"config" : "configs/eBookmark/config_Enhanced Bookmark.json"
 			}, {
 				"position" : {
-					"left" : 145,
-					"top" : 45,
+					"left" : 395,
+					"top" : 5,
 					"width" : 380,
 					"height" : 410,
 					"relativeTo" : "map"
@@ -148,8 +148,8 @@
 				"config" : "configs/Print/config_Print.json"
 			}, {
 				"position" : {
-				  "left" : 195,
-				  "top" : 45,
+				  "left" : 445,
+				  "top" : 5,
 				  "width" : 380,
 				  "height" : 410,
 				  "relativeTo" : "map"
@@ -163,8 +163,8 @@
 				"config" : "widgets/ElevationProfile/config.json"
 			}, {
 				"position" : {
-				  "left" : 245,
-				  "top" : 45,
+				  "left" : 495,
+				  "top" : 5,
 				  "width" : 380,
 				  "height" : 410,
 				  "relativeTo" : "map"

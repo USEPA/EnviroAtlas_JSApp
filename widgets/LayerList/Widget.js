@@ -44,6 +44,7 @@ define([
 
       startup: function() {
         this.inherited(arguments);
+      	//this.fetchDataByName('SimpleSearchFilter');
         NlsStrings.value = this.nls;
         // summary:
         //    this function will be called when widget is started.
@@ -220,6 +221,17 @@ define([
       onAppConfigChanged: function(appConfig, reason, changedData){
         /*jshint unused: false*/
         this.appConfig = appConfig;
+      },
+      _onRemoveLayersClick: function() {
+    	for (i in window.allLayerNumber) {    		
+    		lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
+			if(lyr){
+            	this.map.removeLayer(lyr);
+          	}
+        }        
+        /*this.publishData({
+	        message: window.removeAllMessage
+	    });*/
       }
     });
     //clazz.hasConfig = false;

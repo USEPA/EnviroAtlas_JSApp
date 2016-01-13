@@ -43,7 +43,8 @@
 
 .jimu-widget-layerList .layer-row{
   background-color: #ffffff;
-  height: 40px;
+  height: 55px;
+  vertical-align: top;
 }
 
 .jimu-widget-layerList .layer-row-mouseover{
@@ -71,6 +72,8 @@
   border: 0px solid;/*remove*/
   border-bottom: 0px solid #ffffff;
   /*************/
+  padding-top: 2px;
+  padding-bottom: 4px;
 }
 
 .jimu-widget-layerList .col1{
@@ -418,3 +421,56 @@
   color: inherit;
   display: block;
 }
+#navlist {
+    margin: 3px;
+    padding: 0;	
+    position: absolute;
+}
+#navlist li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    top: 0;
+}
+#navlist li, #navlist a {
+    height: 18px;
+    width: 18px;
+    display: block;
+}
+/* biodiversity conservation */
+#biod_bw {background: url('../images/bc_icons.png') 0 0;}
+#biod {background: url('../images/bc_icons.png') -20px 0px;}
+#biod a:hover {background: url('../images/bc_icons.png') -80px 0px;}
+/* clean air */
+#cair_bw {background: url('../images/bc_icons.png') 0px -20px;}
+#cair {background: url('../images/bc_icons.png') -20px -20px;}
+#cair a:hover {background: url('../images/bc_icons.png') -40px -20px;}
+/* clean and plentiful water */
+#cpw_bw {background: url('../images/bc_icons.png') 0px -40px;}
+#cpw {background: url('../images/bc_icons.png') -20px -40px;}
+#cpw a:hover {background: url('../images/bc_icons.png') -40px -40px;}
+/* climate stabilization */
+#clim_bw {background: url('../images/bc_icons.png') 0px -60px;}
+#clim {background: url('../images/bc_icons.png') -20px -60px;}
+#clim a:hover {background: url('../images/bc_icons.png') -40px -60px;}
+/* food, fuel, and materials */
+#ffm_bw {background: url('../images/bc_icons.png') 0px -80px;}
+#ffm {background: url('../images/bc_icons.png') -20px -80px;}
+#ffm a:hover {background: url('../images/bc_icons.png') -40px -80px;}
+/* natural hazard mitigation */
+#nhm_bw {background: url('../images/bc_icons.png') 0px -100px;}
+#nhm {background: url('../images/bc_icons.png') -20px -100px;}
+#nhm a:hover {background: url('../images/bc_icons.png') -40px -100px;}
+/* recreation, culture, and aesthetics */
+#rca_bw {background: url('../images/bc_icons.png') 0px -120px;}
+#rca {background: url('../images/bc_icons.png') -20px -120px;}
+#rca a:hover {background: url('../images/bc_icons.png') -40px -120px;}
+/* people and built spaces */
+#pbs_bw {background: url('../images/bc_icons.png') 0px -140px;}
+#pbs {background: url('../images/bc_icons.png') -20px -140px;}
+#pbs a:hover {background: url('../images/bc_icons.png') -40px -140px;}
+/* supplemental */
+#sup_bw {background: url('../images/bc_icons.png') 0px -160px;}
+#sup {background: url('../images/bc_icons.png') -20px -160px;}
+#sup a:hover {background: url('../images/bc_icons.png') -40px -160px;}

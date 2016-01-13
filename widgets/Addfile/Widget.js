@@ -8,6 +8,7 @@ define([
         'dojo/_base/lang',
         'dojo/dom',
         'dojo/_base/array',
+        'dojo/dom-style',
         'esri/layers/FeatureLayer',
         'esri/InfoTemplate',
         'esri/renderers/SimpleRenderer',
@@ -19,7 +20,8 @@ define([
         'esri/geometry/webMercatorUtils',
         'esri/geometry/Point',
         'esri/geometry/Multipoint',
-        'jimu/dijit/TabContainer'
+        'jimu/dijit/TabContainer',
+        'jimu/dijit/RadioBtn',
     ],
     function (declare,
               BaseWidget,
@@ -30,6 +32,7 @@ define([
               lang,
               dom,
               arrayUtils,
+              domStyle,
               FeatureLayer,
               InfoTemplate,
               SimpleRenderer,
@@ -41,10 +44,14 @@ define([
               webMercatorUtils,
               Point,
               Multipoint,
-              TabContainer) {
+              TabContainer,
+              RadioBtn) {
 
             var latFieldStrings = ["lat", "latitude", "y", "ycenter"];
             var longFieldStrings = ["lon", "long", "longitude", "x", "xcenter"];
+            var dataCSV;
+            var thisWidget;
+
 
         return declare([BaseWidget], {
 
@@ -58,7 +65,7 @@ define([
 
             startup: function () {
                 this.inherited(arguments);
-
+                thisWidget = this;
                 //this._initTabContainer();
 
                 on(this.uploadForm, "change", lang.hitch(this, function (event) {
@@ -69,15 +76,19 @@ define([
                         fileName = arr[arr.length - 1];
                     }
                     if (fileName.indexOf(".zip") !== -1) {//is file a zip - if not notify user
+                        //close the .csv form incase it is visible
+                        domStyle.set("fieldForm", "display", "none");
+                        //Add shapefile
                         this.generateFeatureCollection(fileName);
                     }
                     else if (fileName.indexOf(".csv") !== -1) {
 
                         var file = event.target.files[0]; // that's right I'm only reading one file
                         this.handleCSV(file);
+                        //this.populateFieldForm(file);
                     }
                     else {
-                        this.uploadstatus.innerHTML = '<p style="color:red">Add shapefile as .zip file</p>';
+                        this.uploadstatus.innerHTML = '<p style="color:red">Please add file</p>';
                     }
                 }));
             },
@@ -240,21 +251,50 @@ define([
                 if (file.data) {
                     var decoded = this.bytesToString(base64.decode(file.data));
                     //this.processCSVData(decoded);
-                    fileUpload.processCSVData(decoded);
+                    //fileUpload.processCSVData(decoded);
+                    thisWidget.populateFieldForm(decoded);
                 }
                 else {
                     var reader = new FileReader();
                     reader.onload = function () {
                         console.log("Finished reading CSV data");
-                        fileUpload.processCSVData(reader.result);
+                        //fileUpload.processCSVData(reader.result);
+                        thisWidget.populateFieldForm(reader.result);
                         //this.processCSVData(reader.result);
                     };
                     reader.readAsText(file);
                 }
             },
+            populateFieldForm: function(data){
+                //get first line with field names
+                var newLineIndex = data.indexOf("\n");
+                var firstLine = lang.trim(data.substr(0, newLineIndex));
+                var cFieldNames = firstLine.split(",");
+                //alert(cFieldNames);
+                //thisWidget.latField.innerHTML="<a>Hello</a>";
+
+                arrayUtils.forEach(cFieldNames, function(col){
+                    //option elements
+                    var xOption = document.createElement("option");
+                    var yOption = document.createElement("option");
+                    xOption.text = col;
+                    yOption.text = col;
+                    thisWidget.latField.add(xOption);
+                    thisWidget.longField.add(yOption);
+                });
+
+                on(this.addToMap, "click", this.processCSVData);
+
+                dataCSV = data;
+
+                //Display coord field dropdowns
+                domStyle.set("fieldForm", "display", "inline");
+            },
             //Process csv
-            processCSVData: function (data) {
+            processCSVData: function () {
                 fileUpload.uploadstatus.innerHTML = '<b>Loading… </b>' + name;
+                //pass csv data
+                var data = dataCSV;
 
                 var newLineIndex = data.indexOf("\n");
                 var firstLine = lang.trim(data.substr(0, newLineIndex)); //remove extra whitespace, not sure if I need to do this since I threw out space delimiters
@@ -270,23 +310,26 @@ define([
                         var featureCollection = fileUpload.generateFeatureCollectionTemplateCSV(csvStore, items);
                         var popupInfo = fileUpload.generateDefaultPopupInfo(featureCollection);
                         var infoTemplate = new InfoTemplate(fileUpload.buildInfoTemplate(popupInfo));
-                        var latField, longField;
+
+                        var latField = thisWidget.latField.value;
+                        var longField = thisWidget.longField.value;
+                        alert(thisWidget.latField.value);
                         var fieldNames = csvStore.getAttributes(items[0]);
-                        arrayUtils.forEach(fieldNames, function (fieldName) {
-                            var matchId;
-                            matchId = arrayUtils.indexOf(latFieldStrings,
-                                fieldName.toLowerCase());
-
-                            if (matchId !== -1) {
-                                latField = fieldName;
-                            }
-
-                            matchId = arrayUtils.indexOf(longFieldStrings,
-                                fieldName.toLowerCase());
-                            if (matchId !== -1) {
-                                longField = fieldName;
-                            }
-                        });
+                        //arrayUtils.forEach(fieldNames, function (fieldName) {
+                        //    var matchId;
+                        //    matchId = arrayUtils.indexOf(latFieldStrings,
+                        //        fieldName.toLowerCase());
+                        //
+                        //    if (matchId !== -1) {
+                        //        latField = fieldName;
+                        //    }
+                        //
+                        //    matchId = arrayUtils.indexOf(longFieldStrings,
+                        //        fieldName.toLowerCase());
+                        //    if (matchId !== -1) {
+                        //        longField = fieldName;
+                        //    }
+                        //});
 
                         // Add records in this CSV store as graphics
                         arrayUtils.forEach(items, function (item) {
@@ -325,6 +368,7 @@ define([
                         fileUpload.zoomToData(featureLayerCSV);
 
                         fileUpload.uploadstatus.innerHTML = "";
+                        domStyle.set("fieldForm", "display", "none");
                     },
                     onError: function (error) {
                         console.error("Error fetching items from CSV store: ", error);

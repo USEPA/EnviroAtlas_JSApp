@@ -33,7 +33,19 @@ define([
 ], function(_WidgetBase, declare, lang, array, domConstruct, on, query,
   CheckBox, PopupMenu, _TemplatedMixin, template,
   domAttr, domClass, domStyle, NlsStrings) {
+  	var received = "";
+  	var loadJSON = function(callback){   
 
+        var xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+        xobj.open('GET', 'widgets/LocalLayer/config.json', true); 
+        xobj.onreadystatechange = function () {
+              if (xobj.readyState == 4 && xobj.status == "200") {
+                callback(xobj.responseText);
+              }
+        };
+        xobj.send(null);  
+    };
   return declare([_WidgetBase, _TemplatedMixin], {
     templateString: template,
     _currentSelectedLayerRowNode: null,
@@ -42,8 +54,17 @@ define([
       this.inherited(arguments);
       this.nls = NlsStrings.value;
     },
+	//postCreate function need to be commented out, otherwise the layer is shown as double
+    /*postCreate: function() {
+      array.forEach(this.operLayerInfos.getLayerInfoArray(), function(layerInfo) {
+        this.drawListNode(layerInfo, 0, this.layerListTable, true);
+      }, this);
 
-    postCreate: function() {
+      array.forEach(this.operLayerInfos.getTableInfoArray(), function(layerInfo) {
+        this.drawListNode(layerInfo, 0, this.tableListTable, true);
+      }, this);
+    },*/
+	startup: function() {
       array.forEach(this.operLayerInfos.getLayerInfoArray(), function(layerInfo) {
         this.drawListNode(layerInfo, 0, this.layerListTable, true);
       }, this);
@@ -157,7 +178,59 @@ define([
         'innerHTML': layerInfo.title,
         'class': 'div-content jimu-float-leading'
       }, layerTitleTdNode);
+	  //add categery for added layer
 
+	  loadJSON(function(response) {
+         var localLayerConfig = JSON.parse(response);
+         var arrLayers = localLayerConfig.layers.layer;
+         for (index = 0, len = arrLayers.length; index < len; ++index) {
+            layer = arrLayers[index];
+            if(layer.hasOwnProperty('eaLyrNum')){
+                if (layerInfo.id === (window.layerIdPrefix + layer.eaLyrNum.toString())) {
+                    if(layer.hasOwnProperty('eaDescription')){
+					    var photo = document.createElement("td");
+						var ulElem = document.createElement("ul");
+						ulElem.setAttribute("id", "navlist");
+				        //newCell.innerHTML = layer.name;
+						//define the dictionary of mapping category names to sprite style id which is defined in css
+						var liHomeElem = null;
+						var aHomeElem = null;
+						indexImage = 0;
+						for (var key in window.categoryDic) {
+							liElem = document.createElement("li");
+							liElem.style.left = (indexImage*20).toString() + "px";
+							aElem = document.createElement("a");
+							liElem.appendChild(aElem);
+							ulElem.appendChild(liElem);							
+							if (layer.eaCategory.indexOf(key) !=-1) {
+								liElem.setAttribute("id",window.categoryDic[key]);
+								indexImage = indexImage + 1;
+							}
+						}
+						/*var div= document.getElementById('LayerListTOC'); // need real DOM Node, not jQuery wrapper
+						var hasVerticalScrollbar= div.scrollHeight>div.clientHeight;
+						if (hasVerticalScrollbar) {
+							alert("has vertical :  ");
+						}
+						else {
+							alert("has no vertical :  ");
+						}*/
+						/*var layerTitleTdNode = domConstruct.create('td', {
+					        'class': 'col col2'
+					    }, layerTrNode);
+					    divLabel = domConstruct.create('div', {
+					        'innerHTML': layerInfo.title,
+					        'class': 'div-content jimu-float-leading'
+					    }, layerTitleTdNode);*/
+				        //photo.appendChild(ulElem);
+				        //layerTitleTdNode.appendChild(ulElem);
+				        divLabel.appendChild(ulElem);
+						//newCell.appendChild(photo);
+                    }
+                }
+            }
+         }
+	  });
       //domStyle.set(divLabel, 'width', 263 - level*13 + 'px');
 
       layerTdNode = domConstruct.create('td', {
