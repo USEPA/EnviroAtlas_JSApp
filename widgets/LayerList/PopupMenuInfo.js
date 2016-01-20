@@ -24,9 +24,10 @@ define([
   'jimu/WidgetManager',
   'esri/lang',
   'esri/graphicsUtils',
-  './NlsStrings'
+  './NlsStrings',
+  'dijit/Dialog'
 ], function(declare, array, lang, Deferred, all, portalUrlUtils, WidgetManager, esriLang,
-  graphicsUtils, NlsStrings) {
+  graphicsUtils, NlsStrings,Dialog) {
   var mapDescriptionStr = "";
   var dataFactSheet = "http://leb.epa.gov/projects/EnviroAtlas/currentDevelopment/";
   var loadJSON = function(callback){   
@@ -352,7 +353,12 @@ define([
                 if(layer.hasOwnProperty('eaLyrNum')){
                     if (layerId === (window.layerIdPrefix + layer.eaLyrNum.toString())) {
                         if(layer.hasOwnProperty('eaDescription')){
-                            alert(layer.eaDescription);
+					    	var mapDescription = new Dialog({
+						        title: layer.name,
+						        style: "width: 300px",    
+					    	});
+					        mapDescription.show();
+					        mapDescription.set("content", layer.eaDescription);
                             break;
                         }
                     }
