@@ -284,9 +284,10 @@ function(declare,
 				  url: serviceParams,
 				  handleAs: "json"
 				});
-				
+
 				serviceRequestError.then(requestSucceeded, requestFailed);
 				}
+			alert("Adding the service failed");
 		}
 		
 		// 1.2 function added to handle WMS

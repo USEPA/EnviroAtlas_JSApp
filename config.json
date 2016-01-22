@@ -178,8 +178,8 @@
 				"config" : "widgets/Addfile/config.json"
 			}, {
 		  "position" : {
-			"left" : 295,
-			"top" : 45,
+			"left" : 545,
+			"top" : 5,
 			"width" : 380,
 			"height" : 410,
 			"relativeTo" : "map"
