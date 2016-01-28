@@ -20,7 +20,6 @@ define([
         'esri/geometry/webMercatorUtils',
         'esri/geometry/Point',
         'esri/geometry/Multipoint',
-        'jimu/dijit/TabContainer',
         'jimu/dijit/RadioBtn',
     ],
     function (declare,
@@ -44,7 +43,6 @@ define([
               webMercatorUtils,
               Point,
               Multipoint,
-              TabContainer,
               RadioBtn) {
 
             var latFieldStrings = ["lat", "latitude", "y", "ycenter"];
@@ -58,10 +56,10 @@ define([
             baseClass: 'jimu-widget-addfile',
             portalUrl: 'http://www.arcgis.com',
 
-            // postCreate: function() {
-            //   this.inherited(arguments);
-            //   console.log('postCreate');
-            // },
+             postCreate: function() {
+               this.inherited(arguments);
+               console.log('postCreate');
+             },
 
             startup: function () {
                 this.inherited(arguments);
@@ -91,32 +89,6 @@ define([
                         this.uploadstatus.innerHTML = '<p style="color:red">Please add file</p>';
                     }
                 }));
-            },
-
-            _initTabContainer: function () {
-                var tabs = [];
-                tabs.push({
-                    title: "Tab1",
-                    content: this.tabNode1
-                });
-                tabs.push({
-                    title: "Tab2",
-                    content: this.tabNode2
-                });
-                this.selTab = this.nls.measurelabel;
-                this.tabContainer = new TabContainer({
-                    tabs: tabs,
-                    selected: this.selTab
-                }, this.tabMain);
-
-                this.tabContainer.startup();
-                this.own(on(this.tabContainer, 'tabChanged', lang.hitch(this, function (title) {
-                    if (title !== this.nls.resultslabel) {
-                        this.selTab = title;
-                    }
-                    this._resizeChart();
-                })));
-                utils.setVerticalCenter(this.tabContainer.domNode);
             },
 
             onOpen: function () {
@@ -313,7 +285,7 @@ define([
 
                         var latField = thisWidget.latField.value;
                         var longField = thisWidget.longField.value;
-                        alert(thisWidget.latField.value);
+                       // var projection = thisWidget.projection.value;
                         var fieldNames = csvStore.getAttributes(items[0]);
                         //arrayUtils.forEach(fieldNames, function (fieldName) {
                         //    var matchId;
@@ -344,14 +316,30 @@ define([
                             attributes["__OBJECTID"] = objectId;
                             objectId++;
 
+                            var geometry;
+
                             var latitude = parseFloat(attributes[latField]);
                             var longitude = parseFloat(attributes[longField]);
 
                             if (isNaN(latitude) || isNaN(longitude)) {
                                 return;
                             }
+                            //Logic for allowing user selection of Projection
+                            //if(projection == "Web Mercator"){
+                            //    //alert("Web Mercator");
+                            //    geometry = new Point(longitude, latitude);
+                            //}else if(projection == "Lat/Long"){
+                            //    //alert("Lat/Long");
+                            //    geometry = webMercatorUtils.geographicToWebMercator(new Point(longitude, latitude));
+                            //}else if(projection == "US Albers") {
+                            //    //alert("US albers");
+                            //    //geometry = webMercatorUtils
+                            //}else{
+                            //    //geometry = webMercatorUtils.geographicToWebMercator(new Point(longitude, latitude));
+                            //}
 
-                            var geometry = webMercatorUtils.geographicToWebMercator(new Point(longitude, latitude));
+                            geometry = webMercatorUtils.geographicToWebMercator(new Point(longitude, latitude));
+
                             var feature = {
                                 "geometry": geometry.toJson(),
                                 "attributes": attributes
@@ -361,7 +349,8 @@ define([
 
                         var featureLayerCSV = new FeatureLayer(featureCollection, {
                             infoTemplate: infoTemplate,
-                            id: 'csvLayer'
+                            id: 'csvLayer',
+                            name: 'DavidsTest'
                         });
                         featureLayerCSV.__popupInfo = popupInfo;
                         fileUpload.map.addLayer(featureLayerCSV);
