@@ -5,9 +5,17 @@ define(['dojo/_base/declare',
       'jimu/utils',
         'esri/request',
         'dojo/_base/json',
+        'esri/graphic',
+        'esri/symbols/SimpleLineSymbol',
+        'esri/symbols/SimpleMarkerSymbol',
+        'esri/Color',
+        'esri/geometry/Polyline',
       'jimu/dijit/TabContainer'],
-function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, TabContainer) {
-  //To create a widget, you need to derive from BaseWidget.
+function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, SimpleLineSymbol, SimpleMarkerSymbol, Color, Polyline, TabContainer) {
+
+  var curMap;
+  var RaindropTool;
+
   return declare([BaseWidget], {
     // DemoWidget code goes here
 
@@ -15,6 +23,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, TabContain
     //templateString: template,
 
     baseClass: 'jimu-widget-demo',
+
 
     postCreate: function() {
       this.inherited(arguments);
@@ -25,20 +34,40 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, TabContain
 
     startup: function() {
       this.inherited(arguments);
-      this.mapIdNode.innerHTML = 'map id:' + this.map.id;
+      //this.mapIdNode.innerHTML = 'map id:' + this.map.id;
 
+      RaindropTool = this;
+      curMap = this.map;
+
+      //Events
       on(this.run_Service, "click", this._run_RaindropService);
+      on(this.map, "click", function(evt){
+
+        //Get Location of Click
+        var point = evt.mapPoint;
+        //symbology for point
+        var pointSymbol = new SimpleMarkerSymbol().setStyle(
+            SimpleMarkerSymbol.STYLE_circle).setColor(
+            new Color([255, 0, 0, 0.5])
+        );
+        //add graphic
+        var graphic = new Graphic(point, pointSymbol);
+        curMap.graphics.add(graphic);
+
+        RaindropTool._run_RaindropService(point);
+      });
+
 
       console.log('startup');
     },
 
-    _run_RaindropService: function (){
-      alert("hello");
+    _run_RaindropService: function (point){
 
-      var service_url = 'http://ofmpub.epa.gov/waters10/PointIndexing.Service';
+      //var service_url = 'http://ofmpub.epa.gov/waters10/PointIndexing.Service';
 
+      //settings for indexing service
       var data = {
-        "pGeometry": "POINT(-77.03647613525392 38.889696702324095)",
+        "pGeometry": "POINT(" + point.getLongitude() + " " + point.getLatitude() + ")",
         "pGeometryMod": "WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84",
         "pPointIndexingMethod": "RAINDROP",
         "pPointIndexingRaindropDist": 5,
@@ -49,7 +78,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, TabContain
         "optOutPrettyPrint": 0,
         "optClientRef": "CodePen"
       };
-
+      //Point Indexing service
       var layerUrl = "http://ofmpub.epa.gov/waters10/PointIndexing.Service";
       var layersRequest = esriRequest({
         url: layerUrl,
@@ -59,7 +88,21 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, TabContain
       });
       layersRequest.then(
           function(response) {
-            console.log("Success: ", dojoJson.toJson(response, true));
+
+            //Line Symbology
+            var lineSymbol = new SimpleLineSymbol(
+                SimpleLineSymbol.STYLE_SHORTDASHDOTDOT,
+                new Color([255, 0, 0]),
+                2
+            );
+            console.log("JSON: ",  dojoJson.toJson(response, true));
+            //add polyline to map
+            var polyline = new Polyline(response['output']['indexing_path']['coordinates']);
+
+            var graphic = new Graphic(polyline, lineSymbol);
+            curMap.graphics.add(graphic);
+
+            console.log("Success: ", dojoJson.toJson(response['output']['indexing_path']['coordinates'], true));
           }, function(error) {
             console.log("Error: ", error.message);
           });
