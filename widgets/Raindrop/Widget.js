@@ -10,11 +10,14 @@ define(['dojo/_base/declare',
         'esri/symbols/SimpleMarkerSymbol',
         'esri/Color',
         'esri/geometry/Polyline',
-      'jimu/dijit/TabContainer'],
-function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, SimpleLineSymbol, SimpleMarkerSymbol, Color, Polyline, TabContainer) {
+      'jimu/dijit/TabContainer',
+      'dijit/layout/ContentPane',
+       'dojo/parser'],
+function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, SimpleLineSymbol, SimpleMarkerSymbol, Color, Polyline, TabContainer, ContentPane) {
 
   var curMap;
   var RaindropTool;
+  var onMapClick;
 
   return declare([BaseWidget], {
     // DemoWidget code goes here
@@ -40,8 +43,10 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
       curMap = this.map;
 
       //Events
-      on(this.run_Service, "click", this._run_RaindropService);
-      on(this.map, "click", function(evt){
+      on(this.run_Service, "click", function(){
+
+      });
+      onMapClick = on(this.map, "click", function(evt){
 
         //Get Location of Click
         var point = evt.mapPoint;
@@ -112,12 +117,16 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
     _initTabContainer: function () {
       var tabs = [];
       tabs.push({
-        title: "Tab1",
+        title: "About",
         content: this.tabNode1
       });
       tabs.push({
-        title: "Tab2",
+        title: "Settings",
         content: this.tabNode2
+      });
+      tabs.push({
+        title: "Results",
+        content: this.tabNode3
       });
       this.selTab = this.nls.measurelabel;
       this.tabContainer = new TabContainer({
@@ -140,6 +149,8 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
     },
 
     onClose: function(){
+
+      onMapClick.remove();
       console.log('onClose');
     },
 

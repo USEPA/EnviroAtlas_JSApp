@@ -1,16 +1,29 @@
 <div>
-	<!--<div>${nls.label1}.</div>-->
-	<!--<div>${nls.label2}.[${config.configText}]</div>-->
+	<div style="padding-bottom:8px;">
+		<button class="jimu-btn" data-dojo-attach-point="run_Service">Select Raindrop Point</button>
+		<button class="jimu-btn" data-dojo-attach-point="clear">Clear</button>
+	</div>
 	<div data-dojo-attach-point="tabMain">
 		<div class="profile-tab-node" data-dojo-attach-point="tabNode1">
-			<label>Hello</label>
-			<div style="padding-top:8px;">
-
-				<button class="jimu-btn" data-dojo-attach-point="run_Service">Search</button>
+			<div style="padding-top:8px;" >
+				<p>The Raindrop tool allows users to interactively select a location
+					on the map to locate the general raindrop flow path and distance
+					to the nearest water feature as depicted in National Hydrography
+					Dataset Plus V2 (NHDPlus V2). This tool is a prototype for testing only.
+					Warning: This tool is built using nationally available 30 meter elevation
+					data; it does not account for buildings or engineered stormwater
+					infrastructure such as culverts and pipes and as such is not for
+					use in heavily engineered locations. For additional guidance on
+					this tool, please see the About EnviroAtlas document - accessible
+					from the map viewer Help button.</p>
 			</div>
 		</div>
 		<div class="profile-tab-node" data-dojo-attach-point="tabNode2">
 
 		</div>
+		<div class="profile-tab-node" data-dojo-attach-point="tabNode3">
+
+		</div>
 	</div>
+
 </div>
