@@ -108,8 +108,8 @@ function(declare,
 			else{
 			parentLayerName = json.mapName;
 			}
-			
-			serviceWKID = json.spatialReference.wkid;
+			//console.log(json);
+			serviceWKID = json.fullExtent.spatialReference.wkid;
 			singleFusedMapCache = JSON.stringify(json.singleFusedMapCache);
 			xmin = json.fullExtent.xmin;
 			ymin = json.fullExtent.ymin;
