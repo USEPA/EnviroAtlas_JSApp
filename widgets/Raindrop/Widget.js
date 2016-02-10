@@ -11,13 +11,18 @@ define(['dojo/_base/declare',
         'esri/Color',
         'esri/geometry/Polyline',
       'jimu/dijit/TabContainer',
-      'dijit/layout/ContentPane',
-       'dojo/parser'],
-function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, SimpleLineSymbol, SimpleMarkerSymbol, Color, Polyline, TabContainer, ContentPane) {
+    'esri/dijit/HorizontalSlider',
+    'esri/dijit/ColorPicker',
+    'esri/Color'],
+function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, SimpleLineSymbol, SimpleMarkerSymbol, Color, Polyline, TabContainer, HorizontalSlider, ColorPicker, Color) {
 
   var curMap;
   var RaindropTool;
   var onMapClick;
+  var snapD = 5;  //Snap Distances
+  var maxD = 5;   //Max Distance
+  var lineTh = 1; //line thickness
+  var lineColorPicker;
 
   return declare([BaseWidget], {
     // DemoWidget code goes here
@@ -41,6 +46,63 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
 
       RaindropTool = this;
       curMap = this.map;
+
+      //Color
+      //var curColor = new Color("red");
+
+      //lineColorPicker = new ColorPicker({
+      //  color: curColor,
+      //  colorsPerRow: 13,
+      //  required: true,
+      //  showRecentColors: false,
+      //  showTransparencySlider: false
+      //}, "colorPick").startup();
+
+      //on(this.colorPick, "color-change", function (){
+      //  alert(this.color);
+      //
+      //});
+
+      //set up sliders
+      var lineThickness = new HorizontalSlider({
+        value: lineTh,
+        minimum: 1,
+        maximum: 5,
+        labels: ["1", "2", "3", "4", "5"],
+        showButtons: true,
+        style: "width:300px",
+        onChange: function(value){
+          document.getElementById("lineThickLbl").innerHTML = value.toFixed(2);
+          lineTh = value;
+        }
+      }, "sliderLineThick").startup();
+
+      var maxDistance = new HorizontalSlider({
+        value: maxD,
+        minimum: 1,
+        maximum: 5,
+        labels: ["1", "2", "3", "4", "5"],
+        showButtons: true,
+        style: "width:300px",
+        onChange: function(value){
+          document.getElementById("maxDistLbl").innerHTML = value.toFixed(2);
+          maxD = value;
+        }
+          }, "sliderMaxDist").startup();
+
+      var snapDistance = new HorizontalSlider({
+        value: snapD,
+        minimum: 1,
+        maximum: 5,
+        labels: ["1", "2", "3", "4", "5"],
+        showButtons: true,
+        style: "width:300px",
+        onChange: function(value){
+          document.getElementById("snapDistLbl").innerHTML = value.toFixed(2);
+          snapD = value;
+        }
+      }, "sliderSnapDist").startup();
+
 
       //Events
       on(this.run_Service, "click", function(){
@@ -69,14 +131,14 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
     _run_RaindropService: function (point){
 
       //var service_url = 'http://ofmpub.epa.gov/waters10/PointIndexing.Service';
-
+      alert(maxD + " " + snapD + " " + lineTh);
       //settings for indexing service
       var data = {
         "pGeometry": "POINT(" + point.getLongitude() + " " + point.getLatitude() + ")",
         "pGeometryMod": "WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84",
         "pPointIndexingMethod": "RAINDROP",
-        "pPointIndexingRaindropDist": 5,
-        "pPointIndexingMaxDist": 2,
+        "pPointIndexingRaindropDist": maxD, //Max Distance
+        "pPointIndexingMaxDist": snapD,   //Max Snap Dist
         "pOutputPathFlag": "TRUE",
         "pReturnFlowlineGeomFlag": "FALSE",
         "optOutCS": "SRSNAME=urn:ogc:def:crs:OGC::CRS84",
@@ -98,7 +160,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
             var lineSymbol = new SimpleLineSymbol(
                 SimpleLineSymbol.STYLE_SHORTDASHDOTDOT,
                 new Color([255, 0, 0]),
-                2
+                lineTh
             );
             console.log("JSON: ",  dojoJson.toJson(response, true));
             //add polyline to map
@@ -121,11 +183,11 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
         content: this.tabNode1
       });
       tabs.push({
-        title: "Settings",
+        title: "Results",
         content: this.tabNode2
       });
       tabs.push({
-        title: "Results",
+        title: "Settings",
         content: this.tabNode3
       });
       this.selTab = this.nls.measurelabel;

@@ -1,3 +1,13 @@
 /*.jimu-widget-demo div:first-child{*/
   /*color: red;*/
 /*}*/
+
+.formSlider{
+  margin-top: 10px;
+  font-size: medium;
+}
+.sliderLbl{
+  font-size: medium;
+  margin-left: 5px;
+}
+
