@@ -200,6 +200,7 @@ define([
 							liElem = document.createElement("li");
 							liElem.style.left = (indexImage*20).toString() + "px";
 							aElem = document.createElement("a");
+							aElem.title  = key;
 							liElem.appendChild(aElem);
 							ulElem.appendChild(liElem);							
 							if (layer.eaCategory.indexOf(key) !=-1) {
