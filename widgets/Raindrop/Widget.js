@@ -13,8 +13,10 @@ define(['dojo/_base/declare',
       'jimu/dijit/TabContainer',
     'esri/dijit/HorizontalSlider',
     'esri/dijit/ColorPicker',
-    'esri/Color'],
-function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, SimpleLineSymbol, SimpleMarkerSymbol, Color, Polyline, TabContainer, HorizontalSlider, ColorPicker, Color) {
+    'esri/Color',
+      "dijit/ColorPalette",
+      "dijit/TooltipDialog"],
+function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, SimpleLineSymbol, SimpleMarkerSymbol, Color, Polyline, TabContainer, HorizontalSlider, ColorPicker, Color, ColorPalette, TooltipDialog) {
 
   var curMap;
   var RaindropTool;
@@ -22,7 +24,8 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
   var snapD = 5;  //Snap Distances
   var maxD = 5;   //Max Distance
   var lineTh = 1; //line thickness
-  var lineColorPicker;
+  var curColor = new Color("#ff0000");
+
 
   return declare([BaseWidget], {
     // DemoWidget code goes here
@@ -48,20 +51,26 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
       curMap = this.map;
 
       //Color
-      //var curColor = new Color("red");
 
-      //lineColorPicker = new ColorPicker({
-      //  color: curColor,
-      //  colorsPerRow: 13,
-      //  required: true,
-      //  showRecentColors: false,
-      //  showTransparencySlider: false
-      //}, "colorPick").startup();
 
-      //on(this.colorPick, "color-change", function (){
-      //  alert(this.color);
-      //
-      //});
+
+      var myPalette = new ColorPalette({
+        value: curColor,
+        palette: "7x10",
+        style: "display: none",
+        onChange: function(val){
+          //alert(val);
+          curColor = new Color(val);
+          dojo.style(dojo.byId('colorBtn'),{backgroundColor: val});
+          //make color palette invisible
+          document.getElementById("colorPick").style = "display: none";
+        }
+      }, "colorPick").startup();
+
+      on(RaindropTool.colorBtn, "click", function(){
+        //make color palette visisble
+        document.getElementById("colorPick").style = "display: inline";
+      });
 
       //set up sliders
       var lineThickness = new HorizontalSlider({
@@ -70,7 +79,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
         maximum: 5,
         labels: ["1", "2", "3", "4", "5"],
         showButtons: true,
-        style: "width:300px",
+        style: "width:250px",
         onChange: function(value){
           document.getElementById("lineThickLbl").innerHTML = value.toFixed(2);
           lineTh = value;
@@ -83,7 +92,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
         maximum: 5,
         labels: ["1", "2", "3", "4", "5"],
         showButtons: true,
-        style: "width:300px",
+        style: "width:250px",
         onChange: function(value){
           document.getElementById("maxDistLbl").innerHTML = value.toFixed(2);
           maxD = value;
@@ -96,7 +105,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
         maximum: 5,
         labels: ["1", "2", "3", "4", "5"],
         showButtons: true,
-        style: "width:300px",
+        style: "width:250px",
         onChange: function(value){
           document.getElementById("snapDistLbl").innerHTML = value.toFixed(2);
           snapD = value;
@@ -105,24 +114,43 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
 
 
       //Events
+      on(this.clear, "click", function(){
+        curMap.graphics.clear();
+        document.getElementById("lineID").innerHTML = '';
+        document.getElementById("lineDist").innerHTML = '';
+        document.getElementById("linePath").innerHTML = '';
+        document.getElementById("noResults").innerHTML = '';
+        console.log("Raindrop Tool: Cleared Graphics");
+      });
+
       on(this.run_Service, "click", function(){
+        //toggle map onclick event
+        if(typeof onMapClick != 'undefined'){
 
+          dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#485566'});
+          //remove map click event
+          onMapClick.remove();
+          onMapClick = undefined;
+        }else{
+          dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#596d87'});
+          //add map click event
+          onMapClick = on(curMap, "click", function(evt){
+            //Get Location of Click
+            var point = evt.mapPoint;
+            //symbology for point
+            var pointSymbol = new SimpleMarkerSymbol().setStyle(
+                SimpleMarkerSymbol.STYLE_circle, 5).setColor(
+                new Color([255, 0, 0, 0.5])
+            );
+            //add graphic
+            var graphic = new Graphic(point, pointSymbol);
+            curMap.graphics.add(graphic);
+
+            RaindropTool._run_RaindropService(point);
+          });
+        }
       });
-      onMapClick = on(this.map, "click", function(evt){
 
-        //Get Location of Click
-        var point = evt.mapPoint;
-        //symbology for point
-        var pointSymbol = new SimpleMarkerSymbol().setStyle(
-            SimpleMarkerSymbol.STYLE_circle).setColor(
-            new Color([255, 0, 0, 0.5])
-        );
-        //add graphic
-        var graphic = new Graphic(point, pointSymbol);
-        curMap.graphics.add(graphic);
-
-        RaindropTool._run_RaindropService(point);
-      });
 
 
       console.log('startup');
@@ -131,7 +159,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
     _run_RaindropService: function (point){
 
       //var service_url = 'http://ofmpub.epa.gov/waters10/PointIndexing.Service';
-      alert(maxD + " " + snapD + " " + lineTh);
+      //alert(maxD + " " + snapD + " " + lineTh);
       //settings for indexing service
       var data = {
         "pGeometry": "POINT(" + point.getLongitude() + " " + point.getLatitude() + ")",
@@ -146,7 +174,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
         "optClientRef": "CodePen"
       };
       //Point Indexing service
-      var layerUrl = "http://ofmpub.epa.gov/waters10/PointIndexing.Service";
+      var layerUrl = "https://ofmpub.epa.gov/waters10/PointIndexing.Service";
       var layersRequest = esriRequest({
         url: layerUrl,
         content: data,
@@ -155,21 +183,36 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
       });
       layersRequest.then(
           function(response) {
+            if(response['output'] != null){
+              //Line Symbology
+              var lineSymbol = new SimpleLineSymbol(
+                  SimpleLineSymbol.STYLE_SHORTDASHDOTDOT,
+                  curColor,
+                  lineTh
+              );
+              console.log("JSON: ",  dojoJson.toJson(response, true));
+              //add polyline to map
+              var polyline = new Polyline(response['output']['indexing_path']['coordinates']);
 
-            //Line Symbology
-            var lineSymbol = new SimpleLineSymbol(
-                SimpleLineSymbol.STYLE_SHORTDASHDOTDOT,
-                new Color([255, 0, 0]),
-                lineTh
-            );
-            console.log("JSON: ",  dojoJson.toJson(response, true));
-            //add polyline to map
-            var polyline = new Polyline(response['output']['indexing_path']['coordinates']);
+              var graphic = new Graphic(polyline, lineSymbol);
+              curMap.graphics.add(graphic);
 
-            var graphic = new Graphic(polyline, lineSymbol);
-            curMap.graphics.add(graphic);
+              var totDist = response['output']['total_distance'];
+              var pathDist = response['output']['path_distance'];
 
-            console.log("Success: ", dojoJson.toJson(response['output']['indexing_path']['coordinates'], true));
+              //add info to results
+              document.getElementById("noResults").innerHTML ="";
+              document.getElementById("lineID").innerHTML = '<p><b>Line ID: </b>' + response['output']['feature_id'];
+              document.getElementById("lineDist").innerHTML = '<p><b>Total Distance (km): </b>' + totDist.toFixed(2);
+              document.getElementById("linePath").innerHTML = '<p><b>Path Distance (km): </b>' + pathDist.toFixed(2);
+
+              console.log("Success: Returned Raindrop Path");
+              //console.log("Success: ", dojoJson.toJson(response['output']['indexing_path']['coordinates'], true));
+            }else{
+              document.getElementById("noResults").innerHTML = '<b>No Results Returned</b>';
+              console.log("Success: ", dojoJson.toJson(response['output']['indexing_path']['coordinates'], true));
+            }
+
           }, function(error) {
             console.log("Error: ", error.message);
           });

@@ -1,6 +1,6 @@
 <div>
 	<div style="padding-bottom:8px;">
-		<button class="jimu-btn" data-dojo-attach-point="run_Service">Select Raindrop Point</button>
+		<button class="jimu-btn" id="selectPoint" data-dojo-attach-point="run_Service">Select Raindrop Point</button>
 		<button class="jimu-btn" data-dojo-attach-point="clear">Clear</button>
 	</div>
 	<div data-dojo-attach-point="tabMain">
@@ -19,7 +19,10 @@
 			</div>
 		</div>
 		<div class="profile-tab-node" data-dojo-attach-point="tabNode2">
-
+			<div class="sliderLbl" id="lineID"></div>
+			<div class="sliderLbl" id="lineDist"></div>
+			<div class="sliderLbl" id="linePath"></div>
+			<div class="noResultsLbl" id="noResults"></div>
 		</div>
 		<div class="profile-tab-node" data-dojo-attach-point="tabNode3">
 			<table>
@@ -54,6 +57,9 @@
 					</td>
 					<td>
 						<a id="lineThickLbl" class="sliderLbl">1.00</a>
+					</td>
+					<td>
+						<button class="color" id="colorBtn" data-dojo-attach-point="colorBtn"></button>
 					</td>
 				</tr>
 			</table>

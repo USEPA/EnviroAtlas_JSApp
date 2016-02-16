@@ -4,10 +4,21 @@
 
 .formSlider{
   margin-top: 10px;
-  font-size: medium;
+  font-size: small;
 }
 .sliderLbl{
-  font-size: medium;
+  font-size: small;
   margin-left: 5px;
 }
 
+.noResultsLbl{
+  font-size: medium;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.color{
+  height: 20px;
+  width: 20px;
+  margin-left: 5px;
+}
