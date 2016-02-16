@@ -287,6 +287,7 @@ define([
                         var latField = thisWidget.latField.value;
                         var longField = thisWidget.longField.value;
                        // var projection = thisWidget.projection.value;
+                        //alert(thisWidget.latField.value);
                         var fieldNames = csvStore.getAttributes(items[0]);
                         //arrayUtils.forEach(fieldNames, function (fieldName) {
                         //    var matchId;
