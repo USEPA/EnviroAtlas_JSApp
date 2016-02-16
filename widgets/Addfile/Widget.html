@@ -1,10 +1,10 @@
 <div style="margin:-14px -14px 0 -14.7px;">
 
-    <p style="padding:12px 8px 0 12px;">This tool allows you to add a zipped shapefile or Comma Separated Value (.csv) table to the map.
-        For best performance, please limit the number of features to less than 1,000.  This is not a hard cutoff,
-        but most modern browsers will start to experience instability with increasing numbers of features.  CSV
-        tables should contain fields with x and y coordinates in decimal notation.</p><br/>
-
+    <p style="padding:12px 8px 0 12px;">This tool allows you to add a zipped shapefile or Comma Separated Value (.csv)
+        table to the map.  For best performance, please limit the number of features to less than 1,000.
+        This is not a hard cutoff, but most modern browsers will start to experience instability with
+        increasing numbers of features.  CSV tables should contain fields with Latitude and Longitude
+        coordinates in decimal degrees.</p><br/>
     <div>
         <form enctype="multipart/form-data" method="post" data-dojo-attach-point="uploadForm">
             <div class="field">
@@ -31,14 +31,14 @@
             <!--</select>-->
         <!--</div>-->
         <div data-dojo-attach-point="xCoordField" style="padding-left: 25px;">
-            <span>X Coord Field:</span>
+            <span>Longitude:</span>
             <select class="dijitReset dijitSelect dijitInputField" style="width: 150px; margin: 5px"
                     data-dojo-attach-point="longField"
                     data-dojo-type="dijit/form/Select" >
             </select>
         </div>
-        <div data-dojo-attach-point="yCoordFields" style="padding-left: 25px;">
-            <span>Y Coord Field:</span>
+        <div data-dojo-attach-point="yCoordFields" style="padding-left: 35px;">
+            <span>Latitude:</span>
             <select class="dijitReset dijitSelect dijitInputField" style="width: 150px; margin: 5px"
                     data-dojo-attach-point="latField"
                     data-dojo-type="dijit/form/Select">

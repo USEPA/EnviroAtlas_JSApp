@@ -219,6 +219,7 @@ define([
             //Begin processing csv data
             handleCSV: function (file) {
                 //alert("CSV");
+                csvFileName = file.name;
                 console.log("Processing CSV: ", file, ", ", file.name, ", ", file.type, ", ", file.size);
                 if (file.data) {
                     var decoded = this.bytesToString(base64.decode(file.data));
@@ -286,6 +287,7 @@ define([
                         var latField = thisWidget.latField.value;
                         var longField = thisWidget.longField.value;
                        // var projection = thisWidget.projection.value;
+                        //alert(thisWidget.latField.value);
                         var fieldNames = csvStore.getAttributes(items[0]);
                         //arrayUtils.forEach(fieldNames, function (fieldName) {
                         //    var matchId;
@@ -349,8 +351,8 @@ define([
 
                         var featureLayerCSV = new FeatureLayer(featureCollection, {
                             infoTemplate: infoTemplate,
-                            id: 'csvLayer',
-                            name: 'DavidsTest'
+                            id: csvFileName,
+                            name: csvFileName
                         });
                         featureLayerCSV.__popupInfo = popupInfo;
                         fileUpload.map.addLayer(featureLayerCSV);
