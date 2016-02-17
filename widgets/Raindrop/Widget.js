@@ -161,15 +161,12 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
         }
       });
 
-
-
       console.log('startup');
     },
 
     _run_RaindropService: function (point){
 
       //var service_url = 'http://ofmpub.epa.gov/waters10/PointIndexing.Service';
-      //alert(maxD + " " + snapD + " " + lineTh);
       //settings for indexing service
       var data = {
         "pGeometry": "POINT(" + point.getLongitude() + " " + point.getLatitude() + ")",
