@@ -15,8 +15,12 @@ define(['dojo/_base/declare',
     'esri/dijit/ColorPicker',
     'esri/Color',
       "dijit/ColorPalette",
-      "dijit/TooltipDialog"],
-function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, SimpleLineSymbol, SimpleMarkerSymbol, Color, Polyline, TabContainer, HorizontalSlider, ColorPicker, Color, ColorPalette, TooltipDialog) {
+      "dijit/TooltipDialog",
+    "dijit/form/DropDownButton",
+        "dijit/popup",
+      "dojo/dom",
+    "dojo/parser"],
+function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, SimpleLineSymbol, SimpleMarkerSymbol, Color, Polyline, TabContainer, HorizontalSlider, ColorPicker, Color, ColorPalette, TooltipDialog, DropDownButton, popup, dom) {
 
   var curMap;
   var RaindropTool;
@@ -51,25 +55,31 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
       curMap = this.map;
 
       //Color
-
-
-
       var myPalette = new ColorPalette({
         value: curColor,
         palette: "7x10",
-        style: "display: none",
         onChange: function(val){
           //alert(val);
           curColor = new Color(val);
           dojo.style(dojo.byId('colorBtn'),{backgroundColor: val});
-          //make color palette invisible
-          document.getElementById("colorPick").style = "display: none";
         }
       }, "colorPick").startup();
 
-      on(RaindropTool.colorBtn, "click", function(){
-        //make color palette visisble
-        document.getElementById("colorPick").style = "display: inline";
+      //Popup
+      var myTooltipDialog = new TooltipDialog({
+        id: 'myTooltipDialog',
+        //style: "width: 300px;",
+        content: dom.byId('colorPick'),
+        onMouseLeave: function(){
+          popup.close(myTooltipDialog);
+        }
+      });
+
+      on(dom.byId('colorBtn'), 'click', function(){
+        popup.open({
+          popup: myTooltipDialog,
+          around: dom.byId('colorBtn')
+        });
       });
 
       //set up sliders
@@ -119,7 +129,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
         document.getElementById("lineID").innerHTML = '';
         document.getElementById("lineDist").innerHTML = '';
         document.getElementById("linePath").innerHTML = '';
-        document.getElementById("noResults").innerHTML = '';
+        document.getElementById("noResults").innerHTML = '<b>Select Raindrop Point</b>';
         console.log("Raindrop Tool: Cleared Graphics");
       });
 
@@ -254,8 +264,12 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
     },
 
     onClose: function(){
+      if(typeof onMapClick != 'undefined'){
+        onMapClick.remove();
+        onMapClick = undefined;
+        dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#485566'});
+      }
 
-      onMapClick.remove();
       console.log('onClose');
     },
 
