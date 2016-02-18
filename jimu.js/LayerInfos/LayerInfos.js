@@ -408,6 +408,10 @@ define([
             newLayerInfo = null;
           }
           if (newLayerInfo) {
+          	//alert(newLayer.id);
+          	/*if ((newLayer.id.indexOf(window.layerIdTiledPrefix)) == -1){
+            	this._finalLayerInfos.push(newLayerInfo);
+            }*/
             this._finalLayerInfos.push(newLayerInfo);
           }
         }

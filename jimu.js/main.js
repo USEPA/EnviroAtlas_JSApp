@@ -44,6 +44,7 @@ define(["./ConfigManager",
     var mo = {};
 
     window.layerIdPrefix = "eaLyrNum_";
+    window.layerIdTiledPrefix = "tiledNum_";
     window.removeAllMessage = "removeAll";
     window.bFirstLoadFilterWidget = true;
     window.allLayerNumber = [];
