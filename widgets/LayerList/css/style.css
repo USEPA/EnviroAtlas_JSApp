@@ -26,6 +26,7 @@
 
 .jimu-widget-layerList .layer-list-body {
   /*overflow: auto;*/
+  margin-top: 8px;
 }
 
 .jimu-widget-layerList .layer-list-table{
@@ -38,13 +39,12 @@
 }
 
 .jimu-widget-layerList .jimu-widget-row{
-
+	vertical-align: top;
 }
 
 .jimu-widget-layerList .layer-row{
   background-color: #ffffff;
-  height: 55px;
-  vertical-align: top;
+  height: 52px;
 }
 
 .jimu-widget-layerList .layer-row-mouseover{
@@ -72,8 +72,6 @@
   border: 0px solid;/*remove*/
   border-bottom: 0px solid #ffffff;
   /*************/
-  padding-top: 2px;
-  padding-bottom: 4px;
 }
 
 .jimu-widget-layerList .col1{
@@ -250,7 +248,7 @@
   /*************/
   float: right;
   /*margin-right: 4px;*/
-  padding-top: 14px;
+  padding-top: 8px;
 }
 
 .jimu-widget-layerList .layers-list-popupMenu-div .jimu-loading{

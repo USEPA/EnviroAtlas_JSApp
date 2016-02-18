@@ -2,24 +2,39 @@
     "layers": {
         "layer": [
             {
-                "name": "DeLorme's basemap",
-                "type": "Basemap",
-                "layers": {
-                    "layer": [
+                "eaMetric": "Metric",
+                "opacity": 0,
+                "eaScale": "national",
+                "eaLyrNum": 21,
+                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/2",
+                "visible": false,
+                "name": "Acres of crops that have no nearby pollinator habitat",
+                "mode": "ondemand",
+                "eaCategory": "Clean and Plentiful Water - Water Supply and Demand - Water Uses",
+                "eaDfsLink": "DataFactSheets\\pdf\\ESN\\Agriculturalwateruse.pdf",
+                "popup": {
+                    "fieldInfos": [
                         {
-                            "opacity": 1,
-                            "url": "http://services.arcgisonline.com/arcgis/rest/services/Specialty/DeLorme_World_Base_Map/MapServer",
-                            "isReference": false
+                            "fieldName": "Acres_Unpo",
+                            "visible": true,
+                            "label": "Agricultural water use (million gallons/day)"
                         }
-                    ]
-                }
+                    ],
+                    "showAttachments": false,
+                    "title": "HUC 12 ID: {HUC_12}"
+                },
+                "type": "Feature",
+                "autorefresh": 0,
+                "eaMetadata": "https://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7BD5113083-CFCD-48EC-BC24-0ADA5B9BDDB7%7D",
+                "eaDescription": "This map estimates the millions of gallons of water used daily for agricultural irrigation for each subwatershed (HUC-12) in the contiguous United States. Estimates include self-supplied surface and groundwater, as well as water supplied by irrigation water providers, which may include governments, companies, or other organizations.",
+                "tileLink": "http://leb.epa.gov/arcgiscache_exp/Acres_Unpo/National%20Data%20-%20EnviroAtlas/_alllayers/"
             },
             {
                 "eaMetric": "Metric",
-                "opacity": 0.5,
+                "opacity": 0,
                 "eaScale": "national",
-                "eaLyrNum": 1,
-                "url": "http://enviroatlas.epa.gov/arcgis/rest/services/Other/national_master/MapServer/1",
+                "eaLyrNum": 20,
+                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/1",
                 "visible": false,
                 "name": "Agricultural water use (million gallons/day)",
                 "mode": "ondemand",
@@ -39,34 +54,21 @@
                 "type": "Feature",
                 "autorefresh": 0,
                 "eaMetadata": "https://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7BD5113083-CFCD-48EC-BC24-0ADA5B9BDDB7%7D",
-                "eaDescription": "This map estimates the millions of gallons of water used daily for agricultural irrigation for each subwatershed (HUC-12) in the contiguous United States. Estimates include self-supplied surface and groundwater, as well as water supplied by irrigation water providers, which may include governments, companies, or other organizations."
+                "eaDescription": "This map estimates the millions of gallons of water used daily for agricultural irrigation for each subwatershed (HUC-12) in the contiguous United States. Estimates include self-supplied surface and groundwater, as well as water supplied by irrigation water providers, which may include governments, companies, or other organizations.",
+                "tileLink": "http://leb.epa.gov/arcgiscache_exp/AWD_mgal/National%20Data%20-%20EnviroAtlas/_alllayers/"
             },
             {
-                "eaMetric": "Metric",
-                "opacity": 0.5,
-                "eaScale": "national",
-                "eaLyrNum": 2,
-                "url": "http://enviroatlas.epa.gov/arcgis/rest/services/Other/national_master/MapServer/2",
-                "visible": false,
-                "name": "Acres of crops that have no nearby pollinator habitat",
-                "mode": "ondemand",
-                "eaCategory": "Food, Fuel, and Materials - Pollination and Pest Control - Acres of crops that have no nearby pollinator habitat",
-                "eaDfsLink": "DataFactSheets\\pdf\\ESN\\Acresofcropsthathavenonearbypollinatorhabitat.pdf",
-                "popup": {
-                    "fieldInfos": [
+                "name": "DeLorme's basemap",
+                "type": "Basemap",
+                "layers": {
+                    "layer": [
                         {
-                            "fieldName": "Acres_Unpo",
-                            "visible": true,
-                            "label": "Acres of crops that have no nearby pollinator habitat"
+                            "opacity": 1,
+                            "url": "http://services.arcgisonline.com/arcgis/rest/services/Specialty/DeLorme_World_Base_Map/MapServer",
+                            "isReference": false
                         }
-                    ],
-                    "showAttachments": false,
-                    "title": "HUC 12 ID: {HUC_12}"
-                },
-                "type": "Feature",
-                "autorefresh": 0,
-                "eaMetadata": "https://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7BF8858B62-0EA9-4F07-83C3-AAA0517D0925%7D",
-                "eaDescription": "This map layer depicts the total acres of agricultural crops within a subwatershed (12-digit HUC) that require or would benefit from the presence of pollinators, but are without any nearby supporting habitat."
+                    ]
+                }
             },
             {
                 "eaMetric": "Metric",
