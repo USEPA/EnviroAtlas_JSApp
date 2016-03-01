@@ -1,29 +1,59 @@
-define(['dojo/_base/declare', 'dojo/_base/lang', 'jimu/BaseWidget'],
-function(declare, lang, BaseWidget) {
-	var chkIdDictionary = {};
-	  var loadJSON = function(callback){   
+///////////////////////////////////////////////////////////////////////////
+// Copyright © 2014 Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
 
-        var xobj = new XMLHttpRequest();
-
-        xobj.overrideMimeType("application/json");
+define([
+    'dojo/_base/declare',
+    'dijit/_WidgetsInTemplateMixin',
+    "dojo/Deferred",
+    'jimu/BaseWidget',
+    'dijit/layout/AccordionContainer', 'dijit/layout/ContentPane'
+  ],
+  function(
+    declare,
+    _WidgetsInTemplateMixin,
+    Deferred,
+    BaseWidget) {
+		var chkIdDictionary = {};
+		  var loadJSON = function(callback){   
+	
+	        var xobj = new XMLHttpRequest();
+	
+	        xobj.overrideMimeType("application/json");
 
         xobj.open('GET', 'widgets/LocalLayer/config.json', true); 
 
         xobj.onreadystatechange = function () {
               if (xobj.readyState == 4 && xobj.status == "200") {
-                callback(xobj.responseText);
-              }
-        };
-        xobj.send(null);  
-    };
+	                callback(xobj.responseText);
+	              }
+	        };
+	        xobj.send(null);  
+	    };    	
+    var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
 
-  return declare([BaseWidget], {
+      name: 'eBasemapGallery',
+      baseClass: 'jimu-widget-ebasemapgallery',
 
-     baseClass: 'jimu-widget-SimpleSearchFilter',    
-        
-    startup: function(){
-		
-	    var tableOfRelationship = document.getElementById('layersFilterTable');
+
+
+      startup: function() {
+
+        this.inherited(arguments);
+        //start of displaying the layers
+        var tableOfRelationship = document.getElementById('layersFilterTable');
 	    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
 	    tableRef.innerHTML = "";
 	                     
@@ -136,5 +166,9 @@ function(declare, lang, BaseWidget) {
 	    });
 	    this.i ++;
     },
+
+
+    });
+
+    return clazz;
   });
-});

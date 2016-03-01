@@ -391,10 +391,18 @@ define([
     },
 
     _onCkSelectNodeClick: function(layerInfo, ckSelect, evt) {
+      layerId = layerInfo.id;
+	  lyrTiled = layerInfo.map.getLayer(layerId.replace(window.layerIdPrefix, window.layerIdTiledPrefix));
       if (ckSelect.checked) {
         layerInfo.setTopLayerVisible(true);
+        if(lyrTiled){
+       	  lyrTiled.setVisibility(true);
+      	} 
       } else {
         layerInfo.setTopLayerVisible(false);
+        if(lyrTiled){
+       	  lyrTiled.setVisibility(false);
+      	}         
       }
       evt.stopPropagation();
     },
