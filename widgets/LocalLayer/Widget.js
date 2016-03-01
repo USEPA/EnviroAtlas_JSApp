@@ -47,6 +47,7 @@ define([
 				});
 	            this.loaded = true;
 	            this.onLoad(this);
+	            this.visible = false;
 	            this.id = tiledLayerId;
 	          },        
             getTileUrl: function(level, row, col) {
@@ -66,7 +67,7 @@ define([
               var lLayer;
               var lOptions ={};
               if(layer.hasOwnProperty('opacity')){
-                lOptions.opacity = layer.opacity;
+                lOptions.opacity = layer.opacity;// 1.0 has no transparency; 0.0 is 100% transparent 
               }
               if(layer.hasOwnProperty('visible') && !layer.visible){
                 lOptions.visible = false;
@@ -183,6 +184,10 @@ define([
 	                	//initTileLayer("http://leb.epa.gov/arcgiscache_exp/AWD_mgal/National%20Data%20-%20EnviroAtlas/_alllayers/");
 	                	initTileLayer(layer.tileLink, window.layerIdTiledPrefix + layer.eaLyrNum);
 	                    this._viewerMap.addLayer(new myTiledMapServiceLayer());
+	                    lyrTiled = this._viewerMap.getLayer(window.layerIdTiledPrefix + layer.eaLyrNum);
+					    if(lyrTiled){
+				       	     lyrTiled.setOpacity(layer.opacity);
+				        } 
 	                }                	
                 	this._viewerMap.addLayer(lLayer);
                 }
