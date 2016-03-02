@@ -18,6 +18,19 @@
 	<br>
 	<div data-dojo-attach-point="message">
 	</div>
+	<br>
+	<div id="eMailOption" style="display: none">
+		<div>
+			<label>Send us your service url</label>
+		</div>
+		<div>
+			<textarea cols="40" rows="5" id="emailText" style="width: 100%;"></textarea>
+		</div>
+		<div>
+			<button class="jimu-btn" type="button" data-dojo-attach-event="ondijitclick:sendEmail" style="float: right;">Send</button>
+			<label id="message"></label>
+		</div>
+	</div>
 </div>
 
 
