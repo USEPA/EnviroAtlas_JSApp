@@ -82,7 +82,7 @@ function(declare,
 		  var text = dom.byId("emailText").value;
 
 		  //Make request back to the server to send email
-		  xhr("http://innovate:3344/send",{
+		  xhr("http://machinename/send",{
 			  data: {to:to,subject:subject,text:text},
 			  query: {to:to,subject:subject,text:text},
 			  method: "GET"
