@@ -18,6 +18,9 @@
 define(['dojo/_base/declare', 
 		'jimu/BaseWidget', 
 		"dojo/on",
+		"dojo/dom-style",
+		"dojo/request/xhr",
+		"dojo/dom",
 		"esri/layers/ArcGISDynamicMapServiceLayer",
 		"esri/layers/ArcGISTiledMapServiceLayer",
 		"esri/layers/ArcGISImageServiceLayer",
@@ -31,6 +34,9 @@ define(['dojo/_base/declare',
 function(declare, 
 		BaseWidget, 
 		on,
+		domStyle,
+		 xhr,
+		dom,
 		ArcGISDynamicMapServiceLayer,
 		ArcGISTiledMapServiceLayer,
 		ArcGISImageServiceLayer,
@@ -68,6 +74,28 @@ function(declare,
 	   this.urlTextbox.value = '';
 	   this.message.innerHTML = '';
 	},
+
+	  sendEmail: function(){
+
+		  var to = "email@somewhere.com";
+		  var subject = "EnviroAtlas Add URL";
+		  var text = dom.byId("emailText").value;
+
+		  //Make request back to the server to send email
+		  xhr("http://machinename/send",{
+			  data: {to:to,subject:subject,text:text},
+			  query: {to:to,subject:subject,text:text},
+			  method: "GET"
+		  }).then(function(data){
+			  if(data=="sent")
+			  {
+				  console.log("Successful: Email Sent");
+			  }
+			  else{
+				  console.log("Error: Email Failed");
+			  }
+		  });
+	  },
 	
 	addMapService: function()
 	{
@@ -287,7 +315,11 @@ function(declare,
 
 				serviceRequestError.then(requestSucceeded, requestFailed);
 				}
-			alert("Adding the service failed");
+			//Allow emailing of services that are not in config
+			console.log("Service Failed to Load successfully");
+			message.innerHTML = '<div style="color:green; width: 100%;"><b>Service Failed to Load</b></div>';
+			dom.byId("emailText").value = "Please allow the services from " + extractDomain(serviceURL) + " to be added to the EnviroAtlas application.";
+			domStyle.set('eMailOption', 'display', 'inline');
 		}
 		
 		// 1.2 function added to handle WMS
@@ -303,6 +335,11 @@ function(declare,
 				
 				serviceRequestError.then(requestSucceededWMS, requestFailedWMS);
 				}
+			//Allow emailing of services that are not in config
+			console.log("Service Failed to Load successfully");
+			message.innerHTML = '<div style="color:green; width: 100%;"><b>Service Failed to Load</b></div>';
+			dom.byId("emailText").value = "Please allow the services from " + extractDomain(serviceURL) + " to be added to the EnviroAtlas application.";
+			domStyle.set('eMailOption', 'display', 'inline');
 		}
 		
 		// 1.2 if statement added to differentiate between wms (xml dependent) and other services (json dependent) 
@@ -321,6 +358,22 @@ function(declare,
 		});
 		serviceRequest.then(requestSucceeded, requestFailed);
 		}
+
+		function extractDomain(url) {
+			var domain;
+			//find & remove protocol (http, ftp, etc.) and get domain
+			if (url.indexOf("://") > -1) {
+				p = url.split('/');
+				domain = p[0] + '//' + p[2];  //url.split('/')[2];
+			}
+			else {
+				domain = url.split('/')[0];
+			}
+			//find & remove port number
+			//domain = domain.split(':')[0];
+
+			return domain;
+		}
 	},
 	
     onOpen: function(){
@@ -328,6 +381,8 @@ function(declare,
     },
 
     onClose: function(){
+		message.innerHTML = '';
+		domStyle.set('eMailOption', 'display', 'none');
       console.log('onClose');
     },
 
