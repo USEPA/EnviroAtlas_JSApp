@@ -318,7 +318,7 @@ function(declare,
 			//Allow emailing of services that are not in config
 			console.log("Service Failed to Load successfully");
 			message.innerHTML = '<div style="color:green; width: 100%;"><b>Service Failed to Load</b></div>';
-			dom.byId("emailText").value = "Please allow the services " + serviceURL + " to be added to the EnviroAtlas application.";
+			dom.byId("emailText").value = "Please allow the services from " + extractDomain(serviceURL) + " to be added to the EnviroAtlas application.";
 			domStyle.set('eMailOption', 'display', 'inline');
 		}
 		
@@ -338,7 +338,7 @@ function(declare,
 			//Allow emailing of services that are not in config
 			console.log("Service Failed to Load successfully");
 			message.innerHTML = '<div style="color:green; width: 100%;"><b>Service Failed to Load</b></div>';
-			dom.byId("emailText").value = "Please allow the services " + serviceURL + " to be added to the EnviroAtlas application.";
+			dom.byId("emailText").value = "Please allow the services from " + extractDomain(serviceURL) + " to be added to the EnviroAtlas application.";
 			domStyle.set('eMailOption', 'display', 'inline');
 		}
 		
@@ -357,6 +357,22 @@ function(declare,
 		  handleAs: "json"
 		});
 		serviceRequest.then(requestSucceeded, requestFailed);
+		}
+
+		function extractDomain(url) {
+			var domain;
+			//find & remove protocol (http, ftp, etc.) and get domain
+			if (url.indexOf("://") > -1) {
+				p = url.split('/');
+				domain = p[0] + '//' + p[2];  //url.split('/')[2];
+			}
+			else {
+				domain = url.split('/')[0];
+			}
+			//find & remove port number
+			//domain = domain.split(':')[0];
+
+			return domain;
 		}
 	},
 	
