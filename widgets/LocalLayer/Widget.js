@@ -161,6 +161,7 @@ define([
                   lOptions.showLabels = true;
                 }
                 lLayer = new FeatureLayer(layer.url, lOptions);
+				lLayer.minScale = 577790;
                 if(layer.name){
                   lLayer._titleForLegend = layer.name;
                   lLayer.title = layer.name;
