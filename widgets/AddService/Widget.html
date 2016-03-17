@@ -1,10 +1,49 @@
 
 <div>
 	<div>
-		<div><input class="jimu-radio" type="radio" name="addservice" value="dynMapServ" data-dojo-attach-point="dynMapServ">Dynamic Map Service</div><br>
-		<div><input class="jimu-radio" type="radio" name="addservice" value="tileMapServ" data-dojo-attach-point="tileMapServ">Tiled/Cached Map Service</div><br>
-		<div><input class="jimu-radio" type="radio" name="addservice" value="imageServ" data-dojo-attach-point="imageServ">Image Service</div><br>
-		<div><input class="jimu-radio" type="radio" name="addservice" value="wms" data-dojo-attach-point="wms">WMS Service</div><br>
+		<table>
+			<tr clsss="space">
+				<td>
+					<input class="jimu-radio" type="radio" name="addservice" value="dynMapServ" data-dojo-attach-point="dynMapServ"/>
+				</td>
+				<td>
+					<label><b>${nls.serviceTypeLbl1}</b> ${nls.serviceDescrip1}<a id="infobtn" href="http://doc.arcgis.com/en/arcgis-online/reference/arcgis-server-services.htm" target="_blank">
+						<img src="./widgets/AddService/images/i_info.png" height="17px">
+					</a></label>
+				</td>
+			</tr>
+			<tr clsss="space">
+				<td>
+					<input class="jimu-radio" type="radio" name="addservice" value="tileMapServ" data-dojo-attach-point="tileMapServ"/>
+				</td>
+				<td>
+					<label><b>${nls.serviceTypeLbl2}</b> ${nls.serviceDescrip2}<a id="infobtn" href="http://doc.arcgis.com/en/arcgis-online/reference/tile-layers.htm" target="_blank">
+						<img src="./widgets/AddService/images/i_info.png" height="17px">
+					</a></label>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input class="jimu-radio" type="radio" name="addservice" value="imageServ" data-dojo-attach-point="imageServ"/>
+				</td>
+				<td>
+					<label><b>${nls.serviceTypeLbl3}</b> ${nls.serviceDescrip3}<a id="infobtn" href="http://doc.arcgis.com/en/arcgis-online/reference/arcgis-server-services.htm" target="_blank">
+						<img src="./widgets/AddService/images/i_info.png" height="17px">
+					</a></label>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input class="jimu-radio" type="radio" name="addservice" value="wms" data-dojo-attach-point="wms">
+				</td>
+				<td>
+					<label><b>${nls.serviceTypeLbl4}</b> ${nls.serviceDescrip4}<a id="infobtn" href="http://doc.arcgis.com/en/arcgis-online/reference/ogc.htm" target="_blank">
+						<img src="./widgets/AddService/images/i_info.png" height="17px">
+					</a></label>
+				</td>
+			</tr>
+		</table>
+		<br>
 	</div>
 	<br>
 	<div>
@@ -25,6 +64,12 @@
 		</div>
 		<div>
 			<textarea cols="40" rows="5" id="emailText" style="width: 100%;"></textarea>
+		</div>
+		<div>
+			<label>Add your email below to be notified when your service has be added</label>
+		</div>
+		<div>
+			<input class="jimu-input" type="email" data-dojo-attach-point="notifyEmail" id="notifyEmail" style="width: 100%">
 		</div>
 		<div>
 			<button class="jimu-btn" type="button" data-dojo-attach-event="ondijitclick:sendEmail" style="float: right;">Send</button>

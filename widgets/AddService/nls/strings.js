@@ -1,7 +1,13 @@
 define({
   root: ({
-    label1: "I am a demo widget.",
-    label2: "This is configurable."
+    serviceTypeLbl1: "Dynamic Map Service",
+    serviceTypeLbl2: "Tiled/Cached Map Service",
+    serviceTypeLbl3: "Image Service",
+    serviceTypeLbl4: "WMS Service",
+    serviceDescrip1: "- Esri ArcGIS Server Web service that generates maps ",
+    serviceDescrip2: "- A Tile layer is a set of web-accessible image tiles that reside on a server ",
+    serviceDescrip3: "- Esri ArcGIS Server Web service that provides access to imagery ",
+    serviceDescrip4: "- A service that follows the OGC Web Map Service specification "
   }),
   "ar": 1,
   "cs": 1,

@@ -71,30 +71,41 @@ function(declare,
 	clearTextBox: function()
 	{
 		// Clear the text box and message on clear click
+		domStyle.set('eMailOption', 'display', 'none');
 	   this.urlTextbox.value = '';
 	   this.message.innerHTML = '';
 	},
 
 	  sendEmail: function(){
 
-		  var to = "email@somewhere.com";
+		  var to = "email@somewhere.com"; //Need to change deployed
 		  var subject = "EnviroAtlas Add URL";
 		  var text = dom.byId("emailText").value;
+		  var nEmail = dom.byId("notifyEmail").value;
+		  if(nEmail){
+			  text = text + " Notify " + nEmail;
+		  }
+		  try{
+			  //console.log(text);
+			  //Make request back to the server to send email
+			  xhr("https://machinename/send",{
+				  data: {to:to,subject:subject,text:text},
+				  query: {to:to,subject:subject,text:text},
+				  method: "GET"
+			  }).then(function(data){
+				  if(data=="sent")
+				  {
+					  console.log("Successful: Email Sent");
+				  }
+				  else{
+					  console.log("Error: Email Failed");
+				  }
+			  });
+		  }
+		  catch(error){
+			  console.log(error);
+		  }
 
-		  //Make request back to the server to send email
-		  xhr("http://machinename/send",{
-			  data: {to:to,subject:subject,text:text},
-			  query: {to:to,subject:subject,text:text},
-			  method: "GET"
-		  }).then(function(data){
-			  if(data=="sent")
-			  {
-				  console.log("Successful: Email Sent");
-			  }
-			  else{
-				  console.log("Error: Email Failed");
-			  }
-		  });
 	  },
 	
 	addMapService: function()
@@ -121,8 +132,10 @@ function(declare,
 		for (var i = 0; i < jsonData.length; i++) {
 			esriConfig.defaults.io.corsEnabledServers.push(""+jsonData[i]+"");
 		}
-		
-	   
+		//var urlDomain = extractDomain(serviceURL);
+		//alert(urlDomain);
+		//esriConfig.defaults.io.corsEnabledServers.push(urlDomain);
+
 	   // Clear the message on addMapService click
 	   this.message.innerHTML = "";
 	   
