@@ -21,6 +21,7 @@ define(['dojo/_base/declare',
 		"dojo/dom-style",
 		"dojo/request/xhr",
 		"dojo/dom",
+		"dojo/dom-class",
 		"esri/layers/ArcGISDynamicMapServiceLayer",
 		"esri/layers/ArcGISTiledMapServiceLayer",
 		"esri/layers/ArcGISImageServiceLayer",
@@ -37,6 +38,7 @@ function(declare,
 		domStyle,
 		 xhr,
 		dom,
+		 domClass,
 		ArcGISDynamicMapServiceLayer,
 		ArcGISTiledMapServiceLayer,
 		ArcGISImageServiceLayer,
@@ -65,36 +67,64 @@ function(declare,
     startup: function() {
       this.inherited(arguments);
       //this.mapIdNode.innerHTML = 'map id:' + this.map.id;
+
+		on(dom.byId("urlText"), "keyup", function(){
+			//alert(this.value);
+			var testURL = this.value;
+				if (testURL.indexOf("https") > -1) {
+					//alert("found: " + testURL);
+					domClass.remove(this, "glowing-border");
+					dom.byId("iMessage").innerHTML = '';
+
+				}else if(testURL.indexOf("http") > -1){
+					domClass.add(this,"glowing-border")
+					dom.byId("iMessage").innerHTML = 'Please Use Secure Url (https)';
+				}else{
+					domClass.remove(this, "glowing-border");
+					dom.byId("iMessage").innerHTML = '';
+				}
+		})
       console.log('startup');
     },
 	
 	clearTextBox: function()
 	{
 		// Clear the text box and message on clear click
+		domStyle.set('eMailOption', 'display', 'none');
 	   this.urlTextbox.value = '';
 	   this.message.innerHTML = '';
 	},
 
 	  sendEmail: function(){
 
-		  var to = "email@somewhere.com";
+		  var to = "email@somewhere.com"; //Need to change deployed
 		  var subject = "EnviroAtlas Add URL";
 		  var text = dom.byId("emailText").value;
+		  var nEmail = dom.byId("notifyEmail").value;
+		  if(nEmail){
+			  text = text + " Notify " + nEmail;
+		  }
+		  try{
+			  //console.log(text);
+			  //Make request back to the server to send email
+			  xhr("https://machinename/send",{
+				  data: {to:to,subject:subject,text:text},
+				  query: {to:to,subject:subject,text:text},
+				  method: "GET"
+			  }).then(function(data){
+				  if(data=="sent")
+				  {
+					  console.log("Successful: Email Sent");
+				  }
+				  else{
+					  console.log("Error: Email Failed");
+				  }
+			  });
+		  }
+		  catch(error){
+			  console.log(error);
+		  }
 
-		  //Make request back to the server to send email
-		  xhr("http://machinename/send",{
-			  data: {to:to,subject:subject,text:text},
-			  query: {to:to,subject:subject,text:text},
-			  method: "GET"
-		  }).then(function(data){
-			  if(data=="sent")
-			  {
-				  console.log("Successful: Email Sent");
-			  }
-			  else{
-				  console.log("Error: Email Failed");
-			  }
-		  });
 	  },
 	
 	addMapService: function()
@@ -121,8 +151,22 @@ function(declare,
 		for (var i = 0; i < jsonData.length; i++) {
 			esriConfig.defaults.io.corsEnabledServers.push(""+jsonData[i]+"");
 		}
-		
-	   
+
+		//Add domain to esriConfig
+		var urlDomain = extractDomain(serviceURL);
+		if(urlDomain == ""){
+			this.message.innerHTML = 'Please enter a Service URL';
+			return;
+		}
+		//check for http
+		if (urlDomain.indexOf("https") > -1) {
+
+		}else if(urlDomain.indexOf("http") > -1){
+			this.message.innerHTML = 'Please Use Secure Url (https)';
+			return;
+		}
+		esriConfig.defaults.io.corsEnabledServers.push(urlDomain);
+
 	   // Clear the message on addMapService click
 	   this.message.innerHTML = "";
 	   
