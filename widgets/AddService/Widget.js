@@ -70,7 +70,7 @@ function(declare,
 
 		on(dom.byId("urlText"), "keyup", function(){
 			//alert(this.value);
-			testURL = this.value;
+			var testURL = this.value;
 				if (testURL.indexOf("https") > -1) {
 					//alert("found: " + testURL);
 					domClass.remove(this, "glowing-border");
@@ -154,10 +154,14 @@ function(declare,
 
 		//Add domain to esriConfig
 		var urlDomain = extractDomain(serviceURL);
+		if(urlDomain == ""){
+			this.message.innerHTML = 'Please enter a Service URL';
+			return;
+		}
 		//check for http
-		if (testURL.indexOf("https") > -1) {
+		if (urlDomain.indexOf("https") > -1) {
 
-		}else if(testURL.indexOf("http") > -1){
+		}else if(urlDomain.indexOf("http") > -1){
 			this.message.innerHTML = 'Please Use Secure Url (https)';
 			return;
 		}
