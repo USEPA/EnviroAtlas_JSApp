@@ -21,6 +21,7 @@ define(['dojo/_base/declare',
 		"dojo/dom-style",
 		"dojo/request/xhr",
 		"dojo/dom",
+		"dojo/dom-class",
 		"esri/layers/ArcGISDynamicMapServiceLayer",
 		"esri/layers/ArcGISTiledMapServiceLayer",
 		"esri/layers/ArcGISImageServiceLayer",
@@ -37,6 +38,7 @@ function(declare,
 		domStyle,
 		 xhr,
 		dom,
+		 domClass,
 		ArcGISDynamicMapServiceLayer,
 		ArcGISTiledMapServiceLayer,
 		ArcGISImageServiceLayer,
@@ -65,6 +67,23 @@ function(declare,
     startup: function() {
       this.inherited(arguments);
       //this.mapIdNode.innerHTML = 'map id:' + this.map.id;
+
+		on(dom.byId("urlText"), "keyup", function(){
+			//alert(this.value);
+			testURL = this.value;
+				if (testURL.indexOf("https") > -1) {
+					//alert("found: " + testURL);
+					domClass.remove(this, "glowing-border");
+					dom.byId("iMessage").innerHTML = '';
+
+				}else if(testURL.indexOf("http") > -1){
+					domClass.add(this,"glowing-border")
+					dom.byId("iMessage").innerHTML = 'Please Use Secure Url (https)';
+				}else{
+					domClass.remove(this, "glowing-border");
+					dom.byId("iMessage").innerHTML = '';
+				}
+		})
       console.log('startup');
     },
 	
@@ -132,9 +151,17 @@ function(declare,
 		for (var i = 0; i < jsonData.length; i++) {
 			esriConfig.defaults.io.corsEnabledServers.push(""+jsonData[i]+"");
 		}
-		//var urlDomain = extractDomain(serviceURL);
-		//alert(urlDomain);
-		//esriConfig.defaults.io.corsEnabledServers.push(urlDomain);
+
+		//Add domain to esriConfig
+		var urlDomain = extractDomain(serviceURL);
+		//check for http
+		if (testURL.indexOf("https") > -1) {
+
+		}else if(testURL.indexOf("http") > -1){
+			this.message.innerHTML = 'Please Use Secure Url (https)';
+			return;
+		}
+		esriConfig.defaults.io.corsEnabledServers.push(urlDomain);
 
 	   // Clear the message on addMapService click
 	   this.message.innerHTML = "";
