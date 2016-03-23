@@ -1,0 +1,20 @@
+<div>
+	<div>${nls.label1}.</div>
+	<div>${nls.label2}.[${config.configText}]</div>
+  <div data-dojo-attach-point="mapIdNode"></div>
+	<div id="esri-colorinfoslider-container">
+		<div id="title"></div>
+		<hr>
+		<div>
+			Theme:
+			<select id="color-renderer-theme">
+				<option value="high-to-low" selected>High to low</option>
+				<option value="above-and-below">Above and below</option>
+				<option value="centered-on">Centered on</option>
+				<option value="extremes">Extremes</option>
+			</select>
+		</div>
+		<div id="esri-colorinfoslider"></div>
+		<input type="checkbox" id="sliderZoomButton"/> Show histogram detail
+	</div>
+</div>
