@@ -45,8 +45,8 @@
 		</table>
 		<br>
 	</div>
-	<br>
 	<div>
+		<label>${nls.serviceURLLbl}</label>
 		<input class="jimu-input" id="urlText" data-dojo-attach-point="urlTextbox" style="width: 100%">
 	</div>
 	<br>
@@ -60,13 +60,14 @@
 	<br>
 	<div id="eMailOption" style="display: none">
 		<div>
-			<label>Send us your service url</label>
+			<label>The service provided is not <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">CORS-enabled</a>.
+				Click below to send the URL for this service to the EnviroAtlas support team for further investigation. Inculding your email address is optional.</label>
 		</div>
 		<div>
 			<textarea cols="40" rows="5" id="emailText" style="width: 100%;"></textarea>
 		</div>
 		<div>
-			<label>Add your email below to be notified when your service has be added</label>
+			<label>${nls.emailTextLbl}</label>
 		</div>
 		<div>
 			<input class="jimu-input" type="email" data-dojo-attach-point="notifyEmail" id="notifyEmail" style="width: 100%">
