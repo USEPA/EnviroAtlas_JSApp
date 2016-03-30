@@ -1,28 +1,41 @@
 <div>
-	<!--div style="width: 300px; height: 300px">
-	    <div data-dojo-type="dijit/layout/AccordionContainer" style="height: 300px;">
-	        <div data-dojo-type="dijit/layout/ContentPane" title="Heeh, this is a content pane">
-	            test!
-	        </div>
-	        <div data-dojo-type="dijit/layout/ContentPane" title="This is as well" selected="true">
-	            Test 2
-	        </div>
-	        <div data-dojo-type="dijit/layout/ContentPane" title="This too">
-	            Test 3
-	        </div>
-	    </div>
-	</div-->
+	<div data-dojo-type="dijit/layout/TabContainer" id="rightTabs" style="width: 100%; height: 100%;" useMenu="false" useSlider="false" style = "overflow-x:hidden; overflow-y:hidden">
+			<div data-dojo-type="dijit/layout/ContentPane" title="Search" selected="false" style = "overflow:auto">
+				<div style="width: 320px;height: 410px">
+					<div id="searchWordRemovable"  style= "width:320px">
+						
+					</div>
 	<div>
 	    <input type="button" value="Add Layers" data-dojo-attach-event="onclick:_onAddLayersClick">
 	    <!--span data-dojo-attach-point="pubInfoNode"></span-->
 	    <!--input type="button" value="Remove Layers" data-dojo-attach-event="onclick:_onRemoveLayersClick"-->
 	</div>
 	<div>
-		<table id="layersFilterTable"  style= "width:360px">
+						<table id="layersFilterTable"  style= "width:320px">
 		    <tbody>
 		    	<tr>
 		    	</tr>
 		    </tbody>
 		</table>
+					</div>
+				</div>
+			</div>
+			<div data-dojo-type="dijit/layout/ContentPane" title="Filter" selected="true" >
+					<span id="list3">
+				    <div data-dojo-type="dijit/layout/AccordionContainer" style="width: 280px;height: 350px">
+				        <div data-dojo-type="dijit/layout/ContentPane" title="Select Geography" style="width: 280px;height: 350px">
+				            Under development!
+				        </div>
+				        <div data-dojo-type="dijit/layout/ContentPane" title="Select Benefit Categories" selected="true" style="width: 280px;height: 350px">
+				            Under development!
+				        </div>
+				        <div data-dojo-type="dijit/layout/ContentPane" title="Select word or phrase" style="width: 280px;height: 350px">
+				            <b>Search word: </b><input data-dojo-type="dijit/form/TextBox" id="searchPhraseInput" value="*" ></input>
+				        </div>
+				    </div>
+					<div>
+					    <input type="button" id = "buttonSearchLayersByPhrase"  value="Search"  data-dojo-attach-event="onclick:_onSearchLayersByPhraseClick">
+					</div>
+			</div>
 	</div>
 </div>
