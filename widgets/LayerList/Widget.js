@@ -223,6 +223,19 @@ define([
         this.appConfig = appConfig;
       },
       _onRemoveLayersClick: function() {
+		/*dojo.forEach(this.map.layerIds, function(aLayerId) {  
+			 var serviceLayer = this.map.getLayer(aLayerId);  
+			 this.map.removeLayer(serviceLayer);
+			 if ("layerInfos" in serviceLayer) {  
+				  dojo.forEach(serviceLayer.layerInfos, function(aLayerInfo) {  
+						   config.layers.push({  
+						    name: aLayerInfo.name,  
+						    mapService: serviceLayer.id,  
+						    layerId: aLayerInfo.id  
+					   });  
+				  });  
+			 }  
+		}); */ 
     	for (i in window.allLayerNumber) {    		
     		lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
 			if(lyr){
