@@ -19,6 +19,7 @@ define([
     'dijit/_WidgetsInTemplateMixin',
     "dojo/Deferred",
     'jimu/BaseWidget',
+    'dijit/Dialog',
     'dijit/layout/AccordionContainer', 
     'dijit/layout/ContentPane',
     'dijit/layout/TabContainer',
@@ -30,7 +31,8 @@ define([
     declare,
     _WidgetsInTemplateMixin,
     Deferred,
-    BaseWidget) {
+    BaseWidget,
+    Dialog) {
         var   layerData = {
             identifier: "eaLyrNum",  //This field needs to have unique values
             label: "name", //Name field for display. Not pertinent to a grid but may be used elsewhere.
@@ -44,7 +46,9 @@ define([
 		    this.eaDfsLink = data.eaDfsLink;
 		    this.eaCategory = data.eaCategory ;
 		}
+		var selectableLayerArray = [];
 		var hashFactsheetLink = {};
+		var hashLayerNameLink = {};
 		var objectPropInArray = function(list, prop, val) {
 		  if (list.length > 0 ) {
 		    for (i in list) {
@@ -108,7 +112,7 @@ define([
     i: 0,
     j: 0,
     _onSearchLayersByPhraseClick: function() {
-    	var selectableLayerArray = [];
+    	selectableLayerArray = [];
     	var divsearchWordRemovable = document.getElementById('searchWordRemovable');    	
 	    divsearchWordRemovable.innerHTML = "";//Remove all searching words
         var tableOfRelationship = document.getElementById('layersFilterTable');
@@ -117,7 +121,10 @@ define([
 		  tableOfRelationship.deleteRow(0);
 		}
     	var searchPhraseInput = document.getElementById('searchPhraseInput').value;
-		result = [];
+    	if (searchPhraseInput.replace(/ /g,'') == "") {
+    		this._constructSelectableLayerArray("*", 'name');
+    	}
+		var result = [];
 		searchPhraseInput.split("\"").map(function(v, i ,a){
 		    if(i % 2 == 0) {
 		        result = result.concat(v.split(" ").filter(function(v){
@@ -128,9 +135,10 @@ define([
 		    }
 		});
 		console.log(result);
-		for (var word of result) {
+		for (var wordIndex in result) {
 			//layerDataStore.fetch( { query: { name: '*ork' },  
 			//foodStore.fetch({onBegin: clearSortedList, onComplete: gotSortedItems, onError: fetchFailed, sort: [{ attribute: "aisle"},{attribute: "name"}]});
+			word = result[wordIndex];
 			console.log("look for word: " + word);
 			var singleLineChildren = document.createElement('div');
 			singleLineChildren.style.whiteSpace = "nowrap";
@@ -144,6 +152,16 @@ define([
 			var searchWord = document.createElement('Label');
 			var searchWordRemoveId = word.replace(" ","_");
 			var searchWordElementPrefix = "search";
+			var blueSpace = document.createElement('Label');
+			blueSpace.innerHTML = ".";
+			blueSpace.style.display = strStyleDisplay;//should set label to be inline-block or block, otherwise cannot set height attribute
+			blueSpace.style.verticalAlign = strStyleVerticalAlign;//make the label and button aligned
+			blueSpace.style.height = strStyleHeight;
+			blueSpace.htmlFor = searchWordRemoveId;
+			blueSpace.style.backgroundColor = strStyleBackgroundColor;
+			blueSpace.style.color = strStyleBackgroundColor;
+			blueSpace.style.marginTop = strMarginTop; 
+			singleLineChildren.appendChild(blueSpace);		
 			searchWord.innerHTML = word;
 			searchWord.id = searchWordElementPrefix + searchWordRemoveId;
 			searchWord.style.display = strStyleDisplay;//should set label to be inline-block or block, otherwise cannot set height attribute
@@ -192,7 +210,8 @@ define([
 				    }
 				});
 				var strSearchWordAfterRemoved = "";
-				for (var wordNew of resultNew) {
+				for (var wordNewIndex in resultNew) {
+					var wordNew = resultNew[wordNewIndex];
 					if (wordNew.toUpperCase()!=strToBeRemoved.toUpperCase()){
 						if  (wordNew.indexOf(" ") ==-1){
 							strSearchWordAfterRemoved = strSearchWordAfterRemoved + wordNew + " ";
@@ -205,31 +224,12 @@ define([
 		        document.getElementById('searchPhraseInput').value = strSearchWordAfterRemoved;	      
 		        document.getElementById('buttonSearchLayersByPhrase').click();
 		    };  // end of onclick
-		    if ((word.indexOf(" ") !=-1) || (word.indexOf("*") !=-1)){
-		    	console.log("word:"+word);
-		    	layerDataStore.fetch( {   
-		               onItem: function(item) {
-   								word = word.replace("*", "");
-					    		if ((layerDataStore.getValue( item, 'name').toUpperCase().indexOf(word.toUpperCase()) != -1)&& (!objectPropInArray(selectableLayerArray, 'eaLyrNum', layerDataStore.getValue( item, 'eaLyrNum')))){         		
-									selectableLayerArray.push(new SelectableLayerFactory({eaLyrNum: layerDataStore.getValue( item, 'eaLyrNum') , name: layerDataStore.getValue( item, 'name'), eaDescription: layerDataStore.getValue( item, 'eaDescription'), eaDfsLink: layerDataStore.getValue( item, 'eaDfsLink'), eaCategory: layerDataStore.getValue( item, 'eaCategory')}));
-								}
-		               }
-		         });	    	
-		    }
-		    else {
-		    	layerDataStore.fetch( {   
-		               onItem: function(item) {
-		               		var layerNameArray= layerDataStore.getValue( item, 'name').split(/[ .:;?!~,`"&|()<>{}\[\]\r\n/\\]+/);
-					    	for (i in layerNameArray) {		   
-					    		if ((layerNameArray[i].toUpperCase() ==  word.toUpperCase())&& (!objectPropInArray(selectableLayerArray, 'eaLyrNum', layerDataStore.getValue( item, 'eaLyrNum')))){         		
-									console.log("bji eaLyrNum for no*: "+ layerDataStore.getValue( item, 'eaLyrNum'));
-									selectableLayerArray.push(new SelectableLayerFactory({eaLyrNum: layerDataStore.getValue( item, 'eaLyrNum') , name: layerDataStore.getValue( item, 'name'), eaDescription: layerDataStore.getValue( item, 'eaDescription'), eaDfsLink: layerDataStore.getValue( item, 'eaDfsLink'), eaCategory: layerDataStore.getValue( item, 'eaCategory')}));
-									break;
-								}
-			                } 
-		               }
-		         });
-		    }
+		    this._constructSelectableLayerArray(word, 'name');
+		    this._constructSelectableLayerArray(word, 'eaDescription');
+		    //this._constructSelectableLayerArray(word, 'tag');
+
+
+
         };
         if (selectableLayerArray.length > 0 ) {
 		    for (i in selectableLayerArray) {
@@ -291,20 +291,35 @@ define([
 			        photo.appendChild(ulElem);
 					newTitle.appendChild(photo);
 					newCell.appendChild(newTitle);
-				/*var newButtonInfoCell  = newRow.insertCell(2);
+				var newButtonInfoCell  = newRow.insertCell(2);
 				var buttonInfo = document.createElement('input');
 				buttonInfo.type = "button";
                 var buttonInfoId = "but" + eaLyrNum;
 				buttonInfo.name = buttonInfoId;
 				buttonInfo.id = buttonInfoId;
+				buttonInfo.value = "i";
+				buttonInfo.style.height = "16px";
+				buttonInfo.style.width = "16px";
+				buttonInfo.style.lineHeight = "3px";//to set the text vertically center
 				newButtonInfoCell.style.verticalAlign = "top";//this will put checkbox on first line
 		        newButtonInfoCell.appendChild(buttonInfo);  
 		        hashFactsheetLink[buttonInfoId] = selectableLayerArray[i]['eaDfsLink'];
+		        hashLayerNameLink[buttonInfoId] = selectableLayerArray[i]['name'];
 		        document.getElementById(buttonInfoId).onclick = function(e) {
-			        alert(this.id);
-			        alert(selectableLayerArray[i]['eaLyrNum']);
-			        window.open(dataFactSheet + selectableLayerArray[i]['eaDfsLink']);
-			    }; */     
+			        //alert(this.id);
+			        //alert(selectableLayerArray[i]['eaLyrNum']);
+			        //window.open(dataFactSheet + selectableLayerArray[i]['eaDfsLink']);//this will open the wrong link
+			        if (hashFactsheetLink[this.id] == "N/A") {
+		        		var dataFactNote = new Dialog({
+					        title: hashLayerNameLink[this.id],
+					        style: "width: 300px",    
+				    	});
+				        dataFactNote.show();
+				        dataFactNote.set("content", "Data fact sheet link is not available!");
+			        } else {
+			        	window.open(dataFactSheet + hashFactsheetLink[this.id]);
+			        }		      
+			    };     
                 }
             }
 
@@ -312,8 +327,42 @@ define([
 
             
     },               
-                    
+    _constructSelectableLayerArray: function(word,columnSearchAgainst) {
+    	   /*if ((word.indexOf(" ") !=-1) || (word.indexOf("*") !=-1)){
+		    	console.log("word:"+word);
+		    	layerDataStore.fetch( {   
+		               onItem: function(item) {
+   								word = word.replace("*", "");
+					    		if ((layerDataStore.getValue( item, columnSearchAgainst).toUpperCase().indexOf(word.toUpperCase()) != -1)&& (!objectPropInArray(selectableLayerArray, 'eaLyrNum', layerDataStore.getValue( item, 'eaLyrNum')))){         		
+									selectableLayerArray.push(new SelectableLayerFactory({eaLyrNum: layerDataStore.getValue( item, 'eaLyrNum') , name: layerDataStore.getValue( item, 'name'), eaDescription: layerDataStore.getValue( item, 'eaDescription'), eaDfsLink: layerDataStore.getValue( item, 'eaDfsLink'), eaCategory: layerDataStore.getValue( item, 'eaCategory')}));
+								}
+		               }
+		         });	    	
+		    }
+		    else {
+		    	layerDataStore.fetch( {   
+		               onItem: function(item) {
+		               		var layerNameArray= layerDataStore.getValue( item, columnSearchAgainst).split(/[ .:;?!~,`"&|()<>{}\[\]\r\n/\\]+/);
+					    	for (i in layerNameArray) {		   
+					    		if ((layerNameArray[i].toUpperCase() ==  word.toUpperCase())&& (!objectPropInArray(selectableLayerArray, 'eaLyrNum', layerDataStore.getValue( item, 'eaLyrNum')))){         		
+									console.log("bji eaLyrNum for no*: "+ layerDataStore.getValue( item, 'eaLyrNum'));
+									selectableLayerArray.push(new SelectableLayerFactory({eaLyrNum: layerDataStore.getValue( item, 'eaLyrNum') , name: layerDataStore.getValue( item, 'name'), eaDescription: layerDataStore.getValue( item, 'eaDescription'), eaDfsLink: layerDataStore.getValue( item, 'eaDfsLink'), eaCategory: layerDataStore.getValue( item, 'eaCategory')}));
+									break;
+								}
+			                } 
+		               }
+		         });
 
+		    }*/
+	    	layerDataStore.fetch( {   
+	               onItem: function(item) {
+							word = word.replace("*", "");
+				    		if ((layerDataStore.getValue( item, columnSearchAgainst).toUpperCase().indexOf(word.toUpperCase()) != -1)&& (!objectPropInArray(selectableLayerArray, 'eaLyrNum', layerDataStore.getValue( item, 'eaLyrNum')))){         		
+								selectableLayerArray.push(new SelectableLayerFactory({eaLyrNum: layerDataStore.getValue( item, 'eaLyrNum') , name: layerDataStore.getValue( item, 'name'), eaDescription: layerDataStore.getValue( item, 'eaDescription'), eaDfsLink: layerDataStore.getValue( item, 'eaDfsLink'), eaCategory: layerDataStore.getValue( item, 'eaCategory')}));
+							}
+	               }
+	         });	
+    },
     _onAddLayersClick: function() {
         layersToBeAdded = "a";
 	    var tableOfRelationship = document.getElementById('layersFilterTable');
