@@ -163,7 +163,7 @@ define([
 			searchWord.style.backgroundColor = strStyleBackgroundColor;
 			searchWord.style.color = "white";
 			searchWord.style.textAlign = "right";
-			searchWord.style.padding = "0px 0px 5px 3px";
+			searchWord.style.padding = "2px 0px 5px 3px";
 			singleLineChildren.appendChild(searchWord);			
 			var searchWordRemove = document.createElement('button');
 			searchWordRemove.style.display = strStyleDisplay;
