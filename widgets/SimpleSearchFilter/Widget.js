@@ -144,24 +144,16 @@ define([
 			singleLineChildren.style.whiteSpace = "nowrap";
 			singleLineChildren.style.overflow="hidden";
 			singleLineChildren.style.display = "inline-block";			
+			singleLineChildren.style.padding = "0px 3px 0px 3px";// top , right , bottom , left 
 			var strStyleDisplay = "inline-block";
 			var strStyleVerticalAlign = "bottom";
 			var strStyleHeight = "20px";
 			var strStyleBackgroundColor = "SteelBlue";
 			var strMarginTop = '10px';
-			var searchWord = document.createElement('Label');
+			
 			var searchWordRemoveId = word.replace(" ","_");
 			var searchWordElementPrefix = "search";
-			var blueSpace = document.createElement('Label');
-			blueSpace.innerHTML = ".";
-			blueSpace.style.display = strStyleDisplay;//should set label to be inline-block or block, otherwise cannot set height attribute
-			blueSpace.style.verticalAlign = strStyleVerticalAlign;//make the label and button aligned
-			blueSpace.style.height = strStyleHeight;
-			blueSpace.htmlFor = searchWordRemoveId;
-			blueSpace.style.backgroundColor = strStyleBackgroundColor;
-			blueSpace.style.color = strStyleBackgroundColor;
-			blueSpace.style.marginTop = strMarginTop; 
-			singleLineChildren.appendChild(blueSpace);		
+			var searchWord = document.createElement('Label');
 			searchWord.innerHTML = word;
 			searchWord.id = searchWordElementPrefix + searchWordRemoveId;
 			searchWord.style.display = strStyleDisplay;//should set label to be inline-block or block, otherwise cannot set height attribute
@@ -171,7 +163,7 @@ define([
 			searchWord.style.backgroundColor = strStyleBackgroundColor;
 			searchWord.style.color = "white";
 			searchWord.style.textAlign = "right";
-			searchWord.style.marginTop = strMarginTop; 
+			searchWord.style.padding = "0px 0px 5px 3px";
 			singleLineChildren.appendChild(searchWord);			
 			var searchWordRemove = document.createElement('button');
 			searchWordRemove.style.display = strStyleDisplay;
@@ -184,18 +176,7 @@ define([
 			searchWordRemove.id = searchWordRemoveId;
 			searchWordRemove.innerHTML = "X";
 			singleLineChildren.appendChild(searchWordRemove);
-			var whiteSpace = document.createElement('Label');
-			whiteSpace.innerHTML = "k";
-			whiteSpace.style.display = strStyleDisplay;//should set label to be inline-block or block, otherwise cannot set height attribute
-			whiteSpace.style.verticalAlign = strStyleVerticalAlign;//make the label and button aligned
-			whiteSpace.style.height = strStyleHeight;
-			whiteSpace.htmlFor = searchWordRemoveId;
-			whiteSpace.style.backgroundColor = "white";
-			whiteSpace.style.color = "white";
-			whiteSpace.style.marginTop = strMarginTop; 
-			singleLineChildren.appendChild(whiteSpace);			
-			var spanForSearchWord = document.createTextNode(" ");  
-			singleLineChildren.appendChild(spanForSearchWord);	
+
 			divsearchWordRemovable.appendChild(singleLineChildren);	
 	        document.getElementById(searchWordRemoveId).onclick = function(e) {
 		        var strToBeRemoved = document.getElementById(searchWordElementPrefix + this.id).innerHTML;
