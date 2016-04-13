@@ -1,12 +1,14 @@
 define(['dojo/_base/declare',
       'jimu/BaseWidget',
+      "dojo/dom",
       "esri/map",
       "esri/Color",
       "esri/dijit/ColorInfoSlider",
       "esri/renderers/smartMapping",
       "esri/layers/FeatureLayer",
-      "esri/plugins/FeatureLayerStatistics"],
-function(declare, BaseWidget, Map, Color, ColorInfoSlider, smartMapping, FeatureLayer, FeatureLayerStatistics) {
+      "esri/plugins/FeatureLayerStatistics",
+      "esri/dijit/util/busyIndicator"],
+function(declare, BaseWidget, dom, Map, Color, ColorInfoSlider, smartMapping, FeatureLayer, FeatureLayerStatistics, busyIndicator) {
   //To create a widget, you need to derive from BaseWidget.
   return declare([BaseWidget], {
     // DemoWidget code goes here
@@ -23,22 +25,38 @@ function(declare, BaseWidget, Map, Color, ColorInfoSlider, smartMapping, Feature
 
     startup: function() {
       this.inherited(arguments);
-      this.mapIdNode.innerHTML = 'map id:' + this.map.id;
+      //this.mapIdNode.innerHTML = 'map id:' + this.map.id;
       console.log('startup');
+
+      //Feed in Layer ID
+
 
       //Needed variables
       map = this.map;
       var basemap = "gray";
       var theme = "high-to-low";
-
       var url = "https://enviroatlas.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/45";
       var fieldName= "Wet_P";
+      var handle = busyIndicator.create({target: "esri-colorinfoslider-container", imageUrl: "./widgets/DynamicSymbology/images/busy-indicator.gif", backgroundOpacity: 0});
+
+      //handle.show();
 
       //define featureLayeer and featureLayer statistics
       var geoenrichedFeatureLayer = new FeatureLayer(url, {outFields: ["*"]});
       var featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
 
       map.addLayer(geoenrichedFeatureLayer);
+
+      geoenrichedFeatureLayer.on("load", function (){
+        //alert("loading");
+        //suggest scale range
+        //featureLayerStatistics.getSuggestedScaleRange().then(function (scaleRange){
+        //  //console.log("suggested scale range", scaleRange);
+        //  geoenrichedFeatureLayer.setScaleRange(scaleRange.minScale, scaleRange.maxScale);
+        //  map.setScale(scaleRange.minScale);
+        //});
+        updateSmartMapping();
+      });
 
       //Initial startup of colorInfoSider
       var colorInfoSlider = new ColorInfoSlider({
@@ -52,12 +70,12 @@ function(declare, BaseWidget, Map, Color, ColorInfoSlider, smartMapping, Feature
 
       colorInfoSlider.startup();
 
-      updateSmartMapping();
+      //updateSmartMapping();
 
       function updateSmartMapping() {
-        alert("smartMapping");
+        //alert("smartMapping");
         //console.log("updateSmartMapping");
-        //busyIndicator.show();
+        //handle.show();
         //create and apply color renderer
         smartMapping.createColorRenderer({
           layer: geoenrichedFeatureLayer,
@@ -92,7 +110,7 @@ function(declare, BaseWidget, Map, Color, ColorInfoSlider, smartMapping, Feature
             colorInfoSlider.set("histogram", histogram);
             colorInfoSlider.set("handles", sliderHandleInfo["handles"]);
             colorInfoSlider.set("primaryHandle", sliderHandleInfo["primaryHandle"]);
-            //busyIndicator.hide();
+            //handle.hide();
 
             // --------------------------------------------------------------------
             // process slider handle changes
