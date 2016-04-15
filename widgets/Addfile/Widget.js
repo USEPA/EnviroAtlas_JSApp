@@ -171,7 +171,7 @@ define([
                     var featureLayer = new FeatureLayer(layer, {
                         //infoTemplate: infoTemplate
                     });
-
+                    featureLayer.id = window.addedLayerIdPrefix + featureLayer.name;
 
                     //associate the feature with the popup on click to enable highlight and zoom to
                     featureLayer.on('click', function (event) {
@@ -351,7 +351,7 @@ define([
 
                         var featureLayerCSV = new FeatureLayer(featureCollection, {
                             infoTemplate: infoTemplate,
-                            id: csvFileName,
+                            id: window.addedLayerIdPrefix + csvFileName,
                             name: csvFileName
                         });
                         featureLayerCSV.__popupInfo = popupInfo;
