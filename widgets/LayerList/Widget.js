@@ -232,6 +232,10 @@ define([
         /*this.publishData({
 	        message: window.removeAllMessage
 	    });*/
+      },
+      _onOpenDSClick: function() {
+        alert("this is it");
+        this.openWidgetById("widgets_DynamicSymbology_28");
       }
     });
     //clazz.hasConfig = false;

@@ -21,9 +21,12 @@ function(declare, BaseWidget, dom, Map, Color, ColorInfoSlider, smartMapping, Fe
     postCreate: function() {
       this.inherited(arguments);
       console.log('postCreate');
+
     },
 
     startup: function() {
+      //var lI = new LoadingIndicator();
+      //lI.show();
       this.inherited(arguments);
       //this.mapIdNode.innerHTML = 'map id:' + this.map.id;
       console.log('startup');
@@ -37,17 +40,18 @@ function(declare, BaseWidget, dom, Map, Color, ColorInfoSlider, smartMapping, Fe
       var theme = "high-to-low";
       var url = "https://enviroatlas.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/45";
       var fieldName= "Wet_P";
-      var handle = busyIndicator.create({target: "esri-colorinfoslider-container", imageUrl: "./widgets/DynamicSymbology/images/busy-indicator.gif", backgroundOpacity: 0});
 
-      //handle.show();
+      //var BusyIndicator = busyIndicator.create({target: "mapIdNode", imageUrl: "./widgets/DynamicSymbology/images/busy-indicator.gif"});
+      //BusyIndicator.show();
 
       //define featureLayeer and featureLayer statistics
+      //This will need to be passed in from TOC
       var geoenrichedFeatureLayer = new FeatureLayer(url, {outFields: ["*"]});
       var featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
-
       map.addLayer(geoenrichedFeatureLayer);
 
       geoenrichedFeatureLayer.on("load", function (){
+
         //alert("loading");
         //suggest scale range
         //featureLayerStatistics.getSuggestedScaleRange().then(function (scaleRange){
@@ -75,7 +79,7 @@ function(declare, BaseWidget, dom, Map, Color, ColorInfoSlider, smartMapping, Fe
       function updateSmartMapping() {
         //alert("smartMapping");
         //console.log("updateSmartMapping");
-        //handle.show();
+        BusyIndicator.show();
         //create and apply color renderer
         smartMapping.createColorRenderer({
           layer: geoenrichedFeatureLayer,
@@ -95,6 +99,7 @@ function(declare, BaseWidget, dom, Map, Color, ColorInfoSlider, smartMapping, Fe
           // Calculate the Histogram
           // --------------------------------------------------------------------
           featureLayerStatistics.getHistogram({
+            classificationMethod: "natural-breaks",
             field: fieldName,
             numBins: 10
           }).then(function (histogram) {
