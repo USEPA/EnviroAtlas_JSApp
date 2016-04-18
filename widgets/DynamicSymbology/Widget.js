@@ -9,6 +9,7 @@ define(['dojo/_base/declare',
       "esri/plugins/FeatureLayerStatistics",
       "esri/dijit/util/busyIndicator"],
 function(declare, BaseWidget, dom, Map, Color, ColorInfoSlider, smartMapping, FeatureLayer, FeatureLayerStatistics, busyIndicator) {
+
   //To create a widget, you need to derive from BaseWidget.
   return declare([BaseWidget], {
     // DemoWidget code goes here
@@ -18,6 +19,8 @@ function(declare, BaseWidget, dom, Map, Color, ColorInfoSlider, smartMapping, Fe
 
     baseClass: 'jimu-widget-demo',
 
+
+
     postCreate: function() {
       this.inherited(arguments);
       console.log('postCreate');
@@ -25,14 +28,8 @@ function(declare, BaseWidget, dom, Map, Color, ColorInfoSlider, smartMapping, Fe
     },
 
     startup: function() {
-      //var lI = new LoadingIndicator();
-      //lI.show();
       this.inherited(arguments);
-      //this.mapIdNode.innerHTML = 'map id:' + this.map.id;
       console.log('startup');
-
-      //Feed in Layer ID
-
 
       //Needed variables
       map = this.map;
@@ -41,26 +38,25 @@ function(declare, BaseWidget, dom, Map, Color, ColorInfoSlider, smartMapping, Fe
       var url = "https://enviroatlas.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/45";
       var fieldName= "Wet_P";
 
-      //var BusyIndicator = busyIndicator.create({target: "mapIdNode", imageUrl: "./widgets/DynamicSymbology/images/busy-indicator.gif"});
-      //BusyIndicator.show();
-
       //define featureLayeer and featureLayer statistics
       //This will need to be passed in from TOC
-      var geoenrichedFeatureLayer = new FeatureLayer(url, {outFields: ["*"]});
-      var featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
+      geoenrichedFeatureLayer = new FeatureLayer(url, {outFields: ["*"]});
+      featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
       map.addLayer(geoenrichedFeatureLayer);
 
-      geoenrichedFeatureLayer.on("load", function (){
+      //var BusyIndicator = busyIndicator.create({target: dom.byId("esri-colorinfoslider1"), imageUrl: "./widgets/DynamicSymbology/images/busy-indicator.gif", backgroundOpacity: 0});
 
-        //alert("loading");
-        //suggest scale range
-        //featureLayerStatistics.getSuggestedScaleRange().then(function (scaleRange){
-        //  //console.log("suggested scale range", scaleRange);
-        //  geoenrichedFeatureLayer.setScaleRange(scaleRange.minScale, scaleRange.maxScale);
-        //  map.setScale(scaleRange.minScale);
-        //});
-        updateSmartMapping();
-      });
+
+      //geoenrichedFeatureLayer.on("load", function (){
+      //  //alert("loading");
+      //  //suggest scale range
+      //  //featureLayerStatistics.getSuggestedScaleRange().then(function (scaleRange){
+      //  //  //console.log("suggested scale range", scaleRange);
+      //  //  geoenrichedFeatureLayer.setScaleRange(scaleRange.minScale, scaleRange.maxScale);
+      //  //  map.setScale(scaleRange.minScale);
+      //  //});
+      //  updateSmartMapping();
+      //});
 
       //Initial startup of colorInfoSider
       var colorInfoSlider = new ColorInfoSlider({
@@ -70,16 +66,19 @@ function(declare, BaseWidget, dom, Map, Color, ColorInfoSlider, smartMapping, Fe
             {color: new Color([92,92,92]), label: "51", value: 51}
           ]
         }
-      }, "esri-colorinfoslider");
+      }, "esri-colorinfoslider1");
 
       colorInfoSlider.startup();
 
-      //updateSmartMapping();
+      dom.byId("histClassification").onchange = function () {
 
+      };
+
+      updateSmartMapping();
       function updateSmartMapping() {
         //alert("smartMapping");
         //console.log("updateSmartMapping");
-        BusyIndicator.show();
+        //BusyIndicator.show();
         //create and apply color renderer
         smartMapping.createColorRenderer({
           layer: geoenrichedFeatureLayer,
@@ -99,7 +98,7 @@ function(declare, BaseWidget, dom, Map, Color, ColorInfoSlider, smartMapping, Fe
           // Calculate the Histogram
           // --------------------------------------------------------------------
           featureLayerStatistics.getHistogram({
-            classificationMethod: "natural-breaks",
+            classificationMethod: dom.byId("histClassification").value,
             field: fieldName,
             numBins: 10
           }).then(function (histogram) {
@@ -258,8 +257,28 @@ function(declare, BaseWidget, dom, Map, Color, ColorInfoSlider, smartMapping, Fe
       }
     },
 
+    _updateSmartMapping: function(){
+      alert("this happened");
+    },
+
     onOpen: function(){
+      BusyIndicator = busyIndicator.create("esri-colorinfoslider1");
+      BusyIndicator.show();
       console.log('onOpen');
+
+      geoenrichedFeatureLayer.on("load", function (){
+        BusyIndicator.hide();
+
+        //alert("loading");
+        //suggest scale range
+        //featureLayerStatistics.getSuggestedScaleRange().then(function (scaleRange){
+        //  //console.log("suggested scale range", scaleRange);
+        //  geoenrichedFeatureLayer.setScaleRange(scaleRange.minScale, scaleRange.maxScale);
+        //  map.setScale(scaleRange.minScale);
+        //});
+        //updateSmartMapping();
+      });
+
     },
 
     onClose: function(){
