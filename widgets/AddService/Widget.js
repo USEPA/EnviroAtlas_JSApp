@@ -240,6 +240,7 @@ function(declare,
 				
 				var dynamicMapServiceLayer = new ArcGISDynamicMapServiceLayer(serviceURL);
 				dynamicMapServiceLayer.name = parentLayerName; // 1.1.1 - Sets dynamic service name
+				dynamicMapServiceLayer.id = window.addedLayerIdPrefix + dynamicMapServiceLayer.name;
 				map.addLayer(dynamicMapServiceLayer);
 					// layer loaded listener 
 					dynamicMapServiceLayer.on("load", function(){
@@ -271,6 +272,7 @@ function(declare,
 					
 				var tiledMapServiceLayer = new ArcGISTiledMapServiceLayer(serviceURL);
 				tiledMapServiceLayer.name = parentLayerName;// 1.1.1 - Sets tiled service name
+					tiledMapServiceLayer.id = window.addedLayerIdPrefix + tiledMapServiceLayer.name;
 				map.addLayer(tiledMapServiceLayer);
 					// layer loaded listener 
 					tiledMapServiceLayer.on("load", function(){
@@ -303,6 +305,7 @@ function(declare,
 				else{
 				var imageServiceLayer = new ArcGISImageServiceLayer(serviceURL);
 				imageServiceLayer.name = parentLayerName; // 1.1.1 - Sets tiled service name
+				imageServiceLayer.id = window.addedLayerIdPrefix + parentLayerName;
 				map.addLayer(imageServiceLayer);
 					// layer loaded listener 
 					imageServiceLayer.on("load", function(){
@@ -321,7 +324,7 @@ function(declare,
 		
 		// 1.2 function added to handle WMS
 		function requestSucceededWMS(xml) {
-			console.log(xml);
+			console.log("Loaded: " + xml);
 			
 			// Checking if layer has already been added 
 			 for(var j = 0; j < map.layerIds.length; j++) {
@@ -338,6 +341,7 @@ function(declare,
 			//wms radio button is checked
 				var wmsLayer = new WMSLayer(serviceURL);
 				wmsLayer.setImageFormat ("png");
+				wmsLayer.id = window.addedLayerIdPrefix;
 				map.addLayer(wmsLayer);
 					wmsLayer.on("load", function(){
 						console.log("WMS service Loaded successfully");
