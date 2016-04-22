@@ -18,6 +18,10 @@
 define(['dojo/_base/declare', 
 		'jimu/BaseWidget', 
 		"dojo/on",
+		"dojo/dom-style",
+		"dojo/request/xhr",
+		"dojo/dom",
+		"dojo/dom-class",
 		"esri/layers/ArcGISDynamicMapServiceLayer",
 		"esri/layers/ArcGISTiledMapServiceLayer",
 		"esri/layers/ArcGISImageServiceLayer",
@@ -31,6 +35,10 @@ define(['dojo/_base/declare',
 function(declare, 
 		BaseWidget, 
 		on,
+		domStyle,
+		 xhr,
+		dom,
+		 domClass,
 		ArcGISDynamicMapServiceLayer,
 		ArcGISTiledMapServiceLayer,
 		ArcGISImageServiceLayer,
@@ -59,15 +67,65 @@ function(declare,
     startup: function() {
       this.inherited(arguments);
       //this.mapIdNode.innerHTML = 'map id:' + this.map.id;
+
+		on(dom.byId("urlText"), "keyup", function(){
+			//alert(this.value);
+			var testURL = this.value;
+				if (testURL.indexOf("https") > -1) {
+					//alert("found: " + testURL);
+					domClass.remove(this, "glowing-border");
+					dom.byId("iMessage").innerHTML = '';
+
+				}else if(testURL.indexOf("http") > -1){
+					domClass.add(this,"glowing-border")
+					dom.byId("iMessage").innerHTML = 'Please Use Secure Url (https)';
+				}else{
+					domClass.remove(this, "glowing-border");
+					dom.byId("iMessage").innerHTML = '';
+				}
+		})
       console.log('startup');
     },
 	
 	clearTextBox: function()
 	{
 		// Clear the text box and message on clear click
+		domStyle.set('eMailOption', 'display', 'none');
 	   this.urlTextbox.value = '';
 	   this.message.innerHTML = '';
 	},
+
+	  sendEmail: function(){
+
+		  var to = "email@somewhere.com"; //Need to change deployed
+		  var subject = "EnviroAtlas Add URL";
+		  var text = dom.byId("emailText").value;
+		  var nEmail = dom.byId("notifyEmail").value;
+		  if(nEmail){
+			  text = text + " Notify " + nEmail;
+		  }
+		  try{
+			  //console.log(text);
+			  //Make request back to the server to send email
+			  xhr("https://machinename/send",{
+				  data: {to:to,subject:subject,text:text},
+				  query: {to:to,subject:subject,text:text},
+				  method: "GET"
+			  }).then(function(data){
+				  if(data=="sent")
+				  {
+					  console.log("Successful: Email Sent");
+				  }
+				  else{
+					  console.log("Error: Email Failed");
+				  }
+			  });
+		  }
+		  catch(error){
+			  console.log(error);
+		  }
+
+	  },
 	
 	addMapService: function()
 	{
@@ -93,8 +151,22 @@ function(declare,
 		for (var i = 0; i < jsonData.length; i++) {
 			esriConfig.defaults.io.corsEnabledServers.push(""+jsonData[i]+"");
 		}
-		
-	   
+
+		//Add domain to esriConfig
+		var urlDomain = extractDomain(serviceURL);
+		if(urlDomain == ""){
+			this.message.innerHTML = 'Please enter a Service URL';
+			return;
+		}
+		//check for http
+		if (urlDomain.indexOf("https") > -1) {
+
+		}else if(urlDomain.indexOf("http") > -1){
+			this.message.innerHTML = 'Please Use Secure Url (https)';
+			return;
+		}
+		esriConfig.defaults.io.corsEnabledServers.push(urlDomain);
+
 	   // Clear the message on addMapService click
 	   this.message.innerHTML = "";
 	   
@@ -168,6 +240,7 @@ function(declare,
 				
 				var dynamicMapServiceLayer = new ArcGISDynamicMapServiceLayer(serviceURL);
 				dynamicMapServiceLayer.name = parentLayerName; // 1.1.1 - Sets dynamic service name
+				dynamicMapServiceLayer.id = window.addedLayerIdPrefix + dynamicMapServiceLayer.name;
 				map.addLayer(dynamicMapServiceLayer);
 					// layer loaded listener 
 					dynamicMapServiceLayer.on("load", function(){
@@ -199,6 +272,7 @@ function(declare,
 					
 				var tiledMapServiceLayer = new ArcGISTiledMapServiceLayer(serviceURL);
 				tiledMapServiceLayer.name = parentLayerName;// 1.1.1 - Sets tiled service name
+					tiledMapServiceLayer.id = window.addedLayerIdPrefix + tiledMapServiceLayer.name;
 				map.addLayer(tiledMapServiceLayer);
 					// layer loaded listener 
 					tiledMapServiceLayer.on("load", function(){
@@ -231,6 +305,7 @@ function(declare,
 				else{
 				var imageServiceLayer = new ArcGISImageServiceLayer(serviceURL);
 				imageServiceLayer.name = parentLayerName; // 1.1.1 - Sets tiled service name
+				imageServiceLayer.id = window.addedLayerIdPrefix + parentLayerName;
 				map.addLayer(imageServiceLayer);
 					// layer loaded listener 
 					imageServiceLayer.on("load", function(){
@@ -249,7 +324,7 @@ function(declare,
 		
 		// 1.2 function added to handle WMS
 		function requestSucceededWMS(xml) {
-			console.log(xml);
+			console.log("Loaded: " + xml);
 			
 			// Checking if layer has already been added 
 			 for(var j = 0; j < map.layerIds.length; j++) {
@@ -266,6 +341,7 @@ function(declare,
 			//wms radio button is checked
 				var wmsLayer = new WMSLayer(serviceURL);
 				wmsLayer.setImageFormat ("png");
+				wmsLayer.id = window.addedLayerIdPrefix;
 				map.addLayer(wmsLayer);
 					wmsLayer.on("load", function(){
 						console.log("WMS service Loaded successfully");
@@ -287,7 +363,11 @@ function(declare,
 
 				serviceRequestError.then(requestSucceeded, requestFailed);
 				}
-			alert("Adding the service failed");
+			//Allow emailing of services that are not in config
+			console.log("Service Failed to Load successfully");
+			message.innerHTML = '<div style="color:green; width: 100%;"><b>Service Failed to Load</b></div>';
+			dom.byId("emailText").value = "Please allow the services from " + extractDomain(serviceURL) + " to be added to the EnviroAtlas application.";
+			domStyle.set('eMailOption', 'display', 'inline');
 		}
 		
 		// 1.2 function added to handle WMS
@@ -303,6 +383,11 @@ function(declare,
 				
 				serviceRequestError.then(requestSucceededWMS, requestFailedWMS);
 				}
+			//Allow emailing of services that are not in config
+			console.log("Service Failed to Load successfully");
+			message.innerHTML = '<div style="color:green; width: 100%;"><b>Service Failed to Load</b></div>';
+			dom.byId("emailText").value = "Please allow the services from " + extractDomain(serviceURL) + " to be added to the EnviroAtlas application.";
+			domStyle.set('eMailOption', 'display', 'inline');
 		}
 		
 		// 1.2 if statement added to differentiate between wms (xml dependent) and other services (json dependent) 
@@ -321,6 +406,22 @@ function(declare,
 		});
 		serviceRequest.then(requestSucceeded, requestFailed);
 		}
+
+		function extractDomain(url) {
+			var domain;
+			//find & remove protocol (http, ftp, etc.) and get domain
+			if (url.indexOf("://") > -1) {
+				p = url.split('/');
+				domain = p[0] + '//' + p[2];  //url.split('/')[2];
+			}
+			else {
+				domain = url.split('/')[0];
+			}
+			//find & remove port number
+			//domain = domain.split(':')[0];
+
+			return domain;
+		}
 	},
 	
     onOpen: function(){
@@ -328,6 +429,8 @@ function(declare,
     },
 
     onClose: function(){
+		message.innerHTML = '';
+		domStyle.set('eMailOption', 'display', 'none');
       console.log('onClose');
     },
 

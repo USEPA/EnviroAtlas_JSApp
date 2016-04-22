@@ -1,15 +1,41 @@
 <div>
+	<div data-dojo-type="dijit/layout/TabContainer" id="rightTabs" style="width: 100%; height: 100%;" useMenu="false" useSlider="false" style="height: 450px">
+			<div data-dojo-type="dijit/layout/ContentPane" title="Search" selected="false" style="height: 400px">
+				<div style="width: 300px;height: 250px">
+					<div id="searchWordRemovable"  >
+						
+					</div>
 	<div>
 	    <input type="button" value="Add Layers" data-dojo-attach-event="onclick:_onAddLayersClick">
 	    <!--span data-dojo-attach-point="pubInfoNode"></span-->
 	    <!--input type="button" value="Remove Layers" data-dojo-attach-event="onclick:_onRemoveLayersClick"-->
 	</div>
 	<div>
-		<table id="layersFilterTable"  style= "width:360px">
+						<table id="layersFilterTable"  >
 		    <tbody>
 		    	<tr>
 		    	</tr>
 		    </tbody>
 		</table>
+					</div>
+				</div>
+			</div>
+			<div data-dojo-type="dijit/layout/ContentPane" title="Filter" selected="true" style="height: 400px">
+					<span id="list3">
+				    <div data-dojo-type="dijit/layout/AccordionContainer" >
+				        <div data-dojo-type="dijit/layout/ContentPane" title="Select Geography" style="height: 280px">
+				            Under development!
+				        </div>
+				        <div data-dojo-type="dijit/layout/ContentPane" title="Select Benefit Categories" selected="true" style="height: 280px">
+				            Under development!
+				        </div>
+				        <div data-dojo-type="dijit/layout/ContentPane" title="Select word or phrase" style="height: 280px">
+				            <b>Search word: </b><input data-dojo-type="dijit/form/TextBox" id="searchPhraseInput" value="*" ></input>
+				        </div>
+				    </div>
+					<div>
+					    <input type="button" id = "buttonSearchLayersByPhrase"  value="Search"  data-dojo-attach-event="onclick:_onSearchLayersByPhraseClick">
+					</div>
+			</div>
 	</div>
 </div>

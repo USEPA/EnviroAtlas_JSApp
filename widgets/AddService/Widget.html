@@ -1,14 +1,53 @@
 
 <div>
 	<div>
-		<div><input class="jimu-radio" type="radio" name="addservice" value="dynMapServ" data-dojo-attach-point="dynMapServ">Dynamic Map Service</div><br>
-		<div><input class="jimu-radio" type="radio" name="addservice" value="tileMapServ" data-dojo-attach-point="tileMapServ">Tiled/Cached Map Service</div><br>
-		<div><input class="jimu-radio" type="radio" name="addservice" value="imageServ" data-dojo-attach-point="imageServ">Image Service</div><br>
-		<div><input class="jimu-radio" type="radio" name="addservice" value="wms" data-dojo-attach-point="wms">WMS Service</div><br>
+		<table>
+			<tr clsss="space">
+				<td>
+					<input class="jimu-radio" type="radio" name="addservice" value="dynMapServ" data-dojo-attach-point="dynMapServ" checked="true"/>
+				</td>
+				<td>
+					<label><b>${nls.serviceTypeLbl1}</b> ${nls.serviceDescrip1}<a id="infobtn" href="http://doc.arcgis.com/en/arcgis-online/reference/arcgis-server-services.htm" target="_blank">
+						<img src="./widgets/AddService/images/i_info.png" height="17px">
+					</a></label>
+				</td>
+			</tr>
+			<tr clsss="space">
+				<td>
+					<input class="jimu-radio" type="radio" name="addservice" value="tileMapServ" data-dojo-attach-point="tileMapServ"/>
+				</td>
+				<td>
+					<label><b>${nls.serviceTypeLbl2}</b> ${nls.serviceDescrip2}<a id="infobtn" href="http://doc.arcgis.com/en/arcgis-online/reference/tile-layers.htm" target="_blank">
+						<img src="./widgets/AddService/images/i_info.png" height="17px">
+					</a></label>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input class="jimu-radio" type="radio" name="addservice" value="imageServ" data-dojo-attach-point="imageServ"/>
+				</td>
+				<td>
+					<label><b>${nls.serviceTypeLbl3}</b> ${nls.serviceDescrip3}<a id="infobtn" href="http://doc.arcgis.com/en/arcgis-online/reference/arcgis-server-services.htm" target="_blank">
+						<img src="./widgets/AddService/images/i_info.png" height="17px">
+					</a></label>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input class="jimu-radio" type="radio" name="addservice" value="wms" data-dojo-attach-point="wms">
+				</td>
+				<td>
+					<label><b>${nls.serviceTypeLbl4}</b> ${nls.serviceDescrip4}<a id="infobtn" href="http://doc.arcgis.com/en/arcgis-online/reference/ogc.htm" target="_blank">
+						<img src="./widgets/AddService/images/i_info.png" height="17px">
+					</a></label>
+				</td>
+			</tr>
+		</table>
+		<br>
 	</div>
-	<br>
 	<div>
-		<input class="jimu-input" data-dojo-attach-point="urlTextbox" style="width: 100%">
+		<label>${nls.serviceURLLbl}</label>
+		<input class="jimu-input" id="urlText" data-dojo-attach-point="urlTextbox" style="width: 100%">
 	</div>
 	<br>
 	<div>
@@ -16,7 +55,27 @@
 		<button class="jimu-btn" type="button" data-dojo-attach-event="ondijitclick:clearTextBox" style="float: right;">Clear</button>
 	</div>
 	<br>
-	<div data-dojo-attach-point="message">
+	<div id="iMessage" data-dojo-attach-point="message">
+	</div>
+	<br>
+	<div id="eMailOption" style="display: none">
+		<div>
+			<label>The service provided is not <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">CORS-enabled</a>.
+				Click below to send the URL for this service to the EnviroAtlas support team for further investigation. Inculding your email address is optional.</label>
+		</div>
+		<div>
+			<textarea cols="40" rows="5" id="emailText" style="width: 100%;"></textarea>
+		</div>
+		<div>
+			<label>${nls.emailTextLbl}</label>
+		</div>
+		<div>
+			<input class="jimu-input" type="email" data-dojo-attach-point="notifyEmail" id="notifyEmail" style="width: 100%">
+		</div>
+		<div>
+			<button class="jimu-btn" type="button" data-dojo-attach-event="ondijitclick:sendEmail" style="float: right;">Send</button>
+			<label id="message"></label>
+		</div>
 	</div>
 </div>
 

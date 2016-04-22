@@ -9,7 +9,7 @@ Torrin Hultgren, October 2015
 import sys, json, csv, openpyxl
 
 # This is the spreadsheet that contains all the content
-inputSpreadsheet = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\EnviroAtlas2json.xlsx"
+inputSpreadsheet = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\EnviroAtlas4json.xlsx"
 # Just in case there are rows to ignore at the top - header is row 0
 startingRow = 2
 # This should be a csv table that maps spreadsheet column headers to json elements
@@ -95,14 +95,18 @@ def main(_argv):
         }
         layerJSON["popup"]["fieldInfos"][0]["fieldName"] = inputWorksheet.cell(key["fieldName"]+rowID).value
         layerJSON["popup"]["fieldInfos"][0]["label"] = name
-        layerJSON["eaScale"] = inputWorksheet.cell(key["eaScale"]+rowID).value
-        layerJSON["eaDescription"] = inputWorksheet.cell(key["eaDescription"]+rowID).value
-        layerJSON["eaMetric"] = inputWorksheet.cell(key["eaMetric"]+rowID).value
-        layerJSON["eaDfsLink"] = inputWorksheet.cell(key["eaDfsLink"]+rowID).value
-        layerJSON["eaLyrNum"] = inputWorksheet.cell(key["eaLyrNum"]+rowID).value
-        layerJSON["eaCategory"] = inputWorksheet.cell(key["eaCategory"]+rowID).value
-        layerJSON["eaMetadata"] = inputWorksheet.cell(key["eaMetadata"]+rowID).value
-        
+        stringList = ["eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS"]
+        for elem in stringList:
+            if inputWorksheet.cell(key[elem]+rowID).value:
+                layerJSON[elem] = inputWorksheet.cell(key[elem]+rowID).value
+        arrayList = [("eaScale",","),("eaTags",","),("eaBCSDD",";")]
+        for elem,separator in arrayList:
+             if inputWorksheet.cell(key[elem]+rowID).value:
+                fullString = inputWorksheet.cell(key[elem]+rowID).value
+                cleanString = fullString.strip(separator+' ')
+                fullArray = cleanString.split(separator)
+                cleanArray = [elem.strip() for elem in fullArray]
+                layerJSON[elem] = cleanArray
         fullJSON["layers"]["layer"].append(layerJSON)
     
     validationErrors.close()

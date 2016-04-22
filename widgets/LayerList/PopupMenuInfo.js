@@ -414,9 +414,18 @@ define([
 		if(lyr){
         	this._layerInfo.map.removeLayer(lyr);
       	}          
+		lyrTiled = this._layerInfo.map.getLayer(layerId.replace(window.layerIdPrefix, window.layerIdTiledPrefix));
+		if(lyrTiled){
+       		this._layerInfo.map.removeLayer(lyrTiled);
+      	}        	
     },    
     _onTransparencyChanged: function(evt) {
       this._layerInfo.setOpacity(1 - evt.extraData.newTransValue);
+      layerId = this._layerInfo.id;
+	  lyrTiled = this._layerInfo.map.getLayer(layerId.replace(window.layerIdPrefix, window.layerIdTiledPrefix));
+	  if(lyrTiled){
+       	  lyrTiled.setOpacity(1 - evt.extraData.newTransValue);
+      }  	  
     },
 
     _onControlPopup: function(evt) {
