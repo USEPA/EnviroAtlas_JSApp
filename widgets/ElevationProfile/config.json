@@ -1,5 +1,5 @@
 {
-  "profileTaskUrl": "http://elevation.arcgis.com/arcgis/rest/services/Tools/ElevationSync/GPServer",
+  "profileTaskUrl": "https://elevation.arcgis.com/arcgis/rest/services/Tools/ElevationSync/GPServer",
   "scalebarUnits": "feet",
   "chartRenderingOptions": {
     "chartTitleFontSize": 13,
