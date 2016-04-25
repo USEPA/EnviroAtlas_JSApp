@@ -294,6 +294,7 @@ function(declare,
 					
 				var imageServiceLayer = new ArcGISTiledMapServiceLayer(serviceURL);
 				imageServiceLayer.name = parentLayerName;// 1.1.1 - Sets tiled service name
+				imageServiceLayer.id = window.addedLayerIdPrefix + parentLayerName;
 				map.addLayer(imageServiceLayer);
 					// layer loaded listener 
 					imageServiceLayer.on("load", function(){
