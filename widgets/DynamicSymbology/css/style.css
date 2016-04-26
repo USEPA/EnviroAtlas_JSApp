@@ -1,3 +1,9 @@
 .jimu-widget-demo div:first-child{
   color: red;
 }
+
+.color{
+  height: 20px;
+  width: 20px;
+  margin-left: 5px;
+}
