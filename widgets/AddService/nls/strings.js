@@ -7,7 +7,10 @@ define({
     serviceDescrip1: "- Esri ArcGIS Server Web service that generates maps ",
     serviceDescrip2: "- A Tile layer is a set of web-accessible image tiles that reside on a server ",
     serviceDescrip3: "- Esri ArcGIS Server Web service that provides access to imagery ",
-    serviceDescrip4: "- A service that follows the OGC Web Map Service specification "
+    serviceDescrip4: "- A service that follows the OGC Web Map Service specification ",
+    serviceURLLbl: "Enter full URL of service",
+    corsErrorLbl: "",
+    emailTextLbl: "For notification about the service inclusion status, please provide your email address."
   }),
   "ar": 1,
   "cs": 1,

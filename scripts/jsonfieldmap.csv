@@ -1,12 +1,21 @@
 Column,jsonElem
-sort,	
-Scale/TOC,eaScale
+sort,"	"
+Scale/community list,eaScale
 Layer Name,name
 Description,eaDescription
-Attribute (not alias),fieldName
-Foundational/Metric (all national are metrics),eaMetric
-Service Layer REST URL,url
+Attribute,fieldName
+metric/foundational/boundary/landcover/demographics,eaMetric
+Service layer REST URL,url
 DFS Link,eaDfsLink
-Service Layer Number only,eaLyrNum
-Modified TOC Category Matrix or List of Categories as a set,eaCategory
+service layer number only,eaLyrNum
 Metadata Link,eaMetadata
+Biodiversity Conservation,eaBC
+Clean Air,eaCA
+Clean and Plentiful Water,eaCPW
+Climate Stabilization,eaCS
+"Food, Fuel, and Materials",eaFFM
+Natural Hazard Mitigation,eaNHM
+"Recreation, Culture, and Aesthetics",eaRCA
+People and Built Spaces,eaPBS
+"Tags (words not in title, description, or subcategory)",eaTags
+BC/SDD,eaBCSDD

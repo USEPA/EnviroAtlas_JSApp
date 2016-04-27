@@ -17,6 +17,7 @@ define([
  'esri/dijit/Basemap',
  'esri/basemaps',
  'esri/dijit/PopupTemplate',
+ 'jimu/WidgetManager',
  'dojo/domReady!'
   ],
   function (
@@ -36,7 +37,8 @@ define([
     BasemapLayer,
     Basemap,
     esriBasemaps,
-    PopupTemplate) {
+    PopupTemplate,
+    WidgetManager) {
          var  initTileLayer = function (urlTiledMapService, tiledLayerId){
         	dojo.declare("myTiledMapServiceLayer", esri.layers.TiledMapServiceLayer, {
 	          constructor: function() {
@@ -275,6 +277,9 @@ define([
 		  if (stringArray[0] == "a") {
 		  	_addSelectedLayers(this.config.layers.layer, data.message.substring(2));
 		  }
+		var wm = WidgetManager.getInstance();
+		var sideBar =  wm.getWidgetById('themes_TabTheme_widgets_SidebarController_Widget_20');
+		sideBar.selectTab(0);		  
 			  //removing selected layer function is deleted from SimpleSearchFilter
 			  //if (stringArray[0] == "r") {
 			  //	_removeSelectedLayers(data.message.substring(2));

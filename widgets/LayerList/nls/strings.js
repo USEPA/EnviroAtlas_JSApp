@@ -20,6 +20,7 @@ define({
     enablePopup: "Enable Pop-up",
     itemDataFactSheet: "Data Fact Sheet",
     itemMetadataDownload: "Metadata/Download",
+    itemChangeSymbology: "Change Symbology",
     itemRemove: "Remove"   
   }),
   "ar": 1,

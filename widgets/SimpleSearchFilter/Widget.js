@@ -19,13 +19,47 @@ define([
     'dijit/_WidgetsInTemplateMixin',
     "dojo/Deferred",
     'jimu/BaseWidget',
-    'dijit/layout/AccordionContainer', 'dijit/layout/ContentPane'
+    'dijit/Dialog',
+    'dijit/layout/AccordionContainer', 
+    'dijit/layout/ContentPane',
+    'dijit/layout/TabContainer',
+    'dijit/form/TextBox',
+    'dojox/grid/DataGrid',
+    'dojo/data/ItemFileWriteStore'
   ],
   function(
     declare,
     _WidgetsInTemplateMixin,
     Deferred,
-    BaseWidget) {
+    BaseWidget,
+    Dialog) {
+        var   layerData = {
+            identifier: "eaLyrNum",  //This field needs to have unique values
+            label: "name", //Name field for display. Not pertinent to a grid but may be used elsewhere.
+            items: []};
+    	var layerDataStore = new dojo.data.ItemFileWriteStore({ data:layerData });
+    	//var myNewItem = {eaLyrNum: layer.eaLyrNum, name: layer.name, description: layer.eaDescription, eaDfsLink: layer.eaDfsLink};
+    	var SelectableLayerFactory = function(data) {
+		    this.eaLyrNum = data.eaLyrNum;
+		    this.name = data.name;
+		    this.eaDescription = data.eaDescription;		    
+		    this.eaDfsLink = data.eaDfsLink;
+		    this.eaCategory = data.eaCategory ;
+		}
+		var selectableLayerArray = [];
+		var hashFactsheetLink = {};
+		var hashLayerNameLink = {};
+		var objectPropInArray = function(list, prop, val) {
+		  if (list.length > 0 ) {
+		    for (i in list) {
+		      if (list[i][prop] === val) {
+		        return true;
+		      }
+		    }
+		  }
+		  return false;  
+		};
+    	var dataFactSheet = "https://leb.epa.gov/projects/EnviroAtlas/currentDevelopment/";
 		var chkIdDictionary = {};
 		  var loadJSON = function(callback){   
 	
@@ -52,12 +86,9 @@ define([
       startup: function() {
 
         this.inherited(arguments);
-        //start of displaying the layers
-        var tableOfRelationship = document.getElementById('layersFilterTable');
-	    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
-	    tableRef.innerHTML = "";
+
+	    //tableRef.innerHTML = "";	    	                     
 	                     
-        var emTableWidth = tableRef.offsetWidth;	                     
         loadJSON(function(response) {
             var localLayerConfig = JSON.parse(response);
             var arrLayers = localLayerConfig.layers.layer;
@@ -66,18 +97,135 @@ define([
                 layer = arrLayers[index];
                 var indexCheckbox = 0;
                 if(layer.hasOwnProperty('name')){
+                    if(layer.hasOwnProperty('eaLyrNum')){
+                        eaLyrNum = layer.eaLyrNum.toString();
+                        if ((window.allLayerNumber.indexOf(layer.eaLyrNum)) == -1) {                        	
+    					    var myNewItem = {eaLyrNum: layer.eaLyrNum, name: layer.name, eaDescription: layer.eaDescription, eaDfsLink: layer.eaDfsLink, eaCategory: layer.eaCategory};
+    					    layerDataStore.newItem(myNewItem);
+                        }
+                    }                	
+                }
+            }
+            console.log("layerDataStore:"+ layerDataStore);
+        });
+    },               
+    i: 0,
+    j: 0,
+    _onSearchLayersByPhraseClick: function() {
+    	selectableLayerArray = [];
+    	var divsearchWordRemovable = document.getElementById('searchWordRemovable');    	
+	    divsearchWordRemovable.innerHTML = "";//Remove all searching words
+        var tableOfRelationship = document.getElementById('layersFilterTable');
+	    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];    	
+		while(tableOfRelationship.rows.length > 0) {
+		  tableOfRelationship.deleteRow(0);
+		}
+    	var searchPhraseInput = document.getElementById('searchPhraseInput').value;
+    	if (searchPhraseInput.replace(/ /g,'') == "") {
+    		this._constructSelectableLayerArray("*", 'name');
+    	}
+		var result = [];
+		searchPhraseInput.split("\"").map(function(v, i ,a){
+		    if(i % 2 == 0) {
+		        result = result.concat(v.split(" ").filter(function(v){
+		            return v !== "";
+		        }));
+		    } else {
+		        result.push(v);
+		    }
+		});
+		console.log(result);
+		for (var wordIndex in result) {
+			//layerDataStore.fetch( { query: { name: '*ork' },  
+			//foodStore.fetch({onBegin: clearSortedList, onComplete: gotSortedItems, onError: fetchFailed, sort: [{ attribute: "aisle"},{attribute: "name"}]});
+			word = result[wordIndex];
+			console.log("look for word: " + word);
+			var singleLineChildren = document.createElement('div');
+			singleLineChildren.style.whiteSpace = "nowrap";
+			singleLineChildren.style.overflow="hidden";
+			singleLineChildren.style.display = "inline-block";			
+			singleLineChildren.style.padding = "0px 3px 0px 3px";// top , right , bottom , left 
+			var strStyleDisplay = "inline-block";
+			var strStyleVerticalAlign = "bottom";
+			var strStyleHeight = "20px";
+			var strStyleBackgroundColor = "SteelBlue";
+			var strMarginTop = '10px';
+			
+			var searchWordRemoveId = word.replace(" ","_");
+			var searchWordElementPrefix = "search";
+			var searchWord = document.createElement('Label');
+			searchWord.innerHTML = word;
+			searchWord.id = searchWordElementPrefix + searchWordRemoveId;
+			searchWord.style.display = strStyleDisplay;//should set label to be inline-block or block, otherwise cannot set height attribute
+			searchWord.style.verticalAlign = strStyleVerticalAlign;//make the label and button aligned
+			searchWord.style.height = strStyleHeight;
+			searchWord.htmlFor = searchWordRemoveId;
+			searchWord.style.backgroundColor = strStyleBackgroundColor;
+			searchWord.style.color = "white";
+			searchWord.style.textAlign = "right";
+			searchWord.style.padding = "2px 0px 5px 3px";
+			singleLineChildren.appendChild(searchWord);			
+			var searchWordRemove = document.createElement('button');
+			searchWordRemove.style.display = strStyleDisplay;
+			searchWordRemove.style.verticalAlign = strStyleVerticalAlign;//make the label and button aligned
+			searchWordRemove.style.height = strStyleHeight;
+			searchWordRemove.style.backgroundColor = strStyleBackgroundColor;
+			searchWordRemove.style.marginTop = strMarginTop; 
+			searchWordRemove.style.border = "none";
+			searchWordRemove.name = searchWordRemoveId;
+			searchWordRemove.id = searchWordRemoveId;
+			searchWordRemove.innerHTML = "X";
+			singleLineChildren.appendChild(searchWordRemove);
+
+			divsearchWordRemovable.appendChild(singleLineChildren);	
+	        document.getElementById(searchWordRemoveId).onclick = function(e) {
+		        var strToBeRemoved = document.getElementById(searchWordElementPrefix + this.id).innerHTML;
+				resultNew = [];
+				searchPhraseInput.split("\"").map(function(v, i ,a){
+				    if(i % 2 == 0) {
+				        resultNew = resultNew.concat(v.split(" ").filter(function(v){
+				            return v !== "";
+				        }));
+				    } else {
+				        resultNew.push(v);
+				    }
+				});
+				var strSearchWordAfterRemoved = "";
+				for (var wordNewIndex in resultNew) {
+					var wordNew = resultNew[wordNewIndex];
+					if (wordNew.toUpperCase()!=strToBeRemoved.toUpperCase()){
+						if  (wordNew.indexOf(" ") ==-1){
+							strSearchWordAfterRemoved = strSearchWordAfterRemoved + wordNew + " ";
+						}
+						else {
+							strSearchWordAfterRemoved = strSearchWordAfterRemoved + "\"" + wordNew + "\"" + " ";
+						}
+					}
+				}		    
+		        document.getElementById('searchPhraseInput').value = strSearchWordAfterRemoved;	      
+		        document.getElementById('buttonSearchLayersByPhrase').click();
+		    };  // end of onclick
+		    this._constructSelectableLayerArray(word, 'name');
+		    this._constructSelectableLayerArray(word, 'eaDescription');
+		    //this._constructSelectableLayerArray(word, 'tag');
+
+
+
+        };
+        if (selectableLayerArray.length > 0 ) {
+		    for (i in selectableLayerArray) {
                    	var newRow   = tableRef.insertRow(tableRef.rows.length);
                    	newRow.style.height = "38px";
                    	var newCheckboxCell  = newRow.insertCell(0);
 					var checkbox = document.createElement('input');
 					checkbox.type = "checkbox";
 					var eaLyrNum = "";
-                    if(layer.hasOwnProperty('eaLyrNum')){
-                        eaLyrNum = layer.eaLyrNum.toString();
-                        if ((window.allLayerNumber.indexOf(layer.eaLyrNum)) == -1) {                        	
-                        	window.allLayerNumber.push(layer.eaLyrNum);
+
+                    eaLyrNum = selectableLayerArray[i]['eaLyrNum'].toString();
+                    if ((window.allLayerNumber.indexOf(selectableLayerArray[i]['eaLyrNum'])) == -1) {                        	
+                    	window.allLayerNumber.push(selectableLayerArray[i]['eaLyrNum']);
                         }
-                    }
+
                     chkboxId = "ck" + eaLyrNum;
 					checkbox.name = chkboxId;
 					checkbox.value = 1;
@@ -85,25 +233,25 @@ define([
 					newCheckboxCell.style.verticalAlign = "top";//this will put checkbox on first line
 			        newCheckboxCell.appendChild(checkbox);    			              
           	
-                   	chkIdDictionary[chkboxId] = layer.name;
+               	chkIdDictionary[chkboxId] = selectableLayerArray[i]['name'];
 			        var newCell  = newRow.insertCell(1);
 			        newCell.style.verticalAlign = "top";//this will put layer name on first line
 			        
 			        var photo = document.createElement("td");
-			        photo.style.position = "absolute";
+		        //photo.style.position = "absolute";
 
 					var ulElem = document.createElement("ul");
 					ulElem.setAttribute("id", "navlistSearchfilter");
 					var newTitle  = document.createElement('div');
-			        newTitle.innerHTML = layer.name;
+		        newTitle.innerHTML = selectableLayerArray[i]['name'];
+		        newTitle.title = selectableLayerArray[i]['eaDescription'];
 					
-					//define the dictionary of mapping category names to sprite style id which is defined in css
 
 					var liHomeElem = null;
 					var aHomeElem = null;
 					indexImage = 0;
 					for (var key in window.categoryDic) {
-						if(layer.hasOwnProperty('eaCategory')){
+
 						    liElem = document.createElement("li");
 							liElem.style.left = (indexImage*20).toString() + "px";
 							liElem.style.top = "-10px";
@@ -111,36 +259,97 @@ define([
 							aElem.title  = key;
 							liElem.appendChild(aElem);
 							ulElem.appendChild(liElem);							
-							if (layer.eaCategory.indexOf(key) !=-1) {
+						if (selectableLayerArray[i]['eaCategory'].indexOf(key) !=-1) {
+							console.log("bji new Mar 2016");
 								liElem.setAttribute("id",window.categoryDic[key]);
 							}
 							else {
 								liElem.setAttribute("id",window.categoryDic[key] + "_bw");
 							}
-						}
+					
 						indexImage = indexImage + 1;
 					}
 			        photo.appendChild(ulElem);
 					newTitle.appendChild(photo);
 					newCell.appendChild(newTitle);
-
+				var newButtonInfoCell  = newRow.insertCell(2);
+				var buttonInfo = document.createElement('input');
+				buttonInfo.type = "button";
+                var buttonInfoId = "but" + eaLyrNum;
+				buttonInfo.name = buttonInfoId;
+				buttonInfo.id = buttonInfoId;
+				buttonInfo.value = "i";
+				buttonInfo.style.height = "16px";
+				buttonInfo.style.width = "16px";
+				buttonInfo.style.lineHeight = "3px";//to set the text vertically center
+				newButtonInfoCell.style.verticalAlign = "top";//this will put checkbox on first line
+		        newButtonInfoCell.appendChild(buttonInfo);  
+		        hashFactsheetLink[buttonInfoId] = selectableLayerArray[i]['eaDfsLink'];
+		        hashLayerNameLink[buttonInfoId] = selectableLayerArray[i]['name'];
+		        document.getElementById(buttonInfoId).onclick = function(e) {
+			        //alert(this.id);
+			        //alert(selectableLayerArray[i]['eaLyrNum']);
+			        //window.open(dataFactSheet + selectableLayerArray[i]['eaDfsLink']);//this will open the wrong link
+			        if (hashFactsheetLink[this.id] == "N/A") {
+		        		var dataFactNote = new Dialog({
+					        title: hashLayerNameLink[this.id],
+					        style: "width: 300px",    
+				    	});
+				        dataFactNote.show();
+				        dataFactNote.set("content", "Data fact sheet link is not available!");
+			        } else {
+			        	window.open(dataFactSheet + hashFactsheetLink[this.id]);
+			        }		      
+			    };     
                 }
             }
 
-        });
+        layersToBeAdded = "a";
+
             
     },               
-                    
-    i: 0,
-    j: 0,
+    _constructSelectableLayerArray: function(word,columnSearchAgainst) {
+    	   /*if ((word.indexOf(" ") !=-1) || (word.indexOf("*") !=-1)){
+		    	console.log("word:"+word);
+		    	layerDataStore.fetch( {   
+		               onItem: function(item) {
+   								word = word.replace("*", "");
+					    		if ((layerDataStore.getValue( item, columnSearchAgainst).toUpperCase().indexOf(word.toUpperCase()) != -1)&& (!objectPropInArray(selectableLayerArray, 'eaLyrNum', layerDataStore.getValue( item, 'eaLyrNum')))){         		
+									selectableLayerArray.push(new SelectableLayerFactory({eaLyrNum: layerDataStore.getValue( item, 'eaLyrNum') , name: layerDataStore.getValue( item, 'name'), eaDescription: layerDataStore.getValue( item, 'eaDescription'), eaDfsLink: layerDataStore.getValue( item, 'eaDfsLink'), eaCategory: layerDataStore.getValue( item, 'eaCategory')}));
+								}
+		               }
+		         });	    	
+		    }
+		    else {
+		    	layerDataStore.fetch( {   
+		               onItem: function(item) {
+		               		var layerNameArray= layerDataStore.getValue( item, columnSearchAgainst).split(/[ .:;?!~,`"&|()<>{}\[\]\r\n/\\]+/);
+					    	for (i in layerNameArray) {		   
+					    		if ((layerNameArray[i].toUpperCase() ==  word.toUpperCase())&& (!objectPropInArray(selectableLayerArray, 'eaLyrNum', layerDataStore.getValue( item, 'eaLyrNum')))){         		
+									console.log("bji eaLyrNum for no*: "+ layerDataStore.getValue( item, 'eaLyrNum'));
+									selectableLayerArray.push(new SelectableLayerFactory({eaLyrNum: layerDataStore.getValue( item, 'eaLyrNum') , name: layerDataStore.getValue( item, 'name'), eaDescription: layerDataStore.getValue( item, 'eaDescription'), eaDfsLink: layerDataStore.getValue( item, 'eaDfsLink'), eaCategory: layerDataStore.getValue( item, 'eaCategory')}));
+									break;
+								}
+			                } 
+		               }
+		         });
 
+		    }*/
+	    	layerDataStore.fetch( {   
+	               onItem: function(item) {
+							word = word.replace("*", "");
+				    		if ((layerDataStore.getValue( item, columnSearchAgainst).toUpperCase().indexOf(word.toUpperCase()) != -1)&& (!objectPropInArray(selectableLayerArray, 'eaLyrNum', layerDataStore.getValue( item, 'eaLyrNum')))){         		
+								selectableLayerArray.push(new SelectableLayerFactory({eaLyrNum: layerDataStore.getValue( item, 'eaLyrNum') , name: layerDataStore.getValue( item, 'name'), eaDescription: layerDataStore.getValue( item, 'eaDescription'), eaDfsLink: layerDataStore.getValue( item, 'eaDfsLink'), eaCategory: layerDataStore.getValue( item, 'eaCategory')}));
+							}
+	               }
+	         });	
+    },
     _onAddLayersClick: function() {
         layersToBeAdded = "a";
 	    var tableOfRelationship = document.getElementById('layersFilterTable');
 	    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
-        var emTableWidth = tableRef.offsetWidth;
 		for (var key in chkIdDictionary) {
-		  if (chkIdDictionary.hasOwnProperty(key)) {
+		  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
 		  	if (document.getElementById(key).checked) {
             	layersToBeAdded = layersToBeAdded + "," + key.replace("ck", "");
         	}
@@ -166,6 +375,17 @@ define([
 	    });
 	    this.i ++;
     },
+    sortOn:function(property){
+	    return function(a, b){
+	        if(a[property] < b[property]){
+	            return -1;
+	        }else if(a[property] > b[property]){
+	            return 1;
+	        }else{
+	            return 0;   
+	        }
+	    }
+	},
 
 
     });
