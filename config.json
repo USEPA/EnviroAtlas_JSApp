@@ -207,12 +207,12 @@
 		  		"uri" : "widgets/Raindrop/Widget",
 		  		"config" : "widgets/Raindrop/config.json"
 			},{
-                "position" : {
-                "left" : 645,
-                "top" : 5,
-                "width" : 380,
-                "height" : 410,
-                "relativeTo" : "map"
+                  "position" : {
+                  "left" : 645,
+                  "top" : 5,
+                  "width" : 380,
+                  "height" : 410,
+                  "relativeTo" : "map"
                 },
                 "placeholderIndex" : 1,
                 "id" : "widgets_DynamicSymbology_28",
