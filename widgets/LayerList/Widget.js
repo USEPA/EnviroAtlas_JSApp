@@ -234,7 +234,7 @@ define([
 	    });*/
       },
       _onOpenDSClick: function() {
-        alert("this is it");
+        //alert("this is it");
         this.openWidgetById("widgets_DynamicSymbology_28");
       }
     });
