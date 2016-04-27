@@ -114,6 +114,9 @@ define([
         key: 'metadataDownload',
         label: this.nls.itemMetadataDownload
       }, {
+        key: 'changeSymbology',
+        label: this.nls.itemChangeSymbology
+      },{
         key: 'remove',
         label: this.nls.itemRemove
       }, {
@@ -246,6 +249,9 @@ define([
         case 'metadataDownload':
           this._onItemMetadataDownloadClick(evt);
           break;                    
+        case 'changeSymbology':
+          this._onItemChangeSymbologyClick(evt);
+          break;                             
         case 'remove':
           this._onItemRemoveClick(evt);
           break;                            
@@ -388,6 +394,10 @@ define([
 
         });
     },
+    _onItemChangeSymbologyClick: function(evt) {
+        layerId = this._layerInfo.id;
+        alert("Layer "+ layerId + " is clicked, Change Symbology function is under development" );
+    },
     _onItemMetadataDownloadClick: function(evt) {
         layerId = this._layerInfo.id;
         loadJSON(function(response) {
@@ -475,6 +485,8 @@ define([
         key: 'url'
       }, {
         key: 'metadataDownload'
+      }, {
+        key: 'changeSymbology'
       }, {
         key: 'remove'
       }, {
