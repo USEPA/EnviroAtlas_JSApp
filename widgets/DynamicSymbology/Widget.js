@@ -53,15 +53,15 @@ function(declare, BaseWidget, dom, Map, Color, ColorInfoSlider, smartMapping, Fe
       var dynamicSym = this;
 
       // Setup color palette
-      var myPalette = new ColorPalette({
-        value: curColor,
-        palette: "7x10",
-        onChange: function(val){
-          //alert(val);
-          curColor = new Color(val);
-          dojo.style(dojo.byId('colorBtn'),{backgroundColor: val});
-        }
-      }, "colorPick").startup();
+      //var myPalette = new ColorPalette({
+      //  value: curColor,
+      //  palette: "7x10",
+      //  onChange: function(val){
+      //    //alert(val);
+      //    curColor = new Color(val);
+      //    dojo.style(dojo.byId('colorBtn'),{backgroundColor: val});
+      //  }
+      //}, "colorPick").startup();
 
       //console.log(map.graphicsLayerIds);
       //define featureLayeer and featureLayer statistics
