@@ -466,6 +466,8 @@ define([
       }, {
         key: 'transparency'
       }, {
+        key: 'remove'
+      }, {
         key: 'separator'
       }, {
         key: 'moveup'

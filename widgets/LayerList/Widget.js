@@ -234,13 +234,13 @@ define([
 					   });  
 		array.forEach(this.map.layerIds, function(aLayerId, i){
 		    alert("aLayerId from array.forEach:" + aLayerId);
-				  });  
+		});*/
     	for (i in window.allLayerNumber) {    		
     		lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
 			if(lyr){
             	this.map.removeLayer(lyr);
           	}
-        } */
+        } 
       }
     });
     //clazz.hasConfig = false;
