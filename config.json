@@ -222,6 +222,20 @@
 		  		"uri" : "widgets/Legend/Widget",
 		  		"config" : "widgets/Legend/config.json"
 			},{
+				"position" : {
+				"left" : 695,
+				"top" : 5,
+				"width" : 380,
+				"height" : 410,
+				"relativeTo" : "map"
+				},
+				"uri" : "widgets/eDraw/Widget",
+				"version" : "1.3",
+				"id" : "widgets_DrawMeasure_Widget_36",
+				"name" : "eDraw",
+				"label" : "Draw and Measure",
+				"config" : "widgets/eDraw/config.json"
+			},{
 				"uri" : "widgets/OverviewMap/Widget",
 				"position" : {
 					"right" : 0,
@@ -349,13 +363,6 @@
 				"name" : "LayerList",
 				"label" : "Layer List",
 				"index" : 3
-			}, {
-				"uri" : "widgets/eDraw/Widget",
-				"version" : "1.3",
-				"id" : "widgets_DrawMeasure_Widget_36",
-				"name" : "eDraw",
-				"label" : "Draw and Measure",
-				"index" : 4
 			}, {
 				"name" : "SimpleSearchFilter",
 				"label" : "SimpleSearchFilter",
