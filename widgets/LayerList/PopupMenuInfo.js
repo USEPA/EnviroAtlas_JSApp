@@ -248,7 +248,7 @@ define([
           break;
         case 'metadataDownload':
           this._onItemMetadataDownloadClick(evt);
-          break;                    
+          break;    
         case 'changeSymbology':
           this._onItemChangeSymbologyClick(evt);
           break;                             
@@ -397,6 +397,7 @@ define([
     _onItemChangeSymbologyClick: function(evt) {
         layerId = this._layerInfo.id;
         alert("Layer "+ layerId + " is clicked, Change Symbology function is under development" );
+
     },
     _onItemMetadataDownloadClick: function(evt) {
         layerId = this._layerInfo.id;
@@ -466,6 +467,8 @@ define([
       }, {
         key: 'transparency'
       }, {
+        key: 'remove'
+      }, {
         key: 'separator'
       }, {
         key: 'moveup'
@@ -531,9 +534,10 @@ define([
     };
 
     layerInfo.getLayerType().then(lang.hitch(this, function(layerType) {
+      //alert("layerType:" + layerType);
       var itemInfoCategory = "";
       if (isRootLayer &&
-          (layerType === "FeatureLayer" ||
+           (layerType === "FeatureLayer" ||
             layerType === "CSVLayer" ||
             layerType === "ArcGISImageServiceLayer" ||
             layerType === "StreamLayer" ||
