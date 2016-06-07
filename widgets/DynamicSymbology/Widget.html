@@ -3,9 +3,9 @@
 	<!--<div>${nls.label2}.[${config.configText}]</div>-->
   <div data-dojo-attach-point="mapIdNode"></div>
 	<div id="esri-colorinfoslider-container">
-		<div id="title"></div>
+		<div id="title" data-dojo-attach-point="titleNode"></div>
 		<hr>
-		<div>
+		<!-- <div>
 			Theme:
 			<select id="color-renderer-theme">
 				<option value="high-to-low" selected>High to low</option>
@@ -13,18 +13,21 @@
 				<option value="centered-on">Centered on</option>
 				<option value="extremes">Extremes</option>
 			</select>
-		</div>
-		<div>classification:
-			<select id="histClassification">
+		</div> -->
+			<!-- <select id="histClassification" data-dojo-type="dijit/form/Select">
 				<option value="equal-interval" selected>equal-interval</option>
 				<option value="natural-breaks">natural-breaks</option>
 				<option value="quantile">quantile</option>
 				<option value="standard-deviation">standard-deviation</option>
-			</select>
-		</div>
+			</select> -->
+		
+		
 		<div id="esri-colorinfoslider1" ></div>
-		<input type="checkbox" id="sliderZoomButton"/> Show histogram detail
+		<!-- <input type="checkbox" id="sliderZoomButton"/> Show histogram detail -->
+		<div id="classification">classification: </div>
+		
 	</div>
+	<div id="numClasses" style="height:30px"></div>
 	<!--<div>-->
 		<!--<button class="color" id="colorBtn" data-dojo-attach-point="colorBtn"></button>-->
 		<!--<div id="colorPick" data-dojo-attach-point="colorPick"></div>-->

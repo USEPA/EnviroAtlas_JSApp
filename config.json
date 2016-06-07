@@ -216,7 +216,7 @@
                 },
                 "placeholderIndex" : 1,
                 "id" : "widgets_DynamicSymbology_28",
-                "name" : "Dynamic Symbology",
+                "name" : "DynamicSymbology",
                 "label" : "Dynamic Symbology",
                 "version" : "1.3",
                 "uri" : "widgets/DynamicSymbology/Widget",
