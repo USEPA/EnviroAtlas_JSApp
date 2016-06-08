@@ -18,6 +18,7 @@ define([
  'esri/basemaps',
  'esri/dijit/PopupTemplate',
  'jimu/WidgetManager',
+ 'dijit/form/ToggleButton',
  'dojo/domReady!'
   ],
   function (

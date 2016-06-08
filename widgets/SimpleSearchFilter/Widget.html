@@ -1,17 +1,13 @@
 <div>
-	<div data-dojo-type="dijit/layout/TabContainer" id="rightTabs" style="width: 100%; height: 100%;" useMenu="false" useSlider="false" style="height: 450px">
-			<div data-dojo-type="dijit/layout/ContentPane" title="Search" selected="false" style="height: 400px">
-				<div style="width: 300px;height: 250px">
-					<div id="searchWordRemovable"  >
 						
-					</div>
+	<div >
 	<div>
-	    <input type="button" value="Add Layers" data-dojo-attach-event="onclick:_onAddLayersClick">
+				Ecosystem Services Benefit Categories
 	    <!--span data-dojo-attach-point="pubInfoNode"></span-->
 	    <!--input type="button" value="Remove Layers" data-dojo-attach-event="onclick:_onRemoveLayersClick"-->
 	</div>
 	<div>
-						<table id="layersFilterTable"  >
+				<table id="categoryTable" >
 		    <tbody>
 		    	<tr>
 		    	</tr>
@@ -19,23 +15,52 @@
 		</table>
 					</div>
 				</div>
+	<hr>
+	<div id="numOfLayers"  style = "text-align: left; background-color: green; color:white">
 			</div>
-			<div data-dojo-type="dijit/layout/ContentPane" title="Filter" selected="true" style="height: 400px">
-					<span id="list3">
-				    <div data-dojo-type="dijit/layout/AccordionContainer" >
-				        <div data-dojo-type="dijit/layout/ContentPane" title="Select Geography" style="height: 280px">
-				            Under development!
+	<br>
+	<div>
+		<input id="selectAllLayers"  type="checkbox"   >
+		<label for="selectAllLayers">Select All Layers</label>			
 				        </div>
-				        <div data-dojo-type="dijit/layout/ContentPane" title="Select Benefit Categories" selected="true" style="height: 280px">
-				            Under development!
+		<div id="navcontainer">
+			<ul id="navlistSupplyDemand">
+				<li><a href="#">
+					<div >
+			            <input id="Supply" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked >
+			            <label for="Supply">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Supply</label>
 				        </div>
-				        <div data-dojo-type="dijit/layout/ContentPane" title="Select word or phrase" style="height: 280px">
-				            <b>Search word: </b><input data-dojo-type="dijit/form/TextBox" id="searchPhraseInput" value="*" ></input>
+				</a></li>
+				<li ><a href="#" style="padding-right: 12px;display: inline-block;list-style-type: none;">
+					<div >
+			            <input id="Demand" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked>
+			            <label for="Demand">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Demand</label>
 				        </div>
+				</a></li>
+				<li><a href="#">
+					<div >
+			            <input id="Driver" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked>
+			            <label for="Driver">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Driver</label>
 				    </div>
+				</a></li>
+				<li><a href="#">
 					<div>
-					    <input type="button" id = "buttonSearchLayersByPhrase"  value="Search"  data-dojo-attach-event="onclick:_onSearchLayersByPhraseClick">
+		            <input id="SpatiallyExplicit" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox" checked>
+			            <label for="SpatiallyExplicit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Spatially Explicit</label>
 					</div>
+				</a></li>								
+			</ul>
 			</div>
+		<div>
+			<table id="tableSelectableLayers"  >
+			    <tbody>
+			    	<tr>
+			    	</tr>					    	
+			    </tbody>
+			</table>	
 	</div>
+			<br>
+			<div>
+			    <input type="button" value="Add Layers" data-dojo-attach-event="onclick:_onAddLayersClick" >
+			</div>
 </div>

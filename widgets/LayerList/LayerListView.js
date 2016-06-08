@@ -203,7 +203,14 @@ define([
 							aElem.title  = key;
 							liElem.appendChild(aElem);
 							ulElem.appendChild(liElem);							
-							if (layer.eaCategory.indexOf(key) !=-1) {
+						    var eaCategoryWhole =  "";
+						    if(layer.hasOwnProperty('eaBCSDD')){
+						    	for (categoryIndex = 0, lenCategory = layer.eaBCSDD.length; categoryIndex < lenCategory; ++categoryIndex) {
+						    		eaCategoryWhole = eaCategoryWhole + layer.eaBCSDD[categoryIndex] + ";";
+						    	}
+						    }
+						    eaCategoryWhole = eaCategoryWhole.substring(0, eaCategoryWhole.length - 1);
+							if (eaCategoryWhole.indexOf(key) !=-1) {
 								liElem.setAttribute("id",window.categoryDic[key]);
 								indexImage = indexImage + 1;
 							}
