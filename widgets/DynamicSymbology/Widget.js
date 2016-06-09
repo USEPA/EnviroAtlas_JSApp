@@ -36,6 +36,8 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
     _fieldID: null,
     _fieldName: null,
 	_ClassificationMethod: null,
+	_NumberOfClasses: null,
+	_currentBaseMap: null,
 
     _BusyIndicator: function(){
       return busyIndicator.create("esri-colorinfoslider1");
@@ -48,18 +50,64 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
     },
 
     startup: function() {
-      this.inherited(arguments);
+	  this.inherited(arguments);
 	  
 	  this.fetchDataByName('LayerList');
 	  
-      console.log('startup')
-      //Needed variables
-      map = this.map;
+	  console.log('startup')
+	  //Needed variables
+	  map = this.map;
 
-      var curColor = new Color([92,92,92]);
-      var dynamicSym = this;
+	  var curColor = new Color([92,92,92]);
+	  var dynamicSym = this;
 	  
-	   
+	  dynamicSymbology.isSmartMapping = false;
+	  
+	  //Classification dropdown
+		dynamicSymbology.attTemplateOptions = [
+		{
+			label: "equal-interval",
+			value: "equal-interval"
+		}, {
+			label: "natural-breaks",
+			value: "natural-breaks"
+		},{
+			label: "quantile",
+			value: "quantile",
+			selected: true
+		},{
+			label: "standard-deviation",
+			value: "standard-deviation"
+		},{
+			label: "manual",
+			value: "manual"
+		}];  
+		dynamicSymbology.classSelect = new select({
+			name: "Classification",
+			title: "Classification",
+			options: dynamicSymbology.attTemplateOptions,
+			//onChange: function(c){
+				//_ClassificationMethod = c;
+				//if(c != "manual"){
+					//call smartmapping
+					//alert("call smart mapping");
+				//}
+			//},
+			style: "width: 150px; height: 20px" 
+		});
+		dynamicSymbology.classSelect.placeAt(dom.byId("classification"));
+		dynamicSymbology.classSelect.startup(); 
+		
+		//set number of classes
+		dynamicSymbology.numberClasses = new NumberSpinner({
+			value: "1",
+			smallDelta: 1,
+			constraints: { min:1, max:20},
+			intermediateChanges:true,
+			style: "width:100px; height: 20px; lineHeight: 20px"
+		});
+		dynamicSymbology.numberClasses.placeAt(dom.byId("numClasses"));
+		dynamicSymbology.numberClasses.startup();
 
       // Setup color palette
       //var myPalette = new ColorPalette({
@@ -132,6 +180,8 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
       var dynamicSym = this;
 	  
 	  console.log('layer ID: ' + _layerID);
+	  console.log(this.map.getBasemap());
+	  _currentBaseMap = this.map.getBasemap();
 	  
 	  LayerInfos.getInstance(this.map, this.map.itemInfo).then(function(layerInfosObject){
 			var dslayer = layerInfosObject.getLayerInfoById(_layerID);
@@ -139,53 +189,16 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
 			dom.byId('title').innerHTML = dslayer.title;
 			geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
 			featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
-
-			//Classification dropdown
-			dynamicSymbology.attTemplateOptions = [
-			{
-				label: "equal-interval",
-				value: "equal-interval",
-				selected: true
-			}, {
-				label: "natural-breaks",
-				value: "natural-breaks"
-			},{
-				label: "quantile",
-				value: "quantile"
-			},{
-				label: "standard-deviation",
-				value: "standard-deviation"
-			},{
-				label: "manual",
-				value: "manual"
-			}];  
-			dynamicSymbology.classSelect = new select({
-				name: "Classification",
-				options: dynamicSymbology.attTemplateOptions,
-				onChange: function(c){
-					_ClassificationMethod = c;
-					if(c != "manual"){
-						//call smartmapping
-						alert("call smart mapping");
-					}
-				},
-				style: "width: 150px; height: 20px" 
-			});
-			dynamicSymbology.classSelect.placeAt(dom.byId("classification"));
-			dynamicSymbology.classSelect.startup();
-			
-			//set number of classes
-			var mySpinner = new NumberSpinner({
-				value: geoenrichedFeatureLayer.renderer.infos.length,
-				smallDelta: 1,
-				constraints: { min:1, max:20, places:0 },
-				id: "numClasses",
-				style: "width:100px; height: 20px; fontSize: small"
-			}, "numClasses").startup();
-			
+			//set value of numClasses
+			dynamicSymbology.numberClasses.set('value', geoenrichedFeatureLayer.renderer.infos.length);
+			console.log(geoenrichedFeatureLayer.renderer);
+			//set field
+			_fieldName = geoenrichedFeatureLayer.renderer.attributeField;
 			//set slider
 			dynamicSymbology.slider = new ClassedColorSlider({
 					breakInfos: geoenrichedFeatureLayer.renderer.infos,
+					classificationMethod: geoenrichedFeatureLayer.renderer.classificationMethod,
+					class: "sliderAreaRight"
 					
 			}, "esri-colorinfoslider1");
 			dynamicSymbology.slider.startup();
@@ -209,60 +222,92 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
 				 
 				 geoenrichedFeatureLayer.setRenderer(renderer);
 				 geoenrichedFeatureLayer.redraw();
+				 //console.log(renderer);
 		   });
 		});
-    },
+		//On Classification method change
+		dynamicSymbology.classSelect.on("change", function (c) {
+			_ClassificationMethod = c;
+				if(c != "manual"){
+					//alert(dynamicSymbology.numberClasses.value);
+					//call smartmapping
+					dynamicSym._updateSmartMapping2();
+				}
+		});
+		//On number of classes change
+		dynamicSymbology.numberClasses.on("change", function (c) {
+			_NumberOfClasses = c;
+			if(dynamicSymbology.isSmartMapping == true){
+				dynamicSym._updateSmartMapping2();
+			}else{
+				
+			}
+		});
+	},
 	
 	_updateSmartMapping2: function(){
 		console.log("UpdateSmartMapping");
-      _busy.show();
-      var theme = this._theme;
-      var fieldName = geoenrichedFeatureLayer.renderer.attributeField;
-      var basemap = "gray";
-	  var classes = geoenrichedFeatureLayer.renderer.infos.length;
-	  var classification = geoenrichedFeatureLayer.renderer.classificationMethod;
-	  
-	  // console.log("fieldName: " + geoenrichedFeatureLayer.renderer.attributeField);
-	  // console.log("classification: " + geoenrichedFeatureLayer.renderer.classificationMethod);
-	  // console.log("Classes: " + geoenrichedFeatureLayer.renderer.infos.length);
-	  // console.log(geoenrichedFeatureLayer);
-	  // console.log(featureLayerStatistics);
+		
+		if(dynamicSymbology.isSmartMapping == false){
+			dynamicSymbology.isSmartMapping = true;
+		}
+      //_busy.show();
+      //console.log("Create Renderer");
+	  //console.log("classification: " + _ClassificationMethod);
+	  //console.log("field: " + _fieldName);
+	  //console.log("Num Classes: " + _NumberOfClasses);
+	  //console.log("baseMap: " + _currentBaseMap);
 	  
 	  //create and apply color renderer
       smartMapping.createClassedColorRenderer({
 		basemap: "topo",
-		classificationMethod: classification,
-		field: fieldName,
+		theme: "hybrid",
+		classificationMethod: _ClassificationMethod,
+		field: _fieldName,
         layer: geoenrichedFeatureLayer,
-        //numClasses: classes,
-      }).then(function (colorRenderer) {
-        //console.log("create color renderer is generated", colorRenderer);
-		//alert("here");
+        numClasses: _NumberOfClasses,
+      }).then(function (smartRenderer) {
+        console.log("create color renderer is generated", smartRenderer);
+		
         if (!geoenrichedFeatureLayer.visible) {
           geoenrichedFeatureLayer.show();
         }
-		//console.log(geoenrichedFeatureLayer.renderer);
-		//console.log(colorRenderer);
-		//var newRenderer = colorRenderer.renderer.setColorInfo(geoenrichedFeatureLayer.renderer.infos)
-		//console.log(newRenderer);
 		
-        geoenrichedFeatureLayer.setRenderer(colorRenderer.renderer);
+        geoenrichedFeatureLayer.setRenderer(smartRenderer.renderer);
         geoenrichedFeatureLayer.redraw();
 		
-		//console.log(colorRenderer);
-		
-		slider7.set("breakInfos", colorRenderer.renderer.infos);
+		console.log("Get Histogram");
+		console.log("classification: " + _ClassificationMethod);
+		console.log("field: " + _fieldName);
+		console.log("Num Classes: " + _NumberOfClasses);
 		
         featureLayerStatistics.getHistogram({
-          field: fieldName,
-          numBins: classes
+			classificationMethod: _ClassificationMethod,
+			field: _fieldName,
+			numBins: _NumberOfClasses
         }).then(function (histogram) {
           
-		  slider7.set("colorInfo", colorRenderer.renderer.visualVariables);
-          slider7.set("histogram", histogram);
+		  
+		  
+		  
+		  featureLayerStatistics.getFieldStatistics({
+			  field: _fieldName
+		  }).then(function(statistics){
+				console.log(statistics);
+				dynamicSymbology.slider.set("breakInfos", smartRenderer.renderer.infos);
+				dynamicSymbology.slider.set("minValue", statistics.min);
+				dynamicSymbology.slider.set("maxValue", statistics.max);
+				dynamicSymbology.slider.set("statistics", statistics);
+				dynamicSymbology.slider.set("histogram", histogram);
+				
+				console.log(smartRenderer);
+				console.log(histogram);
+		  });
+		  
+		  
 		  
           //colorInfoSlider.set("primaryHandle", sliderHandleInfo["primaryHandle"]);
-          _busy.hide();
+          //_busy.hide();
 
           // slider7.on("handle-value-change", function (sliderValueChange) {
             // //console.log("handle-value-change", sliderValueChange);
@@ -277,62 +322,62 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
   
 
           // update the slider's zoomed state
-          dom.byId("sliderZoomButton").onchange = function () {
+          // dom.byId("sliderZoomButton").onchange = function () {
 
-            var zoomOptions,
-                bottomHandlerValue,
-                topHandlerValue,
-                zoomInViewBottomValue,
-                zoomInViewTopValue,
-                getHistogramParams;
+            // var zoomOptions,
+                // bottomHandlerValue,
+                // topHandlerValue,
+                // zoomInViewBottomValue,
+                // zoomInViewTopValue,
+                // getHistogramParams;
 
-            // If checked
-            if (dom.byId("sliderZoomButton").checked) {
-              _busy.show();
-              // Get current handle values
-              bottomHandlerValue = colorInfoSlider.get("colorInfo").stops[0].value;
-              topHandlerValue = colorInfoSlider.get("colorInfo").stops[4].value;
+            // // If checked
+            // if (dom.byId("sliderZoomButton").checked) {
+              // _busy.show();
+              // // Get current handle values
+              // bottomHandlerValue = colorInfoSlider.get("colorInfo").stops[0].value;
+              // topHandlerValue = colorInfoSlider.get("colorInfo").stops[4].value;
 
-              // Calculate the minimum and maximum values of the zoomed slider
-              zoomInViewBottomValue = bottomHandlerValue - (topHandlerValue - bottomHandlerValue) / 3;
-              zoomInViewTopValue = topHandlerValue + (topHandlerValue - bottomHandlerValue) / 3;
+              // // Calculate the minimum and maximum values of the zoomed slider
+              // zoomInViewBottomValue = bottomHandlerValue - (topHandlerValue - bottomHandlerValue) / 3;
+              // zoomInViewTopValue = topHandlerValue + (topHandlerValue - bottomHandlerValue) / 3;
 
-              // Fallback to statistics if values are out of expected range
-              if (zoomInViewBottomValue < colorRenderer.statistics.min) {
-                zoomInViewBottomValue = colorRenderer.statistics.min;
-              }
-              if (zoomInViewTopValue > colorRenderer.statistics.max) {
-                zoomInViewTopValue = colorRenderer.statistics.max;
-              }
+              // // Fallback to statistics if values are out of expected range
+              // if (zoomInViewBottomValue < colorRenderer.statistics.min) {
+                // zoomInViewBottomValue = colorRenderer.statistics.min;
+              // }
+              // if (zoomInViewTopValue > colorRenderer.statistics.max) {
+                // zoomInViewTopValue = colorRenderer.statistics.max;
+              // }
 
-              // Histogram generation using new values
-              getHistogramParams = {
-                field: fieldName,
-                numBins: 10,
-                minValue: zoomInViewBottomValue,
-                maxValue: zoomInViewTopValue
-              };
+              // // Histogram generation using new values
+              // getHistogramParams = {
+                // field: fieldName,
+                // numBins: 10,
+                // minValue: zoomInViewBottomValue,
+                // maxValue: zoomInViewTopValue
+              // };
 
-              // Use new FeatureLayer statisticsPlugin module
-              geoenrichedFeatureLayer.statisticsPlugin.getHistogram(getHistogramParams).then(function (histogram) {
+              // // Use new FeatureLayer statisticsPlugin module
+              // geoenrichedFeatureLayer.statisticsPlugin.getHistogram(getHistogramParams).then(function (histogram) {
 
-                zoomOptions = {
-                  "histogram": histogram,
-                  minSliderValue: zoomInViewBottomValue,
-                  maxSliderValue: zoomInViewTopValue
-                };
+                // zoomOptions = {
+                  // "histogram": histogram,
+                  // minSliderValue: zoomInViewBottomValue,
+                  // maxSliderValue: zoomInViewTopValue
+                // };
 
-                // Update the Slider
-                colorInfoSlider.set("zoomOptions", zoomOptions);
+                // // Update the Slider
+                // colorInfoSlider.set("zoomOptions", zoomOptions);
 
-              });
+              // });
 
-            } else {
-              // Unzoom the Slider
-              colorInfoSlider.set("zoomOptions", null);
-            }
-            _busy.hide();
-          }
+            // } else {
+              // // Unzoom the Slider
+              // colorInfoSlider.set("zoomOptions", null);
+            // }
+            // _busy.hide();
+          // }
 
         }).otherwise(function (error) {
           //_busy.hide();

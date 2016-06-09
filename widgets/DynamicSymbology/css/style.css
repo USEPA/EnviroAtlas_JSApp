@@ -7,3 +7,8 @@
   width: 20px;
   margin-left: 5px;
 }
+
+.claro .dijitReset .dijitInputInner{
+	height: 20px !important;
+	line-height: 20px !important;
+}
