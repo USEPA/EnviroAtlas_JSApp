@@ -8,11 +8,45 @@
                         {
                             "isReference": "false",
                             "opacity": 1,
-                            "url": "http://services.arcgisonline.com/arcgis/rest/services/Specialty/DeLorme_World_Base_Map/MapServer"
+                            "url": "https://services.arcgisonline.com/arcgis/rest/services/Specialty/DeLorme_World_Base_Map/MapServer"
                         }
                     ]
                 },
                 "type": "Basemap"
+            },
+            {
+                "mode": "ondemand",
+                "eaScale": [
+                    "NATIONAL"
+                ],
+                "autorefresh": 0,
+                "type": "Feature",
+                "name": "Agricultural water use (million gallons/day)",
+                "eaMetric": "Metric",
+                "eaDescription": "This map layer depicts the total acres of agricultural crops within a subwatershed (12-digit HUC) that require or would benefit from the presence of pollinators, but are without any nearby supporting habitat.",
+                "eaDfsLink": "DataFactSheets\\pdf\\ESN\\Acresofcropsthathavenonearbypollinatorhabitat.pdf",
+                "eaFFM": "Demand",
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - Demand",
+                    "Food, Fuel, and Materials - Demand"
+                ],
+                "eaLyrNum": 1,
+                "visible": "false",
+                "eaCPW": "Demand",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/2",
+                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Acresofcropsthathavenonearbypollinatorhabitat/_alllayers/",
+                "popup": {
+                    "showAttachments": "false",
+                    "fieldInfos": [
+                        {
+                            "fieldName": "Acres_Unpo",
+                            "visible": "true",
+                            "label": "Agricultural water use (million gallons/day)"
+                        }
+                    ],
+                    "title": "HUC 12 ID: {HUC_12}"
+                },
+                "opacity": 0.5
             },
             {
                 "mode": "ondemand",
@@ -48,7 +82,7 @@
                 "eaTags": [
                     "pollutant removal"
                 ],
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/2",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/2",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -95,7 +129,7 @@
                 "eaLyrNum": 3,
                 "visible": "false",
                 "eaBC": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/3",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/3",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -143,7 +177,7 @@
                 "eaTags": [
                     "pollutant removal"
                 ],
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/4",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/4",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -191,7 +225,7 @@
                 "eaTags": [
                     "pollutant removal"
                 ],
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/5",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/5",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -238,7 +272,7 @@
                 "eaLyrNum": 6,
                 "visible": "false",
                 "eaCS": "Driver",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/6",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/6",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -285,7 +319,7 @@
                 "eaLyrNum": 7,
                 "visible": "false",
                 "eaCS": "Driver",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/7",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/7",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -332,7 +366,7 @@
                 "eaLyrNum": 8,
                 "visible": "false",
                 "eaCS": "Driver",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/8",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/8",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -381,7 +415,7 @@
                 "eaLyrNum": 9,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/9",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/9",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -428,7 +462,7 @@
                 "eaTags": [
                     "children"
                 ],
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/10",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/10",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -475,7 +509,7 @@
                 ],
                 "eaLyrNum": 11,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/11",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/11",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -526,7 +560,7 @@
                 "eaLyrNum": 12,
                 "visible": "false",
                 "eaCS": "Driver",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/12",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/12",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -574,7 +608,7 @@
                 "eaTags": [
                     "children"
                 ],
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/13",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/13",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -624,7 +658,7 @@
                 "visible": "false",
                 "eaCS": "Driver",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/14",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/14",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -668,7 +702,7 @@
                 ],
                 "eaLyrNum": 15,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/15",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/15",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -716,7 +750,7 @@
                 "eaLyrNum": 16,
                 "visible": "false",
                 "eaCS": "Driver",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/16",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/16",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -763,7 +797,7 @@
                 "eaLyrNum": 17,
                 "visible": "false",
                 "eaCS": "Driver",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/17",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/17",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -810,7 +844,7 @@
                 "eaLyrNum": 18,
                 "visible": "false",
                 "eaCS": "Driver",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/18",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/18",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -857,7 +891,7 @@
                 "eaLyrNum": 19,
                 "visible": "false",
                 "eaBC": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/19",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/19",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -903,7 +937,7 @@
                 "eaLyrNum": 20,
                 "eaCA": "Supply",
                 "eaCS": "Driver",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/20",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/20",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -949,7 +983,7 @@
                 ],
                 "eaLyrNum": 22,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/22",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/22",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1004,7 +1038,7 @@
                 "visible": "false",
                 "eaBC": "Demand",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/23",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/23",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1055,7 +1089,7 @@
                 "visible": "false",
                 "eaBC": "Demand",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/24",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/24",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1106,7 +1140,7 @@
                 "visible": "false",
                 "eaBC": "Demand",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/25",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/25",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1157,7 +1191,7 @@
                 "visible": "false",
                 "eaBC": "Demand",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/26",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/26",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1208,7 +1242,7 @@
                 "visible": "false",
                 "eaBC": "Demand",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/27",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/27",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1257,7 +1291,7 @@
                 "eaCA": "Supply",
                 "eaCS": "Driver",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/28",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/28",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1303,7 +1337,7 @@
                 ],
                 "eaLyrNum": 29,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/29",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/29",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1350,7 +1384,7 @@
                 ],
                 "eaLyrNum": 30,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/30",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/30",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1395,7 +1429,7 @@
                 ],
                 "eaLyrNum": 31,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/31",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/31",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1443,7 +1477,7 @@
                 "eaTags": [
                     "Window View"
                 ],
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/32",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/32",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1491,7 +1525,7 @@
                 "eaTags": [
                     "Window View"
                 ],
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/33",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/33",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1537,7 +1571,7 @@
                 ],
                 "eaLyrNum": 34,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/34",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/34",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1581,7 +1615,7 @@
                 ],
                 "eaLyrNum": 35,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/35",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/35",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1628,7 +1662,7 @@
                 "eaLyrNum": 36,
                 "eaCA": "Supply",
                 "eaCS": "Driver",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/36",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/36",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1674,7 +1708,7 @@
                 "eaLyrNum": 37,
                 "eaCA": "Supply",
                 "eaCS": "Driver",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/37",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/37",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1720,7 +1754,7 @@
                 "eaLyrNum": 38,
                 "eaCA": "Supply",
                 "eaCS": "Driver",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/38",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/38",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1767,7 +1801,7 @@
                 "eaLyrNum": 21,
                 "visible": "false",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/21",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/21",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1815,7 +1849,7 @@
                 "eaCA": "Supply",
                 "eaCS": "Driver",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/39",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/39",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1869,7 +1903,7 @@
                 "visible": "false",
                 "eaBC": "Demand",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/40",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/40",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1920,7 +1954,7 @@
                 "visible": "false",
                 "eaBC": "Supply",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/41",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/41",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -1971,7 +2005,7 @@
                 "visible": "false",
                 "eaBC": "Supply",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/42",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/42",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2022,7 +2056,7 @@
                 "visible": "false",
                 "eaBC": "Supply",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/43",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/43",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2073,7 +2107,7 @@
                 "visible": "false",
                 "eaBC": "Supply",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/44",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/44",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2126,7 +2160,7 @@
                 "visible": "false",
                 "eaBC": "Demand",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/45",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/45",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2174,7 +2208,7 @@
                 "eaLyrNum": 46,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/46",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/46",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2219,7 +2253,7 @@
                 "eaLyrNum": 47,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/47",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/47",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2264,7 +2298,7 @@
                 "eaLyrNum": 48,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/48",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/48",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2309,7 +2343,7 @@
                 "eaLyrNum": 49,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/49",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/49",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2354,7 +2388,7 @@
                 "eaLyrNum": 50,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/50",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/50",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2399,7 +2433,7 @@
                 "eaLyrNum": 51,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/51",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/51",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2444,7 +2478,7 @@
                 "eaLyrNum": 52,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/52",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/52",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2489,7 +2523,7 @@
                 "eaLyrNum": 53,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/53",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/53",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2536,7 +2570,7 @@
                 "eaLyrNum": 54,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/54",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/54",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2581,7 +2615,7 @@
                 "eaLyrNum": 55,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/55",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/55",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2626,7 +2660,7 @@
                 "eaLyrNum": 56,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/56",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/56",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2671,7 +2705,7 @@
                 "eaLyrNum": 57,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/57",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/57",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2716,7 +2750,7 @@
                 "eaLyrNum": 58,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/58",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/58",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2761,7 +2795,7 @@
                 "eaLyrNum": 59,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/59",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/59",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2806,7 +2840,7 @@
                 "eaLyrNum": 60,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/60",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/60",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2851,7 +2885,7 @@
                 "eaLyrNum": 61,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/61",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/61",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2898,7 +2932,7 @@
                 "eaLyrNum": 62,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/62",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/62",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2942,7 +2976,7 @@
                 ],
                 "eaLyrNum": 63,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/63",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/63",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -2990,7 +3024,7 @@
                 "eaTags": [
                     "Window View"
                 ],
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/64",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/64",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3038,7 +3072,7 @@
                 "eaTags": [
                     "Window View"
                 ],
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/65",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/65",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3084,7 +3118,7 @@
                 ],
                 "eaLyrNum": 66,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/66",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/66",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3129,7 +3163,7 @@
                 ],
                 "eaLyrNum": 67,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/67",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/67",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3174,7 +3208,7 @@
                 ],
                 "eaLyrNum": 68,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/68",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/68",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3218,7 +3252,7 @@
                 ],
                 "eaLyrNum": 69,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/69",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/69",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3267,7 +3301,7 @@
                 "eaTags": [
                     "pollutant removal"
                 ],
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/70",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/70",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3316,7 +3350,7 @@
                 "visible": "false",
                 "eaCS": "Driver",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/71",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/71",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3361,7 +3395,7 @@
                 "eaLyrNum": 72,
                 "visible": "false",
                 "eaCS": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/72",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/72",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3406,7 +3440,7 @@
                 "eaLyrNum": 73,
                 "visible": "false",
                 "eaCS": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/73",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/73",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3456,7 +3490,7 @@
                 "visible": "false",
                 "eaBC": "Supply",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/74",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/74",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3507,7 +3541,7 @@
                 "visible": "false",
                 "eaBC": "Supply",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/75",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/75",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3560,7 +3594,7 @@
                 "eaLyrNum": 76,
                 "visible": "false",
                 "eaBC": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/76",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/76",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3609,7 +3643,7 @@
                 "eaTags": [
                     "pollutant removal"
                 ],
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/77",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/77",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3657,7 +3691,7 @@
                 "eaTags": [
                     "pollutant removal"
                 ],
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/78",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/78",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3702,7 +3736,7 @@
                 "eaLyrNum": 79,
                 "visible": "false",
                 "eaCS": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/79",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/79",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3747,7 +3781,7 @@
                 "eaLyrNum": 80,
                 "visible": "false",
                 "eaCS": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/80",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/80",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3792,7 +3826,7 @@
                 ],
                 "eaLyrNum": 81,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/81",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/81",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3837,7 +3871,7 @@
                 ],
                 "eaLyrNum": 82,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/82",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/82",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3885,7 +3919,7 @@
                 "eaTags": [
                     "pollutant removal"
                 ],
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/83",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/83",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3933,7 +3967,7 @@
                 "eaTags": [
                     "pollutant removal"
                 ],
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/84",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/84",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -3981,7 +4015,7 @@
                 "eaTags": [
                     "pollutant removal"
                 ],
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/85",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/CommunityBG_ES_layers/MapServer/85",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -5589,11 +5623,11 @@
                 "name": "Number of daycares",
                 "eaMetric": "demographics",
                 "eaDescription": "This map shows the number of day care centers in each census block group.",
-                "eaDfsLink": "http://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/NumberofDayCareCenters.pdf",
+                "eaDfsLink": "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/NumberofDayCareCenters.pdf",
                 "eaPBS": "Demographics",
                 "eaLyrNum": 12,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/12",
+                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/12",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -5631,11 +5665,11 @@
                 "name": "Number of schools (K-12)",
                 "eaMetric": "demographics",
                 "eaDescription": "This map shows the number of K-12 schools in each census block group.",
-                "eaDfsLink": "http://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/NumberofSchools.pdf",
+                "eaDfsLink": "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/NumberofSchools.pdf",
                 "eaPBS": "Demographics",
                 "eaLyrNum": 11,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/11",
+                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/11",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -5673,11 +5707,11 @@
                 "name": "Percent population other than White, non-Hispanic",
                 "eaMetric": "demographics",
                 "eaDescription": "This map estimates the percent of the population of each census block group that did not identify as White Alone in 2010. This value includes white Hispanics.",
-                "eaDfsLink": "http://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/PercentPopulationotherthanWhiteNonHispanic.pdf",
+                "eaDfsLink": "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/PercentPopulationotherthanWhiteNonHispanic.pdf",
                 "eaPBS": "Demographics",
                 "eaLyrNum": 8,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/8",
+                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/8",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -5715,11 +5749,11 @@
                 "name": "Percent population over 70 years old",
                 "eaMetric": "demographics",
                 "eaDescription": "This map estimates the percent of the population of each census block group aged 70 years or older in 2010.",
-                "eaDfsLink": "http://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/PercentPopulationover70YearsOld.pdf",
+                "eaDfsLink": "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/PercentPopulationover70YearsOld.pdf",
                 "eaPBS": "Demographics",
                 "eaLyrNum": 6,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/6",
+                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/6",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -5757,11 +5791,11 @@
                 "name": "Percent population under 1 year old",
                 "eaMetric": "demographics",
                 "eaDescription": "This map estimates the percent of the population of each census block group under one year of age in 2010.",
-                "eaDfsLink": "http://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/PercentPopulationunder1YearOld.pdf",
+                "eaDfsLink": "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/PercentPopulationunder1YearOld.pdf",
                 "eaPBS": "Demographics",
                 "eaLyrNum": 2,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/2",
+                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/2",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -5799,11 +5833,11 @@
                 "name": "Percent population under 13 years old",
                 "eaMetric": "demographics",
                 "eaDescription": "This map estimates the percent of the population of each census block group under 13 years of age in 2010.",
-                "eaDfsLink": "http://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/PercentPopulationunder13YearsOld.pdf",
+                "eaDfsLink": "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/PercentPopulationunder13YearsOld.pdf",
                 "eaPBS": "Demographics",
                 "eaLyrNum": 4,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/4",
+                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/4",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -5841,11 +5875,11 @@
                 "name": "Percent population with income below twice the poverty level",
                 "eaMetric": "demographics",
                 "eaDescription": "This map estimates the percent of the population of each census block group with income less than two times the relative household poverty level in 2010.",
-                "eaDfsLink": "http://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Percentpopulationwithincomebelowtwicethepovertylevel.pdf",
+                "eaDfsLink": "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Percentpopulationwithincomebelowtwicethepovertylevel.pdf",
                 "eaPBS": "Demographics",
                 "eaLyrNum": 10,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/10",
+                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/10",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -5883,11 +5917,11 @@
                 "name": "Population other than White, non-Hispanic",
                 "eaMetric": "demographics",
                 "eaDescription": "This map estimates the number of individuals in each census block group that did not identify as White Alone in 2010. This value includes white Hispanics.",
-                "eaDfsLink": "http://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/PopulationotherthanWhiteNonHispanic.pdf",
+                "eaDfsLink": "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/PopulationotherthanWhiteNonHispanic.pdf",
                 "eaPBS": "Demographics",
                 "eaLyrNum": 7,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/7",
+                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/7",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -5925,11 +5959,11 @@
                 "name": "Population over 70 years old",
                 "eaMetric": "demographics",
                 "eaDescription": "This map estimates the number of individuals in each census block group that were 70 years of age or older in 2010.",
-                "eaDfsLink": "http://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/PopulationOver70YearsOld.pdf",
+                "eaDfsLink": "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/PopulationOver70YearsOld.pdf",
                 "eaPBS": "Demographics",
                 "eaLyrNum": 5,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/5",
+                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/5",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -5967,11 +6001,11 @@
                 "name": "Population under 1 year old",
                 "eaMetric": "demographics",
                 "eaDescription": "This map estimates the number of individuals in each census block group that were under one year of age in 2010.",
-                "eaDfsLink": "http://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Populationunder1YearOld.pdf",
+                "eaDfsLink": "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Populationunder1YearOld.pdf",
                 "eaPBS": "Demographics",
                 "eaLyrNum": 1,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/1",
+                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/1",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6009,11 +6043,11 @@
                 "name": "Population under 13 years old",
                 "eaMetric": "demographics",
                 "eaDescription": "This map estimates the number of individuals in each census block group that were under 13 years of age in 2010.",
-                "eaDfsLink": "http://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Populationunder13YearsOld.pdf",
+                "eaDfsLink": "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Populationunder13YearsOld.pdf",
                 "eaPBS": "Demographics",
                 "eaLyrNum": 3,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/3",
+                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/3",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6051,11 +6085,11 @@
                 "name": "Population with income below twice the poverty level",
                 "eaMetric": "demographics",
                 "eaDescription": "This map estimates the number of individuals in each census block group with income less than two times the relative household poverty level in 2010.",
-                "eaDfsLink": "http://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Populationwithincomebelowtwicethepovertylevel.pdf",
+                "eaDfsLink": "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Populationwithincomebelowtwicethepovertylevel.pdf",
                 "eaPBS": "Demographics",
                 "eaLyrNum": 9,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/9",
+                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/9",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6093,10 +6127,10 @@
                 "name": "Total Population (DUPLICATE NAME!!!)",
                 "eaMetric": "demographics",
                 "eaDescription": "This map estimates the total population of each census block group in 2010.",
-                "eaDfsLink": "http://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/TotalPopulation.pdf",
+                "eaDfsLink": "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/TotalPopulation.pdf",
                 "eaPBS": "Demographics",
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/0",
+                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/ESC_PAZ_demographics/MapServer/0",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6173,7 +6207,7 @@
                 "eaLyrNum": 1,
                 "visible": "false",
                 "eaBC": "Driver",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/1",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/1",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6187,39 +6221,7 @@
                 },
                 "opacity": 0.5
             },
-            {
-                "mode": "ondemand",
-                "eaScale": [
-                    "NATIONAL"
-                ],
-                "autorefresh": 0,
-                "type": "Feature",
-                "name": "Agricultural water use (million gallons/day)",
-                "eaMetric": "Metric",
-                "eaDescription": "This map layer depicts the total acres of agricultural crops within a subwatershed (12-digit HUC) that require or would benefit from the presence of pollinators, but are without any nearby supporting habitat.",
-                "eaDfsLink": "DataFactSheets\\pdf\\ESN\\Acresofcropsthathavenonearbypollinatorhabitat.pdf",
-                "eaFFM": "Demand",
-                "eaBCSDD": [
-                    "Clean and Plentiful Water - Demand",
-                    "Food, Fuel, and Materials - Demand"
-                ],
-                "eaLyrNum": 2,
-                "visible": "false",
-                "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/2",
-                "popup": {
-                    "showAttachments": "false",
-                    "fieldInfos": [
-                        {
-                            "fieldName": "Acres_Unpo",
-                            "visible": "true",
-                            "label": "Agricultural water use (million gallons/day)"
-                        }
-                    ],
-                    "title": "HUC 12 ID: {HUC_12}"
-                },
-                "opacity": 0.5
-            },
+
             {
                 "mode": "ondemand",
                 "eaScale": [
@@ -6241,7 +6243,7 @@
                 "visible": "false",
                 "eaBC": "Demand",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/108",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/108",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6276,7 +6278,7 @@
                 "visible": "false",
                 "eaBC": "Demand",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/109",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/109",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6311,7 +6313,7 @@
                 "visible": "false",
                 "eaBC": "Demand",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/146",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/146",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6346,7 +6348,7 @@
                 "visible": "false",
                 "eaBC": "Demand",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/147",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/147",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6381,7 +6383,7 @@
                 "visible": "false",
                 "eaBC": "Driver",
                 "eaCPW": "Driver",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/154",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/154",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6416,7 +6418,7 @@
                 "visible": "false",
                 "eaBC": "Driver",
                 "eaCPW": "Driver",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/155",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/155",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6447,7 +6449,7 @@
                 ],
                 "eaLyrNum": 3,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/3",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/3",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6478,7 +6480,7 @@
                 ],
                 "eaLyrNum": 4,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/4",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/4",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6518,7 +6520,7 @@
                 "visible": "false",
                 "eaCS": "Driver",
                 "eaCPW": "Driver",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/5",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/5",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6550,7 +6552,7 @@
                 "eaLyrNum": 6,
                 "visible": "false",
                 "eaCS": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/6",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/6",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6581,7 +6583,7 @@
                 "eaLyrNum": 7,
                 "visible": "false",
                 "eaCS": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/7",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/7",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6612,7 +6614,7 @@
                 ],
                 "eaLyrNum": 8,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/8",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/8",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6645,7 +6647,7 @@
                 "eaLyrNum": 9,
                 "visible": "false",
                 "eaCS": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/9",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/9",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6676,7 +6678,7 @@
                 "eaLyrNum": 10,
                 "visible": "false",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/10",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/10",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6707,7 +6709,7 @@
                 ],
                 "eaLyrNum": 11,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/11",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/11",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6738,7 +6740,7 @@
                 ],
                 "eaLyrNum": 12,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/12",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/12",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6769,7 +6771,7 @@
                 ],
                 "eaLyrNum": 13,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/13",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/13",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6800,7 +6802,7 @@
                 ],
                 "eaLyrNum": 14,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/14",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/14",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6831,7 +6833,7 @@
                 ],
                 "eaLyrNum": 15,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/15",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/15",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6862,7 +6864,7 @@
                 ],
                 "eaLyrNum": 16,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/16",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/16",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6893,7 +6895,7 @@
                 "eaLyrNum": 17,
                 "visible": "false",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/17",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/17",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6927,7 +6929,7 @@
                 "visible": "false",
                 "eaBC": "Demand",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/18",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/18",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6959,7 +6961,7 @@
                 "eaLyrNum": 19,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/19",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/19",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -6990,7 +6992,7 @@
                 "eaLyrNum": 20,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/20",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/20",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7023,7 +7025,7 @@
                 "eaLyrNum": 21,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/21",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/21",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7056,7 +7058,7 @@
                 "eaLyrNum": 22,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/22",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/22",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7088,7 +7090,7 @@
                 "eaLyrNum": 23,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/23",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/23",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7121,7 +7123,7 @@
                 "eaLyrNum": 24,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/24",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/24",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7154,7 +7156,7 @@
                 "eaLyrNum": 25,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/25",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/25",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7187,7 +7189,7 @@
                 "eaLyrNum": 26,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/26",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/26",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7220,7 +7222,7 @@
                 "eaLyrNum": 27,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/27",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/27",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7253,7 +7255,7 @@
                 "eaLyrNum": 28,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/28",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/28",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7286,7 +7288,7 @@
                 "eaLyrNum": 29,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/29",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/29",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7319,7 +7321,7 @@
                 "eaLyrNum": 30,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/30",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/30",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7351,7 +7353,7 @@
                 "eaLyrNum": 31,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/31",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/31",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7382,7 +7384,7 @@
                 "eaLyrNum": 32,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/32",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/32",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7414,7 +7416,7 @@
                 "eaLyrNum": 33,
                 "visible": "false",
                 "eaBC": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/33",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/33",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7447,7 +7449,7 @@
                 "eaLyrNum": 34,
                 "visible": "false",
                 "eaBC": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/34",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/34",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7479,7 +7481,7 @@
                 "eaLyrNum": 35,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/35",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/35",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7510,7 +7512,7 @@
                 "eaLyrNum": 36,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/36",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/36",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7542,7 +7544,7 @@
                 "eaLyrNum": 37,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/37",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/37",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7575,7 +7577,7 @@
                 "eaLyrNum": 38,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/38",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/38",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7608,7 +7610,7 @@
                 "eaLyrNum": 39,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/39",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/39",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7641,7 +7643,7 @@
                 "eaLyrNum": 40,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/40",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/40",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7674,7 +7676,7 @@
                 "eaLyrNum": 41,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/41",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/41",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7707,7 +7709,7 @@
                 "eaLyrNum": 42,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/42",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/42",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7740,7 +7742,7 @@
                 "eaLyrNum": 43,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/43",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/43",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7773,7 +7775,7 @@
                 "eaLyrNum": 44,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/44",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/44",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7805,7 +7807,7 @@
                 "eaLyrNum": 45,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/45",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/45",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7836,7 +7838,7 @@
                 "eaLyrNum": 46,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/46",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/46",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7869,7 +7871,7 @@
                 "eaLyrNum": 47,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/47",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/47",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7902,7 +7904,7 @@
                 "eaLyrNum": 48,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/48",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/48",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7934,7 +7936,7 @@
                 "eaLyrNum": 49,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/49",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/49",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -7967,7 +7969,7 @@
                 "eaLyrNum": 50,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/50",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/50",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8000,7 +8002,7 @@
                 "eaLyrNum": 51,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/51",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/51",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8033,7 +8035,7 @@
                 "eaLyrNum": 52,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/52",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/52",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8066,7 +8068,7 @@
                 "eaLyrNum": 53,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/53",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/53",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8099,7 +8101,7 @@
                 "eaLyrNum": 54,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/54",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/54",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8132,7 +8134,7 @@
                 "eaLyrNum": 55,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/55",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/55",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8165,7 +8167,7 @@
                 "eaLyrNum": 56,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/56",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/56",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8197,7 +8199,7 @@
                 "eaLyrNum": 57,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/57",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/57",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8228,7 +8230,7 @@
                 "eaLyrNum": 58,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/58",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/58",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8260,7 +8262,7 @@
                 "eaLyrNum": 59,
                 "visible": "false",
                 "eaBC": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/59",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/59",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8293,7 +8295,7 @@
                 "eaLyrNum": 60,
                 "visible": "false",
                 "eaBC": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/60",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/60",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8325,7 +8327,7 @@
                 "eaLyrNum": 61,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/61",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/61",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8356,7 +8358,7 @@
                 "eaLyrNum": 62,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/62",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/62",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8388,7 +8390,7 @@
                 "eaLyrNum": 63,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/63",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/63",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8421,7 +8423,7 @@
                 "eaLyrNum": 64,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/64",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/64",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8454,7 +8456,7 @@
                 "eaLyrNum": 65,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/65",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/65",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8487,7 +8489,7 @@
                 "eaLyrNum": 66,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/66",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/66",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8520,7 +8522,7 @@
                 "eaLyrNum": 67,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/67",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/67",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8553,7 +8555,7 @@
                 "eaLyrNum": 68,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/68",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/68",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8586,7 +8588,7 @@
                 "eaLyrNum": 69,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/69",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/69",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8619,7 +8621,7 @@
                 "eaLyrNum": 70,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/70",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/70",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8653,7 +8655,7 @@
                 "eaLyrNum": 71,
                 "visible": "false",
                 "eaCS": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/71",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/71",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8684,7 +8686,7 @@
                 "eaLyrNum": 72,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/72",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/72",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8715,7 +8717,7 @@
                 "eaLyrNum": 73,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/73",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/73",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8748,7 +8750,7 @@
                 "eaLyrNum": 74,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/74",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/74",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8781,7 +8783,7 @@
                 "eaLyrNum": 75,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/75",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/75",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8813,7 +8815,7 @@
                 "eaLyrNum": 76,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/76",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/76",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8846,7 +8848,7 @@
                 "eaLyrNum": 77,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/77",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/77",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8879,7 +8881,7 @@
                 "eaLyrNum": 78,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/78",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/78",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8912,7 +8914,7 @@
                 "eaLyrNum": 79,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/79",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/79",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8945,7 +8947,7 @@
                 "eaLyrNum": 80,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/80",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/80",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -8978,7 +8980,7 @@
                 "eaLyrNum": 81,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/81",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/81",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9011,7 +9013,7 @@
                 "eaLyrNum": 82,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/82",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/82",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9044,7 +9046,7 @@
                 "eaLyrNum": 83,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/83",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/83",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9076,7 +9078,7 @@
                 "eaLyrNum": 84,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/84",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/84",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9107,7 +9109,7 @@
                 "eaLyrNum": 85,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/85",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/85",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9139,7 +9141,7 @@
                 "eaLyrNum": 86,
                 "visible": "false",
                 "eaBC": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/86",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/86",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9172,7 +9174,7 @@
                 "eaLyrNum": 87,
                 "visible": "false",
                 "eaBC": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/87",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/87",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9204,7 +9206,7 @@
                 "eaLyrNum": 88,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/88",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/88",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9235,7 +9237,7 @@
                 "eaLyrNum": 89,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/89",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/89",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9267,7 +9269,7 @@
                 "eaLyrNum": 90,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/90",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/90",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9300,7 +9302,7 @@
                 "eaLyrNum": 91,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/91",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/91",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9333,7 +9335,7 @@
                 "eaLyrNum": 92,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/92",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/92",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9366,7 +9368,7 @@
                 "eaLyrNum": 95,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/95",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/95",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9399,7 +9401,7 @@
                 "eaLyrNum": 93,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/93",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/93",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9432,7 +9434,7 @@
                 "eaLyrNum": 94,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/94",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/94",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9465,7 +9467,7 @@
                 "eaLyrNum": 96,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/96",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/96",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9498,7 +9500,7 @@
                 "eaLyrNum": 97,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/97",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/97",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9533,7 +9535,7 @@
                 "visible": "false",
                 "eaBC": "Demand",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/98",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/98",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9568,7 +9570,7 @@
                 "visible": "false",
                 "eaBC": "Demand",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/99",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/99",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9605,7 +9607,7 @@
                 "eaLyrNum": 100,
                 "visible": "false",
                 "eaCPW": "Driver",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/100",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/100",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9637,7 +9639,7 @@
                 ],
                 "eaLyrNum": 101,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/101",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/101",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9668,7 +9670,7 @@
                 ],
                 "eaLyrNum": 102,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/102",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/102",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9700,7 +9702,7 @@
                 "eaLyrNum": 103,
                 "visible": "false",
                 "eaBC": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/103",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/103",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9733,7 +9735,7 @@
                 "eaLyrNum": 104,
                 "visible": "false",
                 "eaBC": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/104",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/104",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9765,7 +9767,7 @@
                 ],
                 "eaLyrNum": 105,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/105",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/105",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9797,7 +9799,7 @@
                 "eaLyrNum": 106,
                 "visible": "false",
                 "eaBC": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/106",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/106",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9830,7 +9832,7 @@
                 "eaLyrNum": 107,
                 "visible": "false",
                 "eaBC": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/107",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/107",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9866,7 +9868,7 @@
                 "eaLyrNum": 110,
                 "visible": "false",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/110",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/110",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9899,7 +9901,7 @@
                 "eaLyrNum": 111,
                 "visible": "false",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/111",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/111",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9930,7 +9932,7 @@
                 ],
                 "eaLyrNum": 112,
                 "visible": "false",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/112",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/112",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -9963,7 +9965,7 @@
                 "eaLyrNum": 113,
                 "visible": "false",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/113",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/113",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -10003,7 +10005,7 @@
                 "visible": "false",
                 "eaBC": "Supply",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/114",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/114",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -10046,7 +10048,7 @@
                 "visible": "false",
                 "eaBC": "Supply",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/115",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/115",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -10087,7 +10089,7 @@
                 "visible": "false",
                 "eaBC": "Supply",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/116",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/116",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -10122,7 +10124,7 @@
                 "eaLyrNum": 117,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/117",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/117",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -10157,7 +10159,7 @@
                 "eaLyrNum": 118,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/118",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/118",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -10191,7 +10193,7 @@
                 "eaLyrNum": 119,
                 "visible": "false",
                 "eaCPW": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/119",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/119",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -10223,7 +10225,7 @@
                 "eaLyrNum": 120,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/120",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/120",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -10256,7 +10258,7 @@
                 "eaLyrNum": 121,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/121",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/121",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -10289,7 +10291,7 @@
                 "eaLyrNum": 122,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/122",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/122",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -10332,7 +10334,7 @@
                 "visible": "false",
                 "eaBC": "Demand",
                 "eaCPW": "Demand",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/123",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/123",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -10365,7 +10367,7 @@
                 "eaLyrNum": 124,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/124",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/124",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -10398,7 +10400,7 @@
                 "eaLyrNum": 125,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/125",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/125",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -10431,7 +10433,7 @@
                 "eaLyrNum": 126,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/126",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/126",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -10464,7 +10466,7 @@
                 "eaLyrNum": 127,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/127",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/127",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -10497,7 +10499,7 @@
                 "eaLyrNum": 128,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/128",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/128",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -10530,7 +10532,7 @@
                 "eaLyrNum": 129,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/129",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/129",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
@@ -10563,7 +10565,7 @@
                 "eaLyrNum": 130,
                 "visible": "false",
                 "eaBC": "Supply",
-                "url": "http://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/130",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/national_master/MapServer/130",
                 "popup": {
                     "showAttachments": "false",
                     "fieldInfos": [
