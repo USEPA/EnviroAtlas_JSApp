@@ -14,13 +14,14 @@ define(['dojo/_base/declare',
 	  "esri/symbols/SimpleFillSymbol",
 	  "esri/styles/choropleth",
       "esri/dijit/util/busyIndicator",
+	  "esri/dijit/SymbolStyler",
       "dijit/ColorPalette",
 	  "dijit/form/Select",
 	  "dijit/form/NumberSpinner",
 	  "dojo/parser"],
 function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
 	ClassedColorSlider, smartMapping, FeatureLayer, FeatureLayerStatistics,
-	ClassBreaksRenderer, SimpleFillSymbol, esriStylesChoropleth, busyIndicator,
+	ClassBreaksRenderer, SimpleFillSymbol, esriStylesChoropleth, busyIndicator, SymbolStyler,
 	ColorPalette, select, NumberSpinner) {
 
   //To create a widget, you need to derive from BaseWidget.
@@ -60,7 +61,7 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
 
 	  var curColor = new Color([92,92,92]);
 	  var dynamicSym = this;
-	  
+
 	  dynamicSymbology.isSmartMapping = false;
 	  
 	  //Classification dropdown
@@ -98,83 +99,20 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
 		dynamicSymbology.classSelect.placeAt(dom.byId("classification"));
 		dynamicSymbology.classSelect.startup(); 
 		
-		//set number of classes
-		dynamicSymbology.numberClasses = new NumberSpinner({
-			value: "1",
-			smallDelta: 1,
-			constraints: { min:1, max:20},
-			intermediateChanges:true,
-			style: "width:100px; height: 20px; lineHeight: 20px"
-		});
-		dynamicSymbology.numberClasses.placeAt(dom.byId("numClasses"));
-		dynamicSymbology.numberClasses.startup();
-
-      // Setup color palette
-      //var myPalette = new ColorPalette({
-      //  value: curColor,
-      //  palette: "7x10",
-      //  onChange: function(val){
-      //    //alert(val);
-      //    curColor = new Color(val);
-      //    dojo.style(dojo.byId('colorBtn'),{backgroundColor: val});
-      //  }
-      //}, "colorPick").startup();
-
-      //console.log(map.graphicsLayerIds);
-      //define featureLayeer and featureLayer statistics
-      //This will need to be passed in from TOC
-      //geoenrichedFeatureLayer = new FeatureLayer(url, {outFields: ["*"]});
-      //featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
-      //map.addLayer(geoenrichedFeatureLayer);
-
-      //var BusyIndicator = busyIndicator.create({target: dom.byId("esri-colorinfoslider1"), imageUrl: "./widgets/DynamicSymbology/images/busy-indicator.gif", backgroundOpacity: 0});
 
 
-      //geoenrichedFeatureLayer.on("load", function (){
-      //  //alert("loading");
-      //  //suggest scale range
-      //  //featureLayerStatistics.getSuggestedScaleRange().then(function (scaleRange){
-      //  //  //console.log("suggested scale range", scaleRange);
-      //  //  geoenrichedFeatureLayer.setScaleRange(scaleRange.minScale, scaleRange.maxScale);
-      //  //  map.setScale(scaleRange.minScale);
-      //  //});
-      //  updateSmartMapping();
-      //});
-
-      //Initial startup of colorInfoSider
-      // slider7 = new ClassedColorSlider({
-        // colorInfo: {
-          // stops:[
-            // {color: new Color([92,92,92]), label: "50", value: 50},
-            // {color: new Color([92,92,92]), label: "51", value: 51}
-          // ]
-        // }
-      // }, "esri-colorinfoslider1");
-
-      // colorInfoSlider.startup();
-
-      //dom.byId("histClassification").onchange = function () {
-        //console.log("load new Histogram");
-        //dynamicSym._updateSmartMapping();
-      //};
-
-      //this._updateSmartMapping();
-      //updateSmartMapping();
-      
     },
 	
 	onReceiveData: function(name, widgetId, data, historyData) {
 		console.log(data.message);
 		//dom.byId('title').innerHTML = data.message;
 		_layerID = data.message;
-		
-		
-		
 	},
 
     onOpen: function(){
       
-      _busy = busyIndicator.create("esri-colorinfoslider1");
+      _busy = busyIndicator.create("esri-colorinfoslider-container");
+
      
       console.log('onOpen');
       var dynamicSym = this;
@@ -187,11 +125,28 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
 			var dslayer = layerInfosObject.getLayerInfoById(_layerID);
 			console.log(dslayer.title);
 			dom.byId('title').innerHTML = dslayer.title;
+		  //Set layers
 			geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
 			featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
+
 			//set value of numClasses
-			dynamicSymbology.numberClasses.set('value', geoenrichedFeatureLayer.renderer.infos.length);
-			console.log(geoenrichedFeatureLayer.renderer);
+		  //set number of classes spinner
+		  dynamicSymbology.numberClasses = new NumberSpinner({
+			  value: geoenrichedFeatureLayer.renderer.infos.length,
+			  smallDelta: 1,
+			  constraints: { min:1, max:20},
+			  intermediateChanges:true,
+			  style: "width:100px; height: 20px; lineHeight: 20px"
+		  });
+		  dynamicSymbology.numberClasses.placeAt(dom.byId("numClasses"));
+		  dynamicSymbology.numberClasses.startup();
+
+		  //dynamicSymbology.numberClasses.set('value', geoenrichedFeatureLayer.renderer.infos.length);
+		    //set classificatoin Method
+		    dynamicSymbology.classSelect.set('value', geoenrichedFeatureLayer.renderer.classificationMethod);
+		  	_ClassificationMethod = geoenrichedFeatureLayer.renderer.classificationMethod;
+
+			console.log("featureLayerStatistics", featureLayerStatistics);
 			//set field
 			_fieldName = geoenrichedFeatureLayer.renderer.attributeField;
 			//set slider
@@ -232,22 +187,26 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
 					//alert(dynamicSymbology.numberClasses.value);
 					//call smartmapping
 					dynamicSym._updateSmartMapping2();
+
 				}
 		});
 		//On number of classes change
 		dynamicSymbology.numberClasses.on("change", function (c) {
 			_NumberOfClasses = c;
+			//alert("changing");
 			if(dynamicSymbology.isSmartMapping == true){
 				dynamicSym._updateSmartMapping2();
 			}else{
-				
+				dynamicSym._updateSmartMapping2();
 			}
+
 		});
+
 	},
 	
 	_updateSmartMapping2: function(){
 		console.log("UpdateSmartMapping");
-		
+		_busy.show();
 		if(dynamicSymbology.isSmartMapping == false){
 			dynamicSymbology.isSmartMapping = true;
 		}
@@ -378,17 +337,18 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
             // }
             // _busy.hide();
           // }
+			_busy.hide();
 
         }).otherwise(function (error) {
-          //_busy.hide();
+          _busy.hide();
           console.log("An error occurred while calculating the histogram, Error: %o", error);
         });
 
       }).otherwise(function (error) {
-        //_busy.hide();
+        _busy.hide();
         console.log("An error occurred while creating the color renderer, Error: %o", error);
       });
-	  
+
 	},
 
     onClose: function(){
