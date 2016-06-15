@@ -193,6 +193,7 @@ define([
 				       	     lyrTiled.setOpacity(layer.opacity);
 				        } 
 	                }                	
+	                lLayer.setVisibility(false);//turn off the layer when first added to map and let user to turn on	
                 	this._viewerMap.addLayer(lLayer);
                 }
               }else if(layer.type.toUpperCase() === 'TILED'){
@@ -259,6 +260,10 @@ define([
 			if(lyr){
             	this._viewerMap.removeLayer(lyr);
           	}
+			lyrTiled = this._viewerMap.getLayer(window.layerIdTiledPrefix + stringArray[i]);
+			if(lyrTiled){
+	       		this._viewerMap.removeLayer(lyrTiled);
+	      	}             	
         }
 
       };
@@ -278,13 +283,11 @@ define([
 		  if (stringArray[0] == "a") {
 		  	_addSelectedLayers(this.config.layers.layer, data.message.substring(2));
 		  }
-		var wm = WidgetManager.getInstance();
-		var sideBar =  wm.getWidgetById('themes_TabTheme_widgets_SidebarController_Widget_20');
-		sideBar.selectTab(0);		  
+			  
 			  //removing selected layer function is deleted from SimpleSearchFilter
-			  //if (stringArray[0] == "r") {
-			  //	_removeSelectedLayers(data.message.substring(2));
-			  //}
+			  if (stringArray[0] == "r") {
+				  	_removeSelectedLayers(data.message.substring(2));
+			  }	
 		  }
 		  //removing all layers function is not used in Layerlist currently
 		  //if (name == 'LayerList'){

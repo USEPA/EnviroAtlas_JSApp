@@ -21,6 +21,7 @@ define([
     'jimu/BaseWidget',
     'dijit/Dialog',
     'esri/symbols/jsonUtils',
+     'jimu/WidgetManager',
     'dijit/layout/AccordionContainer', 
     'dijit/layout/ContentPane',
     'dijit/layout/TabContainer',
@@ -39,13 +40,14 @@ define([
     Deferred,
     BaseWidget,
     Dialog,
-    esriSymJsonUtils) {
+    esriSymJsonUtils,
+    WidgetManager) {
+    	var singleLayerToBeAddedRemoved = "";
         var   layerData = {
             identifier: "eaLyrNum",  //This field needs to have unique values
             label: "name", //Name field for display. Not pertinent to a grid but may be used elsewhere.
             items: []};
     	var layerDataStore = new dojo.data.ItemFileWriteStore({ data:layerData });
-    	//var myNewItem = {eaLyrNum: layer.eaLyrNum, name: layer.name, description: layer.eaDescription, eaDfsLink: layer.eaDfsLink};
     	var SelectableLayerFactory = function(data) {
 		    this.eaLyrNum = data.eaLyrNum;
 		    this.name = data.name;
@@ -94,7 +96,7 @@ define([
 			  }
 			}
 	   };
-	    var	_addSelectableLayer = function(){
+	    var	_addSelectableLayerSorted = function(items){
     	
 			var tableOfRelationship = document.getElementById("tableSelectableLayers");
 		    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0]; 
@@ -104,8 +106,7 @@ define([
             var numOfSelectableLayers = 0;
             var totalNumOfLayers = 0;
             
-	    	layerDataStore.fetch( {   
-	           onItem: function(item) {
+	    	dojo.forEach(items, function(item) {
 	           	totalNumOfLayers = totalNumOfLayers + 1;
 	           	var currentLayerSelectable = false;
 				eaLyrNum = layerDataStore.getValue( item, 'eaLyrNum');
@@ -161,16 +162,17 @@ define([
 			        var newCell  = newRow.insertCell(1);
 			        newCell.style.verticalAlign = "top";//this will put layer name on first line
 			        
-			        var photo = document.createElement("td");
-			        //photo.style.position = "absolute";
 			
-					var ulElem = document.createElement("ul");
-					ulElem.setAttribute("id", "navlistSearchfilter");
 					var newTitle  = document.createElement('div');
 			        newTitle.innerHTML = layerName;
 			        newTitle.title = eaDescription;
 			        
+					// add the category icons				
+					if (!(document.getElementById("hideIcons").checked)) {
+				        var photo = document.createElement("td");
+						var ulElem = document.createElement("ul");
 			
+						ulElem.setAttribute("id", "navlistSearchfilter");					
 					var liHomeElem = null;
 					var aHomeElem = null;
 					indexImage = 0;
@@ -195,6 +197,8 @@ define([
 					}
 			        photo.appendChild(ulElem);
 					newTitle.appendChild(photo);
+		        	}
+					// end of adding the category icons	
 					newCell.appendChild(newTitle);
 					
 					var newButtonInfoCell  = newRow.insertCell(2);
@@ -228,12 +232,30 @@ define([
 				    };    	
 				}//end of if (currentLayerSelectable)
 
-           }
         });	
 	       
- 		dojo.byId("numOfLayers").innerHTML = "&nbsp;" + String(numOfSelectableLayers) + " of " + String(totalNumOfLayers) + " Maps";
+ 		dojo.byId("numOfLayers").value = " " + String(numOfSelectableLayers) + " of " + String(totalNumOfLayers) + " Maps";
     	dojo.byId("selectAllLayers").checked = false;
-
+		for (var key in chkIdDictionary) {
+		  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
+		  	document.getElementById(key).addEventListener('click', function() {
+				if (this.checked){
+					singleLayerToBeAddedRemoved = "a" + "," + this.getAttribute("id").replace("ck", "");
+					document.getElementById('butAddSingleLayer').click();
+				}
+				else{
+					singleLayerToBeAddedRemoved = "r" + "," + this.getAttribute("id").replace("ck", "");
+					document.getElementById('butAddSingleLayer').click();
+				}				
+		    });
+		  }
+		}    	
+	};	   
+	var	_updateSelectableLayer = function(){	
+		layerDataStore.fetch({
+				sort: {attribute: 'eaDfsLink', descending: false},
+				onComplete: _addSelectableLayerSorted
+				});
 	};
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
 
@@ -266,7 +288,7 @@ define([
 				newCheckboxCell.appendChild(label);
 				
 				checkbox.addEventListener('click', function() {
-					_addSelectableLayer();
+					_updateSelectableLayer();
 			    });
 				
 				/// add category images:
@@ -302,20 +324,33 @@ define([
 
 		}
 		document.getElementById("Supply").onclick = function() {
-		    _addSelectableLayer();
+		    _updateSelectableLayer();
 		};
 		document.getElementById("Demand").onclick = function() {
-		    _addSelectableLayer();
+		    _updateSelectableLayer();
 		};	
 		document.getElementById("Driver").onclick = function() {
-		    _addSelectableLayer();
+		    _updateSelectableLayer();
 		};
 		document.getElementById("SpatiallyExplicit").onclick = function() {
-		    _addSelectableLayer();
+		    _updateSelectableLayer();
 		};				
+		document.getElementById("hideIcons").onclick = function() {
+		    _updateSelectableLayer();
+		};					
 		document.getElementById("selectAllLayers").onclick = function() {
+			if (this.checked){
 		    _onSelectAllLayers();
+			    document.getElementById('butAddAllLayers').click();
+		    }
 		};
+		//on hide and show Benefit Categories, enlarge selectable layers
+		document.getElementById("hide1").onclick = function() {
+		    document.getElementById('tableSelectableLayersArea').style.height = "100px";
+		};	
+		document.getElementById("show1").onclick = function() {
+		    document.getElementById('tableSelectableLayersArea').style.height = "300px";
+		};					
 		layersToBeAdded = "a";
 	    
 
@@ -338,10 +373,8 @@ define([
                 layer = arrLayers[index];                          
                 var indexCheckbox = 0;
                 if(layer.hasOwnProperty('name')){
-                	//console.log("index:" + index + " this layer has name");
                     if(layer.hasOwnProperty('eaLyrNum')){
                         eaLyrNum = layer.eaLyrNum.toString();
-                        console.log("index:" + index + " this layer has eaLyrNum");
 					    var eaCategoryWhole =  "";
 					    if(layer.hasOwnProperty('eaBCSDD')){
 					    	for (categoryIndex = 0, lenCategory = layer.eaBCSDD.length; categoryIndex < lenCategory; ++categoryIndex) {
@@ -362,17 +395,24 @@ define([
                 }
 
             }
-            //console.log("layerDataStore:"+ layerDataStore);
+	        });// end of loadJSON(function(response)
 
-        });
 		this.displayCategorySelection();
 		
     },               
                     
-    i: 0,
-    j: 0,
 
+	    _onSingleLayerClick: function() {
+		    this.publishData({
+		        message: singleLayerToBeAddedRemoved
+		    });
+		},
+	    _onViewActiveLayersClick: function() {
 
+			var wm = WidgetManager.getInstance();
+			var sideBar =  wm.getWidgetById('themes_TabTheme_widgets_SidebarController_Widget_20');
+			sideBar.selectTab(0);	
+	    },	
     _onAddLayersClick: function() {
 
         layersToBeAdded = "a";
@@ -403,17 +443,6 @@ define([
 	    });
 	    this.i ++;
     },
-    sortOn:function(property){
-	    return function(a, b){
-	        if(a[property] < b[property]){
-	            return -1;
-	        }else if(a[property] > b[property]){
-	            return 1;
-	        }else{
-	            return 0;   
-	        }
-	    }
-	},
 
 
 
