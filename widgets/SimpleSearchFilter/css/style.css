@@ -244,8 +244,62 @@ input.cmn-toggle-inLineBlock-round-flat:checked + label:after {
 	list-style-type: none;
 	padding-right: 36px;
 }
-h1
-{ 
+/*for collapsible benefit category selection*/
+.FAQ { 
+    vertical-align: bottom; 
+}
+.list {
+    display:none; 
+    height:auto;
+    margin:0;
+    float: left;
+}
+.show {
+    display: none; 
+}
+.hide:target + .show {
+    display: inline; 
+}
+.hide:target {
+    display: none; 
+}
+.hide:target ~ .list {
+    display:inline; 
+}
+/*style the (+) and (-) */
+.hide, .show {
+	width: 20px;
+	height: 20px;
+	border-radius: 20px;
+	font-size: 15px;
+	color: #fff;
+	text-shadow: 0 1px 0 #666;
     text-align: center; 
-    background-color: green; 
+	text-decoration: none;
+	box-shadow: 1px 1px 0px #000;
+	background: #cccbbb;
+	opacity: .95;
+	margin-right: 0;
+	float: left;
+	margin-bottom:5px;
+}
+.hide:hover, .show:hover {
+	color: #eee;
+	text-shadow: 0 0 1px #666;
+	text-decoration: none;
+	box-shadow: 0 0 4px #222 inset;
+	opacity: 1;
+	margin-bottom: 5px;
+}
+.list p{
+    height:auto;
+    margin:0;
+}
+.question {
+	float: left;
+	height: auto;
+	width: 90%;
+	line-height: 15px;
+	padding-left: 20px;
+	margin-bottom: 5px;
 }
