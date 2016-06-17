@@ -3,6 +3,7 @@ define(['dojo/_base/declare',
       'jimu/BaseWidget',
 	  'jimu/LayerInfos/LayerInfos',
       "dojo/dom",
+		"dojo/dom-construct",
       "esri/map",
       "esri/Color",
       "esri/dijit/ColorInfoSlider",
@@ -19,7 +20,7 @@ define(['dojo/_base/declare',
 	  "dijit/form/Select",
 	  "dijit/form/NumberSpinner",
 	  "dojo/parser"],
-function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
+function(declare, BaseWidget, LayerInfos, dom, domConstruct, Map, Color, ColorInfoSlider,
 	ClassedColorSlider, smartMapping, FeatureLayer, FeatureLayerStatistics,
 	ClassBreaksRenderer, SimpleFillSymbol, esriStylesChoropleth, busyIndicator, SymbolStyler,
 	ColorPalette, select, NumberSpinner) {
@@ -63,6 +64,9 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
 	  var dynamicSym = this;
 
 	  dynamicSymbology.isSmartMapping = false;
+
+	  	//symbology slider
+
 	  
 	  //Classification dropdown
 		dynamicSymbology.attTemplateOptions = [
@@ -97,7 +101,7 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
 			style: "width: 150px; height: 20px" 
 		});
 		dynamicSymbology.classSelect.placeAt(dom.byId("classification"));
-		dynamicSymbology.classSelect.startup(); 
+		dynamicSymbology.classSelect.startup();
 		
 
 
@@ -110,26 +114,43 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
 	},
 
     onOpen: function(){
-      
+
       _busy = busyIndicator.create("esri-colorinfoslider-container");
 
      
       console.log('onOpen');
       var dynamicSym = this;
-	  
-	  console.log('layer ID: ' + _layerID);
-	  console.log(this.map.getBasemap());
+		alert(_layerID);
+	  //console.log('layer ID: ' + _layerID);
+	  //console.log(this.map.getBasemap());
 	  _currentBaseMap = this.map.getBasemap();
 	  
 	  LayerInfos.getInstance(this.map, this.map.itemInfo).then(function(layerInfosObject){
-			var dslayer = layerInfosObject.getLayerInfoById(_layerID);
-			console.log(dslayer.title);
-			dom.byId('title').innerHTML = dslayer.title;
-		  //Set layers
-			geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
-			featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
 
-			//set value of numClasses
+		  var dslayer = layerInfosObject.getLayerInfoById(_layerID);
+		  console.log(dslayer.title);
+		  dom.byId('title').innerHTML = dslayer.title;
+		  //Set layers
+		  geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
+		  featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
+
+		  //Set Fields
+		  _ClassificationMethod = geoenrichedFeatureLayer.renderer.classificationMethod;
+		  _fieldName = geoenrichedFeatureLayer.renderer.attributeField;
+
+		  //first time opened create number spinner and classes slider
+		  // if(dynamicSymbology.numberClasses == null || dynamicSymbology.slider == null){
+			//   console.log("numberClasses is not null");
+			//   //set value of numClasses
+			//
+		  // }else{
+			//   //Set numclasses
+			//   dynamicSymbology.numberClasses.set('value', geoenrichedFeatureLayer.renderer.infos.length);
+			//   //set classes slider
+			//   dynamicSymbology.slider.set("breakInfos", geoenrichedFeatureLayer.renderer.infos);
+			//   dynamicSymbology.slider.set("classificationMethod", geoenrichedFeatureLayer.renderer.classificationMethod);
+			//   dynamicSymbology.slider.set("class", "sliderAreaRight");
+		  // }
 		  //set number of classes spinner
 		  dynamicSymbology.numberClasses = new NumberSpinner({
 			  value: geoenrichedFeatureLayer.renderer.infos.length,
@@ -140,46 +161,41 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
 		  });
 		  dynamicSymbology.numberClasses.placeAt(dom.byId("numClasses"));
 		  dynamicSymbology.numberClasses.startup();
+		  //set initail slider
+		  //var sliderNode = domConstruct.create("div",null,"esri-colorinfoslider1", "first");
+		  dynamicSymbology.slider = new ClassedColorSlider({
+			  id: "classedSlider",
+			  breakInfos: geoenrichedFeatureLayer.renderer.infos,
+			  classificationMethod: geoenrichedFeatureLayer.renderer.classificationMethod,
+			  class: "sliderAreaRight"
+		  });
+		  dynamicSymbology.slider.placeAt("esri-colorinfoslider1");
+		  dynamicSymbology.slider.startup();
 
-		  //dynamicSymbology.numberClasses.set('value', geoenrichedFeatureLayer.renderer.infos.length);
-		    //set classificatoin Method
-		    dynamicSymbology.classSelect.set('value', geoenrichedFeatureLayer.renderer.classificationMethod);
-		  	_ClassificationMethod = geoenrichedFeatureLayer.renderer.classificationMethod;
-
-			console.log("featureLayerStatistics", featureLayerStatistics);
-			//set field
-			_fieldName = geoenrichedFeatureLayer.renderer.attributeField;
-			//set slider
-			dynamicSymbology.slider = new ClassedColorSlider({
-					breakInfos: geoenrichedFeatureLayer.renderer.infos,
-					classificationMethod: geoenrichedFeatureLayer.renderer.classificationMethod,
-					class: "sliderAreaRight"
-					
-			}, "esri-colorinfoslider1");
-			dynamicSymbology.slider.startup();
-				
-			//dynamicSym._updateSmartMapping2();
-			//on change event for slider
+		  //set classificatoin Method
+		  dynamicSymbology.classSelect.set('value', geoenrichedFeatureLayer.renderer.classificationMethod);
+		  //dynamicSym._updateSmartMapping2();
+		  //on change event for slider
 			dynamicSymbology.slider.on("handle-value-change", function (sliderValueChange) {
 				 //alert("slider changed");
 				 var symbol = new SimpleFillSymbol();
 				symbol.setColor(new Color([150, 150, 150, 0.5]));
-				
+
 				 var renderer = new ClassBreaksRenderer(symbol, geoenrichedFeatureLayer.renderer.attributeField);
 				 renderer.addBreak(sliderValueChange[0]);
 				 renderer.addBreak(sliderValueChange[1]);
 				 renderer.addBreak(sliderValueChange[2]);
 				 renderer.addBreak(sliderValueChange[3]);
 				 renderer.addBreak(sliderValueChange[4]);
-				 
+
 				 //change classification dropdown to manual
 				 dynamicSymbology.classSelect.set('value', 'manual');
-				 
+
 				 geoenrichedFeatureLayer.setRenderer(renderer);
 				 geoenrichedFeatureLayer.redraw();
 				 //console.log(renderer);
 		   });
-		});
+	  });
 		//On Classification method change
 		dynamicSymbology.classSelect.on("change", function (c) {
 			_ClassificationMethod = c;
@@ -245,10 +261,7 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
 			field: _fieldName,
 			numBins: _NumberOfClasses
         }).then(function (histogram) {
-          
-		  
-		  
-		  
+
 		  featureLayerStatistics.getFieldStatistics({
 			  field: _fieldName
 		  }).then(function(statistics){
@@ -262,81 +275,7 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
 				console.log(smartRenderer);
 				console.log(histogram);
 		  });
-		  
-		  
-		  
-          //colorInfoSlider.set("primaryHandle", sliderHandleInfo["primaryHandle"]);
-          //_busy.hide();
 
-          // slider7.on("handle-value-change", function (sliderValueChange) {
-            // //console.log("handle-value-change", sliderValueChange);
-			// console.log(sliderValueChange);
-			// console.log(geoenrichedFeatureLayer);
-			// //geoenrichedFeatureLayer.renderer.setColorInfo([sliderValueChange]);
-            // geoenrichedFeatureLayer.renderer.setVisualVariables(sliderValueChange);
-			
-			// console.log(geoenrichedFeatureLayer.renderer);
-            // geoenrichedFeatureLayer.redraw();
-          // });
-  
-
-          // update the slider's zoomed state
-          // dom.byId("sliderZoomButton").onchange = function () {
-
-            // var zoomOptions,
-                // bottomHandlerValue,
-                // topHandlerValue,
-                // zoomInViewBottomValue,
-                // zoomInViewTopValue,
-                // getHistogramParams;
-
-            // // If checked
-            // if (dom.byId("sliderZoomButton").checked) {
-              // _busy.show();
-              // // Get current handle values
-              // bottomHandlerValue = colorInfoSlider.get("colorInfo").stops[0].value;
-              // topHandlerValue = colorInfoSlider.get("colorInfo").stops[4].value;
-
-              // // Calculate the minimum and maximum values of the zoomed slider
-              // zoomInViewBottomValue = bottomHandlerValue - (topHandlerValue - bottomHandlerValue) / 3;
-              // zoomInViewTopValue = topHandlerValue + (topHandlerValue - bottomHandlerValue) / 3;
-
-              // // Fallback to statistics if values are out of expected range
-              // if (zoomInViewBottomValue < colorRenderer.statistics.min) {
-                // zoomInViewBottomValue = colorRenderer.statistics.min;
-              // }
-              // if (zoomInViewTopValue > colorRenderer.statistics.max) {
-                // zoomInViewTopValue = colorRenderer.statistics.max;
-              // }
-
-              // // Histogram generation using new values
-              // getHistogramParams = {
-                // field: fieldName,
-                // numBins: 10,
-                // minValue: zoomInViewBottomValue,
-                // maxValue: zoomInViewTopValue
-              // };
-
-              // // Use new FeatureLayer statisticsPlugin module
-              // geoenrichedFeatureLayer.statisticsPlugin.getHistogram(getHistogramParams).then(function (histogram) {
-
-                // zoomOptions = {
-                  // "histogram": histogram,
-                  // minSliderValue: zoomInViewBottomValue,
-                  // maxSliderValue: zoomInViewTopValue
-                // };
-
-                // // Update the Slider
-                // colorInfoSlider.set("zoomOptions", zoomOptions);
-
-              // });
-
-            // } else {
-              // // Unzoom the Slider
-              // colorInfoSlider.set("zoomOptions", null);
-            // }
-            // _busy.hide();
-          // }
 			_busy.hide();
 
         }).otherwise(function (error) {
@@ -352,6 +291,7 @@ function(declare, BaseWidget, LayerInfos, dom, Map, Color, ColorInfoSlider,
 	},
 
     onClose: function(){
+		dynamicSymbology.slider.destroy();
       console.log('onClose');
     },
 

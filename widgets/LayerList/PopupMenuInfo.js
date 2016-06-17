@@ -403,45 +403,17 @@ define([
 		
 		this.layerListWidget.publishData({
 			message: layerId
-		}, true);
-		
-		var widgets = this.layerListWidget.appConfig.getConfigElementsByName('Demo');
-		var widgetId = widgets[0].id;
-		
-		
-		
-		this.layerListWidget.openWidgetById(widgetId);
-		console.log('Open DynamicS ymbology');
-		
-		//var wm = WidgetManager.getInstance();
-		//var ds = wm.appConfig.getElementsByName("Dynamic Symbology");
-		//var ds = wm.getWidgetById("widgets_DynamicSymbology_28");
-		
-		/* var ds = wm.loadWidget({
-                  "position" : {
-                  "left" : 645,
-                  "top" : 5,
-                  "width" : 380,
-                  "height" : 410,
-                  "relativeTo" : "map"
-                },
-                "placeholderIndex" : 1,
-                "id" : "widgets_DynamicSymbology_28",
-                "name" : "DynamicSymbology",
-                "label" : "Dynamic Symbology",
-                "version" : "1.3",
-                "uri" : "widgets/DynamicSymbology/Widget",
-                "config" : "widgets/DynamicSymbology/config.json"
-            }).then( function(){
-				
-				var dsWidget = wm.getWidgetById("widgets_DynamicSymbology_28");
-				wm.openWidget(dsWidget);
-				
-			
-				console.log(dsWidget);
-			}); */
-		
-		//console.log(ds);
+        }, true);
+
+      var widgets = this.layerListWidget.appConfig.getConfigElementsByName('DynamicSymbology');
+
+      var pm = PanelManager.getInstance();
+      pm.showPanel(widgets[0]);
+      //var widgetId = widgets[0].id;
+      //this.layerListWidget.openWidgetById(widgetId);
+      console.log(widgets);
+      console.log('Open DynamicS Symbology');
+
     },
     _onItemMetadataDownloadClick: function(evt) {
         layerId = this._layerInfo.id;
