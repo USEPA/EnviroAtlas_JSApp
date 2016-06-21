@@ -346,10 +346,12 @@ define([
 		};
 		//on hide and show Benefit Categories, enlarge selectable layers
 		document.getElementById("hide1").onclick = function() {
-		    document.getElementById('tableSelectableLayersArea').style.height = "100px";
+		    document.getElementById('tableSelectableLayersArea').style.height = "340px";
+		    //document.getElementById('tableSelectableLayersArea').style.height = '20%';
 		};	
 		document.getElementById("show1").onclick = function() {
-		    document.getElementById('tableSelectableLayersArea').style.height = "300px";
+		    document.getElementById('tableSelectableLayersArea').style.height = "550px";
+		    //document.getElementById('tableSelectableLayersArea').style.height = '70%';
 		};					
 		layersToBeAdded = "a";
 	    
@@ -359,7 +361,6 @@ define([
       startup: function() {
 
         this.inherited(arguments);
-        console.log("Widget simplesearchFilter start up");
 
                
                      
