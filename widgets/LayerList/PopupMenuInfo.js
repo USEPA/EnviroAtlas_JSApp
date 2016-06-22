@@ -22,12 +22,11 @@ define([
   'dojo/promise/all',
   'jimu/portalUrlUtils',
   'jimu/WidgetManager',
-  'jimu/PanelManager',
   'esri/lang',
   'esri/graphicsUtils',
   './NlsStrings',
   'dijit/Dialog'
-], function(declare, array, lang, Deferred, all, portalUrlUtils, WidgetManager, PanelManager, esriLang,
+], function(declare, array, lang, Deferred, all, portalUrlUtils, WidgetManager, esriLang,
   graphicsUtils, NlsStrings,Dialog) {
   var mapDescriptionStr = "";
   var dataFactSheet = "http://leb.epa.gov/projects/EnviroAtlas/currentDevelopment/";
@@ -249,7 +248,7 @@ define([
           break;
         case 'metadataDownload':
           this._onItemMetadataDownloadClick(evt);
-          break;                    
+          break;    
         case 'changeSymbology':
           this._onItemChangeSymbologyClick(evt);
           break;                             
@@ -396,26 +395,9 @@ define([
         });
     },
     _onItemChangeSymbologyClick: function(evt) {
-		
         layerId = this._layerInfo.id;
-        //alert("Layer "+ layerId + " is clicked, Change Symbology function is under development" );
-		
-		this.layerListWidget.publishData({
-			message: layerId
-        }, true);
+        alert("Layer "+ layerId + " is clicked, Change Symbology function is under development" );
 
-        var widgets = this.layerListWidget.appConfig.getConfigElementsByName('DynamicSymbology');
-
-        var pm = PanelManager.getInstance();
-        console.log(pm);
-        if(widgets[0].visible){
-            pm.closePanel(widgets[0].id + "_panel");
-        }
-        pm.showPanel(widgets[0]);
-        //var widgetId = widgets[0].id;
-        //this.layerListWidget.openWidgetById(widgetId);
-        //console.log(widgets);
-        console.log('Open Dynamic Symbology');
     },
     _onItemMetadataDownloadClick: function(evt) {
         layerId = this._layerInfo.id;
@@ -552,9 +534,10 @@ define([
     };
 
     layerInfo.getLayerType().then(lang.hitch(this, function(layerType) {
+      //alert("layerType:" + layerType);
       var itemInfoCategory = "";
       if (isRootLayer &&
-          (layerType === "FeatureLayer" ||
+           (layerType === "FeatureLayer" ||
             layerType === "CSVLayer" ||
             layerType === "ArcGISImageServiceLayer" ||
             layerType === "StreamLayer" ||

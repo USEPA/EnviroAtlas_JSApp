@@ -47,6 +47,7 @@ define(["./ConfigManager",
     window.layerIdTiledPrefix = "tiledNum_";
     window.addedLayerIdPrefix = "added_";
     window.removeAllMessage = "removeAll";
+    window.chkCategoryPrefix = "ckCategory_";
     window.bFirstLoadFilterWidget = true;
     window.allLayerNumber = [];
     window.categoryDic = {};
@@ -59,6 +60,10 @@ define(["./ConfigManager",
     window.categoryDic["Biodiversity Conservation"] = "biod";
     window.categoryDic["People and Built Spaces"] = "pbs";
     window.categoryDic["Supplemental"] = "sup";
+    window.categoryClassSupply = "Supply";
+    window.categoryClassDemand = "Demand";
+    window.categoryClassDriver = "Driver";
+    window.categoryClassSpatialExplicit = "Spatially Explicit";
     //patch for JS API 3.10
     var hasMethod = typeof cookie.getAll === 'function';
     if (!hasMethod) {

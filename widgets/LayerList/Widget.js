@@ -226,17 +226,17 @@ define([
 		for (var j=0, jl=this.map.layerIds.length; j<jl; j++) {
 			var currentLayer = this.map.getLayer(this.map.layerIds[j]);
 			if(currentLayer){
-			if ((currentLayer.id).indexOf(window.addedLayerIdPrefix) > -1) {
-				this.map.removeLayer(currentLayer);
-			}    
-			}
+				if ((currentLayer.id).indexOf(window.addedLayerIdPrefix) > -1) {
+					this.map.removeLayer(currentLayer);
+				}    
+			} 
 		}
 		/*dojo.forEach(this.map.layerIds, function(aLayerId) {  
 			 alert("aLayerId from dojo.forEach:" + aLayerId);
 					   });  
 		array.forEach(this.map.layerIds, function(aLayerId, i){
 		    alert("aLayerId from array.forEach:" + aLayerId);
-		});*/
+		});  */
     	for (i in window.allLayerNumber) {    		
     		lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
 			if(lyr){

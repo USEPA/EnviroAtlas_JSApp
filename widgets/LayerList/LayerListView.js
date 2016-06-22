@@ -183,7 +183,8 @@ define([
 	  loadJSON(function(response) {
          var localLayerConfig = JSON.parse(response);
          var arrLayers = localLayerConfig.layers.layer;
-         for (index = 0, len = arrLayers.length; index < len; ++index) {
+         //for (index = 0, len = arrLayers.length; index < len; ++index) {
+         for (index = 0, len = 100; index < len; ++index) {
             layer = arrLayers[index];
             if(layer.hasOwnProperty('eaLyrNum')){
                 if (layerInfo.id === (window.layerIdPrefix + layer.eaLyrNum.toString())) {
@@ -191,40 +192,33 @@ define([
 					    var photo = document.createElement("td");
 						var ulElem = document.createElement("ul");
 						ulElem.setAttribute("id", "navlist");
-				        //newCell.innerHTML = layer.name;
-						//define the dictionary of mapping category names to sprite style id which is defined in css
 						var liHomeElem = null;
 						var aHomeElem = null;
 						indexImage = 0;
-						for (var key in window.categoryDic) {
-							liElem = document.createElement("li");
-							liElem.style.left = (indexImage*20).toString() + "px";
-							aElem = document.createElement("a");
-							aElem.title  = key;
-							liElem.appendChild(aElem);
-							ulElem.appendChild(liElem);							
-							if (layer.eaCategory.indexOf(key) !=-1) {
+						var keys = Object.keys(window.categoryDic);
+						if(keys.length !== undefined){
+							for (var i = 0; i < keys.length; i++) {	
+								key = keys[i];
+						
+						    var eaCategoryWhole =  "";
+						    if(layer.hasOwnProperty('eaBCSDD')){
+						    	for (categoryIndex = 0, lenCategory = layer.eaBCSDD.length; categoryIndex < lenCategory; ++categoryIndex) {
+						    		eaCategoryWhole = eaCategoryWhole + layer.eaBCSDD[categoryIndex] + ";";
+						    	}
+						    }
+						    eaCategoryWhole = eaCategoryWhole.substring(0, eaCategoryWhole.length - 1);
+							if (eaCategoryWhole.indexOf(key) !=-1) {
+									liElem = document.createElement("li");
+									liElem.style.left = (indexImage*20).toString() + "px";
+									aElem = document.createElement("a");
+									aElem.title  = key;
+									liElem.appendChild(aElem);
+									ulElem.appendChild(liElem);										
 								liElem.setAttribute("id",window.categoryDic[key]);
 								indexImage = indexImage + 1;
 							}
 						}
-						/*var div= document.getElementById('LayerListTOC'); // need real DOM Node, not jQuery wrapper
-						var hasVerticalScrollbar= div.scrollHeight>div.clientHeight;
-						if (hasVerticalScrollbar) {
-							alert("has vertical :  ");
 						}
-						else {
-							alert("has no vertical :  ");
-						}*/
-						/*var layerTitleTdNode = domConstruct.create('td', {
-					        'class': 'col col2'
-					    }, layerTrNode);
-					    divLabel = domConstruct.create('div', {
-					        'innerHTML': layerInfo.title,
-					        'class': 'div-content jimu-float-leading'
-					    }, layerTitleTdNode);*/
-				        //photo.appendChild(ulElem);
-				        //layerTitleTdNode.appendChild(ulElem);
 				        divLabel.appendChild(ulElem);
 						//newCell.appendChild(photo);
                     }
