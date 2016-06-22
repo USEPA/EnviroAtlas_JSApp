@@ -4,6 +4,7 @@
   border: 1px solid transparent;
 }
 .tab-widget-frame .title{
+  display: none;
   overflow: hidden;
 }
 .tab-widget-frame .title-label{
