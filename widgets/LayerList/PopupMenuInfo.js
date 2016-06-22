@@ -397,7 +397,6 @@ define([
     },
     _onItemChangeSymbologyClick: function(evt) {
 		
-		
         layerId = this._layerInfo.id;
         //alert("Layer "+ layerId + " is clicked, Change Symbology function is under development" );
 		
@@ -405,15 +404,18 @@ define([
 			message: layerId
         }, true);
 
-      var widgets = this.layerListWidget.appConfig.getConfigElementsByName('DynamicSymbology');
+        var widgets = this.layerListWidget.appConfig.getConfigElementsByName('DynamicSymbology');
 
-      var pm = PanelManager.getInstance();
-      pm.showPanel(widgets[0]);
-      //var widgetId = widgets[0].id;
-      //this.layerListWidget.openWidgetById(widgetId);
-      console.log(widgets);
-      console.log('Open DynamicS Symbology');
-
+        var pm = PanelManager.getInstance();
+        console.log(pm);
+        if(widgets[0].visible){
+            pm.closePanel(widgets[0].id + "_panel");
+        }
+        pm.showPanel(widgets[0]);
+        //var widgetId = widgets[0].id;
+        //this.layerListWidget.openWidgetById(widgetId);
+        //console.log(widgets);
+        console.log('Open Dynamic Symbology');
     },
     _onItemMetadataDownloadClick: function(evt) {
         layerId = this._layerInfo.id;

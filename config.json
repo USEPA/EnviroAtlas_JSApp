@@ -208,8 +208,8 @@
 		  		"config" : "widgets/Raindrop/config.json"
 			},{
                   "position" : {
-                  "left" : 645,
-                  "top" : 5,
+                  "left" : 695,
+                  "top" : -40,
                   "width" : 380,
                   "height" : 410,
                   "relativeTo" : "map"
@@ -223,7 +223,7 @@
                 "config" : "widgets/DynamicSymbology/config.json"
             }, {
 		  		"position" : {
-				  "left" : 695,
+				  "left" : 645,
 				  "top" : 5,
 				  "width" : 380,
 				  "height" : 410,
