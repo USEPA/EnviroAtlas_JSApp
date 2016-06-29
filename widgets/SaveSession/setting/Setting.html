@@ -1,0 +1,36 @@
+<div style="width:100%;height:100%;">
+    <div class="settings-section" data-dojo-attach-point="searchesSection">
+        <table class="setting-table input-table" cellspacing="0">
+            <tbody>
+                <tr>
+                    <td class="first">Use Server To Download File</td>
+                    <td class="second">
+                        <div data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="shouldUseServerToDownloadFile"></div>
+                        <div class="help-text">Check this box to have the widget send the session data to the server when saving a file. All version of IE require using the server to download a file. If checked, you must enter a Url to Save the File. </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first">Url for Save To File</td>
+                    <td class="second">
+                        <input type="text" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-attach-point="saveToFileUrl" required="true" data-dojo-props="style:{width:'100%'}" />
+                        <div class="help-text">The url that will return the file to download</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first">Filename for All Sessions</td>
+                    <td class="second" colspan="2">
+                        <input type="text" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-attach-point="fileNameForAllSessions" placeHolder="file name" data-dojo-props='style:{width:"100%"}' />
+                        <div class="help-text">The file name to use when the Save to File button is clicked</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="first">Filename for 1 Session</td>
+                    <td class="second" colspan="2">
+                        <input type="text" data-dojo-type="dijit/form/ValidationTextBox" placeHolder="file name" data-dojo-attach-point="fileNameTplForSession" data-dojo-props='style:{width:"100%"}' />
+                        <div class="help-text">The file name to use when the download action in the Save Session table is clicked. This can be a template that includes placeholders for properties from the session such as "{name}"</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
