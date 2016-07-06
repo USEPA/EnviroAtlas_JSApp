@@ -446,7 +446,7 @@ define(['dojo/_base/declare',
                 var sessionString = "",
                     fileName = "",
                     sessions = [];
-
+                return;
                 fileName = string.substitute(this.config.fileNameTplForSession, e.item);
 
                 sessions.push(e.item);
@@ -457,6 +457,7 @@ define(['dojo/_base/declare',
                 this.saveToFileContent.value = sessionString;
 
                 // trigger the post to server side
+                console.log(this.saveToFileForm);
                 this.saveToFileForm.submit();
 
                 console.log('SaveSession :: onSaveItemToFileClicked :: end');
