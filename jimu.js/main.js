@@ -58,8 +58,8 @@ define(["./ConfigManager",
     window.categoryDic["Recreation, Culture, and Aesthetics"] = "rca";
     window.categoryDic["Food, Fuel, and Materials"] ="ffm";
     window.categoryDic["Biodiversity Conservation"] = "biod";
-    window.categoryDic["People and Built Spaces"] = "pbs";
-    window.categoryDic["Supplemental"] = "sup";
+    //window.categoryDic["People and Built Spaces"] = "pbs";
+    //window.categoryDic["Supplemental"] = "sup";
     window.categoryClassSupply = "Supply";
     window.categoryClassDemand = "Demand";
     window.categoryClassDriver = "Driver";
