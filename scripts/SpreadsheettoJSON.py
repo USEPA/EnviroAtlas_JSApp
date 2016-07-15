@@ -95,11 +95,11 @@ def main(_argv):
         }
         layerJSON["popup"]["fieldInfos"][0]["fieldName"] = inputWorksheet.cell(key["fieldName"]+rowID).value
         layerJSON["popup"]["fieldInfos"][0]["label"] = name
-        stringList = ["eaID","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS"]
+        stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS"]
         for elem in stringList:
             if inputWorksheet.cell(key[elem]+rowID).value:
                 layerJSON[elem] = inputWorksheet.cell(key[elem]+rowID).value
-        arrayList = [("eaScale",","),("eaTags",","),("eaBCSDD",";")]
+        arrayList = [("eaTags",","),("eaBCSDD",";")]
         for elem,separator in arrayList:
              if inputWorksheet.cell(key[elem]+rowID).value:
                 fullString = inputWorksheet.cell(key[elem]+rowID).value
