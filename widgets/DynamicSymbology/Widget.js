@@ -20,11 +20,14 @@ define(['dojo/_base/declare',
       "dijit/ColorPalette",
 	  "dijit/form/Select",
 	  "dijit/form/NumberSpinner",
+      "dijit/form/HorizontalSlider",
+      "dijit/form/HorizontalRule",
+      "dijit/form/HorizontalRuleLabels",
 	  "dojo/parser"],
 function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, ColorInfoSlider,
 	ClassedColorSlider, smartMapping, FeatureLayer, FeatureLayerStatistics,
 	ClassBreaksRenderer, SimpleFillSymbol, esriStylesChoropleth, busyIndicator, SymbolStyler,
-	ColorPalette, select, NumberSpinner) {
+	ColorPalette, select, NumberSpinner, HorizontalSlider, HorizontalRule, HorizontalRuleLabels) {
 
   //To create a widget, you need to derive from BaseWidget.
   return declare([BaseWidget], {
@@ -106,6 +109,20 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 		  //Set layers
 		  geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
 		  featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
+
+		  //set slider onClick
+		  dynamicSymbology.oSlider = new HorizontalSlider({
+			  name: "slider",
+			  value: geoenrichedFeatureLayer.opacity,
+			  minimum: 0,
+			  maximum: 1,
+			  discreteValues: 101,
+			  intermediateChanges: false,
+			  style: "width:175px;",
+			  onChange: function(value){
+				  geoenrichedFeatureLayer.setOpacity(value);
+			  }
+		  }, "slider").startup();
 
 		  //Set Fields
 		  _ClassificationMethod = geoenrichedFeatureLayer.renderer.classificationMethod;
@@ -272,11 +289,13 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 
     onClose: function(){
 		//clean up
+		dynamicSymbology.oSlider.destroy();
 		dynamicSymbology.slider.destroy();
 		dynamicSymbology.numberClasses.destroy();
 		onClickHandle.remove();
 		dynamicSymbology.classSelect.destroy();
 		dynamicSymbology = {};
+
       	console.log('onClose');
     },
 
