@@ -110,19 +110,19 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 		  geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
 		  featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
 
-          //set slider onClick
-          dynamicSymbology.oSlider = new HorizontalSlider({
-              name: "slider",
-              value: geoenrichedFeatureLayer.opacity,
-              minimum: 0,
-              maximum: 1,
-              discreteValues: 101,
-              intermediateChanges: false,
-              style: "width:175px;",
-              onChange: function(value){
-                  geoenrichedFeatureLayer.setOpacity(value);
-              }
-          }, "slider").startup();
+		  //set slider onClick
+		  dynamicSymbology.oSlider = new HorizontalSlider({
+			  name: "slider",
+			  value: geoenrichedFeatureLayer.opacity,
+			  minimum: 0,
+			  maximum: 1,
+			  discreteValues: 101,
+			  intermediateChanges: false,
+			  style: "width:175px;",
+			  onChange: function(value){
+				  geoenrichedFeatureLayer.setOpacity(value);
+			  }
+		  }, "slider").startup();
 
 		  //Set Fields
 		  _ClassificationMethod = geoenrichedFeatureLayer.renderer.classificationMethod;
@@ -289,11 +289,13 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 
     onClose: function(){
 		//clean up
+		dynamicSymbology.oSlider.destroy();
 		dynamicSymbology.slider.destroy();
 		dynamicSymbology.numberClasses.destroy();
 		onClickHandle.remove();
 		dynamicSymbology.classSelect.destroy();
 		dynamicSymbology = {};
+
       	console.log('onClose');
     },
 
