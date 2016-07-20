@@ -113,14 +113,14 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 		  //set slider onClick
 		  dynamicSymbology.oSlider = new HorizontalSlider({
 			  name: "slider",
-			  value: geoenrichedFeatureLayer.opacity,
-			  minimum: 0,
-			  maximum: 1,
+			  value: -Math.abs(geoenrichedFeatureLayer.opacity),
+			  minimum: -1,
+			  maximum: 0,
 			  discreteValues: 101,
 			  intermediateChanges: false,
-			  style: "width:175px;",
+			  style: "width:185px; margin-left: 10px",
 			  onChange: function(value){
-				  geoenrichedFeatureLayer.setOpacity(value);
+				  geoenrichedFeatureLayer.setOpacity(Math.abs(value));
 			  }
 		  }, "slider").startup();
 
