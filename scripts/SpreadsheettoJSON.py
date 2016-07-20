@@ -9,16 +9,17 @@ Torrin Hultgren, October 2015
 import sys, json, csv, openpyxl
 
 # This is the spreadsheet that contains all the content
-inputSpreadsheet = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\EAWAB4JSON.xlsx"
+rootPath = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\\"
+inputSpreadsheet = rootpath + r"EAWAB4JSON.xlsx"
 # Just in case there are rows to ignore at the top - header is row 0
 startingRow = 2
 # This should be a csv table that maps spreadsheet column headers to json elements
 # no great reason it needs to be in a standalone file rather than embedded in this 
 # script as a dictionary.
-mapTablePath = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\jsonfieldmap.csv"  
+mapTablePath = rootpath + r"jsonfieldmap.csv"  
 # Output json file
-outputFileName = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\config.json"
-errorLogFile = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\errors.log"
+outputFileName = rootpath + r"config.json"
+errorLogFile = rootpath + r"errors.log"
 
 # Empty rows cause python problems, remove them
 def removeEmptyRows(rows):
