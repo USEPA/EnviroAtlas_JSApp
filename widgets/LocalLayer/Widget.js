@@ -163,7 +163,7 @@ define([
                 if(layer.hasOwnProperty('showLabels')){
                   lOptions.showLabels = true;
                 }
-                lLayer = new FeatureLayer(layer.url, lOptions);
+                lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
                 lLayer.minScale = 1155581.108577;
                 if(layer.name){
                   lLayer._titleForLegend = layer.name;
@@ -173,11 +173,12 @@ define([
                 lLayer.on('load',function(evt){
                   evt.layer.name = lOptions.id;
                 });
-                lLayer.id = window.layerIdPrefix + layer.eaLyrNum;
+                lLayer.id = window.layerIdPrefix + layer.eaID;
                 var bNeedToBeAdded = false;
                 var stringArray = selectedLayerNum.split(",");
                 	for (i in stringArray) {
-						if ((stringArray[i])==(layer.eaLyrNum)) {
+						if ((stringArray[i])==(layer.eaID.toString())) {
+							console.log("layer.eaID: " + layer.eaID.toString());
 						    bNeedToBeAdded = true;
 						    break;
 						}
@@ -186,9 +187,9 @@ define([
                 if (bNeedToBeAdded) {
 	                if(layer.tileLink){
 	                	//initTileLayer("http://leb.epa.gov/arcgiscache_exp/AWD_mgal/National%20Data%20-%20EnviroAtlas/_alllayers/");
-	                	initTileLayer(layer.tileLink, window.layerIdTiledPrefix + layer.eaLyrNum);
+	                	initTileLayer(layer.tileLink, window.layerIdTiledPrefix + layer.eaLyrNum);//bji need to be modified to accomodate tile.
 	                    this._viewerMap.addLayer(new myTiledMapServiceLayer());
-	                    lyrTiled = this._viewerMap.getLayer(window.layerIdTiledPrefix + layer.eaLyrNum);
+	                    lyrTiled = this._viewerMap.getLayer(window.layerIdTiledPrefix + layer.eaLyrNum);//bji need to be modified to accomodate tile.
 					    if(lyrTiled){
 				       	     lyrTiled.setOpacity(layer.opacity);
 				        } 
