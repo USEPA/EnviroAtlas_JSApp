@@ -22,6 +22,7 @@ define([
     'dijit/Dialog',
     'esri/symbols/jsonUtils',
      'jimu/WidgetManager',
+     'jimu/PanelManager',
     'dijit/layout/AccordionContainer', 
     'dijit/layout/ContentPane',
     'dijit/layout/TabContainer',
@@ -41,10 +42,11 @@ define([
     BaseWidget,
     Dialog,
     esriSymJsonUtils,
-    WidgetManager) {
+    WidgetManager,
+    PanelManager) {
     	var singleLayerToBeAddedRemoved = "";
         var   layerData = {
-            identifier: "eaLyrNum",  //This field needs to have unique values
+            identifier: "eaID",  //This field needs to have unique values
             label: "name", //Name field for display. Not pertinent to a grid but may be used elsewhere.
             items: []};
     	var layerDataStore = new dojo.data.ItemFileWriteStore({ data:layerData });
@@ -54,6 +56,9 @@ define([
 		    this.eaDescription = data.eaDescription;		    
 		    this.eaDfsLink = data.eaDfsLink;
 		    this.eaCategory = data.eaCategory;
+		    this.eaID = data.eaID;
+		    this.eaMetadata = data.eaMetadata;
+		    this.eaScale = data.eaScale;
 		}
 		var selectableLayerArray = [];
 		
@@ -110,18 +115,36 @@ define([
 	           	totalNumOfLayers = totalNumOfLayers + 1;
 	           	var currentLayerSelectable = false;
 				eaLyrNum = layerDataStore.getValue( item, 'eaLyrNum');
+				eaID = layerDataStore.getValue( item, 'eaID');
 				layerName = layerDataStore.getValue( item, 'name');
 
     			eaDescription = layerDataStore.getValue( item, 'eaDescription');
     			eaDfsLink = layerDataStore.getValue( item, 'eaDfsLink');
+    			eaScale = layerDataStore.getValue( item, 'eaScale');
+    			bSelectByScale = false;
+				switch (eaScale) {
+					case "NATIONAL":
+						var chkScale = document.getElementById("chkNational");
+						if(chkScale.checked == true){
+							bSelectByScale = true;
+						}
+						break;
+					case "COMMUNITY":
+						var chkScale = document.getElementById("chkCommunity");
+						if(chkScale.checked == true){
+							bSelectByScale = true;
+						}
+						break;
     			
+				}    			
 				eaCategory = layerDataStore.getValue( item, 'eaCategory');
 
 				eachLayerCategoryList = eaCategory.split(";");
-				
+				if (bSelectByScale) {
 				for (i in eachLayerCategoryList) {
 					
 					enumCategoryForCurrentLayer = eachLayerCategoryList[i].split("-");
+						if(window.categoryDic[enumCategoryForCurrentLayer[0].trim()] != undefined){
 					var chkCategery = document.getElementById(window.chkCategoryPrefix+window.categoryDic[enumCategoryForCurrentLayer[0].trim()]);
 					if(chkCategery.checked == true){
 						supplyDemandList = enumCategoryForCurrentLayer[1].trim().split(",");
@@ -134,15 +157,16 @@ define([
 							if (chkSupplyDemand.checked == true) {
 								
 								currentLayerSelectable = true;				
-												
+									}
 							}
 						}
 					}
 				}   //end of for (i in eachLayerCategoryList)		
+				}// end of if (bSelectByScale)
 				
 				if (currentLayerSelectable) {//add the current item as selectable layers
-					if ((window.allLayerNumber.indexOf(eaLyrNum)) == -1) {                        	
-                    	window.allLayerNumber.push(eaLyrNum);
+					if ((window.allLayerNumber.indexOf(eaID)) == -1) {                        	
+                    	window.allLayerNumber.push(eaID);
                     }
 					numOfSelectableLayers = numOfSelectableLayers + 1;
 			       	var newRow   = tableRef.insertRow(tableRef.rows.length);
@@ -151,7 +175,7 @@ define([
 					var checkbox = document.createElement('input');
 					checkbox.type = "checkbox";
 			
-			        chkboxId = "ck" + eaLyrNum;
+			        chkboxId = "ck" + eaID;
 					checkbox.name = chkboxId;
 					checkbox.value = 1;
 					checkbox.id = chkboxId;
@@ -204,7 +228,7 @@ define([
 					var newButtonInfoCell  = newRow.insertCell(2);
 					var buttonInfo = document.createElement('input');
 					buttonInfo.type = "button";
-			        var buttonInfoId = "but" + eaLyrNum;
+			        var buttonInfoId = "but" + eaID;
 					buttonInfo.name = buttonInfoId;
 					buttonInfo.id = buttonInfoId;
 					buttonInfo.value = "i";
@@ -357,7 +381,74 @@ define([
 	    
 
     },
+	displayGeographySelection: function() {
+        var tableOfRelationship = document.getElementById('geographyTable');
+	    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];    	
+	    indexImage = 0;
+		//add row of National geography
+	    var newRow   = tableRef.insertRow(tableRef.rows.length);	    
+       	newRow.style.height = "20px";
+       	var newCheckboxCell  = newRow.insertCell(0);
+       	var checkbox = document.createElement('input');
+		checkbox.type = "checkbox";
+        chkboxId = "chkNational";
+		checkbox.name = chkboxId;
+		checkbox.id = chkboxId;
+		checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+        newCheckboxCell.appendChild(checkbox);    
+        var label = document.createElement('label');
+        label.setAttribute("for",chkboxId);
+		label.innerHTML = "";
+		newCheckboxCell.appendChild(label);
+		checkbox.addEventListener('click', function() {
+			_updateSelectableLayer();
+	    });				
+		/// add National title:
+       	var newTitleCell  = newRow.insertCell(1);
+		var title = document.createElement('label');
+		title.innerHTML = "National";    
+		newTitleCell.appendChild(title);        
 
+		//add row of Community geography
+	    var newRow   = tableRef.insertRow(tableRef.rows.length);	    
+       	newRow.style.height = "20px";
+       	var newCheckboxCell  = newRow.insertCell(0);
+       	var checkbox = document.createElement('input');
+		checkbox.type = "checkbox";
+        chkboxId = "chkCommunity";
+		checkbox.name = chkboxId;
+		checkbox.checked = true;
+		checkbox.id = chkboxId;
+		checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+        newCheckboxCell.appendChild(checkbox);    
+        var label = document.createElement('label');
+        label.setAttribute("for",chkboxId);
+		label.innerHTML = "";
+		newCheckboxCell.appendChild(label);
+		checkbox.addEventListener('click', function() {
+			_updateSelectableLayer();
+	    });				
+		/// add Community title:
+       	var newTitleCell  = newRow.insertCell(1);
+		var title = document.createElement('label');
+		title.innerHTML = "Community";    
+		newTitleCell.appendChild(title); 
+		var newButtonInfoCell  = newRow.insertCell(2);
+		var buttonInfo = document.createElement('input');
+		buttonInfo.type = "button";
+        var buttonInfoId = "butSelectOneCommunity";
+		buttonInfo.name = buttonInfoId;
+		buttonInfo.id = buttonInfoId;
+		buttonInfo.value = "+/-";
+		buttonInfo.style.height = "16px";
+		buttonInfo.style.width = "28px";
+		buttonInfo.style.lineHeight = "3px";//to set the text vertically center
+		newButtonInfoCell.style.verticalAlign = "center";//this will put checkbox on first line
+        newButtonInfoCell.appendChild(buttonInfo);  
+        document.getElementById(buttonInfoId).onclick = function(e) {
+        	alert("select one community");
+				    };   		  		
+	},
       startup: function() {
 
         this.inherited(arguments);
@@ -368,14 +459,20 @@ define([
             var localLayerConfig = JSON.parse(response);
             var arrLayers = localLayerConfig.layers.layer;
             console.log("arrLayers.length:" + arrLayers.length);
-            //for (index = 0, len = arrLayers.length; index < len; ++index) {
-            for (index = 0, len = 100; index < len; ++index) {
+	            for (index = 0, len = arrLayers.length; index < len; ++index) {
+	            //for (index = 0, len = 409; index < len; ++index) {
             	//console.log("index:" + index);
                 layer = arrLayers[index];                          
                 var indexCheckbox = 0;
-                if(layer.hasOwnProperty('name')){
+	                    if(layer.hasOwnProperty('eaID')) {
+	                    	eaID = layer.eaID.toString();
+	                    	if (eaID.trim() != "") {
                     if(layer.hasOwnProperty('eaLyrNum')){
                         eaLyrNum = layer.eaLyrNum.toString();
+		                        }
+		                        else {
+		                        	eaLyrNum = "";
+		                        }
 					    var eaCategoryWhole =  "";
 					    if(layer.hasOwnProperty('eaBCSDD')){
 					    	for (categoryIndex = 0, lenCategory = layer.eaBCSDD.length; categoryIndex < lenCategory; ++categoryIndex) {
@@ -384,22 +481,21 @@ define([
 					    }
 					    eaCategoryWhole = eaCategoryWhole.substring(0, eaCategoryWhole.length - 1);
 					    
-					    var layerItem = {eaLyrNum: layer.eaLyrNum.toString(), name: layer.name, eaDescription: layer.eaDescription, eaDfsLink: layer.eaDfsLink, eaCategory: eaCategoryWhole};
+							    var layerItem = {eaLyrNum: eaLyrNum, name: layer.name, eaDescription: layer.eaDescription, eaDfsLink: layer.eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID, eaMetadata: layer.eaMetadata, eaScale: layer.eaScale};
 
 
 						layerDataStore.newItem(layerItem);
 					    
-					    console.log("index:" + index + " is added to layerDataStore"); 
-                    }                	
-
+							    //console.log("index:" + index + " is added to layerDataStore"); 
+						    }// end of if (eaID.trim() != "")
+	                    }// end of if(layer.hasOwnProperty('eaID'))                	
 
                 }
 
-            }
 	        });// end of loadJSON(function(response)
 
 		this.displayCategorySelection();
-		
+			this.displayGeographySelection();
     },               
                     
 
