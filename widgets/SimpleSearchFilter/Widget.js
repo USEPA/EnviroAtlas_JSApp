@@ -499,10 +499,7 @@ define([
 		newButtonInfoCell.style.verticalAlign = "center";//this will put checkbox on first line
         newButtonInfoCell.appendChild(buttonInfo);  
         document.getElementById(buttonInfoId).onclick = function(e) {
-        	alert("select one community");
-
    			document.getElementById('butOpenSelectCommunityWidget').click();
-			
 	    };   		  		
 
 	},
