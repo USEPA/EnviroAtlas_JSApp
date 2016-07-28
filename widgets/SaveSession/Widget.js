@@ -441,12 +441,11 @@ define(['dojo/_base/declare',
              * save the single item to file
              * @param {Object} e the event args 
              */
-            onSaveItemToFileClicked: function (e) {
-
+            onSaveItemToFileClicked: function (e){
                 var sessionString = "",
                     fileName = "",
                     sessions = [];
-                return;
+
                 fileName = string.substitute(this.config.fileNameTplForSession, e.item);
 
                 sessions.push(e.item);
@@ -455,10 +454,14 @@ define(['dojo/_base/declare',
                 // update form values
                 this.saveToFileName.value = fileName;
                 this.saveToFileContent.value = sessionString;
+                console.log(e);
+                //DY Added
+                // domAttr.set(this.element, "href", "data:application/octet-stream," + sessionString);
+                // domAttr.set(this.element, "download", this.config.fileNameForAllSessions);
 
                 // trigger the post to server side
                 console.log(this.saveToFileForm);
-                this.saveToFileForm.submit();
+                //this.saveToFileForm.submit();
 
                 console.log('SaveSession :: onSaveItemToFileClicked :: end');
             },
