@@ -441,8 +441,7 @@ define(['dojo/_base/declare',
              * save the single item to file
              * @param {Object} e the event args 
              */
-            onSaveItemToFileClicked: function (e) {
-
+            onSaveItemToFileClicked: function (e){
                 var sessionString = "",
                     fileName = "",
                     sessions = [];
@@ -455,9 +454,15 @@ define(['dojo/_base/declare',
                 // update form values
                 this.saveToFileName.value = fileName;
                 this.saveToFileContent.value = sessionString;
+                
+                //Innovate Add - send data to url in hidden element and trigger click event
+                domAttr.set(this.saveSingleSession, "href", "data:application/octet-stream," + sessionString);
+                domAttr.set(this.saveSingleSession, "download", fileName);
+
+                this.saveSingleSession.click();
 
                 // trigger the post to server side
-                this.saveToFileForm.submit();
+                //this.saveToFileForm.submit();
 
                 console.log('SaveSession :: onSaveItemToFileClicked :: end');
             },
