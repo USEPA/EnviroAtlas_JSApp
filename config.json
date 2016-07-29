@@ -223,8 +223,8 @@
                 "config" : "widgets/DynamicSymbology/config.json"
             }, {
 		  		"position" : {
-				  "left" : 645,
-				  "top" : 5,
+				  "right" : 5,
+				  "bottom" : 45,
 				  "width" : 380,
 				  "height" : 410,
 				  "relativeTo" : "map"
@@ -235,10 +235,11 @@
 		  		"label" : "Legend",
 		  		"version" : "1.3",
 		  		"uri" : "widgets/Legend/Widget",
-		  		"config" : "widgets/Legend/config.json"
+		  		"config" : "widgets/Legend/config.json",
+				"openAtStart" : true
 			},{
 				"position" : {
-				"left" : 695,
+				"left" : 645,
 				"top" : 5,
 				"width" : 380,
 				"height" : 410,
@@ -252,7 +253,7 @@
 				"config" : "widgets/eDraw/config.json"
 			},{
 				"position" : {
-					"left" : 745,
+					"left" : 695,
 					"top" : 5,
 					"width" : 380,
 					"height" : 410,
@@ -265,6 +266,21 @@
 				"version" : "1.3",
 				"uri" : "widgets/SaveSession/Widget",
 				"config" : "widgets/SaveSession/config.json"
+			},{
+				"position" : {
+					"left" : 745,
+					"top" : 5,
+					"width" : 380,
+					"height" : 410,
+					"relativeTo" : "map"
+				},
+				"placeholderIndex" : 1,
+				"id" : "widgets_SelectCommunity_29",
+				"name" : "SelectCommunity",
+				"label" : "SelectCommunity",
+				"version" : "1.3",
+				"uri" : "widgets/SelectCommunity/Widget",
+				"config" : "widgets/SelectCommunity/config.json"
 			},{
 				"uri" : "widgets/OverviewMap/Widget",
 				"position" : {

@@ -45,6 +45,7 @@ define([
     WidgetManager,
     PanelManager) {
     	var singleLayerToBeAddedRemoved = "";
+    	var communitySelected = "";
         var   layerData = {
             identifier: "eaID",  //This field needs to have unique values
             label: "name", //Name field for display. Not pertinent to a grid but may be used elsewhere.
@@ -64,6 +65,7 @@ define([
 		
 		var hashFactsheetLink = {};
 		var hashLayerNameLink = {};
+
 		var objectPropInArray = function(list, prop, val) {
 		  if (list.length > 0 ) {
 		    for (i in list) {
@@ -92,8 +94,22 @@ define([
 	        };
 	        xobj.send(null);  
 	    };    	
-	    var _onSelectAllLayers = function() {
+		  var loadCommunityJSON = function(callback){   
+	
+	        var xobj = new XMLHttpRequest();
+	
+	        xobj.overrideMimeType("application/json");
 
+        xobj.open('GET', 'widgets/LocalLayer/communitymetadata.json', true); 
+
+        xobj.onreadystatechange = function () {
+              if (xobj.readyState == 4 && xobj.status == "200") {
+	                callback(xobj.responseText);
+	              }
+	        };
+	        xobj.send(null);  
+	    }; 	    
+	    var _onSelectAllLayers = function() {
 			for (var key in chkIdDictionary) {
 			  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
 	        	document.getElementById(key).checked = true;
@@ -121,6 +137,7 @@ define([
     			eaDescription = layerDataStore.getValue( item, 'eaDescription');
     			eaDfsLink = layerDataStore.getValue( item, 'eaDfsLink');
     			eaScale = layerDataStore.getValue( item, 'eaScale');
+    			eaMetadata = layerDataStore.getValue( item, 'eaMetadata');
     			bSelectByScale = false;
 				switch (eaScale) {
 					case "NATIONAL":
@@ -130,9 +147,26 @@ define([
 						}
 						break;
 					case "COMMUNITY":
+						
 						var chkScale = document.getElementById("chkCommunity");
 						if(chkScale.checked == true){
+
+							if ((communitySelected == "") || (communitySelected == window.strAllCommunity)){
 							bSelectByScale = true;
+						}
+							else{
+								//alert("eaMetadata:" + eaMetadata);
+								if (eaMetadata != "") {
+									
+									if (window.communityMetadataDic.hasOwnProperty(eaMetadata)) {
+										//alert("eaMetadata:" + eaMetadata);
+										communityInfo = window.communityMetadataDic[eaMetadata];
+										if (communityInfo.hasOwnProperty(communitySelected)) {
+											bSelectByScale = true;
+										}
+									}
+								}
+							}
 						}
 						break;
     			
@@ -145,6 +179,7 @@ define([
 					
 					enumCategoryForCurrentLayer = eachLayerCategoryList[i].split("-");
 						if(window.categoryDic[enumCategoryForCurrentLayer[0].trim()] != undefined){
+						
 					var chkCategery = document.getElementById(window.chkCategoryPrefix+window.categoryDic[enumCategoryForCurrentLayer[0].trim()]);
 					if(chkCategery.checked == true){
 						supplyDemandList = enumCategoryForCurrentLayer[1].trim().split(",");
@@ -153,14 +188,14 @@ define([
 						for (j in supplyDemandList) {
 
 							var chkSupplyDemand = document.getElementById(supplyDemandList[j].trim().replace(" ",""));
-						
+									if 	(chkSupplyDemand != null)	{											
 							if (chkSupplyDemand.checked == true) {
-								
 								currentLayerSelectable = true;				
 									}
 							}
 						}
 					}
+						}
 				}   //end of for (i in eachLayerCategoryList)		
 				}// end of if (bSelectByScale)
 				
@@ -186,7 +221,6 @@ define([
 			        var newCell  = newRow.insertCell(1);
 			        newCell.style.verticalAlign = "top";//this will put layer name on first line
 			        
-			
 					var newTitle  = document.createElement('div');
 			        newTitle.innerHTML = layerName;
 			        newTitle.title = eaDescription;
@@ -216,12 +250,12 @@ define([
 							else {
 								liElem.setAttribute("id",window.categoryDic[key] + "_bw");
 							}
-						
 						indexImage = indexImage + 1;
 					}
 			        photo.appendChild(ulElem);
 					newTitle.appendChild(photo);
 		        	}
+
 					// end of adding the category icons	
 					newCell.appendChild(newTitle);
 					
@@ -255,14 +289,15 @@ define([
 				        }		      
 				    };    	
 				}//end of if (currentLayerSelectable)
-
         });	
 	       
  		dojo.byId("numOfLayers").value = " " + String(numOfSelectableLayers) + " of " + String(totalNumOfLayers) + " Maps";
     	dojo.byId("selectAllLayers").checked = false;
 		for (var key in chkIdDictionary) {
+			
 		  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
 		  	document.getElementById(key).addEventListener('click', function() {
+		  		
 				if (this.checked){
 					singleLayerToBeAddedRemoved = "a" + "," + this.getAttribute("id").replace("ck", "");
 					document.getElementById('butAddSingleLayer').click();
@@ -275,6 +310,7 @@ define([
 		  }
 		}    	
 	};	   
+	
 	var	_updateSelectableLayer = function(){	
 		layerDataStore.fetch({
 				sort: {attribute: 'eaDfsLink', descending: false},
@@ -283,17 +319,22 @@ define([
 	};
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
 
-      name: 'eBasemapGallery',
-      baseClass: 'jimu-widget-ebasemapgallery',
+        //name: 'eBasemapGallery',
+        baseClass: 'jimu-widget-simplesearchfilter',
+		onReceiveData: function(name, widgetId, data, historyData) {
+			if (name == 'SelectCommunity'){
+				communitySelected = data.message;
+				_updateSelectableLayer();
+			}		  
+		},
 
     displayCategorySelection: function() {
-		
 		
         var tableOfRelationship = document.getElementById('categoryTable');
 	    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];    	
 	    indexImage = 0;
 	    for (var key in window.categoryDic) {
-	    	console.log("key:"+ key);
+
 	    	    var newRow   = tableRef.insertRow(tableRef.rows.length);
 	    	    
                	newRow.style.height = "20px";
@@ -385,6 +426,7 @@ define([
         var tableOfRelationship = document.getElementById('geographyTable');
 	    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];    	
 	    indexImage = 0;
+	    
 		//add row of National geography
 	    var newRow   = tableRef.insertRow(tableRef.rows.length);	    
        	newRow.style.height = "20px";
@@ -400,6 +442,7 @@ define([
         label.setAttribute("for",chkboxId);
 		label.innerHTML = "";
 		newCheckboxCell.appendChild(label);
+		
 		checkbox.addEventListener('click', function() {
 			_updateSelectableLayer();
 	    });				
@@ -425,14 +468,23 @@ define([
         label.setAttribute("for",chkboxId);
 		label.innerHTML = "";
 		newCheckboxCell.appendChild(label);
+		
 		checkbox.addEventListener('click', function() {
 			_updateSelectableLayer();
+        	if (!this.checked){
+				var btn = document.getElementById("butSelectOneCommunity"); 
+				btn.disabled = true;	
+        	} else {
+				var btn = document.getElementById("butSelectOneCommunity"); 
+				btn.disabled = false;        		
+        	}		
 	    });				
 		/// add Community title:
        	var newTitleCell  = newRow.insertCell(1);
 		var title = document.createElement('label');
 		title.innerHTML = "Community";    
 		newTitleCell.appendChild(title); 
+		
 		var newButtonInfoCell  = newRow.insertCell(2);
 		var buttonInfo = document.createElement('input');
 		buttonInfo.type = "button";
@@ -443,18 +495,19 @@ define([
 		buttonInfo.style.height = "16px";
 		buttonInfo.style.width = "28px";
 		buttonInfo.style.lineHeight = "3px";//to set the text vertically center
+		
 		newButtonInfoCell.style.verticalAlign = "center";//this will put checkbox on first line
         newButtonInfoCell.appendChild(buttonInfo);  
         document.getElementById(buttonInfoId).onclick = function(e) {
-        	alert("select one community");
+   			document.getElementById('butOpenSelectCommunityWidget').click();
 				    };   		  		
+
 	},
       startup: function() {
 
         this.inherited(arguments);
+	      	this.fetchDataByName('SelectCommunity');
 
-               
-                     
         loadJSON(function(response) {
             var localLayerConfig = JSON.parse(response);
             var arrLayers = localLayerConfig.layers.layer;
@@ -464,15 +517,51 @@ define([
             	//console.log("index:" + index);
                 layer = arrLayers[index];                          
                 var indexCheckbox = 0;
+
 	                    if(layer.hasOwnProperty('eaID')) {
 	                    	eaID = layer.eaID.toString();
 	                    	if (eaID.trim() != "") {
+		                    	
                     if(layer.hasOwnProperty('eaLyrNum')){
                         eaLyrNum = layer.eaLyrNum.toString();
 		                        }
 		                        else {
 		                        	eaLyrNum = "";
 		                        }
+		                        
+		                    	if(layer.hasOwnProperty('name') && (layer.name != null)){
+		                    		//if (layer.name == null) {
+		                    		//	console.log("eaID:" + eaID + " with layer name null");
+		                    		//}
+		                        	name = layer.name.toString();
+		                        }
+		                        else {
+		                        	name = "";
+		                        }
+		                    	if(layer.hasOwnProperty('eaDescription')){
+		                        	eaDescription = layer.eaDescription.toString();
+		                        }
+		                        else {
+		                        	eaDescription = "";
+		                        }
+		                        if(layer.hasOwnProperty('eaDfsLink')){
+		                        	eaDfsLink = layer.eaDfsLink.toString();
+		                        }
+		                        else {
+		                        	eaDfsLink = "";
+		                        }
+		                        if(layer.hasOwnProperty('eaMetadata')){
+		                        	eaMetadata = layer.eaMetadata.toString();
+		                        }
+		                        else {
+		                        	eaMetadata = "";
+		                        }
+		                        if(layer.hasOwnProperty('eaScale')){
+		                        	eaScale = layer.eaScale.toString();
+		                        }
+		                        else {
+		                        	eaScale = "";
+		                        }		                        
 					    var eaCategoryWhole =  "";
 					    if(layer.hasOwnProperty('eaBCSDD')){
 					    	for (categoryIndex = 0, lenCategory = layer.eaBCSDD.length; categoryIndex < lenCategory; ++categoryIndex) {
@@ -480,25 +569,36 @@ define([
 					    	}
 					    }
 					    eaCategoryWhole = eaCategoryWhole.substring(0, eaCategoryWhole.length - 1);
+							    //console.log("eaCategoryWhole: "+ eaCategoryWhole);
 					    
-							    var layerItem = {eaLyrNum: eaLyrNum, name: layer.name, eaDescription: layer.eaDescription, eaDfsLink: layer.eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID, eaMetadata: layer.eaMetadata, eaScale: layer.eaScale};
-
+							    var layerItem = {eaLyrNum: eaLyrNum, name: name, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID, eaMetadata: eaMetadata, eaScale: eaScale};
 
 						layerDataStore.newItem(layerItem);
 					    
-							    //console.log("index:" + index + " is added to layerDataStore"); 
 						    }// end of if (eaID.trim() != "")
 	                    }// end of if(layer.hasOwnProperty('eaID'))                	
 
                 }
-
 	        });// end of loadJSON(function(response)
+	        loadCommunityJSON(function(response){
+	        	var community = JSON.parse(response);
 
+	            for (index = 0, len = community.length; index < len; ++index) {
+	            	currentMetadataCommunityIndex = community[index];
+	            	singleCommunityMetadataDic = {};
+	            	for (var key in window.communityDic) {
+	            		if(currentMetadataCommunityIndex.hasOwnProperty(key)) {
+	            			singleCommunityMetadataDic[key] = currentMetadataCommunityIndex[key];
+	            		}
+	            	}
+
+	            	window.communityMetadataDic[currentMetadataCommunityIndex.MetaID_Community] = singleCommunityMetadataDic;
+	            }
+	        }); // end of loadCommunityJSON(function(response)
 		this.displayCategorySelection();
 			this.displayGeographySelection();
     },               
                     
-
 	    _onSingleLayerClick: function() {
 		    this.publishData({
 		        message: singleLayerToBeAddedRemoved
@@ -506,9 +606,16 @@ define([
 		},
 	    _onViewActiveLayersClick: function() {
 
+			//var sideBar =  wm.getWidgetById('themes_TabTheme_widgets_SidebarController_Widget_20');
+			//sideBar.selectTab(0);				
+
+			this.openWidgetById('widgets_SelectCommunity_29');
 			var wm = WidgetManager.getInstance();
-			var sideBar =  wm.getWidgetById('themes_TabTheme_widgets_SidebarController_Widget_20');
-			sideBar.selectTab(0);	
+			widget = wm.getWidgetById('widgets_SelectCommunity_29');
+			if (widget != undefined){
+				var pm = PanelManager.getInstance();   
+				pm.showPanel(widget);  
+			}    
 	    },	
     _onAddLayersClick: function() {
 
@@ -516,7 +623,6 @@ define([
 		for (var key in chkIdDictionary) {
 		  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
 		  	if (document.getElementById(key).checked) {
-		  		//alert(key + "is clicked");
             	layersToBeAdded = layersToBeAdded + "," + key.replace("ck", "");
         	}
 		  }
@@ -526,6 +632,7 @@ define([
 	    });
 	    this.i ++;
     },
+	    
     _onRemoveLayersClick: function() {
         layersToBeRemoved = "r";
 		for (var key in chkIdDictionary) {
@@ -540,9 +647,6 @@ define([
 	    });
 	    this.i ++;
     },
-
-
-
     });
 
     return clazz;
