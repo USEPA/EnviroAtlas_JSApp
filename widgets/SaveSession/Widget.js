@@ -454,13 +454,14 @@ define(['dojo/_base/declare',
                 // update form values
                 this.saveToFileName.value = fileName;
                 this.saveToFileContent.value = sessionString;
-                console.log(e);
-                //DY Added
-                // domAttr.set(this.element, "href", "data:application/octet-stream," + sessionString);
-                // domAttr.set(this.element, "download", this.config.fileNameForAllSessions);
+                
+                //Innovate Add - send data to url in hidden element and trigger click event
+                domAttr.set(this.saveSingleSession, "href", "data:application/octet-stream," + sessionString);
+                domAttr.set(this.saveSingleSession, "download", fileName);
+
+                this.saveSingleSession.click();
 
                 // trigger the post to server side
-                console.log(this.saveToFileForm);
                 //this.saveToFileForm.submit();
 
                 console.log('SaveSession :: onSaveItemToFileClicked :: end');
