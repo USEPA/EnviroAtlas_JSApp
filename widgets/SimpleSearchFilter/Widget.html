@@ -1,10 +1,10 @@
-<div>
+<div style="height:100%;overflow:hidden;">
 
-	<div>
-			<div class="FAQ">
+	<div class="FAQ" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Select by Benefit Categories / Geographies', open: false">
+			<!--<div class="FAQ">
 			    <a href="#hide1" class="hide" id="hide1">+</a>
 			    <a href="#show1" class="show" id="show1">-</a>
-			    <div class="question"> Select by Benefit Categories / Geographies</div>
+			    <div class="question"> Select by Benefit Categories / Geographies</div>-->
 			    <div class="list">
 			    	<div > Benefit Category </div>
 					<table id="categoryTable" style="margin:0px 0px 10px 0px">
@@ -18,14 +18,11 @@
 					<table id="geographyTable" style="margin:0px 0px 10px 0px">
 							    <tbody>
 							    	<tr>	
-					    							    		
 							    	</tr>
-					    	
 							    </tbody>
-						    
-					</table>   					     
+					</table>        
 				</div>
-			</div>
+			<!--</div>-->
 
 
 	</div>
@@ -80,7 +77,7 @@
 				</a></li>								
 			</ul>
 		</div>
-		<div id = "tableSelectableLayersArea" style="overflow-y: auto;">
+		<div id = "tableSelectableLayersArea" style="overflow-y: auto;height:100%;">
 			<table id="tableSelectableLayers"  >
 			    <tbody>
 			    	<tr>
@@ -89,12 +86,12 @@
 			    </tbody>
 			</table>	
 		</div>
-			<br>
+		<!-- 	<br>
 			<div>
-			    <input id = "butOpenSelectCommunityWidget" type="button" value="View Active Layers" style="display:none" data-dojo-attach-event="onclick:_onViewActiveLayersClick" >
+			    <!--<input type="button" value="View Active Layers" data-dojo-attach-event="onclick:_onViewActiveLayersClick" >
 			    <input id = "butAddSingleLayer" type="button" value="butAddSingleLayer" style="display:none"  data-dojo-attach-event="onclick:_onSingleLayerClick"> 
 			    <input id = "butAddAllLayers" type="button" value="butAddAllLayers" style="display:none"  data-dojo-attach-event="onclick:_onAddLayersClick"> 
-				<!--input id = "butDelSingleLayer" type="button" value="butDelSingleLayer" style="display:hidden"  data-dojo-attach-event="onclick:_onDelSingleLayerClick"--> 
-			</div>
+				<!--input id = "butDelSingleLayer" type="button" value="butDelSingleLayer" style="display:hidden"  data-dojo-attach-event="onclick:_onDelSingleLayerClick">
+			</div> -->
 		
 </div>

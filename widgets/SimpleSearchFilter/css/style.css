@@ -247,10 +247,10 @@ input.cmn-toggle-inLineBlock-round-flat:checked + label:after {
     vertical-align: bottom; 
 }
 .list {
-    display:none; 
+    /*display:none; */
     height:auto;
     margin:0;
-    float: left;
+    /*float: left;*/
 }
 .show {
     display: none; 
