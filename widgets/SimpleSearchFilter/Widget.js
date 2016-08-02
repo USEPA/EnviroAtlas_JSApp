@@ -128,7 +128,7 @@ define([
             var totalNumOfLayers = 0;
             
 	    	dojo.forEach(items, function(item) {
-	           	totalNumOfLayers = totalNumOfLayers + 1;
+	           	
 	           	var currentLayerSelectable = false;
 				eaLyrNum = layerDataStore.getValue( item, 'eaLyrNum');
 				eaID = layerDataStore.getValue( item, 'eaID');
@@ -141,6 +141,7 @@ define([
     			bSelectByScale = false;
 				switch (eaScale) {
 					case "NATIONAL":
+						totalNumOfLayers = totalNumOfLayers + 1;
 						var chkScale = document.getElementById("chkNational");
 						if(chkScale.checked == true){
 							bSelectByScale = true;
@@ -149,6 +150,7 @@ define([
 					case "COMMUNITY":
 						
 						var chkScale = document.getElementById("chkCommunity");
+						totalNumOfLayers = totalNumOfLayers + 1;
 						if(chkScale.checked == true){
 
 							if ((communitySelected == "") || (communitySelected == window.strAllCommunity)){
