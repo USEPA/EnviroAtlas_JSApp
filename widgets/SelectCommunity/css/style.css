@@ -1,12 +1,15 @@
-#communityTable table{
+.jimu-widget-demo div:first-child{
+  color: red;
+}
+/*table{
   border-collapse: collapse;
 }
 
-#communityTable td{
+td{
   padding-top: 10px;
   padding-left: 10px;
   font-size: small;
-}
+}*/
 
 #infobtn{
   margin-left: 5px;

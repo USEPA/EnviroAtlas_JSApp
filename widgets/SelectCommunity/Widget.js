@@ -13,7 +13,8 @@ define(['dojo/_base/declare',
 		"dojo/dom-style",
 		"dojo/request/xhr",
 		"dojo/dom",
-		"dojo/dom-class"
+		"dojo/dom-class",
+		'esri/geometry/Extent'
 		],
 function(declare, 
 		BaseWidget, 
@@ -21,11 +22,33 @@ function(declare,
 		domStyle,
 		 xhr,
 		dom,
-		 domClass
+		 domClass,
+		 Extent
 	    ) {
 
   var communitySelected = "";
-  var prefixRadioCommunity = "radio_"
+  var prefixRadioCommunity = "radio_";
+  var communityExtentDic = {};
+  var minXCombinedExtent = 9999999999999;
+  var minYCombinedExtent = 9999999999999;
+  var maxXCombinedExtent = -9999999999999;
+  var maxYCombinedExtent = -9999999999999;  
+  var spatialReference;
+  var loadBookmarkExtent = function(callback){   
+
+	    var xobj = new XMLHttpRequest();
+	
+	    xobj.overrideMimeType("application/json");
+	
+	    xobj.open('GET', 'configs/eBookmark/config_Enhanced Bookmark.json', true); 
+	
+	    xobj.onreadystatechange = function () {
+	      if (xobj.readyState == 4 && xobj.status == "200") {
+	            callback(xobj.responseText);
+	          }
+	    };
+	    xobj.send(null);  
+ }; 	
   //To create a widget, you need to derive from BaseWidget.
   return declare([BaseWidget], {
     // DemoWidget code goes here 
@@ -43,8 +66,36 @@ function(declare,
 
     startup: function() {
       this.inherited(arguments);
-      //this.mapIdNode.innerHTML = 'map id:' + this.map.id;
 	  this.displayCommunitySelection();
+	  loadBookmarkExtent(function(response){
+	    	var bookmarkClassified = JSON.parse(response);
+	
+	        for (index = 0, len = bookmarkClassified.bookmarks.length; index < len; ++index) {
+	        	currentBookmarkClass = bookmarkClassified.bookmarks[index];
+	        	if (currentBookmarkClass.name == "Community") {
+	        		bookmarkCommunity = currentBookmarkClass.items;
+	        		for (indexCommunity = 0, lenCommunity = bookmarkCommunity.length; indexCommunity < lenCommunity; ++indexCommunity) {
+	        			var currentExtent = bookmarkCommunity[indexCommunity].extent;
+	        			communityExtentDic[bookmarkCommunity[indexCommunity].name] = currentExtent;
+	        			spatialReference= currentExtent.spatialReference;
+	        			if (minXCombinedExtent > currentExtent.xmin) {
+	        				minXCombinedExtent = currentExtent.xmin;	        				
+	        			}
+	        			if (minYCombinedExtent > currentExtent.ymin) {
+	        				minYCombinedExtent = currentExtent.ymin;	        				
+	        			}	
+	        			if (maxXCombinedExtent < currentExtent.xmax) {
+	        				maxXCombinedExtent = currentExtent.xmax;	        				
+	        			}
+	        			if (maxYCombinedExtent < currentExtent.ymax) {
+	        				maxYCombinedExtent = currentExtent.ymax;	        				
+	        			}	        			
+	        			        			
+	        		}
+	        	}
+	        }
+	   }); // end of loadCommunityJSON(function(response)
+  
       console.log('startup');
     },
     addRowButton: function(radioId, radioName, labelForRadio) {
@@ -80,6 +131,21 @@ function(declare,
 	        message: communitySelected
 	    });
 	    this.i ++;
+	    var nExtent;
+	    if (communitySelected != window.strAllCommunity) {
+	    	commnunityWholeName = window.communityDic[communitySelected];
+	    	extentForCommunity = communityExtentDic[window.communityDic[communitySelected]];
+	    	nExtent = Extent(extentForCommunity);
+
+	    } else {
+	    	nExtent = Extent({
+			    "xmin":minXCombinedExtent,"ymin":minYCombinedExtent,"xmax":maxXCombinedExtent,"ymax":maxYCombinedExtent,
+			    "spatialReference":spatialReference
+			});
+
+	    }
+	    this.map.setExtent(nExtent);	    
+
     },    
     displayCommunitySelection: function() {
     	this.addRowButton(prefixRadioCommunity + window.strAllCommunity, "community", "Combined Communities");

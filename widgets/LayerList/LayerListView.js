@@ -195,29 +195,30 @@ define([
 						var liHomeElem = null;
 						var aHomeElem = null;
 						indexImage = 0;
+						
 						var keys = Object.keys(window.categoryDic);
 						if(keys.length !== undefined){
 							for (var i = 0; i < keys.length; i++) {	
 								key = keys[i];
 						
-						    var eaCategoryWhole =  "";
-						    if(layer.hasOwnProperty('eaBCSDD')){
-						    	for (categoryIndex = 0, lenCategory = layer.eaBCSDD.length; categoryIndex < lenCategory; ++categoryIndex) {
-						    		eaCategoryWhole = eaCategoryWhole + layer.eaBCSDD[categoryIndex] + ";";
-						    	}
-						    }
-						    eaCategoryWhole = eaCategoryWhole.substring(0, eaCategoryWhole.length - 1);
-							if (eaCategoryWhole.indexOf(key) !=-1) {
+							    var eaCategoryWhole =  "";
+							    if(layer.hasOwnProperty('eaBCSDD')){
+							    	for (categoryIndex = 0, lenCategory = layer.eaBCSDD.length; categoryIndex < lenCategory; ++categoryIndex) {
+							    		eaCategoryWhole = eaCategoryWhole + layer.eaBCSDD[categoryIndex] + ";";
+							    	}
+							    }
+							    eaCategoryWhole = eaCategoryWhole.substring(0, eaCategoryWhole.length - 1);
+								if (eaCategoryWhole.indexOf(key) !=-1) {
 									liElem = document.createElement("li");
 									liElem.style.left = (indexImage*20).toString() + "px";
 									aElem = document.createElement("a");
 									aElem.title  = key;
 									liElem.appendChild(aElem);
 									ulElem.appendChild(liElem);										
-								liElem.setAttribute("id",window.categoryDic[key]);
-								indexImage = indexImage + 1;
+									liElem.setAttribute("id",window.categoryDic[key]);
+									indexImage = indexImage + 1;
+								}
 							}
-						}
 						}
 				        divLabel.appendChild(ulElem);
 						//newCell.appendChild(photo);

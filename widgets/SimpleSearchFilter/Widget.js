@@ -31,8 +31,8 @@ define([
     'dojo/data/ItemFileWriteStore',
     'dijit/form/DropDownButton',
     'dijit/TooltipDialog',
-    'dijit/form/TextBox'
-    
+    'dijit/form/TextBox',
+    'dijit/TitlePane'
     
   ],
   function(
@@ -128,7 +128,7 @@ define([
             var totalNumOfLayers = 0;
             
 	    	dojo.forEach(items, function(item) {
-	           	totalNumOfLayers = totalNumOfLayers + 1;
+	           	
 	           	var currentLayerSelectable = false;
 				eaLyrNum = layerDataStore.getValue( item, 'eaLyrNum');
 				eaID = layerDataStore.getValue( item, 'eaID');
@@ -141,6 +141,7 @@ define([
     			bSelectByScale = false;
 				switch (eaScale) {
 					case "NATIONAL":
+						totalNumOfLayers = totalNumOfLayers + 1;
 						var chkScale = document.getElementById("chkNational");
 						if(chkScale.checked == true){
 							bSelectByScale = true;
@@ -149,11 +150,12 @@ define([
 					case "COMMUNITY":
 						
 						var chkScale = document.getElementById("chkCommunity");
+						totalNumOfLayers = totalNumOfLayers + 1;
 						if(chkScale.checked == true){
 
 							if ((communitySelected == "") || (communitySelected == window.strAllCommunity)){
-								bSelectByScale = true;
-							}
+							bSelectByScale = true;
+						}
 							else{
 								//alert("eaMetadata:" + eaMetadata);
 								if (eaMetadata != "") {
@@ -169,34 +171,34 @@ define([
 							}
 						}
 						break;
-
+    			
 				}    			
 				eaCategory = layerDataStore.getValue( item, 'eaCategory');
 
 				eachLayerCategoryList = eaCategory.split(";");
 				if (bSelectByScale) {
-					for (i in eachLayerCategoryList) {
-						
-						enumCategoryForCurrentLayer = eachLayerCategoryList[i].split("-");
+				for (i in eachLayerCategoryList) {
+					
+					enumCategoryForCurrentLayer = eachLayerCategoryList[i].split("-");
 						if(window.categoryDic[enumCategoryForCurrentLayer[0].trim()] != undefined){
 						
-							var chkCategery = document.getElementById(window.chkCategoryPrefix+window.categoryDic[enumCategoryForCurrentLayer[0].trim()]);
-							if(chkCategery.checked == true){
-								supplyDemandList = enumCategoryForCurrentLayer[1].trim().split(",");
-								
-								
-								for (j in supplyDemandList) {
-									
-									var chkSupplyDemand = document.getElementById(supplyDemandList[j].trim().replace(" ",""));		
+					var chkCategery = document.getElementById(window.chkCategoryPrefix+window.categoryDic[enumCategoryForCurrentLayer[0].trim()]);
+					if(chkCategery.checked == true){
+						supplyDemandList = enumCategoryForCurrentLayer[1].trim().split(",");
+						
+						
+						for (j in supplyDemandList) {
+
+							var chkSupplyDemand = document.getElementById(supplyDemandList[j].trim().replace(" ",""));
 									if 	(chkSupplyDemand != null)	{											
-										if (chkSupplyDemand.checked == true) {								
-											currentLayerSelectable = true;																
-										}
+							if (chkSupplyDemand.checked == true) {
+								currentLayerSelectable = true;				
 									}
-								}
 							}
 						}
-					}   //end of for (i in eachLayerCategoryList)		
+					}
+						}
+				}   //end of for (i in eachLayerCategoryList)		
 				}// end of if (bSelectByScale)
 				
 				if (currentLayerSelectable) {//add the current item as selectable layers
@@ -229,13 +231,13 @@ define([
 					if (!(document.getElementById("hideIcons").checked)) {
 				        var photo = document.createElement("td");
 						var ulElem = document.createElement("ul");
-						
+			
 						ulElem.setAttribute("id", "navlistSearchfilter");					
-						var liHomeElem = null;
-						var aHomeElem = null;
-						indexImage = 0;
-						for (var key in window.categoryDic) {
-				
+					var liHomeElem = null;
+					var aHomeElem = null;
+					indexImage = 0;
+					for (var key in window.categoryDic) {
+			
 						    liElem = document.createElement("li");
 							liElem.style.left = (indexImage*20).toString() + "px";
 							liElem.style.top = "-10px";
@@ -250,10 +252,10 @@ define([
 							else {
 								liElem.setAttribute("id",window.categoryDic[key] + "_bw");
 							}
-							indexImage = indexImage + 1;
-						}
-				        photo.appendChild(ulElem);			        	
-						newTitle.appendChild(photo);
+						indexImage = indexImage + 1;
+					}
+			        photo.appendChild(ulElem);
+					newTitle.appendChild(photo);
 		        	}
 
 					// end of adding the category icons	
@@ -288,7 +290,7 @@ define([
 				        	window.open(dataFactSheet + hashFactsheetLink[this.id]);
 				        }		      
 				    };    	
-				}//end of if (currentLayerSelectable)           
+				}//end of if (currentLayerSelectable)
         });	
 	       
  		dojo.byId("numOfLayers").value = " " + String(numOfSelectableLayers) + " of " + String(totalNumOfLayers) + " Maps";
@@ -313,9 +315,9 @@ define([
 	
 	var	_updateSelectableLayer = function(){	
 		layerDataStore.fetch({
-			sort: {attribute: 'eaDfsLink', descending: false},
-			onComplete: _addSelectableLayerSorted
-		});
+				sort: {attribute: 'eaDfsLink', descending: false},
+				onComplete: _addSelectableLayerSorted
+				});
 	};
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
 
@@ -327,13 +329,13 @@ define([
 				_updateSelectableLayer();
 			}		  
 		},
+
+    displayCategorySelection: function() {
 		
-        displayCategorySelection: function() {
-		
-	        var tableOfRelationship = document.getElementById('categoryTable');
-		    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];    	
-		    indexImage = 0;
-		    for (var key in window.categoryDic) {
+        var tableOfRelationship = document.getElementById('categoryTable');
+	    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];    	
+	    indexImage = 0;
+	    for (var key in window.categoryDic) {
 
 	    	    var newRow   = tableRef.insertRow(tableRef.rows.length);
 	    	    
@@ -387,41 +389,41 @@ define([
 				title.innerHTML = key;    
 				newTitleCell.appendChild(title);        
 
-			}
-			document.getElementById("Supply").onclick = function() {
-			    _updateSelectableLayer();
-			};
-			document.getElementById("Demand").onclick = function() {
-			    _updateSelectableLayer();
-			};	
-			document.getElementById("Driver").onclick = function() {
-			    _updateSelectableLayer();
-			};
-			document.getElementById("SpatiallyExplicit").onclick = function() {
-			    _updateSelectableLayer();
-			};		
-			document.getElementById("hideIcons").onclick = function() {
-			    _updateSelectableLayer();
-			};					
-			document.getElementById("selectAllLayers").onclick = function() {
-				if (this.checked){
-				    _onSelectAllLayers();
-				    document.getElementById('butAddAllLayers').click();
-			    }
-			};
-			//on hide and show Benefit Categories, enlarge selectable layers
-			document.getElementById("hide1").onclick = function() {
-			    document.getElementById('tableSelectableLayersArea').style.height = "340px";
-			    //document.getElementById('tableSelectableLayersArea').style.height = '20%';
-			};	
-			document.getElementById("show1").onclick = function() {
-			    document.getElementById('tableSelectableLayersArea').style.height = "550px";
-			    //document.getElementById('tableSelectableLayersArea').style.height = '70%';
-			};					
-			layersToBeAdded = "a";
+		}
+		document.getElementById("Supply").onclick = function() {
+		    _updateSelectableLayer();
+		};
+		document.getElementById("Demand").onclick = function() {
+		    _updateSelectableLayer();
+		};	
+		document.getElementById("Driver").onclick = function() {
+		    _updateSelectableLayer();
+		};
+		document.getElementById("SpatiallyExplicit").onclick = function() {
+		    _updateSelectableLayer();
+		};				
+		document.getElementById("hideIcons").onclick = function() {
+		    _updateSelectableLayer();
+		};					
+		document.getElementById("selectAllLayers").onclick = function() {
+			if (this.checked){
+		    _onSelectAllLayers();
+			    document.getElementById('butAddAllLayers').click();
+		    }
+		};
+		//on hide and show Benefit Categories, enlarge selectable layers
+		/*document.getElementById("hide1").onclick = function() {
+		    document.getElementById('tableSelectableLayersArea').style.height = "340px";
+		    //document.getElementById('tableSelectableLayersArea').style.height = '20%';
+		};	
+		document.getElementById("show1").onclick = function() {
+		    document.getElementById('tableSelectableLayersArea').style.height = "550px";
+		    //document.getElementById('tableSelectableLayersArea').style.height = '70%';
+		};	*/				
+		layersToBeAdded = "a";
 	    
 
-    	},
+    },
 	displayGeographySelection: function() {
         var tableOfRelationship = document.getElementById('geographyTable');
 	    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];    	
@@ -500,30 +502,30 @@ define([
         newButtonInfoCell.appendChild(buttonInfo);  
         document.getElementById(buttonInfoId).onclick = function(e) {
    			document.getElementById('butOpenSelectCommunityWidget').click();
-	    };   		  		
+				    };   		  		
 
 	},
-        startup: function() {
+      startup: function() {
 
-	        this.inherited(arguments);
+        this.inherited(arguments);
 	      	this.fetchDataByName('SelectCommunity');
-	                     
-	        loadJSON(function(response) {
-	            var localLayerConfig = JSON.parse(response);
-	            var arrLayers = localLayerConfig.layers.layer;
-	            console.log("arrLayers.length:" + arrLayers.length);
+
+        loadJSON(function(response) {
+            var localLayerConfig = JSON.parse(response);
+            var arrLayers = localLayerConfig.layers.layer;
+            console.log("arrLayers.length:" + arrLayers.length);
 	            for (index = 0, len = arrLayers.length; index < len; ++index) {
 	            //for (index = 0, len = 409; index < len; ++index) {
-	            	//console.log("index:" + index);
-	                layer = arrLayers[index];                          
-	                var indexCheckbox = 0;
+            	//console.log("index:" + index);
+                layer = arrLayers[index];                          
+                var indexCheckbox = 0;
 
 	                    if(layer.hasOwnProperty('eaID')) {
 	                    	eaID = layer.eaID.toString();
 	                    	if (eaID.trim() != "") {
 		                    	
-		                    	if(layer.hasOwnProperty('eaLyrNum')){
-		                        	eaLyrNum = layer.eaLyrNum.toString();
+                    if(layer.hasOwnProperty('eaLyrNum')){
+                        eaLyrNum = layer.eaLyrNum.toString();
 		                        }
 		                        else {
 		                        	eaLyrNum = "";
@@ -562,23 +564,23 @@ define([
 		                        else {
 		                        	eaScale = "";
 		                        }		                        
-							    var eaCategoryWhole =  "";
-							    if(layer.hasOwnProperty('eaBCSDD')){
-							    	for (categoryIndex = 0, lenCategory = layer.eaBCSDD.length; categoryIndex < lenCategory; ++categoryIndex) {
-							    		eaCategoryWhole = eaCategoryWhole + layer.eaBCSDD[categoryIndex] + ";";
-							    	}
-							    }
-							    eaCategoryWhole = eaCategoryWhole.substring(0, eaCategoryWhole.length - 1);
+					    var eaCategoryWhole =  "";
+					    if(layer.hasOwnProperty('eaBCSDD')){
+					    	for (categoryIndex = 0, lenCategory = layer.eaBCSDD.length; categoryIndex < lenCategory; ++categoryIndex) {
+					    		eaCategoryWhole = eaCategoryWhole + layer.eaBCSDD[categoryIndex] + ";";
+					    	}
+					    }
+					    eaCategoryWhole = eaCategoryWhole.substring(0, eaCategoryWhole.length - 1);
 							    //console.log("eaCategoryWhole: "+ eaCategoryWhole);
-							    
+					    
 							    var layerItem = {eaLyrNum: eaLyrNum, name: name, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID, eaMetadata: eaMetadata, eaScale: eaScale};
-		
-								layerDataStore.newItem(layerItem);
-							    
+
+						layerDataStore.newItem(layerItem);
+					    
 						    }// end of if (eaID.trim() != "")
 	                    }// end of if(layer.hasOwnProperty('eaID'))                	
-	                
-	            }
+
+                }
 	        });// end of loadJSON(function(response)
 	        loadCommunityJSON(function(response){
 	        	var community = JSON.parse(response);
@@ -595,10 +597,10 @@ define([
 	            	window.communityMetadataDic[currentMetadataCommunityIndex.MetaID_Community] = singleCommunityMetadataDic;
 	            }
 	        }); // end of loadCommunityJSON(function(response)
-			this.displayCategorySelection();			
+		this.displayCategorySelection();
 			this.displayGeographySelection();
-	    },               
-
+    },               
+                    
 	    _onSingleLayerClick: function() {
 		    this.publishData({
 		        message: singleLayerToBeAddedRemoved
@@ -610,43 +612,43 @@ define([
 			//sideBar.selectTab(0);				
 
 			this.openWidgetById('widgets_SelectCommunity_29');
-			var wm = WidgetManager.getInstance();			
+			var wm = WidgetManager.getInstance();
 			widget = wm.getWidgetById('widgets_SelectCommunity_29');
 			if (widget != undefined){
 				var pm = PanelManager.getInstance();   
 				pm.showPanel(widget);  
 			}    
 	    },	
-	    _onAddLayersClick: function() {
-	
-	        layersToBeAdded = "a";
-			for (var key in chkIdDictionary) {
-			  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
-			  	if (document.getElementById(key).checked) {
-	            	layersToBeAdded = layersToBeAdded + "," + key.replace("ck", "");
-	        	}
-			  }
-			}
-	        this.publishData({
-		        message: layersToBeAdded
-		    });
-		    this.i ++;
-	    },
+    _onAddLayersClick: function() {
+
+        layersToBeAdded = "a";
+		for (var key in chkIdDictionary) {
+		  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
+		  	if (document.getElementById(key).checked) {
+            	layersToBeAdded = layersToBeAdded + "," + key.replace("ck", "");
+        	}
+		  }
+		}
+        this.publishData({
+	        message: layersToBeAdded
+	    });
+	    this.i ++;
+    },
 	    
-	    _onRemoveLayersClick: function() {
-	        layersToBeRemoved = "r";
-			for (var key in chkIdDictionary) {
-			  if (chkIdDictionary.hasOwnProperty(key)) {
-			  	if (document.getElementById(key).checked) {
-	            	layersToBeRemoved = layersToBeRemoved + "," + key.replace("ck", "") ;
-	        	}
-			  }
-			}
-	        this.publishData({
-		        message: layersToBeRemoved
-		    });
-		    this.i ++;
-	    },
+    _onRemoveLayersClick: function() {
+        layersToBeRemoved = "r";
+		for (var key in chkIdDictionary) {
+		  if (chkIdDictionary.hasOwnProperty(key)) {
+		  	if (document.getElementById(key).checked) {
+            	layersToBeRemoved = layersToBeRemoved + "," + key.replace("ck", "") ;
+        	}
+		  }
+		}
+        this.publishData({
+	        message: layersToBeRemoved
+	    });
+	    this.i ++;
+    },
     });
 
     return clazz;
