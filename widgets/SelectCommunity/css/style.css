@@ -1,11 +1,8 @@
-.jimu-widget-demo div:first-child{
-  color: red;
-}
-table{
+#communityTable table{
   border-collapse: collapse;
 }
 
-td{
+#communityTable td{
   padding-top: 10px;
   padding-left: 10px;
   font-size: small;

@@ -89,7 +89,7 @@ var
 
   ////////uncomment the following line when downloading the app
 
-  apiUrl = '//js.arcgis.com/3.14';
+  apiUrl = '//js.arcgis.com/3.17';
 
   //////////////////////////////////////////////////////////////
   allCookies = getAllCookies();
@@ -98,11 +98,11 @@ var
     if (queryObject.apiurl) {
       apiUrl = queryObject.apiurl;
     } else if (isXT) {
-      apiUrl = '//js.arcgis.com/3.14';
+      apiUrl = '//js.arcgis.com/3.17';
     } else {
       var portalUrl = getPortalUrlFromLocation();
       if (portalUrl.indexOf('arcgis.com') > -1) {
-        apiUrl = '//js.arcgis.com/3.14';
+        apiUrl = '//js.arcgis.com/3.17';
       } else {
         apiUrl = portalUrl + 'jsapi/jsapi/';
       }
