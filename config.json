@@ -282,6 +282,21 @@
 				"uri" : "widgets/SelectCommunity/Widget",
 				"config" : "widgets/SelectCommunity/config.json"
 			},{
+				"position" : {
+					"left" : 795,
+					"top" : 5,
+					"width" : 380,
+					"height" : 410,
+					"relativeTo" : "map"
+				},
+				"placeholderIndex" : 1,
+				"id" : "widgets_AddData_29",
+				"name" : "AddData",
+				"label" : "AddData",
+				"version" : "1.3",
+				"uri" : "widgets/AddData/Widget",
+				"config" : "widgets/AddData/config.json"
+			},{
 				"uri" : "widgets/OverviewMap/Widget",
 				"position" : {
 					"right" : 0,

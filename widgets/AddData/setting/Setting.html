@@ -1,0 +1,61 @@
+<div>
+
+	<div class="row">
+	  <div class="left-cell">
+		  <input id="${id}_MyContent" type="checkbox"
+		    data-dojo-attach-point="MyContentCheckBox"
+		    data-dojo-type="dijit/form/CheckBox"/>
+		  <label for="${id}_MyContent" class="fixedlen">${nls.scopeOptions.MyContent}</label>
+	  </div>
+	  <input type="text" placeholder="${nls.scopeOptions.labelPlaceholder}"
+	    data-dojo-attach-point="MyContentTextBox"
+	    data-dojo-type="dijit/form/ValidationTextBox"
+	    data-dojo-props="maxLength: 24" />
+	</div>
+
+  <div class="row">
+    <div class="left-cell">
+	    <input id="${id}_MyOrganization" type="checkbox"
+	      data-dojo-attach-point="MyOrganizationCheckBox"
+	      data-dojo-type="dijit/form/CheckBox"/>
+	    <label for="${id}_MyOrganization" class="fixedlen">${nls.scopeOptions.MyOrganization}</label>
+	  </div>
+    <input type="text" placeholder="${nls.scopeOptions.labelPlaceholder}"
+      data-dojo-attach-point="MyOrganizationTextBox"
+      data-dojo-type="dijit/form/ValidationTextBox"
+      data-dojo-props="maxLength: 24" />
+  </div>
+
+  <div class="row">
+    <div class="left-cell">
+	    <input id="${id}_ArcGISOnline" type="checkbox"
+	      data-dojo-attach-point="ArcGISOnlineCheckBox"
+	      data-dojo-type="dijit/form/CheckBox"/>
+	    <label for="${id}_ArcGISOnline" class="fixedlen">${nls.scopeOptions.ArcGISOnline}</label>
+    </div>
+    <input type="text" placeholder="${nls.scopeOptions.labelPlaceholder}"
+      data-dojo-attach-point="ArcGISOnlineTextBox"
+      data-dojo-type="dijit/form/ValidationTextBox"
+      data-dojo-props="maxLength: 24" />
+  </div>
+
+	<!-- <div class="row">
+	  <div class="left-cell">
+		  <input id="${id}_FromUrl" type="checkbox"
+		    data-dojo-attach-point="FromUrlCheckBox"
+		    data-dojo-type="dijit/form/CheckBox"/>
+		  <label for="${id}_FromUrl">${nls.scopeOptions.FromUrl}</label>
+		</div>
+  </div> -->
+
+  <div class="row">
+    <div class="left-cell">
+      <label for="${id}_numPerPage">${nls.numPerPage}</label>
+    </div>
+    <input id="${id}_numPerPage" type="text" class="numbox"
+      data-dojo-attach-point="numPerBageBox"
+      data-dojo-type="dijit/form/NumberTextBox"
+      data-dojo-props="constraints:{min:1,max:100,places:0}" />
+  </div>
+
+</div>
