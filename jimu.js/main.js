@@ -67,7 +67,7 @@ define(["./ConfigManager",
     
     window.strAllCommunity = "AllCommunity";	
     window.communityDic = {};
-
+	window.communityDic["ATX"] = "Austin, TX";
 	window.communityDic["DMIA"] = "Des Moines, IA";
     window.communityDic["DNC"]= "Durham, NC";
     window.communityDic["FCA"] = "Fresno, CA";
