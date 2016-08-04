@@ -379,7 +379,15 @@
 				"version" : "1.3",
 				"uri" : "widgets/eBasemapGallery/Widget",
 				"config" : "configs/eBasemapGallery/config_Enhanced Basemap Gallery.json"
-			}, {
+			},{
+				"index" : 8,
+				"id" : "widgets_AddData_30",
+				"name" : "Add Data",
+				"label" : "Add Data",
+				"version" : "1.3",
+				"uri" : "widgets/AddData/Widget",
+				"config" : "widgets/AddData/config.json"
+			},{
 				"index" : 9,
 				"id" : "widgets_AddShapefile_28",
 				"name" : "Add File",
@@ -388,14 +396,14 @@
 				"uri" : "widgets/Addfile/Widget",
 				"config" : "widgets/Addfile/config.json"
 			},{
-		        "index" : 11,
-		        "id" : "widgets_AddService_29",
-		        "name" : "Add Service",
-		        "label" : "Add Service",
-		        "version" : "1.3",
-		        "uri" : "widgets/AddService/Widget",
-		        "config" : "widgets/AddService/config.json"
-		    }
+				"index" : 11,
+				"id" : "widgets_AddService_29",
+				"name" : "Add Service",
+				"label" : "Add Service",
+				"version" : "1.3",
+				"uri" : "widgets/AddService/Widget",
+				"config" : "widgets/AddService/config.json"
+			}
 		],
 		"groups" : []
 	},
