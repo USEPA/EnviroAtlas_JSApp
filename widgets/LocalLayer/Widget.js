@@ -140,10 +140,31 @@ define([
                 this._viewerMap.addLayer(lLayer);
                 this._viewerMap.setInfoWindowOnClick(true);
               }else if (layer.type.toUpperCase() === 'FEATURE') {
+              	bPopup = true;
                 var _popupTemplate;
                 if (layer.popup){
-                  _popupTemplate = new PopupTemplate(layer.popup);
-                  lOptions.infoTemplate = _popupTemplate;
+                  if (layer.popup.fieldInfos) {
+                  	fieldInfos = layer.popup.fieldInfos;
+                  	if(fieldInfos[0].hasOwnProperty('fieldName')) {
+                  		if (fieldInfos[0].fieldName ==null) {
+                  			bPopup = false;
+                  		}
+                  	}
+                  	else {
+                  		bPopup = false;
+                  	}
+                  }
+                  else {
+                  	bPopup = false;
+                  }
+                  if (bPopup) {
+	                  _popupTemplate = new PopupTemplate(layer.popup);
+	                  lOptions.infoTemplate = _popupTemplate;                  	
+                  }
+                  else {
+                  	console.log("layer.eaID: " + + layer.eaID.toString() + " with no popup info defined");
+                  }
+
                 }
                 if(layer.hasOwnProperty('mode')){
                   var lmode;
@@ -163,7 +184,13 @@ define([
                 if(layer.hasOwnProperty('showLabels')){
                   lOptions.showLabels = true;
                 }
-                lLayer = new FeatureLayer(layer.url, lOptions);
+                if(layer.hasOwnProperty('eaLyrNum')){
+                  lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
+                }
+                else {
+                	lLayer = new FeatureLayer(layer.url , lOptions);
+                }
+                //lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
                 lLayer.minScale = 1155581.108577;
                 if(layer.name){
                   lLayer._titleForLegend = layer.name;
@@ -173,11 +200,15 @@ define([
                 lLayer.on('load',function(evt){
                   evt.layer.name = lOptions.id;
                 });
-                lLayer.id = window.layerIdPrefix + layer.eaLyrNum;
+                
+                lLayer.id = window.layerIdPrefix + layer.eaID;
                 var bNeedToBeAdded = false;
                 var stringArray = selectedLayerNum.split(",");
                 	for (i in stringArray) {
-						if ((stringArray[i])==(layer.eaLyrNum)) {
+                		//console.log("stringArray[i]: " + stringArray[i]);
+                		console.log("layer.eaID.toString(): " + layer.eaID.toString());
+						if ((stringArray[i])==(layer.eaID.toString())) {
+							console.log("layer.eaID: " + layer.eaID.toString());
 						    bNeedToBeAdded = true;
 						    break;
 						}
@@ -186,13 +217,13 @@ define([
                 if (bNeedToBeAdded) {
 	                if(layer.tileLink){
 	                	//initTileLayer("http://leb.epa.gov/arcgiscache_exp/AWD_mgal/National%20Data%20-%20EnviroAtlas/_alllayers/");
-	                	initTileLayer(layer.tileLink, window.layerIdTiledPrefix + layer.eaLyrNum);
+	                	initTileLayer(layer.tileLink, window.layerIdTiledPrefix );//bji need to be modified to accomodate tile.
 	                    this._viewerMap.addLayer(new myTiledMapServiceLayer());
-	                    lyrTiled = this._viewerMap.getLayer(window.layerIdTiledPrefix + layer.eaLyrNum);
+	                    lyrTiled = this._viewerMap.getLayer(window.layerIdTiledPrefix );//bji need to be modified to accomodate tile.
 					    if(lyrTiled){
 				       	     lyrTiled.setOpacity(layer.opacity);
 				        } 
-	                }                	
+	                }                
 	                lLayer.setVisibility(false);//turn off the layer when first added to map and let user to turn on	
                 	this._viewerMap.addLayer(lLayer);
                 }
@@ -279,10 +310,10 @@ define([
     var clazz = declare([BaseWidget], {
 	  onReceiveData: function(name, widgetId, data, historyData) {
 		  if (name == 'SimpleSearchFilter'){
-		  var stringArray = data.message.split(",");
-		  if (stringArray[0] == "a") {
-		  	_addSelectedLayers(this.config.layers.layer, data.message.substring(2));
-		  }
+			  var stringArray = data.message.split(",");
+			  if (stringArray[0] == "a") {
+			  	_addSelectedLayers(this.config.layers.layer, data.message.substring(2));
+			  }
 			  
 			  //removing selected layer function is deleted from SimpleSearchFilter
 			  if (stringArray[0] == "r") {
@@ -295,6 +326,7 @@ define([
 		  //		_removeAllLayers();
 		  //	}
 		  //}
+  
 	  },
       constructor: function() {
         this._originalWebMap = null;

@@ -58,12 +58,34 @@ define(["./ConfigManager",
     window.categoryDic["Recreation, Culture, and Aesthetics"] = "rca";
     window.categoryDic["Food, Fuel, and Materials"] ="ffm";
     window.categoryDic["Biodiversity Conservation"] = "biod";
-    window.categoryDic["People and Built Spaces"] = "pbs";
-    window.categoryDic["Supplemental"] = "sup";
+    //window.categoryDic["People and Built Spaces"] = "pbs";
+    //window.categoryDic["Supplemental"] = "sup";
     window.categoryClassSupply = "Supply";
     window.categoryClassDemand = "Demand";
     window.categoryClassDriver = "Driver";
     window.categoryClassSpatialExplicit = "Spatially Explicit";
+    
+    window.strAllCommunity = "AllCommunity";	
+    window.communityDic = {};
+	window.communityDic["ATX"] = "Austin, TX";
+	window.communityDic["DMIA"] = "Des Moines, IA";
+    window.communityDic["DNC"]= "Durham, NC";
+    window.communityDic["FCA"] = "Fresno, CA";
+    window.communityDic["GBWI"] = "Green Bay, WI";
+    window.communityDic["MTN"] = "Memphis, Tennessee";
+    window.communityDic["MWI"] = "Milwaukee, WI";
+    window.communityDic["NBMA"] = "New Bedford, MA";
+    window.communityDic["NYNY"] = "New York, New York";
+    window.communityDic["PNJ"] = "Paterson, NJ";
+    window.communityDic["PAZ"] = "Phoenix, AZ";
+    window.communityDic["PitPA"] = "Pittsburgh, PA";
+    window.communityDic["PME"] = "Portland, ME"
+    window.communityDic["POR"] = "Portland, OR"
+    window.communityDic["TFL"] = "Tampa, FL";
+    window.communityDic["WIA"] = "Woodbine, IA";
+    
+    window.communityMetadataDic = {};
+                
     //patch for JS API 3.10
     var hasMethod = typeof cookie.getAll === 'function';
     if (!hasMethod) {

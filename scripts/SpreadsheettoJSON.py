@@ -9,16 +9,17 @@ Torrin Hultgren, October 2015
 import sys, json, csv, openpyxl
 
 # This is the spreadsheet that contains all the content
-inputSpreadsheet = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\EnviroAtlas4json.xlsx"
+rootPath = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\\"
+inputSpreadsheet = rootpath + r"EAWAB4JSON.xlsx"
 # Just in case there are rows to ignore at the top - header is row 0
 startingRow = 2
 # This should be a csv table that maps spreadsheet column headers to json elements
 # no great reason it needs to be in a standalone file rather than embedded in this 
 # script as a dictionary.
-mapTablePath = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\jsonfieldmap.csv"  
+mapTablePath = rootpath + r"jsonfieldmap.csv"  
 # Output json file
-outputFileName = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\config.json"
-errorLogFile = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\errors.log"
+outputFileName = rootpath + r"config.json"
+errorLogFile = rootpath + r"errors.log"
 
 # Empty rows cause python problems, remove them
 def removeEmptyRows(rows):
@@ -62,11 +63,11 @@ def main(_argv):
     # Base map layer
     fullJSON["layers"]["layer"].append({
         "type": "Basemap",
-        "name": "DeLorme's basemap",
+        "name": "Topo Basemap",
         "layers": {
           "layer": [
             {
-              "url": "http://services.arcgisonline.com/arcgis/rest/services/Specialty/DeLorme_World_Base_Map/MapServer",
+              "url": "http://services.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer",
               "isReference": "false",
               "opacity": 1
             }
@@ -95,11 +96,11 @@ def main(_argv):
         }
         layerJSON["popup"]["fieldInfos"][0]["fieldName"] = inputWorksheet.cell(key["fieldName"]+rowID).value
         layerJSON["popup"]["fieldInfos"][0]["label"] = name
-        stringList = ["eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS"]
+        stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS"]
         for elem in stringList:
             if inputWorksheet.cell(key[elem]+rowID).value:
                 layerJSON[elem] = inputWorksheet.cell(key[elem]+rowID).value
-        arrayList = [("eaScale",","),("eaTags",","),("eaBCSDD",";")]
+        arrayList = [("eaTags",","),("eaBCSDD",";")]
         for elem,separator in arrayList:
              if inputWorksheet.cell(key[elem]+rowID).value:
                 fullString = inputWorksheet.cell(key[elem]+rowID).value

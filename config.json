@@ -101,9 +101,9 @@
 				"id" : "widgets_Coordinate_Widget_24",
 				"name" : "Coordinate",
 				"label" : "Coordinate"
-			},  {
+			}, {
 				"position" : {
-					"left" : 345,
+					"left" : 295,
 					"top" : 5,
 					"width" : 380,
 					"height" : 410,
@@ -118,7 +118,7 @@
 				"config" : "configs/eBookmark/config_Enhanced Bookmark.json"
 			}, {
 				"position" : {
-					"left" : 395,
+					"left" : 345,
 					"top" : 5,
 					"width" : 380,
 					"height" : 410,
@@ -133,7 +133,7 @@
 				"config" : "configs/Print/config_Print.json"
 			}, {
 				"position" : {
-				  "left" : 445,
+				  "left" : 395,
 				  "top" : 5,
 				  "width" : 380,
 				  "height" : 410,
@@ -147,38 +147,8 @@
 				"uri" : "widgets/ElevationProfile/Widget",
 				"config" : "widgets/ElevationProfile/config.json"
 			}, {
-				"position" : {
-				  "left" : 495,
-				  "top" : 5,
-				  "width" : 380,
-				  "height" : 410,
-				  "relativeTo" : "map"
-				},
-				"placeholderIndex" : 1,
-				"id" : "widgets_AddShapefile_28",
-				"name" : "Add File",
-				"label" : "Add File",
-				"version" : "1.3",
-				"uri" : "widgets/Addfile/Widget",
-				"config" : "widgets/Addfile/config.json"
-			},{
-		        "position" : {
-			      "left" : 545,
-			      "top" : 5,
-			      "width" : 380,
-			      "height" : 410,
-			      "relativeTo" : "map"
-		    	},
-		        "placeholderIndex" : 1,
-		        "id" : "widgets_AddService_29",
-		        "name" : "Add Service",
-		        "label" : "Add Service",
-		        "version" : "1.3",
-		        "uri" : "widgets/AddService/Widget",
-		        "config" : "widgets/AddService/config.json"
-		    }, {
 		  		"position" : {
-				  "left" : 595,
+				  "left" : 445,
 				  "top" : 5,
 				  "width" : 380,
 				  "height" : 410,
@@ -193,7 +163,7 @@
 		  		"config" : "widgets/Raindrop/config.json"
 			},{
                   "position" : {
-                  "left" : 695,
+                  "left" : -40,
                   "top" : -40,
                   "width" : 380,
                   "height" : 410,
@@ -208,8 +178,8 @@
                 "config" : "widgets/DynamicSymbology/config.json"
             }, {
 		  		"position" : {
-				  "left" : 645,
-				  "top" : 5,
+				  "right" : 5,
+				  "bottom" : 45,
 				  "width" : 380,
 				  "height" : 410,
 				  "relativeTo" : "map"
@@ -220,10 +190,11 @@
 		  		"label" : "Legend",
 		  		"version" : "1.3",
 		  		"uri" : "widgets/Legend/Widget",
-		  		"config" : "widgets/Legend/config.json"
+		  		"config" : "widgets/Legend/config.json",
+				"openAtStart" : true
 			},{
 				"position" : {
-				"left" : 695,
+				"left" : 495,
 				"top" : 5,
 				"width" : 380,
 				"height" : 410,
@@ -237,7 +208,7 @@
 				"config" : "widgets/eDraw/config.json"
 			},{
 				"position" : {
-					"left" : 745,
+					"left" : 545,
 					"top" : 5,
 					"width" : 380,
 					"height" : 410,
@@ -245,26 +216,27 @@
 				},
 				"placeholderIndex" : 1,
 				"id" : "widgets_SaveSession_28",
-				"name" : "saveSession",
+				"name" : "DynamicSymbology",
 				"label" : "SaveSession",
 				"version" : "1.3",
 				"uri" : "widgets/SaveSession/Widget",
 				"config" : "widgets/SaveSession/config.json"
 			},{
 				"position" : {
-					"left" : 795,
+					"left" : 595,
 					"top" : 5,
 					"width" : 380,
 					"height" : 410,
 					"relativeTo" : "map"
 				},
-			"placeholderIndex" : 1,
-			"id" : "widgets_Demo_28",
-			"name" : "Demo",
-			"label" : "Demo",
-			"version" : "1.3",
-			"uri" : "widgets/Demo/Widget"
-		},{
+				"placeholderIndex" : 1,
+				"id" : "widgets_SelectCommunity_29",
+				"name" : "SelectCommunity",
+				"label" : "SelectCommunity",
+				"version" : "1.3",
+				"uri" : "widgets/SelectCommunity/Widget",
+				"config" : "widgets/SelectCommunity/config.json"
+			},{
 				"uri" : "widgets/OverviewMap/Widget",
 				"position" : {
 					"right" : 0,
@@ -349,7 +321,7 @@
 				"relativeTo" : "map"
 			}
 		}
-},
+	},
 	"map" : {
 		"3D" : false,
 		"2D" : true,
@@ -399,6 +371,38 @@
 				"uri" : "widgets/SimpleSearchFilter/Widget",
 				"index" : 5,
 				"id" : "widgets_SimpleSearchFilter_Widget_37"
+			}, {
+				"index" : 7,
+				"id" : "basemapGalery_25",
+				"name" : "BasemapGallery",
+				"label" : "Basemap Gallery",
+				"version" : "1.3",
+				"uri" : "widgets/eBasemapGallery/Widget",
+				"config" : "configs/eBasemapGallery/config_Enhanced Basemap Gallery.json"
+			},{
+				"index" : 8,
+				"id" : "widgets_AddData_30",
+				"name" : "Add Data",
+				"label" : "Add Data",
+				"version" : "1.3",
+				"uri" : "widgets/AddData/Widget",
+				"config" : "widgets/AddData/config.json"
+			},{
+				"index" : 9,
+				"id" : "widgets_AddShapefile_28",
+				"name" : "Add File",
+				"label" : "Add File",
+				"version" : "1.3",
+				"uri" : "widgets/Addfile/Widget",
+				"config" : "widgets/Addfile/config.json"
+			},{
+				"index" : 11,
+				"id" : "widgets_AddService_29",
+				"name" : "Add Service",
+				"label" : "Add Service",
+				"version" : "1.3",
+				"uri" : "widgets/AddService/Widget",
+				"config" : "widgets/AddService/config.json"
 			}
 		],
 		"groups" : []
@@ -432,16 +436,6 @@
 						"top" : 0,
 						"width" : 55,
 						"height" : 44,
-						"relativeTo" : "browser"
-					},
-					"version" : "1.3"
-				}, {
-					"uri" : "themes/TabTheme/widgets/Footer/Widget",
-					"position" : {
-						"left" : 0,
-						"width" : 0,
-						"bottom" : 0,
-						"height" : 0,
 						"relativeTo" : "browser"
 					},
 					"version" : "1.3"
@@ -587,15 +581,6 @@
 							"top" : 0,
 							"width" : 55,
 							"height" : 44,
-							"relativeTo" : "browser"
-						}
-					},
-					"themes/TabTheme/widgets/Footer/Widget" : {
-						"position" : {
-							"left" : 0,
-							"width" : 0,
-							"bottom" : 0,
-							"height" : 0,
 							"relativeTo" : "browser"
 						}
 					},

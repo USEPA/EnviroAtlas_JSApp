@@ -1,0 +1,11 @@
+.jimu-widget-add-data-setting .row {
+	margin-top: 20px;
+}
+.jimu-widget-add-data-setting .row .left-cell {
+	display: inline-block;
+	width: 240px; 
+}
+.jimu-widget-add-data-setting .row .numbox {
+	width: 80px; 
+}
+

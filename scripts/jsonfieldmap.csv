@@ -1,14 +1,14 @@
 Column,jsonElem
-sort,"	"
+sort,eaID
 Scale/community list,eaScale
 Layer Name,name
 Description,eaDescription
 Attribute,fieldName
 metric/foundational/boundary/landcover/demographics,eaMetric
 Service layer REST URL,url
-DFS Link,eaDfsLink
+DataFactSheet,eaDfsLink
 service layer number only,eaLyrNum
-Metadata Link,eaMetadata
+metadataLookup,eaMetadata
 Biodiversity Conservation,eaBC
 Clean Air,eaCA
 Clean and Plentiful Water,eaCPW

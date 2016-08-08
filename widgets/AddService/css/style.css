@@ -1,12 +1,12 @@
-.jimu-widget-demo div:first-child{
-  color: red;
-}
-table{
+/*.jimu-widget-demo div:first-child{*/
+  /*color: red;*/
+/*}*/
+#addServiceTable{
   border-collapse: collapse;
 }
 
-td{
-  padding-top: 10px;
+#addServiceTable td{
+  padding-top: 5px;
   padding-left: 10px;
   font-size: small;
 }

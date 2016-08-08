@@ -53,6 +53,30 @@
       "name": "Community",
       "items": [
         {
+          "name": "Austin, TX",
+          "extent": {
+            "xmax": -10711492,
+            "xmin":-11083282,
+            "ymax": 3654249,
+            "ymin": 3470800,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
+          "name": "Des Moines, IA",
+          "extent": {
+            "xmax": -10361448,
+            "xmin":-10479008,
+            "ymax": 5143005,
+            "ymin": 5065039,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
           "name": "Durham, NC",
           "extent": {
             "xmax": -8680127.7589,
@@ -89,6 +113,18 @@
           }
         },
         {
+          "name": "Memphis, TN",
+          "extent": {
+            "xmax": -9857488,
+            "xmin":-10208181,
+            "ymax": 4266447,
+            "ymin": 4082998,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
           "name": "Milwaukee, WI",
           "extent": {
             "xmax": -9567413.1380,
@@ -101,12 +137,48 @@
           }
         },
         {
+          "name": "Navigate HUC (working area)",
+          "extent": {
+            "xmax": -7522000,
+            "xmin":-7700000,
+            "ymax": 5994000,
+            "ymin": 5909000,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
           "name": "New Bedford, MA",
           "extent": {
             "xmax": -7817085.5711,
             "xmin":-7960022.8140,
             "ymax": 5143049.1347,
             "ymin": 5085721.3634,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
+          "name": "New York, NY",
+          "extent": {
+            "xmax": -8123942.6117,
+            "xmin":-8334603.0617,
+            "ymax": 5016726.8744,
+            "ymin": 4925002.4405,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
+          "name": "Paterson, NJ",
+          "extent": {
+            "xmax": -8242066.4843,
+            "xmin":-8270558.3866,
+            "ymax": 5005710.3877,
+            "ymin": 4993958.1946,
             "spatialReference": {
               "wkid": 102100
             }
@@ -143,6 +215,18 @@
             "xmin":-8035683.0665,
             "ymax": 5499534.1243,
             "ymin": 5316085.2564,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
+          "name": "Portland, OR",
+          "extent": {
+            "xmax": -13543370.4400,
+            "xmin":-13771305.6583,
+            "ymax": 5753666.5306,
+            "ymin": 5659648.9858,
             "spatialReference": {
               "wkid": 102100
             }

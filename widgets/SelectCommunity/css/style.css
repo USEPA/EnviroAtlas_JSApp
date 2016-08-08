@@ -1,0 +1,24 @@
+/*table{
+  border-collapse: collapse;
+}
+
+td{
+  padding-top: 10px;
+  padding-left: 10px;
+  font-size: small;
+}*/
+
+#infobtn{
+  margin-left: 5px;
+}
+
+.glowing-border {
+  border: 2px solid #dadada;
+  border-radius: 7px;
+}
+
+.glowing-border:focus {
+  outline: none;
+  border-color: #9ecaed;
+  box-shadow: 0 0 10px #9ecaed;
+}
