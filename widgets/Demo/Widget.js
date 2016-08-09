@@ -16,57 +16,53 @@ function(declare, BaseWidget, WidgetManager, PanelManager, on, dom) {
     },
 
     startup: function() {
+      var self = this;
       this.inherited(arguments);
-      this.mapIdNode.innerHTML = 'map id:' + this.map.id;
+      //console.log(this.config.widgets);
+
+      //on click events
+      var AddDataButton = dom.byId('widget_AddData');
+      on(dom.byId(AddDataButton), "click", function(){
+        var widgets = self.appConfig.getConfigElementsByName('AddData');
+        var pm = PanelManager.getInstance();
+        //console.log(widgets[0]);
+        if(widgets[0].visible){
+          pm.closePanel(widgets[0].id + "_panel");
+        }
+        pm.showPanel(widgets[0]);
+        pm.closePanel(self.id + "_panel");
+      });
+
+      var AddFileButton = dom.byId('widget_AddFile');
+      on(dom.byId(AddFileButton), "click", function(){
+        var widgets = self.appConfig.getConfigElementsByName('AddShapefile');
+        var pm = PanelManager.getInstance();
+        //console.log(widgets[0]);
+        if(widgets[0].visible){
+          pm.closePanel(widgets[0].id + "_panel");
+        }
+        pm.showPanel(widgets[0]);
+        pm.closePanel(self.id + "_panel");
+      });
+
+      var AddServiceButton = dom.byId('widget_AddService');
+      on(dom.byId(AddServiceButton), "click", function(){
+        var widgets = self.appConfig.getConfigElementsByName('AddService');
+        var pm = PanelManager.getInstance();
+        //console.log(widgets[0]);
+        if(widgets[0].visible){
+          pm.closePanel(widgets[0].id + "_panel");
+        }
+        pm.showPanel(widgets[0]);
+        pm.closePanel(self.id + "_panel");
+      });
+
       console.log('startup');
     },
 
     onOpen: function(){
       var self = this;
-      var widgetButton = dom.byId('dijit__WidgetBase_David');
-      on(dom.byId(widgetButton), "click", function(){
-
-        //console.log(self);
-        var widgetManage = WidgetManager.getInstance();
-        var bMapWidget = {
-          position : {
-            left : 5,
-            top : 5,
-            width : 400,
-            height : 410,
-            relativeTo : "map"
-          },
-          placeholderIndex : 1,
-          id : "_25",
-          name : "BasemapGallery",
-          label : "Basemap Gallery",
-          version : "1.3",
-          uri : "widgets/eBasemapGallery/Widget",
-          config : "configs/eBasemapGallery/config_Enhanced Basemap Gallery.json"
-        };
-        var bWid = widgetManage.loadWidget(bMapWidget).then(function (bWid){
-          //widgetManage.openWidget(bWid);
-          console.log(bWid);
-          
-          //var pm = PanelManager.getInstance();
-          //pm.showPanel(bWid);
-
-          console.log("load Widget");
-        });
-        //var bMap = widgetManage.getWidgetsByName('BasemapGallery');
-        //console.log(bWid);
-        //widgetManage.openWidget(bMap);
-
-        //var widgets = self.appConfig.getConfigElementsByName('BasemapGallery');
-        //
-       //var pm = PanelManager.getInstance();
-        // console.log(widgets[0]);
-        // if(widgets[0].visible){
-        //   pm.closePanel(widgets[0].id + "_panel");
-        // }
-        //pm.showPanel(bWid);
-
-      });
+      
       console.log('onOpen');
     },
 
