@@ -8,7 +8,7 @@ function(declare, BaseWidget, WidgetManager, PanelManager, on, dom) {
     //please note that this property is be set by the framework when widget is loaded.
     //templateString: template,
 
-    baseClass: 'jimu-widget-demo',
+    baseClass: 'jimu-widget-drawer',
 
     postCreate: function() {
       this.inherited(arguments);
