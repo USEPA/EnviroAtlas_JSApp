@@ -18,14 +18,13 @@ function(declare, BaseWidget, WidgetManager, PanelManager, on, dom) {
     startup: function() {
       var self = this;
       this.inherited(arguments);
-      //console.log(this.config.widgets);
 
       //on click events
       var AddDataButton = dom.byId('widget_AddData');
       on(dom.byId(AddDataButton), "click", function(){
         var widgets = self.appConfig.getConfigElementsByName('AddData');
         var pm = PanelManager.getInstance();
-        //console.log(widgets[0]);
+        
         if(widgets[0].visible){
           pm.closePanel(widgets[0].id + "_panel");
         }
