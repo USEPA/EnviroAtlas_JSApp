@@ -1,3 +1,4 @@
 {
-	"configText":"Add Data"
+	"configText":"Drawer",
+	"includeWidgets":["Raindrop", "ElevationProfile", "eDraw"]
 }
