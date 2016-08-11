@@ -1,4 +1,4 @@
-<div id=SimpleSearchFilter style="height:100%;overflow:hidden;">
+<div>
 
 	<div class="FAQ" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Select by Benefit Categories / Geographies', open: false">
 			<!--<div class="FAQ">
@@ -18,9 +18,12 @@
 					<table id="geographyTable" style="margin:0px 0px 10px 0px">
 							    <tbody>
 							    	<tr>	
+					    							    		
 							    	</tr>
+					    	
 							    </tbody>
-					</table>        
+						    
+					</table>   					     
 				</div>
 			<!--</div>-->
 
@@ -77,7 +80,7 @@
 				</a></li>								
 			</ul>
 		</div>
-		<div id = "tableSelectableLayersArea" style="overflow-y: scroll;height:100%;">
+		<div id = "tableSelectableLayersArea" style="overflow-y: auto;">
 			<table id="tableSelectableLayers"  >
 			    <tbody>
 			    	<tr>
@@ -86,11 +89,16 @@
 			    </tbody>
 			</table>	
 		</div>
-			<br/>
+		<!-- 	<br>
 			<div>
+<<<<<<< HEAD
+			    <!--<input type="button" value="View Active Layers" data-dojo-attach-event="onclick:_onViewActiveLayersClick" >
+=======
 			    <input id = "butOpenSelectCommunityWidget" type="button" value="View Active Layers" style="display:none" data-dojo-attach-event="onclick:_onViewActiveLayersClick" >
+>>>>>>> origin/master
 			    <input id = "butAddSingleLayer" type="button" value="butAddSingleLayer" style="display:none"  data-dojo-attach-event="onclick:_onSingleLayerClick"> 
 			    <input id = "butAddAllLayers" type="button" value="butAddAllLayers" style="display:none"  data-dojo-attach-event="onclick:_onAddLayersClick"> 
-			</div>
+				<!--input id = "butDelSingleLayer" type="button" value="butDelSingleLayer" style="display:hidden"  data-dojo-attach-event="onclick:_onDelSingleLayerClick">
+			</div> -->
 		
 </div>
