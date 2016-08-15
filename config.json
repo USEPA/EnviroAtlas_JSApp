@@ -190,8 +190,7 @@
 		  		"label" : "Legend",
 		  		"version" : "1.3",
 		  		"uri" : "widgets/Legend/Widget",
-		  		"config" : "widgets/Legend/config.json",
-				"openAtStart" : true
+		  		"config" : "widgets/Legend/config.json"
 			},{
 				"position" : {
 				"left" : 645,

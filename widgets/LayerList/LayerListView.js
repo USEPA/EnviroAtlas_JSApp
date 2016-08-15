@@ -23,6 +23,7 @@ define([
   'dojo/on',
   'dojo/query',
   'jimu/dijit/CheckBox',
+  'jimu/PanelManager',
   './PopupMenu',
   'dijit/_TemplatedMixin',
   'dojo/text!./LayerListView.html',
@@ -31,7 +32,7 @@ define([
   'dojo/dom-style',
   './NlsStrings'
 ], function(_WidgetBase, declare, lang, array, domConstruct, on, query,
-  CheckBox, PopupMenu, _TemplatedMixin, template,
+  CheckBox, PanelManager, PopupMenu, _TemplatedMixin, template,
   domAttr, domClass, domStyle, NlsStrings) {
   	var received = "";
   	var loadJSON = function(callback){   
@@ -392,7 +393,13 @@ define([
         layerInfo.setTopLayerVisible(true);
         if(lyrTiled){
        	  lyrTiled.setVisibility(true);
-      	} 
+      	}
+        //Open Legend
+        var widgetName = 'Legend';
+        var widgets = this.layerListWidget.appConfig.getConfigElementsByName(widgetName);
+        var pm = PanelManager.getInstance();
+        //console.log(widgets[0]);
+        pm.showPanel(widgets[0]);
       } else {
         layerInfo.setTopLayerVisible(false);
         if(lyrTiled){
