@@ -120,21 +120,21 @@ define([
 	   };
 	    var	_addSelectableLayerSorted = function(items){
     		var nSearchableColumns = document.getElementById('tableLyrNameDescrTag').getElementsByTagName('tr')[0].getElementsByTagName('th').length;
-    		var eaLyrNumFilteredList = [];
+    		var eaIDFilteredList = [];
 			tdIndex = 0;
 			
 			$("#tableLyrNameDescrTag").dataTable().$('td',{"filter":"applied"}).each( function (value, index) {
 				var currentCellText = $(this).text();
 				
 				if (tdIndex == 0) {
-					eaLyrNumFilteredList.push(currentCellText);
+					eaIDFilteredList.push(currentCellText);
 				}
 				tdIndex = tdIndex + 1;
 				if (tdIndex == nSearchableColumns) {
 					tdIndex = 0;
 				}				
 				
-				console.log(eaLyrNumFilteredList);
+				console.log(eaIDFilteredList);
 				//alert(currentCellText);		
 			} ); 
     	
@@ -149,8 +149,8 @@ define([
 	    	dojo.forEach(items, function(item) {
 	           	
 	           	var currentLayerSelectable = false;
-				eaLyrNum = layerDataStore.getValue( item, 'eaLyrNum');
-				eaID = layerDataStore.getValue( item, 'eaID');
+				eaLyrNum = layerDataStore.getValue( item, 'eaLyrNum').toString();
+				eaID = layerDataStore.getValue( item, 'eaID').toString();
 				layerName = layerDataStore.getValue( item, 'name');
 
     			eaDescription = layerDataStore.getValue( item, 'eaDescription');
@@ -220,7 +220,7 @@ define([
 				}   //end of for (i in eachLayerCategoryList)		
 				}// end of if (bSelectByScale)
 				
-				if (currentLayerSelectable && eaLyrNumFilteredList.includes(eaLyrNum)) {//add the current item as selectable layers
+				if (currentLayerSelectable && eaIDFilteredList.includes(eaID)) {//add the current item as selectable layers
 					if ((window.allLayerNumber.indexOf(eaID)) == -1) {                        	
                     	window.allLayerNumber.push(eaID);
                     }
@@ -600,7 +600,7 @@ define([
 			    	    var newRow   = tableRef.insertRow(tableRef.rows.length);
 			    	    
 		               	var newCell  = newRow.insertCell(0);
-						newCell.appendChild(document.createTextNode(eaLyrNum));
+						newCell.appendChild(document.createTextNode(eaID));
 						newRow.appendChild(newCell);
 		
 		               	newCell  = newRow.insertCell(1);
