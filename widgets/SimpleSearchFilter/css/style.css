@@ -243,8 +243,8 @@ input.cmn-toggle-inLineBlock-round-flat:checked + label:after {
 	padding-right: 36px;
 }
 /*for collapsible benefit category selection*/
-.FAQ { 
-    vertical-align: bottom; 
+.FAQ {
+    vertical-align: bottom;
 }
 .list {
     /*display:none; */
@@ -253,19 +253,59 @@ input.cmn-toggle-inLineBlock-round-flat:checked + label:after {
     /*float: left;*/
 }
 .show {
-    display: none; 
+    display: none;
 }
 .hide:target + .show {
-    display: inline; 
+    display: inline;
 }
 .hide:target {
-    display: none; 
+    display: none;
 }
 .hide:target ~ .list {
-    display:inline; 
+    display:inline;
 }
+<<<<<<< HEAD
 
 /*Reduce the padding */
 #widgets_SimpleSearchFilter_Widget_37_panel .jimu-widget-frame .jimu-container{
     padding: 0px;
 }
+=======
+/*style the (+) and (-) */
+.jimu-widget-simplesearchfilter.hide, .jimu-widget-simplesearchfilter.show {
+	width: 20px;
+	height: 20px;
+	border-radius: 20px;
+	font-size: 15px;
+	color: #fff;
+	text-shadow: 0 1px 0 #666;
+    text-align: center;
+	text-decoration: none;
+	box-shadow: 1px 1px 0px #000;
+	background: #cccbbb;
+	opacity: .95;
+	margin-right: 0;
+	float: left;
+	margin-bottom:5px;
+}
+.jimu-widget-simplesearchfilter.hide:hover, .jimu-widget-simplesearchfilter.show:hover {
+	color: #eee;
+	text-shadow: 0 0 1px #666;
+	text-decoration: none;
+	box-shadow: 0 0 4px #222 inset;
+	opacity: 1;
+	margin-bottom: 5px;
+}
+.list p{
+    height:auto;
+    margin:0;
+}
+.question {
+	float: left;
+	height: auto;
+	width: 90%;
+	line-height: 15px;
+	padding-left: 20px;
+	margin-bottom: 5px;
+}
+>>>>>>> origin/master

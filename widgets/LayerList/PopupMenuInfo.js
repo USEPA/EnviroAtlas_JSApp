@@ -406,7 +406,7 @@ define([
       var widgets = this.layerListWidget.appConfig.getConfigElementsByName('DynamicSymbology');
 
       var pm = PanelManager.getInstance();
-      console.log(pm);
+
       if(widgets[0].visible){
         pm.closePanel(widgets[0].id + "_panel");
       }

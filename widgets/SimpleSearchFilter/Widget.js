@@ -60,6 +60,7 @@ define([
 		    this.eaID = data.eaID;
 		    this.eaMetadata = data.eaMetadata;
 		    this.eaScale = data.eaScale;
+		    this.eaTags = data.eaTags
 		}
 		var selectableLayerArray = [];
 		
@@ -118,6 +119,24 @@ define([
 			}
 	   };
 	    var	_addSelectableLayerSorted = function(items){
+    		var nSearchableColumns = document.getElementById('tableLyrNameDescrTag').getElementsByTagName('tr')[0].getElementsByTagName('th').length;
+    		var eaIDFilteredList = [];
+			tdIndex = 0;
+			
+			$("#tableLyrNameDescrTag").dataTable().$('td',{"filter":"applied"}).each( function (value, index) {
+				var currentCellText = $(this).text();
+				
+				if (tdIndex == 0) {
+					eaIDFilteredList.push(currentCellText);
+				}
+				tdIndex = tdIndex + 1;
+				if (tdIndex == nSearchableColumns) {
+					tdIndex = 0;
+				}				
+				
+				console.log(eaIDFilteredList);
+				//alert(currentCellText);		
+			} ); 
     	
 			var tableOfRelationship = document.getElementById("tableSelectableLayers");
 		    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0]; 
@@ -130,8 +149,8 @@ define([
 	    	dojo.forEach(items, function(item) {
 	           	
 	           	var currentLayerSelectable = false;
-				eaLyrNum = layerDataStore.getValue( item, 'eaLyrNum');
-				eaID = layerDataStore.getValue( item, 'eaID');
+				eaLyrNum = layerDataStore.getValue( item, 'eaLyrNum').toString();
+				eaID = layerDataStore.getValue( item, 'eaID').toString();
 				layerName = layerDataStore.getValue( item, 'name');
 
     			eaDescription = layerDataStore.getValue( item, 'eaDescription');
@@ -201,7 +220,7 @@ define([
 				}   //end of for (i in eachLayerCategoryList)		
 				}// end of if (bSelectByScale)
 				
-				if (currentLayerSelectable) {//add the current item as selectable layers
+				if (currentLayerSelectable && eaIDFilteredList.includes(eaID)) {//add the current item as selectable layers
 					if ((window.allLayerNumber.indexOf(eaID)) == -1) {                        	
                     	window.allLayerNumber.push(eaID);
                     }
@@ -315,7 +334,7 @@ define([
 	
 	var	_updateSelectableLayer = function(){	
 		layerDataStore.fetch({
-				sort: {attribute: 'eaDfsLink', descending: false},
+				sort: {attribute: 'name', descending: false},
 				onComplete: _addSelectableLayerSorted
 				});
 	};
@@ -337,57 +356,57 @@ define([
 	    indexImage = 0;
 	    for (var key in window.categoryDic) {
 
-	    	    var newRow   = tableRef.insertRow(tableRef.rows.length);
-	    	    
-               	newRow.style.height = "20px";
-               	var newCheckboxCell  = newRow.insertCell(0);
-               	var checkbox = document.createElement('input');
-				checkbox.type = "checkbox";
-                chkboxId = window.chkCategoryPrefix + window.categoryDic[key];
-				checkbox.name = chkboxId;
-				checkbox.value = 0;
-				checkbox.id = chkboxId;
-				checkbox.className ="cmn-toggle cmn-toggle-round-flat";
-		        newCheckboxCell.appendChild(checkbox);    
-		        var label = document.createElement('label');
-		        label.setAttribute("for",chkboxId);
-				label.innerHTML = "";
-				newCheckboxCell.appendChild(label);
-				
-				checkbox.addEventListener('click', function() {
-					_updateSelectableLayer();
-			    });
-				
-				/// add category images:
-				var newCell  = newRow.insertCell(1);
-		        newCell.style.verticalAlign = "top";//this will put layer name on first line
-		        
-		        var photo = document.createElement("td");
-				var ulElem = document.createElement("ul");
-				ulElem.setAttribute("id", "navlistSearchfilter2");
-				var newTitle  = document.createElement('div');		        
-				var liHomeElem = null;
-				var aHomeElem = null;
-				indexImage = 0;
-			    liElem = document.createElement("li");
-				liElem.style.left =  "3px";
-				liElem.style.top = "-10px";
-				aElem = document.createElement("a");
-				aElem.title  = key;
-				liElem.appendChild(aElem);
-				ulElem.appendChild(liElem);							
-
-				liElem.setAttribute("id",window.categoryDic[key] + "2");
+    	    var newRow   = tableRef.insertRow(tableRef.rows.length);
+    	    
+           	newRow.style.height = "20px";
+           	var newCheckboxCell  = newRow.insertCell(0);
+           	var checkbox = document.createElement('input');
+			checkbox.type = "checkbox";
+            chkboxId = window.chkCategoryPrefix + window.categoryDic[key];
+			checkbox.name = chkboxId;
+			checkbox.value = 0;
+			checkbox.id = chkboxId;
+			checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+	        newCheckboxCell.appendChild(checkbox);    
+	        var label = document.createElement('label');
+	        label.setAttribute("for",chkboxId);
+			label.innerHTML = "";
+			newCheckboxCell.appendChild(label);
 			
-		        photo.appendChild(ulElem);
-				newTitle.appendChild(photo);
-				newCell.appendChild(newTitle);
-				
-				/// add category title:
-               	var newTitleCell  = newRow.insertCell(2);
-				var title = document.createElement('label');
-				title.innerHTML = key;    
-				newTitleCell.appendChild(title);        
+			checkbox.addEventListener('click', function() {
+				_updateSelectableLayer();
+		    });
+			
+			/// add category images:
+			var newCell  = newRow.insertCell(1);
+	        newCell.style.verticalAlign = "top";//this will put layer name on first line
+	        
+	        var photo = document.createElement("td");
+			var ulElem = document.createElement("ul");
+			ulElem.setAttribute("id", "navlistSearchfilter2");
+			var newTitle  = document.createElement('div');		        
+			var liHomeElem = null;
+			var aHomeElem = null;
+			indexImage = 0;
+		    liElem = document.createElement("li");
+			liElem.style.left =  "3px";
+			liElem.style.top = "-10px";
+			aElem = document.createElement("a");
+			aElem.title  = key;
+			liElem.appendChild(aElem);
+			ulElem.appendChild(liElem);							
+
+			liElem.setAttribute("id",window.categoryDic[key] + "2");
+		
+	        photo.appendChild(ulElem);
+			newTitle.appendChild(photo);
+			newCell.appendChild(newTitle);
+			
+			/// add category title:
+           	var newTitleCell  = newRow.insertCell(2);
+			var title = document.createElement('label');
+			title.innerHTML = key;    
+			newTitleCell.appendChild(title);        
 
 		}
 		document.getElementById("Supply").onclick = function() {
@@ -411,15 +430,6 @@ define([
 			    document.getElementById('butAddAllLayers').click();
 		    }
 		};
-		//on hide and show Benefit Categories, enlarge selectable layers
-		/*document.getElementById("hide1").onclick = function() {
-		    document.getElementById('tableSelectableLayersArea').style.height = "340px";
-		    //document.getElementById('tableSelectableLayersArea').style.height = '20%';
-		};	
-		document.getElementById("show1").onclick = function() {
-		    document.getElementById('tableSelectableLayersArea').style.height = "550px";
-		    //document.getElementById('tableSelectableLayersArea').style.height = '70%';
-		};	*/				
 		layersToBeAdded = "a";
 	    
 
@@ -502,68 +512,71 @@ define([
         newButtonInfoCell.appendChild(buttonInfo);  
         document.getElementById(buttonInfoId).onclick = function(e) {
    			document.getElementById('butOpenSelectCommunityWidget').click();
-				    };   		  		
+	    };   		  		
 
 	},
       startup: function() {
 
         this.inherited(arguments);
-	      	this.fetchDataByName('SelectCommunity');
+	    this.fetchDataByName('SelectCommunity');
+
+		
+		 
 
         loadJSON(function(response) {
             var localLayerConfig = JSON.parse(response);
             var arrLayers = localLayerConfig.layers.layer;
             console.log("arrLayers.length:" + arrLayers.length);
-	            for (index = 0, len = arrLayers.length; index < len; ++index) {
-	            //for (index = 0, len = 409; index < len; ++index) {
+			///search items
+	        var tableOfRelationship = document.getElementById('tableLyrNameDescrTag');
+		    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];    
+            for (index = 0, len = arrLayers.length; index < len; ++index) {
+            //for (index = 0, len = 4; index < len; ++index) {
             	//console.log("index:" + index);
                 layer = arrLayers[index];                          
                 var indexCheckbox = 0;
 
-	                    if(layer.hasOwnProperty('eaID')) {
-	                    	eaID = layer.eaID.toString();
-	                    	if (eaID.trim() != "") {
+                if(layer.hasOwnProperty('eaID')) {
+                	eaID = layer.eaID.toString();
+                	if (eaID.trim() != "") {
 		                    	
-                    if(layer.hasOwnProperty('eaLyrNum')){
-                        eaLyrNum = layer.eaLyrNum.toString();
-		                        }
-		                        else {
-		                        	eaLyrNum = "";
-		                        }
-		                        
-		                    	if(layer.hasOwnProperty('name') && (layer.name != null)){
-		                    		//if (layer.name == null) {
-		                    		//	console.log("eaID:" + eaID + " with layer name null");
-		                    		//}
-		                        	name = layer.name.toString();
-		                        }
-		                        else {
-		                        	name = "";
-		                        }
-		                    	if(layer.hasOwnProperty('eaDescription')){
-		                        	eaDescription = layer.eaDescription.toString();
-		                        }
-		                        else {
-		                        	eaDescription = "";
-		                        }
-		                        if(layer.hasOwnProperty('eaDfsLink')){
-		                        	eaDfsLink = layer.eaDfsLink.toString();
-		                        }
-		                        else {
-		                        	eaDfsLink = "";
-		                        }
-		                        if(layer.hasOwnProperty('eaMetadata')){
-		                        	eaMetadata = layer.eaMetadata.toString();
-		                        }
-		                        else {
-		                        	eaMetadata = "";
-		                        }
-		                        if(layer.hasOwnProperty('eaScale')){
-		                        	eaScale = layer.eaScale.toString();
-		                        }
-		                        else {
-		                        	eaScale = "";
-		                        }		                        
+	                    if(layer.hasOwnProperty('eaLyrNum')){
+	                        eaLyrNum = layer.eaLyrNum.toString();
+	                    }
+	                    else {
+	                    	eaLyrNum = "";
+	                    }
+			                        
+	                	if(layer.hasOwnProperty('name') && (layer.name != null)){
+	                    	name = layer.name.toString();
+	                    }
+	                    else {
+	                    	name = "";
+	                    }
+	                	if(layer.hasOwnProperty('eaDescription')){
+	                    	eaDescription = layer.eaDescription.toString();
+	                    }
+	                    else {
+	                    	eaDescription = "";
+	                    }
+	                    if(layer.hasOwnProperty('eaDfsLink')){
+	                    	eaDfsLink = layer.eaDfsLink.toString();
+	                    }
+	                    else {
+	                    	eaDfsLink = "";
+	                    }
+	                    if(layer.hasOwnProperty('eaMetadata')){
+	                    	eaMetadata = layer.eaMetadata.toString();
+	                    }
+	                    else {
+	                    	eaMetadata = "";
+	                    }
+	                    if(layer.hasOwnProperty('eaScale')){
+	                    	eaScale = layer.eaScale.toString();
+	                    }
+	                    else {
+	                    	eaScale = "";
+	                    }		                        
 					    var eaCategoryWhole =  "";
 					    if(layer.hasOwnProperty('eaBCSDD')){
 					    	for (categoryIndex = 0, lenCategory = layer.eaBCSDD.length; categoryIndex < lenCategory; ++categoryIndex) {
@@ -571,34 +584,78 @@ define([
 					    	}
 					    }
 					    eaCategoryWhole = eaCategoryWhole.substring(0, eaCategoryWhole.length - 1);
-							    //console.log("eaCategoryWhole: "+ eaCategoryWhole);
 					    
-							    var layerItem = {eaLyrNum: eaLyrNum, name: name, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID, eaMetadata: eaMetadata, eaScale: eaScale};
-
+					    var eaTagsWhole =  "";
+					    if(layer.hasOwnProperty('eaTags')){
+					    	for (tagsIndex = 0, lenTags = layer.eaTags.length; tagsIndex < lenTags; ++tagsIndex) {
+					    		eaTagsWhole = eaTagsWhole + layer.eaTags[tagsIndex] + ";";
+					    	}
+					    }
+					    eaTagsWhole = eaTagsWhole.substring(0, eaTagsWhole.length - 1);						    
+				    	var layerItem = {eaLyrNum: eaLyrNum, name: name, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID, eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole};
+	
 						layerDataStore.newItem(layerItem);
-					    
-						    }// end of if (eaID.trim() != "")
-	                    }// end of if(layer.hasOwnProperty('eaID'))                	
+						
+						//add to the table for use of search text		
+			    	    var newRow   = tableRef.insertRow(tableRef.rows.length);
+			    	    
+		               	var newCell  = newRow.insertCell(0);
+						newCell.appendChild(document.createTextNode(eaID));
+						newRow.appendChild(newCell);
+		
+		               	newCell  = newRow.insertCell(1);
+						newCell.appendChild(document.createTextNode(name));
+						newRow.appendChild(newCell);			
+		       
+		               	newCell  = newRow.insertCell(2);
+						newCell.appendChild(document.createTextNode(eaDescription));
+						newRow.appendChild(newCell);
+						
+		               	newCell  = newRow.insertCell(3);
+						newCell.appendChild(document.createTextNode(eaTagsWhole));
+						newRow.appendChild(newCell);					
+					
+						//end of adding of the table for use of search text
+			    
+				    }// end of if (eaID.trim() != "")
+                }// end of if(layer.hasOwnProperty('eaID'))                	
 
-                }
-	        });// end of loadJSON(function(response)
-	        loadCommunityJSON(function(response){
-	        	var community = JSON.parse(response);
+            }// end of for (index = 0, len = arrLayers.length; index < len; ++index) 
+			$('#tableLyrNameDescrTag').DataTable( {
+		        "columnDefs": [
+		            {
+		                "targets": [ 0 ],
+		                "searchable": false
+		            }
+		        ]
+		    } );	
+			$('#tableLyrNameDescrTag').on( 'draw.dt', function () {
+			    _updateSelectableLayer();		    
+			} );
+					    				
+			var page = document.getElementById('tableLyrNameDescrTag_paginate');
+			page.style.display = 'none';	
+				
+			var searchBox = document.getElementById('searchFilterText');
+			searchBox.style.width= "85%";
+        });// end of loadJSON(function(response)
+        loadCommunityJSON(function(response){
+        	var community = JSON.parse(response);
 
-	            for (index = 0, len = community.length; index < len; ++index) {
-	            	currentMetadataCommunityIndex = community[index];
-	            	singleCommunityMetadataDic = {};
-	            	for (var key in window.communityDic) {
-	            		if(currentMetadataCommunityIndex.hasOwnProperty(key)) {
-	            			singleCommunityMetadataDic[key] = currentMetadataCommunityIndex[key];
-	            		}
-	            	}
+            for (index = 0, len = community.length; index < len; ++index) {
+            	currentMetadataCommunityIndex = community[index];
+            	singleCommunityMetadataDic = {};
+            	for (var key in window.communityDic) {
+            		if(currentMetadataCommunityIndex.hasOwnProperty(key)) {
+            			singleCommunityMetadataDic[key] = currentMetadataCommunityIndex[key];
+            		}
+            	}
 
-	            	window.communityMetadataDic[currentMetadataCommunityIndex.MetaID_Community] = singleCommunityMetadataDic;
-	            }
-	        }); // end of loadCommunityJSON(function(response)
+            	window.communityMetadataDic[currentMetadataCommunityIndex.MetaID_Community] = singleCommunityMetadataDic;
+            }
+        }); // end of loadCommunityJSON(function(response)
 		this.displayCategorySelection();
-			this.displayGeographySelection();
+		this.displayGeographySelection();
     },               
                     
 	    _onSingleLayerClick: function() {
