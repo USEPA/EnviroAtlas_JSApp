@@ -1,4 +1,4 @@
-<div style="height:100%;overflow:hidden;" data-dojo-type="dijit/layout/ContentPane" >
+<div>
 
 	<div class="FAQ" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Select by Benefit Categories / Geographies', open: false">
 			<!--<div class="FAQ">
@@ -18,35 +18,23 @@
 					<table id="geographyTable" style="margin:0px 0px 10px 0px">
 							    <tbody>
 							    	<tr>	
+					    							    		
 							    	</tr>
+					    	
 							    </tbody>
-					</table>        
+						    
+					</table>   					     
 				</div>
 			<!--</div>-->
 
 
 	</div>
 
-    <div id="searchboxDiv" data-dojo-type="dijit/layout/ContentPane">
-        <table id="tableLyrNameDescrTag" cellspacing="0" width="100%" style="display:none">
-            <thead>
-                <tr>
-                    <th>eaLyrNum</th>
-                    <th>name</th>
-                    <th>eaDescription</th>
-                    <th>eaTags</th>
-                </tr>
-            </thead>
-
-            <tbody>
-
-            </tbody>
-        </table>
-    </div>
+	<br>
 	<!--div id="numOfLayers" innerHTML =  "&nbsp;" type="text" style = "text-align: left; background-color: green; color:white;height = 20px">
 	
 	</div-->
-	<div id="selectableLayersContainer" data-dojo-type="dijit/layout/ContentPane"  style="background-color: green; width: 100%; height: 20px; border: 0px;padding: 2px 10px 0px 5px;margin:5px 0px 5px 0px">	<!-- padding:0 is good enough ; margin:0 does not work--> 
+	<div id="selectableLayersContainer" dojoType="dijit.layout.ContentPane"  style="background-color: green; width: 100%; height: 20px; border: 0px;padding:0; margin:5px 0px 5px 0px">	<!-- padding:0 is good enough ; margin:0 does not work--> 
 		<input id="numOfLayers" value = "" type="text" style = "background-color: green; color:white; border: none; float: left; vertical-align:center height: 14px;"/>
 		<div>
 			<label for="hideIcons" style = "background-color: green; color:white; border: none; float: right;">Hide Icons</label>	
@@ -58,12 +46,12 @@
 	
 	<!--input id="numOfLayers1" value = "test" type="text" style = "text-align: left; background-color: green; color:white;height = 20px; width = 100%"/-->
 	<br>
-	<div data-dojo-type="dijit/layout/ContentPane" style="padding: 0px 8px 0px 8px;">
+	<div>
 		<input id="selectAllLayers"  type="checkbox"   >
 		<label for="selectAllLayers">Select All Layers</label>			
 	</div>
 
-		<div id="navcontainer" data-dojo-type="dijit/layout/ContentPane" style="margin: 0px 8px 0px 8px; padding: 0px 0px 0px 12px;">
+		<div id="navcontainer">
 			<ul id="navlistSupplyDemand">
 				<li><a href="#">
 					<div >
@@ -92,7 +80,7 @@
 				</a></li>								
 			</ul>
 		</div>
-		<div id="tableSelectableLayersArea" data-dojo-type="dijit/layout/ContentPane" style="overflow-y: scroll;height:100%;">
+		<div id = "tableSelectableLayersArea" style="overflow-y: auto;">
 			<table id="tableSelectableLayers"  >
 			    <tbody>
 			    	<tr>
@@ -101,11 +89,16 @@
 			    </tbody>
 			</table>	
 		</div>
-			<br/>
+		<!-- 	<br>
 			<div>
+<<<<<<< HEAD
+			    <!--<input type="button" value="View Active Layers" data-dojo-attach-event="onclick:_onViewActiveLayersClick" >
+=======
 			    <input id = "butOpenSelectCommunityWidget" type="button" value="View Active Layers" style="display:none" data-dojo-attach-event="onclick:_onViewActiveLayersClick" >
+>>>>>>> origin/master
 			    <input id = "butAddSingleLayer" type="button" value="butAddSingleLayer" style="display:none"  data-dojo-attach-event="onclick:_onSingleLayerClick"> 
 			    <input id = "butAddAllLayers" type="button" value="butAddAllLayers" style="display:none"  data-dojo-attach-event="onclick:_onAddLayersClick"> 
-			</div>
+				<!--input id = "butDelSingleLayer" type="button" value="butDelSingleLayer" style="display:hidden"  data-dojo-attach-event="onclick:_onDelSingleLayerClick">
+			</div> -->
 		
 </div>
