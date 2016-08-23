@@ -134,7 +134,7 @@ define([
 					tdIndex = 0;
 				}				
 				
-				//console.log(eaIDFilteredList);
+				console.log(eaIDFilteredList);
 				//alert(currentCellText);		
 			} ); 
     	
@@ -344,6 +344,16 @@ define([
         baseClass: 'jimu-widget-simplesearchfilter',
 		onReceiveData: function(name, widgetId, data, historyData) {
 			if (name == 'SelectCommunity'){
+				for (var key in chkIdDictionary) {
+				  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
+		        	if (document.getElementById(key).checked )
+		        	{
+		        		
+		        		document.getElementById('butRemAllLayers').click();
+		        		document.getElementById('butAddAllLayers').click();
+		        	}		
+				  }
+				}				
 				communitySelected = data.message;
 				_updateSelectableLayer();
 			}		  
@@ -518,10 +528,7 @@ define([
       startup: function() {
 
         this.inherited(arguments);
-	    this.fetchDataByName('SelectCommunity');
-
-		
-		 
+	    this.fetchDataByName('SelectCommunity');		 
 
         loadJSON(function(response) {
             var localLayerConfig = JSON.parse(response);
@@ -592,7 +599,7 @@ define([
 					    	}
 					    }
 					    eaTagsWhole = eaTagsWhole.substring(0, eaTagsWhole.length - 1);						    
-				    	var layerItem = {eaLyrNum: eaLyrNum, name: name, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID, eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole};
+				    	var layerItem = {eaLyrNum: eaLyrNum, name: name, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole};
 	
 						layerDataStore.newItem(layerItem);
 						
@@ -677,7 +684,7 @@ define([
 			}    
 	    },	
     _onAddLayersClick: function() {
-
+		//alert("_onAddLayersClick");
         layersToBeAdded = "a";
 		for (var key in chkIdDictionary) {
 		  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
@@ -691,6 +698,21 @@ define([
 	    });
 	    this.i ++;
     },
+    _onRemLayersClick: function() {
+		//alert("_onRemLayersClick");
+        layersToBeAdded = "r";
+		for (var key in chkIdDictionary) {
+		  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
+		  	if (document.getElementById(key).checked) {
+            	layersToBeAdded = layersToBeAdded + "," + key.replace("ck", "");
+        	}
+		  }
+		}
+        this.publishData({
+	        message: layersToBeAdded
+	    });
+	    this.i ++;
+    },    
 	    
     _onRemoveLayersClick: function() {
         layersToBeRemoved = "r";

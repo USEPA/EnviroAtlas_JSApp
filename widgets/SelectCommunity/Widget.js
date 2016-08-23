@@ -126,7 +126,7 @@ function(declare,
     },
     _onSelectCommunityClick: function() {
 
-
+		window.communitySelected = communitySelected;
         this.publishData({
 	        message: communitySelected
 	    });

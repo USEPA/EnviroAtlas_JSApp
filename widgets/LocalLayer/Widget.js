@@ -190,6 +190,8 @@ define([
                 else {
                 	lLayer = new FeatureLayer(layer.url , lOptions);
                 }
+
+
                 //lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
                 lLayer.minScale = 1155581.108577;
                 if(layer.name){
@@ -201,13 +203,24 @@ define([
                   evt.layer.name = lOptions.id;
                 });
                 
-                lLayer.id = window.layerIdPrefix + layer.eaID;
+                lLayer.id = window.layerIdPrefix + layer.eaID.toString();
                 var bNeedToBeAdded = false;
+                console.log("DefinitionExpression: "+ "Community = '" +window.communityDic[window.communitySelected] + "'");
                 var stringArray = selectedLayerNum.split(",");
                 	for (i in stringArray) {
                 		//console.log("stringArray[i]: " + stringArray[i]);
                 		console.log("layer.eaID.toString(): " + layer.eaID.toString());
-						if ((stringArray[i])==(layer.eaID.toString())) {
+						if (((stringArray[i])==(layer.eaID.toString())) && bPopup) {
+			                if(layer.hasOwnProperty('eaScale')){
+			                	if (layer.eaScale == "COMMUNITY") {
+					    			if ((window.communitySelected != "") && (window.communitySelected != window.strAllCommunity)){
+										
+										lLayer.setDefinitionExpression("Community = '" +window.communityDic[window.communitySelected] + "'");
+										
+									}
+								}
+							}
+						
 							console.log("layer.eaID: " + layer.eaID.toString());
 						    bNeedToBeAdded = true;
 						    break;
@@ -223,7 +236,9 @@ define([
 					    if(lyrTiled){
 				       	     lyrTiled.setOpacity(layer.opacity);
 				        } 
-	                }                
+	                }      
+	                //alert("community Selected: "+ communitySelected); 
+	                //alert("DefinitionExpression: "+ "Community = " +window.communityDic[communitySelected]);          
 	                lLayer.setVisibility(false);//turn off the layer when first added to map and let user to turn on	
                 	this._viewerMap.addLayer(lLayer);
                 }
@@ -310,6 +325,11 @@ define([
     var clazz = declare([BaseWidget], {
 	  onReceiveData: function(name, widgetId, data, historyData) {
 		  if (name == 'SimpleSearchFilter'){
+			  //set selected community
+			  if (data.message.includes(window.communitySelectMessagePrefix)) {
+				  	communitySelected = data.message.substring(window.communitySelectMessagePrefix.length + 1);
+				  	//alert("community: " + communitySelected);
+			  }			  	
 			  var stringArray = data.message.split(",");
 			  if (stringArray[0] == "a") {
 			  	_addSelectedLayers(this.config.layers.layer, data.message.substring(2));

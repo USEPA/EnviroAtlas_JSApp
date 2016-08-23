@@ -84,6 +84,8 @@ define(["./ConfigManager",
     window.communityDic["TFL"] = "Tampa, FL";
     window.communityDic["WIA"] = "Woodbine, IA";
     
+    window.communitySelected = window.strAllCommunity;
+    
     window.communityMetadataDic = {};
                 
     //patch for JS API 3.10
