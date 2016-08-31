@@ -184,42 +184,43 @@ define([
                 if(layer.hasOwnProperty('showLabels')){
                   lOptions.showLabels = true;
                 }
-                if(layer.hasOwnProperty('eaLyrNum')){
-                  lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
-                }
-                else {
-                	lLayer = new FeatureLayer(layer.url , lOptions);
-                }
 
-
-                //lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
-                lLayer.minScale = 1155581.108577;
-                if(layer.name){
-                  lLayer._titleForLegend = layer.name;
-                  lLayer.title = layer.name;
-                  lLayer.noservicename = true;
-                }
-                lLayer.on('load',function(evt){
-                  evt.layer.name = lOptions.id;
-                });
-                
-                lLayer.id = window.layerIdPrefix + layer.eaID.toString();
                 var bNeedToBeAdded = false;
-                console.log("DefinitionExpression: "+ "Community = '" +window.communityDic[window.communitySelected] + "'");
+                console.log("before set DefinitionExpression: "+ "Community = '" +window.communityDic[window.communitySelected] + "'");
                 var stringArray = selectedLayerNum.split(",");
                 	for (i in stringArray) {
                 		//console.log("stringArray[i]: " + stringArray[i]);
                 		console.log("layer.eaID.toString(): " + layer.eaID.toString());
 						if (((stringArray[i])==(layer.eaID.toString())) && bPopup) {
-			                if(layer.hasOwnProperty('eaScale')){
+			                if(layer.hasOwnProperty('eaLyrNum')){
+			                  lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
+			                }
+			                else {
+			                	lLayer = new FeatureLayer(layer.url , lOptions);
+			                }
+			
+			
+			                //lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
+			                lLayer.minScale = 1155581.108577;
+			                if(layer.name){
+			                  lLayer._titleForLegend = layer.name;
+			                  lLayer.title = layer.name;
+			                  lLayer.noservicename = true;
+			                }
+			                lLayer.on('load',function(evt){
+			                  evt.layer.name = lOptions.id;
+			                });
+			                
+			                lLayer.id = window.layerIdPrefix + layer.eaID.toString();							
+			                /*if(layer.hasOwnProperty('eaScale')){
 			                	if (layer.eaScale == "COMMUNITY") {
 					    			if ((window.communitySelected != "") && (window.communitySelected != window.strAllCommunity)){
-										
+										console.log("setDefinitionExpression: "  +"Community = '" +window.communityDic[window.communitySelected] + "'");
 										lLayer.setDefinitionExpression("Community = '" +window.communityDic[window.communitySelected] + "'");
 										
 									}
 								}
-							}
+							}*/
 						
 							console.log("layer.eaID: " + layer.eaID.toString());
 						    bNeedToBeAdded = true;
