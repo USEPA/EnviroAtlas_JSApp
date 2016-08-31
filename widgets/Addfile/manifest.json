@@ -1,5 +1,5 @@
 {
-  "name": "AddShapefile",
+  "name": "Addfile",
   "type": "widget",
   "label": "Add Shapefile",
   "platform": "HTML",

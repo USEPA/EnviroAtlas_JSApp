@@ -1,0 +1,83 @@
+div.jimu-widget-addwebmapdata.content-container {
+    width: 100%;
+    height: 100%;
+    min-width: 300px;
+}
+
+.jimu-widget-addwebmapdata .help-text {
+    color: silver;
+}
+
+.jimu-widget-addwebmapdata .tab-container {
+    width: 100%;
+    height: 100%;
+}
+
+div.jimu-widget-addwebmapdata > div.tab-container > div.jimu-tab3 {
+    height: 100%;
+}
+
+div.jimu-widget-addwebmapdata .jimu-item-table .item-info {
+    left: 100px;
+}
+
+div.jimu-widget-addwebmapdata .jimu-item-table .item-thumbnail {
+    width: 85px;
+    height: 85px;
+}
+
+div.jimu-widget-addwebmapdata .jimu-item-table .item-name {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+div.jimu-widget-addwebmapdata .jimu-item-table .item-date {
+    margin-top: 5px;
+}
+
+div.jimu-widget-addwebmapdata .jimu-item-table .item-details {
+    margin-top: 5px;
+}
+
+div.jimu-widget-addwebmapdata .jimu-item-table .items-table .item {
+    position: relative;
+    width: 100%;
+    height: 95px;
+}
+
+div.jimu-widget-addwebmapdata .item {
+    border: 1px solid #eee;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+}
+
+div.jimu-widget-addwebmapdata .item.jimu-state-active,
+div.jimu-widget-addwebmapdata .item:hover {
+    border: 1px solid #15a4fa;
+    background-color: #15a4fa;
+    color: white;
+}
+
+div.jimu-widget-addwebmapdata .item:hover a,
+div.jimu-widget-addwebmapdata .item.jimu-state-active a {
+    color: white;
+}
+
+div.jimu-widget-addwebmapdata .sign-out-btn {
+    font-weight: bold;
+}
+
+div.jimu-widget-addwebmapdata .sign-out-btn {
+    font-weight: bold;
+    color: #15a4fa;
+    display: inline;
+    margin-left: 10px;
+}
+
+div.jimu-widget-addwebmapdata .sign-out-btn:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

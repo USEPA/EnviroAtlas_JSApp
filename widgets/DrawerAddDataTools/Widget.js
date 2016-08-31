@@ -29,7 +29,7 @@ function(declare, BaseWidget, WidgetManager, PanelManager, on, dom, domConstruct
         var widgets = self.appConfig.getConfigElementsByName(w);
         var widgetLabel = widgets[0].label;
         //Add buttons into widget
-        domConstruct.place('<div style="left: 0px; top: ' + topLocation + 'px; right: auto; bottom: auto; width: 100%; height: 40px; padding: 0px; z-index: auto;line-height: 40px" class="jimu-widget-onscreen-icon" id="widget_' + w + '"><img style="float:left" src="widgets/' + w + '/images/icon.png"><span class="droplabel" >' + widgetLabel + '</span></div>', dom.byId("drawerNode"));
+        domConstruct.place('<div style="left: 0px; top: ' + topLocation + 'px; right: auto; bottom: auto; width: 100%; height: 40px; padding: 0px; z-index: auto;line-height: 40px" class="jimu-widget-onscreen-icon" id="widget_' + w + '"><img style="float:left" src="widgets/' + w + '/images/icon.png"><span class="droplabel" >' + widgetLabel + '</span></div>', dom.byId("drawerAddDataNode"));
         //create click event
         self._setWidgetOpenHandler(w);
         //move next button down 40px

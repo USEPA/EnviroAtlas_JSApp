@@ -1,0 +1,26 @@
+<div class="content-container jimu-item-selector">
+    <div id="map2" style="display: none"></div>
+    <div class="tab-container">
+        <div data-dojo-attach-point="tabNode"></div>
+
+        <div class="tab-content mycontent-tab" data-dojo-attach-point="mycontentTabNode">
+            <div class="tab-content-main mycontent-tab-content-main">
+                <div id="signin-panel" data-dojo-attach-point="signInPanel">
+                    <div class="jimu-btn" data-dojo-attach-point="signInButton" data-dojo-attach-event="onclick:doSignIn">Sign In</div>
+                    <div class="help-text">Sign in to view your map layers</div>
+                </div>
+                <div id="signin-panel" data-dojo-attach-point="signOutPanel">
+                    <div class="help-text" style="display:inline" data-dojo-attach-point="signOutMessage"></div>
+                    <div class="sign-out-btn" data-dojo-attach-point="signOutButton" data-dojo-attach-event="onclick:doSignOut">Sign Out</div>
+                </div>
+                <div data-dojo-attach-point="mycontentItemTable" data-dojo-type="widgets/AddWebMapData/ItemTable" data-dojo-props='types:${_itemTypes},typeKeywords:${_typeKeywords}' style="top:50px;"></div>
+            </div>
+        </div>
+
+        <div class="tab-content public-tab" data-dojo-attach-point="publicTabNode">
+            <div class="tab-content-main public-tab-content-main">
+                <div data-dojo-attach-point="publicItemTable" data-dojo-type="widgets/AddWebMapData/ItemTable" data-dojo-props='types:${_itemTypes},typeKeywords:${_typeKeywords}'></div>
+            </div>
+        </div>
+    </div>
+</div>
