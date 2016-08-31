@@ -1,5 +1,5 @@
 {
-  "showLegend": true,
+  "showLegend": false,
   "contextMenu": {
 	"ZoomTo": true,
 	"Transparency": true,

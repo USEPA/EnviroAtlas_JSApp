@@ -72,10 +72,10 @@ define(["./ConfigManager",
     window.communityDic["DNC"]= "Durham, NC";
     window.communityDic["FCA"] = "Fresno, CA";
     window.communityDic["GBWI"] = "Green Bay, WI";
-    window.communityDic["MTN"] = "Memphis, Tennessee";
+    window.communityDic["MTN"] = "Memphis, TN";
     window.communityDic["MWI"] = "Milwaukee, WI";
     window.communityDic["NBMA"] = "New Bedford, MA";
-    window.communityDic["NYNY"] = "New York, New York";
+    window.communityDic["NYNY"] = "New York, NY";
     window.communityDic["PNJ"] = "Paterson, NJ";
     window.communityDic["PAZ"] = "Phoenix, AZ";
     window.communityDic["PitPA"] = "Pittsburgh, PA";
