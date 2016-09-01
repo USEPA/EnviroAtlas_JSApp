@@ -367,8 +367,8 @@ define(['dojo/_base/declare',
                 var mapDeferred = arcgisUtils.createMap(mapid, "map2").then(function(response){
 
                     //testmap.addLayers(response.map._layers['EPARegions_2826']);
-                    console.log("This is the Map: ", response.map);
-                    console.log("THIS IS the layer id count :: ", response.map.layerIds.length);
+                    //console.log("This is the Map: ", response.map);
+                    console.log("THIS IS the layer id count :: ", response.map.layerIds);
                     var idList = response.map.layerIds;
                     var graphicLayerList = response.map.graphicsLayerIds;
                     console.log("Graphic IDs :: ",response.map.graphicsLayerIds);
@@ -376,25 +376,34 @@ define(['dojo/_base/declare',
                         //console.log(lId.url);
 
                         var someLayer = response.map.getLayer(lId);
-                        console.log("Layer to Add :: ", someLayer);
+                        //console.log("Layer to Add :: ", someLayer);
                         //if(someLayer.id != "defaultBasemap"){ //_basemapGalleryLayerType
                         if(someLayer._basemapGalleryLayerType != "basemap"){
-                            testmap.addLayer(someLayer);
+                            var l = testmap.addLayer(someLayer);
+                            // l.hide();
+                            // l.show();
                         }
-                    });
-                    graphicLayerList.forEach(function(gId){
-                        console.log("GraphicLayer Id :: ", gId);
-                       var someGL = response.map.getLayer(gId);
-                        console.log("GraphicLayer :: ", someGL.type);
-                        testmap.addLayer(someGL);
+                        //testmap.getLayer(lId).setVisibility(true);
                     });
 
+                    graphicLayerList.forEach(function(gId){
+                        //console.log("GraphicLayer Id :: ", gId);
+                       var someGL = response.map.getLayer(gId);
+                        //console.log("GraphicLayer :: ", someGL.type);
+                        var gl = testmap.addLayer(someGL);
+                        // gl.setVisibility(false);
+                        // gl.setVisibility(true);
+                        //gl.show();
+                    });
+
+                    //testmap.addLayers(layerArray);
+                    //testmap.getLayer(gId).setVisibility(true);
                 // mapDeferred.then(function(response) {
                 //     map3 = response.map;
                 //     console.log("THIS IS THE ITEM :: ", map3);
                 // });
                 //console.log("THIS IS THE ITEM :: ", mapDeferred);
-                console.log(w);
+                console.log(testmap.getLayersVisibleAtScale());
                     PanelManager.getInstance().closePanel(w.id + "_panel");
                 // var mapConfig,
                 //     onMapChanged,
