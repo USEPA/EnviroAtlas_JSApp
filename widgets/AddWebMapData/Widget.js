@@ -357,44 +357,69 @@ define(['dojo/_base/declare',
             _onItemSelected: function (item) {
                 testmap = this.map;
                 console.log("THIS IS THE ITEM :: ", item);
+
+                item.getItemData().then(function(response){
+                    console.log("Response :: ", response);
+                    response.operationalLayers.forEach(function(l){
+                       console.log("Web Map Layers:: ",l.layerType);
+                        if(l.layerType == 'ArcGISMapServiceLayer'){
+                            tempLayer = new ArcGISDynamicMapServiceLayer(l.url, {
+                                id: l.id,
+                                opacity: l.opacity
+                            });
+
+                        }else if(l.layerType == 'ArcGISFeatureLayer'){
+                            tempLayer = new FeatureLayer(l.url, {
+                                mode: FeatureLayer.MODE_ONDEMAND,
+                                id: l.id,
+                                opacity: l.opacity,
+                                outFields: ["*"]
+                            });
+                        }else{
+                            console.log("Error:: Layer of unknown type");
+                        }
+                        testmap.addLayer(tempLayer);
+
+                    });
+                });
+                //console.log("THIS IS THE STUFF", response.operationalLayers);
                 //console.log("this is new Map",newMap.itemInfo.itemData.operationalLayers);
                 //this.map.addLayers(newMap.itemInfo.itemData.operationalLayers);
                 var mapid=item.id;
 
-                console.log(item.isLayer);
+                //var mapDeferred = arcgisUtils.createMap(mapid, "map2").then(function(response){
 
-
-                var mapDeferred = arcgisUtils.createMap(mapid, "map2").then(function(response){
-
-                    //testmap.addLayers(response.map._layers['EPARegions_2826']);
-                    //console.log("This is the Map: ", response.map);
-                    console.log("THIS IS the layer id count :: ", response.map.layerIds);
-                    var idList = response.map.layerIds;
-                    var graphicLayerList = response.map.graphicsLayerIds;
-                    console.log("Graphic IDs :: ",response.map.graphicsLayerIds);
-                    idList.forEach(function(lId){
-                        //console.log(lId.url);
-
-                        var someLayer = response.map.getLayer(lId);
-                        //console.log("Layer to Add :: ", someLayer);
-                        //if(someLayer.id != "defaultBasemap"){ //_basemapGalleryLayerType
-                        if(someLayer._basemapGalleryLayerType != "basemap"){
-                            var l = testmap.addLayer(someLayer);
-                            // l.hide();
-                            // l.show();
-                        }
-                        //testmap.getLayer(lId).setVisibility(true);
-                    });
-
-                    graphicLayerList.forEach(function(gId){
-                        //console.log("GraphicLayer Id :: ", gId);
-                       var someGL = response.map.getLayer(gId);
-                        //console.log("GraphicLayer :: ", someGL.type);
-                        var gl = testmap.addLayer(someGL);
-                        // gl.setVisibility(false);
-                        // gl.setVisibility(true);
-                        //gl.show();
-                    });
+                    // //testmap.addLayers(response.map._layers['EPARegions_2826']);
+                    // //console.log("This is the Map: ", response.map);
+                    // console.log("THIS IS the layer id count :: ", response.map.layerIds);
+                    // var idList = response.map.layerIds;
+                    // var graphicLayerList = response.map.graphicsLayerIds;
+                    // console.log("Graphic IDs :: ",response.map.graphicsLayerIds);
+                    // idList.forEach(function(lId){
+                    //     //console.log(lId.url);
+                    //
+                    //     var someLayer = response.map.getLayer(lId);
+                    //     console.log("Layer to Add :: ", someLayer.type);
+                    //     //if(someLayer.id != "defaultBasemap"){ //_basemapGalleryLayerType
+                    //     if(someLayer._basemapGalleryLayerType != "basemap"){
+                    //         var l = testmap.addLayer(someLayer);
+                    //
+                    //         //var l2 = new ArcGISDynamicMapServiceLayer()
+                    //         // l.hide();
+                    //         // l.show();
+                    //     }
+                    //     //testmap.getLayer(lId).setVisibility(true);
+                    // });
+                    //
+                    // graphicLayerList.forEach(function(gId){
+                    //     //console.log("GraphicLayer Id :: ", gId);
+                    //    var someGL = response.map.getLayer(gId);
+                    //     console.log("GraphicLayer :: ", someGL.type);
+                    //     var gl = testmap.addLayer(someGL);
+                    //     // gl.setVisibility(false);
+                    //     // gl.setVisibility(true);
+                    //     //gl.show();
+                    // });
 
                     //testmap.addLayers(layerArray);
                     //testmap.getLayer(gId).setVisibility(true);
@@ -449,7 +474,7 @@ define(['dojo/_base/declare',
                 // //            MapManager.getInstance().showMap();
 
                 //console.log('ChangeWebMap :: _onItemSelected :: map change to ', mapConfig);
-                });
+                //});
             }
 
         });
