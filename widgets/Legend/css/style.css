@@ -5,3 +5,7 @@
 .esriLegendLayer{
   font-size: 12px;
 }
+.esriLegendService {
+  padding-bottom: 0;
+  padding-top: 0;
+}

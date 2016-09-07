@@ -373,7 +373,7 @@ define([
       } else {
         //fold
         domStyle.set(subNode, 'display', 'none');
-        //domClass.remove(imageShowLegendNode, "layers-list-imageShowLegend-down");
+        domClass.remove(imageShowLegendNode, "layers-list-imageShowLegend-down");
         var src;
         if (isRTL) {
           src = this.layerListWidget.folderUrl + 'images/v_left.png';

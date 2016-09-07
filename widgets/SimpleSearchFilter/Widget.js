@@ -78,7 +78,7 @@ define([
 		  return false;  
 		};
 
-    	var dataFactSheet = "https://leb.epa.gov/projects/EnviroAtlas/currentDevelopment/";
+
 		var chkIdDictionary = {};
 		  var loadJSON = function(callback){   
 	
@@ -296,7 +296,7 @@ define([
 			        hashFactsheetLink[buttonInfoId] = eaDfsLink;
 			        hashLayerNameLink[buttonInfoId] = layerName;
 			        document.getElementById(buttonInfoId).onclick = function(e) {
-				        //window.open(dataFactSheet + selectableLayerArray[i]['eaDfsLink']);//this will open the wrong link
+				        //window.open(window.dataFactSheet + selectableLayerArray[i]['eaDfsLink']);//this will open the wrong link
 				        if (hashFactsheetLink[this.id] == "N/A") {
 			        		var dataFactNote = new Dialog({
 						        title: hashLayerNameLink[this.id],
@@ -306,7 +306,7 @@ define([
 					        dataFactNote.set("content", "Data fact sheet link is not available!");
 			
 				        } else {
-				        	window.open(dataFactSheet + hashFactsheetLink[this.id]);
+				        	window.open(window.dataFactSheet + hashFactsheetLink[this.id]);
 				        }		      
 				    };    	
 				}//end of if (currentLayerSelectable)
