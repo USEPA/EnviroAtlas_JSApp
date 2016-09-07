@@ -30,7 +30,6 @@ define([
 ], function(declare, array, lang, Deferred, all, portalUrlUtils, WidgetManager, PanelManager, esriLang,
   graphicsUtils, NlsStrings,Dialog) {
   var mapDescriptionStr = "";
-  var dataFactSheet = "http://leb.epa.gov/projects/EnviroAtlas/currentDevelopment/";
   var loadJSON = function(callback){   
 
         var xobj = new XMLHttpRequest();
@@ -132,9 +131,9 @@ define([
       //}, {
       //  key: 'movedown',
       //  label: this.nls.itemMoveDown
-      //}, {
-      //  key: 'table',
-      //  label: this.nls.itemToAttributeTable
+      }, {
+        key: 'table',
+        label: this.nls.itemToAttributeTable
       }, {
         key: 'controlPopup',
         label: this.nls.removePopup
@@ -348,6 +347,44 @@ define([
         evt.layerListView.moveDownLayer(this._layerInfo.id);
       }
     },
+    _onTableItemClick: function(evt) {
+      this._layerInfo.getSupportTableInfo().then(lang.hitch(this, function(supportTableInfo) {
+        var widgetManager;
+        var attributeTableWidgets;
+        var attributeTableHasLoaded;
+        if(supportTableInfo.isSupportedLayer &&
+           supportTableInfo.isSupportQuery) {
+          widgetManager = WidgetManager.getInstance();
+          attributeTableWidgets = widgetManager.getWidgetsByName("AttributeTable");
+          attributeTableHasLoaded = attributeTableWidgets.length > 0;
+          if(attributeTableHasLoaded) {
+            if(attributeTableWidgets[0].state !== 'closed') {
+              // publish data
+              evt.layerListWidget.publishData({
+                'target': 'AttributeTable',
+                'layer': this._layerInfo
+              });
+            } else {
+              widgetManager.openWidget(attributeTableWidgets[0].id);
+              evt.layerListWidget.publishData({
+                'target': 'AttributeTable',
+                'layer': this._layerInfo
+              });
+            }
+          } else {
+            var attributeTableWidget =
+                      this.layerListWidget.appConfig.getConfigElementsByName("AttributeTable")[0];
+            evt.layerListWidget.openWidgetById(attributeTableWidget.id)
+            .then(lang.hitch(this, function() {
+              evt.layerListWidget.publishData({
+                'target': 'AttributeTable',
+                'layer': this._layerInfo
+              });
+            }));
+          }
+        }
+      }));
+    },
 
     _onItemMapDescriptionClick: function(evt) {
         layerId = this._layerInfo.id;
@@ -357,8 +394,8 @@ define([
            
             for (index = 0, len = arrLayers.length; index < len; ++index) {
                 layer = arrLayers[index];
-                if(layer.hasOwnProperty('eaLyrNum')){
-                    if (layerId === (window.layerIdPrefix + layer.eaLyrNum.toString())) {
+                if(layer.hasOwnProperty('eaID')){
+                    if (layerId === (window.layerIdPrefix + layer.eaID.toString())) {
                         if(layer.hasOwnProperty('eaDescription')){
 					    	var mapDescription = new Dialog({
 						        title: layer.name,
@@ -382,11 +419,11 @@ define([
            
             for (index = 0, len = arrLayers.length; index < len; ++index) {
                 layer = arrLayers[index];
-                if(layer.hasOwnProperty('eaLyrNum')){
-                    if (layerId === ("eaLyrNum_" + layer.eaLyrNum.toString())) {
+                if(layer.hasOwnProperty('eaID')){
+                    if (layerId === (window.layerIdPrefix + layer.eaID.toString())) {
                         if(layer.hasOwnProperty('eaDfsLink')){
                             //window.open(window.location.href + layer.eaDfsLink);
-                            window.open(dataFactSheet + layer.eaDfsLink);
+                            window.open(window.dataFactSheet + layer.eaDfsLink);
                             break;
                         }
                     }
@@ -424,8 +461,8 @@ define([
            
             for (index = 0, len = arrLayers.length; index < len; ++index) {
                 layer = arrLayers[index];
-                if(layer.hasOwnProperty('eaLyrNum')){
-                    if (layerId === (window.layerIdPrefix + layer.eaLyrNum.toString())) {
+                if(layer.hasOwnProperty('eaID')){
+                    if (layerId === (window.layerIdPrefix + layer.eaID.toString())) {
                         if(layer.hasOwnProperty('eaMetadata')){
                             window.open(layer.eaMetadata);
                             break;

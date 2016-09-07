@@ -48,6 +48,11 @@ define(["./ConfigManager",
     window.addedLayerIdPrefix = "added_";
     window.removeAllMessage = "removeAll";
     window.chkCategoryPrefix = "ckCategory_";
+    
+    window.dataFactSheet = "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/";
+    //window.matadata = "https://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7BBDF514A6-05A8-400D-BF3D-030645461334%7D";
+	window.matadata = "https://edg.epa.gov/metadata/catalog/search/resource/details.page";//?uuid=%7BBDF514A6-05A8-400D-BF3D-030645461334%7D";
+    
     window.bFirstLoadFilterWidget = true;
     window.allLayerNumber = [];
     window.categoryDic = {};
