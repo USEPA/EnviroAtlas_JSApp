@@ -33,6 +33,7 @@ define(['dojo/_base/declare',
     'esri/layers/FeatureLayer',
     'esri/layers/layer',
     'esri/layers/ArcGISDynamicMapServiceLayer',
+    'esri/dijit/PopupTemplate',
         'jimu/PanelManager',
         'jimu/ConfigManager',
         'jimu/MapManager',
@@ -59,6 +60,7 @@ define(['dojo/_base/declare',
               FeatureLayer,
               layer,
               ArcGISDynamicMapServiceLayer,
+              PopupTemplate,
               PanelManager,
         ConfigManager,
         MapManager,
@@ -356,125 +358,76 @@ define(['dojo/_base/declare',
             // when a web map is selected make it active, but keep the extent
             _onItemSelected: function (item) {
                 testmap = this.map;
-                console.log("THIS IS THE ITEM :: ", item);
+                //console.log("THIS IS THE ITEM :: ", item);
 
                 item.getItemData().then(function(response){
-                    console.log("Response :: ", response);
+                    console.log("Response(WebMap) :: ", response);
                     response.operationalLayers.forEach(function(l){
-                       console.log("Web Map Layers:: ",l.layerType);
-                        if(l.layerType == 'ArcGISMapServiceLayer'){
-                            tempLayer = new ArcGISDynamicMapServiceLayer(l.url, {
-                                id: l.id,
-                                opacity: l.opacity
-                            });
 
-                        }else if(l.layerType == 'ArcGISFeatureLayer'){
-                            tempLayer = new FeatureLayer(l.url, {
-                                mode: FeatureLayer.MODE_ONDEMAND,
-                                id: l.id,
-                                opacity: l.opacity,
-                                outFields: ["*"]
-                            });
-                        }else{
-                            console.log("Error:: Layer of unknown type");
+                        if(l.url){
+                            console.log("Web Map Layers:: ",l.layerType);
+                            if(l.layerType == 'ArcGISMapServiceLayer'){
+                                //Get the layer
+                                tempLayer = new ArcGISDynamicMapServiceLayer(l.url, {
+                                    id: l.id,
+                                    opacity: l.opacity,
+                                });
+                                //if layers have popupInfo grab them
+                                if(l.layers){
+
+                                    var infoTemps=[];
+                                    l.layers.forEach(function(iL){
+                                        var popupTemplate = new PopupTemplate(iL.popupInfo);
+                                        var infoTemp = {
+                                            infoTemplate: popupTemplate,
+                                            layerUrl: null
+                                        }
+                                        infoTemps.push(infoTemp);
+                                    });
+                                    tempLayer.setInfoTemplates(infoTemps);
+                                }
+
+                            }else if(l.layerType == 'ArcGISFeatureLayer'){
+                                tempLayer = new FeatureLayer(l.url, {
+                                    mode: FeatureLayer.MODE_ONDEMAND,
+                                    id: l.id,
+                                    opacity: l.opacity,
+                                    outFields: ["*"]
+                                });
+                                if(l.popupInfo){
+                                    var popupTemplate = new PopupTemplate(l.popupInfo);
+                                    tempLayer.infoTemplate = popupTemplate;
+                                }
+                            }
                         }
-                        testmap.addLayer(tempLayer);
+                        else{
+                            if(l.featureCollection){
+                                console.log("Web Map Layers:: FeatureCollection");
+                                l.featureCollection.layers.forEach(function(subL){
+                                    tempLayer = new FeatureLayer(subL,{
+                                       id: l.id
+                                    });
 
+                                    if(subL.popupInfo){
+                                        var popupTemplate = new PopupTemplate(subL.popupInfo);
+                                        tempLayer.infoTemplate = popupTemplate;
+                                    }
+                                });
+                            }else{
+                                console.log("Error:: Layer of unknown type");
+                            }
+                        }
+                        if(tempLayer){
+                            testmap.addLayer(tempLayer);
+                        }
+                        //testmap.addLayer(tempLayer);
                     });
                 });
-                //console.log("THIS IS THE STUFF", response.operationalLayers);
-                //console.log("this is new Map",newMap.itemInfo.itemData.operationalLayers);
-                //this.map.addLayers(newMap.itemInfo.itemData.operationalLayers);
+
                 var mapid=item.id;
 
-                //var mapDeferred = arcgisUtils.createMap(mapid, "map2").then(function(response){
-
-                    // //testmap.addLayers(response.map._layers['EPARegions_2826']);
-                    // //console.log("This is the Map: ", response.map);
-                    // console.log("THIS IS the layer id count :: ", response.map.layerIds);
-                    // var idList = response.map.layerIds;
-                    // var graphicLayerList = response.map.graphicsLayerIds;
-                    // console.log("Graphic IDs :: ",response.map.graphicsLayerIds);
-                    // idList.forEach(function(lId){
-                    //     //console.log(lId.url);
-                    //
-                    //     var someLayer = response.map.getLayer(lId);
-                    //     console.log("Layer to Add :: ", someLayer.type);
-                    //     //if(someLayer.id != "defaultBasemap"){ //_basemapGalleryLayerType
-                    //     if(someLayer._basemapGalleryLayerType != "basemap"){
-                    //         var l = testmap.addLayer(someLayer);
-                    //
-                    //         //var l2 = new ArcGISDynamicMapServiceLayer()
-                    //         // l.hide();
-                    //         // l.show();
-                    //     }
-                    //     //testmap.getLayer(lId).setVisibility(true);
-                    // });
-                    //
-                    // graphicLayerList.forEach(function(gId){
-                    //     //console.log("GraphicLayer Id :: ", gId);
-                    //    var someGL = response.map.getLayer(gId);
-                    //     console.log("GraphicLayer :: ", someGL.type);
-                    //     var gl = testmap.addLayer(someGL);
-                    //     // gl.setVisibility(false);
-                    //     // gl.setVisibility(true);
-                    //     //gl.show();
-                    // });
-
-                    //testmap.addLayers(layerArray);
-                    //testmap.getLayer(gId).setVisibility(true);
-                // mapDeferred.then(function(response) {
-                //     map3 = response.map;
-                //     console.log("THIS IS THE ITEM :: ", map3);
-                // });
-                //console.log("THIS IS THE ITEM :: ", mapDeferred);
                 console.log(testmap.getLayersVisibleAtScale());
                     PanelManager.getInstance().closePanel(w.id + "_panel");
-                // var mapConfig,
-                //     onMapChanged,
-                //     options;
-                //
-                // mapConfig = {
-                //     "itemId": item.id
-                // };
-                //
-                // // set the map options to override the default extent with the current extent
-                // // to zoom to default extent of map, do not set the map options
-                // options = this.getCurrentMapOptions();
-                // if (options) {
-                //     mapConfig.mapOptions = options;
-                // }
-                //
-                // console.log('ChangeWebMap :: zoomToItem :: map itemid ', this.map.itemId);
-                // // when the map is loaded it uses the previous extext
-                // // prompt user to zoom to the default extent of new map
-                // onMapChanged = topic.subscribe("mapChanged", lang.hitch(this, function (newMap) {
-                //
-                //     console.log('ChangeWebMap :: _onItemSelected :: map changed from  ', this.map.itemId, ' to ', newMap);
-                //
-                //     // update map reference here
-                //     // since this.map still refers to old map?
-                //     // ConfigManager has not recreated widget with new map yet
-                //     this.map = newMap;
-                //
-                //     this.promptUserToZoomToItem(item);
-                //     // do not listen any more
-                //     onMapChanged.remove();
-                // }));
-                //
-                //
-                // // this is the official way to do this, but reloads the whole app instead of just the map
-                // // MapManager.getInstance().onAppConfigChanged(this.appConfig, 'mapChange', mapConfig);
-                // ConfigManager.getInstance()._onMapChanged(mapConfig);
-                //
-                // //so manually apply config and recreate map
-                // //            lang.mixin(this.appConfig.map, mapConfig);
-                // //            this.map.destroy();
-                // //            debugger;
-                // //            MapManager.getInstance().showMap();
-
-                //console.log('ChangeWebMap :: _onItemSelected :: map change to ', mapConfig);
-                //});
             }
 
         });
