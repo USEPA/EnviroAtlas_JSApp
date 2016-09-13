@@ -241,7 +241,7 @@
 					"left" : 545,
 					"top" : 5,
 					"width" : 230,
-					"height" : 220,
+					"height" : 185,
 					"relativeTo" : "map"
 				},
 				"placeholderIndex" : 1,
@@ -277,7 +277,7 @@
 				"placeholderIndex" : 1,
 				"id" : "widgets_AddData_30",
 				"name" : "Add Data",
-				"label" : "Add Data",
+				"label" : "Add Online Data",
 				"version" : "1.3",
 				"uri" : "widgets/AddData/Widget",
 				"config" : "widgets/AddData/config.json"
@@ -292,25 +292,10 @@
 				"placeholderIndex" : 1,
 				"id" : "widgets_Addfile_28",
 				"name" : "Add File",
-				"label" : "Add File",
+				"label" : "Upload Data",
 				"version" : "1.3",
 				"uri" : "widgets/Addfile/Widget",
 				"config" : "widgets/Addfile/config.json"
-			},{
-				"position" : {
-					"left" : 645,
-					"top" : -40,
-					"width" : 380,
-					"height" : 410,
-					"relativeTo" : "map"
-				},
-				"placeholderIndex" : 1,
-				"id" : "widgets_AddService_29",
-				"name" : "Add Service",
-				"label" : "Add Service",
-				"version" : "1.3",
-				"uri" : "widgets/AddService/Widget",
-				"config" : "widgets/AddService/config.json"
 			},{
 				"uri" : "widgets/OverviewMap/Widget",
 				"position" : {
