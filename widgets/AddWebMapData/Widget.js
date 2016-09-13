@@ -358,10 +358,9 @@ define(['dojo/_base/declare',
             // when a web map is selected make it active, but keep the extent
             _onItemSelected: function (item) {
                 testmap = this.map;
-                //console.log("THIS IS THE ITEM :: ", item);
 
                 item.getItemData().then(function(response){
-                    console.log("Response(WebMap) :: ", response);
+                    //console.log("Response(WebMap) :: ", response);
                     response.operationalLayers.forEach(function(l){
 
                         if(l.url){
@@ -402,7 +401,7 @@ define(['dojo/_base/declare',
                         }
                         else{
                             if(l.featureCollection){
-                                console.log("Web Map Layers:: FeatureCollection");
+                                //console.log("Web Map Layers:: FeatureCollection");
                                 l.featureCollection.layers.forEach(function(subL){
                                     tempLayer = new FeatureLayer(subL,{
                                        id: l.id
@@ -414,7 +413,7 @@ define(['dojo/_base/declare',
                                     }
                                 });
                             }else{
-                                console.log("Error:: Layer of unknown type");
+                                console.log("Add Layer Error:: Layer of unknown type");
                             }
                         }
                         if(tempLayer){
