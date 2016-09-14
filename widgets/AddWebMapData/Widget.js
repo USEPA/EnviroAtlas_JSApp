@@ -360,9 +360,7 @@ define(['dojo/_base/declare',
                 testmap = this.map;
 
                 item.getItemData().then(function(response){
-                    //console.log("Response(WebMap) :: ", response);
                     response.operationalLayers.forEach(function(l){
-
                         if(l.url){
                             console.log("Web Map Layers:: ",l.layerType);
                             if(l.layerType == 'ArcGISMapServiceLayer'){
@@ -401,7 +399,7 @@ define(['dojo/_base/declare',
                         }
                         else{
                             if(l.featureCollection){
-                                //console.log("Web Map Layers:: FeatureCollection");
+                                console.log("Web Map Layers:: FeatureCollection");
                                 l.featureCollection.layers.forEach(function(subL){
                                     tempLayer = new FeatureLayer(subL,{
                                        id: l.id
@@ -419,14 +417,11 @@ define(['dojo/_base/declare',
                         if(tempLayer){
                             testmap.addLayer(tempLayer);
                         }
-                        //testmap.addLayer(tempLayer);
+
                     });
                 });
-
-                var mapid=item.id;
-
-                console.log(testmap.getLayersVisibleAtScale());
-                    PanelManager.getInstance().closePanel(w.id + "_panel");
+                //Close the widget
+                PanelManager.getInstance().closePanel(w.id + "_panel");
             }
 
         });
