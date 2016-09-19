@@ -144,7 +144,7 @@ define(['dojo/_base/declare',
                 console.log("ChangeWebMap :: doSignIn");
 
                 var regOAuth = tokenUtils.registerOAuthInfo("https://epa.maps.arcgis.com", "S8P0zvjK2t50sCNd");
-                console.log(regOAuth);
+
                 tokenUtils.signInPortal(this.config.portalUrl)
                     .then(function (credential) {
                         topic.publish('userSignIn', credential);
