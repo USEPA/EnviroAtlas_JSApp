@@ -106,7 +106,7 @@ def main(_argv):
                 fullString = inputWorksheet.cell(key[elem]+rowID).value
                 cleanString = fullString.strip(separator+' ')
                 fullArray = cleanString.split(separator)
-                cleanArray = [elem.strip() for elem in fullArray]
+                cleanArray = [elemVal.strip() for elemVal in fullArray]
                 layerJSON[elem] = cleanArray
         fullJSON["layers"]["layer"].append(layerJSON)
 
