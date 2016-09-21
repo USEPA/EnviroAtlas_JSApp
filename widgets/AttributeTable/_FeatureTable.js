@@ -1025,7 +1025,7 @@ define([
 
     _getLayerFilterExpression: function() {
       var expr = (this._filterObj && this._filterObj.expr) || "";
-	  if (expr == ""){
+      if ((expr == "") && (window.communitySelected != window.strAllCommunity)){
 	      	expr= "UPPER(Community) LIKE UPPER('%" + window.communityDic[window.communitySelected] + "%')";
 	  }        
 
