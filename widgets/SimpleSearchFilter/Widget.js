@@ -134,7 +134,7 @@ define([
 					tdIndex = 0;
 				}				
 				
-				console.log(eaIDFilteredList);
+				//console.log(eaIDFilteredList);
 				//alert(currentCellText);		
 			} ); 
     	
