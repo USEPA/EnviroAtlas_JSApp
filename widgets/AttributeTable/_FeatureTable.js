@@ -519,7 +519,10 @@ define([
       query.returnIdsOnly = true;
       query.where = this._getLayerFilterExpression();
       query.orderByFields = this.layer._orderByFields || [pk + " ASC"];
-
+	  if ((query.where == "1=1") && (window.communitySelected != window.strAllCommunity)){
+	      	//query.where = "Community LIKE '%" + window.communityDic[window.communitySelected] + "%'";
+	      	query.where = "UPPER(Community) LIKE UPPER('%" + window.communityDic[window.communitySelected] + "%')";
+	  }  
       if (normalizedExtent) {
         query.geometry = normalizedExtent;
       }
@@ -1022,6 +1025,9 @@ define([
 
     _getLayerFilterExpression: function() {
       var expr = (this._filterObj && this._filterObj.expr) || "";
+	  if (expr == ""){
+	      	expr= "UPPER(Community) LIKE UPPER('%" + window.communityDic[window.communitySelected] + "%')";
+	  }        
 
       var mapFilter = this.layerInfo.getFilterOfWebmap();
 
