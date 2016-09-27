@@ -186,7 +186,7 @@ define([
                 }
 
                 var bNeedToBeAdded = false;
-                console.log("before set DefinitionExpression: "+ "Community = '" +window.communityDic[window.communitySelected] + "'");
+                //console.log("before set DefinitionExpression: "+ "Community = '" +window.communityDic[window.communitySelected] + "'");
                 var stringArray = selectedLayerNum.split(",");
                 	for (i in stringArray) {
                 		//console.log("stringArray[i]: " + stringArray[i]);

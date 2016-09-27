@@ -344,16 +344,17 @@ define([
         baseClass: 'jimu-widget-simplesearchfilter',
 		onReceiveData: function(name, widgetId, data, historyData) {
 			if (name == 'SelectCommunity'){
-				for (var key in chkIdDictionary) {
+				/*for (var key in chkIdDictionary) {
 				  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
 		        	if (document.getElementById(key).checked )
 		        	{
 		        		
-		        		document.getElementById('butRemAllLayers').click();
-		        		document.getElementById('butAddAllLayers').click();
+		        		//document.getElementById('butRemAllLayers').click();
+		        		//document.getElementById('butAddAllLayers').click();
+		        		//document.getElementById('butUpdateAllLayersWhenCommunityChange').click();
 		        	}		
 				  }
-				}				
+				}*/				
 				communitySelected = data.message;
 				_updateSelectableLayer();
 			}		  
