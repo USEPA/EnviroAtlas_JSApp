@@ -67,7 +67,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 	  var curColor = new Color([92,92,92]);
 	  var dynamicSym = this;
 
-	  dynamicSymbology.isSmartMapping = false;
+	  dynamicSymbology.isSmartMapping = true;
     },
 	
 	onReceiveData: function(name, widgetId, data, historyData) {
@@ -109,6 +109,10 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 		  //Set layers
 		  geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
 		  featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
+
+		  //set store original renderer
+		  dynamicSymbology.origRenderer = geoenrichedFeatureLayer.renderer;
+		  console.log(dynamicSymbology.origRenderer);
 
 		  //set slider onClick
 		  dynamicSymbology.oSlider = new HorizontalSlider({
@@ -202,13 +206,37 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 				 geoenrichedFeatureLayer.redraw();
 
 		   });
+		  //set original renderer button
+		  var origRendBtn = dom.byId('originalBtn');
+		  var originalHandler = on(origRendBtn,"click", function(){
+			  console.log("Set Default Renderer");
+			  dynamicSymbology.isSmartMapping = false;
+			  //onClickHandle.remove();
+			  //set classification
+			  dynamicSymbology.classSelect.set('value', dynamicSymbology.origRenderer.classificationMethod);
+			  //set num of classes
+			  dynamicSymbology.numberClasses.set('value', dynamicSymbology.origRenderer.infos.length);
+			  //set slider
+			  dynamicSymbology.slider.set('breakInfos',dynamicSymbology.origRenderer.infos);
+			  dynamicSymbology.slider.set('classificationMethod',dynamicSymbology.origRenderer.classificationMethod);
+
+			  geoenrichedFeatureLayer.setRenderer(dynamicSymbology.origRenderer);
+			  geoenrichedFeatureLayer.redraw();
+
+		  });
+
 	  });
 
 		//On Classification method change
 		onClickHandle = on(dynamicSymbology.classSelect,"change", function (c) {
 			_ClassificationMethod = c;
 			if(c != "manual"){
-				dynamicSym._updateSmartMapping2();
+				if(dynamicSymbology.isSmartMapping == true){
+					dynamicSym._updateSmartMapping2();
+				}else{
+					dynamicSymbology.isSmartMapping = true;
+				}
+
 			}
 		});
 
@@ -219,7 +247,8 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 			if(dynamicSymbology.isSmartMapping == true){
 				dynamicSym._updateSmartMapping2();
 			}else{
-				dynamicSym._updateSmartMapping2();
+				//dynamicSym._updateSmartMapping2();
+				dynamicSymbology.isSmartMapping = true;
 			}
 		});
 	},
