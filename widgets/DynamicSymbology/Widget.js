@@ -112,7 +112,6 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 
 		  //set store original renderer
 		  dynamicSymbology.origRenderer = geoenrichedFeatureLayer.renderer.toJson();
-		  console.log("OriginalRendererr:::", dynamicSymbology.origRenderer);
 
 		  //set slider onClick
 		  dynamicSymbology.oSlider = new HorizontalSlider({
@@ -191,9 +190,8 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 
 		  //on change event for slider
 			dynamicSymbology.slider.on("handle-value-change", function (sliderValueChange) {
-				 //alert("slider changed");
 				 var symbol = new SimpleFillSymbol();
-				symbol.setColor(new Color([150, 150, 150, 0.5]));
+				 symbol.setColor(new Color([150, 150, 150, 0.5]));
 
 				 var renderer = new ClassBreaksRenderer(symbol, geoenrichedFeatureLayer.renderer.attributeField);
 				 renderer.addBreak(sliderValueChange[0]);
@@ -204,11 +202,9 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 
 				 //change classification dropdown to manual
 				 dynamicSymbology.classSelect.set('value', 'manual');
-				 console.log("Moved slider :: ", renderer.classificationMethod);
+
 				_ClassificationMethod = renderer.classificationMethod;
 				 dynamicSym._getHistoAndStats(renderer);
-				 //geoenrichedFeatureLayer.setRenderer(renderer);
-				 //geoenrichedFeatureLayer.redraw()
 
 		   });
 		  //set original renderer button
@@ -216,13 +212,12 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 		  var originalHandler = on(origRendBtn,"click", function(){
 
 			  var defaultRenderer = new ClassBreaksRenderer(dynamicSymbology.origRenderer);
-			  console.log("Default Renderer :: ", defaultRenderer);
+
 			  //set properties
 			  _ClassificationMethod = defaultRenderer.classificationMethod;
 			  _fieldName = defaultRenderer.attributeField;
 			  _NumberOfClasses = defaultRenderer.infos.length;
 
-			  console.log("Set Default Renderer");
 			  dynamicSymbology.isSmartMapping = false;
 
 			  //set classification drop
@@ -253,7 +248,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 		//On number of classes change
 		dynamicSymbology.numberClasses.on("change", function (c) {
 			_NumberOfClasses = c;
-			//alert("changing");
+
 			if(dynamicSymbology.isSmartMapping == true){
 				dynamicSym._updateSmartMapping2();
 			}else{
@@ -337,9 +332,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 				dynamicSymbology.slider.set("maxValue", statistics.max);
 				dynamicSymbology.slider.set("statistics", statistics);
 				dynamicSymbology.slider.set("histogram", histogram);
-				
-				//console.log(smartRenderer);
-				//console.log(histogram);
+			  
 			  	_busy.hide();
 		  });
 
