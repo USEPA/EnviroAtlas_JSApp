@@ -67,7 +67,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 	  var curColor = new Color([92,92,92]);
 	  var dynamicSym = this;
 
-	  dynamicSymbology.isSmartMapping = false;
+	  dynamicSymbology.isSmartMapping = true;
     },
 	
 	onReceiveData: function(name, widgetId, data, historyData) {
@@ -109,6 +109,10 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 		  //Set layers
 		  geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
 		  featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
+
+		  //set store original renderer
+		  dynamicSymbology.origRenderer = geoenrichedFeatureLayer.renderer.toJson();
+		  console.log("OriginalRendererr:::", dynamicSymbology.origRenderer);
 
 		  //set slider onClick
 		  dynamicSymbology.oSlider = new HorizontalSlider({
@@ -182,6 +186,9 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 		  //set classificatoin Method
 		  dynamicSymbology.classSelect.set('value', geoenrichedFeatureLayer.renderer.classificationMethod);
 
+		  //get Histogram and Stats
+		  dynamicSym._getHistoAndStats(geoenrichedFeatureLayer.renderer);
+
 		  //on change event for slider
 			dynamicSymbology.slider.on("handle-value-change", function (sliderValueChange) {
 				 //alert("slider changed");
@@ -197,18 +204,49 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 
 				 //change classification dropdown to manual
 				 dynamicSymbology.classSelect.set('value', 'manual');
-
-				 geoenrichedFeatureLayer.setRenderer(renderer);
-				 geoenrichedFeatureLayer.redraw();
+				 console.log("Moved slider :: ", renderer.classificationMethod);
+				_ClassificationMethod = renderer.classificationMethod;
+				 dynamicSym._getHistoAndStats(renderer);
+				 //geoenrichedFeatureLayer.setRenderer(renderer);
+				 //geoenrichedFeatureLayer.redraw()
 
 		   });
+		  //set original renderer button
+		  var origRendBtn = dom.byId('originalBtn');
+		  var originalHandler = on(origRendBtn,"click", function(){
+
+			  var defaultRenderer = new ClassBreaksRenderer(dynamicSymbology.origRenderer);
+			  console.log("Default Renderer :: ", defaultRenderer);
+			  //set properties
+			  _ClassificationMethod = defaultRenderer.classificationMethod;
+			  _fieldName = defaultRenderer.attributeField;
+			  _NumberOfClasses = defaultRenderer.infos.length;
+
+			  console.log("Set Default Renderer");
+			  dynamicSymbology.isSmartMapping = false;
+
+			  //set classification drop
+			  dynamicSymbology.classSelect.set('value', _ClassificationMethod);
+			  //set num of classes spinner
+			  dynamicSymbology.numberClasses.set('value', _NumberOfClasses);
+			  //set slider properties
+			  dynamicSymbology.slider.set('breakInfos',defaultRenderer.infos);
+			  dynamicSymbology.slider.set('classificationMethod',_ClassificationMethod);
+
+			  dynamicSym._getHistoAndStats(defaultRenderer);
+		  });
+
 	  });
 
 		//On Classification method change
 		onClickHandle = on(dynamicSymbology.classSelect,"change", function (c) {
 			_ClassificationMethod = c;
 			if(c != "manual"){
-				dynamicSym._updateSmartMapping2();
+				if(dynamicSymbology.isSmartMapping == true){
+					dynamicSym._updateSmartMapping2();
+				}else{
+					dynamicSymbology.isSmartMapping = true;
+				}
 			}
 		});
 
@@ -219,8 +257,38 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 			if(dynamicSymbology.isSmartMapping == true){
 				dynamicSym._updateSmartMapping2();
 			}else{
-				dynamicSym._updateSmartMapping2();
+				//dynamicSym._updateSmartMapping2();
+				dynamicSymbology.isSmartMapping = true;
 			}
+		});
+	},
+
+	_getHistoAndStats: function(gRenderer){
+		_busy.show();
+		featureLayerStatistics.getHistogram({
+			classificationMethod: _ClassificationMethod,
+			field: _fieldName,
+			numBins: _NumberOfClasses
+		}).then(function (histogram) {
+
+			featureLayerStatistics.getFieldStatistics({
+				field: _fieldName
+			}).then(function(statistics){
+				//console.log("Statistics :: ", statistics);
+				dynamicSymbology.slider.set("breakInfos", gRenderer.infos);
+				dynamicSymbology.slider.set("minValue", statistics.min);
+				dynamicSymbology.slider.set("maxValue", statistics.max);
+				dynamicSymbology.slider.set("statistics", statistics);
+				dynamicSymbology.slider.set("histogram", histogram);
+			});
+
+			geoenrichedFeatureLayer.setRenderer(gRenderer);
+			geoenrichedFeatureLayer.redraw();
+
+			_busy.hide();
+		}).otherwise(function (error) {
+			_busy.hide();
+			console.log("An error occurred while calculating the histogram, Error: %o", error);
 		});
 	},
 	
