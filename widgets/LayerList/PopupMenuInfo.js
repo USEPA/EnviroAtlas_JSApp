@@ -464,7 +464,8 @@ define([
                 if(layer.hasOwnProperty('eaID')){
                     if (layerId === (window.layerIdPrefix + layer.eaID.toString())) {
                         if(layer.hasOwnProperty('eaMetadata')){
-                            window.open(layer.eaMetadata);
+                        	metaDataID = window.communityMetadataDic[layer.eaMetadata][window.communitySelected];
+                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
                             break;
                         }
                     }
