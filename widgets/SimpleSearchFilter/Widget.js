@@ -220,7 +220,7 @@ define([
 				}   //end of for (i in eachLayerCategoryList)		
 				}// end of if (bSelectByScale)
 				
-				if (currentLayerSelectable && eaIDFilteredList.includes(eaID)) {//add the current item as selectable layers
+				if (currentLayerSelectable &&(eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
 					if ((window.allLayerNumber.indexOf(eaID)) == -1) {                        	
                     	window.allLayerNumber.push(eaID);
                     }
