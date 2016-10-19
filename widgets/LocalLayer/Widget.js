@@ -327,7 +327,7 @@ define([
 	  onReceiveData: function(name, widgetId, data, historyData) {
 		  if (name == 'SimpleSearchFilter'){
 			  //set selected community
-			  if (data.message.indexOf(window.communitySelectMessagePrefix))
+			  if (data.message.indexOf(window.communitySelectMessagePrefix)) {
 				  	communitySelected = data.message.substring(window.communitySelectMessagePrefix.length + 1);
 				  	//alert("community: " + communitySelected);
 			  }			  	
