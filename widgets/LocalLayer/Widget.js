@@ -327,10 +327,10 @@ define([
 	  onReceiveData: function(name, widgetId, data, historyData) {
 		  if (name == 'SimpleSearchFilter'){
 			  //set selected community
-			  if (data.message.indexOf(window.communitySelectMessagePrefix)) {
-				  	communitySelected = data.message.substring(window.communitySelectMessagePrefix.length + 1);
+			  //if (data.message.indexOf(window.communitySelectMessagePrefix)) {
+			  //  	communitySelected = data.message.substring(window.communitySelectMessagePrefix.length + 1);
 				  	//alert("community: " + communitySelected);
-			  }			  	
+			  //}			  	
 			  var stringArray = data.message.split(",");
 			  if (stringArray[0] == "a") {
 			  	_addSelectedLayers(this.config.layers.layer, data.message.substring(2));
