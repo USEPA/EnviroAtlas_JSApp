@@ -1,4 +1,5 @@
 dynamicSymbology = {};
+currentSymbology = {};
 define(['dojo/_base/declare',
       'jimu/BaseWidget',
 	  'jimu/LayerInfos/LayerInfos',
@@ -83,6 +84,8 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
       var dynamicSym = this;
 	  //Get base map
 	  _currentBaseMap = this.map.getBasemap();
+
+		dynamicSymbology.isSmartMapping = true;
 	  
 	  LayerInfos.getInstance(this.map, this.map.itemInfo).then(function(layerInfosObject){
 		  //console.log("_layerID: ", _layerID);
@@ -102,20 +105,31 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 			//   dynamicSymbology.classSelect.startup();
 		  // }
 
+
 		  var dslayer = layerInfosObject.getLayerInfoById(_layerID);
 		  console.log("Current Layer Name: ", dslayer.title);
 		  dom.byId('title').innerHTML = dslayer.title;
+
+		  //get default symbology
+		  //var tempFL = new FeatureLayer(dslayer.layerObject.url);
+		  //console.log("FL :: ", tempFL);
 
 		  //Set layers
 		  geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
 		  featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
 
 		  //set store original renderer
-		  dynamicSymbology.origRenderer = geoenrichedFeatureLayer.renderer.toJson();
+		  if(!currentSymbology[_layerID]){
+			  currentSymbology[_layerID] = {};
+			  currentSymbology[_layerID]['origRenderer'] = geoenrichedFeatureLayer.renderer.toJson();
+		  }
+
+		  //dynamicSymbology.origRenderer = geoenrichedFeatureLayer.renderer.toJson();
 
 		  //set slider onClick
+		  var horiSlider = domConstruct.place('<div id="transSlider"></div>', 'slider');
 		  dynamicSymbology.oSlider = new HorizontalSlider({
-			  name: "slider",
+			  name: "transSlider",
 			  value: -Math.abs(geoenrichedFeatureLayer.opacity),
 			  minimum: -1,
 			  maximum: 0,
@@ -125,8 +139,8 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 			  onChange: function(value){
 				  geoenrichedFeatureLayer.setOpacity(Math.abs(value));
 			  }
-		  }, "slider").startup();
-
+		  }, "transSlider").startup();
+		  //consol.log("horSlider::::", dynamicSymbology.oSlider);
 		  //Set Fields
 		  _ClassificationMethod = geoenrichedFeatureLayer.renderer.classificationMethod;
 		  _fieldName = geoenrichedFeatureLayer.renderer.attributeField;
@@ -194,12 +208,9 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 				 symbol.setColor(new Color([150, 150, 150, 0.5]));
 
 				 var renderer = new ClassBreaksRenderer(symbol, geoenrichedFeatureLayer.renderer.attributeField);
-				 renderer.addBreak(sliderValueChange[0]);
-				 renderer.addBreak(sliderValueChange[1]);
-				 renderer.addBreak(sliderValueChange[2]);
-				 renderer.addBreak(sliderValueChange[3]);
-				 renderer.addBreak(sliderValueChange[4]);
-
+				sliderValueChange.forEach(function(b){
+					renderer.addBreak(b);
+				});
 				 //change classification dropdown to manual
 				 dynamicSymbology.classSelect.set('value', 'manual');
 
@@ -211,23 +222,25 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 		  var origRendBtn = dom.byId('originalBtn');
 		  var originalHandler = on(origRendBtn,"click", function(){
 
-			  var defaultRenderer = new ClassBreaksRenderer(dynamicSymbology.origRenderer);
-
+			  var defaultRenderer = new ClassBreaksRenderer(currentSymbology[_layerID]['origRenderer']);
 			  //set properties
 			  _ClassificationMethod = defaultRenderer.classificationMethod;
 			  _fieldName = defaultRenderer.attributeField;
 			  _NumberOfClasses = defaultRenderer.infos.length;
 
-			  dynamicSymbology.isSmartMapping = false;
 
+			  dynamicSymbology.isSmartMapping = false;
 			  //set classification drop
 			  dynamicSymbology.classSelect.set('value', _ClassificationMethod);
+
+			  dynamicSymbology.isSmartMapping = false;
 			  //set num of classes spinner
 			  dynamicSymbology.numberClasses.set('value', _NumberOfClasses);
 			  //set slider properties
 			  dynamicSymbology.slider.set('breakInfos',defaultRenderer.infos);
 			  dynamicSymbology.slider.set('classificationMethod',_ClassificationMethod);
 
+			  //dynamicSymbology.isSmartMapping = false;
 			  dynamicSym._getHistoAndStats(defaultRenderer);
 		  });
 
@@ -326,7 +339,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 		  featureLayerStatistics.getFieldStatistics({
 			  field: _fieldName
 		  }).then(function(statistics){
-				console.log(statistics);
+				//console.log(statistics);
 				dynamicSymbology.slider.set("breakInfos", smartRenderer.renderer.infos);
 				dynamicSymbology.slider.set("minValue", statistics.min);
 				dynamicSymbology.slider.set("maxValue", statistics.max);
@@ -350,7 +363,8 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 
     onClose: function(){
 		//clean up
-		dynamicSymbology.oSlider.destroy();
+		dijit.byId("transSlider").destroy();
+
 		dynamicSymbology.slider.destroy();
 		dynamicSymbology.numberClasses.destroy();
 		onClickHandle.remove();
