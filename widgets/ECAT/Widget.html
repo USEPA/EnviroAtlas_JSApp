@@ -1,0 +1,115 @@
+
+<div>
+
+	<div>
+        <table  >
+            <tr>
+                <td>
+                    Climate Scenario:
+                </td>
+                <td>
+					<select data-dojo-id="scenario" name="scenario" id="scenario" style="width: 160px;" data-dojo-type="dijit/form/Select">
+					    <option value="RCP26">Scenario I</option>
+					    <option value="RCP45">Scenario II</option>
+					    <option value="RCP60">Scenario III</option>
+					    <option value="RCP85">Scenario IV</option>
+					</select>
+                </td>
+                <!--td>
+                	<img  src="${folderUrl}images/i_info.png" data-dojo-attach-event="ondijitclick:OnScenarioSelectHelpClick" />
+                </td-->                
+            </tr>
+            
+            <tr>
+                <td>
+                    Starting year for baseline:
+                </td>
+                <td>
+					<select data-dojo-id="startYearBaseline" name="startYearBaseline" id="startYearBaseline" style="width: 160px;" data-dojo-type="dijit/form/Select">
+					</select>
+                </td>
+            </tr> 
+
+            <tr>
+                <td>
+                    Ending year for baseline:
+                </td>
+                <td>
+					<select data-dojo-id="endYearBaseline" name="endYearBaseline" id="endYearBaseline" style="width: 160px;" data-dojo-type="dijit/form/Select">
+					</select>
+                </td>
+            </tr> 
+            
+            <tr>
+                <td>
+                    Starting year for comparison:
+                </td>
+                <td>
+					<select data-dojo-id="startYearComparison" name="startYearComparison" id="startYearComparison" style="width: 160px;" data-dojo-type="dijit/form/Select">
+					</select>
+                </td>
+            </tr>                         
+            
+            <tr>
+                <td>
+                    Ending year for comparison:
+                </td>
+                <td>
+					<select data-dojo-id="endYearComparison" name="endYearComparison" id="endYearComparison" style="width: 160px;" data-dojo-type="dijit/form/Select">
+					</select>
+                </td>
+            </tr>             
+            
+            <tr>
+                <td>
+                    Climate variable:
+                </td>
+                <td>
+					<select data-dojo-id="climateVariable" name="climateVariable" id="climateVariable" style="width: 160px;" data-dojo-type="dijit/form/Select">
+					    <option value="TempMax">Maximum Temperature</option>
+					    <option value="TempMin">Minimum Temperature</option>
+					    <option value="PET">Potential Evapotranspiration</option>
+					    <option value="Precip">Precipitation</option>
+					</select>
+                </td>
+                <td>
+                	<!--img  src="${folderUrl}images/i_info.png" data-dojo-attach-event="ondijitclick:OnClimateVariableHelpClick" /-->
+                </td>                
+            </tr>   
+            
+            <tr>
+                <td>
+                    Season or Annual:
+                </td>
+                <td>
+					<select data-dojo-id="season" name="season" id="season" style="width: 160px;" data-dojo-type="dijit/form/Select">
+					    <option value="Spring">Spring</option>
+					    <option value="Summer">Summer</option>
+					    <option value="Fall">Fall</option>
+					    <option value="Winter">Winter</option>
+					    <option value="Annual">Annual</option>
+					</select>
+                </td>
+                <td>
+                	<!--img  src="${folderUrl}images/i_info.png" data-dojo-attach-event="ondijitclick:OnSeasonSelectHelpClick" /-->
+                </td>                
+            </tr>                       
+        </table>
+	</div>
+	<br>
+    <button id="calculateChangeBtn" type="button">Calculate Change</button>
+                                             
+    <button id="clearLayersBtn" type="button"  >Clear Layers</button>
+	<div style="line-height:60%;">
+	    <br>
+	</div>
+    <button id="downloadCSVBtn" type="button"  >Download HUC12 average values (CSV)</button>      
+	<div>
+	    <br>
+	</div>    
+    <div id="slider"></div>
+</div>
+
+
+
+
