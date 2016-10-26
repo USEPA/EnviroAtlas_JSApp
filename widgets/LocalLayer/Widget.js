@@ -190,7 +190,7 @@ define([
                 var stringArray = selectedLayerNum.split(",");
                 	for (i in stringArray) {
                 		//console.log("stringArray[i]: " + stringArray[i]);
-                		console.log("layer.eaID.toString(): " + layer.eaID.toString());
+                		//console.log("layer.eaID.toString(): " + layer.eaID.toString());
 						if (((stringArray[i])==(layer.eaID.toString())) && bPopup) {
 			                if(layer.hasOwnProperty('eaLyrNum')){
 			                  lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
@@ -222,7 +222,7 @@ define([
 								}
 							}*/
 						
-							console.log("layer.eaID: " + layer.eaID.toString());
+							//console.log("layer.eaID: " + layer.eaID.toString());
 						    bNeedToBeAdded = true;
 						    break;
 						}
