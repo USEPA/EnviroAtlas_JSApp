@@ -267,6 +267,7 @@
 				"uri" : "widgets/ECAT/Widget",
 				"config" : "widgets/ECAT/config.json"
 			},			{
+				"position" : {
 					"left" : 645,
 					"top" : -40,
 					"width" : 380,
