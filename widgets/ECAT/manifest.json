@@ -1,0 +1,10 @@
+{
+  "name": "ECAT",
+  "platform": "HTML",
+  "version": "1.2",
+  "wabVersion": "1.1",
+  "author": "Innovate",
+  "description": "EnviroAtlas Change Analysis Tool (ECAT)",
+  "copyright": "",
+  "license": "http://www.apache.org/licenses/LICENSE-2.0"	
+}
