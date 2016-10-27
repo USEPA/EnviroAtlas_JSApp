@@ -2570,7 +2570,7 @@ widget:jimu-w
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 70%;
+  width: 100%;
 }
 .jimu-on-screen-widget-panel>.jimu-panel-title>.close-btn,
 .jimu-on-screen-widget-panel>.jimu-panel-title>.foldable-btn,
