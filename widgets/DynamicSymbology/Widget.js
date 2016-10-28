@@ -292,6 +292,8 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 
 			geoenrichedFeatureLayer.setRenderer(gRenderer);
 			geoenrichedFeatureLayer.redraw();
+            geoenrichedFeatureLayer.setVisibility(false);
+            geoenrichedFeatureLayer.setVisibility(true);
 
 			_busy.hide();
 		}).otherwise(function (error) {
@@ -324,6 +326,8 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 		
         geoenrichedFeatureLayer.setRenderer(smartRenderer.renderer);
         geoenrichedFeatureLayer.redraw();
+          geoenrichedFeatureLayer.setVisibility(false);
+		  geoenrichedFeatureLayer.setVisibility(true);
 		
 		console.log("Get Histogram");
 		console.log("classification: " + _ClassificationMethod);
