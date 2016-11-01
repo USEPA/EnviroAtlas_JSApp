@@ -88,31 +88,10 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 		dynamicSymbology.isSmartMapping = true;
 	  
 	  LayerInfos.getInstance(this.map, this.map.itemInfo).then(function(layerInfosObject){
-		  //console.log("_layerID: ", _layerID);
-		  // _listOfLayers = [];
-		  // if (typeof(_layerID) == "undefined"){
-			//   dynamicSym.map.graphicsLayerIds.forEach(function(id){
-			// 	  _listOfLayers.push(dynamicSym.map.getLayer(id));
-          //
-			//   });
-			//   dynamicSymbology.layers = new select({
-			// 	  name: "layerSelect",
-			// 	  title: "Layers",
-			// 	  //options: dynamicSymbology.attTemplateOptions,
-			// 	  style: "width: 150px; height: 20px"
-			//   });
-			//   dynamicSymbology.classSelect.placeAt(dom.byId("layerSelect"));
-			//   dynamicSymbology.classSelect.startup();
-		  // }
-
 
 		  var dslayer = layerInfosObject.getLayerInfoById(_layerID);
 		  console.log("Current Layer Name: ", dslayer.title);
 		  dom.byId('title').innerHTML = dslayer.title;
-
-		  //get default symbology
-		  //var tempFL = new FeatureLayer(dslayer.layerObject.url);
-		  //console.log("FL :: ", tempFL);
 
 		  //Set layers
 		  geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
@@ -123,8 +102,6 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 			  currentSymbology[_layerID] = {};
 			  currentSymbology[_layerID]['origRenderer'] = geoenrichedFeatureLayer.renderer.toJson();
 		  }
-
-		  //dynamicSymbology.origRenderer = geoenrichedFeatureLayer.renderer.toJson();
 
 		  //set slider onClick
 		  var horiSlider = domConstruct.place('<div id="transSlider"></div>', 'slider');
@@ -140,7 +117,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 				  geoenrichedFeatureLayer.setOpacity(Math.abs(value));
 			  }
 		  }, "transSlider").startup();
-		  //consol.log("horSlider::::", dynamicSymbology.oSlider);
+
 		  //Set Fields
 		  _ClassificationMethod = geoenrichedFeatureLayer.renderer.classificationMethod;
 		  _fieldName = geoenrichedFeatureLayer.renderer.attributeField;
@@ -227,7 +204,6 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 			  _ClassificationMethod = defaultRenderer.classificationMethod;
 			  _fieldName = defaultRenderer.attributeField;
 			  _NumberOfClasses = defaultRenderer.infos.length;
-
 
 			  dynamicSymbology.isSmartMapping = false;
 			  //set classification drop
