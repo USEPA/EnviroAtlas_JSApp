@@ -268,6 +268,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 
 			geoenrichedFeatureLayer.setRenderer(gRenderer);
 			geoenrichedFeatureLayer.redraw();
+            
             geoenrichedFeatureLayer.setVisibility(false);
             geoenrichedFeatureLayer.setVisibility(true);
 
@@ -302,9 +303,10 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 		
         geoenrichedFeatureLayer.setRenderer(smartRenderer.renderer);
         geoenrichedFeatureLayer.redraw();
-          geoenrichedFeatureLayer.setVisibility(false);
-		  geoenrichedFeatureLayer.setVisibility(true);
-		
+
+        geoenrichedFeatureLayer.setVisibility(false);
+        geoenrichedFeatureLayer.setVisibility(true);
+
 		console.log("Get Histogram");
 		console.log("classification: " + _ClassificationMethod);
 		console.log("field: " + _fieldName);
