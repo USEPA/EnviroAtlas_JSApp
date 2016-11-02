@@ -1025,8 +1025,15 @@ define([
 
     _getLayerFilterExpression: function() {
       var expr = (this._filterObj && this._filterObj.expr) || "";
-      if ((expr == "") && (window.communitySelected != window.strAllCommunity)){
+      //if ((expr == "") && (window.communitySelected != window.strAllCommunity)){
+      if (window.communitySelected != window.strAllCommunity){
+      	 if (expr != "") {
+	      	expr= "(UPPER(Community) LIKE UPPER('%" + window.communityDic[window.communitySelected] + "%')) AND (" + expr + ")" ;
+	     }
+	     else
+	     {
 	      	expr= "UPPER(Community) LIKE UPPER('%" + window.communityDic[window.communitySelected] + "%')";
+	     }
 	  }        
 
       var mapFilter = this.layerInfo.getFilterOfWebmap();

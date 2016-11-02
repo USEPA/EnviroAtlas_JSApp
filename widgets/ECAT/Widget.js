@@ -54,6 +54,7 @@ function(declare,
 	};
 
     var calculateChangeClick = function() {
+    	esri.show(dom.byId("loadingWrap2"));
     	var scenarioSelection = document.getElementById("scenario");
 		var scenarioValue = scenarioSelection.options[scenarioSelection.selectedIndex].value;
 
@@ -105,6 +106,7 @@ function(declare,
 			map.on("click", doIdentify);
 			identifyTask = new IdentifyTask(layer.url);
         }); 
+        esri.hide(dom.byId("loadingWrap2"));
 	};
     var doIdentify = function(event) {
             map.graphics.clear();
@@ -121,7 +123,7 @@ function(declare,
 			if(lyr){
 	            identifyTask.execute(identifyParams, function (idResults) {
 			
-					map.infoWindow.resize(130, 120);            
+					map.infoWindow.resize(140, 120);            
             		map.infoWindow.setTitle("Identify Results");
             		dPixelValue = parseFloat(idResults[0].feature.attributes['Pixel Value']);
             		map.infoWindow.setContent(dPixelValue.toString());
@@ -158,7 +160,7 @@ function(declare,
     startup: function() {
       	this.inherited(arguments);
       	map = this.map;
-      	
+      	esri.hide(dom.byId("loadingWrap2"));
 		var optionStartYearBaseline = null;
 		var optionEndYearBaseline = null;
 		var optionStartYearComparison = null;
@@ -199,7 +201,7 @@ function(declare,
 		document.getElementById("clearLayersBtn").onclick = function() {
 		    clearLayersClick();
 		};
-
+		
 		document.getElementById("downloadCSVBtn").onclick = function() {
 		    downloadCSVClick();
 		};		
@@ -209,7 +211,7 @@ function(declare,
             minimum: 0,
             maximum: 1,
             intermediateChanges: true,
-            style: "width:300px;",
+            style: "width:370px;",
             onChange: function(value){
                 lyr = map.getLayer(window.addedLayerIdPrefix + layerID);
 				if(lyr){
@@ -218,6 +220,12 @@ function(declare,
 				}
             }
         }, "slider");  
+        document.getElementById("helpCloseButton").onclick = function() {
+	        dojo.byId("divSplashScreenContent").style.display = "none";
+	        dojo.byId("divSplashScreenContainer").style.display = "none";
+			var modal = document.getElementById('helpModal');
+			modal.style.display = "none";	        
+		};
     },
 
 
@@ -244,16 +252,46 @@ function(declare,
     onSignOut: function(){
       console.log('onSignOut');
     },
+
+    showInformationWindow: function(){
+    	var modal = document.getElementById('helpModal');
+		modal.style.display = "block";
+        dojo.byId("divSplashScreenContent").style.display = "block";
+        dojo.byId("divSplashScreenContainer").style.display = "block";
+    },
+        
     OnScenarioSelectHelpClick: function(){
-
-
-		//$('#tenant').tabbedDialog();
-
-
-    }
-
-  });
-  
+        dojo.byId("divSplashContent").innerHTML = "<font face='calibri' size='2+'>" +        	
+            "<b>Scenario I – RCP 2.6</b> – This scenario is characterized as having very low greenhouse gas concentration levels. It is a “peak-and-decline” scenario and assumes that greenhouse gas emissions peak between 2010 and 2020 with emissions declining substantially beyond 2020. The projected global warming increase compared to the reference period (1986-2005) is approximately 1.8 degree Fahrenheit (range of 0.54 to 3.06) by 2081-2100. Atmospheric CO2 is expected to be approximately 425 parts per million in 2100.<BR><BR>" +  
+            "<b>Scenario II – RCP 4.5</b> – This scenario assumes a stabilization will occur shortly after 2100, and assumes less emissions than RCP 6.0, which is also a stabilization scenario. It is characterized by a peak in emissions around 2040 and then a decline. The projected global warming increase compared to the reference period 1986-2005 is approximately 3.24 degrees Fahrenheit (range of 1.98 to 4.68) by 2081-2100. Atmospheric CO2 is expected to be approximately 600 parts per million in 2100.<BR><BR>" +
+            "<b>Scenario III – RCP 6.0</b> – This is a stabilization scenario in which the increase in GHG emissions stabilizes shortly after 2100 through the application of a range of technologies and strategies for reducing GHG emissions. It is characterized by a peak in emissions around 2080 and then a decline. The projected global warming increase compared to the reference period 1986-2005 is approximately 3.96 degrees Celsius (range of 2.52 to 5.58) by 2081-2100. Atmospheric CO2 is expected to be approximately 725 parts per million in 2100.<BR><BR>" +
+            "<b>Scenario IV – RCP 8.5</b> – This scenario is characterized by increasing GHG emissions over time, and factors in the highest GHG concentration levels of all the scenarios by 2100. The projected global warming increase compared to the reference period 1986-2005 is approximately 6.66 degrees Celsius (range of 4.68 to 8.64) by 2081-2100. Atmospheric CO2 is expected to be approximately 1225 parts per million in 2100.<BR><BR>" +
+            "<b>Historical climate</b> – These data are based on PRISM historical observations and interpolation of previous climate. Data are provided for the years 1950 -2005." +
+            "</font>";
+        this.showInformationWindow();
+    },
+    
+    OnClimateVariableHelpClick: function(){
+        dojo.byId("divSplashContent").innerHTML = "<font face='calibri' size='2+'>" +
+        	"Maximum Temperature – Average maximum temperature in degrees Fahrenheit for the season or annually. " + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_Temp.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a><br/><br/>" + 
+            "Minimum Temperature – Average minimum temperature in degrees Fahrenheit for the season or annually. " + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_Temp.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a><br/><br/>" + 
+            "Precipitation - Total precipitation in inches for the season or annually. " + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_Precip.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a><br/><br/>" + 
+            "Potential Evapotranspiration - Total potential evapotranspiration in inches for the season or annually. "  + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_PET.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a>" +
+            "</font>";
+            
+        this.showInformationWindow();
+    },
+    OnSeasonSelectHelpClick: function(){
+        dojo.byId("divSplashContent").innerHTML = "<font face='calibri' size='2+'>" + 
+            "Winter – December of previous year, January, February<BR><BR>" +
+            "Spring – March, April, May<BR><BR>" +
+            "Summer – June, July, August<BR><BR>" +
+            "Fall – September, October, November<BR><BR>" +
+            "Annual – January through December of the same calendar year"+
+            "</font>";
+        this.showInformationWindow();
+    }    
+  });  
 
 });
 
