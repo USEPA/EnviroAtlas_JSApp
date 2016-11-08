@@ -13,6 +13,7 @@ define(['dojo/_base/declare',
 		'esri/tasks/Geoprocessor',
         "esri/tasks/IdentifyTask",
         "esri/tasks/IdentifyParameters",
+        "esri/InfoTemplate",
         'dijit/form/HorizontalSlider',
 		"dojo/on",
 		"dojo/dom-style",
@@ -27,6 +28,7 @@ function(declare,
 		Geoprocessor,
 		IdentifyTask,
 		IdentifyParameters,
+		InfoTemplate,
 		HorizontalSlider,
 		on,
 		domStyle,
@@ -42,6 +44,15 @@ function(declare,
     var gpComputeClimateChange = null;
     var layerID = "ClimateChange";
     var currentJobInfo;
+    
+	var scenarioValue = null;
+	var startYearBaseValue = null;
+	var endYearBaseValue = null;	
+	var startYearComparisonValue = null;
+	var endYearComparisonValue = null;
+	var climateVariableValue = null;
+	var seasonValue = null;
+		    
     var clearLayersClick = function() {
 		lyr = map.getLayer(window.addedLayerIdPrefix + layerID);
 		if(lyr){
@@ -56,26 +67,37 @@ function(declare,
     var calculateChangeClick = function() {
     	esri.show(dom.byId("loadingWrap2"));
     	var scenarioSelection = document.getElementById("scenario");
-		var scenarioValue = scenarioSelection.options[scenarioSelection.selectedIndex].value;
+		scenarioValue = scenarioSelection.options[scenarioSelection.selectedIndex].value;
 
     	var startYearBaseSelection = document.getElementById("startYearBaseline");
-		var startYearBaseValue = startYearBaseSelection.options[startYearBaseSelection.selectedIndex].value;
+		startYearBaseValue = startYearBaseSelection.options[startYearBaseSelection.selectedIndex].value;
 
     	var endYearBaseSelection = document.getElementById("endYearBaseline");
-		var endYearBaseValue = endYearBaseSelection.options[endYearBaseSelection.selectedIndex].value;
+		endYearBaseValue = endYearBaseSelection.options[endYearBaseSelection.selectedIndex].value;
 		
     	var startYearComparisonSelection = document.getElementById("startYearComparison");
-		var startYearComparisonValue = startYearComparisonSelection.options[startYearComparisonSelection.selectedIndex].value;
+		startYearComparisonValue = startYearComparisonSelection.options[startYearComparisonSelection.selectedIndex].value;
 
     	var endYearComparisonSelection = document.getElementById("endYearComparison");
-		var endYearComparisonValue = endYearComparisonSelection.options[endYearComparisonSelection.selectedIndex].value;
+		endYearComparisonValue = endYearComparisonSelection.options[endYearComparisonSelection.selectedIndex].value;
 
     	var climateVariableSelection = document.getElementById("climateVariable");
-		var climateVariableValue = climateVariableSelection.options[climateVariableSelection.selectedIndex].value;
+		climateVariableValue = climateVariableSelection.options[climateVariableSelection.selectedIndex].value;
 
     	var seasonSelection = document.getElementById("season");
-		var seasonValue = seasonSelection.options[seasonSelection.selectedIndex].value;	
-
+		seasonValue = seasonSelection.options[seasonSelection.selectedIndex].value;	
+		
+		if (parseFloat(startYearBaseValue) > parseFloat(endYearBaseValue)) {
+			alert("Starting year for baseline shoud not be later than ending year for baseline.");
+			esri.hide(dom.byId("loadingWrap2"));
+			return;
+		}
+		
+		if (parseFloat(startYearComparisonValue) > parseFloat(endYearComparisonValue)) {
+			alert("Starting year for comparison shoud not be later than ending year for comparison.");
+			esri.hide(dom.byId("loadingWrap2"));
+			return;
+		}
 		var gpURL = server + "arcgis/rest/services/ECAT/RasterCalculate_fromAverage/GPServer/RasterAverage_from5Year";		
 		gpComputeClimateChange = new Geoprocessor(gpURL);			    	
         gpComputeClimateChange.setOutSpatialReference(map.spatialReference);
@@ -102,6 +124,10 @@ function(declare,
     	gpComputeClimateChange.getResultImageLayer(jobInfo.jobId, null, null, function(layer){
 			layer.setOpacity(1);
 			layer.id = window.addedLayerIdPrefix + layerID;
+			//ECAT Scenario IV 1950/1950-2000/2000 Precip Spring
+	    	var scenarioSelection = document.getElementById("scenario");
+			scenarioText = scenarioSelection.options[scenarioSelection.selectedIndex].text;			
+			layer.name = "ECAT " + scenarioText + " " + startYearBaseValue + "/" + endYearBaseValue + "-" + startYearComparisonValue +  "/" + endYearComparisonValue + " " + climateVariableValue + " " + seasonValue;
 			map.addLayer(layer);
 			map.on("click", doIdentify);
 			identifyTask = new IdentifyTask(layer.url);
@@ -226,6 +252,16 @@ function(declare,
 			var modal = document.getElementById('helpModal');
 			modal.style.display = "none";	        
 		};
+		document.getElementById("startYearBaseline").onchange = function() {			
+	    	var startYearSelection = document.getElementById("startYearBaseline");
+        	var endYearSelection = document.getElementById("endYearBaseline");
+        	endYearSelection.value = startYearSelection.options[startYearSelection.selectedIndex].value;
+		};
+		document.getElementById("startYearComparison").onchange = function() {			
+	    	var startYearSelection = document.getElementById("startYearComparison");
+        	var endYearSelection = document.getElementById("endYearComparison");
+        	endYearSelection.value = startYearSelection.options[startYearSelection.selectedIndex].value;
+		};		
     },
 
 
@@ -261,7 +297,7 @@ function(declare,
     },
         
     OnScenarioSelectHelpClick: function(){
-        dojo.byId("divSplashContent").innerHTML = "<font face='calibri' size='2+'>" +        	
+        dojo.byId("divSplashContent").innerHTML = "<font-family= 'Source Sans Pro' font-face='sans-serif' size='2+'>" +       	
             "<b>Scenario I – RCP 2.6</b> – This scenario is characterized as having very low greenhouse gas concentration levels. It is a “peak-and-decline” scenario and assumes that greenhouse gas emissions peak between 2010 and 2020 with emissions declining substantially beyond 2020. The projected global warming increase compared to the reference period (1986-2005) is approximately 1.8 degree Fahrenheit (range of 0.54 to 3.06) by 2081-2100. Atmospheric CO2 is expected to be approximately 425 parts per million in 2100.<BR><BR>" +  
             "<b>Scenario II – RCP 4.5</b> – This scenario assumes a stabilization will occur shortly after 2100, and assumes less emissions than RCP 6.0, which is also a stabilization scenario. It is characterized by a peak in emissions around 2040 and then a decline. The projected global warming increase compared to the reference period 1986-2005 is approximately 3.24 degrees Fahrenheit (range of 1.98 to 4.68) by 2081-2100. Atmospheric CO2 is expected to be approximately 600 parts per million in 2100.<BR><BR>" +
             "<b>Scenario III – RCP 6.0</b> – This is a stabilization scenario in which the increase in GHG emissions stabilizes shortly after 2100 through the application of a range of technologies and strategies for reducing GHG emissions. It is characterized by a peak in emissions around 2080 and then a decline. The projected global warming increase compared to the reference period 1986-2005 is approximately 3.96 degrees Celsius (range of 2.52 to 5.58) by 2081-2100. Atmospheric CO2 is expected to be approximately 725 parts per million in 2100.<BR><BR>" +
@@ -272,7 +308,7 @@ function(declare,
     },
     
     OnClimateVariableHelpClick: function(){
-        dojo.byId("divSplashContent").innerHTML = "<font face='calibri' size='2+'>" +
+        dojo.byId("divSplashContent").innerHTML = "<font-family= 'Source Sans Pro' font-face='sans-serif' size='2+'>" + 
         	"Maximum Temperature – Average maximum temperature in degrees Fahrenheit for the season or annually. " + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_Temp.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a><br/><br/>" + 
             "Minimum Temperature – Average minimum temperature in degrees Fahrenheit for the season or annually. " + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_Temp.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a><br/><br/>" + 
             "Precipitation - Total precipitation in inches for the season or annually. " + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_Precip.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a><br/><br/>" + 
@@ -282,7 +318,7 @@ function(declare,
         this.showInformationWindow();
     },
     OnSeasonSelectHelpClick: function(){
-        dojo.byId("divSplashContent").innerHTML = "<font face='calibri' size='2+'>" + 
+        dojo.byId("divSplashContent").innerHTML = "<font-family= 'Source Sans Pro' font-face='sans-serif' size='2+'>" + 
             "Winter – December of previous year, January, February<BR><BR>" +
             "Spring – March, April, May<BR><BR>" +
             "Summer – June, July, August<BR><BR>" +
