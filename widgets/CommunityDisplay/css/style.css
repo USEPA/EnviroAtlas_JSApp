@@ -1,0 +1,10 @@
+.jimu-widget-communitydisplay .communitydisplay-background{
+  padding: 2px 5px 2px 5px;
+  line-height: 20px;
+  overflow: hidden;
+}
+.jimu-widget-communitydisplay .communitydisplay-foldable{
+  center no-repeat;
+  width: 10px;
+  height: 20px;
+}
