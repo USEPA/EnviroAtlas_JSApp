@@ -88,6 +88,17 @@
 				"name" : "Coordinate",
 				"label" : "Coordinate"
 			}, {
+				"uri" : "widgets/CommunityDisplay/Widget",
+				"position" : {
+					"left" : 400,
+					"bottom" : 5,
+					"relativeTo" : "map"
+				},
+				"version" : "1.3",
+				"id" : "widgets_CommunityDisplay_Widget_36",
+				"name" : "CommunityDisplay",
+				"label" : "CommunityDisplay"
+			}, {
 				"position" : {
 					"left" : 295,
 					"top" : 5,
@@ -524,6 +535,13 @@
 					"uri" : "widgets/Coordinate/Widget",
 					"position" : {
 						"left" : 160,
+						"bottom" : 5
+					},
+					"version" : "1.3"
+				}, {
+					"uri" : "widgets/CommunityDisplay/Widget",
+					"position" : {
+						"left" : 400,
 						"bottom" : 5
 					},
 					"version" : "1.3"

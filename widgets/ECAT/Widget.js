@@ -127,7 +127,13 @@ function(declare,
 			//ECAT Scenario IV 1950/1950-2000/2000 Precip Spring
 	    	var scenarioSelection = document.getElementById("scenario");
 			scenarioText = scenarioSelection.options[scenarioSelection.selectedIndex].text;			
-			layer.name = "ECAT " + scenarioText + " " + startYearBaseValue + "/" + endYearBaseValue + "-" + startYearComparisonValue +  "/" + endYearComparisonValue + " " + climateVariableValue + " " + seasonValue;
+			var unit = "null";
+		    if ((climateVariableValue == "TempMax") ||(climateVariableValue == "TempMin")) {
+            	unit =  " (Degrees Fahrenheit)";              
+            } else if ((climateVariableValue == "Precip") ||(climateVariableValue == "PET")) {
+            	unit = " (Inches per season or year)";                
+            }      	
+			layer.name = "ECAT " + scenarioText + " " + startYearBaseValue + "/" + endYearBaseValue + "-" + startYearComparisonValue +  "/" + endYearComparisonValue + " " + climateVariableValue + " " + seasonValue + unit;
 			map.addLayer(layer);
 			map.on("click", doIdentify);
 			identifyTask = new IdentifyTask(layer.url);
