@@ -1,0 +1,77 @@
+<html>
+<head><title>app</title></head>
+
+<script>
+
+			function selNumOfFrameClick() {
+				if(	document.getElementById("selNumOfFram").value =="oneFrame") {
+		
+					var frame0 = document.getElementById('app0');
+					var frame1 = document.getElementById('app1');
+					var frame2 = document.getElementById('app2');
+
+            		frame0.style.width = "100%";
+            		frame0.style.height = "100%";
+            		frame0.style.display = 'block';
+            		            		
+            		frame1.style.display = 'none';
+            		frame2.style.display = 'none';
+				}
+				if(	document.getElementById("selNumOfFram").value =="twoFrames") {
+					var frame0 = document.getElementById('app0');
+					var frame1 = document.getElementById('app1');
+					var frame2 = document.getElementById('app2');
+					
+            		frame0.style.width = "1px";
+            		frame0.style.height = "1px";
+            		frame0.style.top = "40px";	
+            		frame0.style.display = 'none';              		          
+            		
+            		frame1.style.width = "100%";
+            		frame1.style.height = "820px";
+            		frame1.style.top = "40px";
+            		
+            		frame2.style.width = "100%";
+            		frame2.style.height = "820px";
+            		frame2.style.top = "40px";
+            		
+					frame1.style.display = 'block';  
+            		frame2.style.display = 'block';              							
+				}
+			}
+</script>
+<body>
+	<div>
+		<select id="selNumOfFram" style="position: absolute; left: 0; top: 5; width: 160px;" onchange="selNumOfFrameClick();" >
+		    <option value="oneFrame" selected="selected">One Frame</option>
+		    <option value="twoFrames">Two Frames</option>
+		</select>			
+	</div>
+
+	<div>	
+		<input type="checkbox" id="chkSynchronize" style="position: absolute; left: 190; top: 5; width: 20px;" value=1> 
+		<label for="chkSynchronize" style="position: absolute; left: 220; top: 5; width: 160px;" >Synchronize Map</label>
+	</div>
+
+	<div style = "margin-top: 40px">
+		<iframe name="app0" id = "app0" style="width: 100%; height: 100%; " src="./index.html"></iframe>
+	</div>
+	<div >
+        <table  style = "width: 100%; ">
+            <tr>
+                <td>		
+					<div >
+						<iframe name="app1" id = "app1" style="width: 0px; height: 0px;" src="./index.html"></iframe>
+					</div>
+				</td>
+				<td>
+					<div >
+						<iframe name="app2" id = "app2" style="width: 0px; height: 0px; " src="./index.html"></iframe>
+					</div>
+				</td>
+			<tr>
+		</table>
+	</div>
+
+</body>
+</html>
