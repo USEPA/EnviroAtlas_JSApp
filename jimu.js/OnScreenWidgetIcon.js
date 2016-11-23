@@ -104,7 +104,7 @@ function(declare, lang, array, html, on, _WidgetBase, utils) {
     switchToOpen: function(){
       this.state = 'opened';
 
-      this.panelManager.closeAllPanelsInGroup(this.widgetConfig.gid);
+      //this.panelManager.closeAllPanelsInGroup(this.widgetConfig.gid);
       array.forEach(this.widgetManager.getOnScreenOffPanelWidgets(), function(widget){
         if(widget.closeable){
           this.widgetManager.closeWidget(widget);
