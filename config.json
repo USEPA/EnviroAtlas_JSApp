@@ -99,6 +99,17 @@
 				"name" : "CommunityDisplay",
 				"label" : "CommunityDisplay"
 			}, {
+				"uri" : "widgets/SynchronizeMap/Widget",
+				"position" : {
+					"left" : 420,
+					"bottom" : 5,
+					"relativeTo" : "map"
+				},
+				"version" : "1.3",
+				"id" : "widgets_SynchronizeMap_Widget_37",
+				"name" : "SynchronizeMap",
+				"label" : "SynchronizeMap"
+			}, {
 				"position" : {
 					"left" : 295,
 					"top" : 5,
@@ -541,7 +552,14 @@
 				}, {
 					"uri" : "widgets/CommunityDisplay/Widget",
 					"position" : {
-						"left" : 400,
+						"left" : 360,
+						"bottom" : 5
+					},
+					"version" : "1.3"
+				}, {
+					"uri" : "widgets/SynchronizeMap/Widget",
+					"position" : {
+						"left" : 420,
 						"bottom" : 5
 					},
 					"version" : "1.3"

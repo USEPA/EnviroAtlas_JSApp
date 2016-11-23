@@ -91,6 +91,12 @@ define(["./ConfigManager",
     
     window.communitySelected = window.strAllCommunity;
     
+    window.communitySelectedByTheOtherFrame = window.strAllCommunity;
+    //variables that are used for synchronize map
+    window.changedExtentByOtherFrameXmin = null;
+    window.changedExtentByOtherFrameXmax = null;   
+    window.changedExtentByOtherFrameYmin = null;
+    window.changedExtentByOtherFrameYmax = null;   
     window.communityMetadataDic = {};
                 
     //patch for JS API 3.10
