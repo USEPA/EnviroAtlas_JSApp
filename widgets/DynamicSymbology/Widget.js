@@ -95,6 +95,10 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 
 		  //Set layers
 		  geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
+
+		  var comName = window.communityDic[window.communitySelected];
+		  geoenrichedFeatureLayer.setDefinitionExpression("Community like '%" + comName + "%'");
+
 		  featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
 
 		  //set store original renderer
@@ -268,7 +272,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 
 			geoenrichedFeatureLayer.setRenderer(gRenderer);
 			geoenrichedFeatureLayer.redraw();
-            
+
             geoenrichedFeatureLayer.setVisibility(false);
             geoenrichedFeatureLayer.setVisibility(true);
 
