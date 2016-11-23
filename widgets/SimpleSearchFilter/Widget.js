@@ -556,11 +556,11 @@ define([
 	                    	eaLyrNum = "";
 	                    }
 			                        
-	                	if(layer.hasOwnProperty('name') && (layer.name != null)){
-	                    	name = layer.name.toString();
+			            layerName = "";          
+	                	if(layer.hasOwnProperty('name') ){	                		
+		                	if ((layer.name != null)){
+		                    	layerName = layer.name.toString();
 	                    }
-	                    else {
-	                    	name = "";
 	                    }
 	                	if(layer.hasOwnProperty('eaDescription')){
 	                    	eaDescription = layer.eaDescription.toString();
@@ -601,7 +601,7 @@ define([
 					    	}
 					    }
 					    eaTagsWhole = eaTagsWhole.substring(0, eaTagsWhole.length - 1);						    
-				    	var layerItem = {eaLyrNum: eaLyrNum, name: name, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole};
+				    	var layerItem = {eaLyrNum: eaLyrNum, name: layerName, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole};
 	
 						layerDataStore.newItem(layerItem);
 						
