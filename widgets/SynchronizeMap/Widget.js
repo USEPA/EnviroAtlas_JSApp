@@ -92,7 +92,7 @@ define([
       
       onExtentChange: function(params) {
 		if (window.frameElement.name == "app1") {
-			if (window.parent.document.getElementById("chkSynchronize").checked) {
+				if (window.parent.document.getElementById("chkSynchronizeMap").checked) {
 				window.parent.frames['app2'].changedExtentByOtherFrameXmin = params.extent.xmin;
 				window.parent.frames['app2'].changedExtentByOtherFrameXmax = params.extent.xmax;
 				window.parent.frames['app2'].changedExtentByOtherFrameYmin = params.extent.ymin;
