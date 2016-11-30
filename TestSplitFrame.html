@@ -3,6 +3,18 @@
 
 <script>
 
+		function iframe1Load() {
+			document.getElementById("app1").contentWindow.document.body.onmousedown = function() {
+		        window.frames['app1'].frameBeClicked = 1;
+		        window.frames['app2'].frameBeClicked = 1;
+		    }
+		}
+		function iframe2Load() {
+			document.getElementById("app2").contentWindow.document.body.onmousedown = function() {
+		        window.frames['app1'].frameBeClicked = 2;
+		        window.frames['app2'].frameBeClicked = 2;
+		    }
+		}
 			function selNumOfFrameClick() {
 				var frame0 = document.getElementById('app0');
 				var frame1 = document.getElementById('app1');
@@ -55,12 +67,12 @@
             <tr>            	
                 <td>		
 					<div >
-						<iframe name="app1" id = "app1" style="width: 800px; height: 760px;" src="./index.html"></iframe>
+						<iframe name="app1" id = "app1" style="width: 800px; height: 760px;" src="./index.html" onload="iframe1Load()"></iframe>
 					</div>
 				</td>
 				<td>
 					<div >
-						<iframe name="app2" id = "app2" style="width: 800px; height: 760px;" src="./index.html"></iframe>
+						<iframe name="app2" id = "app2" style="width: 800px; height: 760px;" src="./index.html" onload="iframe2Load()"></iframe>
 					</div>
 				</td>
 			<tr>
