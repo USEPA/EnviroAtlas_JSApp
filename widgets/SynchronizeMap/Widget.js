@@ -69,6 +69,7 @@ define([
 	
 	    Object.defineProperty(window, "changedExtentByOtherFrameXmin", {
 	        set: function(newValue) {
+	        	
 	            if(newValue === null) { 
 	                alert("new value is null!"); // <-- breakpoint here!
 	            }
@@ -79,8 +80,17 @@ define([
 			    startExtent.xmax = window.changedExtentByOtherFrameXmax;
 			    startExtent.ymax = window.changedExtentByOtherFrameYmax;
 			    startExtent.spatialReference = new SpatialReference(3857);
-	
-			  	map.setExtent(startExtent);					    
+			    
+	      		if (window.frameBeClicked == 1) {
+					if (window.frameElement.name == "app2") {
+					  	map.setExtent(startExtent);	
+					 }
+			  	}	
+	      		if (window.frameBeClicked == 2) {
+					if (window.frameElement.name == "app1") {
+					  	map.setExtent(startExtent);	
+					 }
+			  	}				  				    
 			    changedNewValue = newValue;	            
 	        },
 	
@@ -91,20 +101,43 @@ define([
       },
       
       onExtentChange: function(params) {
-		if (window.frameElement.name == "app1") {
+      	
+      	var adjustForFurtherSynchronize = 0.0000000000001;
+      	
+      	if (window.frameBeClicked == 1) {
+			if (window.frameElement.name == "app1") {				
 				if (window.parent.document.getElementById("chkSynchronizeMap").checked) {
-				window.parent.frames['app2'].changedExtentByOtherFrameXmin = params.extent.xmin;
-				window.parent.frames['app2'].changedExtentByOtherFrameXmax = params.extent.xmax;
-				window.parent.frames['app2'].changedExtentByOtherFrameYmin = params.extent.ymin;
-				window.parent.frames['app2'].changedExtentByOtherFrameYmax = params.extent.ymax;	
-				
-				var adjustForFurtherSynchronize = 0.0000000000001;
-				window.parent.frames['app2'].changedExtentByOtherFrameXmin = params.extent.xmin+adjustForFurtherSynchronize;
-				window.parent.frames['app2'].changedExtentByOtherFrameXmax = params.extent.xmax+adjustForFurtherSynchronize;
-				window.parent.frames['app2'].changedExtentByOtherFrameYmin = params.extent.ymin+adjustForFurtherSynchronize;
-				window.parent.frames['app2'].changedExtentByOtherFrameYmax = params.extent.ymax+adjustForFurtherSynchronize;		
-			}
-		}       	
+					
+					window.parent.frames['app2'].changedExtentByOtherFrameXmin = params.extent.xmin;
+					window.parent.frames['app2'].changedExtentByOtherFrameXmax = params.extent.xmax;
+					window.parent.frames['app2'].changedExtentByOtherFrameYmin = params.extent.ymin;
+					window.parent.frames['app2'].changedExtentByOtherFrameYmax = params.extent.ymax;	
+					
+					
+					window.parent.frames['app2'].changedExtentByOtherFrameXmin = params.extent.xmin+adjustForFurtherSynchronize;
+					window.parent.frames['app2'].changedExtentByOtherFrameXmax = params.extent.xmax+adjustForFurtherSynchronize;
+					window.parent.frames['app2'].changedExtentByOtherFrameYmin = params.extent.ymin+adjustForFurtherSynchronize;
+					window.parent.frames['app2'].changedExtentByOtherFrameYmax = params.extent.ymax+adjustForFurtherSynchronize;		
+				}
+			}       	
+		}
+		
+      	if (window.frameBeClicked == 2) {
+			if (window.frameElement.name == "app2") {				
+				if (window.parent.document.getElementById("chkSynchronizeMap").checked) {
+					
+					window.parent.frames['app1'].changedExtentByOtherFrameXmin = params.extent.xmin;
+					window.parent.frames['app1'].changedExtentByOtherFrameXmax = params.extent.xmax;
+					window.parent.frames['app1'].changedExtentByOtherFrameYmin = params.extent.ymin;
+					window.parent.frames['app1'].changedExtentByOtherFrameYmax = params.extent.ymax;	
+					
+					window.parent.frames['app1'].changedExtentByOtherFrameXmin = params.extent.xmin+adjustForFurtherSynchronize;
+					window.parent.frames['app1'].changedExtentByOtherFrameXmax = params.extent.xmax+adjustForFurtherSynchronize;
+					window.parent.frames['app1'].changedExtentByOtherFrameYmin = params.extent.ymin+adjustForFurtherSynchronize;
+					window.parent.frames['app1'].changedExtentByOtherFrameYmax = params.extent.ymax+adjustForFurtherSynchronize;		
+				}
+			}       	
+		}		
 
       },
       onOpen: function() {

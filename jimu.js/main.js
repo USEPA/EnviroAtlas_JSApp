@@ -97,6 +97,7 @@ define(["./ConfigManager",
     window.changedExtentByOtherFrameXmax = null;   
     window.changedExtentByOtherFrameYmin = null;
     window.changedExtentByOtherFrameYmax = null;   
+    window.frameBeClicked = 1;
     window.communityMetadataDic = {};
                 
     //patch for JS API 3.10
