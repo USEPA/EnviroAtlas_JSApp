@@ -1,33 +1,33 @@
-<div style="height:100%;overflow:hidden;" data-dojo-type="dijit/layout/ContentPane" >
 
-	<div class="FAQ" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Filter by Benefit Categories / Geographies', open: false">
-			<!--<div class="FAQ">
+<div style="height:100%; width:100%; overflow:hidden;" dojotype="dijit.layout.ContentPane" >
+    <div class="FAQ" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Filter by Benefit Categories / Geographies', open: false">
+        <!--<div class="FAQ">
 			    <a href="#hide1" class="hide" id="hide1">+</a>
 			    <a href="#show1" class="show" id="show1">-</a>
 			    <div class="question"> Select by Benefit Categories / Geographies</div>-->
-			    <div class="list">
-			    	<div > Benefit Category </div>
-					<table id="categoryTable" style="margin:0px 0px 10px 0px">
-							    <tbody>
-							    	<tr>
-						    		
-							    	</tr>
-							    </tbody>
-					</table>   
-			    	<div> Geographies </div>
-					<table id="geographyTable" style="margin:0px 0px 10px 0px">
-							    <tbody>
-							    	<tr>	
-							    	</tr>
-							    </tbody>
-					</table>        
-				</div>
-			<!--</div>-->
+        <div class="list">
+            <div > Benefit Category </div>
+            <table id="categoryTable" style="margin:0px 0px 10px 0px">
+                <tbody>
+                    <tr>
+
+                    </tr>
+                </tbody>
+            </table>   
+            <div> Geographies </div>
+            <table id="geographyTable" style="margin:0px 0px 10px 0px">
+                <tbody>
+                    <tr>	
+                    </tr>
+                </tbody>
+            </table>        
+        </div>
+        <!--</div>-->
 
 
-	</div>
+    </div>
 
-    <div id="searchboxDiv" data-dojo-type="dijit/layout/ContentPane">
+    <div id="searchboxDiv" dojotype="dijit.layout.ContentPane">
         <table id="tableLyrNameDescrTag" cellspacing="0" width="100%" style="display:none">
             <thead>
                 <tr>
@@ -43,70 +43,79 @@
             </tbody>
         </table>
     </div>
-	<!--div id="numOfLayers" innerHTML =  "&nbsp;" type="text" style = "text-align: left; background-color: green; color:white;height = 20px">
+    <!--div id="numOfLayers" innerHTML =  "&nbsp;" type="text" style = "text-align: left; background-color: green; color:white;height = 20px">
 	
 	</div-->
-	<div id="selectableLayersContainer" data-dojo-type="dijit/layout/ContentPane"  style="background-color: green; width: 100%; height: 20px; border: 0px;padding: 2px 10px 0px 5px;margin:5px 0px 5px 0px">	<!-- padding:0 is good enough ; margin:0 does not work--> 
-		<input id="numOfLayers" value = "" type="text" style = "background-color: green; color:white; border: none; float: left; vertical-align:center height: 14px;"/>
-		<div>
-			<label for="hideIcons" style = "background-color: green; color:white; border: none; float: right;">Hide Icons</label>	
-			<input id="hideIcons"  type="checkbox"  style = "background-color: green; color:white; border: none; float: right;vertical-align:center;height: 14px;padding:2px; margin:2px" >
-					
-		</div>		
-	</div>
-	
-	
-	<!--input id="numOfLayers1" value = "test" type="text" style = "text-align: left; background-color: green; color:white;height = 20px; width = 100%"/-->
-	<br>
-	<div data-dojo-type="dijit/layout/ContentPane" style="padding: 0px 8px 0px 8px;">
-		<input id="selectAllLayers"  type="checkbox"   >
-		<label for="selectAllLayers">Select All Layers</label>			
-	</div>
-        <!--Removing supply/demand/driver choices from interface. Awaiting further guidance on layer filter options.-->
-		<div id="navcontainer" data-dojo-type="dijit/layout/ContentPane" style="margin: 0px 8px 0px 8px; padding: 0px 0px 0px 12px; display: none;">
-			<ul id="navlistSupplyDemand">
-				<li><a href="#">
-					<div >
-			            <input id="Supply" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked >
-			            <label for="Supply">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Supply</label>
-			        </div>
-				</a></li>
-				<li ><a href="#" style="padding-right: 12px;display: inline-block;list-style-type: none;">
-					<div >
-			            <input id="Demand" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked>
-			            <label for="Demand">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Demand</label>
-			        </div>
-				</a></li>
-				
-				<li><a href="#">
-					<div >
-			            <input id="Driver" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked>
-			            <label for="Driver">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Driver</label>
-			        </div>
-				</a></li>
-				<li><a href="#">
-					<div >
-		            <input id="SpatiallyExplicit" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox" checked>
-			            <label for="SpatiallyExplicit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Spatially Explicit</label>
-			        </div>
-				</a></li>								
-			</ul>
-		</div>
-		<div id="tableSelectableLayersArea" data-dojo-type="dijit/layout/ContentPane" style="overflow-y: scroll;height:100%;">
-			<table id="tableSelectableLayers"  >
-			    <tbody>
-			    	<tr>
+    <div id="selectableLayersContainer" dojotype="dijit.layout.ContentPane"  style="background-color: green; width: 100%; height: 20px; border: 0px;padding: 2px 10px 0px 5px;margin:5px 0px 5px 0px">
+        <!-- padding:0 is good enough ; margin:0 does not work--> 
+        <input id="numOfLayers" value = "" type="text" style = "background-color: green; color:white; border: none; float: left; vertical-align:center height: 14px;"/>
+        <div>
+            <label for="hideIcons" style = "background-color: green; color:white; border: none; float: right;">Hide Icons</label>	
+            <input id="hideIcons"  type="checkbox"  style = "background-color: green; color:white; border: none; float: right;vertical-align:center;height: 14px;padding:2px; margin:2px" />
 
-			    	</tr>					    	
-			    </tbody>
-			</table>	
-		</div>
-			<br/>
-			<div>
-			    <input id = "butOpenSelectCommunityWidget" type="button" value="View Active Layers" style="display:none" data-dojo-attach-event="onclick:_onViewActiveLayersClick" >
-			    <input id = "butAddSingleLayer" type="button" value="butAddSingleLayer" style="display:none"  data-dojo-attach-event="onclick:_onSingleLayerClick"> 
-			    <input id = "butAddAllLayers" type="button" value="butAddAllLayers" style="display:none"  data-dojo-attach-event="onclick:_onAddLayersClick"> 
-			    <input id = "butRemAllLayers" type="button" value="butRemAllLayers" style="display:none"  data-dojo-attach-event="onclick:_onRemLayersClick"> 
-			</div>
-		
+        </div>		
+    </div>
+
+
+    <!--input id="numOfLayers1" value = "test" type="text" style = "text-align: left; background-color: green; color:white;height = 20px; width = 100%"/-->
+    <br/>
+    <div dojotype="dijit.layout.ContentPane" style="padding: 0px 8px 0px 8px;">
+        <input id="selectAllLayers"  type="checkbox"/>
+        <label for="selectAllLayers">Select All Layers</label>			
+    </div>
+    <!--Removing supply/demand/driver choices from interface. Awaiting further guidance on layer filter options.-->
+    <div id="navcontainer" dojotype="dijit.layout.ContentPane" style="margin: 0px 8px 0px 8px; padding: 0px 0px 0px 12px; display: none;">
+        <ul id="navlistSupplyDemand">
+            <li>
+                <a href="#">
+                    <div >
+                        <input id="Supply" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked />
+                        <label for="Supply">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Supply</label>
+                    </div>
+                </a>
+            </li>
+            <li >
+                <a href="#" style="padding-right: 12px;display: inline-block;list-style-type: none;">
+                    <div >
+                        <input id="Demand" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked/>
+                        <label for="Demand">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Demand</label>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <div >
+                        <input id="Driver" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked/>
+                        <label for="Driver">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Driver</label>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div >
+                        <input id="SpatiallyExplicit" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox" checked/>
+                        <label for="SpatiallyExplicit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Spatially Explicit</label>
+                    </div>
+                </a>
+            </li>								
+        </ul>
+    </div>
+    <div id="tableSelectableLayersArea" dojotype="dijit.layout.ContentPane" style="overflow-y: scroll; height: calc(100% - 125px); height: -moz-calc(100% - 125px); height: -webkit-calc(100% - 125px);">
+        <table id="tableSelectableLayers"  >
+            <tbody>
+                <tr>
+
+                </tr>					    	
+            </tbody>
+        </table>
+    </div>
+    <br/>
+    <div dojotype="dijit.layout.ContentPane" data-dojo-props="region:'bottom'" height="0px">
+        <input id = "butOpenSelectCommunityWidget" type="button" value="View Active Layers" style="display:none" data-dojo-attach-event="onclick:_onViewActiveLayersClick" />
+        <input id = "butAddSingleLayer" type="button" value="butAddSingleLayer" style="display:none"  data-dojo-attach-event="onclick:_onSingleLayerClick"/> 
+        <input id = "butAddAllLayers" type="button" value="butAddAllLayers" style="display:none"  data-dojo-attach-event="onclick:_onAddLayersClick"/> 
+        <input id = "butRemAllLayers" type="button" value="butRemAllLayers" style="display:none"  data-dojo-attach-event="onclick:_onRemLayersClick"/> 
+    </div>
+
 </div>
