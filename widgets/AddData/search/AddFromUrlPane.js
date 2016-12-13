@@ -110,7 +110,7 @@ define(["dojo/_base/declare",
         }
         var type = this.typeSelect.get("value");
         var url = lang.trim(this.urlTextBox.value);
-        if (url.length > 0) {
+        if (url.length > 0 && this.nameTextBox.value) {
           if (url.indexOf("http://") === 0 || url.indexOf("https://") === 0) {
             ok = true;
           }
@@ -189,7 +189,8 @@ define(["dojo/_base/declare",
         url = util.checkMixedContent(url);
         var lc = url.toLowerCase();
         var loader = new LayerLoader();
-        var id = loader._generateLayerId();
+        //var id = loader._generateLayerId();
+        var id = this.nameTextBox.value;
         var self = this,
           layer = null;
 

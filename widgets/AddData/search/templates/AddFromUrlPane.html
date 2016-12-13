@@ -21,10 +21,16 @@
     <input id="${id}_url" type="text" class="url-textbox jimu-input"
       data-dojo-attach-point="urlTextBox">
   </div>
-  <a href="javascript:void(0);
+  <div class="gap">
+    <label for="${id}_name">${i18n.addFromUrl.name}</label>
+  </div>
+  <div class="small-gap">
+    <input id="${id}_name" type="text" class="url-textbox jimu-input"
+           data-dojo-attach-point="nameTextBox">
+  </div>
+  <a href="javascript:void(0);"
      data-dojo-attach-point="examplesExpander"
-     data-dojo-attach-event="onClick: examplesExpanderClicked"
-  " >${i18n.addFromUrl.samplesHint}</a>
+     data-dojo-attach-event="onClick: examplesExpanderClicked">${i18n.addFromUrl.samplesHint}</a>
   <div class="examples" data-dojo-attach-point="examplesNode">
     <div data-examples-type="ArcGIS">
       <div>http://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/World_Cities/FeatureServer/0</div>

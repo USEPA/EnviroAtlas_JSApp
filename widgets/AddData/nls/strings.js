@@ -98,6 +98,7 @@ define({
       caption: "Add Data - Enter a URL",
       type: "Type",
       url: "URL",
+      name: "Layer Name",
       types: {
         "ArcGIS": "An ArcGIS Server Web Service",
         "WMS": "A WMS OGC Web Service",
