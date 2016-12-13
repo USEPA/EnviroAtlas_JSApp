@@ -172,6 +172,7 @@ define([
                         //infoTemplate: infoTemplate
                     });
                     featureLayer.id = window.addedLayerIdPrefix + featureLayer.name;
+                    window.layerID_Portal_WebMap.push(featureLayer.id);
 
                     //associate the feature with the popup on click to enable highlight and zoom to
                     featureLayer.on('click', function (event) {
@@ -355,6 +356,7 @@ define([
                             name: csvFileName
                         });
                         featureLayerCSV.__popupInfo = popupInfo;
+                        window.layerID_Portal_WebMap.push(window.addedLayerIdPrefix + csvFileName);
                         fileUpload.map.addLayer(featureLayerCSV);
                         fileUpload.zoomToData(featureLayerCSV);
 

@@ -224,6 +224,7 @@ define(["dojo/_base/declare",
                     lyrs.reverse();
                     array.forEach(lyrs, function(lyr) {
                       loader._setFeatureLayerInfoTemplate(lyr);
+                      window.layerID_Portal_WebMap.push(lyr.id);
                       map.addLayer(lyr);
                     });
                     dfd.resolve(lyrs);
@@ -401,6 +402,7 @@ define(["dojo/_base/declare",
           } else if (lyr && lyr.declaredClass === "esri.layers.CSVLayer") {
             loader._setFeatureLayerInfoTemplate(lyr);
           }
+          window.layerID_Portal_WebMap.push(lyr.id);
           map.addLayer(lyr);
           dfd.resolve(lyr);
         }).otherwise(function(error) {
