@@ -62,7 +62,8 @@ define([
         }
       });
     }; 
-      var _addSelectedLayers = function(layersTobeAdded, selectedLayerNum) {
+      var _addSelectedLayers = function(layersTobeAdded, selectedLayerNum, bUpdateLayers) {
+      	//alert("bUpdateLayers:"+ bUpdateLayers);
             var index, len;
             for (index = 0, len = layersTobeAdded.length; index < len; ++index) {
               layer = layersTobeAdded[index];
@@ -212,18 +213,49 @@ define([
 			                });
 			                
 			                lLayer.id = window.layerIdPrefix + layer.eaID.toString();							
-			                /*if(layer.hasOwnProperty('eaScale')){
+			                //alert("added lLayer.id:" + lLayer.id)	;				
+			                if(layer.hasOwnProperty('eaScale')){
 			                	if (layer.eaScale == "COMMUNITY") {
+			                		if (bUpdateLayers ==  "1") {
+			                			//alert("update layer")
+			                			lyrTobeUpdated = this._viewerMap.getLayer(window.layerIdPrefix + stringArray[i]);
+										if(lyrTobeUpdated){
+											//alert("update layer: about to remove layer")
+											if (lyrTobeUpdated.visible){
+												lLayer.setVisibility(true);
+											}
+											else {
+												lLayer.setVisibility(false);
+											}
+							            	this._viewerMap.removeLayer(lyrTobeUpdated);
+							          	}
+							          	if(layer.tileLink){
+							          		tileLyrTobeUpdated = this._viewerMap.getLayer(window.layerIdTiledPrefix);
+							          		if(tileLyrTobeUpdated){
+									       	     this._viewerMap.removeLayer(tileLyrTobeUpdated);//bji need to be modified to accomodate tile.
+									        } 
+							          	}
+			                		}
+			                		else {
+			                			lLayer.setVisibility(false);//turn off the layer when first added to map and let user to turn on	
+			                		}
 					    			if ((window.communitySelected != "") && (window.communitySelected != window.strAllCommunity)){
 										console.log("setDefinitionExpression: "  +"Community = '" +window.communityDic[window.communitySelected] + "'");
 										lLayer.setDefinitionExpression("Community = '" +window.communityDic[window.communitySelected] + "'");
 										
 									}
 								}
-							}*/
+							}
 						
 							//console.log("layer.eaID: " + layer.eaID.toString());
 						    bNeedToBeAdded = true;
+			                if(layer.hasOwnProperty('eaScale')){
+			                	if (layer.eaScale == "NATIONAL") {
+			                		if (bUpdateLayers ==  "1") {
+			                			bNeedToBeAdded = false;
+			                		}
+			                	}
+			                }
 						    break;
 						}
 
@@ -333,13 +365,22 @@ define([
 			  //}			  	
 			  var stringArray = data.message.split(",");
 			  if (stringArray[0] == "a") {
-			  	_addSelectedLayers(this.config.layers.layer, data.message.substring(2));
+			  	_addSelectedLayers(this.config.layers.layer, data.message.substring(2), "0");
 			  }
 			  
 			  //removing selected layer function is deleted from SimpleSearchFilter
 			  if (stringArray[0] == "r") {
 				  	_removeSelectedLayers(data.message.substring(2));
 			  }	
+		  }
+		  if (name == 'SelectCommunity'){
+			  var stringArray = data.message.split(",");
+			  if (stringArray.length > 1){
+				  if (stringArray[0] == "u") {
+				  	//alert("stringArray length > 1, " + data.message.substring(2));
+				  	_addSelectedLayers(this.config.layers.layer, data.message.substring(2), "1");
+				  }			  	
+			  }
 		  }
 		  //removing all layers function is not used in Layerlist currently
 		  //if (name == 'LayerList'){

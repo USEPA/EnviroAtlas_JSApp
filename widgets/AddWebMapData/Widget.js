@@ -396,7 +396,9 @@ define(['dojo/_base/declare',
                                 if(l.popupInfo){
                                     var popupTemplate = new PopupTemplate(l.popupInfo);
                                     tempLayer.infoTemplate = popupTemplate;
-                                }
+                                }                            		
+
+
                             }
                         }
                         else{
@@ -417,6 +419,7 @@ define(['dojo/_base/declare',
                             }
                         }
                         if(tempLayer){
+                        	window.layerID_Portal_WebMap.push(l.id);
                             testmap.addLayer(tempLayer);
                         }
 

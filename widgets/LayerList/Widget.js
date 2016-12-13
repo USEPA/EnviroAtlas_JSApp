@@ -237,12 +237,20 @@ define([
 		array.forEach(this.map.layerIds, function(aLayerId, i){
 		    alert("aLayerId from array.forEach:" + aLayerId);
 		});  */
+		//remove all layers searchable from widget SimpleSearchFilter
     	for (i in window.allLayerNumber) {    		
     		lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
 			if(lyr){
             	this.map.removeLayer(lyr);
           	}
         } 
+        //remove all layers added from portal, webmapdata and upload data
+    	for (i in window.layerID_Portal_WebMap) {	        
+    		lyr = this.map.getLayer(window.layerID_Portal_WebMap[i]);
+			if(lyr){
+	    		this.map.removeLayer(lyr);        	
+          	}          	
+        }        
       }
     });
     //clazz.hasConfig = false;

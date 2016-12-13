@@ -240,6 +240,7 @@ define(["dojo/_base/declare",
           if (!esriLang.isDefined(layer.title)) {
             layer.title = item.title;
           }
+          window.layerID_Portal_WebMap.push(layer.id);
           this.map.addLayer(layer);
         }
       },

@@ -55,6 +55,7 @@ define(["./ConfigManager",
     
     window.bFirstLoadFilterWidget = true;
     window.allLayerNumber = [];
+    window.layerID_Portal_WebMap = [];
     window.categoryDic = {};
     window.categoryDic["Clean Air"] = "cair";
     window.categoryDic["Clean and Plentiful Water"] = "cpw";

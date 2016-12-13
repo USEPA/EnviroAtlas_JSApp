@@ -14,7 +14,9 @@ define(['dojo/_base/declare',
 		"dojo/request/xhr",
 		"dojo/dom",
 		"dojo/dom-class",
-		'esri/geometry/Extent'
+		'esri/geometry/Extent',
+		'esri/layers/FeatureLayer',
+		'dojo/_base/array'
 		],
 function(declare, 
 		BaseWidget, 
@@ -23,7 +25,9 @@ function(declare,
 		 xhr,
 		dom,
 		 domClass,
-		 Extent
+		Extent,
+		FeatureLayer,
+		array
 	    ) {
 
   var communitySelected = "";
@@ -146,6 +150,18 @@ function(declare,
 	    }
 	    this.map.setExtent(nExtent);	    
 
+	    var lyr;
+	    layersToBeAdded = "u";
+    	for (i in window.allLayerNumber) {
+    		lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
+			if(lyr){
+	    		layersToBeAdded = layersToBeAdded + "," + lyr.id.replace(window.layerIdPrefix, "");
+          	}
+        } 	    
+        //alert("layersToBeAdded by select Community: "+ layersToBeAdded);
+        this.publishData({
+			message: layersToBeAdded
+		});   
     },    
     displayCommunitySelection: function() {
     	this.addRowButton(prefixRadioCommunity + window.strAllCommunity, "community", "Combined Communities");

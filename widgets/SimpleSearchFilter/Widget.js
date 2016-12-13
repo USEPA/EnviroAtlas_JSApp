@@ -147,10 +147,12 @@ define([
             var totalNumOfLayers = 0;
             
 	    	dojo.forEach(items, function(item) {
+	    		
 	           	
 	           	var currentLayerSelectable = false;
 				eaLyrNum = layerDataStore.getValue( item, 'eaLyrNum').toString();
 				eaID = layerDataStore.getValue( item, 'eaID').toString();
+				
 				layerName = layerDataStore.getValue( item, 'name');
 
     			eaDescription = layerDataStore.getValue( item, 'eaDescription');
@@ -199,24 +201,26 @@ define([
 				for (i in eachLayerCategoryList) {
 					
 					enumCategoryForCurrentLayer = eachLayerCategoryList[i].split("-");
-						if(window.categoryDic[enumCategoryForCurrentLayer[0].trim()] != undefined){
+					if(window.categoryDic[enumCategoryForCurrentLayer[0].trim()] != undefined){
 						
-					var chkCategery = document.getElementById(window.chkCategoryPrefix+window.categoryDic[enumCategoryForCurrentLayer[0].trim()]);
-					if(chkCategery.checked == true){
-						supplyDemandList = enumCategoryForCurrentLayer[1].trim().split(",");
-						
-						
-						for (j in supplyDemandList) {
+						var chkCategery = document.getElementById(window.chkCategoryPrefix+window.categoryDic[enumCategoryForCurrentLayer[0].trim()]);
+						if(chkCategery.checked == true){
 
-							var chkSupplyDemand = document.getElementById(supplyDemandList[j].trim().replace(" ",""));
-									if 	(chkSupplyDemand != null)	{											
-							if (chkSupplyDemand.checked == true) {
-								currentLayerSelectable = true;				
-									}
-							}
+							/*supplyDemandList = enumCategoryForCurrentLayer[1].trim().split(",");
+							
+							
+							for (j in supplyDemandList) {
+	
+								var chkSupplyDemand = document.getElementById(supplyDemandList[j].trim().replace(" ",""));
+										if 	(chkSupplyDemand != null)	{											
+								if (chkSupplyDemand.checked == true) {
+									currentLayerSelectable = true;				
+										}
+								}
+							}*/
+							currentLayerSelectable = true;
 						}
 					}
-						}
 				}   //end of for (i in eachLayerCategoryList)		
 				}// end of if (bSelectByScale)
 				
@@ -344,19 +348,14 @@ define([
         baseClass: 'jimu-widget-simplesearchfilter',
 		onReceiveData: function(name, widgetId, data, historyData) {
 			if (name == 'SelectCommunity'){
-				/*for (var key in chkIdDictionary) {
-				  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
-		        	if (document.getElementById(key).checked )
-		        	{
-		        		
-		        		//document.getElementById('butRemAllLayers').click();
-		        		//document.getElementById('butAddAllLayers').click();
-		        		//document.getElementById('butUpdateAllLayersWhenCommunityChange').click();
-		        	}		
-				  }
-				}*/				
-				communitySelected = data.message;
-				_updateSelectableLayer();
+				  var stringArray = data.message.split(",");
+
+					  if (stringArray[0] != "u") {
+						communitySelected = data.message;
+						_updateSelectableLayer();
+					  }			  	
+		
+
 			}		  
 		},
 

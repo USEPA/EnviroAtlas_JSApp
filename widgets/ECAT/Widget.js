@@ -124,6 +124,7 @@ function(declare,
     	gpComputeClimateChange.getResultImageLayer(jobInfo.jobId, null, null, function(layer){
 			layer.setOpacity(1);
 			layer.id = window.addedLayerIdPrefix + layerID;
+			window.layerID_Portal_WebMap.push(layer.id);
 			//ECAT Scenario IV 1950/1950-2000/2000 Precip Spring
 	    	var scenarioSelection = document.getElementById("scenario");
 			scenarioText = scenarioSelection.options[scenarioSelection.selectedIndex].text;			
