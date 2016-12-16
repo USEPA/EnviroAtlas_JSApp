@@ -22,6 +22,8 @@ define(["dojo/_base/declare",
     "dojo/promise/all",
     "dojo/dom-class",
     "dojo/window",
+    "dojo/dom",
+    "dojo/dom-style",
     "dijit/Viewport",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
@@ -45,7 +47,7 @@ define(["dojo/_base/declare",
     "esri/InfoTemplate"//,
     // "esri/layers/vector-tile"
   ],
-  function(declare, lang, array, on, keys, Deferred, all, domClass, win, Viewport,
+  function(declare, lang, array, on, keys, Deferred, all, domClass, win, dom, domStyle, Viewport,
     _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, i18n, LayerLoader, util,
     ArcGISDynamicMapServiceLayer, ArcGISImageServiceLayer, ArcGISTiledMapServiceLayer, CSVLayer,
     FeatureLayer, GeoRSSLayer, KMLLayer, StreamLayer,
@@ -110,7 +112,7 @@ define(["dojo/_base/declare",
         }
         var type = this.typeSelect.get("value");
         var url = lang.trim(this.urlTextBox.value);
-        if (url.length > 0 && this.nameTextBox.value) {
+        if (url.length > 0 ) {
           if (url.indexOf("http://") === 0 || url.indexOf("https://") === 0) {
             ok = true;
           }
@@ -183,6 +185,25 @@ define(["dojo/_base/declare",
           def.resolve(supported);
         });
         return def;
+      },
+
+      _findServiceName: function(evt){
+
+        var urlS = evt.target.value;
+
+        if(evt.target.value == ""){
+          domStyle.set(this.lNameFrame, "display", "none");
+        }else{
+          if(urlS.indexOf("/MapServer")>0){
+            domStyle.set(this.lNameFrame, "display", "block");
+            var stringArray = urlS.split("/");
+            this.nameTextBox.value = stringArray[stringArray.length -2];
+          }else if(urlS.indexOf("/FeatureServer/")>0){
+            domStyle.set(this.lNameFrame, "display", "block");
+            var stringArray = urlS.split("/");
+            this.nameTextBox.value = stringArray[stringArray.length -3];
+          }
+        }
       },
 
       _handleAdd: function(dfd, map, type, url) {

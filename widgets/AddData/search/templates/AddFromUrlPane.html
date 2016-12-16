@@ -15,19 +15,20 @@
     </select>
   </div>
   <div class="gap">
-    <label for="${id}_url">${i18n.addFromUrl.url}</label>
+    <label for="${id}_url" >${i18n.addFromUrl.url}</label>
   </div>
-  <div class="small-gap">
+  <div  class="small-gap">
     <input id="${id}_url" type="text" class="url-textbox jimu-input"
-      data-dojo-attach-point="urlTextBox">
+      data-dojo-attach-point="urlTextBox" data-dojo-attach-event="oninput: _findServiceName"  >
   </div>
-  <div class="gap">
+  <div data-dojo-attach-point="lNameFrame" class="gap" style="display: none">
     <label for="${id}_name">${i18n.addFromUrl.name}</label>
+    <div data-dojo-attach-point="custumName" class="small-gap">
+      <input id="${id}_name" type="text" class="url-textbox jimu-input"
+             data-dojo-attach-point="nameTextBox">
+    </div>
   </div>
-  <div class="small-gap">
-    <input id="${id}_name" type="text" class="url-textbox jimu-input"
-           data-dojo-attach-point="nameTextBox">
-  </div>
+
   <a href="javascript:void(0);"
      data-dojo-attach-point="examplesExpander"
      data-dojo-attach-event="onClick: examplesExpanderClicked">${i18n.addFromUrl.samplesHint}</a>
