@@ -1,10 +1,10 @@
-''' SpreadsheettoJSON.py
+''' SpreadsheettoJSON_ ancillary.py
 
 This script is designed to produce a JSON file for use with the WAB Local Layer Widget
 using values from an Excel table.
 Utilizes openpyxl, available here: https://openpyxl.readthedocs.org/en/latest/
 Tested using Python 3.4, might be backward compatible?
-Torrin Hultgren, October 2015
+Torrin Hultgren, December 2016
 '''
 import sys, json, csv, openpyxl
 
@@ -38,8 +38,9 @@ def removeEmptyRows(rows):
 def main(_argv):
     # Open the Excel spreadsheet
     inputWorkbook = openpyxl.load_workbook(filename = inputSpreadsheet,data_only=True)
-    # Get the worksheet titled "EA_main"
-    inputWorksheet = inputWorkbook["EA_main"]
+    # For each worksheet we care about:
+    
+    inputWorksheet = inputWorkbook.active
     # Compile a dictionary of Spreadsheet field headers
     mapTable = open(mapTablePath)
     mapTableReader = csv.DictReader(mapTable,delimiter=',')
@@ -96,7 +97,7 @@ def main(_argv):
         }
         layerJSON["popup"]["fieldInfos"][0]["fieldName"] = inputWorksheet.cell(key["fieldName"]+rowID).value
         layerJSON["popup"]["fieldInfos"][0]["label"] = name
-        stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic"]
+        stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS"]
         for elem in stringList:
             cellValue = inputWorksheet.cell(key[elem]+rowID).value
             if cellValue:
