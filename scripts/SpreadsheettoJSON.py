@@ -5,6 +5,8 @@ using values from an Excel table.
 Utilizes openpyxl, available here: https://openpyxl.readthedocs.org/en/latest/
 Tested using Python 3.4, might be backward compatible?
 Torrin Hultgren, October 2015
+
+********** Need to update popup configuration, community layers are not HUC 12s **********
 '''
 import sys, json, csv, openpyxl
 
