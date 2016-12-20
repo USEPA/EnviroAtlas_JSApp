@@ -1,0 +1,453 @@
+{
+    "layers": {
+        "layer": [
+            {
+                "mode": "ondemand",
+                "eaMetric": "boundary",
+                "autorefresh": 0,
+                "popup": {
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": null,
+                            "visible": "true",
+                            "label": "Counties"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "type": "Feature",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Reference_Boundaries/MapServer",
+                "visible": "false",
+                "opacity": 0.5,
+                "eaID": 901,
+                "eaTopic": "Boundaries",
+                "eaScale": "NATIONAL",
+                "eaLyrNum": 1,
+                "name": "Counties",
+                "eaPBS": "Boundaries"
+            },
+            {
+                "mode": "ondemand",
+                "eaMetric": "boundary",
+                "autorefresh": 0,
+                "popup": {
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": null,
+                            "visible": "true",
+                            "label": "County Labels"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "type": "Feature",
+                "url": " ",
+                "visible": "false",
+                "opacity": 0.5,
+                "eaID": 902,
+                "eaTopic": "Boundaries",
+                "eaScale": "NATIONAL",
+                "name": "County Labels",
+                "eaPBS": "Boundaries"
+            },
+            {
+                "mode": "ondemand",
+                "eaMetric": "boundary",
+                "autorefresh": 0,
+                "popup": {
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": null,
+                            "visible": "true",
+                            "label": "EPA Regions"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "type": "Feature",
+                "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/EPA_Locations/MapServer",
+                "visible": "false",
+                "opacity": 0.5,
+                "eaID": 903,
+                "eaTopic": "Boundaries",
+                "eaScale": "NATIONAL",
+                "eaLyrNum": 4,
+                "name": "EPA Regions",
+                "eaPBS": "Boundaries"
+            },
+            {
+                "mode": "ondemand",
+                "eaMetric": "boundary",
+                "autorefresh": 0,
+                "popup": {
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": null,
+                            "visible": "true",
+                            "label": "HUC (12 Digit) Subwatershed"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "type": "Feature",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Reference_Boundaries/MapServer",
+                "visible": "false",
+                "opacity": 0.5,
+                "eaID": 904,
+                "eaTopic": "Boundaries",
+                "eaScale": "NATIONAL",
+                "eaLyrNum": 22,
+                "eaDfsLink": "Supplemental/HUC.pdf",
+                "name": "HUC (12 Digit) Subwatershed",
+                "eaPBS": "Boundaries"
+            },
+            {
+                "mode": "ondemand",
+                "eaMetric": "boundary",
+                "autorefresh": 0,
+                "popup": {
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": null,
+                            "visible": "true",
+                            "label": "HUC (12 Digit) Subwatershed Labels"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "type": "Feature",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Reference_Boundaries/MapServer",
+                "visible": "false",
+                "opacity": 0.5,
+                "eaID": 905,
+                "eaTopic": "Boundaries",
+                "eaScale": "NATIONAL",
+                "eaLyrNum": 23,
+                "eaDfsLink": "Supplemental/HUC.pdf",
+                "name": "HUC (12 Digit) Subwatershed Labels",
+                "eaPBS": "Boundaries"
+            },
+            {
+                "mode": "ondemand",
+                "eaMetric": "boundary",
+                "autorefresh": 0,
+                "popup": {
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": null,
+                            "visible": "true",
+                            "label": "HUC (4 Digit) Subregion"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "type": "Feature",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Reference_Boundaries/MapServer",
+                "visible": "false",
+                "opacity": 0.5,
+                "eaID": 906,
+                "eaTopic": "Boundaries",
+                "eaScale": "NATIONAL",
+                "eaLyrNum": 18,
+                "eaDfsLink": "Supplemental/HUC.pdf",
+                "name": "HUC (4 Digit) Subregion",
+                "eaPBS": "Boundaries"
+            },
+            {
+                "mode": "ondemand",
+                "eaMetric": "boundary",
+                "autorefresh": 0,
+                "popup": {
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": null,
+                            "visible": "true",
+                            "label": "HUC (4 Digit) Subregion Labels"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "type": "Feature",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Reference_Boundaries/MapServer",
+                "visible": "false",
+                "opacity": 0.5,
+                "eaID": 907,
+                "eaTopic": "Boundaries",
+                "eaScale": "NATIONAL",
+                "eaLyrNum": 19,
+                "eaDfsLink": "Supplemental/HUC.pdf",
+                "name": "HUC (4 Digit) Subregion Labels",
+                "eaPBS": "Boundaries"
+            },
+            {
+                "mode": "ondemand",
+                "eaMetric": "boundary",
+                "autorefresh": 0,
+                "popup": {
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": null,
+                            "visible": "true",
+                            "label": "HUC (8 Digit) Subbasin"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "type": "Feature",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Reference_Boundaries/MapServer",
+                "visible": "false",
+                "opacity": 0.5,
+                "eaID": 908,
+                "eaTopic": "Boundaries",
+                "eaScale": "NATIONAL",
+                "eaLyrNum": 20,
+                "eaDfsLink": "Supplemental/HUC.pdf",
+                "name": "HUC (8 Digit) Subbasin",
+                "eaPBS": "Boundaries"
+            },
+            {
+                "mode": "ondemand",
+                "eaMetric": "boundary",
+                "autorefresh": 0,
+                "popup": {
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": null,
+                            "visible": "true",
+                            "label": "HUC (8 Digit) Subbasin Labels"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "type": "Feature",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Reference_Boundaries/MapServer",
+                "visible": "false",
+                "opacity": 0.5,
+                "eaID": 909,
+                "eaTopic": "Boundaries",
+                "eaScale": "NATIONAL",
+                "eaLyrNum": 21,
+                "eaDfsLink": "Supplemental/HUC.pdf",
+                "name": "HUC (8 Digit) Subbasin Labels",
+                "eaPBS": "Boundaries"
+            },
+            {
+                "mode": "ondemand",
+                "eaMetric": "boundary",
+                "autorefresh": 0,
+                "popup": {
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": null,
+                            "visible": "true",
+                            "label": "NHDArea"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "type": "Feature",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/NHDPlusV21_EA/MapServer",
+                "visible": "false",
+                "opacity": 0.5,
+                "eaID": 910,
+                "eaTopic": "Boundaries",
+                "eaScale": "NATIONAL",
+                "eaLyrNum": 2,
+                "eaDfsLink": "Supplemental/NationalHydrographyDataset.pdf",
+                "name": "NHDArea",
+                "eaPBS": "Boundaries"
+            },
+            {
+                "mode": "ondemand",
+                "eaMetric": "boundary",
+                "autorefresh": 0,
+                "popup": {
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": null,
+                            "visible": "true",
+                            "label": "NHDFlowline Main path - Stream Order 2 and 3"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "type": "Feature",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/NHDPlusV21_EA/MapServer",
+                "visible": "false",
+                "opacity": 0.5,
+                "eaID": 911,
+                "eaTopic": "Boundaries",
+                "eaScale": "NATIONAL",
+                "eaLyrNum": 1,
+                "eaDfsLink": "Supplemental/NationalHydrographyDataset.pdf",
+                "name": "NHDFlowline Main path - Stream Order 2 and 3",
+                "eaPBS": "Boundaries"
+            },
+            {
+                "mode": "ondemand",
+                "eaMetric": "boundary",
+                "autorefresh": 0,
+                "popup": {
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": null,
+                            "visible": "true",
+                            "label": "NHDFlowline Main path - Stream Order 4 and higher"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "type": "Feature",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/NHDPlusV21_EA/MapServer",
+                "visible": "false",
+                "opacity": 0.5,
+                "eaID": 912,
+                "eaTopic": "Boundaries",
+                "eaScale": "NATIONAL",
+                "eaDfsLink": "Supplemental/NationalHydrographyDataset.pdf",
+                "name": "NHDFlowline Main path - Stream Order 4 and higher",
+                "eaPBS": "Boundaries"
+            },
+            {
+                "mode": "ondemand",
+                "eaMetric": "boundary",
+                "autorefresh": 0,
+                "popup": {
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": null,
+                            "visible": "true",
+                            "label": "NHDWaterbody"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "type": "Feature",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/NHDPlusV21_EA/MapServer",
+                "visible": "false",
+                "opacity": 0.5,
+                "eaID": 913,
+                "eaCPW": " ",
+                "eaScale": "NATIONAL",
+                "eaLyrNum": 3,
+                "eaDfsLink": "Supplemental/NationalHydrographyDataset.pdf",
+                "eaTopic": "Boundaries",
+                "name": "NHDWaterbody",
+                "eaPBS": "Boundaries"
+            },
+            {
+                "mode": "ondemand",
+                "eaMetric": "boundary",
+                "autorefresh": 0,
+                "popup": {
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": null,
+                            "visible": "true",
+                            "label": "State Labels"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "type": "Feature",
+                "url": " ",
+                "visible": "false",
+                "opacity": 0.5,
+                "eaID": 914,
+                "eaTopic": "Boundaries",
+                "eaScale": "NATIONAL",
+                "name": "State Labels",
+                "eaPBS": "Boundaries"
+            },
+            {
+                "mode": "ondemand",
+                "eaMetric": "boundary",
+                "autorefresh": 0,
+                "popup": {
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": null,
+                            "visible": "true",
+                            "label": "State Lines"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "type": "Feature",
+                "url": "https://geodata.epa.gov/arcgis/rest/services/ORD/USEPA_Ecoregions_Level_III_and_IV/MapServer",
+                "visible": "false",
+                "opacity": 0.5,
+                "eaID": 915,
+                "eaTopic": "Boundaries",
+                "eaScale": "NATIONAL",
+                "name": "State Lines",
+                "eaPBS": "Boundaries"
+            },
+            {
+                "mode": "ondemand",
+                "eaMetric": "boundary",
+                "autorefresh": 0,
+                "popup": {
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": null,
+                            "visible": "true",
+                            "label": "States"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "type": "Feature",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Reference_Boundaries/MapServer",
+                "visible": "false",
+                "opacity": 0.5,
+                "eaID": 916,
+                "eaTopic": "Boundaries",
+                "eaScale": "NATIONAL",
+                "name": "States",
+                "eaPBS": "Boundaries"
+            },
+            {
+                "mode": "ondemand",
+                "autorefresh": 0,
+                "eaDescription": "The EnviroAtlas boundary for the each Community area was determined using the 2010 Census definition of an Urban Area.",
+                "type": "Feature",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Community_Boundaries/MapServer",
+                "visible": "false",
+                "opacity": 0.5,
+                "eaID": 917,
+                "popup": {
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": null,
+                            "visible": "true",
+                            "label": "EnviroAtlas Communities and vicinities"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "eaTopic": "Boundaries",
+                "eaScale": "COMMUNITY",
+                "eaDfsLink": "Supplemental/CommunityVicinity.pdf",
+                "name": "EnviroAtlas Communities and vicinities"
+            }
+        ]
+    }
+}

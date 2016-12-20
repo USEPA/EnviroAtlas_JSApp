@@ -5,6 +5,8 @@ using values from an Excel table.
 Utilizes openpyxl, available here: https://openpyxl.readthedocs.org/en/latest/
 Tested using Python 3.4, might be backward compatible?
 Torrin Hultgren, October 2015
+
+********** Need to update popup configuration, community layers are not HUC 12s **********
 '''
 import sys, json, csv, openpyxl
 
@@ -38,8 +40,8 @@ def removeEmptyRows(rows):
 def main(_argv):
     # Open the Excel spreadsheet
     inputWorkbook = openpyxl.load_workbook(filename = inputSpreadsheet,data_only=True)
-    # Get the active worksheet (hopefully it's the only worksheet)
-    inputWorksheet = inputWorkbook.active
+    # Get the worksheet titled "EA_main"
+    inputWorksheet = inputWorkbook["EA_main"]
     # Compile a dictionary of Spreadsheet field headers
     mapTable = open(mapTablePath)
     mapTableReader = csv.DictReader(mapTable,delimiter=',')
@@ -96,10 +98,13 @@ def main(_argv):
         }
         layerJSON["popup"]["fieldInfos"][0]["fieldName"] = inputWorksheet.cell(key["fieldName"]+rowID).value
         layerJSON["popup"]["fieldInfos"][0]["label"] = name
-        stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS"]
+        stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic"]
         for elem in stringList:
-            if inputWorksheet.cell(key[elem]+rowID).value:
-                layerJSON[elem] = inputWorksheet.cell(key[elem]+rowID).value
+            cellValue = inputWorksheet.cell(key[elem]+rowID).value
+            if cellValue:
+                if cellValue == 'x':
+                    cellValue = 'true'
+                layerJSON[elem] = cellValue
         arrayList = [("eaTags",","),("eaBCSDD",";")]
         for elem,separator in arrayList:
              if inputWorksheet.cell(key[elem]+rowID).value:
