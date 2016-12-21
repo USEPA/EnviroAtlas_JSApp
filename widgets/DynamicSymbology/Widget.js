@@ -6,7 +6,9 @@ define(['dojo/_base/declare',
       "dojo/dom",
 		"dojo/dom-construct",
 	  "dojo/on",
+	  "dojo/dom-style",
       "esri/map",
+	  "esri/styles/choropleth",
       "esri/Color",
       "esri/dijit/ColorInfoSlider",
 	  "esri/dijit/ClassedColorSlider",
@@ -15,6 +17,7 @@ define(['dojo/_base/declare',
       "esri/plugins/FeatureLayerStatistics",
 	  "esri/renderers/ClassBreaksRenderer",
 	  "esri/symbols/SimpleFillSymbol",
+	  "esri/symbols/SimpleLineSymbol",
 	  "esri/styles/choropleth",
       "esri/dijit/util/busyIndicator",
 	  "esri/dijit/SymbolStyler",
@@ -25,9 +28,9 @@ define(['dojo/_base/declare',
       "dijit/form/HorizontalRule",
       "dijit/form/HorizontalRuleLabels",
 	  "dojo/parser"],
-function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, ColorInfoSlider,
+function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, esriStylesChoropleth, Color, ColorInfoSlider,
 	ClassedColorSlider, smartMapping, FeatureLayer, FeatureLayerStatistics,
-	ClassBreaksRenderer, SimpleFillSymbol, esriStylesChoropleth, busyIndicator, SymbolStyler,
+	ClassBreaksRenderer, SimpleFillSymbol, SimpleLineSymbol, esriStylesChoropleth, busyIndicator, SymbolStyler,
 	ColorPalette, select, NumberSpinner, HorizontalSlider, HorizontalRule, HorizontalRuleLabels) {
 
   //To create a widget, you need to derive from BaseWidget.
@@ -78,15 +81,28 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 	},
 
     onOpen: function(){
+	  self = this;
       _busy = busyIndicator.create("esri-colorinfoslider-container");
 
-      console.log('onOpen');
+		schemes = esriStylesChoropleth.getSchemes({
+			basemap: "hybrid",
+			geometryType: "polygon",
+			theme: "high-to-low"
+		});
+		console.log("Returned Style  :: ", schemes);
+	  symbolStyler = new SymbolStyler({portal: "https://epa.maps.arcgis.com"}, this.symbolStyler);
+	  symbolStyler.startup();
+	  
+	  on(self.SSOpen,"click", self._openSymbolStyler);
+		
+
+		console.log('onOpen');
       var dynamicSym = this;
 	  //Get base map
 	  _currentBaseMap = this.map.getBasemap();
 
 		dynamicSymbology.isSmartMapping = true;
-	  
+
 	  LayerInfos.getInstance(this.map, this.map.itemInfo).then(function(layerInfosObject){
 
 		  var dslayer = layerInfosObject.getLayerInfoById(_layerID);
@@ -249,6 +265,32 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 				dynamicSymbology.isSmartMapping = true;
 			}
 		});
+	},
+
+	_openSymbolStyler: function(){
+		var dDisplay = domStyle.get(self.symbolStylerContainer, "display");
+		if(dDisplay == "none"){
+			var sfs = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+				new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+					new Color([255,155,0]), 2),new Color([255,255,0,0.25])
+			);
+			symbolStyler.edit(sfs,{
+				colorRamp: {
+					colors:["blue","red","green", "pink"],
+					numStops: 5,
+					scheme: schemes.primaryScheme
+				},
+				externalSizing:false,
+				schemes:schemes
+			});
+			domStyle.set(self.symbolStylerContainer, "display", "block");
+		}else{
+			console.log("turn off");
+			domStyle.set(self.symbolStylerContainer, "display", "none");
+		}
+
+
+		//self.symbolStyler-container
 	},
 
 	_getHistoAndStats: function(gRenderer){
