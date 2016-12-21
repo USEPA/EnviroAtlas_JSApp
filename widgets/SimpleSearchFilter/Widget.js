@@ -60,7 +60,8 @@ define([
 		    this.eaID = data.eaID;
 		    this.eaMetadata = data.eaMetadata;
 		    this.eaScale = data.eaScale;
-		    this.eaTags = data.eaTags
+		    this.eaTags = data.eaTags;
+		    this.eaTopic = data.eaTopic
 		}
 		var selectableLayerArray = [];
 		
@@ -194,34 +195,23 @@ define([
 						break;
     			
 				}    			
+				eaTopic = layerDataStore.getValue( item, 'eaTopic');
 				eaCategory = layerDataStore.getValue( item, 'eaCategory');
 
 				eachLayerCategoryList = eaCategory.split(";");
 				if (bSelectByScale) {
-				for (i in eachLayerCategoryList) {
 					
-					enumCategoryForCurrentLayer = eachLayerCategoryList[i].split("-");
-					if(window.categoryDic[enumCategoryForCurrentLayer[0].trim()] != undefined){
 						
-						var chkCategery = document.getElementById(window.chkCategoryPrefix+window.categoryDic[enumCategoryForCurrentLayer[0].trim()]);
+					var chkCategery = document.getElementById(window.chkTopicPrefix+window.topicDic[eaTopic]);
 						if(chkCategery.checked == true){
 
-							/*supplyDemandList = enumCategoryForCurrentLayer[1].trim().split(",");
 							
 							
-							for (j in supplyDemandList) {
 	
-								var chkSupplyDemand = document.getElementById(supplyDemandList[j].trim().replace(" ",""));
-										if 	(chkSupplyDemand != null)	{											
-								if (chkSupplyDemand.checked == true) {
 									currentLayerSelectable = true;				
 										}
-								}
-							}*/
-							currentLayerSelectable = true;
-						}
-					}
-				}   //end of for (i in eachLayerCategoryList)		
+						
+					
 				}// end of if (bSelectByScale)
 				
 				if (currentLayerSelectable &&(eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
@@ -364,15 +354,18 @@ define([
         var tableOfRelationship = document.getElementById('categoryTable');
 	    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];    	
 	    indexImage = 0;
-	    for (var key in window.categoryDic) {
-
-    	    var newRow   = tableRef.insertRow(tableRef.rows.length);
+	    var categoCount = 1;
+	    var newRow;
+	    for (var key in window.topicDic) {
+	    	categoCount =  categoCount + 1;
+			if (categoCount % 2 == 0) {
+	    	    newRow   = tableRef.insertRow(tableRef.rows.length);    	    
     	    
            	newRow.style.height = "20px";
            	var newCheckboxCell  = newRow.insertCell(0);
            	var checkbox = document.createElement('input');
 			checkbox.type = "checkbox";
-            chkboxId = window.chkCategoryPrefix + window.categoryDic[key];
+	            chkboxId = window.chkTopicPrefix + window.topicDic[key];
 			checkbox.name = chkboxId;
 			checkbox.value = 0;
 			checkbox.id = chkboxId;
@@ -387,36 +380,41 @@ define([
 				_updateSelectableLayer();
 		    });
 			
-			/// add category images:
-			var newCell  = newRow.insertCell(1);
-	        newCell.style.verticalAlign = "top";//this will put layer name on first line
+				/// add category title:
+	           	var newTitleCell  = newRow.insertCell(1);
+	           	newTitleCell.style.width = "40%";
 	        
-	        var photo = document.createElement("td");
-			var ulElem = document.createElement("ul");
-			ulElem.setAttribute("id", "navlistSearchfilter2");
-			var newTitle  = document.createElement('div');		        
-			var liHomeElem = null;
-			var aHomeElem = null;
-			indexImage = 0;
-		    liElem = document.createElement("li");
-			liElem.style.left =  "3px";
-			liElem.style.top = "-10px";
-			aElem = document.createElement("a");
-			aElem.title  = key;
-			liElem.appendChild(aElem);
-			ulElem.appendChild(liElem);							
-
-			liElem.setAttribute("id",window.categoryDic[key] + "2");
+				var title = document.createElement('label');
+				title.innerHTML = key;    
+				newTitleCell.appendChild(title);     				
+			}
+			else {
+	           	var newCheckboxCell  = newRow.insertCell(2);
+	           	var checkbox = document.createElement('input');
+				checkbox.type = "checkbox";
+	            chkboxId = window.chkTopicPrefix + window.topicDic[key];
+				checkbox.name = chkboxId;
+				checkbox.value = 0;
+				checkbox.id = chkboxId;
+				checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+		        newCheckboxCell.appendChild(checkbox);    
+		        var label = document.createElement('label');
+		        label.setAttribute("for",chkboxId);
+				label.innerHTML = "";
+				newCheckboxCell.appendChild(label);
+				
+				checkbox.addEventListener('click', function() {
+					_updateSelectableLayer();
+			    });
 		
-	        photo.appendChild(ulElem);
-			newTitle.appendChild(photo);
-			newCell.appendChild(newTitle);
 			
 			/// add category title:
-           	var newTitleCell  = newRow.insertCell(2);
+	           	var newTitleCell  = newRow.insertCell(3);
+	           	newTitleCell.style.width = "40%";
 			var title = document.createElement('label');
 			title.innerHTML = key;    
 			newTitleCell.appendChild(title);        
+			}
 
 		}
         /* Commenting out Supply/demand/driver choices.
@@ -579,6 +577,12 @@ define([
 	                    else {
 	                    	eaMetadata = "";
 	                    }
+	                    if(layer.hasOwnProperty('eaTopic')){
+	                    	eaTopic = layer.eaTopic.toString();
+	                    }
+	                    else {
+	                    	eaTopic = "";
+	                    }	                    
 	                    if(layer.hasOwnProperty('eaScale')){
 	                    	eaScale = layer.eaScale.toString();
 	                    }
@@ -600,7 +604,8 @@ define([
 					    	}
 					    }
 					    eaTagsWhole = eaTagsWhole.substring(0, eaTagsWhole.length - 1);						    
-				    	var layerItem = {eaLyrNum: eaLyrNum, name: layerName, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole};
+				    	//var layerItem = {eaLyrNum: eaLyrNum, name: layerName, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole};
+				    	var layerItem = {eaLyrNum: eaLyrNum, name: layerName, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole, eaTopic:eaTopic};
 	
 						layerDataStore.newItem(layerItem);
 						

@@ -47,7 +47,7 @@ define(["./ConfigManager",
     window.layerIdTiledPrefix = "tiledNum_";
     window.addedLayerIdPrefix = "added_";
     window.removeAllMessage = "removeAll";
-    window.chkCategoryPrefix = "ckCategory_";
+    window.chkTopicPrefix = "ckTopic_";
     
     window.dataFactSheet = "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/";
     //window.matadata = "https://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7BBDF514A6-05A8-400D-BF3D-030645461334%7D";
@@ -70,6 +70,32 @@ define(["./ConfigManager",
     window.categoryClassDemand = "Demand";
     window.categoryClassDriver = "Driver";
     window.categoryClassSpatialExplicit = "Spatially Explicit";
+    window.topicDic = {};
+    //window.topicDic["Air Quality"] = "AQ";
+    window.topicDic["Carbon Storage"] = "CS";
+    window.topicDic["Climate and Weather"] = "CaW";
+    window.topicDic["Crop Productivity"] = "CP";
+    //window.topicDic["Demographics"] = "D";
+    window.topicDic["Ecosystem Markets"] = "EM";
+    window.topicDic["Ecosystem Type"] = "ET";
+    window.topicDic["Energy Potential"] = "EP";
+    window.topicDic["Engagement with Outdoors"] = "EwO";
+    window.topicDic["Health and Economic Outcomes"] = "HaEO";
+    window.topicDic["Impaired Waters"] = "IW";
+    window.topicDic["Land Cover: Near-Water"] = "LCNW";
+    window.topicDic["Land Cover: Type"] = "LCT";
+    window.topicDic["Landscape Pattern"] = "LP";
+    window.topicDic["Near-Road Environments"] = "NRE";
+    window.topicDic["Pollutant and Runoff Reduction"] = "PaRR";
+    window.topicDic["Pollutants: Nutrients"] = "PN";
+    window.topicDic["Pollutants: Other"] = "PO";
+    window.topicDic["Protected Lands"] = "PL";
+    window.topicDic["Species: At-Risk and Priority"] = "SARP";
+    window.topicDic["Species: Game"] = "SG";
+    window.topicDic["Species: Other"] = "SO";
+    window.topicDic["Water Supply and Hydrology"] = "WSaH";
+    window.topicDic["Water Use"] = "WU";
+    window.topicDic["Wetlands and Lowlands"] = "WaL";
     
     window.strAllCommunity = "AllCommunity";	
     window.communityDic = {};
