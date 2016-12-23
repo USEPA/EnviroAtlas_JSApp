@@ -27,11 +27,13 @@ define(['dojo/_base/declare',
       "dijit/form/HorizontalSlider",
       "dijit/form/HorizontalRule",
       "dijit/form/HorizontalRuleLabels",
+	  "dijit/TooltipDialog",
+	  "dijit/form/DropDownButton",
 	  "dojo/parser"],
 function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, esriStylesChoropleth, Color, ColorInfoSlider,
 	ClassedColorSlider, smartMapping, FeatureLayer, FeatureLayerStatistics,
 	ClassBreaksRenderer, SimpleFillSymbol, SimpleLineSymbol, esriStylesChoropleth, busyIndicator, SymbolStyler,
-	ColorPalette, select, NumberSpinner, HorizontalSlider, HorizontalRule, HorizontalRuleLabels) {
+	ColorPalette, select, NumberSpinner, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, TooltipDialog, DropDownButton) {
 
   //To create a widget, you need to derive from BaseWidget.
   return declare([BaseWidget], {
@@ -82,19 +84,53 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 
     onOpen: function(){
 	  self = this;
-      _busy = busyIndicator.create("esri-colorinfoslider-container");
+	  _busy = busyIndicator.create("esri-colorinfoslider-container");
 
 		schemes = esriStylesChoropleth.getSchemes({
 			basemap: "hybrid",
 			geometryType: "polygon",
 			theme: "high-to-low"
 		});
-		console.log("Returned Style  :: ", schemes);
-	  symbolStyler = new SymbolStyler({portal: "https://epa.maps.arcgis.com"}, this.symbolStyler);
-	  symbolStyler.startup();
-	  
-	  on(self.SSOpen,"click", self._openSymbolStyler);
-		
+
+
+
+		//var node1 = domConstruct.create("div");
+		//node1.append(symbolStyler.domNode);
+		//node1.append('<button class="jimu-btn" data-dojo-attach-point="createStyle">OK</button>');
+		var styleDialog = new TooltipDialog({
+			 //content: symbolStyler.domNode,
+			style: "width: 300px;",
+			onClose: function(){
+				console.log("closed");
+			},
+			onOpen:self._openSymbolStyler
+			 //'<div data-dojo-attach-point="symbolStylerContainer">' +
+			// '<div data-dojo-attach-point="symbolStyler" ></div>' +
+			// '<button class="jimu-btn" data-dojo-attach-point="createStyle">OK</button>' +
+			// '<button class="jimu-btn" data-dojo-attach-point="cancelStyle">Cancel</button>' +
+			// '</div>'
+		});
+		var stylerNode = domConstruct.create("div");
+		var stylerButtons = domConstruct.create("div");
+		var contentsNode = domConstruct.create("div");
+		// stylerButtons.attr('innerHTML','<button class="jimu-btn" data-dojo-attach-point="createStyle">OK</button>' +
+		// 	'<button class="jimu-btn" data-dojo-attach-point="cancelStyle">Cancel</button>');
+		contentsNode.append(stylerNode);
+		// contentsNode.append(stylerButtons);
+
+		symbolStyler = new SymbolStyler({portal: "https://epa.maps.arcgis.com"}, stylerNode);//this.symbolStyler
+		styleDialog.attr('content',contentsNode);
+		symbolStyler.startup();
+		var displaySymbolStyler = new DropDownButton({
+			label: "Symbology",
+			dropDown: styleDialog
+		});
+		dom.byId("dropDownButtonContainer").appendChild(displaySymbolStyler.domNode);
+		displaySymbolStyler.startup();
+
+
+	  //on(self.SSOpen,"click", self._openSymbolStyler);
+	  //on(self.createStyle,"click", self._getStyle);
 
 		console.log('onOpen');
       var dynamicSym = this;
@@ -106,12 +142,12 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 	  LayerInfos.getInstance(this.map, this.map.itemInfo).then(function(layerInfosObject){
 
 		  var dslayer = layerInfosObject.getLayerInfoById(_layerID);
-		  console.log("Current Layer Name: ", dslayer.title);
+		  //console.log("Current Layer Name: ", dslayer.title);
 		  dom.byId('title').innerHTML = dslayer.title;
 
 		  //Set layers
 		  geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
-
+		  console.log("FeatureLayer: ", geoenrichedFeatureLayer.renderer);
 		  var comName = window.communityDic[window.communitySelected];
 		  geoenrichedFeatureLayer.setDefinitionExpression("Community like '%" + comName + "%'");
 
@@ -267,9 +303,16 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		});
 	},
 
+	_getStyle: function(){
+	  	console.log("OK has been clicked");
+		newStyle = symbolStyler.getStyle();
+		//console.log("Style :: ", newStyle);
+		domStyle.set(self.symbolStylerContainer, "display", "none");
+		self._updateSmartMapping2();
+	},
 	_openSymbolStyler: function(){
-		var dDisplay = domStyle.get(self.symbolStylerContainer, "display");
-		if(dDisplay == "none"){
+		//var dDisplay = domStyle.get(self.symbolStylerContainer, "display");
+		//if(dDisplay == "none"){
 			var sfs = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
 				new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
 					new Color([255,155,0]), 2),new Color([255,255,0,0.25])
@@ -277,17 +320,16 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 			symbolStyler.edit(sfs,{
 				colorRamp: {
 					colors:["blue","red","green", "pink"],
-					numStops: 5,
+					numStops: _NumberOfClasses,
 					scheme: schemes.primaryScheme
 				},
 				externalSizing:false,
 				schemes:schemes
 			});
-			domStyle.set(self.symbolStylerContainer, "display", "block");
-		}else{
-			console.log("turn off");
-			domStyle.set(self.symbolStylerContainer, "display", "none");
-		}
+		// 	domStyle.set(self.symbolStylerContainer, "display", "block");
+		// }else{
+		// 	domStyle.set(self.symbolStylerContainer, "display", "none");
+		// }
 
 
 		//self.symbolStyler-container
@@ -340,6 +382,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		field: _fieldName,
         layer: geoenrichedFeatureLayer,
         numClasses: _NumberOfClasses,
+		scheme: newStyle.scheme
       }).then(function (smartRenderer) {
         console.log("create color renderer is generated", smartRenderer);
 		

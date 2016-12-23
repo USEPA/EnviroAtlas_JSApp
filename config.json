@@ -172,7 +172,7 @@
 			},{
                   "position" : {
                   "left" : 0,
-                  "top" : 140,
+                  "top" : -40,
                   "width" : 370,
                   "height" : 490,
                   "relativeTo" : "map"
