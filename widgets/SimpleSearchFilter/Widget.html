@@ -1,26 +1,24 @@
 
 <div style="height:100%; width:100%; overflow:hidden;" dojotype="dijit.layout.ContentPane" >
-    <div class="FAQ" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Filter by Benefit Categories / Geographies', open: false">
-        <!--<div class="FAQ">
-			    <a href="#hide1" class="hide" id="hide1">+</a>
-			    <a href="#show1" class="show" id="show1">-</a>
-			    <div class="question"> Select by Benefit Categories / Geographies</div>-->
+    <div class="FAQ" id= "selectionCriteria" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Filter by Benefit Categories / Geographies', open: false">
         <div class="list">
             <div> Geographies </div>
             <table id="geographyTable" style="margin:0px 0px 10px 0px">
+                <tbody>
+                    <tr>	
+                    </tr>
+                </tbody>
+            </table>  
+                    	
+            <div > Topics </div>
+            <table id="categoryTable" style="margin:0px 0px 10px 0px">
                 <tbody>
                     <tr>
 
                     </tr>
                 </tbody>
             </table>   
-            <div > Benefit Category </div>
-            <table id="categoryTable" style="margin:0px 0px 10px 0px">
-                <tbody>
-                    <tr>	
-                    </tr>
-                </tbody>
-            </table>        
+      
         </div>
         <!--</div>-->
 
@@ -101,7 +99,7 @@
             </li>								
         </ul>
     </div>
-    <div id="tableSelectableLayersArea" dojotype="dijit.layout.ContentPane" style="overflow-y: scroll; height: calc(100% - 525px); height: -moz-calc(100% - 625px); height: -webkit-calc(100% - 525px);">
+    <div id="tableSelectableLayersArea" dojotype="dijit.layout.ContentPane" style="overflow-y: scroll; height: 85%;">
         <table id="tableSelectableLayers"  >
             <tbody>
                 <tr>
