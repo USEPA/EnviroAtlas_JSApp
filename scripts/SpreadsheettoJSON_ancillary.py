@@ -90,7 +90,7 @@ def main(_argv):
             stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic"]
             for elem in stringList:
                 cellValue = inputWorksheet.cell(key[elem]+rowID).value
-                if cellValue:
+                if cellValue != None:
                     if cellValue == 'x':
                         cellValue = 'true'
                     layerJSON[elem] = cellValue
