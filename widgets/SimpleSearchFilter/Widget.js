@@ -166,6 +166,7 @@ define([
 						totalNumOfLayers = totalNumOfLayers + 1;
 						var chkScale = document.getElementById("chkNational");
 						if(chkScale.checked == true){
+							currentLayerSelectable = true;
 							bSelectByScale = true;
 						}
 						break;
@@ -201,19 +202,14 @@ define([
 				eachLayerCategoryList = eaCategory.split(";");
 				if (bSelectByScale) {
 					
-						
 					var chkCategery = document.getElementById(window.chkTopicPrefix+window.topicDic[eaTopic]);
+					if (typeof(chkCategery) != 'undefined' && chkCategery != null) {
 						if(chkCategery.checked == true){
-
-							
-							
-	
-									currentLayerSelectable = true;				
-										}
-						
+							currentLayerSelectable = true;				
+						}
+					}			
 					
 				}// end of if (bSelectByScale)
-				
 				if (currentLayerSelectable &&(eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
 					if ((window.allLayerNumber.indexOf(eaID)) == -1) {                        	
                     	window.allLayerNumber.push(eaID);
@@ -305,7 +301,6 @@ define([
 				    };    	
 				}//end of if (currentLayerSelectable)
         });	
-	       
  		dojo.byId("numOfLayers").value = " " + String(numOfSelectableLayers) + " of " + String(totalNumOfLayers) + " Maps";
     	dojo.byId("selectAllLayers").checked = false;
 		for (var key in chkIdDictionary) {
@@ -365,7 +360,9 @@ define([
            	var newCheckboxCell  = newRow.insertCell(0);
            	var checkbox = document.createElement('input');
 			checkbox.type = "checkbox";
-	            chkboxId = window.chkTopicPrefix + window.topicDic[key];
+			
+	        chkboxId = window.chkTopicPrefix + window.topicDic[key];
+
 			checkbox.name = chkboxId;
 			checkbox.value = 0;
 			checkbox.id = chkboxId;
@@ -528,7 +525,25 @@ define([
 
         this.inherited(arguments);
 	    this.fetchDataByName('SelectCommunity');		 
+		dojo.connect(dijit.byId("selectionCriteria"), "toggle", function (){
+		    if (dijit.byId('selectionCriteria')._isShown()) {
+		    	if (navigator.userAgent.indexOf("Chrome")>=0) {
+		    		document.getElementById('tableSelectableLayersArea').style.height = "30%";
+		    	} else if(navigator.userAgent.indexOf("Firefox")>=0) {
+		    		document.getElementById('tableSelectableLayersArea').style.height = "30%";
+		    	} else {
+		    		document.getElementById('tableSelectableLayersArea').style.height = "25%";
+		    	}
+		    	
+		    } else {
+		    	if (navigator.userAgent.indexOf("Chrome")>=0) {
+		    		document.getElementById('tableSelectableLayersArea').style.height = "85%";
+		    	} else {
+		    		document.getElementById('tableSelectableLayersArea').style.height = "85%";
+		    	}		    	
 
+		    }
+		}); 
         loadJSON(function(response) {
             var localLayerConfig = JSON.parse(response);
             var arrLayers = localLayerConfig.layers.layer;
@@ -617,7 +632,7 @@ define([
 						newRow.appendChild(newCell);
 		
 		               	newCell  = newRow.insertCell(1);
-						newCell.appendChild(document.createTextNode(name));
+						newCell.appendChild(document.createTextNode(layerName));
 						newRow.appendChild(newCell);			
 		       
 		               	newCell  = newRow.insertCell(2);
