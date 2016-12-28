@@ -166,7 +166,6 @@ define([
 						totalNumOfLayers = totalNumOfLayers + 1;
 						var chkScale = document.getElementById("chkNational");
 						if(chkScale.checked == true){
-							currentLayerSelectable = true;
 							bSelectByScale = true;
 						}
 						break;
