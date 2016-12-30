@@ -527,18 +527,20 @@ define([
 		dojo.connect(dijit.byId("selectionCriteria"), "toggle", function (){
 		    if (dijit.byId('selectionCriteria')._isShown()) {
 		    	if (navigator.userAgent.indexOf("Chrome")>=0) {
-		    		document.getElementById('tableSelectableLayersArea').style.height = "30%";
+		    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 515px)"; 
 		    	} else if(navigator.userAgent.indexOf("Firefox")>=0) {
-		    		document.getElementById('tableSelectableLayersArea').style.height = "30%";
+		    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 630px)"; 
 		    	} else {
-		    		document.getElementById('tableSelectableLayersArea').style.height = "25%";
+		    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 530px)"; 
 		    	}
 		    	
 		    } else {
 		    	if (navigator.userAgent.indexOf("Chrome")>=0) {
-		    		document.getElementById('tableSelectableLayersArea').style.height = "85%";
+		    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 125px)";
+		    	} else if(navigator.userAgent.indexOf("Firefox")>=0) {
+		    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 125px)"; 
 		    	} else {
-		    		document.getElementById('tableSelectableLayersArea').style.height = "85%";
+		    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 125px)";
 		    	}		    	
 
 		    }
