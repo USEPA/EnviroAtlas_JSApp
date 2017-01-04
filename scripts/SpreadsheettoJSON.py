@@ -100,8 +100,9 @@ def main(_argv):
         layerJSON["popup"]["fieldInfos"][0]["label"] = name
         stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic"]
         for elem in stringList:
-            cellValue = inputWorksheet.cell(key[elem]+rowID).value
-            if cellValue:
+            cell = inputWorksheet.cell(key[elem]+rowID)
+            if cell.value != None: 
+                cellValue = cell.value
                 if cellValue == 'x':
                     cellValue = 'true'
                 layerJSON[elem] = cellValue
