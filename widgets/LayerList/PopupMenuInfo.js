@@ -443,9 +443,11 @@ define([
 			        }                	
                     if ((layerId === (window.layerIdPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) {      
                         if(layer.hasOwnProperty('eaDfsLink')){
+                        	if (layer.eaDfsLink.trim() != ""){
                             window.open(window.dataFactSheet + layer.eaDfsLink);
 					        bDataFactSheetAvailale = true;
                             break;
+                        	}
                         }
                     }
                 }
