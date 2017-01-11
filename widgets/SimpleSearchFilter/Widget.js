@@ -81,7 +81,9 @@ define([
 
 
 		var chkIdDictionary = {};
-		  var loadJSON = function(callback){   
+		var nationalTopicList = [];
+		var communityTopicList = [];
+		var loadJSON = function(callback){   
 	
 	        var xobj = new XMLHttpRequest();
 	
@@ -119,7 +121,16 @@ define([
 			  }
 			}
 	   };
+	    var _onUnselectAllLayers = function() {
+			for (var key in chkIdDictionary) {
+			  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
+	        	document.getElementById(key).checked = false;
+	
+			  }
+			}
+	   };	   
 	    var	_addSelectableLayerSorted = function(items){
+			updateTopicToggleButton();
     		var nSearchableColumns = document.getElementById('tableLyrNameDescrTag').getElementsByTagName('tr')[0].getElementsByTagName('th').length;
     		var eaIDFilteredList = [];
 			tdIndex = 0;
@@ -134,9 +145,6 @@ define([
 				if (tdIndex == nSearchableColumns) {
 					tdIndex = 0;
 				}				
-				
-				//console.log(eaIDFilteredList);
-				//alert(currentCellText);		
 			} ); 
     	
 			var tableOfRelationship = document.getElementById("tableSelectableLayers");
@@ -179,11 +187,8 @@ define([
 							bSelectByScale = true;
 						}
 							else{
-								//alert("eaMetadata:" + eaMetadata);
 								if (eaMetadata != "") {
-									
 									if (window.communityMetadataDic.hasOwnProperty(eaMetadata)) {
-										//alert("eaMetadata:" + eaMetadata);
 										communityInfo = window.communityMetadataDic[eaMetadata];
 										if (communityInfo.hasOwnProperty(communitySelected)) {
 											bSelectByScale = true;
@@ -209,11 +214,13 @@ define([
 					}			
 					
 				}// end of if (bSelectByScale)
+
 				if (currentLayerSelectable &&(eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
 					if ((window.allLayerNumber.indexOf(eaID)) == -1) {                        	
                     	window.allLayerNumber.push(eaID);
                     }
 					numOfSelectableLayers = numOfSelectableLayers + 1;
+
 			       	var newRow   = tableRef.insertRow(tableRef.rows.length);
 			       	newRow.style.height = "38px";
 			       	var newCheckboxCell  = newRow.insertCell(0);
@@ -254,7 +261,6 @@ define([
 							liElem.appendChild(aElem);
 							ulElem.appendChild(liElem);							
 							if (eaCategory.indexOf(key) !=-1) {
-								console.log("bji new Mar 2016");
 								liElem.setAttribute("id",window.categoryDic[key]);
 							}
 							else {
@@ -319,8 +325,37 @@ define([
 		  }
 		}    	
 	};	   
+	var updateTopicToggleButton = function() {
+	    for (var key in window.topicDic) {
+	    	var bCurrentTopicDisabled = true;
+			var chkScale = document.getElementById("chkNational");
+			//console.log("nationalTopicList:"+ nationalTopicList);
+			//console.log("communityTopicList:"+ communityTopicList);
+			if((document.getElementById("chkNational").checked == true) && (nationalTopicList.indexOf(key) >= 0)){
+				bCurrentTopicDisabled = false;
+			}
+			if((document.getElementById("chkCommunity").checked == true) && (communityTopicList.indexOf(key) >= 0)){
+				bCurrentTopicDisabled = false;
+			}
+			
+	        var chkboxId = window.chkTopicPrefix + window.topicDic[key];
+	        var checkbox = document.getElementById(chkboxId);			
+	       if (bCurrentTopicDisabled) {
+		        checkbox.className ="cmn-toggle cmn-toggle-round-flat-grayedout";	
+		        checkbox.removeEventListener("click", _updateSelectableLayer);	       	
+	       } else {
+	       		if (checkbox.className == "cmn-toggle cmn-toggle-round-flat-grayedout"){
+	       			checkbox.checked = false;//If the togglebutton is grayed out previously, then it should be off when it is activated
+	       		}
+		        checkbox.className ="cmn-toggle cmn-toggle-round-flat";	
+		        checkbox.addEventListener("click", _updateSelectableLayer);	     	       	
+	       }
+		}
+	}
 	
 	var	_updateSelectableLayer = function(){	
+
+		
 		layerDataStore.fetch({
 				sort: {attribute: 'name', descending: false},
 				onComplete: _addSelectableLayerSorted
@@ -355,27 +390,25 @@ define([
 			if (categoCount % 2 == 0) {
 	    	    newRow   = tableRef.insertRow(tableRef.rows.length);    	    
     	    
-           	newRow.style.height = "20px";
-           	var newCheckboxCell  = newRow.insertCell(0);
-           	var checkbox = document.createElement('input');
-			checkbox.type = "checkbox";
-			
-	        chkboxId = window.chkTopicPrefix + window.topicDic[key];
-
-			checkbox.name = chkboxId;
-			checkbox.value = 0;
-			checkbox.id = chkboxId;
-			checkbox.className ="cmn-toggle cmn-toggle-round-flat";
-	        newCheckboxCell.appendChild(checkbox);    
-	        var label = document.createElement('label');
-	        label.setAttribute("for",chkboxId);
-			label.innerHTML = "";
-			newCheckboxCell.appendChild(label);
-			
-			checkbox.addEventListener('click', function() {
-				_updateSelectableLayer();
-		    });
-			
+	           	newRow.style.height = "20px";
+	           	var newCheckboxCell  = newRow.insertCell(0);
+	           	var checkbox = document.createElement('input');
+				checkbox.type = "checkbox";
+				
+		        chkboxId = window.chkTopicPrefix + window.topicDic[key];
+	
+				checkbox.name = chkboxId;
+				checkbox.value = 0;
+				checkbox.id = chkboxId;
+				checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+		        newCheckboxCell.appendChild(checkbox);    
+		        var label = document.createElement('label');
+		        label.setAttribute("for",chkboxId);
+				label.innerHTML = "";
+				newCheckboxCell.appendChild(label);
+	
+				checkbox.addEventListener('click', _updateSelectableLayer);
+		    
 				/// add category title:
 	           	var newTitleCell  = newRow.insertCell(1);
 	           	newTitleCell.style.width = "40%";
@@ -432,9 +465,12 @@ define([
 		};					
 		document.getElementById("selectAllLayers").onclick = function() {
 			if (this.checked){
-		    _onSelectAllLayers();
+		    	_onSelectAllLayers();
 			    document.getElementById('butAddAllLayers').click();
-		    }
+		   } else {
+		   		_onUnselectAllLayers();
+		   		document.getElementById('butRemAllLayers').click();
+		   }
 		};
 		layersToBeAdded = "a";
 	    
@@ -524,6 +560,8 @@ define([
 
         this.inherited(arguments);
 	    this.fetchDataByName('SelectCommunity');		 
+	    this.displayCategorySelection();
+		this.displayGeographySelection();
 		dojo.connect(dijit.byId("selectionCriteria"), "toggle", function (){
 		    if (dijit.byId('selectionCriteria')._isShown()) {
 		    	if (navigator.userAgent.indexOf("Chrome")>=0) {
@@ -553,8 +591,6 @@ define([
 	        var tableOfRelationship = document.getElementById('tableLyrNameDescrTag');
 		    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];    
             for (index = 0, len = arrLayers.length; index < len; ++index) {
-            //for (index = 0, len = 4; index < len; ++index) {
-            	//console.log("index:" + index);
                 layer = arrLayers[index];                          
                 var indexCheckbox = 0;
 
@@ -601,6 +637,16 @@ define([
 	                    }	                    
 	                    if(layer.hasOwnProperty('eaScale')){
 	                    	eaScale = layer.eaScale.toString();
+	                    	if (eaScale == "NATIONAL") {
+	                    		if (nationalTopicList.indexOf(eaTopic) < 0) {
+	                    			nationalTopicList.push(eaTopic);
+	                    		}	                    		
+	                    	}
+	                    	if (eaScale == "COMMUNITY") {
+	                    		if (communityTopicList.indexOf(eaTopic) < 0) {
+	                    			communityTopicList.push(eaTopic);
+	                    		}	                    		
+	                    	}	                    	
 	                    }
 	                    else {
 	                    	eaScale = "";
@@ -650,6 +696,7 @@ define([
                 }// end of if(layer.hasOwnProperty('eaID'))                	
 
             }// end of for (index = 0, len = arrLayers.length; index < len; ++index) 
+            updateTopicToggleButton();
 			$('#tableLyrNameDescrTag').DataTable( {
 		        "columnDefs": [
 		            {
@@ -683,8 +730,7 @@ define([
             	window.communityMetadataDic[currentMetadataCommunityIndex.MetaID_Community] = singleCommunityMetadataDic;
             }
         }); // end of loadCommunityJSON(function(response)
-		this.displayCategorySelection();
-		this.displayGeographySelection();
+		
     },               
                     
 	    _onSingleLayerClick: function() {
@@ -706,7 +752,6 @@ define([
 			}    
 	    },	
     _onAddLayersClick: function() {
-		//alert("_onAddLayersClick");
         layersToBeAdded = "a";
 		for (var key in chkIdDictionary) {
 		  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
@@ -721,13 +766,10 @@ define([
 	    this.i ++;
     },
     _onRemLayersClick: function() {
-		//alert("_onRemLayersClick");
         layersToBeAdded = "r";
 		for (var key in chkIdDictionary) {
 		  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
-		  	if (document.getElementById(key).checked) {
             	layersToBeAdded = layersToBeAdded + "," + key.replace("ck", "");
-        	}
 		  }
 		}
         this.publishData({
