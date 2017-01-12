@@ -60,7 +60,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 
     postCreate: function() {
       this.inherited(arguments);
-      console.log('postCreate');
+      //console.log('postCreate');
 
     },
 
@@ -143,12 +143,11 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 	  LayerInfos.getInstance(this.map, this.map.itemInfo).then(function(layerInfosObject){
 
 		  var dslayer = layerInfosObject.getLayerInfoById(_layerID);
-		  //console.log("Current Layer Name: ", dslayer.title);
 		  dom.byId('title').innerHTML = dslayer.title;
 
 		  //Set layers
 		  geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
-		  console.log("FeatureLayer: ", geoenrichedFeatureLayer.renderer);
+		  //console.log("FeatureLayer: ", geoenrichedFeatureLayer.renderer);
 		  var comName = window.communityDic[window.communitySelected];
 		  geoenrichedFeatureLayer.setDefinitionExpression("Community like '%" + comName + "%'");
 
@@ -307,7 +306,6 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 	_getStyle: function(){
 		newStyle = symbolStyler.getStyle();
 		newStyle.scheme.outline = newStyle.symbol.outline;
-		console.log(newStyle);
 		popup.close(styleDialog);
 		self._updateSmartMapping2();
 	},
@@ -316,15 +314,9 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		currentInfos.forEach(function(s){
 			symbolColors.push(s.symbol.color);
 		});
-		console.log("colors :::", symbolColors);
 		return symbolColors;
 	},
 	_openSymbolStyler: function(){
-			console.log(geoenrichedFeatureLayer.geometryType);
-		// var sfs = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
-		// 	new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
-		// 		new Color([255,155,0]), 2),new Color([255,255,0,0.25])
-		// );
 		var currRamp = self._getColorsFromInfos(geoenrichedFeatureLayer.renderer.infos);
 
 		var fType = geoenrichedFeatureLayer.geometryType;
@@ -342,14 +334,6 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 				schemes:schemes
 			});
 		}
-
-		// 	domStyle.set(self.symbolStylerContainer, "display", "block");
-		// }else{
-		// 	domStyle.set(self.symbolStylerContainer, "display", "none");
-		// }
-
-
-		//self.symbolStyler-container
 	},
 
 	_getHistoAndStats: function(gRenderer){
@@ -385,7 +369,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 	},
 	
 	_updateSmartMapping2: function(){
-		console.log("UpdateSmartMapping");
+
 		_busy.show();
 		if(dynamicSymbology.isSmartMapping == false){
 			dynamicSymbology.isSmartMapping = true;
@@ -401,7 +385,6 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
         numClasses: _NumberOfClasses,
 		scheme: newStyle.scheme
       }).then(function (smartRenderer) {
-        console.log("create color renderer is generated", smartRenderer);
 		
         if (!geoenrichedFeatureLayer.visible) {
           geoenrichedFeatureLayer.show();
@@ -413,11 +396,6 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
         geoenrichedFeatureLayer.setVisibility(false);
         geoenrichedFeatureLayer.setVisibility(true);
 
-		console.log("Get Histogram");
-		console.log("classification: " + _ClassificationMethod);
-		console.log("field: " + _fieldName);
-		console.log("Num Classes: " + _NumberOfClasses);
-		
         featureLayerStatistics.getHistogram({
 			classificationMethod: _ClassificationMethod,
 			field: _fieldName,
