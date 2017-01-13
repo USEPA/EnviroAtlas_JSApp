@@ -6,7 +6,9 @@ define(['dojo/_base/declare',
       "dojo/dom",
 		"dojo/dom-construct",
 	  "dojo/on",
+	  "dojo/dom-style",
       "esri/map",
+	  "esri/styles/choropleth",
       "esri/Color",
       "esri/dijit/ColorInfoSlider",
 	  "esri/dijit/ClassedColorSlider",
@@ -15,6 +17,7 @@ define(['dojo/_base/declare',
       "esri/plugins/FeatureLayerStatistics",
 	  "esri/renderers/ClassBreaksRenderer",
 	  "esri/symbols/SimpleFillSymbol",
+	  "esri/symbols/SimpleLineSymbol",
 	  "esri/styles/choropleth",
       "esri/dijit/util/busyIndicator",
 	  "esri/dijit/SymbolStyler",
@@ -24,11 +27,16 @@ define(['dojo/_base/declare',
       "dijit/form/HorizontalSlider",
       "dijit/form/HorizontalRule",
       "dijit/form/HorizontalRuleLabels",
+	  "dijit/TooltipDialog",
+	  "dijit/form/DropDownButton",
+	  "dijit/form/Button",
+	  "dijit/popup",
 	  "dojo/parser"],
-function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, ColorInfoSlider,
+function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, esriStylesChoropleth, Color, ColorInfoSlider,
 	ClassedColorSlider, smartMapping, FeatureLayer, FeatureLayerStatistics,
-	ClassBreaksRenderer, SimpleFillSymbol, esriStylesChoropleth, busyIndicator, SymbolStyler,
-	ColorPalette, select, NumberSpinner, HorizontalSlider, HorizontalRule, HorizontalRuleLabels) {
+	ClassBreaksRenderer, SimpleFillSymbol, SimpleLineSymbol, esriStylesChoropleth, busyIndicator, SymbolStyler,
+	ColorPalette, select, NumberSpinner, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, TooltipDialog, DropDownButton,
+		 Button, popup) {
 
   //To create a widget, you need to derive from BaseWidget.
   return declare([BaseWidget], {
@@ -52,7 +60,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 
     postCreate: function() {
       this.inherited(arguments);
-      console.log('postCreate');
+      //console.log('postCreate');
 
     },
 
@@ -78,24 +86,68 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 	},
 
     onOpen: function(){
-      _busy = busyIndicator.create("esri-colorinfoslider-container");
+	  self = this;
+	  _busy = busyIndicator.create("esri-colorinfoslider-container");
 
-      console.log('onOpen');
+		schemes = esriStylesChoropleth.getSchemes({
+			basemap: "hybrid",
+			geometryType: "polygon",
+			theme: "high-to-low"
+		});
+		//Create content for schemes dialog
+		var stylerNode = domConstruct.create("div");
+		var stylerButtons = domConstruct.create("div");
+		var okButtonDiv = domConstruct.create("div");
+		var cancelButtonDiv = domConstruct.create("div");
+		var contentsNode = domConstruct.create("div");
+		stylerButtons.append(okButtonDiv);
+		stylerButtons.append(cancelButtonDiv);
+		contentsNode.append(stylerNode);
+		contentsNode.append(stylerButtons);
+
+		styleDialog = new TooltipDialog({
+			style: "width: 300px;",
+			onOpen: self._openSymbolStyler
+		});
+		styleDialog.attr('content',contentsNode);
+
+		symbolStyler = new SymbolStyler({portal: "https://epa.maps.arcgis.com"}, stylerNode);//this.symbolStyler
+		var okButton = new Button({
+			label: "OK",
+			onClick: self._getStyle
+		}, okButtonDiv).startup();
+
+		var cancelButton = new Button({
+			label: "Cancel",
+			onClick: function(){
+				popup.close(styleDialog);
+			}
+		}, cancelButtonDiv).startup();
+
+
+		var displaySymbolStyler = new DropDownButton({
+			label: "Symbology",
+			dropDown: styleDialog
+		});
+		dom.byId("dropDownButtonContainer").appendChild(displaySymbolStyler.domNode);
+		displaySymbolStyler.startup();
+		symbolStyler.startup();
+
+		console.log('onOpen');
       var dynamicSym = this;
 	  //Get base map
 	  _currentBaseMap = this.map.getBasemap();
 
 		dynamicSymbology.isSmartMapping = true;
-	  
+
 	  LayerInfos.getInstance(this.map, this.map.itemInfo).then(function(layerInfosObject){
 
 		  var dslayer = layerInfosObject.getLayerInfoById(_layerID);
-		  console.log("Current Layer Name: ", dslayer.title);
 		  dom.byId('title').innerHTML = dslayer.title;
 
 		  //Set layers
 		  geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
-
+		  //console.log("FeatureLayer: ", geoenrichedFeatureLayer.renderer);
 		  var comName = window.communityDic[window.communitySelected];
 		  geoenrichedFeatureLayer.setDefinitionExpression("Community like '%" + comName + "%'");
 
@@ -251,6 +303,39 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 		});
 	},
 
+	_getStyle: function(){
+		newStyle = symbolStyler.getStyle();
+		newStyle.scheme.outline = newStyle.symbol.outline;
+		popup.close(styleDialog);
+		self._updateSmartMapping2();
+	},
+	_getColorsFromInfos: function(currentInfos){
+		var symbolColors = [];
+		currentInfos.forEach(function(s){
+			symbolColors.push(s.symbol.color);
+		});
+		return symbolColors;
+	},
+	_openSymbolStyler: function(){
+		var currRamp = self._getColorsFromInfos(geoenrichedFeatureLayer.renderer.infos);
+
+		var fType = geoenrichedFeatureLayer.geometryType;
+		if(fType == "esriGeometryPolygon"){
+			var dSymbol = geoenrichedFeatureLayer.renderer.infos[0].symbol;
+
+			symbolStyler.edit(dSymbol,{
+				activeTab: "fill",
+				colorRamp: {
+					colors:currRamp,
+					numStops: _NumberOfClasses,
+					scheme: schemes.secondarySchemes[39]
+				},
+				externalSizing:false,
+				schemes:schemes
+			});
+		}
+	},
+
 	_getHistoAndStats: function(gRenderer){
 		_busy.show();
 		featureLayerStatistics.getHistogram({
@@ -284,7 +369,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 	},
 	
 	_updateSmartMapping2: function(){
-		console.log("UpdateSmartMapping");
+
 		_busy.show();
 		if(dynamicSymbology.isSmartMapping == false){
 			dynamicSymbology.isSmartMapping = true;
@@ -298,8 +383,8 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
 		field: _fieldName,
         layer: geoenrichedFeatureLayer,
         numClasses: _NumberOfClasses,
+		scheme: newStyle.scheme
       }).then(function (smartRenderer) {
-        console.log("create color renderer is generated", smartRenderer);
 		
         if (!geoenrichedFeatureLayer.visible) {
           geoenrichedFeatureLayer.show();
@@ -311,11 +396,6 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, Map, Color, Col
         geoenrichedFeatureLayer.setVisibility(false);
         geoenrichedFeatureLayer.setVisibility(true);
 
-		console.log("Get Histogram");
-		console.log("classification: " + _ClassificationMethod);
-		console.log("field: " + _fieldName);
-		console.log("Num Classes: " + _NumberOfClasses);
-		
         featureLayerStatistics.getHistogram({
 			classificationMethod: _ClassificationMethod,
 			field: _fieldName,
