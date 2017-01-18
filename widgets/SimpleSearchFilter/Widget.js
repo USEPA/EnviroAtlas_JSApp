@@ -45,6 +45,7 @@ define([
     WidgetManager,
     PanelManager) {
     	var singleLayerToBeAddedRemoved = "";
+    	var bNoTopicSelected = false;
     	var communitySelected = "";
         var   layerData = {
             identifier: "eaID",  //This field needs to have unique values
@@ -67,6 +68,11 @@ define([
 		
 		var hashFactsheetLink = {};
 		var hashLayerNameLink = {};
+		
+		var hashLayerName = {};
+		var hashEaDescription = {};
+		var hashEaTag = {};
+		
 
 		var objectPropInArray = function(list, prop, val) {
 		  if (list.length > 0 ) {
@@ -124,12 +130,95 @@ define([
 	    var _onUnselectAllLayers = function() {
 			for (var key in chkIdDictionary) {
 			  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
-	        	document.getElementById(key).checked = false;
-	
+	        	 document.getElementById(key).checked = false;	
 			  }
 			}
 	   };	   
-	    var	_addSelectableLayerSorted = function(items){
+	   var topicsBeingSelected = function() {
+			var atLeastOneTopicChosen = false;
+			var chkboxId;
+			var checkbox;
+		    for (var key in window.topicDic) {
+				chkboxId = window.chkTopicPrefix + window.topicDic[key];
+				checkbox = document.getElementById(chkboxId);		    	
+				if((checkbox.checked == true ) &&(checkbox.className == "cmn-toggle cmn-toggle-round-flat")){
+					atLeastOneTopicChosen = true;
+				}
+			}	
+			return atLeastOneTopicChosen;	   	
+	   }
+	   var addNewSearchBoxDataTable = function(stringPlaceHolder) {
+	   	    var table = $('#tableLyrNameDescrTag').DataTable();
+	   	    table.destroy();
+		    
+			var nSearchableColumns = document.getElementById('tableLyrNameDescrTag').getElementsByTagName('tr')[0].getElementsByTagName('th').length;
+			var tableOfRelationship = document.getElementById("tableLyrNameDescrTag");
+		    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0]; 
+
+	        for (var key in hashLayerName) {
+		    
+				var eaID = key;				
+				var layerName = hashLayerName[key];		
+				var eaDescription = hashEaDescription[key];
+				var eaTags = hashEaTag[key];
+	
+	    	    var newRow   = tableRef.insertRow(tableRef.rows.length);
+	    	    	    	    
+	           	var newCell  = newRow.insertCell(0);
+				newCell.appendChild(document.createTextNode(eaID));
+				newRow.appendChild(newCell);
+	
+	           	newCell  = newRow.insertCell(1);
+				newCell.appendChild(document.createTextNode(layerName));
+				newRow.appendChild(newCell);			
+	   
+	           	newCell  = newRow.insertCell(2);
+				newCell.appendChild(document.createTextNode(eaDescription));
+				newRow.appendChild(newCell);
+				
+	           	newCell  = newRow.insertCell(3);
+				newCell.appendChild(document.createTextNode(eaTags));
+				newRow.appendChild(newCell);
+		    }
+	   	   $('#tableLyrNameDescrTag').DataTable( {
+			   language: {
+			        searchPlaceholder: stringPlaceHolder			
+			   },
+		        "columnDefs": [
+		            {
+		                "targets": [ 0 ],
+		                "searchable": false
+		            }
+		        ]
+		    } );	
+
+			$('#tableLyrNameDescrTag').on( 'draw.dt', function () {
+			    _updateSelectableLayer();		    
+			} );
+					
+			var page = document.getElementById('tableLyrNameDescrTag_paginate');
+			page.style.display = 'none';	
+				
+			var searchBox = document.getElementById('searchFilterText');
+			searchBox.style.width= "100%";		
+	   }
+	   var updateSearchBoxDataTable = function() {
+
+			if (topicsBeingSelected() == true) {
+				if (bNoTopicSelected) {
+					addNewSearchBoxDataTable("Search selected topics");  					
+				}
+				bNoTopicSelected = false;
+			} else {
+				if (!bNoTopicSelected) {
+	   				addNewSearchBoxDataTable("Search all layers");	
+				}				
+				bNoTopicSelected = true;
+			}
+	   }
+	   
+	    var	_addSelectableLayerSorted = function(items){	    	
+
 			updateTopicToggleButton();
     		var nSearchableColumns = document.getElementById('tableLyrNameDescrTag').getElementsByTagName('tr')[0].getElementsByTagName('th').length;
     		var eaIDFilteredList = [];
@@ -146,7 +235,6 @@ define([
 					tdIndex = 0;
 				}				
 			} ); 
-    	
 			var tableOfRelationship = document.getElementById("tableSelectableLayers");
 		    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0]; 
             while (tableRef.firstChild) {
@@ -154,9 +242,8 @@ define([
             }
             var numOfSelectableLayers = 0;
             var totalNumOfLayers = 0;
-            
+			var bAtLeastOneTopicSelected = topicsBeingSelected();            
 	    	dojo.forEach(items, function(item) {
-	    		
 	           	
 	           	var currentLayerSelectable = false;
 				eaLyrNum = layerDataStore.getValue( item, 'eaLyrNum').toString();
@@ -215,7 +302,7 @@ define([
 					
 				}// end of if (bSelectByScale)
 
-				if (currentLayerSelectable &&(eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
+				if ((currentLayerSelectable || (bAtLeastOneTopicSelected == false)) &&(eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
 					if ((window.allLayerNumber.indexOf(eaID)) == -1) {                        	
                     	window.allLayerNumber.push(eaID);
                     }
@@ -325,12 +412,12 @@ define([
 		  }
 		}    	
 	};	   
+
 	var updateTopicToggleButton = function() {
 	    for (var key in window.topicDic) {
 	    	var bCurrentTopicDisabled = true;
 			var chkScale = document.getElementById("chkNational");
-			//console.log("nationalTopicList:"+ nationalTopicList);
-			//console.log("communityTopicList:"+ communityTopicList);
+
 			if((document.getElementById("chkNational").checked == true) && (nationalTopicList.indexOf(key) >= 0)){
 				bCurrentTopicDisabled = false;
 			}
@@ -353,8 +440,8 @@ define([
 		}
 	}
 	
+	
 	var	_updateSelectableLayer = function(){	
-
 		
 		layerDataStore.fetch({
 				sort: {attribute: 'name', descending: false},
@@ -362,19 +449,14 @@ define([
 				});
 	};
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
-
-        //name: 'eBasemapGallery',
         baseClass: 'jimu-widget-simplesearchfilter',
 		onReceiveData: function(name, widgetId, data, historyData) {
 			if (name == 'SelectCommunity'){
-				  var stringArray = data.message.split(",");
-
-					  if (stringArray[0] != "u") {
-						communitySelected = data.message;
-						_updateSelectableLayer();
-					  }			  	
-		
-
+			   var stringArray = data.message.split(",");
+			   if (stringArray[0] != "u") {
+				 communitySelected = data.message;
+				 _updateSelectableLayer();
+			   } 	
 			}		  
 		},
 
@@ -407,7 +489,13 @@ define([
 				label.innerHTML = "";
 				newCheckboxCell.appendChild(label);
 	
-				checkbox.addEventListener('click', _updateSelectableLayer);
+				//checkbox.addEventListener('click', _updateSelectableLayer);
+				checkbox.addEventListener('click', function() {
+					updateSearchBoxDataTable();
+					_updateSelectableLayer();
+					
+				});
+						
 		    
 				/// add category title:
 	           	var newTitleCell  = newRow.insertCell(1);
@@ -432,17 +520,19 @@ define([
 				label.innerHTML = "";
 				newCheckboxCell.appendChild(label);
 				
+				//checkbox.addEventListener('click', _updateSelectableLayer);
+				
 				checkbox.addEventListener('click', function() {
-					_updateSelectableLayer();
-			    });
-		
+					updateSearchBoxDataTable();
+					_updateSelectableLayer();					
+				});		
 			
 			/// add category title:
 	           	var newTitleCell  = newRow.insertCell(3);
 	           	newTitleCell.style.width = "40%";
-			var title = document.createElement('label');
-			title.innerHTML = key;    
-			newTitleCell.appendChild(title);        
+				var title = document.createElement('label');
+				title.innerHTML = key;    
+				newTitleCell.appendChild(title);        
 			}
 
 		}
@@ -489,6 +579,7 @@ define([
 		checkbox.type = "checkbox";
         chkboxId = "chkNational";
 		checkbox.name = chkboxId;
+		checkbox.checked = true;
 		checkbox.id = chkboxId;
 		checkbox.className ="cmn-toggle cmn-toggle-round-flat";
         newCheckboxCell.appendChild(checkbox);    
@@ -583,6 +674,7 @@ define([
 
 		    }
 		}); 
+		
         loadJSON(function(response) {
             var localLayerConfig = JSON.parse(response);
             var arrLayers = localLayerConfig.layers.layer;
@@ -597,7 +689,7 @@ define([
                 if(layer.hasOwnProperty('eaID')) {
                 	eaID = layer.eaID.toString();
                 	if (eaID.trim() != "") {
-		                    	
+
 	                    if(layer.hasOwnProperty('eaLyrNum')){
 	                        eaLyrNum = layer.eaLyrNum.toString();
 	                    }
@@ -668,8 +760,12 @@ define([
 					    eaTagsWhole = eaTagsWhole.substring(0, eaTagsWhole.length - 1);						    
 				    	//var layerItem = {eaLyrNum: eaLyrNum, name: layerName, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole};
 				    	var layerItem = {eaLyrNum: eaLyrNum, name: layerName, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole, eaTopic:eaTopic};
-	
+						
 						layerDataStore.newItem(layerItem);
+						//add to hash map for update Search datatable column
+						hashLayerName[layer.eaID.toString()] = layerName;
+						hashEaDescription[layer.eaID.toString()] = eaDescription;
+						hashEaTag[layer.eaID.toString()] = eaTagsWhole;
 						
 						//add to the table for use of search text		
 			    	    var newRow   = tableRef.insertRow(tableRef.rows.length);
@@ -697,23 +793,8 @@ define([
 
             }// end of for (index = 0, len = arrLayers.length; index < len; ++index) 
             updateTopicToggleButton();
-			$('#tableLyrNameDescrTag').DataTable( {
-		        "columnDefs": [
-		            {
-		                "targets": [ 0 ],
-		                "searchable": false
-		            }
-		        ]
-		    } );	
-			$('#tableLyrNameDescrTag').on( 'draw.dt', function () {
-			    _updateSelectableLayer();		    
-			} );
-					    				
-			var page = document.getElementById('tableLyrNameDescrTag_paginate');
-			page.style.display = 'none';	
-				
-			var searchBox = document.getElementById('searchFilterText');
-			searchBox.style.width= "85%";
+            updateSearchBoxDataTable();
+
         });// end of loadJSON(function(response)
         loadCommunityJSON(function(response){
         	var community = JSON.parse(response);
@@ -730,7 +811,7 @@ define([
             	window.communityMetadataDic[currentMetadataCommunityIndex.MetaID_Community] = singleCommunityMetadataDic;
             }
         }); // end of loadCommunityJSON(function(response)
-		
+
     },               
                     
 	    _onSingleLayerClick: function() {
