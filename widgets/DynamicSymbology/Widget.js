@@ -53,6 +53,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 	_ClassificationMethod: null,
 	_NumberOfClasses: null,
 	_currentBaseMap: null,
+	_scheme: null,
 
     _BusyIndicator: function(){
       return busyIndicator.create("esri-colorinfoslider1");
@@ -94,6 +95,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 			geometryType: "polygon",
 			theme: "high-to-low"
 		});
+
 		//Create content for schemes dialog
 		var stylerNode = domConstruct.create("div");
 		var stylerButtons = domConstruct.create("div");
@@ -254,7 +256,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		  //set original renderer button
 		  var origRendBtn = dom.byId('originalBtn');
 		  var originalHandler = on(origRendBtn,"click", function(){
-
+			  _scheme = null;
 			  var defaultRenderer = new ClassBreaksRenderer(currentSymbology[_layerID]['origRenderer']);
 			  //set properties
 			  _ClassificationMethod = defaultRenderer.classificationMethod;
@@ -306,6 +308,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 	_getStyle: function(){
 		newStyle = symbolStyler.getStyle();
 		newStyle.scheme.outline = newStyle.symbol.outline;
+		_scheme = newStyle.scheme;
 		popup.close(styleDialog);
 		self._updateSmartMapping2();
 	},
@@ -383,7 +386,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		field: _fieldName,
         layer: geoenrichedFeatureLayer,
         numClasses: _NumberOfClasses,
-		scheme: newStyle.scheme
+		scheme: _scheme
       }).then(function (smartRenderer) {
 		
         if (!geoenrichedFeatureLayer.visible) {
