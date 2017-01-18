@@ -127,7 +127,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		}, cancelButtonDiv).startup();
 
 
-		var displaySymbolStyler = new DropDownButton({
+		displaySymbolStyler = new DropDownButton({
 			label: "Symbology",
 			dropDown: styleDialog
 		});
@@ -433,6 +433,10 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
     onClose: function(){
 		//clean up
 		dijit.byId("transSlider").destroy();
+
+		styleDialog.destroy();
+		symbolStyler.destroy();
+		displaySymbolStyler.destroy();
 
 		dynamicSymbology.slider.destroy();
 		dynamicSymbology.numberClasses.destroy();
