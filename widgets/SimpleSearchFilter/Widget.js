@@ -47,6 +47,7 @@ define([
     	var singleLayerToBeAddedRemoved = "";
     	var bNoTopicSelected = false;
     	var communitySelected = "";
+    	var self;
         var   layerData = {
             identifier: "eaID",  //This field needs to have unique values
             label: "name", //Name field for display. Not pertinent to a grid but may be used elsewhere.
@@ -215,6 +216,12 @@ define([
 				}				
 				bNoTopicSelected = true;
 			}
+	   }
+	   var showLayerListWidget = function(){
+	        var widgetName = 'LayerList';
+	        var widgets = self.appConfig.getConfigElementsByName(widgetName);
+	        var pm = PanelManager.getInstance();
+	        pm.showPanel(widgets[0]);	   	
 	   }
 	   
 	    var	_addSelectableLayerSorted = function(items){	    	
@@ -401,6 +408,7 @@ define([
 		  	document.getElementById(key).addEventListener('click', function() {
 		  		
 				if (this.checked){
+					showLayerListWidget();	
 					singleLayerToBeAddedRemoved = "a" + "," + this.getAttribute("id").replace("ck", "");
 					document.getElementById('butAddSingleLayer').click();
 				}
@@ -555,6 +563,7 @@ define([
 		};					
 		document.getElementById("selectAllLayers").onclick = function() {
 			if (this.checked){
+				showLayerListWidget();
 		    	_onSelectAllLayers();
 			    document.getElementById('butAddAllLayers').click();
 		   } else {
@@ -653,6 +662,7 @@ define([
 	    this.fetchDataByName('SelectCommunity');		 
 	    this.displayCategorySelection();
 		this.displayGeographySelection();
+		self = this;
 		dojo.connect(dijit.byId("selectionCriteria"), "toggle", function (){
 		    if (dijit.byId('selectionCriteria')._isShown()) {
 		    	if (navigator.userAgent.indexOf("Chrome")>=0) {
