@@ -316,7 +316,7 @@ define([
 					numOfSelectableLayers = numOfSelectableLayers + 1;
 
 			       	var newRow   = tableRef.insertRow(tableRef.rows.length);
-			       	newRow.style.height = "38px";
+			       	//newRow.style.height = "38px";
 			       	var newCheckboxCell  = newRow.insertCell(0);
 					var checkbox = document.createElement('input');
 					checkbox.type = "checkbox";
@@ -330,8 +330,10 @@ define([
 			
 			       	chkIdDictionary[chkboxId] = layerName;
 			        var newCell  = newRow.insertCell(1);
+			        newCell.style.width = "100%";
 			        newCell.style.verticalAlign = "top";//this will put layer name on first line
-			        
+			        newCell.style.paddingBottom = "12px"
+
 					var newTitle  = document.createElement('div');
 			        newTitle.innerHTML = layerName;
 			        newTitle.title = eaDescription;
@@ -349,7 +351,7 @@ define([
 			
 						    liElem = document.createElement("li");
 							liElem.style.left = (indexImage*20).toString() + "px";
-							liElem.style.top = "-10px";
+							liElem.style.top = "-12px";
 							aElem = document.createElement("a");
 							aElem.title  = key;
 							liElem.appendChild(aElem);
@@ -475,17 +477,19 @@ define([
 	    indexImage = 0;
 	    var categoCount = 1;
 	    var newRow;
-	    for (var key in window.topicDic) {
-	    	categoCount =  categoCount + 1;
-			if (categoCount % 2 == 0) {
-	    	    newRow   = tableRef.insertRow(tableRef.rows.length);    	    
-    	    
-	           	newRow.style.height = "20px";
+
+	    var keys = Object.keys(window.topicDic);
+	    var half = Math.ceil((keys.length / 2));
+
+	    for (i=0; i<(keys.length / 2); i++) {
+
+	    	newRow = tableRef.insertRow(tableRef.rows.length);
+			newRow.style.height = "20px";
 	           	var newCheckboxCell  = newRow.insertCell(0);
 	           	var checkbox = document.createElement('input');
 				checkbox.type = "checkbox";
 				
-		        chkboxId = window.chkTopicPrefix + window.topicDic[key];
+		        chkboxId = window.chkTopicPrefix + window.topicDic[keys[i]];
 	
 				checkbox.name = chkboxId;
 				checkbox.value = 0;
@@ -497,53 +501,47 @@ define([
 				label.innerHTML = "";
 				newCheckboxCell.appendChild(label);
 	
-				//checkbox.addEventListener('click', _updateSelectableLayer);
-				checkbox.addEventListener('click', function() {
-					updateSearchBoxDataTable();
-					_updateSelectableLayer();
-					
-				});
-						
-		    
+				checkbox.addEventListener('click', _updateSelectableLayer);
+				
 				/// add category title:
 	           	var newTitleCell  = newRow.insertCell(1);
+	           	newTitleCell.style.width = "40%"
+	        
+				var title = document.createElement('label');
+				title.innerHTML = keys[i];    
+				//title.style.fontSize = "10px";
+				newTitleCell.appendChild(title); 
+	    	
+	    	if (i + half < keys.length) {
+	    	var newCheckboxCell  = newRow.insertCell(2);
+	           	var checkbox = document.createElement('input');
+				checkbox.type = "checkbox";
+				
+		        chkboxId = window.chkTopicPrefix + window.topicDic[keys[i + half]];
+	
+				checkbox.name = chkboxId;
+				checkbox.value = 0;
+				checkbox.id = chkboxId;
+				checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+		        newCheckboxCell.appendChild(checkbox);    
+		        var label = document.createElement('label');
+		        label.setAttribute("for",chkboxId);
+				label.innerHTML = "";
+				newCheckboxCell.appendChild(label);
+	
+				checkbox.addEventListener('click', _updateSelectableLayer);
+				
+				/// add category title:
+	           	var newTitleCell  = newRow.insertCell(3);
 	           	newTitleCell.style.width = "40%";
 	        
 				var title = document.createElement('label');
-				title.innerHTML = key;    
-				newTitleCell.appendChild(title);     				
-			}
-			else {
-	           	var newCheckboxCell  = newRow.insertCell(2);
-	           	var checkbox = document.createElement('input');
-				checkbox.type = "checkbox";
-	            chkboxId = window.chkTopicPrefix + window.topicDic[key];
-				checkbox.name = chkboxId;
-				checkbox.value = 0;
-				checkbox.id = chkboxId;
-				checkbox.className ="cmn-toggle cmn-toggle-round-flat";
-		        newCheckboxCell.appendChild(checkbox);    
-		        var label = document.createElement('label');
-		        label.setAttribute("for",chkboxId);
-				label.innerHTML = "";
-				newCheckboxCell.appendChild(label);
-				
-				//checkbox.addEventListener('click', _updateSelectableLayer);
-				
-				checkbox.addEventListener('click', function() {
-					updateSearchBoxDataTable();
-					_updateSelectableLayer();					
-				});		
-			
-			/// add category title:
-	           	var newTitleCell  = newRow.insertCell(3);
-	           	newTitleCell.style.width = "40%";
-				var title = document.createElement('label');
-				title.innerHTML = key;    
-				newTitleCell.appendChild(title);        
-			}
+				title.innerHTML = keys[i + half];    
+				newTitleCell.appendChild(title); 
+	    	}
+	    }
 
-		}
+
         /* Commenting out Supply/demand/driver choices.
 		document.getElementById("Supply").onclick = function() {
 		    _updateSelectableLayer();

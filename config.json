@@ -474,6 +474,7 @@
 				"version" : "1.3",
 				"uri" : "widgets/SimpleSearchFilter/Widget",
 				"index" : 5,
+				"openAtStart": true,
 				"id" : "widgets_SimpleSearchFilter_Widget_37"
 			}, {
 				"name" : "BoundaryLayer",
