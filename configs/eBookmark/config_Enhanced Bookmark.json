@@ -7,10 +7,10 @@
         {
           "name": "Conterminous USA",
           "extent": {
-            "xmax": -8034300,
-            "xmin": -13934000,
-            "ymax": 6710900,
-            "ymin": 2699500,
+            "xmax": -5347672,
+            "xmin": -15914327,
+            "ymax": 7733573,
+            "ymin": 1853426,
             "spatialReference": {
               "wkid": 102100
             }
@@ -59,6 +59,18 @@
             "xmin":-11083282,
             "ymax": 3654249,
             "ymin": 3470800,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
+          "name": "Cleveland, OH",
+          "extent": {
+            "xmax": -8924538,
+            "xmin":-9254746,
+            "ymax": 5179575,
+            "ymin": 4996126,
             "spatialReference": {
               "wkid": 102100
             }
@@ -137,12 +149,12 @@
           }
         },
         {
-          "name": "Navigate HUC (working area)",
+          "name": "Minneapolis-St.Paul, MN",
           "extent": {
-            "xmax": -7522000,
-            "xmin":-7700000,
-            "ymax": 5994000,
-            "ymin": 5909000,
+            "xmax": -10216191,
+            "xmin":-10546400,
+            "ymax": 5711180,
+            "ymin": 5527730,
             "spatialReference": {
               "wkid": 102100
             }
