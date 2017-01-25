@@ -71,7 +71,6 @@ define(["./ConfigManager",
     window.categoryClassDriver = "Driver";
     window.categoryClassSpatialExplicit = "Spatially Explicit";
     window.topicDic = {};
-    //window.topicDic["Air Quality"] = "AQ";
     window.topicDic["Carbon Storage"] = "CS";
     window.topicDic["Climate and Weather"] = "CaW";
     window.topicDic["Crop Productivity"] = "CP";

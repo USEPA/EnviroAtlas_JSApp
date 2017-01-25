@@ -520,8 +520,8 @@ define([
       query.where = this._getLayerFilterExpression();
       query.orderByFields = this.layer._orderByFields || [pk + " ASC"];
 	  if ((query.where == "1=1") && (window.communitySelected != window.strAllCommunity)){
-	      	//query.where = "Community LIKE '%" + window.communityDic[window.communitySelected] + "%'";
-	      	query.where = "UPPER(Community) LIKE UPPER('%" + window.communityDic[window.communitySelected] + "%')";
+	      	//query.where = "UPPER(Community) LIKE UPPER('%" + window.communityDic[window.communitySelected] + "%')";
+	      	query.where = "UPPER(CommST) LIKE UPPER('%" + window.communitySelected + "%')";
 	  }  
       if (normalizedExtent) {
         query.geometry = normalizedExtent;
@@ -1028,11 +1028,11 @@ define([
       //if ((expr == "") && (window.communitySelected != window.strAllCommunity)){
       if (window.communitySelected != window.strAllCommunity){
       	 if (expr != "") {
-	      	expr= "(UPPER(Community) LIKE UPPER('%" + window.communityDic[window.communitySelected] + "%')) AND (" + expr + ")" ;
+	      	expr= "(UPPER(CommST) LIKE UPPER('%" + window.communitySelected + "%')) AND (" + expr + ")" ;
 	     }
 	     else
 	     {
-	      	expr= "UPPER(Community) LIKE UPPER('%" + window.communityDic[window.communitySelected] + "%')";
+	      	expr= "UPPER(CommST) LIKE UPPER('%" + window.communitySelected + "%')";
 	     }
 	  }        
 
