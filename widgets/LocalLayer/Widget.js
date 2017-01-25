@@ -241,7 +241,8 @@ define([
 			                		}
 					    			if ((window.communitySelected != "") && (window.communitySelected != window.strAllCommunity)){
 										console.log("setDefinitionExpression: "  +"Community = '" +window.communityDic[window.communitySelected] + "'");
-										lLayer.setDefinitionExpression("Community = '" +window.communityDic[window.communitySelected] + "'");
+										//lLayer.setDefinitionExpression("Community = '" +window.communityDic[window.communitySelected] + "'");
+										lLayer.setDefinitionExpression("CommST = '" +window.communitySelected + "'");
 										
 									}
 								}
@@ -272,7 +273,7 @@ define([
 	                }      
 	                //alert("community Selected: "+ communitySelected); 
 	                //alert("DefinitionExpression: "+ "Community = " +window.communityDic[communitySelected]);          
-	                lLayer.setVisibility(false);//turn off the layer when first added to map and let user to turn on	
+	                
                 	this._viewerMap.addLayer(lLayer);
                 }
               }else if(layer.type.toUpperCase() === 'TILED'){

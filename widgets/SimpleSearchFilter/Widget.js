@@ -66,6 +66,7 @@ define([
 		    this.eaTopic = data.eaTopic
 		}
 		var selectableLayerArray = [];
+		var dicTopicSelected = {};
 		
 		var hashFactsheetLink = {};
 		var hashLayerNameLink = {};
@@ -225,8 +226,17 @@ define([
 	   }
 	   
 	    var	_addSelectableLayerSorted = function(items){	    	
-
-			updateTopicToggleButton();
+		    for (var key in window.topicDic) {
+		        var chkboxId = window.chkTopicPrefix + window.topicDic[key];
+		        var checkbox = document.getElementById(chkboxId);			
+		        if(checkbox.checked == true){
+			        dicTopicSelected[window.topicDic[key]]  = true;    	
+		        } 
+		        else {
+		        	dicTopicSelected[window.topicDic[key]]  = false; 
+		        }
+			}
+			//updateTopicToggleButton();
     		var nSearchableColumns = document.getElementById('tableLyrNameDescrTag').getElementsByTagName('tr')[0].getElementsByTagName('th').length;
     		var eaIDFilteredList = [];
 			tdIndex = 0;
@@ -299,19 +309,21 @@ define([
 
 				eachLayerCategoryList = eaCategory.split(";");
 				if (bSelectByScale) {
-					
-					var chkCategery = document.getElementById(window.chkTopicPrefix+window.topicDic[eaTopic]);
-					if (typeof(chkCategery) != 'undefined' && chkCategery != null) {
-						if(chkCategery.checked == true){
-							currentLayerSelectable = true;				
-						}
-					}			
-					
+					if (dicTopicSelected[window.topicDic[eaTopic]] == true) {
+						currentLayerSelectable = true;				
+					}
 				}// end of if (bSelectByScale)
 
 				if ((currentLayerSelectable || (bAtLeastOneTopicSelected == false)) &&(eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
+					var bLayerSelected = false;
 					if ((window.allLayerNumber.indexOf(eaID)) == -1) {                        	
                     	window.allLayerNumber.push(eaID);
+                    }
+                    else {
+			    		lyr = self.map.getLayer(window.layerIdPrefix + eaID);
+						if(lyr){
+				    		bLayerSelected = true;
+			          	}                   	
                     }
 					numOfSelectableLayers = numOfSelectableLayers + 1;
 
@@ -325,6 +337,7 @@ define([
 					checkbox.name = chkboxId;
 					checkbox.value = 1;
 					checkbox.id = chkboxId;
+					checkbox.checked = bLayerSelected;
 					newCheckboxCell.style.verticalAlign = "top";//this will put checkbox on first line
 			        newCheckboxCell.appendChild(checkbox);    			              
 			
@@ -501,8 +514,14 @@ define([
 				label.innerHTML = "";
 				newCheckboxCell.appendChild(label);
 	
-				checkbox.addEventListener('click', _updateSelectableLayer);
-				
+				//checkbox.addEventListener('click', _updateSelectableLayer);
+				//checkbox.addEventListener('click', function() {
+				checkbox.addEventListener('change', function() {
+					//alert("topic clicked left" );
+					updateSearchBoxDataTable();
+					_updateSelectableLayer();
+					
+				});
 				/// add category title:
 	           	var newTitleCell  = newRow.insertCell(1);
 	           	newTitleCell.style.width = "40%"
@@ -529,8 +548,14 @@ define([
 				label.innerHTML = "";
 				newCheckboxCell.appendChild(label);
 	
-				checkbox.addEventListener('click', _updateSelectableLayer);
+				//checkbox.addEventListener('click', _updateSelectableLayer);
 				
+				//checkbox.addEventListener('click', function() {
+				checkbox.addEventListener('change', function() {
+					//alert("topic clicked right");
+					updateSearchBoxDataTable();
+					_updateSelectableLayer();					
+				});		
 				/// add category title:
 	           	var newTitleCell  = newRow.insertCell(3);
 	           	newTitleCell.style.width = "40%";
