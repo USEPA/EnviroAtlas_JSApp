@@ -118,6 +118,51 @@
 					"relativeTo" : "map"
 				},
 				"placeholderIndex" : 1,
+				"id" : "basemapGalery_25",
+				"name" : "BasemapGallery",
+				"label" : "Basemap Gallery",
+				"version" : "1.3",
+				"uri" : "widgets/eBasemapGallery/Widget",
+				"config" : "configs/eBasemapGallery/config_Enhanced Basemap Gallery.json"
+			}, {
+				"position" : {
+					"left" : 345,
+					"top" : 5,
+					"width" : 380,
+					"height" : 410,
+					"relativeTo" : "map"
+				},
+				"placeholderIndex" : 1,
+				"id" : "widgets_SelectCommunity_29",
+				"name" : "SelectCommunity",
+				"label" : "SelectCommunity",
+				"version" : "1.3",
+				"uri" : "widgets/SelectCommunity/Widget",
+				"config" : "widgets/SelectCommunity/config.json"
+			},{
+				"position" : {
+					"left" : 395,
+					"top" : 5,
+					"width" : 230,
+					"height" : 220,
+					"relativeTo" : "map"
+				},
+				"placeholderIndex" : 1,
+				"id" : "widgets_DrawerMapping_34",
+				"name" : "Mapping Tools",
+				"label" : "Mapping Tools",
+				"version" : "1.3",
+				"uri" : "widgets/DrawerMappingTools/Widget",
+				"config" : "widgets/DrawerMappingTools/config.json"
+			},{
+				"position" : {
+					"left" : 695,
+					"top" : -40,
+					"width" : 380,
+					"height" : 410,
+					"relativeTo" : "map"
+				},
+				"placeholderIndex" : 1,
 				"id" : "widgets_eBookmark_Widget_18",
 				"name" : "eBookmark",
 				"label" : "Enhanced Bookmark",
@@ -126,8 +171,8 @@
 				"config" : "configs/eBookmark/config_Enhanced Bookmark.json"
 			}, {
 				"position" : {
-					"left" : 345,
-					"top" : 5,
+					"left" : 695,
+					"top" : -40,
 					"width" : 380,
 					"height" : 410,
 					"relativeTo" : "map"
@@ -141,7 +186,81 @@
 				"config" : "configs/Print/config_Print.json"
 			}, {
 				"position" : {
-				  "left" : 645,
+					"left" : 695,
+					"top" : -40,
+					"width" : 380,
+					"height" : 410,
+					"relativeTo" : "map"
+				},
+				"placeholderIndex" : 1,
+				"id" : "widgets_SaveSession_28",
+				"name" : "SaveSession",
+				"label" : "SaveSession",
+				"version" : "1.3",
+				"uri" : "widgets/SaveSession/Widget",
+				"config" : "widgets/SaveSession/config.json"
+			},{
+				"position" : {
+					"left" : 645,
+					"top" : -40,
+					"width" : 380,
+					"height" : 410,
+					"relativeTo" : "map"
+				},
+				"uri" : "widgets/eDraw/Widget",
+				"version" : "1.3",
+				"id" : "widgets_DrawMeasure_Widget_36",
+				"name" : "eDraw",
+				"label" : "Draw and Measure",
+				"config" : "widgets/eDraw/config.json"
+			},{
+				"position" : {
+					"left" : 445,
+					"top" : 5,
+					"width" : 325,
+					"height" : 185,
+					"relativeTo" : "map"
+				},
+				"placeholderIndex" : 1,
+				"id" : "widgets_Drawer_30",
+				"name" : "Analytical Tools",
+				"label" : "Analytical Tools",
+				"version" : "1.3",
+				"uri" : "widgets/Drawer/Widget",
+				"config" : "widgets/Drawer/config.json"
+			},{
+				"position" : {
+					"left" : 695,
+					"top" : -40,
+					"width" : 425,
+					"height" : 480,
+					"relativeTo" : "map"
+				},
+				"placeholderIndex" : 1,
+				"id" : "widgets_EcatTools_35",
+				"name" : "ECAT",
+				"label" : "EnviroAtlas Change Analysis Tool (ECAT)",
+				"version" : "1.3",
+				"uri" : "widgets/ECAT/Widget",
+				"config" : "widgets/ECAT/config.json"
+			},{
+				"position" : {
+					"left" : 645,
+					"top" : -40,
+					"width" : 380,
+					"height" : 410,
+					"relativeTo" : "map"
+				},
+				"placeholderIndex" : 1,
+				"id" : "widgets_Raindrop_28",
+				"name" : "Raindrop",
+				"label" : "Raindrop",
+				"version" : "1.3",
+				"uri" : "widgets/Raindrop/Widget",
+				"config" : "widgets/Raindrop/config.json"
+			},{
+				"position" : {
+				  "left" : 695,
 				  "top" : -40,
 				  "width" : 380,
 				  "height" : 410,
@@ -155,20 +274,65 @@
 				"uri" : "widgets/ElevationProfile/Widget",
 				"config" : "widgets/ElevationProfile/config.json"
 			}, {
-		  		"position" : {
-				  "left" : 645,
-				  "top" : -40,
-				  "width" : 380,
-				  "height" : 410,
-				  "relativeTo" : "map"
-		  		},
-		  		"placeholderIndex" : 1,
-		  		"id" : "widgets_Raindrop_28",
-		  		"name" : "Raindrop",
-		  		"label" : "Raindrop",
-		  		"version" : "1.3",
-		  		"uri" : "widgets/Raindrop/Widget",
-		  		"config" : "widgets/Raindrop/config.json"
+				"position" : {
+					"left" : 495,
+					"top" : 5,
+					"width" : 230,
+					"height" : 185,
+					"relativeTo" : "map"
+				},
+				"placeholderIndex" : 1,
+				"id" : "widgets_DrawerAddDataTools_32",
+				"name" : "Add Data Tools",
+				"label" : "Add Data Tools",
+				"version" : "1.3",
+				"uri" : "widgets/DrawerAddDataTools/Widget",
+				"config" : "widgets/DrawerAddDataTools/config.json"
+			},{
+				"position" : {
+					"left" : 695,
+					"top" : -40,
+					"width" : 380,
+					"height" : 410,
+					"relativeTo" : "map"
+				},
+				"placeholderIndex" : 1,
+				"id" : "widgets_AddData_30",
+				"name" : "Add Data",
+				"label" : "Add Online Data",
+				"version" : "1.3",
+				"uri" : "widgets/AddData/Widget",
+				"config" : "widgets/AddData/config.json"
+			},{
+				"position" : {
+					"left" : 695,
+					"top" : -40,
+					"width" : 380,
+					"height" : 410,
+					"relativeTo" : "map"
+				},
+				"placeholderIndex" : 1,
+				"id" : "widgets_AddWebMapData_31",
+				"name" : "Add Data from Web Map",
+				"label" : "Add Data from Web Map",
+				"version" : "1.3",
+				"uri" : "widgets/AddWebMapData/Widget",
+				"config" : "widgets/AddWebMapData/config.json"
+			},{
+				"position" : {
+					"left" : 695,
+					"top" : -40,
+					"width" : 380,
+					"height" : 410,
+					"relativeTo" : "map"
+				},
+				"placeholderIndex" : 1,
+				"id" : "widgets_Addfile_28",
+				"name" : "Add File",
+				"label" : "Upload Data",
+				"version" : "1.3",
+				"uri" : "widgets/Addfile/Widget",
+				"config" : "widgets/Addfile/config.json"
 			},{
                   "position" : {
                   "left" : 0,
@@ -213,140 +377,6 @@
 		  		"label" : "Layer List",
 		  		"version" : "1.3",
 		  		"uri" : "widgets/LayerList/Widget"
-			},{
-				"position" : {
-				"left" : 645,
-				"top" : -40,
-				"width" : 380,
-				"height" : 410,
-				"relativeTo" : "map"
-				},
-				"uri" : "widgets/eDraw/Widget",
-				"version" : "1.3",
-				"id" : "widgets_DrawMeasure_Widget_36",
-				"name" : "eDraw",
-				"label" : "Draw and Measure",
-				"config" : "widgets/eDraw/config.json"
-			},{
-				"position" : {
-					"left" : 395,
-					"top" : 5,
-					"width" : 380,
-					"height" : 410,
-					"relativeTo" : "map"
-				},
-				"placeholderIndex" : 1,
-				"id" : "widgets_SaveSession_28",
-				"name" : "SaveSession",
-				"label" : "SaveSession",
-				"version" : "1.3",
-				"uri" : "widgets/SaveSession/Widget",
-				"config" : "widgets/SaveSession/config.json"
-			},{
-				"position" : {
-					"left" : 445,
-					"top" : 5,
-					"width" : 380,
-					"height" : 410,
-					"relativeTo" : "map"
-				},
-				"placeholderIndex" : 1,
-				"id" : "widgets_SelectCommunity_29",
-				"name" : "SelectCommunity",
-				"label" : "SelectCommunity",
-				"version" : "1.3",
-				"uri" : "widgets/SelectCommunity/Widget",
-				"config" : "widgets/SelectCommunity/config.json"
-			},{
-				"position" : {
-					"left" : 495,
-					"top" : 5,
-					"width" : 230,
-					"height" : 185,
-					"relativeTo" : "map"
-				},
-				"placeholderIndex" : 1,
-				"id" : "widgets_Drawer_30",
-				"name" : "Analytical Tools",
-				"label" : "Analytical Tools",
-				"version" : "1.3",
-				"uri" : "widgets/Drawer/Widget",
-				"config" : "widgets/Drawer/config.json"
-			},{
-				"position" : {
-					"left" : 545,
-					"top" : 5,
-					"width" : 230,
-					"height" : 185,
-					"relativeTo" : "map"
-				},
-				"placeholderIndex" : 1,
-				"id" : "widgets_DrawerAddDataTools_32",
-				"name" : "Add Data Tools",
-				"label" : "Add Data Tools",
-				"version" : "1.3",
-				"uri" : "widgets/DrawerAddDataTools/Widget",
-				"config" : "widgets/DrawerAddDataTools/config.json"
-			},{
-				"position" : {
-					"left" : 595,
-					"top" : 5,
-					"width" : 425,
-					"height" : 480,
-					"relativeTo" : "map"
-				},
-				"placeholderIndex" : 1,
-				"id" : "widgets_EcatTools_35",
-				"name" : "ECAT",
-				"label" : "EnviroAtlas Change Analysis Tool (ECAT)",
-				"version" : "1.3",
-				"uri" : "widgets/ECAT/Widget",
-				"config" : "widgets/ECAT/config.json"
-			},			{
-				"position" : {
-					"left" : 645,
-					"top" : -40,
-					"width" : 380,
-					"height" : 410,
-					"relativeTo" : "map"
-				},
-				"placeholderIndex" : 1,
-				"id" : "widgets_AddWebMapData_31",
-				"name" : "Add Data from Web Map",
-				"label" : "Add Data from Web Map",
-				"version" : "1.3",
-				"uri" : "widgets/AddWebMapData/Widget",
-				"config" : "widgets/AddWebMapData/config.json"
-			},{
-				"position" : {
-					"left" : 645,
-					"top" : -40,
-					"width" : 380,
-					"height" : 410,
-					"relativeTo" : "map"
-				},
-				"placeholderIndex" : 1,
-				"id" : "widgets_AddData_30",
-				"name" : "Add Data",
-				"label" : "Add Online Data",
-				"version" : "1.3",
-				"uri" : "widgets/AddData/Widget",
-				"config" : "widgets/AddData/config.json"
-			},{
-				"position" : {
-					"left" : 645,
-					"top" : -40,
-					"width" : 380,
-					"height" : 410,
-					"relativeTo" : "map"
-				},
-				"placeholderIndex" : 1,
-				"id" : "widgets_Addfile_28",
-				"name" : "Add File",
-				"label" : "Upload Data",
-				"version" : "1.3",
-				"uri" : "widgets/Addfile/Widget",
-				"config" : "widgets/Addfile/config.json"
 			},{
 				"uri" : "widgets/OverviewMap/Widget",
 				"position" : {
@@ -484,14 +514,6 @@
 				"config": "widgets/BoundaryLayer/config.json",
 				"index" : 5,
 				"id" : "widgets_BoundaryLayer_Widget"
-			}, {
-				"index" : 7,
-				"id" : "basemapGalery_25",
-				"name" : "BasemapGallery",
-				"label" : "Basemap Gallery",
-				"version" : "1.3",
-				"uri" : "widgets/eBasemapGallery/Widget",
-				"config" : "configs/eBasemapGallery/config_Enhanced Basemap Gallery.json"
 			}
 		],
 		"groups" : []
