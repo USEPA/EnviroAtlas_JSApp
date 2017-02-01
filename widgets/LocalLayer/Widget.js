@@ -63,7 +63,6 @@ define([
       });
     }; 
       var _addSelectedLayers = function(layersTobeAdded, selectedLayerNum, bUpdateLayers) {
-      	//alert("bUpdateLayers:"+ bUpdateLayers);
             var index, len;
             for (index = 0, len = layersTobeAdded.length; index < len; ++index) {
               layer = layersTobeAdded[index];
@@ -187,11 +186,9 @@ define([
                 }
 
                 var bNeedToBeAdded = false;
-                //console.log("before set DefinitionExpression: "+ "Community = '" +window.communityDic[window.communitySelected] + "'");
                 var stringArray = selectedLayerNum.split(",");
                 	for (i in stringArray) {
-                		//console.log("stringArray[i]: " + stringArray[i]);
-                		//console.log("layer.eaID.toString(): " + layer.eaID.toString());
+
 						if (((stringArray[i])==(layer.eaID.toString())) && bPopup) {
 			                if(layer.hasOwnProperty('eaLyrNum')){
 			                  lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
@@ -200,8 +197,9 @@ define([
 			                	lLayer = new FeatureLayer(layer.url , lOptions);
 			                }
 			
-			
-			                //lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
+						    dojo.connect(lLayer, "onError", function(error){
+						       alert ("There is a problem on loading layer:"+lLayer.title);
+						    });
 			                lLayer.minScale = 1155581.108577;
 			                if(layer.name){
 			                  lLayer._titleForLegend = layer.name;
@@ -230,7 +228,7 @@ define([
 							            	this._viewerMap.removeLayer(lyrTobeUpdated);
 							          	}
 							          	if(layer.tileLink){
-							          		tileLyrTobeUpdated = this._viewerMap.getLayer(window.layerIdTiledPrefix);
+							          		tileLyrTobeUpdated = this._viewerMap.getLayer(window.layerIdTiledPrefix + layer.eaID.toString());
 							          		if(tileLyrTobeUpdated){
 									       	     this._viewerMap.removeLayer(tileLyrTobeUpdated);//bji need to be modified to accomodate tile.
 									        } 
@@ -240,11 +238,14 @@ define([
 			                			lLayer.setVisibility(false);//turn off the layer when first added to map and let user to turn on	
 			                		}
 					    			if ((window.communitySelected != "") && (window.communitySelected != window.strAllCommunity)){
-										console.log("setDefinitionExpression: "  +"Community = '" +window.communityDic[window.communitySelected] + "'");
+										console.log("setDefinitionExpression: "  +"CommST = '" +window.communitySelected + "'");
 										//lLayer.setDefinitionExpression("Community = '" +window.communityDic[window.communitySelected] + "'");
 										lLayer.setDefinitionExpression("CommST = '" +window.communitySelected + "'");
 										
 									}
+								}
+								else {//National
+									lLayer.setVisibility(false);
 								}
 							}
 						
@@ -263,16 +264,14 @@ define([
 					}   
                 if (bNeedToBeAdded) {
 	                if(layer.tileLink){
-	                	//initTileLayer("http://leb.epa.gov/arcgiscache_exp/AWD_mgal/National%20Data%20-%20EnviroAtlas/_alllayers/");
-	                	initTileLayer(layer.tileLink, window.layerIdTiledPrefix );//bji need to be modified to accomodate tile.
+	                	initTileLayer(layer.tileLink, window.layerIdTiledPrefix + layer.eaID.toString());//bji need to be modified to accomodate tile.
 	                    this._viewerMap.addLayer(new myTiledMapServiceLayer());
-	                    lyrTiled = this._viewerMap.getLayer(window.layerIdTiledPrefix );//bji need to be modified to accomodate tile.
+	                    lyrTiled = this._viewerMap.getLayer(window.layerIdTiledPrefix + layer.eaID.toString());//bji need to be modified to accomodate tile.
 					    if(lyrTiled){
 				       	     lyrTiled.setOpacity(layer.opacity);
 				        } 
 	                }      
-	                //alert("community Selected: "+ communitySelected); 
-	                //alert("DefinitionExpression: "+ "Community = " +window.communityDic[communitySelected]);          
+    
 	                
                 	this._viewerMap.addLayer(lLayer);
                 }
@@ -362,7 +361,6 @@ define([
 			  //set selected community
 			  //if (data.message.indexOf(window.communitySelectMessagePrefix)) {
 			  //  	communitySelected = data.message.substring(window.communitySelectMessagePrefix.length + 1);
-				  	//alert("community: " + communitySelected);
 			  //}			  	
 			  var stringArray = data.message.split(",");
 			  if (stringArray[0] == "a") {
@@ -435,7 +433,6 @@ define([
           });
         }
 
-        //_addLayersBaseOrSelection(this.config.layers.layer);//This is removed because layers are not added on startup
         //prepare for receiving data from SimpleSearchFilter
         this.inherited(arguments);
       	this.fetchDataByName('SimpleSearchFilter');

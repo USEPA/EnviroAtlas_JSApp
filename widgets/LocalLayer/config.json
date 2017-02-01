@@ -3437,6 +3437,7 @@
                 "eaBC": "true", 
                 "type": "Feature", 
                 "eaDfsLink": "ESN/Acresofcropswithnonearbypollinatorhabitat.pdf", 
+                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Acresofpollinatedcropswithnonearbypollinatorhabitat/_alllayers/",
                 "name": "Acres of pollinated crops with no nearby pollinator habitat"
             }, 
             {
@@ -3471,6 +3472,7 @@
                 "eaScale": "NATIONAL", 
                 "type": "Feature", 
                 "eaDfsLink": "ESN/Agriculturalwateruse.pdf", 
+                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Agriculturalwateruse/_alllayers/",
                 "name": "Agricultural water use (million gallons/day)"
             }, 
             {
