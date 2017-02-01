@@ -21,8 +21,10 @@ define([
     'jimu/BaseWidget',
     'dijit/Dialog',
      'jimu/WidgetManager',
+     'jimu/PanelManager',     
      'esri/layers/FeatureLayer',
      'esri/dijit/PopupTemplate',
+     'esri/layers/ArcGISDynamicMapServiceLayer',
     'dijit/layout/ContentPane',
     'dijit/TooltipDialog'
     
@@ -34,13 +36,21 @@ define([
     BaseWidget,
     Dialog,
     WidgetManager,
+    PanelManager,
     FeatureLayer,
-    PopupTemplate) {
+    PopupTemplate,
+    ArcGISDynamicMapServiceLayer) {
 
 
 	var chkIdBoundaryDictionary = {};
 	var map;
- 	    
+	var self;
+    var showLayerListWidget = function(){
+        var widgetName = 'LayerList';
+        var widgets = self.appConfig.getConfigElementsByName(widgetName);
+        var pm = PanelManager.getInstance();
+        pm.showPanel(widgets[0]);	   	
+    }; 	    
     var _onSelectAllLayers = function() {
 		for (var key in chkIdBoundaryDictionary) {
 		  if ((chkIdBoundaryDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
@@ -163,11 +173,16 @@ define([
 						var lLayer;
 	
 		                if(layer.hasOwnProperty('eaLyrNum')){
-		                  lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
+		                  //lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
+		                  lLayer = new ArcGISDynamicMapServiceLayer(layer.url);
 		                }
 		                else {
 		                	lLayer = new FeatureLayer(layer.url , lOptions);
 		                }
+		                
+					    dojo.connect(lLayer, "onError", function(error){
+					       alert ("There is a problem on loading layer:"+lLayer.title);
+					    });		                
 	
 		                if(layer.name){
 		                  lLayer._titleForLegend = layer.name;
@@ -182,6 +197,11 @@ define([
 		                lLayer.setVisibility(false);//turn off the layer when first added to map and let user to turn on	
 	
 						map.addLayer(lLayer);
+
+						showLayerListWidget();	
+
+				
+	
 					}
 					else{
 						lyrTobeRemoved = map.getLayer(window.layerIdPrefix + this.getAttribute("id").replace("ck", ""));
@@ -195,14 +215,17 @@ define([
 
 	        this.inherited(arguments);
 	        map = this.map;
-	        dojo.byId("selectAllBoundary").checked = false;
+	        self = this;
 	        this.updateBoundaryLayers();
+	        
+	        
+	        /*dojo.byId("selectAllBoundary").checked = false;	        
 	        document.getElementById("selectAllBoundary").onclick = function() {
 				if (this.checked){
 			    	_onSelectAllLayers();
 				    
 			    }
-			};
+			};*/
     	}, 	    
 
     });

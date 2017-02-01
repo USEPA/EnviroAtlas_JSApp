@@ -517,7 +517,6 @@ define([
 				//checkbox.addEventListener('click', _updateSelectableLayer);
 				//checkbox.addEventListener('click', function() {
 				checkbox.addEventListener('change', function() {
-					//alert("topic clicked left" );
 					updateSearchBoxDataTable();
 					_updateSelectableLayer();
 					
@@ -552,7 +551,6 @@ define([
 				
 				//checkbox.addEventListener('click', function() {
 				checkbox.addEventListener('change', function() {
-					//alert("topic clicked right");
 					updateSearchBoxDataTable();
 					_updateSelectableLayer();					
 				});		
@@ -621,6 +619,7 @@ define([
 		newCheckboxCell.appendChild(label);
 		
 		checkbox.addEventListener('click', function() {
+			updateTopicToggleButton();
 			_updateSelectableLayer();
 	    });				
 		/// add National title:
@@ -646,6 +645,7 @@ define([
 		newCheckboxCell.appendChild(label);
 		
 		checkbox.addEventListener('click', function() {
+			updateTopicToggleButton();
 			_updateSelectableLayer();
         	if (!this.checked){
 				var btn = document.getElementById("butSelectOneCommunity"); 
@@ -791,6 +791,7 @@ define([
 					    	}
 					    }
 					    eaTagsWhole = eaTagsWhole.substring(0, eaTagsWhole.length - 1);						    
+					    if (eaScale	!= "") {//selectable layers should be either National or Community 
 				    	//var layerItem = {eaLyrNum: eaLyrNum, name: layerName, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole};
 				    	var layerItem = {eaLyrNum: eaLyrNum, name: layerName, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole, eaTopic:eaTopic};
 						
@@ -818,6 +819,7 @@ define([
 		               	newCell  = newRow.insertCell(3);
 						newCell.appendChild(document.createTextNode(eaTagsWhole));
 						newRow.appendChild(newCell);					
+						}//end of if (eaScale	!= "")
 					
 						//end of adding of the table for use of search text
 			    

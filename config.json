@@ -366,7 +366,7 @@
 			},{
 				"position" : {
 				  "right" : 5,
-				  "bottom" : 800,
+				  "top" : 0,
 				  "width" : 380,
 				  "height" : 600,
 				  "relativeTo" : "map"
