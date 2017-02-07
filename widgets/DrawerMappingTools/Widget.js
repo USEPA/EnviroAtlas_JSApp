@@ -44,12 +44,8 @@ function(declare, BaseWidget, WidgetManager, PanelManager, on, dom, domConstruct
       on(dom.byId(AddFileButton), "click", function(){
         var widgets = self.appConfig.getConfigElementsByName(widgetName);
         var pm = PanelManager.getInstance();
-        //console.log(widgets[0]);
-        if(widgets[0].visible){
-          pm.closePanel(widgets[0].id + "_panel");
-        }
+        
         pm.showPanel(widgets[0]);
-        pm.closePanel(self.id + "_panel");
       });
     },
 
