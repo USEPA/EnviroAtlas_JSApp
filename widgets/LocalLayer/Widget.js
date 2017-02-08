@@ -218,11 +218,15 @@ define([
 			                }
 			
 						    dojo.connect(lLayer, "onError", function(error){
-						    //   alert ("There is a problem on loading layer:"+lLayer.title);
-						    	if (!(lLayer.title in window.faildedLayerDictionary)){
+						    	if ((!(lLayer.title in window.faildedLayerDictionary)) && (!(lLayer.title in window.successLayerDictionary))){
 							  		window.faildedLayerDictionary[lLayer.title] = lLayer.title;
+							  		showDisplayLayerAddFailureWidget(lLayer.title);
 							  	}
-						    	showDisplayLayerAddFailureWidget(lLayer.title);
+						    });
+						    dojo.connect(lLayer, "onLoad", function(error){
+						    	if (!(lLayer.title in window.successLayerDictionary)){
+							  		window.successLayerDictionary[lLayer.title] = lLayer.title;
+							  	}
 						    });
 			                lLayer.minScale = 1155581.108577;
 			                if(layer.name){
@@ -235,14 +239,12 @@ define([
 			                });
 			                
 			                lLayer.id = window.layerIdPrefix + layer.eaID.toString();							
-			                //alert("added lLayer.id:" + lLayer.id)	;				
+			
 			                if(layer.hasOwnProperty('eaScale')){
 			                	if (layer.eaScale == "COMMUNITY") {
 			                		if (bUpdateLayers ==  "1") {
-			                			//alert("update layer")
 			                			lyrTobeUpdated = this._viewerMap.getLayer(window.layerIdPrefix + stringArray[i]);
 										if(lyrTobeUpdated){
-											//alert("update layer: about to remove layer")
 											if (lyrTobeUpdated.visible){
 												lLayer.setVisibility(true);
 											}
@@ -273,7 +275,6 @@ define([
 								}
 							}
 						
-							//console.log("layer.eaID: " + layer.eaID.toString());
 						    bNeedToBeAdded = true;
 			                if(layer.hasOwnProperty('eaScale')){
 			                	if (layer.eaScale == "NATIONAL") {

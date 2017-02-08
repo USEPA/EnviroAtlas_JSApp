@@ -126,6 +126,7 @@ define(["./ConfigManager",
     window.frameBeClicked = 1;
     window.communityMetadataDic = {};
     window.faildedLayerDictionary = {};
+    window.successLayerDictionary = {};
                 
     //patch for JS API 3.10
     var hasMethod = typeof cookie.getAll === 'function';
