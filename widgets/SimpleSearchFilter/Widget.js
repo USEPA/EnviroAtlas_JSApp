@@ -23,6 +23,7 @@ define([
     'esri/symbols/jsonUtils',
      'jimu/WidgetManager',
      'jimu/PanelManager',
+     'esri/geometry/Extent',
     'dijit/layout/AccordionContainer', 
     'dijit/layout/ContentPane',
     'dijit/layout/TabContainer',
@@ -43,7 +44,8 @@ define([
     Dialog,
     esriSymJsonUtils,
     WidgetManager,
-    PanelManager) {
+    PanelManager,
+    Extent) {
     	var singleLayerToBeAddedRemoved = "";
     	var bNoTopicSelected = false;
     	var communitySelected = "";
@@ -75,7 +77,18 @@ define([
 		var hashEaDescription = {};
 		var hashEaTag = {};
 		
+		var loadBookmarkHomeExtent = function(callback){   
 
+		    var xobj = new XMLHttpRequest();
+		    xobj.overrideMimeType("application/json");
+		    xobj.open('GET', 'configs/eBookmark/config_Enhanced Bookmark.json', true); 
+		    xobj.onreadystatechange = function () {
+		      if (xobj.readyState == 4 && xobj.status == "200") {
+		            callback(xobj.responseText);
+		          }
+		    };
+		    xobj.send(null);  
+		}; 	
 		var objectPropInArray = function(list, prop, val) {
 		  if (list.length > 0 ) {
 		    for (i in list) {
@@ -217,7 +230,7 @@ define([
 				}				
 				bNoTopicSelected = true;
 			}
-	   }
+	  };
 	   var showLayerListWidget = function(){
 	        var widgetName = 'LayerList';
 	        var widgets = self.appConfig.getConfigElementsByName(widgetName);
@@ -893,7 +906,21 @@ define([
 	    });
 	    this.i ++;
     },    
+    onOpen: function(){
+	  loadBookmarkHomeExtent(function(response){
+	    	var bookmarkClassified = JSON.parse(response);
 	    
+	        for (index = 0, len = bookmarkClassified.bookmarks.length; index < len; ++index) {
+	        	currentBookmarkClass = bookmarkClassified.bookmarks[index];
+	        	if (currentBookmarkClass.name == "National") {
+	        		bookmarkNational = currentBookmarkClass.items;	        		
+        			var currentExtent = bookmarkNational[0].extent;
+        			nExtent = Extent(currentExtent);
+        			self.map.setExtent(nExtent);	        		
+	        	}
+	        }
+	   });   
+    },	    
     _onRemoveLayersClick: function() {
         layersToBeRemoved = "r";
 		for (var key in chkIdDictionary) {

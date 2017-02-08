@@ -4,6 +4,8 @@ define([
  'jimu/BaseWidget',
  'jimu/ConfigManager',
  'jimu/MapManager',
+ 'jimu/WidgetManager',
+ 'jimu/PanelManager',
  'esri/urlUtils',
  'dojo/_base/array',
  'dojo/_base/query',
@@ -26,6 +28,8 @@ define([
     BaseWidget,
     ConfigManager,
     MapManager,
+    WidgetManager,
+    PanelManager,
     urlUtils,
     array,
     query,
@@ -40,6 +44,22 @@ define([
     esriBasemaps,
     PopupTemplate,
     WidgetManager) {
+    	var self;
+    	var sleep = function(ms) {
+		    var unixtime_ms = new Date().getTime();
+		    while(new Date().getTime() < unixtime_ms + ms) {}
+		}
+    	var showDisplayLayerAddFailureWidget = function(layerName){
+	        var widgetName = 'DisplayLayerAddFailure';
+	        var widgets = self.appConfig.getConfigElementsByName(widgetName);
+	        var pm = PanelManager.getInstance();
+	        pm.showPanel(widgets[0]);	  
+	        //alert("Before publish Data");
+	        //sleep(10000);
+	        self.publishData({
+		        message: layerName
+		    });
+	    }; 	
          var  initTileLayer = function (urlTiledMapService, tiledLayerId){
         	dojo.declare("myTiledMapServiceLayer", esri.layers.TiledMapServiceLayer, {
 	          constructor: function() {
@@ -198,7 +218,11 @@ define([
 			                }
 			
 						    dojo.connect(lLayer, "onError", function(error){
-						       alert ("There is a problem on loading layer:"+lLayer.title);
+						    //   alert ("There is a problem on loading layer:"+lLayer.title);
+						    	if (!(lLayer.title in window.faildedLayerDictionary)){
+							  		window.faildedLayerDictionary[lLayer.title] = lLayer.title;
+							  	}
+						    	showDisplayLayerAddFailureWidget(lLayer.title);
 						    });
 			                lLayer.minScale = 1155581.108577;
 			                if(layer.name){
@@ -426,6 +450,7 @@ define([
       startup: function () {
         this._originalWebMap = this.map.webMapResponse.itemInfo.item.id;
         this._removeAllLayersExceptBasemap();
+        self = this;
         if (this.config.useProxy) {
           urlUtils.addProxyRule({
             urlPrefix: this.config.proxyPrefix,
