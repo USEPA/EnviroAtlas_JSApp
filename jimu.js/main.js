@@ -125,6 +125,7 @@ define(["./ConfigManager",
     window.changedExtentByOtherFrameYmax = null;   
     window.frameBeClicked = 1;
     window.communityMetadataDic = {};
+    window.faildedLayerDictionary = {};
                 
     //patch for JS API 3.10
     var hasMethod = typeof cookie.getAll === 'function';
