@@ -3424,7 +3424,7 @@
                     "Food, Fuel, and Materials - Crop Productivity"
                 ], 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer3", 
                 "eaID": 99, 
                 "eaDescription": "This map layer depicts the total acres of agricultural crops within a subwatershed (12-digit HUC) that require or would benefit from the presence of pollinators, but are without any nearby supporting habitat for 2006-2010.", 
                 "eaFFM": "true", 
@@ -3971,7 +3971,7 @@
                     "Food, Fuel, and Materials - Crop Productivity"
                 ], 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer3", 
                 "eaID": 115, 
                 "eaDescription": "This map depicts the thousands of tons of cotton that are grown annually within each subwatershed (12-digit HUC) for 2007-2010.", 
                 "eaFFM": "true", 
@@ -4100,7 +4100,7 @@
                     "Food, Fuel, and Materials - Crop Productivity"
                 ], 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer3", 
                 "eaID": 119, 
                 "eaDescription": "This map depicts the thousands of tons of fruit crops that are grown annually within each subwatershed (12-digit HUC) for 2010.", 
                 "eaFFM": "true", 
@@ -4132,7 +4132,7 @@
                     "Food, Fuel, and Materials - Crop Productivity"
                 ], 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer3", 
                 "eaID": 120, 
                 "eaDescription": "This map depicts the thousands of tons of major grain crops that are grown annually within each subwatershed (12-digit HUC) for 2007-2010.", 
                 "eaFFM": "true", 
