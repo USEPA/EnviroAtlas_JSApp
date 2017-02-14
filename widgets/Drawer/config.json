@@ -1,4 +1,4 @@
 {
 	"configText":"Drawer",
-	"includeWidgets":["ECAT", "Raindrop", "ElevationProfile"]
+	"includeWidgets":["ECAT", "Raindrop", "ElevationProfile", "TimeSeriesViewer"]
 }

@@ -42,11 +42,16 @@ function(declare, BaseWidget, WidgetManager, PanelManager, on, dom, domConstruct
     _setWidgetOpenHandler: function(widgetName){
       var self = this;
       var AddFileButton = dom.byId('widget_' + widgetName);
+      
       on(dom.byId(AddFileButton), "click", function(){
-        var widgets = self.appConfig.getConfigElementsByName(widgetName);
-        var pm = PanelManager.getInstance();
-        //open selected widget
-        pm.showPanel(widgets[0]);
+      	if (widgetName == "TimeSeriesViewer"){
+      		window.open("https://leb.epa.gov/Projects/EnviroAtlas/CurrentDevelopment/FSViewer/index.html");
+      	} else {
+	        var widgets = self.appConfig.getConfigElementsByName(widgetName);
+	        var pm = PanelManager.getInstance();
+	        //open selected widget
+	        pm.showPanel(widgets[0]);
+       }
       });
     },
 
