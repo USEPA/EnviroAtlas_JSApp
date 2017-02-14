@@ -23,6 +23,9 @@ mapTablePath = rootpath + r"jsonfieldmap.csv"
 outputFileName = rootpath + r"config.json"
 errorLogFile = rootpath + r"errors.log"
 
+popupDictionary = {"COMMUNITY" : "Block Group ID: {GEOID10}",
+                   "NATIONAL" : "HUC 12 ID: {HUC_12}"}
+
 # Empty rows cause python problems, remove them
 def removeEmptyRows(rows):
     rowsToKeep = []
@@ -88,7 +91,7 @@ def main(_argv):
         layerJSON["name"] = name
         layerJSON["url"] = inputWorksheet.cell(key["url"]+rowID).value
         layerJSON["popup"] = {
-          "title": "HUC 12 ID: {HUC_12}",
+          "title": popupDictionary[inputWorksheet.cell(key["eaScale"]+rowID).value],
           "fieldInfos": [
             {
               "visible": "true"
@@ -101,7 +104,7 @@ def main(_argv):
         stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic"]
         for elem in stringList:
             cell = inputWorksheet.cell(key[elem]+rowID)
-            if cell.value != None: 
+            if cell.value != None:
                 cellValue = cell.value
                 if cellValue == 'x':
                     cellValue = 'true'

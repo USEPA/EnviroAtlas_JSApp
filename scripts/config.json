@@ -26,7 +26,7 @@
                             "label": "Acute respiratory symptoms avoided due to particulate matter [PM2.5] removed by tree cover (cases/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Health and Economic Outcomes"
@@ -61,7 +61,7 @@
                             "label": "Agricultural land per capita (m2/person)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Type", 
@@ -95,7 +95,7 @@
                             "label": "Asthma exacerbation avoided due to nitrogen dioxide removed by tree cover (cases/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Health and Economic Outcomes"
@@ -130,7 +130,7 @@
                             "label": "Asthma exacerbation avoided due to sulfur dioxide removed by tree cover (cases/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Health and Economic Outcomes"
@@ -165,7 +165,7 @@
                             "label": "Average reduction in daytime ambient temperature (Celsius)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -199,7 +199,7 @@
                             "label": "Average reduction in nighttime ambient temperature (Celsius)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -233,7 +233,7 @@
                             "label": "Carbon monoxide removed annually by tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Pollutant and Runoff Reduction", 
@@ -267,7 +267,7 @@
                             "label": "Daily domestic water use (x1000 gal/day)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Water Use"
@@ -303,7 +303,7 @@
                             "label": "Day care centers with < 25 percent green space in viewshed\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaRCA": "true", 
                 "autorefresh": 0, 
@@ -338,7 +338,7 @@
                             "label": "Green space per capita (m2/person)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -372,7 +372,7 @@
                             "label": "Impervious area per capita (m2/person)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -410,7 +410,7 @@
                             "label": "K-12 schools with < 25 percent green space in viewshed\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaRCA": "true", 
                 "autorefresh": 0, 
@@ -445,7 +445,7 @@
                             "label": "Nitrogen dioxide removed annually by tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Pollutant and Runoff Reduction", 
@@ -481,7 +481,7 @@
                             "label": "Number of historic places [census block group]"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaRCA": "true", 
                 "autorefresh": 0, 
@@ -513,7 +513,7 @@
                             "label": "Ozone removed annually by tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Pollutant and Runoff Reduction", 
@@ -547,7 +547,7 @@
                             "label": "Particulate matter [PM10] removed annually by tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Pollutant and Runoff Reduction", 
@@ -581,7 +581,7 @@
                             "label": "Particulate matter [PM2.5] removed annually by tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Pollutant and Runoff Reduction", 
@@ -615,7 +615,7 @@
                             "label": "Percent agriculture\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -649,7 +649,7 @@
                             "label": "Percent carbon monoxide removed annually by tree cover"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Pollutant and Runoff Reduction", 
@@ -683,7 +683,7 @@
                             "label": "Percent green space\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -725,7 +725,7 @@
                             "label": "Percent impervious area [census block group]"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Type", 
@@ -759,7 +759,7 @@
                             "label": "Percent impervious area in 15m stream and lake buffer\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -797,7 +797,7 @@
                             "label": "Percent impervious area in 50m stream and lake buffer\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -835,7 +835,7 @@
                             "label": "Percent land area in 15m stream and lake buffer\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -873,7 +873,7 @@
                             "label": "Percent land area in 50m stream and lake buffer\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -911,7 +911,7 @@
                             "label": "Percent nitrogen dioxide removed annually by tree cover"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Pollutant and Runoff Reduction", 
@@ -947,7 +947,7 @@
                             "label": "Percent of busy roadway bordered by < 25 percent tree buffer\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaRCA": "true", 
                 "autorefresh": 0, 
@@ -981,7 +981,7 @@
                             "label": "Percent of busy roadway bordered by > 25 percent tree buffer\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaRCA": "true", 
                 "autorefresh": 0, 
@@ -1015,7 +1015,7 @@
                             "label": "Percent of residential population not within 500m of a park entrance\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaRCA": "true", 
                 "autorefresh": 0, 
@@ -1047,7 +1047,7 @@
                             "label": "Percent of residential population with minimal views of trees\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaRCA": "true", 
                 "autorefresh": 0, 
@@ -1082,7 +1082,7 @@
                             "label": "Percent of residential population with views of water\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaRCA": "true", 
                 "autorefresh": 0, 
@@ -1117,7 +1117,7 @@
                             "label": "Percent of residential population within 300m of busy roadway\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Near-Road Environments"
@@ -1149,7 +1149,7 @@
                             "label": "Percent of residential population within 500m of a park entrance\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaRCA": "true", 
                 "autorefresh": 0, 
@@ -1181,7 +1181,7 @@
                             "label": "Percent ozone removed annually by tree cover"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Pollutant and Runoff Reduction", 
@@ -1215,7 +1215,7 @@
                             "label": "Percent particulate matter [PM10] removed annually by tree cover"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Pollutant and Runoff Reduction", 
@@ -1249,7 +1249,7 @@
                             "label": "Percent particulate matter [PM2.5] removed annually by tree cover"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Pollutant and Runoff Reduction", 
@@ -1283,7 +1283,7 @@
                             "label": "Percent reduction in annual runoff\u00a0due to tree cover"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -1317,7 +1317,7 @@
                             "label": "Percent sulfur dioxide removed annually by tree cover"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Pollutant and Runoff Reduction", 
@@ -1361,7 +1361,7 @@
                             "label": "Percent tree cover"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Type", 
@@ -1395,7 +1395,7 @@
                             "label": "Percent tree cover in 15m stream and lake buffer\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -1433,7 +1433,7 @@
                             "label": "Percent tree cover in 50m stream and lake buffer\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -1471,7 +1471,7 @@
                             "label": "Percent vegetated cover in 15m stream and lake buffer\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -1509,7 +1509,7 @@
                             "label": "Percent vegetated cover in 50m stream and lake buffer\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -1555,7 +1555,7 @@
                             "label": "Percent wetlands\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaMetric": "metric", 
                 "eaBCSDD": [
@@ -1587,7 +1587,7 @@
                             "label": "Reduction in annual runoff due to tree cover (m3/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -1621,7 +1621,7 @@
                             "label": "Reduction in mean biochemical oxygen demand [BOD5] due to tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction"
@@ -1653,7 +1653,7 @@
                             "label": "Reduction in mean chemical oxygen demand [COD] due to tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction"
@@ -1685,7 +1685,7 @@
                             "label": "Reduction in mean load of copper due to tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction"
@@ -1717,7 +1717,7 @@
                             "label": "Reduction in mean load of nitrites and nitrates due to tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction"
@@ -1749,7 +1749,7 @@
                             "label": "Reduction in mean load of soluble phosphorus due to tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction"
@@ -1781,7 +1781,7 @@
                             "label": "Reduction in mean load of total Kjeldahl nitrogen [TKN] due to tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction"
@@ -1813,7 +1813,7 @@
                             "label": "Reduction in mean load of total phosphorus due to tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction"
@@ -1845,7 +1845,7 @@
                             "label": "Reduction in mean load of total suspended solids [TSS] due to tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -1879,7 +1879,7 @@
                             "label": "Reduction in median biochemical oxygen demand [BOD5] due to tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction"
@@ -1911,7 +1911,7 @@
                             "label": "Reduction in median chemical oxygen demand [COD] due to tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction"
@@ -1943,7 +1943,7 @@
                             "label": "Reduction in median load of copper due to tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction"
@@ -1975,7 +1975,7 @@
                             "label": "Reduction in median load of nitrites and nitrates due to tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction"
@@ -2007,7 +2007,7 @@
                             "label": "Reduction in median load of soluble phosphorus due to tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction"
@@ -2039,7 +2039,7 @@
                             "label": "Reduction in median load of total Kjeldahl nitrogen [TKN] due to tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction"
@@ -2071,7 +2071,7 @@
                             "label": "Reduction in median load of total phosphorus due to tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction"
@@ -2103,7 +2103,7 @@
                             "label": "Reduction in median load of total suspended solids [TSS] due to tree cover (kg/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -2137,7 +2137,7 @@
                             "label": "Residential population not within 500m of a park entrance\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaRCA": "true", 
                 "autorefresh": 0, 
@@ -2169,7 +2169,7 @@
                             "label": "Residential population with minimal views of trees\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaRCA": "true", 
                 "autorefresh": 0, 
@@ -2204,7 +2204,7 @@
                             "label": "Residential population with views of water\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaRCA": "true", 
                 "autorefresh": 0, 
@@ -2239,7 +2239,7 @@
                             "label": "Residential population within 300m of busy roadway"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Near-Road Environments"
@@ -2271,7 +2271,7 @@
                             "label": "Residential population within 300m of busy roadway with < 25 percent tree buffer\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Near-Road Environments"
@@ -2303,7 +2303,7 @@
                             "label": "Residential population within 300m of busy roadway with > 25 percent tree buffer\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Near-Road Environments"
@@ -2335,7 +2335,7 @@
                             "label": "Residential population within 500m of a park entrance\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaRCA": "true", 
                 "autorefresh": 0, 
@@ -2367,7 +2367,7 @@
                             "label": "School days not lost to illness due to ozone removed by tree cover (days/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Health and Economic Outcomes"
@@ -2402,7 +2402,7 @@
                             "label": "Sulfur dioxide (kg/yr) removed annually by tree cover"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Pollutant and Runoff Reduction", 
@@ -2438,7 +2438,7 @@
                             "label": "Total carbon sequestered by tree cover (mt/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Climate Stabilization - Carbon Storage"
@@ -2470,7 +2470,7 @@
                             "label": "Total carbon stored by tree cover (mt)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Climate Stabilization - Carbon Storage"
@@ -2502,7 +2502,7 @@
                             "label": "Total land area in 15m stream and lake buffer (m2)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -2540,7 +2540,7 @@
                             "label": "Total land area in 50m stream and lake buffer (m2)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -2586,7 +2586,7 @@
                             "label": "Tree cover per capita (m2/person)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaMetric": "metric", 
                 "eaBCSDD": [
@@ -2618,7 +2618,7 @@
                             "label": "Value of asthma exacerbation cases avoided due to nitrogen dioxide removed by tree cover ($/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Health and Economic Outcomes"
@@ -2653,7 +2653,7 @@
                             "label": "Value of asthma exacerbation cases avoided due to sulfur dioxide removed by tree cover ($/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Health and Economic Outcomes"
@@ -2688,7 +2688,7 @@
                             "label": "Value of carbon sequestered by tree cover ($/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Climate Stabilization - Carbon Storage"
@@ -2720,7 +2720,7 @@
                             "label": "Value of carbon stored by tree cover ($)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Climate Stabilization - Carbon Storage"
@@ -2752,7 +2752,7 @@
                             "label": "Value of health, ecosystem, and materials damage avoided due to carbon monoxide removed by tree cover ($/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Health and Economic Outcomes"
@@ -2784,7 +2784,7 @@
                             "label": "Value of health, ecosystem, and materials damage avoided due to particulate matter [PM10] removed by tree cover ($/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Health and Economic Outcomes"
@@ -2816,7 +2816,7 @@
                             "label": "Value of hospital admissions avoided due to nitrogen dioxide removed by tree cover ($/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Health and Economic Outcomes"
@@ -2851,7 +2851,7 @@
                             "label": "Value of hospital admissions avoided due to sulfur dioxide removed by tree cover ($/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Health and Economic Outcomes"
@@ -2886,7 +2886,7 @@
                             "label": "Value of school days not lost to illness due to ozone removed by tree cover ($/yr)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Clean Air - Health and Economic Outcomes"
@@ -2929,7 +2929,7 @@
                             "label": "Land cover (Community)"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaFFM": "true", 
                 "eaBCSDD": [
@@ -2965,7 +2965,7 @@
                             "label": "Tree cover configuration and connectivity (Community)"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaRCA": "true", 
                 "autorefresh": 0, 
@@ -2999,7 +2999,7 @@
                             "label": "Estimated percent of tree cover within 26m of a road edge"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaRCA": "true", 
                 "autorefresh": 0, 
@@ -3033,7 +3033,7 @@
                             "label": "Estimated tree cover in 15m stream and lake buffer (percent)"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -3071,7 +3071,7 @@
                             "label": "Estimated tree cover in 50m stream and lake buffer (percent)"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -3109,7 +3109,7 @@
                             "label": "Estimated vegetated cover in 15m stream and lake buffer (percent)"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -3147,7 +3147,7 @@
                             "label": "Estimated vegetated cover in 50m stream and lake buffer (percent)"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -3185,7 +3185,7 @@
                             "label": "Estimated walking distance to a park entrance (m)"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaRCA": "true", 
                 "autorefresh": 0, 
@@ -3225,7 +3225,7 @@
                             "label": "Percent green space along walkable roads"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Near-Road Environments", 
@@ -3259,7 +3259,7 @@
                             "label": "Percent green space within 1/4 square kilometer"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
@@ -3305,7 +3305,7 @@
                             "label": "Percent impervious area within 1 square kilometer"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Type", 
@@ -3347,7 +3347,7 @@
                             "label": "Percent tree cover along walkable roads"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Near-Road Environments", 
@@ -10232,27 +10232,6 @@
                 "eaScale": "NATIONAL", 
                 "type": "Feature", 
                 "name": "Enabling Conditions - National-scale"
-            }, 
-            {
-                "opacity": 0.5, 
-                "popup": {
-                    "showAttachments": "false", 
-                    "fieldInfos": [
-                        {
-                            "visible": "true", 
-                            "fieldName": null, 
-                            "label": null
-                        }
-                    ], 
-                    "title": "HUC 12 ID: {HUC_12}"
-                }, 
-                "autorefresh": 0, 
-                "url": null, 
-                "eaID": 306, 
-                "visible": "false", 
-                "mode": "ondemand", 
-                "type": "Feature", 
-                "name": null
             }
         ]
     }
