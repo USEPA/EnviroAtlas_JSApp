@@ -218,7 +218,7 @@
 					"left" : 445,
 					"top" : 5,
 					"width" : 325,
-					"height" : 185,
+					"height" : 225,
 					"relativeTo" : "map"
 				},
 				"placeholderIndex" : 1,
@@ -243,6 +243,21 @@
 				"version" : "1.3",
 				"uri" : "widgets/ECAT/Widget",
 				"config" : "widgets/ECAT/config.json"
+			},{
+				"position" : {
+					"left" : 695,
+					"top" : -40,
+					"width" : 425,
+					"height" : 480,
+					"relativeTo" : "map"
+				},
+				"placeholderIndex" : 1,
+				"id" : "widgets_TimeSeriesViewer_35",
+				"name" : "TimeSeriesViewer",
+				"label" : "Time Series Viewer",
+				"version" : "1.3",
+				"uri" : "widgets/TimeSeriesViewer/Widget",
+				"config" : "widgets/TimeSeriesViewer/config.json"
 			},{
 				"position" : {
 					"left" : 645,
@@ -278,7 +293,7 @@
 					"left" : 495,
 					"top" : 5,
 					"width" : 230,
-					"height" : 185,
+					"height" : 225,
 					"relativeTo" : "map"
 				},
 				"placeholderIndex" : 1,
@@ -318,6 +333,21 @@
 				"version" : "1.3",
 				"uri" : "widgets/AddWebMapData/Widget",
 				"config" : "widgets/AddWebMapData/config.json"
+			},{
+				"position" : {
+					"left" : 695,
+					"top" : -40,
+					"width" : 380,
+					"height" : 410,
+					"relativeTo" : "map"
+				},
+				"placeholderIndex" : 1,
+				"id" : "widgets_DisplayLayerAddFailure_Widget_17",
+				"name" : "Failed Layers",
+				"label" : "Failed Layers",
+				"version" : "1.3",
+				"uri" : "widgets/DisplayLayerAddFailure/Widget",
+				"config" : "widgets/DisplayLayerAddFailure/config.json"
 			},{
 				"position" : {
 					"left" : 695,
@@ -377,20 +407,6 @@
 		  		"label" : "Layer List",
 		  		"version" : "1.3",
 		  		"uri" : "widgets/LayerList/Widget"
-			},{
-				"position" : {
-				  "right" : 5,
-				  "bottom" : 100,
-				  "width" : 380,
-				  "height" : 400,
-				  "relativeTo" : "map"
-		  		},
-		  		"placeholderIndex" : 1,
-		  		"id" : "widgets_DisplayLayerAddFailure_Widget_17",
-		  		"name" : "Failed Layers",
-		  		"label" : "Failed Layers",
-		  		"version" : "1.3",
-		  		"uri" : "widgets/DisplayLayerAddFailure/Widget"
 			},{
 				"uri" : "widgets/OverviewMap/Widget",
 				"position" : {
