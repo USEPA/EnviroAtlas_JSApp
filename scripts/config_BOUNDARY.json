@@ -2,138 +2,86 @@
     "layers": {
         "layer": [
             {
-                "opacity": 0.5, 
-                "eaTopic": "Boundaries", 
-                "popup": {
-                    "showAttachments": "false", 
-                    "fieldInfos": [
-                        {
-                            "visible": "true", 
-                            "fieldName": null, 
-                            "label": "States, County, and Census Block Groups"
-                        }
-                    ], 
-                    "title": "HUC 12 ID: {HUC_12}"
-                }, 
-                "autorefresh": 0, 
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Reference_Boundaries/MapServer", 
-                "eaID": 902, 
-                "eaPBS": "Boundaries", 
-                "visible": "false", 
-                "eaMetric": "boundary", 
-                "eaLyrNum": " ", 
-                "mode": "ondemand", 
-                "eaScale": "NATIONAL", 
-                "type": "Feature", 
-                "name": "States, County, and Census Block Groups"
-            }, 
+                "visible": "false",
+                "autorefresh": 0,
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Reference_Boundaries/MapServer",
+                "eaMetric": "boundary",
+                "type": "Feature",
+                "eaDescription": "Census boundaries for States, Counties, and Census Block Groups",
+                "eaID": 902,
+                "eaScale": "NATIONAL",
+                "opacity": 0.5,
+                "eaPBS": "Boundaries",
+                "mode": "ondemand",
+                "name": "States, County, and Census Block Group boundaries",
+                "eaLyrNum": " ",
+                "eaTopic": "Boundaries"
+            },
             {
-                "opacity": 0.5, 
-                "eaTopic": "Boundaries", 
-                "popup": {
-                    "showAttachments": "false", 
-                    "fieldInfos": [
-                        {
-                            "visible": "true", 
-                            "fieldName": null, 
-                            "label": "Congressional Districts"
-                        }
-                    ], 
-                    "title": "HUC 12 ID: {HUC_12}"
-                }, 
-                "autorefresh": 0, 
-                "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/CongressionalDistricts/MapServer", 
-                "eaID": 903, 
-                "eaDescription": "(service and 4 layers)", 
-                "eaPBS": "Boundaries", 
-                "visible": "false", 
-                "eaMetric": "boundary", 
-                "eaLyrNum": " ", 
-                "mode": "ondemand", 
-                "eaScale": "NATIONAL", 
-                "type": "Feature", 
-                "name": "Congressional Districts"
-            }, 
+                "visible": "false",
+                "autorefresh": 0,
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/EPA_Regions/MapServer",
+                "eaMetric": "boundary",
+                "type": "Feature",
+                "eaDescription": "US EPA Regions",
+                "eaID": 903,
+                "eaScale": "NATIONAL",
+                "opacity": 0.5,
+                "eaPBS": "Boundaries",
+                "mode": "ondemand",
+                "name": "USEPA Regions",
+                "eaLyrNum": "  ",
+                "eaTopic": "Boundaries"
+            },
             {
-                "opacity": 0.5, 
-                "eaTopic": "Boundaries", 
-                "popup": {
-                    "showAttachments": "false", 
-                    "fieldInfos": [
-                        {
-                            "visible": "true", 
-                            "fieldName": "The EnviroAtlas boundary for the each Community area was determined using the 2010 Census definition of an Urban Area.", 
-                            "label": "EnviroAtlas Community Boundaries"
-                        }
-                    ], 
-                    "title": "HUC 12 ID: {HUC_12}"
-                }, 
-                "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Community_Boundaries/MapServer", 
-                "eaID": 904, 
-                "eaDescription": "EnviroAtlas Communities and vicinities - listed by community", 
-                "visible": "false", 
-                "eaPBS": "Boundaries", 
-                "eaLyrNum": " ", 
-                "mode": "ondemand", 
-                "eaScale": "NATIONAL", 
-                "type": "Feature", 
-                "eaDfsLink": "Supplemental/CommunityVicinity.pdf", 
-                "name": "EnviroAtlas Community Boundaries"
-            }, 
+                "visible": "false",
+                "autorefresh": 0,
+                "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/CongressionalDistricts/MapServer",
+                "eaMetric": "boundary",
+                "type": "Feature",
+                "eaDescription": "114th Congressional District boundaries and labels",
+                "eaID": 904,
+                "eaScale": "NATIONAL",
+                "opacity": 0.5,
+                "eaPBS": "Boundaries",
+                "mode": "ondemand",
+                "name": "Congressional District boundaries and labels",
+                "eaLyrNum": " ",
+                "eaTopic": "Boundaries"
+            },
             {
-                "opacity": 0.5, 
-                "eaTopic": "Boundaries", 
-                "popup": {
-                    "showAttachments": "false", 
-                    "fieldInfos": [
-                        {
-                            "visible": "true", 
-                            "fieldName": null, 
-                            "label": "NHD Plus V2 features"
-                        }
-                    ], 
-                    "title": "HUC 12 ID: {HUC_12}"
-                }, 
-                "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/NHDPlusV21_EA/MapServer", 
-                "eaID": 905, 
-                "eaDfsLink": "Supplemental/NationalHydrographyDataset.pdf", 
-                "eaPBS": "Boundaries", 
-                "visible": "false", 
-                "eaMetric": "boundary", 
-                "eaLyrNum": " ", 
-                "mode": "ondemand", 
-                "eaScale": "NATIONAL", 
-                "type": "Feature", 
-                "name": "NHD Plus V2 features"
-            }, 
+                "eaDfsLink": "Supplemental/HUC.pdf",
+                "visible": "false",
+                "autorefresh": 0,
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/HydrologicUnits/MapServer",
+                "eaMetric": "boundary",
+                "type": "Feature",
+                "eaDescription": "NHDPlus V2 Hydrologic Unit Code boundaries and labels",
+                "eaID": 905,
+                "eaScale": "NATIONAL",
+                "opacity": 0.5,
+                "eaPBS": "Boundaries",
+                "mode": "ondemand",
+                "name": "Hydrologic Unit Code (HUC) Boundaries and labels",
+                "eaLyrNum": " ",
+                "eaTopic": "Boundaries"
+            },
             {
-                "opacity": 0.5, 
-                "eaTopic": "Boundaries", 
-                "popup": {
-                    "showAttachments": "false", 
-                    "fieldInfos": [
-                        {
-                            "visible": "true", 
-                            "fieldName": null, 
-                            "label": "HUC Boundaries and labels"
-                        }
-                    ], 
-                    "title": "HUC 12 ID: {HUC_12}"
-                }, 
-                "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Other/HydrologicUnits/MapServer", 
-                "eaID": 906, 
-                "eaDfsLink": "Supplemental/HUC.pdf", 
-                "eaPBS": "Boundaries", 
-                "visible": "false", 
-                "eaMetric": "boundary", 
-                "eaLyrNum": " ", 
-                "mode": "ondemand", 
-                "eaScale": "NATIONAL", 
-                "type": "Feature", 
-                "name": "HUC Boundaries and labels"
+                "eaDfsLink": "Supplemental/NationalHydrographyDataset.pdf",
+                "visible": "false",
+                "autorefresh": 0,
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/NHDPlusV21_EA/MapServer",
+                "eaMetric": "boundary",
+                "type": "Feature",
+                "eaDescription": "NHDPlus V2 features",
+                "eaID": 906,
+                "eaScale": "NATIONAL",
+                "opacity": 0.5,
+                "eaPBS": "Boundaries",
+                "mode": "ondemand",
+                "name": "NHD Plus V2 features",
+                "eaLyrNum": " ",
+                "eaTopic": "Boundaries"
             }
         ]
     }
