@@ -76,17 +76,6 @@ def main(_argv):
             name = inputWorksheet.cell(key["name"]+rowID).value
             layerJSON["name"] = name
             layerJSON["url"] = inputWorksheet.cell(key["url"]+rowID).value
-            layerJSON["popup"] = {
-              "title": "HUC 12 ID: {HUC_12}",
-              "fieldInfos": [
-                {
-                  "visible": "true"
-                }
-              ],
-              "showAttachments": "false"
-            }
-            layerJSON["popup"]["fieldInfos"][0]["fieldName"] = inputWorksheet.cell(key["fieldName"]+rowID).value
-            layerJSON["popup"]["fieldInfos"][0]["label"] = name
             stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic"]
             for elem in stringList:
                 cellValue = inputWorksheet.cell(key[elem]+rowID).value
