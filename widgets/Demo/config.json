@@ -1,0 +1,13 @@
+{
+	"configText":"abcdefg",
+	"tour":[{
+		"node":"dijit__WidgetBase_0",
+		"content": "<p>Pick a BaseMap"
+	},{
+		"node":"dijit__WidgetBase_1",
+		"content": "<p>Select a community to look at"
+	},{
+		"node":"dijit__WidgetBase_2",
+		"content": "<p>Cool Mapping Tools!"
+	}]
+}
