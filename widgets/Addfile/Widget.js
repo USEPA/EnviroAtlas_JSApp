@@ -81,8 +81,7 @@ define([
                         pm.closePanel(widgets[0].id + "_panel");
                     }
                     pm.showPanel(widgets[0]);
-
-                    console.log("Finally working");
+                    
                 });
 
                 //this._initTabContainer();
