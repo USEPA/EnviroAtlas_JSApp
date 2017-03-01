@@ -21,6 +21,8 @@ define([
         'esri/geometry/Point',
         'esri/geometry/Multipoint',
         'jimu/dijit/RadioBtn',
+        'jimu/WidgetManager',
+        'jimu/PanelManager',
     ],
     function (declare,
               BaseWidget,
@@ -43,7 +45,9 @@ define([
               webMercatorUtils,
               Point,
               Multipoint,
-              RadioBtn) {
+              RadioBtn,
+              WidgetManager,
+              PanelManager) {
 
             var latFieldStrings = ["lat", "latitude", "y", "ycenter"];
             var longFieldStrings = ["lon", "long", "longitude", "x", "xcenter"];
@@ -64,6 +68,23 @@ define([
             startup: function () {
                 this.inherited(arguments);
                 thisWidget = this;
+
+                on(dom.byId("addfileHelp"), "click", function(){
+                    //console.log(thisWidget);
+                    thisWidget.publishData({
+                        message: "Help"
+                    }, true);
+
+                    var widgets = thisWidget.appConfig.getConfigElementsByName('Demo');
+                    var pm = PanelManager.getInstance();
+                    if(widgets[0].visible){
+                        pm.closePanel(widgets[0].id + "_panel");
+                    }
+                    pm.showPanel(widgets[0]);
+
+                    console.log("Finally working");
+                });
+
                 //this._initTabContainer();
 
                 on(this.uploadForm, "change", lang.hitch(this, function (event) {
