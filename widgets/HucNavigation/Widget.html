@@ -1,0 +1,84 @@
+	<div>
+		<div>Select Up or Down Stream</div>
+		<table id="upOrDown">
+			<tr clsss="space">
+				<td>
+					<input class="jimu-radio" type="radio" name="upOrDown" value="Up" data-dojo-attach-point="upOrDown" checked="true"/>
+				</td>
+				<td>
+					<label>Up</label>
+				</td>
+				<td>
+					<label>&nbsp;&nbsp;&nbsp;</label>
+				</td>
+				<td>
+					<input class="jimu-radio" type="radio" name="upOrDown" value="Down" data-dojo-attach-point="upOrDown"/>
+				</td>
+				<td>
+					<label>Down</label>
+				</td>
+			</tr>
+		</table>
+		<hr style="margin: 2px 0;visibility:hidden;">	
+		<div>Distance or Time of Travel</div>
+		<table id="distOrTime">
+			<tr clsss="space">
+				<td>
+					<input class="jimu-radio" type="radio" name="distOrTime" value="Dist" data-dojo-attach-point="distOrTime" checked="true"/>
+				</td>
+				<td>
+					<label>DIST</label>
+				</td>
+				<td>
+					<label>&nbsp;&nbsp;&nbsp;</label>
+				</td>
+				<td>
+					<input class="jimu-radio" type="radio" name="distOrTime" value="Time" data-dojo-attach-point="distOrTime"/>
+				</td>
+				<td>
+					<label>TIME</label>
+				</td>
+			</tr>
+		</table>	
+		<hr style="margin: 2px 0;visibility:hidden;">		
+		<div>Distance (km)</div>
+		<hr style="margin: 2px 0;visibility:hidden;">
+		0<input type="range" id="distanceHUC" name="distance" id="distance" value="50" min="0" max="250" style="width:200px;">250
+		
+		<hr style="margin: 3px 0;visibility:hidden;">
+		
+		<div>Maximum number of 12-digit HUCs</div>
+		<hr style="margin: 2px 0;visibility:hidden;">
+		0<input type="range" id="numberOfHUCs" name="distance" id="distance" value="50" min="0" max="100" style="width:200px;">100	
+			
+		<hr style="margin: 6px 0;visibility:hidden;">	
+		
+		<div>	
+			<input type="checkbox" id="chkSaveHUC"  value=0> 
+			<label for="chkSaveHUC">Select to Save HUC Shapefile</label>
+		</div>		
+		<br>
+		<textarea id="hucQueryStatus" rows="4" cols="50" style="width:250px; height:50px;">Query Messages...</textarea> 	
+		<hr style="margin: 6px 0;visibility:hidden;">	
+		<button id="downloadHUC"  style="width:190px; display:none;" >
+		    Download HUC Shapefile
+		</button>
+		
+		<hr style="margin: 6px 0">
+		<div>
+		    <table  >
+		        <tr>
+		            <td>
+						<button id="searchPointToggle" data-dojo-type="dijit/form/ToggleButton" style="width:190px" data-dojo-props="iconClass:'dijitCheckBoxIcon', checked: false">
+						    Press and Select a Point
+						</button>
+				    </td>	
+				    
+		        	<td>
+				    	<button id="clearHUCBtn" type="button" >Clear</button> 
+					</td>   
+		    	</tr>
+			</table  >
+			
+		</div>		
+	</div>
