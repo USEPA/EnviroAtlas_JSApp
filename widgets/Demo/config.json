@@ -1,0 +1,19 @@
+{
+	"configText":"abcdefg",
+	"tour":[{
+		"node":"dijit__WidgetBase_0",
+		"content": "<p>Pick a BaseMap"
+	},{
+		"node":"dijit__WidgetBase_1",
+		"content": "<p>Select a community to look at"
+	},{
+		"node":"dijit__WidgetBase_2",
+		"content": "<p>Find Cool Mapping Tools!"
+	},{
+		"node":"dijit__WidgetBase_7",
+		"content": "<p>You can find Analytical tools here such as the ECAT, Raindrop, and Elevation Profile"
+	},{
+		"node":"dijit__WidgetBase_11",
+		"content": "<p>Here you will find tools to add your data to the map"
+	}]
+}
