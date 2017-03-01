@@ -24,6 +24,8 @@ define([
     'jimu/PanelManager',
     "jimu/SpatialReference/wkidUtils",
     'jimu/portalUrlUtils',
+    'jimu/WidgetManager',
+    'jimu/PanelManager',
     "esri/dijit/Basemap",
     "esri/dijit/BasemapLayer",
     'esri/dijit/BasemapGallery',
@@ -34,6 +36,7 @@ define([
     'esri/request',
     'dojo/on',
     'dojo/promise/all',
+    'dojo/dom',
     './utils',
     'dijit/form/HorizontalSlider',
     'dijit/form/HorizontalRuleLabels',
@@ -51,6 +54,8 @@ define([
     PanelManager,
     SRUtils,
     portalUrlUtils,
+    WidgetManager,
+    PanelManager,
     Basemap,
     BasemapLayer,
     BasemapGallery,
@@ -61,6 +66,7 @@ define([
     esriRequest,
     on,
     all,
+    dom,
     utils,
     HorizontalSlider,
     HorizontalRuleLabels,
@@ -109,6 +115,22 @@ define([
         this.own(
           aspect.before(this, 'destroy', this.beforeDestroy)
         );
+
+        thisWidget = this;
+        on(dom.byId("basemapHelp"), "click", function(){
+              console.log(thisWidget.id);
+              thisWidget.publishData({
+                  message: "Help"
+              }, true);
+
+              var widgets = thisWidget.appConfig.getConfigElementsByName('Demo');
+              var pm = PanelManager.getInstance();
+              if(widgets[0].visible){
+                  pm.closePanel(widgets[0].id + "_panel");
+              }
+              pm.showPanel(widgets[0]);
+          });
+
       },
 
       resize: function() {
