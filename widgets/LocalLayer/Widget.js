@@ -289,7 +289,13 @@ define([
 					}   
                 if (bNeedToBeAdded) {
 	                if(layer.tileLink){
-	                	initTileLayer(layer.tileLink, window.layerIdTiledPrefix + layer.eaID.toString());//bji need to be modified to accomodate tile.
+	                	var tileLinkAdjusted = "";
+	                	if (layer.tileLink.slice(-1) == "/" ) {
+	                		tileLinkAdjusted = layer.tileLink;
+	                	} else {
+	                		tileLinkAdjusted = layer.tileLink + "/";
+	                	}
+	                	initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString());//bji need to be modified to accomodate tile.
 	                    this._viewerMap.addLayer(new myTiledMapServiceLayer());
 	                    lyrTiled = this._viewerMap.getLayer(window.layerIdTiledPrefix + layer.eaID.toString());//bji need to be modified to accomodate tile.
 					    if(lyrTiled){
