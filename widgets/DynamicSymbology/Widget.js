@@ -149,9 +149,6 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 
 		  //Set layers
 		  geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
-		  //console.log("FeatureLayer: ", geoenrichedFeatureLayer.renderer);
-		  var comName = window.communityDic[window.communitySelected];
-		  geoenrichedFeatureLayer.setDefinitionExpression("Community like '%" + comName + "%'");
 
 		  featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
 
