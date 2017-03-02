@@ -76,12 +76,38 @@ define([
 		var hashLayerName = {};
 		var hashEaDescription = {};
 		var hashEaTag = {};
+		var updateSelectableLayersArea = function (){
+			    if (dijit.byId('selectionCriteria')._isShown()) {
+			    	if (navigator.userAgent.indexOf("Chrome")>=0) {
+			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 515px)"; 
+			    	} else if(navigator.userAgent.indexOf("Firefox")>=0) {
+			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 630px)"; 
+			    	} else {
+			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 530px)"; 
+			    	}
+			    	
+			    } else {
+			    	if (navigator.userAgent.indexOf("Chrome")>=0) {
+			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 125px)";
+			    	} else if(navigator.userAgent.indexOf("Firefox")>=0) {
+			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 125px)"; 
+			    	} else {
+			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 125px)";
+			    	}		    	
+	
+			    }		
+			
+		}
 		
+  		
 		var loadBookmarkHomeExtent = function(callback){   
-
+		
 		    var xobj = new XMLHttpRequest();
+		
 		    xobj.overrideMimeType("application/json");
+		
 		    xobj.open('GET', 'configs/eBookmark/config_Enhanced Bookmark.json', true); 
+		
 		    xobj.onreadystatechange = function () {
 		      if (xobj.readyState == 4 && xobj.status == "200") {
 		            callback(xobj.responseText);
@@ -237,7 +263,7 @@ define([
 	        var pm = PanelManager.getInstance();
 	        pm.showPanel(widgets[0]);	   	
 	   }
-	   
+ 	   
 	    var	_addSelectableLayerSorted = function(items){	    	
 		    for (var key in window.topicDic) {
 		        var chkboxId = window.chkTopicPrefix + window.topicDic[key];
@@ -447,6 +473,7 @@ define([
 		    });
 		  }
 		}    	
+		updateSelectableLayersArea();
 	};	   
 
 	var updateTopicToggleButton = function() {
@@ -698,28 +725,11 @@ define([
 	    this.fetchDataByName('SelectCommunity');		 
 	    this.displayCategorySelection();
 		this.displayGeographySelection();
+	
 		self = this;
 		dojo.connect(dijit.byId("selectionCriteria"), "toggle", function (){
-		    if (dijit.byId('selectionCriteria')._isShown()) {
-		    	if (navigator.userAgent.indexOf("Chrome")>=0) {
-		    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 515px)"; 
-		    	} else if(navigator.userAgent.indexOf("Firefox")>=0) {
-		    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 630px)"; 
-		    	} else {
-		    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 530px)"; 
-		    	}
-		    	
-		    } else {
-		    	if (navigator.userAgent.indexOf("Chrome")>=0) {
-		    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 125px)";
-		    	} else if(navigator.userAgent.indexOf("Firefox")>=0) {
-		    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 125px)"; 
-		    	} else {
-		    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 125px)";
-		    	}		    	
-
-		    }
-		}); 
+			updateSelectableLayersArea();
+		});
 		
         loadJSON(function(response) {
             var localLayerConfig = JSON.parse(response);
@@ -803,35 +813,35 @@ define([
 					    		eaTagsWhole = eaTagsWhole + layer.eaTags[tagsIndex] + ";";
 					    	}
 					    }
-					    eaTagsWhole = eaTagsWhole.substring(0, eaTagsWhole.length - 1);						    
+					    eaTagsWhole = eaTagsWhole.substring(0, eaTagsWhole.length - 1);			
 					    if (eaScale	!= "") {//selectable layers should be either National or Community 
-				    	//var layerItem = {eaLyrNum: eaLyrNum, name: layerName, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole};
-				    	var layerItem = {eaLyrNum: eaLyrNum, name: layerName, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole, eaTopic:eaTopic};
-						
-						layerDataStore.newItem(layerItem);
-						//add to hash map for update Search datatable column
-						hashLayerName[layer.eaID.toString()] = layerName;
-						hashEaDescription[layer.eaID.toString()] = eaDescription;
-						hashEaTag[layer.eaID.toString()] = eaTagsWhole;
-						
-						//add to the table for use of search text		
-			    	    var newRow   = tableRef.insertRow(tableRef.rows.length);
-			    	    
-		               	var newCell  = newRow.insertCell(0);
-						newCell.appendChild(document.createTextNode(eaID));
-						newRow.appendChild(newCell);
-		
-		               	newCell  = newRow.insertCell(1);
-						newCell.appendChild(document.createTextNode(layerName));
-						newRow.appendChild(newCell);			
-		       
-		               	newCell  = newRow.insertCell(2);
-						newCell.appendChild(document.createTextNode(eaDescription));
-						newRow.appendChild(newCell);
-						
-		               	newCell  = newRow.insertCell(3);
-						newCell.appendChild(document.createTextNode(eaTagsWhole));
-						newRow.appendChild(newCell);					
+					    	//var layerItem = {eaLyrNum: eaLyrNum, name: layerName, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole};
+					    	var layerItem = {eaLyrNum: eaLyrNum, name: layerName, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole, eaTopic:eaTopic};
+							
+							layerDataStore.newItem(layerItem);
+							//add to hash map for update Search datatable column
+							hashLayerName[layer.eaID.toString()] = layerName;
+							hashEaDescription[layer.eaID.toString()] = eaDescription;
+							hashEaTag[layer.eaID.toString()] = eaTagsWhole;
+							
+							//add to the table for use of search text		
+				    	    var newRow   = tableRef.insertRow(tableRef.rows.length);
+				    	    
+			               	var newCell  = newRow.insertCell(0);
+							newCell.appendChild(document.createTextNode(eaID));
+							newRow.appendChild(newCell);
+			
+			               	newCell  = newRow.insertCell(1);
+							newCell.appendChild(document.createTextNode(layerName));
+							newRow.appendChild(newCell);			
+			       
+			               	newCell  = newRow.insertCell(2);
+							newCell.appendChild(document.createTextNode(eaDescription));
+							newRow.appendChild(newCell);
+							
+			               	newCell  = newRow.insertCell(3);
+							newCell.appendChild(document.createTextNode(eaTagsWhole));
+							newRow.appendChild(newCell);					
 						}//end of if (eaScale	!= "")
 					
 						//end of adding of the table for use of search text
@@ -909,7 +919,7 @@ define([
     onOpen: function(){
 	  loadBookmarkHomeExtent(function(response){
 	    	var bookmarkClassified = JSON.parse(response);
-	    
+	
 	        for (index = 0, len = bookmarkClassified.bookmarks.length; index < len; ++index) {
 	        	currentBookmarkClass = bookmarkClassified.bookmarks[index];
 	        	if (currentBookmarkClass.name == "National") {
