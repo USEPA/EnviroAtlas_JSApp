@@ -1,5 +1,6 @@
 .jimu-main-background{
-  background-color: #2c3d4a;
+  background-color: #002137;
+  background: linear-gradient(#002137, #197ec0);
 }
 
 .TabTheme .jimu-widget-header .jimu-subtitle{
@@ -8,10 +9,17 @@
 .TabTheme .jimu-widget-header .links .jimu-link{
   color: white;
 }
+
+.jimu-widget-sidebar-controller .title-list{
+  background-color: #002137;
+  background: linear-gradient(#197ec0, #002137);
+}
 .jimu-widget-sidebar-controller .max-pane,
 .jimu-widget-sidebar-controller .tab-resizer,
 .jimu-widget-sidebar-controller .min-pane,
 .jimu-widget-sidebar-controller .other-group-pane{
+  background-color: #002137;
+  background: linear-gradient(#197ec0, #002137);
   border-style: none;
 }
 .jimu-widget-sidebar-controller .other-group-title{
@@ -22,7 +30,7 @@
 }
 .tab-widget-frame .title-label,
 .jimu-widget-sidebar-controller .content-title{
-  color: #34669a;
+  color: #002137;
 }
 .jimu-widget-sidebar-controller .other-group-pane-title .text{
   color: #fff;
@@ -35,5 +43,10 @@ background-color: #34669a;
 }
 .jimu-preload-widget-icon-panel>.jimu-panel-title{
   color: #fff;
-  background-color: #34669a;
+  background-color: #002137;
+}
+
+.jimu-on-screen-widget-panel>.jimu-panel-title{
+  background-color: #002137;
+  background: linear-gradient(#002137, #197ec0);
 }

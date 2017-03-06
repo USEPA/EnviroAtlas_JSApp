@@ -159,8 +159,8 @@ define([
 
       _setElementsSize: function() {
         html.setStyle(this.logoNode, {
-          height: '30px',
-          marginTop: ((this.height - 30) / 2) + 'px'
+          height: '41px',
+          marginTop: '0px',//((this.height - 41) / 2) + 'px'
         });
 
         html.setStyle(this.titleNode, {
