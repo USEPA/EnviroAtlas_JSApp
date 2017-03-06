@@ -16,33 +16,50 @@
 }
 
 /* biodiversity conservation */
-#biod_bw {background: url('../images/bc_icons.png') 0 0;}
-#biod {background: url('../images/bc_icons.png') -20px 0px;}
-#biod a:hover {background: url('../images/bc_icons.png') -80px 0px;}
+#biod_bw {background: url('../images/ES_Icons/bio_bw.png');
+          background-size: cover;}
+#biod {background: url('../images/ES_Icons/bio.png');
+          background-size: cover;}
 /* clean air */
-#cair_bw {background: url('../images/bc_icons.png') 0px -20px;}
-#cair {background: url('../images/bc_icons.png') -20px -20px;}
-#cair a:hover {background: url('../images/bc_icons.png') -40px -20px;}
+#cair_bw {background: url('../images/ES_Icons/air_bw.png');
+          background-size: cover;}
+#cair {background: url('../images/ES_Icons/air.png');
+          background-size: cover;}
 /* clean and plentiful water */
-#cpw_bw {background: url('../images/bc_icons.png') 0px -40px;}
-#cpw {background: url('../images/bc_icons.png') -20px -40px;}
-#cpw a:hover {background: url('../images/bc_icons.png') -40px -40px;}
+#cpw_bw {background: url('../images/ES_Icons/water_bw.png');
+          background-size: cover;}
+#cpw {background: url('../images/ES_Icons/water.png');
+          background-size: cover;}
 /* climate stabilization */
-#clim_bw {background: url('../images/bc_icons.png') 0px -60px;}
-#clim {background: url('../images/bc_icons.png') -20px -60px;}
-#clim a:hover {background: url('../images/bc_icons.png') -40px -60px;}
+#clim_bw {background: url('../images/ES_Icons/clim_bw.png');
+          background-size: cover;}
+#clim {background: url('../images/ES_Icons/clim.png');
+          background-size: cover;}
 /* food, fuel, and materials */
-#ffm_bw {background: url('../images/bc_icons.png') 0px -80px;}
-#ffm {background: url('../images/bc_icons.png') -20px -80px;}
-#ffm a:hover {background: url('../images/bc_icons.png') -40px -80px;}
+#ffm_bw {background: url('../images/ES_Icons/food_bw.png');
+          background-size: cover;}
+#ffm {background: url('../images/ES_Icons/food.png');
+          background-size: cover;}
 /* natural hazard mitigation */
-#nhm_bw {background: url('../images/bc_icons.png') 0px -100px;}
-#nhm {background: url('../images/bc_icons.png') -20px -100px;}
-#nhm a:hover {background: url('../images/bc_icons.png') -40px -100px;}
+#nhm_bw {background: url('../images/ES_Icons/haz_bw.png');
+          background-size: cover;}
+#nhm {background: url('../images/ES_Icons/haz.png');
+          background-size: cover;}
 /* recreation, culture, and aesthetics */
-#rca_bw {background: url('../images/bc_icons.png') 0px -120px;}
-#rca {background: url('../images/bc_icons.png') -20px -120px;}
-#rca a:hover {background: url('../images/bc_icons.png') -40px -120px;}
+#rca_bw {background: url('../images/ES_Icons/rec_bw.png');
+          background-size: cover;}
+#rca {background: url('../images/ES_Icons/rec.png');
+          background-size: cover;}
+#rca a:hover {background: url('../images/ES_Icons/rec.png');
+          background-size: cover;}
+
+#NATIONAL {background: url('../images/ES_Icons/nat.png');
+          background-size: cover;}
+
+#COMMUNITY {background: url('../images/ES_Icons/comm.png');
+          background-size: cover;}
+
+
 /* people and built spaces */
 #pbs_bw {background: url('../images/bc_icons.png') 0px -140px;}
 #pbs {background: url('../images/bc_icons.png') -20px -140px;}
@@ -52,12 +69,7 @@
 #sup {background: url('../images/bc_icons.png') -20px -160px;}
 #sup a:hover {background: url('../images/bc_icons.png') -40px -160px;}
 
-/*  ==========================================================*/
-/* biodiversity conservation */
-#biod_bw {background: url('../images/bc_icons.png') 0 0;}
-#biod {background: url('../images/bc_icons.png') -20px 0px;}
-#biod a:hover {background: url('../images/bc_icons.png') -80px 0px;}
-/*===================================*/
+
 #navlistSearchfilter2 {
     position: relative;
 }
@@ -141,7 +153,7 @@ input.cmn-toggle-round-flat + label:before {
   bottom: 0px;
   right: 0px;
   background-color: #d8d8d8;
-  border: 1px solid #26A146;
+  border: 1px solid #00436f;
   -webkit-border-radius: 13px;
   -moz-border-radius: 13px;
   -ms-border-radius: 13px;
@@ -158,7 +170,7 @@ input.cmn-toggle-round-flat + label:after {
   bottom: 0px;
   width: 12px;
   background-color: white;
-  border: 1px solid #26A146;
+  border: 1px solid #00436f;
   -webkit-border-radius: 13px;
   -moz-border-radius: 13px;
   -ms-border-radius: 13px;
@@ -170,7 +182,7 @@ input.cmn-toggle-round-flat + label:after {
   transition: margin 0.4s, background 0.6s;
 }
 input.cmn-toggle-round-flat:checked + label:before{
-  background-color: #26A146;
+  background-color: #00436f;
 }
 input.cmn-toggle-round-flat:checked + label:after {
   margin-left: 13px;
@@ -290,4 +302,46 @@ input.cmn-toggle-round-flat-grayedout:checked + label:after {
 	line-height: 15px;
 	padding-left: 20px;
 	margin-bottom: 5px;
+}
+
+.topicTable {
+  margin: 0px;
+  float: left; 
+  width: 50%; 
+  display:inline-block;
+}
+
+.claro .dijitContentPane{
+  padding: 2px;
+}
+
+.claro .dijitTitlePaneContentInner {
+  padding: 2px;
+  background-color: #f4f4f4;
+  /*border: 2px solid #d4d8da;*/
+
+}
+.claro .dijitTitlePaneContentOuter {
+  border: None;
+}
+
+.claro .dijitTitlePaneTitleOpen {
+  background-color: #7f9eb4;
+}
+
+.claro .dijitTitlePaneTitleHover {
+  background-color: #808A92;
+}
+
+.claro .dijitTitlePaneTitle {
+  background-color: #7f9eb4;
+}
+
+.header {
+  text-align: center;
+  z-index: 1;
+}
+
+a.esIcons {
+  text-decoration: none;
 }

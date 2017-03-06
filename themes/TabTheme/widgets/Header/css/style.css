@@ -32,6 +32,8 @@
   margin-left: 12px;
   height: 100%;
   display: inline-block;
+  color: #f4f4f4;
+  text-decoration: none;
 }
 .jimu-rtl .jimu-widget-header .links .link{
   margin-left: auto;

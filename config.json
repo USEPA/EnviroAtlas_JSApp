@@ -1,12 +1,12 @@
 {
 	"theme" : {
 		"name" : "TabTheme",
-"styles":["simpleblue","blue","default","cyan","purple","red","yellow","green"],		"version" : "1.3"
+"styles":["EnviroAtlas", "simpleblue","blue","default","cyan","purple","red","yellow","green"],		"version" : "1.3"
 	},
 	"portalUrl" : "http://epa.maps.arcgis.com",
 	"appId" : "",
-"title" : "EnviroAtlas",
-	"subtitle" : "Interactive Map of Ecosystem Services",
+"title" : " ",
+	"subtitle" : " ",
 	"logo" : "images/logo.png","geometryService":"http://utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer","links":[{"label":"Contact Us","url":"http://enviroatlas.epa.gov/enviroatlas/contactus/index.html"},{"label":"Help ","url":"http://enviroatlas.epa.gov/enviroatlas/InteractiveMapEntrance/InteractiveMap/AboutEnviroAtlas.pdf"}],	"widgetOnScreen" : {
 		"widgets" : [{
 				"uri" : "themes/TabTheme/widgets/Header/Widget",
@@ -411,7 +411,7 @@
 			},{
 				"position" : {
 				  "right" : 5,
-				  "top" : 0,
+				  "top" : 5,
 				  "width" : 380,
 				  "height" : 600,
 				  "relativeTo" : "map"

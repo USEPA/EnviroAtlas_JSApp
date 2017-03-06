@@ -72,6 +72,7 @@ define([
 		
 		var hashFactsheetLink = {};
 		var hashLayerNameLink = {};
+		var hashDescriptionforI = {};
 		
 		var hashLayerName = {};
 		var hashEaDescription = {};
@@ -221,12 +222,12 @@ define([
 
 			if (topicsBeingSelected() == true) {
 				if (bNoTopicSelected) {
-					addNewSearchBoxDataTable("Search selected topics");  					
+					addNewSearchBoxDataTable(" Search selected topics");  					
 				}
 				bNoTopicSelected = false;
 			} else {
 				if (!bNoTopicSelected) {
-	   				addNewSearchBoxDataTable("Search all layers");	
+	   				addNewSearchBoxDataTable(" Search all layers");	
 				}				
 				bNoTopicSelected = true;
 			}
@@ -249,6 +250,12 @@ define([
 		        	dicTopicSelected[window.topicDic[key]]  = false; 
 		        }
 			}
+			if (!topicsBeingSelected()) {
+				for (var key in window.topicDic) {
+					dicTopicSelected[window.topicDic[key]]  = true;
+				}
+			}
+
 			//updateTopicToggleButton();
     		var nSearchableColumns = document.getElementById('tableLyrNameDescrTag').getElementsByTagName('tr')[0].getElementsByTagName('th').length;
     		var eaIDFilteredList = [];
@@ -272,7 +279,8 @@ define([
             }
             var numOfSelectableLayers = 0;
             var totalNumOfLayers = 0;
-			var bAtLeastOneTopicSelected = topicsBeingSelected();            
+			var bAtLeastOneTopicSelected = true;//topicsBeingSelected();  
+			SelectedTopics = [];          
 	    	dojo.forEach(items, function(item) {
 	           	
 	           	var currentLayerSelectable = false;
@@ -286,19 +294,27 @@ define([
     			eaScale = layerDataStore.getValue( item, 'eaScale');
     			eaMetadata = layerDataStore.getValue( item, 'eaMetadata');
     			bSelectByScale = false;
+
+    			// make no geography selection == all geographies selected
+    			var chkNationalScale = document.getElementById("chkNational").checked;
+				var chkCommunityScale = document.getElementById("chkCommunity").checked;
+				if ((!chkNationalScale) && (!chkCommunityScale)) {
+					chkNationalScale = true;
+					chkCommunityScale = true;
+				}
+
 				switch (eaScale) {
 					case "NATIONAL":
 						totalNumOfLayers = totalNumOfLayers + 1;
 						var chkScale = document.getElementById("chkNational");
-						if(chkScale.checked == true){
+						if(chkNationalScale){
 							bSelectByScale = true;
 						}
 						break;
 					case "COMMUNITY":
-						
-						var chkScale = document.getElementById("chkCommunity");
+					
 						totalNumOfLayers = totalNumOfLayers + 1;
-						if(chkScale.checked == true){
+						if(chkCommunityScale){
 
 							if ((communitySelected == "") || (communitySelected == window.strAllCommunity)){
 							bSelectByScale = true;
@@ -339,6 +355,22 @@ define([
 			          	}                   	
                     }
 					numOfSelectableLayers = numOfSelectableLayers + 1;
+
+					//Add Header for each Topic in list
+					if (SelectedTopics.indexOf(eaTopic) == -1) {
+						SelectedTopics.push(eaTopic);
+						var newTopicHeader = tableRef.insertRow(tableRef.rows.length);
+
+						var TopicName = newTopicHeader.insertCell(0);
+						TopicName.colSpan = 3;
+						TopicName.innerHTML = eaTopic;
+						TopicName.style.borderBottom = 'thin solid black';
+						TopicName.style.paddingBottom = "2px";
+						TopicName.style.fontSize = '16px';
+						TopicName.style.fontWeight = "bold";
+						newTopicHeader.appendChild(TopicName);
+					}
+					//Finsih add header for each topic		
 
 			       	var newRow   = tableRef.insertRow(tableRef.rows.length);
 			       	//newRow.style.height = "38px";
@@ -390,6 +422,25 @@ define([
 							}
 						indexImage = indexImage + 1;
 					}
+
+					//Add Community/National Icon
+					liElem = document.createElement("li");
+					liElem.style.left = "160px";
+					liElem.style.top = "-12px";
+					aElem = document.createElement("a");
+					// For now.  Lets adjust this in the spreadsheet
+					if (eaScale == "NATIONAL") {
+						aElem.title = "National Dataset";
+					} else {
+						aElem.title = "Community Dataset";
+					}
+					//aElem.title  = eaScale;
+					liElem.appendChild(aElem);
+					ulElem.appendChild(liElem);
+					liElem.setAttribute("id", eaScale);
+					// end Add Community/National Icon
+
+
 			        photo.appendChild(ulElem);
 					newTitle.appendChild(photo);
 		        	}
@@ -429,7 +480,7 @@ define([
 				}//end of if (currentLayerSelectable)
         });	
  		dojo.byId("numOfLayers").value = " " + String(numOfSelectableLayers) + " of " + String(totalNumOfLayers) + " Maps";
-    	dojo.byId("selectAllLayers").checked = false;
+    	//dojo.byId("selectAllLayers").checked = false;
 		for (var key in chkIdDictionary) {
 			
 		  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
@@ -452,12 +503,19 @@ define([
 	var updateTopicToggleButton = function() {
 	    for (var key in window.topicDic) {
 	    	var bCurrentTopicDisabled = true;
-			var chkScale = document.getElementById("chkNational");
+	    	// If both natl/comm are off treat as both on
+	    	var chkNationalScale = document.getElementById("chkNational").checked;
+			var chkCommunityScale = document.getElementById("chkCommunity").checked;
+			if ((!chkNationalScale) && (!chkCommunityScale)) {
+				chkNationalScale = true;
+				chkCommunityScale = true;
+			}
 
-			if((document.getElementById("chkNational").checked == true) && (nationalTopicList.indexOf(key) >= 0)){
+
+			if((chkNationalScale) && (nationalTopicList.indexOf(key) >= 0)){
 				bCurrentTopicDisabled = false;
 			}
-			if((document.getElementById("chkCommunity").checked == true) && (communityTopicList.indexOf(key) >= 0)){
+			if((chkCommunityScale) && (communityTopicList.indexOf(key) >= 0)){
 				bCurrentTopicDisabled = false;
 			}
 			
@@ -467,9 +525,9 @@ define([
 		        checkbox.className ="cmn-toggle cmn-toggle-round-flat-grayedout";	
 		        checkbox.removeEventListener("click", _updateSelectableLayer);	       	
 	       } else {
-	       		if (checkbox.className == "cmn-toggle cmn-toggle-round-flat-grayedout"){
+	       		/*if (checkbox.className == "cmn-toggle cmn-toggle-round-flat-grayedout"){
 	       			checkbox.checked = false;//If the togglebutton is grayed out previously, then it should be off when it is activated
-	       		}
+	       		}*/
 		        checkbox.className ="cmn-toggle cmn-toggle-round-flat";	
 		        checkbox.addEventListener("click", _updateSelectableLayer);	     	       	
 	       }
@@ -480,7 +538,9 @@ define([
 	var	_updateSelectableLayer = function(){	
 		
 		layerDataStore.fetch({
-				sort: {attribute: 'name', descending: false},
+			//Sort by alphabetically Topic, then by Name
+				sort: [{attribute: 'eaTopic', descending: false},
+				  		{attribute: 'name', descending: false}],
 				onComplete: _addSelectableLayerSorted
 				});
 	};
@@ -498,83 +558,59 @@ define([
 
     displayCategorySelection: function() {
 		
-        var tableOfRelationship = document.getElementById('categoryTable');
-	    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];    	
-	    indexImage = 0;
+        indexImage = 0;
 	    var categoCount = 1;
 	    var newRow;
 
 	    var keys = Object.keys(window.topicDic);
 	    var half = Math.ceil((keys.length / 2));
 
-	    for (i=0; i<(keys.length / 2); i++) {
+	    for (i=0; i<keys.length; i++) {
+	    	if (i < half) {
+	    		var tableOfRelationship = document.getElementById('categoryTableL');
+	    		var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
+	    	} else {
+	    		var tableOfRelationship = document.getElementById('categoryTableR');
+	    		var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
+	    	}
 
 	    	newRow = tableRef.insertRow(tableRef.rows.length);
-			newRow.style.height = "20px";
-	           	var newCheckboxCell  = newRow.insertCell(0);
-	           	var checkbox = document.createElement('input');
-				checkbox.type = "checkbox";
+			//newRow.style.height = "18px";
+           	var newCheckboxCell  = newRow.insertCell(0);
+           	newCheckboxCell.style.paddingRight = "3px";
+
+           	var checkbox = document.createElement('input');
+			checkbox.type = "checkbox";
+			
+	        chkboxId = window.chkTopicPrefix + window.topicDic[keys[i]];
+
+			checkbox.name = chkboxId;
+			checkbox.value = 0;
+			checkbox.id = chkboxId;
+			checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+	        newCheckboxCell.appendChild(checkbox);    
+	        var label = document.createElement('label');
+	        label.setAttribute("for",chkboxId);
+			label.innerHTML = "";
+			newCheckboxCell.appendChild(label);
+
+			//checkbox.addEventListener('click', _updateSelectableLayer);
+			//checkbox.addEventListener('click', function() {
+			checkbox.addEventListener('change', function() {
+				updateSearchBoxDataTable();
+				_updateSelectableLayer();
 				
-		        chkboxId = window.chkTopicPrefix + window.topicDic[keys[i]];
-	
-				checkbox.name = chkboxId;
-				checkbox.value = 0;
-				checkbox.id = chkboxId;
-				checkbox.className ="cmn-toggle cmn-toggle-round-flat";
-		        newCheckboxCell.appendChild(checkbox);    
-		        var label = document.createElement('label');
-		        label.setAttribute("for",chkboxId);
-				label.innerHTML = "";
-				newCheckboxCell.appendChild(label);
-	
-				//checkbox.addEventListener('click', _updateSelectableLayer);
-				//checkbox.addEventListener('click', function() {
-				checkbox.addEventListener('change', function() {
-					updateSearchBoxDataTable();
-					_updateSelectableLayer();
-					
-				});
-				/// add category title:
-	           	var newTitleCell  = newRow.insertCell(1);
-	           	newTitleCell.style.width = "40%"
-	        
-				var title = document.createElement('label');
-				title.innerHTML = keys[i];    
-				//title.style.fontSize = "10px";
-				newTitleCell.appendChild(title); 
+			});
+			/// add category title:
+           	var newTitleCell  = newRow.insertCell(1);
+           	newTitleCell.style.paddingBottom = "3px";
+           	//newTitleCell.style.width = "40%"
+        
+			var title = document.createElement('label');
+			title.innerHTML = keys[i];    
+			//title.style.fontSize = "10px";
+			newTitleCell.appendChild(title); 
 	    	
-	    	if (i + half < keys.length) {
-	    	var newCheckboxCell  = newRow.insertCell(2);
-	           	var checkbox = document.createElement('input');
-				checkbox.type = "checkbox";
-				
-		        chkboxId = window.chkTopicPrefix + window.topicDic[keys[i + half]];
-	
-				checkbox.name = chkboxId;
-				checkbox.value = 0;
-				checkbox.id = chkboxId;
-				checkbox.className ="cmn-toggle cmn-toggle-round-flat";
-		        newCheckboxCell.appendChild(checkbox);    
-		        var label = document.createElement('label');
-		        label.setAttribute("for",chkboxId);
-				label.innerHTML = "";
-				newCheckboxCell.appendChild(label);
-	
-				//checkbox.addEventListener('click', _updateSelectableLayer);
-				
-				//checkbox.addEventListener('click', function() {
-				checkbox.addEventListener('change', function() {
-					updateSearchBoxDataTable();
-					_updateSelectableLayer();					
-				});		
-				/// add category title:
-	           	var newTitleCell  = newRow.insertCell(3);
-	           	newTitleCell.style.width = "40%";
-	        
-				var title = document.createElement('label');
-				title.innerHTML = keys[i + half];    
-				newTitleCell.appendChild(title); 
-	    	}
 	    }
 
 
@@ -595,7 +631,7 @@ define([
 		document.getElementById("hideIcons").onclick = function() {
 		    _updateSelectableLayer();
 		};					
-		document.getElementById("selectAllLayers").onclick = function() {
+		/*document.getElementById("selectAllLayers").onclick = function() {
 			if (this.checked){
 				showLayerListWidget();
 		    	_onSelectAllLayers();
@@ -604,7 +640,7 @@ define([
 		   		_onUnselectAllLayers();
 		   		document.getElementById('butRemAllLayers').click();
 		   }
-		};
+		};*/
 		layersToBeAdded = "a";
 	    
 
@@ -618,11 +654,12 @@ define([
 	    var newRow   = tableRef.insertRow(tableRef.rows.length);	    
        	newRow.style.height = "20px";
        	var newCheckboxCell  = newRow.insertCell(0);
+       	newCheckboxCell.style.paddingRight = "3px";
        	var checkbox = document.createElement('input');
 		checkbox.type = "checkbox";
         chkboxId = "chkNational";
 		checkbox.name = chkboxId;
-		checkbox.checked = true;
+		checkbox.checked = false;
 		checkbox.id = chkboxId;
 		checkbox.className ="cmn-toggle cmn-toggle-round-flat";
         newCheckboxCell.appendChild(checkbox);    
@@ -644,11 +681,12 @@ define([
 
 		//add Community geography to same row
        	var newCheckboxCell  = newRow.insertCell(2);
+       	newCheckboxCell.style.paddingRight = "3px";
        	var checkbox = document.createElement('input');
 		checkbox.type = "checkbox";
         chkboxId = "chkCommunity";
 		checkbox.name = chkboxId;
-		checkbox.checked = true;
+		checkbox.checked = false;
 		checkbox.id = chkboxId;
 		checkbox.className ="cmn-toggle cmn-toggle-round-flat";
         newCheckboxCell.appendChild(checkbox);    
@@ -671,7 +709,7 @@ define([
 		/// add Community title:
        	var newTitleCell  = newRow.insertCell(3);
 		var title = document.createElement('label');
-		title.innerHTML = "Community";    
+		title.innerHTML = "EnviroAtlas Communities";    
 		newTitleCell.appendChild(title); 
 		
 		var newButtonInfoCell  = newRow.insertCell(4);
@@ -842,6 +880,7 @@ define([
             }// end of for (index = 0, len = arrLayers.length; index < len; ++index) 
             updateTopicToggleButton();
             updateSearchBoxDataTable();
+            _updateSelectableLayer();
 
         });// end of loadJSON(function(response)
         loadCommunityJSON(function(response){

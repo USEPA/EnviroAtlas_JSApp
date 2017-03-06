@@ -1,120 +1,166 @@
 
-<div style="height:100%; width:100%; overflow:hidden;" dojotype="dijit.layout.ContentPane" >
-    <div class="FAQ" id= "selectionCriteria" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Filter by Geographies | Topics', open: true">
-        <div class="list">
-            <!-- <div> Geographies </div> -->
-            <table id="geographyTable" style="margin:0px 0px 10px 0px">
-                <tbody>
-                    <tr>	
-                    </tr>
-                </tbody>
-            </table>  
-            <hr style="margin: 5px 0">
-            <!-- <div > Topics </div> -->
-            <table id="categoryTable" style="margin:px 0px 10px 0px">
+<div style="height:100%; width:100%; overflow-y:scroll; background-color: #ece9eb" dojotype="dijit.layout.ContentPane" >
+    <div class="FAQ" id= "selectionCriteria">
+        <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Filter EnviroAtlas Data by Geographies | Topics', open: true">
+            <div class="list">
+                <!-- <div> Geographies </div> -->
+                <table id="geographyTable">
+                    <tbody>
+                        <tr>	
+                        </tr>
+                    </tbody>
+                </table>  
+                <hr style="width: 85%">
+                <!-- <div > Topics </div> -->
+                <table class='topicTable' id="categoryTableL">
+                    <tbody>
+                        <tr>
+
+                        </tr>
+                    </tbody>
+                </table> 
+                <table class='topicTable' id="categoryTableR">
+                    <tbody>
+                        <tr>
+
+                        </tr>
+                    </tbody>
+                </table>  
+            </div>
+        
+
+            <div id="searchboxDiv" dojotype="dijit.layout.ContentPane" style="width:100%; background-color:#f4f4f4">
+                <table id="tableLyrNameDescrTag" cellspacing="0" width="100%" style="display:none">
+                <!--table id="tableLyrNameDescrTag" cellspacing="0" width="100%"-->
+                    <thead>
+                        <tr>
+                            <th>eaLyrNum</th>
+                            <th>name</th>
+                            <th>eaDescription</th>
+                            <th>eaTags</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <br>
+        </div>
+        
+        <div id="selectableLayersContainer" dojotype="dijit.layout.ContentPane"  style="background-color: #00436f; width: 100%; height: 20px; border: 0px;padding: 2px 10px 0px 5px;margin:2px 0px -5px 0px">
+                <!-- padding:0 is good enough ; margin:0 does not work--> 
+                <input id="numOfLayers" value = "" type="text" style = "background-color: #00436f; color:white; border: none; float: left; vertical-align:center height: 14px;"/>
+                <div>
+                    <label for="hideIcons" style = "background-color: #00436f; color:white; border: none; float: right;">Hide Icons</label> 
+                    <input id="hideIcons"  type="checkbox"  style = "background-color: #4a2c3d; color:white; border: none; float: right;vertical-align:center;height: 14px;padding:2px; margin:2px" />
+
+                </div>      
+            </div>
+            <!-- <div class='header'>
+            <p style='font-size:16px; font-weight:bold'></p>
+            <div style="height:40px; text-align: center; padding-top: 4px">
+                <a class=esIcons href = "https://www.epa.gov/enviroatlas/enviroatlas-benefit-category-clean-air" target="_blank">
+                    <img src="./widgets/SimpleSearchFilter/images/ES_Icons/air.png", style="width:30px" title="Clean Air">
+                </a>
+
+                <a class=esIcons href = "https://www.epa.gov/enviroatlas/enviroatlas-benefit-category-clean-and-plentiful-water" target="_blank">
+                    <img src="./widgets/SimpleSearchFilter/images/ES_Icons/water.png", style="width:30px" title="Clean and Plentiful Water">
+                </a>
+
+                <a class=esIcons href = "https://www.epa.gov/enviroatlas/enviroatlas-benefit-category-climate-stabilization" target="_blank">
+                    <img src="./widgets/SimpleSearchFilter/images/ES_Icons/clim.png", style="width:30px" title="Climate Stabilization">
+                </a>
+
+                <a class=esIcons href = "https://www.epa.gov/enviroatlas/enviroatlas-benefit-category-natural-hazard-mitigation" target="_blank">
+                    <img src="./widgets/SimpleSearchFilter/images/ES_Icons/haz.png", style="width:30px" title = "Natural Hazard Mitigation">
+                </a>
+
+                <a class=esIcons href = "https://www.epa.gov/enviroatlas/enviroatlas-benefit-category-recreation-culture-and-aesthetics" target="_blank">
+                    <img src="./widgets/SimpleSearchFilter/images/ES_Icons/rec.png", style="width:30px" title = "Recreation, Culture, and Aesthetics">
+                </a>
+
+                <a class=esIcons href = "https://www.epa.gov/enviroatlas/enviroatlas-benefit-category-food-fuel-and-materials" target="_blank">
+                    <img src="./widgets/SimpleSearchFilter/images/ES_Icons/food.png", style="width:30px" title = "Food, Fuel, and Materials">
+                </a>
+
+                <a class=esIcons href = "https://www.epa.gov/enviroatlas/enviroatlas-benefit-category-biodiversity-conservation" target="_blank">
+                    <img src="./widgets/SimpleSearchFilter/images/ES_Icons/bio.png", style="width:30px" title = "Biodiversity Conservation">
+                </a>
+                </div>
+            </div>
+        </div> -->
+        
+        <!--input id="numOfLayers1" value = "test" type="text" style = "text-align: left; background-color: green; color:white;height = 20px; width = 100%"/-->
+        
+        <!-- <div dojotype="dijit.layout.ContentPane" style="padding: 0px 8px 0px 10px;">
+            <input id="selectAllLayers"  type="checkbox"/>
+            <label for="selectAllLayers" style="vertical-align: top"><b>Select All Layers</b></label>       
+        </div> -->
+        
+
+
+        <!--input id="numOfLayers1" value = "test" type="text" style = "text-align: left; background-color: green; color:white;height = 20px; width = 100%"/-->
+        <br/>
+        <!-- <div dojotype="dijit.layout.ContentPane" style="padding: 0px 8px 0px 10px;">
+            <input id="selectAllLayers"  type="checkbox"/>
+            <label for="selectAllLayers" style="vertical-align: top"><b>Select All Layers</b></label>			
+        </div> -->
+        <!--Removing supply/demand/driver choices from interface. Awaiting further guidance on layer filter options.-->
+        <!--div id="navcontainer" dojotype="dijit.layout.ContentPane" style="margin: 0px 8px 0px 8px; padding: 0px 0px 0px 12px; display: none;">
+            <ul id="navlistSupplyDemand">
+                <li>
+                    <a href="#">
+                        <div >
+                            <input id="Supply" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked />
+                            <label for="Supply">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Supply</label>
+                        </div>
+                    </a>
+                </li>
+                <li >
+                    <a href="#" style="padding-right: 12px;display: inline-block;list-style-type: none;">
+                        <div >
+                            <input id="Demand" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked/>
+                            <label for="Demand">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Demand</label>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <div >
+                            <input id="Driver" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked/>
+                            <label for="Driver">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Driver</label>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div >
+                            <input id="SpatiallyExplicit" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox" checked/>
+                            <label for="SpatiallyExplicit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Spatially Explicit</label>
+                        </div>
+                    </a>
+                </li>								
+            </ul>
+        </div-->
+        <div id="tableSelectableLayersArea" dojotype="dijit.layout.ContentPane">
+            <table id="tableSelectableLayers"  >
                 <tbody>
                     <tr>
 
-                    </tr>
+                    </tr>					    	
                 </tbody>
-            </table>   
-      
+            </table>
         </div>
-        <!--</div>-->
-
-
-    </div>
-
-    <div id="searchboxDiv" dojotype="dijit.layout.ContentPane">
-        <table id="tableLyrNameDescrTag" cellspacing="0" width="100%" style="display:none">
-        <!--table id="tableLyrNameDescrTag" cellspacing="0" width="100%"-->
-            <thead>
-                <tr>
-                    <th>eaLyrNum</th>
-                    <th>name</th>
-                    <th>eaDescription</th>
-                    <th>eaTags</th>
-                </tr>
-            </thead>
-
-            <tbody>
-
-            </tbody>
-        </table>
-    </div>
-    <!--div id="numOfLayers" innerHTML =  "&nbsp;" type="text" style = "text-align: left; background-color: green; color:white;height = 20px">
-	
-	</div-->
-    <div id="selectableLayersContainer" dojotype="dijit.layout.ContentPane"  style="background-color: #26A146; width: 100%; height: 20px; border: 0px;padding: 2px 10px 0px 5px;margin:5px 0px 5px 0px">
-        <!-- padding:0 is good enough ; margin:0 does not work--> 
-        <input id="numOfLayers" value = "" type="text" style = "background-color: #26A146; color:white; border: none; float: left; vertical-align:center height: 14px;"/>
-        <div>
-            <label for="hideIcons" style = "background-color: #26A146; color:white; border: none; float: right;">Hide Icons</label>	
-            <input id="hideIcons"  type="checkbox"  style = "background-color: #26A146; color:white; border: none; float: right;vertical-align:center;height: 14px;padding:2px; margin:2px" />
-
-        </div>		
-    </div>
-
-
-    <!--input id="numOfLayers1" value = "test" type="text" style = "text-align: left; background-color: green; color:white;height = 20px; width = 100%"/-->
-    <br/>
-    <div dojotype="dijit.layout.ContentPane" style="padding: 0px 8px 0px 10px;">
-        <input id="selectAllLayers"  type="checkbox"/>
-        <label for="selectAllLayers" style="vertical-align: top"><b>Select All Layers</b></label>			
-    </div>
-    <!--Removing supply/demand/driver choices from interface. Awaiting further guidance on layer filter options.-->
-    <!--div id="navcontainer" dojotype="dijit.layout.ContentPane" style="margin: 0px 8px 0px 8px; padding: 0px 0px 0px 12px; display: none;">
-        <ul id="navlistSupplyDemand">
-            <li>
-                <a href="#">
-                    <div >
-                        <input id="Supply" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked />
-                        <label for="Supply">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Supply</label>
-                    </div>
-                </a>
-            </li>
-            <li >
-                <a href="#" style="padding-right: 12px;display: inline-block;list-style-type: none;">
-                    <div >
-                        <input id="Demand" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked/>
-                        <label for="Demand">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Demand</label>
-                    </div>
-                </a>
-            </li>
-
-            <li>
-                <a href="#">
-                    <div >
-                        <input id="Driver" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked/>
-                        <label for="Driver">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Driver</label>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <div >
-                        <input id="SpatiallyExplicit" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox" checked/>
-                        <label for="SpatiallyExplicit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Spatially Explicit</label>
-                    </div>
-                </a>
-            </li>								
-        </ul>
-    </div-->
-    <div id="tableSelectableLayersArea" dojotype="dijit.layout.ContentPane" style=="overflow-y: scroll; height: calc(100% - 125px); height: -moz-calc(100% - 125px); height: -webkit-calc(100% - 125px);">
-        <table id="tableSelectableLayers"  >
-            <tbody>
-                <tr>
-
-                </tr>					    	
-            </tbody>
-        </table>
-    </div>
-    <br/>
-    <div dojotype="dijit.layout.ContentPane" data-dojo-props="region:'bottom'" height="0px">
-        <input id = "butOpenSelectCommunityWidget" type="button" value="View Active Layers" style="display:none" data-dojo-attach-event="onclick:_onViewActiveLayersClick" />
-        <input id = "butAddSingleLayer" type="button" value="butAddSingleLayer" style="display:none"  data-dojo-attach-event="onclick:_onSingleLayerClick"/> 
-        <input id = "butAddAllLayers" type="button" value="butAddAllLayers" style="display:none"  data-dojo-attach-event="onclick:_onAddLayersClick"/> 
-        <input id = "butRemAllLayers" type="button" value="butRemAllLayers" style="display:none"  data-dojo-attach-event="onclick:_onRemLayersClick"/> 
+        <br/>
+        <div dojotype="dijit.layout.ContentPane" data-dojo-props="region:'bottom'" height="0px">
+            <input id = "butOpenSelectCommunityWidget" type="button" value="View Active Layers" style="display:none" data-dojo-attach-event="onclick:_onViewActiveLayersClick" />
+            <input id = "butAddSingleLayer" type="button" value="butAddSingleLayer" style="display:none"  data-dojo-attach-event="onclick:_onSingleLayerClick"/> 
+            <input id = "butAddAllLayers" type="button" value="butAddAllLayers" style="display:none"  data-dojo-attach-event="onclick:_onAddLayersClick"/> 
+            <input id = "butRemAllLayers" type="button" value="butRemAllLayers" style="display:none"  data-dojo-attach-event="onclick:_onRemLayersClick"/> 
+        </div>
     </div>
 
 </div>
