@@ -524,7 +524,7 @@ define([
 		    });
 		  }
 		}    	
-		updateSelectableLayersArea();
+		//updateSelectableLayersArea();
 	};	   
 
 	var updateTopicToggleButton = function() {
