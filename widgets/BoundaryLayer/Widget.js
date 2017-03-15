@@ -193,7 +193,7 @@ define([
 		                  evt.layer.name = lOptions.id;
 		                });                
 	
-		                lLayer.id = window.layerIdPrefix + this.getAttribute("id").replace("ck", "");	
+		                lLayer.id = window.layerIdBndrPrefix + this.getAttribute("id").replace("ck", "");	
 		                lLayer.setVisibility(false);//turn off the layer when first added to map and let user to turn on	
 	
 						map.addLayer(lLayer);
@@ -204,7 +204,7 @@ define([
 	
 					}
 					else{
-						lyrTobeRemoved = map.getLayer(window.layerIdPrefix + this.getAttribute("id").replace("ck", ""));
+						lyrTobeRemoved = map.getLayer(window.layerIdBndrPrefix + this.getAttribute("id").replace("ck", ""));
 						map.removeLayer(lyrTobeRemoved);
 					}				
 			    });

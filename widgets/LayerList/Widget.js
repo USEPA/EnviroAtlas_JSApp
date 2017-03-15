@@ -243,7 +243,16 @@ define([
 			if(lyr){
             	this.map.removeLayer(lyr);
           	}
+    		lyr = this.map.getLayer(window.layerIdPBSPrefix + window.allLayerNumber[i]);
+			if(lyr){
+            	this.map.removeLayer(lyr);
+          	}     
+          	lyr = this.map.getLayer(window.layerIdBndrPrefix + window.allLayerNumber[i]);
+			if(lyr){
+            	this.map.removeLayer(lyr);
+          	}         	
         } 
+       
         //remove all layers added from portal, webmapdata and upload data
     	for (i in window.layerID_Portal_WebMap) {	        
     		lyr = this.map.getLayer(window.layerID_Portal_WebMap[i]);

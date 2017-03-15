@@ -35,9 +35,7 @@ define([
         var xobj = new XMLHttpRequest();
 
         xobj.overrideMimeType("application/json");
-        //xobj.open('GET', 'setting/Setting.js', true); // Replace 'my_data' with the path to your file//good
         xobj.open('GET', 'widgets/LocalLayer/config.json', true); // Replace 'my_data' with the path to your file
-        //xobj.open('GET', 'LocalLayer/config.json', true); // Replace 'my_data' with the path to your file
 
         xobj.onreadystatechange = function () {
               if (xobj.readyState == 4 && xobj.status == "200") {
@@ -47,6 +45,21 @@ define([
         };
         xobj.send(null);  
     };
+  var loadJSONPBS = function(callback){   
+
+        var xobj = new XMLHttpRequest();
+
+        xobj.overrideMimeType("application/json");
+        xobj.open('GET', 'widgets/PeopleAndBuildSpaces/config.json', true); // Replace 'my_data' with the path to your file
+
+        xobj.onreadystatechange = function () {
+              if (xobj.readyState == 4 && xobj.status == "200") {
+                // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+                callback(xobj.responseText);
+              }
+        };
+        xobj.send(null);  
+    };    
   var clazz = declare([], {
 
     _candidateMenuItems: null,
@@ -391,37 +404,70 @@ define([
 
         var clickedURL = this._layerInfo.layerObject.url;
         var bMapDescriptionAvailale = false;
-      
-        loadJSON(function(response) {
-            var localLayerConfig = JSON.parse(response);           
-            
-            var urlInConfig = "";
-            
-            var arrLayers = localLayerConfig.layers.layer;
-            for (index = 0, len = arrLayers.length; index < len; ++index) {
-                layer = arrLayers[index];
-                if(layer.hasOwnProperty('eaID')){
-			        if(layer.hasOwnProperty('eaLyrNum')){
-			            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
-			        }                	
-                    if ((layerId === (window.layerIdPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) {
-                        if(layer.hasOwnProperty('eaDescription')){
-					    	var mapDescription = new Dialog({
-						        title: layer.name,
-						        style: "width: 300px",    
-					    	});
-					        mapDescription.show();
-					        mapDescription.set("content", layer.eaDescription);
-					        bMapDescriptionAvailale = true;
-                            break;
-                        }
-                    }
-                }
-            }
-            if (!bMapDescriptionAvailale){
-            	alert("Map description is not available for this layer");
-            }
-        });
+        if ((layerId.indexOf(window.layerIdPrefix)) >= 0) {
+	        loadJSON(function(response) {
+	            var localLayerConfig = JSON.parse(response);           
+	            
+	            var urlInConfig = "";
+	            
+	            var arrLayers = localLayerConfig.layers.layer;
+	            for (index = 0, len = arrLayers.length; index < len; ++index) {
+	                layer = arrLayers[index];
+	                if(layer.hasOwnProperty('eaID')){
+				        if(layer.hasOwnProperty('eaLyrNum')){
+				            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
+				        }                	
+	                    if ((layerId === (window.layerIdPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) {
+	                        if(layer.hasOwnProperty('eaDescription')){
+						    	var mapDescription = new Dialog({
+							        title: layer.name,
+							        style: "width: 300px",    
+						    	});
+						        mapDescription.show();
+						        mapDescription.set("content", layer.eaDescription);
+						        bMapDescriptionAvailale = true;
+	                            break;
+	                        }
+	                    }
+	                }
+	            }
+	            if (!bMapDescriptionAvailale){
+	            	alert("Map description is not available for this layer");
+	            }
+	        });
+       }
+       else if ((layerId.indexOf(window.layerIdPBSPrefix)) >= 0) {
+	        loadJSONPBS(function(response) {
+	            var localLayerConfig = JSON.parse(response);           
+	            
+	            var urlInConfig = "";
+	            
+	            var arrLayers = localLayerConfig.layers.layer;
+	            for (index = 0, len = arrLayers.length; index < len; ++index) {
+	                layer = arrLayers[index];
+	                if(layer.hasOwnProperty('eaID')){
+				        if(layer.hasOwnProperty('eaLyrNum')){
+				            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
+				        }                	
+	                    if ((layerId === (window.layerIdPBSPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) {
+	                        if(layer.hasOwnProperty('eaDescription')){
+						    	var mapDescription = new Dialog({
+							        title: layer.name,
+							        style: "width: 300px",    
+						    	});
+						        mapDescription.show();
+						        mapDescription.set("content", layer.eaDescription);
+						        bMapDescriptionAvailale = true;
+	                            break;
+	                        }
+	                    }
+	                }
+	            }
+	            if (!bMapDescriptionAvailale){
+	            	alert("Map description is not available for this layer");
+	            }
+	        });
+       }       
     },
     _onItemDataFactSheetClick: function(evt) {
         layerId = this._layerInfo.id;
