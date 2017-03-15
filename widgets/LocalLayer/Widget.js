@@ -272,6 +272,7 @@ define([
 								}
 								else {//National
 									lLayer.setVisibility(false);
+									window.nationalLayerNumber.push(layer.eaID.toString());
 								}
 							}
 						
@@ -305,6 +306,13 @@ define([
     
 	                
                 	this._viewerMap.addLayer(lLayer);
+			    	for (i in window.allLayerNumber) {			     
+			          	lyrBoundary = this._viewerMap.getLayer(window.layerIdBndrPrefix + window.allLayerNumber[i]);
+						if(lyrBoundary){
+							alert(this._viewerMap.layerIds.length);
+			            	this._viewerMap.reorderLayer(lyrBoundary,this._viewerMap.layerIds.length);
+			          	}         	
+			        }                 	
                 }
               }else if(layer.type.toUpperCase() === 'TILED'){
                 if(layer.displayLevels){

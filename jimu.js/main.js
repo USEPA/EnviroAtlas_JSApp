@@ -44,10 +44,13 @@ define(["./ConfigManager",
     var mo = {};
 
     window.layerIdPrefix = "eaLyrNum_";
+    window.layerIdBndrPrefix = "eaLyrBndrNum_";
+    window.layerIdPBSPrefix = "eaLyrPBSNum_";
     window.layerIdTiledPrefix = "tiledNum_";
     window.addedLayerIdPrefix = "added_";
     window.removeAllMessage = "removeAll";
     window.chkTopicPrefix = "ckTopic_";
+    window.chkTopicPBSPrefix = "ckTopicPBS_";
     
     window.dataFactSheet = "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/";
     //window.matadata = "https://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7BBDF514A6-05A8-400D-BF3D-030645461334%7D";
@@ -55,6 +58,7 @@ define(["./ConfigManager",
     
     window.bFirstLoadFilterWidget = true;
     window.allLayerNumber = [];
+    window.nationalLayerNumber = [];
     window.layerID_Portal_WebMap = [];
     window.categoryDic = {};
     window.categoryDic["Clean Air"] = "cair";
@@ -95,6 +99,12 @@ define(["./ConfigManager",
     window.topicDic["Water Supply and Hydrology"] = "WSaH";
     window.topicDic["Water Use"] = "WU";
     window.topicDic["Wetlands and Lowlands"] = "WaL";
+	window.topicDicPBS = {};
+    window.topicDicPBS["Housing and Facilities"] = "HaF";
+    window.topicDicPBS["Community Demographics"] = "CD";
+    window.topicDicPBS["Employment"] = "E";
+    window.topicDicPBS["National Demographics"] = "ND";
+    window.topicDicPBS["Commuting and Walkability"] = "CaW";
     
     window.strAllCommunity = "AllCommunity";	
     window.communityDic = {};

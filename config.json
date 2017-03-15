@@ -574,6 +574,14 @@
 				"config": "widgets/BoundaryLayer/config.json",
 				"index" : 5,
 				"id" : "widgets_BoundaryLayer_Widget"
+			}, {
+				"name" : "PeopleAndBuildSpaces",
+				"label" : "PeopleAndBuildSpaces",
+				"version" : "1.3",
+				"uri" : "widgets/PeopleAndBuildSpaces/Widget",
+				"config": "widgets/PeopleAndBuildSpaces/config.json",
+				"index" : 5,
+				"id" : "widgets_PeopleAndBuildSpaces_Widget"
 			}
 		],
 		"groups" : []
