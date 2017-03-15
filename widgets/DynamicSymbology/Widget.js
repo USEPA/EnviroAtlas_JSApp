@@ -67,7 +67,8 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 
     startup: function() {
 	  this.inherited(arguments);
-	  
+        _scheme = null;
+
 	  this.fetchDataByName('LayerList');
 	  
 	  console.log('startup')
