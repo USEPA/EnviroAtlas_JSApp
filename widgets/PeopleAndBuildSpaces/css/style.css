@@ -1,0 +1,177 @@
+
+#navlistSearchfilter {
+    position: relative;
+}
+#navlistSearchfilter li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+}
+
+#navlistSearchfilter li, #navlistSearchfilter a {
+    height: 18px;
+    width: 18px;
+    display: block;
+}
+
+/* biodiversity conservation */
+#biod_bw {background: url('../images/bc_icons.png') 0 0;}
+#biod {background: url('../images/bc_icons.png') -20px 0px;}
+#biod a:hover {background: url('../images/bc_icons.png') -80px 0px;}
+/* clean air */
+#cair_bw {background: url('../images/bc_icons.png') 0px -20px;}
+#cair {background: url('../images/bc_icons.png') -20px -20px;}
+#cair a:hover {background: url('../images/bc_icons.png') -40px -20px;}
+/* clean and plentiful water */
+#cpw_bw {background: url('../images/bc_icons.png') 0px -40px;}
+#cpw {background: url('../images/bc_icons.png') -20px -40px;}
+#cpw a:hover {background: url('../images/bc_icons.png') -40px -40px;}
+/* climate stabilization */
+#clim_bw {background: url('../images/bc_icons.png') 0px -60px;}
+#clim {background: url('../images/bc_icons.png') -20px -60px;}
+#clim a:hover {background: url('../images/bc_icons.png') -40px -60px;}
+/* food, fuel, and materials */
+#ffm_bw {background: url('../images/bc_icons.png') 0px -80px;}
+#ffm {background: url('../images/bc_icons.png') -20px -80px;}
+#ffm a:hover {background: url('../images/bc_icons.png') -40px -80px;}
+/* natural hazard mitigation */
+#nhm_bw {background: url('../images/bc_icons.png') 0px -100px;}
+#nhm {background: url('../images/bc_icons.png') -20px -100px;}
+#nhm a:hover {background: url('../images/bc_icons.png') -40px -100px;}
+/* recreation, culture, and aesthetics */
+#rca_bw {background: url('../images/bc_icons.png') 0px -120px;}
+#rca {background: url('../images/bc_icons.png') -20px -120px;}
+#rca a:hover {background: url('../images/bc_icons.png') -40px -120px;}
+/* people and built spaces */
+#pbs_bw {background: url('../images/bc_icons.png') 0px -140px;}
+#pbs {background: url('../images/bc_icons.png') -20px -140px;}
+#pbs a:hover {background: url('../images/bc_icons.png') -40px -140px;}
+/* supplemental */
+#sup_bw {background: url('../images/bc_icons.png') 0px -160px;}
+#sup {background: url('../images/bc_icons.png') -20px -160px;}
+#sup a:hover {background: url('../images/bc_icons.png') -40px -160px;}
+
+/*  ==========================================================*/
+/* biodiversity conservation */
+#biod_bw {background: url('../images/bc_icons.png') 0 0;}
+#biod {background: url('../images/bc_icons.png') -20px 0px;}
+#biod a:hover {background: url('../images/bc_icons.png') -80px 0px;}
+/*===================================*/
+#navlistSearchfilter2 {
+    position: relative;
+}
+#navlistSearchfilter2 li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+}
+#navlistSearchfilter2 li, #navlistSearchfilter2 a {
+    height: 18px;
+    width: 18px;
+    display: block;
+}
+/* clean air */
+#cair2 {background: url('../images/bc_icons.png') -20px -20px;}
+#cpw2 {background: url('../images/bc_icons.png') -20px -40px;}
+#clim2 {background: url('../images/bc_icons.png') -20px -60px;}
+#ffm2 {background: url('../images/bc_icons.png') -20px -80px;}
+#nhm2 {background: url('../images/bc_icons.png') -20px -100px;}
+#rca2 {background: url('../images/bc_icons.png') -20px -120px;}
+#pbs2 {background: url('../images/bc_icons.png') -20px -140px;}
+#sup2 {background: url('../images/bc_icons.png') -20px -160px;}
+#biod2 {background: url('../images/bc_icons.png') -20px 0px;}
+/* ============================================================
+  COMMON for toggle
+============================================================ */
+.cmn-toggle-PBS {
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden;
+}
+.cmn-toggle-PBS + label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+input.cmn-toggle-PBS-round-flat + label {
+  padding: 1px;
+  width: 26px;
+  height: 13px;
+  background-color: #26A146;
+  -webkit-border-radius: 13px;
+  -moz-border-radius: 13px;
+  -ms-border-radius: 13px;
+  -o-border-radius: 13px;
+  border-radius: 13px;
+  -webkit-transition: background 0.6s;
+  -moz-transition: background 0.6s;
+  -o-transition: background 0.6s;
+  transition: background 0.6s;
+}
+input.cmn-toggle-PBS-round-flat-grayedout + label {
+  padding: 1px;
+  width: 26px;
+  height: 13px;
+  background-color: #FBFBFB;/*#7D7D7D  #FBFBFB*/
+  -webkit-border-radius: 13px;
+  -moz-border-radius: 13px;
+  -ms-border-radius: 13px;
+  -o-border-radius: 13px;
+  border-radius: 13px;
+  -webkit-transition: background 0.6s;
+  -moz-transition: background 0.6s;
+  -o-transition: background 0.6s;
+  transition: background 0.6s;
+}
+input.cmn-toggle-PBS-round-flat + label:before, input.cmn-toggle-PBS-round-flat + label:after {
+  display: block;
+  position: absolute;
+  content: "";
+}
+input.cmn-toggle-PBS-round-flat + label:before {
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  background-color: #d8d8d8;
+  border: 1px solid #26A146;
+  -webkit-border-radius: 13px;
+  -moz-border-radius: 13px;
+  -ms-border-radius: 13px;
+  -o-border-radius: 13px;
+  border-radius: 13px;
+  -webkit-transition: background 0.6s;
+  -moz-transition: background 0.6s;
+  -o-transition: background 0.6s;
+  transition: background 0.6s;
+}
+input.cmn-toggle-PBS-round-flat + label:after {
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  width: 12px;
+  background-color: white;
+  border: 1px solid #26A146;
+  -webkit-border-radius: 13px;
+  -moz-border-radius: 13px;
+  -ms-border-radius: 13px;
+  -o-border-radius: 13x;
+  border-radius: 13px;
+  -webkit-transition: margin 0.4s, background 0.6s;
+  -moz-transition: margin 0.4s, background 0.6s;
+  -o-transition: margin 0.4s, background 0.6s;
+  transition: margin 0.4s, background 0.6s;
+}
+input.cmn-toggle-PBS-round-flat:checked + label:before{
+  background-color: #26A146;
+}
+input.cmn-toggle-PBS-round-flat:checked + label:after {
+  margin-left: 13px;
+}
