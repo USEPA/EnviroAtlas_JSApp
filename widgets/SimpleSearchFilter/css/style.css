@@ -131,7 +131,8 @@ input.cmn-toggle-round-flat-grayedout + label {
   padding: 1px;
   width: 26px;
   height: 13px;
-  background-color: #FBFBFB;/*#7D7D7D  #FBFBFB*/
+  background-color: #e1e1e1;/*#7D7D7D  #FBFBFB*/
+  border-color: 
   -webkit-border-radius: 13px;
   -moz-border-radius: 13px;
   -ms-border-radius: 13px;
@@ -344,4 +345,20 @@ input.cmn-toggle-round-flat-grayedout:checked + label:after {
 
 a.esIcons {
   text-decoration: none;
+}
+
+tr.topicHeader {
+  padding-bottom: 3px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #c3c3c3;
+}
+
+tr.topicHeader:hover {
+  background-color: #929292;
+  cursor: pointer;
+}
+
+.topicTitleGray {
+  color: #969696;
 }
