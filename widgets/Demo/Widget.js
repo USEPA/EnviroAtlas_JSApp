@@ -62,6 +62,12 @@ function(declare, BaseWidget, TooltipDialog, Button, popup, AccordionContainer, 
       nodeToHelp = helpTour[stop].node;
       helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._nextStop()'>Next</button></div>";
 
+      tourDialog = new TooltipDialog({
+        id: 'tourDialog',
+        style: "width: 300px;",
+        content: helpContent,
+      });
+
       console.log('startup');
     },
 
@@ -74,11 +80,11 @@ function(declare, BaseWidget, TooltipDialog, Button, popup, AccordionContainer, 
 
     _startTour: function(){
         stop = 0;
-        tourDialog = new TooltipDialog({
-            id: 'tourDialog',
-            style: "width: 300px;",
-            content: helpContent,
-        });
+
+        nodeToHelp = helpTour[stop].node;
+        helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._nextStop()'>Next</button></div>";
+        tourDialog.set("content", helpContent);
+
         popup.open({
             popup: tourDialog,
             around: dom.byId(nodeToHelp)
