@@ -29,6 +29,12 @@ define([
   ],
   function(BaseWidget, declare, lang, array, domConstruct, dom, on,
     LayerListView, PopupMenu, NlsStrings, LayerInfos) {
+    var uncheckRelatedCheckbox = function (chkboxLayerId){
+    	var chkSimpleSearch = document.getElementById(window.chkSelectableLayer + chkboxLayerId);
+    	if((chkSimpleSearch != null) && (chkSimpleSearch.checked == true)){	
+    		chkSimpleSearch.checked = false;    		
+    	}
+    };
     var clazz = declare([BaseWidget], {
       //these two properties is defined in the BaseWiget
       baseClass: 'jimu-widget-layerList',
@@ -40,7 +46,7 @@ define([
 
       //operLayerInfos: Object{}
       //  operational layer infos
-      operLayerInfos: null,
+      operLayerInfos: null,      
 
       startup: function() {
         this.inherited(arguments);
@@ -242,14 +248,21 @@ define([
     		lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
 			if(lyr){
             	this.map.removeLayer(lyr);
+            	uncheckRelatedCheckbox(window.allLayerNumber[i]);
           	}
+    		lyr = this.map.getLayer(window.layerIdTiledPrefix + window.allLayerNumber[i]);
+			if(lyr){
+            	this.map.removeLayer(lyr);
+          	}          	
     		lyr = this.map.getLayer(window.layerIdPBSPrefix + window.allLayerNumber[i]);
 			if(lyr){
             	this.map.removeLayer(lyr);
+            	uncheckRelatedCheckbox(window.allLayerNumber[i]);
           	}     
           	lyr = this.map.getLayer(window.layerIdBndrPrefix + window.allLayerNumber[i]);
 			if(lyr){
             	this.map.removeLayer(lyr);
+            	uncheckRelatedCheckbox(window.allLayerNumber[i]);
           	}         	
         } 
        

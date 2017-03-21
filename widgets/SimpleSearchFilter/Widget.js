@@ -347,7 +347,7 @@ define([
 					var checkbox = document.createElement('input');
 					checkbox.type = "checkbox";
 			
-			        chkboxId = "ck" + eaID;
+			        chkboxId = window.chkSelectableLayer + eaID;
 					checkbox.name = chkboxId;
 					checkbox.value = 1;
 					checkbox.id = chkboxId;
@@ -457,11 +457,11 @@ define([
 		  		
 				if (this.checked){
 					showLayerListWidget();	
-					singleLayerToBeAddedRemoved = "a" + "," + this.getAttribute("id").replace("ck", "");
+					singleLayerToBeAddedRemoved = "a" + "," + this.getAttribute("id").replace(window.chkSelectableLayer, "");
 					document.getElementById('butAddSingleLayer').click();
 				}
 				else{
-					singleLayerToBeAddedRemoved = "r" + "," + this.getAttribute("id").replace("ck", "");
+					singleLayerToBeAddedRemoved = "r" + "," + this.getAttribute("id").replace(window.chkSelectableLayer, "");
 					document.getElementById('butAddSingleLayer').click();
 				}				
 		    });
@@ -734,7 +734,19 @@ define([
 		/*dojo.connect(dijit.byId("selectionCriteria"), "toggle", function (){
 			updateSelectableLayersArea();
 		});*/
-		
+	    loadBookmarkHomeExtent(function(response){
+	    	var bookmarkClassified = JSON.parse(response);
+	
+	        for (index = 0, len = bookmarkClassified.bookmarks.length; index < len; ++index) {
+	        	currentBookmarkClass = bookmarkClassified.bookmarks[index];
+	        	if (currentBookmarkClass.name == "National") {
+	        		bookmarkNational = currentBookmarkClass.items;	        		
+        			var currentExtent = bookmarkNational[0].extent;
+        			nExtent = Extent(currentExtent);
+        			self.map.setExtent(nExtent);	        		
+	        	}
+	        }
+	    }); 
         loadJSON(function(response) {
             var localLayerConfig = JSON.parse(response);
             var arrLayers = localLayerConfig.layers.layer;
@@ -922,7 +934,7 @@ define([
 		for (var key in chkIdDictionary) {
 		  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
 		  	if (document.getElementById(key).checked) {
-            	layersToBeAdded = layersToBeAdded + "," + key.replace("ck", "");
+            	layersToBeAdded = layersToBeAdded + "," + key.replace(window.chkSelectableLayer, "");
         	}
 		  }
 		}
@@ -935,7 +947,7 @@ define([
         layersToBeAdded = "r";
 		for (var key in chkIdDictionary) {
 		  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
-            	layersToBeAdded = layersToBeAdded + "," + key.replace("ck", "");
+            	layersToBeAdded = layersToBeAdded + "," + key.replace(window.chkSelectableLayer, "");
 		  }
 		}
         this.publishData({
@@ -944,26 +956,14 @@ define([
 	    this.i ++;
     },    
     onOpen: function(){
-	  loadBookmarkHomeExtent(function(response){
-	    	var bookmarkClassified = JSON.parse(response);
-	
-	        for (index = 0, len = bookmarkClassified.bookmarks.length; index < len; ++index) {
-	        	currentBookmarkClass = bookmarkClassified.bookmarks[index];
-	        	if (currentBookmarkClass.name == "National") {
-	        		bookmarkNational = currentBookmarkClass.items;	        		
-        			var currentExtent = bookmarkNational[0].extent;
-        			nExtent = Extent(currentExtent);
-        			self.map.setExtent(nExtent);	        		
-	        	}
-	        }
-	   });   
+  
     },	    
     _onRemoveLayersClick: function() {
         layersToBeRemoved = "r";
 		for (var key in chkIdDictionary) {
 		  if (chkIdDictionary.hasOwnProperty(key)) {
 		  	if (document.getElementById(key).checked) {
-            	layersToBeRemoved = layersToBeRemoved + "," + key.replace("ck", "") ;
+            	layersToBeRemoved = layersToBeRemoved + "," + key.replace(window.chkSelectableLayer, "") ;
         	}
 		  }
 		}

@@ -30,6 +30,12 @@ define([
 ], function(declare, array, lang, Deferred, all, portalUrlUtils, WidgetManager, PanelManager, esriLang,
   graphicsUtils, NlsStrings,Dialog) {
   var mapDescriptionStr = "";
+  var uncheckRelatedCheckbox = function (chkboxLayerId){
+    	var chkSimpleSearch = document.getElementById(window.chkSelectableLayer + chkboxLayerId);
+    	if((chkSimpleSearch != null) && (chkSimpleSearch.checked == true)){	
+    		chkSimpleSearch.checked = false;    		
+    	}
+   };
   var loadJSON = function(callback){   
 
         var xobj = new XMLHttpRequest();
@@ -564,6 +570,9 @@ define([
 		lyr = this._layerInfo.map.getLayer(layerId);
 		if(lyr){
         	this._layerInfo.map.removeLayer(lyr);
+        	uncheckRelatedCheckbox(layerId.replace(window.layerIdPrefix, ""));
+        	uncheckRelatedCheckbox(layerId.replace(window.layerIdBndrPrefix, ""));
+        	uncheckRelatedCheckbox(layerId.replace(window.layerIdPBSPrefix, ""));
       	}          
 		lyrTiled = this._layerInfo.map.getLayer(layerId.replace(window.layerIdPrefix, window.layerIdTiledPrefix));
 		if(lyrTiled){
