@@ -99,7 +99,7 @@ define([
 						var checkbox = document.createElement('input');
 						checkbox.type = "checkbox";
 				
-				        chkboxId = "ck" + eaID;
+				        chkboxId = window.chkSelectableLayer + eaID;
 						checkbox.name = chkboxId;
 						checkbox.value = 1;
 						checkbox.id = chkboxId;
@@ -193,7 +193,7 @@ define([
 		                  evt.layer.name = lOptions.id;
 		                });                
 	
-		                lLayer.id = window.layerIdBndrPrefix + this.getAttribute("id").replace("ck", "");	
+		                lLayer.id = window.layerIdBndrPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, "");
 		                lLayer.setVisibility(false);//turn off the layer when first added to map and let user to turn on	
 	
 						map.addLayer(lLayer);
@@ -204,7 +204,7 @@ define([
 	
 					}
 					else{
-						lyrTobeRemoved = map.getLayer(window.layerIdBndrPrefix + this.getAttribute("id").replace("ck", ""));
+						lyrTobeRemoved = map.getLayer(window.layerIdBndrPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, ""));
 						map.removeLayer(lyrTobeRemoved);
 					}				
 			    });
