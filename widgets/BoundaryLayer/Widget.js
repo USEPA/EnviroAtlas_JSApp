@@ -23,6 +23,7 @@ define([
      'jimu/WidgetManager',
      'jimu/PanelManager',     
      'esri/layers/FeatureLayer',
+     'esri/layers/ImageParameters',
      'esri/dijit/PopupTemplate',
      'esri/layers/ArcGISDynamicMapServiceLayer',
     'dijit/layout/ContentPane',
@@ -38,6 +39,7 @@ define([
     WidgetManager,
     PanelManager,
     FeatureLayer,
+    ImageParameters,
     PopupTemplate,
     ArcGISDynamicMapServiceLayer) {
 
@@ -90,7 +92,7 @@ define([
 	            	eaID = layer.eaID.toString();
 	            	if (eaID.trim() != "") {
 		                    	
-						if ((window.allLayerNumber.indexOf(eaID)) == -1) {                        	
+						if ((window.allLayerNumber.indexOf(eaID)) == -1) {   
 	                    	window.allLayerNumber.push(eaID);
 	                    }
 				       	var newRow   = tableRef.insertRow(tableRef.rows.length);
@@ -158,10 +160,12 @@ define([
 		                  }else if(layer.mode === 'snapshot'){
 		                    lmode = 0;
 		                  }else if(layer.mode === 'selection'){
+		                  	
 		                    lmode = 2;
 		                  }
 		                  lOptions.mode = lmode;
 		                }
+
 		                lOptions.outFields = ['*'];
 		                if(layer.hasOwnProperty('autorefresh')){
 		                  lOptions.refreshInterval = layer.autorefresh;
@@ -170,18 +174,23 @@ define([
 		                  lOptions.showLabels = true;
 		                }
 						
-						var lLayer;
-	
-		                if(layer.hasOwnProperty('eaLyrNum')){
-		                  //lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
-		                  lLayer = new ArcGISDynamicMapServiceLayer(layer.url);
+						var lLayer;	
+
+		                if(layer.hasOwnProperty('eaLyrNum') && (layer.eaLyrNum.trim()!="")){		                  	
+		                  	lLayer = new FeatureLayer(layer.url +"/" + layer.eaLyrNum, lOptions);		                  	
 		                }
 		                else {
-		                	lLayer = new FeatureLayer(layer.url , lOptions);
+	                        /*
+	                        var imageParameters = new ImageParameters();
+      						imageParameters.layerIds = [0];
+  							imageParameters.layerOption = ImageParameters.LAYER_OPTION_SHOW;
+  							lLayer = new ArcGISDynamicMapServiceLayer(layer.url,{"imageParameters": imageParameters});
+  							*/
+		                  	lLayer = new ArcGISDynamicMapServiceLayer(layer.url);
 		                }
 		                
 					    dojo.connect(lLayer, "onError", function(error){
-					       alert ("There is a problem on loading layer:"+lLayer.title);
+					       alert ("There is a problem on loading layer:"+layer.title);
 					    });		                
 	
 		                if(layer.name){
@@ -189,18 +198,18 @@ define([
 		                  lLayer.title = layer.name;
 		                  lLayer.noservicename = true;
 		                }
-		                lLayer.on('load',function(evt){
-		                  evt.layer.name = lOptions.id;
-		                });                
+               
 	
 		                lLayer.id = window.layerIdBndrPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, "");
 		                lLayer.setVisibility(false);//turn off the layer when first added to map and let user to turn on	
-	
+
+		                lLayer.on('update-end',function(evt){//need to use event 'update-end', if use 'load', layer could not be added
+		                  document.getElementById("map_" + lLayer.id).style.zIndex = "1";  	
+		                }); 	
+		                
 						map.addLayer(lLayer);
 
-						showLayerListWidget();	
-
-				
+						showLayerListWidget();					
 	
 					}
 					else{

@@ -306,13 +306,12 @@ define([
     
 	                
                 	this._viewerMap.addLayer(lLayer);
-			    	for (i in window.allLayerNumber) {			     
+			    	/*for (i in window.allLayerNumber) {			     
 			          	lyrBoundary = this._viewerMap.getLayer(window.layerIdBndrPrefix + window.allLayerNumber[i]);
 						if(lyrBoundary){
-							alert(this._viewerMap.layerIds.length);
-			            	this._viewerMap.reorderLayer(lyrBoundary,this._viewerMap.layerIds.length);
+			            	this._viewerMap.reorderLayer(lyrBoundary,this._viewerMap.layerIds.length+2);
 			          	}         	
-			        }                 	
+			        }*/            
                 }
               }else if(layer.type.toUpperCase() === 'TILED'){
                 if(layer.displayLevels){
