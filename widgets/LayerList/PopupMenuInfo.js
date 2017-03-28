@@ -139,8 +139,8 @@ define([
         key: 'remove',
         label: this.nls.itemRemove
       }, {
-        key: 'zoomto',
-        label: this.nls.itemZoomTo
+        key: 'movetotop',
+        label: this.nls.itemMovetoTop
       }, {
         key: 'transparency',
         label: this.nls.itemTransparency
@@ -274,8 +274,8 @@ define([
         case 'remove':
           this._onItemRemoveClick(evt);
           break;                            
-        case 'zoomto' /*this.nls.itemZoomTo'Zoom to'*/ :
-          this._onItemZoomToClick(evt);
+        case 'movetotop' /*this.nls.itemMovetoTop'Move to Top'*/ :
+          this._onMoveToTopClick(evt);
           break;
         case 'moveup' /*this.nls.itemMoveUp'Move up'*/ :
           this._onMoveUpItemClick(evt);
@@ -312,34 +312,18 @@ define([
     _onItemLinkClick: function(evt) {
             window.open("http://www.google.com");
     },
-    _onItemZoomToClick: function(evt) {
+    _onMoveToTopClick: function(evt) {
       /*jshint unused: false*/
-      //this.map.setExtent(this.getExtent());
-      this._layerInfo.getExtent().then(lang.hitch(this, function(geometries) {
-        var ext = null;
-        var a = geometries && geometries.length > 0 && geometries[0];
-        if(this._isValidExtent(a)){
-          ext = a;
-        }
-        if(ext){
-          this._layerInfo.map.setExtent(ext);
-        }else if(this._layerInfo.map.graphicsLayerIds.indexOf(this._layerInfo.id)){
-          //if fullExtent doesn't exist and the layer is (or sub class of) GraphicsLayer,
-          //we can calculate the full extent
-          this._layerInfo.getLayerObject().then(lang.hitch(this, function(layerObject){
-            if(layerObject.graphics && layerObject.graphics.length > 0){
-              try{
-                ext = graphicsUtils.graphicsExtent(layerObject.graphics);
-              }catch(e){
-                console.error(e);
-              }
-              if(ext){
-                this._layerInfo.map.setExtent(ext);
-              }
-            }
-          }));
-        }
-      }));
+
+        lyr = this._layerInfo.map.getLayer(this._layerInfo.id);
+		if(lyr){
+        	this._layerInfo.map.reorderLayer(lyr,this._layerInfo.map.layerIds.length);
+      	}   
+      	
+        lyrTiled = this._layerInfo.map.getLayer(window.layerIdTiledPrefix + this._layerInfo.id.replace(window.layerIdPrefix, "")); //bji need to be modified to accomodate tile.
+	    if(lyrTiled){
+       	     this._layerInfo.map.reorderLayer(lyrTiled,this._layerInfo.map.layerIds.length);
+        } 
     },
 
     _isValidExtent: function(extent){
@@ -612,7 +596,7 @@ define([
       {
         key: 'mapDescription'
       }, {
-        key: 'zoomto'
+        key: 'movetotop'
       }, {
         key: 'transparency'
       }, {
@@ -644,7 +628,7 @@ define([
       }, {
         key: 'separator'
       }, {
-        key: 'zoomto'
+        key: 'movetotop'
       }, {
         key: 'transparency'
       }, {
