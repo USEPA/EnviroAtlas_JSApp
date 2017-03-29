@@ -41,6 +41,7 @@ define([
 		var arrLayers = null;
 		var map = null;
 		var self = null;
+		var hiderows = {};
 		
 		var updateSelectablePBSLayersArea = function (){
 
@@ -67,6 +68,7 @@ define([
 			}
 	    };
 	    var updateSelectablePBSlayers = function() {
+	    	var SelectedTopics = [];  
 			var tableOfRelationship = document.getElementById("tablePBSLayers");
 		    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0]; 
             while (tableRef.firstChild) {
@@ -82,6 +84,7 @@ define([
 				if (layer.hasOwnProperty('eaTopic')) {
 	                if(layer.hasOwnProperty('eaID')) {
 	                	eaID = layer.eaID.toString();
+	                	eaTopic = layer.eaTopic;
 	                	if (eaID.trim() != "") {
 			                    	
 							if ((window.allLayerNumber.indexOf(eaID)) == -1) {                        	
@@ -92,13 +95,50 @@ define([
 					        totalNumOfPBSLayers = totalNumOfPBSLayers + 1;	
 					        if((checkboxTopic != null) && (checkboxTopic.checked == true)){					        	
 					         	numOfSelectablePBSLayers = numOfSelectablePBSLayers + 1;
+
+					         	//Add Header for each Topic in list
+								if (SelectedTopics.indexOf(eaTopic) == -1) {
+									if (!(eaTopic in hiderows)) {
+										hiderows[eaTopic] = true;
+									}
+									
+									SelectedTopics.push(eaTopic);
+									var newTopicHeader = tableRef.insertRow(tableRef.rows.length);
+									newTopicHeader.id = eaTopic;
+									newTopicHeader.className = 'topicHeader'
+
+									var TopicName = newTopicHeader.insertCell(0);
+									TopicName.colSpan = 3;
+									TopicName.innerHTML = eaTopic;
+									newTopicHeader.appendChild(TopicName);
+
+									newTopicHeader.addEventListener('click', function() {
+										hiderows[this.id] = !hiderows[this.id];
+										updateSelectablePBSlayers();
+									});
+									var newTopicHeader = tableRef.insertRow(tableRef.rows.length);
+									var blankspace = newTopicHeader.insertCell(0);
+									blankspace.style.height = '3px';
+									newTopicHeader.appendChild(blankspace);
+								}
+								//Finsih add header for each topic	
+
+
+
+
+
 						       	var newRow   = tableRef.insertRow(tableRef.rows.length);
-						       	newRow.style.height = "38px";
+						       	if (hiderows[eaTopic] == false) {
+						       		//newRow.style.color = 'red';
+						       		newRow.style.display = 'none';
+					      	 	}
+						       	//newRow.style.height = "38px";
 						       	var newCheckboxCell  = newRow.insertCell(0);
+						       	newCheckboxCell.style.verticalAlign = 'top';
 								var checkbox = document.createElement('input');
 								checkbox.type = "checkbox";
 						
-						        chkboxId = window.chkSelectableLayer + eaID;
+						        chkboxId = "ck" + eaID;
 						        chkIdPBSDictionary[chkboxId] = layer;  						        
 								checkbox.name = chkboxId;
 								checkbox.value = 1;
@@ -106,6 +146,7 @@ define([
 						        newCheckboxCell.appendChild(checkbox);    			              
 			
 						       	var newTitleCell  = newRow.insertCell(1);
+						       	newTitleCell.style.paddingBottom = "12px"
 								var title = document.createElement('label');
 								title.innerHTML = layer.name;  
 								title.title = layer.eaDescription;  
@@ -167,14 +208,14 @@ define([
 		                  lLayer.noservicename = true;
 		                }	      
 	
-		                lLayer.id = window.layerIdPBSPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, "");	
+		                lLayer.id = window.layerIdPBSPrefix + this.getAttribute("id").replace("ck", "");	
 		                lLayer.setVisibility(false);//turn off the layer when first added to map and let user to turn on	
 	
 						map.addLayer(lLayer);					    					
 						showLayerListWidget();
 					}
 					else{
-						layerTobeRemoved = map.getLayer(window.layerIdPBSPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, ""));
+						layerTobeRemoved = map.getLayer(window.layerIdPBSPrefix + this.getAttribute("id").replace("ck", ""));
 						map.removeLayer(layerTobeRemoved);
 					}				
 			    });
@@ -194,15 +235,26 @@ define([
         this.inherited(arguments);
         map = this.map;
         arrLayers = this.config.layers.layer;
+        arrLayers = arrLayers.sort(function compare(a,b) {
+        	if (a.eaTopic+a.name < b.eaTopic+b.name)
+        		return -1;
+        	if (a.eaTopic+a.name > b.eaTopic+b.name)
+        		return 1;
+        	return 0;
+        })
+
+
+        
         self = this;
         
         var tableOfRelationship = document.getElementById('categoryTablePBS');
 	    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];   
-		var keys = Object.keys(window.topicDicPBS);
+		var keys = Object.keys(window.topicDicPBS).sort();
 	    for (i=0; i<keys.length; i++) {
 	    	newRow = tableRef.insertRow(tableRef.rows.length);
-			newRow.style.height = "20px";
+			//newRow.style.paddingBottom = "12px";
 	           	var newCheckboxCell  = newRow.insertCell(0);
+	           	newCheckboxCell.style.verticalAlign = 'top';
 	           	var checkbox = document.createElement('input');
 				checkbox.type = "checkbox";
 				
@@ -224,12 +276,14 @@ define([
 				});
 				/// add category title:
 	           	var newTitleCell  = newRow.insertCell(1);
-	           	newTitleCell.style.width = "100%"
+	           	newTitleCell.style.width = "100%";
+	           	newTitleCell.style.paddingBottom = "5px";
 	        
 				var title = document.createElement('label');
 				title.innerHTML = keys[i];    
 				newTitleCell.appendChild(title); 
 			}
+			updateSelectablePBSlayers();
 
     }, 	    
 

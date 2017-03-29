@@ -1,5 +1,5 @@
-
-<div style="height:100%; width:100%; overflow:hidden;" dojotype="dijit.layout.ContentPane" >
+<div style="height:100%; width:100%; overflow-y:scroll; background-color: #ece9eb" dojotype="dijit.layout.ContentPane" >
+<div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Filter People and Built Spaces Data', open: true">
     <!--div dojotype="dijit.layout.ContentPane" style="padding: 0px 8px 0px 8px;">
         <input id="selectAllDemographics"  type="checkbox"/>
         <label for="selectAllDemographics">Select All Layers</label>			
@@ -14,12 +14,12 @@
             </tbody>
         </table> 
 	</div>
-    <div id="selectablePBSLayersContainer" dojotype="dijit.layout.ContentPane"  style="background-color: #26A146; width: 100%; height: 20px; border: 0px;padding: 2px 10px 0px 5px;margin:5px 0px 5px 0px">
-        <input id="numOfPBSLayers" value = "" type="text" style = "background-color: #26A146; color:white; border: none; float: left; vertical-align:center height: 14px;"/>
+    <div id="selectablePBSLayersContainer" dojotype="dijit.layout.ContentPane"  style="background-color: #00436f; width: 100%; height: 20px; border: 0px;padding: 2px 10px 0px 5px;margin:5px 0px 5px 0px">
+        <input id="numOfPBSLayers" value = "" type="text" style = "background-color: #00436f; color:white; border: none; float: left; vertical-align:center height: 14px;"/>
     </div>
     
     <div id="tablePBSLayersArea" dojotype="dijit.layout.ContentPane" style=="overflow-y: scroll; height: calc(100% - 140px); height: -moz-calc(100% - 140px); height: -webkit-calc(100% - 140px);">
-        <table id="tablePBSLayers"  >
+        <table id="tablePBSLayers"  width="100%">
             <tbody>
                 <tr>
 
@@ -27,5 +27,6 @@
             </tbody>
         </table>
     </div>
+</div>
 
 </div>
