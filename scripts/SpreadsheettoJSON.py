@@ -90,17 +90,18 @@ def main(_argv):
         name = inputWorksheet.cell(key["name"]+rowID).value
         layerJSON["name"] = name
         layerJSON["url"] = inputWorksheet.cell(key["url"]+rowID).value
-        layerJSON["popup"] = {
-          "title": popupDictionary[inputWorksheet.cell(key["eaScale"]+rowID).value],
-          "fieldInfos": [
-            {
-              "visible": "true"
+        if inputWorksheet.cell(key["fieldName"]+rowID).value:
+            layerJSON["popup"] = {
+              "title": popupDictionary[inputWorksheet.cell(key["eaScale"]+rowID).value],
+              "fieldInfos": [
+                {
+                  "visible": "true"
+                }
+              ],
+              "showAttachments": "false"
             }
-          ],
-          "showAttachments": "false"
-        }
-        layerJSON["popup"]["fieldInfos"][0]["fieldName"] = inputWorksheet.cell(key["fieldName"]+rowID).value
-        layerJSON["popup"]["fieldInfos"][0]["label"] = name
+            layerJSON["popup"]["fieldInfos"][0]["fieldName"] = inputWorksheet.cell(key["fieldName"]+rowID).value
+            layerJSON["popup"]["fieldInfos"][0]["label"] = name
         stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink"]
         for elem in stringList:
             cell = inputWorksheet.cell(key[elem]+rowID)
