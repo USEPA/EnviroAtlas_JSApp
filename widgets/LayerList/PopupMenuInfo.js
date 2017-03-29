@@ -274,7 +274,7 @@ define([
         case 'remove':
           this._onItemRemoveClick(evt);
           break;                            
-        case 'movetotop' /*this.nls.itemMovetoTop'Move to Top'*/ :
+        case 'movetotop':
           this._onMoveToTopClick(evt);
           break;
         case 'moveup' /*this.nls.itemMoveUp'Move up'*/ :
