@@ -96,8 +96,9 @@ define([
 	                    	window.allLayerNumber.push(eaID);
 	                    }
 				       	var newRow   = tableRef.insertRow(tableRef.rows.length);
-				       	newRow.style.height = "38px";
+				       	
 				       	var newCheckboxCell  = newRow.insertCell(0);
+				       	newCheckboxCell.style.verticalAlign = 'top';
 						var checkbox = document.createElement('input');
 						checkbox.type = "checkbox";
 				
@@ -110,6 +111,7 @@ define([
 				       	chkIdBoundaryDictionary[chkboxId] = layer;
 	
 				       	var newTitleCell  = newRow.insertCell(1);
+				       	newTitleCell.style.paddingBottom = '12px';
 						var title = document.createElement('label');
 						title.innerHTML = layer.name;    
 						newTitleCell.appendChild(title); 			    
