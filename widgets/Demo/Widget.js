@@ -62,6 +62,12 @@ function(declare, BaseWidget, TooltipDialog, Button, popup, AccordionContainer, 
       nodeToHelp = helpTour[stop].node;
       helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._nextStop()'>Next</button></div>";
 
+      tourDialog = new TooltipDialog({
+        id: 'tourDialog',
+        style: "width: 300px;",
+        content: helpContent,
+      });
+
       console.log('startup');
     },
 
@@ -74,11 +80,11 @@ function(declare, BaseWidget, TooltipDialog, Button, popup, AccordionContainer, 
 
     _startTour: function(){
         stop = 0;
-        tourDialog = new TooltipDialog({
-            id: 'tourDialog',
-            style: "width: 300px;",
-            content: helpContent,
-        });
+
+        nodeToHelp = helpTour[stop].node;
+        helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._nextStop()'>Next</button><button type='button' onclick='self._endTour()'>End</button></div>";
+        tourDialog.set("content", helpContent);
+
         popup.open({
             popup: tourDialog,
             around: dom.byId(nodeToHelp)
@@ -93,7 +99,7 @@ function(declare, BaseWidget, TooltipDialog, Button, popup, AccordionContainer, 
         }
         if(stop < numberStops - 1 ){
           nodeToHelp = helpTour[stop].node;
-          helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._previousStop()'>Previous</button><button type='button' onclick='self._nextStop()'>Next</button></div>";
+          helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._previousStop()'>Previous</button><button type='button' onclick='self._nextStop()'>Next</button><button type='button' onclick='self._endTour()'>End</button></div>";
 
           //Change tooltipdialog content
           tourDialog.set("content", helpContent);
@@ -105,7 +111,7 @@ function(declare, BaseWidget, TooltipDialog, Button, popup, AccordionContainer, 
 
         }else if(stop == numberStops - 1) {
             nodeToHelp = helpTour[stop].node;
-            helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._previousStop()'>Previous</button><button type='button' onclick='self._nextStop()'>End</button></div>";
+            helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._previousStop()'>Previous</button><button type='button' onclick='self._endTour()'>End</button></div>";
             //Change tooltipdialog content
             tourDialog.set("content", helpContent);
 
@@ -129,7 +135,7 @@ function(declare, BaseWidget, TooltipDialog, Button, popup, AccordionContainer, 
       }
       if(stop > 0 ){
         nodeToHelp = helpTour[stop].node;
-        helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._previousStop()'>Previous</button><button type='button' onclick='self._nextStop()'>Next</button></div>";
+        helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._previousStop()'>Previous</button><button type='button' onclick='self._nextStop()'>Next</button><button type='button' onclick='self._endTour()'>End</button></div>";
         //Change tooltipdialog content
         tourDialog.set("content", helpContent);
         popup.open({
@@ -138,7 +144,7 @@ function(declare, BaseWidget, TooltipDialog, Button, popup, AccordionContainer, 
         });
       }else if(stop == 0){
           nodeToHelp = helpTour[stop].node;
-          helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._nextStop()'>Next</button></div>";
+          helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._nextStop()'>Next</button><button type='button' onclick='self._endTour()'>End</button></div>";
           //Change tooltipdialog content
           tourDialog.set("content", helpContent);
           popup.open({
@@ -146,6 +152,12 @@ function(declare, BaseWidget, TooltipDialog, Button, popup, AccordionContainer, 
               around: dom.byId(nodeToHelp)
           });
       }
+    },
+
+    _endTour: function(){
+        popup.close(tourDialog);
+        stop = 0;
+       console.log("End the Guided Tour");
     },
 
     onOpen: function(){
