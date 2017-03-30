@@ -102,13 +102,14 @@ function(declare,
   
       console.log('startup');
     },
-    addRowButton: function(radioId, radioName, labelForRadio) {
-    	var tableOfRelationship = document.getElementById('communityTable');
+    addRowButton: function(radioId, radioName, labelForRadio, direction) {
+    	var tableOfRelationship = document.getElementById('communityTable' + direction);
 	    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];    	
 	    indexImage = 0;
 	    var newRow   = tableRef.insertRow(tableRef.rows.length);
 	    
        	newRow.style.height = "20px";
+
        	var newCheckboxCell  = newRow.insertCell(0);
 		var radioCommunity = document.createElement("input");
 		radioCommunity.setAttribute("type", "radio");
@@ -117,6 +118,7 @@ function(declare,
 		radioCommunity.setAttribute("name", radioName);
         newCheckboxCell.appendChild(radioCommunity);    
         var label = document.createElement('label');
+        label.setAttribute('style', 'vertical-align: top');
         label.setAttribute("for", radioId);
 		label.innerHTML = "  " + labelForRadio;
 		newCheckboxCell.appendChild(label);
@@ -164,10 +166,20 @@ function(declare,
 		});   
     },    
     displayCommunitySelection: function() {
-    	this.addRowButton(prefixRadioCommunity + window.strAllCommunity, "community", "Combined Communities");
+    	//this.addRowButton(prefixRadioCommunity + window.strAllCommunity, "community", "Combined Communities", "R");
+    	var i = -1;
+    	var half = Math.ceil((Object.keys(window.communityDic).length / 2));
+
     	for (var key in window.communityDic) {
-    		this.addRowButton(prefixRadioCommunity + key, "community", window.communityDic[key]);
+    		if (i<half) {
+    			direction = 'L';
+    		} else {
+    			direction = 'R';
+    		}
+    		i++;
+    		this.addRowButton(prefixRadioCommunity + key, "community", window.communityDic[key], direction);
     	}
+    	this.addRowButton(prefixRadioCommunity + window.strAllCommunity, "community", "Combined Communities", "R");
     	
     },
 
