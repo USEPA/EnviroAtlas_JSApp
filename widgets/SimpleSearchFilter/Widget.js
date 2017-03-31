@@ -259,16 +259,15 @@ define([
 
 				switch (eaScale) {
 					case "NATIONAL":
-						totalNumOfLayers = totalNumOfLayers + 1;
+						
 						if(chkNationalScale){
+							totalNumOfLayers = totalNumOfLayers + 1;
 							bSelectByScale = true;
 						}
 						break;
 					case "COMMUNITY":
-					
-						totalNumOfLayers = totalNumOfLayers + 1;
 						if(chkCommunityScale){
-
+							totalNumOfLayers = totalNumOfLayers + 1;
 							if ((communitySelected == "") || (communitySelected == window.strAllCommunity)){
 							bSelectByScale = true;
 						}
