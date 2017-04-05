@@ -144,12 +144,12 @@ define([
       }, {
         key: 'transparency',
         label: this.nls.itemTransparency
-      //}, {
-      //  key: 'moveup',
-      //  label: this.nls.itemMoveUp
-      //}, {
-      //  key: 'movedown',
-      //  label: this.nls.itemMoveDown
+      }, {
+        key: 'moveup',
+        label: this.nls.itemMoveUp
+      }, {
+        key: 'movedown',
+        label: this.nls.itemMoveDown
       }, {
         key: 'table',
         label: this.nls.itemToAttributeTable
@@ -594,26 +594,36 @@ define([
     var itemInfoCategoreList = {
       'RootLayer': [
       {
-        key: 'mapDescription'
-      }, {
-        key: 'movetotop'
-      }, {
         key: 'transparency'
       }, {
         key: 'remove'
+      },{
+        key: 'separator'
+      }, {
+        key: 'mapDescription'
+      }, {
+        key: 'url'
       }, {
         key: 'separator'
+      }, {
+        key: 'movetotop'
       }, {
         key: 'moveup'
       }, {
         key: 'movedown'
-      }, {
-        key: 'separator'
-      }, {
-        key: 'url'
-      }],
+      } ],
       'RootLayerAndFeatureLayer': [
       {
+        key: 'transparency'
+      }, {
+        key: 'changeSymbology'
+      }, {
+        key: 'controlPopup'
+      }, {
+        key: 'remove'
+      }, {
+        key: 'separator'
+      },  {
         key: 'mapDescription'
       }, {
         key: 'dataFactSheet'
@@ -622,25 +632,17 @@ define([
       }, {
         key: 'metadataDownload'
       }, {
-        key: 'changeSymbology'
+        key: 'separator'
       }, {
-        key: 'remove'
+        key: 'table'
       }, {
         key: 'separator'
       }, {
         key: 'movetotop'
       }, {
-        key: 'transparency'
-      }, {
-        key: 'controlPopup'
-      }, {
         key: 'moveup'
       }, {
         key: 'movedown'
-      }, {
-        key: 'separator'
-      }, {
-        key: 'table'
       }],
       'FeatureLayer': [{
         key: 'controlPopup'
