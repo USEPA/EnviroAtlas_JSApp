@@ -48,24 +48,56 @@ define([
    
     var updateFailedListOfLayers = function(){	
     	var comment = document.getElementById("failedLayersComment");
-    	if (Object.keys(window.faildedLayerDictionary).length == 0) {    		
-    		comment.innerHTML = "Currently, there is no layers failed being added to map.";    		
+    	if ((Object.keys(window.faildedEALayerDictionary).length == 0)&&(Object.keys(window.faildedOutsideLayerDictionary).length == 0)) {    		
+    		comment.innerHTML = "Currently, there is no layers failed being added to map."; 
+    		var hr = document.getElementById('hrFailedEnviroAtlasLayers');
+			hr.style.display = 'none';	  
+    		hr = document.getElementById('hrFailedOutsideLayers');
+			hr.style.display = 'none';				 		
     	} else{
-    		comment.innerHTML = "Following layers could not be added to map:";
+    		comment.innerHTML = "The following web service(s) failed to load at this time and may be unavailable for this session.";
     	}
-	    var tableOfRelationship = document.getElementById("failedLayers");
-	    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0]; 
-        while (tableRef.firstChild) {
-            tableRef.removeChild(tableRef.firstChild);
-        }	    	
-		for (var key in window.faildedLayerDictionary) {	
-			var newRow   = tableRef.insertRow(tableRef.rows.length);
-           	var newTitleCell  = newRow.insertCell(0);
-        
-			var newTitle  = document.createElement('div');
-	        newTitle.innerHTML = key;
-			newTitleCell.appendChild(newTitle); 							  
-		}  		
+    	if (Object.keys(window.faildedEALayerDictionary).length > 0) {
+    		var hr = document.getElementById('hrFailedEnviroAtlasLayers');
+			hr.style.display = '';	
+    		var commentFaileEA = document.getElementById("failedEnviroAtlasLayersComment");
+    		commentFaileEA.innerHTML = "For EnviroAtlas services, an email will be sent notifying administrators of these issues:";
+
+		    var tableOfRelationship = document.getElementById("failedEALayers");
+		    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0]; 
+	        while (tableRef.firstChild) {
+	            tableRef.removeChild(tableRef.firstChild);
+	        }	    	
+			for (var key in window.faildedEALayerDictionary) {	
+				var newRow   = tableRef.insertRow(tableRef.rows.length);
+	           	var newTitleCell  = newRow.insertCell(0);
+	        
+				var newTitle  = document.createElement('div');
+		        newTitle.innerHTML = key;
+				newTitleCell.appendChild(newTitle); 							  
+			}  		
+		}
+		
+		if (Object.keys(window.faildedOutsideLayerDictionary).length > 0) {
+			var hr = document.getElementById('hrFailedOutsideLayers');
+			hr.style.display = '';		
+    		var commentFaileOursideLayer = document.getElementById("failedOutsideLayersComment");
+    		commentFaileOursideLayer.innerHTML = "For web services hosted outside of the EnviroAtlas hosting environment, EnviroAtlas is not responsible for the performance of these services:";
+
+		    var tableOfRelationship = document.getElementById("failedOutLayers");
+		    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0]; 
+	        while (tableRef.firstChild) {
+	            tableRef.removeChild(tableRef.firstChild);
+	        }	    	
+			for (var key in window.faildedOutsideLayerDictionary) {	
+				var newRow   = tableRef.insertRow(tableRef.rows.length);
+	           	var newTitleCell  = newRow.insertCell(0);
+	        
+				var newTitle  = document.createElement('div');
+		        newTitle.innerHTML = key;
+				newTitleCell.appendChild(newTitle); 							  
+			}  		
+		}
 	};
 
 

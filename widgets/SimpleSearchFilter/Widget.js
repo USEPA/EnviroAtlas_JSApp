@@ -971,6 +971,15 @@ define([
 	    });
 	    this.i ++;
     },
+    _onOpenFailedLayerClick: function() {
+	        var widgetName = 'DisplayLayerAddFailure';
+	        var widgets = this.appConfig.getConfigElementsByName(widgetName);
+	        var pm = PanelManager.getInstance();
+	        pm.showPanel(widgets[0]);	  
+	        this.publishData({
+		        message: ""
+		    });
+      }
     });
 
     return clazz;

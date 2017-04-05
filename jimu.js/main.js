@@ -75,6 +75,7 @@ define(["./ConfigManager",
     window.categoryClassDemand = "Demand";
     window.categoryClassDriver = "Driver";
     window.categoryClassSpatialExplicit = "Spatially Explicit";
+    
     window.topicDic = {};
     window.topicDic["Carbon Storage"] = "CS";
     //window.topicDic["Climate and Weather"] = "CaW";
@@ -90,25 +91,33 @@ define(["./ConfigManager",
     window.topicDic["Landscape Pattern"] = "LP";
     window.topicDic["Near-Road Environments"] = "NRE";
     window.topicDic["Pollutant and Runoff Reduction"] = "PaRR";
+    
     window.topicDic["Pollutant Reduction: Air"] = "PRA"; //This is newly added Mar 2017    
     window.topicDic["Pollutant Reduction: Water"] = "PRW"; //This is newly added Mar 2017 
-    window.topicDic["Pollutants: Nutrients"] = "PN";
+     
+    window.topicDic["Pollutants: Nutrients"] = "PN"; 
     window.topicDic["Pollutants: Other"] = "PO";
+    
     window.topicDic["Protected Lands"] = "PL";
     window.topicDic["Species: At-Risk and Priority"] = "SARP";
     window.topicDic["Species: Game"] = "SG";
     window.topicDic["Species: Other"] = "SO";
     //window.topicDic["Water Supply and Hydrology"] = "WSaH";
     window.topicDic["Water Supply, Runoff, and Flow"] = "WSRaF"; //This is newly added Mar 2017 
+    
     window.topicDic["Water Use"] = "WU";
     window.topicDic["Weather and Climate"] = "WaU"; //This is newly added Mar 2017 
     window.topicDic["Wetlands and Lowlands"] = "WaL";
+    
+    
 	window.topicDicPBS = {};
     window.topicDicPBS["Housing and Facilities"] = "HaF";
     window.topicDicPBS["Community Demographics"] = "CD";
     window.topicDicPBS["Employment"] = "E";
     window.topicDicPBS["National Demographics"] = "ND";
     window.topicDicPBS["Commuting and Walkability"] = "CaW";
+
+
     
     window.strAllCommunity = "AllCommunity";	
     window.communityDic = {};
@@ -142,7 +151,8 @@ define(["./ConfigManager",
     window.changedExtentByOtherFrameYmax = null;   
     window.frameBeClicked = 1;
     window.communityMetadataDic = {};
-    window.faildedLayerDictionary = {};
+    window.faildedEALayerDictionary = {};
+    window.faildedOutsideLayerDictionary = {};
     window.successLayerDictionary = {};
                 
     //patch for JS API 3.10
