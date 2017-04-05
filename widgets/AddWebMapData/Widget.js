@@ -416,6 +416,10 @@ define(['dojo/_base/declare',
                                 });
                             }else{
                                 console.log("Add Layer Error:: Layer of unknown type");
+                                if (!(l.url in window.faildedEALayerDictionary)){
+							  		window.faildedEALayerDictionary[l.url] = l.url;
+							  		document.getElementById('openFailedLayer').click();
+							  	}	
                             }
                         }
                         if(tempLayer){

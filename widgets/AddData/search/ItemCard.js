@@ -92,10 +92,17 @@ define(["dojo/_base/declare",
             util.setNodeText(self.messageNode, i18n.search.item.messages.addFailed);
             domClass.remove(btn, "disabled");
             if (error && typeof error.message === "string" && error.message.length > 0) {
-              // TODO show this message
-              //console.warn("msg",error.message);
-              //util.setNodeText(self.messageNode,error.message);
-              console.log('');
+                // TODO show this message
+                //console.warn("msg",error.message);
+                //util.setNodeText(self.messageNode,error.message);
+                console.log('');
+		        var item = self.item;
+		        var baseUrl = util.checkMixedContent(item.portalUrl);
+		        var url = baseUrl + "/home/item.html?id=" + encodeURIComponent(item.id);
+                if (!(url in window.faildedOutsideLayerDictionary)){
+			  		window.faildedOutsideLayerDictionary[url] = url;
+			    }	
+			    document.getElementById('openFailedLayer').click();
             }
           });
         }
