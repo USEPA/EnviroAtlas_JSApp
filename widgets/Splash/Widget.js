@@ -77,9 +77,11 @@ define(['dojo/_base/declare',
       onOpen: function() {
         if (!TokenUtils.isInConfigOrPreviewWindow()) {
           var isfirst = cookie('isfirst');
-          if (isfirst.toString() === 'false') {
-            this.close();
-          }
+          if (typeof isfirst != 'undefined') {
+	          if (isfirst.toString() === 'false') {
+	            this.close();
+	          }
+      		}
         }
       },
 
@@ -98,9 +100,11 @@ define(['dojo/_base/declare',
 
         if (!TokenUtils.isInConfigOrPreviewWindow()) {
           var isfirst = cookie('isfirst');
-          if (isfirst.toString() === 'false') {
-            this.close();
-          }
+          if (typeof isfirst != 'undefined') {
+	          if (isfirst.toString() === 'false') {
+	            this.close();
+	          }
+      		}
         }
 
         this._resizeContentImg();
