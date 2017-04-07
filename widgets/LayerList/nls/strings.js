@@ -17,12 +17,12 @@ define({
     itemToAttributeTable: "Open Attribute Table",
     itemShowItemDetails: "Show Item Details",
     empty: "empty",
-    removePopup: "Disable Pop-up",
-    enablePopup: "Enable Pop-up",
+    removePopup: "Disable ID Pop-up",
+    enablePopup: "Enable ID Pop-up",
     itemDataFactSheet: "Data Fact Sheet",
     itemMetadataDownload: "Metadata/Download",
-    itemChangeSymbology: "Change Symbology",
-    itemRemove: "Remove"   
+    itemChangeSymbology: "Change Appearance",
+    itemRemove: "Remove Layer"   
   }),
   "ar": 1,
   "cs": 1,
