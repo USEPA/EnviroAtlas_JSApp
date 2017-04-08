@@ -49,9 +49,9 @@ define([
     var updateFailedListOfLayers = function(){	
     	var comment = document.getElementById("failedLayersComment");
     	if (Object.keys(window.faildedLayerDictionary).length == 0) {    		
-    		comment.innerHTML = "Currently, there is no layers failed being added to map.";    		
+    		comment.innerHTML = "All layers added to the map so far have been successful";    		
     	} else{
-    		comment.innerHTML = "Following layers could not be added to map:";
+    		comment.innerHTML = "The following layers could not be added to map:";
     	}
 	    var tableOfRelationship = document.getElementById("failedLayers");
 	    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0]; 
