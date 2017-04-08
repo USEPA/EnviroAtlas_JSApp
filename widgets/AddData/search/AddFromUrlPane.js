@@ -47,6 +47,7 @@ define(["dojo/_base/declare",
     "esri/InfoTemplate"//,
     // "esri/layers/vector-tile"
   ],
+  
   function(declare, lang, array, on, keys, Deferred, all, domClass, win, dom, domStyle, Viewport,
     _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, i18n, LayerLoader, util,
     ArcGISDynamicMapServiceLayer, ArcGISImageServiceLayer, ArcGISTiledMapServiceLayer, CSVLayer,
@@ -125,6 +126,8 @@ define(["dojo/_base/declare",
         util.setNodeText(self.messageNode, i18n.search.item.messages.adding);
         var dfd = new Deferred();
         var map = this.searchPane.wabWidget.map;
+        //var appConfig = this.searchPane.wabWidget.appConfig;
+        var self = this;
         this._handleAdd(dfd, map, type, url);
         dfd.then(function(result) {
           if (result) {
@@ -153,6 +156,11 @@ define(["dojo/_base/declare",
               //console.warn("msg",error.message);
               //util.setNodeText(self.messageNode,error.message);
               console.log("");
+
+              if (!(url in window.faildedOutsideLayerDictionary)){
+			  	  window.faildedOutsideLayerDictionary[url] = url;
+			  }	
+			  document.getElementById('openFailedLayer').click();			  
             }
           }
         });
@@ -248,6 +256,7 @@ define(["dojo/_base/declare",
                       loader._setFeatureLayerInfoTemplate(lyr);
                       window.layerID_Portal_WebMap.push(lyr.id);
                       map.addLayer(lyr);
+
                     });
                     dfd.resolve(lyrs);
                   }).otherwise(function(error) {
@@ -425,6 +434,8 @@ define(["dojo/_base/declare",
             loader._setFeatureLayerInfoTemplate(lyr);
           }
           window.layerID_Portal_WebMap.push(lyr.id);
+
+          
           map.addLayer(lyr);
           dfd.resolve(lyr);
         }).otherwise(function(error) {

@@ -63,8 +63,9 @@ define([
         this.inherited(arguments);
         
     	var frameChoice = window.parent.document.getElementById("selNumOfFram");
-    	frameChoice.selectedIndex  = 0;
-        	
+    	if (frameChoice) {
+    		frameChoice.selectedIndex  = 0;
+        } 	
 	    var changedNewValue = window.changedExtentByOtherFrameXmin;
 	
 	    Object.defineProperty(window, "changedExtentByOtherFrameXmin", {

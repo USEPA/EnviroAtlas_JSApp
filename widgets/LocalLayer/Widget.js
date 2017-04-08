@@ -218,8 +218,8 @@ define([
 			                }
 			
 						    dojo.connect(lLayer, "onError", function(error){
-						    	if ((!(lLayer.title in window.faildedLayerDictionary)) && (!(lLayer.title in window.successLayerDictionary))){
-							  		window.faildedLayerDictionary[lLayer.title] = lLayer.title;
+						    	if ((!(lLayer.title in window.faildedEALayerDictionary)) && (!(lLayer.title in window.successLayerDictionary))){
+							  		window.faildedEALayerDictionary[lLayer.title] = lLayer.title;
 							  		showDisplayLayerAddFailureWidget(lLayer.title);
 							  	}
 						    });
