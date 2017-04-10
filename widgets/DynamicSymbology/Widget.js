@@ -103,10 +103,10 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		var okButtonDiv = domConstruct.create("div");
 		var cancelButtonDiv = domConstruct.create("div");
 		var contentsNode = domConstruct.create("div");
-		stylerButtons.append(okButtonDiv);
-		stylerButtons.append(cancelButtonDiv);
-		contentsNode.append(stylerNode);
-		contentsNode.append(stylerButtons);
+		domConstruct.place(okButtonDiv, stylerButtons);
+		domConstruct.place(cancelButtonDiv, stylerButtons);
+		domConstruct.place(stylerNode, contentsNode);
+		domConstruct.place(stylerButtons, contentsNode);
 
 		styleDialog = new TooltipDialog({
 			style: "width: 300px;",
