@@ -81,27 +81,38 @@ def main(_argv):
       })
 
     for rowID in rowsToKeep:
-        layerJSON = {"type" : "Feature",
-                    "opacity": 0.5,
-                    "visible": "false",
-                    "autorefresh": 0,
-                    "mode": "ondemand"}
-
         name = inputWorksheet.cell(key["name"]+rowID).value
+        layerJSON = {"opacity": 0.5,
+                    "visible": "false"}
+        if (inputWorksheet.cell(key["serviceType"]+rowID).value == "feature"):
+            layerJSON["type"] ="FEATURE"
+            layerJSON["autorefresh"] = 0
+            layerJSON["mode"] = "ondemand"
+            if inputWorksheet.cell(key["fieldName"]+rowID).value:
+                layerJSON["popup"] = {
+                  "title": popupDictionary[inputWorksheet.cell(key["eaScale"]+rowID).value],
+                  "fieldInfos": [
+                    {
+                      "visible": "true"
+                    }
+                  ],
+                  "showAttachments": "false"
+                }
+                layerJSON["popup"]["fieldInfos"][0]["fieldName"] = inputWorksheet.cell(key["fieldName"]+rowID).value
+                layerJSON["popup"]["fieldInfos"][0]["label"] = name
+        else:
+            if (inputWorksheet.cell(key["serviceType"]+rowID).value == "dynamic" or inputWorksheet.cell(key["serviceType"]+rowID).value == "image"):
+                layerJSON["type"] = "DYNAMIC"
+            if (inputWorksheet.cell(key["serviceType"]+rowID).value == "tiled"):
+                layerJSON["type"] = "TILED"
+            ### code for reading in saved json files with layer/popup definitions.
+            #with open(rootpath + inputWorksheet.cell(key["popupDefinition"]+rowID).value) as json_data:
+            #    layerJSON["layers"] = json.load(json_data)
+            ### the excel spreadsheet should include a relative path to a json file containing the layer/popup definition, which should be a JSON array of layer objects.
+            ### will also need to add row: popupDefinition,popupDefinition (or corresponding human-friendly name for excel column to jsonfieldmap.csv to enable
         layerJSON["name"] = name
         layerJSON["url"] = inputWorksheet.cell(key["url"]+rowID).value
-        if inputWorksheet.cell(key["fieldName"]+rowID).value:
-            layerJSON["popup"] = {
-              "title": popupDictionary[inputWorksheet.cell(key["eaScale"]+rowID).value],
-              "fieldInfos": [
-                {
-                  "visible": "true"
-                }
-              ],
-              "showAttachments": "false"
-            }
-            layerJSON["popup"]["fieldInfos"][0]["fieldName"] = inputWorksheet.cell(key["fieldName"]+rowID).value
-            layerJSON["popup"]["fieldInfos"][0]["label"] = name
+
         stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink"]
         for elem in stringList:
             cell = inputWorksheet.cell(key[elem]+rowID)
