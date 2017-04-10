@@ -90,7 +90,7 @@ define(["./ConfigManager",
     window.topicDic["Land Cover: Type"] = "LCT";
     window.topicDic["Landscape Pattern"] = "LP";
     window.topicDic["Near-Road Environments"] = "NRE";
-    window.topicDic["Pollutant and Runoff Reduction"] = "PaRR";
+    //window.topicDic["Pollutant and Runoff Reduction"] = "PaRR";
     
     window.topicDic["Pollutant Reduction: Air"] = "PRA"; //This is newly added Mar 2017    
     window.topicDic["Pollutant Reduction: Water"] = "PRW"; //This is newly added Mar 2017 
@@ -99,14 +99,14 @@ define(["./ConfigManager",
     window.topicDic["Pollutants: Other"] = "PO";
     
     window.topicDic["Protected Lands"] = "PL";
-    window.topicDic["Species: At-Risk and Priority"] = "SARP";
+    window.topicDic["Species: At-Risk and Priority"] = "SARaP";
     window.topicDic["Species: Game"] = "SG";
     window.topicDic["Species: Other"] = "SO";
     //window.topicDic["Water Supply and Hydrology"] = "WSaH";
     window.topicDic["Water Supply, Runoff, and Flow"] = "WSRaF"; //This is newly added Mar 2017 
     
     window.topicDic["Water Use"] = "WU";
-    window.topicDic["Weather and Climate"] = "WaU"; //This is newly added Mar 2017 
+    window.topicDic["Weather and Climate"] = "WaC"; //This is newly added Mar 2017 
     window.topicDic["Wetlands and Lowlands"] = "WaL";
     
     
