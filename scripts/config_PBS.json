@@ -470,7 +470,7 @@
                 "eaMetric": "foundational", 
                 "eaLyrNum": 0, 
                 "eaScale": "NATIONAL", 
-                "type": "DYNAMIC"
+                "type": "FEATURE"
             }, 
             {
                 "opacity": 0.5, 

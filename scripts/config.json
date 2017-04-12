@@ -3626,7 +3626,7 @@
                 "eaID": 86, 
                 "eaCS": "true", 
                 "eaScale": "COMMUNITY", 
-                "type": "TILED", 
+                "type": "FEATURE", 
                 "eaCA": "true", 
                 "opacity": 0.5, 
                 "eaFFM": "true", 
@@ -3672,7 +3672,7 @@
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
                 "tileLink": "no", 
-                "type": "TILED", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Landscape Pattern", 
                     "Recreation, Culture, and Aesthetics - Landscape Pattern"
@@ -3708,7 +3708,7 @@
                     "Clean Air - Near-Road Environments", 
                     "Recreation, Culture, and Aesthetics - Near-Road Environments"
                 ], 
-                "type": "TILED", 
+                "type": "FEATURE", 
                 "eaCA": "true", 
                 "eaRCA": "true"
             }, 
@@ -3738,7 +3738,7 @@
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
                 "tileLink": "no", 
-                "type": "TILED", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
@@ -3773,7 +3773,7 @@
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
                 "tileLink": "no", 
-                "type": "TILED", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
@@ -3811,7 +3811,7 @@
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
                 "tileLink": "no", 
-                "type": "TILED", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
@@ -3849,7 +3849,7 @@
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
                 "tileLink": "no", 
-                "type": "TILED", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
@@ -3880,7 +3880,7 @@
                 "eaMetric": "foundational", 
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
-                "type": "TILED", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Recreation, Culture, and Aesthetics - Engagement with Outdoors"
                 ], 
@@ -3906,7 +3906,7 @@
                 "eaID": 94, 
                 "eaCS": "true", 
                 "eaScale": "COMMUNITY", 
-                "type": "TILED", 
+                "type": "FEATURE", 
                 "eaCA": "true", 
                 "opacity": 0.5, 
                 "eaMetric": "foundational", 
@@ -3956,7 +3956,7 @@
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
                 "tileLink": "no", 
-                "type": "TILED", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Natural Hazard Mitigation - Land Cover: Type", 
                     "Recreation, Culture, and Aesthetics - Land Cover: Type"
@@ -3980,7 +3980,7 @@
                 "eaID": 96, 
                 "eaCS": "true", 
                 "eaScale": "COMMUNITY", 
-                "type": "TILED", 
+                "type": "FEATURE", 
                 "eaCA": "true", 
                 "opacity": 0.5, 
                 "eaMetric": "foundational", 
@@ -4020,7 +4020,7 @@
                 "eaID": 97, 
                 "eaCS": "true", 
                 "eaScale": "COMMUNITY", 
-                "type": "TILED", 
+                "type": "FEATURE", 
                 "eaCA": "true", 
                 "opacity": 0.5, 
                 "eaMetric": "foundational", 
@@ -4067,7 +4067,7 @@
                 "eaLyrNum": 0, 
                 "eaScale": "NATIONAL", 
                 "tileLink": "no", 
-                "type": "TILED", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Protected Lands", 
                     "Clean and Plentiful Water - Protected Lands", 
@@ -10751,7 +10751,7 @@
                 "eaLyrNum": 0, 
                 "eaScale": "NATIONAL", 
                 "tileLink": "no", 
-                "type": "DYNAMIC", 
+                "type": "FEATURE", 
                 "eaCA": "true", 
                 "eaBCSDD": [
                     "Clean Air - Wetlands and Lowlands", 
@@ -10781,7 +10781,7 @@
                 "eaLyrNum": 0, 
                 "eaScale": "NATIONAL", 
                 "tileLink": "no", 
-                "type": "DYNAMIC", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Wetlands and Lowlands", 
                     "Recreation, Culture, and Aesthetics - Wetlands and Lowlands"
@@ -10814,7 +10814,7 @@
                 "eaMetric": "foundational", 
                 "eaLyrNum": 0, 
                 "eaScale": "NATIONAL", 
-                "type": "DYNAMIC"
+                "type": "FEATURE"
             }, 
             {
                 "opacity": 0.5, 
@@ -10834,7 +10834,7 @@
                 "eaLyrNum": 0, 
                 "eaScale": "NATIONAL", 
                 "tileLink": "no", 
-                "type": "DYNAMIC", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Protected Lands", 
                     "Recreation, Culture, and Aesthetics - Protected Lands"
@@ -10859,7 +10859,7 @@
                 "eaLyrNum": 0, 
                 "eaScale": "NATIONAL", 
                 "tileLink": "no", 
-                "type": "DYNAMIC", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Protected Lands", 
                     "Recreation, Culture, and Aesthetics - Protected Lands"
@@ -10885,7 +10885,7 @@
                 "eaLyrNum": 0, 
                 "eaScale": "NATIONAL", 
                 "tileLink": "no", 
-                "type": "DYNAMIC", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Protected Lands", 
                     "Recreation, Culture, and Aesthetics - Protected Lands"
@@ -11173,7 +11173,7 @@
                 "eaID": 267, 
                 "eaCS": "true", 
                 "eaScale": "NATIONAL", 
-                "type": "DYNAMIC", 
+                "type": "FEATURE", 
                 "eaCA": "true", 
                 "opacity": 0.5, 
                 "eaFFM": "true", 
@@ -11229,7 +11229,7 @@
                 "eaCPW": "true", 
                 "eaScale": "NATIONAL", 
                 "tileLink": "no", 
-                "type": "DYNAMIC", 
+                "type": "FEATURE", 
                 "eaCA": "true", 
                 "eaBC": "true"
             }, 
@@ -11263,7 +11263,7 @@
                 "eaLyrNum": " ", 
                 "eaScale": "NATIONAL", 
                 "tileLink": "no", 
-                "type": "DYNAMIC", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Ecosystem Type", 
                     "Recreation, Culture, and Aesthetics - Ecosystem Type"
@@ -11291,7 +11291,7 @@
                 "eaCPW": "true", 
                 "eaLyrNum": " ", 
                 "eaScale": "NATIONAL", 
-                "type": "DYNAMIC", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Impaired Waters"
                 ]
@@ -11318,7 +11318,7 @@
                 "eaCPW": "true", 
                 "eaLyrNum": " ", 
                 "eaScale": "NATIONAL", 
-                "type": "DYNAMIC", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Impaired Waters"
                 ], 
@@ -11344,7 +11344,7 @@
                 "eaLyrNum": " ", 
                 "eaScale": "NATIONAL", 
                 "tileLink": "no", 
-                "type": "DYNAMIC", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Wetlands and Lowlands", 
                     "Recreation, Culture, and Aesthetics - Wetlands and Lowlands"
@@ -12422,7 +12422,7 @@
                 "eaMetric": "foundational", 
                 "eaScale": "NATIONAL", 
                 "tileLink": "no", 
-                "type": "DYNAMIC", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Landscape Pattern", 
                     "Recreation, Culture, and Aesthetics - Landscape Pattern"
@@ -12450,7 +12450,7 @@
                 "eaMetric": "foundational", 
                 "eaScale": "NATIONAL", 
                 "tileLink": "no", 
-                "type": "DYNAMIC", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Landscape Pattern", 
                     "Recreation, Culture, and Aesthetics - Landscape Pattern"
@@ -12478,7 +12478,7 @@
                 "eaMetric": "foundational", 
                 "eaScale": "NATIONAL", 
                 "tileLink": "no", 
-                "type": "DYNAMIC", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Landscape Pattern", 
                     "Recreation, Culture, and Aesthetics - Landscape Pattern"
@@ -12506,7 +12506,7 @@
                 "eaMetric": "foundational", 
                 "eaScale": "NATIONAL", 
                 "tileLink": "no", 
-                "type": "DYNAMIC", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Landscape Pattern", 
                     "Recreation, Culture, and Aesthetics - Landscape Pattern"
@@ -12534,7 +12534,7 @@
                 "eaMetric": "foundational", 
                 "eaScale": "NATIONAL", 
                 "tileLink": "no", 
-                "type": "DYNAMIC", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Landscape Pattern", 
                     "Recreation, Culture, and Aesthetics - Landscape Pattern"
@@ -12562,7 +12562,7 @@
                 "eaMetric": "foundational", 
                 "eaScale": "NATIONAL", 
                 "tileLink": "no", 
-                "type": "DYNAMIC", 
+                "type": "FEATURE", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Landscape Pattern", 
                     "Recreation, Culture, and Aesthetics - Landscape Pattern"
