@@ -28,9 +28,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Health and Economic Outcomes"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 2, 
@@ -48,6 +46,9 @@
                 "eaLyrNum": 3, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Health and Economic Outcomes"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/AcuteRespiratorySymptomsAvoidedDueToParticulateMatterPM25Removedbytreecover.pdf", 
                 "eaCA": "true", 
@@ -67,10 +68,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Biodiversity Conservation - Land Cover: Type", 
-                    "Food, Fuel, and Materials - Land Cover: Type"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 3, 
@@ -90,6 +88,10 @@
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Agriculturallandpercapita.pdf", 
+                "eaBCSDD": [
+                    "Biodiversity Conservation - Land Cover: Type", 
+                    "Food, Fuel, and Materials - Land Cover: Type"
+                ], 
                 "name": "Agricultural land per capita (m2/person)\u00a0"
             }, 
             {
@@ -106,9 +108,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Health and Economic Outcomes"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 4, 
@@ -126,6 +126,9 @@
                 "eaLyrNum": 5, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Health and Economic Outcomes"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/AsthmaExacerbationAvoidedDuetonitrogenDioxideRemovedbytreecover.pdf", 
                 "eaCA": "true", 
@@ -145,9 +148,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Health and Economic Outcomes"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 5, 
@@ -165,6 +166,9 @@
                 "eaLyrNum": 6, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Health and Economic Outcomes"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/AsthmaExacerbationAvoidedDueToSulfurDioxideRemovedbytreecover.pdf", 
                 "eaCA": "true", 
@@ -202,6 +206,7 @@
                 "eaLyrNum": 7, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Averagereductionindaytimeambienttemperature.pdf", 
                 "eaBCSDD": [
@@ -242,6 +247,7 @@
                 "eaLyrNum": 8, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Averagereductioninnighttimeambienttemperature.pdf", 
                 "eaBCSDD": [
@@ -264,10 +270,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Pollutant and Runoff Reduction", 
-                    "Climate Stabilization - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 8, 
@@ -287,6 +290,10 @@
                 "eaLyrNum": 9, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Pollutant and Runoff Reduction", 
+                    "Climate Stabilization - Pollutant and Runoff Reduction"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Carbonmonoxideremovedannuallybytreecover.pdf", 
                 "eaCA": "true", 
@@ -306,9 +313,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean and Plentiful Water - Water Use"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 9, 
@@ -326,6 +331,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Dailydomesticwateruse.pdf", 
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - Water Use"
+                ], 
                 "name": "Daily domestic water use (x1000 gal/day)\u00a0"
             }, 
             {
@@ -365,6 +373,7 @@
                 "eaLyrNum": 11, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Daycarecenterswithlt25percentgreenspaceinviewshed.pdf", 
                 "eaBCSDD": [
@@ -407,6 +416,7 @@
                 "eaLyrNum": 12, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Greenspacepercapita.pdf", 
                 "eaBCSDD": [
@@ -427,9 +437,9 @@
                     "heat island", 
                     "temperature"
                 ], 
+                "tileLink": "no", 
                 "eaID": 12, 
                 "eaCS": "true", 
-                "name": "Impervious area per capita (m2/person)\u00a0", 
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "opacity": 0.5, 
@@ -446,12 +456,7 @@
                 }, 
                 "eaFFM": "true", 
                 "eaMetric": "metric", 
-                "eaBCSDD": [
-                    "Climate Stabilization - Land Cover: Type", 
-                    "Food, Fuel, and Materials - Land Cover: Type", 
-                    "Natural Hazard Mitigation - Land Cover: Type", 
-                    "Recreation, Culture, and Aesthetics - Land Cover: Type"
-                ], 
+                "name": "Impervious area per capita (m2/person)\u00a0", 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
                 "eaTopic": "Land Cover: Type", 
@@ -459,7 +464,13 @@
                 "eaDfsLink": "ESC/Imperviousareapercapita.pdf", 
                 "eaMetadata": "C014", 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
-                "mode": "ondemand"
+                "mode": "ondemand", 
+                "eaBCSDD": [
+                    "Climate Stabilization - Land Cover: Type", 
+                    "Food, Fuel, and Materials - Land Cover: Type", 
+                    "Natural Hazard Mitigation - Land Cover: Type", 
+                    "Recreation, Culture, and Aesthetics - Land Cover: Type"
+                ]
             }, 
             {
                 "opacity": 0.5, 
@@ -498,6 +509,7 @@
                 "eaLyrNum": 14, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/K12schoolswithlt25percentgreenspaceinviewshed.pdf", 
                 "eaBCSDD": [
@@ -506,8 +518,25 @@
                 "name": "K-12 schools with < 25 percent green space in viewshed\u00a0"
             }, 
             {
+                "visible": "false", 
+                "eaCPW": "true", 
+                "eaLyrNum": 15, 
+                "eaTags": [
+                    "forest", 
+                    "plants", 
+                    "vegetation", 
+                    "health", 
+                    "well-being", 
+                    "human"
+                ], 
+                "tileLink": "no", 
+                "eaID": 14, 
+                "eaCS": "true", 
+                "name": "Nitrogen dioxide removed annually by tree cover (kg/yr)\u00a0", 
+                "eaScale": "COMMUNITY", 
+                "type": "FEATURE", 
+                "eaCA": "true", 
                 "opacity": 0.5, 
-                "eaTopic": "Pollutant Reduction: Air", 
                 "popup": {
                     "showAttachments": "false", 
                     "fieldInfos": [
@@ -519,35 +548,19 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
+                "eaMetric": "metric", 
                 "eaBCSDD": [
                     "Clean Air - Pollutant and Runoff Reduction", 
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction", 
                     "Climate Stabilization - Pollutant and Runoff Reduction"
                 ], 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
-                "eaID": 14, 
+                "eaTopic": "Pollutant Reduction: Air", 
                 "eaDescription": "This map estimates the total kilograms of nitrogen dioxide removed annually by trees in each census block group.", 
-                "eaTags": [
-                    "forest", 
-                    "plants", 
-                    "vegetation", 
-                    "health", 
-                    "well-being", 
-                    "human"
-                ], 
-                "eaCS": "true", 
-                "eaMetadata": "C012", 
-                "visible": "false", 
-                "eaMetric": "metric", 
-                "eaCPW": "true", 
-                "eaLyrNum": 15, 
-                "mode": "ondemand", 
-                "eaScale": "COMMUNITY", 
-                "type": "FEATURE", 
                 "eaDfsLink": "ESC/Nitrogendioxideremovedannuallybytreecover.pdf", 
-                "eaCA": "true", 
-                "name": "Nitrogen dioxide removed annually by tree cover (kg/yr)\u00a0"
+                "eaMetadata": "C012", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
+                "mode": "ondemand"
             }, 
             {
                 "opacity": 0.5, 
@@ -580,6 +593,7 @@
                 "eaLyrNum": 16, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Numberofhestoricplacescensusblockgroup.pdf", 
                 "eaBCSDD": [
@@ -601,10 +615,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Pollutant and Runoff Reduction", 
-                    "Climate Stabilization - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 16, 
@@ -624,6 +635,10 @@
                 "eaLyrNum": 17, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Pollutant and Runoff Reduction", 
+                    "Climate Stabilization - Pollutant and Runoff Reduction"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Ozoneremovedannuallybytreecover.pdf", 
                 "eaCA": "true", 
@@ -643,10 +658,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Pollutant and Runoff Reduction", 
-                    "Climate Stabilization - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 17, 
@@ -666,6 +678,10 @@
                 "eaLyrNum": 18, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Pollutant and Runoff Reduction", 
+                    "Climate Stabilization - Pollutant and Runoff Reduction"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ParticulatematterPM10removedannuallybytreecover.pdf", 
                 "eaCA": "true", 
@@ -685,10 +701,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Pollutant and Runoff Reduction", 
-                    "Climate Stabilization - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 18, 
@@ -708,6 +721,10 @@
                 "eaLyrNum": 19, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Pollutant and Runoff Reduction", 
+                    "Climate Stabilization - Pollutant and Runoff Reduction"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ParticulatematterPM25removedannuallybytreecover.pdf", 
                 "eaCA": "true", 
@@ -744,6 +761,7 @@
                 "eaLyrNum": 20, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": " ", 
@@ -767,10 +785,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Pollutant and Runoff Reduction", 
-                    "Climate Stabilization - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 20, 
@@ -790,6 +805,10 @@
                 "eaLyrNum": 21, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Pollutant and Runoff Reduction", 
+                    "Climate Stabilization - Pollutant and Runoff Reduction"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Percentcarbonmonoxideremovedannuallybytreecover.pdf", 
                 "eaCA": "true", 
@@ -830,6 +849,7 @@
                 "eaLyrNum": 22, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Percentgreenspace.pdf", 
                 "eaBCSDD": [
@@ -851,6 +871,7 @@
                     "heat island", 
                     "temperature"
                 ], 
+                "tileLink": "no", 
                 "eaID": 22, 
                 "eaCS": "true", 
                 "eaScale": "COMMUNITY", 
@@ -902,8 +923,8 @@
                     "pond", 
                     "riparian"
                 ], 
+                "tileLink": "no", 
                 "eaID": 23, 
-                "name": "Percent impervious area in 15m stream and lake buffer\u00a0", 
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "opacity": 0.5, 
@@ -918,13 +939,14 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaMetric": "metric", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
                     "Natural Hazard Mitigation - Land Cover: Near-Water", 
                     "Recreation, Culture, and Aesthetics - Land Cover: Near-Water"
                 ], 
+                "eaMetric": "metric", 
+                "name": "Percent impervious area in 15m stream and lake buffer\u00a0", 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
                 "eaTopic": "Land Cover: Near-Water", 
@@ -949,8 +971,8 @@
                     "pond", 
                     "riparian"
                 ], 
+                "tileLink": "no", 
                 "eaID": 24, 
-                "name": "Percent impervious area in 50m stream and lake buffer\u00a0", 
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "opacity": 0.5, 
@@ -965,13 +987,14 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaMetric": "metric", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
                     "Natural Hazard Mitigation - Land Cover: Near-Water", 
                     "Recreation, Culture, and Aesthetics - Land Cover: Near-Water"
                 ], 
+                "eaMetric": "metric", 
+                "name": "Percent impervious area in 50m stream and lake buffer\u00a0", 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
                 "eaTopic": "Land Cover: Near-Water", 
@@ -993,8 +1016,8 @@
                     "pond", 
                     "riparian"
                 ], 
+                "tileLink": "no", 
                 "eaID": 25, 
-                "name": "Percent land area in 15m stream and lake buffer\u00a0", 
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "opacity": 0.5, 
@@ -1009,13 +1032,14 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaMetric": "metric", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
                     "Natural Hazard Mitigation - Land Cover: Near-Water", 
                     "Recreation, Culture, and Aesthetics - Land Cover: Near-Water"
                 ], 
+                "eaMetric": "metric", 
+                "name": "Percent land area in 15m stream and lake buffer\u00a0", 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
                 "eaTopic": "Land Cover: Near-Water", 
@@ -1037,8 +1061,8 @@
                     "pond", 
                     "riparian"
                 ], 
+                "tileLink": "no", 
                 "eaID": 26, 
-                "name": "Percent land area in 50m stream and lake buffer\u00a0", 
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "opacity": 0.5, 
@@ -1053,13 +1077,14 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaMetric": "metric", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
                     "Natural Hazard Mitigation - Land Cover: Near-Water", 
                     "Recreation, Culture, and Aesthetics - Land Cover: Near-Water"
                 ], 
+                "eaMetric": "metric", 
+                "name": "Percent land area in 50m stream and lake buffer\u00a0", 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
                 "eaTopic": "Land Cover: Near-Water", 
@@ -1071,8 +1096,25 @@
                 "eaBC": "true"
             }, 
             {
+                "visible": "false", 
+                "eaCPW": "true", 
+                "eaLyrNum": 28, 
+                "eaTags": [
+                    "forest", 
+                    "plants", 
+                    "vegetation", 
+                    "health", 
+                    "well-being", 
+                    "human"
+                ], 
+                "tileLink": "no", 
+                "eaID": 27, 
+                "eaCS": "true", 
+                "name": "Percent nitrogen dioxide removed annually by tree cover", 
+                "eaScale": "COMMUNITY", 
+                "type": "FEATURE", 
+                "eaCA": "true", 
                 "opacity": 0.5, 
-                "eaTopic": "Pollutant Reduction: Air", 
                 "popup": {
                     "showAttachments": "false", 
                     "fieldInfos": [
@@ -1084,35 +1126,19 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
+                "eaMetric": "metric", 
                 "eaBCSDD": [
                     "Clean Air - Pollutant and Runoff Reduction", 
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction", 
                     "Climate Stabilization - Pollutant and Runoff Reduction"
                 ], 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
-                "eaID": 27, 
+                "eaTopic": "Pollutant Reduction: Air", 
                 "eaDescription": "This map estimates the mean percent of nitrogen dioxide removed annually by tree cover in each census block group.", 
-                "eaTags": [
-                    "forest", 
-                    "plants", 
-                    "vegetation", 
-                    "health", 
-                    "well-being", 
-                    "human"
-                ], 
-                "eaCS": "true", 
-                "eaMetadata": "C012", 
-                "visible": "false", 
-                "eaMetric": "metric", 
-                "eaCPW": "true", 
-                "eaLyrNum": 28, 
-                "mode": "ondemand", 
-                "eaScale": "COMMUNITY", 
-                "type": "FEATURE", 
                 "eaDfsLink": "ESC/Percentnitrogendioxideremovedannuallybytreecover.pdf", 
-                "eaCA": "true", 
-                "name": "Percent nitrogen dioxide removed annually by tree cover"
+                "eaMetadata": "C012", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
+                "mode": "ondemand"
             }, 
             {
                 "opacity": 0.5, 
@@ -1149,6 +1175,7 @@
                 "eaLyrNum": 29, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "eaBCSDD": [
                     "Clean Air - Near-Road Environments", 
                     "Recreation, Culture, and Aesthetics - Near-Road Environments"
@@ -1193,6 +1220,7 @@
                 "eaLyrNum": 30, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "eaBCSDD": [
                     "Clean Air - Near-Road Environments", 
                     "Recreation, Culture, and Aesthetics - Near-Road Environments"
@@ -1236,6 +1264,7 @@
                 "eaLyrNum": 31, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Percentofresidentialpopulationnotwithin500mofaparkentrance.pdf", 
                 "eaBCSDD": [
@@ -1278,6 +1307,7 @@
                 "eaLyrNum": 32, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Percentofresidentialpopulationwithminimalviewsoftrees.pdf", 
                 "eaBCSDD": [
@@ -1320,6 +1350,7 @@
                 "eaLyrNum": 33, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Percentofresidentialpopulationwithviewsofwater.pdf", 
                 "eaBCSDD": [
@@ -1341,9 +1372,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Near-Road Environments"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 33, 
@@ -1361,6 +1390,9 @@
                 "eaLyrNum": 34, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Near-Road Environments"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Percentofresidentialpopulationwithin300mofbusyroadway.pdf", 
                 "eaCA": "true", 
@@ -1401,6 +1433,7 @@
                 "eaLyrNum": 35, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Percentofresidentialpopulationwithin500mofaparkentrance.pdf", 
                 "eaBCSDD": [
@@ -1422,10 +1455,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Pollutant and Runoff Reduction", 
-                    "Climate Stabilization - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 35, 
@@ -1445,6 +1475,10 @@
                 "eaLyrNum": 36, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Pollutant and Runoff Reduction", 
+                    "Climate Stabilization - Pollutant and Runoff Reduction"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Percentozoneremovedannuallybytreecover.pdf", 
                 "eaCA": "true", 
@@ -1464,10 +1498,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Pollutant and Runoff Reduction", 
-                    "Climate Stabilization - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 36, 
@@ -1487,6 +1518,10 @@
                 "eaLyrNum": 37, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Pollutant and Runoff Reduction", 
+                    "Climate Stabilization - Pollutant and Runoff Reduction"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/PercentparticulatematterPM10removedannuallybytreecover.pdf", 
                 "eaCA": "true", 
@@ -1506,10 +1541,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Pollutant and Runoff Reduction", 
-                    "Climate Stabilization - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 37, 
@@ -1529,6 +1561,10 @@
                 "eaLyrNum": 38, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Pollutant and Runoff Reduction", 
+                    "Climate Stabilization - Pollutant and Runoff Reduction"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/PercentparticulatematterPM25removedannuallybytreecover.pdf", 
                 "eaCA": "true", 
@@ -1573,6 +1609,7 @@
                 "eaLyrNum": 39, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Percentreductioninannualrunoffduetotreecover.pdf", 
                 "eaBCSDD": [
@@ -1582,8 +1619,25 @@
                 "name": "Percent reduction in annual runoff\u00a0due to tree cover"
             }, 
             {
+                "visible": "false", 
+                "eaCPW": "true", 
+                "eaLyrNum": 40, 
+                "eaTags": [
+                    "forest", 
+                    "plants", 
+                    "vegetation", 
+                    "health", 
+                    "well-being", 
+                    "human"
+                ], 
+                "tileLink": "no", 
+                "eaID": 39, 
+                "eaCS": "true", 
+                "name": "Percent sulfur dioxide removed annually by tree cover", 
+                "eaScale": "COMMUNITY", 
+                "type": "FEATURE", 
+                "eaCA": "true", 
                 "opacity": 0.5, 
-                "eaTopic": "Pollutant Reduction: Air", 
                 "popup": {
                     "showAttachments": "false", 
                     "fieldInfos": [
@@ -1595,35 +1649,19 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
+                "eaMetric": "metric", 
                 "eaBCSDD": [
                     "Clean Air - Pollutant and Runoff Reduction", 
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction", 
                     "Climate Stabilization - Driver"
                 ], 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
-                "eaID": 39, 
+                "eaTopic": "Pollutant Reduction: Air", 
                 "eaDescription": "This map estimates the mean percent of sulfur dioxide removed annually by tree cover in each census block group.", 
-                "eaTags": [
-                    "forest", 
-                    "plants", 
-                    "vegetation", 
-                    "health", 
-                    "well-being", 
-                    "human"
-                ], 
-                "eaCS": "true", 
-                "eaMetadata": "C012", 
-                "visible": "false", 
-                "eaMetric": "metric", 
-                "eaCPW": "true", 
-                "eaLyrNum": 40, 
-                "mode": "ondemand", 
-                "eaScale": "COMMUNITY", 
-                "type": "FEATURE", 
                 "eaDfsLink": "ESC/Percentsulfurdioxideremovedannuallybytreecover.pdf", 
-                "eaCA": "true", 
-                "name": "Percent sulfur dioxide removed annually by tree cover"
+                "eaMetadata": "C012", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
+                "mode": "ondemand"
             }, 
             {
                 "eaRCA": "true", 
@@ -1638,6 +1676,7 @@
                     "grean infrastructure", 
                     "green space"
                 ], 
+                "tileLink": "no", 
                 "eaID": 40, 
                 "eaCS": "true", 
                 "eaScale": "COMMUNITY", 
@@ -1688,8 +1727,8 @@
                     "vegetation", 
                     "riparian"
                 ], 
+                "tileLink": "no", 
                 "eaID": 41, 
-                "name": "Percent tree cover in 15m stream and lake buffer\u00a0", 
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "opacity": 0.5, 
@@ -1704,13 +1743,14 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaMetric": "metric", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
                     "Natural Hazard Mitigation - Land Cover: Near-Water", 
                     "Recreation, Culture, and Aesthetics - Land Cover: Near-Water"
                 ], 
+                "eaMetric": "metric", 
+                "name": "Percent tree cover in 15m stream and lake buffer\u00a0", 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
                 "eaTopic": "Land Cover: Near-Water", 
@@ -1734,8 +1774,8 @@
                     "vegetation", 
                     "riparian"
                 ], 
+                "tileLink": "no", 
                 "eaID": 42, 
-                "name": "Percent tree cover in 50m stream and lake buffer\u00a0", 
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "opacity": 0.5, 
@@ -1750,13 +1790,14 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaMetric": "metric", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
                     "Natural Hazard Mitigation - Land Cover: Near-Water", 
                     "Recreation, Culture, and Aesthetics - Land Cover: Near-Water"
                 ], 
+                "eaMetric": "metric", 
+                "name": "Percent tree cover in 50m stream and lake buffer\u00a0", 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
                 "eaTopic": "Land Cover: Near-Water", 
@@ -1781,8 +1822,8 @@
                     "herbaceous", 
                     "riparian"
                 ], 
+                "tileLink": "no", 
                 "eaID": 43, 
-                "name": "Percent vegetated cover in 15m stream and lake buffer\u00a0", 
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "opacity": 0.5, 
@@ -1797,13 +1838,14 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaMetric": "metric", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
                     "Natural Hazard Mitigation - Land Cover: Near-Water", 
                     "Recreation, Culture, and Aesthetics - Land Cover: Near-Water"
                 ], 
+                "eaMetric": "metric", 
+                "name": "Percent vegetated cover in 15m stream and lake buffer\u00a0", 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
                 "eaTopic": "Land Cover: Near-Water", 
@@ -1827,8 +1869,8 @@
                     "herbaceous", 
                     "riparian"
                 ], 
+                "tileLink": "no", 
                 "eaID": 44, 
-                "name": "Percent vegetated cover in 50m stream and lake buffer\u00a0", 
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "opacity": 0.5, 
@@ -1843,13 +1885,14 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaMetric": "metric", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
                     "Natural Hazard Mitigation - Land Cover: Near-Water", 
                     "Recreation, Culture, and Aesthetics - Land Cover: Near-Water"
                 ], 
+                "eaMetric": "metric", 
+                "name": "Percent vegetated cover in 50m stream and lake buffer\u00a0", 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
                 "eaTopic": "Land Cover: Near-Water", 
@@ -1875,6 +1918,7 @@
                     "green infrastructure", 
                     "green space"
                 ], 
+                "tileLink": "no", 
                 "eaID": 45, 
                 "eaCS": "true", 
                 "eaScale": "COMMUNITY", 
@@ -1951,6 +1995,7 @@
                 "eaLyrNum": 47, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Reductioninannualrunoffduetotreecover.pdf", 
                 "eaBCSDD": [
@@ -1973,9 +2018,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 47, 
@@ -1995,6 +2038,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ReductioninmeanbiochemicaloxygendemandBOD5duetotreecover.pdf", 
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
+                ], 
                 "name": "Reduction in mean biochemical oxygen demand [BOD5] due to tree cover (kg/yr)\u00a0"
             }, 
             {
@@ -2011,9 +2057,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 48, 
@@ -2033,6 +2077,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ReductioninmeanchemicaloxygendemandCODduetotreecover.pdf", 
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
+                ], 
                 "name": "Reduction in mean chemical oxygen demand [COD] due to tree cover (kg/yr)\u00a0"
             }, 
             {
@@ -2049,9 +2096,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 49, 
@@ -2075,6 +2120,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ReductioninMeanLoadofCopperduetotreecover.pdf", 
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
+                ], 
                 "name": "Reduction in mean load of copper due to tree cover (kg/yr)\u00a0"
             }, 
             {
@@ -2091,9 +2139,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 50, 
@@ -2114,6 +2160,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ReductioninMeanLoadofNitritesandNitratesduetotreecover.pdf", 
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
+                ], 
                 "name": "Reduction in mean load of nitrites and nitrates due to tree cover (kg/yr)\u00a0"
             }, 
             {
@@ -2130,9 +2179,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 51, 
@@ -2153,6 +2200,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ReductioninMeanLoadofSolublePhosphorusduetotreecover.pdf", 
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
+                ], 
                 "name": "Reduction in mean load of soluble phosphorus due to tree cover (kg/yr)\u00a0"
             }, 
             {
@@ -2169,9 +2219,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 52, 
@@ -2192,6 +2240,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ReductioninMeanLoadofTotalKjeldahlNitrogenTKNduetotreecover.pdf", 
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
+                ], 
                 "name": "Reduction in mean load of total Kjeldahl nitrogen [TKN] due to tree cover (kg/yr)\u00a0"
             }, 
             {
@@ -2208,9 +2259,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 53, 
@@ -2231,6 +2280,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ReductioninMeanLoadofTotalPhosphorusduetotreecover.pdf", 
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
+                ], 
                 "name": "Reduction in mean load of total phosphorus due to tree cover (kg/yr)\u00a0"
             }, 
             {
@@ -2266,6 +2318,7 @@
                 "eaLyrNum": 55, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ReductioninMeanLoadofTotalSuspendedSolidsTSSduetotreecover.pdf", 
                 "eaBCSDD": [
@@ -2288,9 +2341,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 55, 
@@ -2310,6 +2361,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ReductioninmedianbiochemicaloxygendemandBOD5duetotreecover.pdf", 
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
+                ], 
                 "name": "Reduction in median biochemical oxygen demand [BOD5] due to tree cover (kg/yr)\u00a0"
             }, 
             {
@@ -2326,9 +2380,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 56, 
@@ -2348,6 +2400,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ReductioninmedianchemicaloxygendemandCODduetotreecover.pdf", 
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
+                ], 
                 "name": "Reduction in median chemical oxygen demand [COD] due to tree cover (kg/yr)\u00a0"
             }, 
             {
@@ -2364,9 +2419,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 57, 
@@ -2390,6 +2443,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ReductioninMedianLoadofCopperduetotreecover.pdf", 
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
+                ], 
                 "name": "Reduction in median load of copper due to tree cover (kg/yr)\u00a0"
             }, 
             {
@@ -2406,9 +2462,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 58, 
@@ -2429,6 +2483,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ReductioninMedianLoadofNitritesandNitratesduetotreecover.pdf", 
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
+                ], 
                 "name": "Reduction in median load of nitrites and nitrates due to tree cover (kg/yr)\u00a0"
             }, 
             {
@@ -2445,9 +2502,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 59, 
@@ -2468,6 +2523,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ReductioninMedianLoadofSolublePhosphorusduetotreecover.pdf", 
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
+                ], 
                 "name": "Reduction in median load of soluble phosphorus due to tree cover (kg/yr)\u00a0"
             }, 
             {
@@ -2484,9 +2542,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 60, 
@@ -2507,6 +2563,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ReductioninMedianLoadofTotalKjeldahlNitrogenTKNduetotreecover.pdf", 
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
+                ], 
                 "name": "Reduction in median load of total Kjeldahl nitrogen [TKN] due to tree cover (kg/yr)\u00a0"
             }, 
             {
@@ -2523,9 +2582,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 61, 
@@ -2546,6 +2603,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ReductioninMedianLoadofTotalPhosphorusduetotreecover.pdf", 
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - Pollutant and Runoff Reduction"
+                ], 
                 "name": "Reduction in median load of total phosphorus due to tree cover (kg/yr)\u00a0"
             }, 
             {
@@ -2581,6 +2641,7 @@
                 "eaLyrNum": 63, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ReductioninMedianLoadofTotalSuspendedSolidsTSSduetotreecover.pdf", 
                 "eaBCSDD": [
@@ -2624,6 +2685,7 @@
                 "eaLyrNum": 64, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Residentialpopulationnotwithin500mofaparkentrance.pdf", 
                 "eaBCSDD": [
@@ -2663,6 +2725,7 @@
                 "eaLyrNum": 65, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Residentialpopulationwithminimalviewsoftrees.pdf", 
                 "eaBCSDD": [
@@ -2702,6 +2765,7 @@
                 "eaLyrNum": 66, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Residentialpopulationwithviewsofwater.pdf", 
                 "eaBCSDD": [
@@ -2723,9 +2787,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Near-Road Environments"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 66, 
@@ -2743,6 +2805,9 @@
                 "eaLyrNum": 67, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Near-Road Environments"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Residentialpopulationwithin300mofbusyroadway.pdf", 
                 "eaCA": "true", 
@@ -2762,9 +2827,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Near-Road Environments"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 67, 
@@ -2782,6 +2845,9 @@
                 "eaLyrNum": 68, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Near-Road Environments"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Residentialpopulationwithin300mofbusyroadwaywithlt25percenttreebuffer.pdf", 
                 "eaCA": "true", 
@@ -2801,9 +2867,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Near-Road Environments"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 68, 
@@ -2821,6 +2885,9 @@
                 "eaLyrNum": 69, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Near-Road Environments"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Residentialpopulationwithin300mofbusyroadwaywithgt25percenttreebuffer.pdf", 
                 "eaCA": "true", 
@@ -2860,6 +2927,7 @@
                 "eaLyrNum": 70, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "tileLink": "no", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Residentialpopulationwithin500mofaparkentrance.pdf", 
                 "eaBCSDD": [
@@ -2881,9 +2949,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Health and Economic Outcomes"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 70, 
@@ -2902,14 +2968,34 @@
                 "eaLyrNum": 71, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Health and Economic Outcomes"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/SchoolDaysNotLostToIllnessDueToOzoneRemovedbytreecover.pdf", 
                 "eaCA": "true", 
                 "name": "School days not lost to illness due to ozone removed by tree cover (days/yr)\u00a0"
             }, 
             {
+                "visible": "false", 
+                "eaCPW": "true", 
+                "eaLyrNum": 72, 
+                "eaTags": [
+                    "forest", 
+                    "plants", 
+                    "vegetation", 
+                    "health", 
+                    "well-being", 
+                    "human"
+                ], 
+                "tileLink": "no", 
+                "eaID": 71, 
+                "eaCS": "true", 
+                "name": "Sulfur dioxide (kg/yr) removed annually by tree cover", 
+                "eaScale": "COMMUNITY", 
+                "type": "FEATURE", 
+                "eaCA": "true", 
                 "opacity": 0.5, 
-                "eaTopic": "Pollutant Reduction: Air", 
                 "popup": {
                     "showAttachments": "false", 
                     "fieldInfos": [
@@ -2921,35 +3007,19 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
+                "eaMetric": "metric", 
                 "eaBCSDD": [
                     "Clean Air - Pollutant and Runoff Reduction", 
                     "Clean and Plentiful Water - Pollutant and Runoff Reduction", 
                     "Climate Stabilization - Pollutant and Runoff Reduction"
                 ], 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
-                "eaID": 71, 
+                "eaTopic": "Pollutant Reduction: Air", 
                 "eaDescription": "This map estimates the total kilograms of sulfur dioxide removed annually by trees in each census block group.", 
-                "eaTags": [
-                    "forest", 
-                    "plants", 
-                    "vegetation", 
-                    "health", 
-                    "well-being", 
-                    "human"
-                ], 
-                "eaCS": "true", 
-                "eaMetadata": "C012", 
-                "visible": "false", 
-                "eaMetric": "metric", 
-                "eaCPW": "true", 
-                "eaLyrNum": 72, 
-                "mode": "ondemand", 
-                "eaScale": "COMMUNITY", 
-                "type": "FEATURE", 
                 "eaDfsLink": "ESC/Sulfurdioxideremovedannuallybytreecover.pdf", 
-                "eaCA": "true", 
-                "name": "Sulfur dioxide (kg/yr) removed annually by tree cover"
+                "eaMetadata": "C012", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
+                "mode": "ondemand"
             }, 
             {
                 "opacity": 0.5, 
@@ -2965,9 +3035,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Climate Stabilization - Carbon Storage"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 72, 
@@ -2987,6 +3055,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Totalcarbonsequesteredbytreecover.pdf", 
+                "eaBCSDD": [
+                    "Climate Stabilization - Carbon Storage"
+                ], 
                 "name": "Total carbon sequestered by tree cover (mt/yr)\u00a0"
             }, 
             {
@@ -3003,9 +3074,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Climate Stabilization - Carbon Storage"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 73, 
@@ -3025,6 +3094,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Totalcarbonstoredbytreecover.pdf", 
+                "eaBCSDD": [
+                    "Climate Stabilization - Carbon Storage"
+                ], 
                 "name": "Total carbon stored by tree cover (mt)\u00a0"
             }, 
             {
@@ -3038,8 +3110,8 @@
                     "pond", 
                     "riparian"
                 ], 
+                "tileLink": "no", 
                 "eaID": 74, 
-                "name": "Total land area in 15m stream and lake buffer (m2)\u00a0", 
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "opacity": 0.5, 
@@ -3054,13 +3126,14 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaMetric": "metric", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
                     "Natural Hazard Mitigation - Land Cover: Near-Water", 
                     "Recreation, Culture, and Aesthetics - Land Cover: Near-Water"
                 ], 
+                "eaMetric": "metric", 
+                "name": "Total land area in 15m stream and lake buffer (m2)\u00a0", 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
                 "eaTopic": "Land Cover: Near-Water", 
@@ -3082,8 +3155,8 @@
                     "pond", 
                     "riparian"
                 ], 
+                "tileLink": "no", 
                 "eaID": 75, 
-                "name": "Total land area in 50m stream and lake buffer (m2)\u00a0", 
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "opacity": 0.5, 
@@ -3098,13 +3171,14 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaMetric": "metric", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
                     "Natural Hazard Mitigation - Land Cover: Near-Water", 
                     "Recreation, Culture, and Aesthetics - Land Cover: Near-Water"
                 ], 
+                "eaMetric": "metric", 
+                "name": "Total land area in 50m stream and lake buffer (m2)\u00a0", 
                 "eaNHM": "true", 
                 "autorefresh": 0, 
                 "eaTopic": "Land Cover: Near-Water", 
@@ -3128,6 +3202,7 @@
                     "green infrastructure", 
                     "green space"
                 ], 
+                "tileLink": "no", 
                 "eaID": 76, 
                 "eaCS": "true", 
                 "eaScale": "COMMUNITY", 
@@ -3178,9 +3253,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Health and Economic Outcomes"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 77, 
@@ -3197,6 +3270,9 @@
                 "eaLyrNum": 78, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Health and Economic Outcomes"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ValueofAsthmaExacerbationCasesAvoidedDueToNitrogenDioxideRemovedbytreecover.pdf", 
                 "eaCA": "true", 
@@ -3216,9 +3292,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Health and Economic Outcomes"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 78, 
@@ -3235,6 +3309,9 @@
                 "eaLyrNum": 79, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Health and Economic Outcomes"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ValueofAsthmaExacerbationCasesAvoidedDuetoSulfurDioxideRemovedbytreecover.pdf", 
                 "eaCA": "true", 
@@ -3254,9 +3331,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Climate Stabilization - Carbon Storage"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 79, 
@@ -3278,6 +3353,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Valueofcarbonsequesteredbytreecover.pdf", 
+                "eaBCSDD": [
+                    "Climate Stabilization - Carbon Storage"
+                ], 
                 "name": "Value of carbon sequestered by tree cover ($/yr)\u00a0"
             }, 
             {
@@ -3294,9 +3372,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Climate Stabilization - Carbon Storage"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 80, 
@@ -3318,6 +3394,9 @@
                 "eaScale": "COMMUNITY", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/Valueofcarbonstoredbytreecover.pdf", 
+                "eaBCSDD": [
+                    "Climate Stabilization - Carbon Storage"
+                ], 
                 "name": "Value of carbon stored by tree cover ($)\u00a0"
             }, 
             {
@@ -3334,9 +3413,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Health and Economic Outcomes"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 81, 
@@ -3353,6 +3430,9 @@
                 "eaLyrNum": 82, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Health and Economic Outcomes"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": " ", 
                 "eaCA": "true", 
@@ -3372,9 +3452,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Health and Economic Outcomes"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 82, 
@@ -3391,6 +3469,9 @@
                 "eaLyrNum": 83, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Health and Economic Outcomes"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": " ", 
                 "eaCA": "true", 
@@ -3410,9 +3491,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Health and Economic Outcomes"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 83, 
@@ -3429,6 +3508,9 @@
                 "eaLyrNum": 84, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Health and Economic Outcomes"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ValueofHospitalAdmissionsAvoidedDuetoNitrogenDioxideRemovedbytreecover.pdf", 
                 "eaCA": "true", 
@@ -3448,9 +3530,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Health and Economic Outcomes"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 84, 
@@ -3467,6 +3547,9 @@
                 "eaLyrNum": 85, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Health and Economic Outcomes"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ValueofhospitaladmissionsavoidedDuetoSulfurDioxideRemovedbytreecover.pdf", 
                 "eaCA": "true", 
@@ -3486,9 +3569,7 @@
                     ], 
                     "title": "Block Group ID: {GEOID10}"
                 }, 
-                "eaBCSDD": [
-                    "Clean Air - Health and Economic Outcomes"
-                ], 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 85, 
@@ -3508,6 +3589,9 @@
                 "eaLyrNum": 86, 
                 "mode": "ondemand", 
                 "eaScale": "COMMUNITY", 
+                "eaBCSDD": [
+                    "Clean Air - Health and Economic Outcomes"
+                ], 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESC/ValueOfSchoolDaysNotLostToIllnessDueToOzoneRemovedbytreecover.pdf", 
                 "eaCA": "true", 
@@ -3538,10 +3622,11 @@
                     "shrub", 
                     "open space"
                 ], 
+                "tileLink": "no", 
                 "eaID": 86, 
                 "eaCS": "true", 
                 "eaScale": "COMMUNITY", 
-                "type": "FEATURE", 
+                "type": "TILED", 
                 "eaCA": "true", 
                 "opacity": 0.5, 
                 "eaFFM": "true", 
@@ -3586,7 +3671,8 @@
                 "eaMetric": "landcover", 
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "TILED", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Landscape Pattern", 
                     "Recreation, Culture, and Aesthetics - Landscape Pattern"
@@ -3597,10 +3683,7 @@
                 "opacity": 0.5, 
                 "eaTopic": "Near-Road Environments", 
                 "eaDescription": "This map estimates the percent tree cover within 26 meters of a busy road edge at any given point throughout the community. A \u201cbusy\u201d roadway in EnviroAtlas is defined to include interstates, arterial roads, and collector roads. It does not include local or neighborhood roads, though some of these roads may also experience consistent and heavy traffic.", 
-                "eaBCSDD": [
-                    "Clean Air - Near-Road Environments", 
-                    "Recreation, Culture, and Aesthetics - Near-Road Environments"
-                ], 
+                "tileLink": "no", 
                 "name": "Estimated percent of tree cover within 26m of a road edge", 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/NrRd_PFor_AllCommunities/MapServer", 
                 "eaID": 88, 
@@ -3621,7 +3704,11 @@
                 "eaMetric": "foundational", 
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
-                "type": "FEATURE", 
+                "eaBCSDD": [
+                    "Clean Air - Near-Road Environments", 
+                    "Recreation, Culture, and Aesthetics - Near-Road Environments"
+                ], 
+                "type": "TILED", 
                 "eaCA": "true", 
                 "eaRCA": "true"
             }, 
@@ -3650,7 +3737,8 @@
                 "eaCPW": "true", 
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "TILED", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
@@ -3684,7 +3772,8 @@
                 "eaCPW": "true", 
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "TILED", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
@@ -3721,7 +3810,8 @@
                 "eaCPW": "true", 
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "TILED", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
@@ -3758,7 +3848,8 @@
                 "eaCPW": "true", 
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "TILED", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Near-Water", 
                     "Clean and Plentiful Water - Land Cover: Near-Water", 
@@ -3771,9 +3862,7 @@
                 "opacity": 0.5, 
                 "eaTopic": "Engagement with Outdoors", 
                 "eaDescription": "This map estimates the total meters, or walking distance, from each park entrance.", 
-                "eaBCSDD": [
-                    "Recreation, Culture, and Aesthetics - Engagement with Outdoors"
-                ], 
+                "tileLink": "no", 
                 "name": "Estimated walking distance to a park entrance (m)", 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Park_prox_AllCommunities/MapServer", 
                 "eaID": 93, 
@@ -3791,19 +3880,17 @@
                 "eaMetric": "foundational", 
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
-                "type": "FEATURE", 
+                "type": "TILED", 
+                "eaBCSDD": [
+                    "Recreation, Culture, and Aesthetics - Engagement with Outdoors"
+                ], 
                 "eaRCA": "true"
             }, 
             {
-                "opacity": 0.5, 
-                "eaTopic": "Near-Road Environments", 
-                "eaDescription": "This EnviroAtlas dataset estimates green space along walkable roads. Green space within 25 meters of the road centerline is included and the percentage is based on the total area between street intersections. Green space provides valuable benefits to neighborhood residents and walkers by providing shade, improved aesthetics, and outdoor gathering spaces.", 
-                "eaNHM": "true", 
-                "name": "Percent green space along walkable roads", 
                 "eaRCA": "true", 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/PctStGS_AllCommunities/MapServer", 
-                "eaID": 94, 
-                "eaDfsLink": "Supplemental/Percentgreenspacealongwalkableroads.pdf", 
+                "visible": "false", 
+                "eaCPW": "true", 
+                "eaLyrNum": 0, 
                 "eaTags": [
                     "forest", 
                     "trees", 
@@ -3815,14 +3902,14 @@
                     "health", 
                     "well-being"
                 ], 
+                "tileLink": "no", 
+                "eaID": 94, 
                 "eaCS": "true", 
-                "eaMetadata": "C019", 
-                "visible": "false", 
-                "eaMetric": "foundational", 
-                "eaCPW": "true", 
-                "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
-                "type": "FEATURE", 
+                "type": "TILED", 
+                "eaCA": "true", 
+                "opacity": 0.5, 
+                "eaMetric": "foundational", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Near-Road Environments", 
                     "Clean Air - Near-Road Environments", 
@@ -3831,7 +3918,13 @@
                     "Natural Hazard Mitigation - Near-Road Environments", 
                     "Recreation, Culture, and Aesthetics - Near-Road Environments"
                 ], 
-                "eaCA": "true", 
+                "eaNHM": "true", 
+                "name": "Percent green space along walkable roads", 
+                "eaTopic": "Near-Road Environments", 
+                "eaDescription": "This EnviroAtlas dataset estimates green space along walkable roads. Green space within 25 meters of the road centerline is included and the percentage is based on the total area between street intersections. Green space provides valuable benefits to neighborhood residents and walkers by providing shade, improved aesthetics, and outdoor gathering spaces.", 
+                "eaDfsLink": "Supplemental/Percentgreenspacealongwalkableroads.pdf", 
+                "eaMetadata": "C019", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/PctStGS_AllCommunities/MapServer", 
                 "eaBC": "true"
             }, 
             {
@@ -3862,7 +3955,8 @@
                 "eaMetric": "foundational", 
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "TILED", 
                 "eaBCSDD": [
                     "Natural Hazard Mitigation - Land Cover: Type", 
                     "Recreation, Culture, and Aesthetics - Land Cover: Type"
@@ -3870,15 +3964,10 @@
                 "eaRCA": "true"
             }, 
             {
-                "opacity": 0.5, 
-                "eaTopic": "Land Cover: Type", 
-                "eaDescription": "This map illustrates the percent of each square kilometer within the community area that is covered by impervious surfaces. It is not summarized by census block group. Impervious surfaces are materials that do not allow the penetration of water and include buildings, roads, and sidewalks.", 
-                "eaNHM": "true", 
-                "name": "Percent impervious area within 1 square kilometer", 
                 "eaRCA": "true", 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/ImpProx_AllCommunities/MapServer", 
-                "eaID": 96, 
-                "eaDfsLink": "ESC/Percentimperviousareawithin1squarekilometer.pdf", 
+                "visible": "false", 
+                "eaCPW": "true", 
+                "eaLyrNum": 0, 
                 "eaTags": [
                     "development", 
                     "urban", 
@@ -3887,14 +3976,14 @@
                     "water", 
                     "heat"
                 ], 
+                "tileLink": "no", 
+                "eaID": 96, 
                 "eaCS": "true", 
-                "eaMetadata": "C010", 
-                "visible": "false", 
-                "eaMetric": "foundational", 
-                "eaCPW": "true", 
-                "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
-                "type": "FEATURE", 
+                "type": "TILED", 
+                "eaCA": "true", 
+                "opacity": 0.5, 
+                "eaMetric": "foundational", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Land Cover: Type", 
                     "Clean Air - Land Cover: Type", 
@@ -3903,19 +3992,20 @@
                     "Natural Hazard Mitigation - Land Cover: Type", 
                     "Recreation, Culture, and Aesthetics - Land Cover: Type"
                 ], 
-                "eaCA": "true", 
+                "eaNHM": "true", 
+                "name": "Percent impervious area within 1 square kilometer", 
+                "eaTopic": "Land Cover: Type", 
+                "eaDescription": "This map illustrates the percent of each square kilometer within the community area that is covered by impervious surfaces. It is not summarized by census block group. Impervious surfaces are materials that do not allow the penetration of water and include buildings, roads, and sidewalks.", 
+                "eaDfsLink": "ESC/Percentimperviousareawithin1squarekilometer.pdf", 
+                "eaMetadata": "C010", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/ImpProx_AllCommunities/MapServer", 
                 "eaBC": "true"
             }, 
             {
-                "opacity": 0.5, 
-                "eaTopic": "Near-Road Environments", 
-                "eaDescription": "This EnviroAtlas dataset estimates tree cover along walkable roads. The road width is estimated for each road and percent tree cover is calculated in a 8.5 meter strip beginning at the estimated road edge. Percent tree cover is calculated for each block between road intersections. Tree cover provides valuable benefits to neighborhood residents and walkers by providing shade, improved aesthetics, and outdoor gathering spaces.", 
-                "eaNHM": "true", 
-                "name": "Percent tree cover along walkable roads", 
                 "eaRCA": "true", 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/PctStTC_AllCommunities/MapServer", 
-                "eaID": 97, 
-                "eaDfsLink": "Supplemental/Percenttreecoveralongwalkableroads.pdf", 
+                "visible": "false", 
+                "eaCPW": "true", 
+                "eaLyrNum": 0, 
                 "eaTags": [
                     "forest", 
                     "plants", 
@@ -3926,14 +4016,14 @@
                     "health", 
                     "well-being"
                 ], 
+                "tileLink": "no", 
+                "eaID": 97, 
                 "eaCS": "true", 
-                "eaMetadata": "C020", 
-                "visible": "false", 
-                "eaMetric": "foundational", 
-                "eaCPW": "true", 
-                "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
-                "type": "FEATURE", 
+                "type": "TILED", 
+                "eaCA": "true", 
+                "opacity": 0.5, 
+                "eaMetric": "foundational", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Near-Road Environments", 
                     "Clean Air - Near-Road Environments", 
@@ -3942,7 +4032,13 @@
                     "Natural Hazard Mitigation - Near-Road Environments", 
                     "Recreation, Culture, and Aesthetics - Near-Road Environments"
                 ], 
-                "eaCA": "true", 
+                "eaNHM": "true", 
+                "name": "Percent tree cover along walkable roads", 
+                "eaTopic": "Near-Road Environments", 
+                "eaDescription": "This EnviroAtlas dataset estimates tree cover along walkable roads. The road width is estimated for each road and percent tree cover is calculated in a 8.5 meter strip beginning at the estimated road edge. Percent tree cover is calculated for each block between road intersections. Tree cover provides valuable benefits to neighborhood residents and walkers by providing shade, improved aesthetics, and outdoor gathering spaces.", 
+                "eaDfsLink": "Supplemental/Percenttreecoveralongwalkableroads.pdf", 
+                "eaMetadata": "C020", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/PctStTC_AllCommunities/MapServer", 
                 "eaBC": "true"
             }, 
             {
@@ -3970,7 +4066,8 @@
                 "eaCPW": "true", 
                 "eaLyrNum": 0, 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "TILED", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Protected Lands", 
                     "Clean and Plentiful Water - Protected Lands", 
@@ -3992,7 +4089,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Acresofcropswithnonearbypollinatorhabitat/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 99, 
@@ -4035,7 +4132,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Agriculturalwateruse/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 100, 
@@ -4072,7 +4169,7 @@
                     "water", 
                     "health"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Annualoxidizednitrogendrydeposition/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 101, 
                 "name": "Annual oxidized nitrogen dry deposition (kg/ha)", 
                 "eaScale": "NATIONAL", 
@@ -4114,7 +4211,7 @@
                     "water", 
                     "health"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Annualoxidizednitrogenwetdeposition/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 102, 
                 "name": "Annual oxidized nitrogen wet deposition (kg/ha)", 
                 "eaScale": "NATIONAL", 
@@ -4156,7 +4253,7 @@
                     "water", 
                     "health"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Annualreducednitrogendrydeposition/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 103, 
                 "name": "Annual reduced nitrogen dry deposition (kg/ha)", 
                 "eaScale": "NATIONAL", 
@@ -4198,7 +4295,7 @@
                     "water", 
                     "health"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Annualreducednitrogenwetdeposition/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 104, 
                 "name": "Annual reduced nitrogen wet deposition (kg/ha)", 
                 "eaScale": "NATIONAL", 
@@ -4240,7 +4337,7 @@
                     "water quality", 
                     "acidification"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Annualsulfurdrydeposition/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 105, 
                 "name": "Annual sulfur dry deposition (kg/ha)", 
                 "eaScale": "NATIONAL", 
@@ -4282,7 +4379,7 @@
                     "water quality", 
                     "acidification"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Annualsulfurwetdeposition/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 106, 
                 "name": "Annual sulfur wet deposition (kg/ha)", 
                 "eaScale": "NATIONAL", 
@@ -4329,7 +4426,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Areaofsolarenergy/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 107, 
@@ -4367,7 +4464,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Averageannualdailypotentialsolarenergy/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 108, 
@@ -4405,7 +4502,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Averageannualdailypotentialwindenergy/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 109, 
@@ -4440,7 +4537,7 @@
                     "snow", 
                     "resources"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Averageannualprecipitation/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 110, 
                 "eaCS": "true", 
                 "eaScale": "NATIONAL", 
@@ -4510,7 +4607,7 @@
                 "eaLyrNum": 13, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Biggamehuntingrecreationdemand/_alllayers", 
+                "tileLink": "yes", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Biggamehuntingrecreationdemand.pdf", 
                 "eaBCSDD": [
@@ -4548,7 +4645,7 @@
                 "eaLyrNum": 14, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Birdwatchingrecreationdemand/_alllayers", 
+                "tileLink": "yes", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Birdwatchingrecreationdemand.pdf", 
                 "eaBCSDD": [
@@ -4570,7 +4667,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Carbonstoragebytreebiomass/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 113, 
@@ -4609,7 +4706,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Carbonstoragebytreerootbiomass/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 114, 
@@ -4648,7 +4745,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Cottonyields/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 115, 
@@ -4687,7 +4784,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Cultivatedbiologicalnitrogenfixation/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 116, 
@@ -4730,7 +4827,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Domesticwateruse/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 117, 
@@ -4785,7 +4882,7 @@
                 "eaLyrNum": 20, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Freshwaterfishingrecreationdemand/_alllayers", 
+                "tileLink": "yes", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Freshwaterfishingrecreationdemand.pdf", 
                 "eaBCSDD": [
@@ -4807,7 +4904,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Fruityields/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 119, 
@@ -4846,7 +4943,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Grainyields/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 120, 
@@ -4885,7 +4982,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Hectaresofcottoncrops/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 121, 
@@ -4924,7 +5021,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Hectaresoffruitcrops/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 122, 
@@ -4963,7 +5060,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Hectaresofgraincrops/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 123, 
@@ -5002,7 +5099,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Hectaresofvegetablecrops/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 124, 
@@ -5041,7 +5138,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Industrialwateruse/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 125, 
@@ -5079,7 +5176,7 @@
                     "farms", 
                     "fertilizer"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Manureapplication/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 126, 
                 "name": "Manure application (kg N/ha/yr)", 
                 "eaScale": "NATIONAL", 
@@ -5125,7 +5222,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Maximumamphibianspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 127, 
@@ -5163,7 +5260,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Maximumbatspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 128, 
@@ -5221,7 +5318,7 @@
                 "eaLyrNum": 31, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Maximumbiggamespeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Maximumbiggamespeciesrichness.pdf", 
@@ -5261,7 +5358,7 @@
                 "eaLyrNum": 32, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Maximumbirdspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Maximumbirdspeciesrichness.pdf", 
@@ -5303,7 +5400,7 @@
                 "eaLyrNum": 33, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Maximumfurbearerspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Maximumfurbearerspeciesrichness.pdf", 
@@ -5351,7 +5448,7 @@
                 "eaLyrNum": 34, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Maximumlandcoverdiversity/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Maximumlandcoverdiversity.pdf", 
@@ -5375,7 +5472,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Maximummammalspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 133, 
@@ -5432,7 +5529,7 @@
                 "eaLyrNum": 36, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/MaximummodeledPartnersinFlightWatchListbirdspecies/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/MaximummodeledPartnersinFlightWatchListbirdspecies.pdf", 
@@ -5474,7 +5571,7 @@
                 "eaLyrNum": 37, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/MaximummodeledStateoftheBirdsspeciesofconservationconcern/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/MaximummodeledStateoftheBirdsspeciesofconservationconcern.pdf", 
@@ -5516,7 +5613,7 @@
                 "eaLyrNum": 38, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Maximummodeledthreatenedandendangeredvertebratespecies/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Maximummodeledthreatenedandendangeredvertebratespecies.pdf", 
@@ -5558,7 +5655,7 @@
                 "eaLyrNum": 39, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Maximumnumberofbirdspeciesvulnerabletorangelossduetoclimatechangeby2050/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Maximumnumberofbirdspeciesvulnerabletorangelossduetoclimatechangeby2050.pdf", 
@@ -5600,7 +5697,7 @@
                 "eaLyrNum": 40, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Maximumnumberofbirdspeciesvulnerabletorangelossduetoclimatechangeby2080/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Maximumnumberofbirdspeciesvulnerabletorangelossduetoclimatechangeby2080.pdf", 
@@ -5624,7 +5721,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Maximumreptilespeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 139, 
@@ -5680,7 +5777,7 @@
                 "eaLyrNum": 42, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Maximumsmallgamespeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Maximumsmallgamespeciesrichness.pdf", 
@@ -5722,7 +5819,7 @@
                 "eaLyrNum": 43, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Maximumtotalharvestablespeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Maximumtotalharvestablespeciesrichness.pdf", 
@@ -5762,7 +5859,7 @@
                 "eaLyrNum": 44, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Maximumtotalvertebratespeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Maximumtotalvertebratespeciesrichness.pdf", 
@@ -5804,7 +5901,7 @@
                 "eaLyrNum": 45, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Maximumwaterfowlspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Maximumwaterfowlspeciesrichness.pdf", 
@@ -5828,7 +5925,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Meanamphibianspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 144, 
@@ -5866,7 +5963,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Meanbatspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 145, 
@@ -5924,7 +6021,7 @@
                 "eaLyrNum": 48, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Meanbiggamespeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Meanbiggamespeciesrichness.pdf", 
@@ -5964,7 +6061,7 @@
                 "eaLyrNum": 49, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Meanbirdspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Meanbirdspeciesrichness.pdf", 
@@ -6006,7 +6103,7 @@
                 "eaLyrNum": 50, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Meanfurbearerspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Meanfurbearerspeciesrichness.pdf", 
@@ -6054,7 +6151,7 @@
                 "eaLyrNum": 51, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Meanlandcoverdiversity/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Meanlandcoverdiversity.pdf", 
@@ -6078,7 +6175,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Meanmammalspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 150, 
@@ -6134,7 +6231,7 @@
                 "eaLyrNum": 53, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/MeanmodeledPartnersinFlightWatchListbirdspecies/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/MeanmodeledPartnersinFlightWatchListbirdspecies.pdf", 
@@ -6176,7 +6273,7 @@
                 "eaLyrNum": 54, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/MeanmodeledStateoftheBirdsspeciesofconservationconcern/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/MeanmodeledStateoftheBirdsspeciesofconservationconcern.pdf", 
@@ -6218,7 +6315,7 @@
                 "eaLyrNum": 55, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Meanmodeledthreatenedandendangeredvertebratespecies/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Meanmodeledthreatenedandendangeredvertebratespecies.pdf", 
@@ -6260,7 +6357,7 @@
                 "eaLyrNum": 56, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Meannumberofbirdspeciesvulnerabletorangelossduetoclimatechangeby2050/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Meannumberofbirdspeciesvulnerabletorangelossduetoclimatechangeby2050.pdf", 
@@ -6302,7 +6399,7 @@
                 "eaLyrNum": 57, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Meannumberofbirdspeciesvulnerabletorangelossduetoclimatechangeby2080/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Meannumberofbirdspeciesvulnerabletorangelossduetoclimatechangeby2080.pdf", 
@@ -6326,7 +6423,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Meanreptilespeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 156, 
@@ -6382,7 +6479,7 @@
                 "eaLyrNum": 59, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Meansmallgamespeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Meansmallgamespeciesrichness.pdf", 
@@ -6424,7 +6521,7 @@
                 "eaLyrNum": 60, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Meantotalharvestablespeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Meantotalharvestablespeciesrichness.pdf", 
@@ -6464,7 +6561,7 @@
                 "eaLyrNum": 61, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Meantotalvertebratespeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Meantotalvertebratespeciesrichness.pdf", 
@@ -6506,7 +6603,7 @@
                 "eaLyrNum": 62, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Meanwaterfowlspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Meanwaterfowlspeciesrichness.pdf", 
@@ -6549,7 +6646,7 @@
                 "eaLyrNum": 63, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Migratorybirdhuntingrecreationdemand/_alllayers", 
+                "tileLink": "yes", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Migratorybirdhuntingrecreationdemand.pdf", 
                 "eaBCSDD": [
@@ -6571,7 +6668,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Naturalbiologicalnitrogenfixation/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 162, 
@@ -6612,7 +6709,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/NIBamphibianspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 163, 
@@ -6651,7 +6748,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/NIBbatspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 164, 
@@ -6711,7 +6808,7 @@
                 "eaLyrNum": 67, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/NIBbiggamespeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/NIBbiggamespeciesrichness.pdf", 
@@ -6752,7 +6849,7 @@
                 "eaLyrNum": 68, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/NIBbirdspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/NIBbirdspeciesrichness.pdf", 
@@ -6795,7 +6892,7 @@
                 "eaLyrNum": 69, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/NIBfurbearerspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/NIBfurbearerspeciesrichness.pdf", 
@@ -6843,7 +6940,7 @@
                 "eaLyrNum": 70, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/NIBlandcoverdiversity/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/NIBlandcoverdiversity.pdf", 
@@ -6867,7 +6964,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/NIBmammalspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 169, 
@@ -6925,7 +7022,7 @@
                 "eaLyrNum": 72, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/NIBmodeledPartnersinFlightWatchListbirdspecies/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/NIBmodeledPartnersinFlightWatchListbirdspecies.pdf", 
@@ -6968,7 +7065,7 @@
                 "eaLyrNum": 73, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/NIBmodeledStateoftheBirdsspeciesofconservationconcern/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/NIBmodeledStateoftheBirdsspeciesofconservationconcern.pdf", 
@@ -7011,7 +7108,7 @@
                 "eaLyrNum": 74, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/NIBmodeledthreatenedandendangeredvertebratespecies/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/NIBmodeledthreatenedandendangeredvertebratespecies.pdf", 
@@ -7054,7 +7151,7 @@
                 "eaLyrNum": 75, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/NIBnumberofbirdspeciesvulnerabletorangelossduetoclimatechangeby2050/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/NIBnumberofbirdspeciesvulnerabletorangelossduetoclimatechangeby2050.pdf", 
@@ -7097,7 +7194,7 @@
                 "eaLyrNum": 76, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/NIBnumberofbirdspeciesvulnerabletorangelossduetoclimatechangeby2080/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/NIBnumberofbirdspeciesvulnerabletorangelossduetoclimatechangeby2080.pdf", 
@@ -7121,7 +7218,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/NIBreptilespeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 175, 
@@ -7179,7 +7276,7 @@
                 "eaLyrNum": 78, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/NIBsmallgamespeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/NIBsmallgamespeciesrichness.pdf", 
@@ -7222,7 +7319,7 @@
                 "eaLyrNum": 79, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/NIBtotalharvestablespeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/NIBtotalharvestablespeciesrichness.pdf", 
@@ -7263,7 +7360,7 @@
                 "eaLyrNum": 80, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/NIBtotalvertebratespeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/NIBtotalvertebratespeciesrichness.pdf", 
@@ -7306,7 +7403,7 @@
                 "eaLyrNum": 81, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/NIBwaterfowlspeciesrichness/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/NIBwaterfowlspeciesrichness.pdf", 
@@ -7330,7 +7427,7 @@
                     "lakes", 
                     "streams"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Numberofatriskaquaticanimalspecies/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 180, 
                 "name": "Number of at-risk aquatic animal species", 
                 "eaScale": "NATIONAL", 
@@ -7376,7 +7473,7 @@
                     "lakes", 
                     "streams"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Numberofatriskaquaticplantspecies/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 181, 
                 "name": "Number of at-risk aquatic plant species", 
                 "eaScale": "NATIONAL", 
@@ -7438,7 +7535,7 @@
                 "eaLyrNum": 84, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Numberofatriskterrestrialanimalspecies/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Numberofatriskterrestrialanimalspecies.pdf", 
@@ -7478,7 +7575,7 @@
                 "eaLyrNum": 85, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Numberofatriskterrestrialplantspecies/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Numberofatriskterrestrialplantspecies.pdf", 
@@ -7518,7 +7615,7 @@
                 "eaLyrNum": 86, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Numberofatriskwetlandanimalspecies/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Numberofatriskwetlandanimalspecies.pdf", 
@@ -7558,7 +7655,7 @@
                 "eaLyrNum": 87, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Numberofatriskwetlandplantspecies/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Numberofatriskwetlandplantspecies.pdf", 
@@ -7582,7 +7679,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Numberoffruitcroptypes/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 186, 
@@ -7621,7 +7718,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Numberofgraincroptypes/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 187, 
@@ -7659,7 +7756,7 @@
                     "resources", 
                     "safety"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Numberofhighhazardpotentialdams/pdf/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 188, 
                 "eaScale": "NATIONAL", 
                 "type": "FEATURE", 
@@ -7724,7 +7821,7 @@
                 "eaLyrNum": 91, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Numberofhistoricplaces/_alllayers", 
+                "tileLink": "yes", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Numberofhistoricplaces.pdf", 
                 "name": "Number of historic places"
@@ -7743,7 +7840,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Numberofvegetablecroptypes/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 190, 
@@ -7799,7 +7896,7 @@
                 "eaLyrNum": 93, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentagricultureinareasofhighwateraccumulation/_alllayers", 
+                "tileLink": "yes", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Percentagricultureinareasofhighwateraccumulation.pdf", 
                 "eaBCSDD": [
@@ -7819,7 +7916,7 @@
                     "crops", 
                     "wetland"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentagricultureonhydricsoil/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 192, 
                 "name": "Percent agriculture on hydric soil", 
                 "eaScale": "NATIONAL", 
@@ -7866,7 +7963,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentcropland/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 193, 
@@ -7900,7 +7997,7 @@
                     "urban", 
                     "cities"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentdevelopedarea/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 194, 
                 "eaCS": "true", 
                 "eaScale": "NATIONAL", 
@@ -7972,7 +8069,7 @@
                 "eaLyrNum": 97, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentdevelopedlandinareasofhighwateraccumulation/_alllayers", 
+                "tileLink": "yes", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Percentdevelopedlandinareasofhighwateraccumulation.pdf", 
                 "eaBCSDD": [
@@ -7993,7 +8090,7 @@
                     "natural cover", 
                     "habitat"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentemergentherbaceouswetlands/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 196, 
                 "eaCS": "true", 
                 "eaScale": "NATIONAL", 
@@ -8044,7 +8141,7 @@
                     "natural cover", 
                     "habitat"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentforest/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 197, 
                 "eaCS": "true", 
                 "eaScale": "NATIONAL", 
@@ -8097,7 +8194,7 @@
                     "natural cover", 
                     "habitat"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentforestandwoodywetlands/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 198, 
                 "eaCS": "true", 
                 "eaScale": "NATIONAL", 
@@ -8148,7 +8245,7 @@
                     "woods", 
                     "riparian"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentforestandwoodywetlandsinstreambuffer/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 199, 
                 "name": "Percent forest and woody wetlands in stream buffer", 
                 "eaScale": "NATIONAL", 
@@ -8214,7 +8311,7 @@
                 "eaLyrNum": 102, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentforestinareaswithhighwateraccumulation/_alllayers", 
+                "tileLink": "yes", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Percentforestinareaswithhighwateraccumulation.pdf", 
                 "eaBCSDD": [
@@ -8236,7 +8333,7 @@
                     "woods", 
                     "riparian"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentforestlandinstreambuffer/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 201, 
                 "name": "Percent forest land in stream buffer", 
                 "eaScale": "NATIONAL", 
@@ -8299,7 +8396,7 @@
                 "eaLyrNum": 104, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/PercentGAPstatus1and2/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/PercentGAPstatus1and2.pdf", 
@@ -8340,7 +8437,7 @@
                 "eaLyrNum": 105, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/PercentGAPstatus12and3/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/PercentGAPstatus12and3.pdf", 
@@ -8386,7 +8483,7 @@
                 "eaLyrNum": 106, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/PercentGAPstatus3/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/PercentGAPstatus3.pdf", 
@@ -8409,7 +8506,7 @@
                     "heat island", 
                     "temperature"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentimperviousarea/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 205, 
                 "eaCS": "true", 
                 "eaScale": "NATIONAL", 
@@ -8480,7 +8577,7 @@
                 "eaLyrNum": 108, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/PercentIUCNstatusIA/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/PercentIUCNstatusIA.pdf", 
@@ -8521,7 +8618,7 @@
                 "eaLyrNum": 109, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/PercentIUCNstatusIB/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/PercentIUCNstatusIB.pdf", 
@@ -8565,7 +8662,7 @@
                 "eaLyrNum": 110, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/PercentIUCNstatusII/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/PercentIUCNstatusII.pdf", 
@@ -8608,7 +8705,7 @@
                 "eaLyrNum": 111, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/PercentIUCNstatusIII/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/PercentIUCNstatusIII.pdf", 
@@ -8653,7 +8750,7 @@
                 "eaLyrNum": 112, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/PercentIUCNstatusIV/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/PercentIUCNstatusIV.pdf", 
@@ -8699,7 +8796,7 @@
                 "eaLyrNum": 113, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/PercentIUCNstatusV/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/PercentIUCNstatusV.pdf", 
@@ -8751,7 +8848,7 @@
                 "eaLyrNum": 114, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/PercentIUCNstatusVI/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/PercentIUCNstatusVI.pdf", 
@@ -8794,7 +8891,7 @@
                 "eaLyrNum": 115, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/PercentlandwithanyIUCNstatus/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/PercentlandwithanyIUCNstatus.pdf", 
@@ -8838,7 +8935,7 @@
                 "eaLyrNum": 116, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentlargesizepatchesofnaturallandcover/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Percentlargesizepatchesofnaturallandcover.pdf", 
@@ -8882,7 +8979,7 @@
                 "eaLyrNum": 117, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentmediumsizepatchesofnaturallandcover/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Percentmediumsizepatchesofnaturallandcover.pdf", 
@@ -8907,7 +9004,7 @@
                     "nature", 
                     "biodiversity"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentnaturallandcover/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 216, 
                 "eaCS": "true", 
                 "eaScale": "NATIONAL", 
@@ -8961,7 +9058,7 @@
                     "vegetation", 
                     "riparian"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentnaturallandcoverinstreambuffer/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 217, 
                 "eaScale": "NATIONAL", 
                 "type": "FEATURE", 
@@ -9031,7 +9128,7 @@
                 "eaLyrNum": 120, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentrareecosystemformsprotected/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Percentrareecosystemformsprotected.pdf", 
@@ -9056,7 +9153,7 @@
                     "pond", 
                     "riparian"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentofstreamandshorelinewith15ormoreimperviouscoverwithin30meters/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 219, 
                 "name": "Percent of stream and shoreline with 15% or more impervious cover within 30 meters", 
                 "eaScale": "NATIONAL", 
@@ -9103,7 +9200,7 @@
                     "pond", 
                     "riparian"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentofstreamandshorelinewith5ormoreimperviouscoverwithin30meters/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 220, 
                 "name": "Percent of stream and shoreline with 5% or more impervious cover within 30 meters", 
                 "eaScale": "NATIONAL", 
@@ -9146,7 +9243,7 @@
                     "farms", 
                     "animals"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentpasture/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 221, 
                 "eaCS": "true", 
                 "eaScale": "NATIONAL", 
@@ -9196,7 +9293,7 @@
                     "groundwater recharge", 
                     "filtration"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentpotentiallyrestorablewetlandsonagriculturalland/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 222, 
                 "eaScale": "NATIONAL", 
                 "type": "FEATURE", 
@@ -9245,7 +9342,7 @@
                     "riparian", 
                     "natural areas"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentrangeinareaswithhighwateraccumulation/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 223, 
                 "name": "Percent range in areas with high water accumulation", 
                 "eaScale": "NATIONAL", 
@@ -9314,7 +9411,7 @@
                 "eaLyrNum": 126, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentrareecosystemforms/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Percentrareecosystemforms.pdf", 
@@ -9358,7 +9455,7 @@
                 "eaLyrNum": 127, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentsmallsizepatchesofnaturallandcover/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Percentsmallsizepatchesofnaturallandcover.pdf", 
@@ -9382,7 +9479,7 @@
                     "natural cover", 
                     "habitat"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentwetlands/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 226, 
                 "eaCS": "true", 
                 "eaScale": "NATIONAL", 
@@ -9456,7 +9553,7 @@
                 "eaLyrNum": 129, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Percentwetlandsinareaswithhighwateraccumulation/_alllayers", 
+                "tileLink": "yes", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Percentwetlandsinareaswithhighwateraccumulation.pdf", 
                 "eaBCSDD": [
@@ -9479,7 +9576,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Populationnearroadwaywithlittletonotreebuffer/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 228, 
@@ -9519,7 +9616,7 @@
                     "hydrography", 
                     "hydrology"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Streamdensity/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 229, 
                 "name": "Stream density (km/km2)", 
                 "eaScale": "NATIONAL", 
@@ -9562,7 +9659,7 @@
                     "hydrography", 
                     "hydrology"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Streamlength/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 230, 
                 "name": "Stream length (km)", 
                 "eaScale": "NATIONAL", 
@@ -9608,7 +9705,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Streamlengthimpairedbymercury/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 231, 
@@ -9646,7 +9743,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Streamlengthimpairedbymetalsotherthanmercury/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 232, 
@@ -9684,7 +9781,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Streamlengthimpairedbynuisancespecies/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 233, 
@@ -9722,7 +9819,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Streamlengthimpairedbynutrients/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 234, 
@@ -9760,7 +9857,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Streamlengthimpairedbyorganiceenrichmentoroxygendepletion/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 235, 
@@ -9798,7 +9895,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Streamlengthimpairedbypathogens/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 236, 
@@ -9836,7 +9933,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Streamlengthimpairedbypesticides/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 237, 
@@ -9874,7 +9971,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Streamlengthimpairedbyphacidityorcausticonditions/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 238, 
@@ -9912,7 +10009,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Streamlengthimpairedbysedimentorturbidity/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 239, 
@@ -9950,7 +10047,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Streamlengthimpairedfortemperature/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 240, 
@@ -9988,7 +10085,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Streamlengthwithanyotherimpaired/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 241, 
@@ -10026,7 +10123,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Streamlengthwithimpairedbiota/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 242, 
@@ -10064,7 +10161,7 @@
                     "agriculture", 
                     "farms"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Syntheticnitrogenfertilizerapplication/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 243, 
                 "name": "Synthetic nitrogen fertilizer application (kg N/ha/yr)", 
                 "eaScale": "NATIONAL", 
@@ -10110,7 +10207,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Thermoelectricwateruse/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 244, 
@@ -10144,7 +10241,7 @@
                     "water quality", 
                     "air quality"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Totalannualnitrogendeposition/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 245, 
                 "eaScale": "NATIONAL", 
                 "type": "FEATURE", 
@@ -10186,7 +10283,7 @@
                     "water quality", 
                     "air quality"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Totalannualoxidizednitrogendeposition/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 246, 
                 "name": "Total annual oxidized nitrogen deposition (kg/ha)", 
                 "eaScale": "NATIONAL", 
@@ -10227,7 +10324,7 @@
                     "water quality", 
                     "air quality"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Totalannualreducednitrogendeposition/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 247, 
                 "name": "Total annual reduced nitrogen deposition (kg/ha)", 
                 "eaScale": "NATIONAL", 
@@ -10270,7 +10367,7 @@
                     "water quality", 
                     "acidification"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Totalannualsulfurdeposition/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 248, 
                 "eaScale": "NATIONAL", 
                 "type": "FEATURE", 
@@ -10316,7 +10413,7 @@
                     "threatened", 
                     "endangered"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Totalnumberofatriskaquaticspecies/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 249, 
                 "name": "Total number of at-risk aquatic species", 
                 "eaScale": "NATIONAL", 
@@ -10380,7 +10477,7 @@
                 "eaLyrNum": 152, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Totalnumberofatriskterrestrialspecies/_alllayers", 
+                "tileLink": "yes", 
                 "eaBC": "true", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Totalnumberofatriskterrestrialspecies.pdf", 
@@ -10402,7 +10499,7 @@
                     "threatened", 
                     "endangered"
                 ], 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Totalnumberofatriskwetlandspecies/_alllayers", 
+                "tileLink": "yes", 
                 "eaID": 251, 
                 "name": "Total number of at-risk wetland species", 
                 "eaScale": "NATIONAL", 
@@ -10448,7 +10545,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/ValueofCottonCrops/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 252, 
@@ -10488,7 +10585,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Valueofgraincrops/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 253, 
@@ -10528,7 +10625,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Vegetableyields/_alllayers", 
+                "tileLink": "yes", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/National2016_master/MapServer", 
                 "eaID": 254, 
@@ -10583,7 +10680,7 @@
                 "eaLyrNum": 157, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Watersupplyfromnidreservoirs/_alllayers", 
+                "tileLink": "yes", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Watersupplyfromnidreservoirs.pdf", 
                 "eaBCSDD": [
@@ -10623,7 +10720,7 @@
                 "eaLyrNum": 158, 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "tileLink": "https://leb.epa.gov/arcgiscache_exp/Waterbodyarea/_alllayers", 
+                "tileLink": "yes", 
                 "type": "FEATURE", 
                 "eaDfsLink": "ESN/Waterbodyarea.pdf", 
                 "eaBCSDD": [
@@ -10653,7 +10750,8 @@
                 "eaCPW": "true", 
                 "eaLyrNum": 0, 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "DYNAMIC", 
                 "eaCA": "true", 
                 "eaBCSDD": [
                     "Clean Air - Wetlands and Lowlands", 
@@ -10682,7 +10780,8 @@
                 "eaMetric": "foundational", 
                 "eaLyrNum": 0, 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "DYNAMIC", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Wetlands and Lowlands", 
                     "Recreation, Culture, and Aesthetics - Wetlands and Lowlands"
@@ -10693,6 +10792,7 @@
                 "opacity": 0.5, 
                 "eaTopic": "Landscape Pattern", 
                 "eaDescription": "This map for rare ecosystems in the conterminous U.S. delineates the Relative Rarity Metric developed by the EPA. The metric is based on current extent, spatial pattern type, and relative uniqueness. Metric values range from 0 to 100 with higher values indicating greater relative ecosystem rarity.", 
+                "tileLink": "no", 
                 "name": "Rare Ecosystems", 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/ESN_Rare_Ecosystems/MapServer/0", 
                 "eaID": 259, 
@@ -10714,7 +10814,7 @@
                 "eaMetric": "foundational", 
                 "eaLyrNum": 0, 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE"
+                "type": "DYNAMIC"
             }, 
             {
                 "opacity": 0.5, 
@@ -10733,7 +10833,8 @@
                 "eaMetric": "boundary", 
                 "eaLyrNum": 0, 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "DYNAMIC", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Protected Lands", 
                     "Recreation, Culture, and Aesthetics - Protected Lands"
@@ -10757,7 +10858,8 @@
                 "eaMetric": "boundary", 
                 "eaLyrNum": 0, 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "DYNAMIC", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Protected Lands", 
                     "Recreation, Culture, and Aesthetics - Protected Lands"
@@ -10782,7 +10884,8 @@
                 "eaMetric": "boundary", 
                 "eaLyrNum": 0, 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "DYNAMIC", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Protected Lands", 
                     "Recreation, Culture, and Aesthetics - Protected Lands"
@@ -10817,6 +10920,7 @@
                     "deciduous", 
                     "evergreen"
                 ], 
+                "tileLink": "no", 
                 "eaID": 263, 
                 "eaCS": "true", 
                 "eaScale": "NATIONAL", 
@@ -10883,6 +10987,7 @@
                     "deciduous", 
                     "evergreen"
                 ], 
+                "tileLink": "no", 
                 "eaID": 264, 
                 "eaCS": "true", 
                 "eaScale": "NATIONAL", 
@@ -10949,6 +11054,7 @@
                     "deciduous", 
                     "evergreen"
                 ], 
+                "tileLink": "no", 
                 "eaID": 265, 
                 "eaCS": "true", 
                 "eaScale": "NATIONAL", 
@@ -11015,6 +11121,7 @@
                     "deciduous", 
                     "evergreen"
                 ], 
+                "tileLink": "no", 
                 "eaID": 266, 
                 "eaCS": "true", 
                 "eaScale": "NATIONAL", 
@@ -11062,10 +11169,11 @@
                     "NRCS", 
                     "wetlands"
                 ], 
+                "tileLink": "no", 
                 "eaID": 267, 
                 "eaCS": "true", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "type": "DYNAMIC", 
                 "eaCA": "true", 
                 "opacity": 0.5, 
                 "eaFFM": "true", 
@@ -11120,7 +11228,8 @@
                 "eaMetric": "boundary", 
                 "eaCPW": "true", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "DYNAMIC", 
                 "eaCA": "true", 
                 "eaBC": "true"
             }, 
@@ -11153,7 +11262,8 @@
                 "eaMetric": "Additional_landcover", 
                 "eaLyrNum": " ", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "DYNAMIC", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Ecosystem Type", 
                     "Recreation, Culture, and Aesthetics - Ecosystem Type"
@@ -11164,6 +11274,7 @@
                 "opacity": 0.5, 
                 "eaTopic": "Impaired Waters", 
                 "eaDescription": "These maps identify waterbodies that have been assessed and determined to be impaired, meaning that the waterbody has been degraded and does not meet the standards for seven designated beneficial uses (such as aquatic life habitat, drinking water supply, and fish consumption). This map identifies area features from the Impaired Waters database. ", 
+                "tileLink": "no", 
                 "name": "Impaired Waters", 
                 "url": "https://watersgeo.epa.gov/arcgis/rest/services/OWRAD_NP21/303D_NP21/MapServer", 
                 "eaID": 270, 
@@ -11180,7 +11291,7 @@
                 "eaCPW": "true", 
                 "eaLyrNum": " ", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "type": "DYNAMIC", 
                 "eaBCSDD": [
                     "Clean and Plentiful Water - Impaired Waters"
                 ]
@@ -11189,9 +11300,7 @@
                 "opacity": 0.5, 
                 "eaTopic": "Impaired Waters", 
                 "eaDescription": "This map depicts waterbodies that have been assessed by states, territories, and authorized tribes every two years to evaluate waterbody condition for seven beneficial uses (such as aquatic life habitat, drinking water supply, and fish consumption). Those waterbodies not meeting the standards for beneficial uses are designated as impaired or threatened. This map identifies area features from the Assessed Waters database.", 
-                "eaBCSDD": [
-                    "Clean and Plentiful Water - Impaired Waters"
-                ], 
+                "tileLink": "no", 
                 "name": "Assessed Waters", 
                 "url": "https://watersgeo.epa.gov/arcgis/rest/services/OWRAD_NP21/305B_NP21/MapServer", 
                 "eaID": 271, 
@@ -11209,7 +11318,10 @@
                 "eaCPW": "true", 
                 "eaLyrNum": " ", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "type": "DYNAMIC", 
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - Impaired Waters"
+                ], 
                 "eaRCA": "true"
             }, 
             {
@@ -11231,7 +11343,8 @@
                 "eaMetric": "boundary", 
                 "eaLyrNum": " ", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "DYNAMIC", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Wetlands and Lowlands", 
                     "Recreation, Culture, and Aesthetics - Wetlands and Lowlands"
@@ -11252,6 +11365,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 273, 
@@ -11288,6 +11402,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 274, 
@@ -11324,6 +11439,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 275, 
@@ -11360,6 +11476,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 276, 
@@ -11396,6 +11513,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 277, 
@@ -11432,6 +11550,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 278, 
@@ -11468,6 +11587,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 279, 
@@ -11504,6 +11624,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 280, 
@@ -11542,6 +11663,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 281, 
@@ -11580,6 +11702,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 282, 
@@ -11618,6 +11741,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 283, 
@@ -11656,6 +11780,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 284, 
@@ -11694,6 +11819,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 285, 
@@ -11732,6 +11858,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 286, 
@@ -11767,6 +11894,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 287, 
@@ -11802,6 +11930,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 288, 
@@ -11837,6 +11966,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 289, 
@@ -11872,6 +12002,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 290, 
@@ -11907,6 +12038,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 291, 
@@ -11942,6 +12074,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 292, 
@@ -11980,6 +12113,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 293, 
@@ -12018,6 +12152,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 294, 
@@ -12056,6 +12191,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 295, 
@@ -12094,6 +12230,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 296, 
@@ -12130,6 +12267,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 297, 
@@ -12166,6 +12304,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 298, 
@@ -12202,6 +12341,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 299, 
@@ -12238,6 +12378,7 @@
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
                 }, 
+                "tileLink": "no", 
                 "autorefresh": 0, 
                 "url": "https://leb.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer", 
                 "eaID": 300, 
@@ -12280,7 +12421,8 @@
                 "visible": "false", 
                 "eaMetric": "foundational", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "DYNAMIC", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Landscape Pattern", 
                     "Recreation, Culture, and Aesthetics - Landscape Pattern"
@@ -12307,7 +12449,8 @@
                 "visible": "false", 
                 "eaMetric": "foundational", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "DYNAMIC", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Landscape Pattern", 
                     "Recreation, Culture, and Aesthetics - Landscape Pattern"
@@ -12334,7 +12477,8 @@
                 "visible": "false", 
                 "eaMetric": "foundational", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "DYNAMIC", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Landscape Pattern", 
                     "Recreation, Culture, and Aesthetics - Landscape Pattern"
@@ -12361,7 +12505,8 @@
                 "visible": "false", 
                 "eaMetric": "foundational", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "DYNAMIC", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Landscape Pattern", 
                     "Recreation, Culture, and Aesthetics - Landscape Pattern"
@@ -12388,7 +12533,8 @@
                 "visible": "false", 
                 "eaMetric": "foundational", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "DYNAMIC", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Landscape Pattern", 
                     "Recreation, Culture, and Aesthetics - Landscape Pattern"
@@ -12415,7 +12561,8 @@
                 "visible": "false", 
                 "eaMetric": "foundational", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE", 
+                "tileLink": "no", 
+                "type": "DYNAMIC", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - Landscape Pattern", 
                     "Recreation, Culture, and Aesthetics - Landscape Pattern"

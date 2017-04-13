@@ -9,20 +9,19 @@ Torrin Hultgren, October 2015
 ********** Need to update popup configuration, community layers are not HUC 12s **********
 '''
 import sys, json, csv, openpyxl
-import os
 
 # This is the spreadsheet that contains all the content
-rootpath = r"C:\inetpub\wwwroot\EnviroAtlas\scripts"
-inputSpreadsheet = os.path.join(rootpath, r"EAWAB4JSON.xlsx")
+rootpath = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\\"
+inputSpreadsheet = rootpath + r"EAWAB4JSON.xlsx"
 # Just in case there are rows to ignore at the top - header is row 0
 startingRow = 2
 # This should be a csv table that maps spreadsheet column headers to json elements
 # no great reason it needs to be in a standalone file rather than embedded in this
 # script as a dictionary.
-mapTablePath = os.path.join(rootpath, r"jsonfieldmap.csv")
+mapTablePath = rootpath + r"jsonfieldmap.csv"
 # Output json file
-outputFileName = os.path.join(rootpath, r"config.json")
-errorLogFile = os.path.join(rootpath, r"errors.log")
+outputFileName = rootpath + r"config.json"
+errorLogFile = rootpath + r"errors.log"
 
 popupDictionary = {"COMMUNITY" : "Block Group ID: {GEOID10}",
                    "NATIONAL" : "HUC 12 ID: {HUC_12}"}
@@ -103,9 +102,9 @@ def main(_argv):
                 layerJSON["popup"]["fieldInfos"][0]["label"] = name
         else:
             if (inputWorksheet.cell(key["serviceType"]+rowID).value == "dynamic" or inputWorksheet.cell(key["serviceType"]+rowID).value == "image"):
-                layerJSON["type"] = "FEATURE"
+                layerJSON["type"] = "DYNAMIC"
             if (inputWorksheet.cell(key["serviceType"]+rowID).value == "tiled"):
-                layerJSON["type"] = "FEATURE"
+                layerJSON["type"] = "TILED"
             ### code for reading in saved json files with layer/popup definitions.
             #with open(rootpath + inputWorksheet.cell(key["popupDefinition"]+rowID).value) as json_data:
             #    layerJSON["layers"] = json.load(json_data)
@@ -117,16 +116,11 @@ def main(_argv):
         stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink"]
         for elem in stringList:
             cell = inputWorksheet.cell(key[elem]+rowID)
-            if elem == 'tileLink':
-                if cell.value == 'yes':
-                    cell = inputWorksheet.cell(key['tileURL']+rowID)
-                    layerJSON[elem] = cell.value
-            else:
-                if cell.value != None:
-                    cellValue = cell.value
-                    if cellValue == 'x':
-                        cellValue = 'true'
-                    layerJSON[elem] = cellValue
+            if cell.value != None:
+                cellValue = cell.value
+                if cellValue == 'x':
+                    cellValue = 'true'
+                layerJSON[elem] = cellValue
         arrayList = [("eaTags",","),("eaBCSDD",";")]
         for elem,separator in arrayList:
              if inputWorksheet.cell(key[elem]+rowID).value:
