@@ -27,9 +27,9 @@ define([
 
       // required for server side paging
       this.where = options.where;
-	  if ((window.communitySelected != window.strAllCommunity)){
+	  /*if ((window.communitySelected != window.strAllCommunity)){
 	      	this.where = "(UPPER(CommST) LIKE UPPER('%" + window.communitySelected + "%')) AND (" + options.where + ")";
-	  }        
+	  }  */      
       //alert("inside FeatureLayerQueryStore: constructor options.where: " + options.where);
       this.orderByFields = options.orderByFields;
 

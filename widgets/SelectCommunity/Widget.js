@@ -152,7 +152,7 @@ function(declare,
 	    }
 	    this.map.setExtent(nExtent);	    
 
-	    var lyr;
+	    /*var lyr;
 	    layersToBeAdded = "u";
     	for (i in window.allLayerNumber) {
     		lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
@@ -160,10 +160,9 @@ function(declare,
 	    		layersToBeAdded = layersToBeAdded + "," + lyr.id.replace(window.layerIdPrefix, "");
           	}
         } 	    
-        //alert("layersToBeAdded by select Community: "+ layersToBeAdded);
         this.publishData({
 			message: layersToBeAdded
-		});   
+		}); */  
     },    
     displayCommunitySelection: function() {
     	//this.addRowButton(prefixRadioCommunity + window.strAllCommunity, "community", "Combined Communities", "R");

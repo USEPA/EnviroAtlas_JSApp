@@ -42,6 +42,8 @@ define([
 		var map = null;
 		var self = null;
 		var hiderows = {};
+		var hashFactsheetLinkPBS = {};
+		var hashLayerNameLinkPBS = {};
 		
 		var updateSelectablePBSLayersArea = function (){
 
@@ -151,6 +153,43 @@ define([
 								title.innerHTML = layer.name;  
 								title.title = layer.eaDescription;  
 								newTitleCell.appendChild(title); 		
+								
+								// end of adding the category icons	
+
+								
+								var newButtonInfoCell  = newRow.insertCell(2);
+								var buttonInfo = document.createElement('input');
+								buttonInfo.type = "button";
+						        var buttonInfoId = "but" + eaID;
+								buttonInfo.name = buttonInfoId;
+								buttonInfo.id = buttonInfoId;
+								buttonInfo.value = "i";
+								buttonInfo.style.height = "16px";
+								buttonInfo.style.width = "16px";
+								buttonInfo.style.lineHeight = "3px";//to set the text vertically center
+								
+								newButtonInfoCell.style.verticalAlign = "top";//this will put checkbox on first line
+						        newButtonInfoCell.appendChild(buttonInfo); 
+						        hashFactsheetLinkPBS[buttonInfoId] =  "N/A";
+						        hashLayerNameLinkPBS[buttonInfoId] =  layer.name;
+						        if (layer.hasOwnProperty('eaDfsLink')) {
+						        	hashFactsheetLinkPBS[buttonInfoId] = layer.eaDfsLink;
+						        }
+						        
+			
+						        document.getElementById(buttonInfoId).onclick = function(e) {
+							        if (hashFactsheetLinkPBS[this.id] == "N/A") {
+						        		var dataFactNote = new Dialog({
+									        title: hashLayerNameLinkPBS[this.id],
+									        style: "width: 300px",    
+								    	});
+								        dataFactNote.show();
+								        dataFactNote.set("content", "Data fact sheet link is not available!");
+						
+							        } else {
+							        	window.open(window.dataFactSheet + hashFactsheetLinkPBS[this.id]);
+							        }		      
+							    };    //end of inserting datafactsheet icon
 							}	    
 					    }// end of if (eaID.trim() != "")
 	                }// end of if(layer.hasOwnProperty('eaID'))           
@@ -197,10 +236,6 @@ define([
 		                else {
 		                	lLayer = new FeatureLayer(layer.url , lOptions);
 		                }
-			                
-					    //dojo.connect(lLayer, "onError", function(error){
-					    //   alert ("There is a problem on loading layer:"+layer.name);
-					    //});		                
 	
 		                if(layer.name){
 		                  lLayer._titleForLegend = layer.name;
