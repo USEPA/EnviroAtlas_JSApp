@@ -1,1 +1,126 @@
-{"layers":{"layer":[{"opacity":0.5,"eaTopic":"Boundaries","eaDescription":"EnviroAtlas Communities and vicinities. The EnviroAtlas boundary for the each Community area was determined using the 2010 Census definition of an Urban Area.","name":"EnviroAtlas Community Boundaries","url":"https://leb.epa.gov/arcgis/rest/services/Communities/Community_Locations/MapServer","eaID":901,"eaTags":["people","human","urban"],"eaPBS":"Boundaries","visible":"false","eaMetric":"boundary","eaLyrNum":" ","eaScale":"NATIONAL","type":"DYNAMIC"},{"opacity":0.5,"eaTopic":"Boundaries","eaDescription":"Census boundaries for States, Counties, and Census Block Groups","name":"States, County, and Census Block Group boundaries","url":"https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Reference_Boundaries/MapServer","eaID":902,"eaTags":["people","human","government"],"eaPBS":"Boundaries","visible":"false","eaMetric":"boundary","eaLyrNum":" ","eaScale":"NATIONAL","type":"DYNAMIC"},{"opacity":0.5,"eaTopic":"Boundaries","eaDescription":"US EPA Regions","name":"USEPA Regions","url":"https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/EPA_Regions/MapServer","eaID":903,"eaTags":["people","human","government","economy"],"eaPBS":"Boundaries","visible":"false","eaMetric":"boundary","eaLyrNum":"  ","eaScale":"NATIONAL","type":"DYNAMIC"},{"opacity":0.5,"eaTopic":"Boundaries","eaDescription":"114th Congressional District boundaries and labels","name":"Congressional District boundaries and labels","url":"https://geodata.epa.gov/arcgis/rest/services/OEI/CongressionalDistricts/MapServer","eaID":904,"eaTags":["people","human","government","economy"],"eaPBS":"Boundaries","visible":"false","eaMetric":"boundary","eaLyrNum":" ","eaScale":"NATIONAL","type":"DYNAMIC"},{"opacity":0.5,"eaTopic":"Boundaries","eaDescription":"NHDPlus V2 Hydrologic Unit Code boundaries and labels","name":"Hydrologic Unit Code (HUC) Boundaries and labels","url":"https://leb.epa.gov/arcgis/rest/services/Other/HydrologicUnits/MapServer","eaID":905,"eaDfsLink":"Supplemental/HUC.pdf","eaTags":["hydrology","hydrography"],"eaPBS":"Boundaries","visible":"false","eaMetric":"boundary","eaLyrNum":" ","eaScale":"NATIONAL","type":"DYNAMIC"},{"opacity":0.5,"eaTopic":"Boundaries","eaDescription":"NHDPlus V2 features","name":"NHD Plus V2 features","url":"https://leb.epa.gov/arcgis/rest/services/Supplemental/NHDPlusV21_EA/MapServer","eaID":906,"eaDfsLink":"Supplemental/NationalHydrographyDataset.pdf","eaTags":["National Hydrography Dataset","river","stream","lake","pond","hydrology"],"eaPBS":"Boundaries","visible":"false","eaMetric":"boundary","eaLyrNum":" ","eaScale":"NATIONAL","type":"DYNAMIC"}]}}
+{
+    "layers": {
+        "layer": [
+            {
+                "opacity": 0.5, 
+                "eaTopic": "Boundaries", 
+                "eaDescription": "EnviroAtlas Communities and vicinities. The EnviroAtlas boundary for the each Community area was determined using the 2010 Census definition of an Urban Area.", 
+                "name": "EnviroAtlas Community Boundaries", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_Locations/MapServer", 
+                "eaID": 901, 
+                "eaTags": [
+                    "people", 
+                    "human", 
+                    "urban"
+                ], 
+                "eaPBS": "Boundaries", 
+                "visible": "false", 
+                "eaMetric": "boundary", 
+                "eaLyrNum": " ", 
+                "eaScale": "NATIONAL", 
+                "type": "DYNAMIC"
+            }, 
+            {
+                "opacity": 0.5, 
+                "eaTopic": "Boundaries", 
+                "eaDescription": "Census boundaries for States, Counties, and Census Block Groups", 
+                "name": "States, County, and Census Block Group boundaries", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Reference_Boundaries/MapServer", 
+                "eaID": 902, 
+                "eaTags": [
+                    "people", 
+                    "human", 
+                    "government"
+                ], 
+                "eaPBS": "Boundaries", 
+                "visible": "false", 
+                "eaMetric": "boundary", 
+                "eaLyrNum": " ", 
+                "eaScale": "NATIONAL", 
+                "type": "DYNAMIC"
+            }, 
+            {
+                "opacity": 0.5, 
+                "eaTopic": "Boundaries", 
+                "eaDescription": "US EPA Regions", 
+                "name": "USEPA Regions", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/EPA_Regions/MapServer", 
+                "eaID": 903, 
+                "eaTags": [
+                    "people", 
+                    "human", 
+                    "government", 
+                    "economy"
+                ], 
+                "eaPBS": "Boundaries", 
+                "visible": "false", 
+                "eaMetric": "boundary", 
+                "eaLyrNum": "  ", 
+                "eaScale": "NATIONAL", 
+                "type": "DYNAMIC"
+            }, 
+            {
+                "opacity": 0.5, 
+                "eaTopic": "Boundaries", 
+                "eaDescription": "114th Congressional District boundaries and labels", 
+                "name": "Congressional District boundaries and labels", 
+                "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/CongressionalDistricts/MapServer", 
+                "eaID": 904, 
+                "eaTags": [
+                    "people", 
+                    "human", 
+                    "government", 
+                    "economy"
+                ], 
+                "eaPBS": "Boundaries", 
+                "visible": "false", 
+                "eaMetric": "boundary", 
+                "eaLyrNum": " ", 
+                "eaScale": "NATIONAL", 
+                "type": "DYNAMIC"
+            }, 
+            {
+                "opacity": 0.5, 
+                "eaTopic": "Boundaries", 
+                "eaDescription": "NHDPlus V2 Hydrologic Unit Code boundaries and labels", 
+                "name": "Hydrologic Unit Code (HUC) Boundaries and labels", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/HydrologicUnits/MapServer", 
+                "eaID": 905, 
+                "eaDfsLink": "Supplemental/HUC.pdf", 
+                "eaTags": [
+                    "hydrology", 
+                    "hydrography"
+                ], 
+                "eaPBS": "Boundaries", 
+                "visible": "false", 
+                "eaMetric": "boundary", 
+                "eaLyrNum": " ", 
+                "eaScale": "NATIONAL", 
+                "type": "DYNAMIC"
+            }, 
+            {
+                "opacity": 0.5, 
+                "eaTopic": "Boundaries", 
+                "eaDescription": "NHDPlus V2 features", 
+                "name": "NHD Plus V2 features", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/NHDPlusV21_EA/MapServer", 
+                "eaID": 906, 
+                "eaDfsLink": "Supplemental/NationalHydrographyDataset.pdf", 
+                "eaTags": [
+                    "National Hydrography Dataset", 
+                    "river", 
+                    "stream", 
+                    "lake", 
+                    "pond", 
+                    "hydrology"
+                ], 
+                "eaPBS": "Boundaries", 
+                "visible": "false", 
+                "eaMetric": "boundary", 
+                "eaLyrNum": " ", 
+                "eaScale": "NATIONAL", 
+                "type": "DYNAMIC"
+            }
+        ]
+    }
+}

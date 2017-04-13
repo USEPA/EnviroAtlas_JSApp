@@ -519,8 +519,8 @@ define([
       query.returnIdsOnly = true;
       query.where = this._getLayerFilterExpression();
       query.orderByFields = this.layer._orderByFields || [pk + " ASC"];
-	  if ((query.where == "1=1") && (window.communitySelected != window.strAllCommunity)){
-	      	//query.where = "UPPER(Community) LIKE UPPER('%" + window.communityDic[window.communitySelected] + "%')";
+	  //if ((query.where == "1=1") && (window.communitySelected != window.strAllCommunity)){
+	  if ((window.communitySelected != window.strAllCommunity) && (window.attributeByOneCommu == true) && (query.where == "1=1")){
 	      	query.where = "UPPER(CommST) LIKE UPPER('%" + window.communitySelected + "%')";
 	  }  
       if (normalizedExtent) {
@@ -1026,7 +1026,7 @@ define([
     _getLayerFilterExpression: function() {
       var expr = (this._filterObj && this._filterObj.expr) || "";
       //if ((expr == "") && (window.communitySelected != window.strAllCommunity)){
-      if (window.communitySelected != window.strAllCommunity){
+      if ((window.communitySelected != window.strAllCommunity) && (window.attributeByOneCommu == true)){
       	 if (expr != "") {
 	      	expr= "(UPPER(CommST) LIKE UPPER('%" + window.communitySelected + "%')) AND (" + expr + ")" ;
 	     }

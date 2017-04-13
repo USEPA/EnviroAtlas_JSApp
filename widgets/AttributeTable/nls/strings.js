@@ -20,6 +20,8 @@ define({
     showRelatedRecords: "Show Related Records",
     noRelatedRecords: "No Related Records",
     refresh: "Refresh",
+    queryByCommu: "Selected Community Only",
+    clearQueryByCommu: "Show All Community Records",
     features: "features",
     selected: "selected",
     transparent: "Transparent Mode",
