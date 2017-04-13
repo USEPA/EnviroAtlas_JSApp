@@ -2585,7 +2585,7 @@ widget:jimu-w
   margin: 0 !important;
 }
 .jimu-on-screen-widget-panel>.jimu-panel-title>.close-btn{
-  background: url(images/white_close_default.png) no-repeat center center;
+  background: url(images/white_min_default.png) no-repeat center center;
 }
 .jimu-on-screen-widget-panel>.jimu-panel-title>.fold-down{
   background: url(images/fold_down.png) no-repeat center center;
