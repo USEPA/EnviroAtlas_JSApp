@@ -42,6 +42,8 @@ define([
 		var map = null;
 		var self = null;
 		var hiderows = {};
+		var hashFactsheetLinkPBS = {};
+		var hashLayerNameLinkPBS = {};
 		
 		var updateSelectablePBSLayersArea = function (){
 
@@ -151,8 +153,6 @@ define([
 								title.innerHTML = layer.name;  
 								title.title = layer.eaDescription;  
 								newTitleCell.appendChild(title); 		
-<<<<<<< Updated upstream
-=======
 								
 								// end of adding the category icons	
 
@@ -163,7 +163,7 @@ define([
 						        var buttonInfoId = "but" + eaID;
 								buttonInfo.name = buttonInfoId;
 								buttonInfo.id = buttonInfoId;
-								buttonInfo.className = 'i-button';
+								buttonInfo.className = 'i-button'
 								
 								newButtonInfoCell.style.verticalAlign = "top";//this will put checkbox on first line
 						        newButtonInfoCell.appendChild(buttonInfo); 
@@ -187,7 +187,6 @@ define([
 							        	window.open(window.dataFactSheet + hashFactsheetLinkPBS[this.id]);
 							        }		      
 							    };    //end of inserting datafactsheet icon
->>>>>>> Stashed changes
 							}	    
 					    }// end of if (eaID.trim() != "")
 	                }// end of if(layer.hasOwnProperty('eaID'))           
@@ -234,10 +233,6 @@ define([
 		                else {
 		                	lLayer = new FeatureLayer(layer.url , lOptions);
 		                }
-			                
-					    //dojo.connect(lLayer, "onError", function(error){
-					    //   alert ("There is a problem on loading layer:"+layer.name);
-					    //});		                
 	
 		                if(layer.name){
 		                  lLayer._titleForLegend = layer.name;
