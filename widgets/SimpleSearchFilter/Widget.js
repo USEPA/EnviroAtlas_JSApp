@@ -376,7 +376,7 @@ define([
 					for (var key in window.categoryDic) {
 			
 						    liElem = document.createElement("li");
-							liElem.style.left = (indexImage*20).toString() + "px";
+							liElem.style.left = (indexImage*23).toString() + "px";
 							liElem.style.top = "-12px";
 							aElem = document.createElement("a");
 							aElem.title  = key;
@@ -393,7 +393,7 @@ define([
 
 					//Add Community/National Icon
 					liElem = document.createElement("li");
-					liElem.style.left = "160px";
+					liElem.style.left = "175px";
 					liElem.style.top = "-12px";
 					aElem = document.createElement("a");
 					// For now.  Lets adjust this in the spreadsheet
