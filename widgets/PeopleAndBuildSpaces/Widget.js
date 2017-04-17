@@ -151,6 +151,43 @@ define([
 								title.innerHTML = layer.name;  
 								title.title = layer.eaDescription;  
 								newTitleCell.appendChild(title); 		
+<<<<<<< Updated upstream
+=======
+								
+								// end of adding the category icons	
+
+								
+								var newButtonInfoCell  = newRow.insertCell(2);
+								var buttonInfo = document.createElement('input');
+								buttonInfo.type = "button";
+						        var buttonInfoId = "but" + eaID;
+								buttonInfo.name = buttonInfoId;
+								buttonInfo.id = buttonInfoId;
+								buttonInfo.className = 'i-button';
+								
+								newButtonInfoCell.style.verticalAlign = "top";//this will put checkbox on first line
+						        newButtonInfoCell.appendChild(buttonInfo); 
+						        hashFactsheetLinkPBS[buttonInfoId] =  "N/A";
+						        hashLayerNameLinkPBS[buttonInfoId] =  layer.name;
+						        if (layer.hasOwnProperty('eaDfsLink')) {
+						        	hashFactsheetLinkPBS[buttonInfoId] = layer.eaDfsLink;
+						        }
+						        
+			
+						        document.getElementById(buttonInfoId).onclick = function(e) {
+							        if (hashFactsheetLinkPBS[this.id] == "N/A") {
+						        		var dataFactNote = new Dialog({
+									        title: hashLayerNameLinkPBS[this.id],
+									        style: "width: 300px",    
+								    	});
+								        dataFactNote.show();
+								        dataFactNote.set("content", "Data fact sheet link is not available!");
+						
+							        } else {
+							        	window.open(window.dataFactSheet + hashFactsheetLinkPBS[this.id]);
+							        }		      
+							    };    //end of inserting datafactsheet icon
+>>>>>>> Stashed changes
 							}	    
 					    }// end of if (eaID.trim() != "")
 	                }// end of if(layer.hasOwnProperty('eaID'))           

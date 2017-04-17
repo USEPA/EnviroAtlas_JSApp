@@ -364,3 +364,12 @@
 .jimu-draw-box .text-icon{
   background-image: url(images/draw_text.png);
 }
+
+.i-button {
+  margin-left: 3px;
+  height: 16px;
+  width: 16px;
+  border-radius: 10px;
+  background-image: url('./images/i_icon.png');
+  background-size: cover;
+}
