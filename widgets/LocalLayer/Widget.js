@@ -50,6 +50,7 @@ define([
 		    while(new Date().getTime() < unixtime_ms + ms) {}
 		}
     	var showDisplayLayerAddFailureWidget = function(layerName){
+
 	        var widgetName = 'DisplayLayerAddFailure';
 	        var widgets = self.appConfig.getConfigElementsByName(widgetName);
 	        var pm = PanelManager.getInstance();
@@ -61,6 +62,7 @@ define([
 		    });
 	    }; 	
          var  initTileLayer = function (urlTiledMapService, tiledLayerId){
+
         	dojo.declare("myTiledMapServiceLayer", esri.layers.TiledMapServiceLayer, {
 	          constructor: function() {
 	            this.spatialReference = new esri.SpatialReference({ wkid:102100 });
@@ -74,6 +76,7 @@ define([
 	            this.id = tiledLayerId;
 	          },        
             getTileUrl: function(level, row, col) {
+ 
             //return "http://leb.epa.gov/arcgiscache_exp/AWD_mgal/National%20Data%20-%20EnviroAtlas/_alllayers/" +
             //       "L" + dojo.string.pad(level, 2, '0') + "/" + "R" + dojo.string.pad(row.toString(16), 8, '0') + "/" + "C" + dojo.string.pad(col.toString(16), 8, '0') + "." + "png";
             return urlTiledMapService +
@@ -221,13 +224,15 @@ define([
 						    	if ((!(lLayer.title in window.faildedEALayerDictionary)) && (!(lLayer.title in window.successLayerDictionary))){
 							  		window.faildedEALayerDictionary[lLayer.title] = lLayer.title;
 							  		showDisplayLayerAddFailureWidget(lLayer.title);
-							  	}
+							  	}						    	
 						    });
+						    
 						    dojo.connect(lLayer, "onLoad", function(error){
 						    	if (!(lLayer.title in window.successLayerDictionary)){
 							  		window.successLayerDictionary[lLayer.title] = lLayer.title;
 							  	}
-						    });
+						    });		
+						    					
 			                lLayer.minScale = 1155581.108577;
 			                if(layer.name){
 			                  lLayer._titleForLegend = layer.name;
@@ -238,7 +243,8 @@ define([
 			                  evt.layer.name = lOptions.id;
 			                });
 			                
-			                lLayer.id = window.layerIdPrefix + layer.eaID.toString();							
+
+			                lLayer.id = window.layerIdPrefix + layer.eaID.toString();		
 			
 			                if(layer.hasOwnProperty('eaScale')){
 			                	if (layer.eaScale == "COMMUNITY") {
@@ -261,8 +267,10 @@ define([
 							          	}
 			                		}
 			                		else {
+			                			
 			                			lLayer.setVisibility(false);//turn off the layer when first added to map and let user to turn on	
 			                		}
+
 					    			if ((window.communitySelected != "") && (window.communitySelected != window.strAllCommunity)){
 										console.log("setDefinitionExpression: "  +"CommST = '" +window.communitySelected + "'");
 										//lLayer.setDefinitionExpression("Community = '" +window.communityDic[window.communitySelected] + "'");
@@ -275,7 +283,7 @@ define([
 									window.nationalLayerNumber.push(layer.eaID.toString());
 								}
 							}
-						
+
 						    bNeedToBeAdded = true;
 			                if(layer.hasOwnProperty('eaScale')){
 			                	if (layer.eaScale == "NATIONAL") {
@@ -302,16 +310,17 @@ define([
 					    if(lyrTiled){
 				       	     lyrTiled.setOpacity(layer.opacity);
 				        } 
-	                }      
-    
+	                }        
 	                
                 	this._viewerMap.addLayer(lLayer);
+                	
 			    	/*for (i in window.allLayerNumber) {			     
 			          	lyrBoundary = this._viewerMap.getLayer(window.layerIdBndrPrefix + window.allLayerNumber[i]);
 						if(lyrBoundary){
 			            	this._viewerMap.reorderLayer(lyrBoundary,this._viewerMap.layerIds.length+2);
 			          	}         	
 			        }*/            
+			        
                 }
               }else if(layer.type.toUpperCase() === 'TILED'){
                 if(layer.displayLevels){
@@ -397,6 +406,7 @@ define([
 	  onReceiveData: function(name, widgetId, data, historyData) {
 		  if (name == 'SimpleSearchFilter'){
 			  //set selected community
+
 			  //if (data.message.indexOf(window.communitySelectMessagePrefix)) {
 			  //  	communitySelected = data.message.substring(window.communitySelectMessagePrefix.length + 1);
 			  //}			  	
@@ -410,15 +420,15 @@ define([
 				  	_removeSelectedLayers(data.message.substring(2));
 			  }	
 		  }
-		  if (name == 'SelectCommunity'){
+		  /*if (name == 'SelectCommunity'){
 			  var stringArray = data.message.split(",");
 			  if (stringArray.length > 1){
 				  if (stringArray[0] == "u") {
-				  	//alert("stringArray length > 1, " + data.message.substring(2));
 				  	_addSelectedLayers(this.config.layers.layer, data.message.substring(2), "1");
 				  }			  	
 			  }
-		  }
+
+		  }	*/	  
 		  //removing all layers function is not used in Layerlist currently
 		  //if (name == 'LayerList'){
 		  //	if (data.message ==window.removeAllMessage) {

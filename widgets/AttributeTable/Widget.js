@@ -1098,7 +1098,16 @@ define([
           onClick: lang.hitch(this, this.onClickRefreshButton)
         });
         toolbar.addChild(this.refreshButton);
-
+        
+        this.queryByCommButton = new Button({//toggle button for communityQuery
+          id: "queryByCommToggleButton",
+          label: this.nls.queryByCommu,
+          showLabel: true,
+          iconClass: "esriAttributeTableFilterImage",
+          onClick: lang.hitch(this, this.onClickQueryByCommuButton)
+        });
+        toolbar.addChild(this.queryByCommButton);
+        
         this.closeButton = new Button({
           title: this.nls.closeMessage,
           iconClass: "esriAttributeTableCloseImage",
@@ -1299,7 +1308,30 @@ define([
           this._startQueryOnRelationTab(this.currentRelationshipKey);
         }
       },
+      onClickQueryByCommuButton: function() {
+      	//alert(this.queryByCommButton.label);
+      	var button = document.getElementById("queryByCommToggleButton");
+        //submit.value = 'Loading...';
+      	if (window.attributeByOneCommu == false) {
+      		window.attributeByOneCommu = true;
+      		this.queryByCommButton.set("label", this.nls.clearQueryByCommu);
+      	} else {
+      		window.attributeByOneCommu = false;
+      		this.queryByCommButton.set("label", this.nls.queryByCommu);
+      	}
+        var table = this.getCurrentTable();
+        if (!table) {
+          return;
+        }
 
+        if (table.grid) {
+          table.grid.clearSelection();
+        }
+
+        if (table instanceof _FeatureTable) {
+          this.startQuery(this.layersIndex, this.config.layerInfos[this.layersIndex].extent);
+        } 
+      },
       _clearSelection: function() {
         var table = this.getCurrentTable();
         if (table) {
