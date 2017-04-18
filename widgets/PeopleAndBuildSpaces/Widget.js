@@ -163,14 +163,9 @@ define([
 						        var buttonInfoId = "but" + eaID;
 								buttonInfo.name = buttonInfoId;
 								buttonInfo.id = buttonInfoId;
-<<<<<<< HEAD
 								buttonInfo.className = 'i-button'
-=======
-								buttonInfo.value = "i";
-								buttonInfo.style.height = "16px";
-								buttonInfo.style.width = "16px";
+
 								buttonInfo.style.lineHeight = "3px";//to set the text vertically center
->>>>>>> master
 								
 								newButtonInfoCell.style.verticalAlign = "top";//this will put checkbox on first line
 						        newButtonInfoCell.appendChild(buttonInfo); 
