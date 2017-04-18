@@ -376,7 +376,7 @@ define([
 					for (var key in window.categoryDic) {
 			
 						    liElem = document.createElement("li");
-							liElem.style.left = (indexImage*20).toString() + "px";
+							liElem.style.left = (indexImage*23).toString() + "px";
 							liElem.style.top = "-12px";
 							aElem = document.createElement("a");
 							aElem.title  = key;
@@ -393,7 +393,7 @@ define([
 
 					//Add Community/National Icon
 					liElem = document.createElement("li");
-					liElem.style.left = "160px";
+					liElem.style.left = "175px";
 					liElem.style.top = "-12px";
 					aElem = document.createElement("a");
 					// For now.  Lets adjust this in the spreadsheet
@@ -422,13 +422,7 @@ define([
 			        var buttonInfoId = "but" + eaID;
 					buttonInfo.name = buttonInfoId;
 					buttonInfo.id = buttonInfoId;
-					buttonInfo.style.backgroundImage = "url('./images/i_icon.png')";
-					buttonInfo.style.backgroundSize = '100%';
-					//buttonInfo.value = "i";
-					buttonInfo.style.height = "16px";
-					buttonInfo.style.width = "16px";
-					buttonInfo.style.borderRadius = "10px";
-					//buttonInfo.style.lineHeight = "3px";//to set the text vertically center
+					buttonInfo.className = 'i-button';
 					
 					newButtonInfoCell.style.verticalAlign = "top";//this will put checkbox on first line
 			        newButtonInfoCell.appendChild(buttonInfo);  
