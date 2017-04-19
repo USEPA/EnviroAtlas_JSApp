@@ -14,6 +14,12 @@ define([
  'esri/layers/ArcGISTiledMapServiceLayer',
  'esri/layers/FeatureLayer',
  'esri/layers/ImageParameters',
+ 'esri/symbols/SimpleLineSymbol',
+ 'esri/symbols/SimpleFillSymbol',
+ 'esri/renderers/SimpleRenderer',
+ 'esri/graphic',
+ 'esri/Color',
+ 'esri/renderers/ClassBreaksRenderer',
  'esri/dijit/BasemapGallery',
  'esri/dijit/BasemapLayer',
  'esri/dijit/Basemap',
@@ -38,6 +44,12 @@ define([
     ArcGISTiledMapServiceLayer,
     FeatureLayer,
     ImageParameters,
+    SimpleLineSymbol,
+    SimpleFillSymbol,
+    SimpleRenderer,
+    graphic,
+    Color,
+    ClassBreaksRenderer,
     BasemapGallery,
     BasemapLayer,
     Basemap,
@@ -45,6 +57,26 @@ define([
     PopupTemplate,
     WidgetManager) {
     	var self;
+    	var Attribute = null;
+    	var loadSymbologyConfig = function(callback){   
+
+		    var xobj = new XMLHttpRequest();
+		
+		    xobj.overrideMimeType("application/json");		
+ 
+		    if (communitySelected != window.strAllCommunity) {
+			    xobj.open('GET', 'configs/CommunitySymbology/' + window.communitySelected + '_JSON_Symbol/Nulls/' + window.communitySelected + '_' + Attribute + ".json", true); 
+			} else {
+			    xobj.open('GET', 'configs/CommunitySymbology/' + 'AllCommunities' + '_JSON_Symbol/Nulls/' + 'CombComm' + '_' + Attribute + ".json", true); 
+				
+			}
+		    xobj.onreadystatechange = function () {
+		      if (xobj.readyState == 4 && xobj.status == "200") {
+		            callback(xobj.responseText);
+		          }
+		    };
+		    xobj.send(null);  
+ 		}; 	
     	var sleep = function(ms) {
 		    var unixtime_ms = new Date().getTime();
 		    while(new Date().getTime() < unixtime_ms + ms) {}
@@ -171,6 +203,8 @@ define([
                   	if(fieldInfos[0].hasOwnProperty('fieldName')) {
                   		if (fieldInfos[0].fieldName ==null) {
                   			bPopup = false;
+                  		} else {
+                  			Attribute = fieldInfos[0].fieldName;
                   		}
                   	}
                   	else {
@@ -251,32 +285,26 @@ define([
 			                		if (bUpdateLayers ==  "1") {
 			                			lyrTobeUpdated = this._viewerMap.getLayer(window.layerIdPrefix + stringArray[i]);
 										if(lyrTobeUpdated){
-											if (lyrTobeUpdated.visible){
-												lLayer.setVisibility(true);
-											}
-											else {
-												lLayer.setVisibility(false);
-											}
-							            	this._viewerMap.removeLayer(lyrTobeUpdated);
+						                	loadSymbologyConfig(function(response){
+						                		var classBreakInfo = JSON.parse(response);
+						                		var renderer = new ClassBreaksRenderer(classBreakInfo);
+						                		lyrTobeUpdated.setRenderer(renderer);	
+						                		lyrTobeUpdated.redraw();
+						                		lyrTobeUpdated.setVisibility(false);
+            									lyrTobeUpdated.setVisibility(true);					                		
+										    }); 
 							          	}
-							          	if(layer.tileLink){
-							          		tileLyrTobeUpdated = this._viewerMap.getLayer(window.layerIdTiledPrefix + layer.eaID.toString());
-							          		if(tileLyrTobeUpdated){
-									       	     this._viewerMap.removeLayer(tileLyrTobeUpdated);//bji need to be modified to accomodate tile.
-									        } 
-							          	}
+
 			                		}
-			                		else {
-			                			
+			                		else {			                			
 			                			lLayer.setVisibility(false);//turn off the layer when first added to map and let user to turn on	
 			                		}
 
-					    			if ((window.communitySelected != "") && (window.communitySelected != window.strAllCommunity)){
+					    			/*if ((window.communitySelected != "") && (window.communitySelected != window.strAllCommunity)){
 										console.log("setDefinitionExpression: "  +"CommST = '" +window.communitySelected + "'");
 										//lLayer.setDefinitionExpression("Community = '" +window.communityDic[window.communitySelected] + "'");
 										lLayer.setDefinitionExpression("CommST = '" +window.communitySelected + "'");
-										
-									}
+									}*/
 								}
 								else {//National
 									lLayer.setVisibility(false);
@@ -285,13 +313,9 @@ define([
 							}
 
 						    bNeedToBeAdded = true;
-			                if(layer.hasOwnProperty('eaScale')){
-			                	if (layer.eaScale == "NATIONAL") {
-			                		if (bUpdateLayers ==  "1") {
-			                			bNeedToBeAdded = false;
-			                		}
-			                	}
-			                }
+	                		if (bUpdateLayers ==  "1") {
+	                			bNeedToBeAdded = false;
+	                		}
 						    break;
 						}
 
@@ -311,16 +335,16 @@ define([
 				       	     lyrTiled.setOpacity(layer.opacity);
 				        } 
 	                }        
-	                
-                	this._viewerMap.addLayer(lLayer);
-                	
-			    	/*for (i in window.allLayerNumber) {			     
-			          	lyrBoundary = this._viewerMap.getLayer(window.layerIdBndrPrefix + window.allLayerNumber[i]);
-						if(lyrBoundary){
-			            	this._viewerMap.reorderLayer(lyrBoundary,this._viewerMap.layerIds.length+2);
-			          	}         	
-			        }*/            
-			        
+	                if (layer.eaScale == "COMMUNITY") {
+	                	loadSymbologyConfig(function(response){
+	                		var classBreakInfo = JSON.parse(response);
+	                		var renderer = new ClassBreaksRenderer(classBreakInfo);
+	                		lLayer.setRenderer(renderer);
+					    	this._viewerMap.addLayer(lLayer);
+					    }); 
+	                } else {
+	                	this._viewerMap.addLayer(lLayer);
+	                } 			        
                 }
               }else if(layer.type.toUpperCase() === 'TILED'){
                 if(layer.displayLevels){
@@ -420,7 +444,7 @@ define([
 				  	_removeSelectedLayers(data.message.substring(2));
 			  }	
 		  }
-		  /*if (name == 'SelectCommunity'){
+		  if (name == 'SelectCommunity'){
 			  var stringArray = data.message.split(",");
 			  if (stringArray.length > 1){
 				  if (stringArray[0] == "u") {
@@ -428,7 +452,7 @@ define([
 				  }			  	
 			  }
 
-		  }	*/	  
+		  }	
 		  //removing all layers function is not used in Layerlist currently
 		  //if (name == 'LayerList'){
 		  //	if (data.message ==window.removeAllMessage) {
