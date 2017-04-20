@@ -4,29 +4,11 @@
             {
                 "opacity": 0.5, 
                 "eaTopic": "Boundaries", 
-                "eaDescription": "EnviroAtlas Communities and vicinities. The EnviroAtlas boundary for the each Community area was determined using the 2010 Census definition of an Urban Area.", 
-                "name": "EnviroAtlas Community Boundaries", 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_Locations/MapServer", 
-                "eaID": 901, 
-                "eaTags": [
-                    "people", 
-                    "human", 
-                    "urban"
-                ], 
-                "eaPBS": "Boundaries", 
-                "visible": "false", 
-                "eaMetric": "boundary", 
-                "eaLyrNum": " ", 
-                "eaScale": "NATIONAL", 
-                "type": "DYNAMIC"
-            }, 
-            {
-                "opacity": 0.5, 
-                "eaTopic": "Boundaries", 
                 "eaDescription": "Census boundaries for States, Counties, and Census Block Groups", 
                 "name": "States, County, and Census Block Group boundaries", 
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Reference_Boundaries/MapServer", 
                 "eaID": 902, 
+                "eaDfsLink": "Supplemental/TigerBoundaries.pdf", 
                 "eaTags": [
                     "people", 
                     "human", 
@@ -46,6 +28,7 @@
                 "name": "USEPA Regions", 
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/EPA_Regions/MapServer", 
                 "eaID": 903, 
+                "eaDfsLink": "Supplemental/EPARegions.pdf", 
                 "eaTags": [
                     "people", 
                     "human", 
@@ -66,6 +49,7 @@
                 "name": "Congressional District boundaries and labels", 
                 "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/CongressionalDistricts/MapServer", 
                 "eaID": 904, 
+                "eaDfsLink": "Supplemental/114thCongressionalDistricts.pdf", 
                 "eaTags": [
                     "people", 
                     "human", 

@@ -455,11 +455,21 @@
             {
                 "opacity": 0.5, 
                 "eaTopic": "National Demographics", 
-                "eaDescription": "This dasymetric population map intelligently reallocates 2010 population from census blocks to 30 meter pixels based on land cover and slope. It is used for metrics that require population to be spatially allocated at a pixel level, primarily in the urban section of the atlas.\u00a0", 
-                "name": "Dasymetric allocation of population", 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Dasymetric_WMerc/MapServer/", 
+                "popup": {
+                    "showAttachments": "false", 
+                    "fieldInfos": [
+                        {
+                            "visible": "true", 
+                            "fieldName": "Value", 
+                            "label": "Dasymetric allocation of population"
+                        }
+                    ], 
+                    "title": "Dasymetric allocation of population"
+                }, 
+                "autorefresh": 0, 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Dasymetric_WMerc/MapServer/", 
                 "eaID": 714, 
-                "eaDfsLink": "Supplemental/Dasymetricallocationofpopulation.pdf", 
+                "eaDescription": "This dasymetric population map intelligently reallocates 2010 population from census blocks to 30 meter pixels based on land cover and slope. It is used for metrics that require population to be spatially allocated at a pixel level, primarily in the urban section of the atlas.\u00a0", 
                 "eaTags": [
                     "people", 
                     "human"
@@ -469,8 +479,11 @@
                 "visible": "false", 
                 "eaMetric": "foundational", 
                 "eaLyrNum": 0, 
+                "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE"
+                "type": "FEATURE", 
+                "eaDfsLink": "Supplemental/Dasymetricallocationofpopulation.pdf", 
+                "name": "Dasymetric allocation of population"
             }, 
             {
                 "opacity": 0.5, 
@@ -487,7 +500,7 @@
                     "title": "Employment diversity"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Employment/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Employment/MapServer", 
                 "eaID": 715, 
                 "eaDescription": "This map portrays a measure of employment diversity within each census block group. Job counts used in the equation are from eight employment categories: retail, office, service, industrial, entertainment, education, healthcare, and public administration. ", 
                 "eaTags": [
@@ -523,7 +536,7 @@
                     "title": "Employment Rate"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Employment/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Employment/MapServer", 
                 "eaID": 716, 
                 "eaDescription": "This map estimates the percent of the population aged 16-64 who have worked in the past 12 months by block group. It includes people who worked any number of hours per week.  The data are based on the American Community Survey 5-year data for 2008-2012.", 
                 "eaTags": [
@@ -559,7 +572,7 @@
                     "title": "Employment:housing ratio"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Employment/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Employment/MapServer", 
                 "eaID": 717, 
                 "eaDescription": "This map estimates the jobs-to-housing balance (or total employment divided by total occupied housing units) within each census block group for 2010. ", 
                 "eaTags": [
@@ -595,7 +608,7 @@
                     "title": "Jobs within a 45-minute drive, weighted"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 718, 
                 "eaDescription": "This map indicates the relative accessibility to jobs from residences via automobile (in terms of street network travel time) for each census block group, compared to other block groups in the same metropolitan region. Jobs in nearby block groups (based on travel time) are weighted more heavily than those further away.", 
                 "eaTags": [
@@ -631,7 +644,7 @@
                     "title": "Number of high-wage workers [work location]"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 719, 
                 "eaDescription": "This map estimates the number of workers earning more than $3333 per month summarized by workplace location within each census block group. ", 
                 "eaTags": [
@@ -670,7 +683,7 @@
                     "title": "Number of households"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 720, 
                 "eaDescription": "This map illustrates the number of households (i.e., occupied housing units) within each census block group in 2010. A household consists of all people who occupy a housing unit regardless of relationship. See user guide for details: https:", 
                 "eaTags": [
@@ -706,7 +719,7 @@
                     "title": "Number of households with zero vehicles"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 721, 
                 "eaDescription": "This map illustrates the number of households without vehicles within each census block group in 2010. The word vehicle refers to private motor vehicles such as cars and trucks. ", 
                 "eaTags": [
@@ -744,7 +757,7 @@
                     "title": "Number of low-wage workers [home location]"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 722, 
                 "eaDescription": "This map estimates the number of workers earning $1250 or less per month summarized by residence within each census block group.", 
                 "eaTags": [
@@ -781,7 +794,7 @@
                     "title": "Number of low-wage workers [work location]"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 723, 
                 "eaDescription": "This map estimates the number of workers earning $1250 or less per month summarized by workplace location within each census block group. ", 
                 "eaTags": [
@@ -818,7 +831,7 @@
                     "title": "Number of middle-wage workers [work location]"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 724, 
                 "eaDescription": "This map estimates the number of workers earning between $1250 and $3333 per month summarized by workplace location within each census block group.", 
                 "eaTags": [
@@ -854,7 +867,7 @@
                     "title": "Number of workers [home location]"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 725, 
                 "eaDescription": "This map illustrates the total number of workers by home location in 2010 within each census block group. ", 
                 "eaTags": [
@@ -890,7 +903,7 @@
                     "title": "Pedestrian-oriented street intersection density"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 726, 
                 "eaDescription": "This map estimates the degree of pedestrian-oriented street connectivity for each census block group, measured as street intersections per square mile. Intersections that exclude pedestrian passage were not counted.", 
                 "eaTags": [
@@ -1225,7 +1238,7 @@
                     "title": "Percent of households with zero vehicles"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 736, 
                 "eaDescription": "This map estimates zero-vehicle households as a percentage of all households within each census block group in 2010. The word vehicle refers to private motor vehicles such as cars and trucks. ", 
                 "eaTags": [
@@ -1259,7 +1272,7 @@
                     "title": "Percent low-wage workers [work location]"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 737, 
                 "eaDescription": "This map estimates the percentage of all workers within each census block group earning $1250 or less per month based on their workplace location. ", 
                 "eaTags": [
@@ -1296,7 +1309,7 @@
                     "title": "Percent of workers who bike or walk to work"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 738, 
                 "eaDescription": "This map estimates the percent of workers who bike or walk to work.  The data are based on the American Community Survey 5-year data for 2008-2012.", 
                 "eaTags": [
@@ -1329,7 +1342,7 @@
                     "title": "Percent of workers who carpool to work"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 739, 
                 "eaDescription": "This map estimates the percent of workers who carpool to work.  The data are based on the American Community Survey 5-year data for 2008-2012.", 
                 "eaTags": [
@@ -1362,7 +1375,7 @@
                     "title": "Percent of workers who commute to work by public transportation"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 740, 
                 "eaDescription": "This map estimates the percent of workers who commute to work by public transportation.  The data are based on the American Community Survey 5-year data for 2008-2012.", 
                 "eaTags": [
@@ -1394,7 +1407,7 @@
                     "title": "Percent of workers who drive to work alone"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 741, 
                 "eaDescription": "This map estimates the percent of workers who drive to work alone.  The data are based on the American Community Survey 5-year data for 2008-2012.", 
                 "eaTags": [
@@ -1427,7 +1440,7 @@
                     "title": "Percent of workers who work from home"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 742, 
                 "eaDescription": "This map estimates the percent of workers who work from home.  The data are based on the American Community Survey 5-year data for 2008-2012.", 
                 "eaTags": [
@@ -1460,7 +1473,7 @@
                     "title": "Percent of workers with 30 - 60 minutes travel time to work"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 743, 
                 "eaDescription": "This map estimates the percent of workers within each block group with travel time to work ranging from 30 to 60 minutes.", 
                 "eaTags": [
@@ -1493,7 +1506,7 @@
                     "title": "Percent of workers with 60 - 90 minutes travel time to work"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 744, 
                 "eaDescription": "This map estimates the percent of workers within each block group with travel time to work ranging from 60 to 90 minutes.", 
                 "eaTags": [
@@ -1526,7 +1539,7 @@
                     "title": "Percent of workers with greater than 90 minutes travel time to work"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 745, 
                 "eaDescription": "This map estimates the percent of workers within each block group with more than 90 minutes travel time to work.", 
                 "eaTags": [
@@ -1559,7 +1572,7 @@
                     "title": "Percent of workers with less than 30 minutes travel time to work"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 746, 
                 "eaDescription": "This map estimates the percent of workers within each block group with less than 30 minutes travel time to work.", 
                 "eaTags": [
@@ -1728,7 +1741,7 @@
                     "title": "Residential density (hu/ac)"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Housing/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Housing/MapServer", 
                 "eaID": 751, 
                 "eaDescription": "This map estimates residential density (or housing units per acre) within each census block group. Developed acreage is calculated by excluding parks, water bodies, conservation easements, and other protected areas. ", 
                 "eaTags": [
@@ -1763,7 +1776,7 @@
                     "title": "Total employment"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Employment/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Employment/MapServer", 
                 "eaID": 752, 
                 "eaDescription": "This map illustrates the total number of jobs in 2010 within each census block group. ", 
                 "eaTags": [
@@ -1799,7 +1812,7 @@
                     "title": "Total housing units"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Housing/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Housing/MapServer", 
                 "eaID": 753, 
                 "eaDescription": "This map illustrates the number of housing units (both occupied and vacant) within each census block group in 2010. A housing unit is any living quarters, such as a house, apartment, or mobile home. ", 
                 "eaTags": [
@@ -1867,7 +1880,7 @@
                     "title": "Transit service per hour during evening peak"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 755, 
                 "eaDescription": "This map estimates the aggregate frequency of public transit service (trips per hour) in each census block group. Frequency reflects service during weekday afternoon peak commute period (4:00\u20137:00 pm). ", 
                 "eaTags": [
@@ -1901,7 +1914,7 @@
                     "title": "Workers per job  - Equilibrium Index"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 756, 
                 "eaDescription": "This map illustrates an index that measures the balance between workers and jobs within each census block group. An index value close to one indicates a balance between resident workers and jobs.", 
                 "eaTags": [
@@ -1937,7 +1950,7 @@
                     "title": "Working age population within a 45-minute drive, weighted"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 757, 
                 "eaDescription": "This map indicates the relative accessibility to working age populations (residences) from employment locations via auto commute (in terms of street-network travel time) for each census block group. People living in nearby block groups (based on travel time) are weighted more heavily than those further away.", 
                 "eaTags": [
@@ -1972,7 +1985,7 @@
                     "title": "Employment density (jobs/ac)"
                 }, 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Employment/MapServer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Employment/MapServer", 
                 "eaID": 758, 
                 "eaDescription": "This map estimates employment density (or jobs per acre) within each census block group. Developed acreage is calculated by excluding parks, water bodies, conservation easements, and other protected areas. ", 
                 "eaTags": [
@@ -1992,6 +2005,24 @@
                 "type": "FEATURE", 
                 "eaDfsLink": "Supplemental/Employmentdensity.pdf", 
                 "name": "Employment density (jobs/ac)"
+            }, 
+            {
+                "opacity": 0.5, 
+                "visible": "false", 
+                "url": null, 
+                "name": null
+            }, 
+            {
+                "opacity": 0.5, 
+                "visible": "false", 
+                "url": null, 
+                "name": null
+            }, 
+            {
+                "opacity": 0.5, 
+                "visible": "false", 
+                "url": null, 
+                "name": null
             }
         ]
     }
