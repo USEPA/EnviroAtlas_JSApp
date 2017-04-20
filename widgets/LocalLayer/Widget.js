@@ -20,6 +20,7 @@ define([
  'esri/graphic',
  'esri/Color',
  'esri/renderers/ClassBreaksRenderer',
+ 'esri/geometry/Extent',
  'esri/dijit/BasemapGallery',
  'esri/dijit/BasemapLayer',
  'esri/dijit/Basemap',
@@ -50,6 +51,7 @@ define([
     graphic,
     Color,
     ClassBreaksRenderer,
+    Extent,
     BasemapGallery,
     BasemapLayer,
     Basemap,
@@ -290,11 +292,16 @@ define([
 						                		var renderer = new ClassBreaksRenderer(classBreakInfo);
 						                		lyrTobeUpdated.setRenderer(renderer);	
 						                		lyrTobeUpdated.redraw();
-						                		lyrTobeUpdated.setVisibility(false);
-            									lyrTobeUpdated.setVisibility(true);					                		
+						                		            										
+            									/*var currentExtent;
+											    if (window.communitySelected != window.strAllCommunity) {
+											    	commnunityWholeName = window.communityDic[window.communitySelected];
+											    	extentForCommunity = window.communityExtentDic[window.communityDic[window.communitySelected]];
+											    	currentExtent = Extent(extentForCommunity);
+											    	//this._viewerMap.setExtent(currentExtent.expand(0.95), true);											
+											    } */              		
 										    }); 
 							          	}
-
 			                		}
 			                		else {			                			
 			                			lLayer.setVisibility(false);//turn off the layer when first added to map and let user to turn on	

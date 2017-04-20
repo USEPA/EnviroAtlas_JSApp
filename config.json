@@ -133,7 +133,7 @@
 					"left" : 395,
 					"top" : 5,
 					"width" : 230,
-					"height" : 220,
+					"height" : 270,
 					"relativeTo" : "map"
 				},
 				"placeholderIndex" : 1,
@@ -399,8 +399,8 @@
                 "config" : "widgets/DynamicSymbology/config.json"
             }, {
 		  		"position" : {
-				  "right" : 5,
-				  "bottom" : 45,
+				  "left" : 0,
+				  "top" : -40,
 				  "width" : 380,
 				  "height" : 410,
 				  "relativeTo" : "map"
