@@ -36,7 +36,7 @@
 }
 
 .jimu-widget-mylocation .place-holder{
-  background-color: rgba(0,0,0,0.2);
+  background-color: rgba(0,0,0,0.4);
 }
 
 .jimu-widget-mylocation.onLocate .place-holder{
@@ -48,5 +48,5 @@
 }
 
 .jimu-widget-mylocation .place-holder:hover{
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0,0,0,0.7);
 }
