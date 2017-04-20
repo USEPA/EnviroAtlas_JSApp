@@ -32,7 +32,7 @@ function(declare,
 
   var communitySelected = "";
   var prefixRadioCommunity = "radio_";
-  var communityExtentDic = {};
+  
   var minXCombinedExtent = 9999999999999;
   var minYCombinedExtent = 9999999999999;
   var maxXCombinedExtent = -9999999999999;
@@ -80,7 +80,8 @@ function(declare,
 	        		bookmarkCommunity = currentBookmarkClass.items;
 	        		for (indexCommunity = 0, lenCommunity = bookmarkCommunity.length; indexCommunity < lenCommunity; ++indexCommunity) {
 	        			var currentExtent = bookmarkCommunity[indexCommunity].extent;
-	        			communityExtentDic[bookmarkCommunity[indexCommunity].name] = currentExtent;
+	        			window.communityExtentDic[bookmarkCommunity[indexCommunity].name] = currentExtent;
+
 	        			spatialReference= currentExtent.spatialReference;
 	        			if (minXCombinedExtent > currentExtent.xmin) {
 	        				minXCombinedExtent = currentExtent.xmin;	        				
@@ -140,7 +141,7 @@ function(declare,
 	    var nExtent;
 	    if (communitySelected != window.strAllCommunity) {
 	    	commnunityWholeName = window.communityDic[communitySelected];
-	    	extentForCommunity = communityExtentDic[window.communityDic[communitySelected]];
+	    	extentForCommunity = window.communityExtentDic[window.communityDic[communitySelected]];
 	    	nExtent = Extent(extentForCommunity);
 
 	    } else {
