@@ -321,12 +321,12 @@ define([
 
 					}   
                 if (bNeedToBeAdded) {
-	                if(layer.tileLink){
+	                if(layer.tileLink == "yes"){
 	                	var tileLinkAdjusted = "";
-	                	if (layer.tileLink.slice(-1) == "/" ) {
-	                		tileLinkAdjusted = layer.tileLink;
+	                	if (layer.tileURL.slice(-1) == "/" ) {
+	                		tileLinkAdjusted = layer.tileURL;
 	                	} else {
-	                		tileLinkAdjusted = layer.tileLink + "/";
+	                		tileLinkAdjusted = layer.tileURL + "/";
 	                	}
 	                	initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString());//bji need to be modified to accomodate tile.
 	                    this._viewerMap.addLayer(new myTiledMapServiceLayer());
@@ -379,7 +379,7 @@ define([
                   lLayer.setInfoTemplates(finalInfoTemp2);
                 }
                 this._viewerMap.addLayer(lLayer);
-              }else if(layer.type.toUpperCase() === 'BASEMAP'){
+              }/*else if(layer.type.toUpperCase() === 'BASEMAP'){
                 var bmLayers = array.map(layer.layers.layer, function(bLayer){
                   var bmLayerObj = {url:bLayer.url, isReference: false};
                   if(bLayer.displayLevels){
@@ -398,7 +398,7 @@ define([
                 _basemapGallery.add(_newBasemap);
                 _basemapGallery.select('defaultBasemap');
                 _basemapGallery.destroy();
-              }
+              }*/
           }
       };
       var _removeSelectedLayers = function(selectedLayerNum) {
