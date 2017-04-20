@@ -14,7 +14,7 @@ import sys, json, csv, openpyxl
 rootpath = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\\"
 inputSpreadsheet = rootpath + r"EAWAB4JSON.xlsx"
 # Just in case there are rows to ignore at the top - header is row 0
-startingRow = 2
+startingRow = 1
 # This should be a csv table that maps spreadsheet column headers to json elements
 # no great reason it needs to be in a standalone file rather than embedded in this
 # script as a dictionary.
