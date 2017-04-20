@@ -42,19 +42,19 @@
 	vertical-align: top;
 }
 
-.jimu-widget-layerList .layer-row{
+/*.jimu-widget-layerList .layer-row{
   background-color: #ffffff;
   height: 52px;
-}
+}*/
 
 .jimu-widget-layerList .layer-row-mouseover{
   background-color: #e3ecf2;
 }
 
-.jimu-widget-layerList .jimu-widget-row-selected{
+/*.jimu-widget-layerList .jimu-widget-row-selected{
   background-color: #d9dde0;
 ;
-}
+}*/
 
 .jimu-widget-layerList .jimu-widget-row-active{
   background-color: #009cff;
@@ -81,6 +81,7 @@
   width: auto;
   word-break: break-word;
   cursor: pointer;
+  padding-bottom: 8px;
 }
 
 .jimu-widget-layerList .col3{
@@ -200,6 +201,8 @@
 
 /*****************about legend begin*****************************/
 .jimu-widget-layerList .legend-node-td{
+  position: relative;
+  left: 17px;
 }
 
 .jimu-widget-layerList .legend-div{
@@ -233,6 +236,10 @@
   font-size: 12px;
 }
 
+.jimu-widget-layerList .esriLegendLayer > tbody > tr > td:first-child {
+  font-size: 0px;
+}
+
 .jimu-widget-layerList .esriLegendMsg{
   display: none;
 }
@@ -241,14 +248,15 @@
 .jimu-widget-layerList .layers-list-popupMenu-div{
   position: relative;
   width: 16px;
-  height: 40px;
-  /*background-color: #d9dde0;*/
+  /*height: 40px;*/
+  /*background-color: #d9dde0;
+  padding-bottom: 5px*/;
   cursor: pointer;
   border-radius: 2px;
   /*************/
   float: right;
-  /*margin-right: 4px;*/
-  padding-top: 8px;
+  /*margin-right: 4px;
+  padding-top: 8px;*/
 }
 
 .jimu-widget-layerList .layers-list-popupMenu-div .jimu-loading{

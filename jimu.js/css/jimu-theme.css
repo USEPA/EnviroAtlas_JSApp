@@ -110,13 +110,13 @@
 
 .jimu-widget-onscreen-icon{
   background-color: #ccc;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.3);
   border: 1px solid #000000;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.7);
 }
 .jimu-widget-onscreen-icon:hover{
   background-color: #999;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 .jimu-widget-onscreen-icon.jimu-state-selected{
   background-color: #666;

@@ -102,6 +102,7 @@ define([
     },
 
     addLayerNode: function(layerInfo, level, toTableNode) {
+      
       var layerTrNode = domConstruct.create('tr', {
           'class': 'jimu-widget-row layer-row ' +
             ( /*visible*/ false ? 'jimu-widget-row-selected' : ''),
@@ -110,8 +111,10 @@ define([
         layerTdNode, ckSelectDiv, ckSelect, imageShowLegendNode, imageNoLegendDiv,
         imageNoLegendNode, popupMenuNode, i, imageShowLegendDiv, popupMenu, divLabel;
 
+        var col1_width = 20 + ((level + 1) *15);
       layerTdNode = domConstruct.create('td', {
-        'class': 'col col1'
+        'class': 'col col1',
+        'width': col1_width+'px'
       }, layerTrNode);
 
       for (i = 0; i < level; i++) {
@@ -177,11 +180,11 @@ define([
       }, layerTrNode);
       divLabel = domConstruct.create('div', {
         'innerHTML': layerInfo.title,
-        'class': 'div-content jimu-float-leading'
+        'class': 'div-content jimu-float-leading',
       }, layerTitleTdNode);
 	  //add categery for added layer
 
-	  loadJSON(function(response) {
+	  /*loadJSON(function(response) {
          var localLayerConfig = JSON.parse(response);
          var arrLayers = localLayerConfig.layers.layer;
          for (index = 0, len = arrLayers.length; index < len; ++index) {
@@ -227,7 +230,7 @@ define([
                 }
             }
          }
-	  });
+	  });*/
       //domStyle.set(divLabel, 'width', 263 - level*13 + 'px');
 
       layerTdNode = domConstruct.create('td', {
@@ -235,6 +238,7 @@ define([
       }, layerTrNode);
 
       // add popupMenu
+      
       popupMenuNode = domConstruct.create('div', {
         'class': 'layers-list-popupMenu-div'
       }, layerTdNode);
@@ -315,8 +319,13 @@ define([
         }, toTableNode),
         legendTdNode;
 
+      legendTdNode_align_top = '-15px'
+      if (level > 0) {
+        legendTdNode_align_top = '-5px';
+      }  
       legendTdNode = domConstruct.create('td', {
-        'class': 'legend-node-td'
+        'class': 'legend-node-td',
+        style : 'top: '+legendTdNode_align_top
       }, legendTrNode);
 
 
@@ -394,12 +403,12 @@ define([
         if(lyrTiled){
        	  lyrTiled.setVisibility(true);
       	}
-        //Open Legend
+        /*//Open Legend
         var widgetName = 'Legend';
         var widgets = this.layerListWidget.appConfig.getConfigElementsByName(widgetName);
         var pm = PanelManager.getInstance();
         //console.log(widgets[0]);
-        pm.showPanel(widgets[0]);
+        pm.showPanel(widgets[0]);*/
       } else {
         layerInfo.setTopLayerVisible(false);
         if(lyrTiled){

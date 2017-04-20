@@ -1,4 +1,4 @@
 {
 	"configText":"Drawer",
-	"includeWidgets":["eBookmark", "Print", "SaveSession", "eDraw"]
+	"includeWidgets":["eBookmark", "Print", "SaveSession", "eDraw", "Legend"]
 }
