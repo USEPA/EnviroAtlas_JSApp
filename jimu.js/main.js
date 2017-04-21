@@ -78,10 +78,10 @@ define(["./ConfigManager",
     
     window.topicDic = {};
     window.topicDic["Carbon Storage"] = "CS";
-    //window.topicDic["Climate and Weather"] = "CaW";
+    //window.topicDic["Climate and Weather"] = "CaW"; Removed/renamed in March 2017
     window.topicDic["Crop Productivity"] = "CP";
     window.topicDic["Ecosystem Markets"] = "EM";
-    //window.topicDic["Ecosystem Type"] = "ET";
+    window.topicDic["Ecosystem Type"] = "ET";
     window.topicDic["Energy Potential"] = "EP";
     window.topicDic["Engagement with Outdoors"] = "EwO";
     window.topicDic["Health and Economic Outcomes"] = "HaEO";
@@ -90,7 +90,7 @@ define(["./ConfigManager",
     window.topicDic["Land Cover: Type"] = "LCT";
     window.topicDic["Landscape Pattern"] = "LP";
     window.topicDic["Near-Road Environments"] = "NRE";
-    //window.topicDic["Pollutant and Runoff Reduction"] = "PaRR";
+    //window.topicDic["Pollutant and Runoff Reduction"] = "PaRR"; Removed/renamed  in March 2017
     
     window.topicDic["Pollutant Reduction: Air"] = "PRA"; //This is newly added Mar 2017    
     window.topicDic["Pollutant Reduction: Water"] = "PRW"; //This is newly added Mar 2017 
@@ -102,7 +102,7 @@ define(["./ConfigManager",
     window.topicDic["Species: At-Risk and Priority"] = "SARaP";
     window.topicDic["Species: Game"] = "SG";
     window.topicDic["Species: Other"] = "SO";
-    //window.topicDic["Water Supply and Hydrology"] = "WSaH";
+    //window.topicDic["Water Supply and Hydrology"] = "WSaH"; Removed/renamed  in March 2017
     window.topicDic["Water Supply, Runoff, and Flow"] = "WSRaF"; //This is newly added Mar 2017 
     
     window.topicDic["Water Use"] = "WU";
