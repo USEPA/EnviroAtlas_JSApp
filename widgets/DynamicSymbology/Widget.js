@@ -150,7 +150,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 
 		  //Set layers
 		  geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
-
+		  geoenrichedFeatureLayer.setDefinitionExpression("CommST = '" + window.communitySelected + "'");
 		  featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
 
 		  //set store original renderer
@@ -442,6 +442,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		dynamicSymbology.classSelect.destroy();
 		dynamicSymbology = {};
 
+		geoenrichedFeatureLayer.setDefinitionExpression("");
       	console.log('onClose');
     },
 
