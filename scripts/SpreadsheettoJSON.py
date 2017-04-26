@@ -23,9 +23,6 @@ mapTablePath = rootpath + r"jsonfieldmap.csv"
 outputFileName = rootpath + r"config.json"
 errorLogFile = rootpath + r"errors.log"
 
-popupDictionary = {"COMMUNITY" : "Block Group ID: {GEOID10}",
-                   "NATIONAL" : "HUC 12 ID: {HUC_12}"}
-
 # Empty rows cause python problems, remove them
 def removeEmptyRows(rows):
     rowsToKeep = []
@@ -65,21 +62,6 @@ def main(_argv):
     # Root structure of the JSON file
     fullJSON = {"layers": {"layer": []}}
 
-    # Base map layer
-    fullJSON["layers"]["layer"].append({
-        "type": "Basemap",
-        "name": "Topo Basemap",
-        "layers": {
-          "layer": [
-            {
-              "url": "http://services.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer",
-              "isReference": "false",
-              "opacity": 1
-            }
-          ]
-        }
-      })
-
     for rowID in rowsToKeep:
         name = inputWorksheet.cell(key["name"]+rowID).value
         layerJSON = {"opacity": 0.5,
@@ -88,18 +70,6 @@ def main(_argv):
             layerJSON["type"] ="FEATURE"
             layerJSON["autorefresh"] = 0
             layerJSON["mode"] = "ondemand"
-            if inputWorksheet.cell(key["fieldName"]+rowID).value:
-                layerJSON["popup"] = {
-                  "title": popupDictionary[inputWorksheet.cell(key["eaScale"]+rowID).value],
-                  "fieldInfos": [
-                    {
-                      "visible": "true"
-                    }
-                  ],
-                  "showAttachments": "false"
-                }
-                layerJSON["popup"]["fieldInfos"][0]["fieldName"] = inputWorksheet.cell(key["fieldName"]+rowID).value
-                layerJSON["popup"]["fieldInfos"][0]["label"] = name
         else:
             if (inputWorksheet.cell(key["serviceType"]+rowID).value == "dynamic" or inputWorksheet.cell(key["serviceType"]+rowID).value == "image"):
                 layerJSON["type"] = "DYNAMIC"
@@ -109,10 +79,13 @@ def main(_argv):
             #with open(rootpath + inputWorksheet.cell(key["popupDefinition"]+rowID).value) as json_data:
             #    layerJSON["layers"] = json.load(json_data)
             ### the excel spreadsheet should include a relative path to a json file containing the layer/popup definition, which should be a JSON array of layer objects.
-            ### will also need to add row: popupDefinition,popupDefinition (or corresponding human-friendly name for excel column to jsonfieldmap.csv to enable
         layerJSON["name"] = name
         layerJSON["url"] = inputWorksheet.cell(key["url"]+rowID).value
-
+        # Convert the plain text popupJSON into Python Dictionary for loading
+        popupTxt = inputWorksheet.cell(key["popupDefinition"]+rowID).value
+        if popupTxt != None:
+            popupDefinition = json.loads(popupTxt)
+            layerJSON.update(popupDefinition)
         stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL"]
         for elem in stringList:
             cell = inputWorksheet.cell(key[elem]+rowID)
