@@ -156,6 +156,7 @@ define(["./ConfigManager",
     window.faildedOutsideLayerDictionary = {};
     window.successLayerDictionary = {};
     window.communityExtentDic = {};
+    window.hashAttribute = {};
                 
     //patch for JS API 3.10
     var hasMethod = typeof cookie.getAll === 'function';

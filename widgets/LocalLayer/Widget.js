@@ -21,6 +21,7 @@ define([
         'esri/Color',
         'esri/renderers/ClassBreaksRenderer',
         'esri/geometry/Extent',
+ 'esri/InfoTemplate',
         'esri/dijit/BasemapGallery',
         'esri/dijit/BasemapLayer',
         'esri/dijit/Basemap',
@@ -28,6 +29,7 @@ define([
         'esri/dijit/PopupTemplate',
         'jimu/WidgetManager',
         'dijit/form/ToggleButton',
+ 'dijit/form/Button',
         'dojo/domReady!'
     ],
     function (
@@ -52,18 +54,39 @@ define([
         Color,
         ClassBreaksRenderer,
         Extent,
+    InfoTemplate,
         BasemapGallery,
         BasemapLayer,
         Basemap,
         esriBasemaps,
         PopupTemplate,
         WidgetManager) {
-    var self;
-    var Attribute = null;
+    	var communityBoundaryLayer = "https://leb.epa.gov/arcgis/rest/services/Communities/Community_Locations/MapServer";
+	    var minXCombinedExtent = 9999999999999;
+	    var minYCombinedExtent = 9999999999999;
+	    var maxXCombinedExtent = -9999999999999;
+	    var maxYCombinedExtent = -9999999999999;  
+	    var spatialReference;
+	    var currentCommunity = "";
+	    var idCommuBoundaryPoint = "Boundary_Point";
+	    var idCommuBoundaryPoly = "Boundary_Poly";
+	    var arrLayersToChangeSynbology = [];
+	    var Attribute = "";
+	    var loadBookmarkExtent = function(callback){   
+		    var xobj = new XMLHttpRequest();
+		    xobj.overrideMimeType("application/json");
+		    xobj.open('GET', 'configs/eBookmark/config_Enhanced Bookmark.json', true); 
+		    xobj.onreadystatechange = function () {
+		      if (xobj.readyState == 4 && xobj.status == "200") {
+		            callback(xobj.responseText);
+		          }
+		    };
+		    xobj.send(null);  
+	    }; 	    	
     var loadSymbologyConfig = function (callback) {
         var xobj = new XMLHttpRequest();
         xobj.overrideMimeType("application/json");
-        if (communitySelected != window.strAllCommunity) {
+		    if (window.communitySelected != window.strAllCommunity) {
             xobj.open('GET', 'configs/CommunitySymbology/' + window.communitySelected + '_JSON_Symbol/Nulls/' + window.communitySelected + '_' + Attribute + ".json", true);
         } else {
             xobj.open('GET', 'configs/CommunitySymbology/' + 'AllCommunities' + '_JSON_Symbol/Nulls/' + 'CombComm' + '_' + Attribute + ".json", true);
@@ -165,7 +188,12 @@ define([
             }
         });
     };
-    var _addSelectedLayers = function (layersTobeAdded, selectedLayerNum, bUpdateLayers) {
+    var getTextContent = function(graphic) {  	
+        var commName = graphic.attributes.CommST;
+        currentCommunity = commName;
+        return "<b>" + window.communityDic[commName] + "</b><br /><button id = 'testButton' dojoType='dijit.form.Button' onclick='self.selectCurrentComminity() '>Select this community</button>";
+    };
+    var _addSelectedLayers = function (layersTobeAdded, selectedLayerNum) {
         var index,
         len;
         var selectedLayerArray = selectedLayerNum.split(",");
@@ -173,7 +201,6 @@ define([
             for (index = 0, len = layersTobeAdded.length; index < len; ++index) {
                 layer = layersTobeAdded[index];
                 if ((selectedLayerArray[i]) == (layer.eaID.toString())) {
-                    //for (var layer in layersTobeAdded){
                     var lLayer;
                     var lOptions = {};
                     if (layer.hasOwnProperty('opacity')) {
@@ -259,6 +286,7 @@ define([
                                         bPopup = false;
                                     } else {
                                         Attribute = fieldInfos[0].fieldName;
+			                  			hashAttribute[layer.eaID.toString()] = Attribute;
                                     }
                                 } else {
                                     bPopup = false;
@@ -328,42 +356,37 @@ define([
 
                             if (layer.hasOwnProperty('eaScale')) {
                                 if (layer.eaScale == "COMMUNITY") {
-                                    if (bUpdateLayers == "1") {
-                                        lyrTobeUpdated = this._viewerMap.getLayer(window.layerIdPrefix + selectedLayerArray[i]);
-                                        if (lyrTobeUpdated) {
-                                            loadSymbologyConfig(function (response) {
-                                                var classBreakInfo = JSON.parse(response);
-                                                var renderer = new ClassBreaksRenderer(classBreakInfo);
-                                                lyrTobeUpdated.setRenderer(renderer);
-                                                lyrTobeUpdated.redraw();
 
-                                                /*var currentExtent;
-                                                if (window.communitySelected != window.strAllCommunity) {
-                                                commnunityWholeName = window.communityDic[window.communitySelected];
-                                                extentForCommunity = window.communityExtentDic[window.communityDic[window.communitySelected]];
-                                                currentExtent = Extent(extentForCommunity);
-                                                //this._viewerMap.setExtent(currentExtent.expand(0.95), true);
-                                                } */
-                                            });
-                                        }
-                                    } else {
                                         lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
-                                    }
+									    var template = new InfoTemplate();
+									    template.setContent("current community");
+									    template.setContent(getTextContent);
+									
+									    //create the feature layer (street trees of San Francisco)
+									    var pointBoundaryLayer = new FeatureLayer(communityBoundaryLayer + "/0",{
+									     	infoTemplate: template,
+											outFields: ["*"]
+									    });
+									    pointBoundaryLayer.id = idCommuBoundaryPoint;
+									    lyrBoundaryPoint = this._viewerMap.getLayer(idCommuBoundaryPoint);
+										if(lyrBoundaryPoint == null){
+									    	self.map.addLayer(pointBoundaryLayer);
+									    }
+									    var polygonBoundaryLayer = new FeatureLayer(communityBoundaryLayer + "/1",{
+											outFields: ["*"]
+									    });
+									    polygonBoundaryLayer.id = idCommuBoundaryPoly;
+									    lyrBoundaryPoly = this._viewerMap.getLayer(idCommuBoundaryPoly);
+										if(lyrBoundaryPoly == null){
+									    	self.map.addLayer(polygonBoundaryLayer);
+									    }	
 
-                                    /*if ((window.communitySelected != "") && (window.communitySelected != window.strAllCommunity)){
-                                    console.log("setDefinitionExpression: "  +"CommST = '" +window.communitySelected + "'");
-                                    //lLayer.setDefinitionExpression("Community = '" +window.communityDic[window.communitySelected] + "'");
-                                    lLayer.setDefinitionExpression("CommST = '" +window.communitySelected + "'");
-                                    }*/
                                 } else { //National
                                     lLayer.setVisibility(false);
                                     window.nationalLayerNumber.push(layer.eaID.toString());
                                 }
                             }
 
-                            if (bUpdateLayers == "1") {
-                                bNeedToBeAdded = false;
-                            }
                         }
 
                         if (bNeedToBeAdded) {
@@ -487,7 +510,7 @@ define([
                     //}
                     var stringArray = data.message.split(",");
                     if (stringArray[0] == "a") {
-                        _addSelectedLayers(this.config.layers.layer, data.message.substring(2), "0");
+                        _addSelectedLayers(this.config.layers.layer, data.message.substring(2));
                     }
 
                     //removing selected layer function is deleted from SimpleSearchFilter
@@ -495,15 +518,7 @@ define([
                         _removeSelectedLayers(data.message.substring(2));
                     }
                 }
-                if (name == 'SelectCommunity') {
-                    var stringArray = data.message.split(",");
-                    if (stringArray.length > 1) {
-                        if (stringArray[0] == "u") {
-                            _addSelectedLayers(this.config.layers.layer, data.message.substring(2), "1");
-                        }
-                    }
 
-                }
                 //removing all layers function is not used in Layerlist currently
                 //if (name == 'LayerList'){
                 //	if (data.message ==window.removeAllMessage) {
@@ -545,7 +560,21 @@ define([
                     }
                 }
             },
-
+	      selectCurrentComminity: function() {
+	      	
+	      	window.communitySelected = currentCommunity;
+	      	document.getElementById('butUpdateCommunityLayers').click();
+	      	
+		    var nExtent;
+		    if (window.communitySelected != window.strAllCommunity) {
+		    	commnunityWholeName = window.communityDic[window.communitySelected];
+		    	extentForCommunity = window.communityExtentDic[window.communityDic[window.communitySelected]];
+		    	nExtent = Extent(extentForCommunity);
+	
+		    } 
+		    this.map.setExtent(nExtent);	
+	      	this.map.infoWindow.hide();
+	      },
             startup: function () {
                 this._originalWebMap = this.map.webMapResponse.itemInfo.item.id;
                 this._removeAllLayersExceptBasemap();
@@ -556,12 +585,42 @@ define([
                         proxyUrl: this.config.proxyAddress
                     });
                 }
-
+                
+			    loadBookmarkExtent(function(response){
+			    	var bookmarkClassified = JSON.parse(response);
+			
+			        for (index = 0, len = bookmarkClassified.bookmarks.length; index < len; ++index) {
+			        	currentBookmarkClass = bookmarkClassified.bookmarks[index];
+			        	if (currentBookmarkClass.name == "Community") {
+			        		bookmarkCommunity = currentBookmarkClass.items;
+			        		for (indexCommunity = 0, lenCommunity = bookmarkCommunity.length; indexCommunity < lenCommunity; ++indexCommunity) {
+			        			var currentExtent = bookmarkCommunity[indexCommunity].extent;
+			        			window.communityExtentDic[bookmarkCommunity[indexCommunity].name] = currentExtent;
+		
+			        			spatialReference= currentExtent.spatialReference;
+			        			if (minXCombinedExtent > currentExtent.xmin) {
+			        				minXCombinedExtent = currentExtent.xmin;	        				
+			        			}
+			        			if (minYCombinedExtent > currentExtent.ymin) {
+			        				minYCombinedExtent = currentExtent.ymin;	        				
+			        			}	
+			        			if (maxXCombinedExtent < currentExtent.xmax) {
+			        				maxXCombinedExtent = currentExtent.xmax;	        				
+			        			}
+			        			if (maxYCombinedExtent < currentExtent.ymax) {
+			        				maxYCombinedExtent = currentExtent.ymax;	        				
+			        			}	        			
+			        			        			
+			        		}
+			        	}
+			        }
+			     }); // end of loadBookmarkExtent(function(response)          
                 //prepare for receiving data from SimpleSearchFilter
                 this.inherited(arguments);
                 this.fetchDataByName('SimpleSearchFilter');
                 this.fetchDataByName('LayerList');
-            }
+            },
+  
         });
     return clazz;
 });
