@@ -442,6 +442,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		dynamicSymbology.classSelect.destroy();
 		dynamicSymbology = {};
 
+		geoenrichedFeatureLayer.setDefinitionExpression("");
       	console.log('onClose');
     },
 
