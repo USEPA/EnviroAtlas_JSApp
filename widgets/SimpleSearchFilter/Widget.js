@@ -24,6 +24,12 @@ define([
      'jimu/WidgetManager',
      'jimu/PanelManager',
      'esri/geometry/Extent',
+	 'esri/symbols/SimpleLineSymbol',
+	 'esri/symbols/SimpleFillSymbol',
+	 'esri/renderers/SimpleRenderer',
+	 'esri/graphic',
+	 'esri/Color',
+	 'esri/renderers/ClassBreaksRenderer',     
     'dijit/layout/AccordionContainer', 
     'dijit/layout/ContentPane',
     'dijit/layout/TabContainer',
@@ -45,11 +51,18 @@ define([
     esriSymJsonUtils,
     WidgetManager,
     PanelManager,
-    Extent) {
+    Extent,
+    SimpleLineSymbol,
+    SimpleFillSymbol,
+    SimpleRenderer,
+    graphic,
+    Color,
+    ClassBreaksRenderer) {
     	var singleLayerToBeAddedRemoved = "";
     	var bNoTopicSelected = false;
     	var communitySelected = "";
     	var self;
+    	var arrLayersToChangeSynbology = [];
         var   layerData = {
             identifier: "eaID",  //This field needs to have unique values
             label: "name", //Name field for display. Not pertinent to a grid but may be used elsewhere.
@@ -127,7 +140,37 @@ define([
 		  }
 		  return false;  
 		};
-
+    var updateSingleCommunityLayer = function(selectedLayerNum){    	
+		lyrTobeUpdated = self.map.getLayer(window.layerIdPrefix + selectedLayerNum);	 
+		if (window.communitySelected != window.strAllCommunity) {        
+			$.getJSON( 'configs/CommunitySymbology/' + window.communitySelected + '_JSON_Symbol/Nulls/' + window.communitySelected + '_' + window.hashAttribute[selectedLayerNum] + ".json", function( data ) {
+				var renderer = new ClassBreaksRenderer(data);
+        		lyrTobeUpdated.setRenderer(renderer);	
+        		lyrTobeUpdated.redraw();
+        		/*if (lyrTobeUpdated.visible == true){
+            		lyrTobeUpdated.setVisibility(false);
+            		lyrTobeUpdated.setVisibility(true);						                			
+        		}*/
+        		if 	(arrLayersToChangeSynbology.length > 0){
+        			updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
+        		}
+        		
+			})
+		} else {
+			$.getJSON( 'configs/CommunitySymbology/' + 'AllCommunities' + '_JSON_Symbol/Nulls/' + 'CombComm' + '_' + window.hashAttribute[selectedLayerNum] + ".json", function( data ) {
+				var renderer = new ClassBreaksRenderer(data);
+        		lyrTobeUpdated.setRenderer(renderer);	
+        		lyrTobeUpdated.redraw();
+        		/*if (lyrTobeUpdated.visible == true){
+            		lyrTobeUpdated.setVisibility(false);
+            		lyrTobeUpdated.setVisibility(true);						                			
+        		}*/
+        		if 	(arrLayersToChangeSynbology.length > 0){
+        			updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
+        		}	                		
+			})						
+		}
+   };
 
 		var chkIdDictionary = {};
 		var nationalTopicList = [];
@@ -858,9 +901,6 @@ define([
                 }// end of if(layer.hasOwnProperty('eaID'))                	
 
             }// end of for (index = 0, len = arrLayers.length; index < len; ++index) 
-            /*updateTopicToggleButton();
-            updateSearchBoxDataTable();*/
-            
 
             $('#tableLyrNameDescrTag').DataTable( {
 			   language: {
@@ -976,7 +1016,19 @@ define([
 	        this.publishData({
 		        message: ""
 		    });
-      }
+     },
+     _onUpdateCommunityLayers: function() {
+     	arrLayersToChangeSynbology = [];
+	    var lyr;
+    	for (i in window.allLayerNumber) {
+    		lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
+			if(lyr){				
+	    		arrLayersToChangeSynbology.push(lyr.id.replace(window.layerIdPrefix, ""));
+          	}          	
+        } 	    
+
+        updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
+     }
     });
 
     return clazz;

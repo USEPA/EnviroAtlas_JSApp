@@ -38,21 +38,7 @@ function(declare,
   var maxXCombinedExtent = -9999999999999;
   var maxYCombinedExtent = -9999999999999;  
   var spatialReference;
-  var loadBookmarkExtent = function(callback){   
 
-	    var xobj = new XMLHttpRequest();
-	
-	    xobj.overrideMimeType("application/json");
-	
-	    xobj.open('GET', 'configs/eBookmark/config_Enhanced Bookmark.json', true); 
-	
-	    xobj.onreadystatechange = function () {
-	      if (xobj.readyState == 4 && xobj.status == "200") {
-	            callback(xobj.responseText);
-	          }
-	    };
-	    xobj.send(null);  
- }; 	
   //To create a widget, you need to derive from BaseWidget.
   return declare([BaseWidget], {
     // DemoWidget code goes here 
@@ -69,38 +55,9 @@ function(declare,
     
 
     startup: function() {
+    	
       this.inherited(arguments);
-	  this.displayCommunitySelection();
-	  loadBookmarkExtent(function(response){
-	    	var bookmarkClassified = JSON.parse(response);
-	
-	        for (index = 0, len = bookmarkClassified.bookmarks.length; index < len; ++index) {
-	        	currentBookmarkClass = bookmarkClassified.bookmarks[index];
-	        	if (currentBookmarkClass.name == "Community") {
-	        		bookmarkCommunity = currentBookmarkClass.items;
-	        		for (indexCommunity = 0, lenCommunity = bookmarkCommunity.length; indexCommunity < lenCommunity; ++indexCommunity) {
-	        			var currentExtent = bookmarkCommunity[indexCommunity].extent;
-	        			window.communityExtentDic[bookmarkCommunity[indexCommunity].name] = currentExtent;
-
-	        			spatialReference= currentExtent.spatialReference;
-	        			if (minXCombinedExtent > currentExtent.xmin) {
-	        				minXCombinedExtent = currentExtent.xmin;	        				
-	        			}
-	        			if (minYCombinedExtent > currentExtent.ymin) {
-	        				minYCombinedExtent = currentExtent.ymin;	        				
-	        			}	
-	        			if (maxXCombinedExtent < currentExtent.xmax) {
-	        				maxXCombinedExtent = currentExtent.xmax;	        				
-	        			}
-	        			if (maxYCombinedExtent < currentExtent.ymax) {
-	        				maxYCombinedExtent = currentExtent.ymax;	        				
-	        			}	        			
-	        			        			
-	        		}
-	        	}
-	        }
-	   }); // end of loadCommunityJSON(function(response)
-  
+	  this.displayCommunitySelection();  
       console.log('startup');
     },
     addRowButton: function(radioId, radioName, labelForRadio, direction) {
@@ -125,7 +82,6 @@ function(declare,
 		newCheckboxCell.appendChild(label);
 		
 		radioCommunity.addEventListener('click', function() {
-			//alert("key is clicked: " + this.id);
 			communitySelected = this.id.replace(prefixRadioCommunity, "");
 			document.getElementById('butSelectCommunity').click();
 			
@@ -151,20 +107,10 @@ function(declare,
 			});
 
 	    }
-	    this.map.setExtent(nExtent);	    
+	    this.map.setExtent(nExtent);
+	    
+	    document.getElementById('butUpdateCommunityLayers').click();	    
 
-	    var lyr;
-	    layersToBeAdded = "u";
-    	for (i in window.allLayerNumber) {
-    		lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
-			if(lyr){
-	    		layersToBeAdded = layersToBeAdded + "," + lyr.id.replace(window.layerIdPrefix, "");
-          	}
-        } 	    
-        //alert("sent update message: " + layersToBeAdded); 	    
-        this.publishData({
-			message: layersToBeAdded
-		});   
     },    
     displayCommunitySelection: function() {
     	//this.addRowButton(prefixRadioCommunity + window.strAllCommunity, "community", "Combined Communities", "R");
