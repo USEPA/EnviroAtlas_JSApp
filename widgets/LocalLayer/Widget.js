@@ -108,8 +108,6 @@ define([
         var widgets = self.appConfig.getConfigElementsByName(widgetName);
         var pm = PanelManager.getInstance();
         pm.showPanel(widgets[0]);
-        //alert("Before publish Data");
-        //sleep(10000);
         self.publishData({
             message: layerName
         });
@@ -275,7 +273,6 @@ define([
                         });
                         this._viewerMap.addLayer(lLayer);
                         this._viewerMap.setInfoWindowOnClick(true);
-                        lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
                     } else if (layer.type.toUpperCase() === 'FEATURE') {
                         bPopup = true;
                         var _popupTemplate;
@@ -369,18 +366,11 @@ define([
 											outFields: ["*"]
 									    });
 									    pointBoundaryLayer.id = idCommuBoundaryPoint;
+									    pointBoundaryLayer.setScaleRange(0,0);
 									    lyrBoundaryPoint = this._viewerMap.getLayer(idCommuBoundaryPoint);
 										if(lyrBoundaryPoint == null){
 									    	self.map.addLayer(pointBoundaryLayer);
 									    }
-									    var polygonBoundaryLayer = new FeatureLayer(communityBoundaryLayer + "/1",{
-											outFields: ["*"]
-									    });
-									    polygonBoundaryLayer.id = idCommuBoundaryPoly;
-									    lyrBoundaryPoly = this._viewerMap.getLayer(idCommuBoundaryPoly);
-										if(lyrBoundaryPoly == null){
-									    	self.map.addLayer(polygonBoundaryLayer);
-									    }	
 
                                 } else { //National
                                     lLayer.setVisibility(false);
@@ -451,7 +441,6 @@ define([
                             lLayer.setInfoTemplates(finalInfoTemp2);
                         }
                         this._viewerMap.addLayer(lLayer);
-                        lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
                     }
                     /*else if(layer.type.toUpperCase() === 'BASEMAP'){
                     var bmLayers = array.map(layer.layers.layer, function(bLayer){
@@ -565,6 +554,10 @@ define([
 	      selectCurrentComminity: function() {
 	      	
 	      	window.communitySelected = currentCommunity;
+
+	        this.publishData({
+		        message: currentCommunity
+		    });
 	      	document.getElementById('butUpdateCommunityLayers').click();
 	      	
 		    var nExtent;
