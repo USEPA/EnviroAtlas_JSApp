@@ -74,27 +74,18 @@ def main(_argv):
                 layerJSON["type"] ="FEATURE"
                 layerJSON["autorefresh"] = 0
                 layerJSON["mode"] = "ondemand"
-                if inputWorksheet.cell(key["fieldName"]+rowID).value:
-                    layerJSON["popup"] = {
-                      "title": name,
-                      "fieldInfos": [
-                        {
-                          "visible": "true"
-                        }
-                      ],
-                      "showAttachments": "false"
-                    }
-                    layerJSON["popup"]["fieldInfos"][0]["fieldName"] = inputWorksheet.cell(key["fieldName"]+rowID).value
-                    layerJSON["popup"]["fieldInfos"][0]["label"] = name
             else:
                 if (inputWorksheet.cell(key["serviceType"]+rowID).value == "dynamic" or inputWorksheet.cell(key["serviceType"]+rowID).value == "image"):
                     layerJSON["type"] = "DYNAMIC"
                 if (inputWorksheet.cell(key["serviceType"]+rowID).value == "tiled"):
                     layerJSON["type"] = "TILED"
-                ### code for reading in saved json files with layer/popup definitions.
-                #with open(rootpath + inputWorksheet.cell(key["popupDefinition"]+rowID).value) as json_data:
-                #    layerJSON["layers"] = json.load(json_data)
-                ### the excel spreadsheet should include a relative path to a json file containing the layer/popup definition, which should be a JSON array of layer objects.
+            # Convert the plain text popupJSON into Python Dictionary for loading
+            print(name)
+            popupTxt = inputWorksheet.cell(key["popupDefinition"]+rowID).value
+            print(popupTxt)
+            if popupTxt != None:
+                popupDefinition = json.loads(popupTxt)
+                layerJSON.update(popupDefinition)
             layerJSON["name"] = name
             layerJSON["url"] = inputWorksheet.cell(key["url"]+rowID).value
             stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic"]

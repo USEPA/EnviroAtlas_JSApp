@@ -275,6 +275,7 @@ define([
                         });
                         this._viewerMap.addLayer(lLayer);
                         this._viewerMap.setInfoWindowOnClick(true);
+                        lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
                     } else if (layer.type.toUpperCase() === 'FEATURE') {
                         bPopup = true;
                         var _popupTemplate;
@@ -450,6 +451,7 @@ define([
                             lLayer.setInfoTemplates(finalInfoTemp2);
                         }
                         this._viewerMap.addLayer(lLayer);
+                        lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
                     }
                     /*else if(layer.type.toUpperCase() === 'BASEMAP'){
                     var bmLayers = array.map(layer.layers.layer, function(bLayer){
