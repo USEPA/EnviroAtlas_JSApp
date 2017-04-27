@@ -82,7 +82,9 @@ def main(_argv):
         layerJSON["name"] = name
         layerJSON["url"] = inputWorksheet.cell(key["url"]+rowID).value
         # Convert the plain text popupJSON into Python Dictionary for loading
+        print(name)
         popupTxt = inputWorksheet.cell(key["popupDefinition"]+rowID).value
+        print(popupTxt)
         if popupTxt != None:
             popupDefinition = json.loads(popupTxt)
             layerJSON.update(popupDefinition)

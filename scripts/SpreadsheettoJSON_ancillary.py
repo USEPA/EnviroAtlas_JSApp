@@ -80,7 +80,9 @@ def main(_argv):
                 if (inputWorksheet.cell(key["serviceType"]+rowID).value == "tiled"):
                     layerJSON["type"] = "TILED"
             # Convert the plain text popupJSON into Python Dictionary for loading
+            print(name)
             popupTxt = inputWorksheet.cell(key["popupDefinition"]+rowID).value
+            print(popupTxt)
             if popupTxt != None:
                 popupDefinition = json.loads(popupTxt)
                 layerJSON.update(popupDefinition)
