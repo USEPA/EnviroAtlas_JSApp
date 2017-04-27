@@ -142,6 +142,7 @@ define(["./ConfigManager",
     window.communityDic["WIA"] = "Woodbine, IA";
     
     window.communitySelected = window.strAllCommunity;
+    window.nationalMetadataDic = {};
     window.attributeByOneCommu = false;
     
     window.communitySelectedByTheOtherFrame = window.strAllCommunity;

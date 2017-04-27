@@ -496,7 +496,6 @@ define([
     },
     _onItemChangeSymbologyClick: function(evt) {
       layerId = this._layerInfo.id;
-      //alert("Layer "+ layerId + " is clicked, Change Symbology function is under development" );
 
       this.layerListWidget.publishData({
         message: layerId
@@ -533,13 +532,22 @@ define([
 			        if(layer.hasOwnProperty('eaLyrNum')){
 			            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
 			        }                	
-                    if ((layerId === (window.layerIdPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) {                  	
-                        if(layer.hasOwnProperty('eaMetadata')){
-                        	metaDataID = window.communityMetadataDic[layer.eaMetadata][window.communitySelected];
-                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
-					        bMetadataAvailale = true;
-                            break;
-                        }
+                    if ((layerId === (window.layerIdPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) {                        	
+                    	if(layer.hasOwnProperty('eaMetadata')){
+	                    	if (layer.hasOwnProperty('eaScale') &&  (layer.eaScale = "NATIONAL")) {
+	                        	metaDataID = window.nationalMetadataDic[layer.eaMetadata];
+	                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
+						        bMetadataAvailale = true;                    		
+	                    	} else {
+	                        	metaDataID = window.communityMetadataDic[layer.eaMetadata][window.communitySelected];
+	                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
+						        bMetadataAvailale = true;	                    		
+	                    	}     		
+
+					    }
+                            
+                        
+                        break;
                     }
                 }
             }
@@ -669,7 +677,6 @@ define([
     };
 
     layerInfo.getLayerType().then(lang.hitch(this, function(layerType) {
-      //alert("layerType:" + layerType);
       var itemInfoCategory = "";
       if (isRootLayer &&
            (layerType === "FeatureLayer" ||

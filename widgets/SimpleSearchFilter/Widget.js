@@ -196,15 +196,31 @@ define([
 	
 	        xobj.overrideMimeType("application/json");
 
-        xobj.open('GET', 'widgets/LocalLayer/communitymetadata.json', true); 
-
-        xobj.onreadystatechange = function () {
+	        xobj.open('GET', 'widgets/LocalLayer/communitymetadata.json', true); 
+	
+	        xobj.onreadystatechange = function () {
               if (xobj.readyState == 4 && xobj.status == "200") {
 	                callback(xobj.responseText);
 	              }
 	        };
 	        xobj.send(null);  
 	    }; 	    
+	    
+		var loadNationalMetadataJSON = function(callback){   
+	
+	        var xobj = new XMLHttpRequest();
+	
+	        xobj.overrideMimeType("application/json");
+
+	        xobj.open('GET', 'widgets/LocalLayer/nationalmetadata.json', true); 
+	
+	        xobj.onreadystatechange = function () {
+                if (xobj.readyState == 4 && xobj.status == "200") {
+	                callback(xobj.responseText);
+	            }
+	        };
+	        xobj.send(null);  
+	    };		    
 	    var _onSelectAllLayers = function() {
 			for (var key in chkIdDictionary) {
 			  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
@@ -944,7 +960,19 @@ define([
             	window.communityMetadataDic[currentMetadataCommunityIndex.MetaID_Community] = singleCommunityMetadataDic;
             }
         }); // end of loadCommunityJSON(function(response)
+        
+        loadNationalMetadataJSON(function(response){
+        	var national = JSON.parse(response);
 
+            for (index = 0, len = national.length; index < len; ++index) {
+            	currentMetadataNationalIndex = national[index];
+				for (var key in currentMetadataNationalIndex) {
+				    if (currentMetadataNationalIndex.hasOwnProperty(key)) {
+				        window.nationalMetadataDic[key] = currentMetadataNationalIndex[key];
+				    }
+				}
+            }
+        }); // end of loadNationalMetadataJSON(function(response)
     },               
                     
 	    _onSingleLayerClick: function() {

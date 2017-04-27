@@ -56,7 +56,7 @@ define([
       name: 'CommunityDisplay',
       
 	  onReceiveData: function(name, widgetId, data, historyData) {
-		  if (name == 'SelectCommunity'){
+		  if ((name == 'SelectCommunity') ||(name == 'LocalLayer')){
 			  if ((window.communitySelected != window.strAllCommunity)){
 			  	this.communitydisplayInfo.innerHTML = window.communityDic[window.communitySelected];
 			  }
