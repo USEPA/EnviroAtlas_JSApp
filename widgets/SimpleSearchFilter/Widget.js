@@ -439,13 +439,100 @@ define([
 							liElem.style.top = "-12px";
 							aElem = document.createElement("a");
 							aElem.title  = key;
+							// Add popup dialog box for Benefit Category 
+							aElem.onclick = function() {
+								ES_title = this.title;
+
+								var bc_description = new Dialog({
+				        		title: 'EnviroAtlas Benefit Categories', 
+				        		style: 'width: 450px',
+				        		onHide: function() {
+				        			bc_description.destroy()
+				        			}
+				        		});
+				        		
+
+				        		var BC_tabs = dojo.create('div', {
+					        		style: 'text-align: center',
+					        	}, bc_description.containerNode);
+
+					        	for (var key in window.categoryDic) {
+					        		bc_icon_links = dojo.create('a', {
+					        		"title": key,
+					        		"id": window.categoryDic[key] + '_id',
+					        		"class": 'bc_popup '+ window.categoryDic[key],
+					        		}, BC_tabs);
+
+
+					        		dojo.connect(bc_icon_links, 'onclick', function(){
+
+					        			bc_id = this.id.split('_')[0];
+
+
+					        			for (key in window.categoryDic) {
+					        					$('#'+window.categoryDic[key]+'_id').removeClass('bc_popup_selected');
+					        				}
+					        			$('#'+this.id).addClass('bc_popup_selected');
+
+					        			dojo.removeClass(infographic_body);
+					        			dojo.addClass(infographic_body, 'bc_infographic ' + bc_id + '_infographic');
+
+					        			dojo.removeClass(header_icon);
+					        			dojo.addClass(header_icon, 'bc_popup_header_icon ' + bc_id);
+
+					        			dojo.byId(header_text).innerHTML = this.title;
+					        		});
+					        	};
+
+					        	$('#'+window.categoryDic[ES_title]+'_id').addClass('bc_popup_selected');
+
+					        	var blankspace = dojo.create('div', {
+					        		style: 'height: 15px',
+					        	}, bc_description.containerNode);
+
+					        	var bc_infographic = dojo.create('div', {
+			        				'id': 'infographic_area',
+			        				'style': 'background-color: #f4f4f4; width: 100%'
+			        			}, bc_description.containerNode);
+
+			        			var infographic_header = dojo.create('div', {
+			        			"style": 'height: 40px',
+			        			}, bc_infographic);
+
+			        			var header_icon = dojo.create('div', {
+			        				'class': 'bc_popup_header_icon ' + window.categoryDic[ES_title]
+			        			}, infographic_header);
+
+			        			var header_text = dojo.create('div', {
+			        				'innerHTML': this.title,
+			        				'class': 'bc_popup_header_text',
+			        			}, infographic_header);
+
+			        			var infographic_text = dojo.create('div', {
+			        				'innerHTML': 'Ecosystem goods and services, often shortened to ecosystem \
+			        							  services (ES), are the benefits that humans receive from nature. \
+			        							  These benefits underpin almost every aspect of human well-being, \
+			        							  including our food and water, security, health, and economy. \
+			        							  <br><br> \
+			        							  EnviroAtlas organizes our data into seven benefit categories \
+			        							  <br><br>',
+			        				'style': 'font-size: 11px',
+			        			}, bc_infographic );
+
+			        			var infographic_body = dojo.create('div', {
+			        				"class": 'bc_infographic ' + window.categoryDic[ES_title] + '_infographic'
+			        			}, bc_infographic);
+
+				        		bc_description.show();		        		
+							};
+							// End add popup dialog box for Benefit Category 
 							liElem.appendChild(aElem);
 							ulElem.appendChild(liElem);							
 							if (eaCategory.indexOf(key) !=-1) {
-								liElem.setAttribute("id",window.categoryDic[key]);
+								liElem.setAttribute("class",window.categoryDic[key]);
 							}
 							else {
-								liElem.setAttribute("id",window.categoryDic[key] + "_bw");
+								liElem.setAttribute("class",window.categoryDic[key] + "_bw");
 							}
 						indexImage = indexImage + 1;
 					}
@@ -464,7 +551,7 @@ define([
 					//aElem.title  = eaScale;
 					liElem.appendChild(aElem);
 					ulElem.appendChild(liElem);
-					liElem.setAttribute("id", eaScale);
+					liElem.setAttribute("class", eaScale);
 					// end Add Community/National Icon
 
 

@@ -15,59 +15,102 @@
     display: block;
 }
 
+
 /* biodiversity conservation */
-#biod_bw {background: url('../images/ES_Icons/bio_bw.png');
+.biod_bw {background: url('../images/ES_Icons/bio_bw.png');
           background-size: cover;}
-#biod {background: url('../images/ES_Icons/bio.png');
+.biod {background: url('../images/ES_Icons/bio.png');
           background-size: cover;}
+.biod_infographic {background: url('../images/bc_infographics/biod.png') no-repeat;}
+
 /* clean air */
-#cair_bw {background: url('../images/ES_Icons/air_bw.png');
+.cair_bw {background: url('../images/ES_Icons/air_bw.png');
           background-size: cover;}
-#cair {background: url('../images/ES_Icons/air.png');
+.cair {background: url('../images/ES_Icons/air.png');
           background-size: cover;}
+.cair_infographic {background: url('../images/bc_infographics/cair.png') no-repeat;}
+
 /* clean and plentiful water */
-#cpw_bw {background: url('../images/ES_Icons/water_bw.png');
+.cpw_bw {background: url('../images/ES_Icons/water_bw.png');
           background-size: cover;}
-#cpw {background: url('../images/ES_Icons/water.png');
+.cpw {background: url('../images/ES_Icons/water.png');
           background-size: cover;}
+.cpw_infographic {background: url('../images/bc_infographics/cpw.png') no-repeat;}
+
 /* climate stabilization */
-#clim_bw {background: url('../images/ES_Icons/clim_bw.png');
+.clim_bw {background: url('../images/ES_Icons/clim_bw.png');
           background-size: cover;}
-#clim {background: url('../images/ES_Icons/clim.png');
+.clim {background: url('../images/ES_Icons/clim.png');
           background-size: cover;}
+.clim_infographic {background: url('../images/bc_infographics/clim.png') no-repeat;}
+
 /* food, fuel, and materials */
-#ffm_bw {background: url('../images/ES_Icons/food_bw.png');
+.ffm_bw {background: url('../images/ES_Icons/food_bw.png');
           background-size: cover;}
-#ffm {background: url('../images/ES_Icons/food.png');
+.ffm {background: url('../images/ES_Icons/food.png');
           background-size: cover;}
+.ffm_infographic {background: url('../images/bc_infographics/ffm.png') no-repeat;}
+
 /* natural hazard mitigation */
-#nhm_bw {background: url('../images/ES_Icons/haz_bw.png');
+.nhm_bw {background: url('../images/ES_Icons/haz_bw.png');
           background-size: cover;}
-#nhm {background: url('../images/ES_Icons/haz.png');
+.nhm {background: url('../images/ES_Icons/haz.png');
           background-size: cover;}
+.nhm_infographic {background: url('../images/bc_infographics/nhm.png') no-repeat;}
+
 /* recreation, culture, and aesthetics */
-#rca_bw {background: url('../images/ES_Icons/rec_bw.png');
+.rca_bw {background: url('../images/ES_Icons/rec_bw.png');
           background-size: cover;}
-#rca {background: url('../images/ES_Icons/rec.png');
+.rca {background: url('../images/ES_Icons/rec.png');
           background-size: cover;}
-#rca a:hover {background: url('../images/ES_Icons/rec.png');
+.rca_infographic {background: url('../images/bc_infographics/rca.png') no-repeat;}
+
+.NATIONAL {background: url('../images/ES_Icons/nat.png');
           background-size: cover;}
 
-#NATIONAL {background: url('../images/ES_Icons/nat.png');
-          background-size: cover;}
-
-#COMMUNITY {background: url('../images/ES_Icons/comm.png');
+.COMMUNITY {background: url('../images/ES_Icons/comm.png');
           background-size: cover;}
 
 
-/* people and built spaces */
-#pbs_bw {background: url('../images/bc_icons.png') 0px -140px;}
-#pbs {background: url('../images/bc_icons.png') -20px -140px;}
-#pbs a:hover {background: url('../images/bc_icons.png') -40px -140px;}
-/* supplemental */
-#sup_bw {background: url('../images/bc_icons.png') 0px -160px;}
-#sup {background: url('../images/bc_icons.png') -20px -160px;}
-#sup a:hover {background: url('../images/bc_icons.png') -40px -160px;}
+.bc_popup {
+  width: 25px;
+  height: 25px;
+  border: none;
+  display: inline-block;
+  margin: 0px 5px 0px 5px;
+}
+
+.bc_popup:hover {
+  cursor: pointer;
+}
+
+.bc_popup_selected{
+  box-shadow: -1px 6px 10px 1px #333;
+}
+
+.bc_infographic{
+  height: 450px;
+  background-size: 100% 100%;
+}
+
+.bc_popup_header_icon {
+  height:35px; 
+  width:35px; 
+  float: left; 
+  position: relative; 
+  top: 5px; 
+  left:10px;
+}
+
+.bc_popup_header_text {
+  font-size: 18px; 
+  font-weight: bold; 
+  height: 40px; 
+  display: table-cell; 
+  vertical-align:middle; 
+  position: relative; 
+  left: 20px
+}
 
 
 #navlistSearchfilter2 {
