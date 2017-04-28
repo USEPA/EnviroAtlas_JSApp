@@ -33,12 +33,11 @@ function(declare,
   var communitySelected = "";
   var prefixRadioCommunity = "radio_";
   
-  var minXCombinedExtent = 9999999999999;
-  var minYCombinedExtent = 9999999999999;
-  var maxXCombinedExtent = -9999999999999;
-  var maxYCombinedExtent = -9999999999999;  
-  var spatialReference;
-
+  var minXCombinedExtent = -15914327.3951;
+  var minYCombinedExtent = 1853426.1440;
+  var maxXCombinedExtent = -5347672.6049;
+  var maxYCombinedExtent = 7733573.8560;  
+  var spatialReference = {"wkid": 102100}
   //To create a widget, you need to derive from BaseWidget.
   return declare([BaseWidget], {
     // DemoWidget code goes here 
