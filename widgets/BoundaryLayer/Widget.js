@@ -47,6 +47,8 @@ define([
 	var chkIdBoundaryDictionary = {};
 	var map;
 	var self;
+	var hashFactsheetLinkBoundary = {};
+	var hashLayerNameLinkBoundary = {};
     var showLayerListWidget = function(){
         var widgetName = 'LayerList';
         var widgets = self.appConfig.getConfigElementsByName(widgetName);
@@ -114,7 +116,43 @@ define([
 				       	newTitleCell.style.paddingBottom = '12px';
 						var title = document.createElement('label');
 						title.innerHTML = layer.name;    
-						newTitleCell.appendChild(title); 			    
+						newTitleCell.appendChild(title); 
+						
+						// add datafactsheet			    
+						
+						var newButtonInfoCell  = newRow.insertCell(2);
+						var buttonInfo = document.createElement('input');
+						buttonInfo.type = "button";
+				        var buttonInfoId = "but" + eaID;
+						buttonInfo.name = buttonInfoId;
+						buttonInfo.id = buttonInfoId;
+						buttonInfo.className = 'i-button'
+
+						buttonInfo.style.lineHeight = "3px";//to set the text vertically center
+						
+						newButtonInfoCell.style.verticalAlign = "top";//this will put checkbox on first line
+				        newButtonInfoCell.appendChild(buttonInfo); 
+				        hashFactsheetLinkBoundary[buttonInfoId] =  "N/A";
+				        hashLayerNameLinkBoundary[buttonInfoId] =  layer.name;
+				        if (layer.hasOwnProperty('eaDfsLink')) {
+				        	hashFactsheetLinkBoundary[buttonInfoId] = layer.eaDfsLink;
+				        }
+				        
+	
+				        document.getElementById(buttonInfoId).onclick = function(e) {
+					        if (hashFactsheetLinkBoundary[this.id] == "N/A") {
+				        		var dataFactNote = new Dialog({
+							        title: hashLayerNameLinkBoundary[this.id],
+							        style: "width: 300px",    
+						    	});
+						        dataFactNote.show();
+						        dataFactNote.set("content", "Data fact sheet link is not available!");
+						        //https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/CommunityVicinity.pdf	not available
+				
+					        } else {
+					        	window.open(window.dataFactSheet + hashFactsheetLinkBoundary[this.id]);
+					        }		      
+					    };    //end of inserting datafactsheet icon
 				    }// end of if (eaID.trim() != "")
 	            }// end of if(layer.hasOwnProperty('eaID'))                	
 	

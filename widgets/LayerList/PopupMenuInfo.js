@@ -534,7 +534,7 @@ define([
 			        }                	
                     if ((layerId === (window.layerIdPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) {                        	
                     	if(layer.hasOwnProperty('eaMetadata')){
-	                    	if (layer.hasOwnProperty('eaScale') &&  (layer.eaScale = "NATIONAL")) {
+	                    	if (layer.hasOwnProperty('eaScale') &&  (layer.eaScale == "NATIONAL")) {
 	                        	metaDataID = window.nationalMetadataDic[layer.eaMetadata];
 	                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
 						        bMetadataAvailale = true;                    		
