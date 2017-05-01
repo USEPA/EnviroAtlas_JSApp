@@ -273,6 +273,11 @@ define([
 	    		this.map.removeLayer(lyr);        	
           	}          	
         }        
+        //remove community boundary layer   
+        lyrCommunityBoundary = this.map.getLayer(window.idCommuBoundaryPoint);  
+		if(lyrCommunityBoundary){
+    		this.map.removeLayer(lyrCommunityBoundary);        	
+      	} 
       }
     });
     //clazz.hasConfig = false;
