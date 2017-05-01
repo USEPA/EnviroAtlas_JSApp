@@ -68,7 +68,6 @@ define([
 	    var maxYCombinedExtent = -9999999999999;  
 	    var spatialReference;
 	    var currentCommunity = "";
-	    var idCommuBoundaryPoint = "Boundary_Point";
 	    var idCommuBoundaryPoly = "Boundary_Poly";
 	    var arrLayersToChangeSynbology = [];
 	    var Attribute = "";
@@ -365,9 +364,9 @@ define([
 									     	infoTemplate: template,
 											outFields: ["*"]
 									    });
-									    pointBoundaryLayer.id = idCommuBoundaryPoint;
+									    pointBoundaryLayer.id = window.idCommuBoundaryPoint;
 									    pointBoundaryLayer.setScaleRange(0,0);
-									    lyrBoundaryPoint = this._viewerMap.getLayer(idCommuBoundaryPoint);
+									    lyrBoundaryPoint = this._viewerMap.getLayer(window.idCommuBoundaryPoint);
 										if(lyrBoundaryPoint == null){
 									    	self.map.addLayer(pointBoundaryLayer);
 									    }
