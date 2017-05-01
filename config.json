@@ -101,8 +101,8 @@
             }, {
                 "uri": "widgets/CommunityDisplay/Widget",
                 "position": {
-                    "left": 400,
-                    "bottom": 5,
+                    "left": 45,
+                    "top": 45,
                     "relativeTo": "map"
                 },
                 "version": "1.3",
