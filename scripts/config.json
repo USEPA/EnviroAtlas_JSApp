@@ -14,7 +14,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "O3_Acute_Respiratory_Symptoms_I", 
-                            "label": "Acute respiratory symptoms avoided due to ozone removed by tree cover (cases/yr))\u00a0"
+                            "label": "Acute respiratory symptoms avoided due to ozone removed by tree cover (cases/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -58,7 +58,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PM25_Acute_Respiratory_Symptoms_I", 
-                            "label": "Acute respiratory symptoms avoided due to particulate matter [PM2.5] removed by tree cover (cases/yr)\u00a0)\u00a0"
+                            "label": "Acute respiratory symptoms avoided due to particulate matter [PM2.5] removed by tree cover (cases/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -102,7 +102,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Ag_PC", 
-                            "label": "Agricultural land per capita (m2/person)\u00a0)\u00a0"
+                            "label": "Agricultural land per capita (m2/person)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -146,7 +146,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "NO2_Asthma_Exacerbation_I", 
-                            "label": "Asthma exacerbation avoided due to nitrogen dioxide removed by tree cover (cases/yr)\u00a0)\u00a0"
+                            "label": "Asthma exacerbation avoided due to nitrogen dioxide removed by tree cover (cases/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -190,7 +190,7 @@
                                 "places": 3
                             }, 
                             "fieldName": "SO2_Asthma_Exacerbation_I", 
-                            "label": "Asthma exacerbation avoided due to sulfur dioxide removed by tree cover (cases/yr)\u00a0)\u00a0"
+                            "label": "Asthma exacerbation avoided due to sulfur dioxide removed by tree cover (cases/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -234,7 +234,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "maxtempreduction", 
-                            "label": "Average reduction in daytime ambient temperature (Celsius)\u00a0)\u00a0"
+                            "label": "Average reduction in daytime ambient temperature (Celsius)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -279,7 +279,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "maxtempreductionnight", 
-                            "label": "Average reduction in nighttime ambient temperature (Celsius)\u00a0)\u00a0"
+                            "label": "Average reduction in nighttime ambient temperature (Celsius)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -324,7 +324,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "CORemoval", 
-                            "label": "Carbon monoxide removed annually by tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Carbon monoxide removed annually by tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -371,7 +371,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "DWDbyBG", 
-                            "label": "Daily domestic water use (x1000 gal/day)\u00a0)\u00a0"
+                            "label": "Daily domestic water use (x1000 gal/day)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -412,7 +412,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Day_Low", 
-                            "label": "Day care centers with < 25 percent green space in viewshed\u00a0)\u00a0"
+                            "label": "Day care centers with < 25 percent green space in viewshed\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -461,7 +461,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Green_PC", 
-                            "label": "Green space per capita (m2/person)\u00a0)\u00a0"
+                            "label": "Green space per capita (m2/person)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -524,7 +524,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Imp_PC", 
-                            "label": "Impervious area per capita (m2/person)\u00a0)\u00a0"
+                            "label": "Impervious area per capita (m2/person)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -560,7 +560,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "K12_Low", 
-                            "label": "K-12 schools with < 25 percent green space in viewshed\u00a0)\u00a0"
+                            "label": "K-12 schools with < 25 percent green space in viewshed\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -626,7 +626,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "NO2Removal", 
-                            "label": "Nitrogen dioxide removed annually by tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Nitrogen dioxide removed annually by tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -658,7 +658,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "total_his_count", 
-                            "label": "Number of historic places [census block group])\u00a0"
+                            "label": "Number of historic places [census block group]\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -701,7 +701,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "O3Removal", 
-                            "label": "Ozone removed annually by tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Ozone removed annually by tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -748,7 +748,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "PM10Remova", 
-                            "label": "Particulate matter [PM10] removed annually by tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Particulate matter [PM10] removed annually by tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -795,7 +795,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "PM25Remova", 
-                            "label": "Particulate matter [PM2.5] removed annually by tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Particulate matter [PM2.5] removed annually by tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -842,7 +842,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "Ag_P ", 
-                            "label": "Percent agriculture\u00a0)\u00a0"
+                            "label": "Percent agriculture\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -887,7 +887,7 @@
                                 "places": 4
                             }, 
                             "fieldName": "COAQYr", 
-                            "label": "Percent carbon monoxide removed annually by tree cover)\u00a0"
+                            "label": "Percent carbon monoxide removed annually by tree cover\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -934,7 +934,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Green_P ", 
-                            "label": "Percent green space\u00a0)\u00a0"
+                            "label": "Percent green space\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -999,7 +999,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Imp_P ", 
-                            "label": "Percent impervious area [census block group])\u00a0"
+                            "label": "Percent impervious area [census block group]\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1053,7 +1053,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "RB15_ImpP", 
-                            "label": "Percent impervious area in 15m stream and lake buffer\u00a0)\u00a0"
+                            "label": "Percent impervious area in 15m stream and lake buffer\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1105,7 +1105,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "RB50_ImpP", 
-                            "label": "Percent impervious area in 50m stream and lake buffer\u00a0)\u00a0"
+                            "label": "Percent impervious area in 50m stream and lake buffer\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1154,7 +1154,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "RB15_LABGP", 
-                            "label": "Percent land area in 15m stream and lake buffer\u00a0)\u00a0"
+                            "label": "Percent land area in 15m stream and lake buffer\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1203,7 +1203,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "RB50_LABGP", 
-                            "label": "Percent land area in 50m stream and lake buffer\u00a0)\u00a0"
+                            "label": "Percent land area in 50m stream and lake buffer\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1256,7 +1256,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "NO2AQYr", 
-                            "label": "Percent nitrogen dioxide removed annually by tree cover)\u00a0"
+                            "label": "Percent nitrogen dioxide removed annually by tree cover\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1288,7 +1288,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Lane_PctIB", 
-                            "label": "Percent of busy roadway bordered by < 25 percent tree buffer\u00a0)\u00a0"
+                            "label": "Percent of busy roadway bordered by < 25 percent tree buffer\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1337,7 +1337,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Lane_PctSB", 
-                            "label": "Percent of busy roadway bordered by > 25 percent tree buffer\u00a0)\u00a0"
+                            "label": "Percent of busy roadway bordered by > 25 percent tree buffer\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1386,7 +1386,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "BWDP_Pct", 
-                            "label": "Percent of residential population not within 500m of a park entrance\u00a0)\u00a0"
+                            "label": "Percent of residential population not within 500m of a park entrance\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1432,7 +1432,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "WVT_Pct", 
-                            "label": "Percent of residential population with minimal views of trees\u00a0)\u00a0"
+                            "label": "Percent of residential population with minimal views of trees\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1479,7 +1479,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "WVW_Pct", 
-                            "label": "Percent of residential population with views of water\u00a0)\u00a0"
+                            "label": "Percent of residential population with views of water\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1526,7 +1526,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Buff_Pct", 
-                            "label": "Percent of residential population within 300m of busy roadway\u00a0)\u00a0"
+                            "label": "Percent of residential population within 300m of busy roadway\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1570,7 +1570,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "IWDP_Pct", 
-                            "label": "Percent of residential population within 500m of a park entrance\u00a0)\u00a0"
+                            "label": "Percent of residential population within 500m of a park entrance\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1617,7 +1617,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "O3AQYr", 
-                            "label": "Percent ozone removed annually by tree cover)\u00a0"
+                            "label": "Percent ozone removed annually by tree cover\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1664,7 +1664,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "P10AQYr", 
-                            "label": "Percent particulate matter [PM10] removed annually by tree cover)\u00a0"
+                            "label": "Percent particulate matter [PM10] removed annually by tree cover\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1711,7 +1711,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "P25AQYr", 
-                            "label": "Percent particulate matter [PM2.5] removed annually by tree cover)\u00a0"
+                            "label": "Percent particulate matter [PM2.5] removed annually by tree cover\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1758,7 +1758,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "Change", 
-                            "label": "Percent reduction in annual runoff\u00a0due to tree cover)\u00a0"
+                            "label": "Percent reduction in annual runoff\u00a0due to tree cover\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1827,7 +1827,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "SO2AQYr", 
-                            "label": "Percent sulfur dioxide removed annually by tree cover)\u00a0"
+                            "label": "Percent sulfur dioxide removed annually by tree cover\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1876,7 +1876,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "MFor_P", 
-                            "label": "Percent tree cover)\u00a0"
+                            "label": "Percent tree cover\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1929,7 +1929,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "RB15_ForP", 
-                            "label": "Percent tree cover in 15m stream and lake buffer\u00a0)\u00a0"
+                            "label": "Percent tree cover in 15m stream and lake buffer\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1980,7 +1980,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "RB50_ForP", 
-                            "label": "Percent tree cover in 50m stream and lake buffer\u00a0)\u00a0"
+                            "label": "Percent tree cover in 50m stream and lake buffer\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2032,7 +2032,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "RB15_VegP", 
-                            "label": "Percent vegetated cover in 15m stream and lake buffer\u00a0)\u00a0"
+                            "label": "Percent vegetated cover in 15m stream and lake buffer\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2083,7 +2083,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "RB50_VegP", 
-                            "label": "Percent vegetated cover in 50m stream and lake buffer\u00a0)\u00a0"
+                            "label": "Percent vegetated cover in 50m stream and lake buffer\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2137,7 +2137,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "Wet_P", 
-                            "label": "Percent wetlands\u00a0)\u00a0"
+                            "label": "Percent wetlands\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2174,7 +2174,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Runoff", 
-                            "label": "Reduction in annual runoff due to tree cover (m3/yr)\u00a0)\u00a0"
+                            "label": "Reduction in annual runoff due to tree cover (m3/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2228,7 +2228,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "BODmean", 
-                            "label": "Reduction in mean biochemical oxygen demand [BOD5] due to tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Reduction in mean biochemical oxygen demand [BOD5] due to tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2271,7 +2271,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "CODmean", 
-                            "label": "Reduction in mean chemical oxygen demand [COD] due to tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Reduction in mean chemical oxygen demand [COD] due to tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2314,7 +2314,7 @@
                                 "places": 3
                             }, 
                             "fieldName": "Cumean", 
-                            "label": "Reduction in mean load of copper due to tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Reduction in mean load of copper due to tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2361,7 +2361,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "NO23mean", 
-                            "label": "Reduction in mean load of nitrites and nitrates due to tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Reduction in mean load of nitrites and nitrates due to tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2405,7 +2405,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "SolPmean", 
-                            "label": "Reduction in mean load of soluble phosphorus due to tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Reduction in mean load of soluble phosphorus due to tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2449,7 +2449,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "TKNmean", 
-                            "label": "Reduction in mean load of total Kjeldahl nitrogen [TKN] due to tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Reduction in mean load of total Kjeldahl nitrogen [TKN] due to tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2493,7 +2493,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "TPmean", 
-                            "label": "Reduction in mean load of total phosphorus due to tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Reduction in mean load of total phosphorus due to tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2537,7 +2537,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "TSSmean", 
-                            "label": "Reduction in mean load of total suspended solids [TSS] due to tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Reduction in mean load of total suspended solids [TSS] due to tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2583,7 +2583,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "BODmed", 
-                            "label": "Reduction in median biochemical oxygen demand [BOD5] due to tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Reduction in median biochemical oxygen demand [BOD5] due to tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2626,7 +2626,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "CODmed", 
-                            "label": "Reduction in median chemical oxygen demand [COD] due to tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Reduction in median chemical oxygen demand [COD] due to tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2669,7 +2669,7 @@
                                 "places": 4
                             }, 
                             "fieldName": "Cumed", 
-                            "label": "Reduction in median load of copper due to tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Reduction in median load of copper due to tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2716,7 +2716,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "NO2_3med", 
-                            "label": "Reduction in median load of nitrites and nitrates due to tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Reduction in median load of nitrites and nitrates due to tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2760,7 +2760,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "SolPmed", 
-                            "label": "Reduction in median load of soluble phosphorus due to tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Reduction in median load of soluble phosphorus due to tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2804,7 +2804,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "TKNmed", 
-                            "label": "Reduction in median load of total Kjeldahl nitrogen [TKN] due to tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Reduction in median load of total Kjeldahl nitrogen [TKN] due to tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2848,7 +2848,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "Tpmed", 
-                            "label": "Reduction in median load of total phosphorus due to tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Reduction in median load of total phosphorus due to tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2892,7 +2892,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "TSSmed", 
-                            "label": "Reduction in median load of total suspended solids [TSS] due to tree cover (kg/yr)\u00a0)\u00a0"
+                            "label": "Reduction in median load of total suspended solids [TSS] due to tree cover (kg/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2938,7 +2938,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "BWDP_Pop", 
-                            "label": "Residential population not within 500m of a park entrance\u00a0)\u00a0"
+                            "label": "Residential population not within 500m of a park entrance\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2985,7 +2985,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "WVT_Pop", 
-                            "label": "Residential population with minimal views of trees\u00a0)\u00a0"
+                            "label": "Residential population with minimal views of trees\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3029,7 +3029,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "WVW_Pop", 
-                            "label": "Residential population with views of water\u00a0)\u00a0"
+                            "label": "Residential population with views of water\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3073,7 +3073,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Buff_Pop", 
-                            "label": "Residential population within 300m of busy roadway)\u00a0"
+                            "label": "Residential population within 300m of busy roadway\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3117,7 +3117,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "IBuff_Pop", 
-                            "label": "Residential population within 300m of busy roadway with < 25 percent tree buffer\u00a0)\u00a0"
+                            "label": "Residential population within 300m of busy roadway with < 25 percent tree buffer\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3161,7 +3161,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "SBuff_Pop", 
-                            "label": "Residential population within 300m of busy roadway with > 25 percent tree buffer\u00a0)\u00a0"
+                            "label": "Residential population within 300m of busy roadway with > 25 percent tree buffer\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3205,7 +3205,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "IWDP_Pop", 
-                            "label": "Residential population within 500m of a park entrance\u00a0)\u00a0"
+                            "label": "Residential population within 500m of a park entrance\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3251,7 +3251,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "O3_School_Loss_Days_I", 
-                            "label": "School days not lost to illness due to ozone removed by tree cover (days/yr)\u00a0)\u00a0"
+                            "label": "School days not lost to illness due to ozone removed by tree cover (days/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3313,7 +3313,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "SO2Removal", 
-                            "label": "Sulfur dioxide (kg/yr) removed annually by tree cover)\u00a0"
+                            "label": "Sulfur dioxide (kg/yr) removed annually by tree cover\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3345,7 +3345,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "MTCSEQ", 
-                            "label": "Total carbon sequestered by tree cover (mt/yr)\u00a0)\u00a0"
+                            "label": "Total carbon sequestered by tree cover (mt/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3388,7 +3388,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "MTCSTOR", 
-                            "label": "Total carbon stored by tree cover (mt)\u00a0)\u00a0"
+                            "label": "Total carbon stored by tree cover (mt)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3444,7 +3444,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "RB15_LArea", 
-                            "label": "Total land area in 15m stream and lake buffer (m2)\u00a0)\u00a0"
+                            "label": "Total land area in 15m stream and lake buffer (m2)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3493,7 +3493,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "RB50_LArea", 
-                            "label": "Total land area in 50m stream and lake buffer (m2)\u00a0)\u00a0"
+                            "label": "Total land area in 50m stream and lake buffer (m2)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3546,7 +3546,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "MFor_PC", 
-                            "label": "Tree cover per capita (m2/person)\u00a0)\u00a0"
+                            "label": "Tree cover per capita (m2/person)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3583,7 +3583,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "NO2_Asthma_Exacerbation_V", 
-                            "label": "Value of asthma exacerbation cases avoided due to nitrogen dioxide removed by tree cover ($/yr)\u00a0)\u00a0"
+                            "label": "Value of asthma exacerbation cases avoided due to nitrogen dioxide removed by tree cover ($/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3626,7 +3626,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "SO2_Asthma_Exacerbation_V", 
-                            "label": "Value of asthma exacerbation cases avoided due to sulfur dioxide removed by tree cover ($/yr)\u00a0)\u00a0"
+                            "label": "Value of asthma exacerbation cases avoided due to sulfur dioxide removed by tree cover ($/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3669,7 +3669,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "DOLCSEQ", 
-                            "label": "Value of carbon sequestered by tree cover ($/yr)\u00a0)\u00a0"
+                            "label": "Value of carbon sequestered by tree cover ($/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3714,7 +3714,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "DOLCSTOR", 
-                            "label": "Value of carbon stored by tree cover ($)\u00a0)\u00a0"
+                            "label": "Value of carbon stored by tree cover ($)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3759,7 +3759,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "COValue", 
-                            "label": "Value of health, ecosystem, and materials damage avoided due to carbon monoxide removed by tree cover ($/yr)\u00a0)\u00a0"
+                            "label": "Value of health, ecosystem, and materials damage avoided due to carbon monoxide removed by tree cover ($/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3802,7 +3802,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "PM10Value", 
-                            "label": "Value of health, ecosystem, and materials damage avoided due to particulate matter [PM10] removed by tree cover ($/yr)\u00a0)\u00a0"
+                            "label": "Value of health, ecosystem, and materials damage avoided due to particulate matter [PM10] removed by tree cover ($/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3845,7 +3845,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "NO2_Hospital_Admissions_V", 
-                            "label": "Value of hospital admissions avoided due to nitrogen dioxide removed by tree cover ($/yr)\u00a0)\u00a0"
+                            "label": "Value of hospital admissions avoided due to nitrogen dioxide removed by tree cover ($/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3888,7 +3888,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "SO2_Hospital_Admissions_V", 
-                            "label": "Value of hospital admissions avoided due to sulfur dioxide removed by tree cover ($/yr)\u00a0)\u00a0"
+                            "label": "Value of hospital admissions avoided due to sulfur dioxide removed by tree cover ($/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -3931,7 +3931,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "O3_School_Loss_Days_V", 
-                            "label": "Value of school days not lost to illness due to ozone removed by tree cover ($/yr)\u00a0)\u00a0"
+                            "label": "Value of school days not lost to illness due to ozone removed by tree cover ($/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -5038,7 +5038,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "CRP_acres", 
-                            "label": "Acres of land enrolled in CRP)\u00a0"
+                            "label": "Acres of land enrolled in CRP\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5104,7 +5104,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "Acres_Unpo", 
-                            "label": "Acres of pollinated crops with no nearby pollinator habitat)\u00a0"
+                            "label": "Acres of pollinated crops with no nearby pollinator habitat\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5152,7 +5152,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "AWD_MGAL", 
-                            "label": "Agricultural water use (million gallons/day))\u00a0"
+                            "label": "Agricultural water use (million gallons/day)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5197,7 +5197,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "DD_OXN_T", 
-                            "label": "Annual oxidized nitrogen dry deposition (kg/ha))\u00a0"
+                            "label": "Annual oxidized nitrogen dry deposition (kg/ha)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5244,7 +5244,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "AWD_OXN_T", 
-                            "label": "Annual oxidized nitrogen wet deposition (kg/ha))\u00a0"
+                            "label": "Annual oxidized nitrogen wet deposition (kg/ha)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5291,7 +5291,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "DD_REDN_T", 
-                            "label": "Annual reduced nitrogen dry deposition (kg/ha))\u00a0"
+                            "label": "Annual reduced nitrogen dry deposition (kg/ha)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5338,7 +5338,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "AWD_REDN_T", 
-                            "label": "Annual reduced nitrogen wet deposition (kg/ha))\u00a0"
+                            "label": "Annual reduced nitrogen wet deposition (kg/ha)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5385,7 +5385,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "DD_S_T", 
-                            "label": "Annual sulfur dry deposition (kg/ha))\u00a0"
+                            "label": "Annual sulfur dry deposition (kg/ha)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5432,7 +5432,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "AWD_S_T", 
-                            "label": "Annual sulfur wet deposition (kg/ha))\u00a0"
+                            "label": "Annual sulfur wet deposition (kg/ha)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5466,7 +5466,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "SolE_Area", 
-                            "label": "Area of solar energy (km2))\u00a0"
+                            "label": "Area of solar energy (km2)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5509,7 +5509,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "SolE_Mean", 
-                            "label": "Average annual daily potential solar energy (kWh/m2/day))\u00a0"
+                            "label": "Average annual daily potential solar energy (kWh/m2/day)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5552,7 +5552,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "AvgWindEnergy", 
-                            "label": "Average annual daily potential wind energy (kWh/m2/day))\u00a0"
+                            "label": "Average annual daily potential wind energy (kWh/m2/day)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5611,7 +5611,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "MeanPrecip", 
-                            "label": "Average annual precipitation (inches/yr))\u00a0"
+                            "label": "Average annual precipitation (inches/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5649,7 +5649,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "BG_Demand", 
-                            "label": "Big game hunting recreation demand)\u00a0"
+                            "label": "Big game hunting recreation demand\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5694,7 +5694,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "BW_Demand", 
-                            "label": "Bird watching recreation demand)\u00a0"
+                            "label": "Bird watching recreation demand\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5737,7 +5737,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "BMASS_KG_M", 
-                            "label": "Carbon storage by tree biomass (kg/m2))\u00a0"
+                            "label": "Carbon storage by tree biomass (kg/m2)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5781,7 +5781,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "ROOT_BIOM_KG_M2", 
-                            "label": "Carbon storage by tree root biomass (kg/m2))\u00a0"
+                            "label": "Carbon storage by tree root biomass (kg/m2)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5825,7 +5825,7 @@
                                 "places": 5
                             }, 
                             "fieldName": "COT_KTONS", 
-                            "label": "Cotton yields (thousand tons/yr))\u00a0"
+                            "label": "Cotton yields (thousand tons/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5886,7 +5886,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "CBNF_Mean", 
-                            "label": "Cultivated biological nitrogen fixation (kg N/ha/yr))\u00a0"
+                            "label": "Cultivated biological nitrogen fixation (kg N/ha/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5917,7 +5917,7 @@
                                 "places": 4
                             }, 
                             "fieldName": "DWD_mgal", 
-                            "label": "Domestic water use (million gallons/day))\u00a0"
+                            "label": "Domestic water use (million gallons/day)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -5959,7 +5959,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "FF_Demand", 
-                            "label": "Freshwater fishing recreation demand)\u00a0"
+                            "label": "Freshwater fishing recreation demand\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6004,7 +6004,7 @@
                                 "places": 5
                             }, 
                             "fieldName": "FRUITYIELD", 
-                            "label": "Fruit yields (thousand tons/yr))\u00a0"
+                            "label": "Fruit yields (thousand tons/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6048,7 +6048,7 @@
                                 "places": 4
                             }, 
                             "fieldName": "GRAIN_KTONS", 
-                            "label": "Grain yields (thousand tons/yr))\u00a0"
+                            "label": "Grain yields (thousand tons/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6092,7 +6092,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "COT_HA", 
-                            "label": "Hectares of cotton crops)\u00a0"
+                            "label": "Hectares of cotton crops\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6136,7 +6136,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "FRUITHECTARES", 
-                            "label": "Hectares of fruit crops)\u00a0"
+                            "label": "Hectares of fruit crops\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6180,7 +6180,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "GRAIN_HA", 
-                            "label": "Hectares of grain crops)\u00a0"
+                            "label": "Hectares of grain crops\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6224,7 +6224,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "VEGHECTARES", 
-                            "label": "Hectares of vegetable crops)\u00a0"
+                            "label": "Hectares of vegetable crops\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6268,7 +6268,7 @@
                                 "places": 3
                             }, 
                             "fieldName": "IWD_MGAL", 
-                            "label": "Industrial water use (million gallons/day))\u00a0"
+                            "label": "Industrial water use (million gallons/day)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6328,7 +6328,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "ManureMean", 
-                            "label": "Manure application (kg N/ha/yr))\u00a0"
+                            "label": "Manure application (kg N/ha/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6362,7 +6362,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "AMPH_MAX", 
-                            "label": "Maximum amphibian species richness)\u00a0"
+                            "label": "Maximum amphibian species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6417,7 +6417,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "BAT_MAX", 
-                            "label": "Maximum bat species richness)\u00a0"
+                            "label": "Maximum bat species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6465,7 +6465,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "BIGGA_MAX", 
-                            "label": "Maximum big game species richness)\u00a0"
+                            "label": "Maximum big game species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6510,7 +6510,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Bird_All_MAX", 
-                            "label": "Maximum bird species richness)\u00a0"
+                            "label": "Maximum bird species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6557,7 +6557,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "FURB_MAX", 
-                            "label": "Maximum fur bearer species richness)\u00a0"
+                            "label": "Maximum fur bearer species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6610,7 +6610,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "LD_MAX", 
-                            "label": "Maximum land cover diversity)\u00a0"
+                            "label": "Maximum land cover diversity\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6642,7 +6642,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "MAM_MAX", 
-                            "label": "Maximum mammal species richness)\u00a0"
+                            "label": "Maximum mammal species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6701,7 +6701,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Bird_PIF_MAX", 
-                            "label": "Maximum modeled Partners in Flight Watch List bird species)\u00a0"
+                            "label": "Maximum modeled Partners in Flight Watch List bird species\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6748,7 +6748,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Bird_BCC_MAX", 
-                            "label": "Maximum modeled State of the Birds species of conservation concern)\u00a0"
+                            "label": "Maximum modeled State of the Birds species of conservation concern\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6795,7 +6795,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "TE_MAX", 
-                            "label": "Maximum modeled threatened and endangered vertebrate species)\u00a0"
+                            "label": "Maximum modeled threatened and endangered vertebrate species\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6842,7 +6842,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Bird_Aud_end_MAX", 
-                            "label": "Maximum number of bird species vulnerable to range loss due to climate change by 2050)\u00a0"
+                            "label": "Maximum number of bird species vulnerable to range loss due to climate change by 2050\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6889,7 +6889,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Bird_Aud_thr_MAX", 
-                            "label": "Maximum number of bird species vulnerable to range loss due to climate change by 2080)\u00a0"
+                            "label": "Maximum number of bird species vulnerable to range loss due to climate change by 2080\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6921,7 +6921,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Rep_MAX", 
-                            "label": "Maximum reptile species richness)\u00a0"
+                            "label": "Maximum reptile species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -6979,7 +6979,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "SMGA_MAX", 
-                            "label": "Maximum small game species richness)\u00a0"
+                            "label": "Maximum small game species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7026,7 +7026,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "HARV_MAX", 
-                            "label": "Maximum total harvestable species richness)\u00a0"
+                            "label": "Maximum total harvestable species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7071,7 +7071,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "TOTAL_MAX", 
-                            "label": "Maximum total vertebrate species richness)\u00a0"
+                            "label": "Maximum total vertebrate species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7118,7 +7118,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "WTFL_MAX", 
-                            "label": "Maximum waterfowl species richness)\u00a0"
+                            "label": "Maximum waterfowl species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7150,7 +7150,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "AMPH_AVG", 
-                            "label": "Mean amphibian species richness)\u00a0"
+                            "label": "Mean amphibian species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7205,7 +7205,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "BAT_AVG", 
-                            "label": "Mean bat species richness)\u00a0"
+                            "label": "Mean bat species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7253,7 +7253,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "BIGGA_AVG", 
-                            "label": "Mean big game species richness)\u00a0"
+                            "label": "Mean big game species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7298,7 +7298,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "Bird_All_MEAN", 
-                            "label": "Mean bird species richness)\u00a0"
+                            "label": "Mean bird species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7345,7 +7345,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "FURB_AVG", 
-                            "label": "Mean fur bearer species richness)\u00a0"
+                            "label": "Mean fur bearer species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7398,7 +7398,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "LD_AVG", 
-                            "label": "Mean land cover diversity)\u00a0"
+                            "label": "Mean land cover diversity\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7430,7 +7430,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "MAM_AVG", 
-                            "label": "Mean mammal species richness)\u00a0"
+                            "label": "Mean mammal species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7488,7 +7488,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "Bird_PIF_MEAN", 
-                            "label": "Mean modeled Partners in Flight Watch List bird species)\u00a0"
+                            "label": "Mean modeled Partners in Flight Watch List bird species\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7535,7 +7535,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "Bird_BCC_MEAN", 
-                            "label": "Mean modeled State of the Birds species of conservation concern)\u00a0"
+                            "label": "Mean modeled State of the Birds species of conservation concern\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7582,7 +7582,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "TE_AVG", 
-                            "label": "Mean modeled threatened and endangered vertebrate species)\u00a0"
+                            "label": "Mean modeled threatened and endangered vertebrate species\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7629,7 +7629,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "Bird_Aud_end_MEAN", 
-                            "label": "Mean number of bird species vulnerable to range loss due to climate change by 2050)\u00a0"
+                            "label": "Mean number of bird species vulnerable to range loss due to climate change by 2050\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7676,7 +7676,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "Bird_Aud_thr_MEAN", 
-                            "label": "Mean number of bird species vulnerable to range loss due to climate change by 2080)\u00a0"
+                            "label": "Mean number of bird species vulnerable to range loss due to climate change by 2080\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7708,7 +7708,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "Rep_MEAN", 
-                            "label": "Mean reptile species richness)\u00a0"
+                            "label": "Mean reptile species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7766,7 +7766,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "SMGA_AVG", 
-                            "label": "Mean small game species richness)\u00a0"
+                            "label": "Mean small game species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7813,7 +7813,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "HARV_AVG", 
-                            "label": "Mean total harvestable species richness)\u00a0"
+                            "label": "Mean total harvestable species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7858,7 +7858,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "TOTAL_AVG", 
-                            "label": "Mean total vertebrate species richness)\u00a0"
+                            "label": "Mean total vertebrate species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7905,7 +7905,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "WTFL_AVG", 
-                            "label": "Mean waterfowl species richness)\u00a0"
+                            "label": "Mean waterfowl species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7937,7 +7937,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "MB_Demand", 
-                            "label": "Migratory bird hunting recreation demand)\u00a0"
+                            "label": "Migratory bird hunting recreation demand\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -7998,7 +7998,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "BNF", 
-                            "label": "Natural biological nitrogen fixation (kg N/ha/yr))\u00a0"
+                            "label": "Natural biological nitrogen fixation (kg N/ha/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8029,7 +8029,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "AMPH_AVG_I", 
-                            "label": "NIB amphibian species richness)\u00a0"
+                            "label": "NIB amphibian species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8086,7 +8086,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "BAT_AVG_I", 
-                            "label": "NIB bat species richness)\u00a0"
+                            "label": "NIB bat species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8135,7 +8135,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "BIGGA_AVG_I", 
-                            "label": "NIB big game species richness)\u00a0"
+                            "label": "NIB big game species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8181,7 +8181,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "Bird_All_NIB", 
-                            "label": "NIB bird species richness)\u00a0"
+                            "label": "NIB bird species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8229,7 +8229,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "FURB_AVG_I", 
-                            "label": "NIB fur bearer species richness)\u00a0"
+                            "label": "NIB fur bearer species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8282,7 +8282,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "LD_AVG_I", 
-                            "label": "NIB land cover diversity)\u00a0"
+                            "label": "NIB land cover diversity\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8314,7 +8314,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "MAM_AVG_I", 
-                            "label": "NIB mammal species richness)\u00a0"
+                            "label": "NIB mammal species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8374,7 +8374,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "Bird_PIF_NIB", 
-                            "label": "NIB modeled Partners in Flight Watch List bird species)\u00a0"
+                            "label": "NIB modeled Partners in Flight Watch List bird species\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8422,7 +8422,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "Bird_BCC_NIB", 
-                            "label": "NIB modeled State of the Birds species of conservation concern)\u00a0"
+                            "label": "NIB modeled State of the Birds species of conservation concern\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8470,7 +8470,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "TE_AVG_I", 
-                            "label": "NIB modeled threatened and endangered vertebrate species)\u00a0"
+                            "label": "NIB modeled threatened and endangered vertebrate species\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8518,7 +8518,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "Bird_Aud_end_NIB", 
-                            "label": "NIB number of bird species vulnerable to range loss due to climate change by 2050)\u00a0"
+                            "label": "NIB number of bird species vulnerable to range loss due to climate change by 2050\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8566,7 +8566,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "Bird_Aud_thr_NIB", 
-                            "label": "NIB number of bird species vulnerable to range loss due to climate change by 2080)\u00a0"
+                            "label": "NIB number of bird species vulnerable to range loss due to climate change by 2080\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8598,7 +8598,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "Rep_NIB", 
-                            "label": "NIB reptile species richness)\u00a0"
+                            "label": "NIB reptile species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8658,7 +8658,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "SMGA_AVG_I", 
-                            "label": "NIB small game species richness)\u00a0"
+                            "label": "NIB small game species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8706,7 +8706,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "HARV_AVG_I", 
-                            "label": "NIB total harvestable species richness)\u00a0"
+                            "label": "NIB total harvestable species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8752,7 +8752,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "TOTAL_AVG_I", 
-                            "label": "NIB total vertebrate species richness)\u00a0"
+                            "label": "NIB total vertebrate species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8800,7 +8800,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "WTFL_AVG_I", 
-                            "label": "NIB waterfowl species richness)\u00a0"
+                            "label": "NIB waterfowl species richness\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8849,7 +8849,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "AQ_TOT_A", 
-                            "label": "Number of at-risk aquatic animal species)\u00a0"
+                            "label": "Number of at-risk aquatic animal species\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8900,7 +8900,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "AQ_TOT_P", 
-                            "label": "Number of at-risk aquatic plant species)\u00a0"
+                            "label": "Number of at-risk aquatic plant species\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8947,7 +8947,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "TR_TOT_A", 
-                            "label": "Number of at-risk terrestrial animal species)\u00a0"
+                            "label": "Number of at-risk terrestrial animal species\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -8992,7 +8992,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "TR_TOT_P", 
-                            "label": "Number of at-risk terrestrial plant species)\u00a0"
+                            "label": "Number of at-risk terrestrial plant species\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9037,7 +9037,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "WT_TOT_A", 
-                            "label": "Number of at-risk wetland animal species)\u00a0"
+                            "label": "Number of at-risk wetland animal species\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9082,7 +9082,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "WT_TOT_P", 
-                            "label": "Number of at-risk wetland plant species)\u00a0"
+                            "label": "Number of at-risk wetland plant species\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9114,7 +9114,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "FRUITCOUNT", 
-                            "label": "Number of fruit crop types (annually))\u00a0"
+                            "label": "Number of fruit crop types (annually)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9158,7 +9158,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "GRAIN_COUN", 
-                            "label": "Number of grain crop types (annually))\u00a0"
+                            "label": "Number of grain crop types (annually)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9218,7 +9218,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "NIDamCount", 
-                            "label": "Number of high hazard potential dams )\u00a0"
+                            "label": "Number of high hazard potential dams \u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9254,7 +9254,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Total_Hist", 
-                            "label": "Number of historic places)\u00a0"
+                            "label": "Number of historic places\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9298,7 +9298,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "VEGCOUNT", 
-                            "label": "Number of vegetable crop types (annually))\u00a0"
+                            "label": "Number of vegetable crop types (annually)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9355,7 +9355,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "WET_AG", 
-                            "label": "Percent agriculture in areas of high water accumulation)\u00a0"
+                            "label": "Percent agriculture in areas of high water accumulation\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9401,7 +9401,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "PAGHYD80", 
-                            "label": "Percent agriculture on hydric soil)\u00a0"
+                            "label": "Percent agriculture on hydric soil\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9436,7 +9436,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PAGC", 
-                            "label": "Percent cropland)\u00a0"
+                            "label": "Percent cropland\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9494,7 +9494,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "PDEV", 
-                            "label": "Percent developed area)\u00a0"
+                            "label": "Percent developed area\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9548,7 +9548,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "WET_URB", 
-                            "label": "Percent developed land in areas of high water accumulation)\u00a0"
+                            "label": "Percent developed land in areas of high water accumulation\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9596,7 +9596,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PWETL95", 
-                            "label": "Percent emergent herbaceous wetlands)\u00a0"
+                            "label": "Percent emergent herbaceous wetlands\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9653,7 +9653,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "PFOR", 
-                            "label": "Percent forest)\u00a0"
+                            "label": "Percent forest\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9711,7 +9711,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "PFOR90", 
-                            "label": "Percent forest and woody wetlands)\u00a0"
+                            "label": "Percent forest and woody wetlands\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9765,7 +9765,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "RFOR9030", 
-                            "label": "Percent forest and woody wetlands in stream buffer)\u00a0"
+                            "label": "Percent forest and woody wetlands in stream buffer\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9815,7 +9815,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "WET_FOR", 
-                            "label": "Percent forest in areas with high water accumulation)\u00a0"
+                            "label": "Percent forest in areas with high water accumulation\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9863,7 +9863,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "RFOR30", 
-                            "label": "Percent forest land in stream buffer)\u00a0"
+                            "label": "Percent forest land in stream buffer\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9911,7 +9911,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "PGAPSTAT1_2", 
-                            "label": "Percent GAP status 1 and 2)\u00a0"
+                            "label": "Percent GAP status 1 and 2\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -9957,7 +9957,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "PGAPSTAT123", 
-                            "label": "Percent GAP status 1, 2, and 3)\u00a0"
+                            "label": "Percent GAP status 1, 2, and 3\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10008,7 +10008,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "PGAPSTAT3", 
-                            "label": "Percent GAP status 3)\u00a0"
+                            "label": "Percent GAP status 3\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10058,7 +10058,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PIMPV", 
-                            "label": "Percent impervious area)\u00a0"
+                            "label": "Percent impervious area\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10112,7 +10112,7 @@
                                 "places": 8
                             }, 
                             "fieldName": "PIUCN_IA", 
-                            "label": "Percent IUCN status IA)\u00a0"
+                            "label": "Percent IUCN status IA\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10158,7 +10158,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PIUCN_IB", 
-                            "label": "Percent IUCN status IB)\u00a0"
+                            "label": "Percent IUCN status IB\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10207,7 +10207,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PIUCN_II", 
-                            "label": "Percent IUCN status II)\u00a0"
+                            "label": "Percent IUCN status II\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10255,7 +10255,7 @@
                                 "places": 9
                             }, 
                             "fieldName": "PIUCN_III", 
-                            "label": "Percent IUCN status III)\u00a0"
+                            "label": "Percent IUCN status III\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10305,7 +10305,7 @@
                                 "places": 6
                             }, 
                             "fieldName": "PIUCN_IV", 
-                            "label": "Percent IUCN status IV)\u00a0"
+                            "label": "Percent IUCN status IV\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10356,7 +10356,7 @@
                                 "places": 4
                             }, 
                             "fieldName": "PIUCN_V", 
-                            "label": "Percent IUCN status V)\u00a0"
+                            "label": "Percent IUCN status V\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10413,7 +10413,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PIUCN_VI", 
-                            "label": "Percent IUCN status VI)\u00a0"
+                            "label": "Percent IUCN status VI\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10461,7 +10461,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "PIUCN_ALL", 
-                            "label": "Percent land with any IUCN status)\u00a0"
+                            "label": "Percent land with any IUCN status\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10510,7 +10510,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "NATLarge", 
-                            "label": "Percent large size patches of natural land cover)\u00a0"
+                            "label": "Percent large size patches of natural land cover\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10559,7 +10559,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "NATMedium", 
-                            "label": "Percent medium size patches of natural land cover)\u00a0"
+                            "label": "Percent medium size patches of natural land cover\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10611,7 +10611,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "N_INDEX", 
-                            "label": "Percent natural land cover)\u00a0"
+                            "label": "Percent natural land cover\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10668,7 +10668,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "RNAT30", 
-                            "label": "Percent natural land cover in stream buffer)\u00a0"
+                            "label": "Percent natural land cover in stream buffer\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10723,7 +10723,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Percent_Rare_Area_Protected", 
-                            "label": "Percent of rare ecosystem forms protected)\u00a0"
+                            "label": "Percent of rare ecosystem forms protected\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10773,7 +10773,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "strlak15p", 
-                            "label": "Percent of stream and shoreline with 15% or more impervious cover within 30 meters)\u00a0"
+                            "label": "Percent of stream and shoreline with 15% or more impervious cover within 30 meters\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10825,7 +10825,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "strlak5p", 
-                            "label": "Percent of stream and shoreline with 5% or more impervious cover within 30 meters)\u00a0"
+                            "label": "Percent of stream and shoreline with 5% or more impervious cover within 30 meters\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10875,7 +10875,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "PAGP", 
-                            "label": "Percent pasture)\u00a0"
+                            "label": "Percent pasture\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10929,7 +10929,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "PctPRWAg", 
-                            "label": "Percent potentially restorable wetlands on agricultural land)\u00a0"
+                            "label": "Percent potentially restorable wetlands on agricultural land\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -10982,7 +10982,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "WET_RNG", 
-                            "label": "Percent range in areas with high water accumulation)\u00a0"
+                            "label": "Percent range in areas with high water accumulation\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11036,7 +11036,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "Percent_of_HUC_Rare", 
-                            "label": "Percent rare ecosystem forms)\u00a0"
+                            "label": "Percent rare ecosystem forms\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11085,7 +11085,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "NATSmall", 
-                            "label": "Percent small size patches of natural land cover)\u00a0"
+                            "label": "Percent small size patches of natural land cover\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11136,7 +11136,7 @@
                                 "places": 3
                             }, 
                             "fieldName": "PWETL", 
-                            "label": "Percent wetlands)\u00a0"
+                            "label": "Percent wetlands\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11192,7 +11192,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "WET_WETL", 
-                            "label": "Percent wetlands in areas with high water accumulation)\u00a0"
+                            "label": "Percent wetlands in areas with high water accumulation\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11224,7 +11224,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "ESTPOP", 
-                            "label": "Population near roadway with little to no tree buffer)\u00a0"
+                            "label": "Population near roadway with little to no tree buffer\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11286,7 +11286,7 @@
                                 "places": 3
                             }, 
                             "fieldName": "StreamDensity", 
-                            "label": "Stream density (km/km2))\u00a0"
+                            "label": "Stream density (km/km2)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11334,7 +11334,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "TotalLength", 
-                            "label": "Stream length (km))\u00a0"
+                            "label": "Stream length (km)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11368,7 +11368,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "MercuryImpLen", 
-                            "label": "Stream length impaired by mercury (km))\u00a0"
+                            "label": "Stream length impaired by mercury (km)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11411,7 +11411,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "MetalsImpLen", 
-                            "label": "Stream length impaired by metals other than mercury (km))\u00a0"
+                            "label": "Stream length impaired by metals other than mercury (km)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11454,7 +11454,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "NuisanceImpLen", 
-                            "label": "Stream length impaired by nuisance species (km))\u00a0"
+                            "label": "Stream length impaired by nuisance species (km)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11497,7 +11497,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "NutImpLen", 
-                            "label": "Stream length impaired by nutrients (km))\u00a0"
+                            "label": "Stream length impaired by nutrients (km)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11540,7 +11540,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "OrgEnrO2DepImpLen", 
-                            "label": "Stream length impaired by organic enrichment or oxygen depletion (km))\u00a0"
+                            "label": "Stream length impaired by organic enrichment or oxygen depletion (km)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11583,7 +11583,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PathogenImpLen", 
-                            "label": "Stream length impaired by pathogens (km))\u00a0"
+                            "label": "Stream length impaired by pathogens (km)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11626,7 +11626,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PesticidesImpLen", 
-                            "label": "Stream length impaired by pesticides (km))\u00a0"
+                            "label": "Stream length impaired by pesticides (km)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11669,7 +11669,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "pHImpLen", 
-                            "label": "Stream length impaired by pH, acidity, or caustic conditions (km))\u00a0"
+                            "label": "Stream length impaired by pH, acidity, or caustic conditions (km)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11712,7 +11712,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "SedTurbImpLen", 
-                            "label": "Stream length impaired by sediment or turbidity (km))\u00a0"
+                            "label": "Stream length impaired by sediment or turbidity (km)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11755,7 +11755,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "TempImpLen", 
-                            "label": "Stream length impaired for temperature (km))\u00a0"
+                            "label": "Stream length impaired for temperature (km)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11798,7 +11798,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "OtherImpLen", 
-                            "label": "Stream length with any other impairment (km))\u00a0"
+                            "label": "Stream length with any other impairment (km)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11841,7 +11841,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "BiotaImpLen", 
-                            "label": "Stream length with impaired biota (km))\u00a0"
+                            "label": "Stream length with impaired biota (km)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11901,7 +11901,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "SNFA_MEAN", 
-                            "label": "Synthetic nitrogen fertilizer application (kg N/ha/yr))\u00a0"
+                            "label": "Synthetic nitrogen fertilizer application (kg N/ha/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11935,7 +11935,7 @@
                                 "places": 9
                             }, 
                             "fieldName": "TWD_MGAL", 
-                            "label": "Thermoelectric water use (million gallons/day))\u00a0"
+                            "label": "Thermoelectric water use (million gallons/day)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -11992,7 +11992,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "TD_N_T", 
-                            "label": "Total annual nitrogen deposition (kg/ha))\u00a0"
+                            "label": "Total annual nitrogen deposition (kg/ha)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -12039,7 +12039,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "TD_OXN_T", 
-                            "label": "Total annual oxidized nitrogen deposition (kg/ha))\u00a0"
+                            "label": "Total annual oxidized nitrogen deposition (kg/ha)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -12085,7 +12085,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "TD_REDN_T", 
-                            "label": "Total annual reduced nitrogen deposition (kg/ha))\u00a0"
+                            "label": "Total annual reduced nitrogen deposition (kg/ha)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -12133,7 +12133,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "TD_S_T", 
-                            "label": "Total annual sulfur deposition (kg/ha))\u00a0"
+                            "label": "Total annual sulfur deposition (kg/ha)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -12183,7 +12183,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "AQ_TOT", 
-                            "label": "Total number of at-risk aquatic species)\u00a0"
+                            "label": "Total number of at-risk aquatic species\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -12232,7 +12232,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "TR_TOT", 
-                            "label": "Total number of at-risk terrestrial species)\u00a0"
+                            "label": "Total number of at-risk terrestrial species\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -12279,7 +12279,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "WT_TOT", 
-                            "label": "Total number of at-risk wetland species)\u00a0"
+                            "label": "Total number of at-risk wetland species\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -12313,7 +12313,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "COT_DOLS", 
-                            "label": "Value of cotton crops (dollars/yr))\u00a0"
+                            "label": "Value of cotton crops (dollars/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -12358,7 +12358,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "GRAIN_DOLS", 
-                            "label": "Value of grain crops (dollars/yr))\u00a0"
+                            "label": "Value of grain crops (dollars/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -12403,7 +12403,7 @@
                                 "places": 4
                             }, 
                             "fieldName": "VEGYIELD", 
-                            "label": "Vegetable yields (thousand tons/yr))\u00a0"
+                            "label": "Vegetable yields (thousand tons/yr)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -12459,7 +12459,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "NIDamMGAL", 
-                            "label": "Water supply from NID reservoirs (million gallons))\u00a0"
+                            "label": "Water supply from NID reservoirs (million gallons)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -12491,7 +12491,7 @@
                                 "places": 1
                             }, 
                             "fieldName": "WaterbodyArea", 
-                            "label": "Waterbody area (km2))\u00a0"
+                            "label": "Waterbody area (km2)\u00a0\u00a0"
                         }
                     ], 
                     "title": "HUC 12 ID: {HUC_12}"
@@ -14039,7 +14039,7 @@
                 "eaID": 268, 
                 "eaDfsLink": "Supplemental/USEPAEcoregions.pdf", 
                 "eaCS": "true", 
-                "eaTopic": "Ecosystem Type", 
+                "eaTopic": "Ecosystems and Ecoregions", 
                 "eaScale": "NATIONAL", 
                 "type": "DYNAMIC", 
                 "eaCA": "true", 
@@ -14057,7 +14057,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "VALUE", 
-                            "label": "GAP Ecological Systems)\u00a0"
+                            "label": "GAP Ecological Systems\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -14092,7 +14092,7 @@
                 "url": "https://gis1.usgs.gov/arcgis/rest/services/gap/GAP_Land_Cover_Ecological_Systems_Landuse/MapServer", 
                 "eaID": 269, 
                 "eaDfsLink": "Supplemental/GAPEcologicalSystems.pdf", 
-                "eaTopic": "Ecosystem Type", 
+                "eaTopic": "Ecosystems and Ecoregions", 
                 "eaScale": "NATIONAL", 
                 "type": "DYNAMIC", 
                 "eaBC": "true"

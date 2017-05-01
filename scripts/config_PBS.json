@@ -129,7 +129,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Day_Count", 
-                            "label": "Number of daycare centers)\u00a0"
+                            "label": "Number of daycare centers\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -168,7 +168,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "K12_Count", 
-                            "label": "Number of schools (K-12))\u00a0"
+                            "label": "Number of schools (K-12)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -207,7 +207,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "NonWt_Pct", 
-                            "label": "Percent population other than White, non-Hispanic)\u00a0"
+                            "label": "Percent population other than White, non-Hispanic\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -246,7 +246,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "over_70pct", 
-                            "label": "Percent population over 70 years old)\u00a0"
+                            "label": "Percent population over 70 years old\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -285,7 +285,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "under_1pct", 
-                            "label": "Percent population under 1 year old)\u00a0"
+                            "label": "Percent population under 1 year old\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -324,7 +324,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "under_13pc", 
-                            "label": "Percent population under 13 years old)\u00a0"
+                            "label": "Percent population under 13 years old\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -363,7 +363,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PLx2_Pct", 
-                            "label": "Percent population with income below twice the poverty level)\u00a0"
+                            "label": "Percent population with income below twice the poverty level\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -401,7 +401,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "NonWhite", 
-                            "label": "Population other than White, non-Hispanic)\u00a0"
+                            "label": "Population other than White, non-Hispanic\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -440,7 +440,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "over_70", 
-                            "label": "Population over 70 years old)\u00a0"
+                            "label": "Population over 70 years old\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -479,7 +479,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "under_1", 
-                            "label": "Population under 1 year old)\u00a0"
+                            "label": "Population under 1 year old\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -518,7 +518,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "under_13", 
-                            "label": "Population under 13 years old)\u00a0"
+                            "label": "Population under 13 years old\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -557,7 +557,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "PLx2_Pop", 
-                            "label": "Population with income below twice the poverty level)\u00a0"
+                            "label": "Population with income below twice the poverty level\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -595,7 +595,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "SUM_POP10", 
-                            "label": "Total Population [census block group])\u00a0"
+                            "label": "Total Population [census block group]\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -663,7 +663,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "D2B_E8MIXA", 
-                            "label": "Employment diversity)\u00a0"
+                            "label": "Employment diversity\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -703,7 +703,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "employ_rate ", 
-                            "label": "Employment Rate)\u00a0"
+                            "label": "Employment Rate\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -743,7 +743,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "D2A_JPHH", 
-                            "label": "Employment:housing ratio)\u00a0"
+                            "label": "Employment:housing ratio\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -783,7 +783,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "D5ar", 
-                            "label": "Jobs within a 45-minute drive, weighted)\u00a0"
+                            "label": "Jobs within a 45-minute drive, weighted\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -823,7 +823,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "E_HIWAGEWK", 
-                            "label": "Number of high-wage workers [work location])\u00a0"
+                            "label": "Number of high-wage workers [work location]\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -866,7 +866,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "HH", 
-                            "label": "Number of households)\u00a0"
+                            "label": "Number of households\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -906,7 +906,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "AUTOOWN0", 
-                            "label": "Number of households with zero vehicles)\u00a0"
+                            "label": "Number of households with zero vehicles\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -948,7 +948,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "R_LOWWAGEWK", 
-                            "label": "Number of low-wage workers [home location])\u00a0"
+                            "label": "Number of low-wage workers [home location]\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -989,7 +989,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "E_LOWWAGEW", 
-                            "label": "Number of low-wage workers [work location])\u00a0"
+                            "label": "Number of low-wage workers [work location]\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1030,7 +1030,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "E_MEDWAGEW", 
-                            "label": "Number of middle-wage workers [work location])\u00a0"
+                            "label": "Number of middle-wage workers [work location]\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1070,7 +1070,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "WORKERS", 
-                            "label": "Number of workers [home location])\u00a0"
+                            "label": "Number of workers [home location]\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1110,7 +1110,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "D3b", 
-                            "label": "Pedestrian-oriented street intersection density)\u00a0"
+                            "label": "Pedestrian-oriented street intersection density\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1148,7 +1148,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PERC_HS_DG", 
-                            "label": "Percent 25 Years And Over With A High School Degree)\u00a0"
+                            "label": "Percent 25 Years And Over With A High School Degree\u00a0\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1185,7 +1185,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PERC_BELOW12", 
-                            "label": "Percent 25 Years And Over With Less Than A High School Degree)\u00a0"
+                            "label": "Percent 25 Years And Over With Less Than A High School Degree\u00a0\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1222,7 +1222,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PERC_AGE_UNDER18", 
-                            "label": "Percent Age Less Than 18 Years Old)\u00a0"
+                            "label": "Percent Age Less Than 18 Years Old\u00a0\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1259,7 +1259,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PERC_AGE_UNDER5", 
-                            "label": "Percent Age Less Than 5 Years Old)\u00a0"
+                            "label": "Percent Age Less Than 5 Years Old\u00a0\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1296,7 +1296,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PERC_BPOV", 
-                            "label": "Percent Below Poverty Level)\u00a0"
+                            "label": "Percent Below Poverty Level\u00a0\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1334,7 +1334,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PERC_HOME_PRE50", 
-                            "label": "Percent Housing Units Built Before 1950)\u00a0"
+                            "label": "Percent Housing Units Built Before 1950\u00a0\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1372,7 +1372,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PCT_LINGISO", 
-                            "label": "Percent Linguistically Isolated Households)\u00a0"
+                            "label": "Percent Linguistically Isolated Households\u00a0\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1409,7 +1409,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PCT_LOWINC", 
-                            "label": "Percent Low Income Population (Less Than 2X Poverty Level) )\u00a0"
+                            "label": "Percent Low Income Population (Less Than 2X Poverty Level) \u00a0\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1447,7 +1447,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PERC_MINOR", 
-                            "label": "Percent Minority)\u00a0"
+                            "label": "Percent Minority\u00a0\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1485,7 +1485,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "PCT_AO0", 
-                            "label": "Percent of households with zero vehicles)\u00a0"
+                            "label": "Percent of households with zero vehicles\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1523,7 +1523,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "E_PCTLOWWA", 
-                            "label": "Percent low-wage workers [work location])\u00a0"
+                            "label": "Percent low-wage workers [work location]\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1564,7 +1564,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "BikeWalk", 
-                            "label": "Percent of workers who bike or walk to work)\u00a0"
+                            "label": "Percent of workers who bike or walk to work\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1601,7 +1601,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Carpool", 
-                            "label": "Percent of workers who carpool to work)\u00a0"
+                            "label": "Percent of workers who carpool to work\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1638,7 +1638,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Public", 
-                            "label": "Percent of workers who commute to work by public transportation)\u00a0"
+                            "label": "Percent of workers who commute to work by public transportation\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1674,7 +1674,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Drivealone", 
-                            "label": "Percent of workers who drive to work alone)\u00a0"
+                            "label": "Percent of workers who drive to work alone\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1711,7 +1711,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "Home", 
-                            "label": "Percent of workers who work from home)\u00a0"
+                            "label": "Percent of workers who work from home\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1748,7 +1748,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "P_30_60", 
-                            "label": "Percent of workers with 30 - 60 minutes travel time to work)\u00a0"
+                            "label": "Percent of workers with 30 - 60 minutes travel time to work\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1785,7 +1785,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "P_60_90", 
-                            "label": "Percent of workers with 60 - 90 minutes travel time to work)\u00a0"
+                            "label": "Percent of workers with 60 - 90 minutes travel time to work\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1822,7 +1822,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "P_more_90", 
-                            "label": "Percent of workers with greater than 90 minutes travel time to work)\u00a0"
+                            "label": "Percent of workers with greater than 90 minutes travel time to work\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1859,7 +1859,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "P_less_30", 
-                            "label": "Percent of workers with less than 30 minutes travel time to work)\u00a0"
+                            "label": "Percent of workers with less than 30 minutes travel time to work\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1896,7 +1896,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "PERC_AGE_OVER64", 
-                            "label": "Percent Population Age Greater Than 64 Years Old)\u00a0"
+                            "label": "Percent Population Age Greater Than 64 Years Old\u00a0\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1934,7 +1934,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "POP_DEN", 
-                            "label": "Population Density (per square mile))\u00a0"
+                            "label": "Population Density (per square mile)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1970,7 +1970,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "AMERIND", 
-                            "label": "Population of American Indian and Alaskan Native)\u00a0"
+                            "label": "Population of American Indian and Alaskan Native\u00a0\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -2009,7 +2009,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "AMERIND_BPOV", 
-                            "label": "Population of American Indian and Alaskan Native Below Poverty Level)\u00a0"
+                            "label": "Population of American Indian and Alaskan Native Below Poverty Level\u00a0\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -2048,7 +2048,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "D1A", 
-                            "label": "Residential density (hu/ac))\u00a0"
+                            "label": "Residential density (hu/ac)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2087,7 +2087,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "EMPTOT", 
-                            "label": "Total employment)\u00a0"
+                            "label": "Total employment\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2127,7 +2127,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "COUNTHU10", 
-                            "label": "Total housing units)\u00a0"
+                            "label": "Total housing units\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2166,7 +2166,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "TOTALPOP", 
-                            "label": "Total Population)\u00a0"
+                            "label": "Total Population\u00a0\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -2203,7 +2203,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "D4c", 
-                            "label": "Transit service per hour during evening peak)\u00a0"
+                            "label": "Transit service per hour during evening peak\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2241,7 +2241,7 @@
                                 "places": 4
                             }, 
                             "fieldName": "D2C_WREMIX", 
-                            "label": "Workers per job  - Equilibrium Index)\u00a0"
+                            "label": "Workers per job  - Equilibrium Index\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2281,7 +2281,7 @@
                                 "places": 0
                             }, 
                             "fieldName": "D5ae", 
-                            "label": "Working age population within a 45-minute drive, weighted)\u00a0"
+                            "label": "Working age population within a 45-minute drive, weighted\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2320,7 +2320,7 @@
                                 "places": 2
                             }, 
                             "fieldName": "D1C", 
-                            "label": "Employment density (jobs/ac))\u00a0"
+                            "label": "Employment density (jobs/ac)\u00a0\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
