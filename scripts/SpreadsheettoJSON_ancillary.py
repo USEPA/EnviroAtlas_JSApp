@@ -69,7 +69,7 @@ def main(_argv):
         for rowID in rowsToKeep:
             name = inputWorksheet.cell(key["name"]+rowID).value
             layerJSON = {"opacity": 0.5,
-                        "visible": "false"}
+                        "visible": False}
             if (inputWorksheet.cell(key["serviceType"]+rowID).value == "feature"):
                 layerJSON["type"] ="FEATURE"
                 layerJSON["autorefresh"] = 0
@@ -93,7 +93,7 @@ def main(_argv):
                 cellValue = inputWorksheet.cell(key[elem]+rowID).value
                 if cellValue != None:
                     if cellValue == 'x':
-                        cellValue = 'true'
+                        cellValue = True
                     layerJSON[elem] = cellValue
             arrayList = [("eaTags",","),("eaBCSDD",";")]
             for elem,separator in arrayList:
