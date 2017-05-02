@@ -225,7 +225,9 @@ define([
 		                if(layer.hasOwnProperty('showLabels')){
 		                  lOptions.showLabels = true;
 		                }
-						
+	                    if (layer.hasOwnProperty('opacity')) {
+	                        lOptions.opacity = layer.opacity; // 1.0 has no transparency; 0.0 is 100% transparent
+	                    }						
 						var lLayer;
 	
 		                if(layer.hasOwnProperty('eaLyrNum')){
