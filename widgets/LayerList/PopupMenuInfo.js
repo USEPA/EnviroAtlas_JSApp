@@ -539,9 +539,14 @@ define([
 	                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
 						        bMetadataAvailale = true;                    		
 	                    	} else {
+	                    		if (window.communitySelected == window.strAllCommunity){
+		                            window.open(window.communityMetadataDic[layer.eaMetadata][window.communitySelected]);
+							        bMetadataAvailale = true;		                    			
+	                    		} else {
 	                        	metaDataID = window.communityMetadataDic[layer.eaMetadata][window.communitySelected];
 	                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
 						        bMetadataAvailale = true;	                    		
+	                    		}
 	                    	}     		
 
 					    }
