@@ -1042,6 +1042,9 @@ define([
             		if(currentMetadataCommunityIndex.hasOwnProperty(key)) {
             			singleCommunityMetadataDic[key] = currentMetadataCommunityIndex[key];
             		}
+	        		if(currentMetadataCommunityIndex.hasOwnProperty(window.strAllCommunity)) {
+	        			singleCommunityMetadataDic[window.strAllCommunity] = currentMetadataCommunityIndex[window.strAllCommunity];
+	        		}            		
             	}
 
             	window.communityMetadataDic[currentMetadataCommunityIndex.MetaID_Community] = singleCommunityMetadataDic;
