@@ -197,7 +197,7 @@ define([
         for (i in selectedLayerArray) {
             for (index = 0, len = layersTobeAdded.length; index < len; ++index) {
                 layer = layersTobeAdded[index];
-                if ((selectedLayerArray[i]) == (layer.eaID.toString())) {
+                if (layer.hasOwnProperty('eaID') && ((selectedLayerArray[i]) == (layer.eaID.toString()))) {
                     var lLayer;
                     var lOptions = {};
                     if (layer.hasOwnProperty('opacity')) {
