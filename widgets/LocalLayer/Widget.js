@@ -270,6 +270,7 @@ define([
                                 evt.layer.visibleLayers.splice(evt.layer.visibleLayers.indexOf(layerId), 1);
                             });
                         });
+                        lLayer.id = window.layerIdPrefix + layer.eaID.toString();
                         this._viewerMap.addLayer(lLayer);
                         this._viewerMap.setInfoWindowOnClick(true);
                     } else if (layer.type.toUpperCase() === 'FEATURE') {
