@@ -82,7 +82,7 @@ define(["./ConfigManager",
     //window.topicDic["Climate and Weather"] = "CaW"; Removed/renamed in March 2017
     window.topicDic["Crop Productivity"] = "CP";
     window.topicDic["Ecosystem Markets"] = "EM";
-    window.topicDic["Ecosystem Type"] = "ET";
+    window.topicDic["Ecosystems and Ecoregions"] = "EaE";
     window.topicDic["Energy Potential"] = "EP";
     window.topicDic["Engagement with Outdoors"] = "EwO";
     window.topicDic["Health and Economic Outcomes"] = "HaEO";
