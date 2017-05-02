@@ -14038,7 +14038,7 @@
                 "url": "https://geodata.epa.gov/arcgis/rest/services/ORD/USEPA_Ecoregions_Level_III_and_IV/MapServer", 
                 "eaID": 268, 
                 "eaDfsLink": "Supplemental/USEPAEcoregions.pdf", 
-                "eaCS": true, 
+                "eaCS": "true", 
                 "eaTopic": "Ecosystems and Ecoregions", 
                 "eaScale": "NATIONAL", 
                 "type": "DYNAMIC", 
