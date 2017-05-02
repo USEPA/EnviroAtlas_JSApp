@@ -5,10 +5,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Health and Economic Outcomes", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -49,10 +49,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Health and Economic Outcomes", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -93,10 +93,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Land Cover: Type", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -137,10 +137,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Health and Economic Outcomes", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -181,10 +181,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Health and Economic Outcomes", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 3
@@ -225,10 +225,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Weather and Climate", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -270,10 +270,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Weather and Climate", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -315,10 +315,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Air", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -362,10 +362,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Water Use", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -403,10 +403,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Engagement with Outdoors", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -452,10 +452,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Land Cover: Type", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -515,10 +515,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -551,10 +551,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Engagement with Outdoors", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -617,10 +617,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -649,10 +649,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Engagement with Outdoors", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -692,10 +692,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Air", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -739,10 +739,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Air", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -786,10 +786,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Air", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -833,10 +833,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Land Cover: Type", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -878,10 +878,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Air", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 4
@@ -925,10 +925,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Land Cover: Type", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -990,10 +990,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -1044,10 +1044,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -1096,10 +1096,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -1145,10 +1145,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -1194,10 +1194,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -1247,10 +1247,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -1279,10 +1279,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Near-Road Environments", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -1328,10 +1328,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Near-Road Environments", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -1377,10 +1377,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Engagement with Outdoors", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -1423,10 +1423,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Engagement with Outdoors", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -1470,10 +1470,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Engagement with Outdoors", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -1517,10 +1517,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Near-Road Environments", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -1561,10 +1561,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Engagement with Outdoors", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -1608,10 +1608,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Air", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -1655,10 +1655,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Air", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -1702,10 +1702,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Air", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -1749,10 +1749,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Water Supply, Runoff, and Flow", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -1818,10 +1818,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -1867,10 +1867,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -1920,10 +1920,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -1971,10 +1971,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -2023,10 +2023,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -2074,10 +2074,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -2128,10 +2128,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -2165,10 +2165,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Water Supply, Runoff, and Flow", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -2219,10 +2219,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Water", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -2262,10 +2262,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Water", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -2305,10 +2305,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Water", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 3
@@ -2352,10 +2352,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Water", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -2396,10 +2396,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Water", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -2440,10 +2440,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Water", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -2484,10 +2484,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Water", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -2528,10 +2528,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Water", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -2574,10 +2574,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Water", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -2617,10 +2617,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Water", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -2660,10 +2660,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Water", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 4
@@ -2707,10 +2707,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Water", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -2751,10 +2751,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Water", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -2795,10 +2795,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Water", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -2839,10 +2839,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Water", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -2883,10 +2883,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Pollutant Reduction: Water", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -2929,10 +2929,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Engagement with Outdoors", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -2976,10 +2976,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Engagement with Outdoors", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3020,10 +3020,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Engagement with Outdoors", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3064,10 +3064,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Near-Road Environments", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3108,10 +3108,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Near-Road Environments", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3152,10 +3152,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Near-Road Environments", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3196,10 +3196,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Engagement with Outdoors", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3242,10 +3242,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Health and Economic Outcomes", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -3304,10 +3304,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3336,10 +3336,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Carbon Storage", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3379,10 +3379,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Carbon Storage", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3435,10 +3435,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3484,10 +3484,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3537,10 +3537,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3574,10 +3574,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Health and Economic Outcomes", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3617,10 +3617,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Health and Economic Outcomes", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -3660,10 +3660,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Carbon Storage", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3705,10 +3705,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Carbon Storage", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3750,10 +3750,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Health and Economic Outcomes", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3793,10 +3793,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Health and Economic Outcomes", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3836,10 +3836,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Health and Economic Outcomes", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3879,10 +3879,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Health and Economic Outcomes", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -3922,10 +3922,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Health and Economic Outcomes", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -5029,10 +5029,10 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -5095,10 +5095,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -5143,10 +5143,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -5188,10 +5188,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -5235,10 +5235,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -5282,10 +5282,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -5329,10 +5329,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -5376,10 +5376,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -5423,10 +5423,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -5457,10 +5457,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Energy Potential", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -5500,10 +5500,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Energy Potential", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -5543,10 +5543,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Energy Potential", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -5602,10 +5602,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -5640,10 +5640,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Engagement with Outdoors", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -5685,10 +5685,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Engagement with Outdoors", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -5728,10 +5728,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Carbon Storage", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -5772,10 +5772,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Carbon Storage", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -5816,10 +5816,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Crop Productivity", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 5
@@ -5877,10 +5877,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -5908,10 +5908,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Water Use", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 4
@@ -5950,10 +5950,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Engagement with Outdoors", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -5995,10 +5995,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Crop Productivity", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 5
@@ -6039,10 +6039,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Crop Productivity", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 4
@@ -6083,10 +6083,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Crop Productivity", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -6127,10 +6127,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Crop Productivity", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -6171,10 +6171,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Crop Productivity", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -6215,10 +6215,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Crop Productivity", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -6259,10 +6259,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Water Use", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 3
@@ -6319,10 +6319,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -6353,10 +6353,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Species: Other", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -6408,10 +6408,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -6456,10 +6456,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -6501,10 +6501,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -6548,10 +6548,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -6601,10 +6601,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -6633,10 +6633,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Species: Other", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -6692,10 +6692,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -6739,10 +6739,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -6786,10 +6786,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -6833,10 +6833,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -6880,10 +6880,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -6912,10 +6912,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Species: Other", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -6970,10 +6970,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -7017,10 +7017,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -7062,10 +7062,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -7109,10 +7109,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -7141,10 +7141,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Species: Other", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -7196,10 +7196,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -7244,10 +7244,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -7289,10 +7289,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -7336,10 +7336,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -7389,10 +7389,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -7421,10 +7421,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Species: Other", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -7479,10 +7479,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -7526,10 +7526,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -7573,10 +7573,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -7620,10 +7620,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -7667,10 +7667,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -7699,10 +7699,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Species: Other", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -7757,10 +7757,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -7804,10 +7804,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -7849,10 +7849,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -7896,10 +7896,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -7928,10 +7928,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Engagement with Outdoors", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -7989,10 +7989,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8020,10 +8020,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Species: Other", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8077,10 +8077,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8126,10 +8126,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8172,10 +8172,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8220,10 +8220,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8273,10 +8273,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8305,10 +8305,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Species: Other", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8365,10 +8365,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8413,10 +8413,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8461,10 +8461,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8509,10 +8509,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8557,10 +8557,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8589,10 +8589,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Species: Other", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8649,10 +8649,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8697,10 +8697,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8743,10 +8743,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8791,10 +8791,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -8840,10 +8840,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -8891,10 +8891,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -8938,10 +8938,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -8983,10 +8983,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -9028,10 +9028,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -9073,10 +9073,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -9105,10 +9105,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Crop Productivity", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -9149,10 +9149,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Crop Productivity", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -9209,10 +9209,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -9245,10 +9245,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Engagement with Outdoors", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -9289,10 +9289,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Crop Productivity", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -9346,10 +9346,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -9392,10 +9392,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -9427,10 +9427,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Land Cover: Type", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -9485,10 +9485,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -9539,10 +9539,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -9587,10 +9587,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -9644,10 +9644,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -9702,10 +9702,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -9756,10 +9756,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -9806,10 +9806,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -9854,10 +9854,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -9902,10 +9902,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -9948,10 +9948,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -9999,10 +9999,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -10049,10 +10049,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -10103,10 +10103,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 8
@@ -10149,10 +10149,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -10198,10 +10198,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -10246,10 +10246,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 9
@@ -10296,10 +10296,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 6
@@ -10347,10 +10347,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 4
@@ -10404,10 +10404,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -10452,10 +10452,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -10501,10 +10501,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -10550,10 +10550,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -10602,10 +10602,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -10659,10 +10659,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -10714,10 +10714,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -10764,10 +10764,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -10816,10 +10816,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -10866,10 +10866,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -10920,10 +10920,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -10973,10 +10973,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -11027,10 +11027,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -11076,10 +11076,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -11127,10 +11127,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 3
@@ -11183,10 +11183,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -11215,10 +11215,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Near-Road Environments", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -11277,10 +11277,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 3
@@ -11325,10 +11325,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -11359,10 +11359,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Impaired Waters", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -11402,10 +11402,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Impaired Waters", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -11445,10 +11445,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Impaired Waters", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -11488,10 +11488,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Impaired Waters", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -11531,10 +11531,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Impaired Waters", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -11574,10 +11574,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Impaired Waters", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -11617,10 +11617,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Impaired Waters", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -11660,10 +11660,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Impaired Waters", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -11703,10 +11703,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Impaired Waters", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -11746,10 +11746,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Impaired Waters", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -11789,10 +11789,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Impaired Waters", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -11832,10 +11832,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Impaired Waters", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -11892,10 +11892,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -11926,10 +11926,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Water Use", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 9
@@ -11983,10 +11983,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -12030,10 +12030,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -12076,10 +12076,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -12124,10 +12124,10 @@
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -12174,10 +12174,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -12223,10 +12223,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -12270,10 +12270,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -12304,10 +12304,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Crop Productivity", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -12349,10 +12349,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Crop Productivity", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
@@ -12394,10 +12394,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Crop Productivity", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 4
@@ -12450,10 +12450,10 @@
                 "type": "FEATURE", 
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
@@ -12482,10 +12482,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "Water Supply, Runoff, and Flow", 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 1
@@ -12525,10 +12525,10 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "fieldName": "Value", 
                             "label": "Potential Wetland Area"
                         }
@@ -12567,10 +12567,10 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "fieldName": "Value", 
                             "label": "Potentially Restorable Wetlands on Agricultural Land"
                         }
@@ -12607,10 +12607,10 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "fieldName": "Value", 
                             "label": "Rare Ecosystems"
                         }
@@ -13499,10 +13499,10 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "fieldName": "VALUE", 
                             "label": "Land_Cover_2011_CONUS (NLCD_2011, National Land Cover Database (NLCD)))\u00a0"
                         }
@@ -13564,10 +13564,10 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "fieldName": "VALUE", 
                             "label": "Land_Cover_1992 (NLCD_1992, National Land Cover Database (NLCD)))\u00a0"
                         }
@@ -13629,10 +13629,10 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "fieldName": "VALUE", 
                             "label": "Land_Cover_2001_CONUS (NLCD_2001, National Land Cover Database (NLCD)))\u00a0"
                         }
@@ -13694,10 +13694,10 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "fieldName": "VALUE", 
                             "label": "Land_Cover_2006_CONUS (NLCD_2006, National Land Cover Database (NLCD)))\u00a0"
                         }
@@ -13759,10 +13759,10 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "fieldName": "drclassdcd", 
                             "label": "Soils Drainage Class - dominant condition)\u00a0"
                         }
@@ -14038,7 +14038,7 @@
                 "url": "https://geodata.epa.gov/arcgis/rest/services/ORD/USEPA_Ecoregions_Level_III_and_IV/MapServer", 
                 "eaID": 268, 
                 "eaDfsLink": "Supplemental/USEPAEcoregions.pdf", 
-                "eaCS": "true", 
+                "eaCS": true, 
                 "eaTopic": "Ecosystems and Ecoregions", 
                 "eaScale": "NATIONAL", 
                 "type": "DYNAMIC", 
@@ -14048,10 +14048,10 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": "false", 
+                    "showAttachments": false, 
                     "fieldInfos": [
                         {
-                            "visible": "true", 
+                            "visible": true, 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
