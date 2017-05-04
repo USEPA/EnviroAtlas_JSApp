@@ -226,12 +226,13 @@ define([
                             lLayer.title = layer.name;
                             lLayer.noservicename = true;
                         }
-                        if (layer.popup) {
+                        if (layer.layers) {
                             var finalInfoTemp = {};
-                            array.forEach(layer.popup.infoTemplates, function (_infoTemp) {
+                            array.forEach(layer.layers, function (subLayer) {
+                                var _infoTemp = subLayer.popup;
                                 var popupInfo = {};
                                 popupInfo.title = _infoTemp.title;
-                                alert("popupInfo.title:" + popupInfo.title);
+                                //alert("popupInfo.title:" + popupInfo.title);
                                 if (_infoTemp.description) {
                                     popupInfo.description = _infoTemp.description;
                                 } else {
@@ -241,7 +242,7 @@ define([
                                     popupInfo.fieldInfos = _infoTemp.fieldInfos;
                                 }
                                 var _popupTemplate1 = new PopupTemplate(popupInfo);
-                                finalInfoTemp[_infoTemp.layerId] = {
+                                finalInfoTemp[subLayer.id] = {
                                     infoTemplate: _popupTemplate1
                                 };
                             });
