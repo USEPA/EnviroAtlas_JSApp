@@ -995,7 +995,7 @@ widget:jimu-w
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 14px 14px 14px 14px;
+  /*padding: 14px 14px 14px 14px;*/
   background-color: white;
 }
 .jimu-widget-icon{}

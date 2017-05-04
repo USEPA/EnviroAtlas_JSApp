@@ -84,10 +84,44 @@ define([
 	        }
 	
 	        var arrLayers = this.config.layers.layer;
-	
+			
+			// We can add this to the spreadsheet!!!
 	        for (index = 0, len = arrLayers.length; index < len; ++index) {
-	        //for (index = 0, len = 1; index < len; ++index) {
-	            layer = arrLayers[index];                          
+	        	layer = arrLayers[index];
+	        	layer['eaBoundaryType'] = 'Political Boundaries';
+	        	if (layer.eaTags.indexOf('hydrology') > -1) {
+	        		layer['eaBoundaryType'] = 'Hydrologic Features';
+	        	};
+	        };
+	        // Delete above section if we add eaBoundaryType to spreadsheet and arrLayers!
+
+	        // Sort by boundary type and name
+	        arrLayers = arrLayers.sort(function(a,b){
+	        	return a.eaBoundaryType + a.name > b.eaBoundaryType + b.name ?1:-1;
+	        });
+
+	        boundary_types = [];
+
+	        for (index = 0, len = arrLayers.length; index < len; ++index) {	
+	        	layer = arrLayers[index];   
+
+	        	// Create Header if first layer in topic.
+	        	if (boundary_types.indexOf(layer.eaBoundaryType) == -1) {
+	        		boundary_types.push(layer.eaBoundaryType);
+	        		var newRow   = tableRef.insertRow(tableRef.rows.length);
+	        		newRow.className = 'topicHeader_noCollapse';
+	        		
+        			var newHeaderCell  = newRow.insertCell(0);
+        			newHeaderCell.colSpan = 3;
+        			newHeaderCell.innerHTML = layer.eaBoundaryType;   
+        			
+        			newRow.appendChild(newHeaderCell);
+        			var blankrow = tableRef.insertRow(tableRef.rows.length);
+        			var blankcell = blankrow.insertCell(0);
+        			blankcell.style.height = '3px';
+        			blankrow.appendChild(blankcell);
+        		}; 
+	        	  
 	            var indexCheckbox = 0;
 	
 	            if(layer.hasOwnProperty('eaID')) {
@@ -98,7 +132,7 @@ define([
 	                    	window.allLayerNumber.push(eaID);
 	                    }
 				       	var newRow   = tableRef.insertRow(tableRef.rows.length);
-				       	
+
 				       	var newCheckboxCell  = newRow.insertCell(0);
 				       	newCheckboxCell.style.verticalAlign = 'top';
 						var checkbox = document.createElement('input');
@@ -114,6 +148,7 @@ define([
 	
 				       	var newTitleCell  = newRow.insertCell(1);
 				       	newTitleCell.style.paddingBottom = '12px';
+				       	
 						var title = document.createElement('label');
 						title.innerHTML = layer.name;    
 						newTitleCell.appendChild(title); 
