@@ -217,7 +217,7 @@
                 "position": {
                     "left": 445,
                     "top": 5,
-                    "width": 325,
+                    "width": 350,
                     "height": 265,
                     "relativeTo": "map"
                 },
@@ -248,7 +248,7 @@
                     "left": 695,
                     "top": -40,
                     "width": 425,
-                    "height": 480,
+                    "height": 200,
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
@@ -800,7 +800,7 @@
                     "position": {
                         "left": 7,
                         "top": 280,
-                        "width": 325,
+                        "width": 350,
                         "height": 265,
                         "relativeTo": "map"
                     },
@@ -831,7 +831,7 @@
                         "left": 695,
                         "top": -40,
                         "width": 425,
-                        "height": 480,
+                        "height": 200,
                         "relativeTo": "map"
                     },
                     "placeholderIndex": 1,
