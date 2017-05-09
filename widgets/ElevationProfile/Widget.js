@@ -976,7 +976,8 @@ define([
           return valueMeters;
         } else {
           var distanceMiles = (valueMeters / this.measureTool._unitDictionary[this.measureTool._unitStrings.esriMeters]);
-          return (distanceMiles * this.measureTool._unitDictionary[displayUnits]);
+          //return (distanceMiles * this.measureTool._unitDictionary[displayUnits]);
+          return (distanceMiles/this.measureTool._unitDictionary[displayUnits]);
         }
       },
 
