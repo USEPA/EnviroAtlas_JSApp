@@ -420,14 +420,14 @@ define([
                             lLayer.title = layer.name;
                             lLayer.noservicename = true;
                         }
-                        if (layer.popup) {
+                        if (layer.layers) {
                             var finalInfoTemp2 = {};
-                            array.forEach(layer.popup.infoTemplates, function (_infoTemp) {
+                            array.forEach(layer.layers, function (subLayer) {
+                                var _infoTemp = subLayer.popup;
                                 var popupInfo = {};
                                 popupInfo.title = _infoTemp.title;
-                                alert("_infoTemp.title:" + _infoTemp.title);
-                                if (_infoTemp.content) {
-                                    popupInfo.description = _infoTemp.content;
+                                if (_infoTemp.description) {
+                                    popupInfo.description = _infoTemp.description;
                                 } else {
                                     popupInfo.description = null;
                                 }
@@ -435,34 +435,14 @@ define([
                                     popupInfo.fieldInfos = _infoTemp.fieldInfos;
                                 }
                                 var _popupTemplate2 = new PopupTemplate(popupInfo);
-                                finalInfoTemp2[_infoTemp.layerId] = {
+                                finalInfoTemp2[subLayer.id] = {
                                     infoTemplate: _popupTemplate2
                                 };
                             });
-                            lLayer.setInfoTemplates(finalInfoTemp2);
+                            lLayer.setInfoTemplates(finalInfoTemp);
                         }
                         this._viewerMap.addLayer(lLayer);
                     }
-                    /*else if(layer.type.toUpperCase() === 'BASEMAP'){
-                    var bmLayers = array.map(layer.layers.layer, function(bLayer){
-                    var bmLayerObj = {url:bLayer.url, isReference: false};
-                    if(bLayer.displayLevels){
-                    bmLayerObj.displayLevels = bLayer.displayLevels;
-                    }
-                    if(layer.hasOwnProperty('opacity')){
-                    bmLayerObj.opacity = bLayer.opacity;
-                    }
-                    return new BasemapLayer(bmLayerObj);
-                    });
-                    var _newBasemap = new Basemap({id:'defaultBasemap', title:layer.name, layers:bmLayers});
-                    var _basemapGallery = new BasemapGallery({
-                    showArcGISBasemaps: false,
-                    map: this._viewerMap
-                    }, '_tmpBasemapGallery');
-                    _basemapGallery.add(_newBasemap);
-                    _basemapGallery.select('defaultBasemap');
-                    _basemapGallery.destroy();
-                    }*/
                 }
             }
         }
