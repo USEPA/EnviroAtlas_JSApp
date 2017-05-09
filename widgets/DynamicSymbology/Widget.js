@@ -150,7 +150,9 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 
 		  //Set layers
 		  geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
-		  geoenrichedFeatureLayer.setDefinitionExpression("CommST = '" + window.communitySelected + "'");
+		  if(window.communitySelected != "AllCommunity"){
+			  geoenrichedFeatureLayer.setDefinitionExpression("CommST = '" + window.communitySelected + "'");
+		  }
 		  featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
 
 		  //set store original renderer
@@ -254,28 +256,21 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		  //set original renderer button
 		  var origRendBtn = dom.byId('originalBtn');
 		  var originalHandler = on(origRendBtn,"click", function(){
-			  _scheme = null;
-			  var defaultRenderer = new ClassBreaksRenderer(currentSymbology[_layerID]['origRenderer']);
-			  //set properties
-			  _ClassificationMethod = defaultRenderer.classificationMethod;
-			  _fieldName = defaultRenderer.attributeField;
-			  _NumberOfClasses = defaultRenderer.infos.length;
 
-			  dynamicSymbology.isSmartMapping = false;
-			  //set classification drop
-			  dynamicSymbology.classSelect.set('value', _ClassificationMethod);
-
-			  dynamicSymbology.isSmartMapping = false;
-			  //set num of classes spinner
-			  dynamicSymbology.numberClasses.set('value', _NumberOfClasses);
-			  //set slider properties
-			  dynamicSymbology.slider.set('breakInfos',defaultRenderer.infos);
-			  dynamicSymbology.slider.set('classificationMethod',_ClassificationMethod);
-
-			  //dynamicSymbology.isSmartMapping = false;
-			  dynamicSym._getHistoAndStats(defaultRenderer);
+			  var res = _layerID.split("_");
+			  lyrTobeUpdated = self.map.getLayer(_layerID);
+			  if (window.communitySelected != window.strAllCommunity) {
+				  $.getJSON( 'configs/CommunitySymbology/' + window.communitySelected + '_JSON_Symbol/Nulls/' + window.communitySelected + '_' + window.hashAttribute[res[1]] + ".json", function( data ) {
+					  var defaultRenderer = new ClassBreaksRenderer(data);
+					  self._resetElements(defaultRenderer);
+				  })
+			  }else {
+				  $.getJSON( 'configs/CommunitySymbology/' + 'AllCommunities' + '_JSON_Symbol/Nulls/' + 'CombComm' + '_' + window.hashAttribute[res[1]] + ".json", function( data ) {
+					  var defaultRenderer = new ClassBreaksRenderer(data);
+					  self._resetElements(defaultRenderer);
+				  })
+			  }
 		  });
-
 	  });
 
 		//On Classification method change
@@ -301,6 +296,28 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 				dynamicSymbology.isSmartMapping = true;
 			}
 		});
+	},
+
+	_resetElements: function(defaultRenderer){
+		var dynamicSym = this;
+		//set properties
+		_ClassificationMethod = defaultRenderer.classificationMethod;
+		_fieldName = defaultRenderer.attributeField;
+		_NumberOfClasses = defaultRenderer.infos.length;
+
+		dynamicSymbology.isSmartMapping = false;
+		//set classification drop
+		dynamicSymbology.classSelect.set('value', _ClassificationMethod);
+
+		dynamicSymbology.isSmartMapping = false;
+		//set num of classes spinner
+		dynamicSymbology.numberClasses.set('value', _NumberOfClasses);
+		//set slider properties
+		dynamicSymbology.slider.set('breakInfos',defaultRenderer.infos);
+		dynamicSymbology.slider.set('classificationMethod',_ClassificationMethod);
+
+		dynamicSymbology.isSmartMapping = false;
+		dynamicSym._getHistoAndStats(defaultRenderer);
 	},
 
 	_getStyle: function(){

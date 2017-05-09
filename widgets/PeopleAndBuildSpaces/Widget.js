@@ -125,20 +125,20 @@ define([
 								}
 								//Finsih add header for each topic	
 
-
-
-
-
+						       	
 						       	var newRow   = tableRef.insertRow(tableRef.rows.length);
 						       	if (hiderows[eaTopic] == false) {
 						       		//newRow.style.color = 'red';
 						       		newRow.style.display = 'none';
 					      	 	}
-						       	//newRow.style.height = "38px";
 						       	var newCheckboxCell  = newRow.insertCell(0);
 						       	newCheckboxCell.style.verticalAlign = 'top';
+						       	newCheckboxCell.style.width = '13px';
 								var checkbox = document.createElement('input');
 								checkbox.type = "checkbox";
+								checkbox.style.position = 'relative';
+								checkbox.style.top = '1px';
+								
 						
 						        chkboxId = window.chkSelectableLayer + eaID;
 						        chkIdPBSDictionary[chkboxId] = layer;  						        
@@ -148,15 +148,11 @@ define([
 						        newCheckboxCell.appendChild(checkbox);    			              
 			
 						       	var newTitleCell  = newRow.insertCell(1);
-						       	newTitleCell.style.paddingBottom = "12px"
-								var title = document.createElement('label');
-								title.innerHTML = layer.name;  
-								title.title = layer.eaDescription;  
-								newTitleCell.appendChild(title); 		
-								
-								// end of adding the category icons	
+						       	newTitleCell.style.verticalAlign = 'top';
+								newTitleCell.style.width = "100%";
+								newTitleCell.innerHTML = layer.name;  
+								newTitleCell.title = layer.eaDescription; 
 
-								
 								var newButtonInfoCell  = newRow.insertCell(2);
 								var buttonInfo = document.createElement('input');
 								buttonInfo.type = "button";
@@ -164,17 +160,44 @@ define([
 								buttonInfo.name = buttonInfoId;
 								buttonInfo.id = buttonInfoId;
 								buttonInfo.className = 'i-button'
-
 								buttonInfo.style.lineHeight = "3px";//to set the text vertically center
-								
+			
 								newButtonInfoCell.style.verticalAlign = "top";//this will put checkbox on first line
-						        newButtonInfoCell.appendChild(buttonInfo); 
+								newButtonInfoCell.appendChild(buttonInfo); 
+						        
 						        hashFactsheetLinkPBS[buttonInfoId] =  "N/A";
 						        hashLayerNameLinkPBS[buttonInfoId] =  layer.name;
 						        if (layer.hasOwnProperty('eaDfsLink')) {
 						        	hashFactsheetLinkPBS[buttonInfoId] = layer.eaDfsLink;
 						        }
-						        
+
+						        var newRow   = tableRef.insertRow(tableRef.rows.length);
+
+						        if (hiderows[eaTopic] == false) {
+						       		newRow.style.display = 'none';
+					      	 	}
+
+							    cell1 = newRow.insertCell(0);
+							    cell1.style.width = '13px';
+
+							    cell2 = newRow.insertCell(1);
+							    cell2.style.height = '20px';
+							    cell2.style.paddingBottom = '10px';
+
+							    
+								var scale_icon = document.createElement("div");
+								// For now.  Lets adjust this in the spreadsheet
+								if (layer.eaScale == "NATIONAL") {
+									scale_icon.title = "National Dataset";
+								} else {
+									scale_icon.title = "Community Dataset";
+								}
+								scale_icon.style.width = '20px';
+								scale_icon.style.height = '20px';
+								scale_icon.setAttribute("class", layer.eaScale);
+								
+								cell2.appendChild(scale_icon);
+								newRow.appendChild(cell2);
 			
 						        document.getElementById(buttonInfoId).onclick = function(e) {
 							        if (hashFactsheetLinkPBS[this.id] == "N/A") {
@@ -187,8 +210,10 @@ define([
 						
 							        } else {
 							        	window.open(window.dataFactSheet + hashFactsheetLinkPBS[this.id]);
-							        }		      
+							        }	
+
 							    };    //end of inserting datafactsheet icon
+
 							}	    
 					    }// end of if (eaID.trim() != "")
 	                }// end of if(layer.hasOwnProperty('eaID'))           
@@ -301,6 +326,7 @@ define([
 				checkbox.id = chkboxId;
 				checkbox.className ="cmn-toggle-PBS cmn-toggle-PBS-round-flat";
 		        newCheckboxCell.appendChild(checkbox);    
+		        newCheckboxCell.style.paddingRight = "3px";
 		        var label = document.createElement('label');
 		        label.setAttribute("for",chkboxId);
 				label.innerHTML = "";
