@@ -190,6 +190,59 @@ define([
         currentCommunity = commName;
         return "<b>" + window.communityDic[commName] + "</b><br /><button id = 'testButton' dojoType='dijit.form.Button' onclick='self.selectCurrentComminity() '>Select this community</button>";
     };
+
+    var addCommunityBoundaries = function() {
+    	var lyrBoundaryPoint = this._viewerMap.getLayer(window.idCommuBoundaryPoint);    
+		if(lyrBoundaryPoint == null){
+			var popupsTemplate = {}
+			var locationTemplate = new InfoTemplate();
+		    locationTemplate.setTitle("EnviroAtlas Community Location");
+		    locationTemplate.setContent(getTextContent);
+			var boundaryTemplate = new InfoTemplate();
+		    boundaryTemplate.setTitle("EnviroAtlas Community Boundary");
+		    boundaryTemplate.setContent(getTextContent);
+		    popupsTemplate[0] = {infoTemplate:locationTemplate};
+		    popupsTemplate[1] = {infoTemplate:boundaryTemplate};
+
+		    var communityLocationLayer = new ArcGISDynamicMapServiceLayer(communityBoundaryLayer);
+            communityLocationLayer._titleForLegend = "EnviroAtlas Community Boundaries";
+            communityLocationLayer.title = "EnviroAtlas Community Boundaries";
+            communityLocationLayer.noservicename = true;
+            communityLocationLayer.setInfoTemplates(popupsTemplate);
+
+		    communityLocationLayer.id = window.idCommuBoundaryPoint;
+	    	self.map.addLayer(communityLocationLayer);
+	    	//Would be really nifty if when enabling this layer we could check the box next to "EnviroAtlas Community Boundaries" in the Boundaries and Natural Features widget.
+	    }
+    }
+
+    var getPopups = function(layer) {
+    	var infoTemplateArray = {};
+        if (layer.layers) {
+            array.forEach(layer.layers, function (subLayer) {
+                var _infoTemp = subLayer.popup;
+                var popupInfo = {};
+                popupInfo.title = _infoTemp.title;
+                if (_infoTemp.description) {
+                    popupInfo.description = _infoTemp.description;
+                } else {
+                    popupInfo.description = null;
+                }
+                if (_infoTemp.fieldInfos) {
+                    popupInfo.fieldInfos = _infoTemp.fieldInfos;
+                }
+                var _popupTemplate = new PopupTemplate(popupInfo);
+                infoTemplateArray[subLayer.id] = {
+                    infoTemplate: _popupTemplate
+                };
+            });
+        } else if (layer.popup) {
+        	var _popupTemplate = new PopupTemplate(layer.popup);
+        	infoTemplateArray[0] = {infoTemplate: _popupTemplate}
+        }
+        return infoTemplateArray;
+    }
+
     var _addSelectedLayers = function (layersTobeAdded, selectedLayerNum) {
         var index,
         len;
@@ -226,28 +279,10 @@ define([
                             lLayer.title = layer.name;
                             lLayer.noservicename = true;
                         }
-                        if (layer.layers) {
-                            var finalInfoTemp = {};
-                            array.forEach(layer.layers, function (subLayer) {
-                                var _infoTemp = subLayer.popup;
-                                var popupInfo = {};
-                                popupInfo.title = _infoTemp.title;
-                                //alert("popupInfo.title:" + popupInfo.title);
-                                if (_infoTemp.description) {
-                                    popupInfo.description = _infoTemp.description;
-                                } else {
-                                    popupInfo.description = null;
-                                }
-                                if (_infoTemp.fieldInfos) {
-                                    popupInfo.fieldInfos = _infoTemp.fieldInfos;
-                                }
-                                var _popupTemplate1 = new PopupTemplate(popupInfo);
-                                finalInfoTemp[subLayer.id] = {
-                                    infoTemplate: _popupTemplate1
-                                };
-                            });
-                            lLayer.setInfoTemplates(finalInfoTemp);
-                        }
+
+                        var popupConfig = getPopups(layer);
+                        lLayer.setInfoTemplates(popupConfig);
+
                         if (layer.disableclientcaching) {
                             lLayer.setDisableClientCaching(true);
                         }
@@ -274,6 +309,11 @@ define([
                         lLayer.id = window.layerIdPrefix + layer.eaID.toString();
                         this._viewerMap.addLayer(lLayer);
                         this._viewerMap.setInfoWindowOnClick(true);
+                        if (layer.hasOwnProperty('eaScale')) {
+                            if (layer.eaScale == "COMMUNITY") {
+                                    addCommunityBoundaries();
+                            }
+                        }
                     } else if (layer.type.toUpperCase() === 'FEATURE') {
                         bPopup = true;
                         var _popupTemplate;
@@ -357,21 +397,7 @@ define([
                                 if (layer.eaScale == "COMMUNITY") {
 
                                         lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
-									    var template = new InfoTemplate();
-									    template.setContent("current community");
-									    template.setContent(getTextContent);
-									
-									    // This is where the community layer is being added that we need to change to a dynamic service.  There are also a few TILED (and dynamic?) services that are community scale, so maybe we need to pull this out into a separate function?
-									    var pointBoundaryLayer = new FeatureLayer(communityBoundaryLayer + "/0",{
-									     	infoTemplate: template,
-											outFields: ["*"]
-									    });
-									    pointBoundaryLayer.id = window.idCommuBoundaryPoint;
-									    pointBoundaryLayer.setScaleRange(0,0);
-									    lyrBoundaryPoint = this._viewerMap.getLayer(window.idCommuBoundaryPoint);
-										if(lyrBoundaryPoint == null){
-									    	self.map.addLayer(pointBoundaryLayer);
-									    }
+                                        addCommunityBoundaries();
 
                                 } else { //National
                                     lLayer.setVisibility(false);
@@ -420,29 +446,16 @@ define([
                             lLayer.title = layer.name;
                             lLayer.noservicename = true;
                         }
-                        if (layer.layers) {
-                            // This is a near perfect duplicate of the same functionality for DYNAMIC layers. refactor into separate function?
-                            var finalInfoTemp2 = {};
-                            array.forEach(layer.layers, function (subLayer) {
-                                var _infoTemp = subLayer.popup;
-                                var popupInfo = {};
-                                popupInfo.title = _infoTemp.title;
-                                if (_infoTemp.description) {
-                                    popupInfo.description = _infoTemp.description;
-                                } else {
-                                    popupInfo.description = null;
-                                }
-                                if (_infoTemp.fieldInfos) {
-                                    popupInfo.fieldInfos = _infoTemp.fieldInfos;
-                                }
-                                var _popupTemplate2 = new PopupTemplate(popupInfo);
-                                finalInfoTemp2[subLayer.id] = {
-                                    infoTemplate: _popupTemplate2
-                                };
-                            });
-                            lLayer.setInfoTemplates(finalInfoTemp);
-                        }
+
+                        var popupConfig = getPopups(layer);
+                        lLayer.setInfoTemplates(popupConfig);
+
                         this._viewerMap.addLayer(lLayer);
+                        if (layer.hasOwnProperty('eaScale')) {
+                            if (layer.eaScale == "COMMUNITY") {
+                                    addCommunityBoundaries();
+                            }
+                        }
                     }
                 }
             }
