@@ -144,7 +144,7 @@
                     "left": 395,
                     "top": 5,
                     "width": 230,
-                    "height": 270,
+                    "height": 225,
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
@@ -293,7 +293,7 @@
                     "left": 495,
                     "top": 5,
                     "width": 230,
-                    "height": 225,
+                    "height": 185,
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
@@ -697,7 +697,7 @@
                         "left": 7,
                         "top": 235,
                         "width": 230,
-                        "height": 270,
+                        "height": 225,
                         "relativeTo": "map"
                     },
                     "placeholderIndex": 1,
@@ -846,7 +846,7 @@
                         "left": 7,
                         "top": 325,
                         "width": 230,
-                        "height": 225,
+                        "height": 185,
                         "relativeTo": "map"
                     },
                     "placeholderIndex": 1,
