@@ -9,6 +9,9 @@
 
 define(['dojo/_base/declare', 
 		'jimu/BaseWidget', 
+		'dojo/request/xhr',
+		'dojo/_base/lang',
+		'jimu/utils',
 		'esri/layers/ArcGISDynamicMapServiceLayer',
 		'esri/tasks/Geoprocessor',
         "esri/tasks/IdentifyTask",
@@ -24,6 +27,7 @@ define(['dojo/_base/declare',
         'dijit/form/ToggleButton',
         "esri/InfoTemplate",
         'dijit/form/HorizontalSlider',
+        'jimu/dijit/TabContainer',
 		"dojo/on",
 		"dojo/dom-style",
 		"dojo/request/xhr",
@@ -33,6 +37,9 @@ define(['dojo/_base/declare',
 		],
 function(declare, 
 		BaseWidget, 
+		xhr,
+		lang,
+		utils,
 		ArcGISDynamicMapServiceLayer,
 		Geoprocessor,
 		IdentifyTask,
@@ -48,6 +55,7 @@ function(declare,
 		ToggleButton,
 		InfoTemplate,
 		HorizontalSlider,
+		TabContainer,
 		on,
 		domStyle,
 		 xhr,
@@ -217,7 +225,36 @@ function(declare,
 
     postCreate: function() {
       this.inherited(arguments);
+      this._initTabContainer();
       console.log('postCreate');
+    },
+    _initTabContainer: function () {
+      var tabs = [];
+      tabs.push({
+        title: "About",
+        content: this.tabNode1
+      });
+      tabs.push({
+        title: "Results",
+        content: this.tabNode2
+      });
+      tabs.push({
+        title: "Settings",
+        content: this.tabNode3
+      });
+      this.selTab = this.nls.measurelabel;
+      this.tabContainer = new TabContainer({
+        tabs: tabs,
+        selected: this.selTab
+      }, this.tabMain);
+      this.tabContainer.startup();
+      this.own(on(this.tabContainer, 'tabChanged', lang.hitch(this, function (title) {
+        if (title !== this.nls.resultslabel) {
+          this.selTab = title;
+        }
+        //this._resizeChart();
+      })));
+      utils.setVerticalCenter(this.tabContainer.domNode);
     },
     
 
