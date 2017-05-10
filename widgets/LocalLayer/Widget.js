@@ -361,7 +361,7 @@ define([
 									    template.setContent("current community");
 									    template.setContent(getTextContent);
 									
-									    //create the feature layer (street trees of San Francisco)
+									    // This is where the community layer is being added that we need to change to a dynamic service.  There are also a few TILED (and dynamic?) services that are community scale, so maybe we need to pull this out into a separate function?
 									    var pointBoundaryLayer = new FeatureLayer(communityBoundaryLayer + "/0",{
 									     	infoTemplate: template,
 											outFields: ["*"]
@@ -421,6 +421,7 @@ define([
                             lLayer.noservicename = true;
                         }
                         if (layer.layers) {
+                            // This is a near perfect duplicate of the same functionality for DYNAMIC layers. refactor into separate function?
                             var finalInfoTemp2 = {};
                             array.forEach(layer.layers, function (subLayer) {
                                 var _infoTemp = subLayer.popup;
