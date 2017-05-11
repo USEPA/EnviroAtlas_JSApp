@@ -66,6 +66,7 @@ function(declare,
 
     var calculateChangeClick = function() {
     	esri.show(dom.byId("loadingWrap2"));
+    	document.getElementById("ECATgpFail").style.display = 'none';
     	var scenarioSelection = document.getElementById("scenario");
 		scenarioValue = scenarioSelection.options[scenarioSelection.selectedIndex].value;
 
@@ -120,6 +121,7 @@ function(declare,
 			 
     };
     var onTaskComplete = function(jobInfo) {
+    	document.getElementById("ECATgpFail").style.display = "none";
     	currentJobInfo = jobInfo;
     	gpComputeClimateChange.getResultImageLayer(jobInfo.jobId, null, null, function(layer){
 			layer.setOpacity(1);
@@ -175,6 +177,8 @@ function(declare,
 	// Event handler for onError event
 	var onTaskFailure= function(error) {
 	  // Report error 
+	  document.getElementById("ECATgpFail").style.display = '';
+	  esri.hide(dom.byId("loadingWrap2"));
 	  console.log(" geoprocessing service error:"+ error); 
 	};
   //To create a widget, you need to derive from BaseWidget.
