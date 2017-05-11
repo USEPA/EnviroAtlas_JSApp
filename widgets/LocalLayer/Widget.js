@@ -21,7 +21,7 @@ define([
         'esri/Color',
         'esri/renderers/ClassBreaksRenderer',
         'esri/geometry/Extent',
- 'esri/InfoTemplate',
+        'esri/InfoTemplate',
         'esri/dijit/BasemapGallery',
         'esri/dijit/BasemapLayer',
         'esri/dijit/Basemap',
@@ -29,7 +29,7 @@ define([
         'esri/dijit/PopupTemplate',
         'jimu/WidgetManager',
         'dijit/form/ToggleButton',
- 'dijit/form/Button',
+        'dijit/form/Button',
         'dojo/domReady!'
     ],
     function (
@@ -54,7 +54,7 @@ define([
         Color,
         ClassBreaksRenderer,
         Extent,
-    InfoTemplate,
+        InfoTemplate,
         BasemapGallery,
         BasemapLayer,
         Basemap,
@@ -190,6 +190,59 @@ define([
         currentCommunity = commName;
         return "<b>" + window.communityDic[commName] + "</b><br /><button id = 'testButton' dojoType='dijit.form.Button' onclick='self.selectCurrentComminity() '>Select this community</button>";
     };
+
+    var addCommunityBoundaries = function() {
+    	var lyrBoundaryPoint = this._viewerMap.getLayer(window.idCommuBoundaryPoint);    
+		if(lyrBoundaryPoint == null){
+			var popupsTemplate = {}
+			var locationTemplate = new InfoTemplate();
+		    locationTemplate.setTitle("EnviroAtlas Community Location");
+		    locationTemplate.setContent(getTextContent);
+			var boundaryTemplate = new InfoTemplate();
+		    boundaryTemplate.setTitle("EnviroAtlas Community Boundary");
+		    boundaryTemplate.setContent(getTextContent);
+		    popupsTemplate[0] = {infoTemplate:locationTemplate};
+		    popupsTemplate[1] = {infoTemplate:boundaryTemplate};
+
+		    var communityLocationLayer = new ArcGISDynamicMapServiceLayer(communityBoundaryLayer);
+            communityLocationLayer._titleForLegend = "EnviroAtlas Community Boundaries";
+            communityLocationLayer.title = "EnviroAtlas Community Boundaries";
+            communityLocationLayer.noservicename = true;
+            communityLocationLayer.setInfoTemplates(popupsTemplate);
+
+		    communityLocationLayer.id = window.idCommuBoundaryPoint;
+	    	self.map.addLayer(communityLocationLayer);
+	    	//Would be really nifty if when enabling this layer we could check the box next to "EnviroAtlas Community Boundaries" in the Boundaries and Natural Features widget.
+	    }
+    }
+
+    var getPopups = function(layer) {
+    	var infoTemplateArray = {};
+        if (layer.layers) {
+            array.forEach(layer.layers, function (subLayer) {
+                var _infoTemp = subLayer.popup;
+                var popupInfo = {};
+                popupInfo.title = _infoTemp.title;
+                if (_infoTemp.description) {
+                    popupInfo.description = _infoTemp.description;
+                } else {
+                    popupInfo.description = null;
+                }
+                if (_infoTemp.fieldInfos) {
+                    popupInfo.fieldInfos = _infoTemp.fieldInfos;
+                }
+                var _popupTemplate = new PopupTemplate(popupInfo);
+                infoTemplateArray[subLayer.id] = {
+                    infoTemplate: _popupTemplate
+                };
+            });
+        } else if (layer.popup) {
+        	var _popupTemplate = new PopupTemplate(layer.popup);
+        	infoTemplateArray[0] = {infoTemplate: _popupTemplate}
+        }
+        return infoTemplateArray;
+    }
+
     var _addSelectedLayers = function (layersTobeAdded, selectedLayerNum) {
         var index,
         len;
@@ -226,28 +279,10 @@ define([
                             lLayer.title = layer.name;
                             lLayer.noservicename = true;
                         }
-                        if (layer.layers) {
-                            var finalInfoTemp = {};
-                            array.forEach(layer.layers, function (subLayer) {
-                                var _infoTemp = subLayer.popup;
-                                var popupInfo = {};
-                                popupInfo.title = _infoTemp.title;
-                                //alert("popupInfo.title:" + popupInfo.title);
-                                if (_infoTemp.description) {
-                                    popupInfo.description = _infoTemp.description;
-                                } else {
-                                    popupInfo.description = null;
-                                }
-                                if (_infoTemp.fieldInfos) {
-                                    popupInfo.fieldInfos = _infoTemp.fieldInfos;
-                                }
-                                var _popupTemplate1 = new PopupTemplate(popupInfo);
-                                finalInfoTemp[subLayer.id] = {
-                                    infoTemplate: _popupTemplate1
-                                };
-                            });
-                            lLayer.setInfoTemplates(finalInfoTemp);
-                        }
+
+                        var popupConfig = getPopups(layer);
+                        lLayer.setInfoTemplates(popupConfig);
+
                         if (layer.disableclientcaching) {
                             lLayer.setDisableClientCaching(true);
                         }
@@ -274,6 +309,11 @@ define([
                         lLayer.id = window.layerIdPrefix + layer.eaID.toString();
                         this._viewerMap.addLayer(lLayer);
                         this._viewerMap.setInfoWindowOnClick(true);
+                        if (layer.hasOwnProperty('eaScale')) {
+                            if (layer.eaScale == "COMMUNITY") {
+                                    addCommunityBoundaries();
+                            }
+                        }
                     } else if (layer.type.toUpperCase() === 'FEATURE') {
                         bPopup = true;
                         var _popupTemplate;
@@ -357,21 +397,7 @@ define([
                                 if (layer.eaScale == "COMMUNITY") {
 
                                         lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
-									    var template = new InfoTemplate();
-									    template.setContent("current community");
-									    template.setContent(getTextContent);
-									
-									    //create the feature layer (street trees of San Francisco)
-									    var pointBoundaryLayer = new FeatureLayer(communityBoundaryLayer + "/0",{
-									     	infoTemplate: template,
-											outFields: ["*"]
-									    });
-									    pointBoundaryLayer.id = window.idCommuBoundaryPoint;
-									    pointBoundaryLayer.setScaleRange(0,0);
-									    lyrBoundaryPoint = this._viewerMap.getLayer(window.idCommuBoundaryPoint);
-										if(lyrBoundaryPoint == null){
-									    	self.map.addLayer(pointBoundaryLayer);
-									    }
+                                        addCommunityBoundaries();
 
                                 } else { //National
                                     lLayer.setVisibility(false);
@@ -420,49 +446,17 @@ define([
                             lLayer.title = layer.name;
                             lLayer.noservicename = true;
                         }
-                        if (layer.popup) {
-                            var finalInfoTemp2 = {};
-                            array.forEach(layer.popup.infoTemplates, function (_infoTemp) {
-                                var popupInfo = {};
-                                popupInfo.title = _infoTemp.title;
-                                alert("_infoTemp.title:" + _infoTemp.title);
-                                if (_infoTemp.content) {
-                                    popupInfo.description = _infoTemp.content;
-                                } else {
-                                    popupInfo.description = null;
-                                }
-                                if (_infoTemp.fieldInfos) {
-                                    popupInfo.fieldInfos = _infoTemp.fieldInfos;
-                                }
-                                var _popupTemplate2 = new PopupTemplate(popupInfo);
-                                finalInfoTemp2[_infoTemp.layerId] = {
-                                    infoTemplate: _popupTemplate2
-                                };
-                            });
-                            lLayer.setInfoTemplates(finalInfoTemp2);
-                        }
+
+                        var popupConfig = getPopups(layer);
+                        lLayer.setInfoTemplates(popupConfig);
+
                         this._viewerMap.addLayer(lLayer);
+                        if (layer.hasOwnProperty('eaScale')) {
+                            if (layer.eaScale == "COMMUNITY") {
+                                    addCommunityBoundaries();
+                            }
+                        }
                     }
-                    /*else if(layer.type.toUpperCase() === 'BASEMAP'){
-                    var bmLayers = array.map(layer.layers.layer, function(bLayer){
-                    var bmLayerObj = {url:bLayer.url, isReference: false};
-                    if(bLayer.displayLevels){
-                    bmLayerObj.displayLevels = bLayer.displayLevels;
-                    }
-                    if(layer.hasOwnProperty('opacity')){
-                    bmLayerObj.opacity = bLayer.opacity;
-                    }
-                    return new BasemapLayer(bmLayerObj);
-                    });
-                    var _newBasemap = new Basemap({id:'defaultBasemap', title:layer.name, layers:bmLayers});
-                    var _basemapGallery = new BasemapGallery({
-                    showArcGISBasemaps: false,
-                    map: this._viewerMap
-                    }, '_tmpBasemapGallery');
-                    _basemapGallery.add(_newBasemap);
-                    _basemapGallery.select('defaultBasemap');
-                    _basemapGallery.destroy();
-                    }*/
                 }
             }
         }
