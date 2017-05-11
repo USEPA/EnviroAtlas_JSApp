@@ -231,6 +231,8 @@ define([
 		              	
 		                var _popupTemplate;	
 		                var lOptions ={};
+                        
+                        //Need to incorporate DYNAMIC and TILED options from locallayer widget here, after communitylayer fixes.
 	
 		                if(layer.hasOwnProperty('mode')){
 		                  var lmode;
