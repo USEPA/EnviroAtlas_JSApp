@@ -61,7 +61,9 @@ define([
         esriBasemaps,
         PopupTemplate,
         WidgetManager) {
+        //To do: set these community boundary layer properties from the config file.
     	var communityBoundaryLayer = "https://leb.epa.gov/arcgis/rest/services/Communities/Community_Locations/MapServer";
+        var communityBoundaryLayerID = "901"
 	    var minXCombinedExtent = 9999999999999;
 	    var minYCombinedExtent = 9999999999999;
 	    var maxXCombinedExtent = -9999999999999;
@@ -188,11 +190,11 @@ define([
     var getTextContent = function(graphic) {  	
         var commName = graphic.attributes.CommST;
         currentCommunity = commName;
-        return "<b>" + window.communityDic[commName] + "</b><br /><button id = 'testButton' dojoType='dijit.form.Button' onclick='self.selectCurrentComminity() '>Select this community</button>";
+        return "<b>" + window.communityDic[commName] + "</b><br /><button id = 'testButton' dojoType='dijit.form.Button' onclick='self.selectCurrentCommunity() '>Select this community</button>";
     };
 
     var addCommunityBoundaries = function() {
-    	var lyrBoundaryPoint = this._viewerMap.getLayer(window.idCommuBoundaryPoint);    
+    	var lyrBoundaryPoint = this._viewerMap.getLayer(window.idCommuBoundaryPoint);  
 		if(lyrBoundaryPoint == null){
 			var popupsTemplate = {}
 			var locationTemplate = new InfoTemplate();
@@ -210,9 +212,11 @@ define([
             communityLocationLayer.noservicename = true;
             communityLocationLayer.setInfoTemplates(popupsTemplate);
 
-		    communityLocationLayer.id = window.idCommuBoundaryPoint;
+		    communityLocationLayer.id = window.layerIdBndrPrefix + communityBoundaryLayerID;
+            window.idCommuBoundaryPoint = communityLocationLayer.id;
+            chkboxId = window.chkSelectableLayer + communityBoundaryLayerID;
+            if (dojo.byId(chkboxId)) {dojo.byId(chkboxId).checked = true;}
 	    	self.map.addLayer(communityLocationLayer);
-	    	//Would be really nifty if when enabling this layer we could check the box next to "EnviroAtlas Community Boundaries" in the Boundaries and Natural Features widget.
 	    }
     }
 
@@ -546,7 +550,7 @@ define([
                     }
                 }
             },
-	      selectCurrentComminity: function() {
+	      selectCurrentCommunity: function() {
 	      	
 	      	window.communitySelected = currentCommunity;
 
