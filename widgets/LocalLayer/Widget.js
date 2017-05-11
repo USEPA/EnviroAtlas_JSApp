@@ -21,7 +21,7 @@ define([
         'esri/Color',
         'esri/renderers/ClassBreaksRenderer',
         'esri/geometry/Extent',
- 'esri/InfoTemplate',
+        'esri/InfoTemplate',
         'esri/dijit/BasemapGallery',
         'esri/dijit/BasemapLayer',
         'esri/dijit/Basemap',
@@ -29,7 +29,7 @@ define([
         'esri/dijit/PopupTemplate',
         'jimu/WidgetManager',
         'dijit/form/ToggleButton',
- 'dijit/form/Button',
+        'dijit/form/Button',
         'dojo/domReady!'
     ],
     function (
@@ -54,7 +54,7 @@ define([
         Color,
         ClassBreaksRenderer,
         Extent,
-    InfoTemplate,
+        InfoTemplate,
         BasemapGallery,
         BasemapLayer,
         Basemap,
