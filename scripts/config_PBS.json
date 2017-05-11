@@ -2,103 +2,28 @@
     "layers": {
         "layer": [
             {
+                "opacity": 0.5, 
+                "eaTopic": "Commuting and Walkability", 
+                "eaDescription": "This EnviroAtlas dataset estimates the intersection density of walkable roads within a 750 meter radius of any given 10 meter pixel in the community. Intersections are defined as any point where 3 or more roads meet and density is calculated using kernel density, where closer intersections are weighted higher than further intersections. Intersection density is highly correlated with walking for transportation.", 
+                "eaNHM": true, 
+                "name": "Estimated intersection density of walkable roads", 
                 "eaRCA": true, 
-                "visible": false, 
-                "eaCPW": true, 
-                "eaLyrNum": 0, 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/IntDen_AllCommunities/MapServer", 
+                "eaID": 700, 
+                "eaDfsLink": "Supplemental/Estimatedintersectiondensityofwalkableroads.pdf", 
                 "eaTags": [
                     "people", 
                     "human", 
                     "transportation"
                 ], 
-                "eaID": 700, 
                 "eaCS": true, 
+                "eaPBS": "Commuting and Walkability ", 
+                "eaMetadata": "C011", 
+                "visible": false, 
+                "eaMetric": "foundational", 
+                "eaCPW": true, 
+                "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
-                "type": "TILED", 
-                "eaCA": true, 
-                "opacity": 0.5, 
-                "popup": {
-                    "showAttachments": false, 
-                    "fieldInfos": [
-                        {
-                            "visible": false, 
-                            "fieldName": "OBJECTID", 
-                            "isEditable": false, 
-                            "label": "OBJECTID"
-                        }, 
-                        {
-                            "visible": false, 
-                            "fieldName": "Shape", 
-                            "isEditable": false, 
-                            "label": "Shape"
-                        }, 
-                        {
-                            "visible": false, 
-                            "format": {
-                                "digitSeparator": true, 
-                                "places": 0
-                            }, 
-                            "fieldName": "Id", 
-                            "isEditable": false, 
-                            "label": "Id"
-                        }, 
-                        {
-                            "visible": true, 
-                            "format": {
-                                "digitSeparator": true, 
-                                "places": 0
-                            }, 
-                            "fieldName": "IntDen", 
-                            "isEditable": false, 
-                            "label": "IntDen"
-                        }, 
-                        {
-                            "visible": true, 
-                            "stringFieldOption": "textbox", 
-                            "fieldName": "Community", 
-                            "isEditable": false, 
-                            "label": "EnviroAtlas Community Name"
-                        }, 
-                        {
-                            "visible": true, 
-                            "stringFieldOption": "textbox", 
-                            "fieldName": "CommST", 
-                            "isEditable": false, 
-                            "label": "EnviroAtlas Community Code"
-                        }, 
-                        {
-                            "visible": false, 
-                            "format": {
-                                "digitSeparator": true, 
-                                "places": 2
-                            }, 
-                            "fieldName": "Shape_Length", 
-                            "isEditable": false, 
-                            "label": "Shape_Length"
-                        }, 
-                        {
-                            "visible": false, 
-                            "format": {
-                                "digitSeparator": true, 
-                                "places": 2
-                            }, 
-                            "fieldName": "Shape_Area", 
-                            "isEditable": false, 
-                            "label": "Shape_Area"
-                        }, 
-                        {
-                            "visible": true, 
-                            "stringFieldOption": "textbox", 
-                            "fieldName": "Metadata", 
-                            "isEditable": false, 
-                            "label": "Metadata URL HTML Hyperlink"
-                        }
-                    ], 
-                    "mediaInfos": [], 
-                    "description": null, 
-                    "title": "Estimated intersection density of walkable roads:{Community}"
-                }, 
-                "eaPBS": true, 
                 "eaBCSDD": [
                     "Biodiversity Conservation - x", 
                     "Clean Air - x", 
@@ -107,32 +32,25 @@
                     "Natural Hazard Mitigation - x", 
                     "Recreation, Culture, and Aesthetics - x"
                 ], 
-                "eaNHM": true, 
-                "name": "Estimated intersection density of walkable roads", 
-                "eaTopic": "Commuting and Walkability", 
-                "eaDescription": "This EnviroAtlas dataset estimates the intersection density of walkable roads within a 750 meter radius of any given 10 meter pixel in the community. Intersections are defined as any point where 3 or more roads meet and density is calculated using kernel density, where closer intersections are weighted higher than further intersections. Intersection density is highly correlated with walking for transportation.", 
-                "eaDfsLink": "Supplemental/Estimatedintersectiondensityofwalkableroads.pdf", 
-                "eaMetric": "foundational", 
-                "eaMetadata": "C011", 
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/IntDen_AllCommunities/MapServer", 
+                "eaCA": true, 
                 "eaBC": true
             }, 
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
-                                "places": 0
+                                "places": 1
                             }, 
-                            "fieldName": "Day_Count", 
-                            "label": "Number of daycare centers\u00a0\u00a0"
+                            "fieldName": "Acres_Unpo", 
+                            "label": "Acres of pollinated crops with no nearby pollinator habitat\u00a0\u00a0"
                         }
                     ], 
-                    "title": "Block Group ID: {GEOID10}"
+                    "title": "HUC 12 ID: {HUC_12}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -146,10 +64,10 @@
                 "name": "Number of daycare centers", 
                 "eaDescription": "This map shows the number of day care centers in each census block group.", 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 701, 
                 "eaDfsLink": "Supplemental/Numberofdaycarecenters.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Housing and Facilities", 
                 "eaMetadata": "C007", 
                 "eaTopic": "Housing and Facilities", 
                 "mode": "ondemand", 
@@ -159,19 +77,19 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
-                                "places": 0
+                                "places": 2
                             }, 
-                            "fieldName": "K12_Count", 
-                            "label": "Number of schools (K-12)\u00a0\u00a0"
+                            "fieldName": "AWD_MGAL", 
+                            "label": "Agricultural water use (million gallons/day)\u00a0\u00a0"
                         }
                     ], 
-                    "title": "Block Group ID: {GEOID10}"
+                    "title": "HUC 12 ID: {HUC_12}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -185,10 +103,10 @@
                 "name": "Number of schools (K-12)", 
                 "eaDescription": "This map shows the number of K-12 schools in each census block group.", 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 702, 
                 "eaDfsLink": "Supplemental/Numberofschools.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Housing and Facilities", 
                 "eaMetadata": "C007", 
                 "eaTopic": "Housing and Facilities", 
                 "mode": "ondemand", 
@@ -198,19 +116,19 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
-                            "fieldName": "NonWt_Pct", 
-                            "label": "Percent population other than White, non-Hispanic\u00a0\u00a0"
+                            "fieldName": "DD_OXN_T", 
+                            "label": "Annual oxidized nitrogen dry deposition (kg/ha)\u00a0\u00a0"
                         }
                     ], 
-                    "title": "Block Group ID: {GEOID10}"
+                    "title": "HUC 12 ID: {HUC_12}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -224,10 +142,10 @@
                 "name": "Percent population other than White, non-Hispanic", 
                 "eaDescription": "This map estimates the percent of the population of each census block group that did not identify as White Alone in 2010. This value includes white Hispanics.", 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 703, 
                 "eaDfsLink": "Supplemental/PercentPopulationotherthanWhiteNonHispanic.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Community Demographics", 
                 "eaMetadata": "C003", 
                 "eaTopic": "Community Demographics", 
                 "mode": "ondemand", 
@@ -237,19 +155,19 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
-                            "fieldName": "over_70pct", 
-                            "label": "Percent population over 70 years old\u00a0\u00a0"
+                            "fieldName": "AWD_OXN_T", 
+                            "label": "Annual oxidized nitrogen wet deposition (kg/ha)\u00a0\u00a0"
                         }
                     ], 
-                    "title": "Block Group ID: {GEOID10}"
+                    "title": "HUC 12 ID: {HUC_12}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -263,10 +181,10 @@
                 "name": "Percent population over 70 years old", 
                 "eaDescription": "This map estimates the percent of the population of each census block group aged 70 years or older in 2010.", 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 704, 
                 "eaDfsLink": "Supplemental/PercentPopulationover70YearsOld.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Community Demographics", 
                 "eaMetadata": "C003", 
                 "eaTopic": "Community Demographics", 
                 "mode": "ondemand", 
@@ -276,19 +194,19 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
-                            "fieldName": "under_1pct", 
-                            "label": "Percent population under 1 year old\u00a0\u00a0"
+                            "fieldName": "DD_REDN_T", 
+                            "label": "Annual reduced nitrogen dry deposition (kg/ha)\u00a0\u00a0"
                         }
                     ], 
-                    "title": "Block Group ID: {GEOID10}"
+                    "title": "HUC 12 ID: {HUC_12}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -302,10 +220,10 @@
                 "name": "Percent population under 1 year old", 
                 "eaDescription": "This map estimates the percent of the population of each census block group under one year of age in 2010.", 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 705, 
                 "eaDfsLink": "Supplemental/PercentPopulationunder1YearOld.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Community Demographics", 
                 "eaMetadata": "C003", 
                 "eaTopic": "Community Demographics", 
                 "mode": "ondemand", 
@@ -315,19 +233,19 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
-                            "fieldName": "under_13pc", 
-                            "label": "Percent population under 13 years old\u00a0\u00a0"
+                            "fieldName": "AWD_REDN_T", 
+                            "label": "Annual reduced nitrogen wet deposition (kg/ha)\u00a0\u00a0"
                         }
                     ], 
-                    "title": "Block Group ID: {GEOID10}"
+                    "title": "HUC 12 ID: {HUC_12}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -341,10 +259,10 @@
                 "name": "Percent population under 13 years old", 
                 "eaDescription": "This map estimates the percent of the population of each census block group under 13 years of age in 2010.", 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 706, 
                 "eaDfsLink": "Supplemental/PercentPopulationunder13YearsOld.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Community Demographics", 
                 "eaMetadata": "C003", 
                 "eaTopic": "Community Demographics", 
                 "mode": "ondemand", 
@@ -354,19 +272,19 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
-                            "fieldName": "PLx2_Pct", 
-                            "label": "Percent population with income below twice the poverty level\u00a0\u00a0"
+                            "fieldName": "DD_S_T", 
+                            "label": "Annual sulfur dry deposition (kg/ha)\u00a0\u00a0"
                         }
                     ], 
-                    "title": "Block Group ID: {GEOID10}"
+                    "title": "HUC 12 ID: {HUC_12}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -379,10 +297,10 @@
                 "name": "Percent population with income below twice the poverty level", 
                 "eaDescription": "This map estimates the percent of the population of each census block group with income less than two times the relative household poverty level in 2010.", 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 707, 
                 "eaDfsLink": "Supplemental/Percentpopulationwithincomebelowtwicethepovertylevel.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Community Demographics", 
                 "eaMetadata": "C003", 
                 "eaTopic": "Community Demographics", 
                 "mode": "ondemand", 
@@ -392,19 +310,19 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
-                                "places": 0
+                                "places": 2
                             }, 
-                            "fieldName": "NonWhite", 
-                            "label": "Population other than White, non-Hispanic\u00a0\u00a0"
+                            "fieldName": "AWD_S_T", 
+                            "label": "Annual sulfur wet deposition (kg/ha)\u00a0\u00a0"
                         }
                     ], 
-                    "title": "Block Group ID: {GEOID10}"
+                    "title": "HUC 12 ID: {HUC_12}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -418,10 +336,10 @@
                 "name": "Population other than White, non-Hispanic", 
                 "eaDescription": "This map estimates the number of individuals in each census block group that did not identify as White Alone in 2010. This value includes white Hispanics.", 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 708, 
                 "eaDfsLink": "Supplemental/PopulationotherthanWhiteNonHispanic.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Community Demographics", 
                 "eaMetadata": "C003", 
                 "eaTopic": "Community Demographics", 
                 "mode": "ondemand", 
@@ -431,19 +349,19 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
-                                "places": 0
+                                "places": 1
                             }, 
-                            "fieldName": "over_70", 
-                            "label": "Population over 70 years old\u00a0\u00a0"
+                            "fieldName": "SolE_Area", 
+                            "label": "Area of solar energy (km2)\u00a0\u00a0"
                         }
                     ], 
-                    "title": "Block Group ID: {GEOID10}"
+                    "title": "HUC 12 ID: {HUC_12}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -457,10 +375,10 @@
                 "name": "Population over 70 years old", 
                 "eaDescription": "This map estimates the number of individuals in each census block group that were 70 years of age or older in 2010.", 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 709, 
                 "eaDfsLink": "Supplemental/PopulationOver70YearsOld.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Community Demographics", 
                 "eaMetadata": "C003", 
                 "eaTopic": "Community Demographics", 
                 "mode": "ondemand", 
@@ -470,19 +388,19 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
-                                "places": 0
+                                "places": 2
                             }, 
-                            "fieldName": "under_1", 
-                            "label": "Population under 1 year old\u00a0\u00a0"
+                            "fieldName": "SolE_Mean", 
+                            "label": "Average annual daily potential solar energy (kWh/m2/day)\u00a0\u00a0"
                         }
                     ], 
-                    "title": "Block Group ID: {GEOID10}"
+                    "title": "HUC 12 ID: {HUC_12}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -496,10 +414,10 @@
                 "name": "Population under 1 year old", 
                 "eaDescription": "This map estimates the number of individuals in each census block group that were under one year of age in 2010.", 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 710, 
                 "eaDfsLink": "Supplemental/Populationunder1YearOld.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Community Demographics", 
                 "eaMetadata": "C003", 
                 "eaTopic": "Community Demographics", 
                 "mode": "ondemand", 
@@ -509,19 +427,19 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
-                            "fieldName": "under_13", 
-                            "label": "Population under 13 years old\u00a0\u00a0"
+                            "fieldName": "AvgWindEnergy", 
+                            "label": "Average annual daily potential wind energy (kWh/m2/day)\u00a0\u00a0"
                         }
                     ], 
-                    "title": "Block Group ID: {GEOID10}"
+                    "title": "HUC 12 ID: {HUC_12}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -535,10 +453,10 @@
                 "name": "Population under 13 years old", 
                 "eaDescription": "This map estimates the number of individuals in each census block group that were under 13 years of age in 2010.", 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 711, 
                 "eaDfsLink": "Supplemental/Populationunder13YearsOld.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Community Demographics", 
                 "eaMetadata": "C003", 
                 "eaTopic": "Community Demographics", 
                 "mode": "ondemand", 
@@ -548,19 +466,19 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
-                                "places": 0
+                                "places": 1
                             }, 
-                            "fieldName": "PLx2_Pop", 
-                            "label": "Population with income below twice the poverty level\u00a0\u00a0"
+                            "fieldName": "MeanPrecip", 
+                            "label": "Average annual precipitation (inches/yr)\u00a0\u00a0"
                         }
                     ], 
-                    "title": "Block Group ID: {GEOID10}"
+                    "title": "HUC 12 ID: {HUC_12}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -573,10 +491,10 @@
                 "name": "Population with income below twice the poverty level", 
                 "eaDescription": "This map estimates the number of individuals in each census block group with income less than two times the relative household poverty level in 2010.", 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 712, 
                 "eaDfsLink": "Supplemental/Populationwithincomebelowtwicethepovertylevel.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Community Demographics", 
                 "eaMetadata": "C003", 
                 "eaTopic": "Community Demographics", 
                 "mode": "ondemand", 
@@ -586,19 +504,19 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
-                            "fieldName": "SUM_POP10", 
-                            "label": "Total Population [census block group]\u00a0\u00a0"
+                            "fieldName": "BG_Demand", 
+                            "label": "Big game hunting recreation demand\u00a0\u00a0"
                         }
                     ], 
-                    "title": "Block Group ID: {GEOID10}"
+                    "title": "HUC 12 ID: {HUC_12}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -610,10 +528,10 @@
                 "name": "Total Population [census block group]", 
                 "eaDescription": "This map estimates the total population of each census block group in 2010.\u00a0", 
                 "autorefresh": 0, 
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer", 
+                "url": "https://leb.epa.gov/arcgis/rest/services/Other/Community_BGmetrics/MapServer", 
                 "eaID": 713, 
                 "eaDfsLink": "Supplemental/TotalPopulationcensusblockgroup.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Community Demographics", 
                 "eaMetadata": "C003", 
                 "eaTopic": "Community Demographics", 
                 "mode": "ondemand", 
@@ -624,10 +542,10 @@
                 "opacity": 0.5, 
                 "eaTopic": "National Demographics", 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "fieldName": "Value", 
                             "label": "Dasymetric allocation of population"
                         }
@@ -635,14 +553,14 @@
                     "title": "Dasymetric allocation of population"
                 }, 
                 "name": "Dasymetric allocation of population", 
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Dasymetric_WMerc/MapServer/", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Dasymetric_WMerc/MapServer", 
                 "eaID": 714, 
                 "eaDescription": "This dasymetric population map intelligently reallocates 2010 population from census blocks to 30 meter pixels based on land cover and slope. It is used for metrics that require population to be spatially allocated at a pixel level, primarily in the urban section of the atlas.\u00a0", 
                 "eaTags": [
                     "people", 
                     "human"
                 ], 
-                "eaPBS": true, 
+                "eaPBS": "People and Built Spaces", 
                 "eaMetadata": "N017", 
                 "visible": false, 
                 "eaMetric": "foundational", 
@@ -654,16 +572,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "D2B_E8MIXA", 
-                            "label": "Employment diversity\u00a0\u00a0"
+                            "label": "Employment diversity\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -684,7 +602,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Employment/MapServer", 
                 "eaID": 715, 
                 "eaDfsLink": "Supplemental/Employmentdiversity.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Employment ", 
                 "eaMetadata": "E010", 
                 "eaTopic": "Employment", 
                 "mode": "ondemand", 
@@ -694,16 +612,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "employ_rate ", 
-                            "label": "Employment Rate\u00a0\u00a0"
+                            "label": "Employment Rate\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -724,7 +642,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Employment/MapServer", 
                 "eaID": 716, 
                 "eaDfsLink": "Supplemental/Employmentrate.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Employment ", 
                 "eaMetadata": "N020", 
                 "eaTopic": "Employment", 
                 "mode": "ondemand", 
@@ -734,16 +652,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "D2A_JPHH", 
-                            "label": "Employment:housing ratio\u00a0\u00a0"
+                            "label": "Employment:housing ratio\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -764,7 +682,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Employment/MapServer", 
                 "eaID": 717, 
                 "eaDfsLink": "Supplemental/Employmenthousingratio.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Employment ", 
                 "eaMetadata": "E010", 
                 "eaTopic": "Employment", 
                 "mode": "ondemand", 
@@ -774,16 +692,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "D5ar", 
-                            "label": "Jobs within a 45-minute drive, weighted\u00a0\u00a0"
+                            "label": "Jobs within a 45-minute drive, weighted\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -804,7 +722,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 718, 
                 "eaDfsLink": "Supplemental/Jobswithina45minutedriveweighted.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Employment ", 
                 "eaMetadata": "E010", 
                 "eaTopic": "Employment", 
                 "mode": "ondemand", 
@@ -814,16 +732,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "E_HIWAGEWK", 
-                            "label": "Number of high-wage workers [work location]\u00a0\u00a0"
+                            "label": "Number of high-wage workers [work location]\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -845,7 +763,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 719, 
                 "eaDfsLink": "Supplemental/Numberofhighwageworkersworklocation.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Employment ", 
                 "eaMetadata": "E010", 
                 "eaTopic": "Employment", 
                 "mode": "ondemand", 
@@ -857,16 +775,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "HH", 
-                            "label": "Number of households\u00a0\u00a0"
+                            "label": "Number of households\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -887,7 +805,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 720, 
                 "eaDfsLink": "Supplemental/Numberofhouseholds.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "National Demographics", 
                 "eaMetadata": "E010", 
                 "eaTopic": "Housing and Facilities", 
                 "mode": "ondemand", 
@@ -897,16 +815,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "AUTOOWN0", 
-                            "label": "Number of households with zero vehicles\u00a0\u00a0"
+                            "label": "Number of households with zero vehicles\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -917,8 +835,6 @@
                 "eaTags": [
                     "people", 
                     "human", 
-                    "", 
-                    "transportation", 
                     "work", 
                     "jobs", 
                     "economy"
@@ -929,9 +845,9 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 721, 
                 "eaDfsLink": "Supplemental/Numberofhouseholdswithzerovehicles.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Employment ", 
                 "eaMetadata": "E010", 
-                "eaTopic": "Commuting and Walkability", 
+                "eaTopic": "Employment", 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
                 "type": "FEATURE"
@@ -939,16 +855,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "R_LOWWAGEWK", 
-                            "label": "Number of low-wage workers [home location]\u00a0\u00a0"
+                            "label": "Number of low-wage workers [home location]\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -970,7 +886,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 722, 
                 "eaDfsLink": "Supplemental/Numberoflowwageworkershomelocation.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Employment ", 
                 "eaMetadata": "E010", 
                 "eaTopic": "Employment", 
                 "mode": "ondemand", 
@@ -980,16 +896,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "E_LOWWAGEW", 
-                            "label": "Number of low-wage workers [work location]\u00a0\u00a0"
+                            "label": "Number of low-wage workers [work location]\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1011,7 +927,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 723, 
                 "eaDfsLink": "Supplemental/Numberoflowwageworkersworklocation.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Employment ", 
                 "eaMetadata": "E010", 
                 "eaTopic": "Employment", 
                 "mode": "ondemand", 
@@ -1021,16 +937,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "E_MEDWAGEW", 
-                            "label": "Number of middle-wage workers [work location]\u00a0\u00a0"
+                            "label": "Number of middle-wage workers [work location]\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1051,7 +967,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 724, 
                 "eaDfsLink": "Supplemental/Numberofmiddlewageworkersworklocation.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Employment ", 
                 "eaMetadata": "E010", 
                 "eaTopic": "Employment", 
                 "mode": "ondemand", 
@@ -1061,16 +977,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "WORKERS", 
-                            "label": "Number of workers [home location]\u00a0\u00a0"
+                            "label": "Number of workers [home location]\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1091,7 +1007,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 725, 
                 "eaDfsLink": "Supplemental/Numberofworkershomelocation.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Employment ", 
                 "eaMetadata": "E010", 
                 "eaTopic": "Employment", 
                 "mode": "ondemand", 
@@ -1101,16 +1017,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "D3b", 
-                            "label": "Pedestrian-oriented street intersection density\u00a0\u00a0"
+                            "label": "Pedestrian-oriented street intersection density\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1129,7 +1045,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 726, 
                 "eaDfsLink": "Supplemental/Pedestrianorientedstreetintersectiondensity.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Commuting and Walkability ", 
                 "eaMetadata": "E010", 
                 "eaTopic": "Commuting and Walkability", 
                 "mode": "ondemand", 
@@ -1139,16 +1055,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "PERC_HS_DG", 
-                            "label": "Percent 25 Years And Over With A High School Degree\u00a0\u00a0"
+                            "label": "Percent 25 Years And Over With A High School Degree\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1166,7 +1082,7 @@
                 "autorefresh": 0, 
                 "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/ACS_Demographics_by_Tract_2008_2012/MapServer", 
                 "eaID": 727, 
-                "eaPBS": true, 
+                "eaPBS": "National Demographics", 
                 "eaMetadata": "E011", 
                 "eaTopic": "National Demographics", 
                 "mode": "ondemand", 
@@ -1176,16 +1092,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "PERC_BELOW12", 
-                            "label": "Percent 25 Years And Over With Less Than A High School Degree\u00a0\u00a0"
+                            "label": "Percent 25 Years And Over With Less Than A High School Degree\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1203,7 +1119,7 @@
                 "autorefresh": 0, 
                 "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/ACS_Demographics_by_Tract_2008_2012/MapServer", 
                 "eaID": 728, 
-                "eaPBS": true, 
+                "eaPBS": "National Demographics", 
                 "eaMetadata": "E011", 
                 "eaTopic": "National Demographics", 
                 "mode": "ondemand", 
@@ -1213,16 +1129,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "PERC_AGE_UNDER18", 
-                            "label": "Percent Age Less Than 18 Years Old\u00a0\u00a0"
+                            "label": "Percent Age Less Than 18 Years Old\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1240,7 +1156,7 @@
                 "autorefresh": 0, 
                 "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/ACS_Demographics_by_Tract_2008_2012/MapServer", 
                 "eaID": 729, 
-                "eaPBS": true, 
+                "eaPBS": "National Demographics", 
                 "eaMetadata": "E011", 
                 "eaTopic": "National Demographics", 
                 "mode": "ondemand", 
@@ -1250,16 +1166,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "PERC_AGE_UNDER5", 
-                            "label": "Percent Age Less Than 5 Years Old\u00a0\u00a0"
+                            "label": "Percent Age Less Than 5 Years Old\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1277,7 +1193,7 @@
                 "autorefresh": 0, 
                 "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/ACS_Demographics_by_Tract_2008_2012/MapServer", 
                 "eaID": 730, 
-                "eaPBS": true, 
+                "eaPBS": "National Demographics", 
                 "eaMetadata": "E011", 
                 "eaTopic": "National Demographics", 
                 "mode": "ondemand", 
@@ -1287,16 +1203,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "PERC_BPOV", 
-                            "label": "Percent Below Poverty Level\u00a0\u00a0"
+                            "label": "Percent Below Poverty Level\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1315,7 +1231,7 @@
                 "autorefresh": 0, 
                 "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/ACS_Demographics_by_Tract_2008_2012/MapServer", 
                 "eaID": 731, 
-                "eaPBS": true, 
+                "eaPBS": "National Demographics", 
                 "eaMetadata": "E011", 
                 "eaTopic": "National Demographics", 
                 "mode": "ondemand", 
@@ -1325,16 +1241,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "PERC_HOME_PRE50", 
-                            "label": "Percent Housing Units Built Before 1950\u00a0\u00a0"
+                            "label": "Percent Housing Units Built Before 1950\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1353,7 +1269,7 @@
                 "autorefresh": 0, 
                 "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/ACS_Demographics_by_Tract_2008_2012/MapServer", 
                 "eaID": 732, 
-                "eaPBS": true, 
+                "eaPBS": "Housing and Facilities", 
                 "eaMetadata": "E011", 
                 "eaTopic": "National Demographics", 
                 "mode": "ondemand", 
@@ -1363,16 +1279,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "PCT_LINGISO", 
-                            "label": "Percent Linguistically Isolated Households\u00a0\u00a0"
+                            "label": "Percent Linguistically Isolated Households\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1390,7 +1306,7 @@
                 "autorefresh": 0, 
                 "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/ACS_Demographics_by_Tract_2008_2012/MapServer", 
                 "eaID": 733, 
-                "eaPBS": true, 
+                "eaPBS": "National Demographics", 
                 "eaMetadata": "E011", 
                 "eaTopic": "National Demographics", 
                 "mode": "ondemand", 
@@ -1400,16 +1316,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "PCT_LOWINC", 
-                            "label": "Percent Low Income Population (Less Than 2X Poverty Level) \u00a0\u00a0"
+                            "label": "Percent Low Income Population (Less Than 2X Poverty Level) \u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1428,7 +1344,7 @@
                 "autorefresh": 0, 
                 "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/ACS_Demographics_by_Tract_2008_2012/MapServer", 
                 "eaID": 734, 
-                "eaPBS": true, 
+                "eaPBS": "National Demographics", 
                 "eaMetadata": "E011", 
                 "eaTopic": "National Demographics", 
                 "mode": "ondemand", 
@@ -1438,16 +1354,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "PERC_MINOR", 
-                            "label": "Percent Minority\u00a0\u00a0"
+                            "label": "Percent Minority\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1466,7 +1382,7 @@
                 "autorefresh": 0, 
                 "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/ACS_Demographics_by_Tract_2008_2012/MapServer", 
                 "eaID": 735, 
-                "eaPBS": true, 
+                "eaPBS": "National Demographics", 
                 "eaMetadata": "E011", 
                 "eaTopic": "National Demographics", 
                 "mode": "ondemand", 
@@ -1476,16 +1392,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "PCT_AO0", 
-                            "label": "Percent of households with zero vehicles\u00a0\u00a0"
+                            "label": "Percent of households with zero vehicles\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1504,7 +1420,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 736, 
                 "eaDfsLink": "Supplemental/Percentofhouseholdswithzerovehicles.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Commuting and Walkability ", 
                 "eaMetadata": "E011", 
                 "eaTopic": "Commuting and Walkability", 
                 "mode": "ondemand", 
@@ -1514,16 +1430,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "E_PCTLOWWA", 
-                            "label": "Percent low-wage workers [work location]\u00a0\u00a0"
+                            "label": "Percent low-wage workers [work location]\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1545,7 +1461,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Demographics/MapServer", 
                 "eaID": 737, 
                 "eaDfsLink": "Supplemental/Percentoflowwageworkersworklocation.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Employment ", 
                 "eaMetadata": "E011", 
                 "eaTopic": "Employment", 
                 "mode": "ondemand", 
@@ -1555,16 +1471,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "BikeWalk", 
-                            "label": "Percent of workers who bike or walk to work\u00a0\u00a0"
+                            "label": "Percent of workers who bike or walk to work\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1582,26 +1498,29 @@
                 "autorefresh": 0, 
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 738, 
-                "eaPBS": true, 
+                "eaPBS": "Commuting and Walkability ", 
                 "eaMetadata": "N014", 
                 "eaTopic": "Commuting and Walkability", 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE"
+                "type": "FEATURE", 
+                "eaBCSDD": [
+                    "Percentofworkerswhobikeorwalktowork"
+                ]
             }, 
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "Carpool", 
-                            "label": "Percent of workers who carpool to work\u00a0\u00a0"
+                            "label": "Percent of workers who carpool to work\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1619,26 +1538,29 @@
                 "autorefresh": 0, 
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 739, 
-                "eaPBS": true, 
+                "eaPBS": "Commuting and Walkability ", 
                 "eaMetadata": "N014", 
                 "eaTopic": "Commuting and Walkability", 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE"
+                "type": "FEATURE", 
+                "eaBCSDD": [
+                    "Percentofworkerswhocarpooltowork"
+                ]
             }, 
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "Public", 
-                            "label": "Percent of workers who commute to work by public transportation\u00a0\u00a0"
+                            "label": "Percent of workers who commute to work by public transportation\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1655,26 +1577,29 @@
                 "autorefresh": 0, 
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 740, 
-                "eaPBS": true, 
+                "eaPBS": "Commuting and Walkability ", 
                 "eaMetadata": "N014", 
                 "eaTopic": "Commuting and Walkability", 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE"
+                "type": "FEATURE", 
+                "eaBCSDD": [
+                    "Percentofworkerswhocommutetoworkbypublictransportation"
+                ]
             }, 
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "Drivealone", 
-                            "label": "Percent of workers who drive to work alone\u00a0\u00a0"
+                            "label": "Percent of workers who drive to work alone\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1692,26 +1617,29 @@
                 "autorefresh": 0, 
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 741, 
-                "eaPBS": true, 
+                "eaPBS": "Commuting and Walkability ", 
                 "eaMetadata": "N014", 
                 "eaTopic": "Commuting and Walkability", 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE"
+                "type": "FEATURE", 
+                "eaBCSDD": [
+                    "Percentofworkerswhodrivetoworkalone"
+                ]
             }, 
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "Home", 
-                            "label": "Percent of workers who work from home\u00a0\u00a0"
+                            "label": "Percent of workers who work from home\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1729,26 +1657,29 @@
                 "autorefresh": 0, 
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 742, 
-                "eaPBS": true, 
+                "eaPBS": "Commuting and Walkability ", 
                 "eaMetadata": "N014", 
                 "eaTopic": "Commuting and Walkability", 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE"
+                "type": "FEATURE", 
+                "eaBCSDD": [
+                    "Percentofworkerswhoworkfromhome"
+                ]
             }, 
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "P_30_60", 
-                            "label": "Percent of workers with 30 - 60 minutes travel time to work\u00a0\u00a0"
+                            "label": "Percent of workers with 30 - 60 minutes travel time to work\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1766,26 +1697,29 @@
                 "autorefresh": 0, 
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 743, 
-                "eaPBS": true, 
+                "eaPBS": "Commuting and Walkability ", 
                 "eaMetadata": "N015", 
                 "eaTopic": "Commuting and Walkability", 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE"
+                "type": "FEATURE", 
+                "eaBCSDD": [
+                    "Percentofworkerswith3060minutestraveltimetowork"
+                ]
             }, 
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "P_60_90", 
-                            "label": "Percent of workers with 60 - 90 minutes travel time to work\u00a0\u00a0"
+                            "label": "Percent of workers with 60 - 90 minutes travel time to work\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1803,26 +1737,29 @@
                 "autorefresh": 0, 
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 744, 
-                "eaPBS": true, 
+                "eaPBS": "Commuting and Walkability ", 
                 "eaMetadata": "N015", 
                 "eaTopic": "Commuting and Walkability", 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE"
+                "type": "FEATURE", 
+                "eaBCSDD": [
+                    "Percentofworkerswith6090minutestraveltimetowork"
+                ]
             }, 
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "P_more_90", 
-                            "label": "Percent of workers with greater than 90 minutes travel time to work\u00a0\u00a0"
+                            "label": "Percent of workers with greater than 90 minutes travel time to work\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1840,26 +1777,29 @@
                 "autorefresh": 0, 
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 745, 
-                "eaPBS": true, 
+                "eaPBS": "Commuting and Walkability ", 
                 "eaMetadata": "N015", 
                 "eaTopic": "Commuting and Walkability", 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE"
+                "type": "FEATURE", 
+                "eaBCSDD": [
+                    "Percentofworkerswithgreaterthan90minutestraveltimetowork"
+                ]
             }, 
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "P_less_30", 
-                            "label": "Percent of workers with less than 30 minutes travel time to work\u00a0\u00a0"
+                            "label": "Percent of workers with less than 30 minutes travel time to work\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -1877,26 +1817,29 @@
                 "autorefresh": 0, 
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 746, 
-                "eaPBS": true, 
+                "eaPBS": "Commuting and Walkability ", 
                 "eaMetadata": "N015", 
                 "eaTopic": "Commuting and Walkability", 
                 "mode": "ondemand", 
                 "eaScale": "NATIONAL", 
-                "type": "FEATURE"
+                "type": "FEATURE", 
+                "eaBCSDD": [
+                    "Percentofworkerswithlessthan30minutestraveltimetowork"
+                ]
             }, 
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "PERC_AGE_OVER64", 
-                            "label": "Percent Population Age Greater Than 64 Years Old\u00a0\u00a0"
+                            "label": "Percent Population Age Greater Than 64 Years Old\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1915,7 +1858,7 @@
                 "autorefresh": 0, 
                 "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/ACS_Demographics_by_Tract_2008_2012/MapServer", 
                 "eaID": 747, 
-                "eaPBS": true, 
+                "eaPBS": "National Demographics", 
                 "eaMetadata": "E011", 
                 "eaTopic": "National Demographics", 
                 "mode": "ondemand", 
@@ -1925,16 +1868,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "POP_DEN", 
-                            "label": "Population Density (per square mile)\u00a0\u00a0"
+                            "label": "Population Density (per square mile)\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1951,7 +1894,7 @@
                 "autorefresh": 0, 
                 "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/ACS_Demographics_by_Tract_2008_2012/MapServer", 
                 "eaID": 748, 
-                "eaPBS": true, 
+                "eaPBS": "National Demographics", 
                 "eaMetadata": "E011", 
                 "eaTopic": "National Demographics", 
                 "mode": "ondemand", 
@@ -1961,16 +1904,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "AMERIND", 
-                            "label": "Population of American Indian and Alaskan Native\u00a0\u00a0"
+                            "label": "Population of American Indian and Alaskan Native\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -1990,7 +1933,7 @@
                 "autorefresh": 0, 
                 "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/ACS_Demographics_by_Tract_2008_2012/MapServer", 
                 "eaID": 749, 
-                "eaPBS": true, 
+                "eaPBS": "National Demographics", 
                 "eaMetadata": "E011", 
                 "eaTopic": "National Demographics", 
                 "mode": "ondemand", 
@@ -2000,16 +1943,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "AMERIND_BPOV", 
-                            "label": "Population of American Indian and Alaskan Native Below Poverty Level\u00a0\u00a0"
+                            "label": "Population of American Indian and Alaskan Native Below Poverty Level\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -2029,7 +1972,7 @@
                 "autorefresh": 0, 
                 "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/ACS_Demographics_by_Tract_2008_2012/MapServer", 
                 "eaID": 750, 
-                "eaPBS": true, 
+                "eaPBS": "National Demographics", 
                 "eaMetadata": "E011", 
                 "eaTopic": "National Demographics", 
                 "mode": "ondemand", 
@@ -2039,16 +1982,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "D1A", 
-                            "label": "Residential density (hu/ac)\u00a0\u00a0"
+                            "label": "Residential density (hu/ac)\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2068,7 +2011,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Housing/MapServer", 
                 "eaID": 751, 
                 "eaDfsLink": "Supplemental/Residentialdensity.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Housing and Facilities", 
                 "eaMetadata": "E010", 
                 "eaTopic": "Housing and Facilities", 
                 "mode": "ondemand", 
@@ -2078,16 +2021,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "EMPTOT", 
-                            "label": "Total employment\u00a0\u00a0"
+                            "label": "Total employment\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2108,7 +2051,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Employment/MapServer", 
                 "eaID": 752, 
                 "eaDfsLink": "Supplemental/Totalemployment.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Employment ", 
                 "eaMetadata": "E010", 
                 "eaTopic": "Employment", 
                 "mode": "ondemand", 
@@ -2118,16 +2061,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "COUNTHU10", 
-                            "label": "Total housing units\u00a0\u00a0"
+                            "label": "Total housing units\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2147,7 +2090,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Housing/MapServer", 
                 "eaID": 753, 
                 "eaDfsLink": "Supplemental/Totalhousingunits.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Housing and Facilities", 
                 "eaMetadata": "E010", 
                 "eaTopic": "Housing and Facilities", 
                 "mode": "ondemand", 
@@ -2157,16 +2100,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "TOTALPOP", 
-                            "label": "Total Population\u00a0\u00a0"
+                            "label": "Total Population\u00a0"
                         }
                     ], 
                     "title": "Census Tract ID: {GEOID10}"
@@ -2184,7 +2127,7 @@
                 "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/ACS_Demographics_by_Tract_2008_2012/MapServer", 
                 "eaID": 754, 
                 "eaDfsLink": "Supplemental/TotalPopulation.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "National Demographics", 
                 "eaMetadata": "E010", 
                 "eaTopic": "National Demographics", 
                 "mode": "ondemand", 
@@ -2194,16 +2137,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "D4c", 
-                            "label": "Transit service per hour during evening peak\u00a0\u00a0"
+                            "label": "Transit service per hour during evening peak\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2222,7 +2165,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 755, 
                 "eaDfsLink": "Supplemental/Transitserviceperhourduringeveningpeak.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Commuting and Walkability ", 
                 "eaMetadata": "E010", 
                 "eaTopic": "Commuting and Walkability", 
                 "mode": "ondemand", 
@@ -2232,16 +2175,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 4
                             }, 
                             "fieldName": "D2C_WREMIX", 
-                            "label": "Workers per job  - Equilibrium Index\u00a0\u00a0"
+                            "label": "Workers per job  - Equilibrium Index\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2262,7 +2205,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 756, 
                 "eaDfsLink": "Supplemental/Workersperjobequilibriumindex.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Employment ", 
                 "eaMetadata": "E010", 
                 "eaTopic": "Employment", 
                 "mode": "ondemand", 
@@ -2272,16 +2215,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
                             "fieldName": "D5ae", 
-                            "label": "Working age population within a 45-minute drive, weighted\u00a0\u00a0"
+                            "label": "Working age population within a 45-minute drive, weighted\u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2301,7 +2244,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Accessibility/MapServer", 
                 "eaID": 757, 
                 "eaDfsLink": "Supplemental/WorkingAgePopulationWithina45MinuteDrive.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Commuting and Walkability ", 
                 "eaMetadata": "E010", 
                 "eaTopic": "Commuting and Walkability", 
                 "mode": "ondemand", 
@@ -2311,16 +2254,16 @@
             {
                 "opacity": 0.5, 
                 "popup": {
-                    "showAttachments": false, 
+                    "showAttachments": "false", 
                     "fieldInfos": [
                         {
-                            "visible": true, 
+                            "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
                             "fieldName": "D1C", 
-                            "label": "Employment density (jobs/ac)\u00a0\u00a0"
+                            "label": "Employment density (jobs/ac) \u00a0"
                         }
                     ], 
                     "title": "Block Group ID: {GEOID10}"
@@ -2341,7 +2284,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/PeopleBuiltSpaces/Employment/MapServer", 
                 "eaID": 758, 
                 "eaDfsLink": "Supplemental/Employmentdensity.pdf", 
-                "eaPBS": true, 
+                "eaPBS": "Employment", 
                 "eaMetadata": "E010", 
                 "eaTopic": "Employment", 
                 "mode": "ondemand", 
