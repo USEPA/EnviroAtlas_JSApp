@@ -77,7 +77,7 @@ def main(_argv):
             else:
                 if (inputWorksheet.cell(key["serviceType"]+rowID).value == "dynamic" or inputWorksheet.cell(key["serviceType"]+rowID).value == "image"):
                     layerJSON["type"] = "DYNAMIC"
-                if (inputWorksheet.cell(key["serviceType"]+rowID).value == "tiled"):
+                if (inputWorksheet.cell(key["serviceType"]+rowID).value == "tile"):
                     layerJSON["type"] = "TILED"
             # Convert the plain text popupJSON into Python Dictionary for loading
             print(name)
