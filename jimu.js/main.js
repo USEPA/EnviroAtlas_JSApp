@@ -159,6 +159,9 @@ define(["./ConfigManager",
     window.successLayerDictionary = {};
     window.communityExtentDic = {};
     window.hashAttribute = {};
+    window.hashURL = {};
+    window.hashPopup = {};
+    window.hashURL = {};
                 
     //patch for JS API 3.10
     var hasMethod = typeof cookie.getAll === 'function';
