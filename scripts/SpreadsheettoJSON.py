@@ -73,7 +73,7 @@ def main(_argv):
         else:
             if (inputWorksheet.cell(key["serviceType"]+rowID).value == "dynamic" or inputWorksheet.cell(key["serviceType"]+rowID).value == "image"):
                 layerJSON["type"] = "DYNAMIC"
-            if (inputWorksheet.cell(key["serviceType"]+rowID).value == "tiled"):
+            if (inputWorksheet.cell(key["serviceType"]+rowID).value == "tile"):
                 layerJSON["type"] = "TILED"
             ### code for reading in saved json files with layer/popup definitions.
             #with open(rootpath + inputWorksheet.cell(key["popupDefinition"]+rowID).value) as json_data:
