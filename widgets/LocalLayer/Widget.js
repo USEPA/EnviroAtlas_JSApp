@@ -318,6 +318,7 @@ define([
                         bPopup = true;
                         var _popupTemplate;
                         if (layer.popup) {
+                        	window.hashPopup[layer.eaID] = layer.popup;
                             if (layer.popup.fieldInfos) {
                                 fieldInfos = layer.popup.fieldInfos;
                                 if (fieldInfos[0].hasOwnProperty('fieldName')) {
@@ -364,6 +365,7 @@ define([
                         if (bPopup) {
                             if (layer.hasOwnProperty('eaLyrNum')) {
                                 lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
+                                window.hashURL[layer.eaID] = layer.url + "/" + layer.eaLyrNum.toString();
                             } else {
                                 lLayer = new FeatureLayer(layer.url, lOptions);
                             }
