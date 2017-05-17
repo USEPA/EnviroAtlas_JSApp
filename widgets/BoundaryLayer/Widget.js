@@ -302,6 +302,13 @@ define([
 	        self = this;
 	        this.updateBoundaryLayers();
 	        
+            // The community boundary layer is special, may already be activated automatically by the selection of a community layer
+            var lyrBoundaryPoint = map.getLayer(window.idCommuBoundaryPoint); 
+            if (lyrBoundaryPoint != null){
+                console.log(lyrBoundaryPoint);
+                var bndChkboxID = window.chkSelectableLayer + lyrBoundaryPoint.id.substring(window.layerIdBndrPrefix.length,100);
+                if (dojo.byId(bndChkboxID)) {dojo.byId(bndChkboxID).checked = true;}
+            }
 	        
 	        /*dojo.byId("selectAllBoundary").checked = false;	        
 	        document.getElementById("selectAllBoundary").onclick = function() {
