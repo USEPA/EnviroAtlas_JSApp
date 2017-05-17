@@ -335,7 +335,7 @@ define([
                             }
                             if (bPopup) {
                                 _popupTemplate = new PopupTemplate(layer.popup);
-                                lOptions.infoTemplate = _popupTemplate;
+                                //lOptions.infoTemplate = _popupTemplate;
                             } else {
                                 console.log("layer.eaID: " +  + layer.eaID.toString() + " with no popup info defined");
                             }
