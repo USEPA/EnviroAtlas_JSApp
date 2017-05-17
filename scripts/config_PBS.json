@@ -2,28 +2,22 @@
     "layers": {
         "layer": [
             {
-                "opacity": 0.5, 
-                "eaTopic": "Commuting and Walkability", 
-                "eaDescription": "This EnviroAtlas dataset estimates the intersection density of walkable roads within a 750 meter radius of any given 10 meter pixel in the community. Intersections are defined as any point where 3 or more roads meet and density is calculated using kernel density, where closer intersections are weighted higher than further intersections. Intersection density is highly correlated with walking for transportation.", 
-                "eaNHM": true, 
-                "name": "Estimated intersection density of walkable roads", 
                 "eaRCA": true, 
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/IntDen_AllCommunities/MapServer", 
-                "eaID": 700, 
-                "eaDfsLink": "Supplemental/Estimatedintersectiondensityofwalkableroads.pdf", 
+                "visible": false, 
+                "eaCPW": true, 
+                "eaLyrNum": 0, 
                 "eaTags": [
                     "people", 
                     "human", 
                     "transportation"
                 ], 
+                "eaID": 700, 
                 "eaCS": true, 
-                "eaPBS": "Commuting and Walkability ", 
-                "eaMetadata": "C011", 
-                "visible": false, 
-                "eaMetric": "foundational", 
-                "eaCPW": true, 
-                "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
+                "type": "TILED", 
+                "eaCA": true, 
+                "opacity": 0.5, 
+                "eaPBS": "Commuting and Walkability ", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - x", 
                     "Clean Air - x", 
@@ -32,7 +26,14 @@
                     "Natural Hazard Mitigation - x", 
                     "Recreation, Culture, and Aesthetics - x"
                 ], 
-                "eaCA": true, 
+                "eaNHM": true, 
+                "name": "Estimated intersection density of walkable roads", 
+                "eaTopic": "Commuting and Walkability", 
+                "eaDescription": "This EnviroAtlas dataset estimates the intersection density of walkable roads within a 750 meter radius of any given 10 meter pixel in the community. Intersections are defined as any point where 3 or more roads meet and density is calculated using kernel density, where closer intersections are weighted higher than further intersections. Intersection density is highly correlated with walking for transportation.", 
+                "eaDfsLink": "Supplemental/Estimatedintersectiondensityofwalkableroads.pdf", 
+                "eaMetric": "foundational", 
+                "eaMetadata": "C011", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/IntDen_AllCommunities/MapServer", 
                 "eaBC": true
             }, 
             {
