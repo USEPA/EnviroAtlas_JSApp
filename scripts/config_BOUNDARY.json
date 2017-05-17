@@ -282,7 +282,7 @@
                                 {
                                     "visible": false, 
                                     "stringFieldOption": "textbox", 
-                                    "fieldName": "HUC4", 
+                                    "fiel}dName": "HUC4", 
                                     "tooltip": "", 
                                     "label": "HUC4"
                                 }, 

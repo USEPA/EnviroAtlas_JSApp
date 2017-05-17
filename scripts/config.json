@@ -3993,6 +3993,7 @@
                 "eaID": 86, 
                 "eaCS": true, 
                 "eaScale": "COMMUNITY", 
+                "type": "TILED", 
                 "eaCA": true, 
                 "opacity": 0.5, 
                 "eaFFM": true, 
@@ -4038,6 +4039,7 @@
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
                 "tileLink": "no", 
+                "type": "TILED", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - x", 
                     "Recreation, Culture, and Aesthetics - x"
@@ -4046,7 +4048,6 @@
             }, 
             {
                 "opacity": 0.5, 
-                "eaTopic": "Near-Road Environments", 
                 "popup": {
                     "showAttachments": true, 
                     "fieldInfos": [
@@ -4117,11 +4118,10 @@
                     "description": null, 
                     "title": "Estimated percent of tree cover within 26m of a road edge: {PctTree}"
                 }, 
-                "tileLink": "no", 
-                "name": "Estimated percent of tree cover within 26m of a road edge", 
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/NrRd_PFor_AllCommunities/MapServer", 
-                "eaID": 88, 
-                "eaDescription": "This map estimates the percent tree cover within 26 meters of a busy road edge at any given point throughout the community. A \u201cbusy\u201d roadway in EnviroAtlas is defined to include interstates, arterial roads, and collector roads. It does not include local or neighborhood roads, though some of these roads may also experience consistent and heavy traffic.", 
+                "eaRCA": true, 
+                "visible": false, 
+                "eaMetric": "foundational", 
+                "eaLyrNum": 0, 
                 "eaTags": [
                     "forest", 
                     "plants", 
@@ -4133,18 +4133,21 @@
                     "well-being", 
                     "green"
                 ], 
-                "eaMetadata": "C015", 
-                "visible": false, 
-                "eaMetric": "foundational", 
-                "eaLyrNum": 0, 
-                "eaScale": "COMMUNITY", 
                 "eaBCSDD": [
                     "Clean Air - x", 
                     "Recreation, Culture, and Aesthetics - x"
                 ], 
+                "eaDescription": "This map estimates the percent tree cover within 26 meters of a busy road edge at any given point throughout the community. A \u201cbusy\u201d roadway in EnviroAtlas is defined to include interstates, arterial roads, and collector roads. It does not include local or neighborhood roads, though some of these roads may also experience consistent and heavy traffic.", 
+                "tileLink": "no", 
+                "name": "Estimated percent of tree cover within 26m of a road edge", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/NrRd_PFor_AllCommunities/MapServer", 
+                "eaID": 88, 
                 "eaDfsLink": "ESC/Estimatedpercentoftreecoverwithin26mofaroadedge.pdf", 
-                "eaCA": true, 
-                "eaRCA": true
+                "eaMetadata": "C015", 
+                "eaTopic": "Near-Road Environments", 
+                "eaScale": "COMMUNITY", 
+                "type": "TILED", 
+                "eaCA": true
             }, 
             {
                 "opacity": 0.5, 
@@ -4172,6 +4175,7 @@
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
                 "tileLink": "no", 
+                "type": "TILED", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - x", 
                     "Clean and Plentiful Water - x", 
@@ -4182,7 +4186,6 @@
             }, 
             {
                 "opacity": 0.5, 
-                "eaTopic": "Land Cover: Near-Water", 
                 "popup": {
                     "showAttachments": false, 
                     "fieldInfos": [
@@ -4254,12 +4257,11 @@
                     "description": null, 
                     "title": "Estimated tree cover in 50m stream and lake buffer (percent):{PFOR}"
                 }, 
-                "eaNHM": true, 
-                "name": "Estimated tree cover in 50m stream and lake buffer (percent)", 
                 "eaRCA": true, 
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/RB51m_For_AllCommunities/MapServer", 
-                "eaID": 90, 
-                "eaDescription": "This map estimates the percent tree cover within 50 meters of hydrologically connected non-coastal waters. It is not summarized by census block group.", 
+                "visible": false, 
+                "eaMetric": "foundational", 
+                "eaCPW": true, 
+                "eaLyrNum": 0, 
                 "eaTags": [
                     "water", 
                     "stream", 
@@ -4269,12 +4271,6 @@
                     "vegetation", 
                     "riparian"
                 ], 
-                "eaMetadata": "C023", 
-                "visible": false, 
-                "eaMetric": "foundational", 
-                "eaCPW": true, 
-                "eaLyrNum": 0, 
-                "eaScale": "COMMUNITY", 
                 "tileLink": "no", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - x", 
@@ -4282,7 +4278,16 @@
                     "Natural Hazard Mitigation - x", 
                     "Recreation, Culture, and Aesthetics - x"
                 ], 
+                "eaDescription": "This map estimates the percent tree cover within 50 meters of hydrologically connected non-coastal waters. It is not summarized by census block group.", 
+                "eaNHM": true, 
+                "name": "Estimated tree cover in 50m stream and lake buffer (percent)", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/RB51m_For_AllCommunities/MapServer", 
+                "eaID": 90, 
                 "eaDfsLink": "ESC/Estimatedtreecoverin50mstreamandlakebuffer.pdf", 
+                "eaMetadata": "C023", 
+                "eaTopic": "Land Cover: Near-Water", 
+                "eaScale": "COMMUNITY", 
+                "type": "TILED", 
                 "eaBC": true
             }, 
             {
@@ -4314,6 +4319,7 @@
                 "eaLyrNum": 0, 
                 "eaScale": "COMMUNITY", 
                 "tileLink": "no", 
+                "type": "TILED", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - x", 
                     "Clean and Plentiful Water - x", 
@@ -4324,7 +4330,6 @@
             }, 
             {
                 "opacity": 0.5, 
-                "eaTopic": "Land Cover: Near-Water", 
                 "popup": {
                     "showAttachments": false, 
                     "fieldInfos": [
@@ -4396,12 +4401,11 @@
                     "description": null, 
                     "title": "Estimated vegetated cover in 50m stream and lake buffer (percent):{PVEGE}"
                 }, 
-                "eaNHM": true, 
-                "name": "Estimated vegetated cover in 50m stream and lake buffer (percent)", 
                 "eaRCA": true, 
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/RB51m_Vege_AllCommunities/MapServer", 
-                "eaID": 92, 
-                "eaDescription": "This map estimates the percent vegetated cover within 50 meters of hydrologically connected non-coastal waters. It is not summarized by census block group.", 
+                "visible": false, 
+                "eaMetric": "foundational", 
+                "eaCPW": true, 
+                "eaLyrNum": 0, 
                 "eaTags": [
                     "water", 
                     "stream", 
@@ -4414,12 +4418,6 @@
                     "plants", 
                     "riparian"
                 ], 
-                "eaMetadata": "C024", 
-                "visible": false, 
-                "eaMetric": "foundational", 
-                "eaCPW": true, 
-                "eaLyrNum": 0, 
-                "eaScale": "COMMUNITY", 
                 "tileLink": "no", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - x", 
@@ -4427,12 +4425,20 @@
                     "Natural Hazard Mitigation - x", 
                     "Recreation, Culture, and Aesthetics - x"
                 ], 
+                "eaDescription": "This map estimates the percent vegetated cover within 50 meters of hydrologically connected non-coastal waters. It is not summarized by census block group.", 
+                "eaNHM": true, 
+                "name": "Estimated vegetated cover in 50m stream and lake buffer (percent)", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/RB51m_Vege_AllCommunities/MapServer", 
+                "eaID": 92, 
                 "eaDfsLink": "ESC/Estimatedvegetatedcoverin50mstreamandlakebuffer.pdf", 
+                "eaMetadata": "C024", 
+                "eaTopic": "Land Cover: Near-Water", 
+                "eaScale": "COMMUNITY", 
+                "type": "TILED", 
                 "eaBC": true
             }, 
             {
                 "opacity": 0.5, 
-                "eaTopic": "Engagement with Outdoors", 
                 "popup": {
                     "showAttachments": true, 
                     "fieldInfos": [
@@ -4520,11 +4526,10 @@
                     "description": null, 
                     "title": "Estimated walking distance to a park entrance (m): {ParkProxD}"
                 }, 
-                "tileLink": "no", 
-                "name": "Estimated walking distance to a park entrance (m)", 
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Park_Prox_AllCommunities/MapServer", 
-                "eaID": 93, 
-                "eaDescription": "This map estimates the total meters, or walking distance, from each park entrance.", 
+                "eaRCA": true, 
+                "visible": false, 
+                "eaMetric": "foundational", 
+                "eaLyrNum": 0, 
                 "eaTags": [
                     "human", 
                     "recreation", 
@@ -4533,38 +4538,21 @@
                     "well-being", 
                     "health"
                 ], 
-                "eaMetadata": "C018", 
-                "visible": false, 
-                "eaMetric": "foundational", 
-                "eaLyrNum": 0, 
-                "eaScale": "COMMUNITY", 
                 "eaBCSDD": [
                     "Recreation, Culture, and Aesthetics - x"
                 ], 
+                "eaDescription": "This map estimates the total meters, or walking distance, from each park entrance.", 
+                "tileLink": "no", 
+                "name": "Estimated walking distance to a park entrance (m)", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Park_Prox_AllCommunities/MapServer", 
+                "eaID": 93, 
                 "eaDfsLink": "ESC/Estimatedwalkingdistancetoaparkentrance.pdf", 
-                "eaRCA": true
+                "eaMetadata": "C018", 
+                "eaTopic": "Engagement with Outdoors", 
+                "eaScale": "COMMUNITY", 
+                "type": "TILED"
             }, 
             {
-                "eaRCA": true, 
-                "visible": false, 
-                "eaCPW": true, 
-                "eaLyrNum": 0, 
-                "eaTags": [
-                    "forest", 
-                    "trees", 
-                    "plants", 
-                    "vegetation", 
-                    "developed", 
-                    "human", 
-                    "transportation", 
-                    "health", 
-                    "well-being"
-                ], 
-                "tileLink": "no", 
-                "eaID": 94, 
-                "eaCS": true, 
-                "eaScale": "COMMUNITY", 
-                "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
                     "showAttachments": true, 
@@ -4636,7 +4624,23 @@
                     "description": null, 
                     "title": "Percent green space along walkable roads: {Pct_GS}"
                 }, 
+                "eaRCA": true, 
+                "visible": false, 
                 "eaMetric": "foundational", 
+                "eaCPW": true, 
+                "eaLyrNum": 0, 
+                "eaTags": [
+                    "forest", 
+                    "trees", 
+                    "plants", 
+                    "vegetation", 
+                    "developed", 
+                    "human", 
+                    "transportation", 
+                    "health", 
+                    "well-being"
+                ], 
+                "tileLink": "no", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - x", 
                     "Clean Air - x", 
@@ -4645,18 +4649,22 @@
                     "Natural Hazard Mitigation - x", 
                     "Recreation, Culture, and Aesthetics - x"
                 ], 
+                "eaDescription": "This EnviroAtlas dataset estimates green space along walkable roads. Green space within 25 meters of the road centerline is included and the percentage is based on the total area between street intersections. Green space provides valuable benefits to neighborhood residents and walkers by providing shade, improved aesthetics, and outdoor gathering spaces.", 
                 "eaNHM": true, 
                 "name": "Percent green space along walkable roads", 
-                "eaTopic": "Near-Road Environments", 
-                "eaDescription": "This EnviroAtlas dataset estimates green space along walkable roads. Green space within 25 meters of the road centerline is included and the percentage is based on the total area between street intersections. Green space provides valuable benefits to neighborhood residents and walkers by providing shade, improved aesthetics, and outdoor gathering spaces.", 
-                "eaDfsLink": "Supplemental/Percentgreenspacealongwalkableroads.pdf", 
-                "eaMetadata": "C019", 
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/PctStGS_AllCommunities/MapServer", 
+                "eaID": 94, 
+                "eaDfsLink": "Supplemental/Percentgreenspacealongwalkableroads.pdf", 
+                "eaCS": true, 
+                "eaMetadata": "C019", 
+                "eaTopic": "Near-Road Environments", 
+                "eaScale": "COMMUNITY", 
+                "type": "TILED", 
+                "eaCA": true, 
                 "eaBC": true
             }, 
             {
                 "opacity": 0.5, 
-                "eaTopic": "Land Cover: Type", 
                 "popup": {
                     "showAttachments": true, 
                     "fieldInfos": [
@@ -4755,11 +4763,10 @@
                     "description": null, 
                     "title": "Percent green space within 1/4 square kilometer: {GreenProxP}"
                 }, 
-                "eaNHM": true, 
-                "name": "Percent green space within 1/4 square kilometer", 
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/GreenProx_AllCommunities/MapServer", 
-                "eaID": 95, 
-                "eaDescription": "This map illustrates the percent of total land within each \u00bc square kilometer that is covered by vegetation, or \u201cgreen space.\u201d  Green space may include trees, lawns and gardens, crop land, and forested wetlands.", 
+                "eaRCA": true, 
+                "visible": false, 
+                "eaMetric": "foundational", 
+                "eaLyrNum": 0, 
                 "eaTags": [
                     "Access", 
                     "Proxmity", 
@@ -4774,37 +4781,23 @@
                     "well-being", 
                     "health"
                 ], 
-                "eaMetadata": "C008", 
-                "visible": false, 
-                "eaMetric": "foundational", 
-                "eaLyrNum": 0, 
-                "eaScale": "COMMUNITY", 
                 "tileLink": "no", 
                 "eaBCSDD": [
                     "Natural Hazard Mitigation - x", 
                     "Recreation, Culture, and Aesthetics - x"
                 ], 
+                "eaDescription": "This map illustrates the percent of total land within each \u00bc square kilometer that is covered by vegetation, or \u201cgreen space.\u201d  Green space may include trees, lawns and gardens, crop land, and forested wetlands.", 
+                "eaNHM": true, 
+                "name": "Percent green space within 1/4 square kilometer", 
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/GreenProx_AllCommunities/MapServer", 
+                "eaID": 95, 
                 "eaDfsLink": "ESC/Percentgreenspacewithin14squarekilometer.pdf", 
-                "eaRCA": true
+                "eaMetadata": "C008", 
+                "eaTopic": "Land Cover: Type", 
+                "eaScale": "COMMUNITY", 
+                "type": "TILED"
             }, 
             {
-                "eaRCA": true, 
-                "visible": false, 
-                "eaCPW": true, 
-                "eaLyrNum": 0, 
-                "eaTags": [
-                    "development", 
-                    "urban", 
-                    "human", 
-                    "runoff", 
-                    "water", 
-                    "heat"
-                ], 
-                "tileLink": "no", 
-                "eaID": 96, 
-                "eaCS": true, 
-                "eaScale": "COMMUNITY", 
-                "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
                     "showAttachments": false, 
@@ -4887,7 +4880,20 @@
                     "description": null, 
                     "title": "Percent impervious area within 1 square kilometer:{ImpProxP}"
                 }, 
+                "eaRCA": true, 
+                "visible": false, 
                 "eaMetric": "foundational", 
+                "eaCPW": true, 
+                "eaLyrNum": 0, 
+                "eaTags": [
+                    "development", 
+                    "urban", 
+                    "human", 
+                    "runoff", 
+                    "water", 
+                    "heat"
+                ], 
+                "tileLink": "no", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - x", 
                     "Clean Air - x", 
@@ -4896,35 +4902,21 @@
                     "Natural Hazard Mitigation - x", 
                     "Recreation, Culture, and Aesthetics - x"
                 ], 
+                "eaDescription": "This map illustrates the percent of each square kilometer within the community area that is covered by impervious surfaces. It is not summarized by census block group. Impervious surfaces are materials that do not allow the penetration of water and include buildings, roads, and sidewalks.", 
                 "eaNHM": true, 
                 "name": "Percent impervious area within 1 square kilometer", 
-                "eaTopic": "Land Cover: Type", 
-                "eaDescription": "This map illustrates the percent of each square kilometer within the community area that is covered by impervious surfaces. It is not summarized by census block group. Impervious surfaces are materials that do not allow the penetration of water and include buildings, roads, and sidewalks.", 
-                "eaDfsLink": "ESC/Percentimperviousareawithin1squarekilometer.pdf", 
-                "eaMetadata": "C010", 
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/ImpProx_AllCommunities/MapServer", 
+                "eaID": 96, 
+                "eaDfsLink": "ESC/Percentimperviousareawithin1squarekilometer.pdf", 
+                "eaCS": true, 
+                "eaMetadata": "C010", 
+                "eaTopic": "Land Cover: Type", 
+                "eaScale": "COMMUNITY", 
+                "type": "TILED", 
+                "eaCA": true, 
                 "eaBC": true
             }, 
             {
-                "eaRCA": true, 
-                "visible": false, 
-                "eaCPW": true, 
-                "eaLyrNum": 0, 
-                "eaTags": [
-                    "forest", 
-                    "plants", 
-                    "vegetation", 
-                    "developed", 
-                    "human", 
-                    "transportation", 
-                    "health", 
-                    "well-being"
-                ], 
-                "tileLink": "no", 
-                "eaID": 97, 
-                "eaCS": true, 
-                "eaScale": "COMMUNITY", 
-                "eaCA": true, 
                 "opacity": 0.5, 
                 "popup": {
                     "showAttachments": true, 
@@ -4996,7 +4988,22 @@
                     "description": null, 
                     "title": "Percent tree cover along walkable roads: {Pct_TC}"
                 }, 
+                "eaRCA": true, 
+                "visible": false, 
                 "eaMetric": "foundational", 
+                "eaCPW": true, 
+                "eaLyrNum": 0, 
+                "eaTags": [
+                    "forest", 
+                    "plants", 
+                    "vegetation", 
+                    "developed", 
+                    "human", 
+                    "transportation", 
+                    "health", 
+                    "well-being"
+                ], 
+                "tileLink": "no", 
                 "eaBCSDD": [
                     "Biodiversity Conservation - x", 
                     "Clean Air - x", 
@@ -5005,13 +5012,18 @@
                     "Natural Hazard Mitigation - x", 
                     "Recreation, Culture, and Aesthetics - x"
                 ], 
+                "eaDescription": "This EnviroAtlas dataset estimates tree cover along walkable roads. The road width is estimated for each road and percent tree cover is calculated in a 8.5 meter strip beginning at the estimated road edge. Percent tree cover is calculated for each block between road intersections. Tree cover provides valuable benefits to neighborhood residents and walkers by providing shade, improved aesthetics, and outdoor gathering spaces.", 
                 "eaNHM": true, 
                 "name": "Percent tree cover along walkable roads", 
-                "eaTopic": "Near-Road Environments", 
-                "eaDescription": "This EnviroAtlas dataset estimates tree cover along walkable roads. The road width is estimated for each road and percent tree cover is calculated in a 8.5 meter strip beginning at the estimated road edge. Percent tree cover is calculated for each block between road intersections. Tree cover provides valuable benefits to neighborhood residents and walkers by providing shade, improved aesthetics, and outdoor gathering spaces.", 
-                "eaDfsLink": "Supplemental/Percenttreecoveralongwalkableroads.pdf", 
-                "eaMetadata": "C020", 
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/PctStTC_AllCommunities/MapServer", 
+                "eaID": 97, 
+                "eaDfsLink": "Supplemental/Percenttreecoveralongwalkableroads.pdf", 
+                "eaCS": true, 
+                "eaMetadata": "C020", 
+                "eaTopic": "Near-Road Environments", 
+                "eaScale": "COMMUNITY", 
+                "type": "TILED", 
+                "eaCA": true, 
                 "eaBC": true
             }, 
             {
@@ -21910,6 +21922,12 @@
                     "Recreation, Culture, and Aesthetics - x"
                 ], 
                 "eaBC": true
+            }, 
+            {
+                "opacity": 0.5, 
+                "visible": false, 
+                "url": null, 
+                "name": null
             }
         ]
     }

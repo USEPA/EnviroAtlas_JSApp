@@ -13,8 +13,8 @@ import sys, json, csv, openpyxl
 # This is the spreadsheet that contains all the content
 rootpath = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\\"
 inputSpreadsheet = rootpath + r"EAWAB4JSON.xlsx"
-# Just in case there are rows to ignore at the top - header is row 0
-startingRow = 1
+# Just in case there are rows to ignore at the top - header is row 1
+startingRow = 2
 # This should be a csv table that maps spreadsheet column headers to json elements
 # no great reason it needs to be in a standalone file rather than embedded in this
 # script as a dictionary.
@@ -48,13 +48,13 @@ def main(_argv):
     mapDictionary = dict([(row['jsonElem'], row['Column']) for row in mapTableReader])
 
     # Create a dictionary of field titles to column letters
-    fieldsToColumns = dict([(cell.value, cell.column) for cell in inputWorksheet.rows[0]])
+    fieldsToColumns = dict([(cell.value, cell.column) for cell in inputWorksheet[1]])
 
     # Map the dictionary of csv titles to columns letters via the intermediate dictionary
     key = dict([(key, fieldsToColumns[mapDictionary[key]]) for key in mapDictionary.keys()])
 
     # Get row index numbers for non-empty rows:
-    rowsToKeep = removeEmptyRows(inputWorksheet.rows[startingRow:])
+    rowsToKeep = removeEmptyRows(inputWorksheet[startingRow:len(inputWorksheet["A"])])
 
     # Nothing is being piped to the error file right now
     validationErrors = open(errorLogFile,'w+')
@@ -63,34 +63,36 @@ def main(_argv):
     fullJSON = {"layers": {"layer": []}}
 
     for rowID in rowsToKeep:
-        name = inputWorksheet.cell(key["name"]+rowID).value
+        name = inputWorksheet[key["name"]+rowID].value
         layerJSON = {"opacity": 0.5,
                     "visible": False}
-        if (inputWorksheet.cell(key["serviceType"]+rowID).value == "feature"):
+        if (inputWorksheet[key["serviceType"]+rowID].value == "feature"):
             layerJSON["type"] ="FEATURE"
             layerJSON["autorefresh"] = 0
             layerJSON["mode"] = "ondemand"
         else:
-            if (inputWorksheet.cell(key["serviceType"]+rowID).value == "dynamic" or inputWorksheet.cell(key["serviceType"]+rowID).value == "image"):
+            if (inputWorksheet[key["serviceType"]+rowID].value == "dynamic" or inputWorksheet[key["serviceType"]+rowID].value == "image"):
                 layerJSON["type"] = "DYNAMIC"
-            if (inputWorksheet.cell(key["serviceType"]+rowID).value == "tile"):
+            if (inputWorksheet[key["serviceType"]+rowID].value == "tile"):
                 layerJSON["type"] = "TILED"
             ### code for reading in saved json files with layer/popup definitions.
             #with open(rootpath + inputWorksheet.cell(key["popupDefinition"]+rowID).value) as json_data:
             #    layerJSON["layers"] = json.load(json_data)
             ### the excel spreadsheet should include a relative path to a json file containing the layer/popup definition, which should be a JSON array of layer objects.
         layerJSON["name"] = name
-        layerJSON["url"] = inputWorksheet.cell(key["url"]+rowID).value
+        layerJSON["url"] = inputWorksheet[key["url"]+rowID].value
         # Convert the plain text popupJSON into Python Dictionary for loading
-        print(name)
-        popupTxt = inputWorksheet.cell(key["popupDefinition"]+rowID).value
-        print(popupTxt)
+        popupTxt = inputWorksheet[key["popupDefinition"]+rowID].value
         if popupTxt != None:
-            popupDefinition = json.loads(popupTxt)
-            layerJSON.update(popupDefinition)
+            try:
+                popupDefinition = json.loads(popupTxt)
+                layerJSON.update(popupDefinition)
+            except:
+                print("This layer had invalid JSON for the popup: " + name)
+                print(popupTxt)
         stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL"]
         for elem in stringList:
-            cell = inputWorksheet.cell(key[elem]+rowID)
+            cell = inputWorksheet[key[elem]+rowID]
             if cell.value != None:
                 cellValue = cell.value
                 if cellValue == 'x':
@@ -98,8 +100,8 @@ def main(_argv):
                 layerJSON[elem] = cellValue
         arrayList = [("eaTags",","),("eaBCSDD",";")]
         for elem,separator in arrayList:
-             if inputWorksheet.cell(key[elem]+rowID).value:
-                fullString = inputWorksheet.cell(key[elem]+rowID).value
+             if inputWorksheet[key[elem]+rowID].value:
+                fullString = inputWorksheet[key[elem]+rowID].value
                 cleanString = fullString.strip(separator+' ')
                 fullArray = cleanString.split(separator)
                 cleanArray = [elemVal.strip() for elemVal in fullArray]
