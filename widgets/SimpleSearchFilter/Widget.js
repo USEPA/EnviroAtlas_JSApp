@@ -65,7 +65,6 @@ define([
     	var singleLayerToBeAddedRemoved = "";
     	var bNoTopicSelected = false;
     	var communitySelected = "";
-    	var self;
     	var arrLayersToChangeSynbology = [];
         var   layerData = {
             identifier: "eaID",  //This field needs to have unique values
@@ -74,6 +73,7 @@ define([
     	var layerDataStore = new dojo.data.ItemFileWriteStore({ data:layerData });
     	var featuresCollection = [];
     	var arrLayersForPopup = [];
+    	var numDecimalDigit = 0;
     	var addSingleFeatureForPopup = function(eaID, clickEvt) {
     		
 			var selectQuery = new query();
@@ -85,6 +85,11 @@ define([
             popupField = window.hashPopup[eaID].fieldInfos[0]["fieldName"];
             popupFieldName = window.hashPopup[eaID].fieldInfos[0]["label"];
             popupTitle = window.hashPopup[eaID].title.split(":");
+            if (window.hashPopup[eaID].fieldInfos[0].hasOwnProperty('format')) {
+            	if (window.hashPopup[eaID].fieldInfos[0].format.hasOwnProperty('places')) {
+            		numDecimalDigit = window.hashPopup[eaID].fieldInfos[0].format.places;
+            	}
+            }
             selectQuery.outFields = ["*"];
             selectQuery.outFields = [popupField, popupTitle[1].trim().replace("{","").replace("}","")];
             
@@ -105,7 +110,7 @@ define([
 				
 					//Loop through each feature returned
 					for (var i=0, il=resultFeatures.length; i<il; i++) {
-						var content = "<b>" + popupTitle[0] + "</b>: $" + popupTitle[1].trim() + "<hr>"+"<b>" + popupFieldName + "</b>: ${" + popupField + "}";			
+						var content = "<b>" + popupTitle[0] + "</b>: $" + popupTitle[1].trim() + "<hr>"+"<b>" + popupFieldName + "</b>: ${" + popupField + ":self.formatValue}";			
 						var infoTemplate = new esri.InfoTemplate(popupFieldName, content);
 					
 					    var graphic = resultFeatures[i];
@@ -1240,6 +1245,10 @@ define([
         } 	    
 
         updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
+     },
+     formatValue : function (value, key, data){
+     	pow10 = Math.pow(10, numDecimalDigit);
+     	return parseFloat(Math.round(value * pow10) / pow10).toFixed(numDecimalDigit);
      }
     });
 
