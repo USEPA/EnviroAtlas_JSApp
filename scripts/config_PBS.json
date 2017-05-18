@@ -45,13 +45,13 @@
                             "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
-                                "places": 1
+                                "places": 0
                             }, 
-                            "fieldName": "Acres_Unpo", 
-                            "label": "Acres of pollinated crops with no nearby pollinator habitat\u00a0\u00a0"
+                            "fieldName": "Day_Count", 
+                            "label": "Number of daycare centers\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -84,13 +84,13 @@
                             "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
-                                "places": 2
+                                "places": 0
                             }, 
-                            "fieldName": "AWD_MGAL", 
-                            "label": "Agricultural water use (million gallons/day)\u00a0\u00a0"
+                            "fieldName": "K12_Count", 
+                            "label": "Number of schools (K-12)\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -125,11 +125,11 @@
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
-                            "fieldName": "DD_OXN_T", 
-                            "label": "Annual oxidized nitrogen dry deposition (kg/ha)\u00a0\u00a0"
+                            "fieldName": "NonWt_Pct", 
+                            "label": "Percent population other than White, non-Hispanic\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -164,11 +164,11 @@
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
-                            "fieldName": "AWD_OXN_T", 
-                            "label": "Annual oxidized nitrogen wet deposition (kg/ha)\u00a0\u00a0"
+                            "fieldName": "over_70pct", 
+                            "label": "Percent population over 70 years old\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -203,11 +203,11 @@
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
-                            "fieldName": "DD_REDN_T", 
-                            "label": "Annual reduced nitrogen dry deposition (kg/ha)\u00a0\u00a0"
+                            "fieldName": "under_1pct", 
+                            "label": "Percent population under 1 year old\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -242,11 +242,11 @@
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
-                            "fieldName": "AWD_REDN_T", 
-                            "label": "Annual reduced nitrogen wet deposition (kg/ha)\u00a0\u00a0"
+                            "fieldName": "under_13pc", 
+                            "label": "Percent population under 13 years old\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -281,11 +281,11 @@
                                 "digitSeparator": true, 
                                 "places": 2
                             }, 
-                            "fieldName": "DD_S_T", 
-                            "label": "Annual sulfur dry deposition (kg/ha)\u00a0\u00a0"
+                            "fieldName": "PLx2_Pct", 
+                            "label": "Percent population with income below twice the poverty level\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -317,13 +317,13 @@
                             "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
-                                "places": 2
+                                "places": 0
                             }, 
-                            "fieldName": "AWD_S_T", 
-                            "label": "Annual sulfur wet deposition (kg/ha)\u00a0\u00a0"
+                            "fieldName": "NonWhite", 
+                            "label": "Population other than White, non-Hispanic\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -356,13 +356,13 @@
                             "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
-                                "places": 1
+                                "places": 0
                             }, 
-                            "fieldName": "SolE_Area", 
-                            "label": "Area of solar energy (km2)\u00a0\u00a0"
+                            "fieldName": "over_70", 
+                            "label": "Population over 70 years old\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -395,13 +395,13 @@
                             "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
-                                "places": 2
+                                "places": 0
                             }, 
-                            "fieldName": "SolE_Mean", 
-                            "label": "Average annual daily potential solar energy (kWh/m2/day)\u00a0\u00a0"
+                            "fieldName": "under_1", 
+                            "label": "Population under 1 year old\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -436,11 +436,11 @@
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
-                            "fieldName": "AvgWindEnergy", 
-                            "label": "Average annual daily potential wind energy (kWh/m2/day)\u00a0\u00a0"
+                            "fieldName": "under_13", 
+                            "label": "Population under 13 years old\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -473,13 +473,13 @@
                             "visible": "true", 
                             "format": {
                                 "digitSeparator": true, 
-                                "places": 1
+                                "places": 0
                             }, 
-                            "fieldName": "MeanPrecip", 
-                            "label": "Average annual precipitation (inches/yr)\u00a0\u00a0"
+                            "fieldName": "PLx2_Pop", 
+                            "label": "Population with income below twice the poverty level\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
@@ -513,11 +513,11 @@
                                 "digitSeparator": true, 
                                 "places": 0
                             }, 
-                            "fieldName": "BG_Demand", 
-                            "label": "Big game hunting recreation demand\u00a0\u00a0"
+                            "fieldName": "SUM_POP10", 
+                            "label": "Total Population [census block group]\u00a0"
                         }
                     ], 
-                    "title": "HUC 12 ID: {HUC_12}"
+                    "title": "Block Group ID: {GEOID10}"
                 }, 
                 "visible": false, 
                 "eaMetric": "dem_metric", 
