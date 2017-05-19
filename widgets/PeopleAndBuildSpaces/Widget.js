@@ -343,29 +343,10 @@ define([
                             if (layer.disableclientcaching) {
                                 lLayer.setDisableClientCaching(true);
                             }
-                            lLayer.on('load', function (evt) {
-                                var removeLayers = [];
-                                array.forEach(evt.layer.visibleLayers, function (layer) {
-                                    //remove any grouplayers
-                                    if (evt.layer.layerInfos[layer].subLayerIds) {
-                                        removeLayers.push(layer);
-                                    } else {
-                                        var _layerCheck = dojo.clone(layer);
-                                        while (evt.layer.layerInfos[_layerCheck].parentLayerId > -1) {
-                                            if (evt.layer.visibleLayers.indexOf(evt.layer.layerInfos[_layerCheck].parentLayerId) == -1) {
-                                                removeLayers.push(layer);
-                                            }
-                                            _layerCheck = dojo.clone(evt.layer.layerInfos[_layerCheck].parentLayerId);
-                                        }
-                                    }
-                                });
-                                array.forEach(removeLayers, function (layerId) {
-                                    evt.layer.visibleLayers.splice(evt.layer.visibleLayers.indexOf(layerId), 1);
-                                });
-                            });
+
                             lLayer.id = window.layerIdPrefix + layer.eaID.toString();
-                            this._viewerMap.addLayer(lLayer);
-                            this._viewerMap.setInfoWindowOnClick(true);
+                            map.addLayer(lLayer);
+                            map.setInfoWindowOnClick(true);
 
                         } else if (layer.type.toUpperCase() === 'FEATURE') {
 
@@ -427,7 +408,7 @@ define([
                             var popupConfig = getPopups(layer);
                             lLayer.setInfoTemplates(popupConfig);
 
-                            this._viewerMap.addLayer(lLayer);
+                            map.addLayer(lLayer);
                         }
                         if (layer.hasOwnProperty('eaScale')) {
                             if (layer.eaScale == "COMMUNITY") {
