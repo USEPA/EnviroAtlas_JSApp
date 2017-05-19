@@ -329,6 +329,7 @@ define([
                             }
                         }
                     } else if (layer.type.toUpperCase() === 'FEATURE') {
+                    	window.featureLyrNumber.push(layer.eaID);
                         bPopup = true;
                         var _popupTemplate;
                         if (layer.popup) {

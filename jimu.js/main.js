@@ -60,6 +60,7 @@ define(["./ConfigManager",
     
     window.bFirstLoadFilterWidget = true;
     window.allLayerNumber = [];
+    window.featureLyrNumber = [];
     window.nationalLayerNumber = [];
     window.layerID_Portal_WebMap = [];
     window.categoryDic = {};
