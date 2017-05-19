@@ -140,18 +140,18 @@ define([
     			self.map.graphics.clear();
     			featuresCollection = [];
     			arrLayersForPopup = [];
-	    		for (i in window.allLayerNumber) {  
+	    		for (i in window.featureLyrNumber) {  
 	    			bVisibleFL = false;
 	    			bVisibleTL = false;
 	    			  		
-		    		lyrFL = self.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);		    		
+		    		lyrFL = self.map.getLayer(window.layerIdPrefix + window.featureLyrNumber[i]);		    		
 		    		if (lyrFL != null) {		    			
 						if (lyrFL.visible == true){
 							bVisibleFL = true;
 						}
 					}
 
-					lyrTL = self.map.getLayer(window.layerIdTiledPrefix + window.allLayerNumber[i]);
+					lyrTL = self.map.getLayer(window.layerIdTiledPrefix + window.featureLyrNumber[i]);
 		    		if (lyrTL != null) {		    			
 						if (lyrTL.visible == true){
 							bVisibleTL = true;							
@@ -159,11 +159,13 @@ define([
 					}		
 					
 					if ((bVisibleFL == true) || (lyrTL == true)) {
-						arrLayersForPopup.push(window.allLayerNumber[i]);
+						arrLayersForPopup.push(window.featureLyrNumber[i]);
 					}		    		
 		    	}
 		    	//start to popup for first layer:
+		    	if 	(arrLayersForPopup.length > 0){
 		    	addSingleFeatureForPopup(arrLayersForPopup.pop(),evt);         
+	        	}       
     		})
     	};
     	var SelectableLayerFactory = function(data) {
