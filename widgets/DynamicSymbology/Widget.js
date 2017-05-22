@@ -265,10 +265,20 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 					  self._resetElements(defaultRenderer);
 				  })
 			  }else {
-				  $.getJSON( 'configs/CommunitySymbology/' + 'AllCommunities' + '_JSON_Symbol/Nulls/' + 'CombComm' + '_' + window.hashAttribute[res[1]] + ".json", function( data ) {
-					  var defaultRenderer = new ClassBreaksRenderer(data);
-					  self._resetElements(defaultRenderer);
-				  })
+			      var str = lyrTobeUpdated.url;
+                  var lookfor = "National";
+			      if(str.includes(lookfor)){
+			         console.log("get from json");
+                      var defaultRenderer = new ClassBreaksRenderer(currentSymbology[_layerID]['origRenderer']);
+                      self._resetElements(defaultRenderer);
+                  }else{
+                      //get from community
+                      $.getJSON( 'configs/CommunitySymbology/' + 'AllCommunities' + '_JSON_Symbol/Nulls/' + 'CombComm' + '_' + window.hashAttribute[res[1]] + ".json", function( data ) {
+                          var defaultRenderer = new ClassBreaksRenderer(data);
+                          self._resetElements(defaultRenderer);
+                      })
+                  }
+
 			  }
 		  });
 	  });
@@ -429,7 +439,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 				dynamicSymbology.slider.set("maxValue", statistics.max);
 				dynamicSymbology.slider.set("statistics", statistics);
 				dynamicSymbology.slider.set("histogram", histogram);
-			  
+
 			  	_busy.hide();
 		  });
 
