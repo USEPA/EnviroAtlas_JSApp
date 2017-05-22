@@ -480,7 +480,7 @@ define([
  	   
     var	_addSelectableLayerSorted = function(items){	    	
 	    
-		//updateTopicToggleButton();
+		updateTopicToggleButton();
 
 		//If using search bar then search all topics
 		if (document.getElementById('searchFilterText').value != ''){
