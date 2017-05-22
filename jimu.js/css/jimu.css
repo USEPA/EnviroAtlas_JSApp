@@ -27,6 +27,10 @@ td, th{
   box-sizing: border-box;
 }
 /************* change map CSS**********************/
+.esriPopupWrapper .sizer .titlePane .title {
+  padding-top: 16px;
+}
+
 .esriSimpleSliderTL{
   top: 5px;
   left: 7px;
