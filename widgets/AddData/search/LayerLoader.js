@@ -22,12 +22,13 @@ define(["dojo/_base/declare",
     "esri/dijit/PopupTemplate",
     "esri/InfoTemplate",
     "esri/renderers/jsonUtils",
-    "jimu/utils"
+    "jimu/utils",
+    'jimu/PanelManager'
   ],
   function(declare, lang, array, all, Deferred, djJson, i18n, util, esriLang, esriRequest, agsUtils,
     ArcGISDynamicMapServiceLayer, ArcGISImageServiceLayer, ArcGISTiledMapServiceLayer, FeatureLayer,
     ImageServiceParameters, KMLLayer, MosaicRule, RasterFunction, VectorTileLayer, WMSLayer,
-    PopupTemplate, InfoTemplate, jsonRendererUtils, jimuUtils) {
+    PopupTemplate, InfoTemplate, jsonRendererUtils, jimuUtils, PanelManager) {
 
     return declare(null, {
 
@@ -864,6 +865,13 @@ define(["dojo/_base/declare",
         //console.warn("_waitForLayer");
         handles.push(layer.on("load", function(layerLoaded) {
           //console.warn("_waitForLayer.load",layerLoaded);
+          
+            //Show Layer List Widget
+            var widgetName = 'LayerList';
+            var widgets = self.appConfig.getConfigElementsByName(widgetName);
+            var pm = PanelManager.getInstance();
+            pm.showPanel(widgets[0]);
+          
           clearHandles();
           dfd.resolve(layerLoaded.layer);
         }));

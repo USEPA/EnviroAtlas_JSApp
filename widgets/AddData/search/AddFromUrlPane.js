@@ -63,7 +63,7 @@ define(["dojo/_base/declare",
       searchPane: null,
 
       _dfd: null,
-
+      
       postCreate: function() {
         this.inherited(arguments);
         this._updateExamples("ArcGIS");
@@ -434,9 +434,9 @@ define(["dojo/_base/declare",
             loader._setFeatureLayerInfoTemplate(lyr);
           }
           window.layerID_Portal_WebMap.push(lyr.id);
-
           
           map.addLayer(lyr);
+          
           dfd.resolve(lyr);
         }).otherwise(function(error) {
           //console.warn("_waitThenAdd.error",error);

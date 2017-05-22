@@ -60,6 +60,7 @@ define(["./ConfigManager",
     
     window.bFirstLoadFilterWidget = true;
     window.allLayerNumber = [];
+    window.featureLyrNumber = [];
     window.nationalLayerNumber = [];
     window.layerID_Portal_WebMap = [];
     window.categoryDic = {};
@@ -159,6 +160,9 @@ define(["./ConfigManager",
     window.successLayerDictionary = {};
     window.communityExtentDic = {};
     window.hashAttribute = {};
+    window.hashURL = {};
+    window.hashPopup = {};
+    window.hashURL = {};
                 
     //patch for JS API 3.10
     var hasMethod = typeof cookie.getAll === 'function';
