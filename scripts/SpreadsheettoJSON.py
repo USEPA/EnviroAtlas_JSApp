@@ -11,7 +11,7 @@ Torrin Hultgren, October 2015
 import sys, json, csv, openpyxl
 
 # This is the spreadsheet that contains all the content
-rootpath = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\\"
+rootpath = r"/home/jbaynes/html/EnviroAtlas/scripts/"
 inputSpreadsheet = rootpath + r"EAWAB4JSON.xlsx"
 # Just in case there are rows to ignore at the top - header is row 1
 startingRow = 2
@@ -90,7 +90,7 @@ def main(_argv):
             except:
                 print("This layer had invalid JSON for the popup: " + name)
                 print(popupTxt)
-        stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL"]
+        stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL", "IsSubLayer", "SubLayerNames", "SubLayerIds"]
         for elem in stringList:
             cell = inputWorksheet[key[elem]+rowID]
             if cell.value != None:
@@ -98,7 +98,7 @@ def main(_argv):
                 if cellValue == 'x':
                     cellValue = True
                 layerJSON[elem] = cellValue
-        arrayList = [("eaTags",","),("eaBCSDD",";")]
+        arrayList = [("eaTags",","),("eaBCSDD",";"),("SubLayerNames", ","), ("SubLayerIds", ";")]
         for elem,separator in arrayList:
              if inputWorksheet[key[elem]+rowID].value:
                 fullString = inputWorksheet[key[elem]+rowID].value

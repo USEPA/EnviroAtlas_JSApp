@@ -56,6 +56,7 @@ define([
     var hiderows = {};
     var hashFactsheetLinkPBS = {};
     var hashLayerNameLinkPBS = {};
+    var hashDescriptionforPBS = {};
 
     var updateSelectablePBSLayersArea = function () {
 
@@ -247,6 +248,7 @@ define([
 
                             hashFactsheetLinkPBS[buttonInfoId] = "N/A";
                             hashLayerNameLinkPBS[buttonInfoId] = layer.name;
+                            hashDescriptionforPBS[buttonInfoId] = layer.eaDescription;
                             if (layer.hasOwnProperty('eaDfsLink')) {
                                 hashFactsheetLinkPBS[buttonInfoId] = layer.eaDfsLink;
                             }
@@ -279,6 +281,30 @@ define([
                             newRow.appendChild(cell2);
 
                             document.getElementById(buttonInfoId).onclick = function (e) {
+
+                                var infobox = new Dialog({
+                                title: hashLayerNameLinkPBS[this.id],
+                                style: 'width: 300px'
+                                });
+
+                            var infoDiv = dojo.create('div', {
+                                'innerHTML': hashDescriptionforPBS[this.id] + '<br><br>'
+                            }, infobox.containerNode);
+
+                            var linkDiv = dojo.create('div', {
+                                }, infobox.containerNode)
+
+                            if (hashFactsheetLinkPBS[this.id] != "N/A") {
+                                var factsheetDiv = dojo.create('a', {
+                                    'innerHTML': 'Fact Sheet',
+                                    'href': window.dataFactSheet + hashFactsheetLinkPBS[this.id],
+                                    'target': '_blank',
+                                    'class': 'factsheetLink' 
+                                }, linkDiv);
+                            }
+                            
+                            infobox.show()
+                      /*
                                 if (hashFactsheetLinkPBS[this.id] == "N/A") {
                                     var dataFactNote = new Dialog({
                                             title: hashLayerNameLinkPBS[this.id],
@@ -289,9 +315,13 @@ define([
 
                                 } else {
                                     window.open(window.dataFactSheet + hashFactsheetLinkPBS[this.id]);
-                                }
+                                }*/
 
                             }; //end of inserting datafactsheet icon
+
+
+
+
 
                         }
                     } // end of if (eaID.trim() != "")

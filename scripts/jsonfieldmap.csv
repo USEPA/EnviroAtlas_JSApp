@@ -24,3 +24,6 @@ tileLink,tileLink
 tileURL,tileURL
 serviceType,serviceType
 popupJSON,popupDefinition
+IsSubLayer,IsSubLayer
+SubLayerNames,SubLayerNames
+SubLayerIds,SubLayerIds

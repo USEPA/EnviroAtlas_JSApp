@@ -191,6 +191,8 @@ define([
 		var hashLayerName = {};
 		var hashEaDescription = {};
 		var hashEaTag = {};
+		var hashSubLayers = {};
+		var hashSubTopicforI = {};
 		var updateSelectableLayersArea = function (){
 			    if (dijit.byId('selectionCriteria')._isShown()) {
 			    	if (navigator.userAgent.indexOf("Chrome")>=0) {
@@ -343,373 +345,484 @@ define([
 	        var pm = PanelManager.getInstance();
 	        pm.showPanel(widgets[0]);	   	
 	   }
- 	   
-	    var	_addSelectableLayerSorted = function(items){	    	
-		    
-			updateTopicToggleButton();
 
-			//If using search bar then search all topics
-			if (document.getElementById('searchFilterText').value != ''){
-				for (var key in window.topicDic) {
-					dicTopicSelected[window.topicDic[key]]  = true;
-					
-				}
+	   var add_bc_icons = function(layerArea, scale) {
+	   		indexImage = 0;
+
+	   		var BC_Div = dojo.create('div', {
+	   			'style': 'overflow:hidden; padding-left: 16px; position: relative; top: -2px'
+			}, layerArea);
+			
+			for (var key in window.categoryDic) {
+
+				bc_img = document.createElement('div');
+				bc_img.style.width = '20px';
+				bc_img.style.height = '20px';
+				bc_img.title  = key;
+				bc_img.style.float = 'left';
+				bc_img.style.marginRight = '5px';
+
+				
+				// Add popup dialog box for Benefit Category 
+				bc_img.onclick = function() {
+				ES_title = this.title;
+
+				var bc_description = new Dialog({
+        		title: 'EnviroAtlas Benefit Categories', 
+        		style: 'width: 450px',
+        		onHide: function() {
+        			bc_description.destroy()
+        			}
+        		});
+        		
+
+        		var BC_tabs = dojo.create('div', {
+	        		style: 'text-align: center; padding-bottom: 15px',
+	        	}, bc_description.containerNode);
+
+	        	for (var key in window.categoryDic) {
+	        		bc_icon_links = dojo.create('a', {
+	        		"title": key,
+	        		"id": window.categoryDic[key] + '_id',
+	        		"class": 'bc_popup '+ window.categoryDic[key],
+	        		}, BC_tabs);
+
+
+	        		dojo.connect(bc_icon_links, 'onclick', function(){
+
+	        			bc_id = this.id.split('_')[0];
+
+
+	        			for (key in window.categoryDic) {
+	        					$('#'+window.categoryDic[key]+'_id').removeClass('bc_popup_selected');
+	        				}
+	        			$('#'+this.id).addClass('bc_popup_selected');
+
+	        			dojo.removeClass(infographic_body);
+	        			dojo.addClass(infographic_body, 'bc_infographic ' + bc_id + '_infographic');
+
+	        			dojo.removeClass(header_icon);
+	        			dojo.addClass(header_icon, 'bc_popup_header_icon ' + bc_id);
+
+	        			dojo.byId(header_text).innerHTML = this.title;
+	        		});
+	        	};
+
+	        	$('#'+window.categoryDic[ES_title]+'_id').addClass('bc_popup_selected');
+
+	        	var bc_infographic = dojo.create('div', {
+    				'id': 'infographic_area',
+    				'style': 'background-color: #f4f4f4; width: 100%'
+    			}, bc_description.containerNode);
+
+    			var infographic_header = dojo.create('div', {
+    			"style": 'height: 40px',
+    			}, bc_infographic);
+
+    			var header_icon = dojo.create('div', {
+    				'class': 'bc_popup_header_icon ' + window.categoryDic[ES_title]
+    			}, infographic_header);
+
+    			var header_text = dojo.create('div', {
+    				'innerHTML': this.title,
+    				'class': 'bc_popup_header_text',
+    			}, infographic_header);
+
+    			var infographic_text = dojo.create('div', {
+    				'innerHTML': 'Ecosystem goods and services, often shortened to ecosystem \
+    							  services (ES), are the benefits that humans receive from nature. \
+    							  These benefits underpin almost every aspect of human well-being, \
+    							  including our food and water, security, health, and economy. \
+    							  <br><br> \
+    							  EnviroAtlas organizes our data into seven benefit categories \
+    							  <br><br>',
+    				'style': 'font-size: 11px',
+    			}, bc_infographic );
+
+    			var infographic_body = dojo.create('div', {
+    				"class": 'bc_infographic ' + window.categoryDic[ES_title] + '_infographic'
+    			}, bc_infographic);
+
+        		bc_description.show();		        		
+			};
+			// End add popup dialog box for Benefit Category 
+								
+			if (eaCategory.indexOf(key) !=-1) {
+				bc_img.setAttribute("class",window.categoryDic[key]);
+			}
+			else {
+				bc_img.setAttribute("class",window.categoryDic[key] + "_bw");
+			}
+			
+			indexImage = indexImage + 1;
+			BC_Div.appendChild(bc_img);
+			
+			
+		}
+
+		scale_img = document.createElement('div');
+		scale_img.style.width = '20px';
+		scale_img.style.height = '20px';
+		scale_img.style.float = 'left';
+		scale_img.style.marginLeft = '20px';
+
+		if (scale == "NATIONAL") {
+				scale_img.title = "National Dataset";
 			} else {
-				// take this out of else to search
-				for (var key in window.topicDic) {
+				scale_img.title = "Community Dataset";
+			}
+		scale_img.setAttribute("class", scale);
+		BC_Div.appendChild(scale_img);
+
+		//BC_Cell.appendChild(BC_Div);
+
+	   }
+ 	   
+    var	_addSelectableLayerSorted = function(items){	    	
+	    
+		updateTopicToggleButton();
+
+		//If using search bar then search all topics
+		if (document.getElementById('searchFilterText').value != ''){
+			for (var key in window.topicDic) {
+				dicTopicSelected[window.topicDic[key]]  = true;
+				
+			}
+		} else {
+			// take this out of else to search
+			for (var key in window.topicDic) {
 		        var chkboxId = window.chkTopicPrefix + window.topicDic[key];
 		        var checkbox = document.getElementById(chkboxId);			
 		        if(checkbox.checked == true){
 			        dicTopicSelected[window.topicDic[key]]  = true;    	
-		        } 
-		        else {
+		        } else {
 		        	dicTopicSelected[window.topicDic[key]]  = false; 
 		        }
 			}
+		}
+
+		var nSearchableColumns = document.getElementById('tableLyrNameDescrTag').getElementsByTagName('tr')[0].getElementsByTagName('th').length;
+		var eaIDFilteredList = [];
+		tdIndex = 0;
+		
+		$("#tableLyrNameDescrTag").dataTable().$('td',{"filter":"applied"}).each( function (value, index) {
+			var currentCellText = $(this).text();
+			
+			if (tdIndex == 0) {
+				eaIDFilteredList.push(currentCellText);
+			}
+			tdIndex = tdIndex + 1;
+			if (tdIndex == nSearchableColumns) {
+				tdIndex = 0;
+			}				
+		}); 
+
+		var tableOfRelationship = document.getElementById("tableSelectableLayersArea");
+
+		dojo.destroy('layerArea');
+
+		var layerArea = dojo.create('div', {
+			'id': 'layerArea',
+			'style': 'width: 100%',
+		}, tableOfRelationship);
+		
+
+
+        var numOfSelectableLayers = 0;
+        var totalNumOfLayers = 0;
+		var bAtLeastOneTopicSelected = true;//topicsBeingSelected();  
+		SelectedTopics = [];          
+    	dojo.forEach(items, function(item) {
+           	
+           	var currentLayerSelectable = false;
+			eaLyrNum = layerDataStore.getValue( item, 'eaLyrNum').toString();
+			eaID = layerDataStore.getValue( item, 'eaID').toString();
+			layerName = layerDataStore.getValue( item, 'name');
+			eaDescription = layerDataStore.getValue( item, 'eaDescription');
+			eaDfsLink = layerDataStore.getValue( item, 'eaDfsLink');
+			eaScale = layerDataStore.getValue( item, 'eaScale');
+			eaMetadata = layerDataStore.getValue( item, 'eaMetadata');
+			eaTopic = layerDataStore.getValue( item, 'eaTopic');
+			eaCategory = layerDataStore.getValue( item, 'eaCategory');
+			IsSubLayer = layerDataStore.getValue( item, 'IsSubLayer');
+			SubLayerNames = layerDataStore.getValue( item, 'SubLayerNames');
+			SubLayerIds = layerDataStore.getValue( item, 'SubLayerIds');
+			bSelectByScale = false;
+
+			var chkNationalScale = document.getElementById("chkNational").checked;
+			var chkCommunityScale = document.getElementById("chkCommunity").checked;
+
+			// Search should use both national and community
+			if (document.getElementById('searchFilterText').value != ''){
+				chkNationalScale = true;
+				chkCommunityScale = true;
 			}
 
-    		var nSearchableColumns = document.getElementById('tableLyrNameDescrTag').getElementsByTagName('tr')[0].getElementsByTagName('th').length;
-    		var eaIDFilteredList = [];
-			tdIndex = 0;
-			
-			$("#tableLyrNameDescrTag").dataTable().$('td',{"filter":"applied"}).each( function (value, index) {
-				var currentCellText = $(this).text();
-				
-				if (tdIndex == 0) {
-					eaIDFilteredList.push(currentCellText);
-				}
-				tdIndex = tdIndex + 1;
-				if (tdIndex == nSearchableColumns) {
-					tdIndex = 0;
-				}				
-			} ); 
-
-			var tableOfRelationship = document.getElementById("tableSelectableLayers");
-		    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0]; 
-            while (tableRef.firstChild) {
-                tableRef.removeChild(tableRef.firstChild);
-            }
-            var numOfSelectableLayers = 0;
-            var totalNumOfLayers = 0;
-			var bAtLeastOneTopicSelected = true;//topicsBeingSelected();  
-			SelectedTopics = [];          
-	    	dojo.forEach(items, function(item) {
-	           	
-	           	var currentLayerSelectable = false;
-				eaLyrNum = layerDataStore.getValue( item, 'eaLyrNum').toString();
-				eaID = layerDataStore.getValue( item, 'eaID').toString();
-				layerName = layerDataStore.getValue( item, 'name');
-    			eaDescription = layerDataStore.getValue( item, 'eaDescription');
-    			eaDfsLink = layerDataStore.getValue( item, 'eaDfsLink');
-    			eaScale = layerDataStore.getValue( item, 'eaScale');
-    			eaMetadata = layerDataStore.getValue( item, 'eaMetadata');
-    			eaTopic = layerDataStore.getValue( item, 'eaTopic');
-				eaCategory = layerDataStore.getValue( item, 'eaCategory');
-    			bSelectByScale = false;
-
-    			var chkNationalScale = document.getElementById("chkNational").checked;
-				var chkCommunityScale = document.getElementById("chkCommunity").checked;
-
-				// Search should use both national and community
-				if (document.getElementById('searchFilterText').value != ''){
-					chkNationalScale = true;
-					chkCommunityScale = true;
-				}
-
-				switch (eaScale) {
-					case "NATIONAL":
-						
-						if(chkNationalScale){
-							totalNumOfLayers = totalNumOfLayers + 1;
-							bSelectByScale = true;
-						}
-						break;
-					case "COMMUNITY":
-						if(chkCommunityScale){
-							totalNumOfLayers = totalNumOfLayers + 1;
-							if ((communitySelected == "") || (communitySelected == window.strAllCommunity)){
-							bSelectByScale = true;
-						}
-							else{
-								if (eaMetadata != "") {
-									if (window.communityMetadataDic.hasOwnProperty(eaMetadata)) {
-										communityInfo = window.communityMetadataDic[eaMetadata];
-										if (communityInfo.hasOwnProperty(communitySelected)) {
-											bSelectByScale = true;
-										}
+			switch (eaScale) {
+				case "NATIONAL":
+					
+					if(chkNationalScale){
+						totalNumOfLayers = totalNumOfLayers + 1;
+						bSelectByScale = true;
+					}
+					break;
+				case "COMMUNITY":
+					if(chkCommunityScale){
+						totalNumOfLayers = totalNumOfLayers + 1;
+						if ((communitySelected == "") || (communitySelected == window.strAllCommunity)){
+						bSelectByScale = true;
+					}
+						else{
+							if (eaMetadata != "") {
+								if (window.communityMetadataDic.hasOwnProperty(eaMetadata)) {
+									communityInfo = window.communityMetadataDic[eaMetadata];
+									if (communityInfo.hasOwnProperty(communitySelected)) {
+										bSelectByScale = true;
 									}
 								}
 							}
 						}
-						break;
-    			
-				}    			
-				
-
-				eachLayerCategoryList = eaCategory.split(";");
-				if (bSelectByScale) {
-					if (dicTopicSelected[window.topicDic[eaTopic]] == true) {
-						currentLayerSelectable = true;				
 					}
-				}// end of if (bSelectByScale)
-
-				if ((currentLayerSelectable || (bAtLeastOneTopicSelected == false)) &&(eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
-					var bLayerSelected = false;
-					if ((window.allLayerNumber.indexOf(eaID)) == -1) {                        	
-                    	window.allLayerNumber.push(eaID);
-                    }
-                    else {
-			    		lyr = self.map.getLayer(window.layerIdPrefix + eaID);
-						if(lyr){
-				    		bLayerSelected = true;
-			          	}                   	
-                    }
-					numOfSelectableLayers = numOfSelectableLayers + 1;
-
-					//Add Header for each Topic in list
-					if (SelectedTopics.indexOf(eaTopic) == -1) {
-						if (!(eaTopic in hiderows)) {
-							hiderows[eaTopic] = true;
-						}
-						
-						SelectedTopics.push(eaTopic);
-						var newTopicHeader = tableRef.insertRow(tableRef.rows.length);
-						newTopicHeader.id = eaTopic;
-						newTopicHeader.className = 'topicHeader'
-
-						var TopicName = newTopicHeader.insertCell(0);
-						TopicName.colSpan = 3;
-						TopicName.innerHTML = eaTopic;
-						newTopicHeader.appendChild(TopicName);
-
-						newTopicHeader.addEventListener('click', function() {
-							hiderows[this.id] = !hiderows[this.id];
-							_updateSelectableLayer();
-						});
-						var newTopicHeader = tableRef.insertRow(tableRef.rows.length);
-						var blankspace = newTopicHeader.insertCell(0);
-						blankspace.style.height = '3px';
-						newTopicHeader.appendChild(blankspace);
-					}
-					//Finsih add header for each topic			
-
-			       	var newRow   = tableRef.insertRow(tableRef.rows.length);
-			       	newRow.className = eaTopic;
-			       	if (hiderows[eaTopic] == false) {
-			       		//newRow.style.color = 'red';
-			       		newRow.style.display = 'none';
-			       	}
-
-			       	//newRow.style.height = "38px";
-			       	var newCheckboxCell  = newRow.insertCell(0);
-					var checkbox = document.createElement('input');
-					checkbox.type = "checkbox";
+					break;
+			}    			
 			
-			        chkboxId = window.chkSelectableLayer + eaID;
-					checkbox.name = chkboxId;
-					checkbox.value = 1;
-					checkbox.id = chkboxId;
-					checkbox.checked = bLayerSelected;
-					newCheckboxCell.style.verticalAlign = "top";//this will put checkbox on first line
-			        newCheckboxCell.appendChild(checkbox);    			              
-			
-			       	chkIdDictionary[chkboxId] = layerName;
-			        var newCell  = newRow.insertCell(1);
-			        newCell.style.width = "100%";
-			        newCell.style.verticalAlign = "top";//this will put layer name on first line
-			        newCell.style.paddingBottom = "12px"
 
-					var newTitle  = document.createElement('div');
-			        newTitle.innerHTML = layerName;
-			        newTitle.title = eaDescription;
-			        
-					// add the category icons				
-					if (!(document.getElementById("hideIcons").checked)) {
-				        var photo = document.createElement("td");
-						var ulElem = document.createElement("ul");
-			
-						ulElem.setAttribute("id", "navlistSearchfilter");					
-					var liHomeElem = null;
-					var aHomeElem = null;
-					indexImage = 0;
-					for (var key in window.categoryDic) {
-			
-						    liElem = document.createElement("li");
-							liElem.style.left = (indexImage*23).toString() + "px";
-							liElem.style.top = "-12px";
-							aElem = document.createElement("a");
-							aElem.title  = key;
-							// Add popup dialog box for Benefit Category 
-							aElem.onclick = function() {
-								ES_title = this.title;
-
-								var bc_description = new Dialog({
-				        		title: 'EnviroAtlas Benefit Categories', 
-				        		style: 'width: 450px',
-				        		onHide: function() {
-				        			bc_description.destroy()
-				        			}
-				        		});
-				        		
-
-				        		var BC_tabs = dojo.create('div', {
-					        		style: 'text-align: center',
-					        	}, bc_description.containerNode);
-
-					        	for (var key in window.categoryDic) {
-					        		bc_icon_links = dojo.create('a', {
-					        		"title": key,
-					        		"id": window.categoryDic[key] + '_id',
-					        		"class": 'bc_popup '+ window.categoryDic[key],
-					        		}, BC_tabs);
-
-
-					        		dojo.connect(bc_icon_links, 'onclick', function(){
-
-					        			bc_id = this.id.split('_')[0];
-
-
-					        			for (key in window.categoryDic) {
-					        					$('#'+window.categoryDic[key]+'_id').removeClass('bc_popup_selected');
-					        				}
-					        			$('#'+this.id).addClass('bc_popup_selected');
-
-					        			dojo.removeClass(infographic_body);
-					        			dojo.addClass(infographic_body, 'bc_infographic ' + bc_id + '_infographic');
-
-					        			dojo.removeClass(header_icon);
-					        			dojo.addClass(header_icon, 'bc_popup_header_icon ' + bc_id);
-
-					        			dojo.byId(header_text).innerHTML = this.title;
-					        		});
-					        	};
-
-					        	$('#'+window.categoryDic[ES_title]+'_id').addClass('bc_popup_selected');
-
-					        	var blankspace = dojo.create('div', {
-					        		style: 'height: 15px',
-					        	}, bc_description.containerNode);
-
-					        	var bc_infographic = dojo.create('div', {
-			        				'id': 'infographic_area',
-			        				'style': 'background-color: #f4f4f4; width: 100%'
-			        			}, bc_description.containerNode);
-
-			        			var infographic_header = dojo.create('div', {
-			        			"style": 'height: 40px',
-			        			}, bc_infographic);
-
-			        			var header_icon = dojo.create('div', {
-			        				'class': 'bc_popup_header_icon ' + window.categoryDic[ES_title]
-			        			}, infographic_header);
-
-			        			var header_text = dojo.create('div', {
-			        				'innerHTML': this.title,
-			        				'class': 'bc_popup_header_text',
-			        			}, infographic_header);
-
-			        			var infographic_text = dojo.create('div', {
-			        				'innerHTML': 'Ecosystem goods and services, often shortened to ecosystem \
-			        							  services (ES), are the benefits that humans receive from nature. \
-			        							  These benefits underpin almost every aspect of human well-being, \
-			        							  including our food and water, security, health, and economy. \
-			        							  <br><br> \
-			        							  EnviroAtlas organizes our data into seven benefit categories \
-			        							  <br><br>',
-			        				'style': 'font-size: 11px',
-			        			}, bc_infographic );
-
-			        			var infographic_body = dojo.create('div', {
-			        				"class": 'bc_infographic ' + window.categoryDic[ES_title] + '_infographic'
-			        			}, bc_infographic);
-
-				        		bc_description.show();		        		
-							};
-							// End add popup dialog box for Benefit Category 
-							liElem.appendChild(aElem);
-							ulElem.appendChild(liElem);							
-							if (eaCategory.indexOf(key) !=-1) {
-								liElem.setAttribute("class",window.categoryDic[key]);
-							}
-							else {
-								liElem.setAttribute("class",window.categoryDic[key] + "_bw");
-							}
-						indexImage = indexImage + 1;
-					}
-
-					//Add Community/National Icon
-					liElem = document.createElement("li");
-					liElem.style.left = "175px";
-					liElem.style.top = "-12px";
-					aElem = document.createElement("a");
-					// For now.  Lets adjust this in the spreadsheet
-					if (eaScale == "NATIONAL") {
-						aElem.title = "National Dataset";
-					} else {
-						aElem.title = "Community Dataset";
-					}
-					//aElem.title  = eaScale;
-					liElem.appendChild(aElem);
-					ulElem.appendChild(liElem);
-					liElem.setAttribute("class", eaScale);
-					// end Add Community/National Icon
-
-
-			        photo.appendChild(ulElem);
-					newTitle.appendChild(photo);
-		        	}
-
-					// end of adding the category icons	
-					newCell.appendChild(newTitle);
-					
-					var newButtonInfoCell  = newRow.insertCell(2);
-					var buttonInfo = document.createElement('input');
-					buttonInfo.type = "button";
-			        var buttonInfoId = "but" + eaID;
-					buttonInfo.name = buttonInfoId;
-					buttonInfo.id = buttonInfoId;
-					buttonInfo.className = 'i-button';
-					
-					newButtonInfoCell.style.verticalAlign = "top";//this will put checkbox on first line
-			        newButtonInfoCell.appendChild(buttonInfo);  
-			        hashFactsheetLink[buttonInfoId] = eaDfsLink;
-			        hashLayerNameLink[buttonInfoId] = layerName;
-			        document.getElementById(buttonInfoId).onclick = function(e) {
-				        //window.open(window.dataFactSheet + selectableLayerArray[i]['eaDfsLink']);//this will open the wrong link
-				        if (hashFactsheetLink[this.id] == "N/A") {
-			        		var dataFactNote = new Dialog({
-						        title: hashLayerNameLink[this.id],
-						        style: "width: 300px",    
-					    	});
-					        dataFactNote.show();
-					        dataFactNote.set("content", "Data fact sheet link is not available!");
-			
-				        } else {
-				        	window.open(window.dataFactSheet + hashFactsheetLink[this.id]);
-				        }		      
-				    };    	
-				}//end of if (currentLayerSelectable)
-        });	
- 		dojo.byId("numOfLayers").value = " " + String(numOfSelectableLayers) + " of " + String(totalNumOfLayers) + " Maps";
-    	//dojo.byId("selectAllLayers").checked = false;
-		for (var key in chkIdDictionary) {
-			
-		  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
-		  	document.getElementById(key).addEventListener('click', function() {
-		  		
-				if (this.checked){
-					showLayerListWidget();	
-					singleLayerToBeAddedRemoved = "a" + "," + this.getAttribute("id").replace(window.chkSelectableLayer, "");
-					document.getElementById('butAddSingleLayer').click();
+			eachLayerCategoryList = eaCategory.split(";");
+			if (bSelectByScale) {
+				if (dicTopicSelected[window.topicDic[eaTopic]] == true) {
+					currentLayerSelectable = true;				
 				}
-				else{
-					singleLayerToBeAddedRemoved = "r" + "," + this.getAttribute("id").replace(window.chkSelectableLayer, "");
-					document.getElementById('butAddSingleLayer').click();
-				}				
-		    });
-		  }
+			}// end of if (bSelectByScale)
+
+			if ((currentLayerSelectable || (bAtLeastOneTopicSelected == false)) &&(eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
+				var bLayerSelected = false;
+				if ((window.allLayerNumber.indexOf(eaID)) == -1) {                        	
+                	window.allLayerNumber.push(eaID);
+                }
+                else {
+		    		lyr = self.map.getLayer(window.layerIdPrefix + eaID);
+					if(lyr){
+			    		bLayerSelected = true;
+		          	}                   	
+                }
+
+                numOfSelectableLayers++;
+				//Add Header for each Topic in list
+				if (SelectedTopics.indexOf(eaTopic) == -1) {
+					if (!(eaTopic in hiderows)) {
+						hiderows[eaTopic] = true;
+					}
+					
+					SelectedTopics.push(eaTopic);
+
+					var topicHeader = dojo.create('div', {
+	    				'id': eaTopic,
+	    				'class': 'topicHeader',
+	    				'innerHTML': eaTopic,
+	    				onclick: function(){
+	    					hiderows[this.id] = !hiderows[this.id];
+							_updateSelectableLayer();
+	    				}
+	    			}, layerArea);
+				}
+				//Finsih add header for each topic	
+
+				var buttonInfoId = "but" + eaID;
+    			hashFactsheetLink[buttonInfoId] = eaDfsLink;
+	        	hashLayerNameLink[buttonInfoId] = layerName;
+	        	hashDescriptionforI[buttonInfoId] = eaDescription;
+	        	hashSubLayers[buttonInfoId] = SubLayerIds;
+	        	hashSubTopicforI[buttonInfoId] = SubLayerNames;
+
+
+				//If not a subLayer create a new Row
+				
+				if (!IsSubLayer) {
+
+					var mainDiv = dojo.create('div', {
+						'class': 'layerDiv'
+						}, layerArea);
+
+					if (!hiderows[eaTopic]) {
+						mainDiv.style.display = 'None';
+					}
+
+					var topicRow = dojo.create('div', {
+						"style" : "display:inline-block; width:100%"
+						//"style": ""
+	    			}, mainDiv);
+
+	    			var Checkbox_div = dojo.create('div', {
+	    				'class': 'checkbox_cell',
+	    				
+	    			}, topicRow);
+
+	    			if (!SubLayerIds.length) {
+
+		    			chkboxId = window.chkSelectableLayer + eaID;
+		    			var checkbox = dojo.create('input', {
+		    				"type": "checkbox",
+							"name": chkboxId,
+							"value": 1,
+							"id": chkboxId,
+							"checked": bLayerSelected
+		    			}, Checkbox_div);
+		    			chkIdDictionary[chkboxId] = SubLayerNames[i] + layerName;
+		    		} else {
+		    			Checkbox_div.innerHTML = '_&nbsp';
+		    			Checkbox_div.style.textAlign = 'right';
+		    			Checkbox_div.style.color = 'gray';
+
+		    		}
+
+
+	    			var iButton = dojo.create('input', {
+	    				"type": "button",
+						"name": buttonInfoId,
+						"id": buttonInfoId,
+						"checked": bLayerSelected,
+						"class": "i-button",
+						"style": "float: right",
+						onclick: function(e) {
+
+							
+							var infobox = new Dialog({
+			        		title: hashLayerNameLink[this.id],
+			        		style: 'width: 300px'
+			        		});
+
+			        		subLayers = hashSubLayers[this.id].split(';');
+
+			        		if (subLayers != "") {
+			        			for (i=0; i < subLayers.length; i++) {
+			        				var subTopicHeader = dojo.create('h2', {
+			        					'innerHTML': hashSubTopicforI[this.id].split(';')[i],
+			        					'style': 'margin-top: 0px'
+			        				}, infobox.containerNode);
+
+			        				var infoDiv = dojo.create('div', {
+			        					'innerHTML': hashDescriptionforI['but' + subLayers[i]] + '<br><br>'
+			        				}, infobox.containerNode);
+
+			        				var linkDiv = dojo.create('div', {
+		        					}, infobox.containerNode);
+		        					// if factsheetlink is not empty
+		        					if (/\S/.test(hashFactsheetLink['but' + subLayers[i]])) {
+			        					var factsheetDiv = dojo.create('a', {
+				        					'innerHTML': 'Fact Sheet',
+				        					'href': window.dataFactSheet + hashFactsheetLink['but' + subLayers[i]],
+				        					'target': '_blank',
+				        					'class': 'factsheetLink'
+				        					}, linkDiv);
+			        				}
+			        				if (i < subLayers.length -1) {
+			        					var line = dojo.create('hr', {'style': 'margin-top: 10px'}, infobox.containerNode);
+			        				}
+
+			        			}
+			        		} else {
+			        			var infoDiv = dojo.create('div', {
+		        					'innerHTML': hashDescriptionforI[this.id] + '<br><br>'
+		        				}, infobox.containerNode);
+
+		        				var linkDiv = dojo.create('div', {
+		        					}, infobox.containerNode)
+		        				if (/\S/.test(hashFactsheetLink[this.id])) {
+			        				var factsheetDiv = dojo.create('a', {
+			        					'innerHTML': 'Fact Sheet',
+			        					'href': window.dataFactSheet + hashFactsheetLink[this.id],
+			        					'target': '_blank',
+			        					'class': 'factsheetLink' 
+			        				}, linkDiv);
+			        			}
+			        		}
+							infobox.show()
+						}
+					}, topicRow);
+
+
+	    			var topicName = dojo.create('div', {
+	    				"innerHTML": layerName,
+		        		"style" : "font-weight: 500; display: table-cell; font-size:13px",
+		        		"title" :eaDescription
+	    			}, topicRow);
+	    			
+	    		
+
+		    		if (SubLayerIds.length) {
+		    			numOfSelectableLayers--;
+						SubLayerNames = SubLayerNames.split(';');
+						SubLayerIds = SubLayerIds.split(';');
+
+						var subTopicRow = dojo.create('div', {
+							"style" : "display:inline-block; width:100%"
+							//"style": "display:inline-block; width:100%"
+		    			}, mainDiv);
+
+		    			var Checkbox_div = dojo.create('div', {
+		    				'class': 'checkbox_cell',
+		    				'innerHTML': '&nbsp'
+		    			}, subTopicRow);
+
+		    			for (i=0; i< SubLayerNames.length; i++) {
+
+							bLayerSelected = false;
+							lyr = self.map.getLayer(window.layerIdPrefix + SubLayerIds[i]);
+							if(lyr){
+					    		bLayerSelected = true;
+				          	}     
+
+				          	var Checkbox_div = dojo.create('div', {
+			    				'class': 'checkbox_cell',
+			    			}, subTopicRow);
+
+
+		    				chkboxId = window.chkSelectableLayer + SubLayerIds[i];
+		    				var checkbox = dojo.create('input', {
+			    				"type": "checkbox",
+								"name": chkboxId,
+								"value": 1,
+								"id": chkboxId,
+								"checked": bLayerSelected
+			    			}, Checkbox_div);
+
+			    			var SubLayerDiv = dojo.create('div', {
+		    					"innerHTML": SubLayerNames[i],
+			        			"style" : "float: left; margin-right: 12px; font-style: italic",
+			        			"title" :eaDescription
+		    				}, subTopicRow);
+
+		    				chkIdDictionary[chkboxId] = SubLayerNames[i] + layerName;
+		    			}
+					}
+
+					if (!(document.getElementById("hideIcons").checked)) {
+						add_bc_icons(mainDiv, eaScale);
+					} 
+				}		
+				
+			}//end of if (currentLayerSelectable)
+		});	
+
+			dojo.byId("numOfLayers").value = " " + String(numOfSelectableLayers) + " of " + String(totalNumOfLayers) + " Maps";
+		//dojo.byId("selectAllLayers").checked = false;
+		for (var key in chkIdDictionary) {
+		
+	  		if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
+	  			document.getElementById(key).addEventListener('click', function() {
+					if (this.checked){
+						showLayerListWidget();	
+						singleLayerToBeAddedRemoved = "a" + "," + this.getAttribute("id").replace(window.chkSelectableLayer, "");
+						document.getElementById('butAddSingleLayer').click();
+					}
+					else {
+						singleLayerToBeAddedRemoved = "r" + "," + this.getAttribute("id").replace(window.chkSelectableLayer, "");
+						document.getElementById('butAddSingleLayer').click();
+					}				
+	    		});
+	  		}
 		}    	
-	};	   
+	};	  	   
 
 	var updateTopicToggleButton = function() {
 
@@ -1010,6 +1123,13 @@ define([
 	                    else {
 	                    	eaLyrNum = "";
 	                    }
+
+	                    if(layer.hasOwnProperty('IsSubLayer')){
+	                        IsSubLayer = layer.IsSubLayer;
+	                    }
+	                    else {
+	                    	IsSubLayer = "";
+	                    }
 			                        
 			            layerName = "";          
 	                	if(layer.hasOwnProperty('name') ){	                		
@@ -1071,10 +1191,28 @@ define([
 					    		eaTagsWhole = eaTagsWhole + layer.eaTags[tagsIndex] + ";";
 					    	}
 					    }
+
+					    var SubLayerNames =  "";
+					    if(layer.hasOwnProperty('SubLayerNames')){
+					    	for (categoryIndex = 0, lenCategory = layer.SubLayerNames.length; categoryIndex < lenCategory; ++categoryIndex) {
+					    		SubLayerNames = SubLayerNames + layer.SubLayerNames[categoryIndex] + ";";
+					    	}
+					    }
+					    SubLayerNames = SubLayerNames.substring(0, SubLayerNames.length - 1);
+
+					    var SubLayerIds =  "";
+					    if(layer.hasOwnProperty('SubLayerIds')){
+					    	for (categoryIndex = 0, lenCategory = layer.SubLayerIds.length; categoryIndex < lenCategory; ++categoryIndex) {
+					    		SubLayerIds = SubLayerIds + layer.SubLayerIds[categoryIndex] + ";";
+					    	}
+					    }
+					    SubLayerIds = SubLayerIds.substring(0, SubLayerIds.length - 1);
+
+
 					    eaTagsWhole = eaTagsWhole.substring(0, eaTagsWhole.length - 1);			
 					    if (eaScale	!= "") {//selectable layers should be either National or Community 
 					    	//var layerItem = {eaLyrNum: eaLyrNum, name: layerName, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole};
-					    	var layerItem = {eaLyrNum: eaLyrNum, name: layerName, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole, eaTopic:eaTopic};
+					    	var layerItem = {eaLyrNum: eaLyrNum, name: layerName, IsSubLayer:IsSubLayer, SubLayerNames: SubLayerNames, SubLayerIds: SubLayerIds, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole, eaTopic:eaTopic};
 							
 							layerDataStore.newItem(layerItem);
 											
@@ -1129,7 +1267,7 @@ define([
 			searchBox.style.borderColor = 'rgb(0,67,111)';
 			searchBox.style.padding = '2px 2px 2px 2px';
 
-			_updateSelectableLayer();
+			//_updateSelectableLayer();
 			setClickEvent();
 
         });// end of loadJSON(function(response)

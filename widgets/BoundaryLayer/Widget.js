@@ -51,6 +51,7 @@ define([
     var self;
     var hashFactsheetLinkBoundary = {};
     var hashLayerNameLinkBoundary = {};
+    var hashDescriptionforBoundary = {};
     var showLayerListWidget = function () {
         var widgetName = 'LayerList';
         var widgets = self.appConfig.getConfigElementsByName(widgetName);
@@ -197,23 +198,35 @@ define([
                             newButtonInfoCell.appendChild(buttonInfo);
                             hashFactsheetLinkBoundary[buttonInfoId] = "N/A";
                             hashLayerNameLinkBoundary[buttonInfoId] = layer.name;
+                            hashDescriptionforBoundary[buttonInfoId] = layer.eaDescription;
                             if (layer.hasOwnProperty('eaDfsLink')) {
                                 hashFactsheetLinkBoundary[buttonInfoId] = layer.eaDfsLink;
                             }
 
                             document.getElementById(buttonInfoId).onclick = function (e) {
-                                if (hashFactsheetLinkBoundary[this.id] == "N/A") {
-                                    var dataFactNote = new Dialog({
-                                            title: hashLayerNameLinkBoundary[this.id],
-                                            style: "width: 300px",
-                                        });
-                                    dataFactNote.show();
-                                    dataFactNote.set("content", "Data fact sheet link is not available!");
-                                    //https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/CommunityVicinity.pdf	not available
 
-                                } else {
-                                    window.open(window.dataFactSheet + hashFactsheetLinkBoundary[this.id]);
+                                var infobox = new Dialog({
+                                title: hashLayerNameLinkBoundary[this.id],
+                                style: 'width: 300px'
+                                });
+
+                                var infoDiv = dojo.create('div', {
+                                    'innerHTML': hashDescriptionforBoundary[this.id] + '<br><br>'
+                                }, infobox.containerNode);
+
+                                var linkDiv = dojo.create('div', {
+                                    }, infobox.containerNode)
+
+                                if (hashFactsheetLinkBoundary[this.id] != "N/A") {
+                                    var factsheetDiv = dojo.create('a', {
+                                        'innerHTML': 'Fact Sheet',
+                                        'href': window.dataFactSheet + hashFactsheetLinkBoundary[this.id],
+                                        'target': '_blank',
+                                        'class': 'factsheetLink' 
+                                    }, linkDiv);
                                 }
+                                
+                                infobox.show()
                             }; //end of inserting datafactsheet icon
                         } // end of if (eaID.trim() != "")
                     } // end of if(layer.hasOwnProperty('eaID'))
