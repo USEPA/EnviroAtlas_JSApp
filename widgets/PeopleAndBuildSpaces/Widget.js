@@ -24,6 +24,7 @@ define([
         'jimu/PanelManager',
         'esri/layers/FeatureLayer',
         'esri/dijit/PopupTemplate',
+        'esri/geometry/Extent',
         'dijit/layout/ContentPane',
         'dijit/TooltipDialog',
         'esri/InfoTemplate',
@@ -40,6 +41,7 @@ define([
         PanelManager,
         FeatureLayer,
         PopupTemplate,
+        Extent,
         ContentPane,
         TooltipDialog,
         InfoTemplate,
@@ -51,7 +53,6 @@ define([
         var chkIdPBSDictionary = {};
     var arrLayers = null;
     var map = null;
-    var self = null;
     var hiderows = {};
     var hashFactsheetLinkPBS = {};
     var hashLayerNameLinkPBS = {};

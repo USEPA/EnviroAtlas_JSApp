@@ -516,51 +516,96 @@ define([
     },
     _onItemMetadataDownloadClick: function(evt) {
         layerId = this._layerInfo.id;
-        
         var clickedURL = this._layerInfo.layerObject.url;
         var bMetadataAvailale = false;
-                
-        loadJSON(function(response) {
-            var localLayerConfig = JSON.parse(response);
-            
-            var urlInConfig = "";
-            
-            var arrLayers = localLayerConfig.layers.layer;           
-            for (index = 0, len = arrLayers.length; index < len; ++index) {
-                layer = arrLayers[index];
-                if(layer.hasOwnProperty('eaID')){
-			        if(layer.hasOwnProperty('eaLyrNum')){
-			            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
-			        }                	
-                    if ((layerId === (window.layerIdPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) {                        	
-                    	if(layer.hasOwnProperty('eaMetadata')){
-	                    	if (layer.hasOwnProperty('eaScale') &&  (layer.eaScale == "NATIONAL")) {
-	                        	metaDataID = window.nationalMetadataDic[layer.eaMetadata];
-	                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
-						        bMetadataAvailale = true;                    		
-	                    	} else {
-	                    		if (window.communitySelected == window.strAllCommunity){
-		                            window.open(window.communityMetadataDic[layer.eaMetadata][window.communitySelected]);
-							        bMetadataAvailale = true;		                    			
-	                    		} else {
-	                        	metaDataID = window.communityMetadataDic[layer.eaMetadata][window.communitySelected];
-	                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
-						        bMetadataAvailale = true;	                    		
-	                    		}
-	                    	}     		
-
-					    }
-                            
-                        
-                        break;
-                    }
-                }
-            }
-            if (!bMetadataAvailale){
-            	alert("Matadata is not available for this layer");
-            }
-
-        });
+        if ((layerId.indexOf(window.layerIdPrefix)) >= 0) {
+	        loadJSON(function(response) {
+	            var localLayerConfig = JSON.parse(response);
+	            
+	            var urlInConfig = "";
+	            
+	            var arrLayers = localLayerConfig.layers.layer;           
+	            for (index = 0, len = arrLayers.length; index < len; ++index) {
+	                layer = arrLayers[index];
+	                if(layer.hasOwnProperty('eaID')){
+				        if(layer.hasOwnProperty('eaLyrNum')){
+				            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
+				        }                	
+	                    if ((layerId === (window.layerIdPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) { 
+	                    	if(layer.hasOwnProperty('eaMetadata')){
+		                    	if (layer.hasOwnProperty('eaScale') &&  (layer.eaScale == "NATIONAL")) {
+		                        	metaDataID = window.nationalMetadataDic[layer.eaMetadata];
+		                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
+							        bMetadataAvailale = true;                    		
+		                    	} else {
+		                    		if (window.communitySelected == window.strAllCommunity){
+			                            window.open(window.communityMetadataDic[layer.eaMetadata][window.communitySelected]);
+								        bMetadataAvailale = true;		                    			
+		                    		} else {
+		                        	metaDataID = window.communityMetadataDic[layer.eaMetadata][window.communitySelected];
+		                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
+							        bMetadataAvailale = true;	                    		
+		                    		}
+		                    	}     		
+	
+						    }
+	                            
+	                        
+	                        break;
+	                    }
+	                }
+	            }
+	            if (!bMetadataAvailale){
+	            	alert("Matadata is not available for this layer");
+	            }
+	
+	        });
+        }
+        else if ((layerId.indexOf(window.layerIdPBSPrefix)) >= 0) {
+	        loadJSONPBS(function(response) {
+	            var localLayerConfig = JSON.parse(response);           
+	            
+	            var urlInConfig = "";
+	            
+	            var arrLayers = localLayerConfig.layers.layer;           
+	            for (index = 0, len = arrLayers.length; index < len; ++index) {
+	                layer = arrLayers[index];
+	                if(layer.hasOwnProperty('eaID')){
+				        if(layer.hasOwnProperty('eaLyrNum')){
+				            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
+				        }                	
+	                    if ((layerId === (window.layerIdPBSPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) {      
+	                    	if(layer.hasOwnProperty('eaMetadata')){
+		                    	if (layer.hasOwnProperty('eaScale') &&  (layer.eaScale == "NATIONAL")) {
+		                        	metaDataID = window.nationalMetadataDic[layer.eaMetadata];
+		                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
+							        bMetadataAvailale = true;                    		
+		                    	} else {
+		                    		if (window.communitySelected == window.strAllCommunity){
+			                            window.open(window.communityMetadataDic[layer.eaMetadata][window.communitySelected]);
+								        bMetadataAvailale = true;		                    			
+		                    		} else {
+		                        	metaDataID = window.communityMetadataDic[layer.eaMetadata][window.communitySelected];
+		                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
+							        bMetadataAvailale = true;	                    		
+		                    		}
+		                    	}     		
+	
+						    }
+	                            
+	                        
+	                        break;
+	                    }
+	                }
+	            }
+	            if (!bMetadataAvailale){
+	            	alert("Matadata is not available for this layer");
+	            }
+	        });
+       }       
+       else {//neither local layer nor PBS layers
+       	alert("Matadata is not available for this layer");
+       }
     },    
     _onItemRemoveClick: function(evt) {
         layerId = this._layerInfo.id;
