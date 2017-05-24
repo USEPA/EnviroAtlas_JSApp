@@ -148,10 +148,22 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		  var dslayer = layerInfosObject.getLayerInfoById(_layerID);
 		  dom.byId('title').innerHTML = dslayer.title;
 
+
+
 		  //Set layers
 		  geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
-		  if(window.communitySelected != "AllCommunity"){
-			  geoenrichedFeatureLayer.setDefinitionExpression("CommST = '" + window.communitySelected + "'");
+          // var str = geoenrichedFeatureLayer.url;
+          // var lookfor = "National";
+          // if(str.includes(lookfor)){
+          //      //turn off cache layer eaLyrNum  "tiledNum_119"
+          //     var res = _layerID.split("_");
+          //     var cacheLayer = dynamicSym.map.getLayer("tiledNum_" + res[1]);
+          //     cacheLayer.setVisibility(false);
+          //     geoenrichedFeatureLayer.setVisibility(true);
+          // }
+
+          if(window.communitySelected != "AllCommunity"){
+			  geoenrichedFeatureLayer.setDefinitionExpression("CommST = '" + window.communitySelected + "'" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " >= 0" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " IS NOT Null" );
 		  }
 		  featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
 
@@ -411,7 +423,8 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		field: _fieldName,
         layer: geoenrichedFeatureLayer,
         numClasses: _NumberOfClasses,
-		scheme: _scheme
+		scheme: _scheme,
+        showOthers: false
       }).then(function (smartRenderer) {
 		
         if (!geoenrichedFeatureLayer.visible) {
@@ -420,6 +433,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		
         geoenrichedFeatureLayer.setRenderer(smartRenderer.renderer);
         geoenrichedFeatureLayer.redraw();
+        //console.log("apply renderer :: ", geoenrichedFeatureLayer.renderer);
 
         geoenrichedFeatureLayer.setVisibility(false);
         geoenrichedFeatureLayer.setVisibility(true);
