@@ -175,7 +175,13 @@ define([
       // }]
       var defRet = new Deferred();
       var dynamicDeniedItems = [];
-
+      var layerId = this._layerInfo.id;
+      if (((layerId.indexOf(window.addedLayerIdPrefix)) >= 0) || ((layerId.indexOf(window.layerIdBndrPrefix)) >= 0)){
+        dynamicDeniedItems.push({
+          'key': 'changeSymbology',
+          'denyType': 'hidden'
+        });        	
+      }
       if (this._layerInfo.isFirst) {
         dynamicDeniedItems.push({
           'key': 'moveup',
@@ -474,10 +480,6 @@ define([
     },
     _onItemChangeSymbologyClick: function(evt) {
       layerId = this._layerInfo.id;
-		if ((layerId.indexOf(window.layerIdBndrPrefix)) >= 0) {
-			alert("change symbology does not work for this layer");
-			return;
-        }  
       this.layerListWidget.publishData({
         message: layerId
       }, true);
