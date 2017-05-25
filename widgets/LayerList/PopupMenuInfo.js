@@ -30,18 +30,20 @@ define([
 ], function(declare, array, lang, Deferred, all, portalUrlUtils, WidgetManager, PanelManager, esriLang,
   graphicsUtils, NlsStrings,Dialog) {
   var mapDescriptionStr = "";
+  var xmlPath = "";
   var uncheckRelatedCheckbox = function (chkboxLayerId){
     	var chkSimpleSearch = document.getElementById(window.chkSelectableLayer + chkboxLayerId);
     	if((chkSimpleSearch != null) && (chkSimpleSearch.checked == true)){	
     		chkSimpleSearch.checked = false;    		
     	}
    };
-  var loadJSON = function(callback){   
+   var loadJSON = function(callback){   
 
         var xobj = new XMLHttpRequest();
 
         xobj.overrideMimeType("application/json");
-        xobj.open('GET', 'widgets/LocalLayer/config.json', true); // Replace 'my_data' with the path to your file
+        //xobj.open('GET', 'widgets/LocalLayer/config.json', true); // Replace 'my_data' with the path to your file
+        xobj.open('GET', xmlPath, true); 
 
         xobj.onreadystatechange = function () {
               if (xobj.readyState == 4 && xobj.status == "200") {
@@ -51,21 +53,7 @@ define([
         };
         xobj.send(null);  
     };
-  var loadJSONPBS = function(callback){   
 
-        var xobj = new XMLHttpRequest();
-
-        xobj.overrideMimeType("application/json");
-        xobj.open('GET', 'widgets/PeopleAndBuildSpaces/config.json', true); // Replace 'my_data' with the path to your file
-
-        xobj.onreadystatechange = function () {
-              if (xobj.readyState == 4 && xobj.status == "200") {
-                // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-                callback(xobj.responseText);
-              }
-        };
-        xobj.send(null);  
-    };    
   var clazz = declare([], {
 
     _candidateMenuItems: null,
@@ -394,77 +382,67 @@ define([
 
         var clickedURL = this._layerInfo.layerObject.url;
         var bMapDescriptionAvailale = false;
+        var strLayerPrefix = "";
         if ((layerId.indexOf(window.layerIdPrefix)) >= 0) {
-	        loadJSON(function(response) {
-	            var localLayerConfig = JSON.parse(response);           
-	            
-	            var urlInConfig = "";
-	            
-	            var arrLayers = localLayerConfig.layers.layer;
-	            for (index = 0, len = arrLayers.length; index < len; ++index) {
-	                layer = arrLayers[index];
-	                if(layer.hasOwnProperty('eaID')){
-				        if(layer.hasOwnProperty('eaLyrNum')){
-				            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
-				        }                	
-	                    if ((layerId === (window.layerIdPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) {
-	                        if(layer.hasOwnProperty('eaDescription')){
-						    	var mapDescription = new Dialog({
-							        title: layer.name,
-							        style: "width: 300px",    
-						    	});
-						        mapDescription.show();
-						        mapDescription.set("content", layer.eaDescription);
-						        bMapDescriptionAvailale = true;
-	                            break;
-	                        }
+        	strLayerPrefix = window.layerIdPrefix;
+			xmlPath = "widgets/LocalLayer/config.json";
+        }
+        else if ((layerId.indexOf(window.layerIdPBSPrefix)) >= 0) {
+        	strLayerPrefix = window.layerIdPBSPrefix;
+       		xmlPath = "widgets/PeopleAndBuildSpaces/config.json";
+        } 
+        else if ((layerId.indexOf(window.layerIdBndrPrefix)) >= 0) {
+        	strLayerPrefix = window.layerIdBndrPrefix;
+       		xmlPath = "widgets/BoundaryLayer/config.json";
+        }  
+        loadJSON(function(response) {
+	        var localLayerConfig = JSON.parse(response);
+	        var urlInConfig = "";
+	        
+	        var arrLayers = localLayerConfig.layers.layer;
+	        for (index = 0, len = arrLayers.length; index < len; ++index) {
+	            layer = arrLayers[index];
+	            if(layer.hasOwnProperty('eaID')){
+			        if(layer.hasOwnProperty('eaLyrNum')){
+			            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
+			        }                	
+	                if ((layerId === (strLayerPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) {
+	                    if(layer.hasOwnProperty('eaDescription')){
+					    	var mapDescription = new Dialog({
+						        title: layer.name,
+						        style: "width: 300px",    
+					    	});
+					        mapDescription.show();
+					        mapDescription.set("content", layer.eaDescription);
+					        bMapDescriptionAvailale = true;
+	                        break;
 	                    }
 	                }
 	            }
-	            if (!bMapDescriptionAvailale){
-	            	alert("Map description is not available for this layer");
-	            }
-	        });
-       }
-       else if ((layerId.indexOf(window.layerIdPBSPrefix)) >= 0) {
-	        loadJSONPBS(function(response) {
-	            var localLayerConfig = JSON.parse(response);           
-	            
-	            var urlInConfig = "";
-	            
-	            var arrLayers = localLayerConfig.layers.layer;
-	            for (index = 0, len = arrLayers.length; index < len; ++index) {
-	                layer = arrLayers[index];
-	                if(layer.hasOwnProperty('eaID')){
-				        if(layer.hasOwnProperty('eaLyrNum')){
-				            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
-				        }                	
-	                    if ((layerId === (window.layerIdPBSPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) {
-	                        if(layer.hasOwnProperty('eaDescription')){
-						    	var mapDescription = new Dialog({
-							        title: layer.name,
-							        style: "width: 300px",    
-						    	});
-						        mapDescription.show();
-						        mapDescription.set("content", layer.eaDescription);
-						        bMapDescriptionAvailale = true;
-	                            break;
-	                        }
-	                    }
-	                }
-	            }
-	            if (!bMapDescriptionAvailale){
-	            	alert("Map description is not available for this layer");
-	            }
-	        });
-       }       
+	        }
+	        if (!bMapDescriptionAvailale){
+	        	alert("Map description is not available for this layer");
+	        }
+      });   
     },
     _onItemDataFactSheetClick: function(evt) {
         layerId = this._layerInfo.id;
         
         var clickedURL = this._layerInfo.layerObject.url;
         var bDataFactSheetAvailale = false;
-                
+        var strLayerPrefix = "";
+        if ((layerId.indexOf(window.layerIdPrefix)) >= 0) {
+        	strLayerPrefix = window.layerIdPrefix;
+			xmlPath = "widgets/LocalLayer/config.json";
+        }
+        else if ((layerId.indexOf(window.layerIdPBSPrefix)) >= 0) {
+        	strLayerPrefix = window.layerIdPBSPrefix;
+       		xmlPath = "widgets/PeopleAndBuildSpaces/config.json";
+        } 
+        else if ((layerId.indexOf(window.layerIdBndrPrefix)) >= 0) {
+        	strLayerPrefix = window.layerIdBndrPrefix;
+       		xmlPath = "widgets/BoundaryLayer/config.json";
+        } 
         loadJSON(function(response) {
             var localLayerConfig = JSON.parse(response);
             
@@ -477,7 +455,7 @@ define([
 			        if(layer.hasOwnProperty('eaLyrNum')){
 			            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
 			        }                	
-                    if ((layerId === (window.layerIdPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) {      
+                    if ((layerId === (strLayerPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) {      
                         if(layer.hasOwnProperty('eaDfsLink')){
                         	if (layer.eaDfsLink.trim() != ""){
                             window.open(window.dataFactSheet + layer.eaDfsLink);
@@ -496,7 +474,10 @@ define([
     },
     _onItemChangeSymbologyClick: function(evt) {
       layerId = this._layerInfo.id;
-
+		if ((layerId.indexOf(window.layerIdBndrPrefix)) >= 0) {
+			alert("change symbology does not work for this layer");
+			return;
+        }  
       this.layerListWidget.publishData({
         message: layerId
       }, true);
@@ -518,94 +499,61 @@ define([
         layerId = this._layerInfo.id;
         var clickedURL = this._layerInfo.layerObject.url;
         var bMetadataAvailale = false;
+        var strLayerPrefix = "";
         if ((layerId.indexOf(window.layerIdPrefix)) >= 0) {
-	        loadJSON(function(response) {
-	            var localLayerConfig = JSON.parse(response);
-	            
-	            var urlInConfig = "";
-	            
-	            var arrLayers = localLayerConfig.layers.layer;           
-	            for (index = 0, len = arrLayers.length; index < len; ++index) {
-	                layer = arrLayers[index];
-	                if(layer.hasOwnProperty('eaID')){
-				        if(layer.hasOwnProperty('eaLyrNum')){
-				            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
-				        }                	
-	                    if ((layerId === (window.layerIdPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) { 
-	                    	if(layer.hasOwnProperty('eaMetadata')){
-		                    	if (layer.hasOwnProperty('eaScale') &&  (layer.eaScale == "NATIONAL")) {
-		                        	metaDataID = window.nationalMetadataDic[layer.eaMetadata];
-		                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
-							        bMetadataAvailale = true;                    		
-		                    	} else {
-		                    		if (window.communitySelected == window.strAllCommunity){
-			                            window.open(window.communityMetadataDic[layer.eaMetadata][window.communitySelected]);
-								        bMetadataAvailale = true;		                    			
-		                    		} else {
-		                        	metaDataID = window.communityMetadataDic[layer.eaMetadata][window.communitySelected];
-		                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
-							        bMetadataAvailale = true;	                    		
-		                    		}
-		                    	}     		
-	
-						    }
-	                            
-	                        
-	                        break;
-	                    }
-	                }
-	            }
-	            if (!bMetadataAvailale){
-	            	alert("Matadata is not available for this layer");
-	            }
-	
-	        });
+        	strLayerPrefix = window.layerIdPrefix;
+			xmlPath = "widgets/LocalLayer/config.json";
         }
         else if ((layerId.indexOf(window.layerIdPBSPrefix)) >= 0) {
-	        loadJSONPBS(function(response) {
-	            var localLayerConfig = JSON.parse(response);           
-	            
-	            var urlInConfig = "";
-	            
-	            var arrLayers = localLayerConfig.layers.layer;           
-	            for (index = 0, len = arrLayers.length; index < len; ++index) {
-	                layer = arrLayers[index];
-	                if(layer.hasOwnProperty('eaID')){
-				        if(layer.hasOwnProperty('eaLyrNum')){
-				            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
-				        }                	
-	                    if ((layerId === (window.layerIdPBSPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) {      
-	                    	if(layer.hasOwnProperty('eaMetadata')){
-		                    	if (layer.hasOwnProperty('eaScale') &&  (layer.eaScale == "NATIONAL")) {
-		                        	metaDataID = window.nationalMetadataDic[layer.eaMetadata];
-		                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
-							        bMetadataAvailale = true;                    		
-		                    	} else {
-		                    		if (window.communitySelected == window.strAllCommunity){
-			                            window.open(window.communityMetadataDic[layer.eaMetadata][window.communitySelected]);
-								        bMetadataAvailale = true;		                    			
-		                    		} else {
-		                        	metaDataID = window.communityMetadataDic[layer.eaMetadata][window.communitySelected];
-		                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
-							        bMetadataAvailale = true;	                    		
-		                    		}
-		                    	}     		
-	
-						    }
-	                            
-	                        
-	                        break;
-	                    }
-	                }
-	            }
-	            if (!bMetadataAvailale){
-	            	alert("Matadata is not available for this layer");
-	            }
-	        });
-       }       
-       else {//neither local layer nor PBS layers
-       	alert("Matadata is not available for this layer");
-       }
+        	strLayerPrefix = window.layerIdPBSPrefix;
+       		xmlPath = "widgets/PeopleAndBuildSpaces/config.json";
+        } 
+        else if ((layerId.indexOf(window.layerIdBndrPrefix)) >= 0) {
+        	strLayerPrefix = window.layerIdBndrPrefix;
+       		xmlPath = "widgets/BoundaryLayer/config.json";
+        }  
+        loadJSON(function(response) {
+            var localLayerConfig = JSON.parse(response);
+            
+            var urlInConfig = "";
+            
+            var arrLayers = localLayerConfig.layers.layer;           
+            for (index = 0, len = arrLayers.length; index < len; ++index) {
+                layer = arrLayers[index];
+                if(layer.hasOwnProperty('eaID')){
+			        if(layer.hasOwnProperty('eaLyrNum')){
+			            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
+			        }                	
+                    if ((layerId === (strLayerPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) { 
+                    	if(layer.hasOwnProperty('eaMetadata')){
+	                    	if (layer.hasOwnProperty('eaScale') &&  (layer.eaScale == "NATIONAL")) {
+	                        	metaDataID = window.nationalMetadataDic[layer.eaMetadata];
+	                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
+						        bMetadataAvailale = true;                    		
+	                    	} else {
+	                    		if (window.communitySelected == window.strAllCommunity){
+		                            window.open(window.communityMetadataDic[layer.eaMetadata][window.communitySelected]);
+							        bMetadataAvailale = true;		                    			
+	                    		} else {
+	                        	metaDataID = window.communityMetadataDic[layer.eaMetadata][window.communitySelected];
+	                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
+						        bMetadataAvailale = true;	                    		
+	                    		}
+	                    	}     		
+
+					    }                      
+                        
+                        break;
+                    }
+                }
+            }
+            if (!bMetadataAvailale){
+            	alert("Matadata is not available for this layer");
+            }
+
+        });
+        
+
     },    
     _onItemRemoveClick: function(evt) {
         layerId = this._layerInfo.id;
@@ -733,6 +681,7 @@ define([
             layerType === "CSVLayer" ||
             layerType === "ArcGISImageServiceLayer" ||
             layerType === "StreamLayer" ||
+            layerType === "ArcGISDynamicMapServiceLayer" ||
             layerType === "ArcGISImageServiceVectorLayer")) {
         itemInfoCategory = "RootLayerAndFeatureLayer";
       } else if (isRootLayer) {
