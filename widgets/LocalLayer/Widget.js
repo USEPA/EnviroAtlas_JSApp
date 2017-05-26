@@ -19,6 +19,8 @@ define([
         'esri/renderers/SimpleRenderer',
         'esri/graphic',
         'esri/Color',
+ 	    'esri/tasks/QueryTask',
+        'esri/tasks/query',          
         'esri/renderers/ClassBreaksRenderer',
         'esri/geometry/Extent',
         'esri/InfoTemplate',
@@ -41,7 +43,7 @@ define([
         PanelManager,
         urlUtils,
         array,
-        query,
+        dojoquery,
         topic,
         ArcGISDynamicMapServiceLayer,
         ArcGISTiledMapServiceLayer,
@@ -52,6 +54,8 @@ define([
         SimpleRenderer,
         graphic,
         Color,
+    	QueryTask,
+    	query,        
         ClassBreaksRenderer,
         Extent,
         InfoTemplate,
@@ -187,10 +191,108 @@ define([
             }
         });
     };
+    //set popup info for each featuer layer
+    var featuresCollection = [];
+    var arrLayersForPopup = [];
+    var numDecimalDigit = 0;
+    var addSingleFeatureForPopup = function(eaID, clickEvt) {
+    		
+		var selectQuery = new query();
+        selectQuery.geometry = clickEvt.mapPoint;
+        selectQuery.returnGeometry = true;
+        selectQuery.spatialRelationship = query.SPATIAL_REL_INTERSECTS;            
+        
+        var queryTask = new QueryTask(window.hashURL[eaID]);
+        popupField = window.hashPopup[eaID].fieldInfos[0]["fieldName"];
+        popupFieldName = window.hashPopup[eaID].fieldInfos[0]["label"];
+        popupTitle = window.hashPopup[eaID].title.split(":");
+        if (window.hashPopup[eaID].fieldInfos[0].hasOwnProperty('format')) {
+        	if (window.hashPopup[eaID].fieldInfos[0].format.hasOwnProperty('places')) {
+        		numDecimalDigit = window.hashPopup[eaID].fieldInfos[0].format.places;
+        	}
+        }
+        selectQuery.outFields = ["*"];
+        selectQuery.outFields = [popupField, popupTitle[1].trim().replace("{","").replace("}","")];
+        
+        queryTask.execute(selectQuery, function (features) {
+        	if (window.hashPopup[eaID] != undefined) {
+									
+				//Performance enhancer - assign featureSet array to a single variable.
+				var resultFeatures = features.features;
+				var symbol = new SimpleFillSymbol(
+                  SimpleFillSymbol.STYLE_NULL, 
+                  new SimpleLineSymbol(
+                    SimpleLineSymbol.STYLE_SOLID, 
+                    new Color([0, 0, 200, 255]), 
+                    1
+                  ),
+                  new Color([215, 215, 215,255])
+                );
+			
+				//Loop through each feature returned
+				for (var i=0, il=resultFeatures.length; i<il; i++) {
+					var content = "<b>" + popupTitle[0] + "</b>: $" + popupTitle[1].trim() + "<hr>"+"<b>" + popupFieldName + "</b>: ${" + popupField + ":self.formatValue}";	
+					var infoTemplate = new esri.InfoTemplate(popupFieldName, content);
+				
+				    var graphic = resultFeatures[i];
+				    graphic.setSymbol(symbol);
+				    graphic.setInfoTemplate(infoTemplate);
+				    featuresCollection.push(graphic);
+				
+				    self.map.graphics.add(graphic);
+				}
+
+				if 	(arrLayersForPopup.length > 0){
+        			addSingleFeatureForPopup(arrLayersForPopup.pop(),clickEvt);
+        		}
+        		else {
+        			if 	(featuresCollection.length > 0){
+		    			self.map.infoWindow.setFeatures(featuresCollection);
+						self.map.infoWindow.show(clickEvt.mapPoint);
+					}
+				}
+            }
+        }); 	
+	};
+	
+	var setClickEvent = function(){    		
+
+		intersect = self.map.on("click", function(evt) {
+			self.map.graphics.clear();
+			featuresCollection = [];
+			arrLayersForPopup = [];
+    		for (i in window.featureLyrNumber) {  
+    			bVisibleFL = false;
+    			bVisibleTL = false;
+    			  		
+	    		lyrFL = self.map.getLayer(window.layerIdPrefix + window.featureLyrNumber[i]);		    		
+	    		if (lyrFL != null) {		    			
+					if (lyrFL.visible == true){
+						bVisibleFL = true;
+					}
+				}
+
+				lyrTL = self.map.getLayer(window.layerIdTiledPrefix + window.featureLyrNumber[i]);
+	    		if (lyrTL != null) {		    			
+					if (lyrTL.visible == true){
+						bVisibleTL = true;							
+					}
+				}		
+				
+				if ((bVisibleFL == true) || (lyrTL == true)) {
+					arrLayersForPopup.push(window.featureLyrNumber[i]);
+				}		    		
+	    	}
+	    	//start to popup for first layer:
+	    	if 	(arrLayersForPopup.length > 0){
+	    	addSingleFeatureForPopup(arrLayersForPopup.pop(),evt);         
+        	}       
+		})
+	};
     var getTextContent = function (graphic) {
         var commName = graphic.attributes.CommST;
         currentCommunity = commName;
-        return "<b>" + window.communityDic[commName] + "</b><br /><button id = 'testButton' dojoType='dijit.form.Button' onclick='self.selectCurrentCommunity() '>Select this community</button>";
+        return "<b>" + window.communityDic[commName] + "</b><br /><button id = 'testButton2' dojoType='dijit.form.Button' onclick='self.selectCurrentCommunity() '>Select this community</button>";
     };
 
     //Function also used in PeopleBuiltSpaces/widget.js, ensure that edits are synchronized
@@ -500,6 +602,25 @@ define([
         }
     };
     var clazz = declare([BaseWidget], {
+    	    selectCurrentCommunity: function () {
+
+                window.communitySelected = currentCommunity;
+
+                this.publishData({
+                    message: currentCommunity
+                });
+                document.getElementById('butUpdateCommunityLayers').click();
+
+                var nExtent;
+                if (window.communitySelected != window.strAllCommunity) {
+                    commnunityWholeName = window.communityDic[window.communitySelected];
+                    extentForCommunity = window.communityExtentDic[window.communityDic[window.communitySelected]];
+                    nExtent = Extent(extentForCommunity);
+
+                }
+                this.map.setExtent(nExtent);
+                this.map.infoWindow.hide();
+            },
             onReceiveData: function (name, widgetId, data, historyData) {
                 if (name == 'SimpleSearchFilter') {
                     var stringArray = data.message.split(",");
@@ -516,7 +637,7 @@ define([
             },
 
             onClose: function () {
-                if (query('.jimu-popup.widget-setting-popup', window.parent.document).length === 0) {
+                if (dojoquery('.jimu-popup.widget-setting-popup', window.parent.document).length === 0) {
                     var _currentExtent = dojo.clone(this.map.extent);
                     var _changedData = {
                         itemId: this._originalWebMap
@@ -544,25 +665,7 @@ define([
                     }
                 }
             },
-            selectCurrentCommunity: function () {
 
-                window.communitySelected = currentCommunity;
-
-                this.publishData({
-                    message: currentCommunity
-                });
-                document.getElementById('butUpdateCommunityLayers').click();
-
-                var nExtent;
-                if (window.communitySelected != window.strAllCommunity) {
-                    commnunityWholeName = window.communityDic[window.communitySelected];
-                    extentForCommunity = window.communityExtentDic[window.communityDic[window.communitySelected]];
-                    nExtent = Extent(extentForCommunity);
-
-                }
-                this.map.setExtent(nExtent);
-                this.map.infoWindow.hide();
-            },
             startup: function () {
                 this._originalWebMap = this.map.webMapResponse.itemInfo.item.id;
                 this._removeAllLayersExceptBasemap();
@@ -607,8 +710,12 @@ define([
                 this.inherited(arguments);
                 this.fetchDataByName('SimpleSearchFilter');
                 this.fetchDataByName('LayerList');
+                setClickEvent();
             },
-
+		     formatValue : function (value, key, data){
+		     	pow10 = Math.pow(10, numDecimalDigit);
+		     	return parseFloat(Math.round(value * pow10) / pow10).toFixed(numDecimalDigit);
+		     }
         });
     return clazz;
 });
