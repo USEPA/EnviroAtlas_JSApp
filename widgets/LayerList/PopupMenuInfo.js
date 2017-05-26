@@ -604,6 +604,8 @@ define([
       {
         key: 'transparency'
       }, {
+        key: 'movetotop'
+      }, {
         key: 'remove'
       },{
         key: 'separator'
@@ -614,8 +616,6 @@ define([
       }, {
         key: 'separator'
       }, {
-        key: 'movetotop'
-      }, {
         key: 'moveup'
       }, {
         key: 'movedown'
@@ -623,6 +623,8 @@ define([
       'RootLayerAndFeatureLayer': [
       {
         key: 'transparency'
+      }, {
+        key: 'movetotop'
       }, {
         key: 'changeSymbology'
       }, {
@@ -645,8 +647,6 @@ define([
         key: 'table'
       }, {
         key: 'separator'
-      }, {
-        key: 'movetotop'
       }, {
         key: 'moveup'
       }, {
