@@ -1028,7 +1028,7 @@ define([
         menus.addChild(this.filter);
 
         this.matchingCheckBox = new CheckedMenuItem({
-          checked: false,
+          checked: true, //set to true by default.
           // style: "margin-left:10px;margin-right:10px;",
           label: this.nls.filterByExtent,
           onChange: lang.hitch(this, function(status) {
