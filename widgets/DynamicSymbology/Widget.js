@@ -148,10 +148,22 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		  var dslayer = layerInfosObject.getLayerInfoById(_layerID);
 		  dom.byId('title').innerHTML = dslayer.title;
 
+
+
 		  //Set layers
 		  geoenrichedFeatureLayer = dynamicSym.map.getLayer(_layerID);
-		  if(window.communitySelected != "AllCommunity"){
-			  geoenrichedFeatureLayer.setDefinitionExpression("CommST = '" + window.communitySelected + "'");
+          // var str = geoenrichedFeatureLayer.url;
+          // var lookfor = "National";
+          // if(str.includes(lookfor)){
+          //      //turn off cache layer eaLyrNum  "tiledNum_119"
+          //     var res = _layerID.split("_");
+          //     var cacheLayer = dynamicSym.map.getLayer("tiledNum_" + res[1]);
+          //     cacheLayer.setVisibility(false);
+          //     geoenrichedFeatureLayer.setVisibility(true);
+          // }
+
+          if(window.communitySelected != "AllCommunity"){
+			  geoenrichedFeatureLayer.setDefinitionExpression("CommST = '" + window.communitySelected + "'" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " >= 0" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " IS NOT Null" );
 		  }
 		  featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
 
@@ -265,10 +277,20 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 					  self._resetElements(defaultRenderer);
 				  })
 			  }else {
-				  $.getJSON( 'configs/CommunitySymbology/' + 'AllCommunities' + '_JSON_Symbol/Nulls/' + 'CombComm' + '_' + window.hashAttribute[res[1]] + ".json", function( data ) {
-					  var defaultRenderer = new ClassBreaksRenderer(data);
-					  self._resetElements(defaultRenderer);
-				  })
+			      var str = lyrTobeUpdated.url;
+                  var lookfor = "National";
+			      if(str.includes(lookfor)){
+			         console.log("get from json");
+                      var defaultRenderer = new ClassBreaksRenderer(currentSymbology[_layerID]['origRenderer']);
+                      self._resetElements(defaultRenderer);
+                  }else{
+                      //get from community
+                      $.getJSON( 'configs/CommunitySymbology/' + 'AllCommunities' + '_JSON_Symbol/Nulls/' + 'CombComm' + '_' + window.hashAttribute[res[1]] + ".json", function( data ) {
+                          var defaultRenderer = new ClassBreaksRenderer(data);
+                          self._resetElements(defaultRenderer);
+                      })
+                  }
+
 			  }
 		  });
 	  });
@@ -401,7 +423,8 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		field: _fieldName,
         layer: geoenrichedFeatureLayer,
         numClasses: _NumberOfClasses,
-		scheme: _scheme
+		scheme: _scheme,
+        showOthers: false
       }).then(function (smartRenderer) {
 		
         if (!geoenrichedFeatureLayer.visible) {
@@ -410,6 +433,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		
         geoenrichedFeatureLayer.setRenderer(smartRenderer.renderer);
         geoenrichedFeatureLayer.redraw();
+        //console.log("apply renderer :: ", geoenrichedFeatureLayer.renderer);
 
         geoenrichedFeatureLayer.setVisibility(false);
         geoenrichedFeatureLayer.setVisibility(true);
@@ -429,7 +453,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 				dynamicSymbology.slider.set("maxValue", statistics.max);
 				dynamicSymbology.slider.set("statistics", statistics);
 				dynamicSymbology.slider.set("histogram", histogram);
-			  
+
 			  	_busy.hide();
 		  });
 
