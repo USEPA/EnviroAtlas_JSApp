@@ -468,13 +468,17 @@ define([
 				case "NATIONAL":
 					
 					if(chkNationalScale){
-						totalNumOfLayers = totalNumOfLayers + 1;
 						bSelectByScale = true;
+						if (SubLayerIds.length == 0) {
+							totalNumOfLayers = totalNumOfLayers + 1;
+						}
 					}
 					break;
 				case "COMMUNITY":
 					if(chkCommunityScale){
-						totalNumOfLayers = totalNumOfLayers + 1;
+						if (SubLayerIds.length == 0) {
+							totalNumOfLayers = totalNumOfLayers + 1;
+						}
 						if ((communitySelected == "") || (communitySelected == window.strAllCommunity)){
 						bSelectByScale = true;
 					}
