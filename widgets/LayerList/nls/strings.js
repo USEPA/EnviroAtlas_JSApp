@@ -6,7 +6,7 @@ define({
     labelLayer: "Layer Name",
     itemMapDescription: "Map Description",
     itemZoomTo: "Zoom to",
-    itemMovetoTop: "Move to Top",
+    itemMovetoTop: "Draw Layer On Top",
     itemTransparency: "Transparency",
     itemTransparent: "Transparent",
     itemOpaque: "Opaque",
