@@ -88,7 +88,7 @@ define([
 		var dicTopicSelected = {};
 		hiderows = {};
 		
-		var self;
+		var selfSimpleSearchFilter;
 		
 		var hashFactsheetLink = {};
 		var hashLayerNameLink = {};
@@ -149,7 +149,7 @@ define([
 		  return false;  
 		};
     var updateSingleCommunityLayer = function(selectedLayerNum){    	
-		lyrTobeUpdated = self.map.getLayer(window.layerIdPrefix + selectedLayerNum);	 
+		lyrTobeUpdated = selfSimpleSearchFilter.map.getLayer(window.layerIdPrefix + selectedLayerNum);	 
 		if (window.communitySelected != window.strAllCommunity) {        
 			$.getJSON( 'configs/CommunitySymbology/' + window.communitySelected + '_JSON_Symbol/Nulls/' + window.communitySelected + '_' + window.hashAttribute[selectedLayerNum] + ".json", function( data ) {
 				var renderer = new ClassBreaksRenderer(data);
@@ -247,7 +247,7 @@ define([
 	   
 	   var showLayerListWidget = function(){
 	        var widgetName = 'LayerList';
-	        var widgets = self.appConfig.getConfigElementsByName(widgetName);
+	        var widgets = selfSimpleSearchFilter.appConfig.getConfigElementsByName(widgetName);
 	        var pm = PanelManager.getInstance();
 	        pm.showPanel(widgets[0]);	   	
 	   }
@@ -510,7 +510,7 @@ define([
                 	window.allLayerNumber.push(eaID);
                 }
                 else {
-		    		lyr = self.map.getLayer(window.layerIdPrefix + eaID);
+		    		lyr = selfSimpleSearchFilter.map.getLayer(window.layerIdPrefix + eaID);
 					if(lyr){
 			    		bLayerSelected = true;
 		          	}                   	
@@ -677,7 +677,7 @@ define([
 		    			for (i=0; i< SubLayerNames.length; i++) {
 
 							bLayerSelected = false;
-							lyr = self.map.getLayer(window.layerIdPrefix + SubLayerIds[i]);
+							lyr = selfSimpleSearchFilter.map.getLayer(window.layerIdPrefix + SubLayerIds[i]);
 							if(lyr){
 					    		bLayerSelected = true;
 				          	}     
@@ -995,7 +995,7 @@ define([
 	    this.displayCategorySelection();
 		this.displayGeographySelection();
 	
-		self = this;
+		selfSimpleSearchFilter = this;
 		/*dojo.connect(dijit.byId("selectionCriteria"), "toggle", function (){
 			updateSelectableLayersArea();
 		});*/
@@ -1008,7 +1008,7 @@ define([
 	        		bookmarkNational = currentBookmarkClass.items;	        		
         			var currentExtent = bookmarkNational[0].extent;
         			nExtent = Extent(currentExtent);
-        			self.map.setExtent(nExtent);	        		
+        			selfSimpleSearchFilter.map.setExtent(nExtent);	        		
 	        	}
 	        }
 	    }); 
