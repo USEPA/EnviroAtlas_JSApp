@@ -88,7 +88,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 	},
 
     onOpen: function(){
-	  self = this;
+	  selfDynamicSymbology = this;
 	  _busy = busyIndicator.create("esri-colorinfoslider-container");
 
 		schemes = esriStylesChoropleth.getSchemes({
@@ -110,14 +110,14 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 
 		styleDialog = new TooltipDialog({
 			style: "width: 300px;",
-			onOpen: self._openSymbolStyler
+			onOpen: selfDynamicSymbology._openSymbolStyler
 		});
 		styleDialog.attr('content',contentsNode);
 
 		symbolStyler = new SymbolStyler({portal: "https://epa.maps.arcgis.com"}, stylerNode);//this.symbolStyler
 		var okButton = new Button({
 			label: "OK",
-			onClick: self._getStyle
+			onClick: selfDynamicSymbology._getStyle
 		}, okButtonDiv).startup();
 
 		var cancelButton = new Button({
@@ -270,11 +270,11 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		  var originalHandler = on(origRendBtn,"click", function(){
 
 			  var res = _layerID.split("_");
-			  lyrTobeUpdated = self.map.getLayer(_layerID);
+			  lyrTobeUpdated = selfDynamicSymbology.map.getLayer(_layerID);
 			  if (window.communitySelected != window.strAllCommunity) {
 				  $.getJSON( 'configs/CommunitySymbology/' + window.communitySelected + '_JSON_Symbol/Nulls/' + window.communitySelected + '_' + window.hashAttribute[res[1]] + ".json", function( data ) {
 					  var defaultRenderer = new ClassBreaksRenderer(data);
-					  self._resetElements(defaultRenderer);
+					  selfDynamicSymbology._resetElements(defaultRenderer);
 				  })
 			  }else {
 			      var str = lyrTobeUpdated.url;
@@ -282,12 +282,12 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 			      if(str.includes(lookfor)){
 			         console.log("get from json");
                       var defaultRenderer = new ClassBreaksRenderer(currentSymbology[_layerID]['origRenderer']);
-                      self._resetElements(defaultRenderer);
+                      selfDynamicSymbology._resetElements(defaultRenderer);
                   }else{
                       //get from community
                       $.getJSON( 'configs/CommunitySymbology/' + 'AllCommunities' + '_JSON_Symbol/Nulls/' + 'CombComm' + '_' + window.hashAttribute[res[1]] + ".json", function( data ) {
                           var defaultRenderer = new ClassBreaksRenderer(data);
-                          self._resetElements(defaultRenderer);
+                          selfDynamicSymbology._resetElements(defaultRenderer);
                       })
                   }
 
@@ -347,7 +347,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		newStyle.scheme.outline = newStyle.symbol.outline;
 		_scheme = newStyle.scheme;
 		popup.close(styleDialog);
-		self._updateSmartMapping2();
+		selfDynamicSymbology._updateSmartMapping2();
 	},
 	_getColorsFromInfos: function(currentInfos){
 		var symbolColors = [];
@@ -357,7 +357,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		return symbolColors;
 	},
 	_openSymbolStyler: function(){
-		var currRamp = self._getColorsFromInfos(geoenrichedFeatureLayer.renderer.infos);
+		var currRamp = selfDynamicSymbology._getColorsFromInfos(geoenrichedFeatureLayer.renderer.infos);
 
 		var fType = geoenrichedFeatureLayer.geometryType;
 		if(fType == "esriGeometryPolygon"){
