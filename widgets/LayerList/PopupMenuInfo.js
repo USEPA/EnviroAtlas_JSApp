@@ -480,6 +480,16 @@ define([
     },
     _onItemChangeSymbologyClick: function(evt) {
       layerId = this._layerInfo.id;
+      lyrTiled = this._layerInfo.map.getLayer(layerId.replace(window.layerIdPrefix, window.layerIdTiledPrefix));
+	  if(lyrTiled){
+			  var r = confirm("The tiled layer will be removed if you proceed to change symbology!");
+			  if (r == false) {
+			      return;
+			  } 
+			  else {
+		       		this._layerInfo.map.removeLayer(lyrTiled);
+	      	  }       	
+	  }
       this.layerListWidget.publishData({
         message: layerId
       }, true);
