@@ -367,6 +367,7 @@ define([
             for (index = 0, len = layersTobeAdded.length; index < len; ++index) {
                 layer = layersTobeAdded[index];
                 if (layer.hasOwnProperty('eaID') && ((selectedLayerArray[i]) == (layer.eaID.toString()))) {
+                    var bNeedToBeAdded = true;
                     var lLayer;
                     var lOptions = {};
                     if (layer.hasOwnProperty('opacity')) {
@@ -390,11 +391,6 @@ define([
                             lOptions.imageParameters = ip;
                         }
                         lLayer = new ArcGISDynamicMapServiceLayer(layer.url, lOptions);
-                        if (layer.name) {
-                            lLayer._titleForLegend = layer.name;
-                            lLayer.title = layer.name;
-                            lLayer.noservicename = true;
-                        }
 
                         var popupConfig = getPopups(layer);
                         lLayer.setInfoTemplates(popupConfig);
@@ -422,14 +418,8 @@ define([
                                 evt.layer.visibleLayers.splice(evt.layer.visibleLayers.indexOf(layerId), 1);
                             });
                         });
-                        lLayer.id = window.layerIdPrefix + layer.eaID.toString();
-                        this._viewerMap.addLayer(lLayer);
                         this._viewerMap.setInfoWindowOnClick(true);
-                        if (layer.hasOwnProperty('eaScale')) {
-                            if (layer.eaScale == "COMMUNITY") {
-                                addCommunityBoundaries();
-                            }
-                        }
+
                     } else if (layer.type.toUpperCase() === 'FEATURE') {
                     	window.featureLyrNumber.push(layer.eaID);
                         bPopup = true;
@@ -477,7 +467,6 @@ define([
                             lOptions.showLabels = true;
                         }
 
-                        var bNeedToBeAdded = true;
                         if (bPopup) {
                             if (layer.hasOwnProperty('eaLyrNum')) {
                                 lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
@@ -485,41 +474,7 @@ define([
                             } else {
                                 lLayer = new FeatureLayer(layer.url, lOptions);
                             }
-
-                            dojo.connect(lLayer, "onError", function (error) {
-                                if ((!(lLayer.title in window.faildedEALayerDictionary)) && (!(lLayer.title in window.successLayerDictionary))) {
-                                    window.faildedEALayerDictionary[lLayer.title] = lLayer.title;
-                                    showDisplayLayerAddFailureWidget(lLayer.title);
-                                }
-                            });
-
-                            dojo.connect(lLayer, "onLoad", function (error) {
-                                if (!(lLayer.title in window.successLayerDictionary)) {
-                                    window.successLayerDictionary[lLayer.title] = lLayer.title;
-                                }
-                            });
-
                             lLayer.minScale = 1155581.108577;
-                            if (layer.name) {
-                                lLayer._titleForLegend = layer.name;
-                                lLayer.title = layer.name;
-                                lLayer.noservicename = true;
-                            }
-                            lLayer.on('load', function (evt) {
-                                evt.layer.name = lOptions.id;
-                            });
-
-                            lLayer.id = window.layerIdPrefix + layer.eaID.toString();
-
-                            if (layer.hasOwnProperty('eaScale')) {
-                                if (layer.eaScale == "COMMUNITY") {
-                                    lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
-                                    addCommunityBoundaries();
-                                } else { //National
-                                    lLayer.setVisibility(false);
-                                    window.nationalLayerNumber.push(layer.eaID.toString());
-                                }
-                            }
                         }
 
                         if (bNeedToBeAdded) {
@@ -541,11 +496,8 @@ define([
                                 loadSymbologyConfig(function (response) {
                                     var classBreakInfo = JSON.parse(response);
                                     var renderer = new ClassBreaksRenderer(classBreakInfo);
-                                    lLayer.setRenderer(renderer);
-                                    this._viewerMap.addLayer(lLayer);
+                                    lLayer.setRenderer(renderer);  
                                 });
-                            } else {
-                                this._viewerMap.addLayer(lLayer);
                             }
                         }
                     } else if (layer.type.toUpperCase() === 'TILED') {
@@ -556,19 +508,45 @@ define([
                             lOptions.refreshInterval = layer.autorefresh;
                         }
                         lLayer = new ArcGISTiledMapServiceLayer(layer.url, lOptions);
+
+                        var popupConfig = getPopups(layer);
+                        lLayer.setInfoTemplates(popupConfig);
+
+                    }
+                    //All layer types:
+                    if (bNeedToBeAdded) {
+                        dojo.connect(lLayer, "onError", function (error) {
+                            if ((!(lLayer.title in window.faildedEALayerDictionary)) && (!(lLayer.title in window.successLayerDictionary))) {
+                                window.faildedEALayerDictionary[lLayer.title] = lLayer.title;
+                                showDisplayLayerAddFailureWidget(lLayer.title);
+                            }
+                        });
+
+                        dojo.connect(lLayer, "onLoad", function (error) {
+                            if (!(lLayer.title in window.successLayerDictionary)) {
+                                window.successLayerDictionary[lLayer.title] = lLayer.title;
+                            }
+                        });
+                        
                         if (layer.name) {
                             lLayer._titleForLegend = layer.name;
                             lLayer.title = layer.name;
                             lLayer.noservicename = true;
                         }
+                        lLayer.on('load', function (evt) {
+                            evt.layer.name = lOptions.id;
+                        });
 
-                        var popupConfig = getPopups(layer);
-                        lLayer.setInfoTemplates(popupConfig);
-
+                        lLayer.id = window.layerIdPrefix + layer.eaID.toString();                    
+                        
                         this._viewerMap.addLayer(lLayer);
                         if (layer.hasOwnProperty('eaScale')) {
                             if (layer.eaScale == "COMMUNITY") {
+                                lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
                                 addCommunityBoundaries();
+                            } else { //National
+                                lLayer.setVisibility(false);
+                                window.nationalLayerNumber.push(layer.eaID.toString());
                             }
                         }
                     }
