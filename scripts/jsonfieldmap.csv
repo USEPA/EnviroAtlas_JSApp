@@ -24,6 +24,7 @@ tileLink,tileLink
 tileURL,tileURL
 serviceType,serviceType
 popupJSON,popupDefinition
+decimals,numDecimal
 IsSubLayer,IsSubLayer
 SubLayerNames,SubLayerNames
 SubLayerIds,SubLayerIds
