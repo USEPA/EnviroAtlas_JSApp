@@ -83,7 +83,7 @@ define(["./ConfigManager",
     //window.topicDic["Climate and Weather"] = "CaW"; Removed/renamed in March 2017
     window.topicDic["Crop Productivity"] = "CP";
     window.topicDic["Ecosystem Markets"] = "EM";
-    window.topicDic["Ecosystems and Ecoregions"] = "EaE";
+    //window.topicDic["Ecosystems and Ecoregions"] = "EaE"; Removed from topics may 2017- added to boundaries
     window.topicDic["Energy Potential"] = "EP";
     window.topicDic["Engagement with Outdoors"] = "EwO";
     window.topicDic["Health and Economic Outcomes"] = "HaEO";
@@ -102,7 +102,7 @@ define(["./ConfigManager",
     
     window.topicDic["Protected Lands"] = "PL";
     window.topicDic["Species: At-Risk and Priority"] = "SARaP";
-    window.topicDic["Species: Game"] = "SG";
+    //window.topicDic["Species: Game"] = "SG"; Removed from topics may 2017 - appened to "SO" 
     window.topicDic["Species: Other"] = "SO";
     //window.topicDic["Water Supply and Hydrology"] = "WSaH"; Removed/renamed  in March 2017
     window.topicDic["Water Supply, Runoff, and Flow"] = "WSRaF"; //This is newly added Mar 2017 

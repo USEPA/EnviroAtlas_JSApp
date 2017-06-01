@@ -90,7 +90,7 @@ def main(_argv):
                     print(popupTxt)
             layerJSON["name"] = name
             layerJSON["url"] = inputWorksheet[key["url"]+rowID].value
-            stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic"]
+            stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL"]
             for elem in stringList:
                 cellValue = inputWorksheet[key[elem]+rowID].value
                 if cellValue != None:
