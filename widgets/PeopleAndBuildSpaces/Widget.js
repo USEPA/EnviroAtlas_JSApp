@@ -137,7 +137,78 @@ define([
         }
         return infoTemplateArray;
     }
+    var initTileLayer = function (urlTiledMapService, tiledLayerId) {
+        dojo.declare("myTiledMapServiceLayer", esri.layers.TiledMapServiceLayer, {
+            constructor: function () {
+                this.spatialReference = new esri.SpatialReference({
+                        wkid: 102100
+                    });
+                this.initialExtent = (this.fullExtent = new esri.geometry.Extent(-13899346.378, 2815952.218899999, -7445653.2326, 6340354.452, this.spatialReference));
+                this.tileInfo = new esri.layers.TileInfo({
+                        "rows": 256,
+                        "cols": 256,
+                        "dpi": 96,
+                        "format": "PNG",
+                        "compressionQuality": 0,
+                        "origin": {
+                            "x": -20037508.342787,
+                            "y": 20037508.342787
+                        },
+                        "spatialReference": {
+                            "wkid": 102100
+                        },
+                        "lods": [{
+                                level: 0,
+                                resolution: 156543.03392800014,
+                                scale: 591657527.591555
+                            }, {
+                                level: 1,
+                                resolution: 78271.51696399994,
+                                scale: 295828763.795777
+                            }, {
+                                level: 2,
+                                resolution: 39135.75848200009,
+                                scale: 147914381.897889
+                            }, {
+                                level: 3,
+                                resolution: 19567.87924099992,
+                                scale: 73957190.948944
+                            }, {
+                                level: 4,
+                                resolution: 9783.93962049996,
+                                scale: 36978595.474472
+                            }, {
+                                level: 5,
+                                resolution: 4891.96981024998,
+                                scale: 18489297.737236
+                            }, {
+                                level: 6,
+                                resolution: 2445.98490512499,
+                                scale: 9244648.868618
+                            }, {
+                                level: 7,
+                                resolution: 1222.992452562495,
+                                scale: 4622324.434309
+                            }, {
+                                level: 8,
+                                resolution: 611.4962262813797,
+                                scale: 2311162.217155
+                            }
+                        ]
+                    });
+                this.loaded = true;
+                this.onLoad(this);
+                this.visible = false;
+                this.id = tiledLayerId;
+            },
+            getTileUrl: function (level, row, col) {
+                return urlTiledMapService +
+                "L" + dojo.string.pad(level, 2, '0') + "/" + "R" + dojo.string.pad(row.toString(16), 8, '0') + "/" + "C" + dojo.string.pad(col.toString(16), 8, '0') + "." + "png";
 
+            }
+        });
+    };
+    
     var showLayerListWidget = function () {
         var widgetName = 'LayerList';
         var widgets = selfPBS.appConfig.getConfigElementsByName(widgetName);
@@ -304,25 +375,7 @@ define([
                             }
                             
                             infobox.show()
-                      /*
-                                if (hashFactsheetLinkPBS[this.id] == "N/A") {
-                                    var dataFactNote = new Dialog({
-                                            title: hashLayerNameLinkPBS[this.id],
-                                            style: "width: 300px",
-                                        });
-                                    dataFactNote.show();
-                                    dataFactNote.set("content", "Data fact sheet link is not available!");
-
-                                } else {
-                                    window.open(window.dataFactSheet + hashFactsheetLinkPBS[this.id]);
-                                }*/
-
                             }; //end of inserting datafactsheet icon
-
-
-
-
-
                         }
                     } // end of if (eaID.trim() != "")
                 } // end of if(layer.hasOwnProperty('eaID'))
@@ -376,7 +429,6 @@ define([
                             }
 
                             lLayer.id = window.layerIdPrefix + layer.eaID.toString();
-                            map.addLayer(lLayer);
                             map.setInfoWindowOnClick(true);
 
                         } else if (layer.type.toUpperCase() === 'FEATURE') {
@@ -406,7 +458,7 @@ define([
 
                             if (layer.hasOwnProperty('eaLyrNum')) {
                                 lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
-                                //lLayer = new ArcGISDynamicMapServiceLayer(layer.url);
+                                window.hashURL[layer.eaID] = layer.url + "/" + layer.eaLyrNum.toString();
                             } else {
                                 lLayer = new FeatureLayer(layer.url, lOptions);
                             }
@@ -420,7 +472,20 @@ define([
                             lLayer.id = window.layerIdPBSPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, "");
                             lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
 
-                            map.addLayer(lLayer);
+                            if (layer.tileLink == "yes") {
+                                var tileLinkAdjusted = "";
+                                if (layer.tileURL.slice(-1) == "/") {
+                                    tileLinkAdjusted = layer.tileURL;
+                                } else {
+                                    tileLinkAdjusted = layer.tileURL + "/";
+                                }
+                                initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString()); 
+                                map.addLayer(new myTiledMapServiceLayer());
+                                lyrTiled = map.getLayer(window.layerIdTiledPrefix + layer.eaID.toString()); 
+                                if (lyrTiled) {
+                                    lyrTiled.setOpacity(layer.opacity);
+                                }
+                            }                            
 
                         } else if (layer.type.toUpperCase() === 'TILED') {
                             if (layer.displayLevels) {
@@ -438,12 +503,39 @@ define([
 
                             var popupConfig = getPopups(layer);
                             lLayer.setInfoTemplates(popupConfig);
-
-                            map.addLayer(lLayer);
                         }
+                        dojo.connect(lLayer, "onError", function (error) {
+                            if ((!(lLayer.title in window.faildedEALayerDictionary)) && (!(lLayer.title in window.successLayerDictionary))) {
+                                window.faildedEALayerDictionary[lLayer.title] = lLayer.title;
+                                showDisplayLayerAddFailureWidget(lLayer.title);
+                            }
+                        });
+
+                        dojo.connect(lLayer, "onLoad", function (error) {
+                            if (!(lLayer.title in window.successLayerDictionary)) {
+                                window.successLayerDictionary[lLayer.title] = lLayer.title;
+                            }
+                        });
+                        
+                        if (layer.name) {
+                            lLayer._titleForLegend = layer.name;
+                            lLayer.title = layer.name;
+                            lLayer.noservicename = true;
+                        }
+                        lLayer.on('load', function (evt) {
+                            evt.layer.name = lOptions.id;
+                        });
+
+                        lLayer.id = window.layerIdPrefix + layer.eaID.toString();                    
+                        
+                        map.addLayer(lLayer);
                         if (layer.hasOwnProperty('eaScale')) {
                             if (layer.eaScale == "COMMUNITY") {
+                                lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
                                 addCommunityBoundaries();
+                            } else { //National
+                                lLayer.setVisibility(false);
+                                window.nationalLayerNumber.push(layer.eaID.toString());
                             }
                         }
                         showLayerListWidget();
