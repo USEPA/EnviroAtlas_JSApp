@@ -479,8 +479,9 @@ define([
 						if (SubLayerIds.length == 0) {
 							totalNumOfLayers = totalNumOfLayers + 1;
 						}
-						if ((communitySelected == "") || (communitySelected == window.strAllCommunity)){
 						bSelectByScale = true;
+						/*if ((communitySelected == "") || (communitySelected == window.strAllCommunity)){
+						
 					}
 						else{
 							if (eaMetadata != "") {
@@ -491,7 +492,7 @@ define([
 									}
 								}
 							}
-						}
+						}*/
 					}
 					break;
 			}    			
@@ -575,7 +576,8 @@ define([
 							"name": chkboxId,
 							"value": 1,
 							"id": chkboxId,
-							"checked": bLayerSelected
+							"checked": bLayerSelected,
+							"style": "margin-top: 1px"
 		    			}, Checkbox_div);
 		    			chkIdDictionary[chkboxId] = SubLayerNames[i] + layerName;
 		    		} else {
@@ -693,7 +695,8 @@ define([
 								"name": chkboxId,
 								"value": 1,
 								"id": chkboxId,
-								"checked": bLayerSelected
+								"checked": bLayerSelected,
+								"style": "margin-top: 1px"
 			    			}, Checkbox_div);
 
 			    			var SubLayerDiv = dojo.create('div', {
@@ -954,13 +957,13 @@ define([
 		checkbox.addEventListener('click', function() {
 			//updateTopicToggleButton();
 			_updateSelectableLayer();
-        	if (!this.checked){
+        	/*if (!this.checked){
 				var btn = document.getElementById("butSelectOneCommunity"); 
 				btn.disabled = true;	
         	} else {
 				var btn = document.getElementById("butSelectOneCommunity"); 
 				btn.disabled = false;        		
-        	}		
+        	}	*/	
 	    });				
 		
 		// add Community title:
@@ -970,7 +973,7 @@ define([
 		title.innerHTML = "EnviroAtlas Communities";    
 		newTitleCell.appendChild(title); 
 		
-		var newButtonInfoCell  = newRow.insertCell(4);
+		/*var newButtonInfoCell  = newRow.insertCell(4);
 		var buttonInfo = document.createElement('input');
 		buttonInfo.type = "button";
         var buttonInfoId = "butSelectOneCommunity";
@@ -985,7 +988,7 @@ define([
         newButtonInfoCell.appendChild(buttonInfo);  
         document.getElementById(buttonInfoId).onclick = function(e) {
    			document.getElementById('butOpenSelectCommunityWidget').click();
-	    };   		  		
+	    };   	*/	  		
 
 	},
       startup: function() {
