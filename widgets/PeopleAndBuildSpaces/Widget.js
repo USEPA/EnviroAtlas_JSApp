@@ -71,7 +71,7 @@ define([
     var getTextContent = function (graphic) {
         var commName = graphic.attributes.CommST;
         currentCommunity = commName;
-        return "<b>" + window.communityDic[commName] + "</b><br /><button id = 'testButton' dojoType='dijit.form.Button' onclick='self.selectCurrentCommunity() '>Select this community</button>";
+        return "<b>" + window.communityDic[commName] + "</b><br /><button id = 'testButton' dojoType='dijit.form.Button' onclick='selfPBS.selectCurrentCommunity() '>Select this community</button>";
     };
 
     //Function also used in PeopleBuiltSpaces/widget.js, ensure that edits are synchronized
@@ -104,7 +104,7 @@ define([
             if (dojo.byId(chkboxId)) {
                 dojo.byId(chkboxId).checked = true;
             }
-            self.map.addLayer(communityLocationLayer);
+            selfPBS.map.addLayer(communityLocationLayer);
         }
     }
 
@@ -211,7 +211,7 @@ define([
     
     var showLayerListWidget = function () {
         var widgetName = 'LayerList';
-        var widgets = self.appConfig.getConfigElementsByName(widgetName);
+        var widgets = selfPBS.appConfig.getConfigElementsByName(widgetName);
         var pm = PanelManager.getInstance();
         pm.showPanel(widgets[0]);
     }
@@ -586,7 +586,7 @@ define([
                         return 0;
                     })
 
-                    self = this;
+                    selfPBS = this;
 
                 var tableOfRelationship = document.getElementById('categoryTablePBS');
                 var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];

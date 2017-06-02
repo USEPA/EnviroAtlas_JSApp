@@ -110,10 +110,10 @@ define([
     var showDisplayLayerAddFailureWidget = function (layerName) {
 
         var widgetName = 'DisplayLayerAddFailure';
-        var widgets = self.appConfig.getConfigElementsByName(widgetName);
+        var widgets = selfLocalLayer.appConfig.getConfigElementsByName(widgetName);
         var pm = PanelManager.getInstance();
         pm.showPanel(widgets[0]);
-        self.publishData({
+        selfLocalLayer.publishData({
             message: layerName
         });
     };
@@ -231,7 +231,7 @@ define([
 			
 				//Loop through each feature returned
 				for (var i=0, il=resultFeatures.length; i<il; i++) {
-					var content = "<b>" + popupTitle[0] + "</b>: $" + popupTitle[1].trim() + "<hr>"+"<b>" + popupFieldName + "</b>: ${" + popupField + ":self.formatValue}";	
+					var content = "<b>" + popupTitle[0] + "</b>: $" + popupTitle[1].trim() + "<hr>"+"<b>" + popupFieldName + "</b>: ${" + popupField + ":selfLocalLayer.formatValue}";	
 					var infoTemplate = new esri.InfoTemplate(popupFieldName, content);
 				
 				    var graphic = resultFeatures[i];
@@ -239,7 +239,7 @@ define([
 				    graphic.setInfoTemplate(infoTemplate);
 				    featuresCollection.push(graphic);
 				
-				    self.map.graphics.add(graphic);
+				    selfLocalLayer.map.graphics.add(graphic);
 				}
 
 				if 	(arrLayersForPopup.length > 0){
@@ -247,8 +247,8 @@ define([
         		}
         		else {
         			if 	(featuresCollection.length > 0){
-		    			self.map.infoWindow.setFeatures(featuresCollection);
-						self.map.infoWindow.show(clickEvt.mapPoint);
+		    			selfLocalLayer.map.infoWindow.setFeatures(featuresCollection);
+						selfLocalLayer.map.infoWindow.show(clickEvt.mapPoint);
 					}
 				}
             }
@@ -257,22 +257,22 @@ define([
 	
 	var setClickEvent = function(){    		
 
-		intersect = self.map.on("click", function(evt) {
-			self.map.graphics.clear();
+		intersect = selfLocalLayer.map.on("click", function(evt) {
+			selfLocalLayer.map.graphics.clear();
 			featuresCollection = [];
 			arrLayersForPopup = [];
     		for (i in window.featureLyrNumber) {  
     			bVisibleFL = false;
     			bVisibleTL = false;
     			  		
-	    		lyrFL = self.map.getLayer(window.layerIdPrefix + window.featureLyrNumber[i]);		    		
+	    		lyrFL = selfLocalLayer.map.getLayer(window.layerIdPrefix + window.featureLyrNumber[i]);		    		
 	    		if (lyrFL != null) {		    			
 					if (lyrFL.visible == true){
 						bVisibleFL = true;
 					}
 				}
 
-				lyrTL = self.map.getLayer(window.layerIdTiledPrefix + window.featureLyrNumber[i]);
+				lyrTL = selfLocalLayer.map.getLayer(window.layerIdTiledPrefix + window.featureLyrNumber[i]);
 	    		if (lyrTL != null) {		    			
 					if (lyrTL.visible == true){
 						bVisibleTL = true;							
@@ -292,7 +292,7 @@ define([
     var getTextContent = function (graphic) {
         var commName = graphic.attributes.CommST;
         currentCommunity = commName;
-        return "<b>" + window.communityDic[commName] + "</b><br /><button id = 'testButton2' dojoType='dijit.form.Button' onclick='self.selectCurrentCommunity() '>Select this community</button>";
+        return "<b>" + window.communityDic[commName] + "</b><br /><button id = 'testButton2' dojoType='dijit.form.Button' onclick='selfLocalLayer.selectCurrentCommunity() '>Select this community</button>";
     };
 
     //Function also used in PeopleBuiltSpaces/widget.js, ensure that edits are synchronized
@@ -325,7 +325,7 @@ define([
             if (dojo.byId(chkboxId)) {
                 dojo.byId(chkboxId).checked = true;
             }
-            self.map.addLayer(communityLocationLayer);
+            selfLocalLayer.map.addLayer(communityLocationLayer);
         }
     }
 
@@ -647,7 +647,7 @@ define([
             startup: function () {
                 this._originalWebMap = this.map.webMapResponse.itemInfo.item.id;
                 this._removeAllLayersExceptBasemap();
-                self = this;
+                selfLocalLayer = this;
                 if (this.config.useProxy) {
                     urlUtils.addProxyRule({
                         urlPrefix: this.config.proxyPrefix,
