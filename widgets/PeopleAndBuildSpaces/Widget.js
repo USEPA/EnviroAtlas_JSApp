@@ -222,13 +222,38 @@ define([
             }
         }
     };
+
+    var add_bc_icons = function(layerArea, scale) {
+
+        indexImage = 0;
+
+        var BC_Div = dojo.create('div', {
+            'style': 'overflow:hidden; padding-left: 16px; position: relative; top: -2px'
+        }, layerArea);
+
+        scale_img = document.createElement('div');
+        scale_img.className = 'icon_style';
+        //scale_img.style.marginLeft = '20px';
+
+        if (scale == "NATIONAL") {
+                scale_img.title = "National Dataset";
+            } else {
+                scale_img.title = "Community Dataset";
+            }
+        scale_img.className += " " + scale;
+        BC_Div.appendChild(scale_img);
+
+    }
+
     var updateSelectablePBSlayers = function () {
         var SelectedTopics = [];
-        var tableOfRelationship = document.getElementById("tablePBSLayers");
-        var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
-        while (tableRef.firstChild) {
-            tableRef.removeChild(tableRef.firstChild);
-        }
+        var tableOfRelationship = document.getElementById("tablePBSLayersArea");
+
+        dojo.destroy('tablePBSArea');
+        var layerArea = dojo.create('div', {
+            'id': 'tablePBSArea',
+            'style': 'width: 100%',
+        }, tableOfRelationship);
 
         var numOfSelectablePBSLayers = 0;
         var totalNumOfPBSLayers = 0;
@@ -242,13 +267,21 @@ define([
                     eaTopic = layer.eaTopic;
                     if (eaID.trim() != "") {
 
-                        if ((window.allLayerNumber.indexOf(eaID)) == -1) {
-                            window.allLayerNumber.push(eaID);
-                        }
                         var chkboxTopicId = window.chkTopicPBSPrefix + window.topicDicPBS[layer.eaTopic];
                         var checkboxTopic = document.getElementById(chkboxTopicId);
                         totalNumOfPBSLayers = totalNumOfPBSLayers + 1;
                         if ((checkboxTopic != null) && (checkboxTopic.checked == true)) {
+                            var bLayerSelected = false;
+                            if ((window.allLayerNumber.indexOf(eaID)) == -1) {                          
+                                window.allLayerNumber.push(eaID);
+                            }
+                            else {
+                                lyr = selfPBS.map.getLayer(window.layerIdPrefix + eaID);
+                                if(lyr){
+                                    bLayerSelected = true;
+                                }                       
+                            }
+
                             numOfSelectablePBSLayers = numOfSelectablePBSLayers + 1;
 
                             //Add Header for each Topic in list
@@ -256,67 +289,42 @@ define([
                                 if (!(eaTopic in hiderows)) {
                                     hiderows[eaTopic] = true;
                                 }
-
+                                
                                 SelectedTopics.push(eaTopic);
-                                var newTopicHeader = tableRef.insertRow(tableRef.rows.length);
-                                newTopicHeader.id = eaTopic;
-                                newTopicHeader.className = 'topicHeader'
 
-                                    var TopicName = newTopicHeader.insertCell(0);
-                                TopicName.colSpan = 3;
-                                TopicName.innerHTML = eaTopic;
-                                newTopicHeader.appendChild(TopicName);
-
-                                newTopicHeader.addEventListener('click', function () {
-                                    hiderows[this.id] = !hiderows[this.id];
-                                    updateSelectablePBSlayers();
-                                });
-                                var newTopicHeader = tableRef.insertRow(tableRef.rows.length);
-                                var blankspace = newTopicHeader.insertCell(0);
-                                blankspace.style.height = '3px';
-                                newTopicHeader.appendChild(blankspace);
+                                var topicHeader = dojo.create('div', {
+                                    'id': eaTopic,
+                                    'class': 'topicHeader',
+                                    'innerHTML': eaTopic,
+                                    onclick: function(){
+                                        hiderows[this.id] = !hiderows[this.id];
+                                        updateSelectablePBSlayers();
+                                    }
+                                }, layerArea);
                             }
-                            //Finsih add header for each topic
+                            //End Header for each Topic
 
+                            var mainDiv = dojo.create('div', {
+                                'class': 'layerDiv'
+                                }, layerArea);
 
-                            var newRow = tableRef.insertRow(tableRef.rows.length);
-                            if (hiderows[eaTopic] == false) {
-                                //newRow.style.color = 'red';
-                                newRow.style.display = 'none';
+                            if (!hiderows[eaTopic]) {
+                                mainDiv.style.display = 'None';
                             }
-                            var newCheckboxCell = newRow.insertCell(0);
-                            newCheckboxCell.style.verticalAlign = 'top';
-                            newCheckboxCell.style.width = '13px';
-                            var checkbox = document.createElement('input');
-                            checkbox.type = "checkbox";
-                            checkbox.style.position = 'relative';
-                            checkbox.style.top = '1px';
 
+                            var topicRow = dojo.create('div', {
+                                "style" : "display:inline-block; width:100%"
+                                //"style": ""
+                            }, mainDiv);
+
+                            var Checkbox_div = dojo.create('div', {
+                                'class': 'checkbox_cell',
+                                
+                            }, topicRow);
+
+                            var buttonInfoId = "but" + eaID;
                             chkboxId = window.chkSelectableLayer + eaID;
                             chkIdPBSDictionary[chkboxId] = layer;
-                            checkbox.name = chkboxId;
-                            checkbox.value = 1;
-                            checkbox.id = chkboxId;
-                            newCheckboxCell.appendChild(checkbox);
-
-                            var newTitleCell = newRow.insertCell(1);
-                            newTitleCell.style.verticalAlign = 'top';
-                            newTitleCell.style.width = "100%";
-                            newTitleCell.innerHTML = layer.name;
-                            newTitleCell.title = layer.eaDescription;
-
-                            var newButtonInfoCell = newRow.insertCell(2);
-                            var buttonInfo = document.createElement('input');
-                            buttonInfo.type = "button";
-                            var buttonInfoId = "but" + eaID;
-                            buttonInfo.name = buttonInfoId;
-                            buttonInfo.id = buttonInfoId;
-                            buttonInfo.className = 'i-button'
-                                buttonInfo.style.lineHeight = "3px"; //to set the text vertically center
-
-                            newButtonInfoCell.style.verticalAlign = "top"; //this will put checkbox on first line
-                            newButtonInfoCell.appendChild(buttonInfo);
-
                             hashFactsheetLinkPBS[buttonInfoId] = "N/A";
                             hashLayerNameLinkPBS[buttonInfoId] = layer.name;
                             hashDescriptionforPBS[buttonInfoId] = layer.eaDescription;
@@ -324,58 +332,61 @@ define([
                                 hashFactsheetLinkPBS[buttonInfoId] = layer.eaDfsLink;
                             }
 
-                            var newRow = tableRef.insertRow(tableRef.rows.length);
+                            var checkbox = dojo.create('input', {
+                                "type": "checkbox",
+                                "name": chkboxId,
+                                "value": 1,
+                                "id": chkboxId,
+                                "checked": bLayerSelected,
+                                "style": "margin-top: 1px"
+                            }, Checkbox_div);
 
-                            if (hiderows[eaTopic] == false) {
-                                newRow.style.display = 'none';
-                            }
 
-                            cell1 = newRow.insertCell(0);
-                            cell1.style.width = '13px';
+                            var iButton = dojo.create('input', {
+                                "type": "button",
+                                "name": buttonInfoId,
+                                "id": buttonInfoId,
+                                "checked": bLayerSelected,
+                                "class": "i-button",
+                                "style": "float: right",
+                                onclick: function(e) {
 
-                            cell2 = newRow.insertCell(1);
-                            cell2.style.height = '20px';
-                            cell2.style.paddingBottom = '10px';
+                                    var infobox = new Dialog({
+                                        title: hashLayerNameLinkPBS[this.id],
+                                        style: 'width: 300px'
+                                    });
 
-                            var scale_icon = document.createElement("div");
-                            // For now.  Lets adjust this in the spreadsheet
-                            if (layer.eaScale == "NATIONAL") {
-                                scale_icon.title = "National Dataset";
-                            } else {
-                                scale_icon.title = "Community Dataset";
-                            }
-                            scale_icon.style.width = '20px';
-                            scale_icon.style.height = '20px';
-                            scale_icon.setAttribute("class", layer.eaScale);
+                                    var infoDiv = dojo.create('div', {
+                                        'innerHTML': hashDescriptionforPBS[this.id] + '<br><br>'
+                                    }, infobox.containerNode);
 
-                            cell2.appendChild(scale_icon);
-                            newRow.appendChild(cell2);
+                                    var linkDiv = dojo.create('div', {
+                                        }, infobox.containerNode)
+                                    if (hashFactsheetLinkPBS[this.id] != "N/A") {
+                                        var factsheetDiv = dojo.create('a', {
+                                            'innerHTML': 'Fact Sheet',
+                                            'href': window.dataFactSheet + hashFactsheetLinkPBS[this.id],
+                                            'target': '_blank',
+                                            'class': 'factsheetLink' 
+                                        }, linkDiv);
+                                    }
+                                    infobox.show()
+                                }
+                                
+                            }, topicRow);
 
-                            document.getElementById(buttonInfoId).onclick = function (e) {
-
-                                var infobox = new Dialog({
-                                title: hashLayerNameLinkPBS[this.id],
-                                style: 'width: 300px'
-                                });
-
-                            var infoDiv = dojo.create('div', {
-                                'innerHTML': hashDescriptionforPBS[this.id] + '<br><br>'
-                            }, infobox.containerNode);
-
-                            var linkDiv = dojo.create('div', {
-                                }, infobox.containerNode)
-
-                            if (hashFactsheetLinkPBS[this.id] != "N/A") {
-                                var factsheetDiv = dojo.create('a', {
-                                    'innerHTML': 'Fact Sheet',
-                                    'href': window.dataFactSheet + hashFactsheetLinkPBS[this.id],
-                                    'target': '_blank',
-                                    'class': 'factsheetLink' 
-                                }, linkDiv);
-                            }
                             
-                            infobox.show()
-                            }; //end of inserting datafactsheet icon
+                            var topicName = dojo.create('div', {
+                                "innerHTML": layer.name,
+                                "style" : "font-weight: 500; display: table-cell; font-size:13px",
+                                "title" :eaDescription
+                            }, topicRow);
+
+                            //}; //end of inserting datafactsheet icon
+                            if (!(document.getElementById("hideIconsPBS").checked)) {
+                                add_bc_icons(mainDiv, layer.eaScale);
+                            } 
+                            
                         }
                     } // end of if (eaID.trim() != "")
                 } // end of if(layer.hasOwnProperty('eaID'))
@@ -625,6 +636,9 @@ define([
                     title.innerHTML = keys[i];
                     newTitleCell.appendChild(title);
                 }
+                document.getElementById("hideIconsPBS").onclick = function() {
+                    updateSelectablePBSlayers();
+                };
                 updateSelectablePBSlayers();
 
             },

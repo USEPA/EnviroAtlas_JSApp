@@ -577,7 +577,8 @@ define([
 							"value": 1,
 							"id": chkboxId,
 							"checked": bLayerSelected,
-							"style": "margin-top: 1px"
+                            "style": "margin-top: 1px"
+
 		    			}, Checkbox_div);
 		    			chkIdDictionary[chkboxId] = SubLayerNames[i] + layerName;
 		    		} else {
@@ -697,6 +698,7 @@ define([
 								"id": chkboxId,
 								"checked": bLayerSelected,
 								"style": "margin-top: 1px"
+
 			    			}, Checkbox_div);
 
 			    			var SubLayerDiv = dojo.create('div', {
