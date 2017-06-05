@@ -252,7 +252,7 @@ define([
         dojo.destroy('tablePBSArea');
         var layerArea = dojo.create('div', {
             'id': 'tablePBSArea',
-            'style': 'width: 100%',
+            'style': 'width: 100%'
         }, tableOfRelationship);
 
         var numOfSelectablePBSLayers = 0;
@@ -318,7 +318,7 @@ define([
                             }, mainDiv);
 
                             var Checkbox_div = dojo.create('div', {
-                                'class': 'checkbox_cell',
+                                'class': 'checkbox_cell'
                                 
                             }, topicRow);
 
