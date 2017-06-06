@@ -120,6 +120,8 @@ define([
                     layer['eaBoundaryType'] = 'Political Boundaries';
                     if (layer.eaTags.indexOf('hydrology') > -1) {
                         layer['eaBoundaryType'] = 'Hydrologic Features';
+                    if (layer.eaTags.indexOf('ecology') > -1) {
+                        layer['eaBoundaryType'] = 'Ecologic Boundaries';
                     };
                 };
                 // Delete above section if we add eaBoundaryType to spreadsheet and arrLayers!
