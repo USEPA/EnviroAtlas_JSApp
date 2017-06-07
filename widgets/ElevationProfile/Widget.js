@@ -232,6 +232,8 @@ define([
           this.measureTool.clearResult();
           this._displayChartLocation(-1);
         }
+        window.toggleOnElevation = false;
+        document.getElementById('butMapClickForPopup').click();
       },
 
       onOpen: function () {
@@ -270,9 +272,13 @@ define([
         }, this._measureNode);
         aspect.after(this.measureTool, 'setTool', lang.hitch(this, function () {
           if (this.measureTool.activeTool) {
+          	window.toggleOnElevation = true;
+          	document.getElementById('butMapClickForPopup').click();
             this.map.setInfoWindowOnClick(false);
             this.disableWebMapPopup();
           } else {
+          	window.toggleOnElevation = false;
+          	document.getElementById('butMapClickForPopup').click();
             this.map.setInfoWindowOnClick(true);
             this.enableWebMapPopup();
           }

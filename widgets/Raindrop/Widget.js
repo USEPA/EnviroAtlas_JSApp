@@ -136,12 +136,15 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
       on(this.run_Service, "click", function(){
         //toggle map onclick event
         if(typeof onMapClick != 'undefined'){
-
+		  window.toggleOnRainDrop = false;
+		  document.getElementById('butMapClickForPopup').click();
           dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#485566'});
           //remove map click event
           onMapClick.remove();
           onMapClick = undefined;
         }else{
+       	  window.toggleOnRainDrop = true;
+       	  document.getElementById('butMapClickForPopup').click();
           dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#596d87'});
           //add map click event
           onMapClick = on(curMap, "click", function(evt){
@@ -266,6 +269,8 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
         onMapClick = undefined;
         dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#485566'});
       }
+      window.toggleOnRainDrop = false;
+      document.getElementById('butMapClickForPopup').click();
 
       console.log('onClose');
     },

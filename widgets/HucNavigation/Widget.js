@@ -266,12 +266,16 @@ function(declare,
 		chkSearchPointToggle.checked = false;
 		chkSearchPointToggle.addEventListener('click', function() {
 			if(document.getElementById("searchPointToggle").checked == false){
+				window.toggleOnHucNavigation = true;
+				document.getElementById('butMapClickForPopup').click();
 				document.getElementById("searchPointToggle").innerText = "Select a Search Point";
 				document.getElementById("searchPointToggle").checked = true;
 				mapClickListener = map.on("click", executeSearchHUCTask);
 				map.setMapCursor("crosshair");
 			}
 			else {
+				window.toggleOnHucNavigation = false;
+				document.getElementById('butMapClickForPopup').click();
 				document.getElementById("searchPointToggle").innerText = "Press and Select a Point";
 				document.getElementById("searchPointToggle").checked = false;
 				if (mapClickListener != null) {
@@ -292,6 +296,14 @@ function(declare,
 
     onClose: function(){
       console.log('onClose');
+		document.getElementById("searchPointToggle").innerText = "Press and Select a Point";
+		document.getElementById("searchPointToggle").checked = false;
+		if (mapClickListener != null) {
+			mapClickListener.remove();
+		}				
+		map.setMapCursor("default");
+		window.toggleOnHucNavigation = false;
+		document.getElementById('butMapClickForPopup').click();		
     },
 
     onMinimize: function(){
