@@ -162,9 +162,17 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
           //     geoenrichedFeatureLayer.setVisibility(true);
           // }
 
-          if(window.communitySelected != "AllCommunity"){
-			  geoenrichedFeatureLayer.setDefinitionExpression("CommST = '" + window.communitySelected + "'" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " >= 0" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " IS NOT Null" );
+          var str = geoenrichedFeatureLayer.url;
+          var lookfor = "National";
+          if(str.includes(lookfor)){
+              geoenrichedFeatureLayer.setDefinitionExpression(geoenrichedFeatureLayer.renderer.attributeField + " >= 0" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " IS NOT Null" );
+		  }else{
+              if(window.communitySelected != "AllCommunity"){
+                geoenrichedFeatureLayer.setDefinitionExpression("CommST = '" + window.communitySelected + "'" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " >= 0" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " IS NOT Null" );
+              }
 		  }
+
+
 		  featureLayerStatistics = new FeatureLayerStatistics({layer: geoenrichedFeatureLayer, visible: false});
 
 		  //set store original renderer
