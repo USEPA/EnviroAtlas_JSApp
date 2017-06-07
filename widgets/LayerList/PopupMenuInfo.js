@@ -176,7 +176,16 @@ define([
       var defRet = new Deferred();
       var dynamicDeniedItems = [];
       var layerId = this._layerInfo.id;
-      if (((layerId.indexOf(window.addedLayerIdPrefix)) >= 0) || ((layerId.indexOf(window.layerIdBndrPrefix)) >= 0)){
+      var bIsFeatureLayer = false;
+      for (ii in window.featureLyrNumber) {
+	      if(window.layerIdPrefix + window.featureLyrNumber[ii] === layerId)
+	      {
+	      	bIsFeatureLayer = true;
+	      	break;
+	      }
+	  }
+      //if (((layerId.indexOf(window.addedLayerIdPrefix)) >= 0) || ((layerId.indexOf(window.layerIdBndrPrefix)) >= 0)){
+      if (bIsFeatureLayer == false){
         dynamicDeniedItems.push({
           'key': 'changeSymbology',
           'denyType': 'hidden'

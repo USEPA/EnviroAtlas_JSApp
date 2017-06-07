@@ -48,6 +48,9 @@ define(["./ConfigManager",
     window.layerIdPBSPrefix = "eaLyrPBSNum_";
     window.layerIdTiledPrefix = "tiledNum_";
     window.addedLayerIdPrefix = "added_";
+    window.toggleOnHucNavigation = false;
+    window.toggleOnRainDrop = false;
+    window.toggleOnElevation = false;
     window.removeAllMessage = "removeAll";
     window.chkTopicPrefix = "ckTopic_";
     window.chkTopicPBSPrefix = "ckTopicPBS_";
