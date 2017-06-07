@@ -868,8 +868,8 @@ define(["dojo/_base/declare",
           
             //Show Layer List Widget
             var widgetName = 'LayerList';
-            var widgets = self.appConfig.getConfigElementsByName(widgetName);
             var pm = PanelManager.getInstance();
+            var widgets = pm.widgetManager.appConfig.getConfigElementsByName(widgetName);
             pm.showPanel(widgets[0]);
           
           clearHandles();
