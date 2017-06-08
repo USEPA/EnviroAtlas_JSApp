@@ -142,7 +142,7 @@ define([
         this.bottomPosition = 0;
         this.matchingCheckBox = null;
         this.layersIndex = -1;
-        this.matchingMap = false;
+        this.matchingMap = true; //set to true by default.
 
         this.showing = false;
 
@@ -1028,7 +1028,7 @@ define([
         menus.addChild(this.filter);
 
         this.matchingCheckBox = new CheckedMenuItem({
-          checked: true, //set to true by default.
+          checked: true, 
           // style: "margin-left:10px;margin-right:10px;",
           label: this.nls.filterByExtent,
           onChange: lang.hitch(this, function(status) {
