@@ -46,6 +46,10 @@ function(declare, BaseWidget, WidgetManager, PanelManager, on, dom, domConstruct
         var pm = PanelManager.getInstance();
 
         pm.showPanel(widgets[0]);
+	        panelID = "widgets_DrawerAddDataTools_32_panel";
+	        pm.closePanel(panelID);
+	        pm.openPanel(panelID);
+	        pm.closePanel(panelID);       
       });
     },
 
