@@ -189,9 +189,9 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
 
     onOpen: function(){
         this.fetchData();
-        if(activeContainer){
+        /*if(activeContainer){
             aContainer.selectChild( activeContainer );
-        }
+        }*/
       console.log('onOpen');
     },
 
