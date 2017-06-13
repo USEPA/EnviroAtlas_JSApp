@@ -1,19 +1,104 @@
-{
+ {
 	"configText":"abcdefg",
 	"tour":[{
 		"node":"dijit__WidgetBase_0",
-		"content": "<p>Pick a BaseMap"
+		"content": ["<h1>Welcome to EnviroAtlas</h1>",
+					"<p>This brief tour will walk you through some of the ",
+					"key functions and options for displaying and analyzing maps.<br><br></p>"],
+		"orient": ["below","below-alt", "above", "above-alt"],
+		"highlight": false
+	},{
+		"node":"widgets_PeopleAndBuildSpaces_Widget",
+		"content": ["<h1>Data</h1>",
+					"<p>You can access EnviroAtlas data from these three menus.",
+					"<ul>",
+						"<li>Ecosystem Services and Biodiversity</li>",
+						"<li>People and Built Spaces</li>",
+						"<li>Boundaries and Natural Features</li>",
+					"</ul>",
+					"</p>"],
+		"orient": ["below","below-alt", "above", "above-alt"],
+		"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20"
+	},{
+		"node":"dijit_TitlePane_0",
+		"content": ["<h1>Data</h1>",
+					"<p>Use the toggles to filter these data by topic.<br><br></p>"],
+		"orient": ["after-centered"],
+		"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20"
+	},{
+		"node":"searchFilterText",
+		"content": ["<h1>Data</h1>",
+					"<p>Or use the search box to filter all ",
+					"data layers based on your search term<br><br>",
+					"</p>"],
+		"orient": ["after-centered"],
+		"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20"
+	},{
+		"node":"dijit_layout_ContentPane_0",
+		"content": ["<h1>Data</h1>",
+					"<p>Your filtered data will appear here.</p>",
+					"<ul>",
+					"<li>Select the checkbox to move a data layer to the active layer list</li>",
+					"<li>Press the <i>i</i> button for additional layer info and fact sheets</li>",
+					"</ul>"],
+		"orient": ["after"],
+		"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20"
+	},{
+		"node":"dijit__WidgetBase_0",
+		"content": ["<h1>Basemap Selection Widget</h1>",
+					"<p>Select from various basemaps or overlay two together.</p>",
+					"<ul><li>Imagery</li>",
+					"<li>Topographic</li>",
+					"<li>Streets, etc.</li></ul>"],
+		"orient": ["below","below-alt", "above", "above-alt"],
+		"highlight": "dijit__WidgetBase_0"
 	},{
 		"node":"dijit__WidgetBase_1",
-		"content": "<p>Select a community to look at"
+		"content": ["<h1>Community Selection Widget</h1>",
+					"<p>Change the legend when using community data layers.</p>",
+					"<ul>",
+					"<li>Use \"Combined Communities\" to compare multiple communities</li>",
+					"<li>Select a community when working with a single communtiy</li>",
+					"</ul>"],
+		"orient": ["below","below-alt", "above", "above-alt"],
+		"highlight": "dijit__WidgetBase_1"
 	},{
 		"node":"dijit__WidgetBase_2",
-		"content": "<p>Find Cool Mapping Tools!"
+		"content": ["<h1>Mapping Tools</h1>",
+					"<p>Find mapping tools here to</p>",
+					"<ul>",
+					"<li>Set bookmarks</li>",
+					"<li>Print</li>",
+					"<li>Measure</li>",
+					"</ul>"],
+		"orient": ["below","below-alt", "above", "above-alt"],
+		"highlight": "dijit__WidgetBase_2"
 	},{
-		"node":"dijit__WidgetBase_7",
-		"content": "<p>You can find Analytical tools here such as the ECAT, Raindrop, and Elevation Profile"
+		"node":"dijit__WidgetBase_6",
+		"content": ["<h1>Analytical Tools</h1>",
+					"<p>You can find analysis tools here such as the</p>",
+					"<ul>",
+					"<li>Change Analysis Tool</li>",
+					"<li>Raindrop</li>",
+					"<li>Elevation Profile</li>",
+					"</ul>"],
+		"orient": ["below","below-alt", "above", "above-alt"],
+		"highlight": "dijit__WidgetBase_6"
 	},{
-		"node":"dijit__WidgetBase_13",
-		"content": "<p>Here you will find tools to add your data to the map"
+		"node":"dijit__WidgetBase_12",
+		"content": ["<h1>Map Tools</h1>",
+					"<p>Here you will find tools to add additional data to your map</p>",
+					"<ul>",
+					"<li>Upload a shapefile</li>",
+					"<li>Import a web service</li>",
+					"</ul>"],
+		"orient": ["below","below-alt", "above", "above-alt"],
+		"highlight": "dijit__WidgetBase_12"
+	},{
+		"node":"dijit__WidgetBase_16",
+		"content": ["<h1>Tour</h1>",
+					"<p>Start this tour.<br><br></p>"],
+		"orient": ["below","below-alt", "above", "above-alt"],
+		"highlight": "dijit__WidgetBase_16"
 	}]
 }
