@@ -10,6 +10,7 @@ define(['dojo/_base/declare',
         'esri/symbols/SimpleMarkerSymbol',
         'esri/Color',
         'esri/geometry/Polyline',
+        'esri/geometry/Extent',
       'jimu/dijit/TabContainer',
     'esri/dijit/HorizontalSlider',
     'esri/dijit/ColorPicker',
@@ -19,8 +20,10 @@ define(['dojo/_base/declare',
     "dijit/form/DropDownButton",
         "dijit/popup",
       "dojo/dom",
+    "dojo/dom-class",
+    "dojo/dom-attr",
     "dojo/parser"],
-function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, SimpleLineSymbol, SimpleMarkerSymbol, Color, Polyline, TabContainer, HorizontalSlider, ColorPicker, Color, ColorPalette, TooltipDialog, DropDownButton, popup, dom) {
+function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, SimpleLineSymbol, SimpleMarkerSymbol, Color, Polyline, Extent, TabContainer, HorizontalSlider, ColorPicker, Color, ColorPalette, TooltipDialog, DropDownButton, popup, dom, domClass, domAttr) {
 
   var curMap;
   var RaindropTool;
@@ -130,10 +133,13 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
         document.getElementById("lineDist").innerHTML = '';
         document.getElementById("linePath").innerHTML = '';
         document.getElementById("noResults").innerHTML = '<b>Select Raindrop Point</b>';
+        document.getElementById("zoomBtnContainer").style.display = 'none';
         console.log("Raindrop Tool: Cleared Graphics");
       });
 
       on(this.run_Service, "click", function(){
+        console.log("This is on click", this.map);
+
         //toggle map onclick event
         if(typeof onMapClick != 'undefined'){
 		  window.toggleOnRainDrop = false;
@@ -142,7 +148,12 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
           //remove map click event
           onMapClick.remove();
           onMapClick = undefined;
+          //Remove border to button
+          domClass.remove(dojo.byId('selectPoint'), 'rainDropButtonSelected');
         }else{
+          //Add border to button
+          domClass.add(dojo.byId('selectPoint'), 'rainDropButtonSelected');
+
        	  window.toggleOnRainDrop = true;
        	  document.getElementById('butMapClickForPopup').click();
           dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#596d87'});
@@ -164,7 +175,18 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
         }
       });
 
+      //lang.hitch(this, this.onInputKeyUp)
+      on(this.zoomToLine, "click", lang.hitch(this, this._zoomToLineClickEvent));
+
       console.log('startup');
+    },
+
+    _zoomToLineClickEvent: function (evt){
+        featureExtent.xmin = featureExtent.xmin - .002;
+        featureExtent.xmax = featureExtent.xmax + .002;
+        featureExtent.ymin = featureExtent.ymin - .002;
+        featureExtent.ymax = featureExtent.ymax + .002;
+        this.map.setExtent(featureExtent);
     },
 
     _run_RaindropService: function (point){
@@ -204,6 +226,9 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
               //add polyline to map
               var polyline = new Polyline(response['output']['indexing_path']['coordinates']);
 
+              //Capture extent of feature
+              featureExtent = polyline.getExtent();
+
               var graphic = new Graphic(polyline, lineSymbol);
               curMap.graphics.add(graphic);
 
@@ -215,6 +240,8 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
               document.getElementById("lineID").innerHTML = '<p><b>Line ID: </b>' + response['output']['feature_id'];
               document.getElementById("lineDist").innerHTML = '<p><b>Total Distance (km): </b>' + totDist.toFixed(2);
               document.getElementById("linePath").innerHTML = '<p><b>Path Distance (km): </b>' + pathDist.toFixed(2);
+                //zoomBtnContainer
+              document.getElementById("zoomBtnContainer").style.display = 'block';
 
               console.log("Success: Returned Raindrop Path");
               //console.log("Success: ", dojoJson.toJson(response['output']['indexing_path']['coordinates'], true));
@@ -222,10 +249,17 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
               document.getElementById("noResults").innerHTML = '<b>No Results Returned</b>';
               console.log("Success: ", dojoJson.toJson(response['output']['indexing_path']['coordinates'], true));
             }
+            //select results tab
+            var mainTab = dijit.byId("tabContainer"); //Tr
+            mainTab.selectTab("Results");
 
           }, function(error) {
             console.log("Error: ", error.message);
           });
+
+    },
+
+    _changeSelectedTab: function(){
 
     },
 
@@ -246,7 +280,8 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
       this.selTab = this.nls.measurelabel;
       this.tabContainer = new TabContainer({
         tabs: tabs,
-        selected: this.selTab
+        selected: this.selTab,
+        id: "tabContainer"
       }, this.tabMain);
 
       this.tabContainer.startup();
@@ -268,7 +303,10 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
         onMapClick.remove();
         onMapClick = undefined;
         dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#485566'});
+        //Remove border to button
+        domClass.remove(dojo.byId('selectPoint'), 'rainDropButtonSelected');
       }
+
       window.toggleOnRainDrop = false;
       document.getElementById('butMapClickForPopup').click();
 
