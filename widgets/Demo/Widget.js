@@ -31,7 +31,7 @@ function(declare, BaseWidget, TooltipDialog, Button, popup, AccordionContainer, 
 
       //this.mapIdNode.innerHTML = 'map id:' + this.map.id;
 
-      //Add Help content
+      /*//Add Help content
       aContainer = new AccordionContainer({style:"height: 300px"}, this.helptopics);
       aContainer.addChild(new ContentPane({
         title: "Simple Search Filter",
@@ -51,7 +51,7 @@ function(declare, BaseWidget, TooltipDialog, Button, popup, AccordionContainer, 
 
       if(activeContainer){
         aContainer.selectChild( activeContainer );
-      }
+      }*/
 
       //Tour setup
       helpTour = this.config.tour; //tour info from config.json file

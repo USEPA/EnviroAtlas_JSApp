@@ -243,7 +243,7 @@ function(declare,
 		    downloadCSVClick();
 		};		
 
-        var slider = new HorizontalSlider({
+        /*var slider = new HorizontalSlider({
             name: "slider",
             minimum: 0,
             maximum: 1,
@@ -256,7 +256,7 @@ function(declare,
 					lyr.setOpacity(1 - value);
 				}
             }
-        }, "slider");  
+        }, "slider");  */
         document.getElementById("helpCloseButton").onclick = function() {
 	        dojo.byId("divSplashScreenContent").style.display = "none";
 	        dojo.byId("divSplashScreenContainer").style.display = "none";

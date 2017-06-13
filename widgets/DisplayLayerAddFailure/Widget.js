@@ -49,7 +49,7 @@ define([
     var updateFailedListOfLayers = function(){	
     	var comment = document.getElementById("failedLayersComment");
     	if ((Object.keys(window.faildedEALayerDictionary).length == 0)&&(Object.keys(window.faildedOutsideLayerDictionary).length == 0)) {    		
-    		comment.innerHTML = "Currently, there is no layers failed being added to map."; 
+    		comment.innerHTML = "Data that fails to load will appear here and be documented."; 
     		var hr = document.getElementById('hrFailedEnviroAtlasLayers');
 			hr.style.display = 'none';	  
     		hr = document.getElementById('hrFailedOutsideLayers');
