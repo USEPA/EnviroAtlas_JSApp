@@ -22,3 +22,12 @@
   width: 20px;
   margin-left: 5px;
 }
+
+.rainDropButtonSelected {
+   border-width: 2px;
+   border-color: red;
+ }
+
+.zoom-btn{
+    font-size: smaller;
+}
