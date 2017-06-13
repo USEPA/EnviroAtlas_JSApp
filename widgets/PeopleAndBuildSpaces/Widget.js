@@ -551,7 +551,7 @@ define([
                         }
                         showLayerListWidget();
                     } else {
-                        layerTobeRemoved = map.getLayer(window.layerIdPBSPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, ""));
+                        layerTobeRemoved = map.getLayer(window.layerIdPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, ""));
                         map.removeLayer(layerTobeRemoved);
                     }
                 });
