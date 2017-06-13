@@ -425,3 +425,7 @@ a.esIcons {
   padding: 4px; 
   border-radius: 4px; 
 }
+
+.factsheetLink:hover{
+  cursor: pointer;
+}

@@ -1066,6 +1066,69 @@ define([
 		title.id = 'chkCommunity_label';
 		title.innerHTML = "EnviroAtlas Communities";    
 		newTitleCell.appendChild(title); 
+
+		var newButtonInfoCell  = newRow.insertCell(4);
+		var iButton = dojo.create('input', {
+	    				"type": "button",					
+						"class": "i-button",
+						"style": "float: right; height:14px; width:14px; position:relative; top:-1px",
+						onclick: function(e) {
+							var infobox = new Dialog({
+			        		title: "EnviroAtlas Spatial Extents",
+			        		style: 'width: 300px'
+			        		});
+
+			        		var nationalHeader = dojo.create('h2', {
+			        			'style': 'margin-top: 0px',
+			        			'innerHTML': 'National'
+			        		}, infobox.containerNode);
+
+			        		var nationalDiv = dojo.create('div', {
+	        					'innerHTML': "Most maps at the national extent provide wall-to-wall data \
+	        								 coverage for the contiguous U.S. as well as some data for \
+	        								 Alaska and Hawaii. These data include raster datasets, state \
+	        								 and local polygons, and many layers derived from data with a \
+	        								 resolution of 30m. Most national datasets are summarized by 12-digit \
+	        								 hydrologic unit codes, or sub-watershed basins."
+	        				}, infobox.containerNode);
+
+	        				dojo.create('hr', {'style': 'margin-top: 10px'}, infobox.containerNode);
+
+	        				var communityHeader = dojo.create('h2', {
+	        					'style': 'margin-top: 0px',
+			        			'innerHTML': 'EnviroAtlas Communities'
+			        		}, infobox.containerNode);
+
+	        				var CommunityDiv = dojo.create('div', {
+	        					'innerHTML': "Community-level information in EnviroAtlas draws from fine scale \
+	        								  land cover data, census data, and models and is only available \
+	        								  for selected communities (up to 50 by 2019). There are approximately \
+	        								  100 data layers per community. EnviroAtlas community data are \
+	        								  consistent for each available community, and they are mostly \
+	        								  summarized by census block groups. <br><br>"
+	        				}, infobox.containerNode);
+
+	        				var moreInfo = dojo.create('a', {
+	        					'innerHTML': 'More info',
+	        					'href': "https://www.epa.gov/enviroatlas/enviroatlas-spatial-extents",
+	        					'target': '_blank',
+	        					'class': 'factsheetLink'
+	        					}, infobox.containerNode);
+
+
+	        				var CommunityLink = dojo.create('a', {
+	        					'innerHTML': 'Community Fact Sheet',
+	        					'href': "https://www.epa.gov/sites/production/files/2015-07/documents/enviroatlas_community_factsheet.pdf",
+	        					'target': '_blank',
+	        					'class': 'factsheetLink',
+	        					'style': 'margin-left: 10px'
+	        					}, infobox.containerNode);
+
+
+
+							infobox.show()
+						}
+					}, newButtonInfoCell);
 		
 		/*var newButtonInfoCell  = newRow.insertCell(4);
 		var buttonInfo = document.createElement('input');
