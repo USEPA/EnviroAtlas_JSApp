@@ -145,6 +145,8 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
 		  window.toggleOnRainDrop = false;
 		  document.getElementById('butMapClickForPopup').click();
           dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#485566'});
+          dojo.byId('selectPoint').innerHTML = 'Activate Tool';
+
           //remove map click event
           onMapClick.remove();
           onMapClick = undefined;
@@ -153,6 +155,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
         }else{
           //Add border to button
           domClass.add(dojo.byId('selectPoint'), 'rainDropButtonSelected');
+          dojo.byId('selectPoint').innerHTML = 'Tool is Active';
 
        	  window.toggleOnRainDrop = true;
        	  document.getElementById('butMapClickForPopup').click();
@@ -306,6 +309,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
         dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#485566'});
         //Remove border to button
         domClass.remove(dojo.byId('selectPoint'), 'rainDropButtonSelected');
+        dojo.byId('selectPoint').innerHTML = 'Activate Tool';
       }
 
       window.toggleOnRainDrop = false;
