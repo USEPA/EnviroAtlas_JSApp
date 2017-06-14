@@ -28,15 +28,15 @@
 	},{
 		"node":"searchFilterText",
 		"content": ["<h1>Data</h1>",
-					"<p>Or use the search box to filter all ",
-					"data layers based on your search term<br><br>",
+					"<p>Or use the search box to filter all ecosystem services and ",
+					"biodiversity data layers based on your search term.<br><br>",
 					"</p>"],
 		"orient": ["after-centered"],
 		"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20"
 	},{
 		"node":"dijit_layout_ContentPane_0",
 		"content": ["<h1>Data</h1>",
-					"<p>Your filtered data will appear here.</p>",
+					"<p>Your filtered data will appear below the search and filter options.</p>",
 					"<ul>",
 					"<li>Select the checkbox to move a data layer to the active layer list</li>",
 					"<li>Press the <i>i</i> button for additional layer info and fact sheets</li>",
@@ -55,28 +55,30 @@
 	},{
 		"node":"dijit__WidgetBase_1",
 		"content": ["<h1>Community Selection Widget</h1>",
-					"<p>Change the legend when using community data layers.</p>",
+					"<p>Your selection changes the legend when using community data layers.</p>",
 					"<ul>",
-					"<li>Use \"Combined Communities\" to compare multiple communities</li>",
-					"<li>Select a community when working with a single communtiy</li>",
+					"<li>Use \"Combined Communities\" to have a comparable legend across ",
+					"multiple communities</li>",
+					"<li>Select one community to see the legend for that communtiy</li>",
 					"</ul>"],
 		"orient": ["below","below-alt", "above", "above-alt"],
 		"highlight": "dijit__WidgetBase_1"
 	},{
 		"node":"dijit__WidgetBase_2",
 		"content": ["<h1>Mapping Tools</h1>",
-					"<p>Find mapping tools here to</p>",
+					"<p>Find mapping tools here:</p>",
 					"<ul>",
 					"<li>Set bookmarks</li>",
 					"<li>Print</li>",
-					"<li>Measure</li>",
+					"<li>Draw and measure",
+					"<li>Open legend</li>",
 					"</ul>"],
 		"orient": ["below","below-alt", "above", "above-alt"],
 		"highlight": "dijit__WidgetBase_2"
 	},{
 		"node":"dijit__WidgetBase_6",
 		"content": ["<h1>Analytical Tools</h1>",
-					"<p>You can find analysis tools here such as the</p>",
+					"<p>You can find analysis tools here such as:</p>",
 					"<ul>",
 					"<li>Change Analysis Tool</li>",
 					"<li>Raindrop</li>",
@@ -87,17 +89,18 @@
 	},{
 		"node":"dijit__WidgetBase_12",
 		"content": ["<h1>Map Tools</h1>",
-					"<p>Here you will find tools to add additional data to your map</p>",
+					"<p>Here you will find tools to add additional data to your map.</p>",
 					"<ul>",
 					"<li>Upload a shapefile</li>",
-					"<li>Import a web service</li>",
+					"<li>Add a web service</li>",
 					"</ul>"],
 		"orient": ["below","below-alt", "above", "above-alt"],
 		"highlight": "dijit__WidgetBase_12"
 	},{
 		"node":"dijit__WidgetBase_16",
 		"content": ["<h1>Tour</h1>",
-					"<p>Start this tour.<br><br></p>"],
+					"<p>Access the in-depth EnviroAtlas User Guide or restart ",
+					"this tour.<br><br></p>"],
 		"orient": ["below","below-alt", "above", "above-alt"],
 		"highlight": "dijit__WidgetBase_16"
 	}]

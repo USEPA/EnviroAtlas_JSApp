@@ -279,6 +279,12 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 
 			  var res = _layerID.split("_");
 			  lyrTobeUpdated = selfDynamicSymbology.map.getLayer(_layerID);
+			  lyrTiled = selfDynamicSymbology.map.getLayer(_layerID.replace(window.layerIdPrefix, window.layerIdTiledPrefix));
+			  if(lyrTiled){
+					  if (lyrTobeUpdated.visible == true) {
+				       		lyrTiled.setVisibility(true);
+			      	  }       	
+			  }
 			  if (window.communitySelected != window.strAllCommunity) {
 				  $.getJSON( 'configs/CommunitySymbology/' + window.communitySelected + '_JSON_Symbol/Nulls/' + window.communitySelected + '_' + window.hashAttribute[res[1]] + ".json", function( data ) {
 					  var defaultRenderer = new ClassBreaksRenderer(data);
@@ -406,9 +412,10 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 			geoenrichedFeatureLayer.setRenderer(gRenderer);
 			geoenrichedFeatureLayer.redraw();
 
+			if (geoenrichedFeatureLayer.visible == true) {
             geoenrichedFeatureLayer.setVisibility(false);
             geoenrichedFeatureLayer.setVisibility(true);
-
+			}
 			_busy.hide();
 		}).otherwise(function (error) {
 			_busy.hide();
@@ -443,9 +450,10 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
         geoenrichedFeatureLayer.redraw();
         //console.log("apply renderer :: ", geoenrichedFeatureLayer.renderer);
 
+		if (geoenrichedFeatureLayer.visible == true) {
         geoenrichedFeatureLayer.setVisibility(false);
         geoenrichedFeatureLayer.setVisibility(true);
-
+		}
         featureLayerStatistics.getHistogram({
 			classificationMethod: _ClassificationMethod,
 			field: _fieldName,
