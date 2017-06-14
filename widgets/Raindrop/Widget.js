@@ -130,7 +130,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
       on(this.clear, "click", function(){
         curMap.graphics.clear();
         document.getElementById("lineID").innerHTML = '';
-        document.getElementById("lineDist").innerHTML = '';
+        //document.getElementById("lineDist").innerHTML = '';
         document.getElementById("linePath").innerHTML = '';
         document.getElementById("noResults").innerHTML = '<b>Select Raindrop Point</b>';
         document.getElementById("zoomBtnContainer").style.display = 'none';
@@ -242,7 +242,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
               //add info to results
               document.getElementById("noResults").innerHTML ="";
               document.getElementById("lineID").innerHTML = '<p><b>Line ID: </b>' + response['output']['feature_id'];
-              document.getElementById("lineDist").innerHTML = '<p><b>Total Distance (km): </b>' + totDist.toFixed(2);
+              // document.getElementById("lineDist").innerHTML = '<p><b>Total Distance (km): </b>' + totDist.toFixed(2);
               document.getElementById("linePath").innerHTML = '<p><b>Path Distance (km): </b>' + pathDist.toFixed(2);
                 //zoomBtnContainer
               document.getElementById("zoomBtnContainer").style.display = 'block';
