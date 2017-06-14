@@ -213,7 +213,10 @@ function(declare,
 		    
 		    var myTextArea = document.getElementById('hucQueryStatus');
 			myTextArea.value='Polygons Plotted...\r\nNumber of HUCs: ' + resultFeatures.length.toString();
-		}    	
+		}
+        //select results tab
+        var mainTab = dijit.byId("huctabContainer"); //Tr
+        mainTab.selectTab("Results");
     };
 
   //To create a widget, you need to derive from BaseWidget.
@@ -245,7 +248,8 @@ function(declare,
       this.selTab = this.nls.measurelabel;
       this.tabContainer = new TabContainer({
         tabs: tabs,
-        selected: this.selTab
+        selected: this.selTab,
+	    id: "huctabContainer"
       }, this.tabMain);
       this.tabContainer.startup();
       this.own(on(this.tabContainer, 'tabChanged', lang.hitch(this, function (title) {
@@ -268,16 +272,18 @@ function(declare,
 			if(document.getElementById("searchPointToggle").checked == false){
 				window.toggleOnHucNavigation = true;
 				document.getElementById('butMapClickForPopup').click();
-				document.getElementById("searchPointToggle").innerText = "Select a Search Point";
+				document.getElementById("searchPointToggle").innerText = "Select Point";
 				document.getElementById("searchPointToggle").checked = true;
+                domClass.add(dojo.byId('searchPointToggle'), 'hucButtonSelected');
 				mapClickListener = map.on("click", executeSearchHUCTask);
 				map.setMapCursor("crosshair");
 			}
 			else {
 				window.toggleOnHucNavigation = false;
 				document.getElementById('butMapClickForPopup').click();
-				document.getElementById("searchPointToggle").innerText = "Press and Select a Point";
+				document.getElementById("searchPointToggle").innerText = "Activate tool";
 				document.getElementById("searchPointToggle").checked = false;
+                domClass.remove(dojo.byId('searchPointToggle'), 'hucButtonSelected');
 				if (mapClickListener != null) {
 					mapClickListener.remove();
 				}				
@@ -296,13 +302,14 @@ function(declare,
 
     onClose: function(){
       console.log('onClose');
-		document.getElementById("searchPointToggle").innerText = "Press and Select a Point";
+		document.getElementById("searchPointToggle").innerText = "Activate tool";
 		document.getElementById("searchPointToggle").checked = false;
 		if (mapClickListener != null) {
 			mapClickListener.remove();
 		}				
 		map.setMapCursor("default");
 		window.toggleOnHucNavigation = false;
+        domClass.remove(dojo.byId('searchPointToggle'), 'hucButtonSelected');
 		document.getElementById('butMapClickForPopup').click();		
     },
 
