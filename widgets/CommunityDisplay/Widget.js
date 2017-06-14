@@ -49,7 +49,7 @@ define([
      *
      * @module widgets/CommnityDisplay
      */
-    var allCommunities = "All Communities";
+    var allCommunities = "Combined Communities";
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
 
       baseClass: 'jimu-widget-communitydisplay',

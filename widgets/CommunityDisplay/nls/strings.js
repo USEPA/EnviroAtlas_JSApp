@@ -1,7 +1,7 @@
 define({
   root: ({
 
-    loading: "All communities",
+    loading: "Combined Communities",
 
   }),
   "ar": 1,
