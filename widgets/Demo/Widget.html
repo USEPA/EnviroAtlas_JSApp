@@ -1,7 +1,16 @@
 <div>
-	<div>${nls.label1}.</div>
-	<div>${nls.label2}</div>
-  <div data-dojo-attach-point="mapIdNode"></div>
-	<div><button type='button' onclick='self._startTour()'>Take a Tour</button></div>
+	<h2 style="margin-top: 0px; margin-bottom: 1.5em">${nls.label1}.</h2>
+	<p>${nls.label2}</p>
+  	<div data-dojo-attach-point="mapIdNode"></div>
+  	<div>
+		<a class='factsheetLink' style = 'position: relative; top:5px' onclick='self._startTour()'>Start Tour</a>	
+	</div>
+	<br>
+	<br>
+	<div>
+		<p>The EnviroAtlas user guide provides detailed information and a walkthrough of all map functionality and tools.</p>
+		<a class='factsheetLink' style = 'position: relative; top:5px' target = "_blank" href="http://enviroatlas.epa.gov/enviroatlas/InteractiveMapEntrance/InteractiveMap/AboutEnviroAtlas.pdf">User Guide (pdf)
+		</a>
+	</div>
 	<div data-dojo-attach-point="helptopics"></div>
 </div>

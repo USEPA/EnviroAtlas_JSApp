@@ -1,5 +1,6 @@
 define(['dojo/_base/declare',
   'jimu/BaseWidget',
+  'jimu/PanelManager',
   'dijit/TooltipDialog',
   'dijit/form/Button',
   'dijit/popup',
@@ -7,7 +8,7 @@ define(['dojo/_base/declare',
   'dijit/layout/ContentPane',
   'dojo/on',
   'dojo/dom'],
-function(declare, BaseWidget, TooltipDialog, Button, popup, AccordionContainer, ContentPane, on, dom) {
+function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, AccordionContainer, ContentPane, on, dom) {
   //To create a widget, you need to derive from BaseWidget.
   return declare([BaseWidget], {
     // DemoWidget code goes here
@@ -32,7 +33,7 @@ function(declare, BaseWidget, TooltipDialog, Button, popup, AccordionContainer, 
       //this.mapIdNode.innerHTML = 'map id:' + this.map.id;
 
       //Add Help content
-      aContainer = new AccordionContainer({style:"height: 300px"}, this.helptopics);
+      /*aContainer = new AccordionContainer({style:"height: 300px"}, this.helptopics);
       aContainer.addChild(new ContentPane({
         title: "Simple Search Filter",
         content: "Simple Search Filter Help stuff"
@@ -51,7 +52,7 @@ function(declare, BaseWidget, TooltipDialog, Button, popup, AccordionContainer, 
 
       if(activeContainer){
         aContainer.selectChild( activeContainer );
-      }
+      }*/
 
       //Tour setup
       helpTour = this.config.tour; //tour info from config.json file
@@ -78,93 +79,119 @@ function(declare, BaseWidget, TooltipDialog, Button, popup, AccordionContainer, 
 
     },
 
+
     _startTour: function(){
+
+        
+        //$('#overlay').css('z-index', '1000');
+        var overlay = dojo.create('div', {
+          "class": "overlay",
+          "id": "overlay"
+        }, dojo.byId('main-page'));
+
+        //Close the tour main widget
+        PanelManager.getInstance().closePanel(this.id + "_panel");
+        
         stop = 0;
-
-        nodeToHelp = helpTour[stop].node;
-        helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._nextStop()'>Next</button><button type='button' onclick='self._endTour()'>End</button></div>";
-        tourDialog.set("content", helpContent);
-
-        popup.open({
-            popup: tourDialog,
-            around: dom.byId(nodeToHelp)
-        });
+        this._nextStop(stop);
+       
     },
 
-    _nextStop: function(){
-        stop = stop + 1;
-
+    _nextStop: function(stop){
+        
+        
         if(tourDialog){
           popup.close(tourDialog);
         }
-        if(stop < numberStops - 1 ){
+
+        //change z-index to selected element
+        for (i=0; i<numberStops; i++) {
+            $('#'+helpTour[i].highlight).css('z-index', '');
+          }
+        if (helpTour[stop].highlight) {
+          $('#'+helpTour[stop].highlight).css('z-index', '1000');
+        } 
+
+
+        if (stop == 0) {
+          //Open to simple search widget
+          $('#widgets_SimpleSearchFilter_Widget_37').click();
+          $('#widgets_SimpleSearchFilter_Widget_37_min').click();
+          
+
           nodeToHelp = helpTour[stop].node;
-          helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._previousStop()'>Previous</button><button type='button' onclick='self._nextStop()'>Next</button><button type='button' onclick='self._endTour()'>End</button></div>";
+          helpContent = "<div> \
+                          <a class='exit_button' onclick='self._endTour()'>&#10006</a> \
+                        </div>"+
+                        helpTour[stop].content.join("") +
+                        "<div> \
+                          <button type='button' onclick='self._nextStop("+ stop+1 +")'>Next &raquo;</button> \
+                        </div> \
+                        <div class='counter'>" + (stop+1).toString() +"/"+ numberStops.toString()+"</div>";
+          tourDialog.set("content", helpContent);
+
+          
+        } else if (stop < numberStops -1) {
+
+          nodeToHelp = helpTour[stop].node;
+          helpContent = "<div> \
+                        <a class='exit_button' onclick='self._endTour()'>&#10006</a> \
+                      </div>"+
+                      helpTour[stop].content.join("") +
+                      "<div> \
+                        <button type='button' onclick='self._nextStop("+ (stop-1).toString() +")'>&laquo Previous</button> \
+                        &nbsp \
+                        <button type='button' onclick='self._nextStop("+ (stop+1).toString() +")'>Next &raquo;</button> \
+                      </div> \
+                      <div class='counter'>" + (stop+1).toString() + "/" + numberStops.toString() + "</div>";
 
           //Change tooltipdialog content
           tourDialog.set("content", helpContent);
 
-          popup.open({
-            popup: tourDialog,
-            around: dom.byId(nodeToHelp)
-          });
-
-        }else if(stop == numberStops - 1) {
+          } else {
             nodeToHelp = helpTour[stop].node;
-            helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._previousStop()'>Previous</button><button type='button' onclick='self._endTour()'>End</button></div>";
-            //Change tooltipdialog content
-            tourDialog.set("content", helpContent);
+            helpContent = "<div> \
+                        <a class='exit_button' onclick='self._endTour()'>&#10006</a> \
+                      </div>"+
+                      helpTour[stop].content.join("") +
+                      "<div> \
+                        <button type='button' onclick='self._nextStop("+ (stop-1).toString() +")'>&laquo Previous</button> \
+                        &nbsp \
+                        <button type='button' onclick='self._endTour()'>End</button> \
+                      </div> \
+                      <div class='counter'>" + (stop+1).toString() + "/" + numberStops.toString() + "</div>";
 
-            popup.open({
-                popup: tourDialog,
-                around: dom.byId(nodeToHelp)
-            });
-        }else {
-          stop = 0;
-          console.log("stop", stop);
+
+            //Change tooltipdialog content
+            tourDialog.set("content", helpContent);   
         }
 
+         popup.open({
+                popup: tourDialog,
+                around: dom.byId(nodeToHelp),
+                orient: helpTour[stop].orient,
+                padding: {x:100, y:100}
+                });
+
     },
 
-    _previousStop: function(){
-      stop = stop - 1;
-      console.log("Stop value: ", stop);
-      //close open dialog
-      if(tourDialog){
-        popup.close(tourDialog);
-      }
-      if(stop > 0 ){
-        nodeToHelp = helpTour[stop].node;
-        helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._previousStop()'>Previous</button><button type='button' onclick='self._nextStop()'>Next</button><button type='button' onclick='self._endTour()'>End</button></div>";
-        //Change tooltipdialog content
-        tourDialog.set("content", helpContent);
-        popup.open({
-          popup: tourDialog,
-          around: dom.byId(nodeToHelp)
-        });
-      }else if(stop == 0){
-          nodeToHelp = helpTour[stop].node;
-          helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._nextStop()'>Next</button><button type='button' onclick='self._endTour()'>End</button></div>";
-          //Change tooltipdialog content
-          tourDialog.set("content", helpContent);
-          popup.open({
-              popup: tourDialog,
-              around: dom.byId(nodeToHelp)
-          });
-      }
-    },
-
+    
     _endTour: function(){
         popup.close(tourDialog);
+        dojo.destroy("overlay");
+        
+        for (i=0; i<numberStops; i++) {
+            $('#'+helpTour[i].highlight).css('z-index', '');
+          }
         stop = 0;
        console.log("End the Guided Tour");
     },
 
     onOpen: function(){
         this.fetchData();
-        if(activeContainer){
+        /*if(activeContainer){
             aContainer.selectChild( activeContainer );
-        }
+        }*/
       console.log('onOpen');
     },
 

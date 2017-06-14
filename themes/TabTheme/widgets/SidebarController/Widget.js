@@ -707,6 +707,7 @@ define([
           node = html.create('div', {
             title: title,
             'class': 'title-node jimu-float-leading',
+            'id': config.id,
             'settingid': config.id,
             i: this.tabs.length,
             style: {

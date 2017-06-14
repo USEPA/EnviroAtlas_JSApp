@@ -1,7 +1,18 @@
 <div>
   <div data-dojo-attach-point="tabMain">
     <div class="${baseClass} profile-tab-node" data-dojo-attach-point="tabNode1">
-      <label>${nls.descriptionlabel}</label>
+      <div>
+        <p>View the elevation profile of a selected line segment.</p>
+          <ul>
+            <li>Select the ruler icon below</li>
+            <li>Choose units</li>
+            <li>Click on the map to start</li>
+            <li>Double click to end</li>
+          </ul>
+        </div>
+      <a target = "_blank" href="http://enviroatlas.epa.gov/enviroatlas/InteractiveMapEntrance/InteractiveMap/AboutEnviroAtlas.pdf">Learn more in our User Guide (pdf)</a>
+      <br>
+      <br>
       <div style="padding-top:8px;">
         <div data-dojo-attach-point="_measureNode" ></div>
       </div>
