@@ -132,7 +132,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
         document.getElementById("lineID").innerHTML = '';
         //document.getElementById("lineDist").innerHTML = '';
         document.getElementById("linePath").innerHTML = '';
-        document.getElementById("noResults").innerHTML = '<b>Select Raindrop Point</b>';
+        document.getElementById("noResults").innerHTML = '<b>Select Raindrop Point(s)</b>';
         document.getElementById("zoomBtnContainer").style.display = 'none';
         console.log("Raindrop Tool: Cleared Graphics");
       });
@@ -155,7 +155,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
         }else{
           //Add border to button
           domClass.add(dojo.byId('selectPoint'), 'rainDropButtonSelected');
-          dojo.byId('selectPoint').innerHTML = 'Tool is Active';
+          dojo.byId('selectPoint').innerHTML = 'Select Point(s)';
 
        	  window.toggleOnRainDrop = true;
        	  document.getElementById('butMapClickForPopup').click();
