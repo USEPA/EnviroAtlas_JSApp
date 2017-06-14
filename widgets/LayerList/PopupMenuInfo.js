@@ -496,7 +496,8 @@ define([
 			      return;
 			  } 
 			  else {
-		       		this._layerInfo.map.removeLayer(lyrTiled);
+		       		//this._layerInfo.map.removeLayer(lyrTiled);
+		       		lyrTiled.setVisibility(false);
 	      	  }       	
 	  }
       this.layerListWidget.publishData({

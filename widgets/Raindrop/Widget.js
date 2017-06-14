@@ -156,7 +156,8 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
 
        	  window.toggleOnRainDrop = true;
        	  document.getElementById('butMapClickForPopup').click();
-          dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#596d87'});
+          //dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#596d87'});
+          dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#93A2B7'});
           //add map click event
           onMapClick = on(curMap, "click", function(evt){
             //Get Location of Click
