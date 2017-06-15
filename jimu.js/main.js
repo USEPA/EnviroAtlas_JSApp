@@ -65,6 +65,7 @@ define(["./ConfigManager",
     window.allLayerNumber = [];
     window.featureLyrNumber = [];
     window.nationalLayerNumber = [];
+    window.dynamicLayerNumber = [];
     window.layerID_Portal_WebMap = [];
     window.categoryDic = {};
     window.categoryDic["Clean Air"] = "cair";

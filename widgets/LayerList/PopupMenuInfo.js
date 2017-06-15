@@ -320,9 +320,15 @@ define([
 
         lyr = this._layerInfo.map.getLayer(this._layerInfo.id);
 		if(lyr){
+			lyrId = this._layerInfo.id.replace(window.layerIdPrefix, "");
+			if ((lyrId.indexOf(window.dynamicLayerNumber)) >= 0) {
+     			document.getElementById("map_" + this._layerInfo.id).style.zIndex = "1";
+	     	} 	
+	     	else {
         	this._layerInfo.map.reorderLayer(lyr,this._layerInfo.map.layerIds.length);
       	}   
       	
+      	}   
         lyrTiled = this._layerInfo.map.getLayer(window.layerIdTiledPrefix + this._layerInfo.id.replace(window.layerIdPrefix, "")); //bji need to be modified to accomodate tile.
 	    if(lyrTiled){
        	     this._layerInfo.map.reorderLayer(lyrTiled,this._layerInfo.map.layerIds.length);
