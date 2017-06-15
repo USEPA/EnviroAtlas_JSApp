@@ -608,8 +608,10 @@ define([
           for (var j = 0, len2 = rFields.length; j < len2; j++) {
             var rf = rFields[j];
             if (rf.name === sf.name) {
-              validFields.push(sf);
-              break;
+                if (sf.type != 'esriFieldTypeGeometry'){
+                    validFields.push(sf);
+                }
+                break;
             }
           }
         }
