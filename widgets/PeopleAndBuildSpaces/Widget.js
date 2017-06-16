@@ -481,6 +481,7 @@ define([
                             }
 
                             lLayer.id = window.layerIdPBSPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, "");
+                            lLayer.minScale = 1155581.108577;
                             lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
 
                             if (layer.tileLink == "yes") {
