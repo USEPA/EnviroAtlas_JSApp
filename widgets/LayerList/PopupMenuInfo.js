@@ -320,6 +320,16 @@ define([
 
         lyr = this._layerInfo.map.getLayer(this._layerInfo.id);
 		if(lyr){
+			for (ii in window.dynamicLayerNumber) {
+				eachDynamicLyrId = window.layerIdPrefix + window.dynamicLayerNumber[ii];
+				eachDynamicLyr = this._layerInfo.map.getLayer(eachDynamicLyrId);
+				if (eachDynamicLyr ){
+					dynamicLayerElem = document.getElementById("map_" + eachDynamicLyrId);
+					if (dynamicLayerElem != null){
+						dynamicLayerElem.style.zIndex = "0";
+					}
+				}
+		  	}
 			lyrId = this._layerInfo.id.replace(window.layerIdPrefix, "");
 			if ((lyrId.indexOf(window.dynamicLayerNumber)) >= 0) {
      			document.getElementById("map_" + this._layerInfo.id).style.zIndex = "1";
