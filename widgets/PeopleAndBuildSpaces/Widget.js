@@ -379,7 +379,7 @@ define([
                             var topicName = dojo.create('div', {
                                 "innerHTML": layer.name,
                                 "style" : "font-weight: 500; display: table-cell; font-size:13px",
-                                "title" :eaDescription
+                                "title" : layer.eaDescription
                             }, topicRow);
 
                             //}; //end of inserting datafactsheet icon
