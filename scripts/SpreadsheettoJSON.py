@@ -64,7 +64,7 @@ def main(_argv):
 
     for rowID in rowsToKeep:
         name = inputWorksheet[key["name"]+rowID].value
-        layerJSON = {"opacity": 0.5,
+        layerJSON = {"opacity": 0.6,
                     "visible": False}
         if (inputWorksheet[key["serviceType"]+rowID].value == "feature"):
             layerJSON["type"] ="FEATURE"
@@ -90,7 +90,7 @@ def main(_argv):
             except:
                 print("This layer had invalid JSON for the popup: " + name)
                 print(popupTxt)
-        stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL","numDecimal","IsSubLayer","SubLayerNames","SubLayerIds"]
+        stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL","numDecimal","IsSubLayer","SubLayerNames","SubLayerIds","sourceType"]
         for elem in stringList:
             cell = inputWorksheet[key[elem]+rowID]
             if cell.value != None:
