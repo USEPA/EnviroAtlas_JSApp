@@ -68,7 +68,7 @@ def main(_argv):
 
         for rowID in rowsToKeep:
             name = inputWorksheet[key["name"]+rowID].value
-            layerJSON = {"opacity": 0.5,
+            layerJSON = {"opacity": 0.6,
                         "visible": False}
             if (inputWorksheet[key["serviceType"]+rowID].value == "feature"):
                 layerJSON["type"] ="FEATURE"
@@ -79,6 +79,8 @@ def main(_argv):
                     layerJSON["type"] = "DYNAMIC"
                 if (inputWorksheet[key["serviceType"]+rowID].value == "tile"):
                     layerJSON["type"] = "TILED"
+            layerJSON["name"] = name
+            layerJSON["url"] = inputWorksheet[key["url"]+rowID].value
             # Convert the plain text popupJSON into Python Dictionary for loading
             popupTxt = inputWorksheet[key["popupDefinition"]+rowID].value
             if popupTxt != None:
@@ -88,16 +90,15 @@ def main(_argv):
                 except:
                     print("This layer had invalid JSON for the popup: " + name)
                     print(popupTxt)
-            layerJSON["name"] = name
-            layerJSON["url"] = inputWorksheet[key["url"]+rowID].value
-            stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL"]
+            stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL","numDecimal","IsSubLayer","SubLayerNames","SubLayerIds","sourceType"]
             for elem in stringList:
-                cellValue = inputWorksheet[key[elem]+rowID].value
-                if cellValue != None:
+                cell = inputWorksheet[key[elem]+rowID]
+                if cell.value != None:
+                    cellValue = cell.value
                     if cellValue == 'x':
                         cellValue = True
                     layerJSON[elem] = cellValue
-            arrayList = [("eaTags",","),("eaBCSDD",";")]
+            arrayList = [("eaTags",","),("eaBCSDD",";"),("SubLayerNames", ","), ("SubLayerIds", ";")]
             for elem,separator in arrayList:
                  if inputWorksheet[key[elem]+rowID].value:
                     fullString = inputWorksheet[key[elem]+rowID].value
