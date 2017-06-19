@@ -182,6 +182,7 @@ define([
 
 							var title = document.createElement('label');
 							title.innerHTML = layer.name;
+							title.title = layer.eaDescription;
 							newTitleCell.appendChild(title);
 
 							// add datafactsheet
