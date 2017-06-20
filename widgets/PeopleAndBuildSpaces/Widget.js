@@ -223,7 +223,7 @@ define([
         }
     };
 
-    var add_bc_icons = function(layerArea, scale) {
+    var add_bc_icons = function(layerArea, scale, type) {
 
         indexImage = 0;
 
@@ -242,6 +242,27 @@ define([
             }
         scale_img.className += " " + scale;
         BC_Div.appendChild(scale_img);
+
+        datatype_img = document.createElement('div');
+        datatype_img.style.width = '20px';
+        datatype_img.style.height = '20px';
+        datatype_img.style.float = 'left';
+        //datatype_img.style.marginLeft = '20px';
+
+        if (type == 'huc12') {
+            datatype_img.title = "Data summarized by 12 digit HUCs";
+        } else if (type == 'cbg') {
+            datatype_img.title = "Data summarized by census block groups";
+        } else if (type == 'grid') {
+            datatype_img.title = "Non-summarized raster data";
+        } else if (type == 'plp') {
+            datatype_img.title = "Point, line, or polygon data"
+        }
+
+        datatype_img.setAttribute("class", type);
+        BC_Div.appendChild(datatype_img);
+
+
 
     }
 
@@ -384,7 +405,7 @@ define([
 
                             //}; //end of inserting datafactsheet icon
                             if (!(document.getElementById("hideIconsPBS").checked)) {
-                                add_bc_icons(mainDiv, layer.eaScale);
+                                add_bc_icons(mainDiv, layer.eaScale, layer.sourceType);
                             } 
                             
                         }

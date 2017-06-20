@@ -344,7 +344,7 @@ define([
 	        pm.showPanel(widgets[0]);	   	
 	   }
 
-	   var add_bc_icons = function(layerArea, scale) {
+	   var add_bc_icons = function(layerArea, scale, type) {
 	   		indexImage = 0;
 
 	   		var BC_Div = dojo.create('div', {
@@ -463,6 +463,7 @@ define([
 		scale_img.style.height = '20px';
 		scale_img.style.float = 'left';
 		scale_img.style.marginLeft = '20px';
+		scale_img.style.marginRight = '5px';
 
 		if (scale == "NATIONAL") {
 				scale_img.title = "National Dataset";
@@ -471,6 +472,27 @@ define([
 			}
 		scale_img.setAttribute("class", scale);
 		BC_Div.appendChild(scale_img);
+
+		datatype_img = document.createElement('div');
+		datatype_img.style.width = '20px';
+		datatype_img.style.height = '20px';
+		datatype_img.style.float = 'left';
+		//datatype_img.style.marginLeft = '20px';
+
+		if (type == 'huc12') {
+			datatype_img.title = "Data summarized by 12 digit HUCs";
+		} else if (type == 'cbg') {
+			datatype_img.title = "Data summarized by census block groups";
+		} else if (type == 'grid') {
+			datatype_img.title = "Non-summarized grid data";
+		} else if (type == 'plp') {
+			datatype_img.title = "Point, line, or polygon data"
+		}
+
+		datatype_img.setAttribute("class", type);
+		BC_Div.appendChild(datatype_img);
+
+
 
 		//BC_Cell.appendChild(BC_Div);
 
@@ -545,6 +567,7 @@ define([
 			IsSubLayer = layerDataStore.getValue( item, 'IsSubLayer');
 			SubLayerNames = layerDataStore.getValue( item, 'SubLayerNames');
 			SubLayerIds = layerDataStore.getValue( item, 'SubLayerIds');
+			sourceType = layerDataStore.getValue( item, 'sourceType');
 			bSelectByScale = false;
 
 			var chkNationalScale = document.getElementById("chkNational").checked;
@@ -804,7 +827,7 @@ define([
 					}
 
 					if (!(document.getElementById("hideIcons").checked)) {
-						add_bc_icons(mainDiv, eaScale);
+						add_bc_icons(mainDiv, eaScale, sourceType);
 					} 
 				}		
 				
@@ -1200,6 +1223,13 @@ define([
 	                    else {
 	                    	IsSubLayer = "";
 	                    }
+
+	                    if(layer.hasOwnProperty('sourceType')){
+	                    	sourceType = layer.sourceType;
+	                    }
+	                    else {
+	                    	sourceType = "";
+	                    }
 			                        
 			            layerName = "";          
 	                	if(layer.hasOwnProperty('name') ){	                		
@@ -1282,7 +1312,7 @@ define([
 					    eaTagsWhole = eaTagsWhole.substring(0, eaTagsWhole.length - 1);			
 					    if (eaScale	!= "") {//selectable layers should be either National or Community 
 					    	//var layerItem = {eaLyrNum: eaLyrNum, name: layerName, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole};
-					    	var layerItem = {eaLyrNum: eaLyrNum, name: layerName, IsSubLayer:IsSubLayer, SubLayerNames: SubLayerNames, SubLayerIds: SubLayerIds, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole, eaTopic:eaTopic};
+					    	var layerItem = {eaLyrNum: eaLyrNum, name: layerName, IsSubLayer:IsSubLayer, SubLayerNames: SubLayerNames, SubLayerIds: SubLayerIds, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole, eaTopic:eaTopic, sourceType:sourceType};
 							
 							layerDataStore.newItem(layerItem);
 											

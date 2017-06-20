@@ -71,6 +71,18 @@
 .COMMUNITY {background: url('../images/ES_Icons/comm.png');
           background-size: cover;}
 
+.huc12 {background: url('../images/ES_Icons/huc12.png');
+          background-size: cover;}
+
+.cbg {background: url('../images/ES_Icons/cbg.png');
+          background-size: cover;}
+
+.grid {background: url('../images/ES_Icons/grid.png');
+          background-size: cover;}
+
+.plp {background: url('../images/ES_Icons/plp.png');
+          background-size: cover;}
+
 
 .bc_popup {
   width: 25px;
