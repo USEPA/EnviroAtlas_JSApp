@@ -459,6 +459,7 @@ define([
                         if (layer.hasOwnProperty('eaScale')) {
                             if (layer.eaScale == "COMMUNITY") {
                                 lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
+                                window.communityLayerNumber.push(layer.eaID.toString());
                                 addCommunityBoundaries();
                             } else { //National
                                 lLayer.setVisibility(false);

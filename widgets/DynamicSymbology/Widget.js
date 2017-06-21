@@ -84,7 +84,9 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 	onReceiveData: function(name, widgetId, data, historyData) {
 		console.log("onRecieveData", data.message);
 		//dom.byId('title').innerHTML = data.message;
+		if (name == 'LayerList') {
 		_layerID = data.message;
+		}
 	},
 
     onOpen: function(){
