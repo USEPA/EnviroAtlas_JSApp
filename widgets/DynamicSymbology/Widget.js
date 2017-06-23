@@ -84,7 +84,9 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 	onReceiveData: function(name, widgetId, data, historyData) {
 		console.log("onRecieveData", data.message);
 		//dom.byId('title').innerHTML = data.message;
+		if (name == 'LayerList') {
 		_layerID = data.message;
+		}
 	},
 
     onOpen: function(){
@@ -164,7 +166,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 
           var str = geoenrichedFeatureLayer.url;
           var lookfor = "National";
-          if(str.includes(lookfor)){
+          if(str.indexOf(lookfor)>-1){
               geoenrichedFeatureLayer.setDefinitionExpression(geoenrichedFeatureLayer.renderer.attributeField + " >= 0" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " IS NOT Null" );
 		  }else{
               if(window.communitySelected != "AllCommunity"){
@@ -293,7 +295,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 			  }else {
 			      var str = lyrTobeUpdated.url;
                   var lookfor = "National";
-			      if(str.includes(lookfor)){
+			      if(str.indexOf(lookfor)>-1){
 			         console.log("get from json");
                       var defaultRenderer = new ClassBreaksRenderer(currentSymbology[_layerID]['origRenderer']);
                       selfDynamicSymbology._resetElements(defaultRenderer);

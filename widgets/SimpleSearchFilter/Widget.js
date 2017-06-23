@@ -1478,8 +1478,8 @@ define([
      _onUpdateCommunityLayers: function() {
      	arrLayersToChangeSynbology = [];
 	    var lyr;
-    	for (i in window.allLayerNumber) {
-    		lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
+    	for (i in window.communityLayerNumber) {
+    		lyr = this.map.getLayer(window.layerIdPrefix + window.communityLayerNumber[i]);
 			if(lyr){				
 	    		arrLayersToChangeSynbology.push(lyr.id.replace(window.layerIdPrefix, ""));
           	}          	
