@@ -1,6 +1,13 @@
 .jimu-widget-demo {
   
 }
+#title{
+    font-weight: bold;
+}
+.nationalWarningText{
+    font-size: smaller;
+    display: none;
+}
 
 .color{
   height: 20px;

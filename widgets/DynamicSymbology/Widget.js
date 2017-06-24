@@ -167,8 +167,11 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
           var str = geoenrichedFeatureLayer.url;
           var lookfor = "National";
           if(str.indexOf(lookfor)>-1){
+          	//add warning for national data
+              domStyle.set(dom.byId('nationalDSWarning'), "display", "inline");
               geoenrichedFeatureLayer.setDefinitionExpression(geoenrichedFeatureLayer.renderer.attributeField + " >= 0" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " IS NOT Null" );
 		  }else{
+              domStyle.set(dom.byId('nationalDSWarning'), "display", "none");
               if(window.communitySelected != "AllCommunity"){
                 geoenrichedFeatureLayer.setDefinitionExpression("CommST = '" + window.communitySelected + "'" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " >= 0" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " IS NOT Null" );
               }
@@ -489,6 +492,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 
     onClose: function(){
 		//clean up
+        domStyle.set(dom.byId('nationalDSWarning'), "display", "none");
 		dijit.byId("transSlider").destroy();
 
 		styleDialog.destroy();
