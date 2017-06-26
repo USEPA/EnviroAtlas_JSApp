@@ -2,7 +2,8 @@ define({
   root: ({
     _widgetLabel: "Demo",
     label1: "I am a demo widget.",
-    label2: "This is configurable."
+    label2: "This is configurable.",
+    nationalLayerText: "Changing the appearance of national layers is not possible when you are zoomed out beyond a multi-county area. Zoom in to view data with customized appearance or use the reset button to return to the default appearance."
   }),
   "ar": 0,
   "cs": 0,
