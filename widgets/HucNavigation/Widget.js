@@ -277,6 +277,13 @@ function(declare,
                 domClass.add(dojo.byId('searchPointToggle'), 'hucButtonSelected');
 				mapClickListener = map.on("click", executeSearchHUCTask);
 				map.setMapCursor("crosshair");
+				//deactivate the Raindrop tool and Elevation tool
+	            if (window.toggleOnRainDrop == true) {
+	          	    document.getElementById('selectPoint').click();
+	            }
+	            if (window.toggleOnElevation == true) {
+	          	    document.getElementById('butNullifyMeasureElevation').click();
+	            }          
 			}
 			else {
 				window.toggleOnHucNavigation = false;
