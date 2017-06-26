@@ -91,7 +91,8 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 
     onOpen: function(){
 	  selfDynamicSymbology = this;
-	  _busy = busyIndicator.create("esri-colorinfoslider-container");
+	  //_busy = busyIndicator.create("esri-colorinfoslider-container");
+	  _busy = busyIndicator.create("uniqName_7_1");
 
 		schemes = esriStylesChoropleth.getSchemes({
 			basemap: "hybrid",
@@ -290,27 +291,22 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 				       		lyrTiled.setVisibility(true);
 			      	  }       	
 			  }
-			  if (window.communitySelected != window.strAllCommunity) {
-				  $.getJSON( 'configs/CommunitySymbology/' + window.communitySelected + '_JSON_Symbol/Nulls/' + window.communitySelected + '_' + window.hashAttribute[res[1]] + ".json", function( data ) {
+
+			  var str = lyrTobeUpdated.url;
+			  var lookfor = "National";
+			  if(str.indexOf(lookfor)>-1){
+				 console.log("get from json");
+				  var defaultRenderer = new ClassBreaksRenderer(currentSymbology[_layerID]['origRenderer']);
+				  selfDynamicSymbology._resetElements(defaultRenderer);
+			  }else{
+				  //get from community
+				  $.getJSON( 'configs/CommunitySymbology/' + 'AllCommunities' + '_JSON_Symbol/Nulls/' + 'CombComm' + '_' + window.hashAttribute[res[1]] + ".json", function( data ) {
 					  var defaultRenderer = new ClassBreaksRenderer(data);
 					  selfDynamicSymbology._resetElements(defaultRenderer);
 				  })
-			  }else {
-			      var str = lyrTobeUpdated.url;
-                  var lookfor = "National";
-			      if(str.indexOf(lookfor)>-1){
-			         console.log("get from json");
-                      var defaultRenderer = new ClassBreaksRenderer(currentSymbology[_layerID]['origRenderer']);
-                      selfDynamicSymbology._resetElements(defaultRenderer);
-                  }else{
-                      //get from community
-                      $.getJSON( 'configs/CommunitySymbology/' + 'AllCommunities' + '_JSON_Symbol/Nulls/' + 'CombComm' + '_' + window.hashAttribute[res[1]] + ".json", function( data ) {
-                          var defaultRenderer = new ClassBreaksRenderer(data);
-                          selfDynamicSymbology._resetElements(defaultRenderer);
-                      })
-                  }
-
 			  }
+
+
 		  });
 	  });
 
