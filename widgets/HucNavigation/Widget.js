@@ -24,6 +24,7 @@ define(['dojo/_base/declare',
         'esri/symbols/SimpleMarkerSymbol',
         'esri/Color',
         'esri/graphic',
+        'esri/layers/GraphicsLayer',
         'dijit/form/ToggleButton',
         "esri/InfoTemplate",
         'dijit/form/HorizontalSlider',
@@ -52,6 +53,7 @@ function(declare,
 		SimpleMarkerSymbol,
 		Color,
 		Graphic,
+		GraphicsLayer,
 		ToggleButton,
 		InfoTemplate,
 		HorizontalSlider,
@@ -74,7 +76,8 @@ function(declare,
 	    var myTextArea = document.getElementById('hucQueryStatus');
 		myTextArea.value='Query Messages...';
 		
-		map.graphics.clear(); //clear previous results
+		//map.graphics.clear(); //clear previous results
+		selfHucNavigation.graphicsLayer.clear();
 		dojo.byId("downloadHUC").style.display = 'none';
 				
 		 var startPointSym =  new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 15,
@@ -83,7 +86,8 @@ function(declare,
 	    new Color([0,255,0,0.25]));
 
 		var startGraphic = new Graphic(event.mapPoint, startPointSym);
-		map.graphics.add(startGraphic);    	
+		//map.graphics.add(startGraphic);    	
+		selfHucNavigation.graphicsLayer.add(startGraphic);
     	var radios = document.getElementsByName("upOrDown");
 		var upOrDownSelected = "";
 		for (var i = 0; i < radios.length; i++) {       
@@ -130,7 +134,8 @@ function(declare,
 		gpComputeClimateChange.execute(gpParams, onTaskComplete, onTaskFailure);		
     };
     var removeGraphics = function(message) {
-		map.graphics.clear();
+		//map.graphics.clear();
+		selfHucNavigation.graphicsLayer.clear();
    	
     };
     var onTaskFailure = function(message) {
@@ -206,10 +211,11 @@ function(declare,
         			lineColor, 2), polyColor);
 
 			myGraphic.symbol = polySymbol;	
-			map.graphics.add(myGraphic);		    
+			//map.graphics.add(myGraphic);		    
 		
 		    //Add graphic to the map graphics layer.
-		    map.graphics.add(myGraphic);
+		    //map.graphics.add(myGraphic);
+		    selfHucNavigation.graphicsLayer.add(myGraphic);
 		    
 		    var myTextArea = document.getElementById('hucQueryStatus');
 			myTextArea.value='Polygons Plotted...\r\nNumber of HUCs: ' + resultFeatures.length.toString();
@@ -265,7 +271,10 @@ function(declare,
     startup: function() {
       	this.inherited(arguments);
       	map = this.map;
-
+      	if (map) {
+	        this.graphicsLayer = new GraphicsLayer();
+	        map.addLayer(this.graphicsLayer);
+      	}      	
 		chkSearchPointToggle = document.getElementById("searchPointToggle");
 		chkSearchPointToggle.checked = false;
 		chkSearchPointToggle.addEventListener('click', function() {
@@ -300,6 +309,7 @@ function(declare,
 	    document.getElementById("clearHUCBtn").onclick = function() {
 		    removeGraphics();
 		};
+		selfHucNavigation = this;
     },
 
 
@@ -309,6 +319,8 @@ function(declare,
 
     onClose: function(){
       console.log('onClose');
+        selfHucNavigation.graphicsLayer.clear();        
+        selfHucNavigation.map.removeLayer(selfHucNavigation.graphicsLayer);		
 		document.getElementById("searchPointToggle").innerText = "Activate tool";
 		document.getElementById("searchPointToggle").checked = false;
 		if (mapClickListener != null) {
