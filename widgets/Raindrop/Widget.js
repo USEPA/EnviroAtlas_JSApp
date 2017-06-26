@@ -156,6 +156,13 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
           //Add border to button
           domClass.add(dojo.byId('selectPoint'), 'rainDropButtonSelected');
           dojo.byId('selectPoint').innerHTML = 'Select Point(s)';
+          //deactivate the HUC tool and Elevation tool
+          if (window.toggleOnHucNavigation == true) {
+          	document.getElementById('searchPointToggle').click();
+          }
+          if (window.toggleOnElevation == true) {
+          	document.getElementById('butNullifyMeasureElevation').click();
+          }          
 
        	  window.toggleOnRainDrop = true;
        	  document.getElementById('butMapClickForPopup').click();

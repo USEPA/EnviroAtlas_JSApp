@@ -319,9 +319,13 @@ define([
       /*jshint unused: false*/
 
         lyr = this._layerInfo.map.getLayer(this._layerInfo.id);
+        isDynamicLayer = false;
 		if(lyr){
 			for (ii in window.dynamicLayerNumber) {
 				eachDynamicLyrId = window.layerIdPrefix + window.dynamicLayerNumber[ii];
+				if (eachDynamicLyrId == this._layerInfo.id) {
+					isDynamicLayer = true;
+				}
 				eachDynamicLyr = this._layerInfo.map.getLayer(eachDynamicLyrId);
 				if (eachDynamicLyr ){
 					dynamicLayerElem = document.getElementById("map_" + eachDynamicLyrId);
@@ -330,8 +334,8 @@ define([
 					}
 				}
 		  	}
-			lyrId = this._layerInfo.id.replace(window.layerIdPrefix, "");
-			if ((lyrId.indexOf(window.dynamicLayerNumber)) >= 0) {
+			if (isDynamicLayer == true) {
+				console.log("map_" + this._layerInfo.id + " is dynamic layer");
      			document.getElementById("map_" + this._layerInfo.id).style.zIndex = "1";
 	     	} 	
 	     	else {

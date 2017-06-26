@@ -272,6 +272,13 @@ define([
         }, this._measureNode);
         aspect.after(this.measureTool, 'setTool', lang.hitch(this, function () {
           if (this.measureTool.activeTool) {
+      		//deactivate the Raindrop tool and Huc Navigation tool
+            if (window.toggleOnRainDrop == true) {
+          	    document.getElementById('selectPoint').click();
+            }
+            if (window.toggleOnHucNavigation == true) {
+          	    document.getElementById('searchPointToggle').click();
+            } 
           	window.toggleOnElevation = true;
           	document.getElementById('butMapClickForPopup').click();
             this.map.setInfoWindowOnClick(false);
@@ -342,6 +349,9 @@ define([
         this.emit("measure-distance-checked", {
           checked: this.measureTool._distanceButton.checked
         });
+      },
+      NullifyMeasureClick: function () {
+      	this.measureTool.setTool("distance", false);
       },
 
       /**
