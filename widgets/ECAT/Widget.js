@@ -38,8 +38,7 @@ function(declare,
 	    ) {
 
     var map;
-    //var server = "https://enviroatlas2.epa.gov/";
-    var server = "https://leb.epa.gov/";
+    var server = "https://enviroatlas2.epa.gov/";
     
     var gpComputeClimateChange = null;
     var layerID = "ClimateChange";
