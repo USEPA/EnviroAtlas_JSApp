@@ -299,7 +299,7 @@ define([
                                 window.allLayerNumber.push(eaID);
                             }
                             else {
-                                lyr = selfPBS.map.getLayer(window.layerIdPrefix + eaID);
+                                lyr = selfPBS.map.getLayer(window.layerIdPBSPrefix + eaID);
                                 if(lyr){
                                     bLayerSelected = true;
                                 }                       
@@ -462,7 +462,7 @@ define([
                                 lLayer.setDisableClientCaching(true);
                             }
 
-                            lLayer.id = window.layerIdPrefix + layer.eaID.toString();
+                            lLayer.id = window.layerIdPBSPrefix + layer.eaID.toString();
                             map.setInfoWindowOnClick(true);
 
                         } else if (layer.type.toUpperCase() === 'FEATURE') {
@@ -561,7 +561,7 @@ define([
                             evt.layer.name = lOptions.id;
                         });
 
-                        lLayer.id = window.layerIdPrefix + layer.eaID.toString();                    
+                        lLayer.id = window.layerIdPBSPrefix + layer.eaID.toString();                    
                         
                         map.addLayer(lLayer);
                         if (layer.hasOwnProperty('eaScale')) {
@@ -575,7 +575,7 @@ define([
                         }
                         showLayerListWidget();
                     } else {
-                        layerTobeRemoved = map.getLayer(window.layerIdPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, ""));
+                        layerTobeRemoved = map.getLayer(window.layerIdPBSPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, ""));
                         map.removeLayer(layerTobeRemoved);
                     }
                 });
