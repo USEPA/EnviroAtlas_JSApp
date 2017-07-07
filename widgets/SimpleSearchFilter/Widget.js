@@ -483,6 +483,8 @@ define([
 			datatype_img.title = "Data summarized by 12 digit HUCs";
 		} else if (type == 'cbg') {
 			datatype_img.title = "Data summarized by census block groups";
+		} else if (type == 'ctr') {
+			datatype_img.title = "Data summarized by census tract";
 		} else if (type == 'grid') {
 			datatype_img.title = "Non-summarized grid data";
 		} else if (type == 'plp') {
