@@ -67,7 +67,7 @@ function(declare,
 
     var map;
     var gpURL = "https://enviroatlas.epa.gov/arcgis/rest/services/Other/HUC12NAVModelIDs/GPServer/HUC12NAVModelIDs";
-    var hucQueryURL = "https://enviroatlas.epa.gov/arcgis/rest/services/Other/HUC12NavRMS_MapService/MapServer";
+    var hucQueryURL = "https://enviroatlas.epa.gov/arcgis/rest/services/Other/HUC12NavRMS_MapService/MapServer/0";
     
     var mapClickListener = null;
 	var strHUCShpDownload = null;
