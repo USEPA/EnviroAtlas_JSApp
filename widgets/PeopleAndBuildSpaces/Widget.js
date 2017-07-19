@@ -288,6 +288,7 @@ define([
                 if (layer.hasOwnProperty('eaID')) {
                     eaID = layer.eaID.toString();
                     eaTopic = layer.eaTopic;
+                    window.hashTopicPBS[eaID]  = eaTopic;
                     if (eaID.trim() != "") {
 
                         var chkboxTopicId = window.chkTopicPBSPrefix + window.topicDicPBS[layer.eaTopic];

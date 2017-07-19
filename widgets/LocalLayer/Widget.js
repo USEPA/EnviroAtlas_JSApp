@@ -314,6 +314,9 @@ define([
                         if (layer.disableclientcaching) {
                             lLayer.setDisableClientCaching(true);
                         }
+                        if (window.hashVisibleLayersForDynamic[layer.eaID] != null) {
+							lLayer.setVisibleLayers(window.hashVisibleLayersForDynamic[layer.eaID]);
+                        }                        
                         lLayer.on('load', function (evt) {
                             var removeLayers = [];
                             array.forEach(evt.layer.visibleLayers, function (layer) {
@@ -408,7 +411,7 @@ define([
                                     lyrTiled.setOpacity(layer.opacity);
                                 }
                             }
-                            if (layer.eaScale == "COMMUNITY") {
+                            else if (layer.eaScale == "COMMUNITY") {
                                 loadSymbologyConfig(function (response) {
                                     var classBreakInfo = JSON.parse(response);
                                     var renderer = new ClassBreaksRenderer(classBreakInfo);
@@ -439,6 +442,9 @@ define([
                         });
 
                         dojo.connect(lLayer, "onLoad", function (error) {
+                            selfLocalLayer.publishData({		                            	
+					            message: "AllLoaded"
+					        }); 
                             if (!(lLayer.title in window.successLayerDictionary)) {
                                 window.successLayerDictionary[lLayer.title] = lLayer.title;
                             }

@@ -168,6 +168,10 @@ define(["./ConfigManager",
     window.hashURL = {};
     window.hashPopup = {};
     window.hashURL = {};
+    window.hashTopic = {};
+    window.hashTopicPBS = {};
+    window.hashVisibleLayersForDynamic = {};
+	window.hashRenderer = {};
                 
     //patch for JS API 3.10
     var hasMethod = typeof cookie.getAll === 'function';

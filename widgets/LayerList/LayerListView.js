@@ -396,19 +396,22 @@ define([
     },
 
     _onCkSelectNodeClick: function(layerInfo, ckSelect, evt) {
+      eaId = "";
       layerId = layerInfo.id;
-	  lyrTiled = layerInfo.map.getLayer(layerId.replace(window.layerIdPrefix, window.layerIdTiledPrefix));
+      if (layerId.indexOf(window.layerIdPrefix) >= 0) {
+       		eaId = layerId.replace(window.layerIdPrefix, "");                     	
+      } else if (layerSettings.id.indexOf(window.layerIdPBSPrefix) >= 0) {
+       		eaId = layerId.replace(window.layerIdPBSPrefix, "");                     	
+ 	  } 
+	  lyrTiled = layerInfo.map.getLayer(window.layerIdTiledPrefix + eaId);
       if (ckSelect.checked) {
         layerInfo.setTopLayerVisible(true);
         if(lyrTiled){
-       	  lyrTiled.setVisibility(true);
+        	  if (window.hashRenderer[eaId] == null) {
+	       	  	  lyrTiled.setVisibility(true);//set tile visible only when user not set the dynamic symbology
       	}
-        /*//Open Legend
-        var widgetName = 'Legend';
-        var widgets = this.layerListWidget.appConfig.getConfigElementsByName(widgetName);
-        var pm = PanelManager.getInstance();
-        //console.log(widgets[0]);
-        pm.showPanel(widgets[0]);*/
+      	  }
+
       } else {
         layerInfo.setTopLayerVisible(false);
         if(lyrTiled){
