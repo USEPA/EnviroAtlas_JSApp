@@ -35,10 +35,12 @@ define(['dojo/_base/declare',
         'esri/layers/GraphicsLayer',
         'esri/layers/FeatureLayer',
         'esri/layers/ImageParameters',
+        'esri/renderers/ClassBreaksRenderer',
         'esri/layers/ArcGISDynamicMapServiceLayer',
         'esri/layers/ArcGISTiledMapServiceLayer',
         'jimu/ConfigManager',
         'jimu/MapManager',
+        'jimu/WidgetManager',
         'jimu/dijit/Popup',
         'jimu/dijit/Message',
         'jimu/LayerInfos/LayerInfos',
@@ -64,10 +66,12 @@ define(['dojo/_base/declare',
         GraphicsLayer,
         FeatureLayer,
         ImageParameters,
+        ClassBreaksRenderer,
         ArcGISDynamicMapServiceLayer,
         ArcGISTiledMapServiceLayer,
         ConfigManager,
         MapManager,
+        WidgetManager,
         Popup,
         Message,
         LayerInfos,
@@ -84,6 +88,7 @@ define(['dojo/_base/declare',
 
             // the saved sessions
             sessions: [],
+            sessionLoaded: null,
 
             postCreate: function () {
                 this.inherited(arguments);
@@ -111,6 +116,15 @@ define(['dojo/_base/declare',
 
             onOpen: function () {
                 console.log('SaveSession :: onOpen');
+
+              	this.openWidgetById('widgets_PeopleAndBuildSpaces_Widget');
+              	//this.openWidgetById('widgets_SimpleSearchFilter_Widget_37');
+              	//this.closeWidget('widgets_PeopleAndBuildSpaces_Widget');
+            },
+            onReceiveData: function (name, widgetId, data, historyData) {
+                if ((name == 'LocalLayer') ) {
+                   this.setLayersVisibilityOpacity(sessionLoaded.layers);
+                }
             },
 
             /**
@@ -283,6 +297,7 @@ define(['dojo/_base/declare',
                 var newName = name + " " + String(idx);
 
                 if (!this.isValidSessionName(newName)) {
+                	
 
                     newName = this.getUniqueSessionName(name, idx);
                 }
@@ -366,7 +381,9 @@ define(['dojo/_base/declare',
              */
             onLoadSessionClicked: function (e) {
                 var session = e.item;
+                sessionLoaded = session;
                 console.log('SaveSession :: onLoadSessionClicked :: session  = ', session);
+                document.getElementById("butRemAllLayers").click();
                 this.loadSession(session);
             },
 
@@ -535,6 +552,7 @@ define(['dojo/_base/declare',
              */
             loadSession: function (sessionToLoad) {
 
+
                 var onMapChanged,
                     extentToLoad;
 
@@ -582,96 +600,84 @@ define(['dojo/_base/declare',
 
                 // load the saved graphics
                 this.setGraphicsOnCurrentMap(sessionToLoad.graphics);
-
-
-                // toggle layers
-                if (sessionToLoad.layers) {
-                    this.setLayersOnMap(sessionToLoad.layers);
+                this.initLayersRenderer(sessionToLoad.layers);
+                this.initVisibleLayersForDynamic(sessionToLoad.layers);
+                
+                if (sessionToLoad.toggleButtonTopics) {
+                	this.setToggleButtonTopics(sessionToLoad.toggleButtonTopics);
                 }
 
+                if (sessionToLoad.chkLayerInSearchFilter) {
+                	this.setChkLayerInSearchFilter(sessionToLoad.chkLayerInSearchFilter);
+                }
+				//
+                if (sessionToLoad.toggleButtonPBSTopics) {
+                	//this.openWidgetById('widgets_PeopleAndBuildSpaces_Widget');
+                	this.setToggleButtonPBSTopics(sessionToLoad.toggleButtonPBSTopics);
+                }
+
+                if (sessionToLoad.chkLayerInPBS) {
+                	//this.openWidgetById('widgets_PeopleAndBuildSpaces_Widget');
+                	this.setChkLayerInPBS(sessionToLoad.chkLayerInPBS);
+                }
+
+                if (sessionToLoad.chkLayerInBoundary) {
+                	this.setChkLayerInBoundary(sessionToLoad.chkLayerInBoundary);
+                }
                 console.log('SaveSession :: loadSession :: session  = ', sessionToLoad);
             },
-
             /**
              * apply settings to layers
              * @param {Array} array of layer settings to apply to map
              */
-            setLayersOnMap: function (settings) {
-                var propName = "",
-                    layerSettings,
-                    layer,
-                    addGraphicsToLayer;
+            setLayersVisibilityOpacity: function (settings) {
 
                 array.forEach(settings, function (layerSettings) {
+                    
+                    var eaId = "";
+                    if (layerSettings.id.indexOf(window.layerIdPrefix) >= 0) {
+                   		eaId = layerSettings.id.replace(window.layerIdPrefix, "");                     	
+                    } else if (layerSettings.id.indexOf(window.layerIdPBSPrefix) >= 0) {
+                   		eaId = layerSettings.id.replace(window.layerIdPBSPrefix, "");                     	
+                    } 
+                    
                     layer = this.map.getLayer(layerSettings.id);
-                    if (!layer) {
-                        console.log('SaveSession :: setLayersOnMap :: no layer found with id = ', propName);
-                        layer = this.addLayerToMap(layerSettings);
-                        // exit here? or re-apply settings 
-                        return;
-                    }
-
-                    // set visible
-                    if (layer.setVisibility) {
+                    if (layer != null) {
+                        if (window.hashRenderer[eaId] != null) {
+                        	var rendererJson = window.hashRenderer[eaId];
+                        	var renderer = new ClassBreaksRenderer(rendererJson);
+		                	layer.setRenderer(renderer);
+                        }
                         layer.setVisibility(layerSettings.isVisible);
+                        layer.setOpacity(layerSettings.opacity);
+                        layer.refresh();  
                         console.log('SaveSession :: loadSession :: set visibility = ', layerSettings.isVisible, ' for layer : id=', layer.id);
+
+                       
+                       layerTile = this.map.getLayer(layerIdTiledPrefix + eaId);
+                       if (layerTile != null) {
+                       		if (window.hashRenderer[eaId] == null) {
+	                        	layerTile.setVisibility(layerSettings.isVisible);
+	                       	}
+	                        layerTile.setOpacity(layerSettings.opacity);
+	                        layerTile.refresh();                         	
+                       }
                     }
 
-                    if (layerSettings.visibleLayers && layer.setVisibleLayers) {
-                        layer.setVisibleLayers(layerSettings.visibleLayers);
-                    }
-
-                    console.log('SaveSession :: loadSession :: setLayersOnMap completed for layer = ', layer.id);
                 }, this);
-
-                // fire refresh event 
-                LayerInfos.getInstance(this.map, this.map.itemInfo).then(function (layerInfosObject) { // fire change event to trigger update
-                    on.emit(layerInfosObject, "updated");
-                    //layerInfosObject.onlayerInfosChanged();
-                });
-
             },
+            initLayersRenderer: function (settings) {
+                array.forEach(settings, function (layerSettings) {
+  					window.hashRenderer[layerSettings.id.replace(window.layerIdPrefix, "")] = layerSettings.renderer;
 
-            /**
-             * create a new map layer with the given settings
-             * @param {Object} layerSettings settings for the layer
-             * @return {Object} layer oject
-             */
-            addLayerToMap: function (layerSettings) {
-                console.log('SaveSession :: addLayerToMap :: adding layer = ', layerSettings);
-                var layer,
-                    options;
-                switch (layerSettings.type) {
-                case "ArcGISDynamicMapServiceLayer":
-                    options = lang.clone(layerSettings.options);
-                    options.imageParameters = new ImageParameters();
-                    lang.mixin(options.imageParameters, layerSettings.options.imageParameters);
-                    layer = new ArcGISDynamicMapServiceLayer(layerSettings.url, options);
-                    console.log('SaveSession :: addLayerToMap :: created ArcGISDynamicMapServiceLayer layer = ', layer);
-                    break;
-                case "FeatureLayer":
-                    layer = new FeatureLayer(layerSettings.url, layerSettings.options);
-                    console.log('SaveSession :: addLayerToMap :: created Feature layer = ', layer);
-                    break;
-                case "ArcGISTiledMapServiceLayer":
-                    layer = new ArcGISTiledMapServiceLayer(layerSettings.url, layerSettings.options);
-                    console.log('SaveSession :: addLayerToMap :: created ArcGISTiledMapServiceLayer layer = ', layer);
-                    break;
-                default:
-                    console.log('SaveSession :: addLayerToMap :: unsupported layer type = ', layerSettings.type);
-                    break;
-                }
-
-                if (layerSettings.name) {
-                    layer.name = layerSettings.name;
-                }
-
-                // The bottom most layer has an index of 0.
-                this.map.addLayer(layer, layerSettings.order);
-                console.log('SaveSession :: addLayerToMap :: created layer for ', layer.id, ' using settings = ', layerSettings);
-                return layer;
+                }, this);
             },
+            initVisibleLayersForDynamic: function (settings) {
+                array.forEach(settings, function (layerSettings) {
+  					window.hashVisibleLayersForDynamic[layerSettings.id.replace(window.layerIdPrefix, "")] = layerSettings.visibleLayers;
 
+                }, this);
+            },
             /**
              * returns the session object for the current map
              * @returns {Object} map settings for session
@@ -683,6 +689,11 @@ define(['dojo/_base/declare',
                     webmapId: "",
                     extent: null,
                     layers: [],
+                    toggleButtonTopics: [],
+                    chkLayerInSearchFilter: [], 
+                    toggleButtonPBSTopics: [],
+                    chkLayerInPBS: [],
+                    chkLayerInBoundary: [],                   
                     graphics: []
                 };
 
@@ -690,6 +701,12 @@ define(['dojo/_base/declare',
                 settings.webmapId = this.map.itemId;
 
                 settings.graphics = this.getGraphicsForCurrentMap();
+                settings.toggleButtonTopics = this.getToggleButtonTopics();
+                settings.chkLayerInSearchFilter = this.getChkLayerInSearchFilter();
+                settings.toggleButtonPBSTopics = this.getToggleButtonPBSTopics();
+                settings.chkLayerInPBS = this.getChkLayerInPBS();
+                settings.chkLayerInBoundary = this.getChkLayerInBoundary();
+                
 
                 // have to use async to get layers
                 this.getLayerSettingsForCurrentMap().then(function (layerSettings) {
@@ -749,102 +766,20 @@ define(['dojo/_base/declare',
                     name: layer.name,
                     type: "",
                     isVisible: layer.visible,
+                    opacity:layer.opacity,
                     visibleLayers: layer.visibleLayers || null,
                     url: layer.url,
-                    options: null
+                    options: null,
+                    renderer: null,
                 };
 
                 layerSettings.type = this.getLayerType(layer);
-
-                switch (layerSettings.type) {
-                case "ArcGISDynamicMapServiceLayer":
-                    layerSettings.options = this.getOptionsForDynamicLayer(layer);
-                    break;
-                case "FeatureLayer":
-                    layerSettings.options = this.getOptionsForFeatureLayer(layer);
-                    console.log('SaveSession :: getSettingsForLayer :: added options for feature layer = ', layerSettings);
-                    break;
-                case "ArcGISTiledMapServiceLayer":
-                    layerSettings.options = this.getOptionsForTiledLayer(layer);
-                    console.log('SaveSession :: getSettingsForLayer :: added options for tiled layer = ', layerSettings);
-                    break;
-
-                default:
-                    console.log('SaveSession :: getSettingsForLayer :: no options for layer type = ', layerSettings.type);
-                    break;
-                }
-
+                layerSettings.renderer = window.hashRenderer[layer.id.replace(window.layerIdPrefix, "")];
+                
                 console.log('SaveSession :: getSettingsForCurrentMap :: settings ', layerSettings, ' added for layer = ', layer.id);
                 return layerSettings;
             },
 
-            /**
-             * return the options object to create the given layer
-             * @param   {esri.layers.ArcGISDynamicMapServiceLayer}   layer the ArcGISDynamicMapServiceLayer 
-             * @returns {Object} Object with properties for the ArcGISDynamicMapServiceLayer constructor
-             */
-            getOptionsForDynamicLayer: function (layer) {
-                var ip,
-                    options = {
-                        id: layer.id,
-                        imageParameters: null,
-                        opacity: layer.opacity,
-                        refreshInterval: layer.refreshInterval,
-                        visible: layer.visible
-                    };
-
-                if (layer.imageFormat) {
-                    ip = {
-                        format: layer.imageFormat,
-                        dpi: layer.dpi
-                    };
-
-                    options.imageParameters = ip;
-                }
-
-                console.log('SaveSession :: getOptionsForDynamicLayer :: options =  ', options, ' for layer = ', layer.id);
-                return options;
-            },
-
-            /**
-             * return the options object to create the given layer
-             * @param   {esri.layers.FeatureLayer}   layer the FeatureLayer 
-             * @returns {Object} Object with properties for the FeatureLayer constructor
-             */
-            getOptionsForFeatureLayer: function (layer) {
-
-                var options = {
-                    id: layer.id,
-                    mode: FeatureLayer.MODE_ONDEMAND,
-                    outFields: ["*"],
-                    opacity: layer.opacity,
-                    refreshInterval: layer.refreshInterval,
-                    visible: layer.visible
-                };
-
-                // TODO: get mode?
-
-                console.log('SaveSession :: getOptionsForFeatureLayer :: options =  ', options, ' for layer = ', layer.id);
-                return options;
-            },
-
-            /**
-             * return the options object to create the given layer
-             * @param   {esri.layers.ArcGISTiledMapServiceLayer}   layer the Tiled layer 
-             * @returns {Object} Object with properties for the ArcGISTiledMapServiceLayer constructor
-             */
-            getOptionsForTiledLayer: function (layer) {
-
-                var options = {
-                    id: layer.id,
-                    opacity: layer.opacity,
-                    refreshInterval: layer.refreshInterval,
-                    visible: layer.visible
-                };
-
-                console.log('SaveSession :: getOptionsForTiledLayer :: options =  ', options, ' for layer = ', layer.id);
-                return options;
-            },
 
             /**
              * return all the settings for the current graphic layers
@@ -872,7 +807,79 @@ define(['dojo/_base/declare',
                 console.log('SaveSession :: getGraphicsForCurrentMap :: settings added for graphics = ', settings);
                 return settings;
             },
-
+            /**
+             * return all the settings for the toggle buttons of topics
+             */
+            getToggleButtonTopics: function () {
+				var settings = [];
+		        for (i in window.allLayerNumber) {
+		            lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
+		            if (lyr) {
+		                topicWholeName = window.hashTopic[window.allLayerNumber[i]];
+		                topicShortName = window.topicDic[topicWholeName];
+                		if (settings.indexOf(topicShortName) < 0) {
+                			settings.push(topicShortName);
+                		} 
+		            }
+		        }
+		        return settings;
+            },
+            getChkLayerInSearchFilter: function () {
+				var settings = [];
+		        for (i in window.allLayerNumber) {
+		            lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
+		            if (lyr) {
+						chkBoxIndex = window.allLayerNumber[i];
+                		if (settings.indexOf(chkBoxIndex) < 0) {
+                			settings.push(chkBoxIndex);
+                		} 
+		            }
+		        }
+		        return settings;
+            },
+            /**
+             * return all the settings for the toggle buttons of topics
+             */
+            getToggleButtonPBSTopics: function () {
+				var settings = [];
+		        for (i in window.allLayerNumber) {
+		            lyr = this.map.getLayer(window.layerIdPBSPrefix + window.allLayerNumber[i]);
+		            if (lyr) {
+		                topicWholeName = window.hashTopicPBS[window.allLayerNumber[i]];
+		                topicShortName = window.topicDicPBS[topicWholeName];
+                		if (settings.indexOf(topicShortName) < 0) {
+                			settings.push(topicShortName);
+                		} 
+		            }
+		        }
+		        return settings;
+            },
+            getChkLayerInPBS: function () {
+				var settings = [];
+		        for (i in window.allLayerNumber) {
+		            lyr = this.map.getLayer(window.layerIdPBSPrefix + window.allLayerNumber[i]);
+		            if (lyr) {
+						chkBoxIndex = window.allLayerNumber[i];
+                		if (settings.indexOf(chkBoxIndex) < 0) {
+                			settings.push(chkBoxIndex);
+                		} 
+		            }
+		        }
+		        return settings;
+            },
+            getChkLayerInBoundary: function () {
+				var settings = [];
+		        for (i in window.allLayerNumber) {
+		            lyr = this.map.getLayer(window.layerIdBndrPrefix + window.allLayerNumber[i]);
+		            if (lyr) {
+						chkBoxIndex = window.allLayerNumber[i];
+                		if (settings.indexOf(chkBoxIndex) < 0) {
+                			settings.push(chkBoxIndex);
+                		} 
+		            }
+		        }
+		        return settings;
+            },                        
             /**
              * create settings object from the given graphics Layer
              * @param   {GraphicLayer}   graphicLayer a graphics layer
@@ -934,6 +941,78 @@ define(['dojo/_base/declare',
                 console.log("SaveSession :: setGraphicsOnCurrentMap :: graphics added to the map");
             },
 
+            setToggleButtonTopics: function (settings) {
+            	for (index = 0, len = settings.length; index < len; ++index) {
+            		//document.getElementById(window.chkTopicPrefix + settings[index]).click();
+            		var checkbox = document.getElementById(window.chkTopicPrefix + settings[index]);			
+			        if(checkbox.checked == true){
+			        	checkbox.click();
+			        	
+	            	}
+					checkbox.click();
+	            }
+            },
+            setChkLayerInSearchFilter: function (settings) {
+            	for (index = 0, len = settings.length; index < len; ++index) {
+            		chkbox = document.getElementById(window.chkSelectableLayer + settings[index]);
+            		if (chkbox != null) {
+            					
+				        if(chkbox.checked == true){
+				        	chkbox.click();
+				        	
+		            	}
+            			chkbox.click();
+            			if (settings.type != "ArcGISDynamicMapServiceLayer") {
+            				chkbox.click();
+            				chkbox.click();
+            			}
+            			//chkbox.click();
+            			//chkbox.click();            			
+            		}
+            	}
+            	//document.getElementById('butAddAllLayers').click();
+            },
+            setToggleButtonPBSTopics: function (settings) {
+            	for (index = 0, len = settings.length; index < len; ++index) {
+            		//document.getElementById(window.chkTopicPrefix + settings[index]).click();
+            		var checkbox = document.getElementById(window.chkTopicPBSPrefix + settings[index]);			
+			        if(checkbox.checked == true){
+			        	checkbox.click();
+			        	
+	            	}
+					checkbox.click();
+	            }
+            },            
+            setChkLayerInPBS: function (settings) {
+            	for (index = 0, len = settings.length; index < len; ++index) {
+            		chkbox = document.getElementById(window.chkSelectableLayer + settings[index]);
+            		if (chkbox != null) {
+            					
+				        if(chkbox.checked == true){
+				        	chkbox.click();
+				        	
+		            	}
+            			chkbox.click();
+            			chkbox.click();
+            			chkbox.click();
+            		}
+            	}
+            },  
+            setChkLayerInBoundary: function (settings) {
+            	for (index = 0, len = settings.length; index < len; ++index) {
+            		chkbox = document.getElementById(window.chkSelectableLayer + settings[index]);
+            		if (chkbox != null) {
+            					
+				        if(chkbox.checked == true){
+				        	chkbox.click();
+				        	
+		            	}
+            			chkbox.click();
+            			chkbox.click();
+            			chkbox.click();
+            		}
+            	}
+            },                      
             clearAllGraphicsOnMap: function () {
                 // clear the default layer
                 this.map.graphics.clear();
@@ -993,7 +1072,9 @@ define(['dojo/_base/declare',
                     return all(defs).then(function (layerObjects) {
                         var resultArray = [];
                         array.forEach(layerObjects, function (layerObject, i) {
+                        	
                             layerObject.id = layerObject.id || layerInfos[i].id;
+
                             resultArray.push(layerObject);
                         });
                         return {

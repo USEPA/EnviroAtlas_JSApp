@@ -1259,6 +1259,8 @@ define([
 	                    }
 	                    if(layer.hasOwnProperty('eaTopic')){
 	                    	eaTopic = layer.eaTopic.toString();
+	                    	console.log("eaID:" + eaID + ", eaTopic: " + eaTopic);
+	                    	window.hashTopic[eaID]  = eaTopic;
 	                    }
 	                    else {
 	                    	eaTopic = "";
