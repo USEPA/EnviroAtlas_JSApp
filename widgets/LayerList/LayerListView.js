@@ -400,7 +400,7 @@ define([
       layerId = layerInfo.id;
       if (layerId.indexOf(window.layerIdPrefix) >= 0) {
        		eaId = layerId.replace(window.layerIdPrefix, "");                     	
-      } else if (layerSettings.id.indexOf(window.layerIdPBSPrefix) >= 0) {
+      } else if (layerId.indexOf(window.layerIdPBSPrefix) >= 0) {
        		eaId = layerId.replace(window.layerIdPBSPrefix, "");                     	
  	  } 
 	  lyrTiled = layerInfo.map.getLayer(window.layerIdTiledPrefix + eaId);
