@@ -165,6 +165,7 @@ define([
 						selfSimpleSearchFilter.map.graphics.clear();
 						featuresCollection = [];
 						arrLayersForPopup = [];
+						//alert("window.featureLyrNumber: " + window.featureLyrNumber);
 			    		for (i in window.featureLyrNumber) {  
 			    			bVisibleFL = false;
 			    			bVisibleTL = false;
@@ -172,6 +173,13 @@ define([
 				    		if (lyrFL != null) {		    			
 								if (lyrFL.visible == true){
 									bVisibleFL = true;
+								}
+							} else {
+								lyrFL = selfSimpleSearchFilter.map.getLayer(window.layerIdPBSPrefix + window.featureLyrNumber[i]);	
+								if (lyrFL != null) {
+									if (lyrFL.visible == true){
+										bVisibleFL = true;
+									}
 								}
 							}
 							lyrTL = selfSimpleSearchFilter.map.getLayer(window.layerIdTiledPrefix + window.featureLyrNumber[i]);

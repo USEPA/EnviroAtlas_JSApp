@@ -608,7 +608,7 @@ define(['dojo/_base/declare',
                 }
 
                 if (sessionToLoad.chkLayerInSearchFilter) {
-                	this.setChkLayerInSearchFilter(sessionToLoad.chkLayerInSearchFilter);
+                	this.setChkLayerInSearchFilter(sessionToLoad);
                 }
 				//
                 if (sessionToLoad.toggleButtonPBSTopics) {
@@ -650,6 +650,13 @@ define(['dojo/_base/declare',
                         }
                         layer.setVisibility(layerSettings.isVisible);
                         layer.setOpacity(layerSettings.opacity);
+                        if (layerSettings.type == "ArcGISDynamicMapServiceLayer") {
+                        	  visible = [];
+							  for (var i=0, il=layerSettings.visibleLayers.length; i< il; i++) {
+							      visible.push(layerSettings.visibleLayers[i]);
+							  }
+							  layer.setVisibleLayers(visible);
+                        }
                         layer.refresh();  
                         console.log('SaveSession :: loadSession :: set visibility = ', layerSettings.isVisible, ' for layer : id=', layer.id);
 
@@ -952,8 +959,20 @@ define(['dojo/_base/declare',
 					checkbox.click();
 	            }
             },
-            setChkLayerInSearchFilter: function (settings) {
+            setChkLayerInSearchFilter: function (sessionToLoad) {
+            	settings =  sessionToLoad.chkLayerInSearchFilter;
+            	layersInfo = sessionToLoad.layers;
             	for (index = 0, len = settings.length; index < len; ++index) {
+            		bIsDynamicLayer = false;
+            		layerType = "";
+	            	array.forEach(layersInfo, function (layerSettings) {
+	                    if (layerSettings.id.indexOf(window.layerIdPrefix) >= 0) {
+	                   		eaId = layerSettings.id.replace(window.layerIdPrefix, "");
+	                   		if (eaId == settings[index]) {
+	                   			layerType = layerSettings.type;
+	                  		}                     	
+	                    }             		
+	            	})
             		chkbox = document.getElementById(window.chkSelectableLayer + settings[index]);
             		if (chkbox != null) {
             					
@@ -962,12 +981,11 @@ define(['dojo/_base/declare',
 				        	
 		            	}
             			chkbox.click();
-            			if (settings.type != "ArcGISDynamicMapServiceLayer") {
+            			if ( layerType != "ArcGISDynamicMapServiceLayer"){
             				chkbox.click();
             				chkbox.click();
             			}
-            			//chkbox.click();
-            			//chkbox.click();            			
+			
             		}
             	}
             	//document.getElementById('butAddAllLayers').click();

@@ -467,7 +467,33 @@ define([
                             map.setInfoWindowOnClick(true);
 
                         } else if (layer.type.toUpperCase() === 'FEATURE') {
-
+                        	window.featureLyrNumber.push(layer.eaID);
+	                        bPopup = true;
+	                        var _popupTemplate;
+	                        if (layer.popup) {
+	                        	window.hashPopup[layer.eaID] = layer.popup;
+	                            if (layer.popup.fieldInfos) {
+	                                fieldInfos = layer.popup.fieldInfos;
+	                                if (fieldInfos[0].hasOwnProperty('fieldName')) {
+	                                    if (fieldInfos[0].fieldName == null) {
+	                                        bPopup = false;
+	                                    } else {
+	                                        Attribute = fieldInfos[0].fieldName;
+	                                        hashAttribute[layer.eaID.toString()] = Attribute;
+	                                    }
+	                                } else {
+	                                    bPopup = false;
+	                                }
+	                            } else {
+	                                bPopup = false;
+	                            }
+	                            if (bPopup) {
+	                                _popupTemplate = new PopupTemplate(layer.popup);
+	                                //lOptions.infoTemplate = _popupTemplate;
+	                            } else {
+	                                console.log("layer.eaID: " +  + layer.eaID.toString() + " with no popup info defined");
+	                            }
+	                        }
                             if (layer.hasOwnProperty('mode')) {
                                 var lmode;
                                 if (layer.mode === 'ondemand') {
