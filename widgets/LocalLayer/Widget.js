@@ -314,9 +314,9 @@ define([
                         if (layer.disableclientcaching) {
                             lLayer.setDisableClientCaching(true);
                         }
-                        if (window.hashVisibleLayersForDynamic[layer.eaID] != null) {
+                        /*if (window.hashVisibleLayersForDynamic[layer.eaID] != null) {
 							lLayer.setVisibleLayers(window.hashVisibleLayersForDynamic[layer.eaID]);
-                        }                        
+                        }   */                     
                         lLayer.on('load', function (evt) {
                             var removeLayers = [];
                             array.forEach(evt.layer.visibleLayers, function (layer) {
