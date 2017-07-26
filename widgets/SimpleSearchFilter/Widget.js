@@ -112,6 +112,12 @@ define([
 	        var queryTask = new QueryTask(window.hashURL[eaID]);
 	        popupField = window.hashPopup[eaID].fieldInfos[0]["fieldName"];
 	        popupFieldName = window.hashPopup[eaID].fieldInfos[0]["label"];
+	        var bIsTextFormat = false;
+	        if (window.hashPopup[eaID].fieldInfos[0].hasOwnProperty('stringFieldOption')) {	        	
+	        	if (window.hashPopup[eaID].fieldInfos[0].stringFieldOption == "textbox") {
+	        		bIsTextFormat = true;
+	        	}
+	        }
 	        popupTitle = window.hashPopup[eaID].title.split(":");
 	        if (window.hashPopup[eaID].fieldInfos[0].hasOwnProperty('format')) {
 	        	if (window.hashPopup[eaID].fieldInfos[0].format.hasOwnProperty('places')) {
@@ -135,7 +141,11 @@ define([
 	                );
 					//Loop through each feature returned
 					for (var i=0, il=resultFeatures.length; i<il; i++) {
+						if (bIsTextFormat == false) {
 						var content = "<b>" + popupTitle[0] + "</b>: $" + popupTitle[1].trim() + "<hr>"+"<b>" + popupFieldName + "</b>: ${" + popupField + ":selfSimpleSearchFilter.formatValue}";	
+						} else {
+							var content = "<b>" + popupTitle[0] + "</b>: $" + popupTitle[1].trim() + "<hr>"+"<b>" + popupFieldName + "</b>: ${" + popupField + "}";	
+						}
 						var infoTemplate = new esri.InfoTemplate(popupFieldName, content);
 					    var graphic = resultFeatures[i];
 					    graphic.setSymbol(symbol);
