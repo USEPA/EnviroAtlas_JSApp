@@ -235,6 +235,9 @@ define([
 				if ((currentLayer.id).indexOf(window.addedLayerIdPrefix) > -1) {
 					this.map.removeLayer(currentLayer);
 				}    
+				if ((currentLayer.id).indexOf(window.uploadedFeatLayerIdPrefix) > -1) {
+					this.map.removeLayer(currentLayer);
+				}    				
 			} 
 		}
 		/*dojo.forEach(this.map.layerIds, function(aLayerId) {  
