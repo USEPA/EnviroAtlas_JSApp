@@ -36,6 +36,9 @@ define(['dojo/_base/declare',
         'esri/layers/FeatureLayer',
         'esri/layers/ImageParameters',
         'esri/renderers/ClassBreaksRenderer',
+        'esri/symbols/SimpleFillSymbol',
+        'esri/symbols/SimpleLineSymbol',        
+        'esri/Color',
         'esri/layers/ArcGISDynamicMapServiceLayer',
         'esri/layers/ArcGISTiledMapServiceLayer',
         'jimu/ConfigManager',
@@ -67,6 +70,9 @@ define(['dojo/_base/declare',
         FeatureLayer,
         ImageParameters,
         ClassBreaksRenderer,
+        SimpleFillSymbol,
+        SimpleLineSymbol,
+        Color,
         ArcGISDynamicMapServiceLayer,
         ArcGISTiledMapServiceLayer,
         ConfigManager,
@@ -78,6 +84,10 @@ define(['dojo/_base/declare',
         Table,
         TextBox) {
         //To create a widget, you need to derive from BaseWidget.
+        var sleep = function (ms) {
+	        var unixtime_ms = new Date().getTime();
+	        while (new Date().getTime() < unixtime_ms + ms) {}
+	    }
         return declare([BaseWidget, _WidgetsInTemplateMixin], {
             // Custom widget code goes here
 
@@ -96,7 +106,6 @@ define(['dojo/_base/declare',
                 // setup save to file
                 this.saveToFileForm.action = this.config.saveToFileUrl;
                 this.saveToFileName.value = this.config.defaultFileName;
-
 
                 this.loadSavedSessionsFromStorage();
 
@@ -559,11 +568,8 @@ define(['dojo/_base/declare',
                 if (sessionToLoad.webmapId && sessionToLoad.webmapId !== this.map.itemId) {
                     console.log('SaveSession :: loadSession :: changing webmap = ', sessionToLoad.webmapId);
 
-
                     onMapChanged = topic.subscribe("mapChanged", lang.hitch(this, function (newMap) {
-
                         console.log('SaveSession :: loadSession :: map changed from  ', this.map.itemId, ' to ', newMap.itemId);
-
                         // update map reference here
                         // since this.map still refers to old map?
                         // ConfigManager has not recreated widget with new map yet
@@ -575,7 +581,6 @@ define(['dojo/_base/declare',
                         // load the rest of the session
                         this.loadSession(sessionToLoad);
                     }));
-
 
                     ConfigManager.getInstance()._onMapChanged({
                         "itemId": sessionToLoad.webmapId
@@ -599,6 +604,9 @@ define(['dojo/_base/declare',
                 }
 
                 // load the saved graphics
+                this.initLayersFields(sessionToLoad.layers);
+                this.setSelectedCommunity(sessionToLoad);
+                this.initGeometryTypeAddedFeatLyr(sessionToLoad.layers);
                 this.setGraphicsOnCurrentMap(sessionToLoad.graphics);
                 this.initLayersRenderer(sessionToLoad.layers);
                 this.initVisibleLayersForDynamic(sessionToLoad.layers);
@@ -654,9 +662,11 @@ define(['dojo/_base/declare',
                         	  visible = [];
 							  for (var i=0, il=layerSettings.visibleLayers.length; i< il; i++) {
 							      visible.push(layerSettings.visibleLayers[i]);
+
 							  }
 							  layer.setVisibleLayers(visible);
                         }
+                        
                         layer.refresh();  
                         console.log('SaveSession :: loadSession :: set visibility = ', layerSettings.isVisible, ' for layer : id=', layer.id);
 
@@ -670,7 +680,22 @@ define(['dojo/_base/declare',
 	                        layerTile.refresh();                         	
                        }
                     }
+                }, this);
+                // fire refresh event 
+                LayerInfos.getInstance(this.map, this.map.itemInfo).then(function (layerInfosObject) { // fire change event to trigger update
+                    on.emit(layerInfosObject, "updated");
+                    layerInfosObject.onlayerInfosChanged();
+                });
+            },
+            initLayersFields: function (settings) {
+                array.forEach(settings, function (layerSettings) {
+  					window.hashFieldsAddedFeatureLayer[layerSettings.id] = layerSettings.fields;
 
+                }, this);
+            },
+            initGeometryTypeAddedFeatLyr: function (settings) {
+                array.forEach(settings, function (layerSettings) {
+  					window.hashGeometryTypeAddedFeatLyr[layerSettings.id] = layerSettings.geometryType;
                 }, this);
             },
             initLayersRenderer: function (settings) {
@@ -696,6 +721,7 @@ define(['dojo/_base/declare',
                     webmapId: "",
                     extent: null,
                     layers: [],
+                    selectedCommunity: null,
                     toggleButtonTopics: [],
                     chkLayerInSearchFilter: [], 
                     toggleButtonPBSTopics: [],
@@ -706,8 +732,8 @@ define(['dojo/_base/declare',
 
                 settings.extent = this.map.extent;
                 settings.webmapId = this.map.itemId;
-
-                settings.graphics = this.getGraphicsForCurrentMap();
+				settings.selectedCommunity = this.getSelectedCommunity();
+                settings.graphics = this.getGraphicsForCurrentMap();//This will save the graphics for uploaded featurelayer only
                 settings.toggleButtonTopics = this.getToggleButtonTopics();
                 settings.chkLayerInSearchFilter = this.getChkLayerInSearchFilter();
                 settings.toggleButtonPBSTopics = this.getToggleButtonPBSTopics();
@@ -776,18 +802,42 @@ define(['dojo/_base/declare',
                     opacity:layer.opacity,
                     visibleLayers: layer.visibleLayers || null,
                     url: layer.url,
+                    fields: null,
+                    geometryType: null,
                     options: null,
                     renderer: null,
                 };
 
                 layerSettings.type = this.getLayerType(layer);
                 layerSettings.renderer = window.hashRenderer[layer.id.replace(window.layerIdPrefix, "")];
+                layerSettings.fields = this.getFieldssForFeatureLayer(layer);
+                layerSettings.geometryType = this.getGeometryTypeForFeatureLayer(layer);
                 
                 console.log('SaveSession :: getSettingsForCurrentMap :: settings ', layerSettings, ' added for layer = ', layer.id);
                 return layerSettings;
             },
 
+            getFieldssForFeatureLayer: function (layer) {
+            	var fields = hashFieldsAddedFeatureLayer[layer.id];
+                console.log('SaveSession :: getFieldssForFeatureLayer :: fields =  ', fields, ' for layer = ', layer.id);
+                return fields;
+            },
 
+            getGeometryTypeForFeatureLayer: function (layer) {
+            	var geometryType = hashGeometryTypeAddedFeatLyr[layer.id];
+                console.log('SaveSession :: getGeometryTypeForFeatureLayer :: geometryType =  ', geometryType, ' for layer = ', layer.id);
+                return geometryType;
+            },    
+
+            /**
+             * return all the settings for the Community user selected
+             */
+            getSelectedCommunity: function () {
+                var settings = null;
+                settings = window.communitySelected;
+                console.log('SaveSession :: getSelectedCommunity :: ' + settings);
+                return settings;
+            },            
             /**
              * return all the settings for the current graphic layers
              * @returns {Array} array of settings objects for each graphic layer
@@ -897,21 +947,33 @@ define(['dojo/_base/declare',
                     id: graphicLayer.id,
                     graphics: []
                 };
-
+                symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+                    new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                        new Color([0, 112, 0]), 1), new Color([0, 0, 136, 0.25]));
+                
                 // set the graphics from the layer
-                array.forEach(graphicLayer.graphics, function (g) {
-                    settings.graphics.push(g.toJson());
-                }, this);
-
+                if (graphicLayer.id.indexOf(window.uploadedFeatLayerIdPrefix)>-1){
+	                array.forEach(graphicLayer.graphics, function (g) {
+	                	g.setSymbol(symbol);	
+	                    settings.graphics.push(g.toJson());
+	                }, this);
+				}
                 console.log('SaveSession :: getSettingsFromGraphicsLayer :: settings ', settings, ' added for graphicLayer = ', graphicLayer);
                 return settings;
             },
-
+            
+            /*Load settings part*/
+            setSelectedCommunity: function (settings) {
+				window.communitySelected = settings.selectedCommunity;
+			        this.publishData({
+			        message: window.communitySelected
+			    });
+            },
             /** 
              * add the graphics defined in the settings to the current map
              * @param {Object} settings = object with property for each graphic layer
              */
-            setGraphicsOnCurrentMap: function (settings) {
+             setGraphicsOnCurrentMap: function (settings) {
                 var propName = "",
                     settingsForLayer,
                     graphicsLayer,
@@ -921,28 +983,70 @@ define(['dojo/_base/declare',
                 addGraphicsToLayer = function (graphicsLayer, settingsForLayer) {
                     // add to default graphics layer
                     array.forEach(settingsForLayer.graphics, function (g) {
-                        var graphic = new Graphic(g);
+                        var graphic = new Graphic(g);                        
                         graphicsLayer.add(graphic);
                     }, this);
                 };
 
                 array.forEach(settings, function (settingsForLayer, i) {
-                    if (settingsForLayer.id === "map_graphics") {
-                        // already exists by default so add graphics
-                        addGraphicsToLayer(this.map.graphics, settingsForLayer);
-                    } else {
-                        // add a new layer
-                        graphicsLayer = new GraphicsLayer({
-                            id: settingsForLayer.id
-                        });
-
-                        // add the graphics layer at the index - The bottom most layer has an index of 0.
-                        //var idx = i - 1; // adjust to account for default map graphics at first index in settings
-                        // adds the graphiclayers on top of other layers, since index not specified
-                        this.map.addLayer(graphicsLayer);
-
-                        addGraphicsToLayer(graphicsLayer, settingsForLayer);
-                    }
+                    if(settingsForLayer.id.indexOf(window.uploadedFeatLayerIdPrefix)>-1){  	
+                    	//create the layer
+                    	createdFields = [];
+                    	
+                    	fieldsArray = window.hashFieldsAddedFeatureLayer[settingsForLayer.id].split(";");
+                    	for (index = 0, len = fieldsArray.length; index < len; ++index) {
+                    		var newField = {};
+                    		singleFieldArray = fieldsArray[index].split(":");
+                    		if ((singleFieldArray[0].toUpperCase() == "FID")) {
+                    			
+	                     		newField["name"] = singleFieldArray[0];
+	                    		newField["alias"] = singleFieldArray[0];
+	                    		newField["type"] = "esriFieldTypeOID";
+	                    		createdFields.push(newField);                   			
+                    		} else if ((singleFieldArray[0].toUpperCase() == "OBJECTID")) {
+                    			
+	                     		newField["name"] = singleFieldArray[0];
+	                    		newField["alias"] = singleFieldArray[0];
+	                    		newField["type"] = "esriFieldTypeOID";
+	                    		createdFields.push(newField);                   			
+                    		} else {
+                    			
+	                     		newField["name"] = singleFieldArray[0];
+	                    		newField["alias"] = singleFieldArray[0];
+	                    		newField["type"] = singleFieldArray[1];
+	                    		createdFields.push(newField);                   			
+                    		}                   		
+                    	}
+						
+						//-----------------------------
+			         var jsonFS = {
+				          "geometryType": hashGeometryTypeAddedFeatLyr[settingsForLayer.id],
+				          "spatialReference": {
+				              "wkid": this.map.spatialReference.wkid //102100 //WGS_1984_Web_Mercator_Auxiliary_Sphere
+				          },
+				          "fields": createdFields,
+				          "features": []
+				        };
+				        console.log(jsonFS.features);
+				        var fs = new esri.tasks.FeatureSet(jsonFS);
+				
+				        var featureCollection = {
+				          layerDefinition: {
+				            "geometryType": hashGeometryTypeAddedFeatLyr[settingsForLayer.id],
+				            "fields": createdFields
+				          },
+				          featureSet: fs
+				        };
+				
+				        var jsonfl = new esri.layers.FeatureLayer(featureCollection, {
+				          mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
+				          'id': settingsForLayer.id,
+				          'title': settingsForLayer.id.replace(window.uploadedFeatLayerIdPrefix, "")
+				        });
+				        addGraphicsToLayer(jsonfl, settingsForLayer);
+				        this.map.addLayer(jsonfl);
+	            	}
+                    
                 }, this);
 
                 console.log("SaveSession :: setGraphicsOnCurrentMap :: graphics added to the map");
@@ -950,7 +1054,6 @@ define(['dojo/_base/declare',
 
             setToggleButtonTopics: function (settings) {
             	for (index = 0, len = settings.length; index < len; ++index) {
-            		//document.getElementById(window.chkTopicPrefix + settings[index]).click();
             		var checkbox = document.getElementById(window.chkTopicPrefix + settings[index]);			
 			        if(checkbox.checked == true){
 			        	checkbox.click();
@@ -962,6 +1065,7 @@ define(['dojo/_base/declare',
             setChkLayerInSearchFilter: function (sessionToLoad) {
             	settings =  sessionToLoad.chkLayerInSearchFilter;
             	layersInfo = sessionToLoad.layers;
+            	
             	for (index = 0, len = settings.length; index < len; ++index) {
             		bIsDynamicLayer = false;
             		layerType = "";
@@ -970,29 +1074,25 @@ define(['dojo/_base/declare',
 	                   		eaId = layerSettings.id.replace(window.layerIdPrefix, "");
 	                   		if (eaId == settings[index]) {
 	                   			layerType = layerSettings.type;
-	                  		}                     	
+	                  		}                     		                    	
 	                    }             		
 	            	})
             		chkbox = document.getElementById(window.chkSelectableLayer + settings[index]);
             		if (chkbox != null) {
             					
 				        if(chkbox.checked == true){
-				        	chkbox.click();
-				        	
+				        	chkbox.click();				        	
 		            	}
             			chkbox.click();
             			if ( layerType != "ArcGISDynamicMapServiceLayer"){
-            				chkbox.click();
-            				chkbox.click();
-            			}
-			
+	            			chkbox.click();
+	            			chkbox.click();
+            			}			
             		}
             	}
-            	//document.getElementById('butAddAllLayers').click();
             },
             setToggleButtonPBSTopics: function (settings) {
             	for (index = 0, len = settings.length; index < len; ++index) {
-            		//document.getElementById(window.chkTopicPrefix + settings[index]).click();
             		var checkbox = document.getElementById(window.chkTopicPBSPrefix + settings[index]);			
 			        if(checkbox.checked == true){
 			        	checkbox.click();
@@ -1007,8 +1107,7 @@ define(['dojo/_base/declare',
             		if (chkbox != null) {
             					
 				        if(chkbox.checked == true){
-				        	chkbox.click();
-				        	
+				        	chkbox.click();				        	
 		            	}
             			chkbox.click();
             			chkbox.click();
