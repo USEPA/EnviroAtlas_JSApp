@@ -15,6 +15,10 @@
   height: 100%;
 }
 
+.jimu-widget-header .logo{
+  max-height: 40px;
+}
+
 .jimu-widget-header .jimu-title{
   text-align: center;
   height: 100%;
@@ -31,14 +35,26 @@
 .jimu-widget-header .links .link{
   margin-left: 12px;
   height: 100%;
+  color: #d9dde0;
   display: inline-block;
-  color: #f4f4f4;
   text-decoration: none;
 }
 .jimu-rtl .jimu-widget-header .links .link{
   margin-left: auto;
   margin-right: 12px;
 }
+.jimu-widget-header .links .link:link,
+.jimu-widget-header .links .link:visited,
+{
+  color: rgba(255, 255, 255, 0.7);
+}
+.jimu-widget-header .links .link:hover{
+  color: #FFFFFF;
+}
+.jimu-widget-header .links .link:active{
+  color: rgba(255, 255, 255, 0.9);
+}
+
 .jimu-widget-header .signin-section .link{
   color: #d9dde0;
 }
@@ -102,17 +118,4 @@
 }
 .popup-links .link-section.signin a{
   color: #d9dde0;
-}
-
-.subtitle {
-  position: absolute;
-  bottom: 7px;
-  font-size: 16px;
-  color: #d8d8d8;
-  letter-spacing: .5px;
-
-}
-
-.logo {
-  padding-top: 3px;
 }

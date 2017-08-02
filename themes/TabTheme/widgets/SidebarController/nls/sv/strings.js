@@ -1,7 +1,5 @@
-﻿define(
-   ({
-    _widgetLabel: "Sidopanelskontroll",
-    more: "fler",
-    otherPanels: "Övriga paneler"
-  })
-);
+define({
+  "_widgetLabel": "Sidopanelskontroll",
+  "more": "fler",
+  "otherPanels": "Andra paneler"
+});

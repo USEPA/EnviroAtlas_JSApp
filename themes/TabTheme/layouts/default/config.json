@@ -9,47 +9,54 @@
         "height": 44,
         "relativeTo": "browser"
       },
-      "version": "1.3"
+      "version": "2.5"
     }, {
-       "uri": "widgets/LocalLayer/Widget",
-       "visible": false
+      "uri": "themes/TabTheme/widgets/Footer/Widget",
+      "position": {
+        "left": 0,
+        "right": 0,
+        "bottom": 0,
+        "height": 24,
+        "relativeTo": "browser"
+      },
+      "version": "2.5"
     }, {
       "uri": "themes/TabTheme/widgets/SidebarController/Widget",
       "position": {
         "left": 0,
         "top": 44,
-        "bottom": 0,
+        "bottom": 24,
         "relativeTo": "browser"
       },
-      "version": "1.3"
+      "version": "2.5"
     }, {
       "uri": "widgets/HomeButton/Widget",
       "position": {
         "left": 7,
         "top": 75
       },
-      "version": "1.3"
+      "version": "2.5"
     }, {
       "uri": "widgets/Scalebar/Widget",
       "position": {
         "left": 10,
-        "bottom": 10
+        "bottom": 25
       },
-      "version": "1.3"
+      "version": "2.5"
     }, {
       "uri": "widgets/Search/Widget",
       "position": {
         "left": 45,
         "top": 5
       },
-      "version": "1.3"
+      "version": "2.5"
     }, {
       "uri": "widgets/Coordinate/Widget",
       "position": {
-        "left": 160,
+        "left": 10,
         "bottom": 5
       },
-      "version": "1.3"
+      "version": "2.5"
     }, {
       "position": {
         "left": 45,
@@ -77,7 +84,7 @@
         "right": 0,
         "bottom": 0
       },
-      "version": "1.3"
+      "version": "2.5"
     }, {
       "uri": "widgets/MyLocation/Widget",
       "inPanel": false,
@@ -85,37 +92,21 @@
         "left": 7,
         "top": 110
       },
-      "version": "1.3"
+      "version": "2.5"
     }, {
       "uri": "widgets/AttributeTable/Widget",
       "position": {
         "bottom": 24,
         "relativeTo": "browser"
       },
-      "version": "1.3"
+      "version": "2.5"
     }, {
       "uri": "widgets/Splash/Widget",
       "visible": false,
       "position": {
         "relativeTo": "browser"
       },
-      "version": "1.3"
-    }, {
-      "uri": "widgets/TimeSlider/Widget",
-      "visible": false,
-      "position": {
-        "bottom": 55,
-        "left": 7
-      },
-      "version": "1.3"
-    }, {
-      "uri": "widgets/Swipe/Widget",
-      "visible": false,
-      "position": {
-        "top": 145,
-        "left": 7
-      },
-      "version": "1.3"
+      "version": "2.5"
     }, {
       "uri": "widgets/ZoomSlider/Widget",
       "visible": true,
@@ -123,7 +114,23 @@
         "top": 5,
         "left": 7
       },
-      "version": "1.3"
+      "version": "2.5"
+    }, {
+      "uri": "widgets/ExtentNavigate/Widget",
+      "visible": false,
+      "position":{
+        "top": 149,
+        "left": 7
+      },
+      "version": "2.5"
+    }, {
+      "uri": "widgets/FullScreen/Widget",
+      "visible": false,
+      "position": {
+        "right": 8,
+        "top": 8
+      },
+      "version": "2.5"
     }]
   },
 
@@ -133,7 +140,7 @@
       "position": {
         "top": 44,
         "left": 0,
-        "bottom": 0,
+        "bottom": 22,
         "relativeTo": "browser"
       }
     }
@@ -142,7 +149,7 @@
     "position": {
       "top": 44,
       "right": 0,
-      "bottom": 0,
+      "bottom": 24,
       "left": 55
     }
   },
@@ -158,12 +165,33 @@
             "relativeTo": "browser"
           }
         },
+        "themes/TabTheme/widgets/Footer/Widget": {
+          "position": {
+            "left": 0,
+            "width": 0,
+            "bottom": 0,
+            "height": 0,
+            "relativeTo": "browser"
+          }
+        },
         "themes/TabTheme/widgets/SidebarController/Widget": {
           "position": {
             "left": 0,
             "top": 44,
             "bottom": 0,
             "relativeTo": "browser"
+          }
+        },
+        "widgets/Scalebar/Widget": {
+          "position": {
+            "left": 10,
+            "bottom": 40
+          }
+        },
+        "widgets/Coordinate/Widget": {
+          "position": {
+            "left": 10,
+            "bottom": 20
           }
         },
         "widgets/AttributeTable/Widget": {

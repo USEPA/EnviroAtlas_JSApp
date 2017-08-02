@@ -1,10 +1,8 @@
-﻿define(
-   ({
-    _widgetLabel: "Rubrik",
-    signin: "Logga in",
-    signout: "Logga ut",
-    about: "Om",
-    signInTo: "Logga in på",
-    cantSignOutTip: "Denna funktion är inte tillgänglig i förhandsgranskningsläge."
-  })
-);
+define({
+  "_widgetLabel": "Rubrik",
+  "signin": "Nästan klar",
+  "signout": "kvarvarande",
+  "about": "Om",
+  "signInTo": "Logga in på",
+  "cantSignOutTip": "Denna funktion är inte tillgänglig i förhandsgranskningsläge."
+});
