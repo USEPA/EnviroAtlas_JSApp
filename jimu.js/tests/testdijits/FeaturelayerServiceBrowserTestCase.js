@@ -1,8 +1,7 @@
 ﻿require([
-    'doh/main', 'dojo/_base/html', 'dojo/_base/array', 'dojo/json', 'dojo/on', 'dojo/Deferred',
-    'jimu/dijit/FeaturelayerServiceBrowser'
+    'doh/main', 'dojo/_base/html', 'dojo/_base/array', 'jimu/dijit/FeaturelayerServiceBrowser'
   ],
-  function(doh, html, array, dojoJSON, on, Deferred, FeaturelayerServiceBrowser) {
+  function(doh, html, array, FeaturelayerServiceBrowser) {
     if (window.currentDijit) {
       window.currentDijit.destroy();
     }
@@ -123,6 +122,7 @@
           });
           var allCount = allItems.length;
           var item = allItems[0];
+
           if (allCount === 1 && item.name === 'Campus' && item.url === url && item.type === 'group') {
             def.resolve();
           } else {
@@ -149,6 +149,7 @@
           var items = flsb.getSelectedItems();
           var item = items[0];
           var valid = item.name === 'FacilitySitePoint_140' && item.url === url;
+
           if (valid) {
             def.resolve();
           } else {

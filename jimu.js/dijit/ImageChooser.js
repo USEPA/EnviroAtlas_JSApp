@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 Esri. All Rights Reserved.
+// Copyright © 2014 - 2016 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,9 @@
 // limitations under the License.
 ///////////////////////////////////////////////////////////////////////////
 
-define(['dojo/_base/declare',
+define([
+    'dojo/Evented',
+    'dojo/_base/declare',
     'dijit/_WidgetBase',
     'dijit/_TemplatedMixin',
     'dojo/_base/lang',
@@ -26,46 +28,19 @@ define(['dojo/_base/declare',
     'esri/lang',
     '../utils',
     './_CropImage',
-    'jimu/tokenUtils',
     'jimu/dijit/Popup',
     'jimu/dijit/Message',
     'jimu/dijit/LoadingShelter'
   ],
-  function(declare, _WidgetBase, _TemplatedMixin, lang, html,
+  function(Evented, declare, _WidgetBase, _TemplatedMixin, lang, html,
     on, template, has, request, esriLang, utils, _CropImage,
-    tokenUtils, Popup, Message, LoadingShelter) {
-    /*global testLoad*/
-    var fileAPIJsStatus = 'unload'; // unload, loading, loaded
+    Popup, Message, LoadingShelter) {
     var count = 0;
 
-    function _loadFileAPIJs(prePath, cb) {
-      prePath = prePath || "";
-      var loaded = 0,
-        completeCb = function() {
-          loaded++;
-          if (loaded === tests.length) {
-            cb();
-          }
-        },
-        tests = [{
-          test: window.File && window.FileReader && window.FileList && window.Blob ||
-            !utils.file.isEnabledFlash(),
-          failure: [
-            prePath + "libs/polyfills/fileAPI/FileAPI.js"
-          ],
-          callback: function() {
-            completeCb();
-          }
-        }];
-
-      for (var i = 0; i < tests.length; i++) {
-        testLoad(tests[i]);
-      }
-    }
     //summary:
     //  popup the image file chooser dialog, when choose an image file,
     //  display the image file and return the image's base64 code
-    var ic = declare([_WidgetBase, _TemplatedMixin], {
+    var ic = declare([_WidgetBase, _TemplatedMixin, Evented], {
       templateString: template,
       declaredClass: "jimu.dijit.ImageChooser",
 
@@ -78,6 +53,7 @@ define(['dojo/_base/declare',
       showTip: true,
       goldenWidth: 400,
       goldenHeight: 400,
+      maxSize: 1024,
       format: null, // array:['image/png','image/gif','image/jpeg']
 
       // public methods
@@ -97,24 +73,9 @@ define(['dojo/_base/declare',
       postCreate: function() {
         this._initial();
         if (!utils.file.supportHTML5() && !has('safari') && utils.file.isEnabledFlash()) {
-          if (fileAPIJsStatus === 'unload') {
-            var prePath = tokenUtils.isInBuilderWindow() ? 'stemapp/' : "";
-            window.FileAPI = {
-              debug: false,
-              flash: true,
-              staticPath: prePath + 'libs/polyfills/fileAPI/',
-              flashUrl: prePath + 'libs/polyfills/fileAPI/FileAPI.flash.swf',
-              flashImageUrl: prePath + 'libs/polyfills/fileAPI/FileAPI.flash.image.swf'
-            };
-
-            _loadFileAPIJs(prePath, lang.hitch(this, function() {
-              html.setStyle(this.mask, 'zIndex', 1); // prevent mask hide file input
-              fileAPIJsStatus = 'loaded';
-            }));
-            fileAPIJsStatus = 'loading';
-          } else {
+          utils.file.loadFileAPI().then(lang.hitch(this, function() {
             html.setStyle(this.mask, 'zIndex', 1); // prevent mask hide file input
-          }
+          }));
         }
       },
 
@@ -157,6 +118,8 @@ define(['dojo/_base/declare',
       },
 
       _processProperties: function() {
+        this.fileProperty = {};
+
         if (this.label && typeof this.label === 'string') {
           this.displayText.innerHTML = this.label;
           html.setStyle(this.hintText, 'display', 'block');
@@ -180,7 +143,7 @@ define(['dojo/_base/declare',
           html.setAttr(this.fileInput, 'accept', accept);
         }
 
-        if (has('ie') <= 9) {
+        if (!utils.file.supportHTML5() && !has('safari') && utils.file.isEnabledFlash()) {
           html.setStyle(this.fileInput, {
             'width': '100%',
             'height': '100%',
@@ -271,7 +234,7 @@ define(['dojo/_base/declare',
           return;
         }
 
-        var maxSize = has('ie') < 9 ? 23552 : 1048576; //ie8:21k others:1M
+        var maxSize = has('ie') < 9 ? 23552 : this.maxSize * 1024; //ie8:21k others:1M
         utils.file.readFile(
           evt,
           'image/*',
@@ -287,6 +250,7 @@ define(['dojo/_base/declare',
                 'message': message
               });
             } else {
+              this.fileProperty.fileName = fileName;
               if (window.isXT && this.cropImage && file.type !== 'image/gif') {
                 this._cropImageByUser(fileData);
               } else {
@@ -323,7 +287,7 @@ define(['dojo/_base/declare',
       },
 
       _readFileData: function(fileData) {
-        this.onImageChange(fileData);
+        this.onImageChange(fileData, this.fileProperty);
         if (this.displayImg) {
           html.setAttr(this.displayImg, 'src', fileData);
         }
@@ -332,6 +296,12 @@ define(['dojo/_base/declare',
             html.setAttr(this.selfImg, 'src', fileData);
           } else {
             this.selfImg.src = fileData;
+          }
+          //Center&Vertically
+          var layoutBox = html.getMarginBox(this.hintImage);
+          if (layoutBox && layoutBox.w && layoutBox.h) {
+            html.style(this.selfImg, "maxWidth", layoutBox.w + "px");
+            html.style(this.selfImg, "maxHeight", layoutBox.h + "px");
           }
         }
       },
@@ -348,7 +318,7 @@ define(['dojo/_base/declare',
           hidden: true
         });
         var cropPopup = new Popup({
-          titleLabel: 'Crop Image',
+          titleLabel: this.nls.cropImage,
           content: cropImage,
           // autoHeight: true,
           width: 500,
@@ -400,6 +370,8 @@ define(['dojo/_base/declare',
 
       onImageChange: function(fileData) {
         this.imageData = fileData;
+        this.emit("imageChange", this.imageData, this.fileProperty);
+        this.emit("change", this.imageData, this.fileProperty);
       }
     });
 

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 Esri. All Rights Reserved.
+// Copyright © 2014 - 2016 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ function(declare, lang, array, html, on, _WidgetBase, utils) {
         src: this.widgetConfig.icon
       }, this.domNode);
       html.setAttr(this.domNode, 'title', this.widgetConfig.label);
+      html.setAttr(this.domNode, 'data-widget-name', this.widgetConfig.name);
       this.own(on(this.domNode, 'click', lang.hitch(this, function(){
         this.onClick();
       })));
@@ -104,7 +105,7 @@ function(declare, lang, array, html, on, _WidgetBase, utils) {
     switchToOpen: function(){
       this.state = 'opened';
 
-      //this.panelManager.closeAllPanelsInGroup(this.widgetConfig.gid);
+      this.panelManager.closeAllPanelsInGroup(this.widgetConfig.gid);
       array.forEach(this.widgetManager.getOnScreenOffPanelWidgets(), function(widget){
         if(widget.closeable){
           this.widgetManager.closeWidget(widget);

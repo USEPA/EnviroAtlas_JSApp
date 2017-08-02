@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 Esri. All Rights Reserved.
+// Copyright © 2014 - 2016 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -117,10 +117,11 @@ function(lang, array, Deferred, jimuUtils, ServiceBrowserRule) {
   mo._getFeaturelayerServiceBrowserRule = function(types, shouldSupportQuery){
     var rule = new ServiceBrowserRule({
       types: types,
-      leafTypes: ['Feature Layer'],
+      leafTypes: ['Feature Layer', 'Table'],
       serviceTypes: ['MapServer', 'FeatureServer'],
       _groupLayerType: 'Group Layer',
       _featureLayerType: 'Feature Layer',
+      _tableType: 'Table',
 
       //override
       getItem: function(url){
@@ -174,6 +175,8 @@ function(lang, array, Deferred, jimuUtils, ServiceBrowserRule) {
           } else if (geoType === 'polygon') {
             imageName = 'polygon_layer1.png';
           }
+        } else if(item.type === this._tableType){
+          imageName = "table.png";
         } else if (item.type === 'root') {
           if (this._currentUrl) {
             var isMapFeatureServer = array.some(this.serviceTypes,
@@ -241,9 +244,17 @@ function(lang, array, Deferred, jimuUtils, ServiceBrowserRule) {
             url: layerUrl,
             definition: layerDefinition
           };
-        } else if (type === this._featureLayerType) {
+        } else if (type === this._featureLayerType || type === this._tableType) {
           //check geometry type
-          var isPassGeoTypeCheck = this._validateEsriGeometryType(layerDefinition.geometryType);
+          var isPassGeoTypeCheck = false;
+
+          if(type === this._featureLayerType){
+            //it is a feature layer
+            isPassGeoTypeCheck = this._validateEsriGeometryType(layerDefinition.geometryType);
+          }else if(type === this._tableType){
+            //it is a table and let the table pass the geometryType check
+            isPassGeoTypeCheck = true;
+          }
 
           if(isPassGeoTypeCheck){
             var isPassQueryCheck = false;

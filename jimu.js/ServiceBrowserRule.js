@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 Esri. All Rights Reserved.
+// Copyright © 2014 - 2016 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,9 +20,10 @@ define([
   'dojo/_base/array',
   'dojo/Deferred',
   'jimu/utils',
-  'esri/request'
+  'esri/request',
+  'esri/IdentityManager'
 ],
-function(declare, lang, array, Deferred, jimuUtils, esriRequest) {
+function(declare, lang, array, Deferred, jimuUtils, esriRequest, IdentityManager) {
 
   //properties required:
   //leafTypes
@@ -123,6 +124,10 @@ function(declare, lang, array, Deferred, jimuUtils, esriRequest) {
           callbackParamName: "callback",
           timeout: 20000
         };
+        var credential = IdentityManager.findCredential(url);
+        if(credential && credential.token){
+          args.content.token = credential.token;
+        }
         esriRequest(args).then(lang.hitch(this, function(response) {
           this._restInfoCache[url] = response;
           def.resolve(response);
