@@ -39,6 +39,8 @@ define(['dojo/_base/declare',
         'esri/symbols/SimpleFillSymbol',
         'esri/symbols/SimpleLineSymbol',        
         'esri/Color',
+        'esri/renderers/SimpleRenderer',
+        'esri/InfoTemplate',
         'esri/layers/ArcGISDynamicMapServiceLayer',
         'esri/layers/ArcGISTiledMapServiceLayer',
         'jimu/ConfigManager',
@@ -73,6 +75,8 @@ define(['dojo/_base/declare',
         SimpleFillSymbol,
         SimpleLineSymbol,
         Color,
+        SimpleRenderer,
+        InfoTemplate,
         ArcGISDynamicMapServiceLayer,
         ArcGISTiledMapServiceLayer,
         ConfigManager,
@@ -607,9 +611,11 @@ define(['dojo/_base/declare',
                 this.initLayersFields(sessionToLoad.layers);
                 this.setSelectedCommunity(sessionToLoad);
                 this.initGeometryTypeAddedFeatLyr(sessionToLoad.layers);
-                this.setGraphicsOnCurrentMap(sessionToLoad.graphics);
                 this.initLayersRenderer(sessionToLoad.layers);
                 this.initVisibleLayersForDynamic(sessionToLoad.layers);
+                this.initInfoTemplateForUploadedFile(sessionToLoad.layers);
+                this.setGraphicsOnCurrentMap(sessionToLoad.graphics);
+
                 
                 if (sessionToLoad.toggleButtonTopics) {
                 	this.setToggleButtonTopics(sessionToLoad.toggleButtonTopics);
@@ -710,6 +716,12 @@ define(['dojo/_base/declare',
 
                 }, this);
             },
+            initInfoTemplateForUploadedFile: function (settings) {
+                array.forEach(settings, function (layerSettings) {
+  					window.hashInfoTemplate[layerSettings.id] = layerSettings.infoTemplateJson;
+
+                }, this);
+            },            
             /**
              * returns the session object for the current map
              * @returns {Object} map settings for session
@@ -728,6 +740,7 @@ define(['dojo/_base/declare',
                     chkLayerInPBS: [],
                     chkLayerInBoundary: [],                   
                     graphics: []
+                    
                 };
 
                 settings.extent = this.map.extent;
@@ -806,12 +819,14 @@ define(['dojo/_base/declare',
                     geometryType: null,
                     options: null,
                     renderer: null,
+                    infoTemplateJson: []
                 };
 
                 layerSettings.type = this.getLayerType(layer);
                 layerSettings.renderer = window.hashRenderer[layer.id.replace(window.layerIdPrefix, "")];
                 layerSettings.fields = this.getFieldssForFeatureLayer(layer);
                 layerSettings.geometryType = this.getGeometryTypeForFeatureLayer(layer);
+                layerSettings.infoTemplateJson = this.getinfoTemplateForUploadedFile(layer);
                 
                 console.log('SaveSession :: getSettingsForCurrentMap :: settings ', layerSettings, ' added for layer = ', layer.id);
                 return layerSettings;
@@ -828,7 +843,11 @@ define(['dojo/_base/declare',
                 console.log('SaveSession :: getGeometryTypeForFeatureLayer :: geometryType =  ', geometryType, ' for layer = ', layer.id);
                 return geometryType;
             },    
-
+            getinfoTemplateForUploadedFile: function (layer) {
+            	var infoTemplateJson = hashInfoTemplate[layer.id];
+                console.log('SaveSession :: getinfoTemplateForUploadedFile :: infoTemplateJson =  ', infoTemplateJson, ' for layer = ', layer.id);
+                return infoTemplateJson;
+            },
             /**
              * return all the settings for the Community user selected
              */
@@ -947,14 +966,14 @@ define(['dojo/_base/declare',
                     id: graphicLayer.id,
                     graphics: []
                 };
-                symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
-                    new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
-                        new Color([0, 112, 0]), 1), new Color([0, 0, 136, 0.25]));
+                //symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+                //    new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                //        new Color([0, 112, 0]), 1), new Color([0, 0, 136, 0.25]));
                 
                 // set the graphics from the layer
                 if (graphicLayer.id.indexOf(window.uploadedFeatLayerIdPrefix)>-1){
 	                array.forEach(graphicLayer.graphics, function (g) {
-	                	g.setSymbol(symbol);	
+	                	//g.setSymbol(symbol);	
 	                    settings.graphics.push(g.toJson());
 	                }, this);
 				}
@@ -992,7 +1011,6 @@ define(['dojo/_base/declare',
                     if(settingsForLayer.id.indexOf(window.uploadedFeatLayerIdPrefix)>-1){  	
                     	//create the layer
                     	createdFields = [];
-                    	
                     	fieldsArray = window.hashFieldsAddedFeatureLayer[settingsForLayer.id].split(";");
                     	for (index = 0, len = fieldsArray.length; index < len; ++index) {
                     		var newField = {};
@@ -1003,7 +1021,7 @@ define(['dojo/_base/declare',
 	                    		newField["alias"] = singleFieldArray[0];
 	                    		newField["type"] = "esriFieldTypeOID";
 	                    		createdFields.push(newField);                   			
-                    		} else if ((singleFieldArray[0].toUpperCase() == "OBJECTID")) {
+                    		} else if (singleFieldArray[0].toUpperCase().indexOf("OBJECTID")) {
                     			
 	                     		newField["name"] = singleFieldArray[0];
 	                    		newField["alias"] = singleFieldArray[0];
@@ -1019,7 +1037,7 @@ define(['dojo/_base/declare',
                     	}
 						
 						//-----------------------------
-			         var jsonFS = {
+			         	var jsonFS = {
 				          "geometryType": hashGeometryTypeAddedFeatLyr[settingsForLayer.id],
 				          "spatialReference": {
 				              "wkid": this.map.spatialReference.wkid //102100 //WGS_1984_Web_Mercator_Auxiliary_Sphere
@@ -1029,20 +1047,54 @@ define(['dojo/_base/declare',
 				        };
 				        console.log(jsonFS.features);
 				        var fs = new esri.tasks.FeatureSet(jsonFS);
-				
 				        var featureCollection = {
 				          layerDefinition: {
 				            "geometryType": hashGeometryTypeAddedFeatLyr[settingsForLayer.id],
-				            "fields": createdFields
+				            "fields": createdFields,
 				          },
+
 				          featureSet: fs
 				        };
-				
-				        var jsonfl = new esri.layers.FeatureLayer(featureCollection, {
-				          mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
-				          'id': settingsForLayer.id,
-				          'title': settingsForLayer.id.replace(window.uploadedFeatLayerIdPrefix, "")
-				        });
+				        
+				        //set drawingInfo.renderer for uploaded CSV file whose GeometryType is esriGeometryPoint and fields includes "__OBJECTID"		        
+				        if ((hashGeometryTypeAddedFeatLyr[settingsForLayer.id] == "esriGeometryPoint") && (hashFieldsAddedFeatureLayer[settingsForLayer.id].indexOf("__OBJECTID")>=0)) {
+				        	featureCollection.layerDefinition.drawingInfo ={
+		                        "renderer": {
+		                            "type": "simple",
+		                            "symbol": {
+		                                "type": "esriPMS",
+		                                "url": "http://static.arcgis.com/images/Symbols/Basic/RedSphere.png",
+		                                "imageData": "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",
+		                                "contentType": "image/png",
+		                                "width": 15,
+		                                "height": 15
+		                            }
+		                        }
+		                   };
+				        } 				
+
+						if (window.hashInfoTemplate[settingsForLayer.id] == null) {
+					        var jsonfl = new esri.layers.FeatureLayer(featureCollection, {
+					          mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
+					          'id': settingsForLayer.id,
+					          'title': settingsForLayer.id.replace(window.uploadedFeatLayerIdPrefix, "")
+					        });
+				        } else {
+				        	var infoTemplate = new InfoTemplate(window.hashInfoTemplate[settingsForLayer.id]);
+					        var jsonfl = new esri.layers.FeatureLayer(featureCollection, {
+					          mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
+					          'id': settingsForLayer.id,
+					          'title': settingsForLayer.id.replace(window.uploadedFeatLayerIdPrefix, ""),
+					          infoTemplate: infoTemplate,					          
+					        });				        	
+				        }
+				        
+				        /*if (window.hashRenderer[settingsForLayer.id] != null) {
+				        	alert("render in not null:" + window.hashRenderer[settingsForLayer.id]);
+                        	var rendererJson = window.hashRenderer[settingsForLayer.id];
+		                	jsonfl.setRenderer(new SimpleRenderer(rendererJson));				        	
+				        }*/
+				        
 				        addGraphicsToLayer(jsonfl, settingsForLayer);
 				        this.map.addLayer(jsonfl);
 	            	}
@@ -1056,8 +1108,7 @@ define(['dojo/_base/declare',
             	for (index = 0, len = settings.length; index < len; ++index) {
             		var checkbox = document.getElementById(window.chkTopicPrefix + settings[index]);			
 			        if(checkbox.checked == true){
-			        	checkbox.click();
-			        	
+			        	checkbox.click();			        	
 	            	}
 					checkbox.click();
 	            }
