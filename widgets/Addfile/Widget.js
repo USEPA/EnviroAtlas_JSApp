@@ -241,6 +241,7 @@ define([
                 }
                 if (symbol) {
                     layer.setRenderer(new SimpleRenderer(symbol));
+                    window.hashRenderer[layer.id] = symbol;
                 }
             },
 
@@ -308,9 +309,10 @@ define([
                 csvStore.fetch({
                     onComplete: function (items) {
                         var objectId = 0;
-                        var featureCollection = fileUpload.generateFeatureCollectionTemplateCSV(csvStore, items);
+                        var featureCollection = fileUpload.generateFeatureCollectionTemplateCSV(csvStore, items, window.uploadedFeatLayerIdPrefix + csvFileName);
                         var popupInfo = fileUpload.generateDefaultPopupInfo(featureCollection);
                         var infoTemplate = new InfoTemplate(fileUpload.buildInfoTemplate(popupInfo));
+                        window.hashInfoTemplate[window.uploadedFeatLayerIdPrefix + csvFileName] = fileUpload.buildInfoTemplate(popupInfo);
 
                         var latField = thisWidget.latField.value;
                         var longField = thisWidget.longField.value;
@@ -382,6 +384,7 @@ define([
                             id: window.uploadedFeatLayerIdPrefix + csvFileName,
                             name: csvFileName
                         });
+                        window.hashGeometryTypeAddedFeatLyr[uploadedFeatLayerIdPrefix + csvFileName] = "esriGeometryPoint";
                         featureLayerCSV.__popupInfo = popupInfo;
                         window.layerID_Portal_WebMap.push(window.uploadedFeatLayerIdPrefix + csvFileName);
                         fileUpload.map.addLayer(featureLayerCSV);
@@ -410,7 +413,7 @@ define([
                 });
                 return maxSeparatorValue;
             },
-            generateFeatureCollectionTemplateCSV: function(store, items){
+            generateFeatureCollectionTemplateCSV: function(store, items, CSVLayerId){
                 //create a feature collection for the input csv file
                 var featureCollection = {
                     "layerDefinition": null,
@@ -450,6 +453,7 @@ define([
                     "capabilities": "Query"
                 };
 
+                var fieldsCSV = "__OBJECTID:esriFieldTypeOID;";
                 var fields = store.getAttributes(items[0]);
                 arrayUtils.forEach(fields, function (field) {
                     var value = store.getValue(items[0], field);
@@ -462,6 +466,7 @@ define([
                             "editable": true,
                             "domain": null
                         });
+                        fieldsCSV = fieldsCSV + field + ":" + "esriFieldTypeString" + ";";
                     }
                     else {
                         featureCollection.layerDefinition.fields.push({
@@ -471,8 +476,11 @@ define([
                             "editable": true,
                             "domain": null
                         });
+                        fieldsCSV = fieldsCSV + field + ":" + "esriFieldTypeDouble" + ";";
                     }
                 });
+                fieldsCSV = fieldsCSV.substring(0, fieldsCSV.length - 1);
+                hashFieldsAddedFeatureLayer[CSVLayerId] = fieldsCSV;
                 return featureCollection;
             },
             generateDefaultPopupInfo: function(featureCollection){

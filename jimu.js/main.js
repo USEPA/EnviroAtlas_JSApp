@@ -174,6 +174,7 @@ define(["./ConfigManager",
     window.hashFieldsAddedFeatureLayer = {};
     window.hashVisibleLayersForDynamic = {};
     window.hashGeometryTypeAddedFeatLyr = {};
+    window.hashInfoTemplate = {};
 	window.hashRenderer = {};
                 
     //patch for JS API 3.10
