@@ -131,6 +131,7 @@ define(['dojo/_base/declare',
                 console.log('SaveSession :: onOpen');
 
               	this.openWidgetById('widgets_PeopleAndBuildSpaces_Widget');
+              	this.openWidgetById('widgets_BoundaryLayer_Widget');
               	//this.openWidgetById('widgets_SimpleSearchFilter_Widget_37');
               	//this.closeWidget('widgets_PeopleAndBuildSpaces_Widget');
             },
