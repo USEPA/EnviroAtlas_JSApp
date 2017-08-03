@@ -2,3 +2,7 @@ AttributeTable - need to check community filter function, and did we have some o
 Coordinate - should be COTS
 ExtentNavigate - New - need to confirm/adjust positioning
 FullScreen - New - need to confirm/adjust positioning
+
+Ticket for each widget.
+Clean up unused widgets.
+Inventory community widgets - updates?
