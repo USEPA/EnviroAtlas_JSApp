@@ -61,6 +61,7 @@ define([
     window.layerIdPBSPrefix = "eaLyrPBSNum_";
     window.layerIdTiledPrefix = "tiledNum_";
     window.addedLayerIdPrefix = "added_";
+    window.uploadedFeatLayerIdPrefix = "uploaded_";
     window.toggleOnHucNavigation = false;
     window.toggleOnRainDrop = false;
     window.toggleOnElevation = false;
@@ -181,6 +182,13 @@ define([
     window.hashURL = {};
     window.hashPopup = {};
     window.hashURL = {};
+    window.hashTopic = {};
+    window.hashTopicPBS = {};
+    window.hashFieldsAddedFeatureLayer = {};
+    window.hashVisibleLayersForDynamic = {};
+    window.hashGeometryTypeAddedFeatLyr = {};
+    window.hashInfoTemplate = {};
+	window.hashRenderer = {};
                 
     //patch for JS API 3.10
     var hasMethod = typeof cookie.getAll === 'function';

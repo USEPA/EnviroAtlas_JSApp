@@ -253,6 +253,8 @@ define([
             datatype_img.title = "Data summarized by 12 digit HUCs";
         } else if (type == 'cbg') {
             datatype_img.title = "Data summarized by census block groups";
+        } else if (type == 'ctr') {
+            datatype_img.title = "Data summarized by census tract";
         } else if (type == 'grid') {
             datatype_img.title = "Non-summarized raster data";
         } else if (type == 'plp') {
@@ -286,6 +288,7 @@ define([
                 if (layer.hasOwnProperty('eaID')) {
                     eaID = layer.eaID.toString();
                     eaTopic = layer.eaTopic;
+                    window.hashTopicPBS[eaID]  = eaTopic;
                     if (eaID.trim() != "") {
 
                         var chkboxTopicId = window.chkTopicPBSPrefix + window.topicDicPBS[layer.eaTopic];
@@ -464,7 +467,33 @@ define([
                             map.setInfoWindowOnClick(true);
 
                         } else if (layer.type.toUpperCase() === 'FEATURE') {
-
+                        	window.featureLyrNumber.push(layer.eaID);
+	                        bPopup = true;
+	                        var _popupTemplate;
+	                        if (layer.popup) {
+	                        	window.hashPopup[layer.eaID] = layer.popup;
+	                            if (layer.popup.fieldInfos) {
+	                                fieldInfos = layer.popup.fieldInfos;
+	                                if (fieldInfos[0].hasOwnProperty('fieldName')) {
+	                                    if (fieldInfos[0].fieldName == null) {
+	                                        bPopup = false;
+	                                    } else {
+	                                        Attribute = fieldInfos[0].fieldName;
+	                                        hashAttribute[layer.eaID.toString()] = Attribute;
+	                                    }
+	                                } else {
+	                                    bPopup = false;
+	                                }
+	                            } else {
+	                                bPopup = false;
+	                            }
+	                            if (bPopup) {
+	                                _popupTemplate = new PopupTemplate(layer.popup);
+	                                //lOptions.infoTemplate = _popupTemplate;
+	                            } else {
+	                                console.log("layer.eaID: " +  + layer.eaID.toString() + " with no popup info defined");
+	                            }
+	                        }
                             if (layer.hasOwnProperty('mode')) {
                                 var lmode;
                                 if (layer.mode === 'ondemand') {

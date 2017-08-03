@@ -112,6 +112,12 @@ define([
 	        var queryTask = new QueryTask(window.hashURL[eaID]);
 	        popupField = window.hashPopup[eaID].fieldInfos[0]["fieldName"];
 	        popupFieldName = window.hashPopup[eaID].fieldInfos[0]["label"];
+	        var bIsTextFormat = false;
+	        if (window.hashPopup[eaID].fieldInfos[0].hasOwnProperty('stringFieldOption')) {	        	
+	        	if (window.hashPopup[eaID].fieldInfos[0].stringFieldOption == "textbox") {
+	        		bIsTextFormat = true;
+	        	}
+	        }
 	        popupTitle = window.hashPopup[eaID].title.split(":");
 	        if (window.hashPopup[eaID].fieldInfos[0].hasOwnProperty('format')) {
 	        	if (window.hashPopup[eaID].fieldInfos[0].format.hasOwnProperty('places')) {
@@ -135,7 +141,11 @@ define([
 	                );
 					//Loop through each feature returned
 					for (var i=0, il=resultFeatures.length; i<il; i++) {
+						if (bIsTextFormat == false) {
 						var content = "<b>" + popupTitle[0] + "</b>: $" + popupTitle[1].trim() + "<hr>"+"<b>" + popupFieldName + "</b>: ${" + popupField + ":selfSimpleSearchFilter.formatValue}";	
+						} else {
+							var content = "<b>" + popupTitle[0] + "</b>: $" + popupTitle[1].trim() + "<hr>"+"<b>" + popupFieldName + "</b>: ${" + popupField + "}";	
+						}
 						var infoTemplate = new esri.InfoTemplate(popupFieldName, content);
 					    var graphic = resultFeatures[i];
 					    graphic.setSymbol(symbol);
@@ -165,6 +175,7 @@ define([
 						selfSimpleSearchFilter.map.graphics.clear();
 						featuresCollection = [];
 						arrLayersForPopup = [];
+						//alert("window.featureLyrNumber: " + window.featureLyrNumber);
 			    		for (i in window.featureLyrNumber) {  
 			    			bVisibleFL = false;
 			    			bVisibleTL = false;
@@ -172,6 +183,13 @@ define([
 				    		if (lyrFL != null) {		    			
 								if (lyrFL.visible == true){
 									bVisibleFL = true;
+								}
+							} else {
+								lyrFL = selfSimpleSearchFilter.map.getLayer(window.layerIdPBSPrefix + window.featureLyrNumber[i]);	
+								if (lyrFL != null) {
+									if (lyrFL.visible == true){
+										bVisibleFL = true;
+									}
 								}
 							}
 							lyrTL = selfSimpleSearchFilter.map.getLayer(window.layerIdTiledPrefix + window.featureLyrNumber[i]);
@@ -483,6 +501,8 @@ define([
 			datatype_img.title = "Data summarized by 12 digit HUCs";
 		} else if (type == 'cbg') {
 			datatype_img.title = "Data summarized by census block groups";
+		} else if (type == 'ctr') {
+			datatype_img.title = "Data summarized by census tract";
 		} else if (type == 'grid') {
 			datatype_img.title = "Non-summarized grid data";
 		} else if (type == 'plp') {
@@ -1257,6 +1277,8 @@ define([
 	                    }
 	                    if(layer.hasOwnProperty('eaTopic')){
 	                    	eaTopic = layer.eaTopic.toString();
+	                    	console.log("eaID:" + eaID + ", eaTopic: " + eaTopic);
+	                    	window.hashTopic[eaID]  = eaTopic;
 	                    }
 	                    else {
 	                    	eaTopic = "";

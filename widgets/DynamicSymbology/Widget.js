@@ -272,6 +272,9 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 				sliderValueChange.forEach(function(b){
 					renderer.addBreak(b);
 				});
+				renderStr = JSON.stringify(renderer.toJson());
+				console.log(renderStr);
+				window.hashRenderer[_layerID.replace(window.layerIdPrefix, "")] = renderer.toJson();
 				 //change classification dropdown to manual
 				 dynamicSymbology.classSelect.set('value', 'manual');
 
@@ -289,6 +292,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 			  if(lyrTiled){
 					  if (lyrTobeUpdated.visible == true) {
 				       		lyrTiled.setVisibility(true);
+				       		window.hashRenderer[_layerID.replace(window.layerIdPrefix, "")] = null;
 			      	  }       	
 			  }
 
@@ -448,6 +452,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
         }
 		
         geoenrichedFeatureLayer.setRenderer(smartRenderer.renderer);
+        window.hashRenderer[geoenrichedFeatureLayer.id.replace(window.layerIdPrefix, "")] = smartRenderer.renderer.toJson();
         geoenrichedFeatureLayer.redraw();
         //console.log("apply renderer :: ", geoenrichedFeatureLayer.renderer);
 
