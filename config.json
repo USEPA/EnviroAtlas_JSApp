@@ -2,7 +2,7 @@
     "theme": {
         "name": "TabTheme",
         "styles": ["EnviroAtlas", "simpleblue", "blue", "default", "cyan", "purple", "red", "yellow", "green"],
-        "version": "1.3"
+        "version": "2.5"
     },
     "portalUrl": "http://epa.maps.arcgis.com",
     "appId": "",
