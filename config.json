@@ -499,7 +499,29 @@
                 "id": "widgets_ZoomSlider_Widget_34",
                 "name": "ZoomSlider",
                 "label": "Zoom Slider"
-            }
+            },
+              {
+                "uri": "widgets/ExtentNavigate/Widget",
+                "position": {
+                  "top": 149,
+                  "left": 7,
+                  "relativeTo": "map"
+                },
+                "version": "2.5",
+                "id": "widgets_ExtentNavigate_Widget_35",
+                "name": "ExtentNavigate"
+              },
+              {
+                "uri": "widgets/FullScreen/Widget",
+                "position": {
+                  "left": 7,
+                  "top": 210,
+                  "relativeTo": "map"
+                },
+                "version": "2.5",
+                "id": "widgets_FullScreen_Widget_36",
+                "name": "FullScreen"
+              }
         ],
         "panel": {
             "uri": "jimu/OnScreenWidgetPanel",
@@ -1028,6 +1050,24 @@
                         "left": 7
                     },
                     "version": "1.3"
+                },
+                {
+                  "uri": "widgets/ExtentNavigate/Widget",
+                  "visible": false,
+                  "position": {
+                    "top": 149,
+                    "left": 7
+                  },
+                  "version": "2.5"
+                },
+                {
+                  "uri": "widgets/FullScreen/Widget",
+                  "visible": false,
+                  "position": {
+                    "right": 8,
+                    "top": 8
+                  },
+                  "version": "2.5"
                 }
             ]
         },
