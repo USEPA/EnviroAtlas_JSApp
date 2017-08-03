@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 Esri. All Rights Reserved.
+// Copyright © 2014 - 2016 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ define(
     'jimu/BaseWidgetSetting',
     'jimu/dijit/CheckBox',
     'dojo/text!./Edit.html',
-    "jimu/SpatialReference/utils",
+    "jimu/SpatialReference/srUtils",
     'dijit/form/ValidationTextBox',
     'dijit/form/Select'
   ],
@@ -105,6 +105,11 @@ define(
     }, {
       "value": "DECIMAL_DEGREES",
       "label": "Decimal_Degrees",
+      "selected": false,
+      "disabled": false
+    }, {
+      "value": "DEGREES_DECIMAL_MINUTES",
+      "label": "Degrees_Decimal_Minutes",
       "selected": false,
       "disabled": false
     }, {
@@ -211,6 +216,12 @@ define(
           unitRate: utils.getUnitRate(utils.getCSUnit(cs.wkid), cs.outputUnit)
         };
 
+        //for hack DEGREES_DECIMAL_MINUTES
+        if(cs.outputUnit === "DEGREES_DECIMAL_MINUTES"){
+          _options.isGeographicUnit = true;
+          _options.unitRate = 1;
+        }
+
         if (_options.isGeographicUnit && _options.isProjectedCS) { // use spheroidCS unit
           _options.unitRate = 1;
         }
@@ -223,6 +234,7 @@ define(
         array.forEach(utils.getGeographicUnits(), lang.hitch(this, function(unit) {
           this.outputUnit.removeOption(unit);
         }));
+        this.outputUnit.removeOption("DEGREES_DECIMAL_MINUTES");//for hack DEGREES_DECIMAL_MINUTES
       },
 
       _removeProjUnits: function() {
