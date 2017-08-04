@@ -1,8 +1,8 @@
 AttributeTable - need to check community filter function, and did we have some other filter function?
 Coordinate - should be COTS
-ExtentNavigate - New - need to confirm/adjust positioning
-FullScreen - New - need to confirm/adjust positioning
-OverviewMap - 
+ExtentNavigate - New - need to confirm/adjust positioning in mobile
+FullScreen - New - need to confirm/adjust positioning in mobile - can we keep side widget and avoid splash on re-entry?
+OverviewMap - Updated.
 
 
 OTHER NOTES

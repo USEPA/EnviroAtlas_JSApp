@@ -503,7 +503,7 @@
               {
                 "uri": "widgets/ExtentNavigate/Widget",
                 "position": {
-                  "top": 149,
+                  "top": 147,
                   "left": 7,
                   "relativeTo": "map"
                 },
@@ -515,7 +515,7 @@
                 "uri": "widgets/FullScreen/Widget",
                 "position": {
                   "left": 7,
-                  "top": 210,
+                  "top": 212,
                   "relativeTo": "map"
                 },
                 "version": "2.5",
@@ -1055,17 +1055,8 @@
                   "uri": "widgets/ExtentNavigate/Widget",
                   "visible": false,
                   "position": {
-                    "top": 149,
+                    "top": 147,
                     "left": 7
-                  },
-                  "version": "2.5"
-                },
-                {
-                  "uri": "widgets/FullScreen/Widget",
-                  "visible": false,
-                  "position": {
-                    "right": 8,
-                    "top": 8
                   },
                   "version": "2.5"
                 }
