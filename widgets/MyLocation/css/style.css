@@ -1,7 +1,7 @@
 .jimu-widget-mylocation{
 	border-radius: 5px;
-	background-color: rgb(255,255,255);
-	background-color: rgba(255,255,255,0.3);
+	background-color: #ccc;
+	background-color: rgba(0,0,0,0.3);
 }
 
 .jimu-widget-mylocation.onCenter {
@@ -33,10 +33,17 @@
 
 .jimu-widget-mylocation .place-holder.tracking{
 	background-image: url("images/stop.png") !important;
+	background-color: #000;
+}
+.jimu-widget-mylocation .place-holder.nohttps{
+	background-image: url("images/locate_disabled.png") !important;
+}
+.jimu-widget-mylocation .nohttps:hover{
+	background-color: rgba(0,0,0,0) !important;
 }
 
 .jimu-widget-mylocation .place-holder{
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0,0,0,0);
 }
 
 .jimu-widget-mylocation.onLocate .place-holder{

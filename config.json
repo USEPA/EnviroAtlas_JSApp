@@ -61,7 +61,7 @@
                     "top": 75,
                     "relativeTo": "map"
                 },
-                "version": "1.3",
+                "version": "2.5",
                 "id": "widgets_HomeButton_Widget_21",
                 "name": "HomeButton",
                 "label": "Home Button"
@@ -181,7 +181,7 @@
                 "id": "_27",
                 "name": "Print",
                 "label": "Print",
-                "version": "1.3",
+                "version": "2.5",
                 "uri": "widgets/Print/Widget",
                 "config": "configs/Print/config_Print.json"
             }, {
@@ -440,7 +440,7 @@
                     "top": 110,
                     "relativeTo": "map"
                 },
-                "version": "1.3",
+                "version": "2.5",
                 "id": "widgets_MyLocation_Widget_29",
                 "name": "MyLocation",
                 "label": "My Location"
@@ -659,7 +659,7 @@
                         "top": 75,
                         "relativeTo": "map"
                     },
-                    "version": "1.3",
+                    "version": "2.5",
                     "id": "widgets_HomeButton_Widget_21",
                     "name": "HomeButton",
                     "label": "Home Button"
@@ -695,8 +695,8 @@
                 }, {
                     "uri": "widgets/CommunityDisplay/Widget",
                     "position": {
-                        "left": 400,
-                        "bottom": 5,
+                        "left": 45,
+                        "top": 45,
                         "relativeTo": "map"
                     },
                     "version": "1.3",
@@ -771,7 +771,7 @@
                     "id": "_27",
                     "name": "Print",
                     "label": "Print",
-                    "version": "1.3",
+                    "version": "2.5",
                     "uri": "widgets/Print/Widget",
                     "config": "configs/Print/config_Print.json"
                 },{
@@ -1011,7 +1011,7 @@
                         "left": 7,
                         "top": 110
                     },
-                    "version": "1.3"
+                    "version": "2.5"
                 }, {
                     "uri": "widgets/AttributeTable/Widget",
                     "position": {

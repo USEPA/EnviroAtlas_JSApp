@@ -1,5 +1,3 @@
-﻿define(
-   ({
-    _widgetLabel: "Botão Página Inicial"
-  })
-);
+define({
+  "_widgetLabel": "Início"
+});

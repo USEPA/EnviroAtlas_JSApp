@@ -1,5 +1,3 @@
-﻿define(
-   ({
-    _widgetLabel: "Home-knop"
-  })
-);
+define({
+  "_widgetLabel": "Home"
+});

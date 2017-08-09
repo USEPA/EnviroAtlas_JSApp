@@ -3,6 +3,8 @@
     "geolocationOptions": {
       "timeout": 15000
     },
-    "highlightLocation": true
+    "highlightLocation": true,
+    "useTracking": true,
+    "scale": 50000
   }
 }

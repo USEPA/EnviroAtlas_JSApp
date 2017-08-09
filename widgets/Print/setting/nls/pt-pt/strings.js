@@ -1,12 +1,13 @@
-﻿define(
-   ({
-    serviceURL: "URL de Serviço",
-    defaultTitle: "Título padrão",
-    defaultAuthor: "Autor Padrão",
-    defaultCopyright: "Copyright Padrão",
-    defaultFormat: "Formato Padrão",
-    defaultLayout: "Layout Padrão",
-    warning: "Entrada incorreta",
-    ok: "OK"
-  })
-);
+define({
+  "serviceURL": "URL de Serviço",
+  "defaultTitle": "Título predefinido",
+  "defaultAuthor": "Autor predefinido",
+  "defaultCopyright": "Copyright predefinido",
+  "defaultFormat": "Formato predefinido",
+  "defaultLayout": "Layout predefinido",
+  "warning": "Entrada incorreta",
+  "urlNotAvailable": "O url não se encontra disponível",
+  "notPrintTask": "O url não é uma tarefa de impressão",
+  "advancedOption": "Mostrar opções avançadas",
+  "ok": "OK"
+});
