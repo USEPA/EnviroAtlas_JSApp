@@ -24,6 +24,8 @@ define([
     _firstEmitChange: null, // dont't hide menu when first click icon
     _loadDef: null,
 
+    _obtainedLabelLayers: [],//label layer independent with main-label-layer
+
     postCreate: function() {
       this.inherited(arguments);
 
@@ -133,6 +135,16 @@ define([
     },
 
     _enableSwipe: function() {
+      if (this._obtainedLabelLayers &&
+        this._obtainedLabelLayers.length && this._obtainedLabelLayers.length > 0) {
+        this._obtainedLabelLayers = [];
+
+        var layerId = this.swipeLayers.get('value');
+        var isBasemap = !(!!layerId);
+        var layerParams = this._getLayerParams(layerId, isBasemap);
+        this.swipeDijit.set('layers', layerParams);
+      }
+
       this.swipeDijit.enable();
       this.swipeLayers.set('disabled', false);
     },
@@ -140,6 +152,10 @@ define([
     _disableSwipe: function() {
       this.swipeDijit.disable();
       this.swipeLayers.set('disabled', true);
+
+      array.forEach(this._obtainedLabelLayers, lang.hitch(this, function (labelLayer) {
+        labelLayer.restoreLabelControl();
+      }));
     },
 
     onOpen: function() {
@@ -225,7 +241,7 @@ define([
     onSwipeLayersClick: function() {
       if (!this.swipeLayers.disabled) {
         var box = html.getMarginBox(this.swipeLayers.dropDown.domNode);
-        console.log(box);
+        //console.log(box);
         // padding of swipeLayersMenu is 14, max-width of domNode is 350
         if (box.w + 14 * 2 > 350) {
           html.setStyle(this.domNode, 'maxWidth', (box.w + 28) + 'px');
@@ -243,6 +259,37 @@ define([
       }, this.layerSwipe);
       this.swipeDijit.startup();
       html.place(this.swipeDijit.domNode, this.map.root, 'before');
+      var hideInfoWindow = this._shouldHideInfoWindow(layerParams);
+      if (hideInfoWindow) {
+        this.map.infoWindow.hide();
+      }
+      this.swipeDijit.on('swipe', lang.hitch(this, function(evt) {
+        var swipeLayers = array.map(evt.layers, function(l) {
+          return l.layer;
+        });
+        var inSwipeLayers = this._shouldHideInfoWindow(swipeLayers);
+        if (inSwipeLayers) {
+          this.map.infoWindow.hide();
+        }
+      }));
+    },
+
+    _shouldHideInfoWindow: function(swipeLayers) {
+      if (!this.map.infoWindow.isShowing) {
+        return false;
+      }
+      var sf = this.map.infoWindow.getSelectedFeature();
+      var inSwipeLayers = swipeLayers && array.some(swipeLayers, function(l) {
+        var sfLayer = sf && sf.getLayer && sf.getLayer();
+        var layerInfo = this.layerInfosObj.getLayerInfoById(l.id);
+        var isSubLayer = sfLayer && layerInfo &&
+          layerInfo.traversal(function(linfo) {
+            return linfo.id === sfLayer.id;
+          });
+        return sfLayer === l || isSubLayer;
+      }, this);
+
+      return inSwipeLayers;
     },
 
     _getLayerParams: function(layerId, isBasemap) {
@@ -258,10 +305,10 @@ define([
           var layer = this.map.getLayer(_info.id);
           if (layer) {
             layerParams.push(layer);
+            this._obtainLabelControl(_info, layerParams);
           }
         }));
       }
-
       return layerParams;
     },
 
@@ -269,6 +316,8 @@ define([
       if (this.swipeDijit && this.swipeDijit.destroy) {
         this.swipeDijit.destroy();
         this.swipeDijit = null;
+
+        this._restoreAllLabelControl();
 
         this.layerSwipe = html.create('div', {}, this.swipeLayersMenu, 'after');
       }
@@ -344,6 +393,22 @@ define([
     destroy: function() {
       this.destroySwipeDijit();
       this.inherited(arguments);
+    },
+
+    //swipe label layer
+    _obtainLabelControl: function (info, layerParams) {
+      var labelLayer = info.obtainLabelControl();
+      if (labelLayer) {
+        layerParams.push(labelLayer);
+
+        this._obtainedLabelLayers.push(info);
+      }
+    },
+    _restoreAllLabelControl: function () {
+      array.forEach(this._obtainedLabelLayers, lang.hitch(this, function (labelLayer) {
+        labelLayer.restoreLabelControl();
+      }));
+      this._obtainedLabelLayers = [];
     }
   });
 });
