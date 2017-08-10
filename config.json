@@ -144,7 +144,7 @@
                     "left": 395,
                     "top": 5,
                     "width": 230,
-                    "height": 225,
+                    "height": 305,
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
@@ -198,7 +198,33 @@
                 "name": "eDraw",
                 "label": "Draw and Measure",
                 "config": "widgets/eDraw/config.json"
-            }, {
+            },{
+                "name": "Select",
+                "version": "2.5",
+                "uri": "widgets/Select/Widget",
+                "config": "configs/Select/config_Select.json",
+                "position": {
+                    "left": 655,
+                    "top": -40,
+                    "width": 380,
+                    "height": 410,
+                    "relativeTo": "map"
+                },
+                "id": "widgets_Select_Widget_39"
+              }, {
+                "name": "Share",
+                "version": "2.5",
+                "uri": "widgets/Share/Widget",
+                "position": {
+                    "left": 655,
+                    "top": -40,
+                    "width": 380,
+                    "height": 410,
+                    "relativeTo": "map"
+                },
+                "id": "widgets_Share_Widget_40",
+                "config": "configs/Share/config_Share.json"
+              }, {
                 "position": {
                     "left": 445,
                     "top": 5,
