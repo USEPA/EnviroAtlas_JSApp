@@ -40,7 +40,8 @@ define([
     'dijit/form/HorizontalRuleLabels',
     'dojo/dom-construct',
     'dojo/dom-geometry',
-    'dojo/aspect'
+    'dojo/aspect',
+    'dojo/dom'
   ],
   function(
     declare,
@@ -68,7 +69,8 @@ define([
     HorizontalRuleLabels,
     domConstruct,
     domGeom,
-    aspect) {
+    aspect,
+    dom) {
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
 
       name: 'eBasemapGallery',

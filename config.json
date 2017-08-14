@@ -311,7 +311,7 @@
                 "id": "_28",
                 "name": "Elevation Profile",
                 "label": "Elevation Profile",
-                "version": "1.3",
+                "version": "2.5",
                 "uri": "widgets/ElevationProfile/Widget",
                 "config": "widgets/ElevationProfile/config.json"
             }, {
@@ -901,7 +901,7 @@
                     "id": "_28",
                     "name": "Elevation Profile",
                     "label": "Elevation Profile",
-                    "version": "1.3",
+                    "version": "2.5",
                     "uri": "widgets/ElevationProfile/Widget",
                     "config": "widgets/ElevationProfile/config.json"
                 }, {
