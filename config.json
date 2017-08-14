@@ -193,7 +193,7 @@
                     "relativeTo": "map"
                 },
                 "uri": "widgets/eDraw/Widget",
-                "version": "1.3",
+                "version": "2.1",
                 "id": "widgets_DrawMeasure_Widget_36",
                 "name": "eDraw",
                 "label": "Draw and Measure",
@@ -809,7 +809,7 @@
                         "relativeTo": "map"
                     },
                     "uri": "widgets/eDraw/Widget",
-                    "version": "1.3",
+                    "version": "2.1",
                     "id": "widgets_DrawMeasure_Widget_36",
                     "name": "eDraw",
                     "label": "Draw and Measure",
