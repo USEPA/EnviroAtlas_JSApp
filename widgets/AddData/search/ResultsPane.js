@@ -22,7 +22,7 @@ define(["dojo/_base/declare",
     "./util"
   ],
   function(declare, array, SearchComponent, template, i18n, ItemCard, util) {
-
+	var addedItems = [];
     return declare([SearchComponent], {
 
       i18n: i18n,
@@ -34,6 +34,12 @@ define(["dojo/_base/declare",
 
       addItem: function(itemCard) {
         itemCard.placeAt(this.itemsNode);
+        var indexTobeAdded = window.onlineDataTobeAdded.indexOf(itemCard.item.id);
+        var indexAlreadyAdded = window.onlineDataAlreadyAdded.indexOf(itemCard.item.id);
+        if ((indexTobeAdded >=0 ) && ( indexAlreadyAdded <0 )){
+        	window.onlineDataAlreadyAdded.push(itemCard.item.id);
+        	itemCard.addButton.click();
+        }
       },
 
       destroyItems: function() {

@@ -3,7 +3,7 @@
     <label for="${id}_select">${i18n.addFromUrl.type}</label>
   </div>
   <div class="small-gap">
-    <select id="${id}_select"
+    <select id="urlTypeSelect"
       data-dojo-type="dijit/form/Select" data-dojo-attach-point="typeSelect">
       <option value="ArcGIS" selected="selected">${i18n.addFromUrl.types.ArcGIS}</option>
       <option value="WMS">${i18n.addFromUrl.types.WMS}</option>
@@ -18,8 +18,8 @@
     <label for="${id}_url" >${i18n.addFromUrl.url}</label>
   </div>
   <div  class="small-gap">
-    <input id="${id}_url" type="text" class="url-textbox jimu-input"
-      data-dojo-attach-point="urlTextBox" data-dojo-attach-event="oninput: _findServiceName"  >
+    <input  type="text" class="url-textbox jimu-input"
+      data-dojo-attach-point="urlTextBox" id="urlTextInput" data-dojo-attach-event="oninput: _findServiceName"  >
   </div>
   <div data-dojo-attach-point="lNameFrame" class="gap" style="display: none">
     <label for="${id}_name">${i18n.addFromUrl.name}</label>
@@ -55,6 +55,7 @@
     <span class="message" data-dojo-attach-point="messageNode"></span>
     <a class="jimu-btn"
       href="javascript:void(0)"
+      id = "addURLButton"
       data-dojo-attach-point="addButton"
       data-dojo-attach-event="onClick: addClicked"
       >${i18n.search.item.actions.add}

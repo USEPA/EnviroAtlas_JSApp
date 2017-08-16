@@ -29,12 +29,6 @@ define([
   ],
   function(BaseWidget, declare, lang, array, domConstruct, dom, on,
     LayerListView, PopupMenu, NlsStrings, LayerInfos) {
-    var uncheckRelatedCheckbox = function (chkboxLayerId){
-    	var chkSimpleSearch = document.getElementById(window.chkSelectableLayer + chkboxLayerId);
-    	if((chkSimpleSearch != null) && (chkSimpleSearch.checked == true)){	
-    		chkSimpleSearch.checked = false;    		
-    	}
-    };
     var clazz = declare([BaseWidget], {
       //these two properties is defined in the BaseWiget
       baseClass: 'jimu-widget-layerList',
@@ -228,14 +222,33 @@ define([
         /*jshint unused: false*/
         this.appConfig = appConfig;
       },
+  	  uncheckRelatedCheckbox: function (chkboxLayerId){
+    	var chkSimpleSearch = document.getElementById(window.chkSelectableLayer + chkboxLayerId);
+    	if((chkSimpleSearch != null) && (chkSimpleSearch.checked == true)){	
+    		//chkSimpleSearch.checked = false;    		
+    		chkSimpleSearch.click();
+    	}
+      },   
       _onRemoveLayersClick: function() {
 		for (var j=0, jl=this.map.layerIds.length; j<jl; j++) {
 			var currentLayer = this.map.getLayer(this.map.layerIds[j]);
-			if(currentLayer){
+			if(currentLayer != null){
 				if ((currentLayer.id).indexOf(window.addedLayerIdPrefix) > -1) {
 					this.map.removeLayer(currentLayer);
 				}    
 				if ((currentLayer.id).indexOf(window.uploadedFeatLayerIdPrefix) > -1) {
+					this.map.removeLayer(currentLayer);
+				} 
+				if ((currentLayer.id).indexOf(window.layerIdTiledPrefix) > -1) {
+					this.map.removeLayer(currentLayer);
+				}  
+				if ((currentLayer.id).indexOf(window.layerIdPrefix) > -1) {
+					this.map.removeLayer(currentLayer);
+				} 
+				if ((currentLayer.id).indexOf(window.layerIdBndrPrefix) > -1) {
+					this.map.removeLayer(currentLayer);
+				} 
+				if ((currentLayer.id).indexOf(window.layerIdPBSPrefix) > -1) {
 					this.map.removeLayer(currentLayer);
 				}    				
 			} 
@@ -249,36 +262,36 @@ define([
 		//remove all layers searchable from widget SimpleSearchFilter
     	for (i in window.allLayerNumber) {    		
     		lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
-			if(lyr){
+			if(lyr != null){
             	this.map.removeLayer(lyr);
-            	uncheckRelatedCheckbox(window.allLayerNumber[i]);
+            	this.uncheckRelatedCheckbox(window.allLayerNumber[i]);
           	}
     		lyr = this.map.getLayer(window.layerIdTiledPrefix + window.allLayerNumber[i]);
-			if(lyr){
+			if(lyr != null){
             	this.map.removeLayer(lyr);
           	}          	
     		lyr = this.map.getLayer(window.layerIdPBSPrefix + window.allLayerNumber[i]);
-			if(lyr){
+			if(lyr != null){
             	this.map.removeLayer(lyr);
-            	uncheckRelatedCheckbox(window.allLayerNumber[i]);
+            	this.uncheckRelatedCheckbox(window.allLayerNumber[i]);
           	}     
           	lyr = this.map.getLayer(window.layerIdBndrPrefix + window.allLayerNumber[i]);
-			if(lyr){
+			if(lyr != null){
             	this.map.removeLayer(lyr);
-            	uncheckRelatedCheckbox(window.allLayerNumber[i]);
+            	this.uncheckRelatedCheckbox(window.allLayerNumber[i]);
           	}         	
         } 
        
         //remove all layers added from portal, webmapdata and upload data
     	for (i in window.layerID_Portal_WebMap) {	        
     		lyr = this.map.getLayer(window.layerID_Portal_WebMap[i]);
-			if(lyr){
+			if(lyr != null){
 	    		this.map.removeLayer(lyr);        	
           	}          	
         }        
         //remove community boundary layer   
         lyrCommunityBoundary = this.map.getLayer(window.idCommuBoundaryPoint);  
-		if(lyrCommunityBoundary){
+		if(lyrCommunityBoundary != null){
     		this.map.removeLayer(lyrCommunityBoundary);        	
       	} 
       }
