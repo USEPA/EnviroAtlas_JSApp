@@ -82,6 +82,8 @@ define([
     window.communityLayerNumber =  [];
     window.dynamicLayerNumber = [];
     window.layerID_Portal_WebMap = [];
+    window.onlineDataTobeAdded = [];
+    window.onlineDataAlreadyAdded = [];
     window.categoryDic = {};
     window.categoryDic["Clean Air"] = "cair";
     window.categoryDic["Clean and Plentiful Water"] = "cpw";
@@ -179,7 +181,6 @@ define([
     window.successLayerDictionary = {};
     window.communityExtentDic = {};
     window.hashAttribute = {};
-    window.hashURL = {};
     window.hashPopup = {};
     window.hashURL = {};
     window.hashTopic = {};
@@ -189,6 +190,8 @@ define([
     window.hashGeometryTypeAddedFeatLyr = {};
     window.hashInfoTemplate = {};
 	window.hashRenderer = {};
+	window.hashAddedURLToType = {};
+	window.hashAddedURLToId = {};
                 
     //patch for JS API 3.10
     var hasMethod = typeof cookie.getAll === 'function';

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 Esri. All Rights Reserved.
+// Copyright © 2014 - 2016 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,39 +19,37 @@ define([
     'dojo/_base/declare',
     'dojo/_base/lang',
     'dojo/_base/array',
-    'dojo/dom-construct',
+    'dojo/_base/html',
     'dojo/dom',
     'dojo/on',
+    'dojo/query',
+    'dijit/registry',
     './LayerListView',
-    './PopupMenu',
     './NlsStrings',
     'jimu/LayerInfos/LayerInfos'
   ],
-  function(BaseWidget, declare, lang, array, domConstruct, dom, on,
-    LayerListView, PopupMenu, NlsStrings, LayerInfos) {
-    var uncheckRelatedCheckbox = function (chkboxLayerId){
-    	var chkSimpleSearch = document.getElementById(window.chkSelectableLayer + chkboxLayerId);
-    	if((chkSimpleSearch != null) && (chkSimpleSearch.checked == true)){	
-    		chkSimpleSearch.checked = false;    		
-    	}
-    };
+  function(BaseWidget, declare, lang, array, html, dom, on,
+  query, registry, LayerListView, NlsStrings, LayerInfos) {
+
     var clazz = declare([BaseWidget], {
       //these two properties is defined in the BaseWiget
       baseClass: 'jimu-widget-layerList',
       name: 'layerList',
-
+      _denyLayerInfosReorderResponseOneTime: null,
+      _denyLayerInfosIsVisibleChangedResponseOneTime: null,
       //layerListView: Object{}
       //  A module is responsible for show layers list
       layerListView: null,
 
       //operLayerInfos: Object{}
       //  operational layer infos
-      operLayerInfos: null,      
+      operLayerInfos: null,
 
       startup: function() {
         this.inherited(arguments);
-      	//this.fetchDataByName('SimpleSearchFilter');
         NlsStrings.value = this.nls;
+        this._denyLayerInfosReorderResponseOneTime = false;
+        this._denyLayerInfosIsVisibleChangedResponseOneTime = false;
         // summary:
         //    this function will be called when widget is started.
         // description:
@@ -99,22 +97,6 @@ define([
             operationalLayers: []
           }
         };
-        // array.forEach(this.map.layerIds.concat(this.map.graphicsLayerIds), function(layerId) {
-        //   var layer = this.map.getLayer(layerId);
-        //   if (layer.isOperationalLayer) {
-        //     operLayers.push({
-        //       layerObject: layer,
-        //       title: layer.label || layer.title || layer.name || layer.id || " ",
-        //       id: layer.id || " "
-        //     });
-        //   } else {
-        //     basemapLayers.push({
-        //       layerObject: layer,
-        //       id: layer.id || " "
-        //     });
-        //   }
-        // }, this);
-
         array.forEach(this.map.graphicsLayerIds, function(layerId) {
           var layer = this.map.getLayer(layerId);
           if (layer.isOperationalLayer) {
@@ -146,24 +128,6 @@ define([
         return retObj;
       },
 
-
-
-      _layerFilter: function(layerId, basemapLayers, operLayers) {
-        var layer = this.map.getLayer(layerId);
-        if (layer.isOperationalLayer) {
-          operLayers.push({
-            layerObject: layer,
-            title: layer.label || layer.title || layer.name || layer.id || " ",
-            id: layer.id || " "
-          });
-        } else {
-          basemapLayers.push({
-            layerObject: layer,
-            id: layer.id || " "
-          });
-        }
-      },
-
       showLayers: function() {
         // summary:
         //    create a LayerListView module used to draw layers list in browser.
@@ -172,15 +136,6 @@ define([
           layerListWidget: this,
           config: this.config
         }).placeAt(this.layerListBody);
-      },
-
-      _createPopupMenu: function() {
-        // summary:
-        //    popup menu is a dijit used to do some operations of layer
-        this.popupMenu = new PopupMenu({
-          layerListWidget: this
-        });
-        domConstruct.place(this.popupMenu.domNode, this.domNode);
       },
 
       _clearLayers: function() {
@@ -192,14 +147,14 @@ define([
         }
       },
 
-      flag: true,
-
-
       _refresh: function() {
         this._clearLayers();
         this.showLayers();
       },
 
+      /****************
+       * Event
+       ***************/
       bindEvents: function() {
         // summary:
         //    bind events are listened by this module
@@ -209,80 +164,210 @@ define([
 
         this.own(on(this.operLayerInfos,
           'tableInfosChanged',
-          lang.hitch(this, this._onLayerInfosChanged)));
+          lang.hitch(this, this._onTableInfosChanged)));
+
+        this.own(this.operLayerInfos.on('layerInfosIsVisibleChanged',
+          lang.hitch(this, this._onLayerInfosIsVisibleChanged)));
 
         this.own(on(this.operLayerInfos,
           'updated',
           lang.hitch(this, this._onLayerInfosObjUpdated)));
+
+        this.own(on(this.operLayerInfos,
+          'layerInfosReorder',
+          lang.hitch(this, this._onLayerInfosReorder)));
+
+        this.own(on(this.map,
+          'zoom-end',
+          lang.hitch(this, this._onZoomEnd)));
+
+        this.own(on(this.operLayerInfos,
+          'layerInfosRendererChanged',
+          lang.hitch(this, this._onLayerInfosRendererChanged)));
+
+        this.own(on(this.operLayerInfos,
+          'layerInfosOpacityChanged',
+          lang.hitch(this, this._onLayerInfosOpacityChanged)));
       },
 
-      _onLayerInfosChanged: function(/*layerInfo, changedType*/) {
-        this._refresh();
+      _onLayerInfosChanged: function(layerInfo, changedType) {
+        //this._refresh();
+
+        if(changedType === "added") {
+          var allLayers = this.map.layerIds.concat(this.map.graphicsLayerIds);
+
+          var layerIndex = array.indexOf(allLayers, layerInfo.id);
+          var refLayerId = null;
+          var refLayerNode = null;
+          for(var i = layerIndex - 1; i >= 0; i--) {
+            refLayerId = allLayers[i];
+            refLayerNode = query("[class~='layer-tr-node-" + refLayerId + "']", this.domNode)[0];
+            if(refLayerNode) {
+              break;
+            }
+          }
+          if(refLayerNode) {
+            this.layerListView.drawListNode(layerInfo, 0, refLayerNode, 'before');
+          } else {
+            this.layerListView.drawListNode(layerInfo, 0, this.layerListView.layerListTable);
+          }
+        } else {
+          this.layerListView.destroyLayerTrNode(layerInfo);
+        }
+      },
+
+      _onTableInfosChanged: function(tableInfoArray, changedType) {
+        if(changedType === "added") {
+          array.forEach(tableInfoArray, function(tableInfo) {
+            this.layerListView.drawListNode(tableInfo, 0, this.layerListView.tableListTable);
+          }, this);
+        } else {
+          array.forEach(tableInfoArray, function(tableInfo) {
+            this.layerListView.destroyLayerTrNode(tableInfo);
+          }, this);
+        }
+      },
+
+      _onLayerInfosIsVisibleChanged: function(changedLayerInfos) {
+        if(this._denyLayerInfosIsVisibleChangedResponseOneTime) {
+          this._denyLayerInfosIsVisibleChangedResponseOneTime = false;
+        } else {
+          array.forEach(changedLayerInfos, function(layerInfo) {
+            query("[class~='visible-checkbox-" + layerInfo.id + "']", this.domNode)
+            .forEach(function(visibleCheckBoxDomNode) {
+              var visibleCheckBox = registry.byNode(visibleCheckBoxDomNode);
+              if(layerInfo.isVisible()) {
+                visibleCheckBox.check();
+              } else {
+                visibleCheckBox.uncheck();
+              }
+            }, this);
+
+          }, this);
+        }
       },
 
       _onLayerInfosObjUpdated: function() {
         this._refresh();
       },
 
+      _onZoomEnd: function() {
+        this.operLayerInfos.traversal(lang.hitch(this, function(layerInfo) {
+          query("[class~='layer-title-div-" + layerInfo.id + "']", this.domNode)
+          .forEach(function(layerTitleDivIdDomNode) {
+            try {
+              if (layerInfo.isInScale()) {
+                html.removeClass(layerTitleDivIdDomNode, 'grayed-title');
+              } else {
+                html.addClass(layerTitleDivIdDomNode, 'grayed-title');
+              }
+            } catch (err) {
+              console.warn(err.message);
+            }
+          }, this);
+        }));
+      },
+
+      _onLayerInfosReorder: function() {
+        if(this._denyLayerInfosReorderResponseOneTime) {
+          // denies one time
+          this._denyLayerInfosReorderResponseOneTime = false;
+        } else {
+          this._refresh();
+        }
+      },
+
+      _onLayerInfosRendererChanged: function(changedLayerInfos) {
+        try {
+          array.forEach(changedLayerInfos, function(layerInfo) {
+            this.layerListView.redrawLegends(layerInfo);
+          }, this);
+        } catch (err) {
+          this._refresh();
+        }
+      },
+
+      _onLayerInfosOpacityChanged: function(changedLayerInfos) {
+        array.forEach(changedLayerInfos, function(layerInfo) {
+          var opacity = layerInfo.layerObject.opacity === undefined ? 1 : layerInfo.layerObject.opacity;
+          var contentDomNode = query("[layercontenttrnodeid='" + layerInfo.id + "']", this.domNode)[0];
+          query(".legends-div.jimu-legends-div-flag img", contentDomNode).style("opacity", opacity);
+        }, this);
+      },
+
       onAppConfigChanged: function(appConfig, reason, changedData){
         /*jshint unused: false*/
         this.appConfig = appConfig;
       },
+  	  uncheckRelatedCheckbox: function (chkboxLayerId){
+    	var chkSimpleSearch = document.getElementById(window.chkSelectableLayer + chkboxLayerId);
+    	if((chkSimpleSearch != null) && (chkSimpleSearch.checked == true)){	
+    		//chkSimpleSearch.checked = false;    		
+    		chkSimpleSearch.click();
+    	}
+      },   
       _onRemoveLayersClick: function() {
 		for (var j=0, jl=this.map.layerIds.length; j<jl; j++) {
 			var currentLayer = this.map.getLayer(this.map.layerIds[j]);
-			if(currentLayer){
+			if(currentLayer != null){
 				if ((currentLayer.id).indexOf(window.addedLayerIdPrefix) > -1) {
 					this.map.removeLayer(currentLayer);
 				}    
 				if ((currentLayer.id).indexOf(window.uploadedFeatLayerIdPrefix) > -1) {
 					this.map.removeLayer(currentLayer);
+				} 
+				if ((currentLayer.id).indexOf(window.layerIdTiledPrefix) > -1) {
+					this.map.removeLayer(currentLayer);
+				}  
+				if ((currentLayer.id).indexOf(window.layerIdPrefix) > -1) {
+					this.map.removeLayer(currentLayer);
+				} 
+				if ((currentLayer.id).indexOf(window.layerIdBndrPrefix) > -1) {
+					this.map.removeLayer(currentLayer);
+				} 
+				if ((currentLayer.id).indexOf(window.layerIdPBSPrefix) > -1) {
+					this.map.removeLayer(currentLayer);
 				}    				
 			} 
 		}
-		/*dojo.forEach(this.map.layerIds, function(aLayerId) {  
-			 alert("aLayerId from dojo.forEach:" + aLayerId);
-					   });  
-		array.forEach(this.map.layerIds, function(aLayerId, i){
-		    alert("aLayerId from array.forEach:" + aLayerId);
-		});  */
+
 		//remove all layers searchable from widget SimpleSearchFilter
     	for (i in window.allLayerNumber) {    		
     		lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
-			if(lyr){
+			if(lyr != null){
             	this.map.removeLayer(lyr);
-            	uncheckRelatedCheckbox(window.allLayerNumber[i]);
+            	this.uncheckRelatedCheckbox(window.allLayerNumber[i]);
           	}
     		lyr = this.map.getLayer(window.layerIdTiledPrefix + window.allLayerNumber[i]);
-			if(lyr){
+			if(lyr != null){
             	this.map.removeLayer(lyr);
           	}          	
     		lyr = this.map.getLayer(window.layerIdPBSPrefix + window.allLayerNumber[i]);
-			if(lyr){
+			if(lyr != null){
             	this.map.removeLayer(lyr);
-            	uncheckRelatedCheckbox(window.allLayerNumber[i]);
+            	this.uncheckRelatedCheckbox(window.allLayerNumber[i]);
           	}     
           	lyr = this.map.getLayer(window.layerIdBndrPrefix + window.allLayerNumber[i]);
-			if(lyr){
+			if(lyr != null){
             	this.map.removeLayer(lyr);
-            	uncheckRelatedCheckbox(window.allLayerNumber[i]);
+            	this.uncheckRelatedCheckbox(window.allLayerNumber[i]);
           	}         	
         } 
        
         //remove all layers added from portal, webmapdata and upload data
     	for (i in window.layerID_Portal_WebMap) {	        
     		lyr = this.map.getLayer(window.layerID_Portal_WebMap[i]);
-			if(lyr){
+			if(lyr != null){
 	    		this.map.removeLayer(lyr);        	
           	}          	
         }        
         //remove community boundary layer   
         lyrCommunityBoundary = this.map.getLayer(window.idCommuBoundaryPoint);  
-		if(lyrCommunityBoundary){
+		if(lyrCommunityBoundary != null){
     		this.map.removeLayer(lyrCommunityBoundary);        	
       	} 
       }
     });
-    //clazz.hasConfig = false;
+
     return clazz;
   });
