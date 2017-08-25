@@ -132,20 +132,31 @@ define(['dojo/_base/declare',
 
             onOpen: function () {
                 console.log('SaveSession :: onOpen');
+                
+                pbsWidgetId = 'widgets_PeopleAndBuildSpaces_Widget';
+                boundaryWidgetId = 'widgets_BoundaryLayer_Widget';
+                simpleSearchFilterId = 'widgets_SimpleSearchFilter_Widget_37';
 
-              	this.openWidgetById('widgets_PeopleAndBuildSpaces_Widget');
-              	this.openWidgetById('widgets_BoundaryLayer_Widget');
-              	//var widgets = this.layerListWidget.appConfig.getConfigElementsByName('DynamicSymbology');
+              	this.openWidgetById(pbsWidgetId);
+              	this.openWidgetById(boundaryWidgetId);
+              	
+ 				document.getElementById(boundaryWidgetId).onclick = function() {
+			        document.getElementById("resizeButton").click();
+			        document.getElementById("resizeButton").click();  
+				}; 
+ 				document.getElementById(simpleSearchFilterId).onclick = function() {
+			        document.getElementById("resizeButton").click();
+			        document.getElementById("resizeButton").click();  
+				}; 
+								
               	var widgets = this.appConfig.getConfigElementsByName("AddData");
 		        var pm = PanelManager.getInstance();		
 		        pm.showPanel(widgets[0]);
 		        panelID = "widgets_AddData_30_panel";
 		        pm.closePanel(panelID);//close the panel
-	        	//WidgetManager.getInstance().closeWidget("widgets_AddData_30");
 
- 
-              	//this.openWidgetById('widgets_SimpleSearchFilter_Widget_37');
-              	//this.closeWidget('widgets_PeopleAndBuildSpaces_Widget');
+   				document.getElementById(simpleSearchFilterId).click();
+ 	
             },
             onReceiveData: function (name, widgetId, data, historyData) {
                 if ((name == 'LocalLayer') ) {
