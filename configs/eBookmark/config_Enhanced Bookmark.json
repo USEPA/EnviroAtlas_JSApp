@@ -173,6 +173,18 @@
           }
         },
         {
+          "name": "New Haven, CT",
+          "extent": {
+            "xmax": -8026147.8023,
+            "xmin":-8161747.0905,
+            "ymax": 5130049.2048,
+            "ymin": 5014629.2921,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
           "name": "New York, NY",
           "extent": {
             "xmax": -8123942.6117,
