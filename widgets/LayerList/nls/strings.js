@@ -14,7 +14,7 @@ define({
     itemMoveDown: "Move down",
     itemDesc: "Access Web Service",//modify Map Description to "Access Web Service"
     itemDownload: "Download",
-    itemToAttributeTable: "View in Attribute Table",
+    itemToAttributeTable: "Open Attribute Table",
     itemShowItemDetails: "Show item details",
     empty: "empty",
     removePopup: "Disable ID Pop-up",
@@ -22,7 +22,15 @@ define({
     itemDataFactSheet: "Data Fact Sheet",
     itemMetadataDownload: "Metadata/Download",
     itemChangeSymbology: "Change Appearance",
-    itemRemove: "Remove Layer"   
+    itemRemove: "Remove Layer",    
+    turnAllLayersOff: "Turn all layers off",
+    turnAllLayersOn: "Turn all layers on",
+    expandAllLayers: "Expand all layers",
+    collapseAlllayers: "Collapse all layers",
+    turnAllLabelsOff: "Turn all labels off",
+    turnAllLabelsOn: "Turn all labels on",
+    showLabels: "Show labels",
+    hideLables: "Hide labels"
   }),
   "ar": 1,
   "bs": 1,

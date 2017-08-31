@@ -365,9 +365,6 @@ define([
       //   layerListView: layerListView
       // }, result;
      **********************************/
-    _onItemLinkClick: function(evt) {
-            window.open("http://www.google.com");
-    },
     _onMoveToTopClick: function(evt) {
       /*jshint unused: false*/
 
@@ -495,7 +492,6 @@ define([
     },
     _onItemDataFactSheetClick: function(evt) {
         layerId = this._layerInfo.id;
-        
         var clickedURL = this._layerInfo.layerObject.url;
         var bDataFactSheetAvailale = false;
         var strLayerPrefix = "";
@@ -562,7 +558,7 @@ define([
       //this.layerListWidget.openWidgetById(widgetId);
       //console.log(widgets);
       console.log('Open Dynamic Symbology');
-    },
+    },    
     _onItemMetadataDownloadClick: function(evt) {
         layerId = this._layerInfo.id;
         var clickedURL = this._layerInfo.layerObject.url;
@@ -582,7 +578,9 @@ define([
         }  
         loadJSON(function(response) {
             var localLayerConfig = JSON.parse(response);
+            
             var urlInConfig = "";
+            
             var arrLayers = localLayerConfig.layers.layer;           
             for (index = 0, len = arrLayers.length; index < len; ++index) {
                 layer = arrLayers[index];
@@ -606,7 +604,9 @@ define([
 						        bMetadataAvailale = true;	                    		
 	                    		}
 	                    	}     		
+
 					    }                      
+                        
                         break;
                     }
                 }
@@ -639,7 +639,7 @@ define([
 	  lyrTiled = this._layerInfo.map.getLayer(layerId.replace(window.layerIdPrefix, window.layerIdTiledPrefix));
 	  if(lyrTiled){
        	  lyrTiled.setOpacity(1 - evt.extraData.newTransValue);
-      }  	  
+      }        
     },
 
     _onControlPopup: function(evt) {
@@ -680,7 +680,7 @@ define([
         key: 'movetotop'
       }, {
         key: 'remove'
-      }, {
+      },{
         key: 'separator'
       }, {
         key: 'mapDescription'
@@ -692,7 +692,7 @@ define([
         key: 'moveup'
       }, {
         key: 'movedown'
-      }],
+      } ],
       'RootLayerAndFeatureLayer': [
       {
         key: 'transparency'
@@ -706,7 +706,7 @@ define([
         key: 'remove'
       }, {
         key: 'separator'
-      }, {
+      },  {
         key: 'mapDescription'
       }, {
         key: 'dataFactSheet'
@@ -756,7 +756,6 @@ define([
             layerType === "CSVLayer" ||
             layerType === "ArcGISImageServiceLayer" ||
             layerType === "StreamLayer" ||
-            layerType === "ArcGISDynamicMapServiceLayer" ||
             layerType === "ArcGISImageServiceVectorLayer")) {
         itemInfoCategory = "RootLayerAndFeatureLayer";
       } else if (isRootLayer) {

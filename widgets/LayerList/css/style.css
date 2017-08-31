@@ -32,7 +32,6 @@
 
 .jimu-widget-layerList .layer-list-body {
   /*overflow: auto;*/
-  margin-top: 8px;
 }
 
 
@@ -46,22 +45,20 @@
 }
 
 .jimu-widget-layerList .jimu-widget-row{
-	vertical-align: top;
+
 }
 
-/*.jimu-widget-layerList .layer-row{
-  background-color: #ffffff;
-  height: 52px;
-}*/
+.jimu-widget-layerList .layer-row{
+  height: 40px;
+}
 
 .jimu-widget-layerList .layer-row-mouseover{
   background-color: #e3ecf2;
 }
 
-/*.jimu-widget-layerList .jimu-widget-row-selected{
+.jimu-widget-layerList .jimu-widget-row-selected{
   background-color: #d9dde0;
-;
-}*/
+}
 
 .jimu-widget-layerList .jimu-widget-row-active{
   background-color: #009cff;
@@ -88,7 +85,6 @@
   width: auto;
   word-break: break-word;
   cursor: pointer;
-  padding-bottom: 8px;
 }
 
 .jimu-widget-layerList .col3{
@@ -224,8 +220,6 @@
 
 /*****************about legend begin*****************************/
 .jimu-widget-layerList .legend-node-td{
-  position: relative;
-  left: 17px;
 }
 
 .jimu-widget-layerList .legend-div{
@@ -258,7 +252,6 @@
 .jimu-widget-layerList .esriLegendLayer{
   font-size: 12px;
 }
-
 .jimu-widget-layerList .esriLegendLayer > tbody > tr > td:first-child {
   font-size: 0px;
 }
@@ -269,21 +262,23 @@
 
 .jimu-widget-layerList .layers-list-popupMenu-div{
   position: relative;
-  width: 16px;
-  /*height: 40px;*/
-  /*background-color: #d9dde0;
-  padding-bottom: 5px*/;
+  width: 22px;
+  height: 40px;
+  /*background-color: #d9dde0;*/
   cursor: pointer;
   border-radius: 2px;
   /*************/
   float: right;
-  /*margin-right: 4px;
-  padding-top: 8px;*/
+  /*margin-right: 4px;*/
+  padding-top: 14px;
+  background-image: url("../images/more_normal.svg");
+  background-repeat: no-repeat;
+  background-position: center 23px;
 }
 
-/*.jimu-widget-layerList .layers-list-popupMenu-div:hover{
+.jimu-widget-layerList .layers-list-popupMenu-div:hover{
   background-image: url("../images/more_hover.svg");
-}*/
+}
 
 .jimu-widget-layerList .layers-list-popupMenu-div .popup-menu-button{
   background: none;
@@ -308,12 +303,11 @@
 }
 
 .jimu-widget-layerList .layers-list-popupMenu-div .popup-menu-loading{
-  width: 9px;
-  height: 9px;
-  margin: -1px 0 0 2px;
+  width: 17px;
+  height: 17px;
+  margin: -9px 0 0 2px;
   border-radius: 25px;
-  /*background-image: url("../images/loading.gif");*/
-  background-image: url("../images/v.png");
+  background-image: url("../images/loading.gif");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain;
@@ -496,8 +490,8 @@
 
 .jimu-widget-layerList .jimu-dropmenu .menu-item{
   position: relative;
-  height: 20px;
-  line-height: 20px;
+  height: 30px;
+  line-height: 30px;
   white-space: nowrap;
   padding: 0px 12px;
   margin: 0 0;
@@ -507,8 +501,8 @@
 }
 .menu-item-description{
   position: relative;
-  height: 20px;
-  line-height: 20px;
+  height: 30px;
+  line-height: 30px;
   white-space: nowrap;
   padding: 0px 12px;
   margin: 0 0;
@@ -633,23 +627,7 @@
   background-color: #f3f3f3;
 }
 
-#navlist {
-    margin: 3px;
-    padding: 0;	
-    position: absolute;
-}
-#navlist li {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    position: absolute;
-    top: 0;
-}
-#navlist li, #navlist a {
-    height: 18px;
-    width: 18px;
-    display: block;
-}
+
 
 
 

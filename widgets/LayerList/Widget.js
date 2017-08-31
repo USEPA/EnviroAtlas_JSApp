@@ -330,7 +330,12 @@ define([
 				}    				
 			} 
 		}
-
+		/*dojo.forEach(this.map.layerIds, function(aLayerId) {  
+			 alert("aLayerId from dojo.forEach:" + aLayerId);
+					   });  
+		array.forEach(this.map.layerIds, function(aLayerId, i){
+		    alert("aLayerId from array.forEach:" + aLayerId);
+		});  */
 		//remove all layers searchable from widget SimpleSearchFilter
     	for (i in window.allLayerNumber) {    		
     		lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);

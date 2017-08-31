@@ -613,7 +613,9 @@ define([
             if(lang.getObject('_wabProperties.isTemporaryLayer', false, newLayer)) {
               newLayerInfo._isTemporaryLayerInfo = true;
             }
+            if ((newLayer.id.indexOf(window.layerIdTiledPrefix)) == -1){
             this._finalLayerInfos.push(newLayerInfo);
+            }	    
           }
         }
 

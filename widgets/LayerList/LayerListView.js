@@ -24,6 +24,7 @@ define([
   'dojo/query',
   'jimu/dijit/CheckBox',
   'jimu/PanelManager',
+  'jimu/dijit/DropMenu',
   './PopupMenu',
   'dijit/_TemplatedMixin',
   'dojo/text!./LayerListView.html',
@@ -32,7 +33,7 @@ define([
   'dojo/dom-style',
   './NlsStrings'
 ], function(_WidgetBase, declare, lang, array, domConstruct, on, query,
-  CheckBox, PanelManager, PopupMenu, _TemplatedMixin, template,
+  CheckBox, PanelManager, DropMenu, PopupMenu, _TemplatedMixin, template,
   domAttr, domClass, domStyle, NlsStrings) {
   	var received = "";
   	var loadJSON = function(callback){   
@@ -58,8 +59,8 @@ define([
       this.nls = NlsStrings.value;
       this._layerNodeHandles = {};
     },
-	//postCreate function need to be commented out, otherwise the layer is shown as double
-    /*postCreate: function() {
+
+    postCreate: function() {
       array.forEach(this.operLayerInfos.getLayerInfoArray(), function(layerInfo) {
         this.drawListNode(layerInfo, 0, this.layerListTable);
       }, this);
@@ -68,16 +69,8 @@ define([
         this.drawListNode(layerInfo, 0, this.tableListTable);
       }, this);
       this._initOperations();
-    },*/
-	startup: function() {
-      array.forEach(this.operLayerInfos.getLayerInfoArray(), function(layerInfo) {
-        this.drawListNode(layerInfo, 0, this.layerListTable, true);
-      }, this);
-
-      array.forEach(this.operLayerInfos.getTableInfoArray(), function(layerInfo) {
-        this.drawListNode(layerInfo, 0, this.tableListTable, true);
-      }, this);
     },
+
     drawListNode: function(layerInfo, level, toTableNode, position) {
       var nodeAndSubNode, showLegendDiv;
       if(this.isLayerHiddenInWidget(layerInfo)) {
@@ -199,16 +192,13 @@ define([
         'class': 'col col3'
       }, layerTrNode);
 
-      //var popupMenuDisplayStyle = this.hasContentMenu() ? "display: block" : "display: none";
-      var popupMenuDisplayStyle = "display: block" ;
+      var popupMenuDisplayStyle = this.hasContentMenu() ? "display: block" : "display: none";
       // add popupMenu
       popupMenuNode = domConstruct.create('div', {
         'class': 'layers-list-popupMenu-div',
         'style': popupMenuDisplayStyle
       }, layerTdNode);
-      /*popupMenuNode = domConstruct.create('div', {
-        'class': 'layers-list-popupMenu-div'
-      }, layerTdNode);*/
+
       /*
       var handle = on(popupMenuNode,
                   'click',
@@ -228,7 +218,7 @@ define([
                     handle.remove();
                   }));
       */
-      
+      /*
       popupMenu = new PopupMenu({
         //items: layerInfo.popupMenuInfo.menuItems,
         _layerInfo: layerInfo,
@@ -240,7 +230,7 @@ define([
       this.own(on(popupMenu,
         'onMenuClick',
         lang.hitch(this, this._onPopupMenuItemClick, layerInfo, popupMenu)));
-      
+      */
 
       //add a tr node to toTableNode.
       var trNode = domConstruct.create('tr', {
@@ -348,13 +338,8 @@ define([
         }, toTableNode),
         legendTdNode;
 
-      legendTdNode_align_top = '-15px'
-      if (level > 0) {
-        legendTdNode_align_top = '-5px';
-      }  
       legendTdNode = domConstruct.create('td', {
-        'class': 'legend-node-td',
-        style : 'top: '+legendTdNode_align_top
+        'class': 'legend-node-td'
       }, legendTrNode);
 
       try {
@@ -433,14 +418,6 @@ define([
     },
 
     _onCkSelectNodeClick: function(layerInfo, ckSelect, evt) {
-      eaId = "";
-      layerId = layerInfo.id;
-      if (layerId.indexOf(window.layerIdPrefix) >= 0) {
-       		eaId = layerId.replace(window.layerIdPrefix, "");                     	
-      } else if (layerId.indexOf(window.layerIdPBSPrefix) >= 0) {
-       		eaId = layerId.replace(window.layerIdPBSPrefix, "");                     	
- 	  } 
-	  lyrTiled = layerInfo.map.getLayer(window.layerIdTiledPrefix + eaId);
       if(evt.ctrlKey || evt.metaKey) {
         if(layerInfo.isRootLayer()) {
           this.turnAllRootLayers(ckSelect.checked);
@@ -449,12 +426,28 @@ define([
         }
       } else {
         this.layerListWidget._denyLayerInfosIsVisibleChangedResponseOneTime = true;
+        //set visibility for corresponding tiled layers
+	    eaId = "";
+	    layerId = layerInfo.id;
+	    if (layerId.indexOf(window.layerIdPrefix) >= 0) {
+	        eaId = layerId.replace(window.layerIdPrefix, "");                     	
+	    } else if (layerId.indexOf(window.layerIdPBSPrefix) >= 0) {
+	        eaId = layerId.replace(window.layerIdPBSPrefix, "");                     	
+	 	} 
+		lyrTiled = layerInfo.map.getLayer(window.layerIdTiledPrefix + eaId);   
+		if (ckSelect.checked) {
+	        if(lyrTiled){
+	        	if (window.hashRenderer[eaId] == null) {
+		       	  	lyrTiled.setVisibility(true);//set tile visible only when user not set the dynamic symbology
+		       	}
+	      	}	
+	    } else {
+	        if(lyrTiled){
+	       	  lyrTiled.setVisibility(false);
+	      	}         
+	    }     
+	    //end of set visibility for corresponding tiled layers
         layerInfo.setTopLayerVisible(ckSelect.checked);
-	    if(lyrTiled){
-	    	  if (window.hashRenderer[eaId] == null) {
-	       	  	  lyrTiled.setVisibility(ckSelect.checked);//set tile visible only when user not set the dynamic symbology
-	       	  }
-	  	}        
       }
       evt.stopPropagation();
     },
@@ -789,7 +782,26 @@ define([
       var layerInfoArray = this.operLayerInfos.getLayerInfoArray();
       array.forEach(layerInfoArray, function(layerInfo) {
         if (!this.isLayerHiddenInWidget(layerInfo)) {
-          layerInfo.setTopLayerVisible(isOnOrOff);
+            layerInfo.setTopLayerVisible(isOnOrOff);
+			eaId = "";
+			layerId = layerInfo.id;
+			if (layerId.indexOf(window.layerIdPrefix) >= 0) {
+			    eaId = layerId.replace(window.layerIdPrefix, "");                     	
+			} else if (layerId.indexOf(window.layerIdPBSPrefix) >= 0) {
+			    eaId = layerId.replace(window.layerIdPBSPrefix, "");                     	
+			} 
+			lyrTiled = layerInfo.map.getLayer(window.layerIdTiledPrefix + eaId);   
+			if (isOnOrOff) {
+			    if(lyrTiled){
+			    	if (window.hashRenderer[eaId] == null) {
+			       	  	lyrTiled.setVisibility(true);//set tile visible only when user not set the dynamic symbology
+			       	}
+			  	}	
+			} else {
+			    if(lyrTiled){
+			   	  lyrTiled.setVisibility(false);
+			  	}         
+			}           
         }
       }, this);
     },

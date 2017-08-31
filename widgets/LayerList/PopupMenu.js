@@ -42,7 +42,6 @@ define([
     _initDeniedItems: function() {
       var deniedItemsFromConfigKeys = [];
       var menuItemDictionary = {
-        "ZoomTo": "zoomto",
         "Transparency": "transparency",
         "EnableOrDisablePopup": "controlPopup",
         "MoveupOrMovedown": "moveup movedown",
