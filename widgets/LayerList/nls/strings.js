@@ -29,6 +29,7 @@ define({
     collapseAlllayers: "Collapse all layers",
     turnAllLabelsOff: "Turn all labels off",
     turnAllLabelsOn: "Turn all labels on",
+    removeAllLayers: "Remove all layers",
     showLabels: "Show labels",
     hideLables: "Hide labels"
   }),

@@ -198,7 +198,7 @@
 }
 
 .jimu-widget-layerList .div-content.grayed-title{
-  opacity: 0.3;
+  opacity: 1;/*0.3*/
 }
 
 .jimu-widget-layerList .col-popupMenu{
