@@ -215,7 +215,7 @@ define([
         setTimeout(lang.hitch(this, function() {
           if (this.searchDijit && this.searchDijit.domNode) {
             var box = {
-              w: !window.appInfo.isRunInMobile ? 274 : // original width of search dijit
+              w: !window.appInfo.isRunInMobile ? 240 : // original width of search dijit
                 parseInt(html.getComputedStyle(this.domNode).width, 10)
             };
             var sourcesBox = html.getMarginBox(this.searchDijit.sourcesBtnNode);
