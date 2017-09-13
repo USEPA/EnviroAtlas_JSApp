@@ -60,6 +60,8 @@ define(["dojo/_base/declare",
         domClass.add(btn, "disabled");
 
         if (this.canRemove) {
+          var index = window.onlineDataAlreadyAdded.indexOf(self.item.id);
+		  window.onlineDataAlreadyAdded.splice(index, 1);
           var map = this.resultsPane.getMap();
           util.setNodeText(self.messageNode, i18n.search.item.messages.removing);
           var lyrs = util.findLayersAdded(map, this.item.id).layers;
@@ -73,6 +75,10 @@ define(["dojo/_base/declare",
           domClass.remove(btn, "disabled");
 
         } else {
+          var index = window.onlineDataAlreadyAdded.indexOf(self.item.id);
+          if (index<0) {
+        		window.onlineDataAlreadyAdded.push(self.item.id);
+          }
           util.setNodeText(self.messageNode, i18n.search.item.messages.adding);
           var loader = new LayerLoader();
           loader.addItem(this.item, this.resultsPane.getMap()).then(function(result) {
@@ -102,6 +108,8 @@ define(["dojo/_base/declare",
                 if (!(url in window.faildedOutsideLayerDictionary)){
 			  		window.faildedOutsideLayerDictionary[url] = url;
 			    }	
+                var indexTobeRemoved = window.onlineDataAlreadyAdded.indexOf(self.item.id);
+		  		window.onlineDataAlreadyAdded.splice(indexTobeRemoved, 1);
 			    document.getElementById('openFailedLayer').click();
             }
           });

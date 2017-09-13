@@ -46,11 +46,13 @@ define(['dojo/_base/declare',
         'jimu/ConfigManager',
         'jimu/MapManager',
         'jimu/WidgetManager',
+        'jimu/PanelManager',
         'jimu/dijit/Popup',
         'jimu/dijit/Message',
         'jimu/LayerInfos/LayerInfos',
         './SimpleTable',
-        'dijit/form/TextBox'
+        'dijit/form/TextBox',
+        "dijit/form/Select",
        ],
     function (declare,
         BaseWidget,
@@ -82,6 +84,7 @@ define(['dojo/_base/declare',
         ConfigManager,
         MapManager,
         WidgetManager,
+        PanelManager,
         Popup,
         Message,
         LayerInfos,
@@ -129,10 +132,31 @@ define(['dojo/_base/declare',
 
             onOpen: function () {
                 console.log('SaveSession :: onOpen');
+                
+                pbsWidgetId = 'widgets_PeopleAndBuildSpaces_Widget';
+                boundaryWidgetId = 'widgets_BoundaryLayer_Widget';
+                simpleSearchFilterId = 'widgets_SimpleSearchFilter_Widget_37';
 
-              	this.openWidgetById('widgets_PeopleAndBuildSpaces_Widget');
-              	//this.openWidgetById('widgets_SimpleSearchFilter_Widget_37');
-              	//this.closeWidget('widgets_PeopleAndBuildSpaces_Widget');
+              	this.openWidgetById(pbsWidgetId);
+              	this.openWidgetById(boundaryWidgetId);
+              	
+ 				document.getElementById(boundaryWidgetId).onclick = function() {
+			        document.getElementById("resizeButton").click();
+			        document.getElementById("resizeButton").click();  
+				}; 
+ 				document.getElementById(simpleSearchFilterId).onclick = function() {
+			        document.getElementById("resizeButton").click();
+			        document.getElementById("resizeButton").click();  
+				}; 
+								
+              	var widgets = this.appConfig.getConfigElementsByName("AddData");
+		        var pm = PanelManager.getInstance();		
+		        pm.showPanel(widgets[0]);
+		        panelID = "widgets_AddData_30_panel";
+		        pm.closePanel(panelID);//close the panel
+
+   				document.getElementById(simpleSearchFilterId).click();
+ 	
             },
             onReceiveData: function (name, widgetId, data, historyData) {
                 if ((name == 'LocalLayer') ) {
@@ -454,9 +478,7 @@ define(['dojo/_base/declare',
                     console.log('SaveSession :: onSaveToFileButtonClicked :: saveToFileForm submit canceled.');
                     return;
                 }
-
                 var sessionString = JSON.stringify(this.sessions);
-
                 // update form values
                 this.saveToFileName.value = this.config.fileNameForAllSessions;
                 this.saveToFileContent.value = sessionString;
@@ -607,9 +629,10 @@ define(['dojo/_base/declare',
                     });
                 }
 
-                // load the saved graphics
-                this.initLayersFields(sessionToLoad.layers);
-                this.setSelectedCommunity(sessionToLoad);
+                this.setAddedURL(sessionToLoad.addedURL);
+                this.initOnlineDataItems(sessionToLoad.onlineDataItems);
+                this.initLayersFields(sessionToLoad.layers);                
+                this.setSelectedCommunity(sessionToLoad);                
                 this.initGeometryTypeAddedFeatLyr(sessionToLoad.layers);
                 this.initLayersRenderer(sessionToLoad.layers);
                 this.initVisibleLayersForDynamic(sessionToLoad.layers);
@@ -639,6 +662,26 @@ define(['dojo/_base/declare',
                 	this.setChkLayerInBoundary(sessionToLoad.chkLayerInBoundary);
                 }
                 console.log('SaveSession :: loadSession :: session  = ', sessionToLoad);
+            },
+            setAddedURL:function (settings) {
+
+    	        urlArray = settings.split(";");
+            	for (index = 0, len = urlArray.length; index < len; ++index) {
+            		singleURLArray = urlArray[index].split(",");
+            		urlTypeSelection = document.getElementById("urlTypeSelect");
+            		if (urlTypeSelection != null) {
+            			 dijit.byId("urlTypeSelect").set("value", singleURLArray[1]);
+            		}            		
+            		addURLText = document.getElementById("urlTextInput");
+            		if (addURLText != null) {
+	            		addURLText.value = singleURLArray[0];
+            		}
+            		
+        	        addURLbutton = document.getElementById("addURLButton");
+            		if (addURLbutton != null) {
+			        	addURLbutton.click();
+            		}
+                 }            	
             },
             /**
              * apply settings to layers
@@ -693,6 +736,9 @@ define(['dojo/_base/declare',
                     layerInfosObject.onlayerInfosChanged();
                 });
             },
+            initOnlineDataItems: function (settings) {
+				window.onlineDataTobeAdded = settings;
+            },            
             initLayersFields: function (settings) {
                 array.forEach(settings, function (layerSettings) {
   					window.hashFieldsAddedFeatureLayer[layerSettings.id] = layerSettings.fields;
@@ -739,8 +785,9 @@ define(['dojo/_base/declare',
                     toggleButtonPBSTopics: [],
                     chkLayerInPBS: [],
                     chkLayerInBoundary: [],                   
-                    graphics: []
-                    
+                    graphics: [],
+                    addedURL: null,            
+                    onlineDataItems:window.onlineDataAlreadyAdded,       
                 };
 
                 settings.extent = this.map.extent;
@@ -752,7 +799,7 @@ define(['dojo/_base/declare',
                 settings.toggleButtonPBSTopics = this.getToggleButtonPBSTopics();
                 settings.chkLayerInPBS = this.getChkLayerInPBS();
                 settings.chkLayerInBoundary = this.getChkLayerInBoundary();
-                
+                settings.addedURL = this.getAddedURL();
 
                 // have to use async to get layers
                 this.getLayerSettingsForCurrentMap().then(function (layerSettings) {
@@ -955,7 +1002,17 @@ define(['dojo/_base/declare',
 		            }
 		        }
 		        return settings;
-            },                        
+            },  
+            getAddedURL: function () {
+            	var addedURL = "";
+            	for (var key in window.hashAddedURLToType) {
+				  if (window.hashAddedURLToType.hasOwnProperty(key)) {
+				  	addedURL = addedURL + key + "," + window.hashAddedURLToType[key] + ";";
+				  }
+				}
+				addedURL = addedURL.substring(0, addedURL.length - 1);			
+            	return addedURL;
+            },                  
             /**
              * create settings object from the given graphics Layer
              * @param   {GraphicLayer}   graphicLayer a graphics layer

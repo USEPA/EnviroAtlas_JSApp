@@ -187,9 +187,9 @@ define([
                 var layers = [];
 
                 arrayUtils.forEach(featureCollection.layers, lang.hitch(this, function (layer) {
-                    //var infoTemplate = new InfoTemplate("Details", "${*}");
+                    var infoTemplate = new InfoTemplate("Details", "${*}");
                     var featureLayer = new FeatureLayer(layer, {
-                        //infoTemplate: infoTemplate
+                        infoTemplate: infoTemplate
                     });
                     var fields = "";
                     for (index = 0, len = featureCollection.layers[0].layerDefinition.fields.length; index < len; ++index) {

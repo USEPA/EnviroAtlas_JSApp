@@ -121,8 +121,8 @@ define(["dojo/_base/declare",
         if (!ok) {
           return;
         }
-
-        domClass.add(btn, "disabled");
+		window.hashAddedURLToType[url] = type;
+        //domClass.add(btn, "disabled");//this line is removed so that the button will work for saveSession with multiple added URL
         util.setNodeText(self.messageNode, i18n.search.item.messages.adding);
         var dfd = new Deferred();
         var map = this.searchPane.wabWidget.map;
@@ -220,6 +220,7 @@ define(["dojo/_base/declare",
         var loader = new LayerLoader();
         //var id = loader._generateLayerId();
         var id = this.nameTextBox.value;
+        window.hashAddedURLToId[url] = id;
         var self = this,
           layer = null;
 
@@ -245,6 +246,7 @@ define(["dojo/_base/declare",
                       infoTemplate: new InfoTemplate()
                     });
                     dfds.push(loader._waitForLayer(lyr));
+                    window.hashAddedURLToId[url] = lyr.id;
                   });
                   all(dfds).then(function(results) {
                     var lyrs = [];
@@ -255,6 +257,7 @@ define(["dojo/_base/declare",
                     array.forEach(lyrs, function(lyr) {
                       loader._setFeatureLayerInfoTemplate(lyr);
                       window.layerID_Portal_WebMap.push(lyr.id);
+                      window.hashAddedURLToId[url] = lyr.id;
                       map.addLayer(lyr);
 
                     });

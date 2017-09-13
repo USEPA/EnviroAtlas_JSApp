@@ -31,6 +31,9 @@ define([
   function(BaseWidget, declare, lang, array, html, dom, on,
   query, registry, LayerListView, NlsStrings, LayerInfos) {
 
+  function(BaseWidget, declare, lang, array, domConstruct, dom, on,
+    LayerListView, PopupMenu, NlsStrings, LayerInfos) {
+
     var clazz = declare([BaseWidget], {
       //these two properties is defined in the BaseWiget
       baseClass: 'jimu-widget-layerList',
