@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 Esri. All Rights Reserved.
+// Copyright © 2014 - 2016 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,8 +34,8 @@ function(declare, _WidgetBase, domStyle, domConstruct) {
         });
       }
       domStyle.set(this.domNode, {width: '100%', height: '100%'});
-      var str = '<img class="jimu-loading" src="' + require.toUrl('jimu') +
-        '/images/loading.gif">';
+
+      var str = '<div class="jimu-loading"></div>';
       domConstruct.place(str, this.domNode);
     },
 

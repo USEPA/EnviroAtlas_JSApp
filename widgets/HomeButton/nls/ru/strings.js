@@ -1,5 +1,3 @@
-﻿define(
-   ({
-    _widgetLabel: "Кнопка На главную"
-  })
-);
+define({
+  "_widgetLabel": "На главную"
+});

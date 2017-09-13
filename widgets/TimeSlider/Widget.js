@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 Esri. All Rights Reserved.
+// Copyright © 2014 - 2016 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,222 +19,161 @@ define(['dojo/_base/declare',
     'dojo/_base/html',
     'dojo/_base/array',
     'dojo/_base/fx',
+    "jimu/WidgetManager",
+    'dojo/dnd/move',
     'dojo/on',
-    'dojo/sniff',
+    'dojo/query',
     'dojo/Deferred',
+    'dojo/dom-geometry',
     'jimu/LayerInfos/LayerInfos',
     'jimu/BaseWidget',
-    'jimu/utils',
-    'esri/lang',
     'esri/TimeExtent',
-    'esri/dijit/TimeSlider'
+    'esri/dijit/TimeSlider',
+    './SpeedMenu',
+    'jimu/utils',
+    './TimeProcesser',
+    './LayerProcesser',
+    './utils',
+    "dojo/throttle"
   ],
-  function(declare, lang, html, array, baseFx, on, has, Deferred,
-    LayerInfos, BaseWidget, utils, esriLang, TimeExtent, TimeSlider) {
+  function(declare, lang, html, array, baseFx, WidgetManager, Move,
+    on, query, Deferred, domGeometry,
+    LayerInfos, BaseWidget, TimeExtent, TimeSlider,
+    SpeedMenu, jimuUtils,TimeProcesser,LayerProcesser, utils, throttle) {
 
     var clazz = declare([BaseWidget], {
       baseClass: 'jimu-widget-timeslider',
       clasName: 'esri.widgets.TimeSlider',
+      speedMenu: null,
       _showed: false,
-      // _enabled: true,
       _timeHandles: null,
       layerInfosObj: null,
+
+      _layerInfosDef: null,
+      _timeSliderPropsDef: null,
+
+      _miniModeTimer: null,
 
       postCreate: function() {
         this.inherited(arguments);
         this._timeHandles = [];
-        this.getTimeSliderProps(this.map).then(lang.hitch(this, function() {
-          LayerInfos.getInstance(this.map, this.map.itemInfo)
-            .then(lang.hitch(this, function(layerInfosObj) {
-              this.layerInfosObj = layerInfosObj;
-              // should check whether is timeInfo layer.
-              this.own(on(
-                layerInfosObj,
-                'layerInfosIsShowInMapChanged',
-                lang.hitch(this, this._onLayerInfosIsShowInMapChanged)));
-              this.own(layerInfosObj.on(
-                'layerInfosChanged',
-                lang.hitch(this, this._onLayerInfosChanged)));
 
-              this.processTimeDisableLayer();
-            }));
+        this.layerProcesser = new LayerProcesser({map:this.map});
+        this.timeProcesser = new TimeProcesser({map:this.map,nls:this.nls,config:this.config});
+
+        this._initLayerInfosObj().then(lang.hitch(this, function() {
+          this.timeProcesser.setLayerInfosObj(this.layerInfosObj);
+          this.layerProcesser.setLayerInfosObj(this.layerInfosObj);
+          this.layerProcesser.processTimeDisableLayer();
         }));
       },
 
       startup: function() {
         this.inherited(arguments);
         this.own(on(this.map, 'resize', lang.hitch(this, this._onMapResize)));
-      },
+        //close btn
+        this.own(on(this.closeBtn, 'click', lang.hitch(this, this._closeHanlder)));
+        //toggle mini-mode(desktop)
+        this.own(on(this.domNode, 'mouseover', lang.hitch(this, function () {
+          if (!utils.isRunInMobile()) {
+            this._clearMiniModeTimer();
+          }
+        })));
+        this.own(on(this.domNode, 'mouseout', lang.hitch(this, function () {
+          if (!utils.isRunInMobile()) {
+            this._setMiniModeTimer();
+          }
+        })));
+        //toggle mini-mode(mobile)
+        this.own(on(this.domNode, 'click', lang.hitch(this, function () {
+          if (utils.isRunInMobile()) {
+            this._clearMiniModeTimer();
+            this._setMiniModeTimer();
 
-      _isTimeTemporalLayer: function(layer, mustVisible) {
-        var _hasValidTime = layer && layer.timeInfo && layer.useMapTime;
-        var _layerInfo = this.layerInfosObj.getLayerInfoById(layer.id);
-        var timeAnimation = _layerInfo && _layerInfo.originOperLayer &&
-          (_layerInfo.originOperLayer.timeAnimation !== false);
-        var condition = _hasValidTime && timeAnimation && (mustVisible ? layer.visible : true);
-
-        if (condition) {
-          var layerType = layer.declaredClass;
-          if (layerType === "esri.layers.KMLLayer") {
-            var internalLayers = layer.getLayers();
-            var some = array.some(internalLayers, function(kLayer) {
-              if (kLayer.timeInfo && kLayer.timeInfo.timeExtent) {
-                return true;
-              }
-              return false;
-            });
-            if (some) {
-              return true;
+            var isInMiniMode = html.hasClass(this.domNode, 'mini-mode');
+            if (isInMiniMode) {
+              html.removeClass(this.domNode, 'mini-mode');
+              this._adaptResponsive();
             }
-          } else if (layer.timeInfo && layer.timeInfo.timeExtent) {
-            return true;
           }
-        }
-
-        return false;
+        })));
       },
 
-      _processTimeUpdate: function(layer) {
-        var _layerInfo = null;
-        var timeAnimation = true;
-        _layerInfo = this.layerInfosObj.getLayerInfoById(layer.id);
-        timeAnimation = _layerInfo && _layerInfo.originOperLayer &&
-          (_layerInfo.originOperLayer.timeAnimation !== false);
-        if (!timeAnimation && 'setUseMapTime' in layer) {
-          layer.setUseMapTime(false);
-        }
-      },
+      //overwrite for dijit in header-controller
+      setPosition: function(/*position, containerNode*/){
+        if (!this._isSetPosition) {
+          var containerNode = this.map.id;
+          var style = jimuUtils.getPositionStyle(this.position);
+          html.place(this.domNode, containerNode);
+          html.setStyle(this.domNode, style);
 
-      processTimeDisableLayer: function() {
-        var i = 0,
-          len, layer, layerId;
-        for (i = 0, len = this.map.layerIds.length; i < len; i++) {
-          layerId = this.map.layerIds[i];
-          layer = this.map.getLayer(layerId);
-
-          this._processTimeUpdate(layer);
-        }
-
-        for (i = 0, len = this.map.graphicsLayerIds.length; i < len; i++) {
-          layerId = this.map.graphicsLayerIds[i];
-          layer = this.map.getLayer(layerId);
-
-          this._processTimeUpdate(layer);
+          this._isSetPosition = true;
         }
       },
 
-      hasVisibleTemporalLayer: function() {
-        var i = 0,
-          len, layer, layerId;
-        for (i = 0, len = this.map.layerIds.length; i < len; i++) {
-          layerId = this.map.layerIds[i];
-          layer = this.map.getLayer(layerId);
-
-          if (this._isTimeTemporalLayer(layer, true)) {
-            return true;
-          }
-        }
-
-        for (i = 0, len = this.map.graphicsLayerIds.length; i < len; i++) {
-          layerId = this.map.graphicsLayerIds[i];
-          layer = this.map.getLayer(layerId);
-
-          if (this._isTimeTemporalLayer(layer, true)) {
-            return true;
-          }
-        }
-
-        return false;
-      },
-
-      _onLayerInfosIsShowInMapChanged: function(changedLayerInfos) {
-        var timeTemporalLayerChanged = array.some(
-          changedLayerInfos,
-          lang.hitch(this, function(layerInfo) {
-            var _layer = null;
-            while (!_layer) {
-              _layer = this.map.getLayer(layerInfo.id);
-              layerInfo = layerInfo.parentLayerInfo;
-            }
-
-            return this._isTimeTemporalLayer(_layer);
-          }));
-
-        if (timeTemporalLayerChanged) {
-          this._onTimeTemportalLayerChanged();
-        }
-      },
-
-      _onLayerInfosChanged: function(layerInfo, changedType, layerInfoSelf) {
-        /* jshint unused:true */
-        if (changedType === 'added') {
-          var _layer = this.map.getLayer(layerInfoSelf.id);
-          var visibleTimeTemporalLayerChanged = this._isTimeTemporalLayer(_layer, true);
-
-          if (visibleTimeTemporalLayerChanged) {
-            this._onTimeTemportalLayerChanged();
-          }
-        } else if (changedType === 'removed') {
-          this._onTimeTemportalLayerChanged();
-        }
-      },
-
-      _onTimeTemportalLayerChanged: function() {
-        if (this.state !== 'closed') {
-          if (this.hasVisibleTemporalLayer()) {
-            if (this.timeSlider) {
-              this.updateLayerLabel();
-            } else {
-              // this.createTimeSlider();
-              this.showTimeSlider();
-            }
-          } else {
-            if (this.timeSlider) {
-              this.closeTimeSlider();
-            }
-            // html.setStyle(this.noTimeContentNode, 'display', 'block');
-          }
-        }
+      resize: function () {
+        throttle(lang.hitch(this, this._onMapResize), 200);
       },
 
       onOpen: function() {
-        if (!this.hasVisibleTemporalLayer()) {
-          html.setStyle(this.noTimeContentNode, 'display', 'block');
-          html.setStyle(this.timeContentNode, 'display', 'none');
-          this._showed = true;
-        } else {
-          if (!this._showed) {
-            this.showTimeSlider();
+        this._initLayerInfosObj().then(lang.hitch(this, function () {
+          if (!this.layerProcesser.hasVisibleTemporalLayer()) {
+            this._showNoTimeLayer();
+          } else {
+            if (!this._showed) {
+              this.showTimeSlider();
+            }
           }
-        }
+
+          //initPosition
+          utils.initPosition(this.map, this.domNode, this.position);
+          this._adaptResponsive();
+        }));
       },
 
       onClose: function() {
-        if (!this.hasVisibleTemporalLayer()) {
-          html.setStyle(this.noTimeContentNode, 'display', 'none');
-          this._showed = false;
-        } else {
-          if (this._showed) {
-            this.closeTimeSlider();
+        this._initLayerInfosObj().then(lang.hitch(this, function() {
+          if (!this.layerProcesser.hasVisibleTemporalLayer()) {
+            html.setStyle(this.noTimeContentNode, 'display', 'none');
+            this._showed = false;
+          } else {
+            if (this._showed) {
+              this.closeTimeSlider();
+            }
           }
-        }
+        }));
       },
-
-      _isRunInMobile: function() {
-        return window.appInfo.isRunInMobile;
+      //on close btn click
+      _closeHanlder: function(){
+        WidgetManager.getInstance().closeWidget(this);
+      },
+      _showNoTimeLayer: function () {
+        html.setStyle(this.noTimeContentNode, 'display', 'block');
+        html.setStyle(this.timeContentNode, 'display', 'none');
+        this._showed = true;
       },
 
       showTimeSlider: function() {
         html.setStyle(this.noTimeContentNode, 'display', 'none');
-        this.createTimeSlider();
-        html.setStyle(this.timeContentNode, 'display', 'block');
-        html.addClass(this.domNode, 'show-time-slider');
 
-        this._adaptResponsive();
+        this.createTimeSlider().then(lang.hitch(this, function() {
+          if("undefined" === typeof this.timeSlider){
+            this._showNoTimeLayer();
+            return;
+          }
 
-        if (has('ie') && has('ie') < 9) {
-          this._showed = true;
-        } else {
+          this.timeProcesser.setTimeSlider(this.timeSlider);
+          this._updateTimeSliderUI();
+
+          //restore playBtn state
+          if (this.playBtn && html.hasClass(this.playBtn, "pause")) {
+            html.removeClass(this.playBtn, "pause");
+          }
+          //styles
+          html.setStyle(this.timeContentNode, 'display', 'block');
+          html.addClass(this.domNode, 'show-time-slider');
+          this._initSpeedMenu();
+
           baseFx.animateProperty({
             node: this.timeContentNode,
             properties: {
@@ -245,139 +184,188 @@ define(['dojo/_base/declare',
             },
             onEnd: lang.hitch(this, function() {
               this._showed = true;
+              //auto play when open
+              if (false === html.hasClass(this.playBtn, "pause")) {
+                on.emit(this.playBtn, 'click', { cancelable: false, bubbles: true });
+              }
+              this._adaptResponsive();
             }),
             duration: 500
           }).play();
-        }
+        }));
       },
 
       closeTimeSlider: function() {
-        html.setStyle(this.domNode, 'display', 'block');
-        if (has('ie') && has('ie') < 9) {
-          this._onCloseTimeSliderEnd();
-        } else {
-          baseFx.animateProperty({
-            node: this.timeContentNode,
-            properties: {
-              opacity: {
-                start: 1,
-                end: 0
-              }
-            },
-            onEnd: lang.hitch(this, this._onCloseTimeSliderEnd),
-            duration: 500
-          }).play();
-        }
+        this._draged = false;
+        this._isSetPosition = false;
+        this._showed = false;
+
+        html.setStyle(this.domNode, 'display', 'none');
+
+        this.removeTimeSlider();
+        this._destroySpeedMenu();
+
+        baseFx.animateProperty({
+          node: this.timeContentNode,
+          properties: {
+            opacity: {
+              start: 1,
+              end: 0
+            }
+          },
+          onEnd: lang.hitch(this, this._onCloseTimeSliderEnd),
+          duration: 500
+        }).play();
       },
 
       _onCloseTimeSliderEnd: function() {
-        this.removeTimeSlider();
-        this._showed = false;
-
-        html.setStyle(this.timeContentNode, 'display', 'none');
-        html.removeClass(this.domNode, 'show-time-slider');
-
-        if (this.state !== 'closed') {
-          html.setStyle(this.noTimeContentNode, 'display', 'block');
+        if (this._destroyed) {
+          return;
         }
-
+        html.removeClass(this.domNode, 'show-time-slider');
         if (this.state === 'closed') {
           html.removeClass(this.domNode, 'mobile-time-slider');
           html.removeClass(this.timeContentNode, 'mobile');
         }
       },
 
-      getTimeSliderProps: function(map) {
-        var def = new Deferred();
-        var itemInfo = map && map.itemInfo;
-        if (itemInfo && itemInfo.itemData && itemInfo.itemData.widgets &&
-          itemInfo.itemData.widgets.timeSlider && itemInfo.itemData.widgets.timeSlider.properties) {
-          def.resolve(itemInfo.itemData.widgets.timeSlider.properties);
-        } else {
-          def.resolve(null);
+      getTimeSliderProps: function() {
+        if (!this._timeSliderPropsDef) {
+
+          this._timeSliderPropsDef = new Deferred();
+          this.own(this._timeSliderPropsDef);
+          //var itemInfo = map && map.itemInfo;
+          this.timeProcesser.getTsPros().then(lang.hitch(this, function (tsProps) {
+            if (null !== tsProps &&
+              (this.timeProcesser.needUpdateFullTime() || true === tsProps._needToFindDefaultInterval)) {
+              this.timeProcesser._getUpdatedFullTime().then(lang.hitch(this, function (fullTimeExtent) {
+                var start = fullTimeExtent.startTime.getTime();
+                var end = fullTimeExtent.endTime.getTime();
+
+                if (tsProps.startTime > end || tsProps.endTime < start) {
+                  tsProps.startTime = start;
+                  tsProps.endTime = end;
+                } else {
+                  if (tsProps.startTime < start) {
+                    tsProps.startTime = start;
+                  }
+                  if (tsProps.endTime > end) {
+                    tsProps.endTime = end;
+                  }
+                }
+
+                if (true === tsProps._needToFindDefaultInterval) {
+                  tsProps.timeStopInterval = this.timeProcesser.findDefaultInterval(fullTimeExtent);
+                }
+
+                this._timeSliderPropsDef.resolve(tsProps);
+              }));
+            } else {
+              this._timeSliderPropsDef.resolve(tsProps);
+            }
+          }));
         }
 
-        return def;
+        return this._timeSliderPropsDef;
       },
 
       createTimeSlider: function() {
-        if (!this.timeSlider) {
-          this.getTimeSliderProps(this.map).then(lang.hitch(this, function(props) {
-            this.timeSlider = new TimeSlider({}, this.sliderNode);
-            this.map.setTimeSlider(this.timeSlider);
-            var fromTime = new Date(props.startTime);
-            var endTime = new Date(props.endTime);
-
-            var timeExtent = new TimeExtent(fromTime, endTime);
-            this.timeSlider.setThumbCount(props.thumbCount);
-            if (props.numberOfStops) {
-              this.timeSlider.createTimeStopsByCount(timeExtent, (props.numberOfStops + 1));
-            } else {
-              this.timeSlider.createTimeStopsByTimeInterval(
-                timeExtent,
-                props.timeStopInterval.interval,
-                props.timeStopInterval.units
-              );
-            }
-            this.timeSlider.setThumbMovingRate(props.thumbMovingRate);
-
-            if (this.timeSlider.timeStops.length > 25) {
-              this.timeSlider.setTickCount(0);
-            }
-            if (this.timeSlider.thumbCount === 2) {
-              this.timeSlider.setThumbIndexes([0, 1]);
-            }
-
-            this.timeSlider.setLoop(true);
-            this.timeSlider.startup();
-            html.addClass(this.timeSlider.domNode, 'jimu-float-leading');
-
-            this.updateLayerLabel();
-            this.updateTimeExtentLabel();
-
-            this._timeHandles.push(on(
-              this.timeSlider,
-              'time-extent-change',
-              lang.hitch(this, this.updateTimeExtentLabel)
-            ));
-          }));
-        }
-      },
-
-      _onSelectSpeedItem: function(evt) {
-        if (evt.target) {
-          var rate = html.getAttr(evt.target, 'speed');
-          this.getTimeSliderProps(this.map).then(lang.hitch(this, function(props) {
-            if (props && rate) {
-              rate = parseFloat(rate);
-              this.timeSlider.setThumbMovingRate(props.thumbMovingRate / rate);
-              this.speedLabelNode.innerHTML = evt.target.innerHTML;
-            }
-            html.setStyle(this.speedMenu, 'display', 'none');
-          }));
-        }
-      },
-
-      _onSpeedLabelClick: function() {
-        html.setStyle(this.speedMenu, 'display', 'block');
-      },
-
-      _onMouseEnterSpeedContainer: function() {
-        html.setStyle(this.speedMenu, 'display', 'block');
-      },
-
-      _onMouseLeaveSpeedContainer: function() {
-        html.setStyle(this.speedMenu, 'display', 'none');
-      },
-
-      updateTimeSlider: function() {
-        if (this.timeSlider) {
-          var isPlaying = this.timeSlider.playing;
-          this.removeTimeSlider();
-          this.createTimeSlider();
-          if (isPlaying) {
-            this.timeSlider.play();
+        return this.getTimeSliderProps().then(lang.hitch(this, function(props) {
+          if (!props) {
+            return;
           }
+          if (this.timeSlider) {
+            return this.timeSlider;
+          }
+          //this domNode will be deleted when TimeSlider destroy
+          this.sliderNode = html.create('div', {}, this.sliderNodeContainer);
+
+          this.timeSlider = new TimeSlider({}, this.sliderNode);
+
+          var fromTime = new Date(props.startTime);
+          var endTime = new Date(props.endTime);
+          var timeExtent = new TimeExtent(fromTime, endTime);
+          this.timeSlider.setThumbCount(props.thumbCount);
+          if (props.numberOfStops) {
+            this.timeSlider.createTimeStopsByCount(timeExtent, (props.numberOfStops + 1));
+          } else {
+            this.timeSlider.createTimeStopsByTimeInterval(
+              timeExtent,
+              props.timeStopInterval.interval,
+              props.timeStopInterval.units
+            );
+          }
+          this.timeSlider.setThumbMovingRate(props.thumbMovingRate);
+
+          if (this.timeSlider.timeStops.length > 25) {
+            this.timeSlider.setTickCount(0);
+          }
+          if (this.timeSlider.thumbCount === 2) {
+            this.timeSlider.setThumbIndexes([0, 1]);
+          }
+          this.timeSlider.setLoop(true);
+          this.timeSlider.startup();
+
+          this._timeHandles.push(on(
+            this.timeSlider,
+            'time-extent-change',
+            lang.hitch(this, this.updateTimeExtentLabel)
+          ));
+
+          this.map.setTimeSlider(this.timeSlider);
+
+          return this.timeSlider;
+        }));
+      },
+
+      _updateTimeSliderUI: function () {
+        this.updateLayerLabel();
+        this.updateTimeExtentLabel();
+        this._updateBtnsUI();
+      },
+      _updateBtnsUI: function(){
+        //find and hide raw btns
+        var btns = query(".esriTimeSlider > table > tbody > tr > td > span > span", this.esriTimeSlider);
+        if (btns && 3 === btns.length) {
+          this._rawPlayBtn = btns[0];
+          this._rawPreviousBtn = btns[1];
+          this._rawNextBtn = btns[2];
+        }
+        var tds = query(".esriTimeSlider > table > tbody > tr > td", this.esriTimeSlider);
+        if (tds && 4 === tds.length) {
+          html.addClass(tds[0], "hide");//_rawPlayBtn
+          html.addClass(tds[2], "hide");//_rawPreviousBtn
+          html.addClass(tds[3], "hide");//_rawNextBtn
+        }
+
+        //trigger events
+        if(!this._previousBtnHandler){
+          this._previousBtnHandler = this.own(on(this.previousBtn, 'click', lang.hitch(this, function () {
+            on.emit(this._rawPreviousBtn, 'click', { cancelable: false, bubbles: true });
+          })));
+        }
+        if(!this._playBtnHandler){
+          this._playBtnHandler = this.own(on(this.playBtn, 'click', lang.hitch(this, function (evt) {
+            on.emit(this._rawPlayBtn, 'click', {cancelable: false, bubbles: true });
+            //toggle pause class
+            if(html.hasClass(this.playBtn, "pause")){
+              html.removeClass(this.playBtn, "pause");
+            } else {
+              html.addClass(this.playBtn, "pause");
+              if(utils.isRunInMobile()){
+                html.addClass(this.domNode, 'mini-mode');
+                this._adaptResponsive();
+              }
+            }
+
+            evt.stopPropagation();
+            evt.preventDefault();
+          })));
+        }
+        if(!this._nextBtnHandler){
+          this._nextBtnHandler = this.own(on(this.nextBtn, 'click', lang.hitch(this, function () {
+            on.emit(this._rawNextBtn, 'click', { cancelable: false, bubbles: true });
+          })));
         }
       },
 
@@ -387,19 +375,21 @@ define(['dojo/_base/declare',
             handle.remove();
           }
         });
-        this.timeSlider.destroy();
-        this.timeSlider = null;
-        if (this.map) {
-          this.map.setTimeExtent(null);
+        if (this.timeSlider && !this.timeSlider._destroyed) {
+          this.timeSlider.destroy();
+          this.timeSlider = null;
         }
-        this.sliderNode = html.create('div', {}, this.speedContainerNode, 'before');
+
+        if (this.map) {
+          this.map.setTimeExtent();
+        }
       },
 
       updateLayerLabel: function() {
         if (this.config.showLabels) {
           html.setStyle(this.layerLabelsNode, 'display', 'block');
           var label = this.nls.layers;
-          var names = this._getVisibleTemporalLayerNames();
+          var names = this.layerProcesser._getVisibleTemporalLayerNames();
           label = label + names.join(',');
           this.layerLabelsNode.innerHTML = label;
           html.setAttr(this.layerLabelsNode, 'title', label);
@@ -408,95 +398,117 @@ define(['dojo/_base/declare',
         }
       },
 
-      _getVisibleTemporalLayerNames: function() {
-        var i = 0,
-          len, layer, layerId;
-        var ids = [];
-        for (i = 0, len = this.map.layerIds.length; i < len; i++) {
-          layerId = this.map.layerIds[i];
-          layer = this.map.getLayer(layerId);
-
-          if (this._isTimeTemporalLayer(layer, true)) {
-            ids.push(layer.id);
-          }
-        }
-
-        for (i = 0, len = this.map.graphicsLayerIds.length; i < len; i++) {
-          layerId = this.map.graphicsLayerIds[i];
-          layer = this.map.getLayer(layerId);
-
-          if (this._isTimeTemporalLayer(layer, true)) {
-            ids.push(layer.id);
-          }
-        }
-
-        var names = array.map(ids, lang.hitch(this, function(id) {
-          var info = this.layerInfosObj.getLayerInfoById(id);
-          return info.title || "";
-        }));
-
-        return names;
-      },
-
       updateTimeExtentLabel: function(timeExtent) {
-        var label = this.nls.timeExtent;
-        var start = null;
-        var end = null;
-
-        if (!timeExtent) {
-          if (this.timeSlider.thumbCount === 2) {
-            start = this.timeSlider.timeStops[0];
-            end = this.timeSlider.timeStops[1];
-          } else {
-            start = this.timeSlider.timeStops[0];
-          }
-        } else {
-          start = timeExtent.startTime;
-          if (timeExtent.endTime.getTime() - timeExtent.startTime.getTime() > 0) {
-            end = timeExtent.endTime;
-          }
-        }
-
-        if (end) {
-          label = esriLang.substitute({
-            FROMTIME: utils.localizeDate(start),
-            ENDTIME: utils.localizeDate(end)
-          }, label);
-        } else {
-          label = utils.localizeDate(start);
-        }
-
+        var label = this.timeProcesser._getTimeFormatLabel(timeExtent);
+        //console.log("===>"+label);
         this.timeExtentLabelNode.innerHTML = label;
+        html.setAttr(this.timeExtentLabelNode, 'title', label);
       },
 
-      _adaptResponsive: function() {
-        if (!this.timeSlider) {
+      _adaptResponsive: function (optison) {
+        if (!this._showed) {
           return;
         }
-        setTimeout(lang.hitch(this, function() {
-          var _w = null;
-          var layoutBox = html.getMarginBox(window.jimuConfig.layoutId);
-          var aPos = html.position(this.domNode);
-          var sliderContentBox = html.getContentBox(this.sliderContent);
-          var speedBox = html.getMarginBox(this.speedContainerNode);
-          if (window.appInfo.isRunInMobile) {
-            html.addClass(this.timeContentNode, 'mobile');
-            html.addClass(this.domNode, 'mobile-time-slider');
-          } else {
-            html.removeClass(this.timeContentNode, 'mobile');
-            html.removeClass(this.domNode, 'mobile-time-slider');
-          }
-          _w = sliderContentBox.w - speedBox.w;
-          html.setStyle(this.timeSlider.domNode, 'width', _w + 'px');
-        }), 10);
 
+        this._updateTimeSliderUI();
+
+        setTimeout(lang.hitch(this, function () {
+          if (utils.isRunInMobile()) {
+            this.disableMoveable();
+            html.addClass(this.timeContentNode, 'mobile');
+            html.addClass(this.domNode, 'mobile');
+          } else {
+            //DO NOT makeMoveable, when _clearMiniModeTimer
+            if (!(optison && "undefined" !== typeof optison.refreshMoveable && false === optison.refreshMoveable)) {
+              if ("none" !== html.getStyle(this.noTimeContentNode, "display")) {
+                this.dragHandler = this.noTimeContentNode;
+              } else {
+                this.dragHandler = this.labelContainer;
+              }
+
+              this.makeMoveable(this.dragHandler);
+            }
+
+            html.removeClass(this.timeContentNode, 'mobile');
+            html.removeClass(this.domNode, 'mobile');
+          }
+          this._setPopupPosition(utils.isRunInMobile());
+        }), 10);
+      },
+
+      _setPopupPosition: function (isRunInMobile) {
+        if(!isRunInMobile){
+          //height
+          if (this.config.showLabels){
+            html.setStyle(this.domNode, 'height','92px');
+          } else {
+            html.setStyle(this.domNode, 'height','72px');
+          }
+          //left
+          //do not center it, if moveed by drag
+          if (!this._draged) {
+            var left = utils.getInitLeft(this.map, this.domNode);
+            this.position.left = left;
+            html.setStyle(this.domNode, 'left', this.position.left + 'px');
+          }
+
+          if (!this._moving && this.position &&
+            this.position.left && this.position.top) {
+            html.setStyle(this.domNode, 'top', this.position.top + 'px');
+            html.setStyle(this.domNode, 'left', this.position.left + 'px');
+          }
+        } else {
+          //height
+          if (this.config.showLabels){
+            html.setStyle(this.domNode, 'height','128px');
+          } else {
+            html.setStyle(this.domNode, 'height','108px');
+          }
+        }
+
+        this._setUI(isRunInMobile);
+      },
+      _setUI:function(isRunInMobile){
+        var btnsContainer = html.getContentBox(this.btnsContainer);
+
+        if(isRunInMobile){
+          var screenWidth = window.innerWidth;
+          var middleOfScreenWidth = screenWidth / 2;
+          var left = middleOfScreenWidth - btnsContainer.w / 2;
+
+          if(window.isRTL){
+            html.setStyle(this.btnsContainer, 'margin-right', left + 'px');
+          } else {
+            html.setStyle(this.btnsContainer, 'margin-left', left + 'px');
+          }
+
+          if (this.config.showLabels && !html.hasClass(this.domNode, 'mini-mode')) {
+            html.setStyle(this.sliderContent, 'bottom', '-12px');
+          } else if (this.config.showLabels && html.hasClass(this.domNode, 'mini-mode')) {
+            html.setStyle(this.sliderContent, 'bottom', '20px');
+          }
+
+        } else {
+          html.setStyle(this.btnsContainer, 'margin-left', 'auto');
+          html.setStyle(this.btnsContainer, 'margin-right', 'auto');
+
+          if (this.config.showLabels && !html.hasClass(this.domNode, 'mini-mode')) {
+            //showLabels && no 'mini-mode'
+            html.setStyle(this.sliderContent, 'bottom', '-20px');
+          } else if (this.config.showLabels && html.hasClass(this.domNode, 'mini-mode')) {
+            //showLabels && 'mini-mode'
+            html.setStyle(this.sliderContent, 'bottom', '20px');
+          } else {
+            //no showLabels
+            html.setStyle(this.sliderContent, 'bottom', '0px');
+          }
+        }
       },
 
       _onMapResize: function() {
         if (this.state === 'closed') {
           return;
         }
-
         this._adaptResponsive();
       },
 
@@ -505,6 +517,137 @@ define(['dojo/_base/declare',
           this.map.setTimeExtent(null);
         }
         this.inherited(arguments);
+      },
+
+
+      //LayerInfosObj
+      _initLayerInfosObj: function () {
+        if (!this._layerInfosDef) {
+          this._layerInfosDef = new Deferred();
+          this.own(this._layerInfosDef);
+
+          LayerInfos.getInstance(this.map, this.map.itemInfo).then(lang.hitch(this, function (layerInfosObj) {
+            // if (this.domNode) {
+            //   }
+            this.layerInfosObj = layerInfosObj;
+            // should check whether is timeInfo layer.
+            this.own(on(
+              layerInfosObj,
+              'layerInfosIsShowInMapChanged',
+              lang.hitch(this, this.layerProcesser._onLayerInfosIsShowInMapChanged)));
+            this.own(layerInfosObj.on(
+              'layerInfosChanged',
+              lang.hitch(this, this.layerProcesser._onLayerInfosChanged)));
+
+            this._layerInfosDef.resolve(this.layerInfosObj);
+          }));
+        }
+
+        return this._layerInfosDef;
+      },
+
+      //miniModeTimer
+      _clearMiniModeTimer: function () {
+        html.removeClass(this.domNode, 'mini-mode');
+        this._adaptResponsive({ refreshMoveable:false });
+        if (this._miniModeTimer) {
+          clearTimeout(this._miniModeTimer);
+        }
+      },
+      _setMiniModeTimer: function () {
+        var time = utils.isRunInMobile() ? 5000 : 2000;
+        this._miniModeTimer = setTimeout(lang.hitch(this, function () {
+          html.addClass(this.domNode, 'mini-mode');
+          this._adaptResponsive();
+        }), time);
+      },
+
+      //moveable
+      makeMoveable: function (handleNode) {
+        this.disableMoveable();
+        var containerBox = domGeometry.getMarginBox(this.map.root);
+        //containerBox.l = containerBox.l - width + tolerance;
+        //containerBox.w = containerBox.w + 2 * (width - tolerance);
+        this.moveable = new Move.boxConstrainedMoveable(this.domNode, {
+          box: containerBox,
+          handle: handleNode || this.handleNode,
+          within: true
+        });
+        this.own(on(this.moveable, 'MoveStart', lang.hitch(this, this.onMoveStart)));
+        this.own(on(this.moveable, 'Moving', lang.hitch(this, this.onMoving)));
+        this.own(on(this.moveable, 'MoveStop', lang.hitch(this, this.onMoveStop)));
+      },
+      disableMoveable: function () {
+        if (this.moveable) {
+          this.dragHandler = null;
+          this.moveable.destroy();
+          this.moveable = null;
+        }
+      },
+      onMoveStart: function (mover) {
+        var containerBox = domGeometry.getMarginBox(this.map.root),
+          domBox = domGeometry.getMarginBox(this.domNode);
+        if (window.isRTL) {
+          var rightPx = html.getStyle(mover.node, 'right');
+          html.setStyle(mover.node, 'left', (containerBox.w - domBox.w - parseInt(rightPx, 10)) + 'px');
+          html.setStyle(mover.node, 'right', '');
+        }
+        //move flag
+        if (!this._draged) {
+          this._draged = true;
+        }
+      },
+      onMoving: function (/*mover*/) {
+        //html.setStyle(mover.node, 'opacity', 0.9);
+        this._moving = true;
+      },
+      onMoveStop: function (mover) {
+        if (mover && mover.node) {
+          html.setStyle(mover.node, 'opacity', 1);
+          var panelBox = domGeometry.getMarginBox(mover.node);
+          this.position.left = panelBox.l;
+          this.position.top = panelBox.t;
+          setTimeout(lang.hitch(this, function () {
+            this._moving = false;
+          }), 500);
+        }
+      },
+      _onHandleClick: function(evt) {
+        evt.stopPropagation();
+      },
+
+      //speed meun
+      _initSpeedMenu: function () {
+        if (!this.speedMenu) {
+          this.speedMenuNode = html.create('div', { "class": "jimu-float-trailing" }, this.sliderContent);
+
+          this.speedMenu = new SpeedMenu({ nls: this.nls }, this.speedMenuNode);
+          this.speedMenuSelectedHanlder = this.own(on(this.speedMenu, 'selected', lang.hitch(this, function (rateStr) {
+            this.getTimeSliderProps().then(lang.hitch(this, function (props) {
+              if (this.timeSlider && props && rateStr) {
+                var rate = parseFloat(rateStr);
+                this.timeSlider.setThumbMovingRate(props.thumbMovingRate / rate);
+              }
+            }));
+          })));
+
+          this.speedMenuOpenHanlder = this.own(on(this.speedMenu, 'open', lang.hitch(this, function () {
+            this._clearMiniModeTimer();
+          })));
+
+          this.speedMenuCloseHanlder = this.own(on(this.speedMenu, 'close', lang.hitch(this, function () {
+            this._setMiniModeTimer();
+          })));
+        }
+      },
+      _destroySpeedMenu: function () {
+        if(this.speedMenu && this.speedMenu.destroy){
+          this.speedMenu.destroy();
+        }
+        this.speedMenu = null;
+        this.speedMenuSelectedHanlder = null;
+        this.speedMenuOpenHanlder = null;
+        this.speedMenuCloseHanlder = null;
       }
     });
     return clazz;

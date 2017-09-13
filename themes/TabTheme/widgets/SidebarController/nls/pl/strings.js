@@ -1,7 +1,5 @@
-﻿define(
-   ({
-    _widgetLabel: "Kontroler paska bocznego",
-    more: "więcej",
-    otherPanels: "Inne panele"
-  })
-);
+define({
+  "_widgetLabel": "Kontroler paska bocznego",
+  "more": "więcej",
+  "otherPanels": "Inne panele"
+});

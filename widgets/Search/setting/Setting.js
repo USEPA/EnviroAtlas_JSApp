@@ -22,19 +22,22 @@ define([
     "dojo/query",
     "dojo/on",
     "dojo/when",
+    "esri/lang",
     "dijit/_WidgetsInTemplateMixin",
     "jimu/BaseWidgetSetting",
     "jimu/LayerInfos/LayerInfos",
     "../utils",
+    "jimu/utils",
     "./QuerySourceSetting",
     "./LocatorSourceSetting",
+    "jimu/dijit/CheckBox",
     "jimu/dijit/SimpleTable",
     "jimu/dijit/LoadingIndicator"
   ],
   function(
-    declare, array, html, lang, query, on, when,
-    _WidgetsInTemplateMixin, BaseWidgetSetting, LayerInfos, utils,
-    QuerySourceSetting, LocatorSourceSetting) {
+    declare, array, html, lang, query, on, when, esriLang,
+    _WidgetsInTemplateMixin, BaseWidgetSetting, LayerInfos, utils, jimuUtils,
+    QuerySourceSetting, LocatorSourceSetting, CheckBox, SimpleTable) {
     /*jshint maxlen: 150*/
     /*jshint smarttabs:true */
 
@@ -42,11 +45,35 @@ define([
       baseClass: 'jimu-widget-search-setting',
       _currentSourceSetting: null,
 
-      postMixInProperties: function() {
-        this.nls.countryCode = this.nls.countryCode || "Country Code(s)";
-        this.nls.countryCodeEg = this.nls.countryCodeEg || "e.g. ";
-        this.nls.countryCodeHint = this.nls.countryCodeHint ||
-          "Leaving this value blank will search all countires";
+      postCreate: function() {
+        this.inherited(arguments);
+
+        this.sourceList = new SimpleTable({
+          autoHeight: false,
+          selectable: true,
+          fields: [{
+            name: "name",
+            title: this.nls.name,
+            width: "auto",
+            type: "text",
+            editable: false
+          }, {
+            name: "actions",
+            title: "",
+            width: "70px",
+            type: "actions",
+            actions: ["up", "down", "delete"]
+          }]
+        }, this.sourceList);
+        html.setStyle(this.sourceList.domNode, 'height', '100%');
+        this.sourceList.startup();
+        this.own(on(this.sourceList, 'row-select', lang.hitch(this, this._onSourceItemSelected)));
+        this.own(on(this.sourceList, 'row-delete', lang.hitch(this, this._onSourceItemRemoved)));
+
+        this.showInfoWindowOnSelect = new CheckBox({
+          checked: true,
+          label: this.nls.showInfoWindowOnSelect
+        }, this.showInfoWindowOnSelect);
       },
 
       startup: function() {
@@ -77,6 +104,10 @@ define([
       setConfig: function(config) {
         this.config = config;
         var sources = config.sources;
+        this.allPlaceholder.set('value', jimuUtils.stripHTML(this.config.allPlaceholder));
+        this.showInfoWindowOnSelect.setValue(
+          esriLang.isDefined(this.config.showInfoWindowOnSelect) ?
+          !!this.config.showInfoWindowOnSelect : true);
         array.forEach(sources, lang.hitch(this, function(source, index) {
           var addResult = this.sourceList.addRow({
             name: source.name || ""
@@ -102,6 +133,10 @@ define([
         if (this._currentSourceSetting) {
           this._closeSourceSetting();
         }
+        var config = {
+          allPlaceholder: jimuUtils.stripHTML(this.allPlaceholder.get('value')),
+          showInfoWindowOnSelect: this.showInfoWindowOnSelect.checked
+        };
         var trs = this.sourceList.getRows();
         var sources = [];
         array.forEach(trs, lang.hitch(this, function(tr) {
@@ -112,9 +147,20 @@ define([
           sources.push(source);
         }));
 
-        return {
-          "sources": sources
-        };
+        config.sources = sources;
+        return config;
+      },
+
+      destroy: function() {
+        utils.setMap(null);
+        utils.setLayerInfosObj(null);
+        utils.setAppConfig(null);
+
+        this.inherited(arguments);
+      },
+
+      _onAllPlaceholderBlur: function() {
+        this.allPlaceholder.set('value', jimuUtils.stripHTML(this.allPlaceholder.get('value')));
       },
 
       _onMenuItemClick: function(evt) {
@@ -126,7 +172,6 @@ define([
 
         var itemType = evt && evt.target && html.getAttr(evt.target, "type");
         if (itemType === "locator") {
-          // this._createNewLocatorSourceSetting();
           this._addNewLocator();
         } else if (itemType === "query") {
           this._addNewQuerySource();
@@ -134,27 +179,11 @@ define([
       },
 
       _addNewLocator: function() {
-        var addResult = this.sourceList.addRow({
-          name: "New Geocoder" //json.name
-        });
-        if (addResult && addResult.success) {
-          this._createNewLocatorSourceSetting({}, {}, addResult.tr);
-          this.sourceList.selectRow(addResult.tr);
-          this._currentSourceSetting._onSetLocatorUrlClick();
-        }
+        this._createNewLocatorSourceSettingFromMenuItem({}, {});
       },
 
       _addNewQuerySource: function() {
-        var addResult = this.sourceList.addRow({
-          // name: item.name || item.title
-          name: "New FeatureLayer"
-        });
-        if (addResult.success) {
-          this._createNewQuerySourceSetting({}, {}, addResult.tr);
-          this.sourceList.selectRow(addResult.tr);
-          // popup select feature layers
-          this._currentSourceSetting._onSetSourceClick();
-        }
+        this._createNewQuerySourceSettingFromMenuItem({}, {});
       },
 
       _setRelatedConfig: function(tr, source) {
@@ -169,15 +198,70 @@ define([
         return query(tr).removeData('config');
       },
 
-      _createNewLocatorSourceSetting: function(setting, definition, relatedTr) {
+      _createNewLocatorSourceSettingFromMenuItem: function(setting, definition) {
+        var locatorSetting = new LocatorSourceSetting({
+          nls: this.nls,
+          map: this.map
+        });
+        locatorSetting.setDefinition(definition);
+        locatorSetting.setConfig({
+          url: setting.url || "",
+          name: setting.name || "",
+          singleLineFieldName: setting.singleLineFieldName || "",
+          placeholder: setting.placeholder || "",
+          countryCode: setting.countryCode || "",
+          zoomScale: setting.zoomScale || 50000,
+          maxSuggestions: setting.maxSuggestions || 6,
+          maxResults: setting.maxResults || 6,
+          searchInCurrentMapExtent: !!setting.searchInCurrentMapExtent,
+          type: "locator"
+        });
+        locatorSetting._openLocatorChooser();
+
+        locatorSetting.own(
+          on(locatorSetting, 'select-locator-url-ok', lang.hitch(this, function(item) {
+            var addResult = this.sourceList.addRow({
+              name: item.name || "New Geocoder"
+            }, this.sourceList.getRows().length);
+            if (addResult && addResult.success) {
+              if (this._currentSourceSetting) {
+                this._closeSourceSetting();
+              }
+              locatorSetting.setRelatedTr(addResult.tr);
+              locatorSetting.placeAt(this.sourceSettingNode);
+              this.sourceList.selectRow(addResult.tr);
+
+              this._currentSourceSetting = locatorSetting;
+            }
+          }))
+        );
+        locatorSetting.own(
+          on(locatorSetting, 'reselect-locator-url-ok', lang.hitch(this, function(item) {
+            var tr = this._currentSourceSetting.getRelatedTr();
+            this.sourceList.editRow(tr, {
+              name: item.name
+            });
+          }))
+        );
+        locatorSetting.own(
+          on(locatorSetting, 'select-locator-url-cancel', lang.hitch(this, function() {
+            if (this._currentSourceSetting !== locatorSetting) {// locator doesn't display in UI
+              locatorSetting.destroy();
+              locatorSetting = null;
+            }
+          }))
+        );
+      },
+
+      _createNewLocatorSourceSettingFromSourceList: function(setting, definition, relatedTr) {
         if (this._currentSourceSetting) {
           this._closeSourceSetting();
         }
 
         this._currentSourceSetting = new LocatorSourceSetting({
-          nls: this.nls
+          nls: this.nls,
+          map: this.map
         });
-        this._currentSourceSetting.placeAt(this.sourceSettingNode);
         this._currentSourceSetting.setDefinition(definition);
         this._currentSourceSetting.setConfig({
           url: setting.url || "",
@@ -185,18 +269,27 @@ define([
           singleLineFieldName: setting.singleLineFieldName || "",
           placeholder: setting.placeholder || "",
           countryCode: setting.countryCode || "",
+          zoomScale: setting.zoomScale || 50000,
+          maxSuggestions: setting.maxSuggestions || 6,
           maxResults: setting.maxResults || 6,
+          searchInCurrentMapExtent: !!setting.searchInCurrentMapExtent,
+          enableLocalSearch: !!setting.enableLocalSearch,
+          localSearchMinScale: setting.localSearchMinScale,
+          localSearchDistance: setting.localSearchDistance,
           type: "locator"
         });
         this._currentSourceSetting.setRelatedTr(relatedTr);
+        this._currentSourceSetting.placeAt(this.sourceSettingNode);
 
         this._currentSourceSetting.own(
-          on(this._currentSourceSetting, 'reset-locator-source', lang.hitch(this, function(item) {
-            var tr = this._currentSourceSetting.getRelatedTr();
-            this.sourceList.editRow(tr, {
-              name: item.name || ""
-            });
-          }))
+          on(this._currentSourceSetting,
+            'reselect-locator-url-ok',
+            lang.hitch(this, function(item) {
+              var tr = this._currentSourceSetting.getRelatedTr();
+              this.sourceList.editRow(tr, {
+                name: item.name
+              });
+            }))
         );
       },
 
@@ -211,7 +304,65 @@ define([
         this._currentSourceSetting.destroy();
       },
 
-      _createNewQuerySourceSetting: function(setting, definition, relatedTr) {
+      _createNewQuerySourceSettingFromMenuItem: function(setting, definition) {
+        var querySetting = new QuerySourceSetting({
+          nls: this.nls,
+          map: this.map,
+          appConfig: this.appConfig
+        });
+        querySetting.setDefinition(definition);
+        querySetting.setConfig({
+          url: setting.url,
+          name: setting.name || "",
+          layerId: setting.layerId,
+          placeholder: setting.placeholder || "",
+          searchFields: setting.searchFields || [],
+          displayField: setting.displayField || definition.displayField || "",
+          exactMatch: !!setting.exactMatch,
+          zoomScale: setting.zoomScale || 50000,
+          maxSuggestions: setting.maxSuggestions || 6,
+          maxResults: setting.maxResults || 6,
+          searchInCurrentMapExtent: !!setting.searchInCurrentMapExtent,
+          type: "query"
+        });
+        querySetting._openQuerySourceChooser();
+
+        querySetting.own(
+          on(querySetting, 'select-query-source-ok', lang.hitch(this, function(item) {
+            var addResult = this.sourceList.addRow({
+              name: item.name
+            }, 0);
+            if (addResult && addResult.success) {
+              if (this._currentSourceSetting) {
+                this._closeSourceSetting();
+              }
+              querySetting.setRelatedTr(addResult.tr);
+              querySetting.placeAt(this.sourceSettingNode);
+              this.sourceList.selectRow(addResult.tr);
+
+              this._currentSourceSetting = querySetting;
+            }
+          }))
+        );
+        querySetting.own(
+          on(querySetting, 'reselect-query-source-ok', lang.hitch(this, function(item) {
+            var tr = this._currentSourceSetting.getRelatedTr();
+            this.sourceList.editRow(tr, {
+              name: item.name
+            });
+          }))
+        );
+        querySetting.own(
+          on(querySetting, 'select-query-source-cancel', lang.hitch(this, function() {
+            if (this._currentSourceSetting !== querySetting) {// query source doesn't display in UI
+              querySetting.destroy();
+              querySetting = null;
+            }
+          }))
+        );
+      },
+
+      _createNewQuerySourceSettingFromSourceList: function(setting, definition, relatedTr) {
         if (this._currentSourceSetting) {
           this._closeSourceSetting();
         }
@@ -231,13 +382,16 @@ define([
           searchFields: setting.searchFields || [],
           displayField: setting.displayField || definition.displayField || "",
           exactMatch: !!setting.exactMatch,
+          zoomScale: setting.zoomScale || 50000,
+          maxSuggestions: setting.maxSuggestions || 6,
           maxResults: setting.maxResults || 6,
+          searchInCurrentMapExtent: !!setting.searchInCurrentMapExtent,
           type: "query"
         });
         this._currentSourceSetting.setRelatedTr(relatedTr);
 
         this._currentSourceSetting.own(
-          on(this._currentSourceSetting, 'reset-query-source', lang.hitch(this, function(item) {
+          on(this._currentSourceSetting, 'reselect-query-source', lang.hitch(this, function(item) {
             var tr = this._currentSourceSetting.getRelatedTr();
             this.sourceList.editRow(tr, {
               name: item.name
@@ -273,9 +427,9 @@ define([
         }
 
         if (config.type === "query") {
-          this._createNewQuerySourceSetting(config, config._definition || {}, tr);
+          this._createNewQuerySourceSettingFromSourceList(config, config._definition || {}, tr);
         } else if (config.type === "locator") {
-          this._createNewLocatorSourceSetting(config, config._definition || {}, tr);
+          this._createNewLocatorSourceSettingFromSourceList(config, config._definition || {}, tr);
         }
       }
     });

@@ -1,17 +1,11 @@
-<div style = "border-bottom: 1px solid black">
-  <img class="logo jimu-float-leading jimu-leading-margin1" data-dojo-attach-point="logoNode", style="height:41px; margin-top:0px">
+<div>
+  <a data-dojo-attach-point="logoLinkNode" target="_blank">
+    <img class="logo jimu-float-leading jimu-leading-margin1" data-dojo-attach-point="logoNode">
+  </a>
   <div class="titles jimu-float-leading jimu-leading-margin1" data-dojo-attach-point="titlesNode">
-    <div class = 'subtitle'> Interactive Map </div>
     <div class="jimu-title jimu-float-leading" data-dojo-attach-point="titleNode"></div>
     <div class="jimu-subtitle jimu-float-leading jimu-leading-margin2" data-dojo-attach-point="subtitleNode"></div>
   </div>
-
-  <!-- <div data-dojo-attach-point="titleNode" align="center" style="margin-left: 40px;margin-top: 4px;float: left;">
-    	<img src="themes/TabTheme/widgets/Footer/images/epa1.png" style="height: 35px; margin-right: 20px">
-		<img src="themes/TabTheme/widgets/Footer/images/usgs.gif" style="height: 35px; margin-right: 35px">
-		<img src="themes/TabTheme/widgets/Footer/images/landscope.jpg" style="height: 35px; margin-right: 20px">
-		<img src="themes/TabTheme/widgets/Footer/images/usda.png" style="height: 35px">
-    </div> -->
   <div class="links jimu-float-trailing jimu-trailing-margin25" data-dojo-attach-point="linksNode">
     <span class="dynamic-section" data-dojo-attach-point="dynamicLinksNode"></span>
     <a class="link" href="#" data-dojo-attach-point="aboutNode" data-dojo-attach-event="onclick:_onAboutClick">${nls.about}</a>
@@ -21,6 +15,6 @@
       <a href="#" target="_blank" class="link" data-dojo-attach-event="onclick:_onUserNameClick" data-dojo-attach-point="userNameLinkNode"></a>
       <a href="#" class="link" data-dojo-attach-event="onclick:_onSignoutClick" data-dojo-attach-point="signoutLinkNode">${nls.signout}</a>
     </span>
-    
-  </div>    
+
+  </div>
 </div>

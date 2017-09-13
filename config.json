@@ -2,7 +2,7 @@
     "theme": {
         "name": "TabTheme",
         "styles": ["EnviroAtlas", "simpleblue", "blue", "default", "cyan", "purple", "red", "yellow", "green"],
-        "version": "1.3"
+        "version": "2.5"
     },
     "portalUrl": "http://epa.maps.arcgis.com",
     "appId": "",
@@ -61,7 +61,7 @@
                     "top": 75,
                     "relativeTo": "map"
                 },
-                "version": "1.3",
+                "version": "2.5",
                 "id": "widgets_HomeButton_Widget_21",
                 "name": "HomeButton",
                 "label": "Home Button"
@@ -72,7 +72,7 @@
                     "bottom": 10,
                     "relativeTo": "map"
                 },
-                "version": "1.3",
+                "version": "2.5",
                 "id": "widgets_Scalebar_Widget_22",
                 "name": "Scalebar",
                 "label": "Scalebar"
@@ -94,7 +94,7 @@
                     "bottom": 5,
                     "relativeTo": "map"
                 },
-                "version": "1.3",
+                "version": "2.5",
                 "id": "widgets_Coordinate_Widget_24",
                 "name": "Coordinate",
                 "label": "Coordinate"
@@ -121,7 +121,7 @@
                 "id": "basemapGalery_25",
                 "name": "BasemapGallery",
                 "label": "Basemap Gallery",
-                "version": "1.3",
+                "version": "2.5",
                 "uri": "widgets/eBasemapGallery/Widget",
                 "config": "configs/eBasemapGallery/config_Enhanced Basemap Gallery.json"
             }, {
@@ -144,7 +144,7 @@
                     "left": 395,
                     "top": 5,
                     "width": 230,
-                    "height": 225,
+                    "height": 305,
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
@@ -166,7 +166,7 @@
                 "id": "widgets_eBookmark_Widget_18",
                 "name": "eBookmark",
                 "label": "Enhanced Bookmarks",
-                "version": "1.3",
+                "version": "2.3",
                 "uri": "widgets/eBookmark/Widget",
                 "config": "configs/eBookmark/config_Enhanced Bookmark.json"
             }, {
@@ -181,7 +181,7 @@
                 "id": "_27",
                 "name": "Print",
                 "label": "Print",
-                "version": "1.3",
+                "version": "2.5",
                 "uri": "widgets/Print/Widget",
                 "config": "configs/Print/config_Print.json"
             }, {
@@ -193,12 +193,38 @@
                     "relativeTo": "map"
                 },
                 "uri": "widgets/eDraw/Widget",
-                "version": "1.3",
+                "version": "2.1",
                 "id": "widgets_DrawMeasure_Widget_36",
                 "name": "eDraw",
                 "label": "Draw and Measure",
                 "config": "widgets/eDraw/config.json"
-            }, {
+            },{
+                "name": "Select",
+                "version": "2.5",
+                "uri": "widgets/Select/Widget",
+                "config": "configs/Select/config_Select.json",
+                "position": {
+                    "left": 655,
+                    "top": -40,
+                    "width": 380,
+                    "height": 410,
+                    "relativeTo": "map"
+                },
+                "id": "widgets_Select_Widget_39"
+              }, {
+                "name": "Share",
+                "version": "2.5",
+                "uri": "widgets/Share/Widget",
+                "position": {
+                    "left": 655,
+                    "top": -40,
+                    "width": 380,
+                    "height": 410,
+                    "relativeTo": "map"
+                },
+                "id": "widgets_Share_Widget_40",
+                "config": "configs/Share/config_Share.json"
+              }, {
                 "position": {
                     "left": 445,
                     "top": 5,
@@ -285,7 +311,7 @@
                 "id": "_28",
                 "name": "Elevation Profile",
                 "label": "Elevation Profile",
-                "version": "1.3",
+                "version": "2.5",
                 "uri": "widgets/ElevationProfile/Widget",
                 "config": "widgets/ElevationProfile/config.json"
             }, {
@@ -429,7 +455,7 @@
                     "bottom": 0,
                     "relativeTo": "map"
                 },
-                "version": "1.3",
+                "version": "2.5",
                 "id": "widgets_OverviewMap_Widget_28",
                 "name": "OverviewMap",
                 "label": "Overview Map"
@@ -440,7 +466,7 @@
                     "top": 110,
                     "relativeTo": "map"
                 },
-                "version": "1.3",
+                "version": "2.5",
                 "id": "widgets_MyLocation_Widget_29",
                 "name": "MyLocation",
                 "label": "My Location"
@@ -450,7 +476,7 @@
                     "bottom": 0,
                     "relativeTo": "browser"
                 },
-                "version": "1.3",
+                "version": "2.5",
                 "id": "widgets_AttributeTable_Widget_30",
                 "name": "AttributeTable",
                 "label": "Attribute Table"
@@ -459,7 +485,7 @@
                 "position": {
                     "relativeTo": "browser"
                 },
-                "version": "1.3",
+                "version": "2.5",
                 "id": "widgets_Splash_Widget_31",
                 "name": "Splash",
                 "label": "Disclaimer",
@@ -472,7 +498,7 @@
                     "left": 7,
                     "relativeTo": "map"
                 },
-                "version": "1.3",
+                "version": "2.5",
                 "id": "widgets_TimeSlider_Widget_32",
                 "name": "TimeSlider",
                 "label": "Time Slider"
@@ -484,7 +510,7 @@
                     "left": 7,
                     "relativeTo": "map"
                 },
-                "version": "1.3",
+                "version": "2.5",
                 "id": "widgets_Swipe_Widget_33",
                 "name": "Swipe",
                 "label": "Swipe"
@@ -495,11 +521,33 @@
                     "left": 7,
                     "relativeTo": "map"
                 },
-                "version": "1.3",
+                "version": "2.5",
                 "id": "widgets_ZoomSlider_Widget_34",
                 "name": "ZoomSlider",
                 "label": "Zoom Slider"
-            }
+            },
+              {
+                "uri": "widgets/ExtentNavigate/Widget",
+                "position": {
+                  "top": 147,
+                  "left": 7,
+                  "relativeTo": "map"
+                },
+                "version": "2.5",
+                "id": "widgets_ExtentNavigate_Widget_35",
+                "name": "ExtentNavigate"
+              },
+              {
+                "uri": "widgets/FullScreen/Widget",
+                "position": {
+                  "left": 7,
+                  "top": 212,
+                  "relativeTo": "map"
+                },
+                "version": "2.5",
+                "id": "widgets_FullScreen_Widget_36",
+                "name": "FullScreen"
+              }
         ],
         "panel": {
             "uri": "jimu/OnScreenWidgetPanel",
@@ -637,7 +685,7 @@
                         "top": 75,
                         "relativeTo": "map"
                     },
-                    "version": "1.3",
+                    "version": "2.5",
                     "id": "widgets_HomeButton_Widget_21",
                     "name": "HomeButton",
                     "label": "Home Button"
@@ -648,7 +696,7 @@
                         "bottom": 10,
                         "relativeTo": "map"
                     },
-                    "version": "1.3",
+                    "version": "2.5",
                     "id": "widgets_Scalebar_Widget_22",
                     "name": "Scalebar",
                     "label": "Scalebar"
@@ -666,15 +714,15 @@
                         "bottom": 5,
                         "relativeTo": "map"
                     },
-                    "version": "1.3",
+                    "version": "2.5",
                     "id": "widgets_Coordinate_Widget_24",
                     "name": "Coordinate",
                     "label": "Coordinate"
                 }, {
                     "uri": "widgets/CommunityDisplay/Widget",
                     "position": {
-                        "left": 400,
-                        "bottom": 5,
+                        "left": 45,
+                        "top": 45,
                         "relativeTo": "map"
                     },
                     "version": "1.3",
@@ -690,7 +738,7 @@
                         "relativeTo": "map"
                     },
                     "placeholderIndex": 1,
-                    "version": "1.3",
+                    "version": "2.5",
                     "uri": "widgets/eBasemapGallery/Widget"
                 }, {
                     "position": {
@@ -734,7 +782,7 @@
                     "id": "widgets_eBookmark_Widget_18",
                     "name": "eBookmark",
                     "label": "Enhanced Bookmarks",
-                    "version": "1.3",
+                    "version": "2.3",
                     "uri": "widgets/eBookmark/Widget",
                     "config": "configs/eBookmark/config_Enhanced Bookmark.json"
                 }, {
@@ -749,7 +797,7 @@
                     "id": "_27",
                     "name": "Print",
                     "label": "Print",
-                    "version": "1.3",
+                    "version": "2.5",
                     "uri": "widgets/Print/Widget",
                     "config": "configs/Print/config_Print.json"
                 },{
@@ -761,7 +809,7 @@
                         "relativeTo": "map"
                     },
                     "uri": "widgets/eDraw/Widget",
-                    "version": "1.3",
+                    "version": "2.1",
                     "id": "widgets_DrawMeasure_Widget_36",
                     "name": "eDraw",
                     "label": "Draw and Measure",
@@ -853,7 +901,7 @@
                     "id": "_28",
                     "name": "Elevation Profile",
                     "label": "Elevation Profile",
-                    "version": "1.3",
+                    "version": "2.5",
                     "uri": "widgets/ElevationProfile/Widget",
                     "config": "widgets/ElevationProfile/config.json"
                 }, {
@@ -981,7 +1029,7 @@
                         "right": 0,
                         "bottom": 0
                     },
-                    "version": "1.3"
+                    "version": "2.5"
                 }, {
                     "uri": "widgets/MyLocation/Widget",
                     "inPanel": false,
@@ -989,21 +1037,21 @@
                         "left": 7,
                         "top": 110
                     },
-                    "version": "1.3"
+                    "version": "2.5"
                 }, {
                     "uri": "widgets/AttributeTable/Widget",
                     "position": {
                         "bottom": 0,
                         "relativeTo": "map"
                     },
-                    "version": "1.3"
+                    "version": "2.5"
                 }, {
                     "uri": "widgets/Splash/Widget",
                     "visible": false,
                     "position": {
                         "relativeTo": "browser"
                     },
-                    "version": "1.3"
+                    "version": "2.5"
                 }, {
                     "uri": "widgets/TimeSlider/Widget",
                     "visible": false,
@@ -1011,7 +1059,7 @@
                         "bottom": 55,
                         "left": 7
                     },
-                    "version": "1.3"
+                    "version": "2.5"
                 }, {
                     "uri": "widgets/Swipe/Widget",
                     "visible": false,
@@ -1019,7 +1067,7 @@
                         "top": 145,
                         "left": 7
                     },
-                    "version": "1.3"
+                    "version": "2.5"
                 }, {
                     "uri": "widgets/ZoomSlider/Widget",
                     "visible": true,
@@ -1027,7 +1075,16 @@
                         "top": 5,
                         "left": 7
                     },
-                    "version": "1.3"
+                    "version": "2.5"
+                },
+                {
+                  "uri": "widgets/ExtentNavigate/Widget",
+                  "visible": false,
+                  "position": {
+                    "top": 147,
+                    "left": 7
+                  },
+                  "version": "2.5"
                 }
             ]
         },

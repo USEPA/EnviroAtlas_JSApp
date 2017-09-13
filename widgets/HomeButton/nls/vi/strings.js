@@ -1,5 +1,3 @@
-﻿define(
-   ({
-    _widgetLabel: "Nút Trang chủ"
-  })
-);
+define({
+  "_widgetLabel": "Trang chủ"
+});

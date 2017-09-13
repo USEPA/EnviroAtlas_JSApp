@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 Esri. All Rights Reserved.
+// Copyright © 2014 - 2016 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,8 @@
 // limitations under the License.
 ///////////////////////////////////////////////////////////////////////////
 
-define(['dojo/_base/declare',
+define([
+    'dojo/_base/declare',
     'dijit/_WidgetBase',
     'dijit/_TemplatedMixin',
     'dojo/Evented',
@@ -23,25 +24,37 @@ define(['dojo/_base/declare',
     'dojo/_base/array',
     'dojo/on',
     'dojo/query',
-    'jimu/utils'
+    'dijit/registry',
+    'jimu/utils',
+    'jimu/dijit/CheckBox'
   ],
-  function(declare, _WidgetBase, _TemplatedMixin, Evented, lang, html, array, on, query,
-  jimuUtils) {
+  function(declare, _WidgetBase, _TemplatedMixin, Evented, lang, html, array, on, query, registry,
+  jimuUtils, CheckBox) {
+
     return declare([_WidgetBase, _TemplatedMixin, Evented], {
       baseClass: 'jimu-simple-table',
       declaredClass: 'jimu.dijit.SimpleTable',
       templateString: '<div>' +
-        '<div class="head-section" data-dojo-attach-point="headDiv"></div>' +
+        '<div class="head-section" data-dojo-attach-point="headDiv">' +
+          '<div class="table-div" data-dojo-attach-point="headTableDiv">' +
+            '<table class="table" cellspacing="0"' +
+              ' data-dojo-attach-point="tableInHeadSection">' +
+              '<colgroup data-dojo-attach-point="headColgroup"></colgroup>' +
+              '<thead class="simple-table-thead simple-table-title" ' +
+              ' data-dojo-attach-point="thead"></thead>' +
+            '</table>' +
+          '</div>' +
+        '</div>' +
         '<div class="body-section" data-dojo-attach-point="bodyDiv">' +
-        '<div class="table-div" data-dojo-attach-point="tableDiv">' +
-        '<table class="table" cellspacing="0" onselectstart="return false;">' +
-        '<colgroup></colgroup>' +
-        '<thead class="simple-table-thead simple-table-title"></thead>' +
-        '<tbody class="simple-table-tbody"></tbody>' +
-        '</table>' +
+          '<div class="table-div" data-dojo-attach-point="bodyTableDiv">' +
+            '<table class="table" cellspacing="0"' +
+             'data-dojo-attach-point="tableInBodySection">' +
+              '<colgroup data-dojo-attach-point="bodyColgroup"></colgroup>' +
+              '<tbody class="simple-table-tbody" data-dojo-attach-point="tbody"></tbody>' +
+            '</table>' +
+          '</div>' +
         '</div>' +
-        '</div>' +
-        '</div>',
+      '</div>',
       _name: null,
       _rowIndex: 0,
       _rowHeight: 30,
@@ -53,6 +66,7 @@ define(['dojo/_base/declare',
       _classJimuStateDisabled: 'jimu-state-disabled',
       _classRowUpDiv: 'row-up-div',
       _classRowDownDiv: 'row-down-div',
+      _classVerticalScroll: 'vertical-scroll',
 
       //options:
       autoHeight: true, //if true, automatically calculate the height
@@ -66,9 +80,14 @@ define(['dojo/_base/declare',
         //class:class name of th and td
         //width:width of the field column, auto is default.
         //hidden:default false.If true,the field column will be hidden.
+
         //if text
-          //editable:the text can be edited if true.
+          //editable:the text can be edited if true, default is false
           //unique:field value is unique in the column.
+        //if checkbox
+          //available values: true, false, null (null means the CheckBox is disabled)
+          //onChange: the callback function for checkbox value change event, you can get tr and
+          //CheckBox from this function
         //if actions
           //actions:['up','down','edit','delete']
         //if extension
@@ -79,6 +98,7 @@ define(['dojo/_base/declare',
 
       //public methods:
       //clear
+      //updateUI
       //clearEmptyRows
       //addEmptyRow
       //addRows
@@ -122,14 +142,12 @@ define(['dojo/_base/declare',
 
       startup: function() {
         this.inherited(arguments);
-        this._updateUI();
+        this.updateUI();
       },
 
       _initSelf: function() {
-        this._initAttachPoints();
-
         this.own(
-          jimuUtils.bindClickAndDblclickEvents(this.table,
+          jimuUtils.bindClickAndDblclickEvents(this.tableInBodySection,
             lang.hitch(this, function(evt) {
               var target = evt.target || evt.srcElement;
               var tr = jimuUtils.getAncestorDom(target, function(dom) {
@@ -153,8 +171,6 @@ define(['dojo/_base/declare',
 
         var num = Math.random().toString();
         this._name = 'jimu_table_' + num.slice(2, num.length);
-        this.thead = query('thead', this.domNode)[0];
-        this.tbody = query('tbody', this.domNode)[0];
 
         if (this.fields && this.fields.length > 0) {
           var tr = html.create('tr', {}, this.thead);
@@ -177,11 +193,33 @@ define(['dojo/_base/declare',
               }
             }
 
-            html.create('col', {width:width}, this.colgroup);
+            html.create('col', {width:width}, this.headColgroup);
+            html.create('col', {width:width}, this.bodyColgroup);
+
             var th = html.create('th', {
               innerHTML: item.title,
               title: item.title
             }, tr);
+
+            if(item.type === 'checkbox'){
+              th.innerHTML = "";
+              //we should not bind its onChange event, because it maybe result in unexpected result
+              var cbx = new CheckBox({
+                label: item.title
+              });
+              var iconNode = query('.checkbox', cbx.domNode)[0];
+              if(iconNode){
+                iconNode.style.marginTop = "10px";
+              }
+              this.own(on(cbx.domNode, 'click', lang.hitch(this, function() {
+                if (cbx.getValue()) {
+                  this._checkAllTdCheckBoxes(item.name);
+                } else {
+                  this._uncheckAllTdCheckBoxes(item.name);
+                }
+              })));
+              cbx.placeAt(th);
+            }
 
             html.addClass(th, 'simple-table-field');
 
@@ -195,75 +233,110 @@ define(['dojo/_base/declare',
             html.addClass(th, item.name);
           }));
 
-          //clone thead
-          html.empty(this.headDiv);
-          var tableDiv = lang.clone(this.tableDiv);
-          html.place(tableDiv, this.headDiv);
-
           //this.addEmptyRow();
         } else {
           this.fields = null;
         }
       },
 
-      _initAttachPoints:function(){
-        this.table = query('table', this.bodyDiv)[0];
-        this.colgroup = query('colgroup', this.bodyDiv)[0];
-        this.head = query('thead', this.bodyDiv)[0];
-        this.tbody = query('tbody', this.bodyDiv)[0];
+      _getThCheckBox: function(fieldName){
+        var cbx = null;
+        var selector = ".simple-table-field." + fieldName + " .jimu-checkbox";
+        var dom = query(selector, this.thead)[0];
+        cbx = registry.byNode(dom);
+        return cbx;
+      },
+
+      _getAllEnabledTdCheckBoxes: function(fieldName){
+        var selector = ".simple-table-cell." + fieldName + " .jimu-checkbox";
+        var doms = query(selector, this.tbody);
+        var cbxes = array.map(doms, function(dom){
+          return registry.byNode(dom);
+        });
+        //just return enabled checkbox
+        cbxes = array.filter(cbxes, function(cbx){
+          return cbx.getStatus();
+        });
+        return cbxes;
+      },
+
+      _checkAllTdCheckBoxes: function(fieldName){
+        var cbxes = this._getAllEnabledTdCheckBoxes(fieldName);
+        array.forEach(cbxes, function(cbx){
+          if(!cbx.getValue()){
+            cbx.setValue(true);
+          }
+        });
+      },
+
+      _uncheckAllTdCheckBoxes: function(fieldName){
+        var cbxes = this._getAllEnabledTdCheckBoxes(fieldName);
+        array.forEach(cbxes, function(cbx){
+          if(cbx.getValue()){
+            cbx.setValue(false);
+          }
+        });
+      },
+
+      _delaySyncThCheckBoxStatusWithAllTdCheckBoxes: function(fieldName){
+        setTimeout(lang.hitch(this, function(){
+          this._syncThCheckBoxStatusWithAllTdCheckBoxes(fieldName);
+        }), 100);
+      },
+
+      _syncThCheckBoxStatusWithAllTdCheckBoxes: function(fieldName){
+        var cbxes = this._getAllEnabledTdCheckBoxes(fieldName);
+        //find enabled cbxes
+        cbxes = array.filter(cbxes, lang.hitch(this, function(cbx){
+          return cbx.getStatus();
+        }));
+        if(cbxes.length === 0){
+          return;
+        }
+        var thCbx = this._getThCheckBox(fieldName);
+        var isAllChecked = array.every(cbxes, function(cbx){
+          return cbx.getValue();
+        });
+        if(isAllChecked){
+          if(!thCbx.getValue()){
+            thCbx.setValue(true);
+          }
+        }else{
+          if(thCbx.getValue()){
+            thCbx.setValue(false);
+          }
+        }
       },
 
       clear: function() {
         var trs = this._getNotEmptyRows();
+        var data = array.map(trs, lang.hitch(this, function(tr){
+          return this.getRowData(tr);
+        }));
         html.empty(this.tbody);
-        array.forEach(trs, lang.hitch(this, function(tr) {
-          this._onDeleteRow(tr);
+        array.forEach(trs, lang.hitch(this, function(tr, index) {
+          var rowData = data[index];
+          this._onDeleteRow(tr, rowData);
         }));
         //this.addEmptyRow();
-        this._updateUI();
+        this.updateUI();
         this._rowIndex = 0;
         this._onClearRows(trs);
       },
-
-      // clearEmptyRows: function() {
-      //   var trs = this._getEmptyRows();
-      //   array.forEach(trs, lang.hitch(this, function(tr) {
-      //     html.destroy(tr);
-      //   }));
-      //   this._updateUI();
-      // },
-
-      // addEmptyRow: function() {
-      //   if (!this.fields) {
-      //     return;
-      //   }
-
-      //   this.clearEmptyRows();
-      //   var length = this.fields.length;
-      //   var tr = html.create('tr', {
-      //     'class': 'simple-table-row empty'
-      //   }, this.tbody);
-      //   for (var i = 0; i < length; i++) {
-      //     html.create('td', {
-      //       'class': 'simple-table-cell empty-td'
-      //     }, tr);
-      //   }
-      //   this._updateRowClassName();
-      // },
 
       addRows: function(rowsData) {
         var results = [];
         if (this.fields && rowsData && rowsData.length > 0) {
           array.forEach(rowsData, lang.hitch(this, function(item) {
-            results.push(this.addRow(item, true));
+            results.push(this.addRow(item, -1, true));
           }));
         }
-        this._updateUI();
+        this.updateUI();
         return results;
       },
 
       //example:{name1:value1,name2:value2...}
-      addRow: function(rowData, /* optional */ dontUpdateUI) {
+      addRow: function(rowData, /* optional */ index, /* optional */ dontUpdateUI) {
         this._rowIndex++;
         var result = {
           success: false,
@@ -324,7 +397,11 @@ define(['dojo/_base/declare',
           }
         }));
         if(!dontUpdateUI){
-          this._updateUI();
+          this.updateUI();
+          var trs = this.getRows();
+          if (typeof index === 'number' && index >= 0 && index < trs.length) {
+            html.place(tr, trs[index], 'before');
+          }
         }
         result.success = true;
         result.tr = tr;
@@ -335,13 +412,10 @@ define(['dojo/_base/declare',
 
       deleteRow:function(tr){
         if(tr){
+          var rowData = this.getRowData(tr);
           html.destroy(tr);
-          this._updateUI();
-          this._onDeleteRow(tr);
-          // var trs = this._getAllRows();
-          // if(trs.length === 0){
-          //   this.addEmptyRow();
-          // }
+          this.updateUI();
+          this._onDeleteRow(tr, rowData);
         }
       },
 
@@ -354,9 +428,36 @@ define(['dojo/_base/declare',
         }
       },
 
-      _updateUI: function(){
+      updateUI: function(){
         this._updateRowClassName();
         this._updateHeight();
+
+        html.removeClass(this.domNode, this._classVerticalScroll);
+
+        if(this.bodyDiv.clientHeight > 0){
+          if(this.bodyDiv.clientHeight < this.bodyDiv.scrollHeight){
+            html.addClass(this.domNode, this._classVerticalScroll);
+          }
+        }
+
+        array.forEach(this.fields, lang.hitch(this, function(fieldMeta) {
+          if (fieldMeta.type === 'checkbox') {
+            this._delaySyncThCheckBoxStatusWithAllTdCheckBoxes(fieldMeta.name);
+          }
+        }));
+      },
+
+      _updateHeadTableWidth: function(){
+        if(!this.domNode){
+          return;
+        }
+        var bodyTableBox = html.getContentBox(this.tableInBodySection);
+        var w = bodyTableBox.w;
+        var headTableWidth = "100%";
+        if(typeof w === 'number' && w > 0){
+          headTableWidth = w + 'px';
+        }
+        html.setStyle(this.tableInHeadSection, 'width', headTableWidth);
       },
 
       _updateHeight: function(){
@@ -457,19 +558,19 @@ define(['dojo/_base/declare',
         var editableInput = query('input', td)[0];
         editableDiv.innerHTML = fieldData || "";
         if (editableDiv.innerHTML !== "") {
-          editableDiv.title = editableDiv.innerHTML;
+          editableDiv.title = editableDiv.innerText || editableDiv.innerHTML;
         }
         editableInput.value = editableDiv.innerHTML;
         this.own(on(editableDiv, 'dblclick', lang.hitch(this, function(event) {
           event.stopPropagation();
-          editableInput.value = editableDiv.innerHTML;
+          editableInput.value = editableDiv.innerText || editableDiv.innerHTML;
           html.setStyle(editableDiv, 'display', 'none');
           html.setStyle(editableInput, 'display', 'inline');
           editableInput.focus();
         })));
         this.own(on(editableInput, 'blur', lang.hitch(this, function() {
           editableInput.value = lang.trim(editableInput.value);
-          var oldValue = editableDiv.innerHTML;
+          var oldValue = editableDiv.innerText || editableDiv.innerHTML;
           var newValue = editableInput.value;
           if (newValue !== '') {
             if (fieldMeta.unique) {
@@ -493,7 +594,7 @@ define(['dojo/_base/declare',
       },
 
       _createRadioTd: function(tr, fieldMeta, fieldData) {
-        var tdStr = '<td class="radio-td ' + fieldMeta.name + '"><input type="radio" /></td>';
+        var tdStr = '<td class="radio-td ' + fieldMeta.name + '"><input class="jimu-radio-btn" type="radio" /></td>';
         var td = html.toDom(tdStr);
         html.addClass(td, 'simple-table-cell');
         html.place(td, tr);
@@ -512,15 +613,30 @@ define(['dojo/_base/declare',
       },
 
       _createCheckboxTd: function(tr, fieldMeta, fieldData) {
-        var tdStr = '<td class="checkbox-td ' + fieldMeta.name + '"><input type="checkbox" /></td>';
+        var tdStr = '<td class="checkbox-td ' + fieldMeta.name + '"></td>';
         var td = html.toDom(tdStr);
         html.addClass(td, 'simple-table-cell');
         html.place(td, tr);
         if (fieldMeta['class']) {
           html.addClass(td, fieldMeta['class']);
         }
-        var checkbox = query('input', td)[0];
-        checkbox.checked = fieldData === true;
+        var cbx = new CheckBox({
+          onChange: lang.hitch(this, function(){
+            this._delaySyncThCheckBoxStatusWithAllTdCheckBoxes(fieldMeta.name);
+            if(typeof fieldMeta.onChange === 'function'){
+              setTimeout(lang.hitch(this, function(){
+                fieldMeta.onChange(tr, cbx);
+              }), 200);
+            }
+          })
+        });
+        this.own(on(cbx, 'status-change', lang.hitch(this, function(){
+          this._delaySyncThCheckBoxStatusWithAllTdCheckBoxes(fieldMeta.name);
+        })));
+        // var value = fieldData === true;
+        // cbx.setValue(value);
+        this._setValueForCheckBox(cbx, fieldData);
+        cbx.placeAt(td);
         return td;
       },
 
@@ -554,7 +670,7 @@ define(['dojo/_base/declare',
                 var trRef = trs[newIndex];
                 if (trRef) {
                   html.place(tr, trRef, 'before');
-                  this._updateUI();
+                  this.updateUI();
                   this.emit('row-up', tr);
                 }
               }
@@ -577,7 +693,7 @@ define(['dojo/_base/declare',
                 var trRef = trs[newIndex];
                 if (trRef) {
                   html.place(tr, trRef, 'after');
-                  this._updateUI();
+                  this.updateUI();
                   this.emit('row-down', tr);
                 }
               }
@@ -652,6 +768,8 @@ define(['dojo/_base/declare',
         return td;
       },
 
+      //tr is row you want to edit
+      //rowData is like {name1:value1, name2: value2...}
       editRow: function(tr, rowData) {
         var result = {
           success: false,
@@ -735,8 +853,22 @@ define(['dojo/_base/declare',
 
       _editCheckbox: function(td, fieldMeta, fieldData) {
         /*jshint unused: false*/
-        var checkbox = query('input', td)[0];
-        checkbox.checked = fieldData === true;
+        var dom = query('.jimu-checkbox', td)[0];
+        var cbx = registry.byNode(dom);
+        // var newValue = fieldData === true;
+        // cbx.setValue(newValue);
+        this._setValueForCheckBox(cbx, fieldData);
+      },
+
+      _setValueForCheckBox: function(cbx, value){
+        if(value === null){
+          cbx.setStatus(false);
+        }else{
+          cbx.setStatus(true);
+          if(value !== cbx.getValue()){
+            cbx.setValue(value);
+          }
+        }
       },
 
       _editExtension: function(td, fieldMeta, fieldData){
@@ -819,22 +951,27 @@ define(['dojo/_base/declare',
           }
           var name = fieldMeta.name;
           rowData[name] = null;
-          var td = query('.' + name, tr)[0];
+          var td = query('.simple-table-cell.' + name, tr)[0];
           if (td) {
             if (type === 'text') {
               if (fieldMeta.editable) {
                 var editableDiv = query('div', td)[0];
-                rowData[name] = editableDiv.innerHTML;
+                rowData[name] = editableDiv.innerText || editableDiv.innerHTML;
               } else {
                 var normalTextDiv = query('div', td)[0];
-                rowData[name] = normalTextDiv.innerHTML;
+                rowData[name] = normalTextDiv.innerText || normalTextDiv.innerHTML;
               }
             } else if (type === 'radio') {
               var radio = query('input', td)[0];
               rowData[name] = radio.checked;
             } else if (type === 'checkbox') {
-              var checkbox = query('input', td)[0];
-              rowData[name] = checkbox.checked;
+              var dom = query('.jimu-checkbox', td)[0];
+              var cbx = registry.byNode(dom);
+              if(cbx.getStatus()){
+                rowData[name] = cbx.getValue();
+              }else{
+                rowData[name] = null;
+              }
             }
             else if(type === 'extension'){
               if(fieldMeta.getValue && typeof fieldMeta.getValue === 'function'){
@@ -865,6 +1002,12 @@ define(['dojo/_base/declare',
         return result;
       },
 
+      moveToTop: function(tr){
+        if(tr && tr.parentNode === this.tbody){
+          html.place(tr, this.tbody, 'first');
+        }
+      },
+
       _onClickRow: function(tr){
         this.emit('row-click', tr);
       },
@@ -885,8 +1028,8 @@ define(['dojo/_base/declare',
         this.emit('row-edit', tr);
       },
 
-      _onDeleteRow: function(tr){
-        this.emit('row-delete', tr);
+      _onDeleteRow: function(tr, rowData){
+        this.emit('row-delete', tr, rowData);
       },
 
       _onEnterRow: function(tr){

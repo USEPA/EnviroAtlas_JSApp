@@ -1,21 +1,24 @@
-<div class="jimu-widget-timeslider">
-	<div class="no-time-content" data-dojo-attach-point="noTimeContentNode">${nls.disableTips}</div>
+<div class="jimu-widget-timeslider mini-mode">
+	<div class="close-btn" data-dojo-attach-point="closeBtn"></div>
+
+	<div class="no-time-content drag-handler" data-dojo-attach-point="noTimeContentNode">${nls.disableTips}</div>
+
 	<div class="time-content" data-dojo-attach-point="timeContentNode">
-		<div class="time-extent" data-dojo-attach-point="timeExtentLabelNode">${nls.timeExtent}</div>
-		<div class="layer-labels jimu-ellipsis" data-dojo-attach-point="layerLabelsNode">${nls.layers}</div>
-		<div class="slider-content" data-dojo-attach-point="sliderContent">
-			<div data-dojo-attach-point="sliderNode"></div>
-			<div class="speed-container jimu-float-trailing jimu-trailing-margin1" data-dojo-attach-point="speedContainerNode" data-dojo-attach-event="mouseenter:_onMouseEnterSpeedContainer,mouseleave:_onMouseLeaveSpeedContainer">
-				<div class="speed-label" data-dojo-attach-point="speedLabelNode" data-dojo-attach-event="click:_onSpeedLabelClick">1X</div>
-				<div class="speed-menu" data-dojo-attach-point="speedMenu" data-dojo-attach-event="click:_onSelectSpeedItem">
-					<div class="speed-menu-item item-label jimu-ellipsis" title="${nls.speedLabel}">${nls.speedLabel}</div>
-					<div class="speed-menu-item" speed="0.25">0.25X</div>
-					<div class="speed-menu-item" speed="0.5">0.5X</div>
-					<div class="speed-menu-item" speed="1">1X</div>
-					<div class="speed-menu-item" speed="1.5">1.5X</div>
-					<div class="speed-menu-item" speed="2">2X</div>
-				</div>
+		<div class="label-container drag-handler" data-dojo-attach-point="labelContainer" data-dojo-attach-event="onclick:_onHandleClick">
+			<div class="time-extent jimu-ellipsis" data-dojo-attach-point="timeExtentLabelNode">${nls.timeExtent}</div>
+			<div class="layer-labels jimu-ellipsis" data-dojo-attach-point="layerLabelsNode">${nls.layers}</div>
+		</div>
+
+		<div class="slider-content clearFix jimu-float-leading" data-dojo-attach-point="sliderContent">
+			<div data-dojo-attach-point="sliderNodeContainer" class="slider-node-container jimu-float-leading"></div>
+
+			<div data-dojo-attach-point="btnsContainer" class="btns-container jimu-float-leading">
+				<div data-dojo-attach-point="previousBtn" class="previousBtn btn jimu-float-leading"></div>
+				<div data-dojo-attach-point="playBtn" class="playBtn btn jimu-float-leading"></div>
+				<div data-dojo-attach-point="nextBtn" class="nextBtn btn jimu-float-leading"></div>
 			</div>
+
+			<!--speedMenuNode-->
 		</div>
 	</div>
 </div>

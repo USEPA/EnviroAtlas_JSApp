@@ -1,5 +1,3 @@
-﻿define(
-   ({
-    _widgetLabel: "målestokklinje"
-  })
-);
+define({
+  "_widgetLabel": "målestokklinjal"
+});

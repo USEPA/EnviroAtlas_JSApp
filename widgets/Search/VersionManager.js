@@ -2,6 +2,7 @@ define(['jimu/shared/BaseVersionManager'],
   function(BaseVersionManager) {
 
     function VersionManager() {
+      /*jshint maxlen:150*/
       this.versions = [{
         version: '1.0',
         upgrader: function(oldConfig) {
@@ -62,6 +63,68 @@ define(['jimu/shared/BaseVersionManager'],
           }
 
           newConfig.upgradeFromGeocoder = true;
+          return newConfig;
+        }
+      }, {
+        version: "1.4",
+        upgrader: function(oldConfig) {
+          oldConfig.allPlaceholder = "";
+          oldConfig.showInfoWindowOnSelect = true;
+
+          return oldConfig;
+        }
+      }, {
+        version: "2.0beta",
+        upgrader: function(oldConfig) {
+          function addMaxSuggestions(sources) {
+            for (var i = 0, len = sources.length; i < len; i++) {
+              var s = sources[i];
+              s.maxSuggestions = s.maxSuggestions || 6;
+            }
+          }
+
+          function addZoomScale(sources) {
+            for (var i = 0, len = sources.length; i < len; i++) {
+              var s = sources[i];
+              s.zoomScale = s.zoomScale || 50000;
+            }
+          }
+
+          addMaxSuggestions(oldConfig.sources);
+          addZoomScale(oldConfig.sources);
+
+          return oldConfig;
+        }
+      }, {
+        version: '2.0',
+        upgrader: function(oldConfig) {
+          return oldConfig;
+        }
+      }, {
+        version: '2.0.1',
+        upgrader: function(oldConfig) {
+          return oldConfig;
+        }
+      }, {
+        version: '2.1',
+        upgrader: function(oldConfig) {
+          return oldConfig;
+        }
+      }, {
+        version: '2.2',
+        upgrader: function(oldConfig) {
+          var newConfig = oldConfig;
+          var _esriLocatorRegExp = /http(s)?:\/\/geocode(.){0,3}\.arcgis.com\/arcgis\/rest\/services\/World\/GeocodeServer/g;
+          for (var i = 0, len = newConfig.sources.length; i < len; i++) {
+            var source = newConfig.sources[i];
+            if (source.type === 'locator') {
+              _esriLocatorRegExp.lastIndex = 0;
+              source.enableLocalSearch = _esriLocatorRegExp.test(source.url);
+              source.localSearchMinScale = 300000;
+              source.localSearchDistance = 50000;
+            }
+          }
+
           return newConfig;
         }
       }];

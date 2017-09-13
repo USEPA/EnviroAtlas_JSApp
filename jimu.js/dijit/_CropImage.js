@@ -50,24 +50,10 @@ define([
         this.own(on(this.ownerDocument, 'mousemove', lang.hitch(this, '_onMouseMove')));
         this.own(on(this.ownerDocument, 'mouseup', lang.hitch(this, '_onMouseUp')));
         this.loadingImg.src = require.toUrl('jimu') + '/images/loading.gif';
-      },
-
-      startup: function() {
-        var timeOut = /data:image\/(.*);base64/.test(this.imageSrc) ? 50 : 500;
-        var tic = lang.hitch(this, function() {
-          var imageStyle = this._getComputedStyle(this.baseImage);
-          var imageWidth = parseFloat(imageStyle.width);
-          console.log('image width', imageWidth);
-          // debugger;
-          if (isFinite(imageWidth) && imageWidth > 0) {
-            this._init();
-            html.setStyle(this.loadingImg, 'display', 'none');
-          } else {
-            setTimeout(tic, timeOut);
-          }
-        });
-
-        setTimeout(tic, timeOut);
+        this.own(on(this.baseImage, 'load', lang.hitch(this, function() {
+          this._init();
+          html.setStyle(this.loadingImg, 'display', 'none');
+        })));
       },
 
       setImageSrc: function(src) {
@@ -219,6 +205,12 @@ define([
         });
         //sometimes zoomratio < 1; it's should be not allowed to zoom
         this._zoomRatio = this._maxImageWidth / this._minImageWidth;
+        if (this._zoomRatio <= 1) {
+          html.addClass(this.zoomInBtn, 'disable-zoom');
+          html.addClass(this.zoomOutBtn, 'disable-zoom');
+        } else {
+          html.addClass(this.zoomOutBtn, 'disable-zoom');
+        }
 
         if (window.isRTL) {
           this._latestPercentage = 100;
@@ -452,6 +444,16 @@ define([
       },
 
       _moveSliderButton: function(leftPercentage, _latestPercentage) {
+        if (leftPercentage <= 0) {
+          html.addClass(this.zoomOutBtn, 'disable-zoom');
+        } else {
+          html.removeClass(this.zoomOutBtn, 'disable-zoom');
+        }
+        if (leftPercentage >= 100) {
+          html.addClass(this.zoomInBtn, 'disable-zoom');
+        } else {
+          html.removeClass(this.zoomInBtn, 'disable-zoom');
+        }
         html.setStyle(this.sliderButton, 'left', leftPercentage + '%');
 
         if (window.isRTL) {
@@ -484,7 +486,6 @@ define([
 
         //prevent image out the crop box
         if (leftPercentage - _latestPercentage >= 0) {
-          console.log('zoomin');
           html.setStyle(this.baseImage, {
             top: this._currentTop - delImageTop + 'px',
             left: this._currentLeft - delImageLeft + 'px'
@@ -494,7 +495,6 @@ define([
             left: this._currentLeft - delImageLeft + 'px'
           });
         } else {
-          console.log('zoomout');
           var top = 0;
           var left = 0;
           if (this._currentTop - delImageTop >= 0) {
@@ -506,7 +506,6 @@ define([
           } else {
             top = this._currentTop - delImageTop;
           }
-          console.log(this._currentLeft, delImageLeft);
           if (this._currentLeft - delImageLeft >= 0) {
             left = 0;
           } else if (this._currentLeft - delImageLeft +

@@ -1,5 +1,3 @@
-﻿define(
-   ({
-    _widgetLabel: "Tlačítko Domů"
-  })
-);
+define({
+  "_widgetLabel": "Domov"
+});

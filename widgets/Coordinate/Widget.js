@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 Esri. All Rights Reserved.
+// Copyright © 2014 - 2016 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,23 +17,25 @@
 define([
     'dojo/_base/declare',
     'dojo/_base/html',
-    'dojo/sniff',
     'dijit/_WidgetsInTemplateMixin',
     "esri/geometry/Point",
     'esri/SpatialReference',
     'jimu/BaseWidget',
     'jimu/utils',
+    'jimu/dijit/Message',
     'dojo/_base/lang',
     'dojo/on',
-    "dojo/dom-style",
     "dojo/dom-class",
     "dijit/DropDownMenu",
     "dijit/MenuItem",
     "dojo/aspect",
     "dojo/Deferred",
     "esri/request",
+    "esri/graphic",
+    "esri/layers/GraphicsLayer",
     "esri/tasks/ProjectParameters",
     "esri/geometry/webMercatorUtils",
+    "esri/symbols/PictureMarkerSymbol",
     "jimu/portalUtils",
     "esri/config",
     "libs/usng/usng",
@@ -42,23 +44,25 @@ define([
   function(
     declare,
     html,
-    has,
     _WidgetsInTemplateMixin,
     Point,
     SpatialReference,
     BaseWidget,
     utils,
+    Message,
     lang,
     on,
-    domStyle,
     domClass,
     DropDownMenu,
     MenuItem,
     aspect,
     Deferred,
     esriRequest,
+    Graphic,
+    GraphicsLayer,
     ProjectParameters,
     webMercatorUtils,
+    PictureMarkerSymbol,
     portalUtils,
     esriConfig,
     usng,
@@ -79,6 +83,7 @@ define([
       "DECIMETERS": "Decimeters",
       "DEGREE": "Decimal_Degrees",
       "DECIMAL_DEGREES": "Decimal_Degrees",
+      "DEGREES_DECIMAL_MINUTES":"Degrees_Decimal_Minutes",
       "DEGREE_MINUTE_SECONDS": "Degree_Minutes_Seconds",
       "MGRS": "MGRS",
       "USNG": "USNG"
@@ -110,24 +115,24 @@ define([
      */
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
       /**
-       * realtime: {
-       *   102100: all unit,
-       *   4326: geoUnit,usng,mgrs,
-       *   projCS: projUnit,
-       *   geoCS: geoUnit,usng,mgrs,
-       * }
-       * click: {
-       *   projectCS: {
-       *     geoUnit:  convert to ellipsoidal coordinates,
-       *     projUnit: convert on client,
-       *     usng、mgrs: get longtitude and latitude, then convert to usng/mgrs on client,
-       *   },
-       *   geoCS: {
-       *     geoUnit: convert to ellipsoidal coordinates,
-       *     usng、mgrs: get longtitude and latitude, then convert to usng/mgrs on client
-       *   }
-       * }
-       */
+      * realtime: {
+      *   102100: all unit,
+      *   4326: geoUnit,usng,mgrs,
+      *   projCS: projUnit,
+      *   geoCS: geoUnit,usng,mgrs,
+      * }
+      * click: {
+      *   projectCS: {
+      *     geoUnit:  convert to ellipsoidal coordinates,
+      *     projUnit: convert on client,
+      *     usng、mgrs: get longtitude and latitude, then convert to usng/mgrs on client,
+      *   },
+      *   geoCS: {
+      *     geoUnit: convert to ellipsoidal coordinates,
+      *     usng、mgrs: get longtitude and latitude, then convert to usng/mgrs on client
+      *   }
+      * }
+      */
 
       baseClass: 'jimu-widget-coordinate',
       name: 'Coordinate',
@@ -141,6 +146,7 @@ define([
 
       _mapWkid: null,
       _configured: false,
+      _markerGraphic: null,
 
       postMixInProperties: function() {
         this.nls.enableClick = this.nls.enableClick ||
@@ -149,13 +155,25 @@ define([
           "Click to disable clicking map to get coordinates";
       },
 
+      postCreate: function() {
+        this.inherited(arguments);
+        domClass.add(this.coordinateBackground, "coordinate-background");
+        this.own(on(this.map, "extent-change", lang.hitch(this, this.onExtentChange)));
+        this.own(on(this.map, "mouse-move", lang.hitch(this, this.onMouseMove)));
+        this.own(on(this.map, "click", lang.hitch(this, this.onMapClick)));
+        this.own(on(this.locateButton, "click", lang.hitch(this, this.onLocateButtonClick)));
+        this.own(on(this.foldContainer, 'click', lang.hitch(this, this.onFoldContainerClick)));
+        this.graphicsLayer = new GraphicsLayer();
+        this.map.addLayer(this.graphicsLayer);
+      },
+
       startup: function() {
         this.inherited(arguments);
         this._mapWkid = this.map.spatialReference.isWebMercator() ?
           3857 : this.map.spatialReference.wkid;
         this.selectedWkid = this._mapWkid;
 
-        if (!(this.config.spatialReferences && this.config.spatialReferences.length)) {
+        if (!(this.config.spatialReferences && this.config.spatialReferences.length > 1)) {
           html.setStyle(this.foldableNode, 'display', 'none');
         } else {
           html.setStyle(this.foldableNode, 'display', 'inline-block');
@@ -163,33 +181,14 @@ define([
       },
 
       onOpen: function() {
-        domClass.add(this.coordinateBackground, "coordinate-background");
-        this.own(on(this.map, "mouse-move", lang.hitch(this, this.onMouseMove)));
-        this.own(on(this.map, "click", lang.hitch(this, this.onMapClick)));
-        this.own(on(this.locateButton, "click", lang.hitch(this, this.onLocateButtonClick)));
-
-        if (has('ie') && has('ie') < 9) {
-          // coordinateBackground
-          this.own(on(this.coordinateBackground, "mouseover", lang.hitch(this, this.onMouseOver)));
-          this.own(on(this.coordinateBackground, "mouseout", lang.hitch(this, this.onMouseOut)));
-        } else {
-          this.own(on(this.foldContainer, "mouseover", lang.hitch(this, this.onMouseOver)));
-          this.own(on(this.foldContainer, "mouseout", lang.hitch(this, this.onMouseOut)));
-        }
-
-        this.own(on(
-          this.coordinateMenuContainer,
-          "mouseover",
-          lang.hitch(this, this.onMouseOverMenu)
-        ));
-        this.own(on(
-          this.coordinateMenuContainer,
-          "mouseout",
-          lang.hitch(this, this.onMouseOutMenu)
-        ));
-
         this._processData().then(lang.hitch(this, function(spatialReferences) {
+          if (!this.domNode) {
+            return;
+          }
           this.initPopMenu(spatialReferences);
+          if (this.popMenu.getChildren().length <= 1) {
+            html.setStyle(this.foldContainer, 'display', 'none');
+          }
         }), lang.hitch(this, function(err) {
           console.error(err);
         }));
@@ -200,8 +199,11 @@ define([
         if (mapData.units) {
           def.resolve(mapData);
         } else {
-          var sr = mapData.spatialReference;
-          var ext = mapData.extent;
+          // MapServer or VectorTileServer
+          var sr = mapData.spatialReference ||
+            (lang.exists('tileInfo.spatialReference', mapData) &&
+              mapData.tileInfo.spatialReference);
+          var ext = mapData.extent || mapData.initialExtent || mapData.fullExtent;
           var wkid = (sr && (sr.latestWkid || sr.wkid)) ||
             (ext && ext.spatialReference && ext.spatialReference.wkid);
           var that = this;
@@ -227,7 +229,14 @@ define([
             var isBingMap = basemap && (basemap.type === "BingMapsRoad" ||
               basemap.type === "BingMapsHybrid" || basemap.type === "BingMapsAerial");
             var isWebTiled = basemap && basemap.type === 'WebTiledLayer';
-            if (basemap && basemap.url) {
+            var isVectorTile = basemap && basemap.type === 'VectorTileLayer';
+            if("WMS" === basemap.type){
+              //support WMS basemap
+              this._getWMSBaseMapInfo().then(lang.hitch(this, function (options) {
+                this._configured = false;
+                def.resolve(options);
+              }));
+            } else if (basemap && basemap.url) {
               esriRequest({
                 url: basemap.url,
                 handleAs: "json",
@@ -265,7 +274,8 @@ define([
                 console.error(err);
                 def.reject(err);
               }));
-            } else if (basemap && (basemap.type === "OpenStreetMap" || isBingMap || isWebTiled)) {
+            } else if (basemap &&
+              (basemap.type === "OpenStreetMap" || isBingMap || isWebTiled || isVectorTile)) {
               var unitOptions = this._getUnconfiguredUnitOptions("esriMeters", units);
               var json = {
                 wkid: 3857,
@@ -367,6 +377,14 @@ define([
             parseInt(spatialReferences[0].transformationWkid, 10);
           this._addAllMenuItems();
           this.selectedItem = this.popMenu.getChildren()[0];
+          this.selectedItem.set({
+            label: this.getStatusString(
+              true,
+              this.selectedItem.params.name,
+              this.selectedItem.params.wkid
+            )
+          });
+          html.addClass(this.selectedItem.domNode, 'selected-item');
         }
 
         this._adjustCoordinateInfoUI(this.selectedWkid);
@@ -411,6 +429,7 @@ define([
       },
 
       onClickMenu: function(event) {
+        html.removeClass(this.selectedItem.domNode, 'selected-item');
         this.selectedItem.set({
           label: this.getStatusString(
             false,
@@ -424,30 +443,34 @@ define([
         event.set({
           label: this.getStatusString(true, event.params.name, event.params.wkid)
         });
+        html.addClass(event.domNode, 'selected-item');
         this.selectedItem = event;
 
         this._adjustCoordinateInfoUI(this.selectedWkid);
+
+        html.removeClass(this.coordinateMenuContainer, 'display-coordinate-menu');
       },
 
       _adjustCoordinateInfoUI: function(selectedWkid) {
+        html.removeClass(this.coordinateInfoMenu, 'coordinate-info-menu-empty');
+        this.graphicsLayer.remove(this._markerGraphic);
+        this._markerGraphic = null;
         if (this.canShowInClient(selectedWkid)) {
           this.enableRealtime = true;
           this.coordinateInfo.innerHTML = this.nls.realtimeLabel;
-          html.setStyle(this.locateContainer, 'display', 'block');
-          html.removeClass(this.locateContainer, 'coordinate-locate-container-active');
           html.setAttr(this.locateButton, 'title', this.nls.enableClick);
-          this.enableWebMapPopup();
         } else {
           this.enableRealtime = false;
-          this.coordinateInfo.innerHTML = this.nls.hintMessage;
-          html.setStyle(this.locateContainer, 'display', 'none');
-          html.setAttr(this.locateButton, 'title', this.nls.disableClick);
-          this.disableWebMapPopup();
+          this.coordinateInfo.innerHTML = "";
+          html.addClass(this.coordinateInfoMenu, 'coordinate-info-menu-empty');
+          html.setAttr(this.locateButton, 'title', this.nls.enableClick);
         }
+        html.removeClass(this.locateContainer, 'coordinate-locate-container-active');
+        this.enableWebMapPopup();
 
-        if (has('ios') || has('android')) {
-          html.setStyle(this.locateContainer, 'display', 'none');
-        }
+        this.onExtentChange({
+          extent: this.map.extent
+        });
       },
 
       disableWebMapPopup: function() {
@@ -459,17 +482,45 @@ define([
       },
 
       onLocateButtonClick: function() {
+        if (html.hasClass(this.coordinateMenuContainer, 'display-coordinate-menu')) {
+          this.onFoldContainerClick();
+        }
+        html.removeClass(this.coordinateInfoMenu, 'coordinate-info-menu-empty');
         html.toggleClass(this.locateContainer, 'coordinate-locate-container-active');
-        if (this.enableRealtime) {
-          this.enableRealtime = false;
-          this.coordinateInfo.innerHTML = this.nls.hintMessage;
-          html.setAttr(this.locateButton, 'title', this.nls.disableClick);
-          this.disableWebMapPopup();
+        this.graphicsLayer.remove(this._markerGraphic);
+        this._markerGraphic = null;
+        if (this.canShowInClient(this.selectedWkid)) {
+          if (this.enableRealtime) {
+            this.enableRealtime = false;
+            this.coordinateInfo.innerHTML = this.nls.hintMessage;
+            html.setAttr(this.locateButton, 'title', this.nls.disableClick);
+            this.disableWebMapPopup();
+          } else {
+            this.enableRealtime = true;
+            this.coordinateInfo.innerHTML = this.nls.realtimeLabel;
+            html.setAttr(this.locateButton, 'title', this.nls.enableClick);
+            this.enableWebMapPopup();
+          }
         } else {
-          this.enableRealtime = true;
-          this.coordinateInfo.innerHTML = this.nls.realtimeLabel;
-          html.setAttr(this.locateButton, 'title', this.nls.enableClick);
-          this.enableWebMapPopup();
+          if (html.hasClass(this.locateContainer, 'coordinate-locate-container-active')) {
+            this.coordinateInfo.innerHTML = this.nls.hintMessage;
+            this.disableWebMapPopup();
+            html.setAttr(this.locateButton, 'title', this.nls.disableClick);
+          } else {
+            this.coordinateInfo.innerHTML = "";
+            html.addClass(this.coordinateInfoMenu, 'coordinate-info-menu-empty');
+            this.enableWebMapPopup();
+            html.setAttr(this.locateButton, 'title', this.nls.enableClick);
+          }
+        }
+      },
+
+      onDeActive: function() {
+        if (html.hasClass(this.locateContainer, 'coordinate-locate-container-active')) {
+          this.onLocateButtonClick();
+        }
+        if (html.hasClass(this.coordinateMenuContainer, 'display-coordinate-menu')) {
+          this.onFoldContainerClick();
         }
       },
 
@@ -479,11 +530,9 @@ define([
         wkid = parseInt(wkid, 10);
 
         if (selected) {
-          label = "&nbsp;&nbsp;&bull;&nbsp;&nbsp;" + "<b>" +
-            label + name + "</b>&nbsp;(" + wkid + ")&lrm;&nbsp;";
+          label = "<b>" + label + name + "</b>&nbsp;" + this._rtlTheBrackets(wkid) + "&nbsp;";
         } else {
-          label = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
-            label + name + "&nbsp;&nbsp;(" + wkid + ")&lrm;&nbsp;";
+          label = label + name + "&nbsp;&nbsp;" + this._rtlTheBrackets(wkid) + "&nbsp;";
         }
         if (wkid === mapWkid) {
           label += this.nls.defaultLabel;
@@ -491,11 +540,17 @@ define([
         return label;
       },
 
+      _rtlTheBrackets: function(str) {
+        var rlmFlag = "&rlm;";
+        if (window.isRTL) {
+          return rlmFlag + "(" + str + ")";
+        } else {
+          return "(" + str + ")";
+        }
+      },
+
       addMenuItem: function(name, wkid, outputUnit, tfWkid, forward, _options) {
         var label = this.getStatusString(false, name, wkid);
-        if (this.selectedWkid === parseInt(wkid, 10)) {
-          label = this.getStatusString(true, name, wkid);
-        }
         var item = {
           label: label || "",
           name: name || "",
@@ -512,7 +567,7 @@ define([
       },
 
       _toFormat: function(num) {
-        var decimalPlaces = isFinite(parseInt(this.config.decimalPlaces, 10)) ?
+        /*var decimalPlaces = isFinite(parseInt(this.config.decimalPlaces, 10)) ?
           parseInt(this.config.decimalPlaces, 10) : 3;
         var decimalStr = num.toString().split('.')[1] || "",
           decimalLen = decimalStr.length,
@@ -526,12 +581,21 @@ define([
         }
 
         num = num.toFixed(fix) + patchStr;
+        return this.separator(num, decimalPlaces);*/
+        if(isNaN(num)){
+          return "";
+        }
 
-        return this.separator(num, decimalPlaces);
+        return utils.localizeNumberByFieldInfo(num, {
+          format: {
+            places: this.config.decimalPlaces,
+            digitSeparator: this.config.addSeparator
+          }
+        });
       },
 
       onProjectComplete: function(wkid, geometries) {
-        if (!this.selectedWkid || wkid !== this.selectedWkid) {
+        if (!this.selectedWkid || wkid !== this.selectedWkid || !this.domNode) {
           return;
         }
         var point = geometries[0],
@@ -555,21 +619,94 @@ define([
         return this.nls[nlsLabel] || this.nls[outUnit] || outUnit;
       },
 
-      onError: function(msg) {
-        alert(msg);
+      onProjectError: function(msg) {
+        new Message({message: msg.message || msg.toString()});
+        this.coordinateInfo.innerHTML = this.nls.hintMessage;
       },
 
-      onMapClick: function(evt) {
-        if (this.enableRealtime || !this.selectedItem) {
+      onExtentChange: function(evt) {
+        if (!this.selectedItem) {
           return;
         }
 
+        var cPos = html.position(this.domNode);
+        var mPos = html.position(this.map.root);
+
+        if (!window.isRTL) {
+          if ((cPos.x - mPos.x + cPos.w) + 5 >= mPos.w) {
+            if ('left' in this.position) {
+              html.setStyle(this.domNode, 'right', '5px');
+            } else {
+              html.setStyle(this.domNode, 'left', '5px');
+            }
+          }
+        } else {
+          if (cPos.x - mPos.x <= 0 || (cPos.x - mPos.x + cPos.w) + 5 >= mPos.w) {
+            if ('left' in this.position) {
+              html.setStyle(this.domNode, 'left', '5px');
+            } else {
+              html.setStyle(this.domNode, 'right', '5px');
+            }
+          }
+        }
+
+        if (window.appInfo.isRunInMobile) {
+          this.graphicsLayer.remove(this._markerGraphic);
+          this._markerGraphic = null;
+          html.setStyle(this.locateContainer, 'display', 'none');
+          html.removeClass(this.coordinateMenuContainer, 'display-coordinate-menu');
+          if (this.canShowInClient(this.selectedWkid)) {
+            this._displayOnClient(evt.extent.getCenter());
+          } else {
+            this._projectMapPoint(evt.extent.getCenter());
+          }
+        } else {
+          html.setStyle(this.locateContainer, 'display', 'block');
+          if (this.popMenu.getChildren().length > 1) {
+            html.setStyle(this.foldContainer, 'display', 'block');
+          } else {
+            html.setStyle(this.foldContainer, 'display', 'none');
+          }
+        }
+      },
+
+      _getMarkerGraphic: function(mapPoint) {
+        var symbol = new PictureMarkerSymbol(
+          this.folderUrl + "css/images/esriGreenPin16x26.png",
+          16, 26
+          );
+        symbol.setOffset(0, 12);
+        return new Graphic(mapPoint, symbol);
+      },
+
+      onMapClick: function(evt) {
+        if (window.appInfo.isRunInMobile) {
+          return;
+        }
+        if (this.enableRealtime || !this.selectedItem) {
+          return;
+        }
+        var needMarker = this.canShowInClient(this.selectedWkid) ||
+          html.hasClass(this.locateContainer, 'coordinate-locate-container-active');
+        if (needMarker && !this._markerGraphic) {
+          this._markerGraphic = this._getMarkerGraphic(evt.mapPoint);
+          this.graphicsLayer.add(this._markerGraphic);
+        }
+
         if (this.canShowInClient(this.selectedWkid)) {
+          this._markerGraphic.setGeometry(evt.mapPoint);
           this._displayOnClient(evt.mapPoint);
           return;
         }
 
-        var point = new Point(evt.mapPoint.x, evt.mapPoint.y, this.map.spatialReference);
+        if (html.hasClass(this.locateContainer, 'coordinate-locate-container-active')) {
+          this._markerGraphic.setGeometry(evt.mapPoint);
+          var point = new Point(evt.mapPoint.x, evt.mapPoint.y, this.map.spatialReference);
+          this._projectMapPoint(point);
+        }
+      },
+
+      _projectMapPoint: function(point) {
         var params = new ProjectParameters();
         var outWkid = null;
         var options = this.selectedItem.get('options');
@@ -595,7 +732,7 @@ define([
         this.coordinateInfo.innerHTML = this.nls.computing;
         esriConfig.defaults.geometryService.project(params,
           lang.hitch(this, this.onProjectComplete, this.selectedWkid),
-          lang.hitch(this, this.onError)
+          lang.hitch(this, this.onProjectError)
         );
       },
 
@@ -649,8 +786,7 @@ define([
         } else {
           // use default units
           if (options.defaultUnit === outUnit) {
-            this.coordinateInfo.innerHTML = this._toFormat(x) +
-              "&nbsp;&nbsp;" + this._toFormat(y);
+            this._displayCoordinatesByOrder(this._toFormat(x), this._toFormat(y));
             this.coordinateInfo.innerHTML += " " + this._unitToNls(outUnit);
             return;
           }
@@ -683,11 +819,25 @@ define([
       },
 
       onMouseMove: function(evt) {
+        if (window.appInfo.isRunInMobile) {
+          return;
+        }
         if (!this.enableRealtime || !this.selectedItem) {
           return;
         }
 
         this._displayOnClient(evt.mapPoint);
+      },
+
+      destroy: function() {
+        if (this._markerGraphic) {
+          this.graphicsLayer.remove(this._markerGraphic);
+        }
+        if (this.graphicsLayer) {
+          this.map.removeLayer(this.graphicsLayer);
+        }
+
+        this.inherited(arguments);
       },
 
       _displayUsngOrMgrs: function(outUnit, y, x) {
@@ -697,7 +847,11 @@ define([
           this.coordinateInfo.innerHTML = usng.LLtoUSNG(y, x, 5);
         }
 
-        this.coordinateInfo.innerHTML += " " + this._unitToNls(outUnit);
+        if (isNaN(y) && isNaN(x)) {
+          this.coordinateInfo.innerHTML = "";
+        } else {
+          this.coordinateInfo.innerHTML += " " + this._unitToNls(outUnit);
+        }
       },
 
       _displayDegOrDms: function(outUnit, y, x) {
@@ -711,12 +865,20 @@ define([
         if ("DEGREE_MINUTE_SECONDS" === outUnit) {
           lat_string = this.degToDMS(y, 'LAT');
           lon_string = this.degToDMS(x, 'LON');
-          this.coordinateInfo.innerHTML = lat_string + "&nbsp;&nbsp;&nbsp;" + lon_string;
+          this._displayCoordinatesByOrder(lat_string, lon_string);
+        } else if ("DEGREES_DECIMAL_MINUTES" === outUnit){
+          //for hack DEGREES_DECIMAL_MINUTES
+          lat_string = this.degToDDM(y);
+          lon_string = this.degToDDM(x);
+          this._displayCoordinatesByOrder(lat_string, lon_string);
         } else {
-          this.coordinateInfo.innerHTML = this._toFormat(y) +
-            "&nbsp;&nbsp;" + this._toFormat(x);
+          this._displayCoordinatesByOrder(this._toFormat(x), this._toFormat(y));
 
-          this.coordinateInfo.innerHTML += " " + this._unitToNls(outUnit);
+          if (isNaN(y) && isNaN(x)) {
+            this.coordinateInfo.innerHTML = "";
+          } else {
+            this.coordinateInfo.innerHTML += " " + this._unitToNls(outUnit);
+          }
         }
       },
 
@@ -725,33 +887,28 @@ define([
         x = x * options.unitRate;
         y = y * options.unitRate;
 
-        this.coordinateInfo.innerHTML = this._toFormat(x) +
-          "&nbsp;&nbsp;" + this._toFormat(y);
+        this._displayCoordinatesByOrder(this._toFormat(x), this._toFormat(y));
 
-        this.coordinateInfo.innerHTML += " " + this._unitToNls(outUnit);
-      },
-
-      onMouseOver: function() {
-        if (this._configured) {
-          domStyle.set(this.coordinateMenuContainer, "display", "block");
-          var textBox = html.getMarginBox(this.coordinateInfoMenu);
-          var box = html.getContentBox(this.coordinateBackground);
-          // var pbExtents = html.getPadBorderExtents(this.domNode);
-          if (box.w - textBox.w > 0) {
-            html.setStyle(this.foldContainer, 'width', (box.w - textBox.w) + 'px');
-          }
+        if (isNaN(y) && isNaN(x)) {
+          this.coordinateInfo.innerHTML = "";
+        } else {
+          this.coordinateInfo.innerHTML += " " + this._unitToNls(outUnit);
         }
       },
-      onMouseOut: function() {
-        domStyle.set(this.coordinateMenuContainer, "display", "none");
-        html.setStyle(this.foldContainer, 'width', '10px');
+
+      _displayCoordinatesByOrder: function(x, y) {
+        var displayOrderLonLat = this.config.displayOrderLonLat;//X,Y
+        if (displayOrderLonLat) {
+          this.coordinateInfo.innerHTML = x + "  " + y;
+        } else {
+          this.coordinateInfo.innerHTML = y + "  " + x;
+        }
       },
-      onMouseOverMenu: function() {
-        domStyle.set(this.coordinateMenuContainer, "display", "block");
-      },
-      onMouseOutMenu: function() {
-        domStyle.set(this.coordinateMenuContainer, "display", "none");
-        html.setStyle(this.foldContainer, 'width', '10px');
+
+      onFoldContainerClick: function() {
+        if (this._configured) {
+          html.toggleClass(this.coordinateMenuContainer, 'display-coordinate-menu');
+        }
       },
 
       /**
@@ -791,7 +948,91 @@ define([
           deg + "&deg;" + min_string + "&prime;" + sec_string + "&Prime;" + dir :
           deg + "&deg;" + min_string + "&prime;" + sec_string + "&Prime;" + dir;
       },
+      //for hack Degrees Decimal Minutes
+      degToDDM: function (decDeg) {
+        /** @type {number} */
+        var d = Math.abs(decDeg);
+        /** @type {number} */
+        var deg = Math.floor(d);
+        d = d - deg;
+        /** @type {number} */
+        var min = Math.floor(d * 60);
+        /** @type {number} */
+        var sec = Math.floor((d - min / 60) * 60 * 60);
+        if (sec === 60) { // can happen due to rounding above
+          min++;
+          sec = 0;
+        }
+        if (min === 60) { // can happen due to rounding above
+          deg++;
+          min = 0;
+        }
 
+        var dm = utils.localizeNumberByFieldInfo((min + (sec / 60)), {
+          format: {
+            places: this.config.decimalPlaces,
+            digitSeparator: this.config.addSeparator
+          }
+        });
+
+        return deg + "&deg;" + dm + "&prime;";
+      },
+      _getWMSBaseMapInfo: function () {
+        var def = new Deferred();
+        require(['jimu/SpatialReference/srUtils'], lang.hitch(this, function (srUtils) {
+          srUtils.loadResource().then(lang.hitch(this, function () {
+            var mapWkid = this.map.spatialReference.wkid;
+            portalUtils.getUnits(this.appConfig.portalUrl).then(lang.hitch(this, function (units) {
+              if (srUtils.isValidWkid(mapWkid)) {
+                var item = {
+                  wkid: srUtils.standardizeWkid(mapWkid),
+                  label: srUtils.getSRLabel(parseInt(mapWkid, 10))
+                };
+
+                if (srUtils.isProjectedCS(item.wkid)) {
+                  item.outputUnit = units === "english" ? "FOOT" : "METER";
+                } else {
+                  item.outputUnit = item.outputUnit || srUtils.getCSUnit(item.wkid);
+                }
+
+                var _options = {
+                  sameSRWithMap: srUtils.isSameSR(item.wkid, this.map.spatialReference.wkid),
+                  isGeographicCS: srUtils.isGeographicCS(item.wkid),
+                  isGeographicUnit: srUtils.isGeographicUnit(item.outputUnit),
+                  isProjectedCS: srUtils.isProjectedCS(item.wkid),
+                  isProjectUnit: srUtils.isProjectUnit(item.outputUnit),
+                  spheroidCS: srUtils.isProjectedCS(item.wkid) ?
+                    srUtils.getGeoCSByProj(item.wkid) : item.wkid,
+                  defaultUnit: srUtils.getCSUnit(item.wkid),
+                  unitRate: srUtils.getUnitRate(srUtils.getCSUnit(item.wkid), item.outputUnit)
+                };
+
+                //default show mercator is degrees.
+                if (this.map.spatialReference.isWebMercator()) {
+                  _options.isGeographicUnit = true;
+                  _options.isProjectUnit = false;
+                  _options.unitRate = 1;
+                  item.outputUnit = "DECIMAL_DEGREES";
+                }
+                //for hack DEGREES_DECIMAL_MINUTES
+                if (item.outputUnit === "DEGREES_DECIMAL_MINUTES") {
+                  _options.isGeographicUnit = true;
+                  _options.unitRate = 1;
+                }
+
+                item.options = _options;
+                def.resolve(item);
+              }
+            }), lang.hitch(this, function (err) {
+              console.error(err);
+              def.reject(err);
+            }));
+          }));
+        }));
+
+        return def;
+      }
+      /*,
       separator: function(nStr, places) {
         if (this.config.addSeparator && JSON.parse(this.config.addSeparator)) {
           return utils.localizeNumber(nStr, {
@@ -799,7 +1040,7 @@ define([
           });
         }
         return nStr;
-      }
+      }*/
     });
 
     return clazz;

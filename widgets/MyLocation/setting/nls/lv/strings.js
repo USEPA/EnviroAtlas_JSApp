@@ -1,8 +1,7 @@
-﻿define(
-   ({
-    timeout: "Taimauts",
-    highlightLocation: "Izcelt atrašanās vietu",
-    useTracking: "Skatīties atrašanās vietas izmaiņas",
-    warning: "Nepareiza ievade"
-  })
-);
+define({
+  "timeout": "Pārtraukums",
+  "highlightLocation": "Izcelt atrašanās vietu",
+  "useTracking": "Skatīties atrašanās vietas izmaiņas",
+  "warning": "Nepareiza ievade",
+  "zoomScale": "Mērogmaiņas skala"
+});

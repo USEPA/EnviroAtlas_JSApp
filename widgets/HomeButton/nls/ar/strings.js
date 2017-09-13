@@ -1,5 +1,3 @@
-﻿define(
-   ({
-    _widgetLabel: "زر البداية"
-  })
-);
+define({
+  "_widgetLabel": "الصفحة الرئيسية"
+});

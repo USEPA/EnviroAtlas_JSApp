@@ -1,3 +1,5 @@
 {
-	"sources":[]
+  "allPlaceholder": "",
+  "showInfoWindowOnSelect": true,
+  "sources":[]
 }

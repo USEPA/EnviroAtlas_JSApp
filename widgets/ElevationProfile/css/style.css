@@ -10,6 +10,26 @@
   height: 32px;
 }
 
+.LaunchpadTheme .esriMeasurement .esriButton + .esriButton .dijitButtonNode {
+  border: 1px solid #DDD  !important;
+}
+
+.LaunchpadTheme .esriMeasurement:first-child .dijitButtonNode {
+  border-radius: 2px  !important;
+}
+
+.LaunchpadTheme .esriMeasurement .esriMeasurementSeparator {
+  display: inline-block !important;
+}
+
+.LaunchpadTheme .esriMeasurement .esriToggleButton {
+  display: inline-block !important;
+}
+
+.LaunchpadTheme .esriMeasurement {
+  top: 36px !important;
+}
+
 .jimu-widget-frame>.widget-elevation-profile>.jimu-tab>.control{
   margin:-14px -14px 0 -14.7px;
 }

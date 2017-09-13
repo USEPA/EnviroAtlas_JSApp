@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 Esri. All Rights Reserved.
+// Copyright © 2014 - 2016 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,12 +21,29 @@ define([
   'dojo/Deferred',
   'dojo/dom-construct',
   './LayerInfoForDefault',
-  'esri/layers/FeatureLayer',
-  'esri/layers/RasterLayer'
-], function(declare, array, lang, Deferred, domConstruct,
-LayerInfoForDefault, FeatureLayer, RasterLayer) {
+  './LayerObjectFacory'
+], function(declare, array, lang, Deferred, domConstruct, LayerInfoForDefault, LayerObjectFacory) {
   return declare(LayerInfoForDefault, {
     _legendsNode: null,
+    //_layerObjectLoadingIndicator: null,
+    _layerObjectFacory: null,
+
+    constructor: function() {
+      /*
+      // init _layerObjectLoadingIndicator
+      this._layerObjectLoadingIndicator = {
+        loadingFlag: false,
+        loadedDef: new Deferred()
+      };
+      */
+
+      // init _layerObjectFacory
+      this._layerObjectFacory = new LayerObjectFacory(this);
+    },
+
+    _resetLayerObjectVisiblity: function() {
+      // do not do anything.
+    },
 
     _loadLegends: function(portalUrl) {
       var defRet = new Deferred();
@@ -146,33 +163,105 @@ LayerInfoForDefault, FeatureLayer, RasterLayer) {
       }
     },
 
+    _getShowLegendOfWebmap: function() {
+      var subId = this.originOperLayer.mapService.subId;
+      return this.originOperLayer.mapService.layerInfo._getSublayerShowLegendOfWebmap(subId);
+    },
+
+
+    /***************************************************
+     * methods for control service definition
+     ***************************************************/
+    // async method, return a deferred.
+    _getServiceDefinition: function() {
+      return this.originOperLayer.mapService.layerInfo._getSubserviceDefinition(this.subId);
+    },
+
+    /***************************************************
+     * methods for control service definition
+     ***************************************************/
+
+    _getLayerObject: function() {
+      var def = new Deferred();
+      this._layerObjectFacory.getLayerObject().then(lang.hitch(this, function(layerObject) {
+        if(this.layerObject.empty && layerObject) {
+          this.layerObject = layerObject;
+        }
+        def.resolve(layerObject);
+      }));
+      return def;
+    },
+
     //--------------public interface---------------------------
+
+
+    getLayerObject: function() {
+      return this._getLayerObject();
+    },
+
+    /*
     getLayerObject: function() {
       var def = new Deferred();
+      // if this.layerInfo is groupLayerInfo
+      if(this.getSubLayers().length > 0) {
+        return this._getGroupLayerObject();
+      }
+
+      var loadHandle, loadErrorHandle;
       this.getLayerType().then(lang.hitch(this, function(layerType) {
         if(this.layerObject.empty) {
           if(layerType === "RasterLayer") {
             this.layerObject = new RasterLayer(this.layerObject.url);
-          } else  {
-            // default as FeatureLayer
-            this.layerObject = new FeatureLayer(this.layerObject.url);
+          } else if(layerType === "FeatureLayer") {
+            this.layerObject = new FeatureLayer(this.layerObject.url,
+                                                this._getLayerOptionsForCreateLayerObject());
+          } else if(layerType === "StreamLayer") {
+            this.layerObject = new StreamLayer(this.layerObject.url);
+          } else if(layerType === "ArcGISImageServiceLayer") {
+            this.layerObject = new ArcGISImageServiceLayer(this.layerObject.url);
+          } else if(layerType === "ArcGISImageServiceVectorLayer") {
+            this.layerObject = new ArcGISImageServiceVectorLayer(this.layerObject.url);
+          }// else resolve with null at below;
+          // temporary solution, partly supports kind of layerTypes. Todo...***
+          // need a layerObject factory.
+
+          if(this.layerObject.empty) {
+            def.resolve();
+          } else {
+            // consider the condition of layer that there is no 'on' method. Todo...
+            this._layerObjectLoadingIndicator.loadingFlag = true;
+            loadHandle = this.layerObject.on('load', lang.hitch(this, function() {
+              // change layer.name, just for subLayers of mapService now, need move to layerObject factory.
+              // Todo...
+              if(!this.layerObject.empty &&
+                 this.layerObject.name &&
+                 !lang.getObject("_wabProperties.originalLayerName", false, this.layerObject)) {
+                lang.setObject('_wabProperties.originalLayerName',
+                               this.layerObject.name,
+                               this.layerObject);
+                this.layerObject.name = this.title;
+              }
+              this.layerObject.id = this.id;
+              def.resolve(this.layerObject);
+              this._layerObjectLoadingIndicator.loadedDef.resolve(this.layerObject);
+              if(loadHandle.remove) {
+                loadHandle.remove();
+              }
+            }));
+            loadErrorHandle = this.layerObject.on('error', lang.hitch(this, function() {
+              def.resolve(null);
+              this._layerObjectLoadingIndicator.loadedDef.resolve(null);
+              if(loadErrorHandle.remove) {
+                loadErrorHandle.remove();
+              }
+            }));
           }
-          this.layerObject.on('load', lang.hitch(this, function() {
-            def.resolve(this.layerObject);
-          }));
-          this.layerObject.on('error', lang.hitch(this, function(/*err*/) {
-            //def.reject(err);
-            def.resolve(null);
-          }));
-        } else if (!this.layerObject.loaded) {
-          this.layerObject.on('load', lang.hitch(this, function() {
-            def.resolve(this.layerObject);
-          }));
-          this.layerObject.on('error', lang.hitch(this, function(/*err*/) {
-            //def.reject(err);
-            def.resolve(null);
+        } else if(this._layerObjectLoadingIndicator.loadingFlag) {
+          this._layerObjectLoadingIndicator.loadedDef.then(lang.hitch(this, function(layerObject) {
+            def.resolve(layerObject);
           }));
         } else {
+          // layerObject exist at initial.
           def.resolve(this.layerObject);
         }
       }), lang.hitch(this, function() {
@@ -180,6 +269,32 @@ LayerInfoForDefault, FeatureLayer, RasterLayer) {
       }));
       return def;
     },
+
+    _getGroupLayerObject: function() {
+      var def = new Deferred();
+      if(this.layerObject.empty) {
+        // *** will improve.
+        esriRequest({
+          url: this.layerObject.url,
+          handleAs: 'json',
+          callbackParamName: 'callback',
+          timeout: 100000,
+          content: {f: 'json'}
+        }).then(lang.hitch(this, function(res){
+          var url = this.layerObject.url;
+          this.layerObject = res;
+          this.layerObject.url = url;
+          this.layerObject.id = this.id;
+          def.resolve(this.layerObject);
+        }), function(err) {
+          def.reject(err);
+        });
+      } else {
+        def.resolve(this.layerObject);
+      }
+      return def;
+    },
+    */
 
     // now it is used for Attribute.
     getPopupInfo: function() {
@@ -220,19 +335,64 @@ LayerInfoForDefault, FeatureLayer, RasterLayer) {
       return filter;
     },
 
+    getFilter: function() {
+      // summary:
+      //   get filter from layerObject.
+      // description:
+      //   return null if does not have or cannot get it.
+      var filter;
+      var mapService = this.originOperLayer.mapService;
+      if(mapService.layerInfo.layerObject &&
+         mapService.layerInfo.layerObject.layerDefinitions) {
+        filter = mapService.layerInfo.layerObject.layerDefinitions[mapService.subId];
+      } else {
+        filter = null;
+      }
+      return filter;
+    },
+
+    setFilter: function(layerDefinitionExpression) {
+      // summary:
+      //   set layer definition expression to layerObject.
+      // paramtter
+      //   layerDefinitionExpression: layer definition expression
+      //   set 'null' to delete layer definition express
+      // description:
+      //   operation will skip if layer not support filter.
+      var layerDefinitions;
+      var mapService = this.originOperLayer.mapService;
+      if(mapService.layerInfo.layerObject &&
+         mapService.layerInfo.layerObject.setLayerDefinitions) {
+        if(mapService.layerInfo.layerObject.layerDefinitions) {
+          layerDefinitions = array.map(mapService.layerInfo.layerObject.layerDefinitions,
+                                       function(layerDefinition) {
+            return layerDefinition;
+          });
+        } else {
+          layerDefinitions = [];
+        }
+
+        layerDefinitions[mapService.subId] = layerDefinitionExpression;
+        mapService.layerInfo.layerObject.setLayerDefinitions(layerDefinitions);
+      }
+    },
+
     getLayerType: function() {
       var def = new Deferred();
-      var mapService = this.originOperLayer.mapService;
-      mapService.layerInfo._getSublayerDefinition(mapService.subId)
-      .then(lang.hitch(this, function(layerIdent) {
-        if (layerIdent) {
-          def.resolve(layerIdent.type.replace(/\ /g, ''));
-        } else {
+      // if this.layerInfo is groupLayerInfo
+      if(this.getSubLayers().length > 0) {
+        def.resolve("GroupLayer");
+      } else {
+        this._getServiceDefinition().then(lang.hitch(this, function(serviceDefinition) {
+          if (serviceDefinition) {
+            def.resolve(serviceDefinition.type.replace(/\ /g, ''));
+          } else {
+            def.resolve(null);
+          }
+        }), function() {
           def.resolve(null);
-        }
-      }), function() {
-        def.resolve(null);
-      });
+        });
+      }
 
       return def;
     },
@@ -257,10 +417,8 @@ LayerInfoForDefault, FeatureLayer, RasterLayer) {
         if (this._getLayerTypesOfSupportTable().indexOf(layerType) >= 0) {
           resultValue.isSupportedLayer = true;
         }
-        var mapService = this.originOperLayer.mapService;
-        mapService.layerInfo._getSublayerDefinition(mapService.subId)
-        .then(lang.hitch(this, function(layerIdent){
-          if(layerIdent && layerIdent.capabilities.indexOf("Data") >= 0) {
+        this._getServiceDefinition().then(lang.hitch(this, function(serviceDefinition){
+          if(serviceDefinition && serviceDefinition.capabilities.indexOf("Data") >= 0) {
             resultValue.isSupportQuery = true;
           }
           def.resolve(resultValue);
@@ -278,14 +436,21 @@ LayerInfoForDefault, FeatureLayer, RasterLayer) {
       var mapServiceLayerInfo = this.originOperLayer.mapService.layerInfo;
       var mapServiceLayer = mapServiceLayerInfo.layerObject;
       var subId = this.originOperLayer.mapService.subId;
-      this.controlPopupInfo.enablePopup = true;
-      if(mapServiceLayerInfo.controlPopupInfo.infoTemplates) {
-        if(!mapServiceLayer.infoTemplates) {
-          mapServiceLayer.infoTemplates = {};
+
+      return this.loadInfoTemplate().then(lang.hitch(this, function() {
+        if(mapServiceLayerInfo.controlPopupInfo.infoTemplates &&
+          mapServiceLayerInfo.controlPopupInfo.infoTemplates[subId]) {
+          this.controlPopupInfo.enablePopup = true;
+          if(!mapServiceLayer.infoTemplates) {
+            mapServiceLayer.infoTemplates = {};
+          }
+          mapServiceLayer.infoTemplates[subId] =
+            mapServiceLayerInfo.controlPopupInfo.infoTemplates[subId];
+          return true;
+        } else {
+          return false;
         }
-        mapServiceLayer.infoTemplates[subId] =
-          mapServiceLayerInfo.controlPopupInfo.infoTemplates[subId];
-      }
+      }));
     },
 
     disablePopup: function() {
@@ -302,15 +467,21 @@ LayerInfoForDefault, FeatureLayer, RasterLayer) {
       var mapServiceLayerInfo = this.originOperLayer.mapService.layerInfo;
       var subId = this.originOperLayer.mapService.subId;
       if(mapServiceLayerInfo.controlPopupInfo.infoTemplates &&
-        mapServiceLayerInfo.controlPopupInfo.infoTemplates[subId]) {
-        def.resolve(mapServiceLayerInfo.controlPopupInfo.infoTemplates[subId]);
+        mapServiceLayerInfo.controlPopupInfo.infoTemplates[subId] &&
+        mapServiceLayerInfo.controlPopupInfo.infoTemplates[subId].infoTemplate) {
+        def.resolve(mapServiceLayerInfo.controlPopupInfo.infoTemplates[subId].infoTemplate);
       } else {
         if(!mapServiceLayerInfo.controlPopupInfo.infoTemplates){
           mapServiceLayerInfo.controlPopupInfo.infoTemplates = {};
         }
+        /*
         mapServiceLayerInfo._getSublayerDefinition(subId)
         .then(lang.hitch(this, function(layerDefinition) {
           var popupTemplate = this._getDefaultPopupTemplate(layerDefinition);
+        */
+        this.getLayerObject()
+        .then(lang.hitch(this, function(layerObject) {
+          var popupTemplate = this._getDefaultPopupTemplate(layerObject);
           mapServiceLayerInfo.controlPopupInfo.infoTemplates[subId] = {
             infoTemplate: popupTemplate,
             layerUrl: null
@@ -333,6 +504,35 @@ LayerInfoForDefault, FeatureLayer, RasterLayer) {
       } else {
         return null;
       }
+    },
+
+    getScaleRange: function() {
+      var scaleRange;
+      var mapService = this.originOperLayer.mapService;
+      var jsapiLayerInfo = mapService.layerInfo._getJsapiLayerInfoById(mapService.subId);
+
+      if(jsapiLayerInfo &&
+         (jsapiLayerInfo.minScale >= 0) &&
+         (jsapiLayerInfo.maxScale >= 0)) {
+        scaleRange = {
+          minScale: jsapiLayerInfo.minScale,
+          maxScale: jsapiLayerInfo.maxScale
+        };
+      } else {
+        scaleRange = {
+          minScale: 0,
+          maxScale: 0
+        };
+      }
+
+      return scaleRange;
+    },
+
+    /****************
+     * Event
+     ***************/
+    _onVisibilityChanged: function() {
+      // for all subLayers of mapService, do not response VisibilityChanged.
     }
 
   });

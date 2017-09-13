@@ -1,7 +1,5 @@
-﻿define(
-   ({
-    _widgetLabel: "רצועת כלים צידית",
-    more: "עוד",
-    otherPanels: "חלוניות נוספות"
-  })
-);
+define({
+  "_widgetLabel": "בקר סרגל צד",
+  "more": "עוד",
+  "otherPanels": "פאנלים אחרים"
+});

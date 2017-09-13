@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 Esri. All Rights Reserved.
+// Copyright © 2014 - 2016 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,12 +22,14 @@ define([
     'dojo/Deferred',
     'dojo/topic',
     'dojo/json',
+    'dojo/request/xhr',
     'esri/request',
+    './Role',
     './utils',
     './portalUrlUtils',
     './tokenUtils'
   ],
-  function(declare, lang, array, dojoConfig, Deferred, topic, dojoJson, esriRequest, jimuUtils,
+  function(declare, lang, array, dojoConfig, Deferred, topic, dojoJson, xhr, esriRequest, Role, jimuUtils,
     portalUrlUtils, tokenUtils) {
 
     //important attributes of portal relevant classes
@@ -165,6 +167,7 @@ define([
         return def;
       },
 
+      //params: {q,sortField,sortOrder,num,start}
       queryItems: function(params) {
         this.updateCredential();
 
@@ -221,18 +224,14 @@ define([
           callbackParamName: 'callback'
         };
 
-        if (this.isValidCredential()) {
-          args.content.token = this.credential.token;
-        }
+        // if (this.isValidCredential()) {
+        //   args.content.token = this.credential.token;
+        // }
 
         return esriRequest(args);
       },
 
-      getItemById: function(_itemId) {
-        var def = new Deferred();
-
-        this.updateCredential();
-
+      _getItemById: function(_itemId, /*optional*/ token) {
         var url = portalUrlUtils.getItemUrl(this.portalUrl, _itemId);
         var args = {
           url: url,
@@ -243,21 +242,29 @@ define([
           callbackParamName: 'callback'
         };
 
-        if (this.isValidCredential()) {
-          args.content.token = this.credential.token;
+        if(token){
+          args.content.token = token;
         }
 
-        esriRequest(args).then(lang.hitch(this, function(item) {
+        return esriRequest(args).then(lang.hitch(this, function(item) {
           item.portalUrl = this.portalUrl;
           item.credential = this.credential;
           item.portal = this;
           var portalItem = new PortalItem(item);
-          def.resolve(portalItem);
-        }), lang.hitch(this, function(err) {
-          console.error(err);
-          def.reject(err);
+          return portalItem;
         }));
-        return def;
+      },
+
+      getItemById: function(_itemId, /*optional*/ carryToken) {
+        this.updateCredential();
+
+        return this._getItemById(_itemId).then(lang.hitch(this, function(item){
+          if(carryToken && item.owner && this.isValidCredential() &&
+             this.credential && this.credential.userId === item.owner){
+            return this._getItemById(_itemId, this.credential.token);
+          }
+          return item;
+        }));
       },
 
       getAppById: function(appId) {
@@ -462,6 +469,19 @@ define([
         }
       },
 
+      canCreateItem: function(){
+        var userRole = new Role({
+          id: this.roleId ? this.roleId : this.role,
+          role: this.role
+        });
+
+        if (this.privileges) {
+          userRole.setPrivileges(this.privileges);
+        }
+
+        return userRole.canCreateItem();
+      },
+
       getGroups: function() {
         var groups = [];
         if (this.groups) {
@@ -603,9 +623,9 @@ define([
           callbackParamName: 'callback'
         };
 
-        if (this.isValidCredential()) {
-          args.content.token = this.credential.token;
-        }
+        // if (this.isValidCredential()) {
+        //   args.content.token = this.credential.token;
+        // }
 
         esriRequest(args).then(lang.hitch(this, function(item) {
           item.portalUrl = this.portalUrl;
@@ -673,8 +693,9 @@ define([
               content = lang.mixin(content, args);
             }
             var folder = item.ownerFolder;
+            var userName = item.owner;
             esriRequest({
-              url: portalUrlUtils.getUpdateItemUrl(this.portalUrl, this.username, itemId, folder),
+              url: portalUrlUtils.getUpdateItemUrl(this.portalUrl, userName, itemId, folder),
               handleAs: 'json',
               callbackParamName: 'callback',
               timeout: 100000,
@@ -713,6 +734,43 @@ define([
       isUserRole: function(){
         //use account_user for back compability
         return this.role === 'org_user' || this.role === 'account_user';
+      },
+
+      getRegisteredAppInfo: function(itemId, folderId) {
+        var def = new Deferred();
+
+        this.updateCredential();
+        var userItemsUrl = portalUrlUtils.getUserItemsUrl(this.portalUrl, this.username, folderId);
+        var getRegisteredAppInfoUrl = userItemsUrl + "/" + itemId + "/registeredAppInfo";
+        def = esriRequest({
+          url: getRegisteredAppInfoUrl,
+          content: {
+            token: this.credential.token,
+            f: 'json'
+          },
+          handleAs: 'json'
+        }, {
+          usePost: true
+        });
+
+        return def;
+      },
+
+      getRegisteredAppInfoWithXhr: function(itemId, folderId) {
+        var def = new Deferred();
+
+        this.updateCredential();
+        var userItemsUrl = portalUrlUtils.getUserItemsUrl(this.portalUrl, this.username, folderId);
+        var getRegisteredAppInfoUrl = userItemsUrl + "/" + itemId + "/registeredAppInfo";
+        def = xhr(getRegisteredAppInfoUrl, {
+          data: {
+            token: this.credential.token,
+            f: 'json'
+          },
+          method: 'POST',
+          handleAs: 'json'
+        });
+        return def;
       }
     });
 
@@ -808,6 +866,26 @@ define([
 
       getItemData: function() {
         return this.portal.getItemData(this.id);
+      },
+
+      getItemGroups: function() {
+        this.updateCredential();
+
+        var itemGroupsUrl = portalUrlUtils.getItemGroupsUrl(this.portalUrl, this.id);
+        var args = {
+          url: itemGroupsUrl,
+          handleAs: 'json',
+          content: {
+            f: 'json'
+          },
+          callbackParamName: 'callback'
+        };
+
+        if (this.isValidCredential()) {
+          args.content.token = this.credential.token;
+        }
+
+        return esriRequest(args);
       }
     });
 
@@ -883,11 +961,21 @@ define([
         }), lang.hitch(this, function(err) {
           console.warn(err);
           this.getPortalSelfInfo(_portalUrl).then(lang.hitch(this, function(selfInfo) {
-            _culture = (selfInfo && selfInfo.culture) || dojoConfig.locale;
+            var units = null;
+            if (selfInfo && selfInfo.units) {
+              units = selfInfo.units;
+            } else {
+              _culture = (selfInfo && selfInfo.culture) || dojoConfig.locale;
+              if (_culture.startWith("en")) {
+                units = "english";
+              } else {
+                units = "metric";
+              }
+            }
+            def.resolve(units);
           }), lang.hitch(this, function(err) {
             console.warn(err);
             _culture = dojoConfig.locale;
-          })).always(lang.hitch(this, function() {
             if (_culture.startWith("en")) {
               units = "english";
             } else {
@@ -962,37 +1050,163 @@ define([
         return def;
       },
 
-      getDefaultWebScene: function(portalUrl){
+      getDefaultWebScene: function(_portalUrl){
+        var portalUrl = portalUrlUtils.getStandardPortalUrl(_portalUrl);
+        return this._searchWABDefaultWebScene(portalUrl).then(lang.hitch(this, function(webSceneId){
+          if(webSceneId){
+            return webSceneId;
+          }else{
+            return this._createWABDefaultWebScene(portalUrl).
+            then(lang.hitch(this, function(webSceneId){
+              var portal = this.getPortal(portalUrl);
+              return portal.getUser().then(lang.hitch(this, function(user){
+                var canShareToPublic = false;
+                if(user && user.privileges && user.privileges.length > 0){
+                  canShareToPublic = array.some(user.privileges, function(privilege){
+                    return privilege.indexOf("shareToPublic") >= 0;
+                  });
+                }
+                if(canShareToPublic){
+                  //If user has "shareToPublic" privilege,
+                  //we should share this newly created web scene to everyone.
+                  var args = {
+                    everyone: true
+                  };
+                  return user.shareItem(args, webSceneId).then(lang.hitch(this, function(){
+                    return webSceneId;
+                  }), lang.hitch(this, function(){
+                    return webSceneId;
+                  }));
+                }else{
+                  return webSceneId;
+                }
+              }), lang.hitch(this, function(err){
+                console.error(err);
+                return webSceneId;
+              }));
+            }));
+          }
+        }));
+      },
+
+      //resolve the default web scene id which has typekeywords "WABDefaultWebScene"
+      _searchWABDefaultWebScene: function(_portalUrl){
         var def = new Deferred();
+        var portalUrl = portalUrlUtils.getStandardPortalUrl(_portalUrl);
+        var portal = this.getPortal(portalUrl);
+        //must use double quotation marks around typeKeywords
+        //such as typekeywords:"Web AppBuilder" or typekeywords:"Web AppBuilder,Web Map"
+        var q = 'typekeywords:"WABDefaultWebScene" access:public ' + this.webSceneQueryStr;
+        var args = {
+          q: q
+        };
+        portal.queryItems(args).then(lang.hitch(this, function(response){
+          if(response && response.results && response.results.length > 0){
+            def.resolve(response.results[0].id);
+          }else{
+            def.resolve(null);
+          }
+        }), lang.hitch(this, function(err){
+          console.error("_searchWABDefaultWebScene error:", err);
+          def.reject(err);
+        }));
+        return def;
+      },
+
+      //resolve newly created web scene id
+      _createWABDefaultWebScene: function(portalUrl){
+        var def = new Deferred();
+        portalUrl = portalUrlUtils.getStandardPortalUrl(portalUrl);
         var portal = this.getPortal(portalUrl);
         portal.getUser().then(lang.hitch(this, function(user){
-          var queryStr = this.webSceneQueryStr + ' AND owner:"' + user.username + '" ';
-          var params = {
-            start: 1,
-            num: 1,
-            f: 'json',
-            q: queryStr,
-            sortField: 'numViews',
-            sortOrder: 'desc'
+          var url1 = "http://services.arcgisonline.com/ArcGIS/rest/services/" +
+                     "World_Imagery/MapServer";
+          var url2 = "http://elevation3d.arcgis.com/arcgis/rest/services/" +
+                     "WorldElevation3D/Terrain3D/ImageServer";
+          var data = {
+            "operationalLayers": [],
+            "baseMap": {
+              "id": "151b431fe65-basemap-0",
+              "title": "Topographic",
+              "baseMapLayers": [{
+                "id": "defaultBasemap",
+                "url": url1,
+                "layerType": "ArcGISTiledMapServiceLayer"
+              }],
+              "elevationLayers": [{
+                "id": "globalElevation",
+                "url": url2,
+                "layerType": "ArcGISTiledElevationServiceLayer"
+              }]
+            },
+            "version": "1.3",
+            "authoringApp": "WebSceneViewer",
+            "authoringAppVersion": "3.10.0.0",
+            "spatialReference": {
+              "wkid": 102100,
+              "latestWkid": 3857
+            },
+            "viewingMode": "global",
+            "initialState": {
+              "viewpoint": {
+                "scale": 45188197.847224146,
+                "rotation": 0,
+                "targetGeometry": {
+                  "x": 144770.99872895706,
+                  "y": 3232837.215000455,
+                  "spatialReference": {
+                    "wkid": 102100,
+                    "latestWkid": 3857
+                  },
+                  "z": -127.7412482528016
+                },
+                "camera": {
+                  "position": {
+                    "x": 144770.99767624016,
+                    "y": 3182557.105058348,
+                    "spatialReference": {
+                      "wkid": 102100,
+                      "latestWkid": 3857
+                    },
+                    "z": 25512548.00000001
+                  },
+                  "heading": 0,
+                  "tilt": 0.0999986601088944
+                }
+              },
+              "environment": {
+                "lighting": {
+                  "datetime": 1426420488000,
+                  "displayUTCOffset": 0
+                }
+              }
+            },
+            "presentation": {
+              "slides": []
+            }
           };
-          portal.queryItems(params).then(lang.hitch(this, function(response){
-            var items = response.results;
-            items = array.filter(items, lang.hitch(this, function(item){
-              return item.type && item.type.toLowerCase() === 'web scene';
-            }));
-            if(items.length > 0){
-              var item = items[0];
-              def.resolve(item.id);
+          var text = dojoJson.stringify(data);
+          var args = {
+            title: "Default Web Scene",
+            type: "Web Scene",
+            typeKeywords: "WABDefaultWebScene",
+            tags: "default",
+            text: text,
+            snippet: ""
+          };
+          user.addItem(args, "").then(lang.hitch(this, function(response){
+            if (response.success) {
+              def.resolve(response.id);
+            }else{
+              console.error("Can't create default web scene:", response);
+              def.reject();
             }
-            else{
-              def.resolve(null);
-            }
-          }), lang.hitch(this, function(err){
-            def.reject(err);
           }));
-        }), lang.hitch(this, function(){
-          def.reject('not sign in');
+        }), lang.hitch(this, function(err){
+          console.error("Can't create default web scene");
+          def.reject(err);
         }));
+
         return def;
       },
 
@@ -1135,6 +1349,123 @@ define([
           def.reject(err);
         }));
         return def;
+      },
+
+      //if return 0, means strPortalVersion1 == strPortalVersion2
+      //if return 1, means strPortalVersion1 > strPortalVersion2
+      //if return -1, means strPortalVersion1 < strPortalVersion2
+      comparePortalVersion: function(strPortalVersion1, strPortalVersion2){
+        var result;
+
+        var splits1 = strPortalVersion1.split(".");
+        var majorVersion1 = parseInt(splits1[0], 10);
+        var minorVersion1 = splits1.length > 1 ? parseInt(splits1[1], 10) : 0;
+
+        var splits2 = strPortalVersion2.split(".");
+        var majorVersion2 = parseInt(splits2[0], 10);
+        var minorVersion2 = splits2.length > 1 ? parseInt(splits2[1], 10) : 0;
+
+        if(majorVersion1 > majorVersion2){
+          result = 1;
+        }else if(majorVersion1 < majorVersion2){
+          result = -1;
+        }else{
+          if(minorVersion1 > minorVersion2){
+            result = 1;
+          }else if(minorVersion1 < minorVersion2){
+            result = -1;
+          }else{
+            result = 0;
+          }
+        }
+
+        return result;
+      },
+      getItemResources: function(num) {
+        //num: Maximum number of resources
+        if (!num) {
+          num = 100;
+        }
+        var portalUrl = portalUrlUtils.getStandardPortalUrl(window.portalUrl);
+        var resourcesUrl = portalUrlUtils.getItemResourceUrl(portalUrl, window.appInfo.id);
+        return esriRequest({
+          url: resourcesUrl,
+          content: {
+            f: 'json',
+            num: num
+          }
+        }).then(function(result) {
+          if (result && result.resources) {
+            return result.resources;
+          }
+        }, function(err) {
+          console.error(err.message || err);
+          return err;
+        });
+      },
+      addResource: function(itemId, blobFile, _resourceName, _prefixName) {
+        // _resourceName example: abc.jpg,must have a file name suffix
+        var portalUrl = portalUrlUtils.getStandardPortalUrl(window.portalUrl);
+        var portal = this.getPortal(portalUrl);
+
+        var formData = new FormData();
+        formData.append("file", blobFile, _resourceName);
+        formData.append("fileName", _resourceName);
+        formData.append("f", 'json');
+
+        var customResUrl = '';
+        if (_prefixName) {
+          formData.append("resourcesPrefix", _prefixName);
+          customResUrl = _prefixName + '/' + _resourceName;
+        } else {
+          customResUrl = _resourceName;
+        }
+        return portal.getItemById(itemId, true).then(function(item) {
+          var UserContentItemUrl = portalUrlUtils.getUserContentItemUrl(portalUrl, item.owner, itemId);
+          var addReourcesUrl = UserContentItemUrl + '/addResources';
+          return esriRequest({
+            url: addReourcesUrl,
+            form: formData
+          }).then(function(result) {
+            var resUrl = '';
+            if (result && result.success) {
+              resUrl = portalUrlUtils.getItemResourceUrl(portalUrl, '${itemId}', customResUrl);
+            }
+            return resUrl;
+          }, function(err) {
+            console.error(err.message || err);
+            return err;
+          });
+        });
+      },
+      removeResources: function(_resourceName, _prefixName) {
+        var customResUrl = '';
+        if (_prefixName) {
+          customResUrl = _prefixName + '/' + _resourceName;
+        } else {
+          customResUrl = _resourceName;
+        }
+        var data = {
+          resource: customResUrl,
+          f: 'json'
+        };
+        var portalUrl = portalUrlUtils.getStandardPortalUrl(window.portalUrl);
+        var portal = this.getPortal(portalUrl);
+        return portal.getItemById(window.appInfo.id, true).then(function(item) {
+          var UserContentItemUrl = portalUrlUtils.getUserContentItemUrl(portalUrl, item.owner, window.appInfo.id);
+          var removeResourcesUrl = UserContentItemUrl + '/removeResources';
+          return esriRequest({
+            url: removeResourcesUrl,
+            content: data
+          }, {
+            usePost: true
+          }).then(function(result) {
+            return result;
+          }, function(err) {
+            console.error(err.message || err);
+            return err;
+          });
+        });
       }
     };
 

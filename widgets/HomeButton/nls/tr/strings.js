@@ -1,5 +1,3 @@
-﻿define(
-   ({
-    _widgetLabel: "Ana Sayfa Düğmesi"
-  })
-);
+define({
+  "_widgetLabel": "Giriş Sayfası"
+});
