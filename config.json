@@ -296,7 +296,7 @@
                 "id": "widgets_Raindrop_28",
                 "name": "Raindrop",
                 "label": "Raindrop",
-                "version": "1.3",
+                "version": "2.5",
                 "uri": "widgets/Raindrop/Widget",
                 "config": "widgets/Raindrop/config.json"
             }, {
@@ -886,7 +886,7 @@
                     "id": "widgets_Raindrop_28",
                     "name": "Raindrop",
                     "label": "Raindrop",
-                    "version": "1.3",
+                    "version": "2.5",
                     "uri": "widgets/Raindrop/Widget",
                     "config": "widgets/Raindrop/config.json"
                 }, {
