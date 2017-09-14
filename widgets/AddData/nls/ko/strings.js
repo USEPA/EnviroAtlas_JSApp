@@ -1,17 +1,21 @@
 define({
   "_widgetLabel": "데이터 추가",
+  "noOptionsConfigured": "구성된 옵션이 없습니다.",
+  "tabs": {
+    "search": "검색",
+    "url": "URL",
+    "file": "파일"
+  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "레이어에 접근할 수 없습니다.",
-    "online": "ArcGIS Online",
-    "url": "URL 입력",
     "loadError": "데이터 추가, 로드할 수 없음:",
     "searchBox": {
       "search": "검색",
       "placeholder": "검색..."
     },
     "bboxOption": {
-      "bbox": "맵 영역 내"
+      "bbox": "맵 내부"
     },
     "scopeOptions": {
       "anonymousContent": "콘텐츠",
@@ -90,10 +94,6 @@ define({
     }
   },
   "addFromUrl": {
-    "donw": "완료",
-    "editName": "이름 편집",
-    "buttonLabel": "URL...",
-    "caption": "데이터 추가 - URL 입력",
     "type": "유형",
     "url": "URL",
     "types": {
@@ -106,5 +106,30 @@ define({
       "CSV": "CSV 파일"
     },
     "samplesHint": "샘플 URL"
+  },
+  "addFromFile": {
+    "intro": "다음 파일 유형을 드롭하거나 찾아볼 수 있습니다.",
+    "types": {
+      "Shapefile": "쉐이프파일(.zip, 모든 쉐이프 파일이 포함된 ZIP 아카이브)",
+      "CSV": "CSV 파일(.csv, 주소 또는 위도/경도가 포함된 파일, 세미콜론 또는 탭으로 구분된 파일)",
+      "GPX": "GPX 파일(.gpx, GPS Exchange 형식)",
+      "GeoJSON": "GeoJSON 파일(.geo.json 또는 .geojson)"
+    },
+    "generalizeOn": "웹 보기를 위한 피처 일반화",
+    "dropOrBrowse": "드롭 또는 찾아보기",
+    "browse": "찾아보기",
+    "invalidType": "이 파일 형식은 지원되지 않습니다.",
+    "addingPattern": "{filename}: 추가 중...",
+    "addFailedPattern": "{filename}: 추가 실패",
+    "featureCountPattern": "{filename}: 피처 {count}개",
+    "invalidTypePattern": "{filename}: 이 형식은 지원되지 않음",
+    "maxFeaturesAllowedPattern": "최대 {count}개 피처가 허용됨",
+    "layerNamePattern": "{filename} - {name}"
+  },
+  "layerList": {
+    "caption": "레이어",
+    "noLayersAdded": "추가된 레이어가 없습니다.",
+    "removeLayer": "레이어 제거",
+    "back": "뒤로"
   }
 });

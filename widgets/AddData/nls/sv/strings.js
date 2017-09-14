@@ -1,17 +1,21 @@
 define({
   "_widgetLabel": "Lägg till data",
+  "noOptionsConfigured": "Inga alternativ har konfigurerats.",
+  "tabs": {
+    "search": "Sök",
+    "url": "URL",
+    "file": "Fil"
+  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} – {layerName}",
     "layerInaccessible": "Lagret är oåtkomligt.",
-    "online": "ArcGIS Online",
-    "url": "Ange en webbadress",
     "loadError": "AddData, kan inte läsa in:",
     "searchBox": {
       "search": "Sök",
       "placeholder": "Sök..."
     },
     "bboxOption": {
-      "bbox": "I kartområdet"
+      "bbox": "Inom kartan"
     },
     "scopeOptions": {
       "anonymousContent": "Innehåll",
@@ -90,10 +94,6 @@ define({
     }
   },
   "addFromUrl": {
-    "donw": "Färdig",
-    "editName": "redigera namn",
-    "buttonLabel": "URL...",
-    "caption": "Lägg till data – ange en webbadress",
     "type": "Mappen innehåller inte ett giltigt app-projekt",
     "url": "URL",
     "types": {
@@ -106,5 +106,30 @@ define({
       "CSV": "En CSV-fil"
     },
     "samplesHint": "Exempel-URL:er"
+  },
+  "addFromFile": {
+    "intro": "Du kan släppa eller bläddra efter någon av följande filtyper:",
+    "types": {
+      "Shapefile": "En shapefil (.zip, ZIP-arkiv som innehåller alla shapefiler)",
+      "CSV": "En CSV-fil (.csv, med adress eller latitud och longitud, komma-, semikolon- eller tabbavgränsade)",
+      "GPX": "En GPX-fil (.gpx, GPS Exchange Format)",
+      "GeoJSON": "En GeoJSON-fil (.geo.json eller .geojson)"
+    },
+    "generalizeOn": "Generalisera geoobjekt för webbvisning",
+    "dropOrBrowse": "Släpp eller bläddra",
+    "browse": "Bläddra",
+    "invalidType": "Den här filtypen stöds inte.",
+    "addingPattern": "{filename}: lägger till...",
+    "addFailedPattern": "{filename}: det gick inte att lägga till",
+    "featureCountPattern": "{filename}: {count} geoobjekt",
+    "invalidTypePattern": "{filename}: den här typen stöds inte",
+    "maxFeaturesAllowedPattern": "Högst {count} geoobjekt tillåts",
+    "layerNamePattern": "{filename} - {name}"
+  },
+  "layerList": {
+    "caption": "Lager",
+    "noLayersAdded": "Inga lager har lagts till.",
+    "removeLayer": "Ta bort lager",
+    "back": "Bakåt"
   }
 });

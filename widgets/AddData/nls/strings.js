@@ -2,18 +2,24 @@ define({
   root: ({
     _widgetLabel: "Add Data",
 
+    noOptionsConfigured: "No options were configured.",
+
+    tabs: {
+      search: "Search",
+      url: "URL",
+      file: "File"
+    },
+
     search: {
       featureLayerTitlePattern: "{serviceName} - {layerName}",
       layerInaccessible: "The layer is inaccessible.",
-      online: "ArcGIS Online",
-      url: "Enter A URL",
       loadError: "AddData, unable to load:",
       searchBox: {
         search: "Search",
         placeholder: "Search..."
       },
       bboxOption: {
-        bbox: "Within map area"
+        bbox: "Within map"
       },
       scopeOptions: {
         anonymousContent: "Content",
@@ -92,13 +98,8 @@ define({
     },
 
     addFromUrl: {
-      donw: "Done",
-      editName: "edit Name",
-      buttonLabel: "URL...",
-      caption: "Add Data - Enter a URL",
       type: "Type",
       url: "URL",
-      name: "Layer Name",
       types: {
         "ArcGIS": "An ArcGIS Server Web Service",
         "WMS": "A WMS OGC Web Service",
@@ -109,9 +110,38 @@ define({
         "CSV": "A CSV File"
       },
       samplesHint: "Sample URL(s)"
+    },
+
+    addFromFile: {
+      intro: "You can drop or browse for one the following file types:",
+      types: {
+        "Shapefile": "A Shapefile (.zip, ZIP archive containing all shapefile files)",
+        "CSV": "A CSV File (.csv, with address or latitude, longitude and comma, semi-colon or tab delimited)",
+        "GPX": "A GPX File (.gpx, GPS Exchange Format)",
+        "GeoJSON": "A GeoJSON File (.geo.json or .geojson)"
+      },
+      generalizeOn: "Generalize features for web display",
+      dropOrBrowse: "Drop or Browse",
+      browse: "Browse",
+      invalidType: "This file type is not supported.",
+      addingPattern: "{filename}: adding...",
+      addFailedPattern: "{filename}: add failed",
+      featureCountPattern: "{filename}: {count} feature(s)",
+      invalidTypePattern: "{filename}: this type is not supported",
+      maxFeaturesAllowedPattern: "A maximum of {count} features is allowed",
+      layerNamePattern: "{filename} - {name}"
+    },
+
+    layerList: {
+      caption: "Layers",
+      noLayersAdded: "No layers have been added.",
+      removeLayer: "Remove Layer",
+      back: "Back"
     }
+
   }),
   "ar": 1,
+  "bs": 1,
   "cs": 1,
   "da": 1,
   "de": 1,
@@ -121,8 +151,10 @@ define({
   "fi": 1,
   "fr": 1,
   "he": 1,
+  "hi": 1,
   "hr": 1,
   "it": 1,
+  "id": 1,
   "ja": 1,
   "ko": 1,
   "lt": 1,

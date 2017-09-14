@@ -28,6 +28,10 @@ define(["dojo/_base/array"],
         return uri;
       },
 
+      endsWith: function(sv, sfx) {
+        return (sv.indexOf(sfx, (sv.length - sfx.length)) !== -1);
+      },
+
       escapeForLucene: function(value) {
         var a = ['+', '-', '&', '!', '(', ')', '{', '}', '[', ']',
         '^', '"', '~', '*', '?', ':', '\\'];
@@ -72,6 +76,20 @@ define(["dojo/_base/array"],
         nd.innerHTML = "";
         if (text) {
           nd.appendChild(document.createTextNode(text));
+        }
+      },
+
+      setNodeTitle: function(nd, text) {
+        nd.title = "";
+        if (text) {
+          nd.setAttribute("title", text);
+        }
+      },
+
+      setNodeHTML: function(nd, html) {
+        nd.innerHTML = "";
+        if (html) {
+          nd.innerHTML = html;
         }
       }
 

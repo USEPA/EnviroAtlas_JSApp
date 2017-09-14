@@ -1,17 +1,21 @@
 define({
   "_widgetLabel": "Veri Ekle",
+  "noOptionsConfigured": "Yapılandırılan seçenek yok.",
+  "tabs": {
+    "search": "Arama",
+    "url": "URL",
+    "file": "Dosya"
+  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "Katman erişilemez.",
-    "online": "ArcGIS Online",
-    "url": "Bir URL girin",
     "loadError": "AddData, yüklenemiyor:",
     "searchBox": {
       "search": "Arama",
       "placeholder": "Ara..."
     },
     "bboxOption": {
-      "bbox": "Harita alanı içinde"
+      "bbox": "Harita içinde"
     },
     "scopeOptions": {
       "anonymousContent": "İçerik",
@@ -90,10 +94,6 @@ define({
     }
   },
   "addFromUrl": {
-    "donw": "Bitti",
-    "editName": "Adı düzenle",
-    "buttonLabel": "URL...",
-    "caption": "Veri Ekle - Bir URL girin",
     "type": "Tür",
     "url": "URL",
     "types": {
@@ -106,5 +106,30 @@ define({
       "CSV": "CSV Dosyası"
     },
     "samplesHint": "Örnek URL'ler"
+  },
+  "addFromFile": {
+    "intro": "Aşağıdaki dosya türlerinden birini bırakabilir veya kullanabilirsiniz:",
+    "types": {
+      "Shapefile": "Shapefile (.zip, tüm shapefile dosyalarını kapsayan ZIP arşivi)",
+      "CSV": "CSV Dosyası (.csv, adres veya enlem, boylam ve virgül, noktalı virgül veya sekme ayırmalı)",
+      "GPX": "GPX Dosyası (.gpx, GPS Takas Biçimi)",
+      "GeoJSON": "GeoJSON Dosyası (.geo.json veya .geojson)"
+    },
+    "generalizeOn": "Detayları web'de gösterim için genelleştir",
+    "dropOrBrowse": "Bırak veya Kullan",
+    "browse": "Gözat",
+    "invalidType": "Bu dosya türü desteklenmiyor.",
+    "addingPattern": "{filename} ekleniyor...",
+    "addFailedPattern": "{filename}: eklenemedi",
+    "featureCountPattern": "{filename}: {count} detay",
+    "invalidTypePattern": "{filename}: bu tür desteklenmiyor",
+    "maxFeaturesAllowedPattern": "Maksimum {count} detaya izin verilir",
+    "layerNamePattern": "{filename} - {name}"
+  },
+  "layerList": {
+    "caption": "Katmanlar",
+    "noLayersAdded": "Eklenen katman yok.",
+    "removeLayer": "Katmanı Kaldır",
+    "back": "Geri"
   }
 });

@@ -37,7 +37,7 @@ define(["dojo/_base/declare",
       postCreate: function() {
         this.inherited(arguments);
         if (this.numPerPage === null) {
-          this.numPerPage = 30; // TODO configure this
+          this.numPerPage = 30;
         }
         this.enableOrDisable();
       },

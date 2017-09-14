@@ -20,45 +20,31 @@ define(["dojo/_base/declare",
     "./SearchComponent",
     "dojo/text!./templates/TypeOptions.html",
     "dojo/i18n!../nls/strings",
-    // "esri/layers/vector-tile",// This module shouldn't be loaded using a static dependency.
-    "dojo/Deferred",
+    "esri/layers/VectorTileLayer",
     "dijit/TooltipDialog",
     "dijit/form/DropDownButton",
     "dijit/form/CheckBox"
   ],
-  function(declare, array, lang, on, SearchComponent, template, i18n, Deferred/*,
-    vectorTile*/) {
+  function(declare, array, lang, on, SearchComponent, template, i18n,
+    VectorTileLayer) {
 
     return declare([SearchComponent], {
 
       i18n: i18n,
       templateString: template,
 
-      supportsVectorTile: false,
-
       postCreate: function() {
         this.inherited(arguments);
 
+        if (!VectorTileLayer || !VectorTileLayer.supported()) {
+          console.warn("AddData: Vector Tile is not supported.");
+          this.vectorTileNode.style.display = "none";
+        }
+
         this.own(on(this.tooltipDialog, "open", lang.hitch(this, function() {
-          this.tooltipDialog.domNode.className += " " + this.searchPane.wabWidget.appConfig.theme.name;
+          var v = this.searchPane.wabWidget.appConfig.theme.name;
+          this.tooltipDialog.domNode.className += " " + v;
         })));
-
-        this._checkVTSupport().then(lang.hitch(this, function(supported) {
-          this.supportsVectorTile = supported;
-          if (!this.supportsVectorTile) {
-            console.warn("AddData: Vector Tile is not supported.");
-            this.vectorTileNode.style.display = "none";
-          }
-        }));
-      },
-
-      _checkVTSupport: function() {
-        var def = new Deferred();
-        require(["esri/layers/vector-tile"], function(vectorTileModule) {
-          var supported = vectorTileModule.supported();
-          def.resolve(supported);
-        });
-        return def;
       },
 
       getOptionWidgets: function() {
