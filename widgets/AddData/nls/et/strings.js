@@ -1,17 +1,21 @@
 define({
   "_widgetLabel": "Lisa andmeid",
+  "noOptionsConfigured": "Ühtki valikut pole konfigureeritud.",
+  "tabs": {
+    "search": "Otsi",
+    "url": "URL",
+    "file": "Fail"
+  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "Kiht on ligipääsmatu.",
-    "online": "ArcGIS Online",
-    "url": "Sisesta URL",
     "loadError": "Andmete lisamine, ei saa laadida:",
     "searchBox": {
       "search": "Otsi",
       "placeholder": "Otsing..."
     },
     "bboxOption": {
-      "bbox": "Kaardi kuvaulatuses"
+      "bbox": "Kaardi ulatuses"
     },
     "scopeOptions": {
       "anonymousContent": "Sisu",
@@ -90,10 +94,6 @@ define({
     }
   },
   "addFromUrl": {
-    "donw": "Valmis",
-    "editName": "Muuda nime",
-    "buttonLabel": "URL...",
-    "caption": "Andmete lisamine - URL-i sisestamine",
     "type": "Tüüp",
     "url": "URL",
     "types": {
@@ -106,5 +106,30 @@ define({
       "CSV": "CSV fail"
     },
     "samplesHint": "Näidis-URL(id)"
+  },
+  "addFromFile": {
+    "intro": "Saate ühte järgmistest failitüüpidest lohistada või nendeni liikuda:",
+    "types": {
+      "Shapefile": "Shape fail (.zip, ZIP arhiiv, mis sisaldab kõiki Shape faili komponente)",
+      "CSV": "CSV või TXT failid aadressi või laiuskraadi ja pikkuskraadiga (.csv, aadressi või laiuskraadiga, pikkuskraadiga ja koma-, semikoolon- või tabeleraldusega)",
+      "GPX": "GPX fail (.gpx, GPS Exchange format)",
+      "GeoJSON": "GeoJSON fail (.geo.json või .geojson)"
+    },
+    "generalizeOn": "Üldista objekte veebis kuvamiseks",
+    "dropOrBrowse": "Lohista või sirvi",
+    "browse": "Sirvi",
+    "invalidType": "Seda faili tüüpi ei toetata.",
+    "addingPattern": "{filename}: lisamine...",
+    "addFailedPattern": "{filename}: lisamine nurjus",
+    "featureCountPattern": "{filename}: {count} objekt(i)",
+    "invalidTypePattern": "{filename}: seda tüüpi ei toetata",
+    "maxFeaturesAllowedPattern": "Lubatud on maksimaalselt {count} objekti",
+    "layerNamePattern": "{filename} – {name}"
+  },
+  "layerList": {
+    "caption": "Kihid",
+    "noLayersAdded": "Ühtki kihti pole lisatud.",
+    "removeLayer": "Eemalda kiht",
+    "back": "Tagasi"
   }
 });

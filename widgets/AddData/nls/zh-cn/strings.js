@@ -1,17 +1,21 @@
 define({
   "_widgetLabel": "添加数据",
+  "noOptionsConfigured": "尚未配置任何选项。",
+  "tabs": {
+    "search": "搜索",
+    "url": "URL",
+    "file": "文件"
+  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "图层不可访问。",
-    "online": "ArcGIS Online",
-    "url": "输入 URL",
     "loadError": "添加数据，无法加载:",
     "searchBox": {
       "search": "搜索",
       "placeholder": "搜索..."
     },
     "bboxOption": {
-      "bbox": "在地图区域内"
+      "bbox": "地图内"
     },
     "scopeOptions": {
       "anonymousContent": "内容",
@@ -90,10 +94,6 @@ define({
     }
   },
   "addFromUrl": {
-    "donw": "完成",
-    "editName": "编辑名称",
-    "buttonLabel": "URL...",
-    "caption": "添加数据 - 输入 URL",
     "type": "类型",
     "url": "URL",
     "types": {
@@ -106,5 +106,30 @@ define({
       "CSV": "CSV 文件"
     },
     "samplesHint": "简单 URL"
+  },
+  "addFromFile": {
+    "intro": "您可以放置或浏览以下任一文件类型：",
+    "types": {
+      "Shapefile": "Shapefile (.zip 包含所有 shapefile 文件的 ZIP 归档)",
+      "CSV": "CSV 文件(.csv，含地址或经度、纬度，以逗号、分号或制表符分隔)",
+      "GPX": "GPX 文件(.gpx，GPS 交换格式)",
+      "GeoJSON": "GeoJSON 文件(.geo.json 或 .geojson)"
+    },
+    "generalizeOn": "概化要素以便于 web 显示",
+    "dropOrBrowse": "放置或浏览",
+    "browse": "浏览",
+    "invalidType": "此文件类型不受支持。",
+    "addingPattern": "{filename}：正在添加...",
+    "addFailedPattern": "{filename}：添加失败",
+    "featureCountPattern": "{filename}：{count} 个要素",
+    "invalidTypePattern": "{filename}：此类型不受支持",
+    "maxFeaturesAllowedPattern": "允许最多 {count} 个要素",
+    "layerNamePattern": "{filename} - {name}"
+  },
+  "layerList": {
+    "caption": "图层",
+    "noLayersAdded": "尚未添加任何图层。",
+    "removeLayer": "移除图层",
+    "back": "返回"
   }
 });

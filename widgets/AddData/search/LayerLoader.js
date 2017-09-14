@@ -12,9 +12,12 @@ define(["dojo/_base/declare",
     "esri/layers/ArcGISDynamicMapServiceLayer",
     "esri/layers/ArcGISImageServiceLayer",
     "esri/layers/ArcGISTiledMapServiceLayer",
+    "esri/layers/DynamicLayerInfo",
     "esri/layers/FeatureLayer",
+    "esri/layers/ImageParameters",
     "esri/layers/ImageServiceParameters",
     "esri/layers/KMLLayer",
+    "esri/layers/LayerDrawingOptions",
     "esri/layers/MosaicRule",
     "esri/layers/RasterFunction",
     "esri/layers/VectorTileLayer",
@@ -22,13 +25,13 @@ define(["dojo/_base/declare",
     "esri/dijit/PopupTemplate",
     "esri/InfoTemplate",
     "esri/renderers/jsonUtils",
-    "jimu/utils",
-    'jimu/PanelManager'
+    "jimu/utils"
   ],
   function(declare, lang, array, all, Deferred, djJson, i18n, util, esriLang, esriRequest, agsUtils,
-    ArcGISDynamicMapServiceLayer, ArcGISImageServiceLayer, ArcGISTiledMapServiceLayer, FeatureLayer,
-    ImageServiceParameters, KMLLayer, MosaicRule, RasterFunction, VectorTileLayer, WMSLayer,
-    PopupTemplate, InfoTemplate, jsonRendererUtils, jimuUtils, PanelManager) {
+    ArcGISDynamicMapServiceLayer, ArcGISImageServiceLayer, ArcGISTiledMapServiceLayer,
+    DynamicLayerInfo, FeatureLayer, ImageParameters, ImageServiceParameters, KMLLayer,
+    LayerDrawingOptions, MosaicRule, RasterFunction, VectorTileLayer, WMSLayer, PopupTemplate,
+    InfoTemplate, jsonRendererUtils, jimuUtils) {
 
     return declare(null, {
 
@@ -232,6 +235,7 @@ define(["dojo/_base/declare",
         var item = this.item;
         if (layer) {
           layer.xtnItemId = item.id;
+          layer.xtnAddData = true;
           if (!layer.arcgisProps && item) {
             layer.arcgisProps = {
               title: item.title
@@ -241,7 +245,15 @@ define(["dojo/_base/declare",
           if (!esriLang.isDefined(layer.title)) {
             layer.title = item.title;
           }
-          window.layerID_Portal_WebMap.push(layer.id);
+
+          layer._wabProperties =  {
+            itemLayerInfo: {
+              itemId: item.id,
+              itemUrl: this.itemUrl,
+              portalUrl: item.portalUrl
+            }
+          };
+
           this.map.addLayer(layer);
         }
       },
@@ -553,6 +565,7 @@ define(["dojo/_base/declare",
       _newMapServiceLayer: function(itemData) {
         var self = this,
           dfd = new Deferred();
+        var checkVisibleLayers = false;
         var serviceUrl = this.serviceUrl;
         var mapLayerId = this._generateLayerId();
         var content = {
@@ -572,7 +585,76 @@ define(["dojo/_base/declare",
             if (response.tileInfo) {
               lyr = new ArcGISTiledMapServiceLayer(serviceUrl, options);
             } else {
+              if (response && response.supportedImageFormatTypes &&
+                  response.supportedImageFormatTypes.indexOf("PNG32") !== -1) {
+                options.imageParameters = new ImageParameters();
+                options.imageParameters.format = "png32";
+              }
               lyr = new ArcGISDynamicMapServiceLayer(serviceUrl, options);
+
+              //console.warn("itemData",itemData);
+              //console.warn("response",response);
+              if (itemData && itemData.layers && itemData.layers.length > 0) {
+                var expressions = [];
+                var dynamicLayerInfo;
+                var dynamicLayerInfos = [];
+                var drawingOptions;
+                var drawingOptionsArray = [];
+                var source;
+                array.forEach(itemData.layers, function(layerInfo){
+                  if (layerInfo.layerDefinition && layerInfo.layerDefinition.definitionExpression) {
+                    expressions[layerInfo.id] = layerInfo.layerDefinition.definitionExpression;
+                  }
+                  if (layerInfo.layerDefinition && layerInfo.layerDefinition.source) {
+                    dynamicLayerInfo = null;
+                    source = layerInfo.layerDefinition.source;
+                    if (source.type === "mapLayer") {
+                      var metaLayerInfos = array.filter(response.layers, function(rlyr) {
+                        return rlyr.id === source.mapLayerId;
+                      });
+                      if (metaLayerInfos.length) {
+                        dynamicLayerInfo = lang.mixin(metaLayerInfos[0], layerInfo);
+                      }
+                    }
+                    else {
+                      dynamicLayerInfo = lang.mixin({}, layerInfo);
+                    }
+                    if (dynamicLayerInfo) {
+                      dynamicLayerInfo.source = source;
+                      delete dynamicLayerInfo.popupInfo;
+                      dynamicLayerInfo = new DynamicLayerInfo(dynamicLayerInfo);
+                      if (itemData.visibleLayers) {
+                        var vis = ((typeof itemData.visibleLayers) === "string") ?
+                          itemData.visibleLayers.split(",") : itemData.visibleLayers;
+                        if (array.indexOf(vis, layerInfo.id) > -1) {
+                          dynamicLayerInfo.defaultVisibility = true;
+                        } else {
+                          dynamicLayerInfo.defaultVisibility = false;
+                        }
+                      }
+                      dynamicLayerInfos.push(dynamicLayerInfo);
+                    }
+                  }
+                  if (layerInfo.layerDefinition && layerInfo.layerDefinition.source &&
+                      layerInfo.layerDefinition.drawingInfo) {
+                    drawingOptions = new LayerDrawingOptions(layerInfo.layerDefinition.drawingInfo);
+                    drawingOptionsArray[layerInfo.id] = drawingOptions;
+                  }
+                });
+
+                if (expressions.length > 0) {
+                  lyr.setLayerDefinitions(expressions);
+                }
+                if (dynamicLayerInfos.length > 0) {
+                  lyr.setDynamicLayerInfos(dynamicLayerInfos, true);
+                  if (drawingOptionsArray.length > 0) {
+                    lyr.setLayerDrawingOptions(drawingOptionsArray, true);
+                  }
+                } else {
+                  checkVisibleLayers = true;
+                }
+              }
+
             }
             self._waitForLayer(lyr).then(
               function(layer) {
@@ -607,6 +689,22 @@ define(["dojo/_base/declare",
                     layer.infoTemplates = templates;
                   }
                 }
+                /*
+                if (checkVisibleLayers) {
+                  var visibleLayers = itemData.visibleLayers;
+                  if (!itemData.visibleLayers) {
+                    var subIds = "";
+                    array.forEach(layer.layerInfos, function(layerInfo){
+                      if (layerInfo.defaultVisibility) {
+                        subIds += (subIds.length > 0 ? "," : "") + layerInfo.id;
+                      }
+                    });
+                    visibleLayers = subIds;
+                  }
+                  visibleLayers = self._getVisibleFeatureLayers(layer.layerInfos,visibleLayers);
+                  layer.setVisibleLayers(visibleLayers);
+                }
+                */
                 dfd.resolve(layer);
               },
               function(error2) {
@@ -619,6 +717,28 @@ define(["dojo/_base/declare",
           }
         );
         return dfd;
+      },
+
+      _getVisibleFeatureLayers: function(layerInfos, visibleLayers) {
+        // don't list the group layers
+        if (!layerInfos || !visibleLayers || visibleLayers.length === 0) {
+          return [];
+        }
+        var tocLayers = "," + visibleLayers + ",";
+        var realVisibleLayers = [];
+        var k, dontUseLayerIds = ",";
+        for (k = 0; k < layerInfos.length; k++) {
+          if (layerInfos[k].subLayerIds !== null) {
+            if (tocLayers.indexOf("," + layerInfos[k].id + ",") === -1 ||
+              dontUseLayerIds.indexOf("," + layerInfos[k].id + ",") > -1) {
+              dontUseLayerIds += layerInfos[k].subLayerIds.toString() + ",";
+            }
+          } else if (tocLayers.indexOf("," + layerInfos[k].id + ",") > -1 &&
+            dontUseLayerIds.indexOf("," + layerInfos[k].id + ",") === -1) {
+            realVisibleLayers.push(layerInfos[k].id);
+          }
+        }
+        return realVisibleLayers;
       },
 
       _newPopupInfo: function(object,title) {
@@ -865,13 +985,6 @@ define(["dojo/_base/declare",
         //console.warn("_waitForLayer");
         handles.push(layer.on("load", function(layerLoaded) {
           //console.warn("_waitForLayer.load",layerLoaded);
-          
-            //Show Layer List Widget
-            var widgetName = 'LayerList';
-            var pm = PanelManager.getInstance();
-            var widgets = pm.widgetManager.appConfig.getConfigElementsByName(widgetName);
-            pm.showPanel(widgets[0]);
-          
           clearHandles();
           dfd.resolve(layerLoaded.layer);
         }));

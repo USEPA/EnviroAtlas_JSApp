@@ -1,17 +1,21 @@
 define({
   "_widgetLabel": "Pievienot datus",
+  "noOptionsConfigured": "Netika konfigurēta neviena opcija.",
+  "tabs": {
+    "search": "Meklēt",
+    "url": "URL",
+    "file": "Fails"
+  },
   "search": {
     "featureLayerTitlePattern": "{serviceName}–{layerName}",
     "layerInaccessible": "Slānim nevar piekļūt.",
-    "online": "ArcGIS Online",
-    "url": "Ievadīt URL",
     "loadError": "AddData, nevarēja ielādēt:",
     "searchBox": {
       "search": "Meklēt",
       "placeholder": "Meklēšana..."
     },
     "bboxOption": {
-      "bbox": "Kartes areāla ietvaros"
+      "bbox": "Kartē"
     },
     "scopeOptions": {
       "anonymousContent": "Saturs",
@@ -90,10 +94,6 @@ define({
     }
   },
   "addFromUrl": {
-    "donw": "Pabeigts",
-    "editName": "rediģēt nosaukumu",
-    "buttonLabel": "URL...",
-    "caption": "Datu pievienošana — ievadiet URL",
     "type": "Tips",
     "url": "URL",
     "types": {
@@ -106,5 +106,30 @@ define({
       "CSV": "CSV fails"
     },
     "samplesHint": "Parauga URL"
+  },
+  "addFromFile": {
+    "intro": "Jūs varat nomest vai norādīt kādu no tālāk aprakstītajiem failu tipiem.",
+    "types": {
+      "Shapefile": "Shape fails (.zip paplašinājums; ZIP arhīvs, kurā ietilpst visi Shape faila faili)",
+      "CSV": "CSV fails (.csv paplašinājums; ar adresi vai ģeogrāfisko platumu un ģeogrāfisko garumu; vērtības atdalītas ar komatu, semikolu vai tabulatoru)",
+      "GPX": "GPX fails (.gpx paplašinājums, GPS Exchange formāts)",
+      "GeoJSON": "GeoJSON fails (.geo.json vai .geojson paplašinājums)"
+    },
+    "generalizeOn": "Ģeneralizēt elementus priekš parādīšanas web",
+    "dropOrBrowse": "Nomest vai pārlūkot",
+    "browse": "Pārlūkot",
+    "invalidType": "Šis faila tips netiek atbalstīts.",
+    "addingPattern": "{filename}: notiek pievienošana...",
+    "addFailedPattern": "{filename}: neizdevās pievienot",
+    "featureCountPattern": "{filename}: {count} elements(i)",
+    "invalidTypePattern": "{filename}: šis tips netiek atbalstīts",
+    "maxFeaturesAllowedPattern": "Maksimālais atļautais elementu skaits: {count}",
+    "layerNamePattern": "{filename} — {name}"
+  },
+  "layerList": {
+    "caption": "Slāņi",
+    "noLayersAdded": "Nav pievienots neviens slānis.",
+    "removeLayer": "Noņemt slāni",
+    "back": "Atpakaļ"
   }
 });

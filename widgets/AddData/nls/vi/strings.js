@@ -1,17 +1,21 @@
 define({
   "_widgetLabel": "Thêm Dữ liệu",
+  "noOptionsConfigured": "Không có tùy chọn nào được cấu hình.",
+  "tabs": {
+    "search": "Tìm kiếm",
+    "url": "URL",
+    "file": "Tệp"
+  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "Không thể truy cập lớp.",
-    "online": "ArcGIS Online",
-    "url": "Nhập URL",
     "loadError": "AddData, không thể tải:",
     "searchBox": {
       "search": "Tìm kiếm",
       "placeholder": "Tìm kiếm..."
     },
     "bboxOption": {
-      "bbox": "Trong khu vực bản đồ"
+      "bbox": "Trong bản đồ"
     },
     "scopeOptions": {
       "anonymousContent": "Nội dung",
@@ -90,10 +94,6 @@ define({
     }
   },
   "addFromUrl": {
-    "donw": "Hoàn tất",
-    "editName": "chỉnh sửa Tên",
-    "buttonLabel": "URL...",
-    "caption": "Thêm Dữ liệu - Nhập URL",
     "type": "Loại",
     "url": "URL",
     "types": {
@@ -106,5 +106,30 @@ define({
       "CSV": "Một Tệp CSV"
     },
     "samplesHint": "(Các) URL Mẫu"
+  },
+  "addFromFile": {
+    "intro": "Bạn có thể thả hoặc duyệt cho một loại tệp dưới đây:",
+    "types": {
+      "Shapefile": "Shapefile (.zip, tệp lưu trữ ZIP có chứa tất cả các tệp shapefile)",
+      "CSV": "Tệp CSV (.csv, có địa chỉ hoặc kinh độ, vĩ độ, được ngăn cách bằng dấu phẩy, dấu chấm phẩy hoặc tab)",
+      "GPX": "Tệp GPX (.gpx, Định dạng Trao đổi GPS)",
+      "GeoJSON": "Tệp GeoJSON (.geo.json hoặc .geojson)"
+    },
+    "generalizeOn": "Tổng quát hóa các đối tượng để hiển thị web",
+    "dropOrBrowse": "Thả hoặc Duyệt",
+    "browse": "Duyệt",
+    "invalidType": "Loại tệp này không được hỗ trợ.",
+    "addingPattern": "{filename}: đang thêm...",
+    "addFailedPattern": "{filename}: thêm thất bại",
+    "featureCountPattern": "{filename}: {count} (các) đối tượng",
+    "invalidTypePattern": "{filename}: loại này không được hỗ trợ",
+    "maxFeaturesAllowedPattern": "Cho phép tối đa {count} đối tượng",
+    "layerNamePattern": "{filename} - {name}"
+  },
+  "layerList": {
+    "caption": "Lớp",
+    "noLayersAdded": "Không có lớp nào được thêm.",
+    "removeLayer": "Gỡ bỏ Lớp",
+    "back": "Quay lại"
   }
 });

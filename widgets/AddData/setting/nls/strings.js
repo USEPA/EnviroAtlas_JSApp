@@ -2,14 +2,27 @@ define({
   root: ({
     numPerPage: "Number of items per page",
     scopeOptions: {
+      "defaultScope": "Default search scope",
       "labelPlaceholder": "Optional label",
       "MyContent": "Allow My Content",
       "MyOrganization": "Allow My Organization",
       "ArcGISOnline": "Allow ArcGIS Online",
-      "FromUrl": "Allow URL entry"
-    }
+      "Curated": "Allow Curated",
+      "CuratedFilter": "Curated filter",
+      "livingAtlasExample": "Living atlas example:"
+    },
+    addFromUrl: {
+      caption: "Allow URL"
+    },
+    addFromFile: {
+      caption: "Allow File",
+      maxRecordCount: "Maximum records per file"
+    },
+    _default: "Default",
+    makeDefault: "Make default"
   }),
   "ar": 1,
+  "bs": 1,
   "cs": 1,
   "da": 1,
   "de": 1,
@@ -19,8 +32,10 @@ define({
   "fi": 1,
   "fr": 1,
   "he": 1,
+  "hi": 1,
   "hr": 1,
   "it": 1,
+  "id": 1,
   "ja": 1,
   "ko": 1,
   "lt": 1,

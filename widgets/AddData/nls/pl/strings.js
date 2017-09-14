@@ -1,17 +1,21 @@
 define({
   "_widgetLabel": "Dodaj dane",
+  "noOptionsConfigured": "Nie skonfigurowano żadnych opcji.",
+  "tabs": {
+    "search": "Wyszukaj",
+    "url": "Adres URL",
+    "file": "Plik"
+  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} — {layerName}",
     "layerInaccessible": "Warstwa jest niedostępna.",
-    "online": "ArcGIS Online",
-    "url": "Wprowadź adres URL",
     "loadError": "AddData, nie można wczytać:",
     "searchBox": {
       "search": "Wyszukaj",
       "placeholder": "Wyszukaj..."
     },
     "bboxOption": {
-      "bbox": "W obszarze mapy"
+      "bbox": "Na mapie"
     },
     "scopeOptions": {
       "anonymousContent": "Zawartość",
@@ -90,10 +94,6 @@ define({
     }
   },
   "addFromUrl": {
-    "donw": "Wykonano",
-    "editName": "Edytuj nazwę",
-    "buttonLabel": "Adres URL...",
-    "caption": "Dodaj dane — wprowadź adres URL",
     "type": "Typ",
     "url": "Adres URL",
     "types": {
@@ -106,5 +106,30 @@ define({
       "CSV": "Plik CSV"
     },
     "samplesHint": "Przykład adresu/-ów URL"
+  },
+  "addFromFile": {
+    "intro": "Można upuścić lub wyszukać jeden z następujących typów plików:",
+    "types": {
+      "Shapefile": "Plik shape (zip., archiwum ZIP zawierające wszystkie pliki shape)",
+      "CSV": "Plik CSV (csv., z adresem lub szerokością i długością geograficzną; wartości rozdzielane przecinkami, średnikami lub znakami tabulacji)",
+      "GPX": "Plik GPX (.gpx, format wymiany danych GPS)",
+      "GeoJSON": "Plik GeoJSON (.geo.json lub .geojson)"
+    },
+    "generalizeOn": "Zgeneralizuj obiekty w celu wyświetlenia w Internecie",
+    "dropOrBrowse": "Upuść lub wyszukaj",
+    "browse": "Przeglądaj",
+    "invalidType": "Ten typ pliku nie jest obsługiwany.",
+    "addingPattern": "{filename}: dodawanie...",
+    "addFailedPattern": "{filename}: dodawanie nie powiodło się",
+    "featureCountPattern": "{filename}: liczba obiektów: {count}",
+    "invalidTypePattern": "{filename}: ten typ nie jest obsługiwany",
+    "maxFeaturesAllowedPattern": "Maksymalna dozwolona liczba obiektów: {count}",
+    "layerNamePattern": "{filename} - {name}"
+  },
+  "layerList": {
+    "caption": "Warstwy",
+    "noLayersAdded": "Nie dodano żadnych warstw.",
+    "removeLayer": "Usuń warstwę",
+    "back": "Powrót"
   }
 });
