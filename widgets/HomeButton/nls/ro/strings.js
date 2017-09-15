@@ -1,5 +1,3 @@
-﻿define(
-   ({
-    _widgetLabel: "Buton Pagina principală"
-  })
-);
+define({
+  "_widgetLabel": "Prima pagină"
+});

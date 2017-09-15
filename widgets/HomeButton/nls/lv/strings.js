@@ -1,5 +1,3 @@
-﻿define(
-   ({
-    _widgetLabel: "Sākuma poga"
-  })
-);
+define({
+  "_widgetLabel": "Sākums"
+});

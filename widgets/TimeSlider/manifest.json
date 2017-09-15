@@ -2,8 +2,8 @@
   "name": "TimeSlider",
   "label": "Time Slider",
   "platform": "HTML",
-  "version": "1.3",
-  "wabVersion": "1.3",
+  "version": "2.5",
+  "wabVersion": "2.5",
   "author": "Esri R&D Center Beijing",
   "description": "",
   "copyright": "",
@@ -11,7 +11,8 @@
   "properties": {
     "inPanel": false,
     "hasConfig": true,
-    "keepConfigAfterMapSwithched": false,
-    "supportMultiInstance": false
+    "keepConfigAfterMapSwitched": false,
+    "supportMultiInstance": false,
+    "hasVersionManager": true
   }
 }

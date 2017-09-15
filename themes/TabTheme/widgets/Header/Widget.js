@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 Esri. All Rights Reserved.
+// Copyright © 2014 - 2016 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,6 +41,8 @@ define([
 
       switchableElements: {},
 
+      moveTopOnActive: false,
+
       constructor: function() {
         this.height = this.getHeaderHeight() + 'px';
       },
@@ -57,6 +59,8 @@ define([
         this.switchableElements.title = query('.jimu-title', this.domNode);
         this.switchableElements.links = query('.links', this.domNode);
         this.switchableElements.subtitle = query('.jimu-subtitle', this.domNode);
+
+        this._handleTitleColorAndLogoLink(this.appConfig);
 
         this.switchableElements.logo.style({
           // width: logoH,
@@ -88,10 +92,10 @@ define([
           html.addClass(this.logoNode, 'hide-logo');
         }
         this.switchableElements.title.innerHTML(
-          this.appConfig.title ? this.appConfig.title : 'ArcGIS Web Application'
+          utils.sanitizeHTML(this.appConfig.title ? this.appConfig.title : '')
         );
         this.switchableElements.subtitle.innerHTML(
-          this.appConfig.subtitle ? this.appConfig.subtitle : 'A configurable web application'
+          utils.sanitizeHTML(this.appConfig.subtitle ? this.appConfig.subtitle : '')
         );
 
         this._createDynamicLinks(this.appConfig.links);
@@ -137,10 +141,10 @@ define([
       _onAttributeChange: function(appConfig, changedData) {
         /*jshint unused: false*/
         if ('title' in changedData && changedData.title !== this.appConfig.title) {
-          this.switchableElements.title.innerHTML(changedData.title);
+          this.switchableElements.title.innerHTML(utils.sanitizeHTML(changedData.title));
         }
         if ('subtitle' in changedData && changedData.subtitle !== this.appConfig.subtitle) {
-          this.switchableElements.subtitle.innerHTML(changedData.subtitle);
+          this.switchableElements.subtitle.innerHTML(utils.sanitizeHTML(changedData.subtitle));
         }
         if ('logo' in changedData && changedData.logo !== this.appConfig.logo) {
           if(changedData.logo){
@@ -148,19 +152,36 @@ define([
             html.removeClass(this.logoNode, 'hide-logo');
           }else{
             html.removeAttr(this.logoNode, 'src');
-            html.setStyle(this.logoNode, 'display', '');
             html.addClass(this.logoNode, 'hide-logo');
           }
         }
         if ('links' in changedData) {
           this._createDynamicLinks(changedData.links);
         }
+
+        this._handleTitleColorAndLogoLink(appConfig);
+      },
+
+      _handleTitleColorAndLogoLink: function(appConfig){
+        if(appConfig.titleColor){
+          html.setStyle(this.switchableElements.title, 'color', appConfig.titleColor);
+        }else{
+          html.setStyle(this.switchableElements.title, 'color', '');
+        }
+
+        if(appConfig.logoLink){
+          html.setAttr(this.logoLinkNode, 'href', appConfig.logoLink);
+          html.setStyle(this.logoNode, 'cursor', 'pointer');
+        }else{
+          html.setAttr(this.logoLinkNode, 'href', 'javascript:void(0)');
+          html.setStyle(this.logoNode, 'cursor', 'default');
+        }
       },
 
       _setElementsSize: function() {
         html.setStyle(this.logoNode, {
-          height: '41px',
-          marginTop: '0px',//((this.height - 41) / 2) + 'px'
+          height: '30px',
+          marginTop: ((this.height - 30) / 2) + 'px'
         });
 
         html.setStyle(this.titleNode, {
@@ -182,7 +203,8 @@ define([
           html.create('a', {
             href: link.url,
             target: '_blank',
-            innerHTML: link.label,
+            rel: "noopener noreferrer",
+            innerHTML: utils.sanitizeHTML(link.label),
             'class': "link",
             style: {
               lineHeight: this.height + 'px'
@@ -256,7 +278,7 @@ define([
         for (var p in es) {
           if (es.hasOwnProperty(p)) {
             if (p === 'logo') {
-              es[p].style('display', 'block');
+              es[p].style('display', '');
             } else if (showElement.indexOf(p) > -1) {
               es[p].style('display', 'block');
             } else {
@@ -373,7 +395,8 @@ define([
         html.create('a', {
           href: link.url,
           target: '_blank',
-          innerHTML: link.label,
+          rel: "noopener noreferrer",
+          innerHTML: utils.sanitizeHTML(link.label),
           'class': "jimu-vcenter-text jimu-ellipsis",
           title: link.label
         }, linkSectionNode);

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 Esri. All Rights Reserved.
+// Copyright © 2014 - 2016 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,10 +24,11 @@ define(['dojo/_base/declare',
     'dojo/touch',
     'dojo/query',
     'dojo/dnd/move',
-    'dijit/_WidgetBase'
+    'dijit/_WidgetBase',
+    'jimu/utils'
   ],
   function(declare, lang, array, html, baseFx, on, has, touch,
-    query, Move, _WidgetBase) {
+    query, Move, _WidgetBase, jimuUtils) {
     var count = 0;
     /* global jimuConfig */
     return declare(_WidgetBase, {
@@ -93,7 +94,9 @@ define(['dojo/_base/declare',
 
         this.inherited(arguments);
 
-        this.domNode.tabIndex = 1;
+        // We should not set tabIndex for Popup, there is an issue for Edge browser if we set it.
+        // #4888
+        // this.domNode.tabIndex = 1;
         // init dom node
         this._initDomNode();
 
@@ -147,7 +150,6 @@ define(['dojo/_base/declare',
       },
 
       _createTitleNode: function() {
-        // if (this.titleLabel) {
         this.titleNode = html.create('div', {
           'class': 'title'
         }, this.domNode);
@@ -158,8 +160,14 @@ define(['dojo/_base/declare',
         this.closeBtnNode = html.create('div', {
           'class': 'close-btn jimu-icon jimu-icon-close jimu-float-trailing'
         }, this.titleNode);
-        this.own(on(this.closeBtnNode, 'click', lang.hitch(this, this.close)));
-        // }
+
+        var eventName = null;
+        if ('ontouchstart' in document) {
+          eventName = touch.press;
+        } else {
+          eventName = 'click';
+        }
+        this.own(on(this.closeBtnNode, eventName, lang.hitch(this, this.close)));
       },
 
       _initDomNode: function() {
@@ -232,7 +240,7 @@ define(['dojo/_base/declare',
 
         this.moveable = new Move.boxConstrainedMoveable(this.domNode, {
           box: containerBox,
-          handle: this.titleNode,
+          handle: this.titleNode || this.contentContainerNode,
           within: true
         });
         this.own(on(this.moveable, 'Moving', lang.hitch(this, this.onMoving)));
@@ -361,6 +369,10 @@ define(['dojo/_base/declare',
         count++;
       },
 
+      setTitleLabel: function(titleLabel) {
+        this.titleNode.innerHTML = jimuUtils.stripHTML(titleLabel);
+      },
+
       onMoving: function(mover) {
         html.setStyle(mover.node, 'opacity', 0.9);
       },
@@ -399,14 +411,24 @@ define(['dojo/_base/declare',
       },
 
       _createButton: function(button) {
+        var appendedClasses = " ";
+        if(button.classNames && button.classNames.length > 0){
+          if(typeof button.classNames.join === 'function'){
+            appendedClasses += button.classNames.join(" ");
+          }
+        }
         var node = html.create('div', {
-          'class': 'jimu-btn jimu-float-trailing jimu-leading-margin1',
-          'innerHTML': button.label
+          'class': 'jimu-btn jimu-popup-action-btn jimu-float-trailing jimu-trailing-margin1 ' +
+            appendedClasses,
+          'innerHTML': button.label,
+          'title': button.title || button.label
         }, this.buttonContainer);
         this.enabledButtons.unshift(node);
 
         var disableNode = html.create('div', {
-          'class': 'jimu-btn jimu-state-disabled jimu-float-trailing jimu-leading-margin1',
+          'class': 'jimu-btn jimu-state-disabled jimu-float-trailing jimu-trailing-margin1 ' +
+            appendedClasses,
+          'title': button.title || button.label,
           'innerHTML': button.label,
           'style': {
             display: 'none'
@@ -414,13 +436,7 @@ define(['dojo/_base/declare',
         }, this.buttonContainer);
         this.disabledButtons.unshift(disableNode);
 
-        var eventName = null;
-        if ('ontouchstart' in document) {
-          eventName = touch.press;
-        } else {
-          eventName = 'click';
-        }
-        this.own(on(node, eventName, lang.hitch(this, function(evt) {
+        this.own(on(node, 'click', lang.hitch(this, function(evt) {
           //we don't close popup because that maybe the
           //listener function is async
           if (button.onClick) {
@@ -448,9 +464,31 @@ define(['dojo/_base/declare',
         // }
       },
 
+      setButtonProps: function(idx, props) {
+        if (typeof idx === 'number' && isFinite(idx)) {
+          idx = idx;
+        } else {
+          props = idx;
+          idx = 0;
+        }
+        if (!props || this.enabledButtons.length === 0) {
+          return;
+        }
+
+        for (var p in props) {
+          if (p === 'title') {
+            html.setAttr(this.enabledButtons[idx], 'title', props[p]);
+            html.setAttr(this.disabledButtons[idx], 'title', props[p]);
+          } else if (p === 'label') {
+            html.setProp(this.enabledButtons[idx], 'innerHTML', props[p]);
+            html.setProp(this.disabledButtons[idx], 'innerHTML', props[p]);
+          }
+        }
+      },
+
       enableButton: function(idx) {
         // var btn = null;
-        if (typeof idx === 'number') {
+        if (typeof idx === 'number' && isFinite(idx) && idx < this.enabledButtons.length) {
           html.setStyle(this.enabledButtons[idx], 'display', 'inline-block');
           html.setStyle(this.disabledButtons[idx], 'display', 'none');
 
@@ -471,7 +509,7 @@ define(['dojo/_base/declare',
 
       disableButton: function(idx) {
         // var btn = null;
-        if (typeof idx === 'number') {
+        if (typeof idx === 'number' && isFinite(idx) && idx < this.disabledButtons.length) {
           html.setStyle(this.disabledButtons[idx], 'display', 'inline-block');
           html.setStyle(this.enabledButtons[idx], 'display', 'none');
 
@@ -491,6 +529,42 @@ define(['dojo/_base/declare',
           //     this.pauseKeys.push(btn.key);
           //   }
           // }));
+        }
+      },
+
+      showButton: function(idx) {
+        // var btn = null;
+        // if (typeof idx === 'number' && isFinite(idx) && idx < this.enabledButtons.length) {
+        //   html.setStyle(this.enabledButtons[idx], 'display', 'inline-block');
+        //   html.setStyle(this.disabledButtons[idx], 'display', 'none');
+
+        //   // btn = this.buttons[idx];
+        //   // if (btn && btn.key && this.pauseKeys.indexOf(btn.key) > -1) {
+        //   //   this.pauseKeys.splice(this.pauseKeys.indexOf(btn.key), 1);
+        //   // }
+        // } else {
+        //   array.forEach(this.enabledButtons[idx], lang.hitch(this, function(itm) {
+        //     html.setStyle(itm, 'display', 'inline-block');
+        //   }));
+        //   array.forEach(this.disabledButtons[idx], lang.hitch(this, function(itm) {
+        //     html.setStyle(itm, 'display', 'none');
+        //   }));
+        //   // this.pauseKeys.splice(0, this.pauseKeys.length);
+        // }
+        this.enableButton(idx);
+      },
+
+      hideButton: function(idx) {
+        if (typeof idx === 'number' && isFinite(idx) && idx < this.disabledButtons.length) {
+          html.setStyle(this.disabledButtons[idx], 'display', 'none');
+          html.setStyle(this.enabledButtons[idx], 'display', 'none');
+        } else {
+          array.forEach(this.disabledButtons, lang.hitch(this, function(itm) {
+            html.setStyle(itm, 'display', 'none');
+          }));
+          array.forEach(this.enabledButtons, lang.hitch(this, function(itm) {
+            html.setStyle(itm, 'display', 'none');
+          }));
         }
       }
     });

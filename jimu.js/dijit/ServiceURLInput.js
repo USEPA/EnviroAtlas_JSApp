@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 Esri. All Rights Reserved.
+// Copyright © 2014 - 2016 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ define([
       declaredClass: 'jimu.dijit.ServiceURLInput',
 
       verify: true,
+      _status: null,
 
       postCreate: function() {
         this.inherited(arguments);
@@ -90,6 +91,10 @@ define([
         /* jshint unused:false */
       },
 
+      getStatus: function() {
+        return this._status;
+      },
+
       _onServiceUrlChange: function(serviceUrl) {
         var def = new Deferred();
 
@@ -101,6 +106,10 @@ define([
         }));
 
         this._validating();
+        if (!serviceUrl) {
+          def.reject('error');
+          return;
+        }
         esriRequest({
           url: lang.trim(serviceUrl || ""),
           handleAs: 'json',
@@ -123,57 +132,27 @@ define([
         }));
       },
 
-      _hideStatus: function(){
-        html.setStyle(this._validNode, {
-          'display': 'none'
-        });
-        html.setStyle(this._inValidNode, {
-          'display': 'none'
-        });
-        html.setStyle(this._validatingNode, {
-          'display': 'none'
-        });
-      },
-
       _validating: function(){
-        html.setStyle(this._validNode, {
-          'display': 'none'
-        });
-        html.setStyle(this._inValidNode, {
-          'display': 'none'
-        });
-        html.setStyle(this._validatingNode, {
-          'display': 'inline-block'
-        });
+        this._status = 'validating';
 
         html.removeClass(this.domNode, 'jimu-serviceurl-input-invalid');
+        html.removeClass(this.domNode, 'jimu-serviceurl-input-valid');
+        html.addClass(this.domNode, 'jimu-serviceurl-input-validating');
       },
 
       _valid: function(){
-        html.setStyle(this._validNode, {
-          'display': 'inline-block'
-        });
-        html.setStyle(this._inValidNode, {
-          'display': 'none'
-        });
-        html.setStyle(this._validatingNode, {
-          'display': 'none'
-        });
+        this._status = 'valid';
 
         html.removeClass(this.domNode, 'jimu-serviceurl-input-invalid');
+        html.removeClass(this.domNode, 'jimu-serviceurl-input-validating');
+        html.addClass(this.domNode, 'jimu-serviceurl-input-valid');
       },
 
       _inValid: function(){
-        html.setStyle(this._validNode, {
-          'display': 'none'
-        });
-        html.setStyle(this._inValidNode, {
-          'display': 'inline-block'
-        });
-        html.setStyle(this._validatingNode, {
-          'display': 'none'
-        });
+        this._status = 'invalid';
 
+        html.removeClass(this.domNode, 'jimu-serviceurl-input-validating');
+        html.removeClass(this.domNode, 'jimu-serviceurl-input-valid');
         html.addClass(this.domNode, 'jimu-serviceurl-input-invalid');
       }
     });

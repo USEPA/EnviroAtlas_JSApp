@@ -4,7 +4,6 @@
   border: 1px solid transparent;
 }
 .tab-widget-frame .title{
-  display: none;
   overflow: hidden;
 }
 .tab-widget-frame .title-label{
@@ -14,7 +13,8 @@
   float: left;
   border-top-left-radius: 4px;
   color: #222;
-  font: 12px Arial bold;
+  font: 12px Arial;
+  /*font-weight: bold;*/
   display: inline-block;
   max-width: 338px;
   overflow: hidden;

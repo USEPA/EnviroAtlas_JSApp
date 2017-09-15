@@ -1,5 +1,3 @@
-﻿define(
-   ({
-    _widgetLabel: "主目录按钮"
-  })
-);
+define({
+  "_widgetLabel": "主页"
+});

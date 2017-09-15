@@ -1,3 +1,19 @@
+///////////////////////////////////////////////////////////////////////////
+// Copyright ? 2014 Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
 var dojoConfig, jimuConfig;
 
 /*global weinreUrl, loadResources, _loadPolyfills, loadingCallback, debug, allCookies, unescape */
@@ -64,38 +80,18 @@ var ie = (function() {
       }
     };
 
-    if(allCookies.esri_auth){
-      /*jshint -W061 */
-      var userObj = eval('(' + unescape(allCookies.esri_auth)+ ')');
-      if(userObj.culture){
-        dojoConfig.locale = userObj.culture;
-      }
-    }
-
-    if(window.queryObject.mode){
-      if(allCookies.wab_locale){
-        dojoConfig.locale = allCookies.wab_locale;
-      }
-    }else{
-      if(allCookies.wab_app_locale){
-        dojoConfig.locale = allCookies.wab_app_locale;
-      }
-    }
-
-
-    if(!dojoConfig.locale){
-      dojoConfig.locale = navigator.language ? navigator.language : navigator.userLanguage;
-    }
-
-    dojoConfig.locale = dojoConfig.locale.toLowerCase();
-    window._setRTL(dojoConfig.locale);
+    setLocale();
 
     resources = resources.concat([
       window.apiUrl + 'dojo/resources/dojo.css',
       window.apiUrl + 'dijit/themes/claro/claro.css',
       window.apiUrl + 'esri/css/esri.css',
       window.apiUrl + 'dojox/layout/resources/ResizeHandle.css',
-      window.path + 'jimu.js/css/jimu-theme.css'
+      window.path + 'jimu.js/css/jimu-theme.css',
+      window.path + 'libs/caja-html-sanitizer-minified.js',
+      //because we have jimu/dijit/GridLayout dijit, so we import this css here
+      window.path + 'libs/goldenlayout/goldenlayout-base.css',
+      window.path + 'libs/goldenlayout/goldenlayout-light-theme.css'
     ]);
 
     if (window.apiUrl.substr(window.apiUrl.length - 'arcgis-js-api/'.length,
@@ -121,6 +117,15 @@ var ie = (function() {
       }, {
         name: "dgrid",
         location: window.apiUrl + "dgrid"
+      }, {
+        name: "dgrid1",
+        location: window.apiUrl + "dgrid1"
+      }, {
+        name: "dstore",
+        location: window.apiUrl + "dstore"
+      }, {
+        name: "moment",
+        location: window.apiUrl + "moment"
       }, {
         name: "esri",
         location: window.apiUrl + "esri"
@@ -192,12 +197,51 @@ var ie = (function() {
 
         _loadPolyfills("", function() {
           window.appInfo.appPath = window.path;
-          require(['jimu/main', 'libs/main', 'dynamic-modules/preload'], function(jimuMain) {
-            //loadingCallback('jimu', resources.length + 1, resources.length);
-            jimuMain.initApp();
+          window.avoidRequireCache(require);
+          require(['dojo/aspect', 'dojo/request/util'], function(aspect, requestUtil) {
+            window.avoidRequestCache(aspect, requestUtil);
+
+            require(['jimu/main', 'libs/main'], function(jimuMain) {
+              //loadingCallback('jimu', resources.length + 1, resources.length);
+              jimuMain.initApp();
+            });
           });
         });
       }
     });
+  }
+
+  function setLocale(){
+    if(window.queryObject.locale){
+      dojoConfig.locale = window.queryObject.locale.toLowerCase();
+      window._setRTL(dojoConfig.locale);
+      return;
+    }
+
+    if(allCookies.esri_auth){
+      /*jshint -W061 */
+      var userObj = eval('(' + unescape(allCookies.esri_auth) + ')');
+      if(userObj.culture){
+        dojoConfig.locale = userObj.culture;
+      }
+    }
+
+    if(window.queryObject.mode){
+      if(allCookies.wab_locale){
+        dojoConfig.locale = allCookies.wab_locale;
+      }
+    }else{
+      if(allCookies.wab_app_locale){
+        dojoConfig.locale = allCookies.wab_app_locale;
+      }
+    }
+
+
+    if(!dojoConfig.locale){
+      dojoConfig.locale = navigator.language ? navigator.language : navigator.userLanguage;
+    }
+
+    dojoConfig.locale = dojoConfig.locale.toLowerCase();
+    window._setRTL(dojoConfig.locale);
   }
 })();

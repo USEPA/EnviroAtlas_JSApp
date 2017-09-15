@@ -1,5 +1,3 @@
-﻿define(
-   ({
-    _widgetLabel: "Pradžios mygtukas"
-  })
-);
+define({
+  "_widgetLabel": "Pradžia"
+});

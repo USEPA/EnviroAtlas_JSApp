@@ -1,17 +1,21 @@
 define({
   "_widgetLabel": "Добавить данные",
+  "noOptionsConfigured": "Отсутствуют настроенные опции",
+  "tabs": {
+    "search": "Поиск",
+    "url": "URL-адрес",
+    "file": "Файл"
+  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "Слой не доступен.",
-    "online": "ArcGIS Online",
-    "url": "Введите URL",
     "loadError": "AddData, не удалось загрузить:",
     "searchBox": {
       "search": "Поиск",
       "placeholder": "Поиск..."
     },
     "bboxOption": {
-      "bbox": "В области карты"
+      "bbox": "В карте"
     },
     "scopeOptions": {
       "anonymousContent": "Ресурсы",
@@ -90,10 +94,6 @@ define({
     }
   },
   "addFromUrl": {
-    "donw": "Готово",
-    "editName": "редактировать Имя",
-    "buttonLabel": "URL...",
-    "caption": "Добавление данных – Введите URL",
     "type": "Тип",
     "url": "URL-адрес",
     "types": {
@@ -106,5 +106,30 @@ define({
       "CSV": "Файл CSV"
     },
     "samplesHint": "URL образца"
+  },
+  "addFromFile": {
+    "intro": "Вы можете перетащить или просмотреть один из следующих типов:",
+    "types": {
+      "Shapefile": "Шейп-файл (.zip, ZIP-архив, содержащий все файлы шейп-файла)",
+      "CSV": "Файл CSV (.csv, с адресами или координатами широты и долготы (с разделителями: запятой, точкой с запятой или табуляцией))",
+      "GPX": "Файл GPX (.gpx, обменный формат GPS)",
+      "GeoJSON": "Файл GeoJSON (.geo.json или .geojson)"
+    },
+    "generalizeOn": "Генерализовать объекты для веб-отображения",
+    "dropOrBrowse": "Перетаскивание или просмотр",
+    "browse": "Просмотр",
+    "invalidType": "Этот тип файлов не поддерживается.",
+    "addingPattern": "{filename}: добавление...",
+    "addFailedPattern": "{filename}: добавление не удалось",
+    "featureCountPattern": "{filename}: {count} объектов",
+    "invalidTypePattern": "{filename}: этот тип не поддерживается",
+    "maxFeaturesAllowedPattern": "Допустимо использовать не более {count} объектов",
+    "layerNamePattern": "{filename} – {name}"
+  },
+  "layerList": {
+    "caption": "Слои",
+    "noLayersAdded": "Слои не были добавлены.",
+    "removeLayer": "Удалить слой",
+    "back": "Назад"
   }
 });

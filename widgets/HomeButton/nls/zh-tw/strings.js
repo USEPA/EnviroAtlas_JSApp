@@ -1,5 +1,3 @@
-﻿define(
-   ({
-    _widgetLabel: "首頁按鈕"
-  })
-);
+define({
+  "_widgetLabel": "首頁"
+});

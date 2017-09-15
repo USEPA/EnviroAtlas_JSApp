@@ -1,3 +1,4 @@
 {
-	"showLabels": false
+	"showLabels": false,
+	"timeFormat":  "auto"
 }

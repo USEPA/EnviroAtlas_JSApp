@@ -17,32 +17,31 @@
 define([
     'dojo/_base/declare',
     'dijit/_WidgetsInTemplateMixin',
-    "dojo/Deferred",
+    'dojo/Deferred',
     'jimu/BaseWidget',
     'jimu/portalUtils',
-    "jimu/dijit/Message",
+    'jimu/dijit/Message',
     'jimu/PanelManager',
-    "jimu/SpatialReference/wkidUtils",
+    'jimu/SpatialReference/wkidUtils',
     'jimu/portalUrlUtils',
-    'jimu/WidgetManager',
-    'jimu/PanelManager',
-    "esri/dijit/Basemap",
-    "esri/dijit/BasemapLayer",
+    'jimu/utils',
+    'esri/dijit/Basemap',
+    'esri/dijit/BasemapLayer',
     'esri/dijit/BasemapGallery',
     'dojo/_base/lang',
     'dojo/_base/array',
-    "dojo/_base/html",
-    "dojo/query",
+    'dojo/_base/html',
+    'dojo/query',
     'esri/request',
     'dojo/on',
     'dojo/promise/all',
-    'dojo/dom',
     './utils',
     'dijit/form/HorizontalSlider',
     'dijit/form/HorizontalRuleLabels',
     'dojo/dom-construct',
     'dojo/dom-geometry',
-    'dojo/aspect'
+    'dojo/aspect',
+    'dojo/dom'
   ],
   function(
     declare,
@@ -54,8 +53,7 @@ define([
     PanelManager,
     SRUtils,
     portalUrlUtils,
-    WidgetManager,
-    PanelManager,
+    jimuUtils,
     Basemap,
     BasemapLayer,
     BasemapGallery,
@@ -66,13 +64,13 @@ define([
     esriRequest,
     on,
     all,
-    dom,
     utils,
     HorizontalSlider,
     HorizontalRuleLabels,
     domConstruct,
     domGeom,
-    aspect) {
+    aspect,
+    dom) {
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
 
       name: 'eBasemapGallery',
@@ -235,15 +233,12 @@ define([
             if (!basemaps[i].thumbnailUrl) {
               basemaps[i].thumbnailUrl = this.folderUrl + "images/default.jpg";
             } else {
-              if (basemaps[i].thumbnailUrl.indexOf('http') === 0) {
+              if (basemaps[i].thumbnailUrl.indexOf('//') === 0) {
                 basemaps[i].thumbnailUrl = basemaps[i].thumbnailUrl +
                                            utils.getToken(this.appConfig.portalUrl);
-              }else if(basemaps[i].thumbnailUrl.startWith('/') ||
-                basemaps[i].thumbnailUrl.startWith('data')){
-                basemaps[i].thumbnailUrl = basemaps[i].thumbnailUrl;
-              }else{
-                //if path is relative, relative to widget's folder
-                basemaps[i].thumbnailUrl = this.folderUrl + basemaps[i].thumbnailUrl;
+              } else {
+                basemaps[i].thumbnailUrl =
+                  jimuUtils.processUrlInWidgetConfig(basemaps[i].thumbnailUrl, this.folderUrl);
               }
             }
             basemapObjs.push(new Basemap(basemaps[i]));
@@ -349,7 +344,7 @@ define([
 
         sNode3.innerHTML = sNode3.title = sNode3.alt = sNode.innerHTML = sNode.title = sNode.alt = "";
         sNode4.title = sNode4.alt = sNode2.title = sNode2.alt = "";
-        sNode4.src = sNode2.src = "widgets/eBasemapGallery/images/default.jpg";
+        sNode4.src = sNode2.src = this.folderUrl + "/images/default.jpg";
       },
 
       _addBtnClick: function(evt) {
@@ -572,10 +567,10 @@ define([
           return;
         }
         if(this.selectedBMNode){
-          html.setStyle(this.selectedBMNode, 'display', 'unset');
+          html.setStyle(this.selectedBMNode, 'display', 'inline-block');
         }
         if(this.selectedBMNode2){
-          html.setStyle(this.selectedBMNode2, 'display', 'unset');
+          html.setStyle(this.selectedBMNode2, 'display', 'inline-block');
         }
         var basemap = this.basemapGallery.getSelected();
         if(basemap.title === "Hybrid Mashup"){

@@ -1,7 +1,5 @@
-﻿define(
-   ({
-    _widgetLabel: "Controller barra laterale",
-    more: "altro",
-    otherPanels: "Altri pannelli"
-  })
-);
+define({
+  "_widgetLabel": "Controller barra laterale",
+  "more": "altro",
+  "otherPanels": "Altri pannelli"
+});

@@ -2,7 +2,29 @@
 	"splash": {
 		"splashContent": "<h1 style='margin-top: 0px; margin-bottom:1em; margin-right:5px'>EnviroAtlas Terms and Conditions</h1><div style='padding:5px;'>Please <a target='_blank' style='color:inherit' href='https://www.epa.gov/enviroatlas/forms/contact-us-about-enviroatlas'>contact us</a> if you experience any issues.<br><br><b>We encourage you to take the tour or browse the <a target='_blank' style='color:inherit' href='https://enviroatlas.epa.gov/enviroatlas/interactivemap/AboutEnviroAtlas.pdf'>help document</a></b><ul style='padding-right:20px;'><li><b>It is the responsibility of the user to read and evaluate data limitations and restrictions especially with regard to intended use.</b></li><li><b>Neither EPA, EPA contractors, nor any other organizations cooperating with EPA assume any responsibility for damages or other liabilities</b> related to the accuracy, availability, use or misuse of the information provided on this website.</li><li><b>For site-specific data, EnviroAtlas data will not replace “boots-on-the-ground measurements” or local knowledge. </b>Better data may be available from local sources.</li></ul></div><a target='_blank' style='color:inherit; padding-left:35px;' href='https://www.epa.gov/enviroatlas/enviroatlas-terms-use-and-disclaimer'>Read our full Terms of Use and Disclaimer</a>",
 		"requireConfirm": false,
-		"confirmText": "I understand and agree to the terms and conditions of this disclaimer, do not show the disclaimer again.",
-		"showOption": true
+        "confirm": {
+          "text": "I understand and agree to the terms and conditions of this disclaimer, do not show the disclaimer again.",
+          "color": "#ffffff",
+          "transparency": 0
+        },
+        "showOption": true,
+        "confirmEverytime": true,
+        "contentVertical": "top",
+        "size": {
+          "mode": "wh",
+          "wh": {
+            "w": 600,
+            "h": 410
+          }
+        },
+        "background": {
+          "mode": "color",
+          "color": "#485566",
+          "transparency": "0"
+        },
+        "button": {
+          "color": "#518dca",
+          "transparency": "0"
+        }
 	}
 }

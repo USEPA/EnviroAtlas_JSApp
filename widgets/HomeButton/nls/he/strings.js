@@ -1,5 +1,3 @@
-﻿define(
-   ({
-    _widgetLabel: "לחצן דף הבית"
-  })
-);
+define({
+  "_widgetLabel": "דף הבית"
+});

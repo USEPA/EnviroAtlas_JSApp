@@ -1,6 +1,4 @@
-.claro .dijitArrowButtonContainer{
-  /*width: 30px;*/
-}
+
 /* Select */
 .claro .dijitSelect{
   background-color: #f0f0f0;
@@ -39,7 +37,7 @@
   width:100%;
 }
 
-/* dijit/form/*TextBox */
+/* dijit/form/TextBox */
 .claro .dijitTextBox{
   height: 30px;
   border-color: #d9dde0;
@@ -86,3 +84,57 @@ p{
 .claro .dojoxColorPickerOptional input{
   box-sizing: content-box;
 }
+
+/* restrict-select-width */
+table.dijitDownArrowButton.dijitSelect.restrict-select-width{
+  table-layout: fixed;
+}
+
+table.dijitDownArrowButton.dijitSelect.restrict-select-width > tbody > tr > td.dijitStretch > div.dijitButtonText{
+  text-align: left;
+}
+
+.jimu-rtl table.dijitDownArrowButton.dijitSelect.restrict-select-width > tbody > tr > td.dijitStretch > div.dijitButtonText{
+  text-align: right;
+}
+
+table.dijitDownArrowButton.dijitSelect.restrict-select-width > tbody > tr > td.dijitStretch{
+  width: auto;
+}
+
+table.dijitDownArrowButton.dijitSelect.restrict-select-width > tbody > tr > td.dijitStretch > div.dijitInputField{
+  width: 100%;
+  overflow: hidden;
+}
+
+table.dijitDownArrowButton.dijitSelect.restrict-select-width > tbody > tr > td.dijitDownArrowButton{
+  width: 18px;
+}
+
+/* dijitComboBox */
+.claro .dijitComboBox>div.dijitArrowButton.dijitDownArrowButton{
+  width: 18px;
+  height: 100%;
+}
+
+.claro .dijitComboBox>div.dijitArrowButton.dijitDownArrowButton>input{
+  padding: 0;
+  border: 0;
+  display: inline-block;
+  height: 100% !important;
+}
+
+/* dijitSelect */
+.claro .dijitSelect .dijitReset.dijitButtonNode.dijitArrowButton.dijitDownArrowButton.dijitArrowButtonContainer{
+  width: 20px;
+}
+
+/* dgrid*/
+.jimu-rtl .dgrid-rtl-swap .dgrid-header-row {
+    right: 0;
+    left: 17px;
+}
+ .jimu-rtl .dgrid-cell {
+  border-right-style: none;
+  border-left: solid 1px #ccc;
+ }

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 Esri. All Rights Reserved.
+// Copyright © 2014 - 2016 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -68,6 +68,8 @@ function(lang, array, aspect, Deferred, cookie, json, topic, dojoScript, esriNS,
     //isValidCredential
     //isValidPortalCredentialOfPortalUrl
     //isWebTierPortal
+    //addAuthorizedCrossOriginDomains
+    //addWithCredentialDomain
     //getPortalCredential
     //getUserIdByToken
     //xtGetCredentialFromCookie
@@ -79,15 +81,7 @@ function(lang, array, aspect, Deferred, cookie, json, topic, dojoScript, esriNS,
     },
 
     isInConfigOrPreviewWindow: function(){
-      var b = false;
-      try{
-        b = !window.isBuilder && window.parent && window.parent !== window &&
-        window.parent.isBuilder;
-      }catch(e){
-        console.log(e);
-        b = false;
-      }
-      return !!b;
+      return jimuUtils.isInConfigOrPreviewWindow();
     },
 
     isStringStartWith: function(str, prefix){
@@ -114,6 +108,10 @@ function(lang, array, aspect, Deferred, cookie, json, topic, dojoScript, esriNS,
       var def = new Deferred();
       var thePortalUrl = portalUrlUtils.getStandardPortalUrl(_portalUrl);
       var sharingUrl = thePortalUrl + "/sharing";
+      // var tokenUrl = thePortalUrl + "/sharing/rest/generateToken?f=json";
+      // The url should not include 'rest' because portal 10.3 doesn't support GET method with 'rest' and
+      // get following error
+      // {"error":{"code":405,"messageCode":"GWM_0005","message":"Method not supported.","details":[]}}
       var tokenUrl = thePortalUrl + "/sharing/generateToken?f=json";
       var httpsTokenUrl = portalUrlUtils.setHttpsProtocol(tokenUrl);
       var httpsSharingUrl = portalUrlUtils.setHttpsProtocol(sharingUrl);
@@ -147,10 +145,13 @@ function(lang, array, aspect, Deferred, cookie, json, topic, dojoScript, esriNS,
             if(!credential.token){
               credential.token = response.token;
             }
+            if(!credential.expires){
+              credential.expires = response.expires;
+            }
 
             //#releated issue 4096
             /*****************************************
-             * Workaround to fix API 3.14 bug that doesn't use withCredential when web-tier.
+             * Workaround to fix API 3.14 bug that doesn't use withCredentials when web-tier.
              *****************************************/
             //var portalInfo = esriNS.id.findServerInfo(credential.server);
 
@@ -165,7 +166,11 @@ function(lang, array, aspect, Deferred, cookie, json, topic, dojoScript, esriNS,
             }
 
             // ADD a new entry for this portal in CORS list.
-            esriConfig.defaults.io.corsEnabledServers.push({
+            // esriConfig.defaults.io.corsEnabledServers.push({
+            //   host: portalUrlUtils.getServerByUrl(thePortalUrl),
+            //   withCredentials: true
+            // });
+            this._pushCorsEnabledServerInfo({
               host: portalUrlUtils.getServerByUrl(thePortalUrl),
               withCredentials: true
             });
@@ -174,6 +179,32 @@ function(lang, array, aspect, Deferred, cookie, json, topic, dojoScript, esriNS,
 
             //should not save credential of iwa to cookie because the cookie is not useful
             def.resolve(true);
+
+            function setRegenerateTokenTimer(cre){
+              var creationTime = cre.creationTime || new Date().getTime();
+              var expires = cre.expires;
+              if(creationTime > 0 && expires > 0 && expires > creationTime){
+                var span = expires - creationTime;
+                var time = span * 0.8;
+                setTimeout(function() {
+                  dojoScript.get(httpsTokenUrl, {
+                    jsonp: 'callback'
+                  }).then(function(res) {
+                    if (res.token) {
+                      cre.token = res.token;
+                      cre.expires = res.expires;
+                      cre.creationTime = new Date().getTime();
+                      cre.refreshServerTokens();
+                      setRegenerateTokenTimer(cre);
+                    }
+                  }, function(err) {
+                    console.error(err);
+                  });
+                }, time);
+              }
+            }
+
+            setRegenerateTokenTimer(credential);
           }), lang.hitch(this, function(){
             def.resolve(true);
           }));
@@ -191,6 +222,81 @@ function(lang, array, aspect, Deferred, cookie, json, topic, dojoScript, esriNS,
       return def;
     },
 
+    addAuthorizedCrossOriginDomains: function(domains){
+      if(domains && domains.length > 0){
+        for(var i = 0; i < domains.length; i++) {
+          this.addWithCredentialDomain(domains[i]);
+        }
+      }
+    },
+
+    addWithCredentialDomain: function(domain){
+      // add if trusted host is not null, undefined, or empty string
+      if(domain && typeof domain === 'string'){
+        var corsEnabledServers = esriConfig.defaults.io.corsEnabledServers;
+
+        var server = portalUrlUtils.getServerByUrl(domain);
+        var serverWithProtocol = portalUrlUtils.getServerWithProtocol(domain);
+        if(!serverWithProtocol){
+          serverWithProtocol = "http://" + server;
+        }
+
+        // REMOVE the current entry in CORS list
+        var corsListIndex = esriUrlUtils.canUseXhr(serverWithProtocol, true);
+        if (corsListIndex > -1) {
+          corsEnabledServers.splice(corsListIndex, 1);
+        }
+
+        // ADD a new entry for this portal in CORS list.
+        // corsEnabledServers.push({
+        //   host: server,
+        //   withCredentials: true
+        // });
+        this._pushCorsEnabledServerInfo({
+          host: server,
+          withCredentials: true
+        });
+      }
+    },
+
+    _pushCorsEnabledServerInfo: function(serverInfo){
+      /*jshint -W083 */
+      if(!serverInfo){
+        return;
+      }
+
+      var corsEnabledServers = esriConfig.defaults.io.corsEnabledServers;
+      var methodNames = ["charAt", "charCodeAt", "concat", "endsWith", "indexOf",
+        "lastIndexOf", "localeCompare", "match", "replace", "search", "slice", "split",
+        "startsWith", "substr", "substring", "toLocaleLowerCase", "toLocaleUpperCase",
+        "toLowerCase", "toString", "toUpperCase", "trim", "trimLeft", "trimRight", "valueOf"];
+
+      if(typeof serverInfo === "object" && typeof serverInfo.host === "string"){
+        //object
+        for(var key1 in serverInfo.host){
+          if(typeof serverInfo.host[key1] === 'function'){
+            serverInfo[key1] = function(){
+              return serverInfo.host[key1].apply(serverInfo.host, arguments);
+            };
+          }else{
+            serverInfo[key1] = serverInfo.host[key1];
+          }
+        }
+
+        serverInfo.length = serverInfo.host.length;
+
+        array.forEach(methodNames, function(methodName){
+          if(typeof serverInfo.host[methodName] === 'function'){
+            serverInfo[methodName] = function(){
+              return serverInfo.host[methodName].apply(serverInfo.host, arguments);
+            };
+          }
+        });
+      }
+
+      corsEnabledServers.push(serverInfo);
+    },
+
     tryRegisterCredential: function( /* esri.Credential */ credential) {
       if(!this.isValidCredential(credential)){
         return false;
@@ -206,6 +312,49 @@ function(lang, array, aspect, Deferred, cookie, json, topic, dojoScript, esriNS,
       }
 
       return false;
+    },
+
+    registerToken: function(token){
+      var sharingRest = portalUrlUtils.getSharingUrl(this.portalUrl);
+      var cre = esriNS.id.findCredential(sharingRest);
+      if(cre){
+        //remove the exists credential
+        array.some(esriNS.id.credentials, lang.hitch(this, function(c, i) {
+          if(this.isValidPortalCredentialOfPortalUrl(this.portalUrl, c)){
+            esriNS.id.credentials.splice(i, 1);
+            return true;
+          }
+        }));
+      }
+
+      return this._getTokenInfo(token).then(function(tokenInfo){
+        if(tokenInfo){
+          esriNS.id.registerToken(tokenInfo);
+        }
+      });
+    },
+
+    _getTokenInfo: function(token){
+      var portalSelfUrl = portalUrlUtils.getPortalSelfInfoUrl(this.portalUrl);
+      portalSelfUrl += '?f=json&token=' + token;
+      return dojoScript.get(portalSelfUrl, {
+        jsonp: 'callback'
+      }).then(lang.hitch(this, function(res){
+        if(res.user){
+          return {
+            server: portalUrlUtils.getSharingUrl(this.portalUrl),
+            ssl: res.allSSL,
+            token: token,
+            userId: res.user.username
+          };
+        }else{
+          // throw Error(window.jimuNls.urlParams.invalidToken);
+          return null;
+        }
+      }), function(err){
+        console.error(err);
+        throw Error(window.jimuNls.urlParams.validateTokenError);
+      });
     },
 
     _isInvalidPortalUrl: function(s){
@@ -257,9 +406,10 @@ function(lang, array, aspect, Deferred, cookie, json, topic, dojoScript, esriNS,
       if(!oAuthInfo){
         var oauthReturnUrl = window.location.protocol + "//" + window.location.host +
          require.toUrl("jimu") + "/oauth-callback.html";
+        //OAuth will lose 'persist' query parameter if set expiration to two weeks exectly.
         oAuthInfo = new OAuthInfo({
           appId: appId,
-          expiration: 14 * 24 * 60,
+          expiration: 14 * 24 * 60 - 1,
           portalUrl: portalUrl,
           authNamespace: '/',
           popup: true,
@@ -344,7 +494,37 @@ function(lang, array, aspect, Deferred, cookie, json, topic, dojoScript, esriNS,
       //find portal credential from esriNS.id.credentials
       credential = this._filterPortalCredential(thePortalUrl, esriNS.id.credentials);
 
+      if(!credential){
+        this._tryConvertArcGIScomCrendentialToOrgCredential();
+      }
+
       return credential;
+    },
+
+    _tryConvertArcGIScomCrendentialToOrgCredential: function(){
+      var portalUrl = this.portalUrl;
+      if(!portalUrl){
+        return;
+      }
+      portalUrl = portalUrlUtils.getStandardPortalUrl(portalUrl);
+      if(portalUrlUtils.isOrgOnline(portalUrl)){
+        var credential = this._filterPortalCredential(portalUrl, esriNS.id.credentials);
+        if(!credential){
+          var arcgiscomCredential = this._filterPortalCredential("http://www.arcgis.com", esriNS.id.credentials);
+          if(arcgiscomCredential){
+            //we need to register a new credential which server is this.portalUrl based on arcgiscomCredential
+            var sharingUrl = portalUrl + "/sharing/rest";
+            var auth = {
+              token: arcgiscomCredential.token,
+              scope: "portal",
+              userId: arcgiscomCredential.userId,
+              server: sharingUrl,
+              expires: arcgiscomCredential.expires
+            };
+            esriNS.id.registerToken(auth);
+          }
+        }
+      }
     },
 
     //save wab_auth cookie, register token, return credential
@@ -418,6 +598,8 @@ function(lang, array, aspect, Deferred, cookie, json, topic, dojoScript, esriNS,
 
     _filterPortalCredential: function(thePortalUrl, credentials){
       var credential = null;
+
+      thePortalUrl = portalUrlUtils.getStandardPortalUrl(thePortalUrl);
 
       if(credentials && credentials.length > 0){
         var filterCredentials = array.filter(credentials, lang.hitch(this, function(c){

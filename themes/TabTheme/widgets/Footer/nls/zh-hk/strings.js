@@ -1,6 +1,4 @@
-﻿define(
-   ({
-    appCopyright: "All Rights Reserved",
-    _widgetLabel: "頁腳"
-  })
-);
+define({
+  "appCopyright": "All rights reserved",
+  "_widgetLabel": "頁腳"
+});

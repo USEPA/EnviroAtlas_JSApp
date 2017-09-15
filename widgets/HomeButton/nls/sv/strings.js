@@ -1,5 +1,3 @@
-﻿define(
-   ({
-    _widgetLabel: "HomeButton"
-  })
-);
+define({
+  "_widgetLabel": "Hem"
+});

@@ -1,17 +1,21 @@
 define({
   "_widgetLabel": "Tilføj data",
+  "noOptionsConfigured": "Der blev ikke konfigureret nogen indstillinger.",
+  "tabs": {
+    "search": "Søg",
+    "url": "URL",
+    "file": "Fil"
+  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "Laget er utilgængeligt.",
-    "online": "ArcGIS Online",
-    "url": "Indtast en URL",
     "loadError": "AddData, kan ikke indlæse:",
     "searchBox": {
       "search": "Søg",
       "placeholder": "Søg..."
     },
     "bboxOption": {
-      "bbox": "Inden for kortområdet"
+      "bbox": "Inden for kortet"
     },
     "scopeOptions": {
       "anonymousContent": "Indhold",
@@ -90,10 +94,6 @@ define({
     }
   },
   "addFromUrl": {
-    "donw": "Udført",
-    "editName": "redigér navn",
-    "buttonLabel": "URL...",
-    "caption": "Tilføj data - Indtast en URL",
     "type": "Type",
     "url": "URL",
     "types": {
@@ -106,5 +106,30 @@ define({
       "CSV": "En CSV-fil"
     },
     "samplesHint": "Eksempel-URL(er)"
+  },
+  "addFromFile": {
+    "intro": "Du kan slippe eller browse til én af følgende filtyper:",
+    "types": {
+      "Shapefile": "En shapefil (.-zip, ZIP-arkiv, der indeholder alle shapefiler)",
+      "CSV": "En CSV-fil (.csv, med adresse eller længde- og breddegrader samt komma-, semikolon- eller tabulatorsepareret)",
+      "GPX": "En GPX-fil (.gpx, GPS Exchange Format)",
+      "GeoJSON": "En GeoJSON-fil (.geo.json eller .geojson)"
+    },
+    "generalizeOn": "Generalisér objekter til webvisning",
+    "dropOrBrowse": "Slip eller gennemse",
+    "browse": "Gennemse",
+    "invalidType": "Denne filtype understøttes ikke.",
+    "addingPattern": "{filename}: tilføjer...",
+    "addFailedPattern": "{filename}: tilføjelse mislykkedes",
+    "featureCountPattern": "{filename}: {count} objekt(er)",
+    "invalidTypePattern": "{filename}: denne type understøttes ikke",
+    "maxFeaturesAllowedPattern": "Højst {count} objekter er tilladt",
+    "layerNamePattern": "{filename} - {name}"
+  },
+  "layerList": {
+    "caption": "Lag",
+    "noLayersAdded": "Ingen lag er blevet tilføjet.",
+    "removeLayer": "Fjern lag",
+    "back": "Tilbage"
   }
 });

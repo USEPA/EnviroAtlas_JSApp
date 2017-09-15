@@ -1,17 +1,21 @@
 define({
   "_widgetLabel": "הוסף מידע",
+  "noOptionsConfigured": "לא הוגדרו אפשרויות.",
+  "tabs": {
+    "search": "חיפוש",
+    "url": "URL",
+    "file": "קובץ"
+  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "השכבה לא נגישה.",
-    "online": "ArcGIS Online",
-    "url": "הזן URL",
     "loadError": "AddData, לא ניתן לטעון:",
     "searchBox": {
       "search": "חפש",
       "placeholder": "חפש..."
     },
     "bboxOption": {
-      "bbox": "בתוך שטח המפה"
+      "bbox": "בתוך מפה"
     },
     "scopeOptions": {
       "anonymousContent": "תוכן",
@@ -90,10 +94,6 @@ define({
     }
   },
   "addFromUrl": {
-    "donw": "בוצע",
-    "editName": "ערוך שם",
-    "buttonLabel": "URL...",
-    "caption": "הוסף נתונים - הזן URL",
     "type": "סוג",
     "url": "URL",
     "types": {
@@ -106,5 +106,30 @@ define({
       "CSV": "קובץ CSV"
     },
     "samplesHint": "כתובות URL לדוגמה"
+  },
+  "addFromFile": {
+    "intro": "באפשרותך לשחרר או לנווט לאחד מסוגי הקבצים הבאים:",
+    "types": {
+      "Shapefile": "Shapefile‏ (קובץ ZIP, ארכיון ZIP המכיל את כל קבצי ה-shapefile‏)",
+      "CSV": "קובץ CSV (‏csv. בעלי כתובת או קו אורך, קו רוחב המופרדים באמצעות פסיק, נקודה פסיק או Tab)",
+      "GPX": "קובץ GPX (‏gpx., פורמט GPS Exchange)",
+      "GeoJSON": "קובץ GeoJSON (‏.geo.json או geojson)"
+    },
+    "generalizeOn": "הכלל ישויות לתצוגה ברשת",
+    "dropOrBrowse": "שחרר או נווט",
+    "browse": "נתב",
+    "invalidType": "סוג הקובץ לא נתמך.",
+    "addingPattern": "{filename}: מוסיף...",
+    "addFailedPattern": "{filename}: ההוספה נכשלה",
+    "featureCountPattern": "{filename}:‏ {count} ישויות",
+    "invalidTypePattern": "{filename}: סוג זה אינו נתמך",
+    "maxFeaturesAllowedPattern": "מספר מרבי של {count} ישויות מותר",
+    "layerNamePattern": "{filename} -‏ {name}"
+  },
+  "layerList": {
+    "caption": "שכבות",
+    "noLayersAdded": "לא נוספו שכבות",
+    "removeLayer": "הסר שכבה",
+    "back": "חזור"
   }
 });
