@@ -571,7 +571,6 @@
   left: 11px;
 }
 
-
 .jimu-widget-layerList .layer-list-operations .jimu-icon-btn{
   background-image: url("../images/operation_normal.svg"); 
   background-color: rgba(255, 255, 255, 0);
@@ -626,9 +625,5 @@
   text-decoration: initial;
   background-color: #f3f3f3;
 }
-
-
-
-
 
 
