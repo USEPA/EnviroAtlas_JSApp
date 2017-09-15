@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Mittakaava"
-});
+﻿define(
+   ({
+    _widgetLabel: "Mittakaava"
+  })
+);

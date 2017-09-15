@@ -1,4 +1,6 @@
-define({
-  "appCopyright": "All rights reserved",
-  "_widgetLabel": "כותרת תחתונה"
-});
+﻿define(
+   ({
+    appCopyright: "All Rights Reserved",
+    _widgetLabel: "כותרת תחתונה"
+  })
+);

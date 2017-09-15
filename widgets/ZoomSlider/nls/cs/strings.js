@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Posuvník přiblížení"
-});
+﻿define(
+   ({
+    _widgetLabel: "Posuvník přiblížení"
+  })
+);

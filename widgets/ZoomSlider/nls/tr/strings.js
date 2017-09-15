@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Yaklaştırma Kaydırıcısı"
-});
+﻿define(
+   ({
+    _widgetLabel: "Yaklaştırma Kaydırıcısı"
+  })
+);

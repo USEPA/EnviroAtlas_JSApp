@@ -22,6 +22,8 @@ define(["dojo/_base/declare",
     "dojo/promise/all",
     "dojo/dom-class",
     "dojo/window",
+    "dojo/dom",
+    "dojo/dom-style",
     "dijit/Viewport",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
@@ -36,33 +38,32 @@ define(["dojo/_base/declare",
     "esri/layers/CSVLayer",
     "esri/layers/FeatureLayer",
     "esri/layers/GeoRSSLayer",
-    "esri/layers/ImageParameters",
     "esri/layers/KMLLayer",
     "esri/layers/StreamLayer",
     "esri/layers/VectorTileLayer",
     "esri/layers/WFSLayer",
     "esri/layers/WMSLayer",
     "esri/layers/WMTSLayer",
-    "esri/InfoTemplate",
-    "dijit/form/Select"
+    "esri/InfoTemplate"//,
+    // "esri/layers/vector-tile"
   ],
-  function(declare, lang, array, on, keys, Deferred, all, domClass, win, Viewport,
-    _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, i18n,
-    LayerLoader, util, ArcGISDynamicMapServiceLayer,
-    ArcGISImageServiceLayer, ArcGISTiledMapServiceLayer, CSVLayer,
-    FeatureLayer, GeoRSSLayer, ImageParameters, KMLLayer, StreamLayer,
+  
+  function(declare, lang, array, on, keys, Deferred, all, domClass, win, dom, domStyle, Viewport,
+    _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, i18n, LayerLoader, util,
+    ArcGISDynamicMapServiceLayer, ArcGISImageServiceLayer, ArcGISTiledMapServiceLayer, CSVLayer,
+    FeatureLayer, GeoRSSLayer, KMLLayer, StreamLayer,
     VectorTileLayer, WFSLayer, WMSLayer, WMTSLayer,
-    InfoTemplate) {
+    InfoTemplate/*, vectorTile*/) {
 
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
       i18n: i18n,
       templateString: template,
 
-      wabWidget: null,
+      searchPane: null,
 
       _dfd: null,
-
+      
       postCreate: function() {
         this.inherited(arguments);
         this._updateExamples("ArcGIS");
@@ -74,23 +75,17 @@ define(["dojo/_base/declare",
             self.addClicked();
           } else {
             if (!domClass.contains(self.addButton, "disabled")) {
-              self._setStatus("");
+              util.setNodeText(self.messageNode, "");
             }
           }
         }));
         /*
         this.own(on(this.urlTextBox,"change",function(evt) {
           if (!domClass.contains(self.addButton,"disabled")) {
-            self._setStatus("");
+            util.setNodeText(self.messageNode,"");
           }
         }));
         */
-        this.own(on(this.urlTextBox,"focus",function() {
-          try {
-            self.urlTextBox.select();
-          } catch(ex) {}
-        }));
-
         this.own(on(this.typeSelect, "change", function(type) {
           self._updateExamples(type);
         }));
@@ -118,7 +113,7 @@ define(["dojo/_base/declare",
         }
         var type = this.typeSelect.get("value");
         var url = lang.trim(this.urlTextBox.value);
-        if (url.length > 0) {
+        if (url.length > 0 ) {
           if (url.indexOf("http://") === 0 || url.indexOf("https://") === 0) {
             ok = true;
           }
@@ -126,39 +121,46 @@ define(["dojo/_base/declare",
         if (!ok) {
           return;
         }
-
-        domClass.add(btn, "disabled");
-        self._setStatus(i18n.search.item.messages.adding);
+		window.hashAddedURLToType[url] = type;
+        //domClass.add(btn, "disabled");//this line is removed so that the button will work for saveSession with multiple added URL
+        util.setNodeText(self.messageNode, i18n.search.item.messages.adding);
         var dfd = new Deferred();
-        var map = this.wabWidget.map;
+        var map = this.searchPane.wabWidget.map;
+        //var appConfig = this.searchPane.wabWidget.appConfig;
+        var self = this;
         this._handleAdd(dfd, map, type, url);
         dfd.then(function(result) {
           if (result) {
             //self.canRemove = true;
-            self._setStatus("");
+            util.setNodeText(self.messageNode,"");
             //util.setNodeText(self.addButton,i18n.search.item.actions.remove);
             domClass.remove(btn, "disabled");
             // if (self.parentDialog) {
             //   self.parentDialog.hide();
             // }
           } else {
-            self._setStatus(i18n.search.item.messages.addFailed);
+            util.setNodeText(self.messageNode, i18n.search.item.messages.addFailed);
             domClass.remove(btn, "disabled");
           }
         }).otherwise(function(error) {
           if (typeof error === "string" && error === "Unsupported") {
-            self._setStatus(i18n.search.item.messages.unsupported);
+            util.setNodeText(self.messageNode, i18n.search.item.messages.unsupported);
             domClass.remove(btn, "disabled");
           } else {
             console.warn("Add layer failed.");
             console.warn(error);
-            self._setStatus(i18n.search.item.messages.addFailed);
+            util.setNodeText(self.messageNode, i18n.search.item.messages.addFailed);
             domClass.remove(btn, "disabled");
             if (error && typeof error.message === "string" && error.message.length > 0) {
               // TODO show this message
               //console.warn("msg",error.message);
-              self._setStatus(error.message);
+              //util.setNodeText(self.messageNode,error.message);
               console.log("");
+
+              if (!(url in window.faildedOutsideLayerDictionary)){
+			  	  window.faildedOutsideLayerDictionary[url] = url;
+			  }	
+			  document.getElementById('openFailedLayer').click();			  
             }
           }
         });
@@ -184,11 +186,41 @@ define(["dojo/_base/declare",
         }
       },
 
+      _checkVTSupport: function() {
+        var def = new Deferred();
+        require(["esri/layers/vector-tile"], function(vectorTileModule) {
+          var supported = vectorTileModule.supported();
+          def.resolve(supported);
+        });
+        return def;
+      },
+
+      _findServiceName: function(evt){
+
+        var urlS = evt.target.value;
+
+        if(evt.target.value == ""){
+          domStyle.set(this.lNameFrame, "display", "none");
+        }else{
+          if(urlS.indexOf("/MapServer")>0){
+            domStyle.set(this.lNameFrame, "display", "block");
+            var stringArray = urlS.split("/");
+            this.nameTextBox.value = stringArray[stringArray.length -2];
+          }else if(urlS.indexOf("/FeatureServer/")>0){
+            domStyle.set(this.lNameFrame, "display", "block");
+            var stringArray = urlS.split("/");
+            this.nameTextBox.value = stringArray[stringArray.length -3];
+          }
+        }
+      },
+
       _handleAdd: function(dfd, map, type, url) {
         url = util.checkMixedContent(url);
         var lc = url.toLowerCase();
         var loader = new LayerLoader();
-        var id = loader._generateLayerId();
+        //var id = loader._generateLayerId();
+        var id = this.nameTextBox.value;
+        window.hashAddedURLToId[url] = id;
         var self = this,
           layer = null;
 
@@ -214,6 +246,7 @@ define(["dojo/_base/declare",
                       infoTemplate: new InfoTemplate()
                     });
                     dfds.push(loader._waitForLayer(lyr));
+                    window.hashAddedURLToId[url] = lyr.id;
                   });
                   all(dfds).then(function(results) {
                     var lyrs = [];
@@ -223,8 +256,10 @@ define(["dojo/_base/declare",
                     lyrs.reverse();
                     array.forEach(lyrs, function(lyr) {
                       loader._setFeatureLayerInfoTemplate(lyr);
-                      lyr.xtnAddData = true;
+                      window.layerID_Portal_WebMap.push(lyr.id);
+                      window.hashAddedURLToId[url] = lyr.id;
                       map.addLayer(lyr);
+
                     });
                     dfd.resolve(lyrs);
                   }).otherwise(function(error) {
@@ -237,13 +272,9 @@ define(["dojo/_base/declare",
                       id: id
                     });
                   } else {
-                    var mslOptions = {id:id};
-                    if (info && info.supportedImageFormatTypes &&
-                        info.supportedImageFormatTypes.indexOf("PNG32") !== -1) {
-                      mslOptions.imageParameters = new ImageParameters();
-                      mslOptions.imageParameters.format = "png32";
-                    }
-                    layer = new ArcGISDynamicMapServiceLayer(url,mslOptions);
+                    layer = new ArcGISDynamicMapServiceLayer(url, {
+                      id: id
+                    });
                   }
                   self._waitThenAdd(dfd, map, type, loader, layer);
                 }
@@ -260,19 +291,34 @@ define(["dojo/_base/declare",
 
           } else if (lc.indexOf("/vectortileserver") > 0 ||
             lc.indexOf("/resources/styles/root.json") > 0) {
-            if (!VectorTileLayer || !VectorTileLayer.supported()) {
-              dfd.reject("Unsupported");
-            } else {
-              loader._checkVectorTileUrl(url, {}).then(function(vturl) {
-                //console.warn("vectorTileUrl",vturl);
-                layer = new VectorTileLayer(vturl, {
-                  id: id
+            this._checkVTSupport().then(lang.hitch(this, function(supported) {
+              if (!supported) {
+                dfd.reject("Unsupported");
+              } else {
+                loader._checkVectorTileUrl(url, {}).then(function(vturl) {
+                  //console.warn("vectorTileUrl",vturl);
+                  layer = new VectorTileLayer(vturl, {
+                    id: id
+                  });
+                  self._waitThenAdd(dfd, map, type, loader, layer);
+                }).otherwise(function(error) {
+                  dfd.reject(error);
                 });
-                self._waitThenAdd(dfd, map, type, loader, layer);
-              }).otherwise(function(error) {
-                dfd.reject(error);
-              });
-            }
+              }
+            }));
+            // if (!vectorTile.supported()) {
+            //   dfd.reject("Unsupported");
+            // } else {
+            //   loader._checkVectorTileUrl(url, {}).then(function(vturl) {
+            //     //console.warn("vectorTileUrl",vturl);
+            //     layer = new VectorTileLayer(vturl, {
+            //       id: id
+            //     });
+            //     self._waitThenAdd(dfd, map, type, loader, layer);
+            //   }).otherwise(function(error) {
+            //     dfd.reject(error);
+            //   });
+            // }
           } else if (lc.indexOf("/streamserver") > 0) {
             layer = new StreamLayer(url, {
               id: id,
@@ -327,7 +373,7 @@ define(["dojo/_base/declare",
         try {
           var type = this.typeSelect.get("value");
           var url = lang.trim(this.urlTextBox.value);
-          this.wabWidget.xtnAddFromUrlPane = {
+          this.searchPane.wabWidget.xtnAddFromUrlPane = {
             type: type,
             url: url
           };
@@ -337,7 +383,7 @@ define(["dojo/_base/declare",
       _restore: function() {
         //console.warn("AddFromUrlPane._restore");
         try {
-          var data = this.wabWidget.xtnAddFromUrlPane;
+          var data = this.searchPane.wabWidget.xtnAddFromUrlPane;
           if (data && typeof data.type === "string" && data.type.length > 0) {
             this.typeSelect.set("value", data.type);
           }
@@ -345,18 +391,6 @@ define(["dojo/_base/declare",
             this.urlTextBox.value = data.url;
           }
         } catch (ex) {}
-      },
-
-      _setStatus: function(msg) {
-        if(this.wabWidget) {
-          this.wabWidget._setStatus(msg);
-        }
-      },
-
-      _showLayers: function(){
-        if (this.wabWidget) {
-          this.wabWidget.showLayers();
-        }
       },
 
       _updateExamples: function(type) {
@@ -374,16 +408,14 @@ define(["dojo/_base/declare",
 
       _waitThenAdd: function(dfd, map, type, loader, layer) {
         //console.warn("_waitThenAdd",type,layer);
-        var na;
         loader._waitForLayer(layer).then(function(lyr) {
           //console.warn("_waitThenAdd.ok",lyr);
-          //var templates = null;
+          var templates = null;
           if (type === "WMS") {
             loader._setWMSVisibleLayers(lyr);
           } else if (lyr &&
             (lyr.declaredClass === "esri.layers.ArcGISDynamicMapServiceLayer" ||
-            lyr.declaredClass === "esri.layers.ArcGISTiledMapServiceLayer")) {
-            na = true;
+              lyr.declaredClass === "esri.layers.ArcGISTiledMapServiceLayer")) {
             /*
             if (lyr.infoTemplates === null) {
               array.forEach(lyr.layerInfos, function(lInfo) {
@@ -404,8 +436,10 @@ define(["dojo/_base/declare",
           } else if (lyr && lyr.declaredClass === "esri.layers.CSVLayer") {
             loader._setFeatureLayerInfoTemplate(lyr);
           }
-          lyr.xtnAddData = true;
+          window.layerID_Portal_WebMap.push(lyr.id);
+          
           map.addLayer(lyr);
+          
           dfd.resolve(lyr);
         }).otherwise(function(error) {
           //console.warn("_waitThenAdd.error",error);

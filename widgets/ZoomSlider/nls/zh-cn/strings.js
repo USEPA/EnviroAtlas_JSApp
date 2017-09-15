@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "缩放滑块"
-});
+﻿define(
+   ({
+    _widgetLabel: "缩放滑块"
+  })
+);

@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Bản đồ Toàn cảnh"
-});
+﻿define(
+   ({
+    _widgetLabel: "Bản đồ Toàn cảnh"
+  })
+);

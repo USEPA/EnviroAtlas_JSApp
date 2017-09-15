@@ -1,4 +1,6 @@
-define({
-  "appCopyright": "All rights reserved",
-  "_widgetLabel": "Fußzeile"
-});
+﻿define(
+   ({
+    appCopyright: "All Rights Reserved",
+    _widgetLabel: "Fußzeile"
+  })
+);

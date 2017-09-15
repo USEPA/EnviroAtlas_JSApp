@@ -254,7 +254,7 @@ define(
       _getEditedBaseMap: function() {
         var basemap = {
           title: this.title.value,
-          thumbnailUrl: utils.getStanderdUrl(domAttr.get(this.showImageChooser, 'src')),
+          thumbnailUrl: utils.removeUrlQuery(domAttr.get(this.showImageChooser, 'src')),
           layers: [],
           spatialReference: (this.basemap && this.basemap.spatialReference) ||
                             this.map.spatialReference

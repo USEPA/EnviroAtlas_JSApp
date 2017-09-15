@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,10 +30,11 @@ define([
   'dijit/tree/ObjectStoreModel',
   'jimu/utils',
   'jimu/dijit/_Tree',
+  'jimu/dijit/Message',
   'jimu/dijit/LoadingShelter'
 ],
 function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented, lang, html,
- array, Deferred, all, Memory, Observable, ObjectStoreModel, jimuUtils, Tree) {
+ array, Deferred, all, Memory, Observable, ObjectStoreModel, jimuUtils, Tree, Message) {
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
     templateString:'<div style="width:100%;"><div data-dojo-attach-point="shelter" ' +
     ' data-dojo-type="jimu/dijit/LoadingShelter" data-dojo-props="hidden:true"></div></div>',
@@ -146,12 +147,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
         requestDef = this._searchServiceUrl(serviceUrl, root);
       }
 
-      this.shelter.show();
-
       requestDef.then(lang.hitch(this, function(response){
-        if(this.domNode){
-          this.shelter.hide();
-        }
         var tns = this.tree.getAllLeafTreeNodeWidgets();
         if(tns.length === 1){
           var tn = tns[0];
@@ -159,14 +155,10 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
         }
         this._def.resolve(response);
       }), lang.hitch(this, function(err){
-        // var netErr = err && err.errorCode && err.errorCode === 'NETWORK_ERROR';
-        // if(netErr){
-        //   this._showRequestError();
-        // }
-        if(this.domNode){
-          this.shelter.hide();
+        var netErr = err && err.errorCode && err.errorCode === 'NETWORK_ERROR';
+        if(netErr){
+          this._showRequestError();
         }
-        this._showRequestError();
         this._def.reject(err);
       }));
 
@@ -246,7 +238,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
 
     _searchBaseServiceUrl:function(baseUrl, root){
       //url is end with 'rest/services'
-      // this.shelter.show();
+      this.shelter.show();
       var resultDef = new Deferred();
       this._getRestInfo(baseUrl).then(lang.hitch(this, function(response){
         if(!this.domNode){
@@ -311,14 +303,14 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
           if(!this.domNode){
             return;
           }
-          // this.shelter.hide();
+          this.shelter.hide();
           resultDef.resolve();
         }), lang.hitch(this, function(err){
           console.error(err);
           if(!this.domNode){
             return;
           }
-          // this.shelter.hide();
+          this.shelter.hide();
           resultDef.reject(err);
         }));
       }), lang.hitch(this, function(err){
@@ -326,7 +318,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
         if(!this.domNode){
           return;
         }
-        // this.shelter.hide();
+        this.shelter.hide();
         var errObj = {
           errorCode: 'NETWORK_ERROR',
           error: err
@@ -341,7 +333,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
       //http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics
       //http://pslgis.cityofpsl.com/arcgis/rest/services/aerials/
       var resultDef = new Deferred();
-      // this.shelter.show();
+      this.shelter.show();
       this._doSearchFolderServiceUrl(folderUrl, parent).then(lang.hitch(this, function(items){
         if(!this.domNode){
           return;
@@ -350,14 +342,14 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
           item.parent = parent.id;
           this._addItem(item);
         }));
-        // this.shelter.hide();
+        this.shelter.hide();
         resultDef.resolve();
       }), lang.hitch(this, function(err){
         console.error(err);
         if(!this.domNode){
           return;
         }
-        // this.shelter.hide();
+        this.shelter.hide();
         var errObj = {
           errorCode: 'NETWORK_ERROR',
           error: err
@@ -459,10 +451,9 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented
 
     _showRequestError:function(){
       //this.nls.unableConnectTo + " " + this._currentUrl
-      // new Message({
-      //   message: this.nls.invalidUrlTip
-      // });
-      this.emit('error', this.nls.invalidUrlTip);
+      new Message({
+        message: this.nls.invalidUrlTip
+      });
     },
 
     //item:{name,type,url,parent}

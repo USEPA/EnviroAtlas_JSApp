@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,15 +17,16 @@
 define([
   'dojo/_base/declare',
   'dojo/_base/array',
+  'dojo/_base/lang',
   'dojo/_base/html',
   'dojo/dom-construct',
   'dojo/on',
   './LayerInfoForDefault'
-], function(declare, array, html, domConstruct, on, LayerInfoForDefault) {
+], function(declare, array, lang, html, domConstruct, on, LayerInfoForDefault) {
   var clazz = declare(LayerInfoForDefault, {
 
 
-    constructor: function(operLayer, map) {
+    constructor: function( operLayer, map ) {
       this.layerObject = operLayer.layerObject;
       /*jshint unused: false*/
     },
@@ -33,73 +34,70 @@ define([
     getExtent: function() {
     },
 
-    _resetLayerObjectVisiblity: function() {
-      // do not do anything.
-    },
-
-    _initVisible: function() {
-      var visible = false;
-      this.traversal(function(layerInfo) {
-        var index = array.indexOf(layerInfo.layerObject.visibleLayers, layerInfo.subId);
-        if (index >= 0) {
-          visible = true;
-          return true;
-        }
-      });
-
+    initVisible: function() {
+      var ary = [], index, visible = false;
+      ary = lang.clone(this.originOperLayer.layerObject.visibleLayers);
+      index = array.indexOf(ary, this.originOperLayer.id);
+      if (index >= 0) {
+        visible = true;
+      } else {
+        visible = false;
+      }
       this._visible = visible;
     },
 
-    _setVisible: function(visible) {
-      this._visible = visible ? true : false;
-    },
-
     _setTopLayerVisible: function(visible) {
-      var wms = this.originOperLayer.wms;
-
-      if(visible) {
-        this._visible = true;
+      if(this.originOperLayer.layerObject.visible) {
+        if(visible) {
+          this._show();
+          this._visible = true;
+        } else {
+          this._hide();
+          this._visible = false;
+        }
       } else {
-        this._visible = false;
+        if(visible) {
+          this._hide();
+          this._visible = true;
+        } else {
+          this._hide();
+          this._visible = false;
+        }
       }
 
-      var subLayersVisible = {};
-      this.traversal(function(layerInfo) {
-        if (layerInfo.getSubLayers().length === 0) {
-          subLayersVisible[layerInfo.subId] =
-            layerInfo._isAllSubLayerVisibleOnPath();
+    },
+
+    _show: function() {
+      var ary = [], index;
+      ary = lang.clone(this.originOperLayer.layerObject.visibleLayers);
+      index = array.indexOf(ary, this.id);
+      if(index < 0) {
+        ary.push(this.id);
+        this.originOperLayer.layerObject.setVisibleLayers(ary);
+      }
+    },
+
+    _hide: function() {
+      var ary = [], index;
+      ary = lang.clone(this.originOperLayer.layerObject.visibleLayers);
+      index = array.indexOf(ary, this.id);
+      if (index >= 0) {
+        ary.splice(index, 1);
+      }
+      this.originOperLayer.layerObject.setVisibleLayers(ary);
+    },
+
+    setLayerVisiblefromTopLayer: function() {
+      //click from top collecton
+      if(this.originOperLayer.layerObject.visible) {
+        if(this._visible) {
+          this._show();
         }
-      });
-      wms.layerInfo._setSubLayerVisible(subLayersVisible);
+      } else {
+        this._hide();
+      }
     },
 
-
-    // show: function() {
-    //   var rootLayerInfo = this.getRootLayerInfo();
-    //   var checkedInfo = this._prepareCheckedInfoForShowOrHide(true);
-    //   rootLayerInfo._setSubLayerVisibleByCheckedInfo(checkedInfo);
-    //   rootLayerInfo.show();
-    // },
-
-    // hide: function() {
-    //   var rootLayerInfo = this.getRootLayerInfo();
-    //   var checkedInfo = this._prepareCheckedInfoForShowOrHide(false);
-    //   rootLayerInfo._setSubLayerVisibleByCheckedInfo(checkedInfo);
-    //   rootLayerInfo.hide();
-    // },
-
-    /***************************************************
-     * methods for control layer definition
-     ***************************************************/
-    _getServiceDefinition: function() {
-      var url = this.getUrl();
-      var requestProxy = this._serviceDefinitionBuffer.getRequest(this.subId);
-      return requestProxy.request(url);
-    },
-
-    _serviceDefinitionRequest: function(url) {
-      return this._normalRequest(url, {'SERVICE': 'WMS', 'REQUEST': 'GetCapabilities'}, 'xml');
-    },
     //---------------new section-----------------------------------------
     // operLayer = {
     //    layerObject: layer,
@@ -108,21 +106,6 @@ define([
     //    subLayers: [operLayer, ... ],
     //    wms: {"layerInfo": this, "subId": layerInfo.name, "wmsLayerInfo": layerInfo},
     // };
-
-    obtainNewSubLayers: function() {
-      var newSubLayerInfos = [];
-      var wms = this.originOperLayer.wms;
-      array.forEach(wms.wmsLayerInfo.subLayers, function(wmsLayerInfo){
-        var subLayerInfo;
-        var operLayer = wms.layerInfo._getOperLayerFromWMSLayerInfo(wmsLayerInfo, this);
-        subLayerInfo = this._layerInfoFactory.create(operLayer);
-
-        newSubLayerInfos.push(subLayerInfo);
-        subLayerInfo.init();
-      }, this);
-
-      return newSubLayerInfos;
-    },
 
     drawLegends: function(legendsNode) {
       this._initLegendsNode(legendsNode);
@@ -145,32 +128,17 @@ define([
         domConstruct.empty(legendsNode);
       }
     },
+    //backgroundImage', "url(" + webMap.thumbnailUrl + ")"
+    obtainNewSubLayers: function() {
+      var newSubLayers = [];
+      return newSubLayers;
+    },
 
     getOpacity: function() {
     },
 
     setOpacity: function(opacity) {
       /*jshint unused: false*/
-    },
-
-    /****************
-     * Event
-     ***************/
-    _bindEvent: function() {
-      // because layerObject is WMS layer.
-      // so does not call inherited(arguments),
-      // so does not listen _onVisibilityChanged() for subLayer
-
-      // So far, JS-API does not support event for 'visible-layers-change'
-      // this.layerObject.on('visible-layers-change',
-      //                       lang.hitch(this, this._onVisibleLayersChanged));
-    },
-
-    _onVisibleLayersChanged: function() {
-    },
-
-    getScaleRange: function() {
-      return this.originOperLayer.wms.layerInfo.getScaleRange();
     }
 
   });

@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Página Inicial"
-});
+﻿define(
+   ({
+    _widgetLabel: "Botão da Página Inicial"
+  })
+);

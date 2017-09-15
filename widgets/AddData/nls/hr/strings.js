@@ -1,21 +1,17 @@
 define({
   "_widgetLabel": "Dodaj podatke",
-  "noOptionsConfigured": "Nema konfiguriranih opcija.",
-  "tabs": {
-    "search": "Pretraži",
-    "url": "URL",
-    "file": "Datoteka"
-  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "Sloj nije dostupan.",
+    "online": "ArcGIS Online",
+    "url": "Unesite URL",
     "loadError": "Dodajte podatke, nije moguće učitati:",
     "searchBox": {
       "search": "Pretraži",
       "placeholder": "Pretraži..."
     },
     "bboxOption": {
-      "bbox": "Unutar karte"
+      "bbox": "Unutar područja karte"
     },
     "scopeOptions": {
       "anonymousContent": "Sadržaj",
@@ -94,6 +90,10 @@ define({
     }
   },
   "addFromUrl": {
+    "donw": "Gotovo",
+    "editName": "uredi naziv",
+    "buttonLabel": "URL...",
+    "caption": "Dodajte podatke - Unesite URL",
     "type": "Vrsta",
     "url": "URL",
     "types": {
@@ -106,30 +106,5 @@ define({
       "CSV": "CSV datoteka"
     },
     "samplesHint": "Uzorak URL-ova"
-  },
-  "addFromFile": {
-    "intro": "Možete ispustiti ili pretražiti jednu od sljedećih vrsta datoteka:",
-    "types": {
-      "Shapefile": "Shapefile (.zip, ZIP arhiva koja sadrži sve shapefile datoteke)",
-      "CSV": "CSV datoteka (.csv, s adresom ili geografskom širinom, dužinom koji su odvojeni zarezom, točkom sa zarezom ili karticom)",
-      "GPX": "GPX datoteka (.gpx, format za izmjenu GPS-a)",
-      "GeoJSON": "GeoJSON datoteka (.geo.json ili .geojson)"
-    },
-    "generalizeOn": "Generaliziraj geoobjekte za prikaz na webu",
-    "dropOrBrowse": "Ispusti ili pretraži",
-    "browse": "Pregledaj",
-    "invalidType": "Vrsta datoteke nije podržana.",
-    "addingPattern": "{filename}: dodavanje...",
-    "addFailedPattern": "{filename}: dodavanje nije uspjelo",
-    "featureCountPattern": "{filename}: {count} geoobjek(ti)",
-    "invalidTypePattern": "{filename}: ova vrsta nije podržana",
-    "maxFeaturesAllowedPattern": "Dopušteno je maksimalno {count} geoobjekata",
-    "layerNamePattern": "{filename} - {name}"
-  },
-  "layerList": {
-    "caption": "Slojevi",
-    "noLayersAdded": "Slojevi nisu dodani.",
-    "removeLayer": "Ukloni sloj",
-    "back": "Natrag"
   }
 });

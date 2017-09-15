@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "หน้าหลัก"
-});
+﻿define(
+   ({
+    _widgetLabel: "ปุ่มหน้าหลัก"
+  })
+);

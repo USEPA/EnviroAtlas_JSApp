@@ -1,21 +1,17 @@
 define({
-  "_widgetLabel": "Ajouter des données",
-  "noOptionsConfigured": "Aucune option n'a été configurée.",
-  "tabs": {
-    "search": "Rechercher",
-    "url": "URL",
-    "file": "Fichier"
-  },
+  "_widgetLabel": "Ajouter les données",
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "La couche est inaccessible.",
+    "online": "ArcGIS Online",
+    "url": "Saisir une URL",
     "loadError": "AddData, chargement impossible :",
     "searchBox": {
       "search": "Rechercher",
       "placeholder": "Rechercher..."
     },
     "bboxOption": {
-      "bbox": "Au sein de la carte"
+      "bbox": "Dans la zone de la carte"
     },
     "scopeOptions": {
       "anonymousContent": "Contenu",
@@ -94,6 +90,10 @@ define({
     }
   },
   "addFromUrl": {
+    "donw": "Terminé",
+    "editName": "mettre à jour le nom",
+    "buttonLabel": "URL...",
+    "caption": "Ajouter des données - Saisir une URL",
     "type": "Type",
     "url": "URL",
     "types": {
@@ -106,30 +106,5 @@ define({
       "CSV": "Fichier CSV"
     },
     "samplesHint": "URL(s) d'exemple"
-  },
-  "addFromFile": {
-    "intro": "Vous pouvez déplacer ou recherchez l'un des types de fichiers suivants :",
-    "types": {
-      "Shapefile": "Un fichier de formes (.zip, archive ZIP contenant tous les fichiers de formes)",
-      "CSV": "Un fichier CSV (.csv, avec adresse ou latitude, longitude et valeurs séparées par des virgules, des points-virgules ou des tabulations)",
-      "GPX": "Un fichier GPX (.gpx, GPS Exchange Format)",
-      "GeoJSON": "Un fichier GeoJSON (.geo.json ou .geojson)"
-    },
-    "generalizeOn": "Généraliser les entités pour l’affichage Web",
-    "dropOrBrowse": "Déplacer ou rechercher",
-    "browse": "Parcourir",
-    "invalidType": "Ce type de fichier n'est pas pris en charge.",
-    "addingPattern": "{filename} : en cours d'ajout...",
-    "addFailedPattern": "{filename} : échec d'ajout",
-    "featureCountPattern": "{filename} : {count} entité(s)",
-    "invalidTypePattern": "{filename} : ce type n'est pas pris en charge",
-    "maxFeaturesAllowedPattern": "Un maximum de {count} entités est autorisé",
-    "layerNamePattern": "{filename} - {name}"
-  },
-  "layerList": {
-    "caption": "Couches",
-    "noLayersAdded": "Aucune couche n'a été ajoutée.",
-    "removeLayer": "Supprimer une couche",
-    "back": "Précédent"
   }
 });

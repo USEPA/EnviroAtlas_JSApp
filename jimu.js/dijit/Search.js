@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -52,18 +52,13 @@ function(declare, html, string, _WidgetBase, _TemplatedMixin) {
       }
     },
 
-    getValue: function(){
-      return string.trim(this.inputSearch.value);
-    },
-
     doSearch: function(){
       if(this.onSearch){
-        this.onSearch(this.getValue());
+        this.onSearch(string.trim(this.inputSearch.value));
       }
     },
 
     _onKeyDown: function(evt){
-      this.doChange();
       var keyNum = evt.keyCode !== undefined ? evt.keyCode : evt.which;
       if (keyNum === 13) {
         this.doSearch();
@@ -79,12 +74,6 @@ function(declare, html, string, _WidgetBase, _TemplatedMixin) {
 
     _onBtnClick: function(){
       this.doSearch();
-    },
-
-    doChange: function(){
-      if(this.onChange){
-        this.onChange(this.getValue());
-      }
     }
   });
 });

@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "圖例"
-});
+﻿define(
+   ({
+    _widgetLabel: "圖例"
+  })
+);

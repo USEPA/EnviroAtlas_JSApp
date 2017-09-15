@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Cursore zoom"
-});
+﻿define(
+   ({
+    _widgetLabel: "Cursore zoom"
+  })
+);

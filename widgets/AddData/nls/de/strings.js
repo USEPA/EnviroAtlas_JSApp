@@ -1,38 +1,34 @@
 define({
   "_widgetLabel": "Daten hinzufügen",
-  "noOptionsConfigured": "Es wurden keine Optionen konfiguriert.",
-  "tabs": {
-    "search": "Suchen",
-    "url": "URL",
-    "file": "Datei"
-  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "Auf den Layer kann nicht zugegriffen werden.",
+    "online": "ArcGIS Online",
+    "url": "Eine URL eingeben",
     "loadError": "AddData kann nicht geladen werden:",
     "searchBox": {
       "search": "Suchen",
       "placeholder": "Suchen..."
     },
     "bboxOption": {
-      "bbox": "In der Karte"
+      "bbox": "Innerhalb der Kartenausdehnung"
     },
     "scopeOptions": {
       "anonymousContent": "Inhalt",
       "myContent": "Eigene Inhalte",
       "myOrganization": "Eigene Organisation",
-      "curated": "Kuratierte Inhalte",
+      "curated": "Kuratiert",
       "ArcGISOnline": "ArcGIS Online"
     },
     "sortOptions": {
-      "prompt": "Sortieren  nach:",
+      "prompt": "Sortieren:",
       "relevance": "Relevanz",
       "title": "Titel",
       "owner": "Besitzer",
       "rating": "Bewertung",
       "views": "Aufrufe",
       "date": "Datum",
-      "switchOrder": "Umkehren"
+      "switchOrder": "Wechseln"
     },
     "typeOptions": {
       "prompt": "Typ",
@@ -76,7 +72,7 @@ define({
         "addFailed": "Fehler beim Hinzufügen",
         "unsupported": "Nicht unterstützt"
       },
-      "typeByOwnerPattern": "{type} von {owner}",
+      "typeByOwnerPattern": "{type} nach {owner}",
       "dateFormat": "d. MMMM yyyy",
       "datePattern": "{date}",
       "ratingsCommentsViewsPattern": "{ratings} {ratingsIcon} {comments} {commentsIcon} {views} {viewsIcon}",
@@ -94,42 +90,21 @@ define({
     }
   },
   "addFromUrl": {
+    "donw": "Fertig",
+    "editName": "Name bearbeiten",
+    "buttonLabel": "URL...",
+    "caption": "Daten hinzufügen – Eine URL eingeben",
     "type": "Typ",
     "url": "URL",
     "types": {
-      "ArcGIS": "ArcGIS-Server-Web-Service",
-      "WMS": "WMS-OGC-Web-Service",
-      "WMTS": "WMTS-OGC-Web-Service",
-      "WFS": "WFS-OGC-Web-Service",
-      "KML": "KML-Datei",
-      "GeoRSS": "GeoRSS-Datei",
-      "CSV": "CSV-Datei"
+      "ArcGIS": "Einen ArcGIS-Server-Web-Service",
+      "WMS": "Einen WMS-OGC-Web-Service",
+      "WMTS": "Einen WMTS-OGC-Web-Service",
+      "WFS": "Einen WFS-OGC-Web-Service",
+      "KML": "Eine KML-Datei",
+      "GeoRSS": "Eine GeoRSS-Datei",
+      "CSV": "Eine CSV-Datei"
     },
     "samplesHint": "Beispiel-URL(s)"
-  },
-  "addFromFile": {
-    "intro": "Sie können nach einem der folgenden Dateitypen suchen oder diesen durch Drag & Drop hinzufügen:",
-    "types": {
-      "Shapefile": "Ein Shapefile (ZIP-Archiv mit allen Shapefile-Dateien)",
-      "CSV": "Eine CSV-Datei (CSV-Datei mit Adressen oder Breitengrad, Längengrad und durch Komma, Semikolon oder Tabulatoren getrennt)",
-      "GPX": "Eine GPX-Datei (GPX-Datei, GPS Exchange Format)",
-      "GeoJSON": "Eine GeoJSON-Datei (Dateierweiterung GEO.JSON oder GEOJSON)"
-    },
-    "generalizeOn": "Features für Webanzeige generalisieren",
-    "dropOrBrowse": "DRAG & DROP ODER SUCHEN",
-    "browse": "Durchsuchen",
-    "invalidType": "Dieser Dateityp wird nicht unterstützt.",
-    "addingPattern": "{filename}: wird hinzugefügt...",
-    "addFailedPattern": "{filename}: Fehler beim Hinzufügen",
-    "featureCountPattern": "{filename}: {count} Feature(s)",
-    "invalidTypePattern": "{filename}: dieser Typ wird nicht unterstützt",
-    "maxFeaturesAllowedPattern": "Maximalwert von {count} Features zulässig",
-    "layerNamePattern": "{filename} – {name}"
-  },
-  "layerList": {
-    "caption": "Layer",
-    "noLayersAdded": "Es wurden keine Layer hinzugefügt.",
-    "removeLayer": "Layer entfernen",
-    "back": "Zurück"
   }
 });

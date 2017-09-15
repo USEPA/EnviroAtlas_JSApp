@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,22 +32,19 @@ define([
   'jimu/symbolUtils',
   'esri/symbols/jsonUtils',
   'esri/symbols/SimpleMarkerSymbol',
-  'esri/symbols/PictureMarkerSymbol',
   'esri/symbols/SimpleLineSymbol',
   'esri/symbols/SimpleFillSymbol',
   'esri/symbols/TextSymbol',
   'esri/symbols/Font',
-  'jimu/dijit/ImageChooser',
-  'jimu/dijit/ColorPicker',
-  'jimu/dijit/_Transparency',
   'dijit/form/Select',
-  'dijit/form/NumberSpinner'
+  'dijit/form/NumberSpinner',
+  'jimu/dijit/ColorPicker',
+  'jimu/dijit/_Transparency'
 ],
 function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
   template, Evented, lang, html, array, on, has, query, xhr,
-  jimuUtils, jimuSymUtils, esriSymJsonUtils, SimpleMarkerSymbol, PictureMarkerSymbol,
-  SimpleLineSymbol, SimpleFillSymbol, TextSymbol, Font, ImageChooser) {
-
+  jimuUtils, jimuSymUtils, esriSymJsonUtils, SimpleMarkerSymbol,
+  SimpleLineSymbol, SimpleFillSymbol, TextSymbol, Font) {
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
     templateString:template,
     baseClass: 'jimu-symbol-chooser',
@@ -58,7 +55,6 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     _fillEventBinded: false,
     _textEventBinded: false,
     _invokeSymbolChangeEvent: true,
-    _customPictureMarkerSymbol: null,
 
     //options:
     //you must set symbol or type
@@ -81,7 +77,6 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
 
     postCreate:function(){
       this.inherited(arguments);
-      this._initImageChooser();
       this.own(on(document.body, 'click', lang.hitch(this, this._onBodyClicked)));
       this._isIE8 = has('ie') === 8;
       if(this._isIE8){
@@ -178,17 +173,6 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       return result;
     },
 
-    hideColorPicker: function () {
-      var colorPickers = ["pointColor", "pointOutlineColor", "lineColor",
-        "fillColor", "fillOutlineColor", "textColor"];
-      for (var i = 0, len = colorPickers.length; i < len; i++) {
-        var colorPickerName = colorPickers[i];
-        if (this[colorPickerName]) {
-          this[colorPickerName].hideTooltipDialog();
-        }
-      }
-    },
-
     _onBodyClicked: function(event){
       var target = event.target || event.srcElement;
       this._tryHideDropDownOfSelectDijit(target, this.pointSymClassSelect);
@@ -225,8 +209,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       return jimuUtils.getAncestorDom(dom, checkFunc, maxLoop);
     },
 
-    _getAbsoluteUrl:function(moduleName){
-      return window.location.protocol + "//" + window.location.host +  require.toUrl(moduleName);
+    _getAbsoluteUrl:function(module){
+      return window.location.protocol + "//" + window.location.host +  require.toUrl(module);
     },
 
     _cloneSymbol:function(symbol){
@@ -345,10 +329,12 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       }
 
       if(this.isPictureMarkerSymbol(this.symbol)){
-        this._showBuildInPictureMarkerSymSettings();
-      }else if(this.isSimpleMarkerSymbol(this.symbol)){
+        this._showPictureMarkerSymSettings();
+      }
+      else if(this.isSimpleMarkerSymbol(this.symbol)){
         this._showSimpleMarkerSymSettings();
-      }else{
+      }
+      else{
         var args = {
           "style": "esriSMSCircle",
           "color": [0, 0, 128, 128],
@@ -368,8 +354,16 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     },
 
     _bindPointEvents:function(){
-      this.own(on(this.pointIconTables, '.symbol-div-item:click', lang.hitch(this, this._onPointSymIconItemClick)));
-      this.own(on(this.pointSymClassSelect, 'change', lang.hitch(this, this._onPointSymClassSelectChange)));
+      this.own(
+        on(this.pointIconTables,
+          '.symbol-div-item:click',
+          lang.hitch(this, this._onPointSymIconItemClick))
+      );
+      this.own(
+        on(this.pointSymClassSelect,
+          'Change',
+          lang.hitch(this, this._onPointSymClassSelectChange))
+      );
       this.own(on(this.pointSize, 'change', lang.hitch(this, this._onPointSymbolChange)));
       this.own(on(this.pointColor, 'change', lang.hitch(this, this._onPointSymbolChange)));
       this.own(on(this.pointAlpha, 'change', lang.hitch(this, this._onPointSymbolChange)));
@@ -400,7 +394,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
           this.pointOutlineColor.setColor(outlineSymbol.color);
           this.pointOutlineWidth.set('value', parseFloat(outlineSymbol.width.toFixed(0)));
         }
-      }else if(this.isPictureMarkerSymbol(symbol)){
+      }
+      else if(this.isPictureMarkerSymbol(symbol)){
         this.pointSize.set('value', symbol.width);
       }
       this._invokeSymbolChangeEvent = true;
@@ -414,39 +409,19 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       return symbol && symbol.declaredClass === 'esri.symbol.PictureMarkerSymbol';
     },
 
-    _isCustomImageOptionSelected: function(){
-      return this.pointSymClassSelect.get('value') === 'custom';
-    },
-
     _onPointSymClassSelectChange:function(){
-      if(this._isCustomImageOptionSelected()){
-        this._showCustomPictureMarkerSymSettings();
-        if(this._customPictureMarkerSymbol){
-          this.symbol = this._customPictureMarkerSymbol;
-          this._onPointSymbolChange();
-        }
-      }else{
-        this._showSimpleMarkerSymSettings();
-        this._showSelectedPointSymIconTable();
-        var fileName = this.pointSymClassSelect.get('value');
-        var defName = 'def' + fileName;
-        var def = this.pointSymClassSelect[defName];
-        if (!def) {
-          this._requestPointSymJson(fileName);
-        }
-        var option = this.pointSymClassSelect.getOptions(fileName);
-        var label = option ? option.label : "";
-        this.pointSymClassSelect.domNode.title = label;
+      this._showSelectedPointSymIconTable();
+      var fileName = this.pointSymClassSelect.get('value');
+      var defName = 'def' + fileName;
+      var def = this.pointSymClassSelect[defName];
+      if (!def) {
+        this._requestPointSymJson(fileName);
       }
     },
 
-    _hideAllPointSymIconTable: function(){
-      query('.marker-icon-table', this.pointIconTables).style('display', 'none');
-    },
-
     _showSelectedPointSymIconTable:function(){
-      this._hideAllPointSymIconTable();
       var fileName = this.pointSymClassSelect.get('value');
+      query('.marker-icon-table', this.pointIconTables).style('display', 'none');
       var tables = query('.marker-icon-table-' + fileName, this.pointIconTables);
       if (tables.length > 0) {
         tables.style('display', 'table');
@@ -466,9 +441,6 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       });
       this.pointSymClassSelect[defName] = def;
       def.then(lang.hitch(this, function(jsonSyms) {
-        if(!this.domNode){
-          return;
-        }
         var table = this._createSymbolIconTable(fileName, jsonSyms, 'point');
         html.place(table, this.pointIconTables);
         this._showSelectedPointSymIconTable();
@@ -501,8 +473,9 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       var oldColorTrDisplay = html.getStyle(this.pointColorTr, 'display');
       if(this.isSimpleMarkerSymbol(this.symbol)){
         this._showSimpleMarkerSymSettings();
-      }else{
-        this._showBuildInPictureMarkerSymSettings();
+      }
+      else{
+        this._showPictureMarkerSymSettings();
       }
       this._onPointSymbolChange();
       var newColorTrDisplay = html.getStyle(this.pointColorTr, 'display');
@@ -512,30 +485,17 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     },
 
     _showSimpleMarkerSymSettings:function(){
-      html.addClass(this.pointCustomImageTr, 'hidden');
-      html.removeClass(this.pointIconTablesTr, 'hidden');
-      html.removeClass(this.pointColorTr, 'hidden');
-      html.removeClass(this.pointOpacityTr, 'hidden');
-      html.removeClass(this.pointOutlineColorTr, 'hidden');
-      html.removeClass(this.pointOulineWidthTr, 'hidden');
+      html.setStyle(this.pointColorTr, 'display', '');
+      html.setStyle(this.pointOpacityTr, 'display', '');
+      html.setStyle(this.pointOutlineColorTr, 'display', '');
+      html.setStyle(this.pointOulineWidthTr, 'display', '');
     },
 
-    _showBuildInPictureMarkerSymSettings:function(){
-      html.addClass(this.pointCustomImageTr, 'hidden');
-      html.removeClass(this.pointIconTablesTr, 'hidden');
-      html.addClass(this.pointColorTr, 'hidden');
-      html.addClass(this.pointOpacityTr, 'hidden');
-      html.addClass(this.pointOutlineColorTr, 'hidden');
-      html.addClass(this.pointOulineWidthTr, 'hidden');
-    },
-
-    _showCustomPictureMarkerSymSettings: function(){
-      html.removeClass(this.pointCustomImageTr, 'hidden');
-      html.addClass(this.pointIconTablesTr, 'hidden');
-      html.addClass(this.pointColorTr, 'hidden');
-      html.addClass(this.pointOpacityTr, 'hidden');
-      html.addClass(this.pointOutlineColorTr, 'hidden');
-      html.addClass(this.pointOulineWidthTr, 'hidden');
+    _showPictureMarkerSymSettings:function(){
+      html.setStyle(this.pointColorTr, 'display', 'none');
+      html.setStyle(this.pointOpacityTr, 'display', 'none');
+      html.setStyle(this.pointOutlineColorTr, 'display', 'none');
+      html.setStyle(this.pointOulineWidthTr, 'display', 'none');
     },
 
     _getPointSymbolBySetting:function(){
@@ -563,41 +523,6 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       }
       this._updatePreview(this.pointSymPreview);
       return this.symbol;
-    },
-
-    _initImageChooser: function(){
-      this.imageChooser = new ImageChooser({
-        cropImage: false,
-        showSelfImg: false,
-        goldenWidth: 16,
-        goldenHeight: 16,
-        format: ['image/gif','image/png','image/jpeg'],
-        label: this.nls.chooseFile
-      });
-      html.addClass(this.imageChooser.domNode, 'custom-image-chooser');
-      this.own(on(this.imageChooser, 'change', lang.hitch(this, this._onImageChange)));
-      this.imageChooser.placeAt(this.customImageTd, "first");
-    },
-
-    _onImageChange: function(imageData, fileProperty){
-      this.imageNameNode.innerHTML = fileProperty.fileName;
-      imageData = imageData.replace(/^data:image\/.*;base64,/,"");
-      var size = parseFloat(this.pointSize.get('value'));
-      var args = {
-        "type" : "esriPMS",
-        "url" : null,
-        "imageData" : imageData,
-        "contentType" : "image/png",
-        "color" : null,
-        "width" : size,
-        "height" : size,
-        "angle" : 0,
-        "xoffset" : 0,
-        "yoffset" : 0
-      };
-      this.symbol =  new PictureMarkerSymbol(args);
-      this._customPictureMarkerSymbol = this.symbol;
-      this._onPointSymbolChange();
     },
 
     /* line section */
@@ -660,9 +585,6 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         handleAs:'json'
       });
       def.then(lang.hitch(this, function(jsonSyms){
-        if(!this.domNode){
-          return;
-        }
         var table = this._createSymbolIconTable(fileName, jsonSyms, 'line');
         html.place(table, this.lineIconTables);
       }), lang.hitch(this, function(error){
@@ -768,9 +690,6 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         handleAs: 'json'
       });
       def.then(lang.hitch(this, function(jsonSyms) {
-        if(!this.domNode){
-          return;
-        }
         var table = this._createSymbolIconTable(fileName, jsonSyms, 'fill');
         html.place(table, this.fillIconTables);
       }), lang.hitch(this, function(error) {

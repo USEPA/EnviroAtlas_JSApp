@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,8 +26,7 @@ define([
     'dojo/Deferred',
     "dojo/query",
     "jimu/dijit/Popup",
-    "jimu/dijit/Message",
-    "jimu/dijit/CheckBox",
+    'jimu/dijit/Message',
     "jimu/dijit/LoadingShelter",
     "../utils"
   ],
@@ -44,7 +43,6 @@ define([
     query,
     Popup,
     Message,
-    CheckBox,
     LoadingShelter,
     utils
   ) {
@@ -53,9 +51,7 @@ define([
       baseClass: 'jimu-widget-attributetable-setting',
       currentFieldTable: null,
       _allLayerFields: null,
-      // _allLayerHasAttachments: null,
-      //this.config.layerInfos is [configInfo], not [layerInfo]
-      _layerInfos: null,//[layerInfo]
+      _layerInfos: null,
       _tableInfos: null,
       _delayedLayerInfos: null,
       _delayedLayerInfosAfterInit: null,
@@ -67,7 +63,6 @@ define([
           this.config.layerInfos = [];
         }
         this._allLayerFields = [];
-        // this._allLayerHasAttachments = [];
         this._layerInfos = [];
         this._tableInfos = [];
         this._delayedLayerInfos = [];
@@ -102,11 +97,6 @@ define([
           width: '20%',
           actions: ['edit'],
           'class': 'symbol'
-        }, {
-          name: 'showAttachments',
-          title: '',
-          type: 'checkbox',
-          hidden: true
         }];
 
         var args = {
@@ -119,6 +109,7 @@ define([
         html.setStyle(this.displayFieldsTable.domNode, {
           'height': '100%'
         });
+        this.displayFieldsTable.startup();
 
         this.shelter = new LoadingShelter({
           hidden: true
@@ -202,78 +193,61 @@ define([
       },
 
       _getLayerFields: function(rowIndex) {
-        return this._layerInfos[rowIndex]
-        .getLayerObject()
-        .then(lang.hitch(this, function(layer) {
-          var fields = this._allLayerFields[rowIndex];
-          var layerFields = array.map(layer.fields, function(f) {
-            return {
-              name: f.name,
-              alias: f.alias,
-              show: true
-            };
-          });
+        var def = new Deferred();
+        var fields = this._allLayerFields[rowIndex];
+        if (fields) {
+          def.resolve(fields);
+        } else {
+          this._layerInfos[rowIndex].getLayerObject().then(lang.hitch(this, function(layer) {
+            if (layer.fields) {
+              def.resolve(layer.fields);
+            } else {
+              def.reject();
+            }
+          }), lang.hitch(this, function(err) {
+            def.reject(err);
+          }));
+        }
 
-          utils.merge(layerFields, fields, 'name', function(d, s) {
-            lang.mixin(d, s);
-          });
-          layerFields = utils.syncOrderWith(layerFields, fields, 'name');
-          return layerFields;
-        }));
+        return def;
       },
 
       openFieldsDialog: function(tr, fields, idx) {
         /*jshint unused:false*/
-        var defaultHasAttachment = false;
-        var layerInfo = this._layerInfos[idx];
-        var layerObject = layerInfo && layerInfo.layerObject;
-        if(layerObject){
-          defaultHasAttachment = layerObject.hasAttachments && layerObject.objectIdField;
-        }
-
-        var content = html.create("div");
         var table = this._createFieldsTable(fields, idx);
-        html.place(table.domNode, content);
-
-        var cbx = null;
-        if(defaultHasAttachment){
-          cbx = new CheckBox({
-            label: this.nls.showAttachments,
-            style: 'margin-top:10px;'
-          });
-          var rowData = this.displayFieldsTable.getRowData(tr);
-          cbx.setValue(rowData.showAttachments);
-          //cbx.setValue(this._allLayerHasAttachments[idx]);
-          cbx.placeAt(content);
-        }
-
         this.currentFieldTable = table;
-        var maxHeight = 600;
-        if(cbx){
-          maxHeight = 640;
-        }
+        this.own(on(table, 'row-click', lang.hitch(this, function(tr) {
+          var fields = table.getData();
+          var atLeastOne = array.some(fields, lang.hitch(this, function(field) {
+            return field.show;
+          }));
+          if (!atLeastOne) {
+            new Message({
+              message: this.nls.fieldCheckWarning
+            });
+            var rowData = table.getRowData(tr);
+            if (rowData) {
+              rowData.show = true;
+              table.editRow(tr, rowData);
+            }
+          }
+        })));
 
         var fieldsPopup = new Popup({
           titleLabel: this.nls.configureLayerFields,
           width: 640,
-          maxHeight: maxHeight,
+          maxHeight: 600,
           autoHeight: true,
-          content: content,
+          content: table,
           buttons: [{
             label: this.nls.ok,
             onClick: lang.hitch(this, function() {
               this._allLayerFields[idx] = table.getData();
-              var value = cbx ? cbx.getValue() : false;
-              this.displayFieldsTable.editRow(tr, {
-                showAttachments: value
-              });
-
               fieldsPopup.close();
               fieldsPopup = null;
             })
           }, {
             label: this.nls.cancel,
-            classNames: ['jimu-btn-vacation'],
             onClick: lang.hitch(this, function() {
               fieldsPopup.close();
               fieldsPopup = null;
@@ -283,33 +257,14 @@ define([
             fieldsPopup = null;
           }
         });
-
-        table.startup();
       },
 
       _createFieldsTable: function(lFields) {
-        var fieldsTable = null;
         var fields = [{
           name: 'show',
           title: this.nls.fieldVisibility,
           type: 'checkbox',
-          'class': 'show',
-          onChange: lang.hitch(this, function(tr) {
-            var fields = fieldsTable.getData();
-            var atLeastOne = array.some(fields, lang.hitch(this, function(field) {
-              return field.show;
-            }));
-            if (!atLeastOne) {
-              new Message({
-                message: this.nls.fieldCheckWarning
-              });
-              var rowData = fieldsTable.getRowData(tr);
-              if (rowData) {
-                rowData.show = true;
-                fieldsTable.editRow(tr, rowData);
-              }
-            }
-          })
+          'class': 'show'
         }, {
           name: 'name',
           title: this.nls.fieldName,
@@ -336,7 +291,7 @@ define([
             'maxHeight': '300px'
           }
         };
-        fieldsTable = new Table(args);
+        var fieldsTable = new Table(args);
 
         for (var i = 0; i < lFields.length; i++) {
           if (lFields[i].show === undefined) {
@@ -417,8 +372,7 @@ define([
       _processTableData: function() {
         var def = new Deferred();
 
-        utils.readConfigLayerInfosFromMap(this.map, true, true)
-        .then(lang.hitch(this, function(layerInfos) {
+        utils.readConfigLayerInfosFromMap(this.map).then(lang.hitch(this, function(layerInfos) {
           this._layerInfos = layerInfos;
           this._processDelayedLayerInfos();
 
@@ -427,43 +381,20 @@ define([
               this._tableInfos = tableInfos;
 
               if (this.config && this.config.layerInfos && this.config.layerInfos.length > 0) {
-                // user has configured AT config before.
-                // settting page should sync with webmap
-
-                var configInfosFromMap = utils.getConfigInfosFromLayerInfos(this._layerInfos);
-                // we want to use configInfosFromMap as the new this.config.layerInfos
-                // but we need to use this.config.layerInfos to mixin into configInfosFromMap
-                utils.merge(configInfosFromMap, this.config.layerInfos, 'id',
-                  lang.hitch(this, function(mci, cli) {
-                    //mci short for map config layerInfo: layerInfo
-                    //cli short for config layer info: layerInfo
-                    // mci.name = cli.name;
-                    mci.show = cli.show;
-                    mci.showAttachments = cli.showAttachments;
-                    mci.layer.url = cli.layer.url;
-                    if (lang.getObject('layer.fields.length', false, mci) &&
-                      lang.getObject('layer.fields.length', false, cli)) {
-                      utils.merge(mci.layer.fields, cli.layer.fields, 'name', function(d, s) {
-                        lang.mixin(d, s);
-                      });
-                      mci.layer.fields = utils.syncOrderWith(
-                        mci.layer.fields, cli.layer.fields, 'name');
-                    } else {
-                      mci.layer.fields = cli.layer.fields;
-                    }
+                var _cLayerInfos = array.filter( // remove layerInfo not in webmap.
+                  this.config.layerInfos,
+                  lang.hitch(this, function(layerInfo) {
+                    return this._getLayerInfoById(layerInfo.id);
                   }));
-
-                this.config.layerInfos = configInfosFromMap;
+                this.config.layerInfos = _cLayerInfos;
 
                 this._unSpportQueryCampsite.fromConfig = true;
                 this._unSpportQueryCampsite.layerNames = this._getUnsupportQueryLayerNames(
                   this.config.layerInfos
                 );
 
-                def.resolve(configInfosFromMap);
+                def.resolve(_cLayerInfos);
               } else {
-                // user has not configured AT config before.
-                // this.config.layerInfos is null.
                 this._unSpportQueryCampsite.fromConfig = false;
                 this._unSpportQueryCampsite.layerNames = this._getUnsupportQueryLayerNames(
                   this._layerInfos
@@ -497,13 +428,13 @@ define([
       _init: function(layerInfos) {
         var unSupportQueryLayerNames = [];
         for (var i = 0; i < layerInfos.length; i++) {
-          var show = layerInfos[i].show && this._getSupportTableInfoById(layerInfos[i].id).isSupportQuery;
+          var show = layerInfos[i].show &&
+            this._getSupportTableInfoById(layerInfos[i].id).isSupportQuery;
           this.displayFieldsTable.addRow({
             label: layerInfos[i].name || layerInfos[i].title,
             url: layerInfos[i].layer.url,
             index: "" + i,
-            show: show,
-            showAttachments: !!layerInfos[i].showAttachments
+            show: show
           });
 
           this._allLayerFields.push(layerInfos[i].layer.fields);
@@ -549,12 +480,6 @@ define([
           this.expand.status = false;
           html.addClass(this.expand.domNode, 'disable-checkbox');
         }
-
-        if (this.config.filterByMapExtent) {
-          this.filterByMapExtent.check();
-        } else {
-          this.filterByMapExtent.uncheck();
-        }
       },
 
       _canUseOpenAtStart: function() {
@@ -593,7 +518,6 @@ define([
             json.layer.url = data[idx].url;
             json.layer.fields = this._allLayerFields[idx];
             json.show = data[idx].show;
-            json.showAttachments = data[idx].showAttachments;
             table.push(json);
           }));
         } else {
@@ -605,7 +529,6 @@ define([
             json.layer.url = data[i].url;
             json.layer.fields = this._allLayerFields[i];
             json.show = data[i].show;
-            json.showAttachments = data[i].showAttachments;
             table.push(json);
           }
         }
@@ -613,7 +536,6 @@ define([
 
         this.config.layerInfos = table;
         this.config.hideExportButton = !this.exportcsv.getValue();
-        this.config.filterByMapExtent = this.filterByMapExtent.getValue();
 
         if (!this._canUseOpenAtStart()) {
           this.config.initiallyExpand = this.expand.getValue();

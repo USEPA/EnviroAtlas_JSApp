@@ -40,12 +40,11 @@ define(["dojo/_base/declare",
       show: function() {
         var self = this;
         var content = new AddFromUrlPane({
-          parentDialog: this,
-          wabWidget: this.wabWidget
+          parentDialog: this
         });
         var dialog = this.dialog = new Dialog({
           "class": this.wabWidget.baseClass + "-dialog",
-          title: i18n.tabs.url,
+          title: i18n.addFromUrl.caption,
           content: content
         });
 

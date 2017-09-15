@@ -28,7 +28,6 @@ define(["dojo/_base/declare",
 
       i18n: i18n,
       templateString: template,
-      curatedFilter: null,
 
       postCreate: function() {
         this.inherited(arguments);
@@ -50,45 +49,62 @@ define(["dojo/_base/declare",
 
       initOptions: function() {
         var context = this.searchPane.searchContext;
+        var isPortal = context.portal.isPortal;
         var hasUsername = (typeof context.username === "string" && context.username.length > 0);
         //var hasOrgId = (typeof context.orgId === "string" && context.orgId.length > 0);
-        var options = this.getConfig().scopeOptions;
-        this.curatedFilter = options.Curated.filter;
-        var activeNode = null;
+        var allowMyContent = hasUsername;
+        var allowMyOrganization = true;
+        var allowArcGISOnline = context.allowArcGISOnline;
 
+        var options = this.getConfig().scopeOptions;
         var initOption = function(name, node) {
           var opt = options[name];
-          if (opt && opt.allow) {
-            if (typeof opt.label === "string" && lang.trim(opt.label). length > 0) {
-              util.setNodeText(node,lang.trim(opt.label));
-            } else {
-              if (!hasUsername && name === "MyOrganization") {
-                // "My Organization as a label doesn't make sense
-                util.setNodeText(node,i18n.search.scopeOptions.anonymousContent);
+          if (opt) {
+            if (typeof opt.allow === "boolean" && !opt.allow) {
+              node.style.display = "none";
+              if (name === "MyContent") {
+                allowMyContent = false;
+              } else if (name === "MyOrganization") {
+                allowMyOrganization = false;
+              } else if (name === "ArcGISOnline") {
+                allowArcGISOnline = false;
               }
             }
-            if (options.defaultScope === name) {
-              activeNode = node;
+            if (typeof opt.label === "string") {
+              var s = lang.trim(opt.label);
+              if (s.length > 0) {
+                util.setNodeText(node, s);
+              }
             }
-          } else {
-            node.style.display = "none";
           }
         };
         initOption("MyContent", this.MyContentToggle);
         initOption("MyOrganization", this.MyOrganizationToggle);
-        initOption("Curated", this.CuratedToggle);
         initOption("ArcGISOnline", this.ArcGISOnlineToggle);
 
-        if (!activeNode) {
-          if (options.MyOrganization.allow) {
-            activeNode = this.MyOrganizationToggle;
-          } else if (options.ArcGISOnline.allow) {
-            activeNode = this.ArcGISOnlineToggle;
-          } else if (options.Curated.allow) {
-            activeNode = this.CuratedToggle;
-          } else if (options.MyContent.allow) {
-            activeNode = this.MyContentToggle;
+        if (!hasUsername && !isPortal) {
+          // MyOrganization and ArcGISOnline are equivalent, - PUBLIC
+          if (allowArcGISOnline) {
+            allowMyOrganization = false;
           }
+        }
+        if (!allowMyContent) {
+          this.MyContentToggle.style.display = "none";
+        }
+        if (!allowMyOrganization) {
+          this.MyOrganizationToggle.style.display = "none";
+        }
+        if (!allowArcGISOnline) {
+          this.ArcGISOnlineToggle.style.display = "none";
+        }
+
+        var activeNode = null;
+        if (allowMyOrganization) {
+          activeNode = this.MyOrganizationToggle;
+        } else if (allowArcGISOnline) {
+          activeNode = this.ArcGISOnlineToggle;
+        } else if (allowMyContent) {
+          activeNode = this.MyContentToggle;
         }
         if (activeNode) {
           domClass.add(activeNode, "active");
@@ -140,9 +156,8 @@ define(["dojo/_base/declare",
         }
         //console.warn("scope",scope);
 
-        var q = null;
-        var curatedFilter = this.curatedFilter;
         var context = this.searchPane.searchContext;
+        var q = null;
         var username = context.username;
         var orgId = context.orgId;
         var considerOrg = true;
@@ -160,10 +175,12 @@ define(["dojo/_base/declare",
             q = "(orgid:" + util.escapeForLucene(orgId) + ")";
           }
 
-        } else if (scope === "Curated") {
-          if (typeof curatedFilter === "string" && curatedFilter.length > 0) {
-            q = curatedFilter;
-          }
+          /*
+          } else if (scope === "Curated") {
+            if (typeof curatedFilter === "string" && curatedFilter.length > 0) {
+              q = curatedFilter;
+            }
+          */
 
         } else if (scope === "ArcGISOnline") {
           if (context.allowArcGISOnline) {

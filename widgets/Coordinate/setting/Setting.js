@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,7 +34,6 @@ define([
     'jimu/portalUtils',
     './Edit',
     "jimu/SpatialReference/srUtils",
-    'jimu/dijit/RadioBtn',
     'dojo/NodeList-dom',
     'dijit/form/NumberSpinner',
     'dijit/form/NumberTextBox'
@@ -93,23 +92,18 @@ define([
         this.inherited(arguments);
 
         var fields = [{
-          name: 'id',
-          title: this.nls.id,
-          type: 'text',
-          unique: true,
-          hidden: true,
-          editable: false
-        }, {
           name: 'wkid',
           title: this.nls.wkid,
           type: 'text',
           'class': "wkid",
+          unique: true,
           hidden: true,
           editable: false
         }, {
           name: 'label',
           title: this.nls.label,
           type: 'text',
+          unique: true,
           editable: false
         }, {
           name: 'outputUnit',
@@ -162,8 +156,6 @@ define([
         this.own(on(this.outputCoordinateTable, 'actions-edit', lang.hitch(this, 'onEditClick')));
         this.setConfig(this.config);
 
-        this._initOrderLonLatRadioBtns();
-
         this._getGeometryServiceVersion();
       },
 
@@ -179,7 +171,6 @@ define([
             for (var i = 0; i < len; i++) {
               var wkid = parseInt(config.spatialReferences[i].wkid, 10);
               json.push({
-                id: i,
                 wkid: utils.standardizeWkid(wkid),
                 label: config.spatialReferences[i].label,
                 outputUnit: config.spatialReferences[i].outputUnit,
@@ -214,11 +205,10 @@ define([
           var services = gsUrl.slice(0, gsUrl.indexOf('/Geometry/'));
           request({
             url: services,
-            handleAs: 'json',
-            callbackParamName: "callback",
             content: {
               f: 'json'
-            }
+            },
+            handleAs: 'json'
           }).then(lang.hitch(this, function(response) {
             console.log(response);
             if (response && response.currentVersion) {
@@ -271,13 +261,6 @@ define([
               _options.unitRate = 1;
               item.outputUnit = "DECIMAL_DEGREES";
             }
-
-            //for hack DEGREES_DECIMAL_MINUTES
-            if(item.outputUnit === "DEGREES_DECIMAL_MINUTES"){
-              _options.isGeographicUnit = true;
-              _options.unitRate = 1;
-            }
-
             item.options = dojoJSON.stringify(_options);
             this.outputCoordinateTable.addRow(item);
           }
@@ -330,7 +313,6 @@ define([
             onClick: lang.hitch(this, '_onEditOk')
           }, {
             label: this.nls.cancel,
-            classNames: ['jimu-btn-vacation'],
             key: keys.ESCAPE
           }],
           onClose: lang.hitch(this, '_onEditClose')
@@ -379,7 +361,6 @@ define([
         var json = [];
         var len = data.length;
         for (var i = 0; i < len; i++) {
-          delete data[i].id;
           data[i].options = dojoJSON.parse(data[i].options);
           json.push(data[i]);
         }
@@ -389,27 +370,6 @@ define([
         this.config.addSeparator = this.separator.getValue();
 
         return this.config;
-      },
-      _initOrderLonLatRadioBtns: function() {
-        this.own(on(this.lonLat, 'click', lang.hitch(this, function() {
-          this.config.displayOrderLonLat = true;
-        })));
-        this.own(on(this.latLon, 'click', lang.hitch(this, function() {
-          this.config.displayOrderLonLat = false;
-        })));
-        if (this.config.displayOrderLonLat) {
-          this._selectRadioBtnItem("lonLat");
-          this.config.displayOrderLonLat = true;
-        } else {
-          this._selectRadioBtnItem("latLon");
-          this.config.displayOrderLonLat = false;
-        }
-      },
-      _selectRadioBtnItem: function(name) {
-        var _radio = this[name];
-        if (_radio && _radio.check) {
-          _radio.check(true);
-        }
       }
     });
   });

@@ -1,21 +1,17 @@
 define({
   "_widgetLabel": "Añadir datos",
-  "noOptionsConfigured": "No se ha configurado ninguna opción.",
-  "tabs": {
-    "search": "Buscar",
-    "url": "Dirección URL",
-    "file": "Archivo"
-  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "No se puede acceder a la capa.",
+    "online": "ArcGIS Online",
+    "url": "Introduzca una dirección URL",
     "loadError": "AddData, no se puede cargar:",
     "searchBox": {
       "search": "Buscar",
       "placeholder": "Buscar..."
     },
     "bboxOption": {
-      "bbox": "En el mapa"
+      "bbox": "Dentro del área del mapa"
     },
     "scopeOptions": {
       "anonymousContent": "Contenido",
@@ -94,6 +90,10 @@ define({
     }
   },
   "addFromUrl": {
+    "donw": "Hecho",
+    "editName": "Editar nombre",
+    "buttonLabel": "Dirección URL...",
+    "caption": "Agregar datos: introducir una dirección URL",
     "type": "Tipo",
     "url": "Dirección URL",
     "types": {
@@ -106,30 +106,5 @@ define({
       "CSV": "Un archivo CSV"
     },
     "samplesHint": "Direcciones URL de muestra"
-  },
-  "addFromFile": {
-    "intro": "Puede colocar o buscar uno de los tipos de archivo siguientes:",
-    "types": {
-      "Shapefile": "Un Shapefile (.zip, archivo ZIP que contiene todos los archivos shapefile)",
-      "CSV": "Un archivo CSV (.csv, con dirección o latitud, longitud y delimitados por comas, puntos o tabuladores)",
-      "GPX": "Un archivo (.gpx, formato de intercambio GPS)",
-      "GeoJSON": "Un archivo GeoJSON (.geo.json o .geojson)"
-    },
-    "generalizeOn": "Generalizar entidades para visualización web",
-    "dropOrBrowse": "Colocar o buscar",
-    "browse": "Examinar",
-    "invalidType": "Este tipo de archivo no es compatible.",
-    "addingPattern": "{filename}: agregando...",
-    "addFailedPattern": "{filename}: error al agregar",
-    "featureCountPattern": "{filename}: {count} entidad(es)",
-    "invalidTypePattern": "{filename}: este tipo no es compatible",
-    "maxFeaturesAllowedPattern": "Se permite un máximo de {count} entidades",
-    "layerNamePattern": "{filename} - {name}"
-  },
-  "layerList": {
-    "caption": "Capas",
-    "noLayersAdded": "No se ha agregado ninguna capa.",
-    "removeLayer": "Quitar capa",
-    "back": "Atrás"
   }
 });

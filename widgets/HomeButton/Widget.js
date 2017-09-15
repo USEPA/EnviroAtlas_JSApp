@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ define([
     'jimu/BaseWidget',
     "esri/dijit/HomeButton",
     "esri/geometry/Extent",
-    'esri/SpatialReference',
     'dojo/_base/html',
     'dojo/dom-construct',
     'dojo/topic',
@@ -32,7 +31,6 @@ define([
     BaseWidget,
     HomeButton,
     Extent,
-    SpatialReference,
     html,
     domConstruct,
     topic,
@@ -47,28 +45,12 @@ define([
       },
 
       startup: function() {
-        var initalExtent = null;
         this.inherited(arguments);
         this.own(on(this.map, 'extent-change', lang.hitch(this, 'onExtentChange')));
 
-        var configExtent = this.appConfig && this.appConfig.map &&
-          this.appConfig.map.mapOptions && this.appConfig.map.mapOptions.extent;
-
-        if (configExtent) {
-          initalExtent = new Extent(
-            configExtent.xmin,
-            configExtent.ymin,
-            configExtent.xmax,
-            configExtent.ymax,
-            new SpatialReference(configExtent.spatialReference)
-          );
-        } else {
-          initalExtent = this.map._initialExtent || this.map.extent;
-        }
-
         this.createHomeDijit({
           map: this.map,
-          extent: initalExtent
+          extent: this.map.extent
         });
       },
 

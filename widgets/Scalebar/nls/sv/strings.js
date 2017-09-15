@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Skalfält"
-});
+﻿define(
+   ({
+    _widgetLabel: "Skalfält"
+  })
+);

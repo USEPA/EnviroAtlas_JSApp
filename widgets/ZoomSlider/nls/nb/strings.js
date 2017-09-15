@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Zoom-glidebryter"
-});
+﻿define(
+   ({
+    _widgetLabel: "Zoom-glidebryter"
+  })
+);

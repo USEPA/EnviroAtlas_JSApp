@@ -15,41 +15,20 @@
 ///////////////////////////////////////////////////////////////////////////
 define(["dojo/_base/declare",
     "dojo/_base/lang",
-    "dojo/query",
-    "dojo/dom-class",
-    "dojo/dom-construct",
     "jimu/BaseWidgetSetting",
     "dijit/_WidgetsInTemplateMixin",
-    "dijit/form/Form",
     "dijit/form/CheckBox",
     "dijit/form/NumberTextBox",
     "dijit/form/ValidationTextBox"
   ],
-  function(declare, lang, query, domClass, domConstruct,
-    BaseWidgetSetting, _WidgetsInTemplateMixin) {
+  function(declare, lang, BaseWidgetSetting, _WidgetsInTemplateMixin) {
 
     return declare([BaseWidgetSetting, _WidgetsInTemplateMixin], {
 
       baseClass: "jimu-widget-add-data-setting",
-      maxRecordThreshold: 100000,
 
       postCreate: function() {
         this.inherited(arguments);
-
-        var self = this;
-        query(".default-scope",this.domNode).forEach(function(nd){
-          var txt = domConstruct.create("span",{
-            "class": "opt-text"
-          },nd);
-          txt.appendChild(document.createTextNode(self.nls._default));
-          var btn = domConstruct.create("span",{
-            "class": "opt-button",
-            "onclick": function() {
-              self.setDefaultScope(nd.getAttribute("data-scope"));
-            }
-          },nd);
-          btn.appendChild(document.createTextNode(self.nls.makeDefault));
-        });
       },
 
       startup: function() {
@@ -61,181 +40,85 @@ define(["dojo/_base/declare",
       },
 
       getConfig: function() {
-        if (!this.settingsForm.validate()) {
-          return false;
-        }
-        if (!this.config) {
-          this.config = {};
-        }
-
-        var getInt = function(defaultNum, min, max, numberBox) {
-          var v = numberBox.get("value");
-          if (typeof v === "number" && !isNaN(v)) {
-            v = Math.floor(v);
-            if (v >= min && v <= max) {
-              return v;
-            }
+        this.config = this.config;
+        var v = this.numPerBageBox.get("value");
+        if (typeof v === "number" && !isNaN(v)) {
+          v = Math.floor(v);
+          if (v >= 1 && v <= 100) {
+            this.config.numPerPage = v;
           }
-          return defaultNum;
-        };
+        }
 
-        var getStr = function(textBox) {
-          var v = textBox.get("value");
-          if (typeof v === "string" && lang.trim(v).length > 0) {
-            return lang.trim(v);
-          }
-          return null;
-        };
-
-        var setOption = function(options, name, checkBox, textBox) {
+        var options = this.config.scopeOptions;
+        var setOption = function(name, checkBox, textBox) {
           var opt = options[name];
-          if (!opt) {
-            opt = options[name] = {};
-          }
           opt.allow = !!checkBox.get("checked");
           if (textBox) {
             opt.label = null;
-            var v = textBox.get("value");
-            if (typeof v === "string" && lang.trim(v).length > 0) {
-              opt.label = lang.trim(v);
+            var s = textBox.get("value");
+            if (typeof s === "string") {
+              s = lang.trim(s);
+              if (s.length > 0) {
+                opt.label = s;
+              }
             }
           }
         };
+        setOption("MyContent", this.MyContentCheckBox, this.MyContentTextBox);
+        setOption("MyOrganization", this.MyOrganizationCheckBox, this.MyOrganizationTextBox);
+        setOption("ArcGISOnline", this.ArcGISOnlineCheckBox, this.ArcGISOnlineTextBox);
+        // setOption("FromUrl", this.FromUrlCheckBox);
 
-        this.config.numPerPage = getInt(30,1,100,this.numPerBageBox);
-
-        if (!this.config.scopeOptions) {
-          this.config.scopeOptions = {};
-        }
-        delete this.config.scopeOptions.FromUrl;
-        var options = this.config.scopeOptions;
-        options.defaultScope = this.getDefaultScope();
-
-        setOption(options,"MyContent",
-          this.MyContentCheckBox,this.MyContentTextBox);
-        setOption(options,"MyOrganization",
-          this.MyOrganizationCheckBox,this.MyOrganizationTextBox);
-        setOption(options,"ArcGISOnline",
-          this.ArcGISOnlineCheckBox,this.ArcGISOnlineTextBox);
-        setOption(options,"Curated",
-          this.CuratedCheckBox,this.CuratedTextBox);
-        options.Curated.filter = getStr(this.CuratedFilterTextBox);
-        setOption(this.config,"addFromUrl",this.addFromUrlCheckBox);
-        setOption(this.config,"addFromFile",this.addFromFileCheckBox);
-
-        this.config.addFromFile.maxRecordCount = 1000;
-        /*
-        this.config.addFromFile.maxRecordCount = getInt(1000,1,
-          this.maxRecordThreshold,this.maxRecordBox);
-        */
-
-        //console.warn("getConfig",this.config);
         return this.config;
       },
 
       setConfig: function(config) {
         this.config = config || {};
-        var self = this;
         //console.warn("setConfig",this.config);
-
-        var setInt = function(num, min, max, numberBox, warn) {
-          try {
-            var v = Number(num);
-            if (typeof v === "number" && !isNaN(v)) {
-              v = Math.floor(v);
-              if (v >= min && v <= max) {
-                numberBox.set("value",v);
-              }
+        var numPer = this.config.numPerPage;
+        try {
+          var v = Number(numPer);
+          if (typeof v === "number" && !isNaN(v)) {
+            v = Math.floor(v);
+            if (v >= 1 && v <= 100) {
+              this.numPerBageBox.set("value", v);
             }
-          } catch (ex) {
-            console.warn(warn);
-            console.warn(ex);
           }
-        };
+        } catch (ex) {
+          console.warn("Error setting number:");
+          console.warn(ex);
+        }
 
-        var setStr = function(v,textBox) {
-          if (typeof v === "string") {
-            textBox.set("value",lang.trim(v));
-          }
-        };
-
-        var setOption = function(options, name, checkBox, textBox, chkScope) {
+        if (!config.scopeOptions) {
+          config.scopeOptions = {};
+        }
+        var options = config.scopeOptions;
+        var initOption = function(name, checkBox, textBox) {
           var opt = options[name];
           if (!opt) {
             opt = options[name] = {
-              allow: true
+              allow: true,
+              label: null
             };
-            if (textBox) {
-              opt.label = null;
-            }
           }
           if (typeof opt.allow !== "boolean") {
             opt.allow = true;
           }
-          checkBox.set("checked",opt.allow);
+          checkBox.set("checked", opt.allow);
           if (textBox) {
             if (typeof opt.label === "string") {
               var s = lang.trim(opt.label);
               if (s.length > 0) {
-                textBox.set("value",s);
+                textBox.set("value", s);
               }
             }
           }
-          if (chkScope) {
-            if (options.defaultScope === name) {
-              self.setDefaultScope(name);
-            }
-          }
         };
+        initOption("MyContent", this.MyContentCheckBox, this.MyContentTextBox);
+        initOption("MyOrganization", this.MyOrganizationCheckBox, this.MyOrganizationTextBox);
+        initOption("ArcGISOnline", this.ArcGISOnlineCheckBox, this.ArcGISOnlineTextBox);
+        // initOption("FromUrl", this.FromUrlCheckBox);
 
-        this.numPerBageBox.set("value",30);
-        setInt(this.config.numPerPage,1,100,
-          this.numPerBageBox,"Error setting config.numPerPage:");
-
-        if (!this.config.scopeOptions) {
-          this.config.scopeOptions = {};
-        }
-        var options = this.config.scopeOptions;
-        this.setDefaultScope("MyOrganization");
-
-        setOption(options,"MyContent",
-          this.MyContentCheckBox,this.MyContentTextBox,true);
-        setOption(options,"MyOrganization",
-          this.MyOrganizationCheckBox,this.MyOrganizationTextBox,true);
-        setOption(options,"ArcGISOnline",
-          this.ArcGISOnlineCheckBox,this.ArcGISOnlineTextBox,true);
-        setOption(options,"Curated",
-          this.CuratedCheckBox,this.CuratedTextBox,true);
-        setStr(options.Curated.filter,this.CuratedFilterTextBox);
-        setOption(this.config,"addFromUrl",this.addFromUrlCheckBox);
-        setOption(this.config,"addFromFile",this.addFromFileCheckBox);
-
-        /*
-        this.maxRecordBox.set("value",1000);
-        setInt(this.config.addFromFile.maxRecordCount,1,this.maxRecordThreshold,
-          this.maxRecordBox,"Error setting config.addFromFile.numPerPage:");
-        */
-      },
-
-      getDefaultScope: function() {
-        var scope = "MyOrganization";
-        query(".default-scope",this.domNode).forEach(function(nd){
-          if (domClass.contains(nd,"sel")) {
-            scope = nd.getAttribute("data-scope");
-          }
-        });
-        return scope;
-      },
-
-      setDefaultScope: function(value) {
-        query(".default-scope",this.domNode).forEach(function(nd){
-          var v = nd.getAttribute("data-scope");
-          if (v === value) {
-            domClass.add(nd,"sel");
-          } else {
-            domClass.remove(nd,"sel");
-          }
-        });
       }
 
     });

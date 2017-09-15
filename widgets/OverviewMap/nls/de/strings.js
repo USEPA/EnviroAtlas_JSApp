@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Übersichtskarte"
-});
+﻿define(
+   ({
+    _widgetLabel: "Übersichtskarte"
+  })
+);

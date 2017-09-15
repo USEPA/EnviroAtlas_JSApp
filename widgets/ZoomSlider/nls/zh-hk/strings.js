@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "縮放滑稈"
-});
+﻿define(
+   ({
+    _widgetLabel: "縮放滑稈"
+  })
+);

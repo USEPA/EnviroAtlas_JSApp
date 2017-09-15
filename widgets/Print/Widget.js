@@ -8,12 +8,13 @@ define([
     'jimu/dijit/LoadingShelter',
     './Print',
     "esri/request",
+    'dojo/json',
     'jimu/portalUrlUtils'
   ],
   function(
     declare, BaseWidget, portalUtils, lang, Deferred,
     Message, LoadingShelter, Print, esriRequest,
-    portalUrlUtils
+    dojoJSON, portalUrlUtils
   ) {
     return declare([BaseWidget], {
       baseClass: 'jimu-widget-print',
@@ -52,7 +53,6 @@ define([
                 defaultTitle: this.config.defaultTitle,
                 defaultFormat: this.config.defaultFormat,
                 defaultLayout: this.config.defaultLayout,
-                // showAdvancedOption: this.config.showAdvancedOption !== false,
                 nls: this.nls,
                 async: async
               });
@@ -104,33 +104,50 @@ define([
       isAsync: function(serviceURL) {
         var def = new Deferred();
         // portal own print url: portalname/arcgis/sharing/tools/newPrint
+        var _handleAs = 'json';
         var serviceUrl = portalUrlUtils.setHttpProtocol(serviceURL);
         var portalNewPrintUrl = portalUrlUtils.getNewPrintUrl(this.appConfig.portalUrl);
 
         if (serviceUrl === portalNewPrintUrl ||
           /sharing\/tools\/newPrint$/.test(serviceUrl)) {
-          def.resolve(false);
-        } else {
-          esriRequest({
-            url: serviceURL,
-            content: {
-              f: "json"
-            },
-            callbackParamName: "callback",
-            handleAs: "json",
-            timeout: 60000,
-            load: lang.hitch(this, function(response) {
-              if (response.executionType === "esriExecutionTypeAsynchronous") {
-                def.resolve(true);
-              } else {
-                def.resolve(false);
-              }
-            }),
-            error: lang.hitch(this, function(err) {
-              def.reject(err);
-            })
-          });
+          _handleAs = 'text';
         }
+        esriRequest({
+          url: serviceURL,
+          content: {
+            f: "json"
+          },
+          callbackParamName: "callback",
+          handleAs: _handleAs || "json",
+          timeout: 60000,
+          load: lang.hitch(this, function(rData) {
+            var response = null;
+            try {
+              if (typeof rData === 'string') {
+                response = dojoJSON.parse(rData);
+              } else {
+                response = rData;
+              }
+            } catch (err) {
+              var serviceUrl = portalUrlUtils.setHttpProtocol(serviceURL),
+                portalNewPrintUrl = portalUrlUtils.getNewPrintUrl(this.appConfig.portalUrl);
+              if (serviceUrl === portalNewPrintUrl) { // portal own print url
+                def.resolve(false);
+              } else {
+                def.reject(err);
+              }
+              return;
+            }
+            if (response.executionType === "esriExecutionTypeAsynchronous") {
+              def.resolve(true);
+            } else {
+              def.resolve(false);
+            }
+          }),
+          error: lang.hitch(this, function(err) {
+            def.reject(err);
+          })
+        });
 
         return def;
       },

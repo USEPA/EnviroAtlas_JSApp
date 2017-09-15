@@ -1,24 +1,20 @@
 define({
   "_widgetLabel": "Gegevens toevoegen",
-  "noOptionsConfigured": "Geen opties geconfigureerd.",
-  "tabs": {
-    "search": "Zoeken",
-    "url": "URL",
-    "file": "Bestand"
-  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "De laag is niet toegankelijk.",
+    "online": "ArcGIS Online",
+    "url": "Voer URL in",
     "loadError": "AddData, kan niet worden geladen:",
     "searchBox": {
       "search": "Zoeken",
       "placeholder": "Zoeken..."
     },
     "bboxOption": {
-      "bbox": "Binnen kaart"
+      "bbox": "Binnen kaartgebied"
     },
     "scopeOptions": {
-      "anonymousContent": "Content",
+      "anonymousContent": "Inhoud",
       "myContent": "Mijn Content",
       "myOrganization": "Mijn Organisatie",
       "curated": "Samengesteld",
@@ -94,6 +90,10 @@ define({
     }
   },
   "addFromUrl": {
+    "donw": "Gereed",
+    "editName": "Naam bewerken",
+    "buttonLabel": "URL...",
+    "caption": "Data toevoegen - URL invoeren",
     "type": "Type",
     "url": "URL",
     "types": {
@@ -106,30 +106,5 @@ define({
       "CSV": "Een CSV-bestand"
     },
     "samplesHint": "Voorbeeld URL(s)"
-  },
-  "addFromFile": {
-    "intro": "U kunt de volgende bestandstypen zoeken of plaatsen:",
-    "types": {
-      "Shapefile": "Een shapefile (.zip, ZIP-archief met alle shapefile-bestanden)",
-      "CSV": "Een CSV-bestand (.csv met adres of breedtegraad, lengtegraad en komma, puntkomma of tabscheidingstekens)",
-      "GPX": "Een GPX-bestand (.gpx, GPS Exchange Format)",
-      "GeoJSON": "Een GeoJSON-bestand (.geo.json of .geojson)"
-    },
-    "generalizeOn": "Objecten generaliseren voor webweergave",
-    "dropOrBrowse": "Zoeken of plaatsen",
-    "browse": "Bladeren",
-    "invalidType": "Dit bestandstype worden niet ondersteund.",
-    "addingPattern": "{filename}: bezig met toevoegen...",
-    "addFailedPattern": "{filename}: toevoegen mislukt",
-    "featureCountPattern": "{filename}: {count} object(en)",
-    "invalidTypePattern": "{filename}: dit type wordt niet ondersteund",
-    "maxFeaturesAllowedPattern": "Een maximum van {count} objecten is toegestaan",
-    "layerNamePattern": "{filename} - {name}"
-  },
-  "layerList": {
-    "caption": "Kaartlagen",
-    "noLayersAdded": "Er zijn geen lagen toegevoegd.",
-    "removeLayer": "Laag verwijderen",
-    "back": "Terug"
   }
 });

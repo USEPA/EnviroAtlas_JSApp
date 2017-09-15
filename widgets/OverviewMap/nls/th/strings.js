@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "ภาพรวมของแผนที่"
-});
+﻿define(
+   ({
+    _widgetLabel: "ภาพรวมของแผนที่"
+  })
+);

@@ -4,9 +4,6 @@ Ehanced draw widget for WebApp Builder for Arcgis.
 Fork and modifications of the official widget draw for WebApp Builder for Arcgis :
 http://doc.arcgis.com/en/web-appbuilder/create-apps/widget-draw.htm
 
-The widget use the proj4js library (https://github.com/proj4js/proj4js) for point's lat/lon measure (for non mercator maps) :
-https://github.com/proj4js/proj4js
-
 ## Improvments :
 - add name and description fields on drawings
 - enable infowindow on drawings (selection)
@@ -24,12 +21,12 @@ https://github.com/proj4js/proj4js
 - localStorage
     - dynamic saving on each drawing add/delete/update
     - on widget load : load drawings saved in local Storage
-- draws plus (initially from Larry Stout https://geonet.esri.com/people/Larry_Stout)
+- draws plus (from Larry Stout https://geonet.esri.com/people/Larry_Stout)
     - preview under mouse when adding text or point
     - for text, add font choice, font angle, bold, italic, placement and underline options.
 - checkbox to hide drawing's layer (and therefore widget UI)
 - add of Nautical unit
-- measure's for points/polylines/polygons with automatic update on element's update (or delete). Measure's can be indidualy disabled/enabled on any graphic.
+- measure's refactoring with automatic update on element's update (or delete). Measure's can be indidualy disabled/enabled on any polygon/polyline graphic.
 - defaults symbols can be specified in config's file
 
 ## configuration :
@@ -44,13 +41,13 @@ https://github.com/proj4js/proj4js
 - (without UI) set default symbols
 - use geometryEngine for measure ?
 - specify geometryServer for measure (not used if geometryEngine is activated)
-- enable measure by default ? (is measure checkbox checked on polygon/polyline/point add ?)
-- measure's labels patterns
+- enable measure by default ? (is measure checkbox checked on polygon/polyline add ?)
+- measure's labels patterns 
         
 ## Installation :
 Add eDraw folder in your webApp Builder client\stemapp\widgets folder.
 Download Release here : 
-https://github.com/magis-nc/esri-webappbuilder-widget-eDraw/releases/latest
+https://github.com/magis-nc/esri-webappbuilder-widget-eDraw/releases/tag/v1.1.3
 
 ## Demo :
 http://apps.magis.nc/maps/wab-widgets/?extent=17918900%2C-2706198%2C19092972%2C-2154016%2C102100

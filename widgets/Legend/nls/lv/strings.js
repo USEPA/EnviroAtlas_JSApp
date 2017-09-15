@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Apzīmējumi"
-});
+﻿define(
+   ({
+    _widgetLabel: "Apzīmējumi"
+  })
+);

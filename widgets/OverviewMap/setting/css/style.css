@@ -27,15 +27,6 @@
   margin-left: 2em;
   margin-right: 0;
 }
-
-.jimu-widget-overviewmap-setting .corner-section .jimu-leading-margin2{
-  margin-left: 1em;
-}
-.jimu-rtl .jimu-widget-overviewmap-setting .corner-section .jimu-leading-margin2{
-  margin-left: 0;
-  margin-right: 1em;
-}
-
 .jimu-widget-overviewmap-setting .corner-section .overview-item-image{
   position: relative;
   width: 226px;

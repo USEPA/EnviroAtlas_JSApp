@@ -60,9 +60,6 @@ define([
     //showAllItemsSection
     //showFilterItemsSection
 
-    //callback methods
-    //onCreateItemContent(item, itemInfoDom)
-
     //css classes:
     //item
     //item-border
@@ -291,7 +288,7 @@ define([
           }
         }
       }
-      this.emit("update");
+
     },
 
     _getItemCount:function(tbody){
@@ -331,23 +328,16 @@ define([
       else{
         noneThumbnailTip.innerHTML = this.nls.noneThumbnail;
       }
-
-      if(typeof this.onCreateItemContent === 'function'){
-        var itemInfoDom = query('.item-info', itemDiv)[0];
-        this.onCreateItemContent(item, itemInfoDom);
-      }else{
-        itemName.innerHTML = item.title;
-        itemName.title = itemName.innerHTML;
-        itemTypeOwner.innerHTML = item.type + ' by ' + item.owner;
-        itemTypeOwner.title = itemTypeOwner.innerHTML;
-        var d = new Date();
-        d.setTime(item.modified);
-        itemDate.innerHTML = d.toLocaleString();
-        itemDate.title = itemDate.innerHTML;
-        itemDetails.innerHTML = this.nls.moreDetails;
-        itemDetails.href = item.detailsPageUrl || "#";
-      }
-
+      itemName.innerHTML = item.title;
+      itemName.title = itemName.innerHTML;
+      itemTypeOwner.innerHTML = item.type + ' by ' + item.owner;
+      itemTypeOwner.title = itemTypeOwner.innerHTML;
+      var d = new Date();
+      d.setTime(item.modified);
+      itemDate.innerHTML = d.toLocaleString();
+      itemDate.title = itemDate.innerHTML;
+      itemDetails.innerHTML = this.nls.moreDetails;
+      itemDetails.href = item.detailsPageUrl || "#";
       return itemDiv;
     },
 

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,14 +20,13 @@ define(['dojo/_base/declare',
   'dojo/_base/html',
   'dojo/_base/fx',
   'dojo/Deferred',
-  'dojo/promise/all',
   'dojo/on',
   'dojo/topic',
   'dojo/when',
   'require',
   './utils',
   './WidgetManager'],
-function (declare, lang, array, html, baseFx, Deferred, all, on, topic, when,
+function (declare, lang, array, html, baseFx, Deferred, on, topic, when,
   require, utils, WidgetManager) {
   var clazz, instance = null;
 
@@ -58,10 +57,7 @@ function (declare, lang, array, html, baseFx, Deferred, all, on, topic, when,
         }
         def.resolve(panel);
       }else{
-        all({
-          Panel: this._loadPanelClass(config.panel.uri),
-          nls: this._loadThemeI18N(config.panel.uri)
-        }).then(lang.hitch(this, function(result){
+        require([config.panel.uri], lang.hitch(this, function(Panel){
           var pid = config.id + '_panel',  panel = this.getPanelById(pid);
 
           var options = {
@@ -73,13 +69,12 @@ function (declare, lang, array, html, baseFx, Deferred, all, on, topic, when,
             widgetManager: this.widgetManager,
             panelManager: this,
             id: pid,
-            gid: config.gid,
-            nls: result.nls
+            gid: config.gid
           };
           lang.mixin(options, config.panel.options);
 
           try{
-            panel = new result.Panel(options);
+            panel = new Panel(options);
             console.log('panel [' + pid + '] created.');
           }catch(error){
             console.log('create panel error: ' + error + ', panelId: ' + pid);
@@ -91,6 +86,7 @@ function (declare, lang, array, html, baseFx, Deferred, all, on, topic, when,
 
           utils.setVerticalCenter(panel.domNode);
           this.openPanel(panel);
+          this.panels.push(panel);
 
           on(panel.domNode, 'click', lang.hitch(this, this._onPanelClick, panel));
 
@@ -137,12 +133,6 @@ function (declare, lang, array, html, baseFx, Deferred, all, on, topic, when,
           def.reject();
           return def;
         }
-      }else{
-        if(!this.panels.some(function(p){
-          return p.id === panel.id;
-        })){
-          this.panels.push(panel);
-        }
       }
 
       if(!panel.started){
@@ -187,7 +177,7 @@ function (declare, lang, array, html, baseFx, Deferred, all, on, topic, when,
         return def;
       }
 
-      return this.playClosePanelAnimation(panel).then(lang.hitch(this, function(){
+      return this.playClosePanelAnimation(panel).then(function(){
         if(this.activePanel && this.activePanel.id === panel.id){
           this.activePanel.onDeActive();
           this.activePanel = null;
@@ -197,7 +187,7 @@ function (declare, lang, array, html, baseFx, Deferred, all, on, topic, when,
         if(panel.domNode){
           html.setStyle(panel.domNode, 'display', 'none');
         }
-      }));
+      });
     },
 
     minimizePanel: function(panel){
@@ -523,14 +513,6 @@ function (declare, lang, array, html, baseFx, Deferred, all, on, topic, when,
       this._activePanel(panel);
     },
 
-    activatePanel: function(panel){
-      if(panel.state !== 'opened'){
-        return;
-      }
-
-      this._activePanel(panel);
-    },
-
     _activePanel: function(panel){
       if(this.activePanel){
         if(this.activePanel.id === panel.id){
@@ -552,10 +534,8 @@ function (declare, lang, array, html, baseFx, Deferred, all, on, topic, when,
       var aw = this.widgetManager.activeWidget;
       if(aw && aw.state === 'active' && aw.getPanel() !== panel){
         aw.setState('opened');
-        if(aw.inPanel === false){
-          html.setStyle(aw.domNode, 'zIndex',
+        html.setStyle(aw.domNode, 'zIndex',
           typeof aw.position.zIndex !== 'undefined'? aw.position.zIndex: 'auto');
-        }
         aw.onDeActive();
         this.widgetManager.activeWidget = null;
       }
@@ -601,31 +581,6 @@ function (declare, lang, array, html, baseFx, Deferred, all, on, topic, when,
         this.activePanel.onDeActive();
         this.activePanel = null;
       }
-    },
-
-    _loadPanelClass: function(panelUri){
-      var def = new Deferred();
-      require([panelUri], function(Panel){
-        def.resolve(Panel);
-      });
-      return def;
-    },
-
-    _loadThemeI18N: function(panelUri){
-      //panel will use theme's nls file
-      var def = new Deferred();
-      if(panelUri.startWith('themes')){
-        var segs = panelUri.split('/');
-        var nlsFile = segs[0] + '/' + segs[1] + '/nls/strings';
-        require(['dojo/i18n!' + nlsFile], function(bundle) {
-          def.resolve(bundle);
-        });
-      }else{
-        //panel is not in theme
-        def.resolve({});
-      }
-
-      return def;
     }
 
   });
@@ -633,7 +588,6 @@ function (declare, lang, array, html, baseFx, Deferred, all, on, topic, when,
   clazz.getInstance = function () {
     if(instance === null) {
       instance = new clazz();
-      window._panelManager = instance;
     }
     return instance;
   };

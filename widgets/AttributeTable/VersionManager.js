@@ -23,19 +23,6 @@ function(BaseVersionManager) {
         newConfig.initiallyExpand = false;
         return newConfig;
       }
-    }, {
-      version: '1.4',
-      upgrader: function(oldConfig){
-        return oldConfig;
-      }
-    }, {
-      version: '2.0beta',
-      upgrader: function(oldConfig){
-        var newConfig = oldConfig;
-        newConfig.filterByMapExtent = true;
-
-        return newConfig;
-      }
     }];
   }
 

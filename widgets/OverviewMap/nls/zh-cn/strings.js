@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "总览图"
-});
+﻿define(
+   ({
+    _widgetLabel: "总览图"
+  })
+);

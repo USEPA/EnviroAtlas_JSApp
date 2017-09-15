@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,91 +15,108 @@
 ///////////////////////////////////////////////////////////////////////////
 define([
   'dojo/_base/declare',
-  'jimu/LayerInfos/LayerInfoForCollection',
-  'jimu/LayerInfos/LayerInfoForMapService',
-  'jimu/LayerInfos/LayerInfoForKML',
-  'jimu/LayerInfos/LayerInfoForGeoRSS',
-  'jimu/LayerInfos/LayerInfoForDefault',
-  'jimu/LayerInfos/LayerInfoForWMS',
-  //'jimu/LayerInfos/LayerInfoForGroup',
-  'jimu/LayerInfos/LayerInfoForDefaultDynamic',
-  'jimu/LayerInfos/LayerInfoForDefaultTile',
-  'jimu/LayerInfos/LayerInfoForDefaultWMS',
-  'jimu/LayerInfos/LayerInfoForDefaultTable',
-  'jimu/LayerInfos/LayerInfoForDefaultImage',
-  'jimu/LayerInfos/LayerInfoForDefaultStream'
-], function(
-  declare,
-  LayerInfoForCollection,
-  LayerInfoForMapService,
-  LayerInfoForKML,
-  LayerInfoForGeoRSS,
-  LayerInfoForDefault,
-  LayerInfoForWMS,
-  //LayerInfoForGroup,
-  LayerInfoForDefaultDynamic,
-  LayerInfoForDefaultTile,
-  LayerInfoForDefaultWMS,
-  LayerInfoForDefaultTable,
-  LayerInfoForDefaultImage,
-  LayerInfoForDefaultStream
-) {
+  'dojo/_base/lang',
+  'dojo/Deferred'
+], function(declare, lang, Deferred) {
   var instance = null,
     clazz = declare(null, {
       constructor: function() {
         //this.map = map;
       },
 
+      init: function() {
+        var retDef = new Deferred();
+        require(['jimu/LayerInfos/LayerInfoForCollection',
+          'jimu/LayerInfos/LayerInfoForMapService',
+          'jimu/LayerInfos/LayerInfoForKML',
+          'jimu/LayerInfos/LayerInfoForGeoRSS',
+          'jimu/LayerInfos/LayerInfoForDefault',
+          'jimu/LayerInfos/LayerInfoForWMS',
+          'jimu/LayerInfos/LayerInfoForGroup',
+          'jimu/LayerInfos/LayerInfoForDefaultDynamic',
+          'jimu/LayerInfos/LayerInfoForDefaultTile',
+          'jimu/LayerInfos/LayerInfoForDefaultWMS',
+          'jimu/LayerInfos/LayerInfoForDefaultTable',
+          'jimu/LayerInfos/LayerInfoForDefaultImage',
+          'jimu/LayerInfos/LayerInfoForDefaultStream'
+        ], lang.hitch(this, function(
+          LayerInfoForCollection,
+          LayerInfoForMapService,
+          LayerInfoForKML,
+          LayerInfoForGeoRSS,
+          LayerInfoForDefault,
+          LayerInfoForWMS,
+          LayerInfoForGroup,
+          LayerInfoForDefaultDynamic,
+          LayerInfoForDefaultTile,
+          LayerInfoForDefaultWMS,
+          LayerInfoForDefaultTable,
+          LayerInfoForDefaultImage,
+          LayerInfoForDefaultStream) {
+          this.LayerInfoForCollection = LayerInfoForCollection;
+          this.LayerInfoForMapService = LayerInfoForMapService;
+          this.LayerInfoForKML = LayerInfoForKML;
+          this.LayerInfoForGeoRSS = LayerInfoForGeoRSS;
+          this.LayerInfoForDefault = LayerInfoForDefault;
+          this.LayerInfoForWMS = LayerInfoForWMS;
+          this.LayerInfoForGroup = LayerInfoForGroup;
+          this.LayerInfoForDefaultDynamic = LayerInfoForDefaultDynamic;
+          this.LayerInfoForDefaultTile = LayerInfoForDefaultTile;
+          this.LayerInfoForDefaultWMS = LayerInfoForDefaultWMS;
+          this.LayerInfoForDefaultTable = LayerInfoForDefaultTable;
+          this.LayerInfoForDefaultImage = LayerInfoForDefaultImage;
+          this.LayerInfoForDefaultStream = LayerInfoForDefaultStream;
+          retDef.resolve();
+        }));
+        return retDef;
+      },
+
       create: function(operLayer) {
         if (operLayer.featureCollection) {
-          return new LayerInfoForCollection(operLayer, this.map, this, this.layerInfosInstanceWrap);
+          return new this.LayerInfoForCollection(operLayer, this.map);
         } else if (operLayer.layerObject.declaredClass === 'esri.layers.KMLLayer') {
-          return new LayerInfoForKML(operLayer, this.map, this, this.layerInfosInstanceWrap);
+          return new this.LayerInfoForKML(operLayer, this.map);
         } else if (operLayer.layerObject.declaredClass === 'esri.layers.GeoRSSLayer') {
-          return new LayerInfoForGeoRSS(operLayer, this.map, this, this.layerInfosInstanceWrap);
+          return new this.LayerInfoForGeoRSS(operLayer, this.map);
         } else if ((operLayer.layerObject.declaredClass === 'esri.layers.WMSLayer') &&
                 !operLayer.selfType) {
-          return new LayerInfoForWMS(operLayer, this.map, this, this.layerInfosInstanceWrap);
+          return new this.LayerInfoForWMS(operLayer, this.map);
           //} else if (operLayer.layerObject && operLayer.layerObject.layerInfos) {
         } else if (
             operLayer.layerObject.declaredClass === 'esri.layers.ArcGISDynamicMapServiceLayer' ||
             operLayer.layerObject.declaredClass === 'esri.layers.ArcGISTiledMapServiceLayer') {
-          return new LayerInfoForMapService(operLayer, this.map, this, this.layerInfosInstanceWrap);
+          return new this.LayerInfoForMapService(operLayer, this.map);
           //} else if (operLayer.layerObject) {
         } else if (operLayer.layerObject.declaredClass === 'esri.layers.ArcGISImageServiceLayer' ||
          operLayer.layerObject.declaredClass === 'esri.layers.ArcGISImageServiceVectorLayer') {
-          return new LayerInfoForDefaultImage(operLayer, this.map, this, this.layerInfosInstanceWrap);
+          return new this.LayerInfoForDefaultImage(operLayer, this.map);
         } else if (operLayer.layerObject.declaredClass === 'esri.layers.StreamLayer') {
-          return new LayerInfoForDefaultStream(operLayer, this.map, this, this.layerInfosInstanceWrap);
+          return new this.LayerInfoForDefaultStream(operLayer, this.map);
         } else {
           if(operLayer.layerObject.type === "Table"){
             operLayer.selfType = "table";
           }
           switch (operLayer.selfType) {
-          /*
           case 'mapservice_dynamic_group':
-            return new LayerInfoForGroup(operLayer, this.map, this);
+            return new this.LayerInfoForGroup(operLayer, this.map);
           case 'mapservice_tiled_group':
-            return new LayerInfoForGroup(operLayer, this.map, this, true);
-          */
-          case 'mapservice_dynamic_group':
+            return new this.LayerInfoForGroup(operLayer, this.map, true);
           case 'mapservice_dynamic':
-            return new LayerInfoForDefaultDynamic(operLayer, this.map, this, this.layerInfosInstanceWrap);
-          case 'mapservice_tiled_group':
+            return new this.LayerInfoForDefaultDynamic(operLayer, this.map);
           case 'mapservice_tiled':
-            return new LayerInfoForDefaultTile(operLayer, this.map, this, this.layerInfosInstanceWrap);
+            return new this.LayerInfoForDefaultTile(operLayer, this.map);
           case 'wms':
-            return new LayerInfoForDefaultWMS(operLayer, this.map, this, this.layerInfosInstanceWrap);
+            return new this.LayerInfoForDefaultWMS(operLayer, this.map);
           case 'table':
-            return new LayerInfoForDefaultTable(operLayer, this.map, this, this.layerInfosInstanceWrap);
+            return new this.LayerInfoForDefaultTable(operLayer, this.map);
           default:
-            return new LayerInfoForDefault(operLayer, this.map, this, this.layerInfosInstanceWrap);
+            return new this.LayerInfoForDefault(operLayer, this.map);
           }
         }
       }
     });
 
-  clazz.getInstance = function(map, layerInfosInstanceWrap) {
+  clazz.getInstance = function(map) {
     if (instance === null) {
       instance = new clazz();
     }
@@ -107,10 +124,6 @@ define([
     if(map) {
       instance.map = map;
     }
-    if(layerInfosInstanceWrap) {
-      instance.layerInfosInstanceWrap = layerInfosInstanceWrap;
-    }
-
     return instance;
   };
   return clazz;

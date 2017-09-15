@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,18 +15,18 @@
 ///////////////////////////////////////////////////////////////////////////
 
 define([
-  'dojo/on',
+  'dojo/_base/declare',
   'dojo/Evented',
+  'dojo/on',
   'dojo/_base/lang',
   'dojo/_base/html',
-  'dojo/_base/declare',
   'jimu/dijit/Popup',
   'jimu/dijit/QueryableLayerSource',
   'jimu/dijit/LoadingIndicator',
   'esri/request'
 ],
-function(on, Evented, lang, html, declare, Popup, QueryableLayerSource, LoadingIndicator, esriRequest) {
-
+function(declare, Evented, on, lang, html, Popup, QueryableLayerSource, LoadingIndicator,
+  esriRequest) {
   return declare([Popup, Evented], {
     width: 830,
     height: 560,
@@ -64,10 +64,12 @@ function(on, Evented, lang, html, declare, Popup, QueryableLayerSource, LoadingI
             item.definition.name = item.name;
             item.definition.url = item.url;
             this.emit('ok', item);
-          }catch(e){
+          }
+          catch(e){
             console.error(e);
           }
-        }else{
+        }
+        else{
           this.loading.show();
           esriRequest({
             url: item.url,
@@ -84,7 +86,8 @@ function(on, Evented, lang, html, declare, Popup, QueryableLayerSource, LoadingI
               item.definition.name = item.name;
               item.definition.url = item.url;
               this.emit('ok', item);
-            }catch(e){
+            }
+            catch(e){
               console.error(e);
             }
           }), lang.hitch(this, function(err){
@@ -100,7 +103,8 @@ function(on, Evented, lang, html, declare, Popup, QueryableLayerSource, LoadingI
       this.own(on(this.sourceDijit, 'cancel', lang.hitch(this, function(){
         try{
           this.emit('cancel');
-        }catch(e){
+        }
+        catch(e){
           console.error(e);
         }
       })));

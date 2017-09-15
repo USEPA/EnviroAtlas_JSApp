@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Genel Bakış Haritası"
-});
+﻿define(
+   ({
+    _widgetLabel: "Genel Bakış Haritası"
+  })
+);

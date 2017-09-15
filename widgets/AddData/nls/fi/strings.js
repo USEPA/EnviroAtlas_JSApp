@@ -1,21 +1,17 @@
 define({
   "_widgetLabel": "Lisää aineistoa",
-  "noOptionsConfigured": "Asetuksia ei ole määritetty.",
-  "tabs": {
-    "search": "Etsi",
-    "url": "URL-osoite",
-    "file": "Tiedosto"
-  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "Karttataso ei ole käytettävissä.",
+    "online": "ArcGIS Online",
+    "url": "Anna URL-osoite",
     "loadError": "AddData, ei voi ladata:",
     "searchBox": {
       "search": "Etsi",
       "placeholder": "Etsi..."
     },
     "bboxOption": {
-      "bbox": "Kartassa"
+      "bbox": "Kartan alueelta"
     },
     "scopeOptions": {
       "anonymousContent": "Sisältö",
@@ -94,6 +90,10 @@ define({
     }
   },
   "addFromUrl": {
+    "donw": "Valmis",
+    "editName": "muokkaa nimeä",
+    "buttonLabel": "URL...",
+    "caption": "Lisää tiedot – anna URL-osoite",
     "type": "Tyyppi",
     "url": "URL-osoite",
     "types": {
@@ -106,30 +106,5 @@ define({
       "CSV": "CSV-tiedosto"
     },
     "samplesHint": "URL-malliosoitteet"
-  },
-  "addFromFile": {
-    "intro": "Voit pudottaa jonkin seuraavista tiedostotyypeistä tai selata johonkin seuraavista tiedostotyypeistä:",
-    "types": {
-      "Shapefile": "Shapefile (.zip, ZIP-arkistotiedosto, joka sisältää kaikki shapefile-tiedostot)",
-      "CSV": "CSV-tiedosto (pilkuin, puolipistein tai sarkaimin eroteltu .csv-tiedosto, jossa on osoite tai leveys- tai pituusaste)",
-      "GPX": "GPX-tiedosto (.gpx, GPS Exchange Format)",
-      "GeoJSON": "GeoJSON-tiedosto (.geo.json tai .geojson)"
-    },
-    "generalizeOn": "Yleistä kohteet web-käyttöä varten",
-    "dropOrBrowse": "Pudota tai selaa",
-    "browse": "Selaa",
-    "invalidType": "Tiedostotyyppiä ei tueta.",
-    "addingPattern": "{filename}: lisätään...",
-    "addFailedPattern": "{filename}: lisäys epäonnistui",
-    "featureCountPattern": "{filename}: {count} kohdetta",
-    "invalidTypePattern": "{filename}: tätä tyyppiä ei tueta",
-    "maxFeaturesAllowedPattern": "Kohteiden sallittu enimmäismäärä on {count}",
-    "layerNamePattern": "{filename} – {name}"
-  },
-  "layerList": {
-    "caption": "Karttatasot",
-    "noLayersAdded": "Karttatasoja ei ole lisätty.",
-    "removeLayer": "Poista karttataso",
-    "back": "Takaisin"
   }
 });

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,20 +18,21 @@ define([
   'dojo/_base/declare',
   'dojo/_base/array',
   'dojo/_base/lang',
-  'dojo/topic',
   'dojo/Deferred',
   'esri/graphicsUtils',
   'dojo/aspect',
   './LayerInfo',
   './LayerInfoForDefaultWMS',
-  'esri/layers/FeatureLayer',
-  'esri/lang'
-], function(declare, array, lang, topic, Deferred, graphicsUtils, aspect,
-LayerInfo, LayerInfoForDefaultWMS, FeatureLayer, esriLang) {
+  './LayerInfoFactory',
+  'esri/layers/FeatureLayer'
+], function(declare, array, lang, Deferred, graphicsUtils, aspect,
+LayerInfo, LayerInfoForDefaultWMS, LayerInfoFactory, FeatureLayer) {
   /*jshint unused: false*/
   return declare(LayerInfo, {
 
+
     constructor: function( operLayer, map) {
+      this.layerObject = operLayer.layerObject;
       /*jshint unused: false*/
     },
 
@@ -41,203 +42,80 @@ LayerInfo, LayerInfoForDefaultWMS, FeatureLayer, esriLang) {
       return this._convertGeometryToMapSpatialRef(extent);
     },
 
+    initVisible: function() {
+      /*
+      return this.originOperLayer.layerObject.visible;
+      */
 
-    // _resetLayerObjectVisiblity: function(layerOptions) {
-    //   var layerOption  = layerOptions ? layerOptions[this.id]: null;
-    //   if(layerOptions) {
-    //     //reste visibility for parent layer.
-    //     if(layerOption) {
-    //       this.layerObject.setVisibility(layerOption.visible);
-    //     }
+      /*
+      if(!this.layerObject.visibleLayers || this.layerObject.visibleLayers.length === 0 ) {
+        return false;
+      } else {
+        return true;
+      }*/
 
-    //     //reste visibles of sublayer.
-    //     var subLayersVisible = {};
-    //     var haseConfiguredInLayerOptionsflag = false;
-
-    //     // set visilbe for all sublayers
-    //     this.traversal(function(layerInfo) {
-    //       if(!layerInfo.isRootLayer()) {
-    //         if(esriLang.isDefined(layerOptions[layerInfo.id])) {
-    //           layerInfo._setVisible(layerOptions[layerInfo.id].visible);
-    //         }
-    //       }
-    //     });
-
-    //     this.traversal(function(layerInfo) {
-    //       if (layerInfo.getSubLayers().length === 0) {
-    //         subLayersVisible[layerInfo.subId] =
-    //           layerInfo._isAllSubLayerVisibleOnPath();
-    //       }
-    //     });
-    //     if(haseConfiguredInLayerOptionsflag) {
-    //       this._setSubLayerVisible(subLayersVisible);
-    //     }
-    //   }
-    // },
-
-
-
-    _initVisible: function() {
       this._visible = this.layerObject.visible;
     },
 
     _setTopLayerVisible: function(visible) {
+      if (visible) {
+        this.layerObject.setVisibility(true);
+      } else {
+        this.layerObject.setVisibility(false);
+      }
       this._visible = visible;
-      this.layerObject.setVisibility(visible);
+      array.forEach(this.newSubLayers, function(subLayerInfo) {
+        subLayerInfo.setLayerVisiblefromTopLayer();
+      }, this);
     },
 
-    _setSubLayerVisible: function(layersVisible) {
-      // summary:
-      //   set seblayer visible
-      // description:
-      //   paramerter:
-      //   {subLayerId: visble}
+    /*
+    setSubLayerVisible: function(subLayerId, visible) {
+    //id === name at this.
       var ary = [], index;
-      ary = lang.clone(this.originOperLayer.layerObject.visibleLayers);
-
-      for (var child in layersVisible) {
-        if(layersVisible.hasOwnProperty(child) &&
-           (typeof layersVisible[child] !== 'function') /*&&child !== 'config'*/) {
-          var visible = layersVisible[child];
-          var subLayerId = child.toString();
+      if (subLayerId !== null) {
+        if (visible) {
+          ary = lang.clone(this.originOperLayer.layerObject.visibleLayers);
           index = array.indexOf(ary, subLayerId);
-          if (visible) {
-            if (index < 0) {
-              ary.push(subLayerId);
-            }
-          } else {
-            if (index >= 0) {
-              ary.splice(index, 1);
-            }
+          if(index < 0) {
+            ary.push(subLayerId);
+            this.originOperLayer.layerObject.setVisibleLayers(ary);
           }
+        } else {
+          ary = lang.clone(this.originOperLayer.layerObject.visibleLayers);
+          index = array.indexOf(ary, subLayerId);
+          if (index >= 0) {
+            ary.splice(index, 1);
+          }
+          if (ary.length === 0) {
+            ary.push(-1);
+          }
+          this.originOperLayer.layerObject.setVisibleLayers(ary);
         }
       }
-      this._setVisibleLayersBySelfFlag = true;
-      this.layerObject.setVisibleLayers(ary);
     },
-
-    _resetLayerObjectVisiblity: function(layerOptions) {
-      var layerOption  = layerOptions ? layerOptions[this.id]: null;
-      var haseConfiguredInLayerOptionsflag = false;
-      if(layerOptions) {
-        //reste visibility for parent layer.
-        if(layerOption) {
-          this.layerObject.setVisibility(layerOption.visible);
-        }
-        //reste visibility for sublayers.
-        var subLayersCheckedInfo = {};
-        for ( var id in layerOptions) {
-          if(layerOptions.hasOwnProperty(id) &&
-             (typeof layerOptions[id] !== 'function')) {
-            haseConfiguredInLayerOptionsflag = true;
-            subLayersCheckedInfo[id] = layerOptions[id].visible;
-          }
-        }
-
-        if(haseConfiguredInLayerOptionsflag) {
-          this._setSubLayerVisibleByCheckedInfo(subLayersCheckedInfo);
-        }
-      }
-
-    },
-
-    _setSubLayerVisibleByCheckedInfo: function(checkedInfo) {
-      var subLayersVisible = {};
-
-      // set visilbe for all sublayers
-      this.traversal(function(layerInfo) {
-        if(!layerInfo.isRootLayer()) {
-          if(esriLang.isDefined(checkedInfo[layerInfo.id])) {
-            layerInfo._setVisible(checkedInfo[layerInfo.id]);
-          }
-        }
-      });
-
-      this.traversal(function(layerInfo) {
-        if (layerInfo.getSubLayers().length === 0) {
-          subLayersVisible[layerInfo.subId] =
-            layerInfo._isAllSubLayerVisibleOnPath();
-        }
-      });
-      this._setSubLayerVisible(subLayersVisible);
-    },
-
-    /***************************************************
-     * methods for control layer definition
-     ***************************************************/
-    _getServiceDefinition: function() {
-      var url = this.getUrl();
-      var requestProxy = this._serviceDefinitionBuffer.getRequest(this.subId);
-      return requestProxy.request(url);
-    },
-
-    _serviceDefinitionRequest: function(url) {
-      return this._normalRequest(url, {'SERVICE': 'WMS', 'REQUEST': 'GetCapabilities'}, 'xml');
-    },
-
+    */
     //---------------new section-----------------------------------------
 
     obtainNewSubLayers: function() {
       var newSubLayerInfos = [];
-      array.forEach(this.layerObject.layerInfos, function(wmsLayerInfo, index){
+      array.forEach(this.layerObject.layerInfos, function(layerInfo){
         var subLayerInfo;
-        var operLayer = this._getOperLayerFromWMSLayerInfo(wmsLayerInfo, this);
-        subLayerInfo = this._layerInfoFactory.create(operLayer);
+        subLayerInfo = LayerInfoFactory.getInstance().create({
+          layerObject: this.layerObject, //the subLayerObject is WMS layer also.
+          title: layerInfo.label || layerInfo.title || layerInfo.name || " ",
+          id: layerInfo.name || " ", // WMS sub layer does not has id, the name is id.
+          wms: {"layerInfo": this, "subId": layerInfo.name, "wmsLayerInfo": layerInfo},
+          selfType: 'wms',
+          parentLayerInfo: this
+        });
 
         newSubLayerInfos.push(subLayerInfo);
         subLayerInfo.init();
       }, this);
 
       return newSubLayerInfos;
-    },
-
-    _getOperLayerFromWMSLayerInfo: function(wmsLayerInfo, parentLayerInfo) {
-      return {
-        layerObject: this.layerObject, //the subLayerObject is WMS layer also.
-        title: wmsLayerInfo.label || wmsLayerInfo.title || wmsLayerInfo.name || " ",
-        // WMS sub layer does not has id, set id to 'parentId' + name.
-        id: this.id + '_' + (wmsLayerInfo.name || "-"),
-        subId: wmsLayerInfo.name || "-",
-        wms: {"layerInfo": this, "subId": wmsLayerInfo.name || "-", "wmsLayerInfo": wmsLayerInfo},
-        selfType: 'wms',
-        parentLayerInfo: parentLayerInfo
-      };
-    },
-
-    /****************
-     * Event
-     ***************/
-    _bindEvent: function() {
-      this.inherited(arguments);
-      if(this.layerObject && !this.layerObject.empty) {
-        aspect.after(this.layerObject, "setVisibleLayers",
-          lang.hitch(this, this._onVisibleLayersChanged));
-      }
-    },
-
-    _onVisibleLayersChanged: function() {
-      var changedLayerInfos = [];
-
-      // send event
-      if(!this._setVisibleLayersBySelfFlag) {
-        this.traversal(function(layerInfo) {
-          // init visible for every sublayer.
-          if(!layerInfo.isRootLayer()) {
-            layerInfo._initVisible();
-          }
-        });
-        this._setVisibleLayersBySelfFlag = false;
-      }
-      this.traversal(function(layerInfo) {
-        // init visible for every sublayer.
-        //layerInfo._initVisible();
-        if(!layerInfo.isRootLayer()) {
-          changedLayerInfos.push(layerInfo);
-        }
-      });
-      this._setVisibleLayersBySelfFlag = false;
-      topic.publish('layerInfos/layerInfo/visibleChanged', changedLayerInfos);
-      this._isShowInMapChanged2();
     }
+
   });
 });

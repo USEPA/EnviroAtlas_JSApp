@@ -1,21 +1,17 @@
 define({
   "_widgetLabel": "Προσθήκη δεδομένων",
-  "noOptionsConfigured": "Δεν διαμορφώθηκαν επιλογές.",
-  "tabs": {
-    "search": "Αναζήτηση",
-    "url": "URL",
-    "file": "Αρχείο"
-  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "Το θεματικό επίπεδο δεν είναι προσβάσιμο.",
+    "online": "στο ArcGIS Online",
+    "url": "Εισαγάγετε ένα URL",
     "loadError": "Προσθήκη δεδομένων, δεν είναι δυνατή η φόρτωση:",
     "searchBox": {
       "search": "Αναζήτηση",
       "placeholder": "Αναζήτηση..."
     },
     "bboxOption": {
-      "bbox": "Μέσα στο χάρτη"
+      "bbox": "Μέσα στην περιοχή χάρτη"
     },
     "scopeOptions": {
       "anonymousContent": "Περιεχόμενο",
@@ -94,6 +90,10 @@ define({
     }
   },
   "addFromUrl": {
+    "donw": "Τέλος",
+    "editName": "Επεξεργασία ονόματος",
+    "buttonLabel": "URL...",
+    "caption": "Προσθήκη δεδομένων - Εισαγάγετε ένα URL",
     "type": "Τύπος",
     "url": "URL",
     "types": {
@@ -106,30 +106,5 @@ define({
       "CSV": "Ένα CSV αρχείο"
     },
     "samplesHint": "Δείγματα URL"
-  },
-  "addFromFile": {
-    "intro": "Μπορείτε να αποθέσετε ή να αναζητήσετε έναν από τους ακόλουθους τύπους αρχείων:",
-    "types": {
-      "Shapefile": "Ένα Shapefile (.zip, αρχείο ZIP το οποίο περιέχει όλα τα αρχεία shapefile)",
-      "CSV": "Ένα αρχείο CSV (.csv, με διεύθυνση ή γεωγραφικό πλάτος, γεωγραφικό μήκος και οριοθετημένο με κόμμα, ελληνικό ερωτηματικό ή tab)",
-      "GPX": "Ένα αρχείο GPX (.gpx, μορφής GPS Exchange)",
-      "GeoJSON": "Ένα αρχείο GeoJSON (.geo.json ή .geojson)"
-    },
-    "generalizeOn": "Γενίκευση στοιχείων για εμφάνιση στο web",
-    "dropOrBrowse": "Απόθεση ή αναζήτηση",
-    "browse": "Αναζήτηση",
-    "invalidType": "Αυτός ο τύπος αρχείου δεν υποστηρίζεται.",
-    "addingPattern": "{filename}: προσθήκη...",
-    "addFailedPattern": "{filename}: η προσθήκη απέτυχε",
-    "featureCountPattern": "{filename}: {count} στοιχεία",
-    "invalidTypePattern": "{filename}: αυτός ο τύπος δεν υποστηρίζεται",
-    "maxFeaturesAllowedPattern": "Επιτρέπονται έως {count} στοιχεία",
-    "layerNamePattern": "{filename} - {name}"
-  },
-  "layerList": {
-    "caption": "Θεμ. επίπ.",
-    "noLayersAdded": "Δεν έχουν προστεθεί επίπεδα.",
-    "removeLayer": "Κατάργηση θεματικού επιπέδου",
-    "back": "Πίσω"
   }
 });

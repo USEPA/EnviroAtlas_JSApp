@@ -1,21 +1,17 @@
 define({
   "_widgetLabel": "Adăugare date",
-  "noOptionsConfigured": "Nu a fost configurată nicio opţiune.",
-  "tabs": {
-    "search": "Căutare",
-    "url": "URL",
-    "file": "Fişier"
-  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "Stratul tematic este inaccesibil.",
+    "online": "ArcGIS Online",
+    "url": "Introduceţi un URL",
     "loadError": "Adăugare date, imposibil de încărcat:",
     "searchBox": {
       "search": "Căutare",
       "placeholder": "Căutare..."
     },
     "bboxOption": {
-      "bbox": "În hartă"
+      "bbox": "În interiorul suprafeţei din hartă"
     },
     "scopeOptions": {
       "anonymousContent": "Conţinut",
@@ -94,6 +90,10 @@ define({
     }
   },
   "addFromUrl": {
+    "donw": "Gata",
+    "editName": "editare nume",
+    "buttonLabel": "URL...",
+    "caption": "Adăugare date - Introduceţi un URL",
     "type": "Tip",
     "url": "URL",
     "types": {
@@ -106,30 +106,5 @@ define({
       "CSV": "Un fişier CSV"
     },
     "samplesHint": "Exemple de URL"
-  },
-  "addFromFile": {
-    "intro": "Puteţi fixa sau naviga la unul dintre următoarele tipuri de fişiere:",
-    "types": {
-      "Shapefile": "Un Shapefile (.zip, arhivă ZIP care conţine toate fişierele shapefile)",
-      "CSV": "Un fişier CSV (.csv, cu adresă sau latitudine, longitudine şi delimitate prin virgulă, punct şi virgulă sau tab)",
-      "GPX": "Un fişier GPX (.gpx, format de schimb GPS)",
-      "GeoJSON": "Un fişier GeoJSON (.geo.json sau .geojson)"
-    },
-    "generalizeOn": "Generalizare obiecte spaţiale pentru afişarea pe Web",
-    "dropOrBrowse": "Glisare sau navigare",
-    "browse": "Răsfoire",
-    "invalidType": "Acest tip de fişier nu este suportat.",
-    "addingPattern": "{filename}: se adaugă...",
-    "addFailedPattern": "{filename}: adăugare eşuată",
-    "featureCountPattern": "{filename}: {count} obiecte spaţiale",
-    "invalidTypePattern": "{filename}: acest tip nu este acceptat",
-    "maxFeaturesAllowedPattern": "Sunt permise maximum {count} obiecte spaţiale",
-    "layerNamePattern": "{filename} - {name}"
-  },
-  "layerList": {
-    "caption": "Straturi tematice",
-    "noLayersAdded": "Nu a fost adăugat niciun strat tematic.",
-    "removeLayer": "Eliminare strat tematic",
-    "back": "Înapoi"
   }
 });

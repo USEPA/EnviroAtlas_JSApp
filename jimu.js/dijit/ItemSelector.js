@@ -87,7 +87,6 @@ define([
     //events:
     //item-selected
     //none-item-selected
-    //update
 
     //css classes:
     //signin-tip
@@ -314,15 +313,6 @@ define([
     },
 
     _initItemTables: function(){
-      //pass onCreateItemContent callback
-      if(typeof this.onCreateItemContent === 'function'){
-        this.mycontentItemTable.onCreateItemContent = this.onCreateItemContent;
-        this.organizationItemTable.onCreateItemContent = this.onCreateItemContent;
-        this.groupItemTable.onCreateItemContent = this.onCreateItemContent;
-        this.publicPortalItemTable.onCreateItemContent = this.onCreateItemContent;
-        this.publicOnlineItemTable.onCreateItemContent = this.onCreateItemContent;
-      }
-
       //bind events
       this.own(
         on(this.publicPortalItemTable, 'item-dom-clicked', lang.hitch(this, this._onItemDomClicked))
@@ -338,22 +328,6 @@ define([
       );
       this.own(
         on(this.mycontentItemTable, 'item-dom-clicked', lang.hitch(this, this._onItemDomClicked))
-      );
-
-      this.own(
-        on(this.publicPortalItemTable, 'update', lang.hitch(this, this._onItemTableUpdate))
-      );
-      this.own(
-        on(this.publicOnlineItemTable, 'update', lang.hitch(this, this._onItemTableUpdate))
-      );
-      this.own(
-        on(this.organizationItemTable, 'update', lang.hitch(this, this._onItemTableUpdate))
-      );
-      this.own(
-        on(this.groupItemTable, 'update', lang.hitch(this, this._onItemTableUpdate))
-      );
-      this.own(
-        on(this.mycontentItemTable, 'update', lang.hitch(this, this._onItemTableUpdate))
       );
 
       var portalUrl = this._getPortalUrl();
@@ -598,10 +572,6 @@ define([
         this.groupItemTable.set('portalUrl', portalUrl);
         this.groupItemTable.searchAllItems(this._allGroupQuery);
       }
-    },
-
-    _onItemTableUpdate: function(){
-      this.emit("update");
     },
 
     _onItemDomClicked: function(itemDiv){

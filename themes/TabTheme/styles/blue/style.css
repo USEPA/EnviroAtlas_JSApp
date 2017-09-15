@@ -1,7 +1,7 @@
 .jimu-main-background{
   background-color: #0057b9;
 }
-.jimu-on-screen-widget-panel>.jimu-panel-title{
+.jimu-preload-widget-icon-panel>.jimu-panel-title{
   color: white;
   background-color: #0057b9;
 }
@@ -16,20 +16,4 @@ background-color: #0057b9;
 .jimu-widget-sidebar-controller .min-pane,
 .jimu-widget-sidebar-controller .other-group-pane{
   border-style: none;
-}
-.esriPopup .titlePane {
-  background-color: #0057b9;
-}
-.jimu-widget-sidebar-controller .other-group-title{
-  color: #ffffff;
-}
-.jimu-widget-sidebar-controller .other-group:hover{
-  background-color: #0063d3;
-}
-.tab-widget-frame .title-label {
-  color: #0057b9;
-}
-.jimu-widget-sidebar-controller .content-title,
-.jimu-widget-sidebar-controller .other-group-pane-title .text{
-  color: #ffffff;
 }

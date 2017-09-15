@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "縮尺記号"
-});
+﻿define(
+   ({
+    _widgetLabel: "縮尺記号"
+  })
+);

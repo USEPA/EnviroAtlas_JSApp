@@ -3,8 +3,6 @@ define({
     descriptionlabel: "Use the Measure tool to draw a line on the map that you want to see the elevation profile for.",
     chartLabel: "Hover over or touch the Elevations Profile chart to display elevations and show location on map.",
     clear: "Clear",
-    prepare: "Prepare Download...",
-    download: "Download",
     measurelabel: "Measure",
     resultslabel: "Profile Result",
     profileinfo: "Profile Information",

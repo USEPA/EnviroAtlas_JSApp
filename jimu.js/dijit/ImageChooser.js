@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,9 +14,7 @@
 // limitations under the License.
 ///////////////////////////////////////////////////////////////////////////
 
-define([
-    'dojo/Evented',
-    'dojo/_base/declare',
+define(['dojo/_base/declare',
     'dijit/_WidgetBase',
     'dijit/_TemplatedMixin',
     'dojo/_base/lang',
@@ -28,19 +26,46 @@ define([
     'esri/lang',
     '../utils',
     './_CropImage',
+    'jimu/tokenUtils',
     'jimu/dijit/Popup',
     'jimu/dijit/Message',
     'jimu/dijit/LoadingShelter'
   ],
-  function(Evented, declare, _WidgetBase, _TemplatedMixin, lang, html,
+  function(declare, _WidgetBase, _TemplatedMixin, lang, html,
     on, template, has, request, esriLang, utils, _CropImage,
-    Popup, Message, LoadingShelter) {
+    tokenUtils, Popup, Message, LoadingShelter) {
+    /*global testLoad*/
+    var fileAPIJsStatus = 'unload'; // unload, loading, loaded
     var count = 0;
 
+    function _loadFileAPIJs(prePath, cb) {
+      prePath = prePath || "";
+      var loaded = 0,
+        completeCb = function() {
+          loaded++;
+          if (loaded === tests.length) {
+            cb();
+          }
+        },
+        tests = [{
+          test: window.File && window.FileReader && window.FileList && window.Blob ||
+            !utils.file.isEnabledFlash(),
+          failure: [
+            prePath + "libs/polyfills/fileAPI/FileAPI.js"
+          ],
+          callback: function() {
+            completeCb();
+          }
+        }];
+
+      for (var i = 0; i < tests.length; i++) {
+        testLoad(tests[i]);
+      }
+    }
     //summary:
     //  popup the image file chooser dialog, when choose an image file,
     //  display the image file and return the image's base64 code
-    var ic = declare([_WidgetBase, _TemplatedMixin, Evented], {
+    var ic = declare([_WidgetBase, _TemplatedMixin], {
       templateString: template,
       declaredClass: "jimu.dijit.ImageChooser",
 
@@ -53,7 +78,6 @@ define([
       showTip: true,
       goldenWidth: 400,
       goldenHeight: 400,
-      maxSize: 1024,
       format: null, // array:['image/png','image/gif','image/jpeg']
 
       // public methods
@@ -73,9 +97,24 @@ define([
       postCreate: function() {
         this._initial();
         if (!utils.file.supportHTML5() && !has('safari') && utils.file.isEnabledFlash()) {
-          utils.file.loadFileAPI().then(lang.hitch(this, function() {
+          if (fileAPIJsStatus === 'unload') {
+            var prePath = tokenUtils.isInBuilderWindow() ? 'stemapp/' : "";
+            window.FileAPI = {
+              debug: false,
+              flash: true,
+              staticPath: prePath + 'libs/polyfills/fileAPI/',
+              flashUrl: prePath + 'libs/polyfills/fileAPI/FileAPI.flash.swf',
+              flashImageUrl: prePath + 'libs/polyfills/fileAPI/FileAPI.flash.image.swf'
+            };
+
+            _loadFileAPIJs(prePath, lang.hitch(this, function() {
+              html.setStyle(this.mask, 'zIndex', 1); // prevent mask hide file input
+              fileAPIJsStatus = 'loaded';
+            }));
+            fileAPIJsStatus = 'loading';
+          } else {
             html.setStyle(this.mask, 'zIndex', 1); // prevent mask hide file input
-          }));
+          }
         }
       },
 
@@ -118,8 +157,6 @@ define([
       },
 
       _processProperties: function() {
-        this.fileProperty = {};
-
         if (this.label && typeof this.label === 'string') {
           this.displayText.innerHTML = this.label;
           html.setStyle(this.hintText, 'display', 'block');
@@ -143,7 +180,7 @@ define([
           html.setAttr(this.fileInput, 'accept', accept);
         }
 
-        if (!utils.file.supportHTML5() && !has('safari') && utils.file.isEnabledFlash()) {
+        if (has('ie') <= 9) {
           html.setStyle(this.fileInput, {
             'width': '100%',
             'height': '100%',
@@ -234,7 +271,7 @@ define([
           return;
         }
 
-        var maxSize = has('ie') < 9 ? 23552 : this.maxSize * 1024; //ie8:21k others:1M
+        var maxSize = has('ie') < 9 ? 23552 : 1048576; //ie8:21k others:1M
         utils.file.readFile(
           evt,
           'image/*',
@@ -250,7 +287,6 @@ define([
                 'message': message
               });
             } else {
-              this.fileProperty.fileName = fileName;
               if (window.isXT && this.cropImage && file.type !== 'image/gif') {
                 this._cropImageByUser(fileData);
               } else {
@@ -287,7 +323,7 @@ define([
       },
 
       _readFileData: function(fileData) {
-        this.onImageChange(fileData, this.fileProperty);
+        this.onImageChange(fileData);
         if (this.displayImg) {
           html.setAttr(this.displayImg, 'src', fileData);
         }
@@ -296,12 +332,6 @@ define([
             html.setAttr(this.selfImg, 'src', fileData);
           } else {
             this.selfImg.src = fileData;
-          }
-          //Center&Vertically
-          var layoutBox = html.getMarginBox(this.hintImage);
-          if (layoutBox && layoutBox.w && layoutBox.h) {
-            html.style(this.selfImg, "maxWidth", layoutBox.w + "px");
-            html.style(this.selfImg, "maxHeight", layoutBox.h + "px");
           }
         }
       },
@@ -318,7 +348,7 @@ define([
           hidden: true
         });
         var cropPopup = new Popup({
-          titleLabel: this.nls.cropImage,
+          titleLabel: 'Crop Image',
           content: cropImage,
           // autoHeight: true,
           width: 500,
@@ -370,8 +400,6 @@ define([
 
       onImageChange: function(fileData) {
         this.imageData = fileData;
-        this.emit("imageChange", this.imageData, this.fileProperty);
-        this.emit("change", this.imageData, this.fileProperty);
       }
     });
 

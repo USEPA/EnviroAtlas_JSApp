@@ -1,21 +1,17 @@
 define({
   "_widgetLabel": "إضافة بيانات",
-  "noOptionsConfigured": "لم يتم تكوين اختيارات.",
-  "tabs": {
-    "search": "بحث",
-    "url": "عنوان URL",
-    "file": "ملف"
-  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "يتعذر الوصول إلى الطبقة.",
+    "online": "ArcGIS Online",
+    "url": "أدخل عنوان URL",
     "loadError": "AddData، يتعذر التحميل:",
     "searchBox": {
       "search": "بحث",
       "placeholder": "البحث..."
     },
     "bboxOption": {
-      "bbox": "داخل الخريطة"
+      "bbox": "في منطقة الخريطة"
     },
     "scopeOptions": {
       "anonymousContent": "المحتوى",
@@ -94,6 +90,10 @@ define({
     }
   },
   "addFromUrl": {
+    "donw": "تم",
+    "editName": "تحرير الاسم",
+    "buttonLabel": "عنوان URL...",
+    "caption": "أضف بيانات - أدخل عنوان URL",
     "type": "النوع",
     "url": "عنوان URL",
     "types": {
@@ -106,30 +106,5 @@ define({
       "CSV": "ملف CSV"
     },
     "samplesHint": "نماذج عناوين URL"
-  },
-  "addFromFile": {
-    "intro": "يمكنك إفلات أو استعراض أحد أنواع الملفات التالية:",
-    "types": {
-      "Shapefile": "ملف الشكل (.zip، أرشيف ZIP الضي يحتوي على كل ملفات الشكل)",
-      "CSV": "ملفات CSV (.csv، بعنوان أو دائرة عرض أو خط طول، مُحددة بفاصلة أو فاصلة منقوطة أو علامة تبويب)",
-      "GPX": "ملف GPX (.gpx، تنسيق تبادل GPS)",
-      "GeoJSON": "ملف GeoJSON (.geo.json أو .geojson)"
-    },
-    "generalizeOn": "تعميم المعالم لعرض الويب",
-    "dropOrBrowse": "إفلات أو استعراض",
-    "browse": "مربع حوار",
-    "invalidType": "نوع الملف غير مدعوم.",
-    "addingPattern": "{filename}: جارِ إضافة...",
-    "addFailedPattern": "{filename}: فشلت الإضافة",
-    "featureCountPattern": "{filename}: {count} معلم (معالم)",
-    "invalidTypePattern": "{filename}: هذا النوع غير مدعوم",
-    "maxFeaturesAllowedPattern": "يُسمح بحد أقصى {count} معالم",
-    "layerNamePattern": "{filename} - {name}"
-  },
-  "layerList": {
-    "caption": "طبقات",
-    "noLayersAdded": "لم يتم إضافة طبقات.",
-    "removeLayer": "إزالة الطبقة",
-    "back": "السابق"
   }
 });

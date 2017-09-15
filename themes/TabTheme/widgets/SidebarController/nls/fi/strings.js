@@ -1,5 +1,7 @@
-define({
-  "_widgetLabel": "Sivupalkki-säädin",
-  "more": "lisää",
-  "otherPanels": "Muut paneelit"
-});
+﻿define(
+   ({
+    _widgetLabel: "Sivupalkki-säädin",
+    more: "lisää",
+    otherPanels: "Muut ruudut"
+  })
+);

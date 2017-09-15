@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Mastelio keitimas"
-});
+﻿define(
+   ({
+    _widgetLabel: "Padidinti arba sumažinti slankiklį"
+  })
+);

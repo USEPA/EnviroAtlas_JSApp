@@ -69,18 +69,11 @@ var
   //    If it's debug mode, the app will load weinre file
   debug = false,
 
-  //deprecated, use appInfo.appPath instead
   path = null,
 
   isXT = false,
 
-  allCookies,
-
-  verboseLog = true,
-
-  //This version number will be appended to URL to avoid cache.
-  //The reason we do not use wabVersion is to avoid force user to change wabVersion when they are customizing app.
-  deployVersion = '2.5';
+  allCookies;
 
 // console.time('before map');
 
@@ -90,46 +83,26 @@ var
 
 /////////////////////////////////////
 
-
-/////Build scripts will uncomment this line to disable verboseLog.
-
-//verboseLog = false;
-
-/////////////////////////////////////
-
 (function(global){
   //init API URL
   var queryObject = getQueryObject();
-  var apiVersion = '3.21';
 
   ////////uncomment the following line when downloading the app
 
-  apiUrl = 'https://js.arcgis.com/3.21';
+  apiUrl = '//js.arcgis.com/3.17';
 
   //////////////////////////////////////////////////////////////
   allCookies = getAllCookies();
   window.appInfo = {isRunInPortal: !isXT};
   if (!apiUrl) {
     if (queryObject.apiurl) {
-      if(!checkApiUrl(queryObject.apiurl)){
-        console.error('?apiurl must point to an ULR that is in the app or in esri.com/arcgis.com domain.');
-        return;
-      }
       apiUrl = queryObject.apiurl;
     } else if (isXT) {
-      apiUrl = 'https://js.arcgis.com/' + apiVersion;
+      apiUrl = '//js.arcgis.com/3.17';
     } else {
       var portalUrl = getPortalUrlFromLocation();
       if (portalUrl.indexOf('arcgis.com') > -1) {
-        // if(portalUrl.indexOf('devext.arcgis.com') > -1){
-        //   apiUrl = '//js.arcgis.com/' + apiVersion;
-        // }else if(portalUrl.indexOf('qa.arcgis.com') > -1){
-        //   apiUrl = '//jsqa.arcgis.com/' + apiVersion;
-        // }else{
-        //   apiUrl = '//js.arcgis.com/' + apiVersion;
-        // }
-
-        apiUrl = 'https://js.arcgis.com/' + apiVersion;
+        apiUrl = '//js.arcgis.com/3.17';
       } else {
         apiUrl = portalUrl + 'jsapi/jsapi/';
       }
@@ -155,14 +128,6 @@ var
       }
     }
     return cookies;
-  }
-
-  function checkApiUrl(url){
-    if(/^\/\//.test(url) || /^https?:\/\//.test(url)){
-      return /(?:[\w\-\_]+\.)+(?:esri|arcgis)\.com/.test(url); //api url must be in esri.com or arcgis.com
-    }else{
-      return true;
-    }
   }
 
   function getPortalUrlFromLocation(){
@@ -194,16 +159,12 @@ var
     fullPath = window.location.pathname;
     if (fullPath === '/' || fullPath.substr(fullPath.length - 1) === '/') {
       path = fullPath;
-    }else{
+    } else if (/\.html$/.test(fullPath.split('/').pop())) {
       var sections = fullPath.split('/');
-      var lastSection = sections.pop();
-      if (/\.html$/.test(lastSection) || /\.aspx$/.test(lastSection) ||
-         /\.jsp$/.test(lastSection) || /\.php$/.test(lastSection)) {
-        //index.html may be renamed to index.jsp, etc.
-        path = sections.join('/') + '/';
-      } else {
-        return false;
-      }
+      sections.pop();
+      path = sections.join('/') + '/';
+    } else {
+      return false;
     }
     return path;
   }
@@ -254,22 +215,6 @@ var
         test: sp.trim,
         failure: prePath + "libs/polyfills/trim.js",
         callback: completeCb
-      }, {
-        test: false,
-        failure: prePath + "libs/polyfills/FileSaver.js",
-        callback: completeCb
-      }, {
-        test: typeof Blob !== 'undefined',
-        failure: prePath + "libs/polyfills/FileSaver.ie9.js",
-        callback: completeCb
-      }, {
-        test: window.Blob,
-        failure: prePath + "libs/polyfills/Blob.js",
-        callback: completeCb
-      }, {
-        test: window.ArrayBuffer,
-        failure: prePath + "libs/polyfills/typedarray.js",
-        callback: completeCb
       }];
 
     for(var i = 0; i < tests.length; i++){
@@ -309,31 +254,4 @@ var
   global._loadPolyfills = _loadPolyfills;
   global.queryObject = queryObject;
   global._setRTL = _setRTL;
-
-  global.avoidRequireCache = function(require){
-    var dojoInject = require.injectUrl;
-    require.injectUrl = function(url, callback, owner){
-      url = appendDeployVersion(url);
-      dojoInject(url, callback, owner);
-    };
-  };
-
-  global.avoidRequestCache = function (aspect, requestUtil){
-    aspect.after(requestUtil, 'parseArgs', function(args){
-      args.url = appendDeployVersion(args.url);
-      return args;
-    });
-  };
-
-  function appendDeployVersion(url){
-    if(/^http(s)?:\/\//.test(url) || /^\/proxy\.js/.test(url) || /^\/\//.test(url)){
-      return url;
-    }
-    if(url.indexOf('?') > -1){
-      url = url + '&wab_dv=' + deployVersion;
-    }else{
-      url = url + '?wab_dv=' + deployVersion;
-    }
-    return url;
-  }
 })(window);

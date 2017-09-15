@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -98,15 +98,6 @@ function(declare, lang, html, on, Deferred, _WidgetBase,
         args.mapOptions = {
           extent:this.initExtent
         };
-      }
-      if(this.lods){
-        if(typeof args.mapOptions === 'object'){
-          args.mapOptions.lods = this.lods;
-        }else{
-          args.mapOptions = {
-            lods: this.lods
-          };
-        }
       }
 
       var mapDeferred = jimuUtils.createWebMap(this.portalUrl, this.itemId, mapNode, args);

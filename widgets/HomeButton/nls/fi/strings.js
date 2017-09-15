@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Koti"
-});
+﻿define(
+   ({
+    _widgetLabel: "Kotisivu-painike"
+  })
+);

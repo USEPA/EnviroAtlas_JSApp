@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "ซูมสไลด์เดอร์"
-});
+﻿define(
+   ({
+    _widgetLabel: "ซูมสไลด์เดอร์"
+  })
+);

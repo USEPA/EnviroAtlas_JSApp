@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "ズーム スライダー"
-});
+﻿define(
+   ({
+    _widgetLabel: "ズーム スライダー"
+  })
+);

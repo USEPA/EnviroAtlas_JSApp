@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Avaleht"
-});
+﻿define(
+   ({
+    _widgetLabel: "Avalehe nupp"
+  })
+);

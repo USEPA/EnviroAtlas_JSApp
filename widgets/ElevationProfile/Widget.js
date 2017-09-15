@@ -55,16 +55,17 @@ define([
   'dojo/_base/window',
   'dojo/window',
   'dojo/_base/fx',
-  'dojox/gfx/utils',
   'jimu/dijit/LoadingShelter'
+
+
 ],
   function (declare, BaseWidget, Evented, _OnDijitClickMixin, _WidgetsInTemplateMixin,
     on, aspect, lang, Deferred, array, dojoJson, number, registry, Button, ToggleButton,
     put, domGeometry, domStyle, domClass, Color, colors, easing,
     Chart, Default, Grid, Areas, MouseIndicator, TouchIndicator, ThreeD, esriSniff,
     esriRequest, Geoprocessor, Polyline, SimpleLineSymbol, SimpleMarkerSymbol,
-    Graphic, FeatureSet, LinearUnit, geodesicUtils, webMercatorUtils, Units, jimuUtils,
-    Measurement, html, ProgressBar, TabContainer, Message, domConstruct, domAttr, baseWin, win, fx, gfxUtils) {
+    Graphic, FeatureSet, LinearUnit, geodesicUtils, webMercatorUtils, Units, utils,
+    Measurement, html, ProgressBar, TabContainer, Message, domConstruct, domAttr, baseWin, win, fx) {
     return declare([BaseWidget, _OnDijitClickMixin, _WidgetsInTemplateMixin, Evented], {
 
       baseClass: 'widget-elevation-profile',
@@ -80,16 +81,12 @@ define([
       lastMeasure: null,
       _sourceStr: null,
       _gainLossStr: null,
-      _hasCanvasSupport: false,
-      isIE: false,
 
       /**
        *  POSTCREATE - CONNECT UI ELEMENT EVENTS
        */
       postCreate: function () {
         this.inherited(arguments);
-        this.isIE = jimuUtils.has("ie") || jimuUtils.has("edge")
-        this._hasCanvasSupport = !!window.CanvasRenderingContext2D;
         var target = false,
             tooltip = false,
             tip = false;
@@ -104,6 +101,7 @@ define([
           domAttr.remove(target, 'title');
           var init_tooltip = lang.hitch(this, function()
           {
+            //registry.getEnclosingWidget(this.domNode)
             if(win.getBox().w < tooltip.clientWidth * 1.5){
                 domStyle.set(tooltip, 'max-width', win.getBox().w / 2);
             }else{
@@ -185,19 +183,6 @@ define([
         }
         this._bindEvents();
         this._initMeasureTool();
-
-        this.own(on(this.domNode, 'mousedown', lang.hitch(this, function (event) {
-          event.stopPropagation();
-          if (event.altKey) {
-            var msgStr = this.nls.widgetverstr + ': ' + this.manifest.version;
-            msgStr += '\n' + this.nls.wabversionmsg + ': ' + this.manifest.wabVersion;
-            msgStr += '\n' + this.manifest.description;
-            new Message({
-              titleLabel: this.nls.widgetversion,
-              message: msgStr
-            });
-          }
-        })));
       },
 
       /**
@@ -231,7 +216,7 @@ define([
           }
           this._resizeChart();
         })));
-        jimuUtils.setVerticalCenter(this.tabContainer.domNode);
+        utils.setVerticalCenter(this.tabContainer.domNode);
       },
 
       _initProgressBar: function () {
@@ -398,45 +383,10 @@ define([
       _bindEvents: function () {
         this.own(on(this.btnClear, 'click', lang.hitch(this, this._clear)));
         html.setStyle(this.btnClear, 'display', 'none');
-        this.own(on(this.btnExport, 'click', lang.hitch(this, this._export)));
-        html.setStyle(this.btnExport, 'display', 'none');
         html.setStyle(this.btnInfo, 'display', 'none');
-        html.setStyle(this.btnDownload, 'display', 'none');
-      },
-
-      _downloadCanvas: function(link, canvas, filename){
-        link.href = canvas.toDataURL("image/jpeg");
-        link.download = filename;
-        html.setStyle(this.btnExport, 'display', 'none');
-        html.setStyle(this.btnDownload, 'display', 'block');
-      },
-
-      _export: function(evt) {
-        gfxUtils.toSvg(this.profileChart.surface).then(lang.hitch(this, function(svg) {
-          var canvas = document.createElement('canvas');
-          canvas.width = this.profileChart.dim.width;
-          canvas.height = this.profileChart.dim.height;
-          var context = canvas.getContext("2d");
-          context.fillStyle = "#ffffff";
-          context.fillRect(0,0,canvas.width,canvas.height)
-
-          var URL = window.URL || window.webkitURL;
-          var data = new Blob([svg], {type: "image/svg+xml;charset=utf-8"});
-          var url = URL.createObjectURL(data);
-          var image = new Image();
-          image.crossOrigin = '';
-          image.onload = lang.hitch(this, function() {
-              context.drawImage(image, 0, 0);
-              URL.revokeObjectURL(url);
-              this._downloadCanvas(this.btnDownload, canvas, 'Profile.jpg');
-          })
-          image.src = url;
-        }));
       },
 
       _clear: function () {
-        html.setStyle(this.btnExport, 'display', 'none');
-        html.setStyle(this.btnDownload, 'display', 'none');
         html.setStyle(this.btnClear, 'display', 'none');
         html.setStyle(this.btnInfo, 'display', 'none');
         this.clearProfileChart();
@@ -611,16 +561,12 @@ define([
        * @returns {*}
        */
       displayProfileChart: function (geometry) {
-        html.setStyle(this.btnDownload, 'display', 'none');
         html.setStyle(this.progressBar.domNode, 'display', 'block');
         this._getProfile(geometry).then(lang.hitch(this, function (elevationInfo) {
           this.elevationInfo = elevationInfo;
           this._updateProfileChart();
           this.emit('display-profile', elevationInfo);
           html.setStyle(this.btnClear, 'display', 'block');
-          if(this._hasCanvasSupport && !this.isIE){
-            html.setStyle(this.btnExport, 'display', 'block');
-          }
           html.setStyle(this.btnInfo, 'display', 'block');
           html.setStyle(this.progressBar.domNode, 'display', 'none');
         }), lang.hitch(this, function (error) {
@@ -880,7 +826,6 @@ define([
             minorLabels: true,
             majorTicks: true,
             minorTicks: true,
-            htmlLabels: false,
             majorTick: {
               color: this.chartRenderingOptions.axisMajorTickColor,
               length: 6
@@ -903,7 +848,6 @@ define([
             minorLabels: true,
             majorTicks: true,
             minorTicks: true,
-            htmlLabels: false,
             majorTick: {
               color: this.chartRenderingOptions.axisMajorTickColor,
               length: 6
@@ -1047,8 +991,9 @@ define([
         if (displayUnits === this.measureTool._unitStrings.esriMeters) {
           return valueMeters;
         } else {
-          var distanceMiles = (valueMeters * this.measureTool._unitDictionary[this.measureTool._unitStrings.esriMeters]);
-          return (distanceMiles / this.measureTool._unitDictionary[displayUnits]);
+          var distanceMiles = (valueMeters / this.measureTool._unitDictionary[this.measureTool._unitStrings.esriMeters]);
+          //return (distanceMiles * this.measureTool._unitDictionary[displayUnits]);
+          return (distanceMiles/this.measureTool._unitDictionary[displayUnits]);
         }
       },
 
@@ -1065,7 +1010,7 @@ define([
             displayUnits = this.measureTool._unitStrings.esriFeet;
             break;
           case this.measureTool.esriYards:
-            displayUnits = this.measureTool._unitStrings.esriYards;
+            displayUnits = this.measureTool.esriFeet;
             break;
           case this.measureTool._unitStrings.esriKilometers:
             displayUnits = this.measureTool._unitStrings.esriMeters;

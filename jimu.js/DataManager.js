@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,19 +16,20 @@
 
 define(['dojo/_base/declare',
   'dojo/_base/lang',
-  'dojo/topic'],
-  function (declare, lang, topic) {
-  var instance = null, clazz;
+  'dojo/topic',
+  './WidgetManager'],
+  function (declare, lang, topic, WidgetManager) {
+  var instance  = null, clazz;
 
   clazz =  declare(null, {
-    constructor: function (widgetManager) {
+    constructor: function () {
       topic.subscribe('publishData', lang.hitch(this, this.onDataPublished));
       topic.subscribe('fetchData', lang.hitch(this, this.onFetchData));
       topic.subscribe('clearAllData', lang.hitch(this, this.onClearAllData));
       topic.subscribe('removeData', lang.hitch(this, this.onRemoveData));
       topic.subscribe('clearDataHistory', lang.hitch(this, this.onClearDataHistory));
 
-      this.widgetManager = widgetManager;
+      this.widgetManager = WidgetManager.getInstance();
     },
 
     //key=widgetid, value={current: data, history: [data]}
@@ -62,25 +63,16 @@ define(['dojo/_base/declare',
     onFetchData: function (id) {
       var w;
       if(id){
-        if(id === 'framework'){
+        w = this.widgetManager.getWidgetById(id);
+        if(w){
           if(this._dataStore[id]) {
-            topic.publish('dataFetched', 'framework', 'framework',
+            topic.publish('dataFetched', w.name, id,
               this._dataStore[id].current, this._dataStore[id].history);
           } else {
-            topic.publish('noData', 'framework', 'framework');
+            topic.publish('noData', w.name, id);
           }
         }else{
-          w = this.widgetManager.getWidgetById(id);
-          if(w){
-            if(this._dataStore[id]) {
-              topic.publish('dataFetched', w.name, id,
-                this._dataStore[id].current, this._dataStore[id].history);
-            } else {
-              topic.publish('noData', w.name, id);
-            }
-          }else{
-            topic.publish('noData', undefined, id);
-          }
+          topic.publish('noData', undefined, id);
         }
       }else{
         for(var p in this._dataStore){
@@ -89,9 +81,6 @@ define(['dojo/_base/declare',
             topic.publish('dataFetched', w.name, p,
               this._dataStore[p].current, this._dataStore[p].history);
           }
-        }
-        if(!w) {
-          topic.publish('noData', undefined, undefined);
         }
       }
     },
@@ -114,9 +103,9 @@ define(['dojo/_base/declare',
     }
   });
 
-  clazz.getInstance = function(widgetManager) {
+  clazz.getInstance = function () {
     if(instance === null) {
-      instance = new clazz(widgetManager);
+      instance = new clazz();
     }
     return instance;
   };

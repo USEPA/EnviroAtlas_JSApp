@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -37,8 +37,6 @@ define([
     var clazz = declare([BaseWidget, PoolControllerMixin], {
 
       baseClass: 'jimu-widget-sidebar-controller jimu-main-background',
-
-      moveTopOnActive: false,
 
       maxWidth: 365,
       minWidth: 55,
@@ -132,9 +130,10 @@ define([
       },
 
       _resizeTitleNode: function(){
-        var nodeWidth = (this.getWidth() - 2 - 21 - 18 * 4) / 5;
+        var nodeWidth = (this.getWidth() / 3);
         array.forEach(query('.title-node', this.maxStateNode), function(titleNode){
           html.setStyle(titleNode, 'width', nodeWidth + 'px');
+          html.setStyle(titleNode, 'height', '55px');
         }, this);
       },
 
@@ -547,8 +546,7 @@ define([
 
       _createMoreGroupNode: function(group) {
         var node = html.create('div', {
-            'class': 'other-group',
-            'data-widget-id': group.id
+            'class': 'other-group'
           }, this.otherGroupNode),
           arrowNode;
         html.create('img', {
@@ -557,7 +555,7 @@ define([
         }, node);
         html.create('div', {
           'class': 'other-group-title jimu-float-leading',
-          innerHTML: utils.stripHTML(group.label)
+          innerHTML: group.label
         }, node);
         var imgUrl = window.isRTL ? 'images/arrow_choose_rtl.png' : 'images/arrow_choose.png';
         arrowNode = html.create('img', {
@@ -703,12 +701,13 @@ define([
 
       _createTitleNode: function(config) {
         /*jshint unused:false*/
-        var nodeWidth = (this.getWidth() - 2 - 21 - 18 * 4) / 5;
+        var nodeWidth = (this.getWidth() / 3);
         var title = config.label,
           iconUrl = config.icon,
           node = html.create('div', {
             title: title,
-            'class': 'title-node jimu-float-leading jimu-leading-margin15',
+            'class': 'title-node jimu-float-leading',
+            'id': config.id,
             'settingid': config.id,
             i: this.tabs.length,
             style: {
@@ -722,6 +721,11 @@ define([
 
           imgNode = html.create('img', {
             src: iconUrl
+          }, node),
+
+          textTitleNode = html.create('div', {
+            'class': 'text-for-title-node',
+            innerHTML: title
           }, node),
 
           minNode = html.create('div', {
@@ -799,8 +803,7 @@ define([
         }, node);
         html.create('div', {
           'class': 'content-title',
-          innerHTML: utils.stripHTML((config.widgets && config.widgets.length > 1)?
-                                          config.label : '')
+          innerHTML: (config.widgets && config.widgets.length > 1) ? config.label : ''
         }, node);
         html.create('div', {
           'class': 'content-pane'

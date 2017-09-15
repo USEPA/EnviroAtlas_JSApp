@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,15 +26,14 @@ define([
   'dojo/on',
   'dojo/query',
   'dojo/Evented',
-  'esri/graphic',
   'esri/layers/GraphicsLayer',
+  'esri/graphic',
   'esri/toolbars/draw',
-  'esri/symbols/jsonUtils',
-  'esri/geometry/Polygon'
+  'esri/symbols/jsonUtils'
 ],
-function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, lang, html,
-  array, on, query, Evented, Graphic, GraphicsLayer, Draw, jsonUtils, Polygon) {
-
+function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
+  template, lang, html, array, on, query, Evented,
+  GraphicsLayer, Graphic, Draw, jsonUtils) {
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
     templateString:template,
     baseClass: 'jimu-draw-box',
@@ -43,22 +42,18 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
     drawLayer:null,
     drawLayerId:null,
     drawToolBar:null,
-    _isDisabled: false,
-    _shiftKey: false,
-    _ctrlKey: false,
-    _metaKey: false, //used for Mac
 
     //options:
-    //note: 'types' is mutually exclusive with 'geoTypes' and the latter has high priority
-    //available types: ['point','polyline','polygon','text']
-    types:null,
-    /*available geoTypes:
-      ["POINT",
-       "LINE", "POLYLINE", "FREEHAND_POLYLINE",
-       "TRIANGLE", "EXTENT", "CIRCLE", "ELLIPSE", "POLYGON", "FREEHAND_POLYGON",
-       "TEXT"]
-    */
-    geoTypes:null,//if 'geoTypes' is set, 'types' is ignored
+    types:null,//['point','polyline','polygon','text']
+    /**
+     * For 'point' type, geoTypes can be ["POINT"]
+     * For 'polyline' type, geoTypes can be ["LINE", "POLYLINE", "FREEHAND_POLYLINE"]
+     * For 'polygon' type, geoTypes can be ["TRIANGLE", "EXTENT", "CIRCLE",
+     * "ELLIPSE", "POLYGON", "FREEHAND_POLYGON"]
+     * For 'text' type, geoTypes can be ["POINT"]
+     * @type {[type]}
+     */
+    geoTypes:null,
     map:null,
     pointSymbol:null,
     polylineSymbol:null,
@@ -76,21 +71,14 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
     //setTextSymbol
     //addGraphic
     //removeGraphic
-    //reset
     //clear
     //activate
     //deactivate
-    //enable
-    //disable
-    //isEnabled
 
     //events:
     //icon-selected
     //draw-end
     //clear
-    //user-clear
-    //draw-activate
-    //draw-deactivate
 
     //css classes:
     //draw-item
@@ -122,59 +110,12 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       this._initTypes();
       var items = query('.draw-item', this.domNode);
       this.own(items.on('click', lang.hitch(this, this._onItemClick)));
-      this.own(on(this.btnClear, 'click', lang.hitch(this, this._onClickClear)));
-      //bind key events before draw-end
-      this.own(on(document.body, 'keydown', lang.hitch(this, function(event){
-        this._shiftKey = !!event.shiftKey;
-        this._ctrlKey = !!event.ctrlKey;
-        this._metaKey = !!event.metaKey;
-      })));
-      this.own(on(document.body, 'keyup', lang.hitch(this, function(event){
-        this._shiftKey = !!event.shiftKey;
-        this._ctrlKey = !!event.ctrlKey;
-        this._metaKey = !!event.metaKey;
-      })));
-
+      this.own(on(this.btnClear, 'click', lang.hitch(this, this.clear)));
       if(this.map){
         this.setMap(this.map);
       }
       var display = this.showClear === true ? 'block' : 'none';
       html.setStyle(this.btnClear, 'display', display);
-      this.enable();
-    },
-
-    enable: function(){
-      this._isDisabled = false;
-      html.addClass(this.domNode, 'enabled');
-      html.removeClass(this.domNode, 'disabled');
-    },
-
-    disable: function(){
-      this._isDisabled = true;
-      html.addClass(this.domNode, 'disabled');
-      html.removeClass(this.domNode, 'enabled');
-      this.deactivate();
-    },
-
-    hideLayer: function(){
-      if(this.drawLayer){
-        this.drawLayer.hide();
-      }
-    },
-
-    showLayer: function(){
-      if(this.drawLayer){
-        this.drawLayer.show();
-      }
-    },
-
-    isEnabled: function(){
-      return !this._isDisabled;
-    },
-
-    isActive: function(){
-      var items = query('.draw-item.jimu-state-active', this.domNode);
-      return items && items.length > 0;
     },
 
     disableWebMapPopup:function(){
@@ -190,7 +131,9 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
     },
 
     destroy:function(){
-      this.deactivate();
+      if(this.drawToolBar){
+        this.drawToolBar.deactivate();
+      }
 
       if(this.drawLayer){
         if(this.map){
@@ -235,11 +178,6 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       this.textSymbol = symbol;
     },
 
-    reset: function(){
-      this.deactivate();
-      this.clear();
-    },
-
     clear:function(){
       this.drawLayer.clear();
       this.onClear();
@@ -247,11 +185,10 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
 
     deactivate:function(){
       this.enableWebMapPopup();
-      query('.draw-item', this.domNode).removeClass('jimu-state-active');
       if(this.drawToolBar){
         this.drawToolBar.deactivate();
-        this.emit('draw-deactivate');
       }
+      query('.draw-item', this.domNode).removeClass('jimu-state-active');
     },
 
     activate: function(tool){
@@ -282,8 +219,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       this.emit("icon-selected", target, geotype, commontype);
     },
 
-    onDrawEnd:function(graphic, geotype, commontype, shiftKey, ctrlKey, metaKey){
-      this.emit('draw-end', graphic, geotype, commontype, shiftKey, ctrlKey, metaKey);
+    onDrawEnd:function(graphic, geotype, commontype){
+      this.emit('draw-end', graphic, geotype, commontype);
     },
 
     onClear:function(){
@@ -299,34 +236,6 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
 
     removeGraphic:function(g){
       this.drawLayer.remove(g);
-    },
-
-    getFirstGraphic: function(){
-      var firstGraphic = null;
-      if(this.drawLayer && this.drawLayer.graphics.length > 0){
-        firstGraphic = this.drawLayer.graphics[0];
-      }
-      return firstGraphic;
-    },
-
-    show: function(){
-      html.removeClass(this.domNode, 'hidden');
-    },
-
-    hide: function(){
-      html.addClass(this.domNode, 'hidden');
-    },
-
-    getDrawItemIcons: function(){
-      return query('.draw-item', this.domNode);
-    },
-
-    _onClickClear: function(){
-      if(this._isDisabled){
-        return;
-      }
-      this.clear();
-      this.emit("user-clear");
     },
 
     _initDefaultSymbols:function(){
@@ -371,45 +280,24 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
     },
 
     _initTypes:function(){
-      if(this.geoTypes && this.geoTypes.length > 0){
-        //if 'geoTypes' is set, we ignore 'types'
-        this.types = null;
-      }else{
-        this.geoTypes = [];
-        if(!(this.types && this.types.length > 0)){
-          this.types = ['point', 'polyline', 'polygon'];
-        }
-        if(this.types.indexOf('point') >= 0){
-          this.geoTypes = this.geoTypes.concat(["POINT"]);
-        }
-        if(this.types.indexOf('polyline') >= 0){
-          this.geoTypes = this.geoTypes.concat(["LINE", "POLYLINE", "FREEHAND_POLYLINE"]);
-        }
-        if(this.types.indexOf('polygon') >= 0){
-          var a = ["TRIANGLE", "EXTENT", "CIRCLE", "ELLIPSE", "POLYGON", "FREEHAND_POLYGON"];
-          this.geoTypes = this.geoTypes.concat(a);
-        }
-        if(this.types.indexOf('text') >= 0){
-          this.geoTypes = this.geoTypes.concat(["TEXT"]);
-        }
+      if(!(this.types instanceof Array)){
+        this.types = ['point', 'polyline', 'polygon'];
       }
       var items = query('.draw-item', this.domNode);
       items.style('display', 'none');
       array.forEach(items, lang.hitch(this, function(item){
-        var geoType = item.getAttribute('data-geotype');
-        var display = array.indexOf(this.geoTypes, geoType) >= 0;
+        var commonType = item.getAttribute('data-commontype');
+        var display = array.indexOf(this.types, commonType) >= 0;
+        if(this.geoTypes !== null){
+          var geoType = item.getAttribute('data-geotype');
+          display = display && array.indexOf(this.geoTypes, geoType) >= 0;
+        }
         html.setStyle(item, 'display', display ? 'block' : 'none');
       }));
     },
 
     _onItemClick:function(event){
-      if(this._isDisabled){
-        return;
-      }
       var target = event.target || event.srcElement;
-      if(!html.hasClass(target, 'draw-item')){
-        return;
-      }
       var isSelected = html.hasClass(target, 'jimu-state-active');
 
       //toggle tools on and off
@@ -427,12 +315,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       var geotype = itemIcon.getAttribute('data-geotype');
       var commontype = itemIcon.getAttribute('data-commontype');
       var tool = Draw[geotype];
-      if(geotype === 'TEXT'){
-        tool = Draw.POINT;
-      }
       this.disableWebMapPopup();
       this.drawToolBar.activate(tool);
-      this.emit('draw-activate', tool);
       this.onIconSelected(itemIcon, geotype, commontype);
     },
 
@@ -440,21 +324,9 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       var selectedItem = query('.draw-item.jimu-state-active', this.domNode)[0];
       var geotype = selectedItem.getAttribute('data-geotype');
       var commontype = selectedItem.getAttribute('data-commontype');
-      var geometry = null;
-
-      if(event.geometry.type === 'extent'){
-        //convert extent to polygon because Analysis dijit doesn't support extent
-        geometry = Polygon.fromExtent(event.geometry);
-      }else{
-        geometry = event.geometry;
-      }
-
-      geometry.geoType = geotype;
-      geometry.commonType = commontype;
-
+      var geometry = event.geometry;
       var type = geometry.type;
       var symbol = null;
-
       if (type === "point" || type === "multipoint") {
         if(html.hasClass(this.textIcon, 'jimu-state-active')){
           symbol = this.textSymbol;
@@ -467,20 +339,15 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
       } else {
         symbol = this.polygonSymbol;
       }
-
       var g = new Graphic(geometry, symbol, null, null);
-
       if(this.keepOneGraphic){
         this.drawLayer.clear();
       }
-
       this.drawLayer.add(g);
-
       if(this.deactivateAfterDrawing){
         this.deactivate();
       }
-
-      this.onDrawEnd(g, geotype, commontype, this._shiftKey, this._ctrlKey, this._metaKey);
+      this.onDrawEnd(g, geotype, commontype);
     }
 
   });

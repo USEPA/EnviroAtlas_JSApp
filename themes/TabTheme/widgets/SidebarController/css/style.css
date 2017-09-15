@@ -6,12 +6,12 @@
   left: 0;
   right: 0;
   top: 0;
-  height: 44px;
+  height: 55px;
   border-top: 1px solid #3a3a3a;
   border-top: 1px solid rgba(255,255,255,0.08);
 }
 .jimu-widget-sidebar-controller .title-node{
-  height: 44px;
+  height: 55px;
   cursor: pointer;
   margin-top: -2px;
 }
@@ -36,10 +36,23 @@
 }
 
 .jimu-widget-sidebar-controller .title-node img{
-  margin: 11px 29.62962962962963%;/*16/54*/
-  width: 40.74074074074074%; /*22/54*/
-  height: auto;
+  height: 24px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4px;
 }
+
+.jimu-widget-sidebar-controller .title-node .text-for-title-node{
+  color: white;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 1px;
+  font-size: 9px;
+  text-align: center;
+}
+
+
 .jimu-widget-sidebar-controller .tab-indicator{
   width: 0px;
   height: 2px;
@@ -64,7 +77,7 @@
 .jimu-widget-sidebar-controller .content-list{
   position: absolute;
   left: 0;
-  top: 45px;
+  top: 56px;
   right: 0;
   bottom: 0;
 }
@@ -82,7 +95,7 @@
   left: 0;
   right: 0;
   top: -1px;
-  height: 18px;
+  height: 0;
   opacity: 0.2;
 }
 .jimu-widget-sidebar-controller .content-title{
@@ -95,7 +108,7 @@
 .jimu-widget-sidebar-controller .content-pane{
   position: absolute;
   left: 0;
-  top: 18px;
+  top: 0;
   right: 0;
   bottom: 0;
   overflow: hidden;
@@ -187,14 +200,14 @@
   right: 0;
   top: 0;
   bottom: 0;
-  border-bottom: 1px solid rgba(255,255,255,0.7);
+  background: #666;
   opacity: 0.3;
 }
 .jimu-widget-sidebar-controller .other-group-pane-title .text{
   position: absolute;
   left: 14px;
   top: 1px;
-  color: white;
+  color: #888;
   font: 10px Arial;
 }
 .jimu-widget-sidebar-controller .other-group-pane-title .close{
@@ -219,9 +232,8 @@
 }
 .jimu-widget-sidebar-controller .other-group-title{
   margin: 15px 0;
-  color: white;
-  font: 12px Arial;
-  /*font-weight: bold;*/
+  color: #666;
+  font: 12px Arial bold;
 }
 .jimu-widget-sidebar-controller .other-group-choose{
   margin: 15px 30px;
@@ -242,8 +254,7 @@
   float: left;
   border-top-left-radius: 4px;
   color: #222;
-  font: 12px Arial;
-  /*font-weight: bold;*/
+  font: 12px Arial bold;
 }
 .jimu-widget-sidebar-controller .wp-title .title-angle{
   width: 21px;

@@ -1,4 +1,4 @@
-html[dir='rtl'] caption,
+html[dir='rtl'] caption, 
 html[dir='rtl'] th {
   text-align: right;
 }
@@ -133,34 +133,6 @@ html[dir='rtl'] th {
   padding-right: 1em;
 }
 
-.jimu-leading-position0{
-  left: 0;
-}
-
-.jimu-trailing-position0{
-  right: 0;
-}
-
-.jimu-leading-margin5px{
-  margin-left: 5px;
-}
-.jimu-leading-margin10px{
-  margin-left: 10px;
-}
-.jimu-leading-margin20px{
-  margin-left: 20px;
-}
-
-.jimu-trailing-margin5px{
-  margin-right: 5px;
-}
-.jimu-trailing-margin10px{
-  margin-right: 10px;
-}
-.jimu-trailing-margin20px{
-  margin-right: 20px;
-}
-
 /* RTL related: margins, padding */
 .jimu-rtl .jimu-leading-margin0 {
   margin-right: 0;
@@ -281,38 +253,7 @@ html[dir='rtl'] th {
   padding-right: auto;
 }
 
-.jimu-rtl .jimu-leading-position0{
-  left: auto;
-  right: 0;
-}
 
-.jimu-rtl .jimu-trailing-position0{
-  right: auto;
-  left: 0;
-}
 
-.jimu-rtl .jimu-leading-margin5px{
-  margin-left: auto;
-  margin-right: 5px;
-}
-.jimu-rtl .jimu-leading-margin10px{
-  margin-left: auto;
-  margin-right: 10px;
-}
-.jimu-rtl .jimu-leading-margin20px{
-  margin-left: auto;
-  margin-right: 20px;
-}
 
-.jimu-rtl .jimu-trailing-margin5px{
-  margin-right: auto;
-  margin-left: 5px;
-}
-.jimu-rtl .jimu-trailing-margin10px{
-  margin-right: auto;
-  margin-left: 10px;
-}
-.jimu-rtl .jimu-trailing-margin20px{
-  margin-right: auto;
-  margin-left: 20px;
-}
+

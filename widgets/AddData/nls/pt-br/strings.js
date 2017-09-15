@@ -1,21 +1,17 @@
 define({
   "_widgetLabel": "Adicionar Dados",
-  "noOptionsConfigured": "Nenhuma opção foi configurada.",
-  "tabs": {
-    "search": "Pesquisar",
-    "url": "URL",
-    "file": "Arquivo"
-  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "A camada é inacessível.",
+    "online": "ArcGIS Online",
+    "url": "Insira Uma URL",
     "loadError": "AddData, não é possível carregar:",
     "searchBox": {
       "search": "Pesquisar",
       "placeholder": "Pesquisar..."
     },
     "bboxOption": {
-      "bbox": "Dentro do mapa"
+      "bbox": "Dentro da área do mapa"
     },
     "scopeOptions": {
       "anonymousContent": "Conteúdo",
@@ -94,6 +90,10 @@ define({
     }
   },
   "addFromUrl": {
+    "donw": "Concluído",
+    "editName": "editar Nome",
+    "buttonLabel": "URL...",
+    "caption": "Adicionar Dados - Insira uma URL",
     "type": "Tipo",
     "url": "URL",
     "types": {
@@ -106,30 +106,5 @@ define({
       "CSV": "Um Arquivo CSV"
     },
     "samplesHint": "URL(s) de Amostra"
-  },
-  "addFromFile": {
-    "intro": "Você pode soltar ou procurar por um dos tipos dos arquivos seguintes:",
-    "types": {
-      "Shapefile": "Um Shapefile (.zip, arquivo ZIP contendo todos os arquivos de shapefile)",
-      "CSV": "Um Arquivo de CSV (.csv, com endereço ou latitude, longitude e delimitado por vírgula, dois pontos ou barra)",
-      "GPX": "Um Arquivo de GPX (.gpx, Formato de Intercãmbio do GPS)",
-      "GeoJSON": "Um Arquivo de GeoJSON (.geo.json ou .geojson)"
-    },
-    "generalizeOn": "Generalizar feições para visualização da web",
-    "dropOrBrowse": "Soltar ou Procurar",
-    "browse": "Procurar",
-    "invalidType": "Este tipo de serviço não tem suporte.",
-    "addingPattern": "{filename}: adicionando...",
-    "addFailedPattern": "{filename}: falha ao adicionar",
-    "featureCountPattern": "{filename}: {count} feições",
-    "invalidTypePattern": "{filename}: este tipo não é suportado",
-    "maxFeaturesAllowedPattern": "Um máximo de {count} feições são permitidas",
-    "layerNamePattern": "{filename} - {name}"
-  },
-  "layerList": {
-    "caption": "Camadas",
-    "noLayersAdded": "Nenhuma camada foi adicionada.",
-    "removeLayer": "Remover Camada",
-    "back": "Voltar"
   }
 });

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@ define(['dojo/_base/declare',
       _preProcessing: function() {
         if (this.buttons.length === 0) {
           this.buttons.push({
-            label: window.jimuNls.common.ok,
+            label: 'OK',
             key: keys.ENTER,
             onClick: lang.hitch(this, this.close)
           });

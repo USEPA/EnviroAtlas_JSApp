@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Přehledová mapa"
-});
+﻿define(
+   ({
+    _widgetLabel: "Přehledová mapa"
+  })
+);

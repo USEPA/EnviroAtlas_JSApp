@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Mapa de vista general"
-});
+﻿define(
+   ({
+    _widgetLabel: "Mapa de vista general"
+  })
+);

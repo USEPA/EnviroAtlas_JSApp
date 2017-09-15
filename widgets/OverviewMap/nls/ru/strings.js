@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Обзорная карта"
-});
+﻿define(
+   ({
+    _widgetLabel: "Обзорная карта"
+  })
+);

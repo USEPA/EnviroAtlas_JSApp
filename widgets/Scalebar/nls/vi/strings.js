@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Khung tỷ lệ"
-});
+﻿define(
+   ({
+    _widgetLabel: "Khung tỷ lệ"
+  })
+);

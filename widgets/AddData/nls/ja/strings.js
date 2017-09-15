@@ -1,21 +1,17 @@
 define({
-  "_widgetLabel": "データ追加",
-  "noOptionsConfigured": "オプションが構成されませんでした。",
-  "tabs": {
-    "search": "検索",
-    "url": "URL",
-    "file": "ファイル"
-  },
+  "_widgetLabel": "データの追加",
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "レイヤーにアクセスできません。",
-    "loadError": "データ追加、次を読み込めません:",
+    "online": "ArcGIS Online",
+    "url": "URL の入力",
+    "loadError": "データの追加、次を読み込めません:",
     "searchBox": {
       "search": "検索",
       "placeholder": "検索..."
     },
     "bboxOption": {
-      "bbox": "マップ内"
+      "bbox": "マップ エリア内"
     },
     "scopeOptions": {
       "anonymousContent": "コンテンツ",
@@ -94,6 +90,10 @@ define({
     }
   },
   "addFromUrl": {
+    "donw": "完了",
+    "editName": "名前の編集",
+    "buttonLabel": "URL...",
+    "caption": "データの追加 - URL の入力",
     "type": "タイプ",
     "url": "URL",
     "types": {
@@ -106,30 +106,5 @@ define({
       "CSV": "CSV ファイル"
     },
     "samplesHint": "サンプル URL"
-  },
-  "addFromFile": {
-    "intro": "次のいずれかのファイル タイプをドロップまたは参照できます。",
-    "types": {
-      "Shapefile": "シェープファイル (*.zip、すべてのシェープ ファイルを含む ZIP アーカイブ)",
-      "CSV": "CSV ファイル (*.csv、住所または緯度と経度を含み、カンマ、セミコロン、またはタブ区切り)",
-      "GPX": "GPX ファイル (*.gpx、GPS Exchange Format)",
-      "GeoJSON": "GeoJSON ファイル (*.geo.json または *.geojson)"
-    },
-    "generalizeOn": "Web 表示用にフィーチャを単純化",
-    "dropOrBrowse": "ドロップまたは参照",
-    "browse": "参照",
-    "invalidType": "このファイル タイプはサポートされていません。",
-    "addingPattern": "{filename}: 追加しています...",
-    "addFailedPattern": "{filename}: 追加できませんでした",
-    "featureCountPattern": "{filename}: {count} フィーチャ",
-    "invalidTypePattern": "{filename}: このタイプはサポートされていません",
-    "maxFeaturesAllowedPattern": "最大 {count} フィーチャが許可されています",
-    "layerNamePattern": "{filename} - {name}"
-  },
-  "layerList": {
-    "caption": "レイヤー",
-    "noLayersAdded": "レイヤーが追加されていません。",
-    "removeLayer": "レイヤーの削除",
-    "back": "戻る"
   }
 });

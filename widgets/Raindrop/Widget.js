@@ -47,7 +47,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
       this.inherited(arguments);
       this._initTabContainer();
 
-      // console.log('postCreate');
+      console.log('postCreate');
     },
 
     startup: function() {
@@ -134,11 +134,11 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
         document.getElementById("linePath").innerHTML = '';
         document.getElementById("noResults").innerHTML = '<b>Select Raindrop Point(s)</b>';
         document.getElementById("zoomBtnContainer").style.display = 'none';
-        // console.log("Raindrop Tool: Cleared Graphics");
+        console.log("Raindrop Tool: Cleared Graphics");
       });
 
       on(this.run_Service, "click", function(){
-        // console.log("This is on click", this.map);
+        console.log("This is on click", this.map);
 
         //toggle map onclick event
         if(typeof onMapClick != 'undefined'){
@@ -189,7 +189,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
       //lang.hitch(this, this.onInputKeyUp)
       on(this.zoomToLine, "click", lang.hitch(this, this._zoomToLineClickEvent));
 
-      // console.log('startup');
+      console.log('startup');
     },
 
     _zoomToLineClickEvent: function (evt){
@@ -233,7 +233,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
                   curColor,
                   lineTh
               );
-              // console.log("JSON: ",  dojoJson.toJson(response, true));
+              console.log("JSON: ",  dojoJson.toJson(response, true));
               //add polyline to map
               var polyline = new Polyline(response['output']['indexing_path']['coordinates']);
 
@@ -254,11 +254,11 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
                 //zoomBtnContainer
               document.getElementById("zoomBtnContainer").style.display = 'block';
 
-              // console.log("Success: Returned Raindrop Path");
+              console.log("Success: Returned Raindrop Path");
               //console.log("Success: ", dojoJson.toJson(response['output']['indexing_path']['coordinates'], true));
             }else{
               document.getElementById("noResults").innerHTML = '<b>No Results Returned</b>';
-              // console.log("Success: ", dojoJson.toJson(response['output']['indexing_path']['coordinates'], true));
+              console.log("Success: ", dojoJson.toJson(response['output']['indexing_path']['coordinates'], true));
             }
             //select results tab
             var mainTab = dijit.byId("tabContainer"); //Tr
@@ -306,7 +306,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
     },
 
     onOpen: function(){
-      // console.log('onOpen');
+      console.log('onOpen');
     },
 
     onClose: function(){
@@ -322,24 +322,24 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
       window.toggleOnRainDrop = false;
       document.getElementById('butMapClickForPopup').click();
 
-      // console.log('onClose');
+      console.log('onClose');
     },
 
     onMinimize: function(){
-      // console.log('onMinimize');
+      console.log('onMinimize');
     },
 
     onMaximize: function(){
-      // console.log('onMaximize');
+      console.log('onMaximize');
     },
 
     onSignIn: function(credential){
       /* jshint unused:false*/
-      // console.log('onSignIn');
+      console.log('onSignIn');
     },
 
     onSignOut: function(){
-      // console.log('onSignOut');
+      console.log('onSignOut');
     }
   });
 });

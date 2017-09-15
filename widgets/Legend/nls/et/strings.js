@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Legend"
-});
+﻿define(
+   ({
+    _widgetLabel: "Legend"
+  })
+);

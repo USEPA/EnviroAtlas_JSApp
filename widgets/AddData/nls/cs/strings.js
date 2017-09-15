@@ -1,21 +1,17 @@
 define({
   "_widgetLabel": "Přidat data",
-  "noOptionsConfigured": "Nebyly nakonfigurovány žádné možnosti.",
-  "tabs": {
-    "search": "Hledat",
-    "url": "Adresa URL",
-    "file": "Soubor"
-  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} – {layerName}",
     "layerInaccessible": "Vrstva není přístupná.",
+    "online": "ArcGIS Online",
+    "url": "Zadejte adresu URL.",
     "loadError": "AddData, nelze načíst:",
     "searchBox": {
       "search": "Hledat",
       "placeholder": "Vyhledávání…"
     },
     "bboxOption": {
-      "bbox": "V mapě"
+      "bbox": "V oblasti mapy"
     },
     "scopeOptions": {
       "anonymousContent": "Obsah",
@@ -94,6 +90,10 @@ define({
     }
   },
   "addFromUrl": {
+    "donw": "Hotovo",
+    "editName": "upravit název",
+    "buttonLabel": "URL…",
+    "caption": "Přidat data – zadejte adresu URL",
     "type": "Typ",
     "url": "Adresa URL",
     "types": {
@@ -106,30 +106,5 @@ define({
       "CSV": "Soubor CSV"
     },
     "samplesHint": "Příklady adres URL"
-  },
-  "addFromFile": {
-    "intro": "Přetažením nebo procházením můžete vybrat jeden z následujících typů soborů:",
-    "types": {
-      "Shapefile": "shapefile (.zip, archiv ZIP obsahující všechny soubory shapefile),",
-      "CSV": "soubor CSV (.csv, s adresou nebo zeměpisnou šířkou a délkou oddělenými čárkami, středníky nebo tabulátory),",
-      "GPX": "soubor GPX (.gpx, formát GPX Exchange),",
-      "GeoJSON": "soubor GeoJSON (.geo.json nebo .geojson)."
-    },
-    "generalizeOn": "Generalizovat prvky pro zobrazení na webu",
-    "dropOrBrowse": "Přetáhnout nebo procházet",
-    "browse": "Procházet",
-    "invalidType": "Tento typ souboru není podporován.",
-    "addingPattern": "{filename}: přidávání…",
-    "addFailedPattern": "{filename}: Přidávání selhalo.",
-    "featureCountPattern": "{filename}: {count} prvků",
-    "invalidTypePattern": "{filename}: Tento typ není podporován.",
-    "maxFeaturesAllowedPattern": "Je povoleno maximálně {count} prvků.",
-    "layerNamePattern": "{filename} – {name}"
-  },
-  "layerList": {
-    "caption": "Vrstvy",
-    "noLayersAdded": "Nebyly přidány žádné vrstvy.",
-    "removeLayer": "Odebrat vrstvu",
-    "back": "Zpět"
   }
 });

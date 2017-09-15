@@ -1,9 +1,11 @@
-define({
-  "unit": "Yksikkö",
-  "style": "Tyyli",
-  "dual": "molemmat",
-  "english": "englanti",
-  "metric": "metrinen",
-  "ruler": "viivain",
-  "line": "viiva"
-});
+﻿define(
+   ({
+    unit: "Yksikkö",
+    style: "Tyyli",
+    dual: "molemmat",
+    english: "englanti",
+    metric: "metrinen",
+    ruler: "viivain",
+    line: "viiva"
+  })
+);

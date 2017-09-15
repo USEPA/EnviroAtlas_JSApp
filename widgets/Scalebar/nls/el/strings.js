@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Μπάρα κλίμακας"
-});
+﻿define(
+   ({
+    _widgetLabel: "Μπάρα κλίμακας"
+  })
+);

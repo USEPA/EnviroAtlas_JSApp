@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Χάρτης επισκόπησης"
-});
+﻿define(
+   ({
+    _widgetLabel: "Χάρτης επισκόπησης"
+  })
+);

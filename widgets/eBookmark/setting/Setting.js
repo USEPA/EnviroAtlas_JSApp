@@ -55,7 +55,7 @@ define([
         //hack the 'Learn more about this widget link'
         setTimeout(function(){
           var helpLink = query('.help-link');
-          helpLink[0].href = 'http://gis.calhouncounty.org/WAB/V2.3/widgets/eBookmark/help/eBookmark_Help.htm';
+          helpLink[0].href = 'http://gis.calhouncounty.org/WAB/V1.2/widgets/eBookmark/help/eBookmark_Help.htm';
           html.setStyle(helpLink[0],'display','block');
         },600);
         this.config = config;

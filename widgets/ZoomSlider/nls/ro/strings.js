@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Glisor de zoom"
-});
+﻿define(
+   ({
+    _widgetLabel: "Glisor de zoom"
+  })
+);

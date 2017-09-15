@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Gösterim"
-});
+﻿define(
+   ({
+    _widgetLabel: "Gösterim"
+  })
+);

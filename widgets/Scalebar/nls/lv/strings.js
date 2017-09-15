@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Skalas_josla"
-});
+﻿define(
+   ({
+    _widgetLabel: "Skalas_josla"
+  })
+);

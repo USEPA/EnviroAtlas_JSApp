@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "ホーム"
-});
+﻿define(
+   ({
+    _widgetLabel: "ホーム ボタン"
+  })
+);

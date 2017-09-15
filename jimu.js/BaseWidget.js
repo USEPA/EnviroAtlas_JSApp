@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,11 +20,12 @@ define([
   'dojo/_base/array',
   'dojo/_base/html',
   'dojo/topic',
+  'dojo/Deferred',
   'dijit/_WidgetBase',
   'dijit/_TemplatedMixin',
   'jimu/utils',
   './PanelManager'
-], function(declare, lang, array, html, topic, _WidgetBase, _TemplatedMixin,
+], function(declare, lang, array, html, topic, Deferred, _WidgetBase, _TemplatedMixin,
   utils, PanelManager){
   var clazz = declare([_WidgetBase, _TemplatedMixin], {
     //type: String
@@ -139,8 +140,6 @@ define([
       this.own(topic.subscribe('publishData', lang.hitch(this, this._onReceiveData)));
       this.own(topic.subscribe('dataFetched', lang.hitch(this, this._onReceiveData)));
       this.own(topic.subscribe('noData', lang.hitch(this, this._onNoData)));
-
-      this.own(topic.subscribe('dataSourceDataUpdated', lang.hitch(this, this.onDataSourceDataUpdate)));
     },
 
     startup: function(){
@@ -331,7 +330,23 @@ define([
     },
 
     openWidgetById: function(widgetId){
-      return this.widgetManager.triggerWidgetOpen(widgetId);
+      //this method will publish openWidget message, so onscreen or pool widget can be opened.
+      var def = new Deferred();
+      if(this.widgetManager.getWidgetById(widgetId)){
+        def.resolve(this.widgetManager.getWidgetById(widgetId));
+        return def;
+      }
+
+      var handle = topic.subscribe('widgetCreated', lang.hitch(this, function(widget){
+        if(widget.id === widgetId){
+          handle.remove();
+          def.resolve(widget);
+        }
+      }));
+
+      topic.publish('openWidget', widgetId);
+
+      return def;
     },
 
     _onReceiveData: function(name, widgetId, data, historyData){
@@ -357,14 +372,6 @@ define([
             Please call fetch data.
         object: the history data.
       *********************************/
-    },
-
-    updateDataSourceData: function(dsId, data){
-      topic.publish('updateDataSourceData', 'widget~' + this.id + '~' + dsId, data);
-    },
-
-    onDataSourceDataUpdate: function(dsId, data){
-      /* jshint unused: false */
     },
 
     _onNoData: function(name, widgetId){

@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "وسيلة إيضاح"
-});
+﻿define(
+   ({
+    _widgetLabel: "وسيلة إيضاح"
+  })
+);

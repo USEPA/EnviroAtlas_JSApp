@@ -1,5 +1,7 @@
-define({
-  "_widgetLabel": "Sidebar-Controller",
-  "more": "mehr",
-  "otherPanels": "Weitere Fenster"
-});
+﻿define(
+   ({
+    _widgetLabel: "Sidebar-Controller",
+    more: "mehr",
+    otherPanels: "Andere Fenster"
+  })
+);

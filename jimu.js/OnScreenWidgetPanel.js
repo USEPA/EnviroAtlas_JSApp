@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,14 +31,14 @@ define(['dojo/_base/declare',
   ) {
     /* global jimuConfig */
     return declare([BaseWidgetPanel, _TemplatedMixin], {
-      baseClass: 'jimu-panel jimu-on-screen-widget-panel jimu-main-background',
+      baseClass: 'jimu-panel jimu-on-screen-widget-panel',
       _positionInfoBox: null,
       _originalBox: null,
       widgetIcon: null,
       _resizeOnOpen: true,
 
       templateString: '<div data-dojo-attach-point="boxNode">' +
-        '<div class="jimu-panel-title jimu-main-background" data-dojo-attach-point="titleNode">' +
+        '<div class="jimu-panel-title" data-dojo-attach-point="titleNode">' +
         '<div class="title-label jimu-vcenter-text jimu-float-leading jimu-leading-padding1"' +
         'data-dojo-attach-point="titleLabelNode">${label}</div>' +
         '<div class="close-btn jimu-vcenter jimu-float-trailing" ' +
@@ -103,11 +103,6 @@ define(['dojo/_base/declare',
       _onCloseBtnClicked: function(evt) {
         this.panelManager.closePanel(this);
         evt.stopPropagation();
-
-        //avoid to touchEvent pass through the closeBtn
-        if (evt.type === "touchstart") {
-          evt.preventDefault();
-        }
       },
 
       _normalizePositionObj: function(position) {
@@ -291,24 +286,8 @@ define(['dojo/_base/declare',
         if (!window.appInfo.isRunInMobile) {
           if (window.isRTL) {
             result.position.left = layoutBox.w - leftBlankWidth;
-
-            // prevent the panel out of map content
-            if ((result.position.left + this._positionInfoBox.w) > layoutBox.w) {
-              result.position.left -= this._positionInfoBox.w;
-              if (result.position.left < 0) {
-                result.position.left = layoutBox.w - this._positionInfoBox.w;
-              }
-            }
           } else {
             result.position.left = leftBlankWidth;
-            // prevent the panel out of map content
-            if ((result.position.left + this._positionInfoBox.w) > layoutBox.w) {
-              if (layoutBox.w > this._positionInfoBox.w) {
-                result.position.left = layoutBox.w - this._positionInfoBox.w;
-              } else {
-                result.position.left = 0;
-              }
-            }
           }
         } else {
           result.isRunInMobile = true;
@@ -329,14 +308,17 @@ define(['dojo/_base/declare',
           }
         }
 
+        if (!result.isRunInMobile) {
+          if ((result.position.left + this._positionInfoBox.w) > layoutBox.w) {
+            result.position.left -= this._positionInfoBox.w;
+          }
+        }
+
         return result;
       },
 
       _setMobilePosition: function() {
-        if (window.appInfo.isRunInMobile && this.domNode &&
-          this.domNode.parentNode !== html.byId(jimuConfig.layoutId)) {
-          html.place(this.domNode, jimuConfig.layoutId);
-        }
+        html.place(this.domNode, jimuConfig.layoutId);
         var pos = this.panelManager.getPositionOnMobile(this);
         if (this.position.zIndex) {
           pos.zIndex = this.position.zIndex;
@@ -347,10 +329,7 @@ define(['dojo/_base/declare',
       },
 
       _setDesktopPosition: function(position) {
-        if(!window.appInfo.isRunInMobile && this.domNode &&
-          this.domNode.parentNode !== html.byId(jimuConfig.mapId)) {
-          html.place(this.domNode, jimuConfig.mapId);
-        }
+        html.place(this.domNode, jimuConfig.mapId);
 
         html.setStyle(this.domNode, {
           left: position.left + 'px',

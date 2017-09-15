@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "מפת התמצאות"
-});
+﻿define(
+   ({
+    _widgetLabel: "מפת התמצאות"
+  })
+);

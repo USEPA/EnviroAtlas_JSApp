@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Zoomskjutreglage"
-});
+﻿define(
+   ({
+    _widgetLabel: "Zoomskjutreglage"
+  })
+);

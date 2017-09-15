@@ -1,21 +1,17 @@
 define({
   "_widgetLabel": "新增資料",
-  "noOptionsConfigured": "未配置選項。",
-  "tabs": {
-    "search": "搜尋",
-    "url": "URL",
-    "file": "檔案(F)"
-  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "圖層無法存取。",
+    "online": "ArcGIS Online",
+    "url": "輸入 URL",
     "loadError": "AddData，無法載入:",
     "searchBox": {
       "search": "搜尋",
       "placeholder": "搜尋..."
     },
     "bboxOption": {
-      "bbox": "地圖內"
+      "bbox": "在地圖區域內"
     },
     "scopeOptions": {
       "anonymousContent": "內容",
@@ -94,6 +90,10 @@ define({
     }
   },
   "addFromUrl": {
+    "donw": "完成",
+    "editName": "編輯名稱",
+    "buttonLabel": "URL...",
+    "caption": "新增資料 - 輸入 URL",
     "type": "類型",
     "url": "URL",
     "types": {
@@ -106,30 +106,5 @@ define({
       "CSV": "CSV 檔案"
     },
     "samplesHint": "範例 URL"
-  },
-  "addFromFile": {
-    "intro": "您可以拖曳或瀏覽下列其中一種檔案類型:",
-    "types": {
-      "Shapefile": "Shapefile (.zip，包含所有 shapefile 檔案的 ZIP 封存檔)",
-      "CSV": "CSV 檔案 (.csv，包含地址或經度、緯度和逗號、分號或索引標籤分隔)",
-      "GPX": "GPX 檔案 (.gpx，GPS Exchange 格式)",
-      "GeoJSON": "GeoJSON 檔案 (.geo.json 或 .geojson)"
-    },
-    "generalizeOn": "將圖徵一般化以便於 Web 顯示",
-    "dropOrBrowse": "捨棄或瀏覽",
-    "browse": "瀏覽",
-    "invalidType": "此檔案類型不被支援。",
-    "addingPattern": "{filename}: 正在新增...",
-    "addFailedPattern": "{filename}: 新增失敗",
-    "featureCountPattern": "{filename}: {count} 個圖徵",
-    "invalidTypePattern": "{filename}: 不支援此類型",
-    "maxFeaturesAllowedPattern": "最多允許 {count} 個圖徵",
-    "layerNamePattern": "{filename} - {name}"
-  },
-  "layerList": {
-    "caption": "圖層",
-    "noLayersAdded": "尚未增加任何圖層。",
-    "removeLayer": "移除圖層",
-    "back": "返回"
   }
 });

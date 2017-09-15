@@ -29,10 +29,6 @@ define(
 		showMeasurements : "Afficher les mesures",
 		areaUnits : "Unités de surface",
 		distanceUnits : "Unités de distance",
-		pointUnits : "Unités",
-		unitMap : "Unités de la carte",
-		unitDMS : "Degrés Minutes Secondes",
-		unitDD : "Degrés décimaux",
 		kilometers : "Kilomètres",
 		miles : "Miles",
 		meters : "Mètres",
@@ -96,9 +92,5 @@ define(
 		snappingMessage : 'NB : l\'accrochage est possible (utiliser la touche CTRL)',
 		hideOption : 'Cacher les dessins',
 		textPlacement : 'Placement',
-		isMeasureMessage:'Cette étiquette est une mesure',
-		west:'O',
-		east:'E',
-		north:'N',
-		south:'S'
+		isMeasureMessage:'Cette étiquette est une mesure'
 	}));

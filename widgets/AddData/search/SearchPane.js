@@ -16,6 +16,7 @@
 define(["dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/array",
+    "dojo/_base/html",
     "dojo/on",
     "dojo/dom-class",
     "dijit/_WidgetBase",
@@ -23,6 +24,9 @@ define(["dojo/_base/declare",
     "dijit/_WidgetsInTemplateMixin",
     "dojo/text!./templates/SearchPane.html",
     "dojo/i18n!../nls/strings",
+    "jimu/dijit/TabContainer3",
+    "./AddFromUrlPane",
+    // "./AddFromUrlDialog",
     "./SearchBox",
     "./BBoxOption",
     "./ScopeOptions",
@@ -32,8 +36,11 @@ define(["dojo/_base/declare",
     "./Paging",
     "./ResultCount"
   ],
-  function(declare, lang, array, on, domClass, _WidgetBase, _TemplatedMixin,
-    _WidgetsInTemplateMixin, template, i18n) {
+  function(declare, lang, array, html, on, domClass,
+    _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
+    template, i18n, TabContainer3, AddFromUrlPane
+    // , AddFromUrlDialog
+  ) {
 
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
@@ -54,6 +61,7 @@ define(["dojo/_base/declare",
         array.forEach(this.getComponents(), function(component) {
           component.searchPane = this;
         }, this);
+        this.initTabs();
       },
 
       startup: function() {
@@ -61,12 +69,36 @@ define(["dojo/_base/declare",
           return;
         }
         this.inherited(arguments);
-        //console.warn("SearchPane.startup .......................");
         this.bindEvents();
+        this.initOptions();
         if (this.searchOnStart) {
           this.search();
         }
       },
+
+      initTabs: function(){
+        this.addFromUrlPane = new AddFromUrlPane({
+          searchPane: this
+        });
+        html.place(this.addFromUrlPane.domNode, this.urlPane);
+        this.tab = new TabContainer3({
+          tabs: [{
+            title: this.nls.search.searchBox.search,
+            content: this.onlinePane
+          }, {
+            title: this.nls.search.url,
+            content: this.urlPane
+          }]
+        }, this.tabNode);
+        html.place(this.tab.domNode, this.domNode);
+      },
+
+      // addFromUrlClicked: function() {
+      //   var d = new AddFromUrlDialog({
+      //     wabWidget: this.wabWidget
+      //   });
+      //   d.show();
+      // },
 
       _onFilterPlaceholderChanged: function() {
         if (domClass.contains(this.filterPlaceholder, "opened")) {
@@ -80,7 +112,6 @@ define(["dojo/_base/declare",
       },
 
       _onSearchBoxPlaceholderChanged: function() {
-        /*
         if (!this.searchBox) {
           return;
         }
@@ -92,20 +123,15 @@ define(["dojo/_base/declare",
           domClass.add(this.searchBox.domNode, "show");
           this.searchBox.searchTextBox.focus();
         }
-        */
       },
 
       bindEvents: function() {
-        // TODO
-        this.own(on(this.filterPlaceholder,'click',
+        this.own(on(this.filterPlaceholder,
+          'click',
           lang.hitch(this, this._onFilterPlaceholderChanged)));
-
-        // TODO
-        /*
         this.own(on(this.searchBoxPlaceholder,
           'click',
           lang.hitch(this, this._onSearchBoxPlaceholderChanged)));
-        */
       },
 
       buildQueryParams: function(task) {
@@ -140,12 +166,33 @@ define(["dojo/_base/declare",
         ];
       },
 
+      initOptions: function() {
+        // var options = this.wabWidget.config.scopeOptions || {};
+        // var initOption = function(name, node) {
+        //   var opt = options[name];
+        //   if (opt) {
+        //     if (typeof opt.allow === "boolean" && !opt.allow) {
+        //       node.style.display = "none";
+        //     }
+        //     if (typeof opt.label === "string") {
+        //       var s = lang.trim(opt.label);
+        //       if (s.length > 0) {
+        //         util.setNodeText(node, s);
+        //       }
+        //     }
+        //   }
+        // };
+        // initOption("FromUrl", this.FromUrlNode);
+      },
+
       resize: function() {
         this.contentNode.style.top = this.headerNode.clientHeight + 1 + "px";
+        this.contentNode.style.bottom = this.footerNode.clientHeight + 1 + "px";
       },
 
       search: function() {
-        var self = this, task = {};
+        var self = this,
+          task = {};
         var params = this.buildQueryParams(task);
         if (params === null || params.q === null) {
           return;
@@ -189,12 +236,6 @@ define(["dojo/_base/declare",
           // TODO handle the error
           console.warn("searchError", error);
         });
-      },
-
-      _showLayers: function(){
-        if (this.wabWidget) {
-          this.wabWidget.showLayers();
-        }
       }
 
     });

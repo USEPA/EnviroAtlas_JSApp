@@ -16,12 +16,13 @@
 define(["dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/on",
+    "dojo/dom-class",
     "dojo/keys",
     "./SearchComponent",
     "dojo/text!./templates/SearchBox.html",
     "dojo/i18n!../nls/strings"
   ],
-  function(declare, lang, on, keys, SearchComponent, template, i18n) {
+  function(declare, lang, on, domClass, keys, SearchComponent, template, i18n) {
 
     return declare([SearchComponent], {
 
@@ -41,7 +42,6 @@ define(["dojo/_base/declare",
       },
 
       _checkClearButton: function() {
-        /*
         var v = this.searchTextBox.value;
         if (v !== null && v.length > 0) {
           //domClass.remove(this.clearButton,"hidden");
@@ -49,7 +49,6 @@ define(["dojo/_base/declare",
         } else {
           domClass.add(this.clearButton, "hidden");
         }
-        */
       },
 
       clearButtonClicked: function() {

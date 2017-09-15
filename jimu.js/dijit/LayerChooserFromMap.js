@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,12 +15,12 @@
 ///////////////////////////////////////////////////////////////////////////
 
 define([
-    'dojo/on',
-    'dojo/Evented',
     'dojo/_base/declare',
     'dijit/_WidgetBase',
     'dijit/_TemplatedMixin',
     'dijit/_WidgetsInTemplateMixin',
+    'dojo/Evented',
+    'dojo/on',
     'dojo/store/Memory',
     'dojo/Deferred',
     'dojo/store/Observable',
@@ -34,9 +34,9 @@ define([
     'jimu/LayerInfos/LayerInfos',
     'jimu/dijit/LoadingIndicator'
   ],
-  function(on, Evented, declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Memory, Deferred, Observable,
-    ObjectStoreModel, all, lang, html, array, jimuUtils, JimuTree, LayerInfos, LoadingIndicator) {
-
+  function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented, on,
+    Memory, Deferred, Observable, ObjectStoreModel, all, lang, html, array, jimuUtils,
+    JimuTree, LayerInfos, LoadingIndicator) {
     var LayerChooser = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
       templateString:'<div style="width:100%;">' +
         '<div data-dojo-attach-point="errorTipSection" class="error-tip-section">' +
@@ -52,9 +52,6 @@ define([
       //constructor options:
       createMapResponse: null, //The response of method createMap.
       multiple: false, //Can select multiple layers or a single layer.
-      onlyShowVisible: false,
-      updateWhenLayerInfosIsShowInMapChanged: false,
-      onlyShowWebMapLayers: false,
 
       //public methods:
       //getSelectedItems
@@ -68,7 +65,6 @@ define([
 
       //events:
       //tree-click
-      //update
 
       postMixInProperties:function(){
         this.nls = window.jimuNls.basicLayerChooserFromMap;
@@ -84,22 +80,9 @@ define([
         this.shelter.startup();
 
         this._createTree();
-        this.basicFilter = lang.hitch(this, this.basicFilter);
-        this.filter = LayerChooser.andCombineFilters([this.basicFilter, this.filter]);
-
         if(this.createMapResponse){
           this.setCreateMapResponse(this.createMapResponse);
         }
-      },
-
-      basicFilter: function(layerInfo){
-        var def = new Deferred();
-        if(this.onlyShowVisible){
-          def.resolve(layerInfo.isShowInMap());
-        }else{
-          def.resolve(true);
-        }
-        return def;
       },
 
       //to be override, return Deferred object
@@ -154,12 +137,6 @@ define([
           this.own(
             on(this.layerInfosObj, 'layerInfosChanged', lang.hitch(this, this._onLayerInfosChanged))
           );
-          if(this.updateWhenLayerInfosIsShowInMapChanged){
-            this.own(
-              on(this.layerInfosObj, 'layerInfosIsShowInMapChanged',
-                lang.hitch(this, this._onLayerInfosIsShowInMapChanged))
-            );
-          }
           this._buildTree(this.layerInfosObj);
         }));
       },
@@ -167,32 +144,15 @@ define([
       _onLayerInfosChanged: function(layerInfo, changedType) {
         /*jshint unused: false*/
         this._buildTree(this.layerInfosObj);
-        this.emit('update');
-      },
-
-      _onLayerInfosIsShowInMapChanged: function(changedLayerInfos){
-        /*jshint unused: false*/
-        this._buildTree(this.layerInfosObj);
-        this.emit('update');
       },
 
       _buildTree: function(layerInfosObj){
         this._clear();
         html.setStyle(this.errorTipSection, 'display', 'block');
-        var layerInfos = [];
-
-        if(this.onlyShowWebMapLayers){
-          layerInfos = layerInfosObj.getLayerInfoArrayOfWebmap();
-          layerInfos = layerInfos.concat(layerInfosObj.getTableInfoArrayOfWebmap());
-        }else{
-          layerInfos = layerInfosObj.getLayerInfoArray();
-          layerInfos = layerInfos.concat(layerInfosObj.getTableInfoArray());
-        }
-
+        var layerInfos = layerInfosObj.getLayerInfoArray();
         if(layerInfos.length === 0){
           return;
         }
-
         html.setStyle(this.errorTipSection, 'display', 'none');
         array.forEach(layerInfos, lang.hitch(this, function(layerInfo){
           this._addDirectLayerInfo(layerInfo);
@@ -300,23 +260,19 @@ define([
           model: myModel,
           showRoot: false,
           isLeafItem: lang.hitch(this, this._isLeafItem),
-
           style: {
             width: "100%"
           },
-
           onOpen: lang.hitch(this, function(item, node) {
             if (item.id === 'root') {
               return;
             }
             this._onTreeOpen(item, node);
           }),
-
           onClick: lang.hitch(this, function(item, node, evt) {
             this._onTreeClick(item, node, evt);
             this.emit('tree-click', item, node, evt);
           }),
-
           getIconStyle: lang.hitch(this, function(item, opened) {
             var icon = null;
             if (!item || item.id === 'root') {
@@ -331,7 +287,8 @@ define([
               backgroundImage: ''
             };
 
-            var baseUrl = window.location.protocol + "//" + window.location.host + require.toUrl("jimu");
+            var baseUrl = window.location.protocol + "//" +
+              window.location.host + require.toUrl("jimu");
 
             var imageName = this._getIconImageName(item, opened);
 
@@ -376,12 +333,10 @@ define([
           } else if (geoType === 'polygon') {
             imageName = 'polygon_layer1.png';
           }
-        } else if(item.type === 'Table'){
-          imageName = "table.png";
         } else if(item.type === 'ArcGISImageServiceLayer' ||
          item.type === 'ArcGISImageServiceVectorLayer'){
           imageName = 'image_layer.png';
-        } else {
+        }else {
           if (opened) {
             imageName = 'mapserver_open.png';
           } else {
@@ -488,7 +443,7 @@ define([
     };
 
     //the returned filter only filters FeatureLayer
-    LayerChooser.createFeaturelayerFilter = function(types, showLayerFromFeatureSet, showTable, mustSupportStatistics){
+    LayerChooser.createFeaturelayerFilter = function(types, showLayerFromFeatureSet){
       var allTypes = ['point', 'polyline', 'polygon'];
       if(types && types.length > 0){
         types = array.filter(types, function(type){
@@ -503,100 +458,90 @@ define([
       }
 
       return function(layerInfo){
+        var def = new Deferred();
         var defLayerType = layerInfo.getLayerType();
         var defLayerObject = layerInfo.getLayerObject();
-        return all({
+        all({
           layerType: defLayerType,
           layerObject: defLayerObject
         }).then(function(result){
           var layerType = result.layerType;
           var layerObject = result.layerObject;
           if (layerType === 'ArcGISDynamicMapServiceLayer') {
-            return true;
+            def.resolve(true);
           } else if (layerType === 'ArcGISTiledMapServiceLayer') {
-            return true;
+            def.resolve(true);
           } else if (layerType === 'GroupLayer'){
-            return true;
-          } else if (layerType === 'FeatureCollection'){
-            return true;
+            def.resolve(true);
           }else if (layerType === 'FeatureLayer') {
             var geoType = jimuUtils.getTypeByGeometryType(layerObject.geometryType);
             var isValidGeoType = array.indexOf(types, geoType) >= 0;
-            var isLayerValidStatistics = LayerChooser._shouldPassStatisticsCheck(mustSupportStatistics, layerObject);
 
-            if (layerObject.url) {
+            if(layerObject.url){
               //featurelayer by url
-              var isLayerSupportQuery = jimuUtils.isFeaturelayerUrlSupportQuery(layerObject.url,
-                  layerObject.capabilities);
-              return (isValidGeoType && isLayerSupportQuery && isLayerValidStatistics);
-            } else {
+              var isSupportQuery = false;
+              if(layerObject.url){
+                isSupportQuery = jimuUtils.isFeaturelayerUrlSupportQuery(layerObject.url,
+                                                                         layerObject.capabilities);
+              }
+              def.resolve(isValidGeoType && isSupportQuery);
+            }else{
               //featurelayer by featureset
-              return (showLayerFromFeatureSet && isValidGeoType);
+              if(showLayerFromFeatureSet){
+                def.resolve(isValidGeoType);
+              }else{
+                def.resolve(false);
+              }
             }
-          } else if(layerType === 'Table'){
-            //if showTable is true, we will ignore types
-            var isTableSupportQuery = jimuUtils.isFeaturelayerUrlSupportQuery(layerObject.url,
-                  layerObject.capabilities);
-            var isTableValidStatistics = LayerChooser._shouldPassStatisticsCheck(mustSupportStatistics, layerObject);
-            return (showTable && isTableSupportQuery && isTableValidStatistics);
           }else{
-            return false;
+            def.resolve(false);
           }
+        }, function(err){
+          console.log(err);
+          def.reject(err);
         });
+
+        return def;
       };
     };
 
     //the returned filter only filters ArcGISImageServiceLayer and ArcGISImageServiceVectorLayer
-    LayerChooser.createImageServiceLayerFilter = function(isSupportQuery, mustSupportStatistics){
+    LayerChooser.createImageServiceLayerFilter = function(isSupportQuery){
       return function(layerInfo){
+        var def = new Deferred();
         var defLayerType = layerInfo.getLayerType();
         var defLayerObject = layerInfo.getLayerObject();
-        return all({
+        all({
           layerType: defLayerType,
           layerObject: defLayerObject
         }).then(function(result){
           var layerType = result.layerType;
-          var layerObject = result.layerObject;
           if(layerType === 'ArcGISImageServiceLayer' ||
            layerType === 'ArcGISImageServiceVectorLayer'){
             if(isSupportQuery){
               if(jimuUtils.isImageServiceSupportQuery(result.layerObject.capabilities)){
-                if(mustSupportStatistics){
-                  return LayerChooser._shouldPassStatisticsCheck(mustSupportStatistics, layerObject);
-                }else{
-                  return true;
-                }
+                def.resolve(true);
               }else{
-                return false;
+                def.resolve(false);
               }
             }else{
-              return true;
+              def.resolve(true);
             }
           }else{
-            return false;
+            def.resolve(false);
           }
+        }, function(err){
+          console.log(err);
+          def.reject(err);
         });
+        return def;
       };
     };
 
-    LayerChooser._shouldPassStatisticsCheck = function(mustSupportStatistics, layerObject){
-      if(mustSupportStatistics){
-        var isSupport = false;
-        if (layerObject.advancedQueryCapabilities) {
-          isSupport = !!layerObject.advancedQueryCapabilities.supportsStatistics;
-        } else {
-          isSupport = !!layerObject.supportsStatistics;
-        }
-        return isSupport;
-      }else{
-        return true;
-      }
-    };
-
-    LayerChooser.createQueryableLayerFilter = function(mustSupportStatistics){
+    LayerChooser.createQueryableLayerFilter = function(){
       var types = ['point', 'polyline', 'polygon'];
-      var featureLayerFilter = LayerChooser.createFeaturelayerFilter(types, false, true, mustSupportStatistics);
-      var imageServiceLayerFilter = LayerChooser.createImageServiceLayerFilter(true, mustSupportStatistics);
+      var featureLayerFilter = LayerChooser.createFeaturelayerFilter(types, false);
+      var imageServiceLayerFilter = LayerChooser.createImageServiceLayerFilter(true);
       var filters = [featureLayerFilter, imageServiceLayerFilter];
       var combinedFilter = LayerChooser.orCombineFilters(filters);
       return combinedFilter;

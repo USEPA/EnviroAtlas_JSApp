@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -54,7 +54,9 @@ define([
           return this._getQueryTypeGeocoder(_layer);
         }, searchInfo.hintText));
         return all(defs).then(lang.hitch(this, function(results) {
-          config.sources = [].concat(results).concat(config.sources);
+          for (var i = 0, len = results.length; i < len; i++) {
+            config.sources.push(results[i]);
+          }
           return config;
         }));
       } else {
@@ -64,8 +66,6 @@ define([
       return when(this._getSoucesFromPortalAndWebmap())
         .then(lang.hitch(this, function(sources) {
           return {
-            "allPlaceholder": "",
-            "showInfoWindowOnSelect": true,
             "sources": sources
           };
         }));
@@ -91,7 +91,7 @@ define([
           for (var i = 0, len = geocoders.length; i < len; i++) {
             var geocoder = geocoders[i];
             if (geocoder) {
-              defs.push(this._processSingleLine(geocoder));
+              defs.splice(i, 0, this._processSingleLine(geocoder));
             }
           }
         }
@@ -112,13 +112,8 @@ define([
                 placeholder: geocode.placeholder ||
                   geocode.name || this._getGeocodeName(geocode.url),
                 maxResults: 6,
-                searchInCurrentMapExtent: false,
                 type: "locator"
               };
-              json.enableLocalSearch = this._isEsriLocator(json.url);
-              json.localSearchMinScale = 300000;
-              json.localSearchDistance = 50000;
-
               validSources.push(json);
             }
           }
@@ -165,7 +160,6 @@ define([
         displayField: item.field.name,
         exactMatch: item.field.exactMatch || false,
         maxResults: 6,
-        searchInCurrentMapExtent: false,
         type: "query"
       };
     } else {
@@ -217,10 +211,6 @@ define([
     }
     var strs = geocodeUrl.split('/');
     return strs[strs.length - 2] || "geocoder";
-  };
-
-  mo.getGeocoderName = function(url) {
-    return this._getGeocodeName(url);
   };
 
   mo.hasAppSearchInfo = function(map) {

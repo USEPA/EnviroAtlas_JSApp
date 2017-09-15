@@ -1,21 +1,17 @@
 define({
   "_widgetLabel": "Aggiungi dati",
-  "noOptionsConfigured": "Nessuna opzione configurata.",
-  "tabs": {
-    "search": "Cerca",
-    "url": "URL",
-    "file": "&File"
-  },
   "search": {
     "featureLayerTitlePattern": "{serviceName} - {layerName}",
     "layerInaccessible": "Il layer non è accessibile.",
+    "online": "ArcGIS Online",
+    "url": "Immettere un URL",
     "loadError": "AddData, impossibile caricare:",
     "searchBox": {
       "search": "Cerca",
       "placeholder": "Cerca..."
     },
     "bboxOption": {
-      "bbox": "All'interno della mappa"
+      "bbox": "Nell'area della mappa"
     },
     "scopeOptions": {
       "anonymousContent": "Contenuto",
@@ -94,6 +90,10 @@ define({
     }
   },
   "addFromUrl": {
+    "donw": "Completato",
+    "editName": "modifica nome",
+    "buttonLabel": "URL...",
+    "caption": "Aggiungi dati - Immettere un URL",
     "type": "Tipo",
     "url": "URL",
     "types": {
@@ -106,30 +106,5 @@ define({
       "CSV": "Un file CSV"
     },
     "samplesHint": "URL campione(i)"
-  },
-  "addFromFile": {
-    "intro": "È possibile rilasciare o cercare uno dei seguenti tipi di file:",
-    "types": {
-      "Shapefile": "Uno shapefile (.zip, archivio ZIP contenente tutti i file shapefile)",
-      "CSV": "Un file CSV (.csv, con indirizzo o latitudine, longitudine e virgola, punto e virgola o tabulazione)",
-      "GPX": "Un file GPX (.gpx, GPS Exchange Format)",
-      "GeoJSON": "Un file GeoJSON (.geo.json o .geojson)"
-    },
-    "generalizeOn": "Generalizza le feature per la visualizzazione Web",
-    "dropOrBrowse": "Rilascia o cerca",
-    "browse": "Esplora",
-    "invalidType": "Questo tipo di file non è supportato.",
-    "addingPattern": "{filename}: aggiunta in corso...",
-    "addFailedPattern": "{filename}: aggiunta non riuscita",
-    "featureCountPattern": "{filename}: {count} feature",
-    "invalidTypePattern": "{filename}: questo tipo non è supportato",
-    "maxFeaturesAllowedPattern": "È consentito un massimo di {count} feature",
-    "layerNamePattern": "{filename} - {name}"
-  },
-  "layerList": {
-    "caption": "Livelli",
-    "noLayersAdded": "Nessun layer aggiunto.",
-    "removeLayer": "Rimuovi layer",
-    "back": "Indietro"
   }
 });

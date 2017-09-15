@@ -1,9 +1,11 @@
-define({
-  "unit": "Enhet",
-  "style": "Stil",
-  "dual": "dobbel",
-  "english": "engelsk",
-  "metric": "metric",
-  "ruler": "linjal",
-  "line": "linje"
-});
+﻿define(
+   ({
+    unit: "Enhet",
+    style: "Stil",
+    dual: "dobbel",
+    english: "metric",
+    metric: "metric",
+    ruler: "linjal",
+    line: "linje"
+  })
+);

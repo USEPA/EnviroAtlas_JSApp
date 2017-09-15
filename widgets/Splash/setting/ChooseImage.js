@@ -32,7 +32,7 @@ define([
       toolbar.addChild(this.button);
     },
     _initButton: function() {
-      this.command = "chooseImage";
+      this.command = "uploadImage";
       this.editor.commands[this.command] = "Upload Image";
       this.inherited("_initButton", arguments);
       delete this.command;
@@ -41,38 +41,7 @@ define([
     updateState: function() {
       // summary:
       //    Over-ride for button state control for disabled to work.
-      //To find dojox_form_FileUploader
-      //(ChooseImage plugin's icon is a masker upon the dojox_form_FileUploader.So ChooseImage get all click events.
-      //ChooseImage will change dojox_form_FileUploader's icon ,when "viewsource" dijit clicked)
-      var editorUploadNorm;
-      for (var i = 0, len = this.editor._plugins.length; i < len; i++) {
-        var plugin = this.editor._plugins[i];
-        if (plugin.button.baseClass === "dojoxEditorUploadNorm") {
-          editorUploadNorm = plugin;
-          break;
-        }
-      }
-
-      var disabled = this.get("disabled");
-      if (true === disabled) {
-        html.addClass(this.button.domNode, 'dijitButtonDisabled');
-        html.setStyle(this.button.mask, 'cursor', "inherit");
-
-        if (editorUploadNorm) {
-          html.addClass(editorUploadNorm.button.domNode, 'dijitButtonDisabled');
-        }
-
-        this.button.disableChooseImage();
-      } else {
-        html.removeClass(this.button.domNode, 'dijitButtonDisabled');
-        html.setStyle(this.button.mask, 'cursor', "pointer");
-
-        if (editorUploadNorm) {
-          html.removeClass(editorUploadNorm.button.domNode, 'dijitButtonDisabled');
-        }
-
-        this.button.enableChooseImage();
-      }
+      this.button.set("disabled", this.get("disabled"));
     },
 
     createFileInput: function() {
@@ -150,11 +119,6 @@ define([
         });
     }
   });
-
-  /*jshint sub: true */
-  _Plugin.registry["chooseImage"] = function(args){
-    return new ChooseImage(args);
-  };
 
   return ChooseImage;
 });

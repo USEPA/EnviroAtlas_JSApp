@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Bară de scară"
-});
+﻿define(
+   ({
+    _widgetLabel: "Bară de scară"
+  })
+);

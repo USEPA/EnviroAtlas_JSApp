@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -173,10 +173,6 @@ function(declare, _WidgetBase, _TemplatedMixin, tnTemplate, lang, html, array,
       if(this.rootLoadingIndicator){
         html.setStyle(this.rootLoadingIndicator, 'display', 'none');
       }
-      //disable selection by shift key or ctrl key + mouse click
-      //http://stackoverflow.com/questions/12261723/
-      //how-to-disable-multiple-selection-of-nodes-in-dijit-tree
-      this.dndController.singular = true;
     },
 
     removeItem: function(id){

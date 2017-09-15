@@ -1,3 +1,5 @@
-define({
-  "_widgetLabel": "Barra Deslizante de Zoom"
-});
+﻿define(
+   ({
+    _widgetLabel: "Barra Deslizante de Zoom"
+  })
+);

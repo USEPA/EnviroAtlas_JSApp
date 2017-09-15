@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,17 +24,12 @@ define([
     'dojo/query',
     'dojo/NodeList-traverse',
     'dojo/Deferred',
-    'dojo/promise/all',
     'dojo/on',
     'dojo/json',
     'dojo/cookie',
     'dojo/number',
     'dojo/date/locale',
-    'dojo/i18n!dojo/cldr/nls/number',
-    'dojox/encoding/base64',
-    'esri/lang',
     'esri/arcgis/utils',
-    'esri/dijit/PopupTemplate',
     'esri/SpatialReference',
     'esri/geometry/Extent',
     'esri/geometry/Multipoint',
@@ -43,23 +38,17 @@ define([
     'esri/geometry/webMercatorUtils',
     'esri/tasks/GeometryService',
     'esri/tasks/ProjectParameters',
-    'esri/tasks/FeatureSet',
-    'esri/symbols/PictureMarkerSymbol',
     'esri/urlUtils',
     'esri/request',
-    'esri/tasks/query',
-    'esri/tasks/QueryTask',
-    'esri/graphicsUtils',
     'jimu/portalUrlUtils',
     './shared/utils'
   ],
 
-function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on, json, cookie,
-  dojoNumber, dateLocale, nlsBundle, base64, esriLang, arcgisUtils, PopupTemplate, SpatialReference,
-  Extent, Multipoint, Polyline, Polygon, webMercatorUtils, GeometryService, ProjectParameters, FeatureSet,
-  PictureMarkerSymbol, esriUrlUtils, esriRequest, EsriQuery, QueryTask, graphicsUtils, portalUrlUtils, sharedUtils
-) {
-  /* global esriConfig, dojoConfig, ActiveXObject, testLoad */
+function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, on, json, cookie,
+  dojoNumber, dateLocale, arcgisUtils, SpatialReference, Extent, Multipoint, Polyline, Polygon,
+  webMercatorUtils, GeometryService, ProjectParameters, esriUrlUtils, esriRequest,
+  portalUrlUtils, sharedUtils) {
+  /* global esriConfig, dojoConfig, ActiveXObject */
   var mo = {};
 
   nlt = null;
@@ -69,53 +58,6 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
   };
 
   lang.mixin(mo, sharedUtils);
-
-  if (!window.atob) {
-    window.atob = function(b64) {
-      var bytes = base64.decode(b64);
-      var str = "";
-      for (var i = 0, len = bytes.length; i < len; i++) {
-        str += String.fromCharCode(bytes[i]);
-      }
-      return str;
-    };
-  }
-  if (!window.btob) {
-    window.btob = function(str) {
-      var bytes = [];
-      for (var i = 0, len = str.length; i < len; i++) {
-        bytes.push(String.charCodeAt(str[i]));
-      }
-
-      return base64.encode(bytes);
-    };
-  }
-
-  var fileAPIJsStatus = 'unload'; // unload, loading, loaded
-  function _loadFileAPIJs(prePath, cb) {
-    prePath = prePath || "";
-    var loaded = 0,
-      completeCb = function() {
-        loaded++;
-        if (loaded === tests.length) {
-          cb();
-        }
-      },
-      tests = [{
-        test: window.File && window.FileReader && window.FileList && window.Blob ||
-          !mo.file.isEnabledFlash(),
-        failure: [
-          prePath + "libs/polyfills/fileAPI/FileAPI.js"
-        ],
-        callback: function() {
-          completeCb();
-        }
-      }];
-
-    for (var i = 0; i < tests.length; i++) {
-      testLoad(tests[i]);
-    }
-  }
 
   //if no beforeId, append to head tag, or insert before the id
   function loadStyleLink(id, href, beforeId) {
@@ -157,14 +99,14 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
         id: id,
         rel: "stylesheet",
         type: "text/css",
-        href: hrefPath + '?wab_dv=' + window.deployVersion
+        href: hrefPath
       }, html.byId(beforeId), 'before');
     } else {
       styleLinkNode = html.create('link', {
         id: id,
         rel: "stylesheet",
         type: "text/css",
-        href: hrefPath + '?wab_dv=' + window.deployVersion
+        href: hrefPath
       }, document.getElementsByTagName('head')[0]);
     }
 
@@ -209,9 +151,6 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
       m2 = m[i].match(/(url\(["|']?)(.*)((?:['|"]?)\))/i);
       if(m2.length >= 4){
         var path = m2[2];
-        if(/^data:image\/.*;/.test(path)){
-          continue;
-        }
         if(!rpath.endWith('/')){
           rpath = rpath + '/';
         }
@@ -319,54 +258,6 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     });
   };
 
-  var testImageDom = null;
-  mo.getImagesSize = function(imageUrl){
-    var def = new Deferred();
-
-    if (!imageUrl || imageUrl.indexOf("http") !== 0) {
-      def.reject();
-      return def;
-    }
-
-    if(testImageDom === null){
-      testImageDom = html.create('img', {
-        id: '__test-image-size',
-        style: {
-          position: 'absolute',
-          left: '-9999px',
-          top: '-9999px'
-        }
-      }, document.body);
-    }
-    var testImageHandler = on(testImageDom, "load", function(){
-      clearTimeout(timeoutHandler);
-      timeoutHandler = null;
-      testImageHandler.remove();
-
-      var box = html.getContentBox(testImageDom);
-
-      if ((box.w === 1 && box.h === 1) || box.w === 0 || box.h === 0) {
-        def.reject();
-        return;
-      }
-
-      def.resolve([box.w, box.h]);
-    }, {});
-
-    var timeoutHandler = setTimeout(function(){
-      clearTimeout(timeoutHandler);
-      timeoutHandler = null;
-      // image URL is invalid or takes too long; don't update it
-      def.reject();
-    }, 5000);
-
-    // IE&, Safari and Chrome cache the image if the user does it more than once and
-    //then don't call the onLoad handler
-    html.setAttr(testImageDom, 'src', imageUrl);
-
-    return def;
-  };
-
   /**
    * get style object from position
    * the position can contain 6 property: left, top, right, bottom, width, height
@@ -435,23 +326,12 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
 
   /**
    * compare two object/array recursively
-   * Note: null === null, undefined === undefined
    */
   function isEqual(o1, o2) {
     var leftChain, rightChain;
 
     function compare2Objects(x, y) {
       var p;
-      if(x === null && y === null || typeof x === 'undefined' && typeof y === 'undefined'){
-        return true;
-      }
-
-      if(x === null && y !== null || y === null && x !== null ||
-        typeof x === 'undefined' && typeof y !== 'undefined' ||
-        typeof y === 'undefined' && typeof x !== 'undefined'){
-        return false;
-      }
-
       // remember that NaN === NaN returns false
       // and isNaN(undefined) returns true
       if (isNaN(x) && isNaN(y) && typeof x === 'number' && typeof y === 'number') {
@@ -505,10 +385,6 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
             rightChain.pop();
             break;
           default:
-            // remember that NaN === NaN returns false
-            if (isNaN(x[p]) && isNaN(y[p]) && typeof x[p] === 'number' && typeof y[p] === 'number') {
-              return true;
-            }
             if (x[p] !== y[p]) {
               return false;
             }
@@ -596,30 +472,25 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     setTimeout(doSet, 10);
   }
 
+  /**
+   * get uri info from the configured uri property,
+   * the info contains: folderUrl, name
+   */
+  function getUriInfo(uri) {
+    var pos, firstSeg, info = {},
+      amdFolder;
+
+    pos = uri.indexOf('/');
+    firstSeg = uri.substring(0, pos);
+
+    //config using package
+    amdFolder = uri.substring(0, uri.lastIndexOf('/') + 1);
+    info.folderUrl = require(mo.getRequireConfig()).toUrl(amdFolder);
+    info.amdFolder = amdFolder;
+    return info;
+  }
+
   mo.file = {
-    loadFileAPI: function() {
-      var def = new Deferred();
-      if (fileAPIJsStatus === 'unload') {
-        var prePath = !!window.isBuilder ? 'stemapp/' : "";
-        window.FileAPI = {
-          debug: false,
-          flash: true,
-          staticPath: prePath + 'libs/polyfills/fileAPI/',
-          flashUrl: prePath + 'libs/polyfills/fileAPI/FileAPI.flash.swf',
-          flashImageUrl: prePath + 'libs/polyfills/fileAPI/FileAPI.flash.image.swf'
-        };
-
-        _loadFileAPIJs(prePath, lang.hitch(this, function() {
-          fileAPIJsStatus = 'loaded';
-          def.resolve();
-        }));
-        fileAPIJsStatus = 'loading';
-      } else if (fileAPIJsStatus === 'loaded'){
-        def.resolve();
-      }
-
-      return def;
-    },
     supportHTML5: function() {
       if (window.File && window.FileReader && window.FileList && window.Blob) {
         return true;
@@ -753,76 +624,22 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     }
   };
 
-  ///////////////////widget json(in app config json) processing
+  mo.processWidgetSetting = function(setting) {
+    if (!setting.uri) {
+      return setting;
+    }
+    lang.mixin(setting, getUriInfo(setting.uri));
 
-  mo.getUriInfo = function getUriInfo(uri) {
-    var pos, firstSeg, info = {},
-      amdFolder;
-
-    pos = uri.indexOf('/');
-    firstSeg = uri.substring(0, pos);
-
-    //config using package
-    amdFolder = uri.substring(0, uri.lastIndexOf('/') + 1);
-    info.folderUrl = require(mo.getRequireConfig()).toUrl(amdFolder);
-    info.amdFolder = amdFolder;
-
-    info.url = info.folderUrl;//for backward compatibility
-
-    if(/^http(s)?:\/\//.test(uri) || /^\/\//.test(uri)){
-      info.isRemote = true;
+    if (!setting.icon) {
+      setting.icon = setting.amdFolder + 'images/icon.png';
+    }
+    if (!setting.thumbnail) {
+      setting.thumbnail = setting.amdFolder + 'images/thumbnail.png';
     }
 
-    return info;
+    //setting.label has been processed when loading config.
+    return setting;
   };
-
-  mo.widgetJson = (function(){
-    var ret = {};
-
-    ret.addManifest2WidgetJson = function(widgetJson, manifest){
-      lang.mixin(widgetJson, manifest.properties);
-      widgetJson.name = manifest.name;
-      if(!widgetJson.label){
-        widgetJson.label = manifest.label;
-      }
-      widgetJson.manifest = manifest;
-      widgetJson.isRemote = manifest.isRemote;
-      if(widgetJson.isRemote){
-        widgetJson.itemId = manifest.itemId;
-      }
-      if(manifest.featureActions){
-        widgetJson.featureActions = manifest.featureActions;
-      }
-
-      if (!widgetJson.icon) {
-        widgetJson.icon = manifest.icon;
-      }
-
-      if (!widgetJson.thumbnail) {
-        widgetJson.thumbnail = manifest.thumbnail;
-      }
-
-      widgetJson.folderUrl = manifest.folderUrl;
-      widgetJson.amdFolder = manifest.amdFolder;
-    };
-
-    ret.removeManifestFromWidgetJson = function(widgetJson){
-      //we set property to undefined, instead of delete them.
-      //The reason is: configmanager can't hanle delete properties for now
-      if(!widgetJson.manifest){
-        return;
-      }
-      for(var p in widgetJson.manifest.properties){
-        widgetJson[p] = undefined;
-      }
-      widgetJson.name = undefined;
-      widgetJson.label = undefined;
-      widgetJson.featureActions = undefined;
-      widgetJson.manifest = undefined;
-    };
-    return ret;
-  })();
-
 
   mo.getRequireConfig = function() {
     /* global jimuConfig */
@@ -1043,7 +860,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     var box = html.getContentBox(dom);
     var a = dom.scrollTop + box.h;
     var b = dom.scrollHeight - a;
-    return b < 1;
+    return b === 0;
   };
 
   mo.getAllItemTypes = function() {
@@ -1286,272 +1103,27 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     return obj;
   };
 
-  /////////////widget and theme manifest processing/////////
-  mo.manifest = (function(){
-    var ret = {};
 
-    function addThemeManifestProperies(manifest) {
-      manifest.panels.forEach(function(panel) {
-        panel.uri = 'panels/' + panel.name + '/Panel.js';
-      });
+  mo.addManifestProperies = function(manifest) {
+    manifest.icon = manifest.url + 'images/icon.png';
 
-      manifest.styles.forEach(function(style) {
-        style.uri = 'styles/' + style.name + '/style.css';
-      });
-
-      manifest.layouts.forEach(function(layout) {
-        layout.uri = 'layouts/' + layout.name + '/config.json';
-        layout.icon = 'layouts/' + layout.name + '/icon.png';
-        layout.RTLIcon = 'layouts/' + layout.name + '/icon_rtl.png';
-      });
+    if(manifest.category === "theme") {
+      addThemeManifestProperies(manifest);
+    } else {
+      addWidgetManifestProperties(manifest);
     }
-
-    function addWidgetManifestProperties(manifest) {
-      //because tingo db engine doesn't support 2D, 3D property, so, change here
-      if (typeof manifest['2D'] !== 'undefined') {
-        manifest.support2D = manifest['2D'];
-      }
-      if (typeof manifest['3D'] !== 'undefined') {
-        manifest.support3D = manifest['3D'];
-      }
-
-      if (typeof manifest['2D'] === 'undefined' && typeof manifest['3D'] === 'undefined') {
-        manifest.support2D = true;
-      }
-
-      delete manifest['2D'];
-      delete manifest['3D'];
-
-      if (typeof manifest.properties === 'undefined') {
-        manifest.properties = {};
-      }
-
-      sharedUtils.processWidgetProperties(manifest);
-    }
-
-    ret.addManifestProperies = function(manifest) {
-      if(!manifest.icon){
-        manifest.icon = manifest.folderUrl + 'images/icon.png?wab_dv=' + window.deployVersion;
-      }
-
-      if (!manifest.thumbnail) {
-        manifest.thumbnail = manifest.folderUrl + 'images/thumbnail.png';
-      }
-
-      if(manifest.category === "theme") {
-        addThemeManifestProperies(manifest);
-      } else {
-        addWidgetManifestProperties(manifest);
-      }
-    };
-
-    ret.processManifestLabel = function(manifest, locale){
-      var langCode = locale.split('-')[0];
-      manifest.label = manifest.i18nLabels && (manifest.i18nLabels[locale] || manifest.i18nLabels[langCode] ||
-        manifest.i18nLabels.defaultLabel) ||
-        manifest.label ||
-        manifest.name;
-      if(manifest.layouts){
-        array.forEach(manifest.layouts, function(layout){
-          var key = 'i18nLabels_layout_' + layout.name;
-          layout.label = manifest[key] && (manifest[key][locale] ||
-            manifest[key].defaultLabel) ||
-            layout.label ||
-            layout.name;
-        });
-      }
-      if(manifest.styles){
-        array.forEach(manifest.styles, function(_style){
-          var key = 'i18nLabels_style_' + _style.name;
-          _style.label = manifest[key] && (manifest[key][locale] ||
-            manifest[key].defaultLabel) ||
-            _style.label ||
-            _style.name;
-        });
-      }
-    };
-
-    ret.addI18NLabel = function(manifest){
-      var def = new Deferred();
-      if(manifest.i18nLabels){
-        def.resolve(manifest);
-        return def;
-      }
-      manifest.i18nLabels = {};
-
-      if(manifest.properties && manifest.properties.hasLocale === false){
-        def.resolve(manifest);
-        return def;
-      }
-
-      //theme or widget label
-      var nlsFile;
-      if(manifest.isRemote){
-        nlsFile = manifest.amdFolder + 'nls/strings.js';
-      }else{
-        nlsFile = manifest.amdFolder + 'nls/strings';
-      }
-      require(mo.getRequireConfig(), ['dojo/i18n!' + nlsFile],
-      function(localeStrings){
-        var localesStrings = {};
-        localesStrings[dojoConfig.locale] = localeStrings;
-        sharedUtils.addI18NLabelToManifest(manifest, null, localesStrings);
-        def.resolve(manifest);
-      });
-
-      return def;
-    };
-    return ret;
-  })();
-
-  //return [{value,label}]
-  mo.getUniqueValues = function(featureOrImageLayerUrl, fieldName, where, _layerDefinition){
-    function getLayerDefinition(){
-      var def = new Deferred();
-      if(_layerDefinition){
-        def.resolve(_layerDefinition);
-      }else{
-        def = esriRequest({
-          url: featureOrImageLayerUrl,
-          content: {
-            f: 'json'
-          },
-          handleAs: 'json',
-          callbackParamName: 'callback'
-        });
-      }
-      return def;
-    }
-    return getLayerDefinition().then(function(layerDefinition){
-      return mo._getUniqueValues(featureOrImageLayerUrl, fieldName, where, layerDefinition).then(function(values){
-        var valueLabels = [];
-        var fieldInfo = mo.getFieldInfoByFieldName(layerDefinition.fields, fieldName);
-        var codedValueObj = null;//{value:label}
-        var numberFieldTypes = [
-          'esriFieldTypeOID',
-          'esriFieldTypeSmallInteger',
-          'esriFieldTypeInteger',
-          'esriFieldTypeSingle',
-          'esriFieldTypeDouble'
-        ];
-        var isNumberField = numberFieldTypes.indexOf(fieldInfo.type) >= 0;
-        if(fieldInfo){
-          if(isNumberField){
-            values = array.map(values, function(v){
-              var r = parseFloat(v);
-              if(isNaN(r)){
-                r = null;
-              }
-              return r;
-            });
-          }
-          if(fieldInfo.domain && fieldInfo.domain.codedValues && fieldInfo.domain.codedValues.length > 0){
-            codedValueObj = {};
-            array.forEach(fieldInfo.domain.codedValues, function(item){
-              codedValueObj[item.code] = item.name;
-            });
-          }else if(layerDefinition.typeIdField === fieldName){
-            codedValueObj = {};
-            array.forEach(layerDefinition.types, function(item){
-              codedValueObj[item.id] = item.name;
-            });
-          }
-        }
-        valueLabels = array.map(values, function(value){
-          var label = null;
-          if(value === null || value === undefined){
-            label = '<Null>';
-          }else{
-            if(codedValueObj && codedValueObj.hasOwnProperty(value)){
-              label = codedValueObj[value];
-            }else{
-              if(isNumberField){
-                label = mo.localizeNumber(value);
-              }else{
-                label = value;
-              }
-            }
-          }
-          return {
-            value: value,
-            label: label
-          };
-        });
-        return valueLabels;
-      });
-    });
   };
 
-  mo._getUniqueValues = function(featureOrImageLayerUrl, fieldName, where, layerDefinition){
+  mo.getUniqueValues = function(url, fieldName){
     var def = new Deferred();
-    var url = featureOrImageLayerUrl.replace(/\/*$/g, '');
-    if(!where){
-      where = '1=1';
-    }
-
-    //MapService and FeatureServie both support QueryTask and generateRenderer.
-    //But QueryTask has the maxRecordCount limit, generateRenderer doesn't.
-    //ImageServer only supports QueryTask.
-    var reg = /\/ImageServer$/gi;
-    var isImageService = reg.test(url);
-    if(isImageService){
-      def = mo._getUniqueValuesByQueryTask(url, fieldName, where);
-    }else{
-      var fieldInfo = mo.getFieldInfoByFieldName(layerDefinition.fields, fieldName);
-      var codedValuesOrTypesCount = mo._getCodedValuesOrTypesCount(fieldInfo, layerDefinition);
-      if(codedValuesOrTypesCount > 0){
-        def = mo._getUniqueValuesByQueryTask(url, fieldName, where);
-      }else{
-        def = mo._getUniqueValuesByGenerateRenderer(url, fieldName, where);
-      }
-    }
-
-    return def;
-  };
-
-  mo._getCodedValuesOrTypesCount = function(fieldInfo, layerDefinition) {
-    if (fieldInfo) {
-      if (fieldInfo.domain && fieldInfo.domain.type === 'codedValue' && fieldInfo.domain.codedValues) {
-        return fieldInfo.domain.codedValues.length;
-      }
-      if (layerDefinition.typeIdField === fieldInfo.name && layerDefinition.types) {
-        return layerDefinition.types.length;
-      }
-    }
-    return 0;
-  };
-
-  mo._getUniqueValuesByQueryTask = function(url, fieldName, where){
-    var queryParams = new EsriQuery();
-    queryParams.where = where;
-    queryParams.returnDistinctValues = true;
-    queryParams.returnGeometry = false;
-    queryParams.outFields = [fieldName];
-    var queryTask = new QueryTask(url);
-    return queryTask.execute(queryParams).then(function(response){
-      var values = [];
-      if(response.features && response.features.length > 0){
-        array.forEach(response.features, function(feature){
-          if(feature && feature.attributes){
-            values.push(feature.attributes[fieldName]);
-          }
-        });
-      }
-      return values;
-    });
-  };
-
-  mo._getUniqueValuesByGenerateRenderer = function(featureLayerUrl, fieldName, where){
-    var def = new Deferred();
-    var reqUrl = featureLayerUrl.replace(/\/*$/g, '') + "/generateRenderer";
+    var reqUrl = url.replace(/\/*$/g, '') + "/generateRenderer";
     var classificationDef = {"type":"uniqueValueDef", "uniqueValueFields":[fieldName]};
     var str = json.stringify(classificationDef);
     esriRequest({
       url: reqUrl,
       content: {
         classificationDef: str,
-        f: 'json',
-        where: where
+        f: 'json'
       },
       handleAs: 'json',
       callbackParamName:'callback'
@@ -1568,11 +1140,6 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
       def.reject(err);
     }));
     return def;
-  };
-
-  mo.isCodedValuesSupportFilter = function(layerDefinition, codedValueLength){
-    var version = parseFloat(layerDefinition.currentVersion);
-    return codedValueLength <= parseFloat(layerDefinition.maxRecordCount) && version > 10.1;
   };
 
   mo.combineRadioCheckBoxWithLabel = function(inputDom, labelDom){
@@ -1597,20 +1164,6 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
       labelDom.setAttribute('for', inputId);
       html.setStyle(labelDom, 'cursor', 'pointer');
     }
-  };
-
-  //return handle array, the handles can be owned by widget
-  mo.groupRadios = function(radios, /*optional*/ listener){
-    var handles = [];
-    var name = "radiogroup_" + mo.getRandomString();
-    array.forEach(radios, function(radio){
-      radio.name = name;
-      if(listener){
-        var handle = on(radio, 'change', listener);
-        handles.push(handle);
-      }
-    });
-    return handles;
   };
 
   mo.convertExtentToPolygon = function(extent){
@@ -1642,15 +1195,11 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     function combinePoints(geos){
       //geos is an array of point or multipoint
       var mpJson = {
-        "points": [],//each element is [x,y]
+        "points": [],
         "spatialReference": geos[0].spatialReference.toJson()
       };
       array.forEach(geos, function(geo){
-        if(geo.type === 'point'){
-          mpJson.points = mpJson.points.concat([[geo.x, geo.y]]);
-        }else if(geo.type === 'multipoint'){
-          mpJson.points = mpJson.points.concat(geo.points);
-        }
+        mpJson.points = mpJson.points.concat(geo.points);
       });
       var multipoint = new Multipoint(mpJson);
       return multipoint;
@@ -1743,17 +1292,6 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     return geometry;
   };
 
-  mo.combineGeometriesByGraphics = function(graphics){
-    var geometry = null;
-    if(graphics && graphics.length > 0){
-      var geometries = array.map(graphics, function(graphic){
-        return graphic.geometry;
-      });
-      geometry = mo.combineGeometries(geometries);
-    }
-    return geometry;
-  };
-
   mo.isFeaturelayerUrlSupportQuery = function(featureLayerUrl, capabilities){
     var isSupportQuery = false;
     var isFeatureService = (/\/featureserver\//gi).test(featureLayerUrl);
@@ -1775,6 +1313,122 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
 
   mo.isStringEndWith = function(s, endS){
     return (s.lastIndexOf(endS) + endS.length === s.length);
+  };
+
+  function addThemeManifestProperies(manifest) {
+    manifest.panels.forEach(function(panel) {
+      panel.uri = 'panels/' + panel.name + '/Panel.js';
+    });
+
+    manifest.styles.forEach(function(style) {
+      style.uri = 'styles/' + style.name + '/style.css';
+    });
+
+    manifest.layouts.forEach(function(layout) {
+      layout.uri = 'layouts/' + layout.name + '/config.json';
+      layout.icon = 'layouts/' + layout.name + '/icon.png';
+      layout.RTLIcon = 'layouts/' + layout.name + '/icon_rtl.png';
+    });
+  }
+
+  function addWidgetManifestProperties(manifest) {
+    //because tingo db engine doesn't support 2D, 3D property, so, change here
+    if (typeof manifest['2D'] !== 'undefined') {
+      manifest.support2D = manifest['2D'];
+    }
+    if (typeof manifest['3D'] !== 'undefined') {
+      manifest.support3D = manifest['3D'];
+    }
+
+    if (typeof manifest['2D'] === 'undefined' && typeof manifest['3D'] === 'undefined') {
+      manifest.support2D = true;
+    }
+
+    delete manifest['2D'];
+    delete manifest['3D'];
+
+    if (typeof manifest.properties === 'undefined') {
+      manifest.properties = {};
+    }
+
+    sharedUtils.processWidgetProperties(manifest);
+  }
+
+  mo.processManifestLabel = function(manifest, locale){
+    manifest.label = manifest.i18nLabels && (manifest.i18nLabels[locale] ||
+      manifest.i18nLabels.defaultLabel) ||
+      manifest.label ||
+      manifest.name;
+    if(manifest.layouts){
+      array.forEach(manifest.layouts, function(layout){
+        var key = 'i18nLabels_layout_' + layout.name;
+        layout.label = manifest[key] && (manifest[key][locale] ||
+          manifest[key].defaultLabel) ||
+          layout.label ||
+          layout.name;
+      });
+    }
+    if(manifest.styles){
+      array.forEach(manifest.styles, function(_style){
+        var key = 'i18nLabels_style_' + _style.name;
+        _style.label = manifest[key] && (manifest[key][locale] ||
+          manifest[key].defaultLabel) ||
+          _style.label ||
+          _style.name;
+      });
+    }
+  };
+
+  mo.addManifest2WidgetJson = function(widgetJson, manifest){
+    lang.mixin(widgetJson, manifest.properties);
+    widgetJson.name = manifest.name;
+    if(!widgetJson.label){
+      widgetJson.label = manifest.label;
+    }
+    widgetJson.manifest = manifest;
+  };
+
+  mo.addI18NLabel = function(manifest){
+    var def = new Deferred();
+    if(manifest.i18nLabels){
+      def.resolve(manifest);
+      return def;
+    }
+    manifest.i18nLabels = {};
+
+    if(manifest.properties && manifest.properties.hasLocale === false){
+      def.resolve(manifest);
+      return def;
+    }
+
+    //theme or widget label
+    var key = manifest.category === 'widget'? '_widgetLabel': '_themeLabel';
+    require(mo.getRequireConfig(), ['dojo/i18n!' + manifest.amdFolder + '/nls/strings'],
+      function(localeStrings){
+      manifest.i18nLabels[dojoConfig.locale] = localeStrings[key];
+
+      //theme's layout and style label
+      if(manifest.category === 'theme'){
+        if(manifest.layouts){
+          manifest.layouts.forEach(function(layout){
+            manifest['i18nLabels_layout_' + layout.name] = {};
+            manifest['i18nLabels_layout_' + layout.name][dojoConfig.locale] =
+            localeStrings['_layout_' + layout.name];
+          });
+        }
+
+        if(manifest.styles){
+          manifest.styles.forEach(function(style){
+            manifest['i18nLabels_style_' + style.name] = {};
+            manifest['i18nLabels_style_' + style.name][dojoConfig.locale] =
+            localeStrings['_style_' + style.name];
+          });
+        }
+      }
+      def.resolve(manifest);
+    });
+
+    return def;
   };
 
   /*
@@ -1800,10 +1454,9 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     var decimalStr = num.toString().split('.')[1] || "",
           decimalLen = decimalStr.length;
     var _pattern = "";
-    var places = options && isFinite(options.places) && options.places;
-    if (places > 0 || decimalLen > 0) {
+    if (decimalLen > 0) {
       var patchStr = Array.prototype.join.call({
-        length: places > 0 ? (places + 1) : decimalLen
+        length: decimalLen
       }, '0');
       _pattern = "#,###,###,##0.0" + patchStr;
     }else {
@@ -1901,135 +1554,6 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
       } else {
         return d.toLocaleString();
       }
-    }
-  };
-
-  /*
-  *n: Number
-  *fieldInfo: https://developers.arcgis.com/javascript/jshelp/intro_popuptemplate.html
-  */
-  mo.localizeNumberByFieldInfo = function(n, fieldInfo) {
-    var fn = null;
-    var p = lang.exists('format.places', fieldInfo) && fieldInfo.format.places;
-    fn = mo.localizeNumber(n, {
-      places: p
-    });
-
-    if (lang.exists('format.digitSeparator', fieldInfo) && !fieldInfo.format.digitSeparator) {
-      return fn.toString().replace(new RegExp('\\' + nlsBundle.group, "g"), "");
-    } else {
-      return fn;
-    }
-  };
-
-  /*
-  *d: an instance of date or number
-    (the numeric value corresponding to the time for the specified date according to universal time)
-  *fieldInfo: https://developers.arcgis.com/javascript/jshelp/intro_popuptemplate.html
-  */
-  mo.localizeDateByFieldInfo = function(d, fieldInfo) {
-    var fd = null;
-    try {
-      var data = {
-        date: d instanceof Date ? d.getTime() : d
-      };
-      var dateFormat = lang.exists('format.dateFormat', fieldInfo) ?
-      fieldInfo.format.dateFormat : 'longMonthDayYear';
-
-      var substOptions = {
-        dateFormat: {
-          properties: ['date'],
-          formatter: 'DateFormat' + PopupTemplate.prototype._dateFormats[dateFormat]
-        }
-      };
-      fd = esriLang.substitute(data, '${date}', substOptions);
-    }catch (err) {
-      console.error(err);
-      fd = d;
-    }
-
-    return fd;
-  };
-
-  mo.fieldFormatter = {
-    getFormattedUrl: function(str) {
-      if (str && typeof str === "string") {
-        var s = str.indexOf('http:');
-        if (s === -1) {
-          s = str.indexOf('https:');
-        }
-        if (s > -1) {
-          if (str.indexOf('href=') === -1) {
-            var e = str.indexOf(' ', s);
-            if (e === -1) {
-              e = str.length;
-            }
-            var nl = str.indexOf('\r\n', s) > -1 ? str.indexOf('\r\n', s) :
-              str.indexOf('\n', s) > -1 ? str.indexOf('\n', s) : e;
-            e = nl < e ? nl : e;
-            var link = str.substring(s, e);
-            str = str.substring(0, s) +
-              '<A href="' + link + '" target="_blank">' + link + '</A>' +
-              str.substring(e, str.length);
-          }
-        }
-      }
-
-      if(typeof str === undefined || str === null){
-        return '';
-      }
-
-      return str;
-    },
-
-    getFormattedNumber: function(num, format) {
-      if (typeof num === 'number') {
-        var decimalStr = num.toString().split('.')[1] || "",
-          decimalLen = decimalStr.length;
-        num = mo.localizeNumberByFieldInfo(num, {
-          format: {
-            places: (format && typeof format.places === 'number') ?
-              parseInt(format.places, 10) : decimalLen,
-            digitSeparator: format && format.digitSeparator
-          }
-        });
-        return '<span class="jimu-numeric-value">' + (num || "") + '</span>';
-      }
-      return num;
-    },
-
-    getFormattedDate: function(timeNumber, format) {
-      if (typeof timeNumber === 'number' || timeNumber instanceof Date) {
-        timeNumber = mo.localizeDateByFieldInfo(timeNumber, {
-          'format': format
-        });
-      }
-      return timeNumber || "";
-    },
-
-    getCodedValue: function(domain, v) {
-      if (domain && domain.codedValues) {
-        for (var i = 0, len = domain.codedValues.length; i < len; i++) {
-          var cv = domain.codedValues[i];
-          if (esriLang.isDefined(v) && lang.exists('code', cv) &&
-            v.toString() === cv.code.toString()) {
-            return cv.name;
-          }
-        }
-        return v;
-      } else {
-        return v || null;
-      }
-    },
-
-    getTypeName: function(value, types) {
-      var len = types.length;
-      for (var i = 0; i < len; i++) {
-        if (value === types[i].id) {
-          return types[i].name;
-        }
-      }
-      return value;
     }
   };
 
@@ -2202,28 +1726,15 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
           }
         }, this);
       }else{
-        var managerName;
-        if(config1.layoutDefinition){
-          managerName = config1.layoutDefinition.manager;
-        }else{
-          managerName = 'jimu/layoutManagers/AbsolutePositionLayoutManager';
-        }
-
-        if(managerName === 'jimu/layoutManagers/AbsolutePositionLayoutManager'){
-          array.forEach(os2.groups, function(group2, i){
-            if(group2.panel && group2.panel.position &&
-              !group2.panel.position.relativeTo){
-              group2.panel.position.relativeTo = 'map';
-            }
-            if(os1.groups[i] && group2.panel && group2.panel.position){
-              os1.groups[i].panel.position = group2.panel.position;
-            }
-          });
-        }else if(managerName === 'jimu/layoutManagers/GridLayoutManager'){
-          os1.groups = handleGridLayoutOnScreenGroupChange(os1.groups, os2.groups.map(function(g){
-            return g.id;
-          }));
-        }
+        array.forEach(os2.groups, function(group2, i){
+          if(group2.panel && group2.panel.position &&
+            !group2.panel.position.relativeTo){
+            group2.panel.position.relativeTo = 'map';
+          }
+          if(os1.groups[i] && group2.panel.position){
+            os1.groups[i].panel.position = group2.panel.position;
+          }
+        });
       }
     }
 
@@ -2248,49 +1759,6 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     }
     return mixinConfig;
   };
-
-  function handleGridLayoutOnScreenGroupChange(oldGroups, newGroupIds){
-    var oldGroupIds = oldGroups.map(function(g){
-      return g.id;
-    });
-
-    array.forEach(newGroupIds, function(gId){
-      if(oldGroupIds.indexOf(gId) < 0){// new add group
-        oldGroups.push({
-          id: gId,
-          widgets: []
-        });
-      }
-    }, this);
-
-    var removedGroups = [];
-    oldGroups = array.filter(oldGroups, function(g){
-      if(newGroupIds.indexOf(g.id) < 0){// group is removed
-        removedGroups.push(g);
-        return false;
-      }else{
-        return true;
-      }
-    }, this);
-
-    if(oldGroups.length === 0){
-      return [];
-    }
-    //put widgets in removed groups into the last group
-    var toAddGroup = oldGroups[oldGroups.length - 1];
-    array.forEach(removedGroups, function(removedGroup){
-      toAddGroup.widgets = toAddGroup.widgets.concat(removedGroup.widgets);
-    }, this);
-
-    oldGroups = oldGroups.sort(function(g1, g2){
-      return newGroupIds.indexOf(g1.id) - newGroupIds.indexOf(g2.id);
-    });
-
-    return oldGroups;
-  }
-
-  mo.handleGridLayoutOnScreenGroupChange = handleGridLayoutOnScreenGroupChange;
-
   /**********************************
    * About template
    **********************************/
@@ -2729,995 +2197,8 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     delete mapOptions.minZoom;
   };
 
-  mo.graphicsExtent = function(graphics, /* optional */ factor){
-    var ext = null;
-    try {
-      if(graphics.length > 0){
-        //if graphics.length === 1 and the graphic is a point, it will throw an Exception here
-        ext = graphicsUtils.graphicsExtent(graphics);
-        if (ext) {
-          if(typeof factor === "number" && factor > 0){
-            ext = ext.expand(factor);
-          }
-        }
-      }
-    } catch (e) {
-      console.error(e);
-    }
-    return ext;
+  mo.localeIsSame = function(locale1, locale2){
+    return locale1.split('-')[0] === locale2.split('-')[0];
   };
-
-  mo.sanitizeHTML = function(snippet){
-    /* global html_sanitize */
-
-    //https://code.google.com/p/google-caja/wiki/JsHtmlSanitizer
-    return html_sanitize(snippet, function(url){
-      return url;
-    }, function(v){
-      return v;
-    });
-  };
-
-  mo.stripHTML = function (str){
-    if (!str) {
-      return str;
-    }
-    if (str.indexOf("<") > -1 && str.indexOf(">") > -1) {
-      // this gets pretty slow if the string is long and has a < and no >
-      var matchTag = /<(?:.|\s)*?>/g;
-      return str.replace(matchTag, "");
-    } else {
-      return str;
-    }
-  };
-
-  mo.encodeHTML = function (source) {
-    return String(source)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
-  };
-
-  mo.removeSuffixSlashes = function(url){
-    return url.replace(/\/*$/g, '');
-  };
-
-  mo.getBestDisplayAttributes = function(attributes, fieldInfos) {
-    var displayAttributes = {};
-    var displayValue = null;
-    for (var fieldName in attributes) {
-      displayValue = mo.getBestDisplayValue(fieldName, attributes, fieldInfos);
-      displayAttributes[fieldName] = displayValue;
-    }
-    return displayAttributes;
-  };
-
-  mo.getBestDisplayValue = function(fieldName, attributes, fieldInfoOrFieldInfos) {
-    var displayValue = "";
-    var fieldInfo = null;
-    if (lang.isArrayLike(fieldInfoOrFieldInfos)) {
-      var fieldInfos = fieldInfoOrFieldInfos;
-      fieldInfo = mo.getFieldInfoByFieldName(fieldInfos, fieldName);
-    } else if (typeof fieldInfoOrFieldInfos === 'object') {
-      if(fieldInfoOrFieldInfos.name === fieldName){
-        fieldInfo = fieldInfoOrFieldInfos;
-      }
-    }
-
-    if (fieldInfo) {
-      displayValue = attributes[fieldName];
-      if (fieldInfo.type === 'esriFieldTypeDate') {
-        if (displayValue) {
-          var date = new Date(parseInt(displayValue, 10));
-          displayValue = mo._tryLocaleDate(date);
-        }
-      } else {
-        if (typeof displayValue === 'number') {
-          if (fieldInfo.domain && fieldInfo.domain.type === 'codedValue') {
-            array.some(fieldInfo.domain.codedValues, function(codedValue) {
-              if (codedValue.code === displayValue) {
-                displayValue = codedValue.name;
-                return true;
-              }
-            });
-          } else {
-            displayValue = mo._tryLocaleNumber(displayValue);
-          }
-        }
-      }
-    }
-
-    if (displayValue === null || displayValue === undefined) {
-      displayValue = "";
-    }
-
-    return displayValue;
-  };
-
-  //return {fieldName,label,tooltip,visible,format,stringFieldOption}
-  mo.getDefaultPortalFieldInfo = function(serviceFieldInfo){
-    //serviceFieldInfo: {name,alias,type,...}
-    var fieldName = serviceFieldInfo.name;
-    var item = {
-      fieldName: fieldName,
-      label: serviceFieldInfo.alias || fieldName,
-      tooltip: '',
-      visible: false,
-      format: null,
-      stringFieldOption: 'textbox'
-    };
-
-    //https://developers.arcgis.com/javascript/jsapi/field-amd.html#type
-    var type = serviceFieldInfo.type;
-    switch (type) {
-      case 'esriFieldTypeSmallInteger':
-      case 'esriFieldTypeInteger':
-        item.format = {
-          places: 0,
-          digitSeparator: true
-        };
-        break;
-      case 'esriFieldTypeSingle':
-      case 'esriFieldTypeDouble':
-        item.format = {
-          places: 2,
-          digitSeparator: true
-        };
-        break;
-      case 'esriFieldTypeDate':
-        item.format = {
-          dateFormat: "longMonthDayYear"
-        };
-        break;
-    }
-    return item;
-  };
-
-  mo._tryLocaleNumber = function(value) {
-    var result = mo.localizeNumber(value);
-    if (result === null || result === undefined) {
-      result = value;
-    }
-    return result;
-  };
-
-  mo._tryLocaleDate = function(date) {
-    var result = mo.localizeDate(date);
-    if (!result) {
-      result = date.toLocaleDateString();
-    }
-    return result;
-  };
-
-  mo.getFieldInfoByFieldName = function(fieldInfos, fieldName) {
-    var fieldInfo = null;
-    if (fieldInfos && fieldInfos.length > 0) {
-      array.some(fieldInfos, lang.hitch(this, function(item) {
-        if (item.name === fieldName) {
-          fieldInfo = item;
-          return true;
-        } else {
-          return false;
-        }
-      }));
-    }
-    return fieldInfo;
-  };
-
-  mo.containsNonLatinCharacter = function(string) {
-    /*
-    console.log(string);
-    for (var k = 0; k < string.length; k++) {
-      console.log(string.charCodeAt(k));
-    }
-    */
-    for (var i = 0; i < string.length; i++) {
-      if (string.charCodeAt(i) > 255) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  mo.has = function(browserName) {
-    function _isIE11() {
-      var iev = 0;
-      var ieold = (/MSIE (\d+\.\d+);/.test(navigator.userAgent));
-      var trident = !!navigator.userAgent.match(/Trident\/7.0/);
-      var rv = navigator.userAgent.indexOf("rv:11.0");
-
-      if (ieold) {
-        iev = Number(RegExp.$1);
-      }
-      if (navigator.appVersion.indexOf("MSIE 10") !== -1) {
-        iev = 10;
-      }
-      if (trident && rv !== -1) {
-        iev = 11;
-      }
-
-      return iev === 11;
-    }
-    function _isEdge() {
-      return navigator.userAgent.split('Edge/')[1];
-    }
-    var v = has(browserName);
-    if (!v) {
-      if (browserName.toLowerCase() === 'ie') {
-        return (_isIE11() && 11) || v;
-      } else if (browserName.toLowerCase() === 'edge') {
-        return _isEdge() || v;
-      }
-    } else {
-      return v;
-    }
-  };
-
-  mo.detectUserAgent = function() {
-    var os = {}, browser = {},
-      ua = navigator.userAgent, platform = navigator.platform,
-      webkit = ua.match(/Web[kK]it[\/]{0,1}([\d.]+)/),
-      android = ua.match(/(Android);?[\s\/]+([\d.]+)?/),
-      osx = !!ua.match(/\(Macintosh\; Intel /),
-      ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
-      ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/),
-      iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
-      webos = ua.match(/(webOS|hpwOS)[\s\/]([\d.]+)/),
-      win = /Win\d{2}|Windows/.test(platform),
-      wp = ua.match(/Windows Phone ([\d.]+)/),
-      touchpad = webos && ua.match(/TouchPad/),
-      kindle = ua.match(/Kindle\/([\d.]+)/),
-      silk = ua.match(/Silk\/([\d._]+)/),
-      blackberry = ua.match(/(BlackBerry).*Version\/([\d.]+)/),
-      bb10 = ua.match(/(BB10).*Version\/([\d.]+)/),
-      rimtabletos = ua.match(/(RIM\sTablet\sOS)\s([\d.]+)/),
-      playbook = ua.match(/PlayBook/),
-      chrome = ua.match(/Chrome\/([\d.]+)/) || ua.match(/CriOS\/([\d.]+)/),
-      firefox = ua.match(/Firefox\/([\d.]+)/),
-      firefoxos = ua.match(/\((?:Mobile|Tablet); rv:([\d.]+)\).*Firefox\/[\d.]+/),
-      ie = ua.match(/MSIE\s([\d.]+)/) || ua.match(/Trident\/[\d](?=[^\?]+).*rv:([0-9.].)/),
-      webview = !chrome && ua.match(/(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/),
-      safari = webview || ua.match(/Version\/([\d.]+)([^S](Safari)|[^M]*(Mobile)[^S]*(Safari))/);
-
-    browser.webkit = !!webkit;
-    if (browser.webkit) {
-      browser.version = webkit[1];
-    }
-
-    if (android) {
-      os.android = true;
-      os.version = android[2];
-    }
-    if (iphone && !ipod) {
-      os.ios = os.iphone = true;
-      os.version = iphone[2].replace(/_/g, '.');
-    }
-    if (ipad) {
-      os.ios = os.ipad = true;
-      os.version = ipad[2].replace(/_/g, '.');
-    }
-    if (ipod) {
-      os.ios = os.ipod = true;
-      os.version = ipod[3] ? ipod[3].replace(/_/g, '.') : null;
-    }
-    if (wp) {
-      os.wp = true;
-      os.version = wp[1];
-    }
-    if (webos) {
-      os.webos = true;
-      os.version = webos[2];
-    }
-    if (touchpad) {
-      os.touchpad = true;
-    }
-    if (blackberry) {
-      os.blackberry = true;
-      os.version = blackberry[2];
-    }
-    if (bb10) {
-      os.bb10 = true;
-      os.version = bb10[2];
-    }
-    if (rimtabletos) {
-      os.rimtabletos = true;
-      os.version = rimtabletos[2];
-    }
-    if (playbook) {
-      browser.playbook = true;
-    }
-    if (kindle) {
-      os.kindle = true;
-      os.version = kindle[1];
-    }
-    if (silk) {
-      browser.silk = true;
-      browser.version = silk[1];
-    }
-    if (!silk && os.android && ua.match(/Kindle Fire/)) {
-      browser.silk = true;
-    }
-    if (chrome) {
-      browser.chrome = true;
-      browser.version = chrome[1];
-    }
-    if (firefox) {
-      browser.firefox = true;
-      browser.version = firefox[1];
-    }
-    if (firefoxos) {
-      os.firefoxos = true;
-      os.version = firefoxos[1];
-    }
-    if (ie) {
-      browser.ie = true;
-      browser.version = ie[1];
-    }
-    if (safari && (osx || os.ios || win)) {
-      browser.safari = true;
-      if (!os.ios) {
-        browser.version = safari[1];
-      }
-    }
-    if (webview) {
-      browser.webview = true;
-    }
-
-    os.tablet = !!(ipad || playbook || (android && !ua.match(/Mobile/)) ||
-    (firefox && ua.match(/Tablet/)) || (ie && !ua.match(/Phone/) && ua.match(/Touch/)));
-    os.phone = !!(!os.tablet && !os.ipod && (android || iphone || webos || blackberry || bb10 ||
-    (chrome && ua.match(/Android/)) || (chrome && ua.match(/CriOS\/([\d.]+)/)) ||
-    (firefox && ua.match(/Mobile/)) || (ie && ua.match(/Touch/))));
-
-    return {
-      os: os,
-      browser: browser
-    };
-  };
-  mo.isMobileUa = function() {
-    var uaInfo = mo.detectUserAgent();
-    if (true === uaInfo.os.phone || true === uaInfo.os.tablet) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  mo.inMobileSize = function(){
-    var layoutBox = html.getMarginBox(document.body);
-    if (layoutBox.w <= window.jimuConfig.breakPoints[0] ||
-      layoutBox.h <= window.jimuConfig.breakPoints[0]) {
-      html.addClass(window.jimuConfig.layoutId, 'jimu-ismobile');
-      return true;
-    } else {
-      html.removeClass(window.jimuConfig.layoutId, 'jimu-ismobile');
-      return false;
-    }
-  };
-
-  mo.getObjectIdField = function(layerDefinition){
-    if(layerDefinition.objectIdField){
-      return layerDefinition.objectIdField;
-    }else{
-      var fieldInfos = layerDefinition.fields;
-      for(var i = 0; i < fieldInfos.length; i++){
-        var fieldInfo = fieldInfos[i];
-        if(fieldInfo.type === 'esriFieldTypeOID'){
-          return fieldInfo.name;
-        }
-      }
-    }
-    return null;
-  };
-
-  //if browser(such as Chrome50) have window.isSecureContext, and not in https origin, return true
-  //for example: if true===isNendHttpsButNot(), MyLocateButton should be disabled
-  mo.isNeedHttpsButNot = function() {
-    //copy from: https://devtopia.esri.com/WebGIS/arcgis-js-api/issues/6614
-    var hasGeolocation = navigator.geolocation;
-    var hasSecureContext = window.hasOwnProperty("isSecureContext");
-    var isSecureContext = (hasSecureContext && window.isSecureContext) ||
-      (!hasSecureContext && window.location.protocol === "https:");
-    if (!isSecureContext || !hasGeolocation) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  /**
-   * @param graphics Array of esri/Graphic
-   * @return esri/tasks/FeatureSet
-   */
-  mo.toFeatureSet = function(graphics) {
-    var fs = new FeatureSet();
-    //if it's object, we consider it as a feature.
-    if(Object.prototype.toString.call(graphics) === '[object Object]'){
-      graphics = [graphics];
-    }
-    fs.features = graphics;
-
-    if(graphics.length > 0){
-      var g;
-      // Find the first graphic whose geometry has value.
-      array.some(graphics, function(graphic) {
-        if(graphic.geometry) {
-          g = graphic;
-          return true;
-        }
-      });
-      if(g) {
-        var layer = g.getLayer(), fieldAliases = {};
-        if(layer) {
-          fs.displayFieldName = layer.displayField;
-
-          array.forEach(layer.fields, lang.hitch(this, function(fieldInfo) {
-            var fieldName = fieldInfo.name;
-            var fieldAlias = fieldInfo.alias || fieldName;
-            fieldAliases[fieldName] = fieldAlias;
-          }));
-
-          fs.fieldAliases = fieldAliases;
-        }
-        fs.geometryType = g.geometry.type;
-        fs.spatialReference = g.geometry.spatialReference;
-      }
-    }
-    return fs;
-  };
-
-  mo.showValidationErrorTipForFormDijit = function(_dijit){
-    try{
-      if (!_dijit.validate() && _dijit.domNode) {
-        if (_dijit.focusNode) {
-          _dijit.focusNode.focus();
-          setTimeout(lang.hitch(this, function() {
-            _dijit.focusNode.blur();
-          }), 100);
-        }
-      }
-    }catch(e){
-      console.error(e);
-    }
-  };
-
-  mo.getFeatureLayerDefinition = function(featureLayer){
-    var layerDefinition = null;
-    var features = featureLayer.graphics;
-    featureLayer.graphics = [];
-    var json = featureLayer.toJson();
-    featureLayer.graphics = features;
-    if(json){
-      layerDefinition = json.layerDefinition;
-    }
-    return layerDefinition;
-  };
-
-  mo.simulateClickEvent = function(dom){
-    if(has('safari')){
-      //create an event
-      var mouseEvent = document.createEvent("MouseEvents");
-      //initialize the event
-      mouseEvent.initEvent("click",/* bubble */ true, /* cancelable */ true);
-      //trigger the evevnt
-      dom.dispatchEvent(mouseEvent);
-    }else{
-      dom.click();
-    }
-  };
-
-  mo.getFeatureSetByLayerAndFeatures = function(layer, features){
-    var featureSet = new FeatureSet();
-    featureSet.fields = lang.clone(layer.fields);
-    featureSet.features = features;
-    featureSet.geometryType = layer.geometryType;
-    featureSet.fieldAliases = {};
-    array.forEach(featureSet.fields, lang.hitch(this, function(fieldInfo) {
-      var fieldName = fieldInfo.name;
-      var fieldAlias = fieldInfo.alias || fieldName;
-      featureSet.fieldAliases[fieldName] = fieldAlias;
-    }));
-    return featureSet;
-  };
-
-  mo.featureAction = (function(){
-    var result = {};
-
-    //options: {extentFactor}
-    result.zoomTo = function(map, arr, /*optional*/ options) {
-      if(!options){
-        options = {};
-      }
-      if(!options.hasOwnProperty('extentFactor')){
-        options.extentFactor = 1.2;
-      }
-      if (map && arr && arr.length > 0) {
-        var isGeometries = array.every(arr, function(a) {
-          return a && a.spatialReference && a.type;
-        });
-        var isGraphics = array.every(arr, function(a) {
-          return a && a.geometry && a.geometry.spatialReference && a.geometry.type;
-        });
-        if (isGraphics || isGeometries) {
-          if (isGeometries) {
-            arr = array.map(arr, function(a) {
-              return {
-                geometry: a
-              };
-            });
-          }
-
-          if (arr.length === 1 && arr[0].type === 'point') {
-            var levelOrFactor = 15;
-            levelOrFactor = map.getMaxZoom() > -1 ? map.getMaxZoom() : 0.1;
-            map.centerAndZoom(arr[0].geometry, levelOrFactor);
-          } else {
-            var extent = graphicsUtils.graphicsExtent(arr);
-            map.setExtent(extent.expand(options.extentFactor));
-          }
-        }
-      }
-    };
-
-    result.flash = function(graphics, layer) {
-      var isGraphics = array.every(graphics || [], function(g) {
-        return g && g.geometry;
-      });
-      if (!isGraphics) {
-        return;
-      }
-
-      var features = graphics;
-      var first = features[0];
-      var featureSymbols = array.map(features, function(f){
-        return f.symbol;
-      });
-      var gurdSymbol = first.symbol ||
-        lang.getObject('renderer.symbol', false, layer);
-      var cSymbol = null;
-      if (layer && layer.geometryType === 'esriGeometryPoint') {
-        cSymbol = new PictureMarkerSymbol(require.toUrl('jimu') + '/images/flash.gif', 20, 20);
-      } else {
-        cSymbol = lang.clone(gurdSymbol);
-        if (cSymbol) {
-          if (cSymbol.outline) {
-            cSymbol.outline.setColor("#ffc500");
-          } else {
-            cSymbol.setColor("#ffc500");
-          }
-        }
-      }
-
-      function changeSymbol(s, flash) {
-        array.forEach(features, function(f, idx) {
-          f.setSymbol(flash ? s : featureSymbols[idx] || gurdSymbol);
-        });
-      }
-
-      function flash(cb) {
-        return function() {
-          setTimeout(function() {
-            changeSymbol(cSymbol, true);
-            if (features[0] && layer) {
-              layer.redraw();
-            }
-            setTimeout(function() {
-              changeSymbol(null, false);
-              if (features[0] && layer) {
-                layer.redraw();
-              }
-              cb();
-            }, 200);
-          }, 200);
-        };
-      }
-
-      if (first && gurdSymbol && cSymbol && layer) {
-        if (layer.geometryType === 'esriGeometryPoint') {
-          changeSymbol(cSymbol, true);
-          layer.redraw();
-          setTimeout(function() {
-            changeSymbol(null, false);
-            layer.redraw();
-          }, 2000);
-        } else {
-          flash(flash(flash(function() {})))();
-        }
-      }
-    };
-
-    result.panTo = function(map, graphics) {
-      var isGraphics = array.every(graphics || [], function(g) {
-        return g && g.geometry;
-      });
-      if (!isGraphics) {
-        return;
-      }
-
-      var center;
-      if(graphics.length > 0){
-        var extent = graphicsUtils.graphicsExtent(graphics);
-        center = extent.getCenter();
-      }else{
-        var geometry = graphics[0].geometry;
-        if(geometry.type === 'polyline' || geometry.type === 'polygon'){
-          center = geometry.getExtent().getCenter();
-        }else if(geometry.type === 'extent'){
-          center = geometry.getCenter();
-        }else if(geometry.type === 'multipoint'){
-          if(geometry.points.length > 1){
-            center = geometry.getExtent().getCenter();
-          }else{
-            center = geometry.getPoint(0);
-          }
-        }else{
-          center = geometry;
-        }
-      }
-
-      map.centerAt(center);
-    };
-
-    result.showPopup = function(map, graphics) {
-      var isGraphics = array.every(graphics || [], function(g) {
-        return g && g.geometry;
-      });
-      if (!isGraphics) {
-        return;
-      }
-
-      var popup = map.infoWindow;
-      popup.setFeatures(graphics);
-      var f = graphics[0];
-      if (f.geometry.type === 'point') {
-        popup.show(f.geometry, {
-          closetFirst: true
-        });
-      } else {
-        popup.show(f.geometry.getExtent().getCenter(), {
-          closetFirst: true
-        });
-      }
-    };
-
-    return result;
-  }());
-
-  mo.isInConfigOrPreviewWindow = function(){
-    var b = false;
-    try{
-      b = !window.isBuilder && window.parent && window.parent !== window &&
-        window.parent.isBuilder;
-    }catch(e){
-      console.log(e);
-      b = false;
-    }
-    return !!b;
-  };
-
-  //for cross-origin frame
-  mo.getAppHref = function(){
-    var href = "";
-    if (mo.isInConfigOrPreviewWindow()) {
-      href = window.parent.location.href;
-    } else {
-      href = window.location.href;
-    }
-    return href;
-  };
-
-  mo.getAppIdFromUrl = function() {
-    var isDeployedApp = true,
-      href = mo.getAppHref();// window.top.location.href;
-    if (href.indexOf("id=") !== -1 || href.indexOf("appid=") !== -1 ||
-      href.indexOf("apps") !== -1) {
-      isDeployedApp = false;
-    }
-
-    if (isDeployedApp === true) {
-      // deployed app use pathname as key
-      return href;
-    } else {
-      // xt or integration use id of app as key
-      var urlParams = this.urlToObject(window.location.href);
-      if (urlParams.query) {
-        if (urlParams.query.id || urlParams.query.appid) {
-          return urlParams.query.id || urlParams.query.appid;
-        }
-      }
-
-      // if there is no id/appid in url
-      if (window.appInfo) {
-        if (window.appInfo.id) {
-          //id in appInfo
-          return window.appInfo.id;
-        } else if (window.appInfo.appPath) {
-          //parse id from appPath
-          var list = window.appInfo.appPath.split("/");
-          if (list.length && list.length > 2) {
-            return list[list.length - 2];
-          }
-        } else {
-          console.error("CAN NOT getAppIdFromUrl");
-        }
-      }
-    }
-  };
-
-  mo.getEditorContentHeight = function(content, dom, domParam) {
-    var def = new Deferred();
-    this._content = content;
-    this._dom = dom;
-    this._domParam = domParam;
-    var timeoutHandler = setTimeout(lang.hitch(this, function() {
-      clearTimeout(timeoutHandler);
-      timeoutHandler = null;
-
-      var h = 0;
-      var scrollerWidth = 20;
-      var polyfill = 8;
-      var contentWidth = this._domParam.contentWidth;//defaultWidth - marginLeftRight;
-      try {
-        var fakeContent = document.createElement('div');
-        fakeContent.setAttribute('id', 'fakeContent');
-        html.setStyle(fakeContent, "background-size", "contain");
-        fakeContent.innerHTML = this._content;
-        this._dom.appendChild(fakeContent);
-        if (fakeContent) {
-          //to adjust images
-          var contentImgs = query('img', fakeContent);
-          if (contentImgs && contentImgs.length) {
-            contentImgs.style({
-              maxWidth: (contentWidth - scrollerWidth) + 'px'
-            });
-          }
-
-          html.setStyle(fakeContent, "position", "absolute");
-          html.setStyle(fakeContent, "width", contentWidth + "px");
-          html.setStyle(fakeContent, "left", "-99999px");
-          html.setStyle(fakeContent, "top", "-99999px");
-          html.setStyle(fakeContent, "visibility", "hidden");
-
-          var box = html.getContentBox(fakeContent);
-          if (box.h) {
-            //content height
-            h = box.h;
-            //+ content margin top + content margin bottom + polyfill
-            h += (this._domParam.contentMarginTop + this._domParam.footerHeight + polyfill);
-          }
-          //TODO delete
-          // if (h) {
-          //   this._dom.removeChild(fakeContent);
-          // }
-        }
-      } catch (err) {
-        console.error("can't getEditorContentHeight" + err);
-        h = 200;
-      }
-
-      def.resolve(h);
-    }), 1500);
-    return def;
-  };
-
-  mo.getBase64Data = function(url) {
-    var def = new Deferred();
-    if (url && url.startWith('data:image')) {
-      def.resolve(url);
-    } else {
-      try {
-        esriRequest({
-          url: url,
-          handleAs: 'arraybuffer'
-        }).then(function(response){
-          var reader = new FileReader();
-          reader.onloadend = function () {
-            def.resolve(reader.result);
-          };
-          reader.onerror = function () {
-            def.resolve(null);
-          };
-          reader.readAsDataURL(new Blob([response], {
-            type: 'image/png'
-          }));
-        }, function(){
-          def.resolve(null);
-        });
-      }catch(err) {
-        console.warn(err);
-        def.resolve(null);
-      }
-    }
-    return def;
-  };
-
-  mo.getEditorTextColor = function(colorRecordID, forceAttr) {
-    return {
-      name: "dijit.editor.plugins.EditorTextColor",
-      custom: {
-        recordUID: mo.getColorRecordName(colorRecordID),
-        forceAttr: forceAttr
-      }
-    };
-  };
-  mo.getEditorBackgroundColor = function(colorRecordID) {
-    return {
-      name: "dijit.editor.plugins.EditorBackgroundColor",
-      custom: {
-        recordUID: mo.getColorRecordName(colorRecordID)
-      }
-    };
-  };
-  mo.getColorRecordName = function(id){
-    return "wab_cr_" + (id || "");
-  };
-  mo.b64toBlob = function(b64Data, contentType, sliceSize) {
-    contentType = contentType || '';
-    sliceSize = sliceSize || 512;
-    var byteCharacters = window.atob(b64Data.replace(/^data:image\/(png|jpg|jpeg|gif);base64,/, ''));
-    var byteArrays = [];
-    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      var slice = byteCharacters.slice(offset, offset + sliceSize);
-      var byteNumbers = new Array(slice.length);
-      for (var i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-      var byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
-    }
-    var blob = new Blob(byteArrays, {
-      type: contentType
-    });
-    return blob;
-  };
-  mo.subtractionArray = function(arr1, arr2) {
-    //return arr1 = arr1 - arr2
-    for (var i = arr1.length - 1; i >= 0; i--) {
-      var a = arr1[i];
-      for (var j = arr2.length - 1; j >= 0; j--) {
-        var b = arr2[j];
-        if (a === b) {
-          arr1.splice(i, 1);
-          arr2.splice(j, 1);
-          break;
-        }
-      }
-    }
-    return arr1;
-  };
-  mo.resourcesUrlToBlob = function(resourcesUrl) {
-    return esriRequest({
-      url: resourcesUrl,
-      handleAs: "blob"
-    });
-  };
-  mo.processItemResourceOfAppConfig = function(appConfig, cb){
-    //Traverse appConfig and get all the data that matches the cb.test,
-    //along with its direct parent object, passed to the callback function(cb.func)
-
-    //cb:{test,func}
-    //args:all parameters that need to be passed to the callback function(cb.func)
-    //
-    //Return: if cb.func return a promise(defs.length > 0),this function will return a deferred
-    //        else return {appConfig,normalReturnValues}
-    var normalReturnValues = [];
-    var defs = [];
-    var callbackReturn;
-
-    function processObject(obj) {
-      for (var key in obj) {
-        if (typeof obj[key] === 'object') {
-          if (Array.isArray(obj[key])) {
-            processArray(obj, key);
-          } else {
-            processObject(obj[key]);
-          }
-        } else if (typeof obj[key] === 'string') {
-          processString(obj, key);
-        }
-      }
-    }
-
-    function processString(obj, key, i){
-      if(typeof i === 'number'){
-        if (cb.test(obj[key][i])) {
-          callbackReturn = cb.func({
-            obj: obj,
-            key: key,
-            i:i
-          });
-          if(typeof callbackReturn.then === 'function'){
-            defs.push(callbackReturn);
-          }else{
-            normalReturnValues.push(callbackReturn);
-          }
-        }
-      }else{
-        if (cb.test(obj[key])) {
-          callbackReturn = cb.func({
-            obj: obj,
-            key: key
-          });
-          if(typeof callbackReturn.then === 'function'){
-            defs.push(callbackReturn);
-          }else{
-            normalReturnValues.push(callbackReturn);
-          }
-        }
-      }
-    }
-
-    function processArray(obj, key){
-      for (var i = 0; i < obj[key].length; i++) {
-        if (typeof obj[key][i] === 'string') {
-          processString(obj, key, i);
-        }else if (typeof obj[key][i] === 'object') {
-          processObject(obj[key][i]);
-        }
-      }
-    }
-
-    processObject(appConfig);
-
-    if(defs.length > 0){
-      return all(defs).then(function(result){
-        if(normalReturnValues.length > 0){
-          result = result.concat(normalReturnValues);
-        }
-        return {
-          appConfig: appConfig,
-          result: result
-        };
-      });
-    }else{
-      return {
-        appConfig: appConfig,
-        result: normalReturnValues
-      };
-    }
-  };
-  mo.isEsriDomain = function(url){
-    return /^https?:\/\/(?:[\w\-\_]+\.)+(?:esri|arcgis)\.com/.test(url);
-  };
-  mo.uniqueArray = function(array) {
-    var n = [];
-    for (var i = 0; i < array.length; i++) {
-      if (n.indexOf(array[i]) === -1) {
-        n.push(array[i]);
-      }
-    }
-    return n;
-  };
-  mo.isNotEmptyObject = function(obj, includeArray) {
-    if(!!includeArray){
-      return mo.isObject(obj) && Object.keys(obj).length > 0 && Array.isArray(obj);
-    }else{
-      return mo.isObject(obj) && Object.keys(obj).length > 0;
-    }
-  };
-  mo.getMinOfArray = function(array) {
-    return Number(Math.min.apply(Math, array));
-  };
-  mo.getDataSchemaFromLayerDefinition = function(layerDefinition){
-    var oIdField = layerDefinition.fields.filter(function(f){
-      return f.type === 'esriFieldTypeOID';
-    });
-    if(oIdField.length > 0){
-      oIdField = oIdField[0];
-    }else{
-      oIdField = null;
-    }
-
-    return {
-      geometryType: layerDefinition.geometryType,
-      fields: layerDefinition.fields,
-      displayField: layerDefinition.displayField,
-      objectIdField: oIdField,
-      typeIdField: layerDefinition.typeIdField
-    };
-  };
-
   return mo;
 });
