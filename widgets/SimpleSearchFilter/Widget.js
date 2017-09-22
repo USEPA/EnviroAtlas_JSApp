@@ -1498,6 +1498,9 @@ define([
 		    });
      },
      _onUpdateCommunityLayers: function() {
+     	this.publishData({
+            message: window.communitySelected 
+        });
      	arrLayersToChangeSynbology = [];
 	    var lyr;
     	for (i in window.communityLayerNumber) {

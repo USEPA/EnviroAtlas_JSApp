@@ -257,7 +257,8 @@ define([
           query("[class~='layer-title-div-" + layerInfo.id + "']", this.domNode)
           .forEach(function(layerTitleDivIdDomNode) {
             try {
-              if (layerInfo.isInScale()) {
+              var eaID = layerInfo.id.replace(window.layerIdPrefix, "").replace(window.layerIdPBSPrefix, "");
+              if ((layerInfo.isInScale()) || (window.hashIDtoTileURL[eaID] != null)) {
                 html.removeClass(layerTitleDivIdDomNode, 'grayed-title');
               } else {
                 html.addClass(layerTitleDivIdDomNode, 'grayed-title');

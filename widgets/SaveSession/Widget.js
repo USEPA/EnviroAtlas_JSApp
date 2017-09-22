@@ -720,7 +720,7 @@ define(['dojo/_base/declare',
                         console.log('SaveSession :: loadSession :: set visibility = ', layerSettings.isVisible, ' for layer : id=', layer.id);
 
                        
-                       layerTile = this.map.getLayer(layerIdTiledPrefix + eaId);
+                       layerTile = this.map.getLayer(window.layerIdTiledPrefix + eaId);
                        if (layerTile != null) {
                        		if (window.hashRenderer[eaId] == null) {
 	                        	layerTile.setVisibility(layerSettings.isVisible);

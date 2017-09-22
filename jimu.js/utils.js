@@ -50,6 +50,7 @@ define([
     'esri/tasks/query',
     'esri/tasks/QueryTask',
     'esri/graphicsUtils',
+    'esri/dijit/PopupTemplate',
     'jimu/portalUrlUtils',
     './shared/utils'
   ],
@@ -57,7 +58,7 @@ define([
 function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on, json, cookie,
   dojoNumber, dateLocale, nlsBundle, base64, esriLang, arcgisUtils, PopupTemplate, SpatialReference,
   Extent, Multipoint, Polyline, Polygon, webMercatorUtils, GeometryService, ProjectParameters, FeatureSet,
-  PictureMarkerSymbol, esriUrlUtils, esriRequest, EsriQuery, QueryTask, graphicsUtils, portalUrlUtils, sharedUtils
+  PictureMarkerSymbol, esriUrlUtils, esriRequest, EsriQuery, QueryTask, graphicsUtils, PopupTemplate, portalUrlUtils, sharedUtils
 ) {
   /* global esriConfig, dojoConfig, ActiveXObject, testLoad */
   var mo = {};
@@ -2075,6 +2076,102 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
       }
       return ret;
     }
+  };
+	mo.getPopups = function (layer) {
+		var infoTemplateArray = {};
+		if (layer.layers) {
+			array.forEach(layer.layers, function (subLayer) {
+				var _infoTemp = subLayer.popup;
+				var popupInfo = {};
+				popupInfo.title = _infoTemp.title;
+				if (_infoTemp.description) {
+					popupInfo.description = _infoTemp.description;
+				} else {
+					popupInfo.description = null;
+				}
+				if (_infoTemp.fieldInfos) {
+					popupInfo.fieldInfos = _infoTemp.fieldInfos;
+				}
+				var _popupTemplate = new PopupTemplate(popupInfo);
+				infoTemplateArray[subLayer.id] = {
+					infoTemplate: _popupTemplate
+				};
+			});
+		} else if (layer.popup) {
+			var _popupTemplate = new PopupTemplate(layer.popup);
+			infoTemplateArray[0] = {
+				infoTemplate: _popupTemplate
+			}
+		}
+		return infoTemplateArray;
+	};
+    mo.initTileLayer = function (urlTiledMapService, tiledLayerId) {
+        dojo.declare("myTiledMapServiceLayer", esri.layers.TiledMapServiceLayer, {
+            constructor: function () {
+                this.spatialReference = new esri.SpatialReference({
+                        wkid: 102100
+                    });
+                this.initialExtent = (this.fullExtent = new esri.geometry.Extent(-13899346.378, 2815952.218899999, -7445653.2326, 6340354.452, this.spatialReference));
+                this.tileInfo = new esri.layers.TileInfo({
+                        "rows": 256,
+                        "cols": 256,
+                        "dpi": 96,
+                        "format": "PNG",
+                        "compressionQuality": 0,
+                        "origin": {
+                            "x": -20037508.342787,
+                            "y": 20037508.342787
+                        },
+                        "spatialReference": {
+                            "wkid": 102100
+                        },
+                        "lods": [{
+                                level: 0,
+                                resolution: 156543.03392800014,
+                                scale: 591657527.591555
+                            }, {
+                                level: 1,
+                                resolution: 78271.51696399994,
+                                scale: 295828763.795777
+                            }, {
+                                level: 2,
+                                resolution: 39135.75848200009,
+                                scale: 147914381.897889
+                            }, {
+                                level: 3,
+                                resolution: 19567.87924099992,
+                                scale: 73957190.948944
+                            }, {
+                                level: 4,
+                                resolution: 9783.93962049996,
+                                scale: 36978595.474472
+                            }, {
+                                level: 5,
+                                resolution: 4891.96981024998,
+                                scale: 18489297.737236
+                            }, {
+                                level: 6,
+                                resolution: 2445.98490512499,
+                                scale: 9244648.868618
+                            }, {
+                                level: 7,
+                                resolution: 1222.992452562495,
+                                scale: 4622324.434309
+                            }, {
+                                level: 8,
+                                resolution: 611.4962262813797,
+                                scale: 2311162.217155
+                            }
+                        ]
+                    });
+                this.loaded = true;
+                this.onLoad(this);
+                this.visible = false;
+                this.id = tiledLayerId;
+            },
+            getTileUrl: function (level, row, col) {
+                return urlTiledMapService +
+                "L" + dojo.string.pad(level, 2, '0') + "/" + "R" + dojo.string.pad(row.toString(16), 8, '0') + "/" + "C" + dojo.string.pad(col.toString(16), 8, '0') + "." + "png";
   };
 
   mo.processUrlInWidgetConfig = function(url, widgetFolderUrl){

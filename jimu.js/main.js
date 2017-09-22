@@ -192,6 +192,7 @@ define([
 	window.hashRenderer = {};
 	window.hashAddedURLToType = {};
 	window.hashAddedURLToId = {};
+	window.hashIDtoTileURL = {};
                 
     //patch for JS API 3.10
     var hasMethod = typeof cookie.getAll === 'function';

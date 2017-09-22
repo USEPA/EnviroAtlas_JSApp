@@ -23,6 +23,7 @@ define([
 		'dijit/Dialog',
 		'jimu/WidgetManager',
 		'jimu/PanelManager',
+		'jimu/utils',
 		'esri/layers/FeatureLayer',
 		'esri/layers/ImageParameters',
 		'esri/dijit/PopupTemplate',
@@ -40,6 +41,7 @@ define([
 		Dialog,
 		WidgetManager,
 		PanelManager,
+		jimuUtils,
 		FeatureLayer,
 		ImageParameters,
 		PopupTemplate,
@@ -72,34 +74,6 @@ define([
 			}
 		}
 	};
-	var getPopups = function (layer) {
-		var infoTemplateArray = {};
-		if (layer.layers) {
-			array.forEach(layer.layers, function (subLayer) {
-				var _infoTemp = subLayer.popup;
-				var popupInfo = {};
-				popupInfo.title = _infoTemp.title;
-				if (_infoTemp.description) {
-					popupInfo.description = _infoTemp.description;
-				} else {
-					popupInfo.description = null;
-				}
-				if (_infoTemp.fieldInfos) {
-					popupInfo.fieldInfos = _infoTemp.fieldInfos;
-				}
-				var _popupTemplate = new PopupTemplate(popupInfo);
-				infoTemplateArray[subLayer.id] = {
-					infoTemplate: _popupTemplate
-				};
-			});
-		} else if (layer.popup) {
-			var _popupTemplate = new PopupTemplate(layer.popup);
-			infoTemplateArray[0] = {
-				infoTemplate: _popupTemplate
-			}
-		}
-		return infoTemplateArray;
-	}
 
 	var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
 
@@ -280,7 +254,7 @@ define([
 									lLayer = new ArcGISDynamicMapServiceLayer(layer.url);
 								}
 
-								var popupConfig = getPopups(layer);
+								var popupConfig = jimuUtils.getPopups(layer);
 								lLayer.setInfoTemplates(popupConfig);
 
 								dojo.connect(lLayer, "onError", function (error) {

@@ -322,7 +322,9 @@ define([
           }
           currentLayerInfo = currentLayerInfo.parentLayerInfo;
         }
-        if(!display) {
+        var eaID = layerInfo.id.replace(window.layerIdPrefix, "").replace(window.layerIdPBSPrefix, "");
+        //if(!display) {
+        if((!display)&&(window.hashIDtoTileURL[eaID] == null)) {
           domClass.add(labelDiv, 'grayed-title');
         } else {
           domClass.remove(labelDiv, 'grayed-title');

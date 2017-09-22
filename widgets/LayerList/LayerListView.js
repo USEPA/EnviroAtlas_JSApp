@@ -174,7 +174,8 @@ define([
 
       var grayedTitleClass = '';
       try {
-        if (!layerInfo.isInScale()) {
+      	var eaID = layerInfo.id.replace(window.layerIdPrefix, "").replace(window.layerIdPBSPrefix, "");
+        if ((!layerInfo.isInScale())&&(window.hashIDtoTileURL[eaID] == null)) {
           grayedTitleClass = 'grayed-title';
         }
       } catch (err) {

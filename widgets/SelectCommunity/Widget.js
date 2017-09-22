@@ -89,9 +89,7 @@ function(declare,
     _onSelectCommunityClick: function() {
 
 		window.communitySelected = communitySelected;
-        this.publishData({
-	        message: communitySelected
-	    });
+
 	    this.i ++;
 	    var nExtent;
 	    if (communitySelected != window.strAllCommunity) {
