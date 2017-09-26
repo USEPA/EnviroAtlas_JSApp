@@ -126,6 +126,7 @@ define(["./ConfigManager",
     window.topicDicPBS["Employment"] = "E";
     window.topicDicPBS["National Demographics"] = "ND";
     window.topicDicPBS["Commuting and Walkability"] = "CaW";
+    window.topicDicPBS["Quality of Life"] = "QoL";
 
 
     
