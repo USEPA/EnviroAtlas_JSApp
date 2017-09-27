@@ -5,7 +5,7 @@
       <tr>
         <td style="width:115px;text-align:left;">${nls.layerUrl}</td>
         <td style="width:auto;">
-          <input type="text" data-dojo-type="jimu/dijit/ServiceURLInput" data-dojo-attach-point="layerUrl" data-dojo-props='style:{width:"100%"}' required="true"/>
+          <input type="text" widgetid='jsonURLInput' data-dojo-type="jimu/dijit/jsonURLInput" data-dojo-attach-point="layerUrl" data-dojo-props='style:{width:"100%"}' required="true"/>
         </td>
       </tr>
       <tr>
@@ -29,6 +29,13 @@
               </td>
             </tr>
           </table>
+        </td>
+      </tr>
+      <tr id="featureArrayFieldOuter" style="display:none">
+        <td style="width:115px;text-align:left;vertical-align:middle;">${nls.featureArrayField}</td>
+        </td>
+        <td style="width:115px;text-align:left;vertical-align:middle;">
+          <div data-dojo-attach-point="featureArrayField" id="featureArrayField"></div>
         </td>
       </tr>
       <tr>
@@ -117,82 +124,9 @@
                         <div data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="showLabelsCbx" />
                       </td>
                     </tr>
-                    <tr>
-                      <td style="width:220px;text-align:left;">
-                        <span>${nls.hideinlegend}</span>
-                      </td>
-                      <td style="width:auto;">
-                        <div data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="hideInLegendCbx" />
-                      </td>
-                    </tr>
                   </tbody>
                 </table>
               </td>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <table style="width:100%;" cellspacing="0">
-            <tr>
-              <td style="width:50%;">
-                <table style="width:100%;" cellspacing="0">
-                  <tbody>
-                    <tr>
-                      <td style="width:165px;text-align:left;">
-                        <span>${nls.customLabel}</span>
-                      </td>
-                      <td style="width:auto;">
-                        <input type="text" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-attach-point="customLabel" data-dojo-props='style:{width:"100%"}'/></input>
-                      </td>
-                      </tr>
-                      <tr>
-                      <td style="width:20%;text-align:left;vertical-align:middle;"><a href='http://developers.arcgis.com/javascript/samples/playground/index.html' target="_blank">${nls.customLabelStyle}</a></td>
-                      <td style="width:80%;vertical-align:midle;">
-                        <textarea data-dojo-type="dijit/form/Textarea" data-dojo-attach-point="customLabelStyle" style="width:100%"></textarea>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <table style="width:100%;" cellspacing="0">
-            <tr>
-              <td style="width:50%;">
-                <table style="width:100%;" cellspacing="0">
-                  <tbody>
-                    <tr>
-                      <td style="width:200px;text-align:left;">
-                        <span>${nls.labelMinScale}</span>
-                      </td>
-                      <td style="width:auto;">
-                        <input type="text" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-attach-point="labelMinScale"
-                               required="false" data-dojo-props='style:{width:"100%"}'/></input>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-              <td style="width:50%;">
-                <table style="width:100%;" cellspacing="0">
-                  <tbody>
-                    <tr>
-                      <td style="width:200px;text-align:left;">
-                        <span>${nls.labelMaxScale}</span>
-                      </td>
-                      <td style="width:auto;">
-                        <input type="text" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-attach-point="labelMaxScale"
-                               required="false" data-dojo-props='style:{width:"100%"}'/></input>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
           </table>
         </td>
       </tr>
@@ -247,12 +181,12 @@
                     <tbody>
                       <tr>
                         <td style="width:115px;text-align:left;vertical-align:middle;">${nls.popup}</td>
-                        <td style="width:22px;vertical-align:midle;">
+                        <td style="width:22px;vertical-align:middle;">
                           <div data-dojo-attach-event="onclick: onAddPopup" title="${nls.configurepopup}">
                             <span class="add-popup-icon disabled" data-dojo-attach-point="addPopupBtn"></span>
                           </div>
                         </td>
-                        <td style="width:auto;vertical-align:midle;">
+                        <td style="width:auto;vertical-align:middle;">
                           <div data-dojo-attach-event="onclick: onRemovePopup" title="${nls.removepopup}">
                             <span class="delete-popup-icon disabled" data-dojo-attach-point="removePopupBtn"></span>
                           </div>
@@ -265,11 +199,12 @@
                   <table style="width:100%;" cellspacing="0">
                     <tbody>
                       <tr>
-                        <td style="width:165px;text-align:left;">
-                          <span>${nls.defQuery}</span>
+                        <td style="width:115px;text-align:left;vertical-align:middle;">${nls.symbolpicker}</td>
                         </td>
-                        <td style="width:auto;">
-                          <input type="text" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-attach-point="definitionQuery" data-dojo-props='style:{width:"100%"}'/></input>
+                        <td style="width:115px;text-align:left;vertical-align:middle;">
+                          <div data-dojo-attach-event="onclick: onEditSymbology" title="${nls.symbolpicker}">
+                            <span class="add-popup-icon enabled" data-dojo-attach-point="editSymbolBtn"></span>
+                          </div>
                         </td>
                       </tr>
                     </tbody>
@@ -285,15 +220,14 @@
           <table style="width:100%;padding-top:8px;" cellspacing="0">
             <tbody>
               <tr>
-                <td style="width:50%">
+                <td style="width:50%;">
                   <table style="width:100%;" cellspacing="0">
                     <tbody>
                       <tr>
-                        <td style="width:220px;text-align:left;">
-                          <span>${nls.trackEditByLDAP}</span>
+                        <td style="width:115px;text-align:left;vertical-align:middle;">${nls.latitudeField}</td>
                         </td>
-                        <td style="width:auto;">
-                          <div data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="trackEditByLDAPCbx" />
+                        <td style="width:115px;text-align:left;vertical-align:middle;">
+                          <div data-dojo-attach-point="selectLatitude" id="selectLatitude"></div>
                         </td>
                       </tr>
                     </tbody>
@@ -303,29 +237,14 @@
                   <table style="width:100%;" cellspacing="0">
                     <tbody>
                       <tr>
-                        <td style="width:220px;text-align:left;">
-                          <span>${nls.limitEditByLDAP}</span>
+                        <td style="width:115px;text-align:left;vertical-align:middle;">${nls.longitudeField}</td>
                         </td>
-                        <td style="width:auto;">
-                          <div data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="limitEditByLDAPCbx" />
+                        <td style="width:115px;text-align:left;vertical-align:middle;">
+                          <div data-dojo-attach-point="selectLongitude" id="selectLongitude"></div>
                         </td>
                       </tr>
                     </tbody>
                   </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <table style="width:100%;" cellspacing="0">
-            <tbody>
-              <tr>
-                <td style="width:20%;text-align:left;vertical-align:middle;"><a href='http://developers.arcgis.com/javascript/samples/playground/index.html'  target="_blank">${nls.customRenderer}</a></td>
-                <td style="width:80%;vertical-align:midle;">
-                  <textarea data-dojo-type="dijit/form/Textarea" data-dojo-attach-point="customRenderer" style="width:100%"></textarea>
                 </td>
               </tr>
             </tbody>

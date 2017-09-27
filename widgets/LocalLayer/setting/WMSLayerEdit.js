@@ -16,7 +16,9 @@ define(
     'jimu/dijit/CheckBox',
     'dijit/form/NumberTextBox',
     'dijit/form/ValidationTextBox',
-    'dojo/text!./DynamicLayerEdit.html',
+    'dojo/text!./WMSLayerEdit.html',
+    "esri/layers/WMSLayer",
+    "esri/layers/WMSLayerInfo",
     'jimu/dijit/Popup',
     'dojo/keys',
     './PopupEdit'
@@ -39,6 +41,8 @@ define(
     NumberTextBox,
     ValidationTextBox,
     template,
+    WMSLayer,
+    WMSLayerInfo,
     Popup,
     keys,
     PopupEdit) {
@@ -48,6 +52,8 @@ define(
       config:null,
       tr:null,
       popuppuedit:null,
+      newWMS:null,
+      layerObj: [],
 
       postCreate: function() {
         this.inherited(arguments);
@@ -70,8 +76,8 @@ define(
         this._bindEvents();
         this.own(on(this.layerUrl, 'Change', lang.hitch(this, '_onServiceUrlChange')));
         this.layerUrl.proceedValue = false;
-        this.layerUrl.setProcessFunction(lang.hitch(this, '_onServiceFetch', this.layerUrl),
-                                    lang.hitch(this, '_onServiceFetchError'));
+        //this.layerUrl.setProcessFunction(lang.hitch(this, '_onServiceFetch', this.layerUrl),
+                                    //lang.hitch(this, '_onServiceFetchError'));
         if(config.url){
           this.layerUrl.set('value', config.url);
         }
@@ -178,7 +184,7 @@ define(
 
       _createSubLayer: function(args) {
         var isGroupLayer = false
-        if(args.config.subLayerIds){
+        if(args.config.subLayers.length > 0){
           //return null;
           isGroupLayer = true;
         }
@@ -186,56 +192,41 @@ define(
         args.layerSetting = this;
         args.nls = this.nls;
 
-        var hiddenLayer;
-        var isVisible = args.config.defaultVisibility;
-        if(this.config.hasOwnProperty('hidelayers')){
-          if (this.config.hidelayers){
-            hiddenLayer = this.config.hidelayers.split(',');
-          }else{
-            hiddenLayer = [];
-          }
-          if(array.indexOf(hiddenLayer, args.config.id) >= 0){
-            isVisible = false;
-            //isVisible = true;
-          }else{
-            isVisible = true;
-            //isVisible = false;
-          }
-        }
-        var definitionQueries
-        var defQuery = ""
-        if (this.config.hasOwnProperty('definitionQueries')){
-          if (this.config.definitionQueries){
-            definitionQueries = JSON.parse(this.config.definitionQueries);
-          }else{
-            definitionQueries = [];
-          }
-          if (definitionQueries[args.config.id]){//(array.indexOf(definitionQueries, args.config.id) >= 0){
-            defQuery = definitionQueries[args.config.id]
+        var alias = args.config.title
+        var isVisible = false;
+        var isQueryable = args.config.queryable
+        var isShowPopup = args.config.showPopup
+
+        if (this.config.resourceInfo){
+          if (this.config.resourceInfo.layerInfos){
+            array.forEach(this.config.resourceInfo.layerInfos,lang.hitch(this,function(layerInfo){
+              if (this._searchSublayers(layerInfo, args.config.name)){
+                alias = this._searchSublayers(layerInfo, args.config.name).title
+                isQueryable = this._searchSublayers(layerInfo, args.config.name).queryable
+                isShowPopup = this._searchSublayers(layerInfo, args.config.name).showPopup
+              }
+            }))
           }
         }
 
-        var hideInLegends
-        var hideInLegend
-        if (this.config.hasOwnProperty('hideInLegends')){
-          if (this.config.hideInLegends){
-            hideInLegends = JSON.parse(this.config.hideInLegends);
-          }else{
-            hideInLegends = []
-          }
-          if (hideInLegends[args.config.id]){
-            hideInLegend = hideInLegends[args.config.id]
-          }
+        if (this.config.visibleLayers){
+          array.forEach(this.config.visibleLayers,lang.hitch(this,function(visibleLayer){
+            if (visibleLayer == args.config.name){
+              isVisible = true;
+            }
+          }))
         }
 
         var rowData = {
           name: (args.config && args.config.name) || '',
+          title: alias,
           visible: isVisible,
-          definitionQuery: defQuery,
-          hideInLegend: hideInLegend,
-          layerindex: args.config.id,
+          queryable: isQueryable,
+          showPopup: isShowPopup,
+          isGroupLayer: isGroupLayer
         };
 
+        this.layerObj.push(rowData);
         var result = this.sublayersTable.addRow(rowData);
         if(!result.success){
           return null;
@@ -248,8 +239,41 @@ define(
         return result.tr;
       },
 
+      _searchSublayers: function(layerInfo, searchName){
+        if (layerInfo.name == searchName){
+          return layerInfo
+        }
+        if (layerInfo.subLayers.length > 0){
+          array.forEach(layerInfo.subLayers, lang.hitch(this,function(_layerInfo){
+            this._searchSublayers(_layerInfo, searchName)
+          }))
+        }
+      },
+
+      _spawnSublayers: function(layerInfo, index){
+        var args = {
+          config: layerInfo,
+          sublayerindex: index
+        };
+        if (layerInfo.name){this._createSubLayer(args)};
+        if (layerInfo.subLayers.length > 0){
+          array.forEach(layerInfo.subLayers, lang.hitch(this,function(_layerInfo, _index){
+            this._spawnSublayers(_layerInfo,_index)
+          }))
+        }
+      },
+
       _onServiceUrlChange: function(){
         this.popup.disableButton(0);
+        this.newWMS = new WMSLayer(this.layerUrl.value);
+        this.sublayersTable.clear()
+        this.layerObj = [];
+        on(this.newWMS,"load",lang.hitch(this,function(lLayer){
+          this.popup.enableButton(0);
+          array.forEach(lLayer.layer.layerInfos,lang.hitch(this,function(layerInfo, index){
+            this._spawnSublayers(layerInfo,index)
+          }))
+        }));
       },
 
       _isStringEndWith: function(s,endS){
@@ -259,50 +283,54 @@ define(
       _onServiceFetchError: function(){
       },
 
+      getLayer: function(layerName){
+        var match = null
+        array.forEach(this.layerObj,function(layer){
+          if (layer.name == layerName){
+            match = layer;
+          }
+        })
+        return match;
+      },
+
       getConfig: function() {
         var rowsData = this.sublayersTable.getData();
 
-        var visibleLayers = [];
-        var definitionQueries = new Object();
-        var hideInLegends = new Object();
-        array.map(rowsData, lang.hitch(this, function (item) {
-          if (item.layerindex == ""){item.layerindex = "0"}
-          if(!item.visible){
-            visibleLayers.push(parseInt(item.layerindex))
+        //var definitionQueries = new Object();
+        //var hideInLegends = new Object();
+        var resourceInfo = {}
+        resourceInfo.layerInfos = [];
+        visibleLayers= [];
+        var addToArray = []
+        array.map(rowsData.reverse(), lang.hitch(this, function (item, index) {
+          //var addToArray = resourceInfo.layerInfos
+          if(item.visible){
+            visibleLayers.push(item.name)
           }
-          if (item.definitionQuery !== ""){
-            definitionQueries[parseInt(item.layerindex)] = item.definitionQuery
+          var currentLayer = new WMSLayerInfo({name:item.name,title:item.title,queryable:item.queryable,showPopup:item.showPopup})
+          if (this.getLayer(item.name).isGroupLayer){
+            currentLayer.subLayers = dojo.clone(addToArray)
+            addToArray = []
           }
-          if (item.hideInLegend){
-            hideInLegends[parseInt(item.layerindex)] = true;
-          }else{
-            hideInLegends[parseInt(item.layerindex)] = false;
-          }
+          addToArray.push(currentLayer)
         }));
-var _hideInLegends = JSON.stringify(hideInLegends)
-var _definitionQueries = JSON.stringify(definitionQueries);
-var _hideLayers = visibleLayers.join();
-if (_hideLayers == ""){_hideLayers = null};
-if (_definitionQueries == ""){_definitionQueries = null};
-        var dynamiclayer = {
-          type: 'Dynamic',
+        resourceInfo.layerInfos = addToArray
+        resourceInfo.extent = this.newWMS.extent
+        var wmslayer = {
+          type: 'WMS',
           name: this.layerTitle.get('value'),
           url: this.layerUrl.get('value'),
           opacity: this.layerAlpha.getAlpha(),
           visible: this.isVisible.getValue(),
-          hideInLegends: _hideInLegends,
           imageformat: this.imgFormat.get('value'),
           autorefresh: this.autoRefresh.get('value'),
-          popup: this.config.popup,
-          imagedpi: this.imgDPI.get('value'),
           disableclientcaching: this.disableClientCachingCbx.getValue(),
           minScale: this.minScale.get('value'),
           maxScale: this.maxScale.get('value'),
-          //hidelayers: allHiddenLayers.join()
-          hidelayers: _hideLayers,
-          definitionQueries: _definitionQueries
+          resourceInfo: resourceInfo,
+          visibleLayers: visibleLayers
         };
-        return [dynamiclayer, this.tr];
+        return [wmslayer, this.tr];
       },
 
       _onPUEditOk: function() {

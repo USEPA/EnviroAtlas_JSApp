@@ -16,7 +16,8 @@ define(
     'jimu/dijit/CheckBox',
     'dijit/form/NumberTextBox',
     'dijit/form/ValidationTextBox',
-    'dojo/text!./DynamicLayerEdit.html',
+    'dojo/text!./ImageLayerEdit.html',
+    "esri/layers/ArcGISImageServiceLayer",
     'jimu/dijit/Popup',
     'dojo/keys',
     './PopupEdit'
@@ -39,11 +40,12 @@ define(
     NumberTextBox,
     ValidationTextBox,
     template,
+    ArcGISImageServiceLayer,
     Popup,
     keys,
     PopupEdit) {
     return declare([BaseWidgetSetting, _WidgetsInTemplateMixin], {
-      baseClass: 'dynamic-layer-edit',
+      baseClass: 'image-layer-edit',
       templateString: template,
       config:null,
       tr:null,
@@ -58,6 +60,8 @@ define(
         this.inherited(arguments);
         if(!this.config.url){
           this.popup.disableButton(0);
+        }else{
+          html.removeClass(this.addPopupBtn, 'disabled');
         }
       },
 
@@ -82,6 +86,9 @@ define(
         }else{
           this.isVisible.setValue(true);
         }
+        if(config.hideInLegend){
+          this.hideInLegendCbx.setValue(true)
+        }
         if(config.disableclientcaching){
           this.disableClientCachingCbx.setValue(true);
         }
@@ -98,27 +105,89 @@ define(
         if(config.hasOwnProperty('minScale')){
           this.minScale.set('value', config.minScale);
         }
+        if(config.popup){
+          html.removeClass(this.removePopupBtn, 'disabled');
+        }
+      },
+
+      onAddPopup: function(){
+        if(html.hasClass(this.addPopupBtn, 'disabled')){
+          return false;
+        }
+        html.removeClass(this.removePopupBtn, 'disabled');
+        var args;
+        if(this.config.popup){
+          args = {
+           config:this.config.popup
+          };
+          this.popupState = 'EDIT';
+        }else{
+          args = {
+           config:{}
+          };
+          this.popupState = 'ADD';
+        }
+        this._openPUEdit(this.nls.configurepopup, args);
+      },
+
+      onRemovePopup: function(){
+        if(this.config.popup){
+          delete this.config.popup;
+        }
+      },
+
+      _onPUEditOk: function() {
+        var popupConfig = this.popuppuedit.getConfig();
+        if (popupConfig.length < 0) {
+          new Message({
+            message: this.nls.warning
+          });
+          return;
+        }
+        this.config.popup = popupConfig;
+
+        this.popup.close();
+        this.popupState = '';
+      },
+
+      _onPUEditClose: function() {
+        if(this.popupState === 'ADD'){
+          html.addClass(this.removePopupBtn, 'disabled');
+        }
+        this.popupbmedit = null;
+        this.popup = null;
+      },
+
+      _openPUEdit: function(title, args) {
+        this.popuppuedit = new PopupEdit({
+          wnls: this.nls,
+          config: args.config || {},
+          tr: null,
+          flinfo: this.featureLayerDetails
+        });
+
+        this.popup = new Popup({
+          titleLabel: title,
+          autoHeight: true,
+          content: this.popuppuedit,
+          container: 'main-page',
+          width: 840,
+          height: 460,
+          buttons: [{
+            label: this.nls.ok,
+            key: keys.ENTER,
+            onClick: lang.hitch(this, '_onPUEditOk')
+          }, {
+            label: this.nls.cancel,
+            key: keys.ESCAPE
+          }],
+          onClose: lang.hitch(this, '_onPUEditClose')
+        });
+        html.addClass(this.popup.domNode, 'widget-setting-popup');
+        this.popuppuedit.startup();
       },
 
       _bindEvents: function() {
-        this.own(on(this.sublayersTable,'actions-edit',lang.hitch(this,function(tr){
-          var args;
-          var infoTemp = this.getInfoTemplate(tr.subLayer.id);
-          if(this.config.popup){
-            args = {
-             config: infoTemp,
-             tr: tr
-            };
-            this.popupState = 'EDIT';
-          }else{
-            args = {
-             config:{},
-             tr: tr
-            };
-            this.popupState = 'ADD';
-          }
-          this._openPUEdit(this.nls.configurepopup, args);
-        })));
       },
 
       onBeforeDelete: function(tr) {
@@ -136,17 +205,27 @@ define(
         var result = false;
         var errormessage = null;
         var url = evt.url.replace(/\/*$/g, '');
-        if (this._isStringEndWith(url, '/MapServer')) {
+        if (this._isStringEndWith(url, '/ImageServer')) {
           urlDijit.proceedValue = true;
           result = true;
-          this.sublayersTable.clear();
-          array.forEach(evt.data.layers, lang.hitch(this, function(layerConfig, index) {
-            var args = {
-              config: layerConfig,
-              sublayerindex: index
-            };
-            this._createSubLayer(args);
-          }));
+          var _layer = new ArcGISImageServiceLayer(evt.url);
+          _layer.on('load', lang.hitch(this,function(evt) {
+            _layer.getRasterAttributeTable().then(lang.hitch(this,function(table){
+              array.forEach(table.fields, function(field){
+                if (field.name == "Value"){
+                  field.name = "Raster.ServicePixelValue"
+                }else{
+                  field.name = "Raster." + field.name
+                }
+              })
+              table.fields.push({
+                alias:"Raw Value",
+                name:"Raster.ServicePixelValue.Raw",
+                type: "esriFieldTypeString"
+              })
+              this.featureLayerDetails = {"data": table}
+            }))
+          }))
         } else {
           urlDijit.proceedValue = false;
           result = false;
@@ -154,7 +233,6 @@ define(
         }
 
         this._checkProceed(errormessage);
-//        console.info(evt.data.layers);
         return result;
       },
 
@@ -168,6 +246,7 @@ define(
         }
         if (canProceed) {
           this.popup.enableButton(0);
+          html.removeClass(this.addPopupBtn, 'disabled');
         } else {
           this.popup.disableButton(0);
           if (errormessage) {
@@ -215,24 +294,10 @@ define(
           }
         }
 
-        var hideInLegends
-        var hideInLegend
-        if (this.config.hasOwnProperty('hideInLegends')){
-          if (this.config.hideInLegends){
-            hideInLegends = JSON.parse(this.config.hideInLegends);
-          }else{
-            hideInLegends = []
-          }
-          if (hideInLegends[args.config.id]){
-            hideInLegend = hideInLegends[args.config.id]
-          }
-        }
-
         var rowData = {
           name: (args.config && args.config.name) || '',
           visible: isVisible,
           definitionQuery: defQuery,
-          hideInLegend: hideInLegend,
           layerindex: args.config.id,
         };
 
@@ -260,49 +325,18 @@ define(
       },
 
       getConfig: function() {
-        var rowsData = this.sublayersTable.getData();
-
-        var visibleLayers = [];
-        var definitionQueries = new Object();
-        var hideInLegends = new Object();
-        array.map(rowsData, lang.hitch(this, function (item) {
-          if (item.layerindex == ""){item.layerindex = "0"}
-          if(!item.visible){
-            visibleLayers.push(parseInt(item.layerindex))
-          }
-          if (item.definitionQuery !== ""){
-            definitionQueries[parseInt(item.layerindex)] = item.definitionQuery
-          }
-          if (item.hideInLegend){
-            hideInLegends[parseInt(item.layerindex)] = true;
-          }else{
-            hideInLegends[parseInt(item.layerindex)] = false;
-          }
-        }));
-var _hideInLegends = JSON.stringify(hideInLegends)
-var _definitionQueries = JSON.stringify(definitionQueries);
-var _hideLayers = visibleLayers.join();
-if (_hideLayers == ""){_hideLayers = null};
-if (_definitionQueries == ""){_definitionQueries = null};
-        var dynamiclayer = {
-          type: 'Dynamic',
+        var imagelayer = {
+          type: 'Image',
           name: this.layerTitle.get('value'),
           url: this.layerUrl.get('value'),
           opacity: this.layerAlpha.getAlpha(),
           visible: this.isVisible.getValue(),
-          hideInLegends: _hideInLegends,
-          imageformat: this.imgFormat.get('value'),
-          autorefresh: this.autoRefresh.get('value'),
+          hideInLegend: this.hideInLegendCbx.getValue(),
           popup: this.config.popup,
-          imagedpi: this.imgDPI.get('value'),
-          disableclientcaching: this.disableClientCachingCbx.getValue(),
           minScale: this.minScale.get('value'),
-          maxScale: this.maxScale.get('value'),
-          //hidelayers: allHiddenLayers.join()
-          hidelayers: _hideLayers,
-          definitionQueries: _definitionQueries
+          maxScale: this.maxScale.get('value')
         };
-        return [dynamiclayer, this.tr];
+        return [imagelayer, this.tr];
       },
 
       _onPUEditOk: function() {
@@ -323,32 +357,12 @@ if (_definitionQueries == ""){_definitionQueries = null};
       },
 
       addOrEditInfoTemplate: function(popupConfig) {
-        if(!this.config.popup){
-          this.config.popup = {
-            infoTemplates :[]
-          };
-        }
-
-        var exists = array.some(this.config.popup.infoTemplates, lang.hitch(this, function(infoTemp) {
-          if(infoTemp.layerId === popupConfig.tr.subLayer.id){
-            infoTemp.title = popupConfig.title;
-            infoTemp.description = popupConfig.description;
-            infoTemp.fieldInfos = popupConfig.fieldInfos;
-            infoTemp.showAttachments = popupConfig.showAttachments;
-            return true;
-          }
-        }));
-
-        if(!exists){
-          var it = {
-            layerId: popupConfig.tr.subLayer.id,
-            title: popupConfig.title,
-            description: popupConfig.description,
-            fieldInfos: popupConfig.fieldInfos,
-            showAttachments: popupConfig.showAttachments
-          };
-          this.config.popup.infoTemplates.push(it);
-        }
+        var it = {
+          title: popupConfig.title,
+          description: popupConfig.description,
+          fieldInfos: popupConfig.fieldInfos
+        };
+        this.config.popup = it
       },
 
       getInfoTemplate: function(id) {
@@ -364,42 +378,5 @@ if (_definitionQueries == ""){_definitionQueries = null};
         }));
         return infoTemplate;
       },
-
-      _onPUEditClose: function() {
-        this.popupbmedit = null;
-        this.popup = null;
-      },
-
-      _openPUEdit: function(title, args) {
-        if(!args.tr.subLayer.subLayerIds){
-          this.popuppuedit = new PopupEdit({
-            wnls: this.nls,
-            config: args.config || {},
-            tr: args.tr,
-            flinfo: null,
-            url: this.layerUrl.get('value') + '/' + args.tr.subLayer.id
-          });
-
-          this.popup = new Popup({
-            titleLabel: title,
-            autoHeight: true,
-            content: this.popuppuedit,
-            container: 'main-page',
-            width: 840,
-            height: 460,
-            buttons: [{
-              label: this.nls.ok,
-              key: keys.ENTER,
-              onClick: lang.hitch(this, '_onPUEditOk')
-            }, {
-              label: this.nls.cancel,
-              key: keys.ESCAPE
-            }],
-            onClose: lang.hitch(this, '_onPUEditClose')
-          });
-          html.addClass(this.popup.domNode, 'widget-setting-popup');
-          this.popuppuedit.startup();
-        }
-      }
     });
   });

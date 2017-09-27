@@ -2172,6 +2172,8 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
             getTileUrl: function (level, row, col) {
                 return urlTiledMapService +
                 "L" + dojo.string.pad(level, 2, '0') + "/" + "R" + dojo.string.pad(row.toString(16), 8, '0') + "/" + "C" + dojo.string.pad(col.toString(16), 8, '0') + "." + "png";
+            }
+        });  
   };
 
   mo.processUrlInWidgetConfig = function(url, widgetFolderUrl){

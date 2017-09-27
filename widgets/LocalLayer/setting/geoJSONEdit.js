@@ -10,7 +10,8 @@ define(
     'dijit/_WidgetsInTemplateMixin',
     'jimu/BaseWidgetSetting',
     'jimu/dijit/Message',
-    'jimu/dijit/ServiceURLInput',
+    'widgets/LocalLayer/setting/jsonURLInput',
+    "jimu/dijit/SymbolChooser",
     'jimu/dijit/_Transparency',
     'jimu/dijit/Popup',
     'dojo/keys',
@@ -19,8 +20,10 @@ define(
     'jimu/dijit/CheckBox',
     'dijit/form/NumberTextBox',
     'dijit/form/ValidationTextBox',
-    'dijit/form/Textarea',
-    'dojo/text!./FeatureLayerEdit.html'
+    'dijit/form/Select',
+    'dojo/data/ObjectStore',
+    'dojo/store/Memory',
+    'dojo/text!./geoJSONEdit.html'
   ],
   function(
     declare,
@@ -33,7 +36,8 @@ define(
     _WidgetsInTemplateMixin,
     BaseWidgetSetting,
     Message,
-    ServiceURLInput,
+    jsonURLInput,
+    SymbolChooser,
     _Transparency,
     Popup,
     keys,
@@ -42,7 +46,9 @@ define(
     CheckBox,
     NumberTextBox,
     ValidationTextBox,
-    TextArea,
+    Select,
+    ObjectStore,
+    Memory,
     template) {
     return declare([BaseWidgetSetting, _WidgetsInTemplateMixin], {
       baseClass: 'feature-layer-edit',
@@ -51,6 +57,8 @@ define(
       tr:null,
       popuppuedit:null,
       featureLayerDetails:null,
+      isValidGeoJson:null,
+      geometryType:null,
 
       postCreate: function() {
         this.inherited(arguments);
@@ -77,7 +85,6 @@ define(
         this.layerUrl.proceedValue = false;
         this.layerUrl.setProcessFunction(lang.hitch(this, '_onServiceFetch', this.layerUrl),
                                     lang.hitch(this, '_onServiceFetchError'));
-
         if(config.url){
           this.layerUrl.set('value', config.url);
         }
@@ -102,44 +109,13 @@ define(
         if(config.hasOwnProperty('minScale')){
           this.minScale.set('value', config.minScale);
         }
-        if(config.hasOwnProperty('labelMaxScale')){
-          this.labelMaxScale.set('value', config.labelMaxScale);
-        }
-        if(config.hasOwnProperty('labelMinScale')){
-          this.labelMinScale.set('value', config.labelMinScale);
-        }
         if(config.showLabels === false){
           this.showLabelsCbx.setValue(false)
         }else{
           this.showLabelsCbx.setValue(true)
         }
-        if(config.hideInLegend){
-          this.hideInLegendCbx.setValue(true)
-        }
-        if(!config.trackEditByLDAP || config.trackEditByLDAP === false){
-          this.trackEditByLDAPCbx.setValue(false)
-        }else{
-          this.trackEditByLDAPCbx.setValue(true)
-        }
-        if(!config.limitEditByLDAP || config.limitEditByLDAP === false){
-          this.limitEditByLDAPCbx.setValue(false)
-        }else{
-          this.limitEditByLDAPCbx.setValue(true)
-        }
         if(config.popup){
           html.removeClass(this.removePopupBtn, 'disabled');
-        }
-        if (config.hasOwnProperty('customLabel')){
-          this.customLabel.set('value',config.customLabel)
-        }
-        if (config.hasOwnProperty('definitionQuery')){
-          this.definitionQuery.set('value',config.definitionQuery)
-        }
-        if (config.hasOwnProperty('customRenderer')){
-          this.customRenderer.set('value',config.customRenderer)
-        }
-        if (config.hasOwnProperty('customLabelStyle')){
-          this.customLabelStyle.set('value',config.customLabelStyle)
         }
       },
 
@@ -147,9 +123,58 @@ define(
         var result = false;
         var errormessage = null;
         var url = evt.url.replace(/\/*$/g, '');
-        if (this._checkForFeatureLayer(url)) {
+        if (this._checkForGeoJSON(evt)) {
           urlDijit.proceedValue = true;
           result = true;
+          var fieldList = []
+          var dropDownArray = []
+          //check to see if its a valid geoJson object or just a geo feed
+          if (!evt.data[0].type){
+            this.isValidGeoJson = false
+            for (var key in evt.data[0]){
+              fieldList.push({
+                "alias": key,
+                "domain": null,
+                "editable": false,
+                "name": key,
+                "nullable": false,
+                "type":"esriFieldTypeText"
+              })
+              dropDownArray.push({"id":key,"label":key})
+            }
+            var dropDownMemory = new Memory({data:dropDownArray})
+            var dropDownStore = new ObjectStore({"objectStore":dropDownMemory})
+            var latitudeSelect = new Select({
+              store:dropDownStore
+            }, "selectLatitude").on('change',lang.hitch(this,function(){
+              this.config.latitude = dijit.byId('selectLatitude').attr("value")
+            }))
+            var longitudeSelect = new Select({
+              store:dropDownStore
+            }, "selectLongitude").on('change',lang.hitch(this,function(){
+              this.config.longitude = dijit.byId('selectLongitude').attr("value")
+            }))
+            if(this.config.latitude){
+               dijit.byId('selectLatitude').set('value',this.config.latitude)
+            }
+            if(this.config.longitude){
+              dijit.byId('selectLongitude').set('value',this.config.longitude)
+            }
+          }else{
+            this.isValidGeoJson = true
+            this.geometryType = evt.data[0].geometry.type;
+            for (var key in evt.data[0].properties){
+              fieldList.push({
+                "alias": key,
+                "domain": null,
+                "editable": false,
+                "name": key,
+                "nullable": false,
+                "type":"esriFieldTypeText"
+              })
+            }
+          }
+          evt.data.fields = fieldList;
           this.featureLayerDetails = evt;
         } else {
           urlDijit.proceedValue = false;
@@ -186,40 +211,65 @@ define(
         this.popup.disableButton(0);
       },
 
-      _checkForFeatureLayer: function(layerUrl){
-        var isFeatureService = (/\/featureserver\//gi).test(layerUrl);
-        var isMapService = (/\/mapserver\//gi).test(layerUrl);
-        if(isFeatureService || isMapService){
-          return (/\/\d+$/).test(layerUrl);
+      _onArrayChange: function(){
+        this.popup.disableButton(0);
+        on.emit(this.layerUrl, "Change", this.layerUrl.get('value'), this.featureArrayFieldSelect.get('value'))
+      },
+
+      _checkForGeoJSON: function(evt){
+        //perform an check to see if the response is a valid json array
+        if (dijit.byId('selectLatitude')){
+          if (dijit.byId('featureArrayField')){
+            if (evt.data.hasOwnProperty(dijit.byId('featureArrayField').attr('value'))){
+              evt.data = evt.data[dijit.byId('featureArrayField').attr('value')]
+            }
+          }
+        }
+        if ( Object.prototype.toString.call( evt.data ) === '[object Array]' ) {
+          this.geometryType="Point"
+          return true;
+        }else{
+          var dropDownArray = []
+          for (var key in evt.data){
+            if ( Object.prototype.toString.call( evt.data[key] ) === '[object Array]' ) {
+              dropDownArray.push({id:key,label:key})
+            }
+          }
+          var dropDownMemory = new Memory({data:dropDownArray})
+          var dropDownStore = new ObjectStore({"objectStore":dropDownMemory})
+          this.featureArrayFieldSelect = new Select({
+            store:dropDownStore
+          }, "featureArrayField")
+          this.featureArrayFieldSelect.startup();
+          this.featureArrayFieldSelect.on("change", lang.hitch(this, '_onArrayChange'))
+          this.featureArrayFieldSelect.attr('value',dropDownMemory.data[0].id)
+          on.emit(this.layerUrl, "Change", this.layerUrl.get('value'), this.featureArrayFieldSelect.get('value'))
+          dojo.setStyle(dojo.query("#featureArrayFieldOuter")[0],"display","");
+          return false;
         }
       },
 
       _onServiceFetchError: function(){
+        console.log('error')
       },
 
       getConfig: function() {
         var featurelayer = {
-          type: 'Feature',
-          fltype: this.featureLayerDetails.data.type,
+          type: 'geoJSON',
           url: this.layerUrl.get('value'),
           name: this.layerTitle.get('value'),
           opacity: this.layerAlpha.getAlpha(),
           visible: this.isVisible.getValue(),
           showLabels: this.showLabelsCbx.getValue(),
-          hideInLegend: this.hideInLegendCbx.getValue(),
-          trackEditByLDAP: this.trackEditByLDAPCbx.getValue(),
-          limitEditByLDAP: this.limitEditByLDAPCbx.getValue(),
           popup: this.config.popup,
           autorefresh: this.autoRefresh.get('value'),
+          mode: this.flMode.get('value'),
+          symbol: this.config.symbol,
+          latitude: this.config.latitude,
+          longitude: this.config.longitude,
           minScale: this.minScale.get('value'),
           maxScale: this.maxScale.get('value'),
-          labelMinScale: this.labelMinScale.get('value'),
-          labelMaxScale: this.labelMaxScale.get('value'),
-          customLabel: this.customLabel.get('value'),
-          definitionQuery: this.definitionQuery.get('value'),
-          customRenderer: this.customRenderer.get('value'),
-          customLabelStyle: this.customLabelStyle.get('value'),
-          mode: this.flMode.get('value')
+          isValidGeoJson: this.isValidGeoJson
         };
         return [featurelayer, this.tr];
       },
@@ -250,6 +300,25 @@ define(
         }
       },
 
+      onEditSymbology: function(){
+        if(html.hasClass(this.editSymbolBtn, 'disabled')){
+          return false;
+        }
+        var args;
+        if(this.config.symbol){
+          args = {
+           config:this.config.symbol
+          };
+          this.symbologyState = 'EDIT';
+        }else{
+          args = {
+           config:{}
+          };
+          this.symbologyState = 'ADD';
+        }
+        this._openSymbolEdit(this.nls.configuresymbol, args);
+      },
+
       _onPUEditOk: function() {
         var popupConfig = this.popuppuedit.getConfig();
 //        console.info(popupConfig);
@@ -270,7 +339,7 @@ define(
         if(this.popupState === 'ADD'){
           html.addClass(this.removePopupBtn, 'disabled');
         }
-        this.popupbmedit = null;
+        this.popuppuedit = null;
         this.popup = null;
       },
 
@@ -301,6 +370,54 @@ define(
         });
         html.addClass(this.popup.domNode, 'widget-setting-popup');
         this.popuppuedit.startup();
-      }
+      },
+
+      _openSymbolEdit: function(title, args) {
+        if(this.geometryType == "Point"){
+          this.symboledit = new SymbolChooser({type: "marker"});
+        }
+
+        this.popup = new Popup({
+          titleLabel: title,
+          autoHeight: true,
+          content: this.symboledit,
+          container: 'main-page',
+          width: 380,
+          buttons: [{
+            label: this.nls.ok,
+            key: keys.ENTER,
+            onClick: lang.hitch(this, '_onSymbolEditOk')
+          }, {
+            label: this.nls.cancel,
+            key: keys.ESCAPE
+          }],
+          onClose: lang.hitch(this, '_onSymbolEditClose')
+        });
+        html.addClass(this.popup.domNode, 'widget-setting-popup');
+        this.symboledit.startup();
+      },
+      _onSymbolEditOk: function() {
+        var symbolConfig = this.symboledit.getSymbol().toJson();
+//        console.info(popupConfig);
+
+        if (symbolConfig.length < 0) {
+          new Message({
+            message: this.nls.warning
+          });
+          return;
+        }
+        this.config.symbol = symbolConfig;
+
+        this.popup.close();
+        this.popupState = '';
+      },
+
+      _onSymbolEditClose: function() {
+        if(this.popupState === 'ADD'){
+          html.addClass(this.removePopupBtn, 'disabled');
+        }
+        this.symboledit = null;
+        this.popup = null;
+      },
     });
   });
