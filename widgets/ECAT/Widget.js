@@ -306,9 +306,9 @@ function(declare,
         dojo.byId("divSplashScreenContainer").style.display = "block";
     },
         
-    OnScenarioSelectHelpClick: function(){
-
-    	if ((navigator.userAgent.indexOf("Chrome")>=0) || (navigator.userAgent.indexOf("Firefox")>=0)) {
+    OnScenarioSelectHelpClick: function(){    	
+    	
+    	if ( navigator.userAgent.indexOf("Firefox") >= 0 ) {
     		dojo.byId("divSplashContent").innerHTML = "<font-family= 'Source Sans Pro' font-face='sans-serif' size='2+'>" +       	
             "<b>Scenario I – RCP 2.6</b> – This scenario is characterized as having very low greenhouse gas concentration levels. It is a “peak-and-decline” scenario and assumes that greenhouse gas emissions peak between 2010 and 2020 with emissions declining substantially beyond 2020. The projected global warming increase compared to the reference period (1986-2005) is approximately 1.8 degree Fahrenheit (range of 0.54 to 3.06) by 2081-2100. Atmospheric CO2 is expected to be approximately 425 parts per million in 2100.<BR><BR>" +  
             "<b>Scenario II – RCP 4.5</b> – This scenario assumes a stabilization will occur shortly after 2100, and assumes less emissions than RCP 6.0, which is also a stabilization scenario. It is characterized by a peak in emissions around 2040 and then a decline. The projected global warming increase compared to the reference period 1986-2005 is approximately 3.24 degrees Fahrenheit (range of 1.98 to 4.68) by 2081-2100. Atmospheric CO2 is expected to be approximately 600 parts per million in 2100.<BR><BR>" +
@@ -317,16 +317,17 @@ function(declare,
             "<b>Historical climate</b> – These data are based on PRISM historical observations and interpolation of previous climate. Data are provided for the years 1950 -2005." +
             "</font>";
         	this.showInformationWindow();
-    	} else{
-    		var sFeatures="dialogHeight: " +  "680px;";
+    	} else if ( (navigator.userAgent.indexOf("Chrome")>=0)) {
+    		window.open('widgets/ECAT/Scenario.html',"_blank","toolbar=no, location=no, titlebar=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no,width=600, height=520,top=200,left=200");
+    	} else {
+    		var sFeatures="dialogHeight: " +  "560px;";
     		window.showModalDialog("widgets/ECAT/Scenario.html", "", sFeatures);
-    	}       
-
+    	}    
     },
     
     OnClimateVariableHelpClick: function(){
-        
-        if ((navigator.userAgent.indexOf("Chrome")>=0) || (navigator.userAgent.indexOf("Firefox")>=0)) {
+
+    	if ( navigator.userAgent.indexOf("Firefox") >= 0 ) {
     		dojo.byId("divSplashContent").innerHTML = "<font-family= 'Source Sans Pro' font-face='sans-serif' size='2+'>" + 
         	"Maximum Temperature – Average maximum temperature in degrees Fahrenheit for the season or annually. " + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_Temp.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a><br/><br/>" + 
             "Minimum Temperature – Average minimum temperature in degrees Fahrenheit for the season or annually. " + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_Temp.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a><br/><br/>" + 
@@ -334,14 +335,17 @@ function(declare,
             "Potential Evapotranspiration - Total potential evapotranspiration in inches for the season or annually. "  + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_PET.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a>" +
             "</font>";
         	this.showInformationWindow();
-    	} else{
+    	} else if ( (navigator.userAgent.indexOf("Chrome")>=0)) {
+    		window.open('widgets/ECAT/ClimateVariable.html',"_blank","toolbar=no, location=no, titlebar=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no,width=600, height=260,top=200,left=200");
+
+    	} else {
     		var sFeatures="dialogHeight: " +  "250px;";
     		window.showModalDialog("widgets/ECAT/ClimateVariable.html", "", sFeatures);
-    	} 
+    	}          	
     },
     OnSeasonSelectHelpClick: function(){
-        
-        if ((navigator.userAgent.indexOf("Chrome")>=0) || (navigator.userAgent.indexOf("Firefox")>=0)) {
+
+    	if ( navigator.userAgent.indexOf("Firefox") >= 0 ) {
     		dojo.byId("divSplashContent").innerHTML = "<font-family= 'Source Sans Pro' font-face='sans-serif' size='2+'>" + 
             "Winter – December of previous year, January, February<BR><BR>" +
             "Spring – March, April, May<BR><BR>" +
@@ -350,11 +354,13 @@ function(declare,
             "Annual – January through December of the same calendar year"+
             "</font>";
         	this.showInformationWindow();
-    	} else{
+    	} else if ( (navigator.userAgent.indexOf("Chrome")>=0)) {
+    		window.open('widgets/ECAT/Season.html',"_blank","toolbar=no, location=no, titlebar=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no,width=600, height=220,top=200,left=200");
+
+    	} else {
     		var sFeatures="dialogHeight: " +  "220px;";
     		window.showModalDialog("widgets/ECAT/Season.html", "", sFeatures);
-    	}       
-
+    	} 
     }    
   });  
 

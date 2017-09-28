@@ -459,3 +459,11 @@
 .jimu-draw-box.enabled .drawings-clear:hover{
   background-color: #B60016;
 }
+.i-button {
+  margin-left: 3px;
+  height: 16px;
+  width: 16px;
+  border-radius: 10px;
+  background-image: url('./images/i_icon.png');
+  background-size: cover;
+}
