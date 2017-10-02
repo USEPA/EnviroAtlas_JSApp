@@ -684,6 +684,7 @@ define([
         return;
       case 'collapseAlllayers':
         this.foldOrUnfoldAllRootLayers(true);
+        return;
       case 'removeAllLayers':
         document.getElementById("butRemoveAllLayers").click();        
         return;

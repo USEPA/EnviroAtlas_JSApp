@@ -6,6 +6,9 @@
   text-align: right;
 }
 
+.esriPopup .titlePane .title{
+  width: 200px;
+}
 .esriPopup .esriPopupWrapper {
   font-family: "Avenir Light";
 }
