@@ -700,9 +700,9 @@ define([
         key: 'movetotop'
       }, {
         key: 'changeSymbology'
-      }, {
+      }, /*{
         key: 'controlPopup'
-      }, {
+      },*/ {
         key: 'remove'
       }, {
         key: 'separator'
@@ -725,9 +725,9 @@ define([
       }, {
         key: 'movedown'
       }],
-      'FeatureLayer': [{
+      'FeatureLayer': [/*{
         key: 'controlPopup'
-      }, {
+      }, */{
         key: 'separator'
       }, {
         key: 'table'

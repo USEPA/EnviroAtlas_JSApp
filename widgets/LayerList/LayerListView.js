@@ -134,11 +134,20 @@ define([
       ckSelectDiv = domConstruct.create('div', {
         'class': 'div-select jimu-float-leading'
       }, layerTdNode);
-
+		layerId = layerInfo.id;
+		if (layerId.indexOf(window.layerIdPrefix) >= 0) {
+		    eaId = layerId.replace(window.layerIdPrefix, "");                     	
+		} else if (layerId.indexOf(window.layerIdPBSPrefix) >= 0) {
+		    eaId = layerId.replace(window.layerIdPBSPrefix, "");                     	
+		}       
       ckSelect = new CheckBox({
+        checked: layerInfo.isVisible()||window.allLayersTurnedOn[eaId], //layerInfo.visible
+        'class': "visible-checkbox-" + layerInfo.id
+      });		
+      /*ckSelect = new CheckBox({
         checked: layerInfo.isVisible(), //layerInfo.visible
         'class': "visible-checkbox-" + layerInfo.id
-      });
+      });*/
 
       domConstruct.place(ckSelect.domNode, ckSelectDiv);
 
@@ -799,6 +808,7 @@ define([
 			} 
 			lyrTiled = layerInfo.map.getLayer(window.layerIdTiledPrefix + eaId);   
 			if (isOnOrOff) {
+				window.allLayersTurnedOn[eaId] = isOnOrOff;
 			    if(lyrTiled){
 			    	if (window.hashRenderer[eaId] == null) {
 			       	  	lyrTiled.setVisibility(true);//set tile visible only when user not set the dynamic symbology
