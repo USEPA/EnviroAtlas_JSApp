@@ -103,6 +103,7 @@ define(["dojo/_base/declare",
         }));
 
         this.own(Viewport.on("resize", self.resize()));
+               
       },
 
       destroy: function() {
@@ -126,8 +127,8 @@ define(["dojo/_base/declare",
         if (!ok) {
           return;
         }
-
-        domClass.add(btn, "disabled");
+        window.hashAddedURLToType[url] = type;
+        //domClass.add(btn, "disabled");//this line is removed so that the button will work for saveSession with multiple added URL
         self._setStatus(i18n.search.item.messages.adding);
         var dfd = new Deferred();
         var map = this.wabWidget.map;
@@ -159,6 +160,10 @@ define(["dojo/_base/declare",
               //console.warn("msg",error.message);
               self._setStatus(error.message);
               console.log("");
+              if (!(url in window.faildedOutsideLayerDictionary)){
+			  	  window.faildedOutsideLayerDictionary[url] = url;
+			  }	
+			  document.getElementById('openFailedLayer').click();                                              
             }
           }
         });
@@ -184,11 +189,30 @@ define(["dojo/_base/declare",
         }
       },
 
+      _findServiceName: function(evt){
+        var urlS = evt.target.value;
+        if(evt.target.value == ""){
+          domStyle.set(this.lNameFrame, "display", "none");
+        }else{
+          if(urlS.indexOf("/MapServer")>0){
+            domStyle.set(this.lNameFrame, "display", "block");
+            var stringArray = urlS.split("/");
+            this.nameTextBox.value = stringArray[stringArray.length -2];
+          }else if(urlS.indexOf("/FeatureServer/")>0){
+            domStyle.set(this.lNameFrame, "display", "block");
+            var stringArray = urlS.split("/");
+            this.nameTextBox.value = stringArray[stringArray.length -3];
+          }
+        }
+      },               
+      
       _handleAdd: function(dfd, map, type, url) {
         url = util.checkMixedContent(url);
         var lc = url.toLowerCase();
         var loader = new LayerLoader();
-        var id = loader._generateLayerId();
+        //var id = loader._generateLayerId();
+        var id = this.nameTextBox.value;
+        window.hashAddedURLToId[url] = id;                                 
         var self = this,
           layer = null;
 
@@ -214,6 +238,7 @@ define(["dojo/_base/declare",
                       infoTemplate: new InfoTemplate()
                     });
                     dfds.push(loader._waitForLayer(lyr));
+                    window.hashAddedURLToId[url] = lyr.id;                                      
                   });
                   all(dfds).then(function(results) {
                     var lyrs = [];
@@ -224,6 +249,8 @@ define(["dojo/_base/declare",
                     array.forEach(lyrs, function(lyr) {
                       loader._setFeatureLayerInfoTemplate(lyr);
                       lyr.xtnAddData = true;
+                      window.layerID_Portal_WebMap.push(lyr.id);
+                      window.hashAddedURLToId[url] = lyr.id;                                      
                       map.addLayer(lyr);
                     });
                     dfd.resolve(lyrs);
