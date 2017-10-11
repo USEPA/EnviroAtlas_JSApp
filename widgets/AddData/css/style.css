@@ -219,6 +219,24 @@
   max-width: 960px;
   margin: 0 auto;
 }
+.jimu-widget-add-data .add-url-pane label {
+  color: #596679;
+}
+.jimu-widget-add-data .add-url-pane div.gap {
+  margin-top: 20px;
+}
+.jimu-widget-add-data .add-url-pane div.small-gap {
+  margin-top: 10px;
+}
+.jimu-widget-add-data .add-url-pane div.action-bar {
+  margin-top: 20px;
+}
+.jimu-widget-add-data .add-url-pane .url-textbox {
+  width: 100%;
+  max-width: 500px;
+  font-size: 14px;
+}
+
 .jimu-widget-add-data .add-file-pane .intro ul {
   font-size: 10px;
   margin: 0;

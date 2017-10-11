@@ -22,6 +22,8 @@ define(["dojo/_base/declare",
     "dojo/promise/all",
     "dojo/dom-class",
     "dojo/window",
+    "dojo/dom",
+    "dojo/dom-style",
     "dijit/Viewport",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
@@ -46,7 +48,7 @@ define(["dojo/_base/declare",
     "esri/InfoTemplate",
     "dijit/form/Select"
   ],
-  function(declare, lang, array, on, keys, Deferred, all, domClass, win, Viewport,
+  function(declare, lang, array, on, keys, Deferred, all, domClass, win, dom, domStyle, Viewport,
     _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, i18n,
     LayerLoader, util, ArcGISDynamicMapServiceLayer,
     ArcGISImageServiceLayer, ArcGISTiledMapServiceLayer, CSVLayer,
@@ -212,7 +214,7 @@ define(["dojo/_base/declare",
         var loader = new LayerLoader();
         //var id = loader._generateLayerId();
         var id = this.nameTextBox.value;
-        window.hashAddedURLToId[url] = id;                                 
+        window.hashAddedURLToId[url] = id;
         var self = this,
           layer = null;
 
@@ -238,7 +240,7 @@ define(["dojo/_base/declare",
                       infoTemplate: new InfoTemplate()
                     });
                     dfds.push(loader._waitForLayer(lyr));
-                    window.hashAddedURLToId[url] = lyr.id;                                      
+                    window.hashAddedURLToId[url] = lyr.id;
                   });
                   all(dfds).then(function(results) {
                     var lyrs = [];
@@ -250,7 +252,7 @@ define(["dojo/_base/declare",
                       loader._setFeatureLayerInfoTemplate(lyr);
                       lyr.xtnAddData = true;
                       window.layerID_Portal_WebMap.push(lyr.id);
-                      window.hashAddedURLToId[url] = lyr.id;                                      
+                      window.hashAddedURLToId[url] = lyr.id;
                       map.addLayer(lyr);
                     });
                     dfd.resolve(lyrs);
@@ -431,6 +433,7 @@ define(["dojo/_base/declare",
           } else if (lyr && lyr.declaredClass === "esri.layers.CSVLayer") {
             loader._setFeatureLayerInfoTemplate(lyr);
           }
+          window.layerID_Portal_WebMap.push(lyr.id);
           lyr.xtnAddData = true;
           map.addLayer(lyr);
           dfd.resolve(lyr);

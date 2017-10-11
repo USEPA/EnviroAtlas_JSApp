@@ -100,6 +100,7 @@ define({
     addFromUrl: {
       type: "Type",
       url: "URL",
+      name: "Layer Name",
       types: {
         "ArcGIS": "An ArcGIS Server Web Service",
         "WMS": "A WMS OGC Web Service",
@@ -109,7 +110,7 @@ define({
         "GeoRSS": "A GeoRSS File",
         "CSV": "A CSV File"
       },
-      name: "Layer Name",
+
       samplesHint: "Sample URL(s)"
     },
 

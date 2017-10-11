@@ -1,4 +1,4 @@
 {
 	"configText":"Drawer",
-	"includeWidgets":["AddData", "Addfile", "DisplayLayerAddFailure"]
+	"includeWidgets":["AddData", "DisplayLayerAddFailure"]
 }
