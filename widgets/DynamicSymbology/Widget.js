@@ -91,8 +91,8 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 
     onOpen: function(){
 	  selfDynamicSymbology = this;
-	  //_busy = busyIndicator.create("esri-colorinfoslider-container");
-	  _busy = busyIndicator.create("uniqName_7_1");
+	  _busy = busyIndicator.create("esri-colorinfoslider-container");
+	  //_busy = busyIndicator.create("uniqName_7_1");
 
 		schemes = esriStylesChoropleth.getSchemes({
 			basemap: "hybrid",
