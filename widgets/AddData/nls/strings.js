@@ -100,6 +100,7 @@ define({
     addFromUrl: {
       type: "Type",
       url: "URL",
+      name: "Layer Name",
       types: {
         "ArcGIS": "An ArcGIS Server Web Service",
         "WMS": "A WMS OGC Web Service",
@@ -109,6 +110,7 @@ define({
         "GeoRSS": "A GeoRSS File",
         "CSV": "A CSV File"
       },
+
       samplesHint: "Sample URL(s)"
     },
 
@@ -116,7 +118,7 @@ define({
       intro: "You can drop or browse for one the following file types:",
       types: {
         "Shapefile": "A Shapefile (.zip, ZIP archive containing all shapefile files)",
-        "CSV": "A CSV File (.csv, with address or latitude, longitude and comma, semi-colon or tab delimited)",
+        "CSV": "A CSV File (.csv, with address or latitude, longitude in decimal degrees. The file may be comma, semi-colon, or tab delimited)",
         "GPX": "A GPX File (.gpx, GPS Exchange Format)",
         "GeoJSON": "A GeoJSON File (.geo.json or .geojson)"
       },
@@ -128,7 +130,7 @@ define({
       addFailedPattern: "{filename}: add failed",
       featureCountPattern: "{filename}: {count} feature(s)",
       invalidTypePattern: "{filename}: this type is not supported",
-      maxFeaturesAllowedPattern: "A maximum of {count} features is allowed",
+      maxFeaturesAllowedPattern: "For best performance, limit the number of features to less than {count}. This is not a hard cutoff, but most browsers will experience instability with increasing numbers of features.",
       layerNamePattern: "{filename} - {name}"
     },
 

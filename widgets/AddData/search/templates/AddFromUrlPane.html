@@ -12,9 +12,20 @@
         <option value="GeoRSS">${i18n.addFromUrl.types.GeoRSS}</option>
         <option value="CSV">${i18n.addFromUrl.types.CSV}</option>
       </select>
+	<div>
       <label for="${id}_url">${i18n.addFromUrl.url}</label>
+	</div>
+	<div class="small-gap">
       <input id="${id}_url" type="text" class="url-textbox jimu-input"
-          data-dojo-attach-point="urlTextBox">
+          data-dojo-attach-point="urlTextBox" data-dojo-attach-event="oninput:_findServiceName">
+    </div> 
+	<div data-dojo-attach-point="lNameFrame" class="gap" style="display: none">
+        <label for="${id}_name">${i18n.addFromUrl.name}</label>
+        <div data-dojo-attach-point="customName" class="small-gap">
+          <input id="${id}_name" type="text" class="url-textbox jimu-input"
+                 data-dojo-attach-point="nameTextBox">
+        </div>
+      </div>
       <div class="action-bar">
         <a class="jimu-float-leading" href="javascript:void(0)"
           data-dojo-attach-point="examplesExpander"

@@ -100,7 +100,7 @@ define([
     addLayerNode: function(layerInfo, level, toTableNode, position) {
       var layerTrNode,
         layerTdNode, ckSelectDiv, ckSelect, imageNoLegendDiv, handle,
-        imageNoLegendNode, popupMenuNode, i, imageShowLegendDiv, popupMenu, divLabel;
+        imageNoLegendNode, popupMenuNode, i, imageShowLegendDiv, popupMenu, divLabel, eaId;
 
       var rootLayerInfo = layerInfo.getRootLayerInfo();
       if(!this._layerNodeHandles[rootLayerInfo.id]) {

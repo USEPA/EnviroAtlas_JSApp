@@ -25,13 +25,14 @@ define(["dojo/_base/declare",
     "esri/dijit/PopupTemplate",
     "esri/InfoTemplate",
     "esri/renderers/jsonUtils",
-    "jimu/utils"
+    "jimu/utils",
+    'jimu/PanelManager'
   ],
   function(declare, lang, array, all, Deferred, djJson, i18n, util, esriLang, esriRequest, agsUtils,
     ArcGISDynamicMapServiceLayer, ArcGISImageServiceLayer, ArcGISTiledMapServiceLayer,
     DynamicLayerInfo, FeatureLayer, ImageParameters, ImageServiceParameters, KMLLayer,
     LayerDrawingOptions, MosaicRule, RasterFunction, VectorTileLayer, WMSLayer, PopupTemplate,
-    InfoTemplate, jsonRendererUtils, jimuUtils) {
+    InfoTemplate, jsonRendererUtils, jimuUtils, PanelManager) {
 
     return declare(null, {
 
@@ -245,7 +246,7 @@ define(["dojo/_base/declare",
           if (!esriLang.isDefined(layer.title)) {
             layer.title = item.title;
           }
-
+          window.layerID_Portal_WebMap.push(layer.id);
           layer._wabProperties =  {
             itemLayerInfo: {
               itemId: item.id,
@@ -985,6 +986,13 @@ define(["dojo/_base/declare",
         //console.warn("_waitForLayer");
         handles.push(layer.on("load", function(layerLoaded) {
           //console.warn("_waitForLayer.load",layerLoaded);
+          
+            //Show Layer List Widget
+            var widgetName = 'LayerList';
+            var pm = PanelManager.getInstance();
+            var widgets = pm.widgetManager.appConfig.getConfigElementsByName(widgetName);
+            pm.showPanel(widgets[0]);
+          
           clearHandles();
           dfd.resolve(layerLoaded.layer);
         }));
