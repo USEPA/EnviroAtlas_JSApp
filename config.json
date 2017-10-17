@@ -350,7 +350,7 @@
                 "config": "widgets/Addfile/config.json"
             }, {
                 "position": {
-                    "left": 545,
+                    "left": 595,
                     "top": 5,
                     "width": 370,
                     "height": 270,
@@ -395,7 +395,7 @@
                 "config": "widgets/Legend/config.json"
             }, {
                 "position": {
-					"left" : 595,
+					"left" : 545,
 					"top" : 5,
 					"width" : 380,
 					"height" : 410,
