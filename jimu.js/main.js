@@ -62,6 +62,8 @@ define([
     window.layerIdTiledPrefix = "tiledNum_";
     window.addedLayerIdPrefix = "added_";
     window.uploadedFeatLayerIdPrefix = "uploaded_";
+    window.widthOfInfoWindow = 0;
+    window.heightOfInfoWindow = 0;
     window.toggleOnHucNavigation = false;
     window.toggleOnRainDrop = false;
     window.toggleOnElevation = false;
@@ -70,7 +72,6 @@ define([
     window.chkTopicPBSPrefix = "ckTopicPBS_";
     window.chkSelectableLayer = "ck";
     window.idCommuBoundaryPoint = "Boundary_Point";
-    window.allLayersTurnedOn = [];
     
     window.dataFactSheet = "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/";
     //window.matadata = "https://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7BBDF514A6-05A8-400D-BF3D-030645461334%7D";
@@ -194,6 +195,7 @@ define([
 	window.hashAddedURLToType = {};
 	window.hashAddedURLToId = {};
 	window.hashIDtoTileURL = {};
+	window.allLayersTurnedOn = {};
                 
     //patch for JS API 3.10
     var hasMethod = typeof cookie.getAll === 'function';
