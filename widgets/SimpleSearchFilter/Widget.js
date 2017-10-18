@@ -105,6 +105,10 @@ define([
 	    var arrLayersForPopup = [];
 	    var numDecimalDigit = 0;
 	    var addSingleFeatureForPopup = function(eaID, clickEvt) {
+	    	selfSimpleSearchFilter.map.infoWindow.resize(260, 150 );
+        	/*if (window.widthOfInfoWindow > 0 ) {
+        		selfSimpleSearchFilter.map.infoWindow.resize(window.widthOfInfoWindow, window.heightOfInfoWindow );
+        	}*/	    	
 			var selectQuery = new query();
 	        selectQuery.geometry = clickEvt.mapPoint;
 	        selectQuery.returnGeometry = true;
@@ -175,7 +179,6 @@ define([
 						selfSimpleSearchFilter.map.graphics.clear();
 						featuresCollection = [];
 						arrLayersForPopup = [];
-						//alert("window.featureLyrNumber: " + window.featureLyrNumber);
 			    		for (i in window.featureLyrNumber) {  
 			    			bVisibleFL = false;
 			    			bVisibleTL = false;

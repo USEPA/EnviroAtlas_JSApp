@@ -62,6 +62,8 @@ define([
     window.layerIdTiledPrefix = "tiledNum_";
     window.addedLayerIdPrefix = "added_";
     window.uploadedFeatLayerIdPrefix = "uploaded_";
+    window.widthOfInfoWindow = 0;
+    window.heightOfInfoWindow = 0;
     window.toggleOnHucNavigation = false;
     window.toggleOnRainDrop = false;
     window.toggleOnElevation = false;

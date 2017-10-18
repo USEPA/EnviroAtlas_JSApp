@@ -155,7 +155,12 @@ function(declare,
             identifyParams.mapExtent = map.extent;
     		lyr = map.getLayer(window.addedLayerIdPrefix + layerID);
 			if(lyr){
+				if (lyr.visible) {
 	            identifyTask.execute(identifyParams, function (idResults) {
+		            	if (window.widthOfInfoWindow == 0 ) {
+	                		window.widthOfInfoWindow = map.infoWindow.width;
+	                		window.heightOfInfoWindow = map.infoWindow.height;
+	                	}
 			
 					map.infoWindow.resize(140, 120);            
             		map.infoWindow.setTitle("Identify Results");
@@ -164,6 +169,7 @@ function(declare,
 
 			        map.infoWindow.show(event.screenPoint, map.getInfoWindowAnchor(event.screenPoint));
 	            });
+	           }
             }
 
     };
