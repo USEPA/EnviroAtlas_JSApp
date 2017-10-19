@@ -19,6 +19,7 @@ define(["dojo/_base/declare",
     "dojo/on",
     "dojo/Deferred",
     "dojo/dom-class",
+    "dojo/dom-style",
     "dijit/Viewport",
     "dojo/sniff",
     "dijit/_WidgetBase",
@@ -34,7 +35,7 @@ define(["dojo/_base/declare",
     "jimu/dijit/Message",
     "jimu/dijit/CheckBox"
   ],
-  function(declare, lang, array, on, Deferred, domClass, Viewport, sniff,
+  function(declare, lang, array, on, Deferred, domClass, domStyle, Viewport, sniff,
     _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,template, i18n,
      LayerLoader, util, esriRequest, FeatureLayer, scaleUtils,
      Message) {
@@ -46,6 +47,7 @@ define(["dojo/_base/declare",
       wabWidget: null,
       maxRecordCount: 1000,
       maxRecordThreshold: 100000,
+      fileInfo: null,
       SHAPETYPE_ICONS: [{
         "type": "shapefile",
         "url": "images/filetypes/zip.svg"
@@ -112,7 +114,9 @@ define(["dojo/_base/declare",
             self._setBusy(true);
             var fileInfo = self._getFileInfo();
             if (fileInfo.ok) {
-              self._execute(fileInfo);
+              domStyle.set(self.lNameFrame, "display", "block");
+              self.nameTextBox.value = fileInfo.baseFileName;
+              self.fileInfo = fileInfo;
             }
           }
         }));
@@ -146,7 +150,9 @@ define(["dojo/_base/declare",
             self._setBusy(true);
             var fileInfo = self._getFileInfo(event);
             if (fileInfo.ok) {
-              self._execute(fileInfo);
+              domStyle.set(self.lNameFrame, "display", "block");
+              self.nameTextBox.value = fileInfo.baseFileName;
+              self.fileInfo = fileInfo;
             }
           }
         }));
@@ -445,8 +451,13 @@ define(["dojo/_base/declare",
         if(this.wabWidget) {
           this.wabWidget._setStatus(msg);
         }
+      },
+      
+      addClicked: function() {
+        var self = this;
+        self.fileInfo.baseFileName = this.nameTextBox.value;
+        self._execute(self.fileInfo);
       }
-
     });
 
   });

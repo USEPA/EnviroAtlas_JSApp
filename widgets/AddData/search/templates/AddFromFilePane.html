@@ -26,5 +26,19 @@
       </div>
     </div>
   </div>
-
+	<div data-dojo-attach-point="lNameFrame" id="lNameFrame" class="gap" style="display: none">
+        <label for="${id}_name">${i18n.addFromUrl.name}</label>
+        <div data-dojo-attach-point="customName" class="small-gap">
+          <input id="${id}_name" type="text" class="url-textbox jimu-input"
+                 data-dojo-attach-point="nameTextBox">
+        </div>
+        <div class="action-bar">
+          <a class="jimu-btn"
+              href="javascript:void(0)"
+              data-dojo-attach-point="addButton"
+              data-dojo-attach-event="onClick: addClicked"
+              >${i18n.search.item.actions.add}
+          </a>
+      </div>       
+    </div>
 </div>
