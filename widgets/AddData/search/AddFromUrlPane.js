@@ -435,6 +435,7 @@ define(["dojo/_base/declare",
           }
           window.layerID_Portal_WebMap.push(lyr.id);
           lyr.xtnAddData = true;
+          lyr.title = lyr.id;
           map.addLayer(lyr);
           dfd.resolve(lyr);
         }).otherwise(function(error) {
