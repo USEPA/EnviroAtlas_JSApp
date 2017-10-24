@@ -9,9 +9,10 @@ define([
   'jimu/LayerInfos/LayerInfos',
   'dijit/_WidgetsInTemplateMixin',
   'esri/dijit/LayerSwipe',
-  'dijit/form/Select'
+  'dijit/form/Select',
+  './utils'
 ], function(declare, array, lang, html, on, Deferred, BaseWidget, LayerInfos,
-  _WidgetsInTemplateMixin, LayerSwipe) {
+  _WidgetsInTemplateMixin, LayerSwipe, Select, utils) {
   return declare([BaseWidget, _WidgetsInTemplateMixin], {
     baseClass: 'jimu-widget-swipe',
 
@@ -181,6 +182,8 @@ define([
           }
         }
       }));
+        //initPosition
+        utils.initPosition(this.map, this.domNode, this.position);
     },
 
     onClose: function() {

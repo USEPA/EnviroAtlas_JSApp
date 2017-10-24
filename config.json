@@ -259,7 +259,7 @@
                     "left": 445,
                     "top": 5,
                     "width": 350,
-                    "height": 265,
+                    "height": 340,
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
@@ -462,9 +462,10 @@
                 "config": "configs/Splash/config_Disclaimer.json"
             }, {
                 "uri": "widgets/TimeSlider/Widget",
-                "visible": false,
+                "closeable": true,
+                "openAtStart": false,
                 "position": {
-                    "bottom": 55,
+                    "top": -40,
                     "left": 7,
                     "relativeTo": "map"
                 },
@@ -474,9 +475,10 @@
                 "label": "Time Slider"
             }, {
                 "uri": "widgets/Swipe/Widget",
-                "visible": false,
+                "closeable": true,
+                "openAtStart": false,
                 "position": {
-                    "top": 145,
+                    "top": -40,
                     "left": 7,
                     "relativeTo": "map"
                 },
