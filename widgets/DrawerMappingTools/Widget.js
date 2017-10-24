@@ -44,8 +44,12 @@ function(declare, BaseWidget, WidgetManager, PanelManager, on, dom, domConstruct
       on(dom.byId(AddFileButton), "click", function(){
         var widgets = self.appConfig.getConfigElementsByName(widgetName);
         var pm = PanelManager.getInstance();
-        
-        pm.showPanel(widgets[0]);
+            if (widgets[0].inPanel) {
+                pm.showPanel(widgets[0]);
+            } else {
+                var offPanelIconId = dojo.attr(dojo.query("[data-widget-name^='" + widgetName + "']")[0],"widgetid");
+                dijit.byId(offPanelIconId).onClick();
+            }
 	        panelID = "widgets_DrawerMapping_34_panel";
 	        pm.closePanel(panelID);
 	        pm.openPanel(panelID);
