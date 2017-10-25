@@ -749,7 +749,7 @@ define([
 				LayerInfos.getInstanceSync()._initLayerInfos();
 			});
 			//Note that the _bindEvent and _addTable aspects are essential to prevent redundant event binding on layer add.
-			aspect.after(LayerInfos.prototype, "update", function() {
+			/*aspect.after(LayerInfos.prototype, "update", function() {//this could result in "Turn All Layers On" disfunction in LayerList widget, so comment it out
 				array.forEach(this._finalLayerInfos, lang.hitch(this, function(layerInfo) {
 					if (layerInfo.layerObject.showLegend === false) {
 						layerInfo.originOperLayer.showLegend = layerInfo.layerObject.showLegend
@@ -770,7 +770,7 @@ define([
 						}
 					}, true)
 				}))
-			});
+			});*/
 			aspect.after(arcgisUtils, "getLegendLayers", lang.hitch(this, function(legendObject) {
 				var returnArray = []
 				array.forEach(LayerInfos.getInstanceSync()._operLayers, function(_layer) {
