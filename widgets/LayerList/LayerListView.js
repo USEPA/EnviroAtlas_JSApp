@@ -806,9 +806,10 @@ define([
 			} else if (layerId.indexOf(window.layerIdPBSPrefix) >= 0) {
 			    eaId = layerId.replace(window.layerIdPBSPrefix, "");                     	
 			} 
+			window.allLayersTurnedOn[eaId] = isOnOrOff;
 			lyrTiled = layerInfo.map.getLayer(window.layerIdTiledPrefix + eaId);   
 			if (isOnOrOff) {
-				window.allLayersTurnedOn[eaId] = isOnOrOff;
+
 			    if(lyrTiled){
 			    	if (window.hashRenderer[eaId] == null) {
 			       	  	lyrTiled.setVisibility(true);//set tile visible only when user not set the dynamic symbology
