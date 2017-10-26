@@ -2,6 +2,7 @@
     "layers": {
         "layer": [
             {
+<<<<<<< Updated upstream
                 "eaPBS": "Boundaries",
                 "eaTopic": "Boundaries",
                 "eaLyrNum": " ",
@@ -10,11 +11,21 @@
                 "eaMetric": "boundary",
                 "eaScale": "NATIONAL",
                 "type": "DYNAMIC",
+=======
+                "type": "DYNAMIC",
+                "visible": false,
+                "eaMetric": "boundary",
+                "sourceType": "plp",
+                "opacity": 0.6,
+                "tileLink": "no",
+                "eaDfsLink": "Supplemental/CommunityVicinity.pdf",
+>>>>>>> Stashed changes
                 "eaTags": [
                     "people",
                     "human",
                     "urban"
                 ],
+<<<<<<< Updated upstream
                 "sourceType": "plp",
                 "eaDescription": "EnviroAtlas Communities and vicinities. The EnviroAtlas boundary for the each Community area was determined using the 2010 Census definition of an Urban Area.",
                 "tileLink": "no",
@@ -33,11 +44,32 @@
                 "eaMetric": "boundary",
                 "eaScale": "NATIONAL",
                 "type": "DYNAMIC",
+=======
+                "name": "EnviroAtlas Community Boundaries",
+                "eaDescription": "EnviroAtlas Communities and vicinities. The EnviroAtlas boundary for the each Community area was determined using the 2010 Census definition of an Urban Area.",
+                "eaTopic": "Boundaries",
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Communities/Community_Locations/MapServer",
+                "eaID": 901,
+                "eaMetadata": "E007",
+                "eaPBS": "Boundaries",
+                "eaLyrNum": " ",
+                "eaScale": "NATIONAL"
+            },
+            {
+                "type": "DYNAMIC",
+                "visible": false,
+                "eaMetric": "boundary",
+                "sourceType": "plp",
+                "opacity": 0.6,
+                "tileLink": "no",
+                "eaDfsLink": "Supplemental/TigerBoundaries.pdf",
+>>>>>>> Stashed changes
                 "eaTags": [
                     "people",
                     "human",
                     "government"
                 ],
+<<<<<<< Updated upstream
                 "sourceType": "plp",
                 "eaDescription": "Census boundaries for States, Counties, and Census Block Groups",
                 "tileLink": "no",
@@ -67,17 +99,37 @@
                 "tileLink": "no",
                 "eaID": 903,
                 "eaMetadata": "E012",
+=======
+                "name": "States, County, and Census Block Group boundaries",
+                "eaDescription": "Census boundaries for States, Counties, and Census Block Groups",
+                "eaTopic": "Boundaries",
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Reference_Boundaries/MapServer",
+                "eaID": 902,
+                "eaMetadata": "E009",
+                "eaPBS": "Boundaries",
+                "eaLyrNum": " ",
+                "eaScale": "NATIONAL"
+            },
+            {
+>>>>>>> Stashed changes
                 "popup": {
                     "showAttachments": "false",
                     "title": "EPA Region: {EPAREGION}",
                     "fieldInfos": [
                         {
+<<<<<<< Updated upstream
                             "visible": "true",
                             "fieldName": "EPAREGION",
                             "label": "EPA Regions)\u00a0"
+=======
+                            "label": "EPA Regions)\u00a0",
+                            "visible": "true",
+                            "fieldName": "EPAREGION"
+>>>>>>> Stashed changes
                         }
                     ]
                 },
+<<<<<<< Updated upstream
                 "eaDfsLink": "Supplemental/EPAregions.pdf",
                 "name": "USEPA Regions",
                 "opacity": 0.6
@@ -92,12 +144,22 @@
                 "eaMetric": "boundary",
                 "eaScale": "NATIONAL",
                 "type": "DYNAMIC",
+=======
+                "type": "DYNAMIC",
+                "visible": false,
+                "eaMetric": "boundary",
+                "sourceType": "plp",
+                "opacity": 0.6,
+                "tileLink": "no",
+                "eaDfsLink": "Supplemental/EPAregions.pdf",
+>>>>>>> Stashed changes
                 "eaTags": [
                     "people",
                     "human",
                     "government",
                     "economy"
                 ],
+<<<<<<< Updated upstream
                 "sourceType": "plp",
                 "eaDescription": "114th Congressional District boundaries and labels",
                 "tileLink": "no",
@@ -107,248 +169,533 @@
                             "fieldInfos": [
                                 {
                                     "format": null,
+=======
+                "name": "USEPA Regions",
+                "eaDescription": "US EPA Regions",
+                "eaTopic": "Boundaries",
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/EPA_Regions/MapServer",
+                "eaID": 903,
+                "eaMetadata": "E012",
+                "eaPBS": "Boundaries",
+                "eaLyrNum": "  ",
+                "eaScale": "NATIONAL"
+            },
+            {
+                "type": "DYNAMIC",
+                "visible": false,
+                "eaMetric": "boundary",
+                "layers": [
+                    {
+                        "popup": {
+                            "mediaInfos": [],
+                            "showAttachments": true,
+                            "fieldInfos": [
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "STATE",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "STATE",
                                     "label": "STATE",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "STATE",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "STATE_FIPS",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "STATE_FIPS",
                                     "label": "STATE FIPS",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "STATE FIPS",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "CONG_DIST",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "CONG_DIST",
                                     "label": "Congressional district",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Congressional district",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "CONG_REP",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "CONG_REP",
                                     "label": "Congressional representative",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Congressional representative",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "PARTY_AFF",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "PARTY_AFF",
                                     "label": "Party affiliation",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Party affiliation",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "URL",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "URL",
                                     "label": "Congressional representative's website URL",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Congressional representative's website URL",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "SENATOR_1",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "SENATOR_1",
                                     "label": "Senator 1",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Senator 1",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "SEN1_PARTY",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "SEN1_PARTY",
                                     "label": "Senator 1 party affiliation",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Senator 1 party affiliation",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "SEN_1_URL",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "SEN_1_URL",
                                     "label": "Senator 1 website URL",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Senator 1 website URL",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "SENATOR_2",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "SENATOR_2",
                                     "label": "Senator 2",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Senator 2",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "SEN2_PARTY",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "SEN2_PARTY",
                                     "label": "Senator 2 party affiliation",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Senator 2 party affiliation",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "SEN_2_URL",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "SEN_2_URL",
                                     "label": "Senator 2 website URL",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Senator 2 website URL",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "STATE_ABBR",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "STATE_ABBR",
                                     "label": "State abbreviation",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "State abbreviation",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "STCD",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "STCD",
                                     "label": "State/District Code",
+=======
+                                    "label": "State/District Code",
+                                    "format": null,
+>>>>>>> Stashed changes
                                     "tooltip": ""
                                 }
                             ],
                             "mediaInfos": [],
                             "title": "114th Congressional Districts: {STATE}",
+<<<<<<< Updated upstream
                             "description": null,
                             "showAttachments": true
+=======
+                            "description": null
+>>>>>>> Stashed changes
                         },
                         "id": 2
                     },
                     {
                         "popup": {
+<<<<<<< Updated upstream
                             "fieldInfos": [
                                 {
                                     "format": null,
+=======
+                            "mediaInfos": [],
+                            "showAttachments": true,
+                            "fieldInfos": [
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "STATE",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "STATE",
                                     "label": "STATE",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "STATE",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "STATE_FIPS",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "STATE_FIPS",
                                     "label": "STATE FIPS",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "STATE FIPS",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "CONG_DIST",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "CONG_DIST",
                                     "label": "Congressional district",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Congressional district",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "CONG_REP",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "CONG_REP",
                                     "label": "Congressional representative",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Congressional representative",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "PARTY_AFF",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "PARTY_AFF",
                                     "label": "Party affiliation",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Party affiliation",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "URL",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "URL",
                                     "label": "Congressional representative's website URL",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Congressional representative's website URL",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "SENATOR_1",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "SENATOR_1",
                                     "label": "Senator 1",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Senator 1",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "SEN1_PARTY",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "SEN1_PARTY",
                                     "label": "Senator 1 party affiliation",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Senator 1 party affiliation",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "SEN_1_URL",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "SEN_1_URL",
                                     "label": "Senator 1 website URL",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Senator 1 website URL",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "SENATOR_2",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "SENATOR_2",
                                     "label": "Senator 2",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Senator 2",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "SEN2_PARTY",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "SEN2_PARTY",
                                     "label": "Senator 2 party affiliation",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Senator 2 party affiliation",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "SEN_2_URL",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "SEN_2_URL",
                                     "label": "Senator 2 website URL",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Senator 2 website URL",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "STATE_ABBR",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "STATE_ABBR",
                                     "label": "State abbreviation",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "State abbreviation",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "STCD",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "STCD",
                                     "label": "State/District Code",
+=======
+                                    "label": "State/District Code",
+                                    "format": null,
+>>>>>>> Stashed changes
                                     "tooltip": ""
                                 }
                             ],
                             "mediaInfos": [],
                             "title": "114th Congressional Districts: {STATE}",
+<<<<<<< Updated upstream
                             "description": null,
                             "showAttachments": true
+=======
+                            "description": null
+>>>>>>> Stashed changes
                         },
                         "id": 3
                     }
                 ],
+<<<<<<< Updated upstream
                 "eaMetadata": "E013",
                 "eaDfsLink": "Supplemental/114thCongressionalDistricts.pdf",
                 "name": "Congressional District boundaries and labels",
@@ -380,36 +727,93 @@
                                     "visible": false,
                                     "fieldName": "HUC4",
                                     "label": "HUC4",
+=======
+                "sourceType": "plp",
+                "opacity": 0.6,
+                "tileLink": "no",
+                "eaDfsLink": "Supplemental/Congressionaldistricts.pdf",
+                "eaTags": [
+                    "people",
+                    "human",
+                    "government",
+                    "economy"
+                ],
+                "name": "Congressional District boundaries and labels",
+                "eaScale": "NATIONAL",
+                "eaTopic": "Boundaries",
+                "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/CongressionalDistricts/MapServer",
+                "eaID": 904,
+                "eaMetadata": "E013",
+                "eaPBS": "Boundaries",
+                "eaLyrNum": " ",
+                "eaDescription": "114th Congressional District boundaries and labels"
+            },
+            {
+                "type": "DYNAMIC",
+                "visible": false,
+                "eaMetric": "boundary",
+                "layers": [
+                    {
+                        "popup": {
+                            "mediaInfos": [],
+                            "showAttachments": true,
+                            "fieldInfos": [
+                                {
+                                    "label": "HUC4",
+                                    "visible": false,
+                                    "fieldName": "HUC4",
+                                    "stringFieldOption": "textbox",
+>>>>>>> Stashed changes
                                     "tooltip": ""
                                 }
                             ],
                             "mediaInfos": [],
                             "title": "HUC (4 Digit) Subregion: {HUC4}",
+<<<<<<< Updated upstream
                             "description": null,
                             "showAttachments": true
+=======
+                            "description": null
+>>>>>>> Stashed changes
                         },
                         "id": 0
                     },
                     {
                         "popup": {
+<<<<<<< Updated upstream
                             "fieldInfos": [
                                 {
                                     "stringFieldOption": "textbox",
                                     "visible": false,
                                     "fieldName": "HUC8",
                                     "label": "HUC8",
+=======
+                            "mediaInfos": [],
+                            "showAttachments": true,
+                            "fieldInfos": [
+                                {
+                                    "label": "HUC8",
+                                    "visible": false,
+                                    "fieldName": "HUC8",
+                                    "stringFieldOption": "textbox",
+>>>>>>> Stashed changes
                                     "tooltip": ""
                                 }
                             ],
                             "mediaInfos": [],
                             "title": "HUC (8 Digit) Subbasin: {HUC8}",
+<<<<<<< Updated upstream
                             "description": null,
                             "showAttachments": true
+=======
+                            "description": null
+>>>>>>> Stashed changes
                         },
                         "id": 2
                     },
                     {
                         "popup": {
+<<<<<<< Updated upstream
                             "fieldInfos": [
                                 {
                                     "stringFieldOption": "textbox",
@@ -419,10 +823,28 @@
                                     "tooltip": ""
                                 },
                                 {
+=======
+                            "mediaInfos": [],
+                            "showAttachments": true,
+                            "fieldInfos": [
+                                {
+                                    "label": "HUC 12 Digit Subwatershed",
+                                    "visible": true,
+                                    "fieldName": "HUC_12",
+                                    "stringFieldOption": "textbox",
+                                    "tooltip": ""
+                                },
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "fieldName": "Pct_Land",
+                                    "visible": false,
+                                    "label": "Pct_Land",
+>>>>>>> Stashed changes
                                     "format": {
-                                        "places": 2,
-                                        "digitSeparator": true
+                                        "digitSeparator": true,
+                                        "places": 2
                                     },
+<<<<<<< Updated upstream
                                     "stringFieldOption": "textbox",
                                     "visible": false,
                                     "fieldName": "Pct_Land",
@@ -441,17 +863,38 @@
                                     "visible": false,
                                     "fieldName": "HUC8",
                                     "label": "HUC8",
+=======
+                                    "tooltip": ""
+                                },
+                                {
+                                    "label": "HUC4",
+                                    "visible": false,
+                                    "fieldName": "HUC4",
+                                    "stringFieldOption": "textbox",
+                                    "tooltip": ""
+                                },
+                                {
+                                    "label": "HUC8",
+                                    "visible": false,
+                                    "fieldName": "HUC8",
+                                    "stringFieldOption": "textbox",
+>>>>>>> Stashed changes
                                     "tooltip": ""
                                 }
                             ],
                             "mediaInfos": [],
                             "title": "HUC (8 Digit) Subbasin: {HUC8}",
+<<<<<<< Updated upstream
                             "description": null,
                             "showAttachments": true
+=======
+                            "description": null
+>>>>>>> Stashed changes
                         },
                         "id": 4
                     }
                 ],
+<<<<<<< Updated upstream
                 "eaMetadata": "N054",
                 "eaDfsLink": "Supplemental/HUC.pdf",
                 "name": "Hydrologic Unit Code (HUC) Boundaries and labels",
@@ -483,10 +926,46 @@
                         "popup": {
                             "fieldInfos": [
                                 {
+=======
+                "sourceType": "plp",
+                "opacity": 0.6,
+                "tileLink": "no",
+                "eaDfsLink": "Supplemental/HUC.pdf",
+                "eaTags": [
+                    "hydrology",
+                    "hydrography"
+                ],
+                "name": "Hydrologic Unit Code (HUC) Boundaries and labels",
+                "eaScale": "NATIONAL",
+                "eaTopic": "Boundaries",
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Other/HydrologicUnits/MapServer",
+                "eaID": 905,
+                "eaMetadata": "N054",
+                "eaPBS": "Boundaries",
+                "eaLyrNum": " ",
+                "eaDescription": "NHDPlus V2 Hydrologic Unit Code boundaries and labels"
+            },
+            {
+                "type": "DYNAMIC",
+                "visible": false,
+                "eaMetric": "boundary",
+                "layers": [
+                    {
+                        "popup": {
+                            "mediaInfos": [],
+                            "showAttachments": true,
+                            "fieldInfos": [
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "fieldName": "COMID",
+                                    "visible": true,
+                                    "label": "COMID",
+>>>>>>> Stashed changes
                                     "format": {
-                                        "places": 0,
-                                        "digitSeparator": false
+                                        "digitSeparator": false,
+                                        "places": 0
                                     },
+<<<<<<< Updated upstream
                                     "stringFieldOption": "textbox",
                                     "visible": true,
                                     "fieldName": "COMID",
@@ -508,10 +987,34 @@
                                     "tooltip": ""
                                 },
                                 {
+=======
+                                    "tooltip": ""
+                                },
+                                {
+                                    "label": "GNIS_NAME",
+                                    "visible": true,
+                                    "fieldName": "GNIS_NAME",
+                                    "stringFieldOption": "textbox",
+                                    "tooltip": ""
+                                },
+                                {
+                                    "label": "REACHCODE",
+                                    "visible": true,
+                                    "fieldName": "REACHCODE",
+                                    "stringFieldOption": "textbox",
+                                    "tooltip": ""
+                                },
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "fieldName": "WBAREACOMI",
+                                    "visible": true,
+                                    "label": "WaterBody AREA COMID",
+>>>>>>> Stashed changes
                                     "format": {
-                                        "places": 0,
-                                        "digitSeparator": true
+                                        "digitSeparator": true,
+                                        "places": 0
                                     },
+<<<<<<< Updated upstream
                                     "stringFieldOption": "textbox",
                                     "visible": true,
                                     "fieldName": "WBAREACOMI",
@@ -526,32 +1029,67 @@
                                     "tooltip": ""
                                 },
                                 {
+=======
+                                    "tooltip": ""
+                                },
+                                {
+                                    "label": "FEATURE TYPE",
+                                    "visible": true,
+                                    "fieldName": "FTYPE",
+                                    "stringFieldOption": "textbox",
+                                    "tooltip": ""
+                                },
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "fieldName": "StreamOrde",
+                                    "visible": true,
+                                    "label": "Stream Order (Strahler)",
+>>>>>>> Stashed changes
                                     "format": {
-                                        "places": 0,
-                                        "digitSeparator": true
+                                        "digitSeparator": true,
+                                        "places": 0
                                     },
+<<<<<<< Updated upstream
                                     "stringFieldOption": "textbox",
                                     "visible": true,
                                     "fieldName": "StreamOrde",
                                     "label": "Stream Order (Strahler)",
+=======
+>>>>>>> Stashed changes
                                     "tooltip": ""
                                 }
                             ],
                             "mediaInfos": [],
                             "title": "NHDFlowline Main path - Stream Order 4 and higher: {GNIS_NAME}",
+<<<<<<< Updated upstream
                             "description": null,
                             "showAttachments": true
+=======
+                            "description": null
+>>>>>>> Stashed changes
                         },
                         "id": 0
                     },
                     {
                         "popup": {
+<<<<<<< Updated upstream
                             "fieldInfos": [
                                 {
+=======
+                            "mediaInfos": [],
+                            "showAttachments": true,
+                            "fieldInfos": [
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "fieldName": "COMID",
+                                    "visible": true,
+                                    "label": "COMID",
+>>>>>>> Stashed changes
                                     "format": {
-                                        "places": 0,
-                                        "digitSeparator": false
+                                        "digitSeparator": false,
+                                        "places": 0
                                     },
+<<<<<<< Updated upstream
                                     "stringFieldOption": "textbox",
                                     "visible": true,
                                     "fieldName": "COMID",
@@ -573,10 +1111,34 @@
                                     "tooltip": ""
                                 },
                                 {
+=======
+                                    "tooltip": ""
+                                },
+                                {
+                                    "label": "GNIS_NAME",
+                                    "visible": true,
+                                    "fieldName": "GNIS_NAME",
+                                    "stringFieldOption": "textbox",
+                                    "tooltip": ""
+                                },
+                                {
+                                    "label": "REACHCODE",
+                                    "visible": true,
+                                    "fieldName": "REACHCODE",
+                                    "stringFieldOption": "textbox",
+                                    "tooltip": ""
+                                },
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "fieldName": "WBAREACOMI",
+                                    "visible": true,
+                                    "label": "WaterBody AREA COMID",
+>>>>>>> Stashed changes
                                     "format": {
-                                        "places": 0,
-                                        "digitSeparator": true
+                                        "digitSeparator": true,
+                                        "places": 0
                                     },
+<<<<<<< Updated upstream
                                     "stringFieldOption": "textbox",
                                     "visible": true,
                                     "fieldName": "WBAREACOMI",
@@ -591,32 +1153,67 @@
                                     "tooltip": ""
                                 },
                                 {
+=======
+                                    "tooltip": ""
+                                },
+                                {
+                                    "label": "FEATURE TYPE",
+                                    "visible": true,
+                                    "fieldName": "FTYPE",
+                                    "stringFieldOption": "textbox",
+                                    "tooltip": ""
+                                },
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "fieldName": "StreamOrde",
+                                    "visible": true,
+                                    "label": "Stream Order (Strahler)",
+>>>>>>> Stashed changes
                                     "format": {
-                                        "places": 0,
-                                        "digitSeparator": true
+                                        "digitSeparator": true,
+                                        "places": 0
                                     },
+<<<<<<< Updated upstream
                                     "stringFieldOption": "textbox",
                                     "visible": true,
                                     "fieldName": "StreamOrde",
                                     "label": "Stream Order (Strahler)",
+=======
+>>>>>>> Stashed changes
                                     "tooltip": ""
                                 }
                             ],
                             "mediaInfos": [],
                             "title": "NHDFlowline Main path - Stream Order 4 and higher: {GNIS_NAME}",
+<<<<<<< Updated upstream
                             "description": null,
                             "showAttachments": true
+=======
+                            "description": null
+>>>>>>> Stashed changes
                         },
                         "id": 1
                     },
                     {
                         "popup": {
+<<<<<<< Updated upstream
                             "fieldInfos": [
                                 {
+=======
+                            "mediaInfos": [],
+                            "showAttachments": true,
+                            "fieldInfos": [
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "fieldName": "COMID",
+                                    "visible": true,
+                                    "label": "COMID",
+>>>>>>> Stashed changes
                                     "format": {
-                                        "places": 0,
-                                        "digitSeparator": false
+                                        "digitSeparator": false,
+                                        "places": 0
                                     },
+<<<<<<< Updated upstream
                                     "stringFieldOption": "textbox",
                                     "visible": true,
                                     "fieldName": "COMID",
@@ -638,10 +1235,34 @@
                                     "tooltip": ""
                                 },
                                 {
+=======
+                                    "tooltip": ""
+                                },
+                                {
+                                    "label": "GNIS_ID",
+                                    "visible": true,
+                                    "fieldName": "GNIS_ID",
+                                    "stringFieldOption": "textbox",
+                                    "tooltip": ""
+                                },
+                                {
+                                    "label": "GNIS_NAME",
+                                    "visible": true,
+                                    "fieldName": "GNIS_NAME",
+                                    "stringFieldOption": "textbox",
+                                    "tooltip": ""
+                                },
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "fieldName": "AREASQKM",
+                                    "visible": true,
+                                    "label": "AREASQKM",
+>>>>>>> Stashed changes
                                     "format": {
-                                        "places": 2,
-                                        "digitSeparator": true
+                                        "digitSeparator": true,
+                                        "places": 2
                                     },
+<<<<<<< Updated upstream
                                     "stringFieldOption": "textbox",
                                     "visible": true,
                                     "fieldName": "AREASQKM",
@@ -649,10 +1270,20 @@
                                     "tooltip": ""
                                 },
                                 {
+=======
+                                    "tooltip": ""
+                                },
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "fieldName": "ELEVATION",
+                                    "visible": true,
+                                    "label": "ELEVATION",
+>>>>>>> Stashed changes
                                     "format": {
-                                        "places": 2,
-                                        "digitSeparator": true
+                                        "digitSeparator": true,
+                                        "places": 2
                                     },
+<<<<<<< Updated upstream
                                     "stringFieldOption": "textbox",
                                     "visible": true,
                                     "fieldName": "ELEVATION",
@@ -667,32 +1298,67 @@
                                     "tooltip": ""
                                 },
                                 {
+=======
+                                    "tooltip": ""
+                                },
+                                {
+                                    "label": "FTYPE",
+                                    "visible": true,
+                                    "fieldName": "FTYPE",
+                                    "stringFieldOption": "textbox",
+                                    "tooltip": ""
+                                },
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "fieldName": "FCODE",
+                                    "visible": true,
+                                    "label": "FCODE",
+>>>>>>> Stashed changes
                                     "format": {
-                                        "places": 0,
-                                        "digitSeparator": false
+                                        "digitSeparator": false,
+                                        "places": 0
                                     },
+<<<<<<< Updated upstream
                                     "stringFieldOption": "textbox",
                                     "visible": true,
                                     "fieldName": "FCODE",
                                     "label": "FCODE",
+=======
+>>>>>>> Stashed changes
                                     "tooltip": ""
                                 }
                             ],
                             "mediaInfos": [],
                             "title": "NHDArea: {GNIS_NAME}",
+<<<<<<< Updated upstream
                             "description": null,
                             "showAttachments": true
+=======
+                            "description": null
+>>>>>>> Stashed changes
                         },
                         "id": 2
                     },
                     {
                         "popup": {
+<<<<<<< Updated upstream
                             "fieldInfos": [
                                 {
+=======
+                            "mediaInfos": [],
+                            "showAttachments": true,
+                            "fieldInfos": [
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "fieldName": "COMID",
+                                    "visible": true,
+                                    "label": "COMID",
+>>>>>>> Stashed changes
                                     "format": {
-                                        "places": 0,
-                                        "digitSeparator": false
+                                        "digitSeparator": false,
+                                        "places": 0
                                     },
+<<<<<<< Updated upstream
                                     "stringFieldOption": "textbox",
                                     "visible": true,
                                     "fieldName": "COMID",
@@ -714,10 +1380,34 @@
                                     "tooltip": ""
                                 },
                                 {
+=======
+                                    "tooltip": ""
+                                },
+                                {
+                                    "label": "GNIS_ID",
+                                    "visible": true,
+                                    "fieldName": "GNIS_ID",
+                                    "stringFieldOption": "textbox",
+                                    "tooltip": ""
+                                },
+                                {
+                                    "label": "GNIS_NAME",
+                                    "visible": true,
+                                    "fieldName": "GNIS_NAME",
+                                    "stringFieldOption": "textbox",
+                                    "tooltip": ""
+                                },
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "fieldName": "AREASQKM",
+                                    "visible": true,
+                                    "label": "AREASQKM",
+>>>>>>> Stashed changes
                                     "format": {
-                                        "places": 2,
-                                        "digitSeparator": true
+                                        "digitSeparator": true,
+                                        "places": 2
                                     },
+<<<<<<< Updated upstream
                                     "stringFieldOption": "textbox",
                                     "visible": true,
                                     "fieldName": "AREASQKM",
@@ -725,10 +1415,20 @@
                                     "tooltip": ""
                                 },
                                 {
+=======
+                                    "tooltip": ""
+                                },
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "fieldName": "ELEVATION",
+                                    "visible": true,
+                                    "label": "ELEVATION",
+>>>>>>> Stashed changes
                                     "format": {
-                                        "places": 2,
-                                        "digitSeparator": true
+                                        "digitSeparator": true,
+                                        "places": 2
                                     },
+<<<<<<< Updated upstream
                                     "stringFieldOption": "textbox",
                                     "visible": true,
                                     "fieldName": "ELEVATION",
@@ -750,25 +1450,56 @@
                                     "tooltip": ""
                                 },
                                 {
+=======
+                                    "tooltip": ""
+                                },
+                                {
+                                    "label": "REACHCODE",
+                                    "visible": true,
+                                    "fieldName": "REACHCODE",
+                                    "stringFieldOption": "textbox",
+                                    "tooltip": ""
+                                },
+                                {
+                                    "label": "FTYPE",
+                                    "visible": true,
+                                    "fieldName": "FTYPE",
+                                    "stringFieldOption": "textbox",
+                                    "tooltip": ""
+                                },
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "fieldName": "FCODE",
+                                    "visible": true,
+                                    "label": "FCODE",
+>>>>>>> Stashed changes
                                     "format": {
-                                        "places": 0,
-                                        "digitSeparator": false
+                                        "digitSeparator": false,
+                                        "places": 0
                                     },
+<<<<<<< Updated upstream
                                     "stringFieldOption": "textbox",
                                     "visible": true,
                                     "fieldName": "FCODE",
                                     "label": "FCODE",
+=======
+>>>>>>> Stashed changes
                                     "tooltip": ""
                                 }
                             ],
                             "mediaInfos": [],
                             "title": "NHDWaterbody: {GNIS_NAME}",
+<<<<<<< Updated upstream
                             "description": null,
                             "showAttachments": true
+=======
+                            "description": null
+>>>>>>> Stashed changes
                         },
                         "id": 3
                     }
                 ],
+<<<<<<< Updated upstream
                 "eaMetadata": "E001",
                 "eaDfsLink": "Supplemental/NationalHydrographyDataset.pdf",
                 "name": "NHDPlus V2 features",
@@ -781,12 +1512,21 @@
                 "eaMetric": "boundary",
                 "eaScale": "NATIONAL",
                 "type": "DYNAMIC",
+=======
+                "sourceType": "plp",
+                "opacity": 0.6,
+                "tileLink": "no",
+                "eaDfsLink": "Supplemental/NHDPlusV2.pdf",
+>>>>>>> Stashed changes
                 "eaTags": [
-                    "protection",
-                    "land",
-                    "resources",
-                    "habitat"
+                    "National Hydrography Dataset",
+                    "river",
+                    "stream",
+                    "lake",
+                    "pond",
+                    "hydrology"
                 ],
+<<<<<<< Updated upstream
                 "sourceType": "plp",
                 "eaDescription": "Landscape Conservation Cooperatives (LCCs) are represented in this map by 22 regions established across the U.S., Alaska, Hawaii, and U.S. territories. LCC groups are created through conservation and science partnerships between federal agencies, states, tribes, non-governmental organizations, universities, and private stakeholders.",
                 "tileLink": "no",
@@ -795,25 +1535,66 @@
                     "fieldInfos": [
                         {
                             "format": null,
+=======
+                "name": "NHDPlus V2 features",
+                "eaScale": "NATIONAL",
+                "eaTopic": "Boundaries",
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/NHDPlusV21_EA/MapServer",
+                "eaID": 906,
+                "eaMetadata": "E001",
+                "eaPBS": "Boundaries",
+                "eaLyrNum": " ",
+                "eaDescription": "NHDPlus V2 features for waterbodies, areas, and flowlines. Flowlines are displayed based on Stream Order and Stream Order 1 features are not displayed in this service."
+            },
+            {
+                "popup": {
+                    "mediaInfos": [],
+                    "showAttachments": true,
+                    "fieldInfos": [
+                        {
+>>>>>>> Stashed changes
                             "stringFieldOption": "textbox",
+                            "fieldName": "Shape",
                             "visible": false,
+<<<<<<< Updated upstream
                             "fieldName": "Shape",
                             "label": "Shape",
                             "tooltip": ""
                         },
                         {
                             "format": null,
+=======
+                            "label": "Shape",
+                            "format": null,
+                            "tooltip": ""
+                        },
+                        {
+>>>>>>> Stashed changes
                             "stringFieldOption": "textbox",
+                            "fieldName": "area_names",
                             "visible": true,
+<<<<<<< Updated upstream
                             "fieldName": "area_names",
                             "label": "area_names",
                             "tooltip": ""
                         },
                         {
+=======
+                            "label": "area_names",
+                            "format": null,
+                            "tooltip": ""
+                        },
+                        {
+                            "stringFieldOption": "textbox",
+                            "fieldName": "Area_Num",
+                            "visible": true,
+                            "label": "Area_Num",
+>>>>>>> Stashed changes
                             "format": {
-                                "places": 0,
-                                "digitSeparator": true
+                                "digitSeparator": true,
+                                "places": 0
                             },
+<<<<<<< Updated upstream
                             "stringFieldOption": "textbox",
                             "visible": true,
                             "fieldName": "Area_Num",
@@ -822,25 +1603,53 @@
                         },
                         {
                             "format": null,
+=======
+                            "tooltip": ""
+                        },
+                        {
+>>>>>>> Stashed changes
                             "stringFieldOption": "textbox",
+                            "fieldName": "OBJECTID",
                             "visible": false,
+<<<<<<< Updated upstream
                             "fieldName": "OBJECTID",
                             "label": "OBJECTID",
                             "tooltip": ""
                         },
                         {
                             "format": null,
+=======
+                            "label": "OBJECTID",
+                            "format": null,
+                            "tooltip": ""
+                        },
+                        {
+>>>>>>> Stashed changes
                             "stringFieldOption": "textbox",
+                            "fieldName": "BCR_number",
                             "visible": true,
+<<<<<<< Updated upstream
                             "fieldName": "BCR_number",
                             "label": "BCR_number",
                             "tooltip": ""
                         },
                         {
+=======
+                            "label": "BCR_number",
+                            "format": null,
+                            "tooltip": ""
+                        },
+                        {
+                            "stringFieldOption": "textbox",
+                            "fieldName": "Shape.area",
+                            "visible": false,
+                            "label": "Shape.area",
+>>>>>>> Stashed changes
                             "format": {
-                                "places": 2,
-                                "digitSeparator": true
+                                "digitSeparator": true,
+                                "places": 2
                             },
+<<<<<<< Updated upstream
                             "stringFieldOption": "textbox",
                             "visible": false,
                             "fieldName": "Shape.area",
@@ -848,10 +1657,20 @@
                             "tooltip": ""
                         },
                         {
+=======
+                            "tooltip": ""
+                        },
+                        {
+                            "stringFieldOption": "textbox",
+                            "fieldName": "Shape.len",
+                            "visible": false,
+                            "label": "Shape.len",
+>>>>>>> Stashed changes
                             "format": {
-                                "places": 2,
-                                "digitSeparator": true
+                                "digitSeparator": true,
+                                "places": 2
                             },
+<<<<<<< Updated upstream
                             "stringFieldOption": "textbox",
                             "visible": false,
                             "fieldName": "Shape.len",
@@ -860,15 +1679,27 @@
                         },
                         {
                             "format": null,
+=======
+                            "tooltip": ""
+                        },
+                        {
+>>>>>>> Stashed changes
                             "stringFieldOption": "textbox",
+                            "fieldName": "GlobalID",
                             "visible": false,
+<<<<<<< Updated upstream
                             "fieldName": "GlobalID",
                             "label": "GlobalID",
+=======
+                            "label": "GlobalID",
+                            "format": null,
+>>>>>>> Stashed changes
                             "tooltip": ""
                         }
                     ],
                     "mediaInfos": [],
                     "title": "Landscape Conservation Cooperatives: {area_names}",
+<<<<<<< Updated upstream
                     "description": null,
                     "showAttachments": true
                 },
@@ -910,17 +1741,66 @@
                             "fieldInfos": [
                                 {
                                     "format": null,
+=======
+                    "description": null
+                },
+                "type": "DYNAMIC",
+                "visible": false,
+                "eaMetric": "boundary",
+                "sourceType": "plp",
+                "opacity": 0.6,
+                "tileLink": "no",
+                "eaDfsLink": "Supplemental/LandscapeConservationCooperatives.pdf",
+                "eaTags": [
+                    "protection",
+                    "land",
+                    "resources",
+                    "habitat"
+                ],
+                "name": "Landscape Conservation Cooperatives\u00a0",
+                "eaDescription": "Landscape Conservation Cooperatives (LCCs) are represented in this map by 22 regions established across the U.S., Alaska, Hawaii, and U.S. territories. LCC groups are created through conservation and science partnerships between federal agencies, states, tribes, non-governmental organizations, universities, and private stakeholders.",
+                "eaTopic": "Boundaries",
+                "url": "https://gis.fws.gov/arcgis/rest/services/FWS_LCC/MapServer",
+                "eaID": 907,
+                "eaScale": "NATIONAL"
+            },
+            {
+                "type": "DYNAMIC",
+                "visible": false,
+                "eaMetric": "boundary",
+                "layers": [
+                    {
+                        "popup": {
+                            "mediaInfos": [],
+                            "showAttachments": true,
+                            "fieldInfos": [
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "STATE_NAME",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "STATE_NAME",
                                     "label": "STATE NAME",
                                     "tooltip": ""
                                 },
                                 {
+=======
+                                    "label": "STATE NAME",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "fieldName": "EPA_REGION",
+                                    "visible": true,
+                                    "label": "EPA REGION",
+>>>>>>> Stashed changes
                                     "format": {
-                                        "places": 0,
-                                        "digitSeparator": true
+                                        "digitSeparator": true,
+                                        "places": 0
                                     },
+<<<<<<< Updated upstream
                                     "stringFieldOption": "textbox",
                                     "visible": true,
                                     "fieldName": "EPA_REGION",
@@ -929,60 +1809,123 @@
                                 },
                                 {
                                     "format": null,
+=======
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "L4_KEY",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "L4_KEY",
                                     "label": "Level IV",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Level IV",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "L3_KEY",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "L3_KEY",
                                     "label": "Level III",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Level III",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "L2_KEY",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "L2_KEY",
                                     "label": "Level II",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Level II",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "L1_KEY",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "L1_KEY",
                                     "label": "Level I",
+=======
+                                    "label": "Level I",
+                                    "format": null,
+>>>>>>> Stashed changes
                                     "tooltip": ""
                                 }
                             ],
                             "mediaInfos": [],
                             "title": "Level IV Ecoregion Polygons: {US_L4NAME}",
+<<<<<<< Updated upstream
                             "description": null,
                             "showAttachments": true
+=======
+                            "description": null
+>>>>>>> Stashed changes
                         },
                         "id": 7
                     },
                     {
                         "popup": {
+<<<<<<< Updated upstream
                             "fieldInfos": [
                                 {
                                     "format": null,
+=======
+                            "mediaInfos": [],
+                            "showAttachments": true,
+                            "fieldInfos": [
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "STATE_NAME",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "STATE_NAME",
                                     "label": "STATE NAME",
                                     "tooltip": ""
                                 },
                                 {
+=======
+                                    "label": "STATE NAME",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "fieldName": "EPA_REGION",
+                                    "visible": true,
+                                    "label": "EPA REGION",
+>>>>>>> Stashed changes
                                     "format": {
-                                        "places": 0,
-                                        "digitSeparator": true
+                                        "digitSeparator": true,
+                                        "places": 0
                                     },
+<<<<<<< Updated upstream
                                     "stringFieldOption": "textbox",
                                     "visible": true,
                                     "fieldName": "EPA_REGION",
@@ -991,37 +1934,71 @@
                                 },
                                 {
                                     "format": null,
+=======
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "L3_KEY",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "L3_KEY",
                                     "label": "Level III",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Level III",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "L2_KEY",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "L2_KEY",
                                     "label": "Level II",
                                     "tooltip": ""
                                 },
                                 {
                                     "format": null,
+=======
+                                    "label": "Level II",
+                                    "format": null,
+                                    "tooltip": ""
+                                },
+                                {
+>>>>>>> Stashed changes
                                     "stringFieldOption": "textbox",
+                                    "fieldName": "L1_KEY",
                                     "visible": true,
+<<<<<<< Updated upstream
                                     "fieldName": "L1_KEY",
                                     "label": "Level I",
+=======
+                                    "label": "Level I",
+                                    "format": null,
+>>>>>>> Stashed changes
                                     "tooltip": ""
                                 }
                             ],
                             "mediaInfos": [],
                             "title": "Level IV Ecoregion Polygons: {US_L4NAME}",
+<<<<<<< Updated upstream
                             "description": null,
                             "showAttachments": true
+=======
+                            "description": null
+>>>>>>> Stashed changes
                         },
                         "id": 11
                     }
                 ],
+<<<<<<< Updated upstream
                 "eaDfsLink": "Supplemental/USEPAEcoregions.pdf",
                 "name": "USEPA Ecoregions (Omernik)",
                 "opacity": 0.6
@@ -1034,6 +2011,12 @@
                 "eaMetric": "Additional_landcover",
                 "eaScale": "NATIONAL",
                 "type": "DYNAMIC",
+=======
+                "sourceType": "plp",
+                "opacity": 0.6,
+                "tileLink": "no",
+                "eaDfsLink": "Supplemental/USEPAEcoregions.pdf",
+>>>>>>> Stashed changes
                 "eaTags": [
                     "habitat",
                     "wildlife",
@@ -1051,15 +2034,27 @@
                     "lakes",
                     "ecology"
                 ],
+<<<<<<< Updated upstream
                 "sourceType": "plp",
                 "eaDescription": "The GAP (Gap Anlaysis Program) Ecological Systems data layer, one of several data layers available in the U.S. Geological Survey (USGS) GAP Land Cover Dataset, depicts native vegetation, agricultural areas, and urban development in 590 land use classes. Ecological Systems refers to the vegetation classification developed by NatureServe to map the natural vegetation of the U.S. Separate Ecological Systems datasets have been created for Alaska (LANDFIRE) and Hawaii (Hawaii Gap Analysis Project).",
                 "tileLink": "no",
                 "eaID": 909,
+=======
+                "name": "USEPA Ecoregions (Omernik)",
+                "eaScale": "NATIONAL",
+                "eaTopic": "Boundaries",
+                "url": "https://geodata.epa.gov/arcgis/rest/services/ORD/USEPA_Ecoregions_Level_III_and_IV/MapServer",
+                "eaID": 908,
+                "eaDescription": "This map illustrates USEPA (Omernik) Level III and IV ecoregions, a geographic framework used for an ecosystem approach to land and water resource management. Ecoregions define relatively homogeneous geographical areas that contain similarities in the character of environmental resources."
+            },
+            {
+>>>>>>> Stashed changes
                 "popup": {
                     "showAttachments": "false",
                     "title": "Block Group ID: {GEOID10}",
                     "fieldInfos": [
                         {
+<<<<<<< Updated upstream
                             "format": {
                                 "places": 2,
                                 "digitSeparator": true
@@ -1067,12 +2062,181 @@
                             "visible": "true",
                             "fieldName": "VALUE",
                             "label": "GAP Ecological Systems\u00a0"
+=======
+                            "label": "GAP Ecological Systems\u00a0",
+                            "visible": "true",
+                            "fieldName": "VALUE",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            }
+>>>>>>> Stashed changes
                         }
                     ]
                 },
+<<<<<<< Updated upstream
                 "eaDfsLink": "Supplemental/GAPEcologicalSystems.pdf",
                 "name": "GAP Ecological Systems",
                 "opacity": 0.6
+=======
+                "type": "DYNAMIC",
+                "visible": false,
+                "eaMetric": "Additional_landcover",
+                "sourceType": "plp",
+                "opacity": 0.6,
+                "tileLink": "no",
+                "eaDfsLink": "Supplemental/GAPEcologicalSystems.pdf",
+                "eaTags": [
+                    "habitat",
+                    "wildlife",
+                    "plants",
+                    "animals",
+                    "soil",
+                    "land cover",
+                    "geology",
+                    "trees",
+                    "forest",
+                    "wetlands",
+                    "water",
+                    "rivers",
+                    "streams",
+                    "lakes",
+                    "ecology"
+                ],
+                "name": "GAP Ecological Systems",
+                "eaDescription": "The GAP (Gap Anlaysis Program) Ecological Systems data layer, one of several data layers available in the U.S. Geological Survey (USGS) GAP Land Cover Dataset, depicts native vegetation, agricultural areas, and urban development in 590 land use classes. Ecological Systems refers to the vegetation classification developed by NatureServe to map the natural vegetation of the U.S. Separate Ecological Systems datasets have been created for Alaska (LANDFIRE) and Hawaii (Hawaii Gap Analysis Project).",
+                "eaTopic": "Boundaries",
+                "url": "https://gis1.usgs.gov/arcgis/rest/services/gap/GAP_Land_Cover_Ecological_Systems_Landuse/MapServer",
+                "eaID": 909,
+                "eaLyrNum": " ",
+                "eaScale": "NATIONAL"
+            },
+            {
+                "popup": {
+                    "showAttachments": "false",
+                    "fieldInfos": [
+                        {
+                            "label": "Waterscape - Surface water\u00a0",
+                            "visible": "true",
+                            "fieldName": "value",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 0
+                            }
+                        }
+                    ],
+                    "title": "Waterscape - Surface water"
+                },
+                "type": "DYNAMIC",
+                "visible": false,
+                "sourceType": "grid",
+                "opacity": 0.6,
+                "tileLink": "no",
+                "eaDfsLink": "MissingFactSheet.pdf",
+                "eaTags": [
+                    "lake",
+                    "stream",
+                    "river",
+                    "waterbody",
+                    "pond",
+                    "hydrology"
+                ],
+                "name": "Waterscape - Surface water",
+                "eaDescription": "Surface water identified in EnviroAtlas' hybrid National Land Cover Database-Cropland Data Layer or the NHDPlusV2 catseed grid. The land cover classes, 'Open Water', 'Woody Wetlands', and 'Emergent Herbaceous Wetlands' were considered surface water.",
+                "eaTopic": "Boundaries",
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/WSIO_SW/MapServer",
+                "eaID": 910,
+                "IsSubLayer": true,
+                "eaMetadata": "N067",
+                "eaPBS": "Boundaries",
+                "eaScale": "NATIONAL",
+                "numDecimal": 0
+            },
+            {
+                "popup": {
+                    "showAttachments": "false",
+                    "fieldInfos": [
+                        {
+                            "label": "Waterscape - Hydrologically connected zone\u00a0",
+                            "visible": "true",
+                            "fieldName": "value",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 0
+                            }
+                        }
+                    ],
+                    "title": "Waterscape - Hydrologically connected zone"
+                },
+                "type": "DYNAMIC",
+                "visible": false,
+                "sourceType": "grid",
+                "opacity": 0.6,
+                "tileLink": "no",
+                "eaDfsLink": "MissingFactSheet.pdf",
+                "eaTags": [
+                    "lake",
+                    "stream",
+                    "river",
+                    "waterbody",
+                    "pond",
+                    "hydrology"
+                ],
+                "name": "Waterscape - Hydrologically connected zone",
+                "eaDescription": "Raster showing the hydrologically connected zone, defined as surface water plus any connected cells with high water acculmulation. This map uses a wetness index of 550 from a compound topographic index (CTI) to determine if the area is considered to be wet. ",
+                "eaTopic": "Boundaries",
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/WSIO_HCZ/MapServer",
+                "eaID": 911,
+                "IsSubLayer": true,
+                "eaMetadata": "N068",
+                "eaPBS": "Boundaries",
+                "eaScale": "NATIONAL",
+                "numDecimal": 0
+            },
+            {
+                "popup": {
+                    "showAttachments": "false",
+                    "fieldInfos": [
+                        {
+                            "label": "Waterscape - Riparian zone\u00a0",
+                            "visible": "true",
+                            "fieldName": "value",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 0
+                            }
+                        }
+                    ],
+                    "title": "Waterscape - Riparian zone"
+                },
+                "type": "DYNAMIC",
+                "visible": false,
+                "SubLayerIds": [
+                    ""
+                ],
+                "opacity": 0.6,
+                "tileLink": "no",
+                "eaDfsLink": "MissingFactSheet.pdf",
+                "eaTags": [
+                    "lake",
+                    "stream",
+                    "river",
+                    "waterbody",
+                    "pond",
+                    "hydrology"
+                ],
+                "name": "Waterscape - Riparian zone",
+                "eaDescription": "Raster showing the riparian zone, defined as land within 108 meters of surface water identified in the NHDPlusV2 catseed grid or in EnviroAtlas' hybrid National Land Cover Database-Cropland Data Layer (including 'Open Water', 'Woody Wetlands', and 'Emergent Herbaceous Wetlands').",
+                "eaTopic": "Boundaries",
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/WSIO_RZ/MapServer",
+                "eaID": 912,
+                "IsSubLayer": true,
+                "eaMetadata": "N069",
+                "eaPBS": "Boundaries",
+                "sourceType": "grid",
+                "eaScale": "NATIONAL",
+                "numDecimal": 0
+>>>>>>> Stashed changes
             }
         ]
     }
