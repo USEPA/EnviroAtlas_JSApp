@@ -132,7 +132,7 @@ define([
       },
 
       _resizeTitleNode: function(){
-        var nodeWidth = (this.getWidth() - 2 - 21 - 18 * 4) / 5;
+        var nodeWidth = (this.getWidth() / 3);
         array.forEach(query('.title-node', this.maxStateNode), function(titleNode){
           html.setStyle(titleNode, 'width', nodeWidth + 'px');
         }, this);
@@ -703,12 +703,12 @@ define([
 
       _createTitleNode: function(config) {
         /*jshint unused:false*/
-        var nodeWidth = (this.getWidth() - 2 - 21 - 18 * 4) / 5;
+        var nodeWidth = (this.getWidth() /3);
         var title = config.label,
           iconUrl = config.icon,
           node = html.create('div', {
             title: title,
-            'class': 'title-node jimu-float-leading jimu-leading-margin15',
+            'class': 'title-node jimu-float-leading',// jimu-leading-margin15',
             'settingid': config.id,
             i: this.tabs.length,
             style: {
@@ -722,6 +722,12 @@ define([
 
           imgNode = html.create('img', {
             src: iconUrl
+          }, node),
+
+          textNode = html.create('div', {
+            innerHTML: title,
+            'class': 'panel_titles'
+            
           }, node),
 
           minNode = html.create('div', {
@@ -794,14 +800,14 @@ define([
         var node = html.create('div', {
           'class': 'content-node'
         }, this.contentListNode);
-        html.create('div', {
+        /*html.create('div', {
           'class': 'content-title-bg'
         }, node);
         html.create('div', {
           'class': 'content-title',
           innerHTML: utils.stripHTML((config.widgets && config.widgets.length > 1)?
                                           config.label : '')
-        }, node);
+        }, node);*/
         html.create('div', {
           'class': 'content-pane'
         }, node);
