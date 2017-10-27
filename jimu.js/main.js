@@ -126,6 +126,7 @@ define(["./ConfigManager",
     window.topicDicPBS["Employment"] = "E";
     window.topicDicPBS["National Demographics"] = "ND";
     window.topicDicPBS["Commuting and Walkability"] = "CaW";
+    window.topicDicPBS["Quality of Life"] = "QoL";
 
 
     
@@ -142,6 +143,7 @@ define(["./ConfigManager",
     //window.communityDic["MSPMN"] = "Minneapolis/St. Paul, MN";
     window.communityDic["MSPMN"] = "Minneapolis-St.Paul, MN";
     window.communityDic["NBMA"] = "New Bedford, MA";
+    window.communityDic["NHCT"] = "New Haven, CT";
     window.communityDic["NYNY"] = "New York, NY";
     window.communityDic["PNJ"] = "Paterson, NJ";
     window.communityDic["PAZ"] = "Phoenix, AZ";
