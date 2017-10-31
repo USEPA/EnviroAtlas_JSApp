@@ -390,7 +390,7 @@ define([
 							}
 							evt.layer.name = lOptions.id;
 						});
-						_layersToAdd.push(lLayer);
+						//_layersToAdd.push(lLayer);
 					} else if (layer.type.toUpperCase() === 'WEBTILEDLAYER') {
 						if (layer.hasOwnProperty('subdomains')) {
 							lOptions.subDomains = layer.subdomains;
