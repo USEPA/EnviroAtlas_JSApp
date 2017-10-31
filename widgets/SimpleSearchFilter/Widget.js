@@ -862,7 +862,7 @@ define([
 		for (var key in chkIdDictionary) {
 		
 	  		if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
-	  			document.getElementById(key).addEventListener('click', function() {
+	  			document.getElementById(key).addEventListener('change', function() {
 					if (this.checked){
 						showLayerListWidget();	
 						singleLayerToBeAddedRemoved = "a" + "," + this.getAttribute("id").replace(window.chkSelectableLayer, "");

@@ -2077,6 +2077,21 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
       return ret;
     }
   };
+  	mo.sleep = function(ms) {
+		var unixtime_ms = new Date().getTime();
+		while (new Date().getTime() < unixtime_ms + ms) {
+		}
+	};
+  	mo.checkOnCheckbox = function(chkbox) {
+		chkbox.checked = true;
+	    if ("createEvent" in document) {
+	        var evt = document.createEvent("HTMLEvents");
+	        evt.initEvent("change", false, true);
+	        chkbox.dispatchEvent(evt);
+	    } else {
+	        chkbox.fireEvent("onchange");
+	    }  
+	};	
 	mo.getPopups = function (layer) {
 		var infoTemplateArray = {};
 		if (layer.layers) {

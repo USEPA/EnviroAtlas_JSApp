@@ -50,6 +50,7 @@ define(['dojo/_base/declare',
         'jimu/dijit/Popup',
         'jimu/dijit/Message',
         'jimu/LayerInfos/LayerInfos',
+        'jimu/utils',
         './SimpleTable',
         'dijit/form/TextBox',
         "dijit/form/Select",
@@ -88,13 +89,10 @@ define(['dojo/_base/declare',
         Popup,
         Message,
         LayerInfos,
+        jimuUtils,
         Table,
         TextBox) {
         //To create a widget, you need to derive from BaseWidget.
-        var sleep = function (ms) {
-	        var unixtime_ms = new Date().getTime();
-	        while (new Date().getTime() < unixtime_ms + ms) {}
-	    }
         return declare([BaseWidget, _WidgetsInTemplateMixin], {
             // Custom widget code goes here
 
@@ -1186,16 +1184,9 @@ define(['dojo/_base/declare',
 	                    }             		
 	            	})
             		chkbox = document.getElementById(window.chkSelectableLayer + settings[index]);
+            		
             		if (chkbox != null) {
-            					
-				        if(chkbox.checked == true){
-				        	chkbox.click();				        	
-		            	}
-            			chkbox.click();
-            			if ( layerType != "ArcGISDynamicMapServiceLayer"){
-	            			chkbox.click();
-	            			chkbox.click();
-            			}			
+					    jimuUtils.checkOnCheckbox(chkbox);
             		}
             	}
             },
@@ -1213,13 +1204,7 @@ define(['dojo/_base/declare',
             	for (index = 0, len = settings.length; index < len; ++index) {
             		chkbox = document.getElementById(window.chkSelectableLayer + settings[index]);
             		if (chkbox != null) {
-            					
-				        if(chkbox.checked == true){
-				        	chkbox.click();				        	
-		            	}
-            			chkbox.click();
-            			chkbox.click();
-            			chkbox.click();
+					    jimuUtils.checkOnCheckbox(chkbox);
             		}
             	}
             },  
@@ -1227,14 +1212,7 @@ define(['dojo/_base/declare',
             	for (index = 0, len = settings.length; index < len; ++index) {
             		chkbox = document.getElementById(window.chkSelectableLayer + settings[index]);
             		if (chkbox != null) {
-            					
-				        if(chkbox.checked == true){
-				        	chkbox.click();
-				        	
-		            	}
-            			chkbox.click();
-            			chkbox.click();
-            			chkbox.click();
+					    jimuUtils.checkOnCheckbox(chkbox);            			
             		}
             	}
             },                      

@@ -323,7 +323,7 @@ define([
         for (var key in chkIdPBSDictionary) {
 
             if ((chkIdPBSDictionary.hasOwnProperty(key)) && (document.getElementById(key) != null)) {
-                document.getElementById(key).addEventListener('click', function () {
+                document.getElementById(key).addEventListener('change', function () {
 
                     if (this.checked) {
 
