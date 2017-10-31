@@ -79,6 +79,8 @@ def main(_argv):
                     layerJSON["type"] = "DYNAMIC"
                 if (inputWorksheet[key["serviceType"]+rowID].value == "tile"):
                     layerJSON["type"] = "TILED"
+                if (inputWorksheet[key["serviceType"]+rowID].value == "image"):
+                    layerJSON["type"] = "IMAGE"
             layerJSON["name"] = name
             layerJSON["url"] = inputWorksheet[key["url"]+rowID].value
             # Convert the plain text popupJSON into Python Dictionary for loading
@@ -90,7 +92,7 @@ def main(_argv):
                 except:
                     print("This layer had invalid JSON for the popup: " + name)
                     print(popupTxt)
-            stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL","numDecimal","IsSubLayer","SubLayerNames","SubLayerIds","sourceType"]
+            stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL","numDecimal","IsSubLayer","SubLayerNames","SubLayerIds","sourceType","cacheLevelNat"]
             for elem in stringList:
                 cell = inputWorksheet[key[elem]+rowID]
                 if cell.value != None:

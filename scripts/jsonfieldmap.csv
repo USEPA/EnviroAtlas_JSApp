@@ -29,3 +29,4 @@ IsSubLayer,IsSubLayer
 SubLayerNames,SubLayerNames
 SubLayerIds,SubLayerIds
 sourceType,sourceType
+cacheLevelNat,cacheLevelNat
