@@ -455,7 +455,7 @@
                 "label": "Attribute Table"
             }, {
                 "uri": "widgets/Splash/Widget",
-                "visible": false,
+                "visible": true,
                 "position": {
                     "relativeTo": "browser"
                 },
@@ -1058,7 +1058,7 @@
                     "label": "Attribute Table"
                 }, {
                     "uri": "widgets/Splash/Widget",
-                    "visible": false,
+                    "visible": true,
                     "position": {
                         "relativeTo": "browser"
                     },
