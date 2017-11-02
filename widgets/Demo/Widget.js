@@ -30,29 +30,7 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
         activeContainer = null;
         this.fetchData();
 
-      //this.mapIdNode.innerHTML = 'map id:' + this.map.id;
-
-      //Add Help content
-      /*aContainer = new AccordionContainer({style:"height: 300px"}, this.helptopics);
-      aContainer.addChild(new ContentPane({
-        title: "Simple Search Filter",
-        content: "Simple Search Filter Help stuff"
-      }));
-      aContainer.addChild(new ContentPane({
-        id: "Addfile",
-        title:"Upload Data Widget",
-        content:"Put lots of Help Content here!"
-      }));
-      aContainer.addChild(new ContentPane({
-        id: "eBasemapGallery",
-        title:"Basemap Gallery",
-        content:"Help Documentation for Basemap Widget"
-      }));
-      aContainer.startup();
-
-      if(activeContainer){
-        aContainer.selectChild( activeContainer );
-      }*/
+      
 
       //Tour setup
       helpTour = this.config.tour; //tour info from config.json file
@@ -83,10 +61,14 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
     _startTour: function(){
 
         
-        //$('#overlay').css('z-index', '1000');
-        var overlay = dojo.create('div', {
+        var overlay1 = dojo.create('div', {
           "class": "overlay",
           "id": "overlay"
+        }, dojo.byId('main-page'));
+
+        var overlay2 = dojo.create('div', {
+          "class": "overlay2",
+          "id": "overlay2"
         }, dojo.byId('main-page'));
 
         //Close the tour main widget
@@ -109,7 +91,7 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
             $('#'+helpTour[i].highlight).css('z-index', '');
           }
         if (helpTour[stop].highlight) {
-          $('#'+helpTour[stop].highlight).css('z-index', '1000');
+          $('#'+helpTour[stop].highlight).css('z-index', '998');
         } 
 
 
@@ -179,6 +161,7 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
     _endTour: function(){
         popup.close(tourDialog);
         dojo.destroy("overlay");
+        dojo.destroy("overlay2");
         
         for (i=0; i<numberStops; i++) {
             $('#'+helpTour[i].highlight).css('z-index', '');

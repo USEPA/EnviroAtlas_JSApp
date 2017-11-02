@@ -710,6 +710,7 @@ define([
             title: title,
             'class': 'title-node jimu-float-leading',// jimu-leading-margin15',
             'settingid': config.id,
+            'id': config.id,
             i: this.tabs.length,
             style: {
               width: nodeWidth + 'px'
@@ -734,6 +735,7 @@ define([
             title: title,
             'class': 'title-node',
             'settingid': config.id,
+            'id': config.id + '_min',
             i: this.tabs.length
           }, this.minStateNode),
 
