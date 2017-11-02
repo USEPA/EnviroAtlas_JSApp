@@ -18,7 +18,7 @@
 					"</ul>",
 					"</p>"],
 		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20"
+		"highlight": "data_icons"
 	},{
 		"node":"dijit_TitlePane_0",
 		"content": ["<h1>Data</h1>",
@@ -55,7 +55,7 @@
 	},{
 		"node":"dijit__WidgetBase_1",
 		"content": ["<h1>Community Selection Widget</h1>",
-					"<p>Your selection changes the legend when using community data layers.</p>",
+					"<p>Your selection changes the legend for community data layers.</p>",
 					"<ul>",
 					"<li>Use \"Combined Communities\" to have a comparable legend across ",
 					"multiple communities</li>",
@@ -66,42 +66,41 @@
 	},{
 		"node":"dijit__WidgetBase_2",
 		"content": ["<h1>Mapping Tools</h1>",
-					"<p>Find mapping tools here:</p>",
 					"<ul>",
 					"<li>Set bookmarks</li>",
 					"<li>Print</li>",
 					"<li>Draw and measure",
 					"<li>Open legend</li>",
+					"<li>Add external data</li>",
 					"</ul>"],
 		"orient": ["below","below-alt", "above", "above-alt"],
 		"highlight": "dijit__WidgetBase_2"
 	},{
-		"node":"dijit__WidgetBase_6",
+		"node":"dijit__WidgetBase_10",
 		"content": ["<h1>Analytical Tools</h1>",
-					"<p>You can find analysis tools here such as:</p>",
 					"<ul>",
 					"<li>Change Analysis Tool</li>",
 					"<li>Raindrop</li>",
 					"<li>Elevation Profile</li>",
+					"<li>HUC Navigator</li>",
 					"</ul>"],
 		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": "dijit__WidgetBase_6"
-	},{
-		"node":"dijit__WidgetBase_12",
-		"content": ["<h1>Map Tools</h1>",
-					"<p>Here you will find tools to add additional data to your map.</p>",
-					"<ul>",
-					"<li>Upload a shapefile</li>",
-					"<li>Add a web service</li>",
-					"</ul>"],
-		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": "dijit__WidgetBase_12"
+		"highlight": "dijit__WidgetBase_10"
 	},{
 		"node":"dijit__WidgetBase_16",
+		"content": ["<h1>Save Session</h1>",
+					"<ul>",
+					"<li>Save your progress</li>",
+					"<li>Share your sessions with other users</li>",
+					"</ul>"],
+		"orient": ["below","below-alt", "above", "above-alt"],
+		"highlight": "dijit__WidgetBase_16"
+	},{
+		"node":"dijit__WidgetBase_17",
 		"content": ["<h1>Tour</h1>",
 					"<p>Access the in-depth EnviroAtlas User Guide or restart ",
 					"this tour.<br><br></p>"],
 		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": "dijit__WidgetBase_16"
+		"highlight": "dijit__WidgetBase_17"
 	}]
 }
