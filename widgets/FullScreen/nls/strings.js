@@ -1,6 +1,6 @@
 define({
   root: ({
-    _widgetLabel: "Full Screen"
+    _widgetLabel: "Full Screen Map (Hide sidebars) - Use F11 to view full screen with sidebars"
   }),
   "ar": 1,
   "bs": 1,

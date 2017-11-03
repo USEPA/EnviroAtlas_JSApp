@@ -4,7 +4,7 @@ define({
     chartLabel: "Hover over or touch the Elevations Profile chart to display elevations and show location on map.",
     clear: "Clear",
     prepare: "Prepare Download...",
-    download: "Download",
+    download: "Right-click to download",
     measurelabel: "Measure",
     resultslabel: "Profile Result",
     profileinfo: "Profile Information",
