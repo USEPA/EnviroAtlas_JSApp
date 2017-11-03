@@ -1121,7 +1121,7 @@
                     "openAtStart": false,
                     "position": {
                         "left": 5,
-                        "top": -100,
+                        "top": 212,
                         "relativeTo": "map"
                     },
                     "version": "2.5",
