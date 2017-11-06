@@ -464,8 +464,16 @@ define([
                                     tileLinkAdjusted = layer.tileURL + "/";
                                 }
                                 window.hashIDtoTileURL[layer.eaID.toString()] = tileLinkAdjusted;
-                                jimuUtils.initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString()); 
-                                map.addLayer(new myTiledMapServiceLayer());
+                                switch(layer.cacheLevelNat) {
+                                	case 12:
+                                		jimuUtils.initTileLayer12(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString()); 
+                                		map.addLayer(new myTiledMapServiceLayer12());
+                                		lLayer.minScale = 72223.819286;
+                                		break;
+    								default:
+                                		jimuUtils.initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString()); 
+                                		map.addLayer(new myTiledMapServiceLayer());    								
+                                }
                                 lyrTiled = map.getLayer(window.layerIdTiledPrefix + layer.eaID.toString()); 
                                 if (lyrTiled) {
                                     lyrTiled.setOpacity(layer.opacity);

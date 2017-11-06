@@ -507,7 +507,6 @@ define([
 								}
 								window.hashIDtoTileURL[layer.eaID.toString()] = tileLinkAdjusted;
 								jimuUtils.initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString());
-								//bji need to be modified to accomodate tile.
 								this._viewerMap.addLayer(new myTiledMapServiceLayer());
 								lyrTiled = this._viewerMap.getLayer(window.layerIdTiledPrefix + layer.eaID.toString());
 								//bji need to be modified to accomodate tile.
