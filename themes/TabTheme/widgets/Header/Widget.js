@@ -92,7 +92,7 @@ define([
           html.addClass(this.logoNode, 'hide-logo');
         }
         this.switchableElements.title.innerHTML(
-          utils.sanitizeHTML(this.appConfig.title ? this.appConfig.title : '')
+          //utils.sanitizeHTML(this.appConfig.title ? this.appConfig.title : '')
         );
         this.switchableElements.subtitle.innerHTML(
           utils.sanitizeHTML(this.appConfig.subtitle ? this.appConfig.subtitle : '')
