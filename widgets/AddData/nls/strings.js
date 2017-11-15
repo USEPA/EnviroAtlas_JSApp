@@ -130,7 +130,7 @@ define({
       addFailedPattern: "{filename}: add failed",
       featureCountPattern: "{filename}: {count} feature(s)",
       invalidTypePattern: "{filename}: this type is not supported",
-      maxFeaturesAllowedPattern: "For best performance, limit the number of features to less than {count}. This is not a hard cutoff, but most browsers will experience instability with increasing numbers of features.",
+      maxFeaturesAllowedPattern: "For best performance, limit the number of features to less than {count}.",
       layerNamePattern: "{filename} - {name}"
     },
 

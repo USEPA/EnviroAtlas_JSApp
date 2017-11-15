@@ -7,7 +7,7 @@
     "portalUrl": "http://epa.maps.arcgis.com",
     "appId": "",
     "title": "EnviroAtlas",
-    "subtitle": " ",
+    "subtitle": "",
     "logo": "images/logo.png",
     "geometryService": "http://utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer",
     "links": [{

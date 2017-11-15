@@ -24,6 +24,6 @@
   },
   "addFromFile": {
     "allow": true,
-    "maxRecordCount": 1000
+    "maxRecordCount": 5000
   }
 }
