@@ -61,6 +61,7 @@ define([
     window.layerIdPBSPrefix = "eaLyrPBSNum_";
     window.layerIdTiledPrefix = "tiledNum_";
     window.addedLayerIdPrefix = "added_";
+    window.addedLayerIndex = 0;
     window.uploadedFeatLayerIdPrefix = "uploaded_";
     window.widthOfInfoWindow = 0;
     window.heightOfInfoWindow = 0;
@@ -86,6 +87,7 @@ define([
     window.layerID_Portal_WebMap = [];
     window.onlineDataTobeAdded = [];
     window.onlineDataAlreadyAdded = [];
+    window.uploadedFileColl = [];
     window.categoryDic = {};
     window.categoryDic["Clean Air"] = "cair";
     window.categoryDic["Clean and Plentiful Water"] = "cpw";

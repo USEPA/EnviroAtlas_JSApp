@@ -204,6 +204,10 @@ define(["dojo/_base/declare",
             domStyle.set(this.lNameFrame, "display", "block");
             var stringArray = urlS.split("/");
             this.nameTextBox.value = stringArray[stringArray.length -3];
+          }else if(urlS.indexOf("/ImageServer")>0){
+            domStyle.set(this.lNameFrame, "display", "block");
+            var stringArray = urlS.split("/");
+            this.nameTextBox.value = stringArray[stringArray.length -2];
           }
         }
       },               
@@ -214,6 +218,10 @@ define(["dojo/_base/declare",
         var loader = new LayerLoader();
         //var id = loader._generateLayerId();
         var id = this.nameTextBox.value;
+        if (id.trim()=="") {
+        	window.addedLayerIndex = window.addedLayerIndex + 1;
+        	id = window.addedLayerIdPrefix + window.addedLayerIndex.toString();
+        }
         window.hashAddedURLToId[url] = id;
         var self = this,
           layer = null;

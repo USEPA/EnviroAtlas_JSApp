@@ -367,7 +367,15 @@ define([
         onClick: lang.hitch(this, this.refresh)
       });
       toolbar.addChild(this.refreshButton);
-
+      
+      this.queryByCommButton = new Button({//toggle button for communityQuery
+          id: "queryByCommToggleButton",
+          label: this.nls.queryByCommu,
+          showLabel: true,
+          iconClass: "esriAttributeTableFilterImage",
+          onClick: lang.hitch(this, this.onClickQueryByCommuButton)
+        });
+        toolbar.addChild(this.queryByCommButton);
       // this.closeButton = new Button({
       //   title: this.nls.closeMessage,
       //   iconClass: "esriAttributeTableCloseImage",
@@ -920,7 +928,32 @@ define([
         layerInfoId: this.layerInfo.id
       });
     },
+    onClickQueryByCommuButton: function() {
+      	var button = document.getElementById("queryByCommToggleButton");
+        //submit.value = 'Loading...';
+      	if (window.attributeByOneCommu == false) {
+      		window.attributeByOneCommu = true;
+      		this.queryByCommButton.set("label", this.nls.clearQueryByCommu);
+      	} else {
+      		window.attributeByOneCommu = false;
+      		this.queryByCommButton.set("label", this.nls.queryByCommu);
+      	}
+        /*var table = this.getCurrentTable();
+        if (!table) {
+          return;
+        }
 
+        if (table.grid) {
+          table.grid.clearSelection();
+        }
+
+        if (table instanceof _FeatureTable) {
+          this.startQuery(this.layersIndex, this.config.layerInfos[this.layersIndex].extent);
+        } */
+       this.grid.clearSelection();
+       this.startQuery(this.layersIndex, this.config.layerInfos[this.layersIndex].extent);
+       this.refresh();
+    },
     exportToCSV: function(fileName) {
       if (!this.layerInfo || !this.layer || !this.tableCreated) {
         return;
@@ -1412,7 +1445,7 @@ define([
                   }));
               }
             }
-          }
+          }          
         }), lang.hitch(this, function(err) {
           console.error(err);
           this.changeToolbarStatus();
@@ -1429,7 +1462,6 @@ define([
         query.where += ' AND ' + this.layer.objectIdField +
         ' IN (' + queryByStoreObjectIds.join() + ')';
       }
-
       if (normalizedExtent) {
         query.geometry = normalizedExtent;
       }
@@ -1514,8 +1546,12 @@ define([
       query.returnGeometry = false;
       query.returnIdsOnly = true;
       query.where = this._getLayerFilterExpression();
+	  if ((window.communitySelected != window.strAllCommunity) && (window.attributeByOneCommu == true) && (query.where == "1=1")){
+	      	query.where = "UPPER(CommST) LIKE UPPER('%" + window.communitySelected + "%')";
+	  }       
       if (this.layer._orderByFields || pk) {
         query.orderByFields = this.layer._orderByFields || [pk + " ASC"];
+        
       }
 
       if (normalizedExtent) {
@@ -1854,7 +1890,6 @@ define([
           display: this.layer.objectIdField ? '' : 'none'
         }
       }, countLabel, 'after');
-
       var height = html.getStyle(this.domNode, "height");
       this.changeHeight(height);
 
@@ -2533,7 +2568,17 @@ define([
       if (layerFilter) {
         return layerFilter;
       }
+      if ((window.communitySelected != window.strAllCommunity) && (window.attributeByOneCommu == true)){
+      	 if (layerFilter) {
 
+	      	expr= "(UPPER(CommST) LIKE UPPER('%" + window.communitySelected + "%')) AND (" + layerFilter + ")" ;
+	     }
+	     else
+	     {
+	      	expr= "UPPER(CommST) LIKE UPPER('%" + window.communitySelected + "%')";
+	     }
+	     return expr;
+	  } 
       return "1=1";
     },
 

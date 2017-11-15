@@ -258,6 +258,16 @@ background-color:#E1F0FB;
   width: 13px;
   height: 13px;
 }
+.esriAttributeTableSelectAllImage{
+  background-image: url("../images/select.png");
+  width: 13px;
+  height: 13px;
+}
+.esriAttributeTableFilterImage{
+  background-image: url("../images/filter.png");
+  width: 13px;
+  height: 13px;
+}
 .esriAttributeTableSymbolImage{
   background-image: url("../images/symbol.png");
   width: 13px;

@@ -26,6 +26,8 @@ define({
     noRelatedRecords: "No related records found",
     attachmentColumn: "Photos and files",
     refresh: "Refresh",
+    queryByCommu: "Selected Community Only",
+    clearQueryByCommu: "Show All Community Records",
     features: "features",
     records: "records",
     selected: "selected",

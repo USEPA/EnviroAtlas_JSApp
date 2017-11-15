@@ -368,6 +368,12 @@ define([
 	    		this.map.removeLayer(lyr);        	
           	}          	
         }        
+    	for (i in window.uploadedFileColl) {	        
+    		lyr = this.map.getLayer(window.uploadedFileColl[i]);
+			if(lyr != null){
+	    		this.map.removeLayer(lyr);        	
+          	}          	
+        }                
         //remove community boundary layer   
         lyrCommunityBoundary = this.map.getLayer(window.idCommuBoundaryPoint);  
 		if(lyrCommunityBoundary != null){

@@ -218,6 +218,8 @@ define(["dojo/_base/declare",
               .replace("{filename}",job.baseFileName)
               .replace("{name}",featureLayer.name);
           }
+          featureLayer.id = window.uploadedFeatLayerIdPrefix + featureLayer.name;
+          window.uploadedFileColl.push(featureLayer.id);
           loader._setFeatureLayerInfoTemplate(featureLayer,null,null);
           if (featureLayer.fullExtent) {
             if (!fullExtent) {
