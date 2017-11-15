@@ -4,18 +4,18 @@
         "styles": ["EnviroAtlas"],
         "version": "2.5"
     },
-    "portalUrl": "http://epa.maps.arcgis.com",
+    "portalUrl": "https://epa.maps.arcgis.com",
     "appId": "",
     "title": "EnviroAtlas",
     "subtitle": "",
     "logo": "images/logo.png",
-    "geometryService": "http://utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer",
+    "geometryService": "https://utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer",
     "links": [{
             "label": "Contact Us",
-            "url": "http://enviroatlas.epa.gov/enviroatlas/contactus/index.html"
+            "url": "https://enviroatlas.epa.gov/enviroatlas/contactus/index.html"
         }, {
             "label": "Help ",
-            "url": "http://enviroatlas.epa.gov/enviroatlas/interactivemap/AboutEnviroAtlas.pdf"
+            "url": "https://enviroatlas.epa.gov/enviroatlas/interactivemap/AboutEnviroAtlas.pdf"
         }
     ],
     "widgetOnScreen": {
@@ -555,7 +555,7 @@
             }
         },
         "id": "map",
-        "portalUrl": "http://epa.maps.arcgis.com/"
+        "portalUrl": "https://epa.maps.arcgis.com/"
     },
     "widgetPool": {
         "panel": {

@@ -3,21 +3,22 @@
   "scopeOptions": {
     "MyContent": {
       "allow": true,
-      "label": null
+      "label": "My Content"
     },
     "MyOrganization": {
       "allow": true,
-      "label": null
-    },
-    "Curated": {
-      "allow": true,
-      "label": null,
-      "filter": null
+      "label": "EPA GeoPlatform"
     },
     "ArcGISOnline": {
       "allow": true,
-      "label": null
-    }
+      "label": "All ArcGIS Online"
+    },
+    "Curated": {
+      "allow": true,
+      "label": "Featured EnviroAtlas Data",
+      "filter": "title: 'EnviroAtlas'"
+    },
+    "defaultScope": "Curated"
   },
   "addFromUrl": {
     "allow": true
