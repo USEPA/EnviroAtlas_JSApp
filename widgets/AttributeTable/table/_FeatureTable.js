@@ -188,7 +188,13 @@ define([
     //export-csv
     //zoom-to
     //refresh
-
+	blinker: function (id, times){
+	    var color=document.getElementById(id).style.backgroundColor;
+	    document.getElementById(id).style.backgroundColor="yellow";
+	    setTimeout(function(){document.getElementById(id).style.backgroundColor=color;}, 110);
+	    if ( 1 < times )
+	    setTimeout(function(){blinker(id, times-1);},220);
+	},
     constructor: function(options) {
       options = options || {};
       this.set('map', options.map || null);
@@ -345,6 +351,14 @@ define([
         })
       });
       toolbar.addChild(this.matchingCheckBox);
+      this.queryByCommButton = new ToggleButton({//toggle button for communityQuery
+          id: "queryByCommToggleButton",
+          label: this.nls.queryByCommu,
+          showLabel: true,
+          iconClass: "esriAttributeTableFilterImage",
+          onClick: lang.hitch(this, this.onClickQueryByCommuButton)
+        });
+        toolbar.addChild(this.queryByCommButton);      
 
       this.zoomButton = new Button({
         label: this.nls.zoomto,
@@ -361,6 +375,7 @@ define([
       toolbar.addChild(this.clearSelectionButton);
 
       this.refreshButton = new Button({
+      	id: "refreshButton",
         label: this.nls.refresh,
         showLabel: true,
         iconClass: "esriAttributeTableRefreshImage",
@@ -368,14 +383,7 @@ define([
       });
       toolbar.addChild(this.refreshButton);
       
-      this.queryByCommButton = new Button({//toggle button for communityQuery
-          id: "queryByCommToggleButton",
-          label: this.nls.queryByCommu,
-          showLabel: true,
-          iconClass: "esriAttributeTableFilterImage",
-          onClick: lang.hitch(this, this.onClickQueryByCommuButton)
-        });
-        toolbar.addChild(this.queryByCommButton);
+
       // this.closeButton = new Button({
       //   title: this.nls.closeMessage,
       //   iconClass: "esriAttributeTableCloseImage",
@@ -951,8 +959,9 @@ define([
           this.startQuery(this.layersIndex, this.config.layerInfos[this.layersIndex].extent);
         } */
        this.grid.clearSelection();
+       this.blinker("refreshButton", 2000);
        this.startQuery(this.layersIndex, this.config.layerInfos[this.layersIndex].extent);
-       this.refresh();
+       //this.refresh();
     },
     exportToCSV: function(fileName) {
       if (!this.layerInfo || !this.layer || !this.tableCreated) {
