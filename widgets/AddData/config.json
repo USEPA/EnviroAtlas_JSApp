@@ -3,28 +3,27 @@
   "scopeOptions": {
     "MyContent": {
       "allow": true,
-      "label": "My Content"
+      "label": null
     },
     "MyOrganization": {
       "allow": true,
-      "label": "EPA GeoPlatform"
-    },
-    "ArcGISOnline": {
-      "allow": true,
-      "label": "All ArcGIS Online"
+      "label": null
     },
     "Curated": {
       "allow": true,
-      "label": "Featured EnviroAtlas Data",
-      "filter": "title: 'EnviroAtlas'"
+      "label": null,
+      "filter": null
     },
-    "defaultScope": "Curated"
+    "ArcGISOnline": {
+      "allow": true,
+      "label": null
+    }
   },
   "addFromUrl": {
     "allow": true
   },
   "addFromFile": {
     "allow": true,
-    "maxRecordCount": 5000
+    "maxRecordCount": 1000
   }
 }
