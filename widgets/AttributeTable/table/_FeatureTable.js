@@ -126,6 +126,13 @@ define([
   tableUtils,
   query
 ) {
+  var blinker = function (id, times){
+	    var color=document.getElementById(id).style.backgroundColor;
+	    document.getElementById(id).style.backgroundColor="yellow";
+	    setTimeout(function(){document.getElementById(id).style.backgroundColor=color;}, 200);
+	    if ( 1 < times )
+	    setTimeout(function(){blinker(id, times-1);},400);
+  };
   return declare([_WidgetBase, Evented], {
     baseClass: 'jimu-widget-attributetable-feature-table',
     _defaultFeatureCount: 2000, //default max records by one request
@@ -188,13 +195,7 @@ define([
     //export-csv
     //zoom-to
     //refresh
-	blinker: function (id, times){
-	    var color=document.getElementById(id).style.backgroundColor;
-	    document.getElementById(id).style.backgroundColor="yellow";
-	    setTimeout(function(){document.getElementById(id).style.backgroundColor=color;}, 110);
-	    if ( 1 < times )
-	    setTimeout(function(){blinker(id, times-1);},220);
-	},
+
     constructor: function(options) {
       options = options || {};
       this.set('map', options.map || null);
@@ -923,6 +924,7 @@ define([
     },
 
     refresh: function() {
+	  document.getElementById("refreshButton").style.backgroundColor="white";
       if (this.grid) {
         this.grid.clearSelection();
         // this.clearSelection(false);
@@ -959,7 +961,7 @@ define([
           this.startQuery(this.layersIndex, this.config.layerInfos[this.layersIndex].extent);
         } */
        this.grid.clearSelection();
-       this.blinker("refreshButton", 2000);
+       blinker("refreshButton", 4);
        this.startQuery(this.layersIndex, this.config.layerInfos[this.layersIndex].extent);
        //this.refresh();
     },
