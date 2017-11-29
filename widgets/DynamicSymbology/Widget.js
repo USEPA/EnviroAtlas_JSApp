@@ -54,6 +54,7 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 	_NumberOfClasses: null,
 	_currentBaseMap: null,
 	_scheme: null,
+	renderer: null,
 
     _BusyIndicator: function(){
       return busyIndicator.create("esri-colorinfoslider1");
@@ -265,10 +266,11 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 
 		  //on change event for slider
 			dynamicSymbology.slider.on("handle-value-change", function (sliderValueChange) {
+
 				 var symbol = new SimpleFillSymbol();
 				 symbol.setColor(new Color([150, 150, 150, 0.5]));
 
-				 var renderer = new ClassBreaksRenderer(symbol, geoenrichedFeatureLayer.renderer.attributeField);
+				 renderer = new ClassBreaksRenderer(symbol, geoenrichedFeatureLayer.renderer.attributeField);
 				sliderValueChange.forEach(function(b){
 					renderer.addBreak(b);
 				});
@@ -277,11 +279,21 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 				window.hashRenderer[_layerID.replace(window.layerIdPrefix, "")] = renderer.toJson();
 				 //change classification dropdown to manual
 				 dynamicSymbology.classSelect.set('value', 'manual');
+				 dynamicSymbology.isSmartMapping = false;
 
 				_ClassificationMethod = renderer.classificationMethod;
-				 dynamicSym._getHistoAndStats(renderer);
 
 		   });
+		  //set apply renderer button
+		  var applyRendBtn = dom.byId('applyBtn');
+		  var applyHandler = on(applyRendBtn,"click", function(){
+			
+				if(dynamicSymbology.isSmartMapping == true){
+					dynamicSym._updateSmartMapping2();
+				}else{
+					dynamicSym._getHistoAndStats(renderer);
+				}		
+		  });		   
 		  //set original renderer button
 		  var origRendBtn = dom.byId('originalBtn');
 		  var originalHandler = on(origRendBtn,"click", function(){
@@ -318,24 +330,14 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		onClickHandle = on(dynamicSymbology.classSelect,"change", function (c) {
 			_ClassificationMethod = c;
 			if(c != "manual"){
-				if(dynamicSymbology.isSmartMapping == true){
-					dynamicSym._updateSmartMapping2();
-				}else{
-					dynamicSymbology.isSmartMapping = true;
-				}
+				dynamicSymbology.isSmartMapping = true;
 			}
 		});
 
 		//On number of classes change
 		dynamicSymbology.numberClasses.on("change", function (c) {
 			_NumberOfClasses = c;
-
-			if(dynamicSymbology.isSmartMapping == true){
-				dynamicSym._updateSmartMapping2();
-			}else{
-				//dynamicSym._updateSmartMapping2();
-				dynamicSymbology.isSmartMapping = true;
-			}
+			dynamicSymbology.isSmartMapping = true;
 		});
 	},
 
@@ -365,8 +367,9 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 		newStyle = symbolStyler.getStyle();
 		newStyle.scheme.outline = newStyle.symbol.outline;
 		_scheme = newStyle.scheme;
+		dynamicSymbology.isSmartMapping = true;
 		popup.close(styleDialog);
-		selfDynamicSymbology._updateSmartMapping2();
+		//selfDynamicSymbology._updateSmartMapping2();
 	},
 	_getColorsFromInfos: function(currentInfos){
 		var symbolColors = [];
@@ -402,11 +405,11 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 			field: _fieldName,
 			numBins: _NumberOfClasses
 		}).then(function (histogram) {
-
 			featureLayerStatistics.getFieldStatistics({
 				field: _fieldName
 			}).then(function(statistics){
-				//console.log("Statistics :: ", statistics);
+				console.log("Statistics :: ", statistics);
+
 				dynamicSymbology.slider.set("breakInfos", gRenderer.infos);
 				dynamicSymbology.slider.set("minValue", statistics.min);
 				dynamicSymbology.slider.set("maxValue", statistics.max);
@@ -435,6 +438,11 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 			dynamicSymbology.isSmartMapping = true;
 		}
 	  
+	  
+	  if (_ClassificationMethod == "manual") {
+	  	_ClassificationMethod = "equal-interval";
+	  	dynamicSymbology.classSelect.set('value', 'equal-interval');
+	  }
 	  //create and apply color renderer
       smartMapping.createClassedColorRenderer({
 		basemap: "topo",
@@ -479,10 +487,12 @@ function(declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, 
 			  	_busy.hide();
 		  });
 
+
         }).otherwise(function (error) {
           _busy.hide();
           console.log("An error occurred while calculating the histogram, Error: %o", error);
         });
+       	_busy.hide();
 
       }).otherwise(function (error) {
         _busy.hide();
