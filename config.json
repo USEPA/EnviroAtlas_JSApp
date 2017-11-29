@@ -380,7 +380,7 @@
                     "left": 0,
                     "top": -40,
                     "width": 370,
-                    "height": 490,
+                    "height": 600,
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
@@ -983,7 +983,7 @@
                         "left": 0,
                         "top": -40,
                         "width": 370,
-                        "height": 490,
+                        "height": 600,
                         "relativeTo": "map"
                     },
                     "placeholderIndex": 1,
