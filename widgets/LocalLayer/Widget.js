@@ -522,6 +522,7 @@ define([
 							}
 						}
 					} else if (layer.type.toUpperCase() === 'TILED') {
+						window.tiledLayerNumber.push(layer.eaID);
 						if (layer.displayLevels) {
 							lOptions.displayLevels = layer.displayLevels;
 						}

@@ -370,6 +370,7 @@ define([
 
         lyr = this._layerInfo.map.getLayer(this._layerInfo.id);
         isDynamicLayer = false;
+        isTiledLayer = false;
 		if(lyr){
 			for (ii in window.dynamicLayerNumber) {
 				eachDynamicLyrId = window.layerIdPrefix + window.dynamicLayerNumber[ii];
@@ -380,11 +381,24 @@ define([
 				if (eachDynamicLyr ){
 					dynamicLayerElem = document.getElementById("map_" + eachDynamicLyrId);
 					if (dynamicLayerElem != null){
-						dynamicLayerElem.style.zIndex = "0";
+						dynamicLayerElem.style.zIndex = "0";//with 0 z-index, the layer will be drawing at bottom
 					}
 				}
 		  	}
-			if (isDynamicLayer == true) {
+			for (ii in window.tiledLayerNumber) {
+				eachTiledLyrId = window.layerIdPrefix + window.tiledLayerNumber[ii];
+				if (eachTiledLyrId == this._layerInfo.id) {
+					isTiledLayer = true;
+				}
+				eachTiledLyr = this._layerInfo.map.getLayer(eachTiledLyrId);
+				if (eachTiledLyr ){
+					tiledLayerElem = document.getElementById("map_" + eachTiledLyrId);
+					if (tiledLayerElem != null){
+						tiledLayerElem.style.zIndex = "0";
+					}
+				}
+		  	}
+			if ((isDynamicLayer == true)||(isTiledLayer == true)) {
 				console.log("map_" + this._layerInfo.id + " is dynamic layer");
      			document.getElementById("map_" + this._layerInfo.id).style.zIndex = "1";
 	     	} 	
