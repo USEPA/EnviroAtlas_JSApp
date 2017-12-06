@@ -84,8 +84,17 @@
           background-size: cover;}
 
 .plp {background: url('../images/ES_Icons/plp.png');
-          background-size: cover;}
+          background-size: 20px 20px;
+          background-position: -2px -2px;}
 
+.icon_style {
+  width: 20px;
+  height: 20px;
+  float:left;
+  margin-right: 5px;
+  border: 1px solid gray;
+  border-radius: 2px
+}
 
 .bc_popup {
   width: 25px;
@@ -93,6 +102,7 @@
   border: none;
   display: inline-block;
   margin: 0px 5px 0px 5px;
+  border: 1px solid gray;
 }
 
 .bc_popup:hover {

@@ -177,10 +177,43 @@ define([
       // set tdNode width
       domStyle.set(layerTdNode, 'width', level * 12 + 40 + 'px');
 
-      var layerTitleTdNode = domConstruct.create('td', {
-        'class': 'col col2'
+
+      scaleLabel = domConstruct.create('td', {
+        'style': 'width:22px; vertical-align:top'
       }, layerTrNode);
 
+
+      scaleObject = '';
+      if (layerInfo.layerObject.eaScale) {
+        scaleTitle = 'Community Dataset'
+        if (layerInfo.layerObject.eaScale == 'NATIONAL') {
+          scaleTitle = 'National Dataset';
+        };
+        
+        scale = layerInfo.layerObject.eaScale
+        scaleImage = domConstruct.create('div', {
+          'title': scaleTitle,
+          'class': 'layerlist-scale-icon ' + scale
+        }, scaleLabel);
+      }
+
+
+
+        
+
+      
+      
+
+
+
+
+      var layerTitleText = layerInfo.title
+      var layerTitleTdNode = domConstruct.create('div', {
+        'class': 'col col2', 
+      }, layerTrNode);
+
+      
+      
       var grayedTitleClass = '';
       try {
       	var eaID = layerInfo.id.replace(window.layerIdPrefix, "").replace(window.layerIdPBSPrefix, "");
@@ -190,11 +223,14 @@ define([
       } catch (err) {
         console.warn(err.message);
       }
+      
       var layerTitleDivIdClass = 'layer-title-div-' + layerInfo.id;
-      divLabel = domConstruct.create('div', {
-        'innerHTML': layerInfo.title,
-        'class':layerTitleDivIdClass + ' div-content jimu-float-leading ' + grayedTitleClass
-      }, layerTitleTdNode);
+        divLabel = domConstruct.create('td', {
+          'innerHTML': layerTitleText,
+          'class':layerTitleDivIdClass + ' div-content jimu-float-leading ' + grayedTitleClass
+        }, layerTrNode);
+
+
 
       //domStyle.set(divLabel, 'width', 263 - level*13 + 'px');
 

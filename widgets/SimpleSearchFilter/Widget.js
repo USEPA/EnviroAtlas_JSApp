@@ -375,12 +375,8 @@ define([
 			for (var key in window.categoryDic) {
 
 				bc_img = document.createElement('div');
-				bc_img.style.width = '20px';
-				bc_img.style.height = '20px';
 				bc_img.title  = key;
-				bc_img.style.float = 'left';
-				bc_img.style.marginRight = '5px';
-
+				
 				
 				// Add popup dialog box for Benefit Category 
 				bc_img.onclick = function() {
@@ -467,10 +463,10 @@ define([
 			// End add popup dialog box for Benefit Category 
 								
 			if (eaCategory.indexOf(key) !=-1) {
-				bc_img.setAttribute("class",window.categoryDic[key]);
+				bc_img.setAttribute("class",window.categoryDic[key] + ' icon_style');
 			}
 			else {
-				bc_img.setAttribute("class",window.categoryDic[key] + "_bw");
+				bc_img.setAttribute("class",window.categoryDic[key] + "_bw icon_style");
 			}
 			
 			indexImage = indexImage + 1;
@@ -480,25 +476,19 @@ define([
 		}
 
 		scale_img = document.createElement('div');
-		scale_img.style.width = '20px';
-		scale_img.style.height = '20px';
-		scale_img.style.float = 'left';
 		scale_img.style.marginLeft = '20px';
-		scale_img.style.marginRight = '5px';
+		
 
 		if (scale == "NATIONAL") {
 				scale_img.title = "National Dataset";
 			} else {
 				scale_img.title = "Community Dataset";
 			}
-		scale_img.setAttribute("class", scale);
+		scale_img.setAttribute("class", scale + ' icon_style');
 		BC_Div.appendChild(scale_img);
 
 		datatype_img = document.createElement('div');
-		datatype_img.style.width = '20px';
-		datatype_img.style.height = '20px';
-		datatype_img.style.float = 'left';
-		//datatype_img.style.marginLeft = '20px';
+		
 
 		if (type == 'huc12') {
 			datatype_img.title = "Data summarized by 12 digit HUCs";
@@ -512,7 +502,7 @@ define([
 			datatype_img.title = "Point, line, or polygon data"
 		}
 
-		datatype_img.setAttribute("class", type);
+		datatype_img.setAttribute("class", type + ' icon_style');
 		BC_Div.appendChild(datatype_img);
 
 
