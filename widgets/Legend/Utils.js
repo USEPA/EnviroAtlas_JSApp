@@ -75,12 +75,14 @@ define([
             layerInfosParam.push(layerInfoParam);
           });
         } else {
+          if (topLayerInfo.id!=window.timeSeriesLayerId) {
           var layerInfoParam = {
             hideLayers: hideLayers,
             layer: topLayerInfo.layerObject,
             title: topLayerInfo.title
           };
           layerInfosParam.push(layerInfoParam);
+          }
         }
       }
     });

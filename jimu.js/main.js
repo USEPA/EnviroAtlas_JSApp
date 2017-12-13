@@ -63,6 +63,7 @@ define([
     window.addedLayerIdPrefix = "added_";
     window.addedLayerIndex = 0;
     window.uploadedFeatLayerIdPrefix = "uploaded_";
+    window.timeSeriesLayerId = "ScenarioDataLayer";
     window.widthOfInfoWindow = 0;
     window.heightOfInfoWindow = 0;
     window.toggleOnHucNavigation = false;
