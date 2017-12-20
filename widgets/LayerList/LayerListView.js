@@ -226,6 +226,7 @@ define([
       
       var layerTitleDivIdClass = 'layer-title-div-' + layerInfo.id;
         divLabel = domConstruct.create('td', {
+        	'id': window.layerTitlePrefix + layerInfo.id,
           'innerHTML': layerTitleText,
           'class':layerTitleDivIdClass + ' div-content jimu-float-leading ' + grayedTitleClass
         }, layerTrNode);
