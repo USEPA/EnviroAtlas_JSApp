@@ -161,7 +161,7 @@ define([
         }
     };     
     var mapLoading = function () {
-        esri.show(loading);
+        //esri.show(loading);
         
         if (timeSlider)
         {
@@ -225,7 +225,7 @@ define([
         dojo.byId('titleAndSliderOneFrame').style.display = '';
         dojo.byId("titleAndSliderOneFrame").style.visibility="visible";
         dojo.byId('timeSliderWin').style.display = 'none';     
-        esri.hide(loading);   
+        //esri.hide(loading);   
         
         //add timeslider labels for years that end in 0
         var labels = arrayUtils.map(timeSlider.timeStops, function(timeStop, i) { 
@@ -324,7 +324,7 @@ define([
         dojo.byId("titleAndSlider").style.visibility="visible";
         dojo.byId('timeSliderDivOneFrame').style.display = 'none';
         dojo.byId("titleAndSliderOneFrame").style.display="none";
-        esri.hide(loading);
+        //esri.hide(loading);
         
         //add timeslider labels for years that end in 0
         var labels = arrayUtils.map(timeSlider.timeStops, function(timeStop, i) { 
@@ -349,7 +349,7 @@ define([
 
     };
     var defineOneFrameService = function() {
-        esri.show(loading);        
+        //esri.show(loading);        
 
         if (dijit.byId("seasonSelection").item != null && dijit.byId("climateSelection").item != null) {
             var startHist = 1950;
@@ -439,7 +439,7 @@ define([
 
     };    
 	var defineService = function () {
-	   esri.show(loading);
+	   //esri.show(loading);
        if (dijit.byId("seasonSelection").item != null && dijit.byId("climateSelection").item != null ) {
             if (dijit.byId("modelSelection").item.value == "Hist") {
                 dojo.byId("subTitle").innerHTML = "Timeline: Years (1950-2005)";
@@ -512,7 +512,7 @@ define([
             dijit.byId('timeSliderDijOneFrame').destroy();
             console.log('destroyed time slider');
         }
-        esri.hide(loading); 
+        //esri.hide(loading); 
         
     };
     var removeDataFromMap = function() {
@@ -538,7 +538,7 @@ define([
             dijit.byId('timeSliderDijOneFrame').destroy();
             console.log('destroyed time slider');
         }       
-        esri.hide(loading); 
+        //esri.hide(loading); 
     };    
     var clearMetadataTab = function() {
         dojo.byId("layerMetadata").innerHTML = "";
@@ -667,13 +667,81 @@ define([
 			        name: "clearLayerButton",
 			        disabled: false
 			    }, "removeServiceBtn").startup();  
-			    loading = dojo.byId("loadingTimeSeriesLayer");//dojo.byId("loadingOverlay");
-			    esri.hide(loading);
+			    //loading = dojo.byId("loadingTimeSeriesLayer");//dojo.byId("loadingOverlay");
+			    //esri.hide(loading);
 			    registry.byId("loadServiceBtn").on("click", defineService);		
 			    registry.byId("loadOneFrameBtn").on("click", defineOneFrameService);
 			    registry.byId("removeServiceBtn").on("click", removeDataFromMap);	
 			    registry.byId("frameYearInput").on("click", clickFrameYear);
-    			registry.byId("frameYearInput").on("blur", blurFrameYear);			                     
+    			registry.byId("frameYearInput").on("blur", blurFrameYear);		
+    			
+				document.getElementById("modelSelectionHelp").onclick = function (e) {
+					var infobox = new Dialog({
+							title: "Scenario Description",
+							style: 'width: 500px'
+						});
+					var infoDiv = dojo.create('div', {
+							'innerHTML': "<font face='calibri' size='2+'>" +        	
+            
+				            "<b>Scenario I – RCP 2.6</b> – This scenario is characterized as having very low greenhouse gas concentration levels. It is a “peak-and-decline” scenario and assumes that greenhouse gas emissions peak between 2010 and 2020 with emissions declining substantially beyond 2020. The projected global warming increase compared to the reference period (1986-2005) is approximately 1.8 degree Fahrenheit (range of 0.54 to 3.06) by 2081-2100. Atmospheric CO2 is expected to be approximately 425 parts per million in 2100.<BR><BR>" +  
+				
+				            "<b>Scenario II – RCP 4.5</b> – This scenario assumes a stabilization will occur shortly after 2100, and assumes less emissions than RCP 6.0, which is also a stabilization scenario. It is characterized by a peak in emissions around 2040 and then a decline. The projected global warming increase compared to the reference period 1986-2005 is approximately 3.24 degrees Fahrenheit (range of 1.98 to 4.68) by 2081-2100. Atmospheric CO2 is expected to be approximately 600 parts per million in 2100.<BR><BR>" +
+				
+				            "<b>Scenario III – RCP 6.0</b> – This is a stabilization scenario in which the increase in GHG emissions stabilizes shortly after 2100 through the application of a range of technologies and strategies for reducing GHG emissions. It is characterized by a peak in emissions around 2080 and then a decline. The projected global warming increase compared to the reference period 1986-2005 is approximately 3.96 degrees Celsius (range of 2.52 to 5.58) by 2081-2100. Atmospheric CO2 is expected to be approximately 725 parts per million in 2100.<BR><BR>" +
+				
+				            "<b>Scenario IV – RCP 8.5</b> – This scenario is characterized by increasing GHG emissions over time, and factors in the highest GHG concentration levels of all the scenarios by 2100. The projected global warming increase compared to the reference period 1986-2005 is approximately 6.66 degrees Celsius (range of 4.68 to 8.64) by 2081-2100. Atmospheric CO2 is expected to be approximately 1225 parts per million in 2100.<BR><BR>" +
+				            
+				            "<b>Historical climate</b> – These data are based on PRISM historical observations and interpolation of previous climate. Data are provided for the years 1950 -2005." +
+				            
+				            "</font>"
+						}, infobox.containerNode);
+						infobox.show()
+				}; //end of modelSelectionHelp click event
+				
+				document.getElementById("climateSelectionHelp").onclick = function (e) {
+					var infobox = new Dialog({
+							title: "Climate Description",
+							style: 'width: 500px'
+						});
+					var infoDiv = dojo.create('div', {
+						'innerHTML': "<font face='calibri' size='2+'>" +
+				        	"Maximum Temperature – Average maximum temperature in degrees Fahrenheit for the season or annually. " + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_Temp.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a><br/><br/>" + 
+				            "Minimum Temperature – Average minimum temperature in degrees Fahrenheit for the season or annually. " + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_Temp.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a><br/><br/>" + 
+				            "Precipitation - Total precipitation in inches for the season or annually. " + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_Precip.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a><br/><br/>" + 
+				            "Potential Evapotranspiration - Total potential evapotranspiration in inches for the season or annually. "  + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_PET.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a>" +
+				            "</font>"
+						}, infobox.containerNode);
+						infobox.show()
+				}; //end of climateSelectionHelp click event		
+				
+				document.getElementById("seasonSelectionHelp").onclick = function (e) {
+					var infobox = new Dialog({
+							title: "Season Description",
+							style: 'width: 500px'
+						});
+					var infoDiv = dojo.create('div', {
+						'innerHTML': "<font face='calibri' size='2+'>" + 
+				            "Winter – December of previous year, January, February<BR><BR>" +
+				            "Spring – March, April, May<BR><BR>" +
+				            "Summer – June, July, August<BR><BR>" +
+				            "Fall – September, October, November<BR><BR>" +
+				            "Annual – January through December of the same calendar year"+
+				            "</font>"
+						}, infobox.containerNode);
+						infobox.show()
+				}; //end of seasonSelectionHelp click event		
+				
+				document.getElementById("frameYearInputHelp").onclick = function (e) {
+					var infobox = new Dialog({
+							title: "Input Year Description",
+							style: 'width: 500px'
+						});
+					var infoDiv = dojo.create('div', {
+						'innerHTML': "<font face='calibri' size='2+'>" + "One year between 2006 - 2099" + "</font>"
+						}, infobox.containerNode);
+						infobox.show()
+				}; //end of frameYearInputHelp click event	
+													    				                     
             },
 	        onOpen: function () {
 		    

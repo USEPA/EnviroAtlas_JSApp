@@ -61,6 +61,7 @@ define([
     window.layerIdPBSPrefix = "eaLyrPBSNum_";
     window.layerIdTiledPrefix = "tiledNum_";
     window.addedLayerIdPrefix = "added_";
+    window.topLayerID = "";
     window.addedLayerIndex = 0;
     window.uploadedFeatLayerIdPrefix = "uploaded_";
     window.timeSeriesLayerId = "ScenarioDataLayer";
@@ -73,6 +74,7 @@ define([
     window.chkTopicPrefix = "ckTopic_";
     window.chkTopicPBSPrefix = "ckTopicPBS_";
     window.chkSelectableLayer = "ck";
+    window.layerTitlePrefix = "layerTitle_";
     window.idCommuBoundaryPoint = "Boundary_Point";
     
     window.dataFactSheet = "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/";

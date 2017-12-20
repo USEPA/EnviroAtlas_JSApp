@@ -369,6 +369,11 @@ define([
       /*jshint unused: false*/
 
         lyr = this._layerInfo.map.getLayer(this._layerInfo.id);
+        if (window.topLayerID != "") {
+        	document.getElementById(window.layerTitlePrefix + window.topLayerID).style['font-weight'] = '400';
+        }
+        window.topLayerID = this._layerInfo.id;
+        document.getElementById(window.layerTitlePrefix + this._layerInfo.id).style['font-weight'] = 'bold';
         isDynamicLayer = false;
         isTiledLayer = false;
 		if(lyr){

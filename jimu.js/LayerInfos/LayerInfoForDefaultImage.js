@@ -72,7 +72,7 @@ define([
 
               var symbolDiv = domConstruct.create("div", {
                 "class": "legend-symbol jimu-float-leading",
-                "style": "width:50px;height:50px;position:relative"
+                "style": "width:50px;height:24px;position:relative"
               }, legendDiv);
 
               var imgSrc = null;
