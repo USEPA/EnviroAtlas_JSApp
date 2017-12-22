@@ -366,6 +366,7 @@ define([
 
 						this._viewerMap.setInfoWindowOnClick(true);
 					} else if (layer.type.toUpperCase() === 'IMAGE') {
+						window.imageLayerNumber.push(layer.eaID);
 						lOptions.imageServiceParameters = new ImageServiceParameters();
 						var _popupTemplate;
 						if (layer.popup) {
