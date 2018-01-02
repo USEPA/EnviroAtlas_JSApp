@@ -84,6 +84,8 @@ define([
     window.nationalLayerNumber = [];
     window.communityLayerNumber =  [];
     window.dynamicLayerNumber = [];
+    window.tiledLayerNumber = [];
+    window.imageLayerNumber = [];
     window.layerID_Portal_WebMap = [];
     window.onlineDataTobeAdded = [];
     window.onlineDataAlreadyAdded = [];

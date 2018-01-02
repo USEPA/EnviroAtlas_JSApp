@@ -369,7 +369,14 @@ define([
       /*jshint unused: false*/
 
         lyr = this._layerInfo.map.getLayer(this._layerInfo.id);
+        if (window.topLayerID != "") {
+        	document.getElementById(window.layerTitlePrefix + window.topLayerID).style['font-weight'] = '400';
+        }
+        window.topLayerID = this._layerInfo.id;
+        document.getElementById(window.layerTitlePrefix + this._layerInfo.id).style['font-weight'] = 'bold';
         isDynamicLayer = false;
+        isTiledLayer = false;
+        isImageLayer = false;
 		if(lyr){
 			for (ii in window.dynamicLayerNumber) {
 				eachDynamicLyrId = window.layerIdPrefix + window.dynamicLayerNumber[ii];
@@ -380,12 +387,37 @@ define([
 				if (eachDynamicLyr ){
 					dynamicLayerElem = document.getElementById("map_" + eachDynamicLyrId);
 					if (dynamicLayerElem != null){
-						dynamicLayerElem.style.zIndex = "0";
+						dynamicLayerElem.style.zIndex = "0";//with 0 z-index, the layer will be drawing at bottom
 					}
 				}
 		  	}
-			if (isDynamicLayer == true) {
-				console.log("map_" + this._layerInfo.id + " is dynamic layer");
+			for (ii in window.tiledLayerNumber) {
+				eachTiledLyrId = window.layerIdPrefix + window.tiledLayerNumber[ii];
+				if (eachTiledLyrId == this._layerInfo.id) {
+					isTiledLayer = true;
+				}
+				eachTiledLyr = this._layerInfo.map.getLayer(eachTiledLyrId);
+				if (eachTiledLyr ){
+					tiledLayerElem = document.getElementById("map_" + eachTiledLyrId);
+					if (tiledLayerElem != null){
+						tiledLayerElem.style.zIndex = "0";
+					}
+				}
+		  	}
+			for (ii in window.imageLayerNumber) {
+				eachImageLyrId = window.layerIdPrefix + window.imageLayerNumber[ii];
+				if (eachImageLyrId == this._layerInfo.id) {
+					isImageLayer = true;
+				}
+				eachImageLyr = this._layerInfo.map.getLayer(eachImageLyrId);
+				if (eachImageLyr ){
+					imageLayerElem = document.getElementById("map_" + eachImageLyrId);
+					if (imageLayerElem != null){
+						imageLayerElem.style.zIndex = "0";
+					}
+				}
+		  	}		  	
+			if ((isDynamicLayer == true)||(isTiledLayer == true)||(isImageLayer == true)) {
      			document.getElementById("map_" + this._layerInfo.id).style.zIndex = "1";
 	     	} 	
 	     	else {

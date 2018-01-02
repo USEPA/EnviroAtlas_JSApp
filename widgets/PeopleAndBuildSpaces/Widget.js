@@ -523,6 +523,7 @@ define([
                         
                         map.addLayer(lLayer);
                         if (layer.hasOwnProperty('eaScale')) {
+                            lLayer.eaScale = layer.eaScale;
                             if (layer.eaScale == "COMMUNITY") {
                                 lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
                                 addCommunityBoundaries();

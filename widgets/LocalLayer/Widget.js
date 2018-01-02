@@ -366,6 +366,7 @@ define([
 
 						this._viewerMap.setInfoWindowOnClick(true);
 					} else if (layer.type.toUpperCase() === 'IMAGE') {
+						window.imageLayerNumber.push(layer.eaID);
 						lOptions.imageServiceParameters = new ImageServiceParameters();
 						var _popupTemplate;
 						if (layer.popup) {
@@ -522,6 +523,7 @@ define([
 							}
 						}
 					} else if (layer.type.toUpperCase() === 'TILED') {
+						window.tiledLayerNumber.push(layer.eaID);
 						if (layer.displayLevels) {
 							lOptions.displayLevels = layer.displayLevels;
 						}
@@ -565,6 +567,7 @@ define([
 
 						this._viewerMap.addLayer(lLayer);
 						if (layer.hasOwnProperty('eaScale')) {
+							lLayer.eaScale = layer.eaScale;
 							if (layer.eaScale == "COMMUNITY") {
 								lLayer.setVisibility(false);
 								//turn off the layer when first added to map and let user to turn on
