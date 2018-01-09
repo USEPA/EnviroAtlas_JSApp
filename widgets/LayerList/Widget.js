@@ -200,6 +200,7 @@ define([
           var layerIndex = array.indexOf(allLayers, layerInfo.id);
           var refLayerId = null;
           var refLayerNode = null;
+          var refHrNodeNonGraphic = null;
           for(var i = layerIndex - 1; i >= 0; i--) {
             refLayerId = allLayers[i];
             var layerId = parseInt(refLayerId.replace(window.layerIdPrefix, "").replace(window.layerIdBndrPrefix, "").replace(window.layerIdPBSPrefix, "").replace(window.layerIdTiledPrefix, "").replace(window.addedLayerIdPrefix, ""));
@@ -211,6 +212,7 @@ define([
             }
           }
           refHrNode = query("[class~='hrClass']", this.domNode)[0];
+          refHrNodeNonGraphic = query("[class~='hrClassNonGraphic']", this.domNode)[0];
     	  var layerId = parseInt(layerInfo.id.replace(window.layerIdPrefix, "").replace(window.layerIdBndrPrefix, "").replace(window.layerIdPBSPrefix, "").replace(window.layerIdTiledPrefix, "").replace(window.addedLayerIdPrefix, ""));
 
 		  if ((layerInfo.layerObject.type) && (layerInfo.layerObject.type.toUpperCase() == "FEATURE LAYER")) {
@@ -220,7 +222,7 @@ define([
 	            this.layerListView.drawListNode(layerInfo, 0, refHrNode, 'before');
 	          }
 	       } else {
-	       	  this.layerListView.drawListNode(layerInfo, 0, refHrNode, 'after');
+	       	  this.layerListView.drawListNode(layerInfo, 0, refHrNodeNonGraphic, 'before');
 	       }
 
         } else {

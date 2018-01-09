@@ -64,11 +64,12 @@ define([
       array.forEach(this.operLayerInfos.getLayerInfoArray(), function(layerInfo) {
         //this.drawListNode(layerInfo, 0, this.layerListTable);
         var refHrNode = query("[class~='hrClass']", this.domNode)[0];
+        var refHrNodeNonGraphic = query("[class~='hrClassNonGraphic']", this.domNode)[0];
         if ((layerInfo.layerObject.type) && (layerInfo.layerObject.type.toUpperCase() == "FEATURE LAYER")) {
         	this.drawListNode(layerInfo, 0, refHrNode,'before');
         }
         else {
-        	this.drawListNode(layerInfo, 0, refHrNode,'after');
+        	this.drawListNode(layerInfo, 0, refHrNodeNonGraphic,'before');
         }
       }, this);
 
@@ -236,7 +237,7 @@ define([
         	'id': window.layerTitlePrefix + layerInfo.id,
           'innerHTML': layerTitleText,
           'class':layerTitleDivIdClass + ' div-content jimu-float-leading ' + grayedTitleClass
-        }, layerTrNode);
+        }, layerTitleTdNode);
 
 
 
