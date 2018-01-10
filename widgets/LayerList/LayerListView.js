@@ -229,7 +229,7 @@ define([
         	'id': window.layerTitlePrefix + layerInfo.id,
           'innerHTML': layerTitleText,
           'class':layerTitleDivIdClass + ' div-content jimu-float-leading ' + grayedTitleClass
-        }, layerTrNode);
+        }, layerTitleTdNode);
 
 
 
