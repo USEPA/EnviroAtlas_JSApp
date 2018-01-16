@@ -17,6 +17,10 @@ div.jimu-widget-addwebmapdata > div.tab-container > div.jimu-tab3 {
     height: 100%;
 }
 
+div.jimu-widget-addwebmapdata .jimu-item-table .items-table-div {
+    height: auto;
+}
+
 div.jimu-widget-addwebmapdata .jimu-item-table .item-info {
     left: 100px;
 }
@@ -99,13 +103,9 @@ div.jimu-widget-addwebmapdata .item {
 div.jimu-widget-addwebmapdata .item.jimu-state-active,
 div.jimu-widget-addwebmapdata .item:hover {
     border: 1px solid #15a4fa;
-    background-color: #15a4fa;
-    color: white;
-}
-
-div.jimu-widget-addwebmapdata .item:hover a,
-div.jimu-widget-addwebmapdata .item.jimu-state-active a {
-    color: white;
+    cursor: pointer;
+    /*background-color: #15a4fa;
+    color: white;*/
 }
 
 div.jimu-widget-addwebmapdata .sign-out-btn {
