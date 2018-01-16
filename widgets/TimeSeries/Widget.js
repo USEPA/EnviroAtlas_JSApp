@@ -440,27 +440,56 @@ define([
     };    
 	var defineService = function () {
 	   //esri.show(loading);
-       if (dijit.byId("seasonSelection").item != null && dijit.byId("climateSelection").item != null ) {
-            if (dijit.byId("modelSelection").item.value == "Hist") {
-                dojo.byId("subTitle").innerHTML = "Timeline: Years (1950-2005)";
-                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (1950-2005)";
-            }
-            else {
-                dojo.byId("subTitle").innerHTML = "Timeline: Years (2006-2099)";
-                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (2006-2099)";
-            }          
-            var model = dijit.byId("modelSelection").item.value.replace(".", "" );
-            var season = dijit.byId("seasonSelection").item.value;
-            var climateVar = dijit.byId("climateSelection").item.value;
-            userChosenTimeStep = 5;
-            dojo.byId("frameOrSlide").innerHTML = 'slide';
-            addSelectedImageServiceToMap(model + season + climateVar);
-            console.log("model+ season + climateVar:" + model+ season + climateVar);
-            //changeLegendImg();
-        }
-        else {
-            alert("Choose options for Season, Metric!");
-        }
+	   if (window.timeSeriesDisclaim) {
+	       if (dijit.byId("seasonSelection").item != null && dijit.byId("climateSelection").item != null ) {
+	            if (dijit.byId("modelSelection").item.value == "Hist") {
+	                dojo.byId("subTitle").innerHTML = "Timeline: Years (1950-2005)";
+	                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (1950-2005)";
+	            }
+	            else {
+	                dojo.byId("subTitle").innerHTML = "Timeline: Years (2006-2099)";
+	                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (2006-2099)";
+	            }          
+	            var model = dijit.byId("modelSelection").item.value.replace(".", "" );
+	            var season = dijit.byId("seasonSelection").item.value;
+	            var climateVar = dijit.byId("climateSelection").item.value;
+	            userChosenTimeStep = 5;
+	            dojo.byId("frameOrSlide").innerHTML = 'slide';
+	            addSelectedImageServiceToMap(model + season + climateVar);
+	            console.log("model+ season + climateVar:" + model+ season + climateVar);
+	            //changeLegendImg();
+	        }
+	        else {
+	            alert("Choose options for Season, Metric!");
+	        }
+       }
+       else {
+			var infobox = new Dialog({
+    		title: "EnviroAtlas Time Series Disclaimer",
+    		style: 'width: 400px'
+    		});
+
+
+    		var nationalDiv = dojo.create('div', {
+				'innerHTML': "The original climate projections used in these maps were developed by the NASA Ames Research Center using the NASA Earth Exchange, and are distributed as the NEX-DCP30 dataset. Climate scenarios provide likely approximations of future conditions given a set of initial assumptions. The future is inherently uncertain and the USEPA cannot guarantee that these scenarios reflect what will occur at the specified future time. <BR><BR> \
+							 While every attempt has been made to provide the best information possible, no warranty, expressed or implied, is made by the USEPA regarding the accuracy of the derived projections for general or scientific purposes, nor shall the act of distribution constitute any such warranty. The USEPA shall not be held liable for improper or incorrect use of the information described and/or contained herein."
+			}, infobox.containerNode);
+
+			dojo.create('hr', {'style': 'margin-top: 10px'}, infobox.containerNode);
+
+			var button4 = new Button({ label:"Accept"});
+			button4.startup();
+			button4.placeAt(infobox.containerNode);
+			button4.on("click", function(event) {
+			    window.timeSeriesDisclaim = true;
+			    infobox.hide();
+			});
+
+
+
+			infobox.show();
+       		
+       }
     };
 	var addSelectedImageServiceToMap = function(serviceParams) {
         removeDataFromMap();
