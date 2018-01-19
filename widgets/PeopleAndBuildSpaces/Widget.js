@@ -455,7 +455,14 @@ define([
                             lLayer.id = window.layerIdPBSPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, "");
                             lLayer.minScale = 1155581.108577;
                             lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
+							if (layer.hasOwnProperty('eaScale')) {
+									if (layer.eaScale == "COMMUNITY") {
+										window.communityLayerNumber.push(layer.eaID.toString());
 
+									} else {//National
+										window.nationalLayerNumber.push(layer.eaID.toString());
+									}
+							}
                             if (layer.tileLink == "yes") {
                                 var tileLinkAdjusted = "";
                                 if (layer.tileURL.slice(-1) == "/") {
