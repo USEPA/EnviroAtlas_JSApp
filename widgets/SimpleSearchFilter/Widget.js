@@ -263,6 +263,9 @@ define([
 		};
     var updateSingleCommunityLayer = function(selectedLayerNum){    	
 		lyrTobeUpdated = selfSimpleSearchFilter.map.getLayer(window.layerIdPrefix + selectedLayerNum);	 
+		if(lyrTobeUpdated == null){				
+    		lyrTobeUpdated = selfSimpleSearchFilter.map.getLayer(window.layerIdPBSPrefix + selectedLayerNum);
+      	}  
 		if (window.communitySelected != window.strAllCommunity) {        
 			$.getJSON( 'configs/CommunitySymbology/' + window.communitySelected + '_JSON_Symbol/Nulls/' + window.communitySelected + '_' + window.hashAttribute[selectedLayerNum] + ".json", function( data ) {
 				var renderer = new ClassBreaksRenderer(data);
@@ -1501,6 +1504,10 @@ define([
 			if(lyr){				
 	    		arrLayersToChangeSynbology.push(lyr.id.replace(window.layerIdPrefix, ""));
           	}          	
+    		lyrPBS = this.map.getLayer(window.layerIdPBSPrefix + window.communityLayerNumber[i]);
+			if(lyrPBS){				
+	    		arrLayersToChangeSynbology.push(lyrPBS.id.replace(window.layerIdPBSPrefix, ""));
+          	}           	        	
         } 	    
 
         updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
