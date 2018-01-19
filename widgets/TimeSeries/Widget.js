@@ -483,6 +483,7 @@ define([
 			button4.on("click", function(event) {
 			    window.timeSeriesDisclaim = true;
 			    infobox.hide();
+			    document.getElementById("loadServiceBtn").click();
 			});
 
 
