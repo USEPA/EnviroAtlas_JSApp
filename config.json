@@ -538,6 +538,16 @@
                 "version": "2.5",
                 "id": "widgets_FullScreen_Widget_36",
                 "name": "FullScreen"
+            }, {
+                "uri": "widgets/GoogleAnalytics/Widget",
+                "position": {
+                    "left": 7,
+                    "top": -40,
+                    "relativeTo": "map"
+                },
+                "version": "2.5",
+                "id": "widgets_GoogleAnalytics_Widget_37",
+                "name": "GoogleAnalytics"
             }
         ],
         "panel": {
@@ -1165,7 +1175,17 @@
                     "version": "2.5",
                     "id": "widgets_FullScreen_Widget_36",
                     "name": "FullScreen"
-                }
+                }, {
+                "uri": "widgets/GoogleAnalytics/Widget",
+                "position": {
+                    "left": 7,
+                    "top": -40,
+                    "relativeTo": "map"
+                },
+                "version": "2.5",
+                "id": "widgets_GoogleAnalytics_Widget_37",
+                "name": "GoogleAnalytics"
+            }
             ],
             "panel": {
                 "uri": "jimu/OnScreenWidgetPanel",
