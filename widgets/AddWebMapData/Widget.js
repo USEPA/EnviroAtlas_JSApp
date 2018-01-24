@@ -359,6 +359,8 @@ define(['dojo/_base/declare',
 
             // when a web map is selected make it active, but keep the extent
             _onItemSelected: function (item) {
+            	//this.promptUserToZoomToItem(item);
+            	this.zoomToItem(item);
                 testmap = this.map;
 
                 item.getItemData().then(function(response){
