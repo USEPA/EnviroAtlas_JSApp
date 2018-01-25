@@ -2,22 +2,23 @@
   "numPerPage": 30,
   "scopeOptions": {
     "MyContent": {
-      "allow": true,
-      "label": null
+      "allow": false,
+      "label": "My Content"
     },
     "MyOrganization": {
       "allow": true,
-      "label": null
+      "label": "EPA GeoPlatform Content"
     },
     "Curated": {
       "allow": true,
-      "label": null,
-      "filter": null
+      "label": "EnviroAtlas Content",
+      "filter": "group:9b13e245bb96437a8960dccd51da33ae"
     },
     "ArcGISOnline": {
       "allow": true,
-      "label": null
-    }
+      "label": "ArcGIS Online Content"
+    },
+    "defaultScope": "Curated"
   },
   "addFromUrl": {
     "allow": true
