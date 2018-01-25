@@ -185,9 +185,8 @@ define([
       // set tdNode width
       domStyle.set(layerTdNode, 'width', level * 12 + 40 + 'px');
 
-
       scaleLabel = domConstruct.create('td', {
-        'style': 'width:22px; vertical-align:top'
+        'class': 'col col15'
       }, layerTrNode);
 
 
