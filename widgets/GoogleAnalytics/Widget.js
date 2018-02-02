@@ -95,26 +95,26 @@ define([
      
          // user selected option to log layer events
          if (this.logLayerEvents){
-              
+              /*
               //Log Layers in the map
               array.forEach(this.map.layerIds, lang.hitch(this, function (id) {
                   var layer = this.map.getLayer(id);
                   ga('send', 'event', 'Layers', layer.id, layer.url);
               }));
-        
+               */
               // Track New Layers 
               on(this.map, "layer-add", lang.hitch(this, function (event) {
                   var layer = event.layer
-                  ga('send', 'event', 'Layers', 'layer-add', "url:" + layer.url);
-        
+                  ga('send', 'event', 'EnviroAtlas', "layer-add", "ealyr:" + layer.url + "| " + layer.title);
               }));
-        
+            /*
               // Track Removed Layers 
               on(this.map, "layer-remove", lang.hitch(this, function (event) {
                   var layer = event.layer
                   ga('send', 'event', 'Layers', 'layer-remove', "url:" + layer.url);
         
               }));
+              */
          }
          
          // hide the icon in the menu bar  

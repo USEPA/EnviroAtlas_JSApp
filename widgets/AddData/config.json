@@ -7,18 +7,18 @@
     },
     "MyOrganization": {
       "allow": true,
-      "label": "EPA GeoPlatform Content"
+      "label": "EPA GeoPlatform"
     },
     "Curated": {
       "allow": true,
-      "label": "EnviroAtlas Content",
-      "filter": "group:9b13e245bb96437a8960dccd51da33ae"
+      "label": "Federal GeoPlatform",
+      "filter": "orgid:Hp6G80Pky0om7QvQ"
     },
     "ArcGISOnline": {
       "allow": true,
-      "label": "ArcGIS Online Content"
+      "label": "ArcGIS Online"
     },
-    "defaultScope": "Curated"
+    "defaultScope": "MyOrganization"
   },
   "addFromUrl": {
     "allow": true
