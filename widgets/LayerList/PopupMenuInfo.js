@@ -576,9 +576,11 @@ define([
     },
     _onItemChangeSymbologyClick: function(evt) {
       layerId = this._layerInfo.id;
+	  if (layerId.indexOf(window.layerIdPrefix) > -1) {			
       lyrTiled = this._layerInfo.map.getLayer(layerId.replace(window.layerIdPrefix, window.layerIdTiledPrefix));
 	  if(lyrTiled){
 		       		lyrTiled.setVisibility(false);
+		  }	
 	  }
       this.layerListWidget.publishData({
         message: layerId

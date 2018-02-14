@@ -344,6 +344,7 @@ define([
                             lOptions.id = layer.name;
                         }
                         if (layer.type.toUpperCase() === 'DYNAMIC') {
+                        	window.dynamicLayerNumber.push(layer.eaID);
                             if (layer.imageformat) {
                                 var ip = new ImageParameters();
                                 ip.format = layer.imageformat;

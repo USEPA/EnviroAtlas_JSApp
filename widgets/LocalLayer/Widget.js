@@ -181,6 +181,7 @@ define([
 			communityLocationLayer.setInfoTemplates(popupsTemplate);
 
 			communityLocationLayer.id = window.layerIdBndrPrefix + communityBoundaryLayerID;
+			window.dynamicLayerNumber.push(communityBoundaryLayerID);
 			window.idCommuBoundaryPoint = communityLocationLayer.id;
 			chkboxId = window.chkSelectableLayer + communityBoundaryLayerID;
 			if (dojo.byId(chkboxId)) {
