@@ -117,10 +117,10 @@ define([
     var climateModelsStore = new Memory({
     idProperty: "climateModelsMem",
     data: [
-        {id:"Scenario I", name:"RCP2.6", value:"RCP2.6"},
-        {id:"Scenario II", name:"RCP4.5", value:"RCP4.5"},
-        {id:"Scenario III", name:"RCP6.0", value:"RCP6.0"},
-        {id:"Scenario IV", name:"RCP8.5", value:"RCP8.5"},
+        {id:"RCP2.6 (Peak Emissions Year 2020)", name:"RCP2.6", value:"RCP2.6"},
+        {id:"RCP4.5 (Peak Emissions Year 2040)", name:"RCP4.5", value:"RCP4.5"},
+        {id:"RCP6.0 (Peak Emissions Year 2080)", name:"RCP6.0", value:"RCP6.0"},
+        {id:"RCP8.5 (Peak Emissions After 2100)", name:"RCP8.5", value:"RCP8.5"},
         {id:"Historic Data", name:"Hist", value:"Hist"}
         
         ]
@@ -129,8 +129,8 @@ define([
     idProperty: "climateMem",
     data: [
         {id:"Precipitation", name:"Precip", value:"Precip"},
-        {id:"Max. Temperature", name:"TempMax", value:"TempMax"}, //comma is removed because of shut off of services
-        {id:"Min. Temperature", name:"TempMin", value:"TempMin"},//This is commented out because of shut off of services
+        {id:"Maximum Temperature", name:"TempMax", value:"TempMax"}, //comma is removed because of shut off of services
+        {id:"Minimum Temperature", name:"TempMin", value:"TempMin"},//This is commented out because of shut off of services
         {id:"Evapotranspiration", name:"PET", value:"PET"}  //This is commented out because of shut off of services
         //{id:"Evapotranspiration (NA)", name:"Evap", value:"Evap"}
         ]
@@ -237,7 +237,7 @@ define([
         }); 
         timeSlider.setLabels(labels);
         
-        dojo.byId("details").innerHTML = '2006'; //hardcoded start year date
+        dojo.byId("details").innerHTML = '2010'; //hardcoded start year date
         
         timeSlider.on("time-extent-change", function(evt2) {
             var currYear = evt2.startTime.getUTCFullYear();
@@ -340,7 +340,7 @@ define([
             }            
         }); 
         timeSlider.setLabels(labels);        
-        dojo.byId("details").innerHTML = '2006'; //hardcoded start year date
+        dojo.byId("details").innerHTML = '2010'; //hardcoded start year date
         
         timeSlider.on("time-extent-change", function(evt2) {
             var currYear = evt2.startTime.getUTCFullYear();
@@ -362,8 +362,8 @@ define([
                 errorMessageYearInput = "Please input a year of single frame (" + String(startHist) + "-" + String(endHist) + ")";
             }
             else {
-                dojo.byId("subTitle").innerHTML = "Timeline: Years (2006-2099)";
-                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (2006-2099)";
+                dojo.byId("subTitle").innerHTML = "Timeline: Years (2010-2099)";
+                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (2010-2099)";
                 errorMessageYearInput = "Please input a year of single frame (" + String(startFuture) + "-" + String(endFuture) + ")";
             }
             
@@ -447,8 +447,8 @@ define([
 	                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (1950-2005)";
 	            }
 	            else {
-	                dojo.byId("subTitle").innerHTML = "Timeline: Years (2006-2099)";
-	                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (2006-2099)";
+	                dojo.byId("subTitle").innerHTML = "Timeline: Years (2010-2099)";
+	                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (2010-2099)";
 	            }          
 	            var model = dijit.byId("modelSelection").item.value.replace(".", "" );
 	            var season = dijit.byId("seasonSelection").item.value;
@@ -713,13 +713,13 @@ define([
 					var infoDiv = dojo.create('div', {
 							'innerHTML': "<font face='calibri' size='2+'>" +        	
             
-				            "<b>Scenario I – RCP 2.6</b> – This scenario is characterized as having very low greenhouse gas concentration levels. It is a “peak-and-decline” scenario and assumes that greenhouse gas emissions peak between 2010 and 2020 with emissions declining substantially beyond 2020. The projected global warming increase compared to the reference period (1986-2005) is approximately 1.8 degree Fahrenheit (range of 0.54 to 3.06) by 2081-2100. Atmospheric CO2 is expected to be approximately 425 parts per million in 2100.<BR><BR>" +  
+				            "<b>RCP 2.6</b> – This scenario is characterized as having very low greenhouse gas concentration levels. It is a “peak-and-decline” scenario and assumes that greenhouse gas emissions peak between 2010 and 2020 with emissions declining substantially beyond 2020. The projected global warming increase compared to the reference period (1986-2005) is approximately 1.8 degree Fahrenheit (range of 0.54 to 3.06) by 2081-2100. Atmospheric CO2 is expected to be approximately 425 parts per million in 2100.<BR><BR>" +  
 				
-				            "<b>Scenario II – RCP 4.5</b> – This scenario assumes a stabilization will occur shortly after 2100, and assumes less emissions than RCP 6.0, which is also a stabilization scenario. It is characterized by a peak in emissions around 2040 and then a decline. The projected global warming increase compared to the reference period 1986-2005 is approximately 3.24 degrees Fahrenheit (range of 1.98 to 4.68) by 2081-2100. Atmospheric CO2 is expected to be approximately 600 parts per million in 2100.<BR><BR>" +
+				            "<b>RCP 4.5</b> – This scenario assumes a stabilization will occur shortly after 2100, and assumes less emissions than RCP 6.0, which is also a stabilization scenario. It is characterized by a peak in emissions around 2040 and then a decline. The projected global warming increase compared to the reference period 1986-2005 is approximately 3.24 degrees Fahrenheit (range of 1.98 to 4.68) by 2081-2100. Atmospheric CO2 is expected to be approximately 600 parts per million in 2100.<BR><BR>" +
 				
-				            "<b>Scenario III – RCP 6.0</b> – This is a stabilization scenario in which the increase in GHG emissions stabilizes shortly after 2100 through the application of a range of technologies and strategies for reducing GHG emissions. It is characterized by a peak in emissions around 2080 and then a decline. The projected global warming increase compared to the reference period 1986-2005 is approximately 3.96 degrees Celsius (range of 2.52 to 5.58) by 2081-2100. Atmospheric CO2 is expected to be approximately 725 parts per million in 2100.<BR><BR>" +
+				            "<b>RCP 6.0</b> – This is a stabilization scenario in which the increase in GHG emissions stabilizes shortly after 2100 through the application of a range of technologies and strategies for reducing GHG emissions. It is characterized by a peak in emissions around 2080 and then a decline. The projected global warming increase compared to the reference period 1986-2005 is approximately 3.96 degrees Celsius (range of 2.52 to 5.58) by 2081-2100. Atmospheric CO2 is expected to be approximately 725 parts per million in 2100.<BR><BR>" +
 				
-				            "<b>Scenario IV – RCP 8.5</b> – This scenario is characterized by increasing GHG emissions over time, and factors in the highest GHG concentration levels of all the scenarios by 2100. The projected global warming increase compared to the reference period 1986-2005 is approximately 6.66 degrees Celsius (range of 4.68 to 8.64) by 2081-2100. Atmospheric CO2 is expected to be approximately 1225 parts per million in 2100.<BR><BR>" +
+				            "<b>RCP 8.5</b> – This scenario is characterized by increasing GHG emissions over time, and factors in the highest GHG concentration levels of all the scenarios by 2100. The projected global warming increase compared to the reference period 1986-2005 is approximately 6.66 degrees Celsius (range of 4.68 to 8.64) by 2081-2100. Atmospheric CO2 is expected to be approximately 1225 parts per million in 2100.<BR><BR>" +
 				            
 				            "<b>Historical climate</b> – These data are based on PRISM historical observations and interpolation of previous climate. Data are provided for the years 1950 -2005." +
 				            

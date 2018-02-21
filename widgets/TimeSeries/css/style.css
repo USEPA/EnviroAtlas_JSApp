@@ -1,24 +1,24 @@
 .shadow {
-	-moz-border-radius:6px;
+	/*-moz-border-radius:6px;
 	-webkit-border-radius:6px;
 	-moz-box-shadow:0 6px 3px -3px #111;
 	-webkit-box-shadow:0 6px 3px -3px #111;
-	box-shadow:0 6px 3px -3px #111;
-	background-color:#FFF;
-	padding:8px;
+	box-shadow:0 6px 3px -3px #111;*/
+	background-color:#f4f4f4;
+	padding:8px 2px 0px 2px;
 }
 
 .timeWindow {
-	-moz-border-radius:10px;
+	/*-moz-border-radius:10px;
 
-	/*width:310px;*/
+	width:310px;*/
 	width:100%;
-	-webkit-border-radius:10px;
-	background:url(../images/background.png) repeat scroll left top transparent;
+	/*-webkit-border-radius:10px;
+	background:url(../images/background.png) repeat scroll left top transparent;*/
 	font-family:Tahoma;
-	color:#000;
+	color:#202020;
 	text-align:center;
-	padding:2px;
+	padding:0px;
 }
 
 /*.serviceSelectionWindow {
@@ -206,5 +206,9 @@ width:90%;
 }
 .dijitContentPane{
         font-family: Arial;
+}
+
+.dijitRuleMarkH:nth-child(even){
+    height: 6px;
 }
 
