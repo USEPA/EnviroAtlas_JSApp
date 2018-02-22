@@ -2,16 +2,15 @@
   overflow: hidden;
 }
 .jimu-widget-sidebar-controller .title-list{
-  position: absolute;
+  position: relative;
   left: 0;
   right: 0;
-  top: 0;
-  height: 64px;
-  border-top: 1px solid #3a3a3a;
-  border-top: 1px solid rgba(255,255,255,0.08);
+  top: 2px;
+  height: 34px;
+  
 }
 .jimu-widget-sidebar-controller .title-node{
-  height: 64px;
+  height: 36px;
   cursor: pointer;
   margin-top: -2px;
 }
@@ -46,7 +45,7 @@
 
 .jimu-widget-sidebar-controller .tab-indicator{
   width: 0px;
-  height: 2px;
+  height: 0px;
   margin: auto;
 }
 .jimu-widget-sidebar-controller .title-node:nth-child(1) .tab-indicator{
@@ -68,7 +67,7 @@
 .jimu-widget-sidebar-controller .content-list{
   position: absolute;
   left: 0;
-  top: 65px;
+  top: 55px;
   right: 0;
   bottom: 0;
 }
@@ -272,6 +271,45 @@
   margin-left: 0;
 }
 
+
+/*.jimu-widget-sidebar-controller .title-node:nth-child(1) {
+  background-color: #ec7655;
+}
+.jimu-widget-sidebar-controller .title-node:nth-child(2) {
+  background-color: #fac15a;
+}
+.jimu-widget-sidebar-controller .title-node:nth-child(3) {
+  background-color: #a3ca4b;
+}
+.jimu-widget-sidebar-controller .title-node:nth-child(4) {
+  background-color: #5eb4e6;
+}
+.jimu-widget-sidebar-controller .title-node:nth-child(5) {
+  background-color: #b996d5;
+}*/
+
+.jimu-widget-sidebar-controller .title-node {
+  border-top-right-radius: 7px;
+  border-top-left-radius: 7px;
+/*  box-shadow: 5px 0px 5px;*/
+  border-right: 3px solid #00213765;
+  /*border-right: 1px solid #002137;
+  border-top: 1px solid #002137;*/
+  border-bottom: none;
+}
+
+.tab-selected {
+  background-color: #00436f;
+}
+
+.tab-not-selected {
+  background-color: rgba(191, 208, 219, .35);
+}
+
+
+
+
+
 .jimu-widget-sidebar-controller .title-node:first-child .tab-indicator{
   background-color: #ec7655;
 }
@@ -314,7 +352,32 @@
 .panel_titles{
   color: white;
   text-align: center;
-  font-size: 11px;
+  font-size: 10px;
   padding: 3px;
 
 }
+
+.data_title {
+  height: 20px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+}
+
+.data_title p {
+  line-height: 1.7em;
+  background-color: #00436f;
+}
+
+
+.data_title_min {
+  height: 75px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  border-top: 1px solid #3a3a3a;
+}
+
+.
