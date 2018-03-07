@@ -199,6 +199,7 @@ define([
     window.hashTopicPBS = {};
     window.hashFieldsAddedFeatureLayer = {};
     window.hashVisibleLayersForDynamic = {};
+    window.hashTitleToEAID = {};
     window.hashGeometryTypeAddedFeatLyr = {};
     window.hashInfoTemplate = {};
 	window.hashRenderer = {};
