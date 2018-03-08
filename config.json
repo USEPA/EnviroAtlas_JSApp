@@ -144,7 +144,7 @@
                     "left": 395,
                     "top": 5,
                     "width": 230,
-                    "height": 385,
+                    "height": 310,
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
@@ -260,7 +260,7 @@
                     "left": 445,
                     "top": 5,
                     "width": 350,
-                    "height": 340,
+                    "height": 270,
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,

@@ -26,6 +26,8 @@ define(['dojo/_base/declare',
         'dojo/on',
         'dojo/topic',
         'dojo/string',
+        'dojo/json',
+        "esri/lang",
         'esri/arcgis/Portal',
         'esri/geometry/Extent',
         'esri/geometry/webMercatorUtils',
@@ -33,7 +35,9 @@ define(['dojo/_base/declare',
     'esri/layers/FeatureLayer',
     'esri/layers/layer',
     'esri/layers/ArcGISDynamicMapServiceLayer',
+    "esri/layers/LayerDrawingOptions",
     'esri/dijit/PopupTemplate',
+    "esri/renderers/jsonUtils",
         'jimu/PanelManager',
         'jimu/ConfigManager',
         'jimu/MapManager',
@@ -53,6 +57,8 @@ define(['dojo/_base/declare',
         on,
         topic,
         string,
+        djJson,
+        esriLang,
         arcgisPortal,
         Extent,
         webMercatorUtils,
@@ -60,7 +66,9 @@ define(['dojo/_base/declare',
               FeatureLayer,
               layer,
               ArcGISDynamicMapServiceLayer,
+              LayerDrawingOptions,
               PopupTemplate,
+              jsonRendererUtils,
               PanelManager,
         ConfigManager,
         MapManager,
@@ -367,12 +375,14 @@ define(['dojo/_base/declare',
             // when a web map is selected make it active, but keep the extent
             _onItemSelected: function (item) {
             	//this.promptUserToZoomToItem(item);
+                var self = this;
             	this.zoomToItem(item);
             	showLayerListWidget();
                 testmap = this.map;
-
+                tempLayer = false;
                 item.getItemData().then(function(response){
                     response.operationalLayers.forEach(function(l){
+                        console.log(l);
                         if(l.url){
                             console.log("Web Map Layers:: ",l.layerType);
                             if(l.layerType == 'ArcGISMapServiceLayer'){
@@ -383,17 +393,62 @@ define(['dojo/_base/declare',
                                 });
                                 //if layers have popupInfo grab them
                                 if(l.layers){
-
-                                    var infoTemps=[];
-                                    l.layers.forEach(function(iL){
-                                        var popupTemplate = new PopupTemplate(iL.popupInfo);
-                                        var infoTemp = {
-                                            infoTemplate: popupTemplate,
-                                            layerUrl: null
+                                    var expressions = [];
+                                    var dynamicLayerInfo;
+                                    var dynamicLayerInfos = [];
+                                    var drawingOptions;
+                                    var drawingOptionsArray = [];
+                                    var source;
+                                    array.forEach(l.layers, function(layerInfo){
+                                      if (layerInfo.layerDefinition && layerInfo.layerDefinition.definitionExpression) {
+                                        expressions[layerInfo.id] = layerInfo.layerDefinition.definitionExpression;
+                                      }
+                                      if (layerInfo.layerDefinition && layerInfo.layerDefinition.source) {
+                                        dynamicLayerInfo = null;
+                                        source = layerInfo.layerDefinition.source;
+                                        if (source.type === "mapLayer") {
+                                          var metaLayerInfos = array.filter(response.layers, function(rlyr) {
+                                            return rlyr.id === source.mapLayerId;
+                                          });
+                                          if (metaLayerInfos.length) {
+                                            dynamicLayerInfo = lang.mixin(metaLayerInfos[0], layerInfo);
+                                          }
                                         }
-                                        infoTemps.push(infoTemp);
+                                        else {
+                                          dynamicLayerInfo = lang.mixin({}, layerInfo);
+                                        }
+                                        if (dynamicLayerInfo) {
+                                          dynamicLayerInfo.source = source;
+                                          delete dynamicLayerInfo.popupInfo;
+                                          dynamicLayerInfo = new DynamicLayerInfo(dynamicLayerInfo);
+                                          if (l.visibleLayers) {
+                                            var vis = ((typeof l.visibleLayers) === "string") ?
+                                              l.visibleLayers.split(",") : l.visibleLayers;
+                                            if (array.indexOf(vis, layerInfo.id) > -1) {
+                                              dynamicLayerInfo.defaultVisibility = true;
+                                            } else {
+                                              dynamicLayerInfo.defaultVisibility = false;
+                                            }
+                                          }
+                                          dynamicLayerInfos.push(dynamicLayerInfo);
+                                        }
+                                      }
+                                      if (layerInfo.layerDefinition && layerInfo.layerDefinition.source &&
+                                          layerInfo.layerDefinition.drawingInfo) {
+                                        drawingOptions = new LayerDrawingOptions(layerInfo.layerDefinition.drawingInfo);
+                                        drawingOptionsArray[layerInfo.id] = drawingOptions;
+                                      }
                                     });
-                                    tempLayer.setInfoTemplates(infoTemps);
+
+                                    if (expressions.length > 0) {
+                                      tempLayer.setLayerDefinitions(expressions);
+                                    }
+                                    if (dynamicLayerInfos.length > 0) {
+                                      tempLayer.setDynamicLayerInfos(dynamicLayerInfos, true);
+                                      if (drawingOptionsArray.length > 0) {
+                                        tempLayer.setLayerDrawingOptions(drawingOptionsArray, true);
+                                      }
+                                    }
                                 }
 
                             }else if(l.layerType == 'ArcGISFeatureLayer'){
@@ -403,26 +458,16 @@ define(['dojo/_base/declare',
                                     opacity: l.opacity,
                                     outFields: ["*"]
                                 });
-                                if(l.popupInfo){
-                                    var popupTemplate = new PopupTemplate(l.popupInfo);
-                                    tempLayer.infoTemplate = popupTemplate;
-                                }                            		
-
-
+                                tempLayer = self._processLayer(tempLayer,l);
                             }
-                        }
-                        else{
+                        }else{
                             if(l.featureCollection){
                                 console.log("Web Map Layers:: FeatureCollection");
                                 l.featureCollection.layers.forEach(function(subL){
                                     tempLayer = new FeatureLayer(subL,{
                                        id: l.id
                                     });
-
-                                    if(subL.popupInfo){
-                                        var popupTemplate = new PopupTemplate(subL.popupInfo);
-                                        tempLayer.infoTemplate = popupTemplate;
-                                    }
+                                    tempLayer = self._processLayer(tempLayer,subL);
                                 });
                             }else{
                                 console.log("Add Layer Error:: Layer of unknown type");
@@ -433,15 +478,79 @@ define(['dojo/_base/declare',
                             }
                         }
                         if(tempLayer){
+                            tempLayer.title = l.title;
                         	window.layerID_Portal_WebMap.push(l.id);
                             testmap.addLayer(tempLayer);
                         }
-
                     });
                 });
                 //Close the widget
-                PanelManager.getInstance().closePanel(w.id + "_panel");
+                //PanelManager.getInstance().closePanel(w.id + "_panel");
+            },
+            
+            _processLayer: function (tempLayer, l) {
+                // Borrowed from AddData/search/LayerLoader.js _processFeatureLayer
+                var layerDefinition, renderer= false;
+                var popInfo, infoTemplate;
+                  if (l.popupInfo) {
+                    popInfo = l.popupInfo;
+                    jsonPopInfo = djJson.parse(djJson.stringify(popInfo));
+                    infoTemplate = new PopupTemplate(jsonPopInfo);
+                    tempLayer.setInfoTemplate(infoTemplate);
+                  }
+                  if (esriLang.isDefined(l.showLabels)) {
+                    tempLayer.setShowLabels(l.showLabels);
+                  }
+                  if (esriLang.isDefined(l.refreshInterval)) {
+                    tempLayer.setRefreshInterval(l.refreshInterval);
+                  }
+                  if (esriLang.isDefined(l.showLegend)) {
+                    // TODO?
+                    console.log('');
+                  }
+                  if (esriLang.isDefined(l.timeAnimation)) {
+                    if (l.timeAnimation === false) {
+                      // TODO?
+                      console.log("");
+                    }
+                  }
+                  layerDefinition = l.layerDefinition;
+                  if (layerDefinition) {
+                    if (layerDefinition.definitionExpression) {
+                      tempLayer.setDefinitionExpression(layerDefinition.definitionExpression);
+                    }
+                    if (layerDefinition.displayField) {
+                      tempLayer.displayField(layerDefinition.displayField);
+                    }
+                    if (layerDefinition.drawingInfo) {
+                      if (layerDefinition.drawingInfo.renderer) {
+                        jsonRenderer = djJson.parse(
+                          djJson.stringify(layerDefinition.drawingInfo.renderer)
+                        );
+                        renderer = jsonRendererUtils.fromJson(jsonRenderer);
+                        if (jsonRenderer.type && (jsonRenderer.type === "classBreaks")) {
+                          renderer.isMaxInclusive = true;
+                        }
+                        tempLayer.setRenderer(renderer);
+                      }
+                      if (esriLang.isDefined(layerDefinition.drawingInfo.transparency)) {
+                        // TODO validate before setting?
+                        tempLayer.setOpacity(1 - (layerDefinition.drawingInfo.transparency / 100));
+                      }
+                    }
+                    if (esriLang.isDefined(layerDefinition.minScale)) {
+                      tempLayer.setMinScale(layerDefinition.minScale);
+                    }
+                    if (esriLang.isDefined(layerDefinition.maxScale)) {
+                      tempLayer.setMaxScale(layerDefinition.maxScale);
+                    }
+                    if (esriLang.isDefined(layerDefinition.defaultVisibility)) {
+                      if (layerDefinition.defaultVisibility === false) {
+                        tempLayer.setVisibility(false); // TODO?
+                      }
+                    }
+                  }
+                 return tempLayer;
             }
-
         });
     });
