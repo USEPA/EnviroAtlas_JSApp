@@ -1,6 +1,6 @@
 {
     "portalUrl": "https://epa.maps.arcgis.com",
     "publicContent": {
-      "query": "title: 'EnviroAtlas'"
+      "query": "group:af15badb09d34e2585461fcb90d4e291"
     }
 }
