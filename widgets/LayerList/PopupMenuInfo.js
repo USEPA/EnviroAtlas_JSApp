@@ -151,12 +151,6 @@ define([
         key: 'transparency',
         label: this.nls.itemTransparency
       }, {
-        key: 'moveup',
-        label: this.nls.itemMoveUp
-      }, {
-        key: 'movedown',
-        label: this.nls.itemMoveDown
-      }, {
         key: 'table',
         label: this.nls.itemToAttributeTable
       }, {
@@ -726,12 +720,6 @@ define([
         key: 'mapDescription'
       }, {
         key: 'url'
-      }, {
-        key: 'separator'
-      }, {
-        key: 'moveup'
-      }, {
-        key: 'movedown'
       } ],
       'RootLayerAndFeatureLayer': [
       {
@@ -758,12 +746,6 @@ define([
         key: 'separator'
       }, {
         key: 'table'
-      }, {
-        key: 'separator'
-      }, {
-        key: 'moveup'
-      }, {
-        key: 'movedown'
       }],
       'FeatureLayer': [/*{
         key: 'controlPopup'
