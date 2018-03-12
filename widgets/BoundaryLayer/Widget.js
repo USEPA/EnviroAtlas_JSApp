@@ -258,20 +258,12 @@ define([
 								lLayer.setInfoTemplates(popupConfig);
 
 								dojo.connect(lLayer, "onError", function (error) {
-									if ((!(lLayer.title in window.faildedEALayerDictionary)) && (!(lLayer.title in window.successLayerDictionary))) {
-										window.faildedEALayerDictionary[lLayer.title] = lLayer.title;
-										//showDisplayLayerAddFailureWidget(lLayer.title);
-									}
+									alert("There is a problem on loading layer:" + layer.title);
 								});
-								dojo.connect(lLayer, "onLoad", function(error) {
-									if (!(lLayer.title in window.successLayerDictionary)) {
-										window.successLayerDictionary[lLayer.title] = lLayer.title;
-									}
-								});
+
 								if (layer.name) {
 									lLayer._titleForLegend = layer.name;
 									lLayer.title = layer.name;
-									window.hashTitleToEAID[layer.name] = layer.eaID;
 									lLayer.noservicename = true;
 								}
 

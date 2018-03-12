@@ -31,7 +31,6 @@ define([
   graphicsUtils, NlsStrings,Dialog) {
   var mapDescriptionStr = "";
   var xmlPath = "";
-  var topLayerIndex = 300;
   var uncheckRelatedCheckbox = function (chkboxLayerId){
     	var chkSimpleSearch = document.getElementById(window.chkSelectableLayer + chkboxLayerId);
     	if((chkSimpleSearch != null) && (chkSimpleSearch.checked == true)){	
@@ -150,6 +149,12 @@ define([
       }, {
         key: 'transparency',
         label: this.nls.itemTransparency
+      }, {
+        key: 'moveup',
+        label: this.nls.itemMoveUp
+      }, {
+        key: 'movedown',
+        label: this.nls.itemMoveDown
       }, {
         key: 'table',
         label: this.nls.itemToAttributeTable
@@ -365,10 +370,7 @@ define([
 
         lyr = this._layerInfo.map.getLayer(this._layerInfo.id);
         if (window.topLayerID != "") {
-        	var topLayerChkbox = document.getElementById(window.layerTitlePrefix + window.topLayerID);
-        	if (topLayerChkbox != null) {
-        		topLayerChkbox.style['font-weight'] = '400';
-        	}        	
+        	document.getElementById(window.layerTitlePrefix + window.topLayerID).style['font-weight'] = '400';
         }
         window.topLayerID = this._layerInfo.id;
         document.getElementById(window.layerTitlePrefix + this._layerInfo.id).style['font-weight'] = 'bold';
@@ -419,15 +421,13 @@ define([
      			document.getElementById("map_" + this._layerInfo.id).style.zIndex = "1";
 	     	} 	
 	     	else {
-        		//this._layerInfo.map.reorderLayer(lyr,this._layerInfo.map.layerIds.length);
-        		this._layerInfo.map.reorderLayer(lyr, topLayerIndex);
+        	this._layerInfo.map.reorderLayer(lyr,this._layerInfo.map.layerIds.length);
       	}   
       	
       	}   
         lyrTiled = this._layerInfo.map.getLayer(window.layerIdTiledPrefix + this._layerInfo.id.replace(window.layerIdPrefix, "")); //bji need to be modified to accomodate tile.
 	    if(lyrTiled){
-       	     //this._layerInfo.map.reorderLayer(lyrTiled,this._layerInfo.map.layerIds.length);
-       	     this._layerInfo.map.reorderLayer(lyrTiled, topLayerIndex);
+       	     this._layerInfo.map.reorderLayer(lyrTiled,this._layerInfo.map.layerIds.length);
         } 
     },
 
@@ -570,11 +570,9 @@ define([
     },
     _onItemChangeSymbologyClick: function(evt) {
       layerId = this._layerInfo.id;
-	  if (layerId.indexOf(window.layerIdPrefix) > -1) {			
       lyrTiled = this._layerInfo.map.getLayer(layerId.replace(window.layerIdPrefix, window.layerIdTiledPrefix));
 	  if(lyrTiled){
 		       		lyrTiled.setVisibility(false);
-		  }	
 	  }
       this.layerListWidget.publishData({
         message: layerId
@@ -720,6 +718,12 @@ define([
         key: 'mapDescription'
       }, {
         key: 'url'
+      }, {
+        key: 'separator'
+      }, {
+        key: 'moveup'
+      }, {
+        key: 'movedown'
       } ],
       'RootLayerAndFeatureLayer': [
       {
@@ -746,6 +750,12 @@ define([
         key: 'separator'
       }, {
         key: 'table'
+      }, {
+        key: 'separator'
+      }, {
+        key: 'moveup'
+      }, {
+        key: 'movedown'
       }],
       'FeatureLayer': [/*{
         key: 'controlPopup'

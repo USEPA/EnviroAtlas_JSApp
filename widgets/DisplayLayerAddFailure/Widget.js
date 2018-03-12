@@ -18,7 +18,6 @@ define([
     'dojo/_base/declare',
     'dijit/_WidgetsInTemplateMixin',
     "dojo/Deferred",
-    "dojo/request/xhr",
     'jimu/BaseWidget',
     'dijit/Dialog',
      'jimu/WidgetManager',
@@ -34,7 +33,6 @@ define([
     declare,
     _WidgetsInTemplateMixin,
     Deferred,
-    xhr,
     BaseWidget,
     Dialog,
     WidgetManager,
@@ -47,34 +45,24 @@ define([
 	
 	var map;
 	var self;
-	var failedEAID = "";
    
     var updateFailedListOfLayers = function(){	
     	var comment = document.getElementById("failedLayersComment");
-    	
     	if ((Object.keys(window.faildedEALayerDictionary).length == 0)&&(Object.keys(window.faildedOutsideLayerDictionary).length == 0)) {    		
     		comment.innerHTML = "Data that fails to load will appear here and be documented."; 
     		var hr = document.getElementById('hrFailedEnviroAtlasLayers');
-			hr.style.display = 'none';	 
-    		var hrEmail = document.getElementById('hrFailedLayersSendEmail');
-			hrEmail.style.display = 'none';	
-					 
+			hr.style.display = 'none';	  
     		hr = document.getElementById('hrFailedOutsideLayers');
-			hr.style.display = 'none';			
-    		var butEmail = document.getElementById('eMailOption');
-			butEmail.style.display = 'none';					 		
+			hr.style.display = 'none';				 		
     	} else{
     		comment.innerHTML = "The following web service(s) failed to load at this time and may be unavailable for this session.";
     	}
     	if (Object.keys(window.faildedEALayerDictionary).length > 0) {
     		var hr = document.getElementById('hrFailedEnviroAtlasLayers');
 			hr.style.display = '';	
-    		var hrEmail = document.getElementById('hrFailedLayersSendEmail');
-			hrEmail.style.display = '';				
     		var commentFaileEA = document.getElementById("failedEnviroAtlasLayersComment");
     		commentFaileEA.innerHTML = "For EnviroAtlas services, an email will be sent notifying administrators of these issues:";
-    		var butEmail = document.getElementById('eMailOption');
-			butEmail.style.display = '';
+
 		    var tableOfRelationship = document.getElementById("failedEALayers");
 		    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0]; 
 	        while (tableRef.firstChild) {
@@ -86,12 +74,10 @@ define([
 	        
 				var newTitle  = document.createElement('div');
 		        newTitle.innerHTML = key;
-				newTitleCell.appendChild(newTitle); 	
-				failedEAID = failedEAID  + window.hashTitleToEAID[key] + ",";					  
+				newTitleCell.appendChild(newTitle); 							  
 			}  		
-			failedEAID = failedEAID.substring(0, failedEAID.length -1);
 		}
-
+		
 		if (Object.keys(window.faildedOutsideLayerDictionary).length > 0) {
 			var hr = document.getElementById('hrFailedOutsideLayers');
 			hr.style.display = '';		
@@ -120,20 +106,7 @@ define([
 
         //name: 'DisplayLayerAddFailure',
         baseClass: 'jimu-widget-displaylayeraddfailure',
-        sendEmail: function(){
-
-
-			  try{
-				var xhr = new XMLHttpRequest();
-				xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/SendEmailOfFailedLayers.py?failedLayers=" + failedEAID, true);
-				xhr.send();
-
-			  }
-			  catch(error){
-				  console.log(error);
-			  }
-	
-		  },
+        
 	    onReceiveData: function(name, widgetId, data, historyData) {
 	  		updateFailedListOfLayers();
 	    },

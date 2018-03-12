@@ -82,15 +82,6 @@
   vertical-align: top;
 }
 
-.jimu-widget-layerList .col15{
-  vertical-align: top;
-  width: 22px;
-}
-
-.jimu-widget-layerList .layer-sub-node .col15{
-  width: 0px;
-}
-
 .jimu-widget-layerList .col2{
   width: auto;
   word-break: break-word;
@@ -654,6 +645,4 @@
 
 #uniqName_10_0 {
   padding: 10px 5px 10px 5px;
-}
-.hrClass {
 }

@@ -317,7 +317,8 @@ define([
                 '</div>' +
                 '<div class="item-info">' +
                 '<div class="item-name"></div>' +
-                '<div class="item-snippet"></div>' +
+                '<div class="item-type-owner"></div>' +
+                '<div class="item-date"></div>' +
                 '<a class="item-details" target="_blank"></a>' +
                 '</div>' +
                 '</div>';
@@ -325,7 +326,8 @@ define([
             itemDiv.item = item;
             var itemThumbnail = query('.item-thumbnail', itemDiv)[0];
             var itemName = query('.item-name', itemDiv)[0];
-            var itemSnippet = query('.item-snippet', itemDiv)[0];
+            var itemTypeOwner = query('.item-type-owner', itemDiv)[0];
+            var itemDate = query('.item-date', itemDiv)[0];
             var itemDetails = query('.item-details', itemDiv)[0];
             var noneThumbnailTip = query('.none-thumbnail-tip', itemDiv)[0];
             if (!item.thumbnailUrl) {
@@ -341,8 +343,12 @@ define([
             }
             itemName.innerHTML = item.title;
             itemName.title = itemName.innerHTML;
-            itemSnippet.innerHTML = "<div><p>" + item.snippet + "</p></div>";
-            itemSnippet.title = item.snippet;
+            itemTypeOwner.innerHTML = ' by ' + item.owner;
+            itemTypeOwner.title = itemTypeOwner.innerHTML;
+            var d = new Date();
+            d.setTime(item.modified);
+            itemDate.innerHTML = d.toLocaleString();
+            itemDate.title = itemDate.innerHTML;
             itemDetails.innerHTML = this.nls.moreDetails;
             itemDetails.href = item.detailsPageUrl || "#";
             return itemDiv;

@@ -1,28 +1,5 @@
 dynamicSymbology = {};
 currentSymbology = {};
-lookforEnviroatlas = "enviroatlas";
-lookforNational = "National";
-lookforCommunities = "Communities";
-	  var  createRadioElement = function( name, checked ) {
-	      var radioInput;
-	      try {
-	         var radioHtml = '<input type="radio" name="' + name + '"';
-	         if ( checked ) {
-	            radioHtml += ' checked="checked"';
-	         }
-	         radioHtml += '/>';
-	         radioInput = document.createElement(radioHtml);
-	      } catch( err ) {
-	         radioInput = document.createElement('input');
-	         radioInput.setAttribute('type', 'radio');
-	         radioInput.setAttribute('name', name);
-	         if ( checked ) {
-	            radioInput.setAttribute('checked', 'checked');
-	         }
-	      }
-	
-	      return radioInput;
-	    };
 define(['dojo/_base/declare',
         'jimu/BaseWidget',
         'jimu/LayerInfos/LayerInfos',
@@ -39,13 +16,11 @@ define(['dojo/_base/declare',
         "esri/layers/FeatureLayer",
         "esri/plugins/FeatureLayerStatistics",
         "esri/renderers/ClassBreaksRenderer",
-        "esri/renderers/SimpleRenderer",
         "esri/symbols/SimpleFillSymbol",
         "esri/symbols/SimpleLineSymbol",
         "esri/symbols/SimpleMarkerSymbol",
         "esri/dijit/util/busyIndicator",
         "esri/dijit/SymbolStyler",
-        "esri/request",
         "dijit/ColorPalette",
         "dijit/form/Select",
         "dijit/form/NumberSpinner",
@@ -55,14 +30,13 @@ define(['dojo/_base/declare',
         "dijit/TooltipDialog",
         "dijit/form/DropDownButton",
         "dijit/form/Button",
-        "dijit/form/RadioButton",
         "dijit/popup",
         "dojo/parser"],
     function (declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, esriStylesChoropleth, Color, ColorInfoSlider,
         ClassedColorSlider, smartMapping, FeatureLayer, FeatureLayerStatistics,
-        ClassBreaksRenderer, SimpleRenderer, SimpleFillSymbol, SimpleLineSymbol, SimpleMarkerSymbol, busyIndicator, SymbolStyler, esriRequest,
+        ClassBreaksRenderer, SimpleFillSymbol, SimpleLineSymbol, SimpleMarkerSymbol, busyIndicator, SymbolStyler,
         ColorPalette, select, NumberSpinner, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, TooltipDialog, DropDownButton,
-        Button, RadioButton, popup) {
+        Button, popup) {
 
     //To create a widget, you need to derive from BaseWidget.
     return declare([BaseWidget], {
@@ -77,7 +51,6 @@ define(['dojo/_base/declare',
         _fieldID: null,
         _fieldName: null,
         _ClassificationMethod: null,
-        _nBreaks: null,
         _NumberOfClasses: null,
         _currentBaseMap: null,
         _scheme: null,
@@ -85,15 +58,12 @@ define(['dojo/_base/declare',
         _style: null,
         _color: null,
         _outline: null,
+        _sliderValueArry: null,
         _sliderValueChange: null,
-        _symbolPointForPolygon: null,
-        _bPolygonAsPoint: null,
-        _bSizeUpByValuePolygonAsPoint: null,
         featureLayerStatistics: null,
-        renderer: null,     
-        minimumSymbolSize : null,
+        
+        renderer: null,
 
-		
         _BusyIndicator: function () {
             return busyIndicator.create("esri-colorinfoslider1");
         },
@@ -107,7 +77,6 @@ define(['dojo/_base/declare',
         startup: function () {
             this.inherited(arguments);
             _scheme = null;
-            minimumSymbolSize = 6;
 
             this.fetchDataByName('LayerList');
 
@@ -129,8 +98,6 @@ define(['dojo/_base/declare',
         },
 		onOpen: function () {
         //startup: function () {
-        	_nBreaks = 0;
-        	_bPolygonAsPoint = false;
             selfDynamicSymbology = this;
             _busy = busyIndicator.create("esri-colorinfoslider-container");
 
@@ -146,7 +113,6 @@ define(['dojo/_base/declare',
             var okButtonDiv = domConstruct.create("div");
             var cancelButtonDiv = domConstruct.create("div");
             var contentsNode = domConstruct.create("div");
-            
             domConstruct.place(okButtonDiv, stylerButtons);
             domConstruct.place(cancelButtonDiv, stylerButtons);
             domConstruct.place(stylerNode, contentsNode);
@@ -187,7 +153,6 @@ define(['dojo/_base/declare',
 
             dynamicSymbology.isSmartMapping = true;
 
-
             LayerInfos.getInstance(this.map, this.map.itemInfo).then(function (layerInfosObject) {
 
                 var dslayer = layerInfosObject.getLayerInfoById(_layerID);
@@ -200,7 +165,6 @@ define(['dojo/_base/declare',
                 if (dslayer.layerObject.type == "Feature Layer") { //if the layer is feature layer
 
 	                geoenrichedFeatureLayer = selfDynamicSymbology.map.getLayer(_layerID);
-	                
 	                // var str = geoenrichedFeatureLayer.url;
 	                // var lookfor = "National";
 	                // if(str.includes(lookfor)){
@@ -210,30 +174,18 @@ define(['dojo/_base/declare',
 	                //     cacheLayer.setVisibility(false);
 	                //     geoenrichedFeatureLayer.setVisibility(true);
 	                // }
-					
+	
 	                var str = geoenrichedFeatureLayer.url;
-	                /*esriRequest({
-					    "url": str,
-					    "content": {
-					    "f": "json"
-					  },
-					  "callbackParamName": "callback"
-					}).
-					  then(function (evt) {
-					    console.log(evt.drawingInfo.renderer);
-					});*/
-		            
-		            if (str.indexOf(lookforEnviroatlas) > -1 ) {
-		                if (str.indexOf(lookforNational) > -1) {
-		                    //add warning for national data
-		                    domStyle.set(dom.byId('nationalDSWarning'), "display", "inline");
-		                    geoenrichedFeatureLayer.setDefinitionExpression(geoenrichedFeatureLayer.renderer.attributeField + " >= 0" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " IS NOT Null");
-		                } else  if (str.indexOf(lookforCommunities) > -1){
-		                    domStyle.set(dom.byId('nationalDSWarning'), "display", "none");
-		                    if (window.communitySelected != "AllCommunity") {
-		                        geoenrichedFeatureLayer.setDefinitionExpression("CommST = '" + window.communitySelected + "'" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " >= 0" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " IS NOT Null");
-		                    }
-		                }
+	                var lookfor = "National";
+	                if (str.indexOf(lookfor) > -1) {
+	                    //add warning for national data
+	                    domStyle.set(dom.byId('nationalDSWarning'), "display", "inline");
+	                    geoenrichedFeatureLayer.setDefinitionExpression(geoenrichedFeatureLayer.renderer.attributeField + " >= 0" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " IS NOT Null");
+	                } else {
+	                    domStyle.set(dom.byId('nationalDSWarning'), "display", "none");
+	                    if (window.communitySelected != "AllCommunity") {
+	                        geoenrichedFeatureLayer.setDefinitionExpression("CommST = '" + window.communitySelected + "'" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " >= 0" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " IS NOT Null");
+	                    }
 	                }
 	
 	                featureLayerStatistics = new FeatureLayerStatistics({
@@ -244,137 +196,103 @@ define(['dojo/_base/declare',
 	                //set store original renderer
 	                if (!currentSymbology[_layerID]) {
 	                    currentSymbology[_layerID] = {};
-	                    //currentSymbology[_layerID]['origRenderer'] = geoenrichedFeatureLayer.renderer.toJson();
-	                    currentSymbology[_layerID]['origRenderer'] = geoenrichedFeatureLayer.renderer;
+	                    currentSymbology[_layerID]['origRenderer'] = geoenrichedFeatureLayer.renderer.toJson();
 	                }
+	
+	                //set slider onClick
+	                var horiSlider = domConstruct.place('<div id="transSlider"></div>', 'slider');
+	                dynamicSymbology.oSlider = new HorizontalSlider({
+	                        name: "transSlider",
+	                        value: -Math.abs(geoenrichedFeatureLayer.opacity),
+	                        minimum: -1,
+	                        maximum: 0,
+	                        discreteValues: 101,
+	                        intermediateChanges: false,
+	                        style: "width:185px; margin-left: 10px",
+	                        onChange: function (value) {
+	                            geoenrichedFeatureLayer.setOpacity(Math.abs(value));
+	                        }
+	                    }, "transSlider").startup();
+	
+	                //Set Fields
+	                _ClassificationMethod = geoenrichedFeatureLayer.renderer.classificationMethod;
+	                _fieldName = geoenrichedFeatureLayer.renderer.attributeField;
+	                _NumberOfClasses = geoenrichedFeatureLayer.renderer.infos.length;
+	
+	                //set number of classes spinner
+	                var numClassesNode = domConstruct.create("div", null, dom.byId("numClasses"), "first");
+	                dynamicSymbology.numberClasses = new NumberSpinner({
+	                        value: geoenrichedFeatureLayer.renderer.infos.length,
+	                        smallDelta: 1,
+	                        constraints: {
+	                            min: 1,
+	                            max: 20
+	                        },
+	                        intermediateChanges: true,
+	                        style: "width:100px; height: 20px; lineHeight: 20px"
+	                    });
+	                dynamicSymbology.numberClasses.placeAt(numClassesNode);
+	                dynamicSymbology.numberClasses.startup();
+	
+	                //set initail slider
+	                var sliderNode = domConstruct.create("div", null, dom.byId("esri-colorinfoslider1"), "first");
+	                dynamicSymbology.slider = new ClassedColorSlider({
+	                        breakInfos: geoenrichedFeatureLayer.renderer.infos,
+	                        classificationMethod: geoenrichedFeatureLayer.renderer.classificationMethod
+	                        //class: "sliderAreaRight"
+	                    }, sliderNode);
+	                dynamicSymbology.slider.startup();
+	                
 
-	                _fieldName = geoenrichedFeatureLayer.renderer.attributeField;	                
-	                	                
-					_ClassificationMethod = geoenrichedFeatureLayer.renderer.classificationMethod;
-					var breaks = geoenrichedFeatureLayer.renderer.breaks;
-					
-					if (breaks != undefined) {
-						_nBreaks = breaks.length;
-					}
-					
-					if ((_ClassificationMethod!=undefined) || (_nBreaks>0 )){
-						_NumberOfClasses = geoenrichedFeatureLayer.renderer.infos.length;
-		                //set slider onClick
-		                var horiSlider = domConstruct.place('<div id="transSlider"></div>', 'slider');
-		                
-		                dynamicSymbology.oSlider = new HorizontalSlider({
-		                        name: "transSlider",
-		                        value: -Math.abs(geoenrichedFeatureLayer.opacity),
-		                        minimum: -1,
-		                        maximum: 0,
-		                        discreteValues: 101,
-		                        intermediateChanges: false,
-		                        style: "width:185px; margin-left: 10px",
-		                        onChange: function (value) {
-		                            geoenrichedFeatureLayer.setOpacity(Math.abs(value));
-		                        }
-		                    }, "transSlider").startup();
-		
-		                //set number of classes spinner
-		                var numClassesNode = domConstruct.create("div", null, dom.byId("numClasses"), "first");
-		                dynamicSymbology.numberClasses = new NumberSpinner({
-		                        value: geoenrichedFeatureLayer.renderer.infos.length,
-		                        smallDelta: 1,
-		                        constraints: {
-		                            min: 1,
-		                            max: 20
-		                        },
-		                        intermediateChanges: true,
-		                        style: "width:100px; height: 20px; lineHeight: 20px"
-		                    });
-		                dynamicSymbology.numberClasses.placeAt(numClassesNode);
-		                dynamicSymbology.numberClasses.startup();
-		
-		                //set initail slider
-		                var sliderNode = domConstruct.create("div", null, dom.byId("esri-colorinfoslider1"), "first");
-		                dynamicSymbology.slider = new ClassedColorSlider({
-		                        breakInfos: geoenrichedFeatureLayer.renderer.infos,
-		                        classificationMethod: geoenrichedFeatureLayer.renderer.classificationMethod
-		                        //class: "sliderAreaRight"
-		                    }, sliderNode);
-		                dynamicSymbology.slider.startup();
-		                
-		                var fType = geoenrichedFeatureLayer.geometryType;
-	         			if (fType == "esriGeometryPoint") {
-	         				dom.byId("symbolSize").style.display = '';    
-	         				dom.byId("symbolSizeLabel").style.display = '';
-							dom.byId("symbolSizeSelection").style.display = '';	         								
-	         			}
-	         			else {
-	         				dom.byId("symbolSize").style.display = 'none';
-	         				dom.byId("symbolSizeLabel").style.display = 'none';
-							dom.byId("symbolSizeSelection").style.display = 'none';
-	         			}                    
-	         			if (fType == "esriGeometryPolygon") {
-							var polygonRenderSymbol = geoenrichedFeatureLayer.renderer.infos[0].symbol;  	
-							if (polygonRenderSymbol.type == "simplemarkersymbol") {
-								_bPolygonAsPoint = true;
+	                
 
-								_symbolPointForPolygon = polygonRenderSymbol;
-								
-							}				
-							var index = 0;	
-							var minVale0 = geoenrichedFeatureLayer.renderer.infos[0].minValue;
-							var minVale1 = geoenrichedFeatureLayer.renderer.infos[1].minValue;
-							var size0 = geoenrichedFeatureLayer.renderer.infos[0].symbol.size;
-							var size1 = geoenrichedFeatureLayer.renderer.infos[1].symbol.size;
-							if (((minVale0 > minVale1) && (size0 > size1)) || ((minVale0 < minVale1) && (size0 < size1))){								 
-								_bSizeUpByValuePolygonAsPoint = true;
-							} else {
-								_bSizeUpByValuePolygonAsPoint = false;
-							}
-				
-	         			}
-		
-		                //Classification dropdown
-		                dynamicSymbology.attTemplateOptions = [{
-		                        label: "equal-interval",
-		                        value: "equal-interval"
-		                    }, {
-		                        label: "natural-breaks",
-		                        value: "natural-breaks"
-		                    }, {
-		                        label: "quantile",
-		                        value: "quantile",
-		                        selected: true
-		                    }, {
-		                        label: "standard-deviation",
-		                        value: "standard-deviation"
-		                    }, {
-		                        label: "manual",
-		                        value: "manual"
-		                    }
-		                ];
-		                //Set up Classification dropdown
-		                dynamicSymbology.classSelect = new select({
-		                        name: "Classification",
-		                        title: "Classification",
-		                        options: dynamicSymbology.attTemplateOptions,
-		                        style: "width: 150px; height: 20px"
-		                    });
-		                dynamicSymbology.classSelect.placeAt(dom.byId("classification"));
-		                dynamicSymbology.classSelect.startup();
-		
-		                //set classificatoin Method
-		                dynamicSymbology.classSelect.set('value', geoenrichedFeatureLayer.renderer.classificationMethod);
-		
-		                //get Histogram and Stats
-		                selfDynamicSymbology._getHistoAndStats(geoenrichedFeatureLayer.renderer);
-		
-		                //on change event for slider
-		                dynamicSymbology.slider.on("change", function (sliderValueChange) {
-		                	_sliderValueChange = sliderValueChange;
-		                    //change classification dropdown to manual
-		                    dynamicSymbology.classSelect.set('value', 'manual');
-		                    dynamicSymbology.isSmartMapping = false;	
-		                });
-	                } //if (_ClassificationMethod!=undefined)
 
+
+	
+	                //Classification dropdown
+	                dynamicSymbology.attTemplateOptions = [{
+	                        label: "equal-interval",
+	                        value: "equal-interval"
+	                    }, {
+	                        label: "natural-breaks",
+	                        value: "natural-breaks"
+	                    }, {
+	                        label: "quantile",
+	                        value: "quantile",
+	                        selected: true
+	                    }, {
+	                        label: "standard-deviation",
+	                        value: "standard-deviation"
+	                    }, {
+	                        label: "manual",
+	                        value: "manual"
+	                    }
+	                ];
+	                //Set up Classification dropdown
+	                dynamicSymbology.classSelect = new select({
+	                        name: "Classification",
+	                        title: "Classification",
+	                        options: dynamicSymbology.attTemplateOptions,
+	                        style: "width: 150px; height: 20px"
+	                    });
+	                dynamicSymbology.classSelect.placeAt(dom.byId("classification"));
+	                dynamicSymbology.classSelect.startup();
+	
+	                //set classificatoin Method
+	                dynamicSymbology.classSelect.set('value', geoenrichedFeatureLayer.renderer.classificationMethod);
+	
+	                //get Histogram and Stats
+	                selfDynamicSymbology._getHistoAndStats(geoenrichedFeatureLayer.renderer);
+	
+	                //on change event for slider
+	                dynamicSymbology.slider.on("change", function (sliderValueChange) {
+	                	_sliderValueArry = [];
+	                	_sliderValueChange = sliderValueChange;
+	                    //change classification dropdown to manual
+	                    dynamicSymbology.classSelect.set('value', 'manual');
+	                    dynamicSymbology.isSmartMapping = false;	
+	                });
+	                
 	                //set apply renderer button
 	                var applyNode = domConstruct.create("div", null, dom.byId("applyBtn"), "first");
 
@@ -397,134 +315,61 @@ define(['dojo/_base/declare',
                 }// end of if (dslayer.layerObject.type == "Feature Layer") {  the layer is feature layer   
                    	                              
             });
-            if ((_ClassificationMethod!=undefined) || (_nBreaks>0)) {
-            	dom.byId("classificationLabel").style.display = '';	
-                dom.byId("nClassesLabel").style.display = '';	
-                dom.byId("sliderLabel").style.display = '';	
-                dom.byId("opaqueLabel").style.display = '';
-               
-            	//On Classification method change
-	            onClickHandle = on(dynamicSymbology.classSelect, "change", function (c) {
-	                    _ClassificationMethod = c;
-	                    if (c != "manual") {
-	                        dynamicSymbology.isSmartMapping = true;
-	                    }
-	                });
-	
-	            //On number of classes change
-	            dynamicSymbology.numberClasses.on("change", function (c) {
-	                _NumberOfClasses = c;
-	                dynamicSymbology.isSmartMapping = true;
-	            });
-            } else {
-                dom.byId("classificationLabel").style.display = 'none';	
-                dom.byId("nClassesLabel").style.display = 'none';	
-                dom.byId("sliderLabel").style.display = 'none';	         
-                dom.byId("opaqueLabel").style.display = 'none';	 
- 				dom.byId("symbolSize").style.display = 'none';    
- 				dom.byId("symbolSizeLabel").style.display = 'none';
-				dom.byId("symbolSizeSelection").style.display = 'none';	  
-	        }
+
+            //On Classification method change
+            onClickHandle = on(dynamicSymbology.classSelect, "change", function (c) {
+                    _ClassificationMethod = c;
+                    if (c != "manual") {
+                        dynamicSymbology.isSmartMapping = true;
+                    }
+                });
+
+            //On number of classes change
+            dynamicSymbology.numberClasses.on("change", function (c) {
+                _NumberOfClasses = c;
+                dynamicSymbology.isSmartMapping = true;
+            });
         },
         _onApplyBtnClick: function () {
-				
-			var bSizeEnlargeByValue = false;		
-			var radios = document.getElementsByName('symbolSizeUpDown');
-			for (var i = 0, length = radios.length; i < length; i++)
-			{
-			 	if (radios[i].checked)
-			 	{
-				  if (radios[i].value == "up") {
-				  	bSizeEnlargeByValue = true;
-				  }
-				  break;
-			 	}
-			}
+
             if (dynamicSymbology.isSmartMapping == true) {
                 selfDynamicSymbology._updateSmartMapping2();
             } else {
 				var fType = geoenrichedFeatureLayer.geometryType;
-
-                //symbol.style = _style;
-                if ((_ClassificationMethod!=undefined) || (_nBreaks>0)){
-
-	                renderer = new ClassBreaksRenderer(null, geoenrichedFeatureLayer.renderer.attributeField);	                            	
-	
-	            	
-	            	var minMin = 1000000000;
-	            	var maxMin = 0;
-	            	var index = 0;
-	            	var bValueGoingUp = true;
-	            	_sliderValueChange.forEach(function (b) {
-	            		if (index == 1) {
-	            			if (b.minValue < minMin){
-	            				bValueGoingUp = false;
-	            			}
-	            		}
-	            		if (minMin > b.minValue) {
-	            			minMin = b.minValue;
-	            		}
-	            		if (maxMin < b.minValue) {
-	            			maxMin = b.minValue;
-	            		}       
-	            		
-	            		index = index + 1;     		
-	            	});
-	            	var maxiSymbolSize = minimumSymbolSize + (index - 1) * 2;
-	            	var initialSymbolSize = null;
-	            	var symbolSizeStep = null;
-	            	if ((bValueGoingUp && bSizeEnlargeByValue) || (!bValueGoingUp && !bSizeEnlargeByValue)){
-	            		initialSymbolSize = minimumSymbolSize;
-	            		symbolSizeStep = 2;
-	            	} else {
-	            		initialSymbolSize = maxiSymbolSize;
-	            		symbolSizeStep = -2;            		
-	            	}
-	            	var indexSymbolSizeStep = 0;
-
-	                dynamicSymbology.slider.breakInfos.forEach(function (b) {
-	                	if ((_style != null)&& (fType == "esriGeometryPoint")){
-    						if ((fType == "esriGeometryPolygon") && (!_bPolygonAsPoint)) {
-			                	b.symbol = new SimpleFillSymbol();
-			                }
-			                else if (fType == "esriGeometryPolyline") {
-			                	b.symbol = new SimpleLineSymbol();
-			                }
-			                else if ((fType == "esriGeometryPoint") || _bPolygonAsPoint) {
-			                	
-			                	b.symbol = new SimpleMarkerSymbol();
-			                } 
-			                else if (_bPolygonAsPoint) {
-			                	b.symbol = _symbolPointForPolygon;
-			                }
-	                		//b.symbol = new SimpleMarkerSymbol();
-	                		b.symbol.size = initialSymbolSize + indexSymbolSizeStep * symbolSizeStep;
-	                		indexSymbolSizeStep = indexSymbolSizeStep + 1;
-	                		if (!_bPolygonAsPoint) {
-		                		b.symbol.style = _style;
-		                		b.symbol.color = _color;
-		                		b.symbol.outline = _outline;
-		                		b.symbol.imageData = null;
-		                		b.symbol.url = "";	                			
-	                		}
-
-	                	}
-	                	renderer.addBreak(b);
-	                });
-	            	renderStr = JSON.stringify(renderer.toJson());
-	                window.hashRenderer[_layerID.replace(window.layerIdPrefix, "")] = renderer.toJson();
-	                _ClassificationMethod = renderer.classificationMethod;
-				
-	                selfDynamicSymbology._getHistoAndStats(renderer);
-            	} else {
-            		var symbol = new SimpleMarkerSymbol();
-            		symbol.style = _style;
-            		symbol.color = _color;
-            		symbol.outline = _outline;
-            		var simpleRenderer = new SimpleRenderer(symbol);
-            		geoenrichedFeatureLayer.setRenderer(simpleRenderer);
-            		geoenrichedFeatureLayer.redraw();
+				if (fType == "esriGeometryPolygon") {
+                	var symbol = new SimpleFillSymbol();
                 }
+                else if (fType == "esriGeometryPolyline") {
+                	var symbol = new SimpleLineSymbol();
+                }
+                else if (fType == "esriGeometryPoint") {
+                	var symbol = new SimpleMarkerSymbol();
+                }
+                symbol.setColor(new Color([150, 150, 150, 0.5]));
+                symbol.style = _style;
+
+                renderer = new ClassBreaksRenderer(symbol, geoenrichedFeatureLayer.renderer.attributeField);	                            	
+
+            	var initialSymbolSize = 4;
+            	var indexSymbolSizeStep = 0;
+                _sliderValueChange.forEach(function (b) {
+                	if ((_style != null)&& (fType == "esriGeometryPoint")){
+                		b.symbol = new SimpleMarkerSymbol();
+                		b.symbol.size = initialSymbolSize + indexSymbolSizeStep * 2;
+                		indexSymbolSizeStep = indexSymbolSizeStep + 1;
+                		b.symbol.style = _style;
+                		b.symbol.color = _color;
+                		b.symbol.outline = _outline;
+                		b.symbol.imageData = null;
+                		b.symbol.url = "";
+                	}
+                	renderer.addBreak(b);
+                });
+            	renderStr = JSON.stringify(renderer.toJson());
+                window.hashRenderer[_layerID.replace(window.layerIdPrefix, "")] = renderer.toJson();
+                _ClassificationMethod = renderer.classificationMethod;
+			
+                selfDynamicSymbology._getHistoAndStats(renderer);
             }
         },
         _onOriginalBtnClick: function () {
@@ -539,6 +384,9 @@ define(['dojo/_base/declare',
             }
 
             var str = lyrTobeUpdated.url;
+            var lookforNational = "National";
+            var lookforEnviroatlas = "enviroatlas";
+            var lookforCommunities = "Communities";
             if ((str.indexOf(lookforEnviroatlas) > -1) && (str.indexOf(lookforCommunities) > -1) ) {
                 //get from community
                 $.getJSON('configs/CommunitySymbology/' + 'AllCommunities' + '_JSON_Symbol/Nulls/' + 'CombComm' + '_' + window.hashAttribute[res[1]] + ".json", function (data) {
@@ -548,13 +396,8 @@ define(['dojo/_base/declare',
 
             } else {
                 console.log("get from json");
-                if ((_ClassificationMethod!=undefined)  || (_nBreaks>0)){
-                	selfDynamicSymbology._resetElements(currentSymbology[_layerID]['origRenderer']);
-                } else {
-                	geoenrichedFeatureLayer.setRenderer(currentSymbology[_layerID]['origRenderer']);
-                	geoenrichedFeatureLayer.redraw();
-                }
-                
+                var defaultRenderer = new ClassBreaksRenderer(currentSymbology[_layerID]['origRenderer']);
+                selfDynamicSymbology._resetElements(defaultRenderer);
             }
         },        
         _resetElements: function (defaultRenderer) {
@@ -611,10 +454,7 @@ define(['dojo/_base/declare',
             return symbolColors;
         },
         _openSymbolStyler: function () {
-        	if ((_ClassificationMethod!=undefined) || (_nBreaks>0)) {
-        		var currRamp = selfDynamicSymbology._getColorsFromInfos(geoenrichedFeatureLayer.renderer.infos);
-        	}
-            
+            var currRamp = selfDynamicSymbology._getColorsFromInfos(geoenrichedFeatureLayer.renderer.infos);
 
             var fType = geoenrichedFeatureLayer.geometryType;
             if (fType == "esriGeometryPolygon") {
@@ -652,37 +492,22 @@ define(['dojo/_base/declare',
                     schemes: schemes
                 });
             } else if (fType == "esriGeometryPoint") {
-                
+                var dSymbol = geoenrichedFeatureLayer.renderer.infos[0].symbol;
             	schemes = esriStylesChoropleth.getSchemes({
                     basemap: "hybrid",
                     geometryType: "point",
                     theme: "high-to-low"
-                }); 
-                if ((_ClassificationMethod!=undefined)  || (_nBreaks>0)){ 
-              		var dSymbol = geoenrichedFeatureLayer.renderer.infos[0].symbol;
-	                symbolStyler.edit(dSymbol, {
-	                    //activeTab: "fill",
-	                    colorRamp: {
-	                        colors: currRamp,
-	                        numStops: _NumberOfClasses,
-	                        scheme: schemes.secondarySchemes[39]
-	                    },
-	                    externalSizing: false,
-	                    schemes: schemes
-	                });
-                } else {
-                	dSymbol = new SimpleMarkerSymbol();
-
-	                symbolStyler.edit(dSymbol, {
-	                    //activeTab: "fill",
-	                    colorRamp: {
-	                        colors: [],
-	                        scheme: schemes.secondarySchemes[39]
-	                    },
-	                    externalSizing: false,
-	                    schemes: schemes
-	                });                	
-                }
+                });
+                symbolStyler.edit(dSymbol, {
+                    //activeTab: "fill",
+                    colorRamp: {
+                        colors: currRamp,
+                        numStops: _NumberOfClasses,
+                        scheme: schemes.secondarySchemes[39]
+                    },
+                    externalSizing: false,
+                    schemes: schemes
+                });
             }
         },
 
@@ -743,38 +568,9 @@ define(['dojo/_base/declare',
 
                 if (!geoenrichedFeatureLayer.visible) {
                     geoenrichedFeatureLayer.show();
-                }                
+                }
 
-				if (!_bPolygonAsPoint) {
-					geoenrichedFeatureLayer.setRenderer(smartRenderer.renderer);
-				}
-				else {
-	            	var minValue0 = smartRenderer.renderer.infos[0].minValue;
-					var minValue1 = smartRenderer.renderer.infos[1].minValue;
-	
-	            	var initialSymbolSize = null;
-	            	var symbolSizeStep = null;
-	            	if (((minValue0 < minValue1) && _bSizeUpByValuePolygonAsPoint) || ((minValue0 > minValue1) && !_bSizeUpByValuePolygonAsPoint)){
-	            		initialSymbolSize = minimumSymbolSize;
-	            		symbolSizeStep = 2;
-	            	} else {
-	            		initialSymbolSize = minimumSymbolSize + smartRenderer.renderer.length * 2;
-	            		symbolSizeStep = -2;            		
-	            	}
-	            	var indexSymbolSizeStep = 0;
-	            	
-	            	//construct a new renderer for polygon features which will be rendered as points            	
-	            	var polygonAsPointRenderer = new ClassBreaksRenderer(null, smartRenderer.renderer.attributeField);
-	            	
-					smartRenderer.renderer.infos.forEach(function (info) {
-			                var symbolSize = initialSymbolSize + indexSymbolSizeStep * symbolSizeStep;
-							newSymbol = new SimpleMarkerSymbol(_symbolPointForPolygon.style, symbolSize, _symbolPointForPolygon.outline, _symbolPointForPolygon.color);
-	 						polygonAsPointRenderer.addBreak(info.minValue, info.maxValue, newSymbol);
-	                		indexSymbolSizeStep = indexSymbolSizeStep + 1;
-	            	});	            	
-					geoenrichedFeatureLayer.setRenderer(polygonAsPointRenderer);
-				}
-              
+                geoenrichedFeatureLayer.setRenderer(smartRenderer.renderer);
                 window.hashRenderer[geoenrichedFeatureLayer.id.replace(window.layerIdPrefix, "")] = smartRenderer.renderer.toJson();
                 geoenrichedFeatureLayer.redraw();
                 console.log("apply geoenrichedFeatureLayer.renderer :: ", geoenrichedFeatureLayer.renderer);
@@ -818,22 +614,21 @@ define(['dojo/_base/declare',
         onClose: function () {
             //clean up
             domStyle.set(dom.byId('nationalDSWarning'), "display", "none");
-            if ((_ClassificationMethod!=undefined) || (_nBreaks>0)) { 
-	            dijit.byId("transSlider").destroy();
-	            dynamicSymbology.slider.destroy();
-	            dynamicSymbology.numberClasses.destroy();
-	            dynamicSymbology.classSelect.destroy();
-	            onClickHandle.remove();
-            }
-            
-            
-            dynamicSymbology.applyButton.destroy();
-            dynamicSymbology.origRendButton.destroy();
-            
+            dijit.byId("transSlider").destroy();
+
             styleDialog.destroy();
             symbolStyler.destroy();
             displaySymbolStyler.destroy();
-         
+            
+			
+            dynamicSymbology.slider.destroy();
+            dynamicSymbology.numberClasses.destroy();
+            dynamicSymbology.classSelect.destroy();
+            dynamicSymbology.applyButton.destroy();
+            dynamicSymbology.origRendButton.destroy();
+            
+            onClickHandle.remove();
+            
             dynamicSymbology = {};
             
             _scheme = null;
@@ -841,14 +636,9 @@ define(['dojo/_base/declare',
 	        _style = null;
 	        _color = null;
 	        _outline = null;
-	        _symbolSizeStep = 0;
-	        _symbolSizeInitial = 0;
-	        _nBreaks = 0;
-	        _bPolygonAsPoint = false;
+	        _sliderValueArry = null;
+	        _sliderValueChange = null;
 
-            _scheme = null;
-            dynamicSymbology.isSmartMapping = true;
-            
             geoenrichedFeatureLayer.setDefinitionExpression("");
             console.log('onClose');
         },

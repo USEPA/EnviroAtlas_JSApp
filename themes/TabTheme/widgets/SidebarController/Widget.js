@@ -132,7 +132,7 @@ define([
       },
 
       _resizeTitleNode: function(){
-        var nodeWidth = (this.getWidth() / 6);//var nodeWidth = (this.getWidth() / 3);
+        var nodeWidth = (this.getWidth() / 3);
         array.forEach(query('.title-node', this.maxStateNode), function(titleNode){
           html.setStyle(titleNode, 'width', nodeWidth + 'px');
         }, this);
@@ -240,16 +240,7 @@ define([
         array.forEach(this.tabs, function(tab, i) {
           if (index === i) {
             tab.selected = true;
-            tab.title.classList.remove('tab-not-selected');
-            tab.title.classList.add('tab-selected');
-            
-            // Change text in header
-            $('#data_title_id p').text(tab.title.title);
-
           } else {
-            tab.title.classList.remove('tab-selected');
-            tab.title.classList.add('tab-not-selected');
-            
             if (tab.selected) {
               tab.selected = false;
               if(tab.panel){
@@ -712,7 +703,7 @@ define([
 
       _createTitleNode: function(config) {
         /*jshint unused:false*/
-        var nodeWidth = (this.getWidth() /6);// var nodeWidth = (this.getWidth() /3);
+        var nodeWidth = (this.getWidth() /3);
         var title = config.label,
           iconUrl = config.icon,
           node = html.create('div', {
@@ -726,19 +717,19 @@ define([
             }
           }, this.titleListNode),
 
-          /*indicator = html.create('div', {
+          indicator = html.create('div', {
             'class': 'tab-indicator'
-          }, node),*/
+          }, node),
 
           imgNode = html.create('img', {
             src: iconUrl
           }, node),
 
-          /*textNode = html.create('div', {
+          textNode = html.create('div', {
             innerHTML: title,
             'class': 'panel_titles'
             
-          }, node),*/
+          }, node),
 
           minNode = html.create('div', {
             title: title,
@@ -757,12 +748,12 @@ define([
           }, minNode);
 
         this.own(on(node, 'click', lang.hitch(this, this.onSelect)));
-        /*this.own(on(node, mouse.enter, lang.hitch(this, this._onMouseEnter)));
-        this.own(on(node, mouse.leave, lang.hitch(this, this._onMouseLeave)));*/
+        this.own(on(node, mouse.enter, lang.hitch(this, this._onMouseEnter)));
+        this.own(on(node, mouse.leave, lang.hitch(this, this._onMouseLeave)));
 
         this.own(on(minNode, 'click', lang.hitch(this, this._onMinIconClick, minNode)));
-        /*this.own(on(minNode, mouse.enter, lang.hitch(this, this._onMouseEnter)));
-        this.own(on(minNode, mouse.leave, lang.hitch(this, this._onMouseLeave)));*/
+        this.own(on(minNode, mouse.enter, lang.hitch(this, this._onMouseEnter)));
+        this.own(on(minNode, mouse.leave, lang.hitch(this, this._onMouseLeave)));
         return node;
       },
 

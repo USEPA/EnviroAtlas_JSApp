@@ -344,7 +344,6 @@ define([
                             lOptions.id = layer.name;
                         }
                         if (layer.type.toUpperCase() === 'DYNAMIC') {
-                        	window.dynamicLayerNumber.push(layer.eaID);
                             if (layer.imageformat) {
                                 var ip = new ImageParameters();
                                 ip.format = layer.imageformat;
@@ -521,7 +520,6 @@ define([
                         if (layer.name) {
                             lLayer._titleForLegend = layer.name;
                             lLayer.title = layer.name;
-                            window.hashTitleToEAID[layer.name] = layer.eaID;
                             lLayer.noservicename = true;
                         }
                         lLayer.on('load', function (evt) {

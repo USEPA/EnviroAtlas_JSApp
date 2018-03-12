@@ -51,12 +51,11 @@ define(["dojo/_base/declare",
       initOptions: function() {
         var context = this.searchPane.searchContext;
         var hasUsername = (typeof context.username === "string" && context.username.length > 0);
-        var hasOrgId = (typeof context.orgId === "string" && context.orgId.length > 0);
+        //var hasOrgId = (typeof context.orgId === "string" && context.orgId.length > 0);
         var options = this.getConfig().scopeOptions;
         this.curatedFilter = options.Curated.filter;
         var activeNode = null;
-        options.MyOrganization.allow = true; //Override function in widget.js to disable this.
-        
+
         var initOption = function(name, node) {
           var opt = options[name];
           if (opt && opt.allow) {
@@ -145,12 +144,11 @@ define(["dojo/_base/declare",
         var curatedFilter = this.curatedFilter;
         var context = this.searchPane.searchContext;
         var username = context.username;
-        var orgId = "cJ9YHowT8TU7DUyn" //context.orgId;
+        var orgId = context.orgId;
         var considerOrg = true;
-        /*if (context.portal && context.portal.isPortal) {
+        if (context.portal && context.portal.isPortal) {
           considerOrg = false;
-        }*/
-        
+        }
 
         if (scope === "MyContent") {
           if (typeof username === "string" && username.length > 0) {
