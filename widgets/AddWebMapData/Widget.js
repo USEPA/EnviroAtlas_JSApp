@@ -70,6 +70,12 @@ define(['dojo/_base/declare',
         TabContainer3,
         ItemTable) {
         //To create a widget, you need to derive from BaseWidget.
+        var showLayerListWidget = function(){
+	        var widgetName = 'LayerList';
+	        var widgets = selfAddWebMapData.appConfig.getConfigElementsByName(widgetName);
+	        var pm = PanelManager.getInstance();
+	        pm.showPanel(widgets[0]);	   	
+	    };
         return declare([BaseWidget, _WidgetsInTemplateMixin], {
             // Custom widget code goes here
 
@@ -111,6 +117,7 @@ define(['dojo/_base/declare',
             },
 
             startup: function () {
+            	selfAddWebMapData = this;
                 this.inherited(arguments);
                 console.log('ChangeWebMap :: startup');
             },
@@ -359,6 +366,9 @@ define(['dojo/_base/declare',
 
             // when a web map is selected make it active, but keep the extent
             _onItemSelected: function (item) {
+            	//this.promptUserToZoomToItem(item);
+            	this.zoomToItem(item);
+            	showLayerListWidget();
                 testmap = this.map;
 
                 item.getItemData().then(function(response){

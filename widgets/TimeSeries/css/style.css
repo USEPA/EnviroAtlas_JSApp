@@ -1,0 +1,214 @@
+.shadow {
+	/*-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	-moz-box-shadow:0 6px 3px -3px #111;
+	-webkit-box-shadow:0 6px 3px -3px #111;
+	box-shadow:0 6px 3px -3px #111;*/
+	background-color:#f4f4f4;
+	padding:8px 2px 0px 2px;
+}
+
+.timeWindow {
+	/*-moz-border-radius:10px;
+
+	width:310px;*/
+	width:100%;
+	/*-webkit-border-radius:10px;
+	background:url(../images/background.png) repeat scroll left top transparent;*/
+	font-family:Tahoma;
+	color:#202020;
+	text-align:center;
+	padding:0px;
+}
+
+/*.serviceSelectionWindow {
+	-moz-border-radius:0px;
+	position:absolute;
+
+	width:100%;
+	-webkit-border-radius:0px;
+	background:url(../images/background.png) repeat scroll left top transparent;
+	font-family:Tahoma;
+	color:#000;
+	text-align:left;
+	padding:2px;
+	
+}*/
+.legendTable{
+	border-collapse: collapse; 
+	border-spacing: 0 0px;
+	line-height: 0;
+}
+.legendImage{
+	display:block; 
+	width: 20px;
+}
+.legendLabel{
+	vertical-align:middle;
+	font-size:10;
+}
+#title {
+font-size:12pt;
+font-weight:700;
+}
+
+#subTitle {
+font-size:10pt;
+}
+
+#details {
+font-size:10pt;
+}
+
+#serviceSelectTitle {
+font-size:12pt;
+font-weight:700;
+}
+
+#legendImg {
+width:90%;
+}
+
+.roundedCorner {
+    background-color: #FFFFFF;
+    border: 1px solid #066DAB;
+    border-radius: 4px;
+    bottom: 5px;
+    color: #45484D;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-top: 20px;
+    text-align: center;
+    width: 95%;
+}
+
+.divSplashScreenContainer {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.65);
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 100000;
+    display: none;
+}
+
+.divSplashScreenContent {
+    background-color: #FFFFFF;
+    border-radius: 0px;
+    box-shadow: 0 0 10px #00FFFF;
+    text-align: left;
+    width: 500px;
+    z-index: 1000;
+}
+
+.divSplashContainer {
+    overflow: hidden;
+    position: relative;
+}
+
+.divSplashContent {
+    overflow: hidden;
+    padding-left: 10px;
+    text-align: left;
+    width: 95%;
+    font-size:9pt;
+}
+
+.closeIcon {
+    border: medium none;
+    border-radius: 5px;
+    cursor: pointer;
+    float: inherit;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.infoIcon {
+	background-image: url("../images/i_info.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 30px;
+	width: 30px;
+    text-align: center;
+}
+
+.esriLargeSliderTR {
+	background-color: #bcd5f0;
+	padding-right: 2px;
+	padding-left: 2px;
+    right: 7px; !important;
+    top: 5px;
+}
+
+.esriScalebar{
+	right: 160px; !important;
+	bottom: 60px; !important;
+}
+
+.navButtonsHolder {
+    position:absolute;
+	right:25px;
+	top:212px;
+	z-index:998;
+	width:15px;
+}
+
+.zoominIcon {
+        background-image: url("../images/nav_zoomin.png");
+        width: 16px;
+        height: 16px;
+}
+
+.zoomoutIcon {
+        background-image: url("../images/nav_zoomout.png");
+        width: 16px;
+        height: 16px;
+}
+
+.zoomfullextIcon {
+        background-image: url("../images/nav_fullextent.png");
+        width: 16px;
+        height: 16px;
+}
+
+.panIcon {
+        background-image: url("../images/nav_pan.png");
+        width: 16px;
+        height: 16px;
+}
+
+.deactivateIcon {
+        background-image: url("../images/nav_decline.png");
+        width: 16px;
+        height: 16px;
+}
+.yearInput .dijitTextNode
+{
+	    width: 180px;
+        height: 18px;
+}
+.helpButton {
+		width:20px;
+		height:20px;
+		vertical-align:middle; 
+		/*margin-left:6px;*/
+}
+.dijitMenuItem {
+        font-size: small;
+        font-family: Arial;
+}
+.dijitDialogTitle{
+        font-family: Arial;
+}
+.dijitTitlePaneTitle{
+        font-family: Arial;
+}
+.dijitContentPane{
+        font-family: Arial;
+}
+
+.dijitRuleMarkH:nth-child(even){
+    height: 6px;
+}
+

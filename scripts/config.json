@@ -4274,7 +4274,7 @@
                 "eaCA": true,
                 "eaDescription": "This map estimates the dollar value associated with annual damage to health, ecosystems, and materials that may be avoided due to carbon monoxide removed by trees in each census block group.",
                 "name": "Value of health, ecosystem, and materials damage avoided due to carbon monoxide removed by tree cover ($/yr)\u00a0",
-                "eaDfsLink": "MissingFactSheet.pdf"
+                "eaDfsLink": "ESC/Valuehealthecosystemmaterialsdamageavoidedcarbonmonoxide.pdf"
             },
             {
                 "type": "FEATURE",
@@ -4320,7 +4320,7 @@
                 "eaCA": true,
                 "eaDescription": "This map estimates the dollar value associated with annual damage to health, ecosystems, and materials that may be avoided due to particulate matter [PM10] removed by trees in each census block group.",
                 "name": "Value of health, ecosystem, and materials damage avoided due to particulate matter [PM10] removed by tree cover ($/yr)\u00a0",
-                "eaDfsLink": "MissingFactSheet.pdf"
+                "eaDfsLink": "ESC/ValuehealthecosystemmaterialsdamageavoidedPM10.pdf"
             },
             {
                 "type": "FEATURE",

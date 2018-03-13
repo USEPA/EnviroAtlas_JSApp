@@ -375,7 +375,13 @@ LabelClass, PopupTemplate, Legend) {
     },
 
     drawLegends: function(legendsNode) {
-      var useLegendDijit = true;
+      //var useLegendDijit = true;
+      var useLegendDijit;
+      if (this.layerObject.id === window.timeSeriesLayerId) {
+      	useLegendDijit = false;
+      } else {
+      	useLegendDijit = true;
+      }
       if (useLegendDijit) {
         this._initLegendsNodeByLegendDijit(legendsNode);
       } else {

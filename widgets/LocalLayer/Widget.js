@@ -181,6 +181,7 @@ define([
 			communityLocationLayer.setInfoTemplates(popupsTemplate);
 
 			communityLocationLayer.id = window.layerIdBndrPrefix + communityBoundaryLayerID;
+			window.dynamicLayerNumber.push(communityBoundaryLayerID);
 			window.idCommuBoundaryPoint = communityLocationLayer.id;
 			chkboxId = window.chkSelectableLayer + communityBoundaryLayerID;
 			if (dojo.byId(chkboxId)) {
@@ -248,6 +249,7 @@ define([
 						if (layer.name) {
 							lLayer._titleForLegend = layer.name;
 							lLayer.title = layer.name;
+							window.hashTitleToEAID[layer.name] = layer.eaID;
 							lLayer.noservicename = true;
 						}
 						var popupConfig = jimuUtils.getPopups(layer);
@@ -380,6 +382,7 @@ define([
 						if (layer.name) {
 							lLayer._titleForLegend = layer.name;
 							lLayer.title = layer.name;
+							window.hashTitleToEAID[layer.name] = layer.eaID;
 							lLayer.noservicename = true;
 						}
 						lLayer.on('load', function(evt) {
@@ -557,6 +560,7 @@ define([
 						if (layer.name) {
 							lLayer._titleForLegend = layer.name;
 							lLayer.title = layer.name;
+							window.hashTitleToEAID[layer.name] = layer.eaID;
 							lLayer.noservicename = true;
 						}
 						lLayer.on('load', function(evt) {

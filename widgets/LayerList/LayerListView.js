@@ -62,7 +62,15 @@ define([
 
     postCreate: function() {
       array.forEach(this.operLayerInfos.getLayerInfoArray(), function(layerInfo) {
-        this.drawListNode(layerInfo, 0, this.layerListTable);
+        //this.drawListNode(layerInfo, 0, this.layerListTable);
+        var refHrNode = query("[class~='hrClass']", this.domNode)[0];
+        var refHrNodeNonGraphic = query("[class~='hrClassNonGraphic']", this.domNode)[0];
+        if ((layerInfo.layerObject.type) && (layerInfo.layerObject.type.toUpperCase() == "FEATURE LAYER")) {
+        	this.drawListNode(layerInfo, 0, refHrNode,'before');
+        }
+        else {
+        	this.drawListNode(layerInfo, 0, refHrNodeNonGraphic,'before');
+        }
       }, this);
 
       array.forEach(this.operLayerInfos.getTableInfoArray(), function(layerInfo) {
@@ -177,9 +185,8 @@ define([
       // set tdNode width
       domStyle.set(layerTdNode, 'width', level * 12 + 40 + 'px');
 
-
       scaleLabel = domConstruct.create('td', {
-        'style': 'width:22px; vertical-align:top'
+        'class': 'col col15'
       }, layerTrNode);
 
 

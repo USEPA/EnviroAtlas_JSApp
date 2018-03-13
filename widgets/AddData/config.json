@@ -2,22 +2,23 @@
   "numPerPage": 30,
   "scopeOptions": {
     "MyContent": {
-      "allow": true,
-      "label": null
+      "allow": false,
+      "label": "My Content"
     },
     "MyOrganization": {
       "allow": true,
-      "label": null
+      "label": "EPA GeoPlatform"
     },
     "Curated": {
       "allow": true,
-      "label": null,
-      "filter": null
+      "label": "Federal GeoPlatform",
+      "filter": "orgid:Hp6G80Pky0om7QvQ"
     },
     "ArcGISOnline": {
       "allow": true,
-      "label": null
-    }
+      "label": "ArcGIS Online"
+    },
+    "defaultScope": "MyOrganization"
   },
   "addFromUrl": {
     "allow": true

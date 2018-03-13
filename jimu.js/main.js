@@ -61,8 +61,10 @@ define([
     window.layerIdPBSPrefix = "eaLyrPBSNum_";
     window.layerIdTiledPrefix = "tiledNum_";
     window.addedLayerIdPrefix = "added_";
+    window.topLayerID = "";
     window.addedLayerIndex = 0;
     window.uploadedFeatLayerIdPrefix = "uploaded_";
+    window.timeSeriesLayerId = "ScenarioDataLayer";
     window.widthOfInfoWindow = 0;
     window.heightOfInfoWindow = 0;
     window.toggleOnHucNavigation = false;
@@ -72,7 +74,9 @@ define([
     window.chkTopicPrefix = "ckTopic_";
     window.chkTopicPBSPrefix = "ckTopicPBS_";
     window.chkSelectableLayer = "ck";
+    window.layerTitlePrefix = "layerTitle_";
     window.idCommuBoundaryPoint = "Boundary_Point";
+    window.timeSeriesDisclaim = false;
     
     window.dataFactSheet = "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/";
     //window.matadata = "https://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7BBDF514A6-05A8-400D-BF3D-030645461334%7D";
@@ -162,7 +166,6 @@ define([
     //window.communityDic["MSPMN"] = "Minneapolis/St. Paul, MN";
     window.communityDic["MSPMN"] = "Minneapolis-St.Paul, MN";
     window.communityDic["NBMA"] = "New Bedford, MA";
-    //window.communityDic["NHCT"] = "New Haven, CT";
     window.communityDic["NYNY"] = "New York, NY";
     window.communityDic["PNJ"] = "Paterson, NJ";
     window.communityDic["PAZ"] = "Phoenix, AZ";
@@ -195,6 +198,7 @@ define([
     window.hashTopicPBS = {};
     window.hashFieldsAddedFeatureLayer = {};
     window.hashVisibleLayersForDynamic = {};
+    window.hashTitleToEAID = {};
     window.hashGeometryTypeAddedFeatLyr = {};
     window.hashInfoTemplate = {};
 	window.hashRenderer = {};

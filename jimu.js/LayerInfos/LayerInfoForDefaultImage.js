@@ -72,7 +72,7 @@ define([
 
               var symbolDiv = domConstruct.create("div", {
                 "class": "legend-symbol jimu-float-leading",
-                "style": "width:50px;height:50px;position:relative"
+                "style": "width:50px;height:24px;position:relative"
               }, legendDiv);
 
               var imgSrc = null;
@@ -86,7 +86,17 @@ define([
                 "style":"overflow:auto;margin:auto;position:absolute;top:0;left:0;bottom:0;right:0",
                 "src": imgSrc
               }, symbolDiv);
-
+				//alert(legend.label);//this is called for displaying the label
+				if (this.layerObject.id === "ScenarioDataLayer") {
+					newLegendLabel = legend.label;
+					legendSplit = legend.label.split("-");
+					if (legendSplit.length==1) {
+						newLegendLabel = (parseInt(legendSplit[0].replace(/,/g, ''))/100).toString();
+					} else if (legendSplit.length==2) {
+						newLegendLabel = (parseInt(legendSplit[0].replace(/,/g, ''))/100).toString() + "-" + (parseInt(legendSplit[1].replace(/,/g, ''))/100).toString();
+					};
+					legend.label = newLegendLabel;
+				}
               domConstruct.create("div", {
                 "class": "legend-label jimu-float-leading",
                 "innerHTML": legend.label || " "
