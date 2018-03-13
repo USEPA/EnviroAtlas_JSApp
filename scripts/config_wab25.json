@@ -4232,7 +4232,7 @@
             },
             {
                 "mode": "ondemand",
-                "eaDfsLink": "MissingFactSheet.pdf",
+                "eaDfsLink": "ESC/Valuehealthecosystemmaterialsdamageavoidedcarbonmonoxide.pdf",
                 "sourceType": "cbg",
                 "opacity": 0.6,
                 "name": "Value of health, ecosystem, and materials damage avoided due to carbon monoxide removed by tree cover ($/yr)\u00a0",
@@ -4278,7 +4278,7 @@
             },
             {
                 "mode": "ondemand",
-                "eaDfsLink": "MissingFactSheet.pdf",
+                "eaDfsLink": "ESC/ValuehealthecosystemmaterialsdamageavoidedPM10.pdf",
                 "sourceType": "cbg",
                 "opacity": 0.6,
                 "name": "Value of health, ecosystem, and materials damage avoided due to particulate matter [PM10] removed by tree cover ($/yr)\u00a0",

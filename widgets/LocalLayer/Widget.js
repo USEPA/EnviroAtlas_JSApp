@@ -96,7 +96,7 @@ define([
 	    LabelClass,
 	    Color) {
 	//To do: set these community boundary layer properties from the config file.
-	var communityBoundaryLayer = "https://enviroatlas.epa.gov/arcgis/rest/services/Communities/Community_Locations/MapServer";
+	var communityBoundaryLayer = "https://leb.epa.gov/arcgis/rest/services/Communities/Community_Locations/MapServer";
 	var communityBoundaryLayerID = "901"
 	var minXCombinedExtent = 9999999999999;
 	var minYCombinedExtent = 9999999999999;
