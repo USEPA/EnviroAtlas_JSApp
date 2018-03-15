@@ -105,7 +105,9 @@ define([
               // Track New Layers 
               on(this.map, "layer-add", lang.hitch(this, function (event) {
                   var layer = event.layer
-                  ga('send', 'event', 'EnviroAtlas', "layer-add", "ealyr:" + layer.url + "| " + layer.title);
+                  if (layer.url){
+                    ga('send', 'event', 'EnviroAtlas', "layer-add", "ealyr:" + layer.url + "| " + layer.title);
+                  }
               }));
             /*
               // Track Removed Layers 
