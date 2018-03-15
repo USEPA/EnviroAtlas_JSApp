@@ -70,7 +70,7 @@
             "xmax": -8407515,
             "xmin": -8650275,
             "ymax": 4881221,
-            "ymin": 4655990,
+            "ymin": 4340990,
             "spatialReference": {
               "wkid": 102100
             }
@@ -79,8 +79,8 @@
         {
           "name": "Birmingham, AL",
           "extent": {
-            "xmax": -9590000,
-            "xmin": -9732410,
+            "xmax": -9732410,
+            "xmin": -9590000,
             "ymax": 4008840,
             "ymin": 3886000,
             "spatialReference": {
@@ -321,7 +321,7 @@
           "extent": {
             "xmax": -8402311,
             "xmin": -8620047,
-            "ymax": 4512000,
+            "ymax": 4377789,
             "ymin": 4340990,
             "spatialReference": {
               "wkid": 102100
