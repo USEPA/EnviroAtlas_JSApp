@@ -46,7 +46,7 @@ define([
         'dijit/TooltipDialog',
         'esri/InfoTemplate',
         'dojo/store/Memory',
-        'dijit/form/FilteringSelect',
+        'dijit/form/Select',
         'dijit/form/TextBox',
         'dijit/form/Button',
         'dojo/dom-construct'
@@ -83,7 +83,7 @@ define([
         TooltipDialog,
         InfoTemplate,
         Memory,
-        FilteringSelect,
+        Select,
         TextBox,
         Button,
         domConstruct) {
@@ -285,9 +285,9 @@ define([
         userChosenTimeStep = 5;
         var timeStepIntervals = [];
         var images = new Array();
-        var model = dijit.byId("modelSelection").item.value.replace(".", "" );
-        var season = dijit.byId("seasonSelection").item.value;
-        var climateVar = dijit.byId("climateSelection").item.value;
+        var model = document.getElementById("modelSelection").value.replace(".", "" );
+        var season = document.getElementById("seasonSelection").value;
+        var climateVar = document.getElementById("climateSelection").value;
         var imageCacheIndex = 0;
         var dictBBox = {};
         var dictSize = {};
@@ -351,12 +351,12 @@ define([
     var defineOneFrameService = function() {
         //esri.show(loading);        
 
-        if (dijit.byId("seasonSelection").item != null && dijit.byId("climateSelection").item != null) {
+        if (document.getElementById("seasonSelection").value != "" && document.getElementById("climateSelection").value != "") {
             var startHist = 1950;
             var endHist = 2005;
             var startFuture = 2006;
             var endFuture = 2099;
-            if (dijit.byId("modelSelection").item.value == "Hist") {
+            if (document.getElementById("modelSelection").value == "Hist") {
                 dojo.byId("subTitle").innerHTML = "Timeline: Years (1950-2005)";
                 dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (1950-2005)";
                 errorMessageYearInput = "Please input a year of single frame (" + String(startHist) + "-" + String(endHist) + ")";
@@ -388,9 +388,9 @@ define([
                     }                       
                 }
             }
-            var model = dijit.byId("modelSelection").item.value.replace(".", "" );
-            var season = dijit.byId("seasonSelection").item.value;
-            var climateVar = dijit.byId("climateSelection").item.value;
+            var model = document.getElementById("modelSelection").value.replace(".", "" );
+            var season = document.getElementById("seasonSelection").value;
+            var climateVar = document.getElementById("climateSelection").value;
             dojo.byId("frameOrSlide").innerHTML = 'frame';
             console.log("model+ season + climateVar:" + model+ season + climateVar);
             addOneFrameServiceToMap(model+ season + climateVar);
@@ -423,26 +423,27 @@ define([
         mapClickListener = map.on("click", executeIdentifyTask);
         
         imageServiceLayer.on("load", function(){
-            var modelId = dijit.byId("modelSelection").item.id;
-            var modelValue = dijit.byId("modelSelection").item.value;
-	        var season = dijit.byId("seasonSelection").item.value;
-	        var climateId = dijit.byId("climateSelection").item.id;
-	        var climateVar = dijit.byId("climateSelection").item.value;
+            //var modelId = dijit.byId("modelSelection").item.id;
+            var modelValue = document.getElementById("modelSelection").value;
+	        var season = document.getElementById("seasonSelection").value;
+	        //var climateId = document.getElementById("climateSelection").item.id;
+	        var climateVar = document.getElementById("climateSelection").value;
 	        var unit = "";
             if ((climateVar == "TempMax") ||(climateVar == "TempMin")) {
             	unit = "Degrees F";                
             } else if ((climateVar == "Precip") ||(climateVar == "PET")) {
             	unit = "Inches";                
             } 	        
-	        setMetadataTab(modelId + " (" + modelValue + "), " + season + " <br/>" + climateId + " (" + unit + ")<br/><hr>" + comment);
+	        //setMetadataTab(modelId + " (" + modelValue + "), " + season + " <br/>" + climateId + " (" + unit + ")<br/><hr>" + comment);
+	        setMetadataTab(modelValue + ", " + season + " <br/>" + climateVar + " (" + unit + ")<br/><hr>" + comment);
         });
 
     };    
 	var defineService = function () {
 	   //esri.show(loading);
 	   if (window.timeSeriesDisclaim) {
-	       if (dijit.byId("seasonSelection").item != null && dijit.byId("climateSelection").item != null ) {
-	            if (dijit.byId("modelSelection").item.value == "Hist") {
+	       if (document.getElementById("seasonSelection").value != "" && document.getElementById("climateSelection").value != "" ) {
+	            if (document.getElementById("modelSelection").item.value == "Hist") {
 	                dojo.byId("subTitle").innerHTML = "Timeline: Years (1950-2005)";
 	                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (1950-2005)";
 	            }
@@ -450,9 +451,9 @@ define([
 	                dojo.byId("subTitle").innerHTML = "Timeline: Years (2010-2099)";
 	                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (2010-2099)";
 	            }          
-	            var model = dijit.byId("modelSelection").item.value.replace(".", "" );
-	            var season = dijit.byId("seasonSelection").item.value;
-	            var climateVar = dijit.byId("climateSelection").item.value;
+	            var model = document.getElementById("modelSelection").value.replace(".", "" );
+	            var season = document.getElementById("seasonSelection").value;
+	            var climateVar = document.getElementById("climateSelection").value;
 	            userChosenTimeStep = 5;
 	            dojo.byId("frameOrSlide").innerHTML = 'slide';
 	            addSelectedImageServiceToMap(model + season + climateVar);
@@ -511,18 +512,19 @@ define([
         mapClickListener = map.on("click", executeIdentifyTask);
         
         imageServiceLayer.on("load", function(){
-            var modelId = dijit.byId("modelSelection").item.id;
-            var modelValue = dijit.byId("modelSelection").item.value;
-	        var season = dijit.byId("seasonSelection").item.value;
-	        var climateId = dijit.byId("climateSelection").item.id;
-	        var climateVar = dijit.byId("climateSelection").item.value;
+            //var modelId = dijit.byId("modelSelection").item.id;
+            var modelValue = document.getElementById("modelSelection").value;
+	        var season = document.getElementById("seasonSelection").value;
+	        //var climateId = document.getElementById("climateSelection").value;
+	        var climateVar = document.getElementById("climateSelection").value;
 	        var unit = "";
             if ((climateVar == "TempMax") ||(climateVar == "TempMin")) {
             	unit = "Degrees F";                
             } else if ((climateVar == "Precip") ||(climateVar == "PET")) {
             	unit = "Inches";                
             } 	   
-	        setMetadataTab(modelId + " (" + modelValue + "), " + season + " <br/>" + climateId + " (" + unit + ")<br/><hr>" + comment);          
+	        //setMetadataTab(modelId + " (" + modelValue + "), " + season + " <br/>" + climateId + " (" + unit + ")<br/><hr>" + comment);
+	        setMetadataTab(modelValue + ", " + season + " <br/>" + climateVar + " (" + unit + ")<br/><hr>" + comment);           
         });
 
     };
@@ -595,7 +597,7 @@ define([
         }
         
         dojo.connect(map.infoWindow._hide, "onclick", function(){
-        	    var climateValue = dijit.byId("climateSelection").item.value;
+        	    var climateValue = document.getElementById("climateSelection").value;
                 if ((climateValue == "TempMax") ||(climateValue == "TempMin")) {
                 	dojo.byId("identResult").innerHTML = "Degrees Fahrenheit: " + String(pixelVal);                
                 } else if ((climateValue == "Precip") ||(climateValue == "PET")) {
@@ -605,9 +607,9 @@ define([
         var deferred = identifyTask
             .execute(identifyParams)
             .addCallback(function (response) {
-                                 
+                                 //alert(response.value);
                 pixelVal = parseFloat(response.value)/100;
-                var climateValue = dijit.byId("climateSelection").item.value;
+                var climateValue = document.getElementById("climateSelection").value;
                 if ((climateValue == "TempMax") ||(climateValue == "TempMin")) {
                 	dojo.byId("identResult").innerHTML = "Degrees Fahrenheit: " + String(pixelVal);                
                 	map.infoWindow.setTitle("Degrees Fahrenheit");                	
@@ -635,40 +637,13 @@ define([
 		        map.on("layers-add-result", makeSliderAndLegend);
 		        map.on("layers-add-result", makeSliderAndLegendOneFrame);       
 		        dojo.byId('titleAndSliderOneFrame').style.display = 'none';
-		                	
-	        	var modelfiltSelect = new FilteringSelect({
-			        id: "modelSelection",
-			        name: "modelSelect",
-			        value: "CMIP5 RCP 8.5",
-			        store: climateModelsStore,
-			        searchAttr: "id",
-			        //required: true,
-			        placeHolder: "Select Scenario or Historical",
-			        style: "width:" + widthSelect,
-			        //style: "width: 100%"
-			    }, "modelSelection").startup();
-			    var climateFiltSelect = new FilteringSelect({
-			        id: "climateSelection",
-			        name: "climateSelect",
-			        value: "Autumn",
-			        store: climateVarStore,
-			        searchAttr: "id",
-			        //required: true,
-			        placeHolder: "Select Variable",
-			        style: "width:" + widthSelect,
-			    }, "climateSelection").startup();
-			    
-			    var seasonFiltSelect = new FilteringSelect({
-			        id: "seasonSelection",
-			        name: "seasonSelect",
-			        value: "Select Season",
-			        store: seasonStore,
-			        searchAttr: "id",
-			        intermediateChanges: true,
-			        //required: true,
-			        placeHolder: "Select Season or Annual",
-			        style: "width:" + widthSelect,
-			    }, "seasonSelection").startup();	
+		        document.getElementById("modelSelection").style.width = "320px";
+		        document.getElementById("climateSelection").style.width = "320px";
+		        document.getElementById("seasonSelection").style.width = "320px";
+		        
+	          
+                      	
+
 			    var frameYear = new TextBox({
 			        id: "frameYearInput",
 			        name: "frameYear",
@@ -761,16 +736,6 @@ define([
 						infobox.show()
 				}; //end of seasonSelectionHelp click event		
 				
-				document.getElementById("frameYearInputHelp").onclick = function (e) {
-					var infobox = new Dialog({
-							title: "Input Year Description",
-							style: 'width: 500px'
-						});
-					var infoDiv = dojo.create('div', {
-						'innerHTML': "<font face='calibri' size='2+'>" + "One year between 2006 - 2099" + "</font>"
-						}, infobox.containerNode);
-						infobox.show()
-				}; //end of frameYearInputHelp click event	
 													    				                     
             },
 	        onOpen: function () {

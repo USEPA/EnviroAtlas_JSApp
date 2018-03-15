@@ -65,6 +65,54 @@
           }
         },
         {
+          "name": "Baltimore, MD",
+          "extent": {
+            "xmax": -8407515,
+            "xmin": -8650275,
+            "ymax": 4881221,
+            "ymin": 4340990,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
+          "name": "Birmingham, AL",
+          "extent": {
+            "xmax": -9732410,
+            "xmin": -9590000,
+            "ymax": 4008840,
+            "ymin": 3886000,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
+          "name": "Brownsville, TX",
+          "extent": {
+            "xmax": -10790000,
+            "xmin": -10900000,
+            "ymax": 3033596,
+            "ymin": 2966825,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
+          "name": "Chicago, IL",
+          "extent": {
+            "xmax": -9600000,
+            "xmin": -9900000,
+            "ymax": 5255000,
+            "ymin": 5005000,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
           "name": "Cleveland, OH",
           "extent": {
             "xmax": -8924538,
@@ -263,6 +311,18 @@
             "xmin":-9394613.2987,
             "ymax": 3349023.4318,
             "ymin": 3165574.5639,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
+          "name": "Virginia Beach - Williamsburg, VA",
+          "extent": {
+            "xmax": -8402311,
+            "xmin": -8620047,
+            "ymax": 4377789,
+            "ymin": 4340990,
             "spatialReference": {
               "wkid": 102100
             }
