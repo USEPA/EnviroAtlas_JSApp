@@ -4517,10 +4517,10 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Landcover_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Landcover_AllCommunities/ImageServer",
                 "eaLyrNum": 0,
                 "tileLink": "no",
-                "type": "TILED",
+                "type": "IMAGE",
                 "eaFFM": true,
                 "visible": false,
                 "eaMetric": "landcover",
@@ -4555,13 +4555,13 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Connectivity_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Connectivity_AllCommunities/ImageServer",
                 "eaLyrNum": 0,
                 "eaTopic": "Landscape Pattern",
                 "sourceType": "grid",
                 "tileLink": "no",
                 "opacity": 0.6,
-                "type": "TILED",
+                "type": "IMAGE",
                 "eaBCSDD": [
                     "Biodiversity Conservation - x",
                     "Recreation, Culture, and Aesthetics - x"
@@ -4606,7 +4606,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/NrRd_PFor_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/NrRd_PFor_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "eaTopic": "Near-Road Environments",
                 "sourceType": "plp",
@@ -4802,7 +4802,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/RB15m_For_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/RB15m_For_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "tileLink": "no",
                 "type": "TILED",
@@ -4916,7 +4916,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/RB51m_For_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/RB51m_For_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "tileLink": "no",
                 "type": "TILED",
@@ -5033,7 +5033,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/RB15m_Vege_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/RB15m_Vege_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "tileLink": "no",
                 "type": "TILED",
@@ -5150,7 +5150,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/RB51m_Vege_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/RB51m_Vege_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "tileLink": "no",
                 "type": "TILED",
@@ -5175,7 +5175,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Park_Prox_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Park_Prox_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "eaTopic": "Engagement with Outdoors",
                 "sourceType": "plp",
@@ -5300,7 +5300,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/PctStGS_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/PctStGS_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "eaTopic": "Near-Road Environments",
                 "sourceType": "plp",
@@ -5414,7 +5414,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/GreenProx_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/GreenProx_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "eaTopic": "Land Cover: Type",
                 "sourceType": "plp",
@@ -5570,7 +5570,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/ImpProx_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/ImpProx_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "tileLink": "no",
                 "type": "TILED",
@@ -5680,7 +5680,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/PctStTC_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/PctStTC_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "eaTopic": "Near-Road Environments",
                 "sourceType": "plp",
