@@ -24982,7 +24982,7 @@
                     "health"
                 ],
                 "eaID": 310,
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communitiess/Community_BGmetrics/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer",
                 "eaLyrNum": 103,
                 "tileLink": "no",
                 "type": "FEATURE",
@@ -25027,7 +25027,7 @@
                     "health"
                 ],
                 "eaID": 311,
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communitiess/Community_BGmetrics/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer",
                 "eaLyrNum": 104,
                 "tileLink": "no",
                 "type": "FEATURE",
@@ -25071,7 +25071,7 @@
                     "health"
                 ],
                 "eaID": 312,
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communitiess/Community_BGmetrics/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer",
                 "eaLyrNum": 105,
                 "tileLink": "no",
                 "type": "FEATURE",
@@ -25116,7 +25116,7 @@
                     "health"
                 ],
                 "eaID": 313,
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communitiess/Community_BGmetrics/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer",
                 "eaLyrNum": 106,
                 "tileLink": "no",
                 "type": "FEATURE",
@@ -25161,7 +25161,7 @@
                     "health"
                 ],
                 "eaID": 314,
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communitiess/Community_BGmetrics/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer",
                 "eaLyrNum": 107,
                 "tileLink": "no",
                 "type": "FEATURE",
@@ -25207,7 +25207,7 @@
                     "health"
                 ],
                 "eaID": 315,
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communitiess/Community_BGmetrics/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer",
                 "eaLyrNum": 108,
                 "tileLink": "no",
                 "type": "FEATURE",
@@ -25252,7 +25252,7 @@
                     "health"
                 ],
                 "eaID": 316,
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communitiess/Community_BGmetrics/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer",
                 "eaLyrNum": 109,
                 "tileLink": "no",
                 "type": "FEATURE",
@@ -25298,7 +25298,7 @@
                     "health"
                 ],
                 "eaID": 317,
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communitiess/Community_BGmetrics/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer",
                 "eaLyrNum": 110,
                 "tileLink": "no",
                 "type": "FEATURE",
