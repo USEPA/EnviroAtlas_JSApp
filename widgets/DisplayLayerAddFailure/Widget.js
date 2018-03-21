@@ -27,8 +27,7 @@ define([
      'esri/dijit/PopupTemplate',
      'esri/layers/ArcGISDynamicMapServiceLayer',
     'dijit/layout/ContentPane',
-    'dijit/TooltipDialog',
-    'dijit/registry'
+    'dijit/TooltipDialog'
   ],
   function(
     declare,
@@ -43,8 +42,8 @@ define([
     PopupTemplate,
     ArcGISDynamicMapServiceLayer,
     ContentPane,
-    TooltipDialog,
-    registry) {
+    TooltipDialog
+    ) {
 
 	var map;
 	var self;
@@ -68,7 +67,7 @@ define([
     		comment.innerHTML = "The following web service(s) failed to load at this time and may be unavailable for this session.";
     	}
     	if (Object.keys(window.faildedEALayerDictionary).length > 0) {
-            registry.byId("sendButton").setDisabled(false);		
+            $("#sendButton").prop('disabled',false);			
     		var hr = document.getElementById('hrFailedEnviroAtlasLayers');
 			hr.style.display = '';	
     		var hrEmail = document.getElementById('hrFailedLayersSendEmail');
@@ -95,7 +94,7 @@ define([
 		}
 
 		if (Object.keys(window.faildedOutsideLayerDictionary).length > 0) {
-            registry.byId("sendButton").setDisabled(false);	
+            $("#sendButton").prop('disabled',false);
 			var hr = document.getElementById('hrFailedOutsideLayers');
 			hr.style.display = '';		
     		var commentFaileOursideLayer = document.getElementById("failedOutsideLayersComment");
@@ -130,7 +129,7 @@ define([
 				var xhr = new XMLHttpRequest();
 				xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/SendEmailOfFailedLayers.py?failedLayers=" + failedEAID, true);
 				xhr.send();
-                registry.byId("sendButton").setDisabled(true);
+                $("#sendButton").prop('disabled',true);
 			  }
 			  catch(error){
 				  console.log(error);
