@@ -11,20 +11,30 @@ import json
 import cgi
 
 print('Content-Type: text/html\n\n\n')
-
+failedEaIDArray = []
+AllFailedOutsideURLArray = []
+AllFailedEaIDArray = []
+htmlForEmail = ""
 #get input parameter from HTTPS request
 fs = cgi.FieldStorage()
 for key in fs.keys():
-    if key == "failedLayers":
+    if key == "failedEALayers":
+        print("paramfailedEaIDArray:" + fs[key].value + "\n")
         failedEaIDArray = fs[key].value.split(',')
-
-AllFailedEaIDArray = [int(i) for i in failedEaIDArray]
-
-htmlForEmail = "This is the list of failed layers in EnviroAtlas: <br />"
+    if key == "failedOutsideLayers":
+        AllFailedOutsideURLArray = fs[key].value.split(",,,")
+print("failedEaIDArray:" + str(len(failedEaIDArray))+ "\n")
+if (len(failedEaIDArray)>0):
+    AllFailedEaIDArray = [int(i) for i in failedEaIDArray]    
+    htmlForEmail = "This is the list of failed layers in EnviroAtlas: <br />"
+else:
+    htmlForEmail = ""
+print("AllFailedEaIDArray:" + str(len(AllFailedEaIDArray))+ "\n")
 DataInLocalLayerWidget = r"D:\Public\Data\CodeRepository\EnviroAtlas_WAB\widgets\LocalLayer\config.json"
 DataInBoundaryWidget = r"D:\Public\Data\CodeRepository\EnviroAtlas_WAB\widgets\BoundaryLayer\config.json"
 DataInPBSWidget = r"D:\Public\Data\CodeRepository\EnviroAtlas_WAB\widgets\PeopleAndBuildSpaces\config.json"
-EmailAddress = "Rosenbaum.Barbara@epa.gov"
+#EmailAddress = "Rosenbaum.Barbara@epa.gov"
+EmailAddress = "Ji.Baohong@epa.gov"
 
 def writeURLintoHTML(failedEaIDArray, InputData, html):
     data = json.load(open(InputData))
@@ -36,10 +46,18 @@ def writeURLintoHTML(failedEaIDArray, InputData, html):
             else:
                 html = html+ eachLayer["url"] + "/" + str(eachLayer["eaLyrNum"]) + " <br />"
     return html
-        
+
+def writeOutsideURLintoHTML(failedOutsideURLArray, html):
+    for eachOutsideURL in failedOutsideURLArray:
+        html = html+ eachOutsideURL + " <br />" 
+    return html
+
 htmlForEmail = writeURLintoHTML(AllFailedEaIDArray, DataInLocalLayerWidget, htmlForEmail)
 htmlForEmail = writeURLintoHTML(AllFailedEaIDArray, DataInBoundaryWidget, htmlForEmail)
 htmlForEmail = writeURLintoHTML(AllFailedEaIDArray, DataInPBSWidget, htmlForEmail)
+if len(AllFailedOutsideURLArray):
+    htmlForEmail = " <br />" + htmlForEmail + " <br />" + "This is the list of failed layers outside EnviroAtlas: <br />"
+    htmlForEmail = writeOutsideURLintoHTML(AllFailedOutsideURLArray, htmlForEmail)
 
 msg = MIMEMultipart('alternative')
 

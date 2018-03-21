@@ -102,7 +102,12 @@ define([
     var selfTimeSeries;
 
     var widthSelect = "310px";
-
+    var showLayerListWidget = function () {
+        var widgetName = 'LayerList';
+        var widgets = selfTimeSeries.appConfig.getConfigElementsByName(widgetName);
+        var pm = PanelManager.getInstance();
+        pm.showPanel(widgets[0]);
+    }
     var updateSelectablePBSLayersArea = function () {
 
         if (navigator.userAgent.indexOf("Chrome") >= 0) {
@@ -501,8 +506,14 @@ define([
         
         var params = new ImageServiceParameters();
 
+        var modelValue = document.getElementById("modelSelection").value;
+        var season = document.getElementById("seasonSelection").value;
+        //var climateId = document.getElementById("climateSelection").value;
+        var climateVar = document.getElementById("climateSelection").value;
         var imageServiceLayer = new ArcGISImageServiceLayer(selectedImageService,{imageServiceParameters: params});
         imageServiceLayer.id = "ScenarioDataLayer";
+        imageServiceLayer.name = "TimeSeries_" + modelValue + "_" + season + "_" + climateVar;
+        imageServiceLayer.title = "TimeSeries_" + modelValue + "_" + season + "_" + climateVar;
         imageServiceLayer.setOpacity(0.6);
 
         
@@ -513,10 +524,7 @@ define([
         
         imageServiceLayer.on("load", function(){
             //var modelId = dijit.byId("modelSelection").item.id;
-            var modelValue = document.getElementById("modelSelection").value;
-	        var season = document.getElementById("seasonSelection").value;
-	        //var climateId = document.getElementById("climateSelection").value;
-	        var climateVar = document.getElementById("climateSelection").value;
+
 	        var unit = "";
             if ((climateVar == "TempMax") ||(climateVar == "TempMin")) {
             	unit = "Degrees F";                
@@ -525,6 +533,7 @@ define([
             } 	   
 	        //setMetadataTab(modelId + " (" + modelValue + "), " + season + " <br/>" + climateId + " (" + unit + ")<br/><hr>" + comment);
 	        setMetadataTab(modelValue + ", " + season + " <br/>" + climateVar + " (" + unit + ")<br/><hr>" + comment);           
+	        showLayerListWidget();       
         });
 
     };
