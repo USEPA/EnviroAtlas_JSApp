@@ -178,7 +178,7 @@ define([
     window.communityDic["PME"] = "Portland, ME"
     window.communityDic["POR"] = "Portland, OR"
     window.communityDic["TFL"] = "Tampa, FL";
-    window.communityDic["VBWVA"] = "Virginia Beach/Williamsburg, VA";
+    window.communityDic["VBWVA"] = "Virginia Beach - Williamsburg, VA";
     window.communityDic["WIA"] = "Woodbine, IA";
     
     window.communitySelected = window.strAllCommunity;
