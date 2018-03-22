@@ -15933,7 +15933,7 @@
                 "type": "DYNAMIC",
                 "eaMetric": "Additional_landcover",
                 "eaCPW": true,
-                "url": "https://raster.nationalmap.gov/arcgis/rest/services/LandCover/USGS_EROS_LandCover_NLCD/MapServer",
+                "url": "https://www.mrlc.gov/arcgis/rest/services/LandCover/USGS_EROS_LandCover_NLCD/MapServer",
                 "layers": [
                     {
                         "popup": {
