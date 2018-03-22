@@ -4517,10 +4517,10 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Landcover_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Landcover_AllCommunities/ImageServer",
                 "eaLyrNum": 0,
                 "tileLink": "no",
-                "type": "TILED",
+                "type": "IMAGE",
                 "eaFFM": true,
                 "visible": false,
                 "eaMetric": "landcover",
@@ -4555,13 +4555,13 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Connectivity_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Connectivity_AllCommunities/ImageServer",
                 "eaLyrNum": 0,
                 "eaTopic": "Landscape Pattern",
                 "sourceType": "grid",
                 "tileLink": "no",
                 "opacity": 0.6,
-                "type": "TILED",
+                "type": "IMAGE",
                 "eaBCSDD": [
                     "Biodiversity Conservation - x",
                     "Recreation, Culture, and Aesthetics - x"
@@ -4606,7 +4606,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/NrRd_PFor_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/NrRd_PFor_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "eaTopic": "Near-Road Environments",
                 "sourceType": "plp",
@@ -4802,7 +4802,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/RB15m_For_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/RB15m_For_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "tileLink": "no",
                 "type": "TILED",
@@ -4916,7 +4916,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/RB51m_For_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/RB51m_For_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "tileLink": "no",
                 "type": "TILED",
@@ -5033,7 +5033,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/RB15m_Vege_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/RB15m_Vege_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "tileLink": "no",
                 "type": "TILED",
@@ -5150,7 +5150,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/RB51m_Vege_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/RB51m_Vege_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "tileLink": "no",
                 "type": "TILED",
@@ -5175,7 +5175,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Park_Prox_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/Park_Prox_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "eaTopic": "Engagement with Outdoors",
                 "sourceType": "plp",
@@ -5300,7 +5300,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/PctStGS_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/PctStGS_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "eaTopic": "Near-Road Environments",
                 "sourceType": "plp",
@@ -5414,7 +5414,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/GreenProx_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/GreenProx_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "eaTopic": "Land Cover: Type",
                 "sourceType": "plp",
@@ -5570,7 +5570,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/ImpProx_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/ImpProx_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "tileLink": "no",
                 "type": "TILED",
@@ -5680,7 +5680,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/PctStTC_AllCommunities/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Supplemental/PctStTC_AllCommunities/MapServer",
                 "eaLyrNum": 0,
                 "eaTopic": "Near-Road Environments",
                 "sourceType": "plp",
@@ -16042,7 +16042,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://raster.nationalmap.gov/arcgis/rest/services/LandCover/USGS_EROS_LandCover_NLCD/MapServer",
+                "url": "https://www.mrlc.gov/arcgis/rest/services/LandCover/USGS_EROS_LandCover_NLCD/MapServer",
                 "eaLyrNum": " ",
                 "tileLink": "no",
                 "type": "DYNAMIC",
@@ -24957,7 +24957,7 @@
                 "sourceType": "cbg",
                 "opacity": 0.6,
                 "name": "Land area in 1% Annual Chance Flood Hazard area - Area (m2)",
-                "eaTopic": "Wetlands & Lowlands",
+                "eaTopic": "Wetlands and Lowlands",
                 "popup": {
                     "title": "Block Group ID: {GEOID10}",
                     "showAttachments": "false",
@@ -24982,7 +24982,7 @@
                     "health"
                 ],
                 "eaID": 310,
-                "url": "https://leb.epa.gov/arcgis/rest/services/test_services/Community_BGmetrics/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer",
                 "eaLyrNum": 103,
                 "tileLink": "no",
                 "type": "FEATURE",
@@ -25001,7 +25001,7 @@
                 "sourceType": "cbg",
                 "opacity": 0.6,
                 "name": "Land area in 1% Annual Chance Flood Hazard area - Percent",
-                "eaTopic": "Wetlands & Lowlands",
+                "eaTopic": "Wetlands and Lowlands",
                 "numDecimal": 2,
                 "popup": {
                     "title": "Block Group ID: {GEOID10}",
@@ -25027,7 +25027,7 @@
                     "health"
                 ],
                 "eaID": 311,
-                "url": "https://leb.epa.gov/arcgis/rest/services/test_services/Community_BGmetrics/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer",
                 "eaLyrNum": 104,
                 "tileLink": "no",
                 "type": "FEATURE",
@@ -25046,7 +25046,7 @@
                 "sourceType": "cbg",
                 "opacity": 0.6,
                 "name": "Land area in 0.2% Annual Chance Flood Hazard area - Area (m2)",
-                "eaTopic": "Wetlands & Lowlands",
+                "eaTopic": "Wetlands and Lowlands",
                 "popup": {
                     "title": "Block Group ID: {GEOID10}",
                     "showAttachments": "false",
@@ -25071,7 +25071,7 @@
                     "health"
                 ],
                 "eaID": 312,
-                "url": "https://leb.epa.gov/arcgis/rest/services/test_services/Community_BGmetrics/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer",
                 "eaLyrNum": 105,
                 "tileLink": "no",
                 "type": "FEATURE",
@@ -25090,7 +25090,7 @@
                 "sourceType": "cbg",
                 "opacity": 0.6,
                 "name": "Land area in 0.2% Annual Chance Flood Hazard area - Percent",
-                "eaTopic": "Wetlands & Lowlands",
+                "eaTopic": "Wetlands and Lowlands",
                 "numDecimal": 2,
                 "popup": {
                     "title": "Block Group ID: {GEOID10}",
@@ -25116,7 +25116,7 @@
                     "health"
                 ],
                 "eaID": 313,
-                "url": "https://leb.epa.gov/arcgis/rest/services/test_services/Community_BGmetrics/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer",
                 "eaLyrNum": 106,
                 "tileLink": "no",
                 "type": "FEATURE",
@@ -25135,7 +25135,7 @@
                 "sourceType": "cbg",
                 "opacity": 0.6,
                 "name": "Impervious surface in 1% Annual Chance Flood Hazard area - Area (m2)",
-                "eaTopic": "Wetlands & Lowlands",
+                "eaTopic": "Wetlands and Lowlands",
                 "popup": {
                     "title": "Block Group ID: {GEOID10}",
                     "showAttachments": "false",
@@ -25161,7 +25161,7 @@
                     "health"
                 ],
                 "eaID": 314,
-                "url": "https://leb.epa.gov/arcgis/rest/services/test_services/Community_BGmetrics/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer",
                 "eaLyrNum": 107,
                 "tileLink": "no",
                 "type": "FEATURE",
@@ -25180,7 +25180,7 @@
                 "sourceType": "cbg",
                 "opacity": 0.6,
                 "name": "Impervious surface in 1% Annual Chance Flood Hazard area - Percent",
-                "eaTopic": "Wetlands & Lowlands",
+                "eaTopic": "Wetlands and Lowlands",
                 "numDecimal": 2,
                 "popup": {
                     "title": "Block Group ID: {GEOID10}",
@@ -25207,7 +25207,7 @@
                     "health"
                 ],
                 "eaID": 315,
-                "url": "https://leb.epa.gov/arcgis/rest/services/test_services/Community_BGmetrics/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer",
                 "eaLyrNum": 108,
                 "tileLink": "no",
                 "type": "FEATURE",
@@ -25226,7 +25226,7 @@
                 "sourceType": "cbg",
                 "opacity": 0.6,
                 "name": "Impervious surface in 0.2% Annual Chance Flood Hazard area - Area (m2)",
-                "eaTopic": "Wetlands & Lowlands",
+                "eaTopic": "Wetlands and Lowlands",
                 "popup": {
                     "title": "Block Group ID: {GEOID10}",
                     "showAttachments": "false",
@@ -25252,7 +25252,7 @@
                     "health"
                 ],
                 "eaID": 316,
-                "url": "https://leb.epa.gov/arcgis/rest/services/test_services/Community_BGmetrics/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer",
                 "eaLyrNum": 109,
                 "tileLink": "no",
                 "type": "FEATURE",
@@ -25271,7 +25271,7 @@
                 "sourceType": "cbg",
                 "opacity": 0.6,
                 "name": "Impervious surface in 0.2% Annual Chance Flood Hazard area - Percent",
-                "eaTopic": "Wetlands & Lowlands",
+                "eaTopic": "Wetlands and Lowlands",
                 "numDecimal": 2,
                 "popup": {
                     "title": "Block Group ID: {GEOID10}",
@@ -25298,7 +25298,7 @@
                     "health"
                 ],
                 "eaID": 317,
-                "url": "https://leb.epa.gov/arcgis/rest/services/test_services/Community_BGmetrics/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_BGmetrics/MapServer",
                 "eaLyrNum": 110,
                 "tileLink": "no",
                 "type": "FEATURE",
@@ -27985,7 +27985,7 @@
                 "name": "Land area in 1% Annual Chance Flood Hazard area ",
                 "eaFFM": true,
                 "visible": false,
-                "eaTopic": "Wetlands & Lowlands",
+                "eaTopic": "Wetlands and Lowlands",
                 "eaDescription": "These maps depict the total land area in square meters or the percent in the 1% Annual Chance Flood Hazard area in each census block group for 2017. ",
                 "eaCPW": true,
                 "eaScale": "COMMUNITY",
@@ -28013,7 +28013,7 @@
                 "name": "Land area in 0.2% Annual Chance Flood Hazard area",
                 "eaFFM": true,
                 "visible": false,
-                "eaTopic": "Wetlands & Lowlands",
+                "eaTopic": "Wetlands and Lowlands",
                 "eaDescription": "These maps depict the total land area in in square meters or percent  in the  0.2% Annual Chance Flood Hazard area in each census block group for 2017. ",
                 "eaCPW": true,
                 "eaScale": "COMMUNITY",
@@ -28042,7 +28042,7 @@
                 "name": "Impervious surface in 1% Annual Chance Flood Hazard area",
                 "eaFFM": true,
                 "visible": false,
-                "eaTopic": "Wetlands & Lowlands",
+                "eaTopic": "Wetlands and Lowlands",
                 "eaDescription": "These maps depict the total impervious surface area in square meters or percent in the 1% Annual Chance Flood Hazard area in each census block group for 2017. ",
                 "eaCPW": true,
                 "eaScale": "COMMUNITY",
@@ -28071,7 +28071,7 @@
                 "name": "Impervious surface in 0.2% Annual Chance Flood Hazard area",
                 "eaFFM": true,
                 "visible": false,
-                "eaTopic": "Wetlands & Lowlands",
+                "eaTopic": "Wetlands and Lowlands",
                 "eaDescription": "These maps depict the total impervious surface area in square meters or percent in the 0.2% Annual Chance Flood Hazard area in each census block group for 2017. ",
                 "eaCPW": true,
                 "eaScale": "COMMUNITY",
