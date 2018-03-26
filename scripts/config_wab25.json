@@ -16042,7 +16042,7 @@
                     "Culture",
                     "and Aesthetics\""
                 ],
-                "url": "https://raster.nationalmap.gov/arcgis/rest/services/LandCover/USGS_EROS_LandCover_NLCD/MapServer",
+                "url": "https://www.mrlc.gov/arcgis/rest/services/LandCover/USGS_EROS_LandCover_NLCD/MapServer",
                 "eaLyrNum": " ",
                 "tileLink": "no",
                 "type": "DYNAMIC",

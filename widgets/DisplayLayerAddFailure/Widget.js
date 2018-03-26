@@ -47,11 +47,12 @@ define([
 
 	var map;
 	var self;
-	var failedEAID = "";
-   
+	var failedEAID;
+   	var failedOutsideLayers;
     var updateFailedListOfLayers = function(){	
     	var comment = document.getElementById("failedLayersComment");
-    	
+		failedEAID = "";
+		failedOutsideLayers = "";    	
     	if ((Object.keys(window.faildedEALayerDictionary).length == 0)&&(Object.keys(window.faildedOutsideLayerDictionary).length == 0)) {  
     		comment.innerHTML = "Data that fails to load will appear here and be documented."; 
     		var hr = document.getElementById('hrFailedEnviroAtlasLayers');
@@ -112,7 +113,9 @@ define([
 				var newTitle  = document.createElement('div');
 		        newTitle.innerHTML = key;
 				newTitleCell.appendChild(newTitle); 							  
+				failedOutsideLayers = failedOutsideLayers + key + ",,,";					  
 			}  		
+			failedOutsideLayers = failedOutsideLayers.substring(0, failedOutsideLayers.length -3);
 		}
 	};
 
@@ -127,7 +130,16 @@ define([
 
 			  try{
 				var xhr = new XMLHttpRequest();
-				xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/SendEmailOfFailedLayers.py?failedLayers=" + failedEAID, true);
+				//xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/SendEmailOfFailedLayers.py?failedEALayers=" + failedEAID + "&failedOutsideLayers=" + failedOutsideLayers, true);
+				if ((failedEAID.length > 0) && (failedOutsideLayers.length > 0)) {
+					xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/SendEmailOfFailed_EA_OutsideLayers.py?failedEALayers=" + failedEAID + "&failedOutsideLayers=" + failedOutsideLayers, true);
+				}
+				else if (failedEAID.length > 0) {
+					xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/SendEmailOfFailed_EA_OutsideLayers.py?failedEALayers=" + failedEAID, true);
+				} 
+				else if (failedOutsideLayers.length > 0) {
+					xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/SendEmailOfFailed_EA_OutsideLayers.py?failedOutsideLayers=" + failedOutsideLayers, true);
+				} 				
 				xhr.send();
                 $("#sendButton").prop('disabled',true);
 			  }

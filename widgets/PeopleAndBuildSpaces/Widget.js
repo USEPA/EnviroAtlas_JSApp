@@ -454,7 +454,6 @@ define([
                             }
 
                             lLayer.id = window.layerIdPBSPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, "");
-                            lLayer.minScale = 1155581.108577;
                             lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
 							if (layer.hasOwnProperty('eaScale')) {
 									if (layer.eaScale == "COMMUNITY") {
@@ -472,11 +471,11 @@ define([
                                     tileLinkAdjusted = layer.tileURL + "/";
                                 }
                                 window.hashIDtoTileURL[layer.eaID.toString()] = tileLinkAdjusted;
+                                window.hashIDtoCacheLevelNat[layer.eaID.toString()] = layer.cacheLevelNat;
                                 switch(layer.cacheLevelNat) {
                                 	case 12:
                                 		jimuUtils.initTileLayer12(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString()); 
                                 		map.addLayer(new myTiledMapServiceLayer12());
-                                		lLayer.minScale = 72223.819286;
                                 		break;
     								default:
                                 		jimuUtils.initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString()); 
@@ -513,6 +512,12 @@ define([
                         });
 
                         dojo.connect(lLayer, "onLoad", function (error) {
+                        	var id = lLayer.id.replace(window.layerIdPBSPrefix, "");
+                        	if (id in window.hashIDtoCacheLevelNat) {
+                                if (window.hashIDtoCacheLevelNat[id] == 12) {
+                            		lLayer.minScale = 72223.819286;							
+                                }                        	
+                       	 	}
                             if (!(lLayer.title in window.successLayerDictionary)) {
                                 window.successLayerDictionary[lLayer.title] = lLayer.title;
                             }

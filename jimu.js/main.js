@@ -211,6 +211,7 @@ define([
 	window.hashAddedURLToType = {};
 	window.hashAddedURLToId = {};
 	window.hashIDtoTileURL = {};
+	window.hashIDtoCacheLevelNat = {};
 	window.allLayersTurnedOn = {};
                 
     //patch for JS API 3.10
