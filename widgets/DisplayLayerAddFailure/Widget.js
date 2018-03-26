@@ -28,7 +28,6 @@ define([
      'esri/layers/ArcGISDynamicMapServiceLayer',
     'dijit/layout/ContentPane',
     'dijit/TooltipDialog'
-    
   ],
   function(
     declare,
@@ -41,10 +40,11 @@ define([
     PanelManager,
     FeatureLayer,
     PopupTemplate,
-    ArcGISDynamicMapServiceLayer) {
+    ArcGISDynamicMapServiceLayer,
+    ContentPane,
+    TooltipDialog
+    ) {
 
-
-	
 	var map;
 	var self;
 	var failedEAID;
@@ -53,7 +53,7 @@ define([
     	var comment = document.getElementById("failedLayersComment");
 		failedEAID = "";
 		failedOutsideLayers = "";    	
-    	if ((Object.keys(window.faildedEALayerDictionary).length == 0)&&(Object.keys(window.faildedOutsideLayerDictionary).length == 0)) {    		
+    	if ((Object.keys(window.faildedEALayerDictionary).length == 0)&&(Object.keys(window.faildedOutsideLayerDictionary).length == 0)) {  
     		comment.innerHTML = "Data that fails to load will appear here and be documented."; 
     		var hr = document.getElementById('hrFailedEnviroAtlasLayers');
 			hr.style.display = 'none';	 
@@ -68,12 +68,13 @@ define([
     		comment.innerHTML = "The following web service(s) failed to load at this time and may be unavailable for this session.";
     	}
     	if (Object.keys(window.faildedEALayerDictionary).length > 0) {
+            $("#sendButton").prop('disabled',false);			
     		var hr = document.getElementById('hrFailedEnviroAtlasLayers');
 			hr.style.display = '';	
     		var hrEmail = document.getElementById('hrFailedLayersSendEmail');
 			hrEmail.style.display = '';				
     		var commentFaileEA = document.getElementById("failedEnviroAtlasLayersComment");
-    		commentFaileEA.innerHTML = "For EnviroAtlas services, an email will be sent notifying administrators of these issues:";
+    		commentFaileEA.innerHTML = "Click below to notify the EnviroAtlas administrators of issues with these EnviroAtlas services:";
     		var butEmail = document.getElementById('eMailOption');
 			butEmail.style.display = '';
 		    var tableOfRelationship = document.getElementById("failedEALayers");
@@ -94,10 +95,11 @@ define([
 		}
 
 		if (Object.keys(window.faildedOutsideLayerDictionary).length > 0) {
+            $("#sendButton").prop('disabled',false);
 			var hr = document.getElementById('hrFailedOutsideLayers');
 			hr.style.display = '';		
     		var commentFaileOursideLayer = document.getElementById("failedOutsideLayersComment");
-    		commentFaileOursideLayer.innerHTML = "For web services hosted outside of the EnviroAtlas hosting environment, EnviroAtlas is not responsible for the performance of these services:";
+    		commentFaileOursideLayer.innerHTML = "Click below to notify the EnviroAtlas administrators of issues with the following web services hosted outside of the EnviroAtlas hosting environment:";
 
 		    var tableOfRelationship = document.getElementById("failedOutLayers");
 		    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0]; 
@@ -110,7 +112,7 @@ define([
 	        
 				var newTitle  = document.createElement('div');
 		        newTitle.innerHTML = key;
-				newTitleCell.appendChild(newTitle);
+				newTitleCell.appendChild(newTitle); 							  
 				failedOutsideLayers = failedOutsideLayers + key + ",,,";					  
 			}  		
 			failedOutsideLayers = failedOutsideLayers.substring(0, failedOutsideLayers.length -3);
@@ -139,7 +141,7 @@ define([
 					xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/SendEmailOfFailed_EA_OutsideLayers.py?failedOutsideLayers=" + failedOutsideLayers, true);
 				} 				
 				xhr.send();
-
+                $("#sendButton").prop('disabled',true);
 			  }
 			  catch(error){
 				  console.log(error);
