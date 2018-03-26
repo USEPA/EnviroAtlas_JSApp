@@ -1,0 +1,934 @@
+.widget-esearch-singlesearch-setting {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.widget-esearch-singlevalue-setting .uniqueMessage {
+  font-size: 12px;
+  color: #686868;
+  line-height: 16px;
+  float: left;
+}
+
+.widget-esearch-singlevalue-setting .cancelUnique {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 3px;
+  font-size: 10px;
+  line-height: 16px;
+  text-align: center;
+  background: none repeat scroll 0% 0% #cccccc;
+  vertical-align: middle;
+  color: #000;
+  border-radius: 5px;
+  width:40px;
+  height:16px;
+  margin-left:5px;
+  margin-bottom: 3px;
+}
+
+.widget-esearch-singlevalue-setting .cancelUnique:hover {
+  background: none repeat scroll 0% 0% #acacac;
+}
+
+.widget-esearch-singlevalue-setting .uniqueBusy {
+  width: 16px;
+  height: 16px;
+  background-image: url(images/validating.gif);
+  float: left;
+  margin-right: 7px;
+}
+
+textarea {
+  resize: none;
+}
+
+/*the css for DropMenu dijit*/
+.widget-esearch-setting .jimu-dropmenu{
+  overflow: visible;
+  padding: 0 0 0 0;
+}
+.esearch-add-field-button>.esearch-add-field-icon-btn{
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 15px;
+  font-size: 14px;
+  line-height: 33px;
+  text-align: center;
+  background: none repeat scroll 0% 0% #24b5cc;
+  vertical-align: middle;
+  color: #FFF;
+  border-radius: 5px;
+  width:40px;
+  height:28px;
+  margin-left:5px;
+}
+.esearch-add-field-button>.esearch-add-field-icon-btn:hover{
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 15px;
+  font-size: 14px;
+  line-height: 33px;
+  text-align: center;
+  background: none repeat scroll 0% 0% #0090a7;
+  vertical-align: middle;
+  color: #FFF;
+  border-radius: 5px;
+  width:40px;
+  height:28px;
+  margin-left:5px;
+}
+.esearch-add-field-button>.drop-menu{
+  position: absolute;
+  border: 1px solid #999999;
+  background-color: #ffffff;
+  overflow-y: auto;
+  max-height: 150px;
+}
+.esearch-add-field-button .menu-item{
+  height: 25px;
+  min-width: 50px;
+  margin: 0;
+  padding: 0 5px;
+  cursor: pointer;
+  font-size: 10;
+  white-space: nowrap;
+}
+.esearch-add-field-button .menu-item:hover{
+  color: #000000;
+  background-color: #cae7ff;
+  text-decoration:none;
+}
+.esearch-add-field-button .menu-item-line{
+  border: 1px solid #ffffff;
+  margin: 0px;
+}
+
+/* widget-esearch-setting */
+.widget-esearch-setting{
+  margin:0;
+  padding:0;
+  font-size:15px;
+}
+
+.widget-esearch-setting .jimu-tab{
+  height:auto;
+}
+
+.plus-sign {
+  background:white;
+  width:4px;
+  height:12px;
+  position:relative;
+  margin-left:4px;
+}
+
+.plus-sign:before {
+  background:white;
+  content:"";
+  width:12px;
+  height:4px;
+  position:absolute;
+  top:4px;
+  left:-4px;
+}
+
+.widget-esearch-setting .add-button-enable{
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 15px;
+  font-size: 14px;
+  line-height: 33px;
+  text-align: center;
+  background: none repeat scroll 0% 0% #518DCA;
+  vertical-align: middle;
+  color: #FFF;
+  border-radius: 5px;
+}
+
+.widget-esearch-setting .add-button-enable:hover{
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 15px;
+  font-size: 14px;
+  line-height: 33px;
+  text-align: center;
+  background: none repeat scroll 0% 0% #15a4fa;
+  vertical-align: middle;
+  color: #FFF;
+  border-radius: 5px;
+}
+
+.result-format-edit .help-icon,
+.eSearch-default-symbol-setting .help-icon,
+.eSearch-layer-symbol-setting .help-icon,
+.widget-esearch-singlelink-setting .help-icon{
+  cursor: pointer;
+  display: inline-block;
+  font-size: 18px;
+  line-height: 20px;
+  background: none repeat scroll 0% 0% #24b5cc;
+  color: #FFF;
+  border-radius:99px;
+  -moz-border-radius:99px;
+  -webkit-border-radius:99px;
+  /*-webkit-box-shadow: 0px 2px 4px #000000;
+  -moz-box-shadow: 0px 2px 4px #000000;
+  box-shadow: 0px 2px 4px #000000;*/
+  font-weight:bold;
+}
+
+.result-format-edit .help-icon:hover,
+.eSearch-default-symbol-setting .help-icon:hover,
+.eSearch-layer-symbol-setting .help-icon:hover,
+.widget-esearch-singlelink-setting .help-icon:hover{
+  cursor: pointer;
+  display: inline-block;
+  font-size: 18px;
+  line-height: 20px;
+  background: none repeat scroll 0% 0% #0090a7;
+  color: #FFF;
+  border-radius:99px;
+  -moz-border-radius:99px;
+  -webkit-border-radius:99px;
+  /*-webkit-box-shadow: 0px 2px 4px #000000;
+  -moz-box-shadow: 0px 2px 4px #000000;
+  box-shadow: 0px 2px 4px #000000;*/
+  font-weight:bold;
+}
+
+.widget-esearch-setting .marker-section .input-table > tbody > tr > td{
+  height:30px;
+  line-height: 30px;
+  vertical-align: middle;
+  padding:5px 0;
+}
+
+.widget-esearch-setting .jimu-tab{
+  height:auto;
+}
+
+.widget-esearch-setting .btn-add-section,
+.widget-esearch-singlesearch-setting .btn-add-section,
+.widget-esearch-singleexpression-setting .btn-add-section,
+.widget-esearch-singlevalue-setting .btn-add-section,
+.widget-esearch-defaultbuffer-setting .btn-add-section{
+  display:inline-block;
+  overflow:hidden;
+  height:24px;
+  margin-left:1px;
+  margin-bottom:3px;
+  cursor:pointer;
+  font-size:13px;
+  color:#24B5CC;
+}
+
+.widget-esearch-singlesearch-setting .btn-add-section{
+  margin-bottom:0;
+}
+
+.widget-esearch-setting .btn-sym-section,
+.widget-esearch-setting .btn-buffer-section,
+.widget-esearch-setting .btn-spatial-section,
+.widget-esearch-setting .btn-graphical-section,
+.widget-esearch-setting .btn-format-section,
+.widget-esearch-setting .btn-disable-section {
+  display:inline-block;
+  overflow:hidden;
+  height:24px;
+  margin-left:1px;
+  margin-bottom:3px;
+  cursor:pointer;
+  font-size:13px;
+  color:#24B5CC;
+}
+
+.jimu-query-setting-sort-fields .add-with-icon{
+  color:#24B5CC;
+}
+
+.jimu-symbol-picker {
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid #D7D7D7;
+    height: 34px;
+    overflow: hidden;
+    padding: 0 4px;
+}
+.jimu-symbol-picker .symbol-node {
+    position: relative;
+    top: 4px;
+    height: 30px;
+}
+.jimu-symbol-picker .separator {
+    position: relative;
+    top: 4px;
+    width: 1px;
+    height: 24px;
+    background-color: #D7D7D7;
+    margin: 0 5px;
+}
+.jimu-symbol-picker .jimu-icon {
+    position: relative;
+    top: 12px;
+}
+
+.widget-esearch-setting .btn-add-section .btn-add-icon,
+.widget-esearch-singlesearch-setting .btn-add-section .btn-add-icon,
+.widget-esearch-singleexpression-setting .btn-add-section .btn-add-icon,
+.widget-esearch-singlevalue-setting .btn-add-section .btn-add-icon,
+.widget-esearch-defaultbuffer-setting .btn-add-section .btn-add-icon{
+  float:left;
+  height:100%;
+  width:14px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url(images/add.png);
+}
+
+.widget-esearch-setting .btn-sym-section .btn-edit-icon,
+.widget-esearch-singlesearch-setting .btn-sym-section .btn-edit-icon,
+.widget-esearch-setting .btn-buffer-section .btn-edit-icon,
+.widget-esearch-singlesearch-setting .btn-buffer-section .btn-edit-icon,
+.widget-esearch-setting .btn-spatial-section .btn-edit-icon,
+.widget-esearch-setting .btn-graphical-section .btn-edit-icon,
+.widget-esearch-setting .btn-disable-section .btn-edit-icon,
+.widget-esearch-setting .btn-format-section .btn-edit-icon{
+  float:left;
+  height:100%;
+  width:14px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url(images/edit.png);
+}
+
+.widget-esearch-singleexpression-setting .error-message-div,
+.widget-esearch-singlesearch-setting .error-message-div {
+  border: 0px solid;
+  font-size: 11px;
+  color: red;
+  margin-left: 126px;
+}
+
+.widget-esearch-singlevalue-setting .error-message-div{
+  border: 0px solid;
+  font-size: 11px;
+  color: red;
+  margin-bottom: 8px;
+}
+
+.widget-esearch-setting .btn-add-section .btn-add-label,
+.widget-esearch-singlesearch-setting .btn-add-section .btn-add-label,
+.widget-esearch-singleexpression-setting .btn-add-section .btn-add-label,
+.widget-esearch-singlevalue-setting .btn-add-section .btn-add-label,
+.widget-esearch-defaultbuffer-setting .btn-add-section .btn-add-label{
+  float:left;
+  height:100%;
+  line-height:24px;
+  vertical-align:middle;
+  margin-left:7px;
+  text-decoration: underline;
+}
+
+.widget-esearch-setting .btn-sym-section .btn-edit-sym-label,
+.widget-esearch-setting .btn-buffer-section .btn-edit-buffer-label,
+.widget-esearch-setting .btn-spatial-section .btn-edit-spatial-label,
+.widget-esearch-setting .btn-graphical-section .btn-edit-graphical-label,
+.widget-esearch-setting .btn-disable-section .btn-edit-disable-label,
+.widget-esearch-setting .btn-format-section .btn-edit-format-label{
+  float:left;
+  height:100%;
+  line-height:24px;
+  vertical-align:middle;
+  margin-left:7px;
+  text-decoration: underline;
+}
+
+.widget-esearch-singlevalue-setting .setting-table{
+  width:100%;border-collapse:collapse;
+}
+
+.widget-esearch-singlevalue-setting .sql-setting-table{
+  width:100%;border-collapse:collapse;
+  margin-top:10px;
+}
+
+.widget-esearch-setting .zoom-scale-table{
+  margin-top:12px;
+}
+
+.widget-esearch-singleexpression-setting .input-table,
+.widget-esearch-defaultbuffer-setting .input-table,
+.widget-esearch-singlesearch-setting .input-table,
+.eSearch-default-symbol-setting .input-table,
+.eSearch-layer-symbol-setting .input-table,
+.widget-esearch-setting .marker-section .input-table,
+.widget-esearch-singlelink-setting .input-table,
+.widget-esearch-singlevalue-setting .input-table{
+  width:100%;
+}
+
+.widget-esearch-singleexpression-setting .input-table > tbody > tr > td,
+.widget-esearch-defaultbuffer-setting .input-table > tbody > tr > td,
+.eSearch-default-symbol-setting .input-table > tbody > tr > td,
+.eSearch-layer-symbol-setting .input-table > tbody > tr > td,
+.widget-esearch-singlelink-setting .input-table > tbody > tr > td,
+.widget-esearch-singlevalue-setting .input-table > tbody > tr > td{
+  height: 30px;
+  line-height: 30px;
+  vertical-align: middle;
+  padding:4px 0;
+}
+
+/***CSS for IncludeAllButton dijit***/
+.widgets-Search-setting-include-all-button{
+  position:relative;
+  display: inline-block;
+  background:#8c8c8c;
+  padding:5px 18px 5px 10px;
+  color:white;
+  border-radius:3px;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+.widgets-Search-setting-include-all-button.enable{
+  background: #24b5cc;
+}
+
+.widgets-Search-setting-include-all-button.enable:hover{
+  background: #0090a7;
+}
+
+.widgets-Search-setting-include-all-button .include-arrow{
+  position:absolute;
+  right:4px;
+  top:45%;
+  width:0;
+  height:0;
+  border-top:3px solid transparent;
+  border-bottom:3px solid transparent;
+  border-left:5px solid white;
+}
+
+/***CSS for IncludeButton dijit***/
+.widgets-Search-setting-include-button{
+  position:relative;
+  display: inline-block;
+  background:#8c8c8c;
+  padding:5px 18px 5px 10px;
+  color:white;
+  border-radius:3px;
+  cursor: pointer;
+  margin: 10px auto;
+}
+
+.widgets-Search-setting-include-button.enable{
+  background: #24b5cc;
+}
+
+.widgets-Search-setting-include-button.enable:hover{
+  background: #0090a7;
+}
+
+.widgets-Search-setting-include-button .include-arrow{
+  position:absolute;
+  right:4px;
+  top:45%;
+  width:0;
+  height:0;
+  border-top:3px solid transparent;
+  border-bottom:3px solid transparent;
+  border-left:5px solid white;
+}
+
+.widget-esearch-singlevalue-setting .setting-table{
+  width:100%;
+  border-collapse: collapse;
+}
+
+.widget-esearch-singlevalue-setting .setting-table > tbody > tr > td{
+  vertical-align: top;
+}
+
+.widget-esearch-singlevalue-setting .setting-table .fields-td{
+  width:200px;
+  padding-right:10px;
+}
+
+.widget-esearch-singlevalue-setting .setting-table .operators-td{
+  width:105px;
+  padding-right:10px;
+}
+
+.widget-esearch-singlevalue-setting .setting-table .value-td{
+  /*width:270px;*/
+  width: auto;
+  padding-right:10px;
+}
+
+.widget-esearch-singlevalue-setting .setting-table .delete-td{
+  /*width:auto;*/
+  width: 30px;
+}
+
+.widget-esearch-singlevalue-setting .dijit-form-Select>tbody>tr>td{
+  height: 23px;
+}
+
+.widget-esearch-singlevalue-setting .dijit-form-Select>tbody>tr>td>.dijitButtonText{
+  height: 20px;
+  height: 20px !important;
+}
+
+.widget-esearch-singlevalue-setting .dijit-form-FilteringSelect>div.dijitArrowButton.dijitDownArrowButton{
+  width:20px;
+  height: 100%;
+}
+
+.widget-esearch-singlevalue-setting .dijit-form-FilteringSelect>div.dijitArrowButton.dijitDownArrowButton>input{
+  padding: 0;
+  border: 0;
+  display: inline-block;
+  height: 100%;
+  height: 100% !important;
+}
+
+.widget-esearch-singlevalue-setting .dijit-form-FilteringSelect>div.dijitInputField>input.dijitInputInner{
+  height: 20px;
+}
+
+.widget-esearch-singlevalue-setting .dijit-form-ValidationTextBox>div.dijitInputField>input.dijitInputInner{
+  margin: 0;
+  padding:0;
+  height: 100%;
+  height: 100% !important;
+}
+
+.widget-esearch-singlevalue-setting .dijit-form-NumberTextBox>div.dijitInputField>input.dijitInputInner{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  padding:0 !important;
+  height: 100% !important;
+}
+
+.widget-esearch-singlevalue-setting .dijit-form-DateTextBox>.dijitRight{
+  width:17px;
+  width:17px !important;
+}
+
+.widget-esearch-singlevalue-setting .dijit-form-DateTextBox>div.dijitInputField>input.dijitInputInner{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  padding:0 !important;
+  height: 100% !important;
+}
+
+.widget-esearch-singlevalue-setting .dijitSelectLabel.dijitValidationTextBoxLabel{
+  width:52px;
+  max-width:52px;
+  overflow:hidden;
+  max-width:52px !important;
+  overflow:hidden !important;
+}
+
+.widget-esearch-singlevalue-setting .value-container{
+  position:relative;
+  width:100%;
+}
+
+.widget-esearch-singlevalue-setting .radio-table-container{
+  width:100%;
+  padding-top: 10px;
+}
+
+.widget-esearch-singlevalue-setting .radio-table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.widget-esearch-singlevalue-setting .radio-table > tbody > tr > td{
+  width: 33%;
+  text-align: center;
+}
+
+.widget-esearch-singlevalue-setting .delete{
+  width:15px;
+  height: 15px;
+  background-repeat: no-repeat no-repeat;
+  background-position: center center;
+  background-image: url(images/delete_disabled.png);
+  margin-top:5px;
+  cursor: pointer;
+}
+
+.widget-esearch-singlevalue-setting:hover .delete{
+  background-image: url(images/delete_enabled.png);
+}
+
+.widget-esearch-singlevalue-setting .prompt{
+  /*margin-top:10px;*/
+}
+
+.widget-esearch-singlevalue-setting .askvalues .askvalues-checkbox{
+  margin-left: 1px;
+  margin-right: 8px;
+}
+
+.widget-esearch-singlevalue-setting .prompt-table{
+  display: none;
+  border-collapse: collapse;
+  margin-top: 3px;
+  margin-left: 6px;
+}
+
+.widget-esearch-singlevalue-setting .prompt-table>tbody>tr>td{
+  padding: 3px;
+}
+
+.widget-esearch-singlevalue-setting .prompt-table>tbody>tr>td.first-td{
+  width: 70px;
+}
+
+.widget-esearch-singlevalue-setting .prompt-table>tbody>tr>td.second-td{
+  width: 400px;
+}
+
+.widget-esearch-singlevalue-setting .prompt-table>tbody>tr>td.second-td-user-list{
+  width: 100%;
+}
+
+.widget-esearch-singlevalue-setting .prompt-table>tbody>tr.user-list-tr{
+  display: none;
+  width: 100%;
+}
+
+.jimu-checkbox .checkbox{
+  margin-top: 7px;
+}
+
+.graphical-options-edit .jimu-checkbox .checkbox{
+  margin-top: 0;
+}
+
+/***CSS for SimpleTable dijit***/
+.jimu-simple-table{
+  width:100%;
+  margin:0;
+  padding:0;
+  overflow-x:hidden;
+  overflow-y:auto;
+  min-height: 77px;
+  position: relative;
+}
+
+.jimu-simple-table .simple-table-title{
+  font-size: 14px;
+}
+
+.jimu-simple-table .head-section{
+  width:100%;
+  height:36px;
+  overflow:hidden;
+}
+
+.jimu-simple-table .head-section .simple-table-tbody{
+  display: none;
+}
+
+.jimu-simple-table .body-section{
+  position: absolute;
+  top: 36px;
+  bottom: 0;
+  width:100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-left: 1px solid #eef2f5;
+  border-right: 1px solid #eef2f5;
+  border-bottom: 1px solid #eef2f5;
+  background-color: #fafafc;
+  color: #7989a0;
+}
+
+.jimu-simple-table .body-section .table-div{
+  margin: 0;
+  min-height: 100%;
+  background-image: url(images/table_under_line.png);
+  background-repeat: repeat;
+}
+
+.jimu-simple-table .body-section .simple-table-thead{
+  display: none;
+}
+
+.jimu-simple-table .table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+}
+
+.jimu-simple-table .simple-table-field.hidden-column > *,
+.jimu-simple-table .simple-table-cell.hidden-column > *{
+  display: none;
+}
+
+.jimu-simple-table .simple-table-field{
+  height: 36px;
+  line-height: 36px;
+}
+
+.jimu-simple-table .simple-table-cell{
+  height:40px;
+  line-height:40px;
+}
+
+.jimu-simple-table .radio-td.simple-table-cell {
+  padding-left: 24px;
+}
+
+.jimu-simple-table .checkbox-td.simple-table-cell {
+  padding-left: 42px;
+}
+
+.jimu-simple-table .actions-td.simple-table-cell {
+  padding-left: 24px;
+}
+
+.jimu-simple-table .simple-table-field,
+.jimu-simple-table .simple-table-cell{
+  vertical-align:middle;
+  padding-left:8px;
+  padding-right:8px;
+  padding-top:0;
+  padding-bottom:0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.jimu-simple-table .simple-table-field > *,
+.jimu-simple-table .simple-table-cell > *{
+  text-overflow: ellipsis;
+}
+
+.jimu-simple-table .simple-table-cell > *{
+  overflow: hidden;
+}
+
+.jimu-simple-table .simple-table-row:last-child .simple-table-cell{
+  border-bottom: 0;
+}
+
+.jimu-simple-table .simple-table-row .editable-div,
+.jimu-simple-table .simple-table-row .normal-text-div{
+  width: 100%;
+  height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.jimu-simple-table .simple-table-row .editable-input{
+  width:100%;
+}
+
+.jimu-simple-table .simple-table-row > .actions-td .action-item-parent{
+  display: none;
+  vertical-align:middle;
+}
+
+.jimu-simple-table .simple-table-row:hover > .actions-td .action-item-parent{
+  display: inline-block;
+}
+
+.jimu-simple-table .simple-table-row > .actions-td .action-item{
+  cursor:pointer;
+}
+
+.jimu-simple-table.jimu-layer-field-chooser,
+.jimu-simple-table.searchLayerFieldsTable{
+  min-height: 157px;
+  max-height: 157px;
+}
+
+.jimu-simple-table.searches-table{
+  max-height: 237px;
+  height: 237px;
+}
+
+.jimu-simple-table.expressions-table,
+.jimu-simple-table.link-table,
+.jimu-simple-table.values-table,
+.jimu-simple-table.relate-table{
+  max-height: 117px;
+}
+
+.jimu-simple-table.user-values-table{
+  max-height: 306px;
+}
+
+.searches-section .label.jimu-float-leading {
+  margin-top: 7px;
+}
+
+/*.widget-esearch-singlesearch-setting .jimu-checkbox .label,*/
+.widget-esearch-singlelink-setting .jimu-checkbox .label{
+    font-size: 16px;
+    margin: auto 5px;
+    cursor: default;
+}
+
+.widget-esearch-singlesearch-setting .jimu-checkbox .checkbox {
+    margin-top: 0;
+}
+
+.widget-esearch-singlesearch-setting .input-table > tbody > tr > td{
+  height: 30px;
+  line-height: 20px;
+  vertical-align: middle;
+  padding:4px 0;
+}
+
+.widget-esearch-singlesearch-setting .sort-fields-div{
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #d2dae2;
+  background-color: #e3ecf2;
+  color: #7989a0;
+  font-size: 14px;
+}
+
+.widget-esearch-singlesearch-setting .sort-fields-div span{
+  float: left;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+}
+
+.widget-esearch-singlesearch-setting .btn-sort-fields{
+  width: 14px;
+  height: 14px;
+  background: center center no-repeat url(images/edit_disabled.png);
+  cursor: default;
+}
+
+.widget-esearch-singlesearch-setting .btn-sort-fields.enabled{
+  background: center center no-repeat url(images/edit_enabled.png);
+  cursor: pointer;
+}
+
+.widget-esearch-singlesearch-setting .sorting-table{
+  table-layout:fixed;
+  width:100%;
+  padding-top: 8px;
+}
+
+.widget-esearch-singlesearch-setting .sorting-table > tbody > tr > td{
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.widget-esearch-singlesearch-setting .sort-fields-div span{
+  float: left;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+}
+
+.widget-esearch-singlesearch-setting .sort-arrow{
+  width: 13px;
+}
+
+.widget-esearch-singlesearch-setting .sort-arrow.asc{
+  background: center center no-repeat url(images/up_arrow.png);
+}
+
+.widget-esearch-singlesearch-setting .sort-arrow.desc{
+  background: center center no-repeat url(images/down_arrow.png);
+}
+
+.widget-esearch-singlevalue-setting .label.jimu-float-leading {
+  margin-top: 7px;
+}
+
+.result-format-edit .format-buttons{
+  display: inline-block;
+  padding: 0 8px;
+  float: left;
+}
+
+.result-format-edit .format-buttons>.icon-btn{
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 15px;
+  font-size: 14px;
+  line-height: 28px;
+  text-align: center;
+  background: none repeat scroll 0% 0% #24b5cc;
+  vertical-align: middle;
+  color: #FFF;
+  border-radius: 5px;
+  width:40px;
+  height:28px;
+  margin-left:5px;
+}
+
+.result-format-edit .format-buttons>.icon-btn:hover,
+.result-format-edit .format-buttons>.icon-btn.selected{
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 15px;
+  font-size: 14px;
+  line-height: 28px;
+  text-align: center;
+  background: none repeat scroll 0% 0% #0090a7;
+  vertical-align: middle;
+  color: #FFF;
+  border-radius: 5px;
+  width:40px;
+  height:28px;
+  margin-left:5px;
+}
+
+.result-format-edit .format-buttons .seperator {
+  border-right: 2px solid gray;
+  width:4px;
+  display: inline-block;
+  line-height: 28px;
+  vertical-align: middle;
+  text-align: center;
+  height:28px;
+  margin-left:5px;
+}
+
+.result-format-edit .format-buttons .bold-btn{
+  font-weight: bold;
+}
+
+.result-format-edit .format-buttons .italic-btn{
+  font-style: italic;
+}
+
+.result-format-edit .format-buttons .under-btn{
+  text-decoration: underline;
+}
+
+/* format-edit */
+.result-format-edit .input-table{
+  width:100%;
+}
+
+.result-format-edit .input-table > tbody > tr > td{
+  height: 30px;
+  line-height: 30px;
+  vertical-align: middle;
+  padding:4px 0;
+}
+
+.result-format-edit {
+  margin:0;
+  padding:0;
+  font-size:15px;
+}
