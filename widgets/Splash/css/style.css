@@ -154,6 +154,16 @@
 .jimu-widget-splash .footer .jimu-btn {
   margin: 0 20px;
 }
+
+.jimu-widget-splash li{
+  margin-bottom: 15px;
+  font-size: 11pt;
+}
+
+.jimu-widget-splash .jimu-viewstack{
+  background-color: unset;
+}
+
 /*mobile
 .jimu-widget-splash-mobile .envelope{
   background-color: #485566;
