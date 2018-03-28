@@ -30,43 +30,185 @@ define([
 ], function(declare, array, lang, Deferred, all, portalUrlUtils, WidgetManager, PanelManager, esriLang,
   graphicsUtils, NlsStrings,Dialog) {
   var mapDescriptionStr = "";
-  var xmlPath = "";
   var topLayerIndex = 300;
+  var layerInfoFromJson = {};
+  var _layerType = null;
   var uncheckRelatedCheckbox = function (chkboxLayerId){
     	var chkSimpleSearch = document.getElementById(window.chkSelectableLayer + chkboxLayerId);
     	if((chkSimpleSearch != null) && (chkSimpleSearch.checked == true)){	
     		chkSimpleSearch.checked = false;    		
     	}
    };
-   var loadJSON = function(callback){   
 
-        var xobj = new XMLHttpRequest();
+   var getInfoFromJsonWithEaID = function(callback, arrXmlPath, EaID, actionType){  
+        
+		if (arrXmlPath.length > 0){
+	        var xobj = new XMLHttpRequest();
+	        xobj.overrideMimeType("application/json");   	
+	        //xobj.open('GET', 'widgets/LocalLayer/config.json', true); 
+	        xobj.open('GET', arrXmlPath.pop(), true); 
+	
+	        xobj.onreadystatechange = function () {
+	              if (xobj.readyState == 4 && xobj.status == "200") {
+	                // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+	                if (callback(xobj.responseText, EaID)){
+	                	switch(actionType) {
+	                		case "eaDescription":
+		                		if ('eaDescription' in layerInfoFromJson) {
+							    	var mapDescription = new Dialog({
+								        title: layer.name,
+								        style: "width: 300px",    
+							    	});
+							        mapDescription.show();
+							        mapDescription.set("content", layerInfoFromJson['eaDescription']); 			
+		                		}
+		                		else {
+		                			alert("Map description is not available for this layer");	
+		                		}
+		                        break;      
+		                    case 'eaMetadata':
+			                    if ('eaMetadata' in layerInfoFromJson) {
+			                    	//alert(layerInfoFromJson['eaMetadata']);
+			                    	if ((!('eaScale' in layerInfoFromJson)) &&  (layerInfoFromJson['eaScale'] == "NATIONAL")) {
+			                        	metaDataID = window.nationalMetadataDic[layerInfoFromJson['eaMetadata']];
+			                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");                  		
+			                    	} else {
+			                    		if (window.communitySelected == window.strAllCommunity){
+				                            window.open(window.communityMetadataDic[layerInfoFromJson['eaMetadata']][window.communitySelected]);                    			
+			                    		} else {
+				                        	metaDataID = window.communityMetadataDic[layerInfoFromJson['eaMetadata']][window.communitySelected];
+				                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");                 		
+			                    		}
+			                    	}  		     
+		                    	} 
+		                		else {
+		                			alert("Metadata is not available for this layer");	
+		                		}		
+		                		break;
+		                	case 'eaDfsLink':
+		                		if ('eaDfsLink' in layerInfoFromJson) {
+		                            window.open(window.dataFactSheet + layerInfoFromJson['eaDfsLink']);
+		                		}
+		                		else {
+		                			alert("Data fact sheet is not available for this layer");	
+		                		}		                		
+		                		break;		                	                    	                        		
+	                	}
+	                	
+	                }
+	                else {
+	                	switch(actionType) {
+	                		case "eaDescription":
+			                	if ((arrXmlPath.length == 0)&&(!('eaDescription' in layerInfoFromJson))){
+					              	alert("Map description is not available for this layer");			                	
+					            }	                		
+	                			break;
+	                		case 'eaMetadata':
+			                	if ((arrXmlPath.length == 0)&&(!('eaMetadata' in layerInfoFromJson))){
+					              	alert("Metadata is not available for this layer");			                	
+					            }		                		
+		                		break;
+		                	case 'eaDfsLink':	                		
+			                	if ((arrXmlPath.length == 0)&&(!('eaDescription' in layerInfoFromJson))){
+					              	alert("Data fact sheet is not available for this layer");			                	
+					            }			                	
+		                		break;
+		                }          			                		
+	                	getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, EaID, actionType);
+	                }
+	              }              
+	        }
+	        xobj.send(null); 
+		}
+        
+    };    
+    var getInfoWithEaID = function(response, layerId_url) {
+			var resultLayerInfoFromJson = {};
+	        var localLayerConfig = JSON.parse(response);
+	        var urlInConfig = "";
+	        var resultFound = false;
+	        
+	        var arrLayers = localLayerConfig.layers.layer;
 
-        xobj.overrideMimeType("application/json");
-        //xobj.open('GET', 'widgets/LocalLayer/config.json', true); // Replace 'my_data' with the path to your file
-        xobj.open('GET', xmlPath, true); 
+	        for (index = 0, len = arrLayers.length; index < len; ++index) {
+	            layer = arrLayers[index];
+	            if(layer.hasOwnProperty('eaID')){
+	            	if (layerId_url.indexOf("http")>=0){
+		            	if (_layerType != "ArcGISDynamicMapServiceLayer"){
+					        if(layer.hasOwnProperty('eaLyrNum')){
+					            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
+					        }            
+				        } else {
+				        	urlInConfig = layer.url;
+				        }	      
+	            	}
 
-        xobj.onreadystatechange = function () {
-              if (xobj.readyState == 4 && xobj.status == "200") {
-                // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-                callback(xobj.responseText);
-              }
-        };
-        xobj.send(null);  
+					if ((urlInConfig!=null) &&(urlInConfig!="")){
+		            	if (urlInConfig.substr(urlInConfig.length - 1) == "/") {
+		            		urlInConfig = urlInConfig.substr(0, urlInConfig.length - 2);
+		            	}					
+					}
+
+	                if ((layerId_url === layer.eaID.toString()) ||(layerId_url == urlInConfig)) {
+	                	resultFound = true;
+	                    if(layer.hasOwnProperty('eaDescription')){
+	                    	layerInfoFromJson['eaDescription'] = layer.eaDescription;
+	                    }
+	                    if(layer.hasOwnProperty('eaMetadata')){
+	                    	layerInfoFromJson['eaMetadata'] = layer.eaMetadata;
+	                    }
+	                    if(layer.hasOwnProperty('eaDfsLink')){
+	                    	layerInfoFromJson['eaDfsLink'] = layer.eaDfsLink;
+	                    }
+	                    if (layer.hasOwnProperty('eaScale')) {
+	                    	layerInfoFromJson['eaScale'] = layer.eaScale;
+	                    }
+	                    break;                    	                    
+	                }					                	                
+	            }
+	        }
+	        return 	resultFound;
+
     };
+    var displayInfoOnClickAction = function(layerId, clickedURL, actionType) {
+    	layerInfoFromJson = {};
+    	
+        var eaID = layerId.replace(window.layerIdPrefix, "").replace(window.layerIdPBSPrefix, "").replace(window.layerIdBndrPrefix, "");
+        var arrXmlPath = [];
+        if ((layerId.indexOf(window.layerIdPrefix)) >= 0) {
+			arrXmlPath.push("widgets/LocalLayer/config.json");
+			getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, eaID, actionType);
+        }
+        else if ((layerId.indexOf(window.layerIdPBSPrefix)) >= 0) {
+       		arrXmlPath.push("widgets/PeopleAndBuildSpaces/config.json");
+       		getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, eaID, actionType);
+        } 
+        else if ((layerId.indexOf(window.layerIdBndrPrefix)) >= 0) {
+       		arrXmlPath.push("widgets/BoundaryLayer/config.json");
+       		getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, eaID, actionType);
+        } 
+        else {
+        	arrXmlPath.push("widgets/BoundaryLayer/config.json");
+        	arrXmlPath.push("widgets/LocalLayer/config.json");
+        	arrXmlPath.push("widgets/PeopleAndBuildSpaces/config.json");        	
+        	getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, clickedURL, actionType);
+        }    	
+    };
+
   var clazz = declare([], {
 
     _candidateMenuItems: null,
     //_deniedItems: null,
     _displayItems: null,
     _layerInfo: null,
-    _layerType: null,
+    //_layerType: null,
     _appConfig: null,
 
     constructor: function(layerInfo, displayItemInfos, layerType, layerListWidget) {
       this.nls = NlsStrings.value;
       this._layerInfo = layerInfo;
-      this._layerType = layerType;
+      _layerType = layerType;
+      layerInfoFromJson = {};
       this.layerListWidget = layerListWidget;
       this._initCandidateMenuItems();
       this._initDisplayItems(displayItemInfos);
@@ -82,13 +224,13 @@ define([
         url = this._getItemDetailsPageUrl() || layerUrl;
         label = this.nls.itemShowItemDetails;
       } else if (layerUrl &&
-        (this._layerType === "CSVLayer" || this._layerType === "KMLLayer")) {
+        (_layerType === "CSVLayer" || _layerType === "KMLLayer")) {
         url = layerUrl;
         label = this.nls.itemDownload;
-      } else if (layerUrl && this._layerType === "WMSLayer") {
+      } else if (layerUrl && _layerType === "WMSLayer") {
         url = layerUrl + (layerUrl.indexOf("?") > -1 ? "&" : "?") + "SERVICE=WMS&REQUEST=GetCapabilities";
         label = this.nls.itemDesc;
-      } else if (layerUrl && this._layerType === "WFSLayer") {
+      } else if (layerUrl && _layerType === "WFSLayer") {
         url = layerUrl + (layerUrl.indexOf("?") > -1 ? "&" : "?") + "SERVICE=WFS&REQUEST=GetCapabilities";
         label = this.nls.itemDesc;
       } else if (layerUrl) {
@@ -475,115 +617,31 @@ define([
     },
 
     _onItemMapDescriptionClick: function(evt) {
-        layerId = this._layerInfo.id;
+        layerId = this._layerInfo.id;        
+        var clickedURL = this._layerInfo.layerObject.url;        
+        displayInfoOnClickAction(layerId, clickedURL, 'eaDescription');       
 
-        var clickedURL = this._layerInfo.layerObject.url;
-        var bMapDescriptionAvailale = false;
-        var strLayerPrefix = "";
-        if ((layerId.indexOf(window.layerIdPrefix)) >= 0) {
-        	strLayerPrefix = window.layerIdPrefix;
-			xmlPath = "widgets/LocalLayer/config.json";
-        }
-        else if ((layerId.indexOf(window.layerIdPBSPrefix)) >= 0) {
-        	strLayerPrefix = window.layerIdPBSPrefix;
-       		xmlPath = "widgets/PeopleAndBuildSpaces/config.json";
-        } 
-        else if ((layerId.indexOf(window.layerIdBndrPrefix)) >= 0) {
-        	strLayerPrefix = window.layerIdBndrPrefix;
-       		xmlPath = "widgets/BoundaryLayer/config.json";
-        }  
-        loadJSON(function(response) {
-	        var localLayerConfig = JSON.parse(response);
-	        var urlInConfig = "";
-	        
-	        var arrLayers = localLayerConfig.layers.layer;
-	        for (index = 0, len = arrLayers.length; index < len; ++index) {
-	            layer = arrLayers[index];
-	            if(layer.hasOwnProperty('eaID')){
-			        if(layer.hasOwnProperty('eaLyrNum')){
-			            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
-			        }                	
-	                if ((layerId === (strLayerPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) {
-	                    if(layer.hasOwnProperty('eaDescription')){
-					    	var mapDescription = new Dialog({
-						        title: layer.name,
-						        style: "width: 300px",    
-					    	});
-					        mapDescription.show();
-					        mapDescription.set("content", layer.eaDescription);
-					        bMapDescriptionAvailale = true;
-	                        break;
-	                    }
-	                }
-	            }
-	        }
-	        if (!bMapDescriptionAvailale){
-	        	alert("Map description is not available for this layer");
-	        }
-      });   
     },
     _onItemDataFactSheetClick: function(evt) {
-        layerId = this._layerInfo.id;
-        var clickedURL = this._layerInfo.layerObject.url;
-        var bDataFactSheetAvailale = false;
-        var strLayerPrefix = "";
-        if ((layerId.indexOf(window.layerIdPrefix)) >= 0) {
-        	strLayerPrefix = window.layerIdPrefix;
-			xmlPath = "widgets/LocalLayer/config.json";
-        }
-        else if ((layerId.indexOf(window.layerIdPBSPrefix)) >= 0) {
-        	strLayerPrefix = window.layerIdPBSPrefix;
-       		xmlPath = "widgets/PeopleAndBuildSpaces/config.json";
-        } 
-        else if ((layerId.indexOf(window.layerIdBndrPrefix)) >= 0) {
-        	strLayerPrefix = window.layerIdBndrPrefix;
-       		xmlPath = "widgets/BoundaryLayer/config.json";
-        } 
-        loadJSON(function(response) {
-            var localLayerConfig = JSON.parse(response);
-            
-            var urlInConfig = "";
-            
-            var arrLayers = localLayerConfig.layers.layer;           
-            for (index = 0, len = arrLayers.length; index < len; ++index) {
-                layer = arrLayers[index];
-                if(layer.hasOwnProperty('eaID')){
-			        if(layer.hasOwnProperty('eaLyrNum')){
-			            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
-			        }                	
-                    if ((layerId === (strLayerPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) {      
-                        if(layer.hasOwnProperty('eaDfsLink')){
-                        	if (layer.eaDfsLink.trim() != ""){
-                            window.open(window.dataFactSheet + layer.eaDfsLink);
-					        bDataFactSheetAvailale = true;
-                            break;
-                        	}
-                        }
-                    }
-                }
-            }
-            if (!bDataFactSheetAvailale){
-            	alert("Data fact sheet is not available for this layer");
-            }
-
-        });
+        layerId = this._layerInfo.id;        
+        var clickedURL = this._layerInfo.layerObject.url;        
+        displayInfoOnClickAction(layerId, clickedURL, 'eaDfsLink');
     },
     _onItemChangeSymbologyClick: function(evt) {
       layerId = this._layerInfo.id;
 	  if (layerId.indexOf(window.layerIdPrefix) > -1) {			
-      lyrTiled = this._layerInfo.map.getLayer(layerId.replace(window.layerIdPrefix, window.layerIdTiledPrefix));
-	  if(lyrTiled){
-		       		lyrTiled.setVisibility(false);
+	      lyrTiled = this._layerInfo.map.getLayer(layerId.replace(window.layerIdPrefix, window.layerIdTiledPrefix));
+		  if(lyrTiled){
+       		lyrTiled.setVisibility(false);
 		  }	
 	  }
+
       this.layerListWidget.publishData({
         message: layerId
       }, true);
 
       var widgets = this.layerListWidget.appConfig.getConfigElementsByName('DynamicSymbology');
-
       var pm = PanelManager.getInstance();
-
       if(widgets[0].visible){
         pm.closePanel(widgets[0].id + "_panel");
       }
@@ -594,62 +652,9 @@ define([
       console.log('Open Dynamic Symbology');
     },    
     _onItemMetadataDownloadClick: function(evt) {
-        layerId = this._layerInfo.id;
-        var clickedURL = this._layerInfo.layerObject.url;
-        var bMetadataAvailale = false;
-        var strLayerPrefix = "";
-        if ((layerId.indexOf(window.layerIdPrefix)) >= 0) {
-        	strLayerPrefix = window.layerIdPrefix;
-			xmlPath = "widgets/LocalLayer/config.json";
-        }
-        else if ((layerId.indexOf(window.layerIdPBSPrefix)) >= 0) {
-        	strLayerPrefix = window.layerIdPBSPrefix;
-       		xmlPath = "widgets/PeopleAndBuildSpaces/config.json";
-        } 
-        else if ((layerId.indexOf(window.layerIdBndrPrefix)) >= 0) {
-        	strLayerPrefix = window.layerIdBndrPrefix;
-       		xmlPath = "widgets/BoundaryLayer/config.json";
-        }  
-        loadJSON(function(response) {
-            var localLayerConfig = JSON.parse(response);
-            
-            var urlInConfig = "";
-            
-            var arrLayers = localLayerConfig.layers.layer;           
-            for (index = 0, len = arrLayers.length; index < len; ++index) {
-                layer = arrLayers[index];
-                if(layer.hasOwnProperty('eaID')){
-			        if(layer.hasOwnProperty('eaLyrNum')){
-			            urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
-			        }                	
-                    if ((layerId === (strLayerPrefix + layer.eaID.toString()))||(clickedURL === urlInConfig)) { 
-                    	if(layer.hasOwnProperty('eaMetadata')){
-	                    	if (layer.hasOwnProperty('eaScale') &&  (layer.eaScale == "NATIONAL")) {
-	                        	metaDataID = window.nationalMetadataDic[layer.eaMetadata];
-	                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
-						        bMetadataAvailale = true;                    		
-	                    	} else {
-	                    		if (window.communitySelected == window.strAllCommunity){
-		                            window.open(window.communityMetadataDic[layer.eaMetadata][window.communitySelected]);
-							        bMetadataAvailale = true;		                    			
-	                    		} else {
-	                        	metaDataID = window.communityMetadataDic[layer.eaMetadata][window.communitySelected];
-	                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
-						        bMetadataAvailale = true;	                    		
-	                    		}
-	                    	}     		
-
-					    }                      
-                        
-                        break;
-                    }
-                }
-            }
-            if (!bMetadataAvailale){
-            	alert("Matadata is not available for this layer");
-            }
-
-        });
+        layerId = this._layerInfo.id;        
+        var clickedURL = this._layerInfo.layerObject.url;        
+        displayInfoOnClickAction(layerId, clickedURL, 'eaMetadata');
         
 
     },    
@@ -716,10 +721,14 @@ define([
         key: 'remove'
       },{
         key: 'separator'
-      }, {
+      },{
         key: 'mapDescription'
-      }, {
+      },{
+        key: 'dataFactSheet'
+      },{
         key: 'url'
+      }, {
+        key: 'metadataDownload'
       } ],
       'RootLayerAndFeatureLayer': [
       {
@@ -756,6 +765,8 @@ define([
       }, {
         key: 'separator'
       }, {
+        key: 'changeSymbology'
+      }, {
         key: 'url'
       }],
       'GroupLayer': [{
@@ -772,6 +783,7 @@ define([
     };
 
     layerInfo.getLayerType().then(lang.hitch(this, function(layerType) {
+    	_layerType = layerType;
       var itemInfoCategory = "";
       if (isRootLayer &&
           (layerType === "FeatureLayer" ||
