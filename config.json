@@ -128,8 +128,8 @@
                 "position": {
                     "left": 345,
                     "top": 5,
-                    "width": 380,
-                    "height": 410,
+                    "width": 490,
+                    "height": 480,
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
@@ -772,8 +772,8 @@
                     "position": {
                         "right": 5,
                         "top": 95,
-                        "width": 380,
-                        "height": 410,
+                        "width": 490,
+                        "height": 480,
                         "relativeTo": "map"
                     },
                     "placeholderIndex": 1,
