@@ -30,7 +30,8 @@ define([
         'dijit/TooltipDialog',
         'esri/InfoTemplate',
         'esri/layers/ArcGISDynamicMapServiceLayer',
-        'esri/layers/ArcGISTiledMapServiceLayer'
+        'esri/layers/ArcGISTiledMapServiceLayer',
+        'esri/renderers/ClassBreaksRenderer',
     ],
     function (
         declare,
@@ -48,7 +49,8 @@ define([
         TooltipDialog,
         InfoTemplate,
         ArcGISDynamicMapServiceLayer,
-        ArcGISTiledMapServiceLayer) {
+        ArcGISTiledMapServiceLayer,
+        ClassBreaksRenderer) {
     //To do: set these community boundary layer properties from the config file.
     var communityBoundaryLayer = "https://leb.epa.gov/arcgis/rest/services/Communities/Community_Locations/MapServer";
     var communityBoundaryLayerID = "901"
@@ -59,6 +61,21 @@ define([
     var hashFactsheetLinkPBS = {};
     var hashLayerNameLinkPBS = {};
     var hashDescriptionforPBS = {};
+    var loadSymbologyPBSConfig = function(callback) {
+		var xobj = new XMLHttpRequest();
+		xobj.overrideMimeType("application/json");
+		if (window.communitySelected != window.strAllCommunity) {
+			xobj.open('GET', 'configs/CommunitySymbology/' + window.communitySelected + '_JSON_Symbol/Nulls/' + window.communitySelected + '_' + Attribute + ".json", true);
+		} else {
+			xobj.open('GET', 'configs/CommunitySymbology/' + 'AllCommunities' + '_JSON_Symbol/Nulls/' + 'CombComm' + '_' + Attribute + ".json", true);
+		}
+		xobj.onreadystatechange = function() {
+			if (xobj.readyState == 4 && xobj.status == "200") {
+				callback(xobj.responseText);
+			}
+		};
+		xobj.send(null);
+	};
 
     var updateSelectablePBSLayersArea = function () {
 
@@ -485,6 +502,12 @@ define([
                                 if (lyrTiled) {
                                     lyrTiled.setOpacity(layer.opacity);
                                 }
+                            }  else if (layer.eaScale == "COMMUNITY") {
+								loadSymbologyPBSConfig(function(response) {
+									var classBreakInfo = JSON.parse(response);
+									var renderer = new ClassBreaksRenderer(classBreakInfo);
+									lLayer.setRenderer(renderer);
+								});
                             }                            
 
                         } else if (layer.type.toUpperCase() === 'TILED') {
