@@ -199,11 +199,19 @@ define(["dojo/_base/declare",
           if(urlS.indexOf("/MapServer")>0){
             domStyle.set(this.lNameFrame, "display", "block");
             var stringArray = urlS.split("/");
+            if (stringArray[stringArray.length -2]=="MapServer"){
+                this.nameTextBox.value = stringArray[stringArray.length -3] + "-" + stringArray[stringArray.length -1];
+            } else {
             this.nameTextBox.value = stringArray[stringArray.length -2];
-          }else if(urlS.indexOf("/FeatureServer/")>0){
+            }
+          }else if(urlS.indexOf("/FeatureServer")>0){
             domStyle.set(this.lNameFrame, "display", "block");
             var stringArray = urlS.split("/");
-            this.nameTextBox.value = stringArray[stringArray.length -3];
+            if (stringArray[stringArray.length -2]=="FeatureServer"){
+                this.nameTextBox.value = stringArray[stringArray.length -3] + "-" + stringArray[stringArray.length -1];
+            } else {
+            this.nameTextBox.value = stringArray[stringArray.length -2];
+            }
           }else if(urlS.indexOf("/ImageServer")>0){
             domStyle.set(this.lNameFrame, "display", "block");
             var stringArray = urlS.split("/");

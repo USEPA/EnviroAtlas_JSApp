@@ -130,6 +130,8 @@ define(['dojo/_base/declare',
             if (typeof button.color !== "undefined") {
               html.setStyle(this.okNode, 'backgroundColor', button.color);
               html.setStyle(this.okNode, 'color', utils.invertColor(button.color));//auto color for text
+              html.setStyle(this.backNode, 'backgroundColor', button.color);
+              html.setStyle(this.backNode, 'color', utils.invertColor(button.color));//auto color for text
             }
             if (typeof button.transparency !== "undefined") {
               html.setStyle(this.okNode, 'opacity', (1 - button.transparency));
@@ -137,8 +139,6 @@ define(['dojo/_base/declare',
           }
           this.okNode.innerHTML = this.config.splash.button.text || this.nls.ok;
           html.attr(this.okNode, "title", this.config.splash.button.text || this.nls.ok);
-          console.log(this.okNode);
-          console.log(this.backNode);
           var background = this.config.splash.background;
           if (typeof background !== "undefined") {
             //image
@@ -348,7 +348,10 @@ define(['dojo/_base/declare',
         var welcomeTabs = dijit.byId("welcometabContainer"); 
         welcomeTabs.selectTab("Welcome");
       },
-      
+      onFwdClick: function(){
+        var welcomeTabs = dijit.byId("welcometabContainer"); 
+        welcomeTabs.selectTab("Disclaimer");
+      },      
       close: function() {
         this._isClosed = true;
         this.widgetManager.closeWidget(this);
