@@ -6,7 +6,9 @@ div.jimu-widget-addwebmapdata.content-container {
 }
 
 .jimu-widget-addwebmapdata .help-text {
-    color: silver;
+    padding: 4px;
+    color: black;
+    font-size: 14px;
 }
 
 .jimu-widget-addwebmapdata .tab-container {
