@@ -61,9 +61,8 @@
 }
 .jimu-widget-splash-desktop .splash-container .jimu-btn,
 .jimu-widget-splash-mobile .splash-container .jimu-btn{
+  /*width: 450px;*
   height: 33px;
-  padding: 0;
-  width: 450px;
   line-height: 33px;
 }
 .jimu-rtl .jimu-widget-splash-desktop .splash-container .jimu-btn,
@@ -154,6 +153,28 @@
 .jimu-widget-splash .footer .jimu-btn {
   margin: 0 20px;
 }
+
+.jimu-widget-splash li{
+  margin-bottom: 15px;
+  font-size: 11pt;
+}
+
+.jimu-widget-splash .jimu-viewstack{
+  background-color: unset;
+}
+
+.jimu-widget-splash .mainbtn{
+  margin: 20px;
+  width: 210px;
+  background-color: #518dca;
+}
+
+.jimu-widget-splash .btndiv{
+    text-align:center;
+    width: 100%;
+    margin: 0 auto;
+}
+
 /*mobile
 .jimu-widget-splash-mobile .envelope{
   background-color: #485566;

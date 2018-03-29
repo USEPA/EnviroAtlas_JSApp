@@ -1,15 +1,31 @@
 <div class="jimu-widget-splash-desktop">
-  <div class="overlay" data-dojo-attach-point="overlayNode"></div>
-  <div class="envelope buried" data-dojo-attach-point="envelopeNode">
-    <div class="splash-container splash-bg" data-dojo-attach-point="splashContainerBackground"></div>
-    <div class="splash-container" data-dojo-attach-point="splashContainerNode">
-      <div class="custom-content" data-dojo-attach-point="customContentNode" style="font-family: 'Verdana','Avenir Light'"></div>
-      <div class="footer" data-dojo-attach-point="footerNode">
-        <div class="confirmcheck-container" data-dojo-attach-point="confirmCheckContainer">
-          <div data-dojo-attach-point="confirmCheck"></div>
+    <div class="overlay" data-dojo-attach-point="overlayNode"/>
+    <div class="envelope buried" data-dojo-attach-point="envelopeNode">
+        <div class="splash-container splash-bg" data-dojo-attach-point="splashContainerBackground"/>
+        <div class="splash-container" data-dojo-attach-point="splashContainerNode">
+            <div data-dojo-attach-point="tabMain">
+                <div class="splash-container" data-dojo-attach-point="welcomeTab">
+                    <div class="custom-content" data-dojo-attach-point="customContentNode"></div>
+                    <div class="custom-content btndiv">
+                        <div class='jimu-btn mainbtn' data-dojo-attach-point='tourNode' data-dojo-attach-event='onclick:onTourClick'>Take A Tour<br><img src="/EnviroAtlas/widgets/Demo/images/icon.png?wab_dv=2.5"><br><span style="font-size:small">Show me how to use the map</span></div>
+                        <div class='jimu-btn mainbtn' data-dojo-attach-point='learnNode' data-dojo-attach-event='onclick:onLearnClick'>Learn<br><img src="/EnviroAtlas/widgets/AddWebMapData/images/icon.png?wab_dv=2.5"><br><span style="font-size:small">Show me something cool</span></div>
+                        <div class='jimu-btn mainbtn' data-dojo-attach-point='exploreNode' data-dojo-attach-event='onclick:onOkClick'>Explore<br><img src="/EnviroAtlas/widgets/SimpleSearchFilter/images/icon.png?wab_dv=2.5"><br><span style="font-size:small">I know what I'm looking for</span></div>
+                    </div>
+                    <div class="footer" data-dojo-attach-point="footerNode">
+                        <div class="custom-content"><div style="color: yellow">By using the EnviroAtlas interactive map, you acknowledge the limitations outlined in our disclaimer. <div class='jimu-btn' data-dojo-attach-point='fwdNode' data-dojo-attach-event='onclick:onFwdClick' style="padding: 0px 10px 0px 10px;">Read full Disclaimer</div></div></div>
+                        <div style="display:none"><div class="confirmcheck-container" data-dojo-attach-point="confirmCheckContainer">
+                            <div data-dojo-attach-point="confirmCheck"/>
+                        </div>
+                        <div class="jimu-btn jimu-float-trailing" data-dojo-attach-point="okNode" data-dojo-attach-event="onclick:onOkClick"/></div>
+                    </div>
+                </div>
+                <div class="splash-container" data-dojo-attach-point="disclaimerTab">
+                    <div class="custom-content" data-dojo-attach-point="customDisclaimerNode"></div>
+                    <div class="custom-content">
+                        <div class='jimu-btn jimu-float-trailing' data-dojo-attach-point='backNode' data-dojo-attach-event='onclick:onBackClick' style="width:100px;">Back</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="jimu-btn jimu-float-trailing" data-dojo-attach-point="okNode" data-dojo-attach-event="onclick:onOkClick"></div>
-      </div>
     </div>
-  </div>
 </div>

@@ -84,7 +84,7 @@ var ie = (function() {
 
     resources = resources.concat([
       window.apiUrl + 'dojo/resources/dojo.css',
-      window.apiUrl + 'dijit/themes/claro/claro.css',
+      window.apiUrl + 'dijit/themes/tundra/tundra.css',
       window.apiUrl + 'esri/css/esri.css',
       window.apiUrl + 'dojox/layout/resources/ResizeHandle.css',
       window.path + 'jimu.js/css/jimu-theme.css',

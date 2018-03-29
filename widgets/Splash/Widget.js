@@ -26,10 +26,13 @@ define(['dojo/_base/declare',
     'jimu/utils',
     'esri/lang',
     'jimu/dijit/LoadingShelter',
-    'dojo/Deferred'
+    'dojo/Deferred',
+    "jimu/dijit/TabContainer",
+    'jimu/WidgetManager',
+    'jimu/PanelManager'
   ],
   function(declare, lang, html, on, query, cookie, _WidgetsInTemplateMixin, BaseWidget,
-           CheckBox, utils, esriLang, LoadingShelter, Deferred) {
+           CheckBox, utils, esriLang, LoadingShelter, Deferred, TabContainer, WidgetManager, PanelManager) {
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
       baseClass: 'jimu-widget-splash',
       _hasContent: null,
@@ -53,7 +56,11 @@ define(['dojo/_base/declare',
         if (this._hasContent) {
           this.customContentNode.innerHTML = this.config.splash.splashContent;
         }
-
+        this._hasDisclaimer = this.config.splash && this.config.splash.disclaimerContent;
+        if (this._hasDisclaimer) {
+          this.customDisclaimerNode.innerHTML = this.config.splash.disclaimerContent;
+        }        
+        
         if (!this._requireConfirm && !this._showOption) {
           html.setStyle(this.confirmCheck, 'display', 'none');
           html.addClass(this.okNode, 'enable-btn');
@@ -70,12 +77,33 @@ define(['dojo/_base/declare',
             label: utils.stripHTML(hint),
             checked: false
           }, this.confirmCheck);
-          this.own(on(this.confirmCheck.domNode, 'click', lang.hitch(this, this.onCheckBoxClick)));
           html.setAttr(this.confirmCheck.domNode, 'title', utils.stripHTML(hint));
           this.confirmCheck.startup();
         }
       },
-
+      
+      _initTabContainer: function () {
+          var tabs = [];
+          tabs.push({
+            title: "Welcome",
+            content: this.welcomeTab
+          });
+          tabs.push({
+            title: "Disclaimer",
+            content: this.disclaimerTab
+          });
+          this.selTab = "Welcome"; 
+          this.tabContainer = new TabContainer({
+            tabs: tabs,
+            selected: this.selTab,
+            id: "welcometabContainer"
+          }, this.tabMain);
+          this.tabContainer.startup();
+          this.own(on(this.tabContainer, 'tabChanged', lang.hitch(this, function (title) {
+            this.selTab = title;
+          })));
+        },
+      
       onOpen: function() {
         if (!utils.isInConfigOrPreviewWindow()) {
           var isFirstKey = this._getCookieKey();
@@ -90,7 +118,7 @@ define(['dojo/_base/declare',
         this.inherited(arguments);
         this.shelter.show();
         this._normalizeDomNodePosition();
-
+        this._initTabContainer();
         this._setConfig();
       },
 
@@ -104,6 +132,10 @@ define(['dojo/_base/declare',
             if (typeof button.color !== "undefined") {
               html.setStyle(this.okNode, 'backgroundColor', button.color);
               html.setStyle(this.okNode, 'color', utils.invertColor(button.color));//auto color for text
+              html.setStyle(this.backNode, 'backgroundColor', button.color);
+              html.setStyle(this.backNode, 'color', utils.invertColor(button.color));//auto color for text
+              html.setStyle(this.fwdNode, 'backgroundColor', button.color);
+              html.setStyle(this.fwdNode, 'color', utils.invertColor(button.color));//auto color for text
             }
             if (typeof button.transparency !== "undefined") {
               html.setStyle(this.okNode, 'opacity', (1 - button.transparency));
@@ -111,7 +143,6 @@ define(['dojo/_base/declare',
           }
           this.okNode.innerHTML = this.config.splash.button.text || this.nls.ok;
           html.attr(this.okNode, "title", this.config.splash.button.text || this.nls.ok);
-
           var background = this.config.splash.background;
           if (typeof background !== "undefined") {
             //image
@@ -317,7 +348,38 @@ define(['dojo/_base/declare',
           this.close();
         }
       },
-
+      onBackClick: function(){
+        var welcomeTabs = dijit.byId("welcometabContainer"); 
+        welcomeTabs.selectTab("Welcome");
+      },
+      onFwdClick: function(){
+        var welcomeTabs = dijit.byId("welcometabContainer"); 
+        welcomeTabs.selectTab("Disclaimer");
+      },   
+      onTourClick: function(){
+        this.openWidgetById('widgets_Demo_28');
+        var wm = WidgetManager.getInstance();
+        widget = wm.getWidgetById('widgets_Demo_28');
+        if (widget != undefined){
+            var pm = PanelManager.getInstance();   
+            pm.showPanel(widget); 
+        }  
+        this.close();
+      },
+      onLearnClick: function(){
+        this.openWidgetById('widgets_AddWebMapData');
+        var wm = WidgetManager.getInstance();
+        widget = wm.getWidgetById('widgets_AddWebMapData');
+        if (widget != undefined){
+            var pm = PanelManager.getInstance();   
+            pm.showPanel(widget); 
+        }  
+        var wm = WidgetManager.getInstance();
+        widget = wm.getWidgetById('themes_TabTheme_widgets_SidebarController_Widget_20');
+        console.log(widget);
+        widget.selectTab(4);
+        this.close();
+      },     
       close: function() {
         this._isClosed = true;
         this.widgetManager.closeWidget(this);
