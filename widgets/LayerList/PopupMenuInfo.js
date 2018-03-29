@@ -68,8 +68,7 @@ define([
 		                        break;      
 		                    case 'eaMetadata':
 			                    if ('eaMetadata' in layerInfoFromJson) {
-			                    	//alert(layerInfoFromJson['eaMetadata']);
-			                    	if ((!('eaScale' in layerInfoFromJson)) &&  (layerInfoFromJson['eaScale'] == "NATIONAL")) {
+			                    	if (('eaScale' in layerInfoFromJson) &&  (layerInfoFromJson['eaScale'] == "NATIONAL")) {
 			                        	metaDataID = window.nationalMetadataDic[layerInfoFromJson['eaMetadata']];
 			                            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");                  		
 			                    	} else {
