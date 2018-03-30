@@ -358,25 +358,12 @@ define(['dojo/_base/declare',
       },   
       onTourClick: function(){
         this.openWidgetById('widgets_Demo_28');
-        var wm = WidgetManager.getInstance();
-        widget = wm.getWidgetById('widgets_Demo_28');
-        if (widget != undefined){
-            var pm = PanelManager.getInstance();   
-            pm.showPanel(widget); 
-        }  
         this.close();
       },
       onLearnClick: function(){
         this.openWidgetById('widgets_AddWebMapData');
         var wm = WidgetManager.getInstance();
-        widget = wm.getWidgetById('widgets_AddWebMapData');
-        if (widget != undefined){
-            var pm = PanelManager.getInstance();   
-            pm.showPanel(widget); 
-        }  
-        var wm = WidgetManager.getInstance();
         widget = wm.getWidgetById('themes_TabTheme_widgets_SidebarController_Widget_20');
-        console.log(widget);
         widget.selectTab(4);
         this.close();
       },     
