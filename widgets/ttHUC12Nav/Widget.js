@@ -4058,7 +4058,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 		{
 			html.empty(this.divResultMessage);
 			html.empty(this.clickAgainMessage);
-			var msg_text = "<label style=\"font-size: 18px;\">" + "Click on only one of the " + this.currentFeatures.length + " highlighted Subwatersheds to navigate." + "</label>";
+			var msg_text = "<label style=\"font-size: 18px;\">" + "Click on only one of the " + this.currentFeatures.length + " highlighted Subwatersheds to see additional information." + "</label>";
 			html.place(html.toDom(msg_text), this.clickAgainMessage);
 			html.setStyle(this.clickAgainMessage, 'display', '');
 		}

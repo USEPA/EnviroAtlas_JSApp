@@ -5,7 +5,7 @@ define({
     selectFeatures: "Select Subwatershed",
     selectByAttribute: "By Value",
     results: "Results",
-    searchLayer: "Click the map to navigation on the Watershed Boundary Dataset Subwatersheds (HUC12)",
+    searchLayer: "Click on any location in the conterminous US to identify upstream or downstream watersheds within the stream network.",
     searchType: "Search alias",
     selectFeaturesBy: "Select features by",
     selectSpatial: "By Spatial",
