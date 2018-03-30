@@ -573,6 +573,10 @@ define([
                     } else {
                         layerTobeRemoved = map.getLayer(window.layerIdPBSPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, ""));
                         map.removeLayer(layerTobeRemoved);
+            			lyrTiledPBS = map.getLayer(window.layerIdTiledPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, ""));
+						if (lyrTiledPBS) {
+							map.removeLayer(lyrTiledPBS);
+						}
                     }
                 });
             }
