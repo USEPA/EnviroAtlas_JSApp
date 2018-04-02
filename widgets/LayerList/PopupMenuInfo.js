@@ -634,7 +634,12 @@ define([
        		lyrTiled.setVisibility(false);
 		  }	
 	  }
-
+	  if (layerId.indexOf(window.layerIdPBSPrefix) > -1) {			
+	      lyrTiledPBS = this._layerInfo.map.getLayer(layerId.replace(window.layerIdPBSPrefix, window.layerIdTiledPrefix));
+		  if(lyrTiledPBS){
+       		lyrTiledPBS.setVisibility(false);
+		  }	
+	  }
       this.layerListWidget.publishData({
         message: layerId
       }, true);
