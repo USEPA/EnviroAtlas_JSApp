@@ -86,6 +86,7 @@ define(['dojo/_base/declare',
         _style: null,
         _color: null,
         _outline: null,
+        _width: null,
         _sliderValueChange: null,
         _symbolPointForPolygon: null,
         _bPolygonAsPoint: null,
@@ -438,7 +439,7 @@ define(['dojo/_base/declare',
 		            dynamicSymbology.chkTransparentPoly.startup();				
                     //var chkTransparen = document.getElementsByName("chkTransparent");
             		//chkTransparen[0].style.left = "400px";	
-            		dom.byId("dropDownButtonContainer").appendChild(dojo.create("label", {"for" : "chkTransparent", innerHTML: " Transparent", "id": "lblTransparent", "name": "lblTransparent"}));
+            		dom.byId("dropDownButtonContainer").appendChild(dojo.create("label", {"for" : "chkTransparent", innerHTML: " no fill", "id": "lblTransparent", "name": "lblTransparent"}));
 				}
 	        }
         },
@@ -546,8 +547,11 @@ define(['dojo/_base/declare',
 	                }
 	                else if (fType == "esriGeometryPolyline") {
 	                	var symbol = new SimpleLineSymbol();
-	                	if (_style != null) {
+	                	if ((_style != null) && (_style != undefined)){
 	                		symbol.style = _style;
+	                	}
+	                	if ((_width != null) && (_width != undefined)){
+	                		symbol.width = _width;
 	                	}
 	                }
 	                else if ((fType == "esriGeometryPoint") || _bPolygonAsPoint) {
@@ -627,12 +631,15 @@ define(['dojo/_base/declare',
 
         _getStyle: function () {
             newStyle = symbolStyler.getStyle();
-            newStyle.scheme.outline = newStyle.symbol.outline;
+            if (newStyle.symbol.outline!=undefined) {
+            	newStyle.scheme.outline = newStyle.symbol.outline;
+            }
             _scheme = newStyle.scheme;
             _symbol = newStyle.symbol;
             _style = newStyle.symbol.style;
             _color = newStyle.symbol.color;
             _outline = newStyle.symbol.outline;
+            _width = newStyle.symbol.width;
             
 			var fType = geoenrichedFeatureLayer.geometryType;
 			if (fType == "esriGeometryPolygon") {
@@ -689,22 +696,36 @@ define(['dojo/_base/declare',
                 });
             } else if (fType == "esriGeometryPolyline") {
                 //var dSymbol = geoenrichedFeatureLayer.renderer.infos[0].symbol;
-                var dSymbol = new SimpleLineSymbol();
+                
             	schemes = esriStylesChoropleth.getSchemes({
                     basemap: "hybrid",
                     geometryType: "polyline",
                     theme: "high-to-low"
                 });
-                symbolStyler.edit(dSymbol, {
-                    //activeTab: "fill",
-                    colorRamp: {
-                        colors: currRamp,
-                        numStops: _NumberOfClasses,
-                        scheme: schemes.secondarySchemes[39]
-                    },
-                    externalSizing: false,
-                    schemes: schemes
-                });
+                if ((_ClassificationMethod!=undefined)  || (_nBreaks>0)){ 
+              		var dSymbol = geoenrichedFeatureLayer.renderer.infos[0].symbol;
+
+	                symbolStyler.edit(dSymbol, {
+	                    //activeTab: "fill",
+	                    colorRamp: {
+	                        colors: currRamp,
+	                        numStops: _NumberOfClasses,
+	                        scheme: schemes.secondarySchemes[39]
+	                    },
+	                    externalSizing: false,
+	                    schemes: schemes
+	                });
+                } else {
+                	
+                	var dSymbol = new SimpleLineSymbol();
+
+	                symbolStyler.edit(dSymbol, {
+	                    //activeTab: "fill",
+	                    externalSizing: false,
+	                    schemes: schemes
+	                });                	
+                }
+
             } else if (fType == "esriGeometryPoint") {
                 
             	schemes = esriStylesChoropleth.getSchemes({
