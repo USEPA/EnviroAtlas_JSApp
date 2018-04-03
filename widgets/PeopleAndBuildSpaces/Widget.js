@@ -18,6 +18,7 @@ define([
         'dojo/_base/declare',
         'dijit/_WidgetsInTemplateMixin',
         "dojo/Deferred",
+        'dojo/_base/array',
         'jimu/BaseWidget',
         'dijit/Dialog',
         'jimu/WidgetManager',
@@ -37,6 +38,7 @@ define([
         declare,
         _WidgetsInTemplateMixin,
         Deferred,
+        array,
         BaseWidget,
         Dialog,
         WidgetManager,
@@ -127,7 +129,16 @@ define([
         }
     }
 
+	var showDisplayLayerAddFailureWidget = function(layerName) {
 
+		var widgetName = 'DisplayLayerAddFailure';
+		var widgets = selfPBS.appConfig.getConfigElementsByName(widgetName);
+		var pm = PanelManager.getInstance();
+		pm.showPanel(widgets[0]);
+		selfPBS.publishData({
+			message : layerName
+		});
+	};
     
     var showLayerListWidget = function () {
         var widgetName = 'LayerList';
@@ -383,26 +394,107 @@ define([
                             if (layer.disableclientcaching) {
                                 lLayer.setDisableClientCaching(true);
                             }
-	                        lLayer.on('load', function (evt) {
-	                            var removeLayers = [];
-	                            array.forEach(evt.layer.visibleLayers, function (layer) {
-	                                //remove any grouplayers
-	                                if (evt.layer.layerInfos[layer].subLayerIds) {
-	                                    removeLayers.push(layer);
-	                                } else {
-	                                    var _layerCheck = dojo.clone(layer);
-	                                    while (evt.layer.layerInfos[_layerCheck].parentLayerId > -1) {
-	                                        if (evt.layer.visibleLayers.indexOf(evt.layer.layerInfos[_layerCheck].parentLayerId) == -1) {
-	                                            removeLayers.push(layer);
-	                                        }
-	                                        _layerCheck = dojo.clone(evt.layer.layerInfos[_layerCheck].parentLayerId);
-	                                    }
-	                                }
-	                            });
-	                            array.forEach(removeLayers, function (layerId) {
-	                                evt.layer.visibleLayers.splice(evt.layer.visibleLayers.indexOf(layerId), 1);
-	                            });
-	                        });
+
+							lLayer.on('load', function(evt) {
+								if (layer.flyPopups) {
+									var _infoTemps = []
+									evt.layer.layerInfos.forEach(function(layer) {
+										_infoTemps.push({
+											infoTemplate : new PopupTemplate({
+												title : layer.name,
+												fieldInfos : [{
+													fieldName : "*",
+													visible : true,
+													label : "*"
+												}]
+											})
+										})
+									})
+									evt.layer.setInfoTemplates(_infoTemps)
+								}
+								//set min/max scales if present
+								if (lOptions.minScale) { 
+									evt.layer.setMinScale(lOptions.minScale)
+								}
+								if (lOptions.maxScale) {
+									evt.layer.setMaxScale(lOptions.maxScale)
+								}
+	
+								if (!lOptions.hasOwnProperty('hidelayers')) {
+									lOptions.hidelayers = []
+								}
+								var removeLayers = [];
+								for (var i = 0; i < lOptions.hidelayers.length; i++) {
+									lOptions.hidelayers[i] = parseInt(lOptions.hidelayers[i])
+								}
+								var showLayers = [];
+								array.forEach(evt.layer.layerInfos, function(ilayer) {
+									showLayers.push(ilayer.id)
+								})
+								array.forEach(lOptions.hidelayers, function(id) {
+									showLayers.splice(showLayers.indexOf(id), 1)
+								})
+								lOptions.hidelayers = showLayers;
+								var getArrayItemById = function(_array, _id) {
+									var _matchItem;
+									array.some(_array, function(_arrayItem) {
+										if (_arrayItem.id == _id) {
+											_matchItem = _arrayItem;
+											return true;
+										}
+									})
+									return _matchItem;
+								}
+								array.forEach(evt.layer.layerInfos, function(ilayer) {
+									ilayer.defaultVisibility = false;
+								})
+								for (var i = 0; i < lOptions.hidelayers.length; i++) {
+									getArrayItemById(evt.layer.layerInfos, lOptions.hidelayers[i]).defaultVisibility = true;
+								}
+								array.forEach(evt.layer.layerInfos, function(ilayer) {
+									if (ilayer.subLayerIds) {
+										if (removeLayers.indexOf(ilayer.id) == -1) {
+											removeLayers.push(ilayer.id)
+										};
+									}
+								})
+								for (var i = 0; i < lOptions.hidelayers.length; i++) {
+									var j = getArrayItemById(evt.layer.layerInfos, lOptions.hidelayers[i]).parentLayerId
+									while (j > -1) {
+										if (lOptions.hidelayers.indexOf(j) == -1) {
+											if (removeLayers.indexOf(lOptions.hidelayers[i]) == -1) {
+												removeLayers.push(lOptions.hidelayers[i])
+											}
+										}
+										j = getArrayItemById(evt.layer.layerInfos, j).parentLayerId;
+									}
+								}
+								array.forEach(removeLayers, function(layerId) {
+									if (lOptions.hidelayers.indexOf(layerId) > -1) {
+										lOptions.hidelayers.splice(lOptions.hidelayers.indexOf(layerId), 1)
+									};
+								})
+								if (lOptions.hidelayers.length == 0) {
+									lOptions.hidelayers.push(-1);
+									lOptions.hidelayers.push(-1);
+									lOptions.hidelayers.push(-1);
+								}
+
+								evt.layer.setVisibleLayers(lOptions.hidelayers);  
+	
+								if (layer.hasOwnProperty('hideInLegends')) {
+									var hideLegends = JSON.parse(layer.hideInLegends)
+									var finalLegends = []
+									for (var prop in hideLegends) {
+										array.forEach(evt.layer.layerInfos, lang.hitch(this, function(layerInfo) {
+											if (layerInfo.id == parseInt(prop)) {
+												layerInfo.showLegend = !hideLegends[prop]
+											}
+										}))
+									}
+								}
+								lLayer.layers = evt.layer.layerInfos
+							});	                       
                             lLayer.id = window.layerIdPBSPrefix + layer.eaID.toString();
                             map.setInfoWindowOnClick(true);
 
@@ -605,10 +697,13 @@ define([
                 this.map.setExtent(nExtent);
                 this.map.infoWindow.hide();
             },
+
             startup: function () {
 
                 this.inherited(arguments);
+                selfPBS = this;
                 map = this.map;
+                
                 arrLayers = this.config.layers.layer;
                 arrLayers = arrLayers.sort(function compare(a, b) {
                         if (a.eaTopic + a.name < b.eaTopic + b.name)
@@ -618,7 +713,6 @@ define([
                         return 0;
                     })
 
-                    selfPBS = this;
 
                 var tableOfRelationship = document.getElementById('categoryTablePBS');
                 var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
