@@ -1,10 +1,20 @@
 {
   "name": "HucNavigation",
+  "label": "HUC12 Navigator",
   "platform": "HTML",
-  "version": "1.2",
-  "wabVersion": "1.1",
-  "author": "Innovate",
-  "description": "HUC Navigation",
-  "copyright": "",
-  "license": "http://www.apache.org/licenses/LICENSE-2.0"	
+  "version": "2.5",
+  "wabVersion": "2.5",
+  "author": "Jimmy Bisese Tetra Tech built from eSearch by Robert Scheitlin & Esri R&D Center Beijing",
+  "description": "This widget provides navigation upstream and downstream on the Watershed Boundary Dataset.",
+  "copyright": "2017",
+  "license": "http://www.apache.org/licenses/LICENSE-2.0",
+  "properties": {
+    "hasVersionManager": true
+  },
+  "featureActions": [
+    {
+      "name": "eShowStatistics",
+      "uri": "featureActions/eShowStatistics"
+    }
+  ]
 }

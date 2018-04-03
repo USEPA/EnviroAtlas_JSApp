@@ -317,21 +317,6 @@
                 "config": "widgets/HucNavigation/config.json"
             }, {
                 "position": {
-                    "left": 695,
-                    "top": -40,
-                    "width": 360,
-                    "height": 420,
-                    "relativeTo": "map"
-                },
-                "placeholderIndex": 1,
-                "id": "widgets_ttHUC12Nav_36",
-                "name": "ttHUC12Nav",
-                "label": "HUC12 Navigation",
-                "version": "2.5",
-                "uri": "widgets/ttHUC12Nav/Widget",
-                "config": "widgets/ttHUC12Nav/config.json"
-            }, {
-                "position": {
                     "left": 645,
                     "top": -40,
                     "width": 440,
@@ -959,21 +944,6 @@
                     "version": "1.3",
                     "uri": "widgets/HucNavigation/Widget",
                     "config": "widgets/HucNavigation/config.json"
-                }, {
-                    "position": {
-                        "left": 695,
-                        "top": -40,
-                        "width": 360,
-                        "height": 420,
-                        "relativeTo": "map"
-                    },
-                    "placeholderIndex": 1,
-                    "id": "widgets_ttHUC12Nav_36",
-                    "name": "ttHUC12Nav",
-                    "label": "HUC12 Navigation",
-                    "version": "2.5",
-                    "uri": "widgets/ttHUC12Nav/Widget",
-                    "config": "widgets/ttHUC12Nav/config.json"
                 }, {
                     "position": {
                         "left": 645,
