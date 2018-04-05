@@ -260,7 +260,7 @@
                     "left": 445,
                     "top": 5,
                     "width": 350,
-                    "height": 340,
+                    "height": 310,
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
@@ -319,7 +319,7 @@
                 "position": {
                     "left": 645,
                     "top": -40,
-                    "width": 380,
+                    "width": 440,
                     "height": 410,
                     "relativeTo": "map"
                 },

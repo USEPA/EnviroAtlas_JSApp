@@ -21,9 +21,9 @@ for key in fs.keys():
 AllFailedEaIDArray = [int(i) for i in failedEaIDArray]
 
 htmlForEmail = "This is the list of failed layers in EnviroAtlas: <br />"
-DataInLocalLayerWidget = r"D:\Public\Data\CodeRepository\EnviroAtlas_WAB\widgets\LocalLayer\config.json"
-DataInBoundaryWidget = r"D:\Public\Data\CodeRepository\EnviroAtlas_WAB\widgets\BoundaryLayer\config.json"
-DataInPBSWidget = r"D:\Public\Data\CodeRepository\EnviroAtlas_WAB\widgets\PeopleAndBuildSpaces\config.json"
+DataInLocalLayerWidget = r"D:\Public\Data\EnviroAtlas_Public\WebProduction\interactivemap\widgets\LocalLayer\config.json"
+DataInBoundaryWidget = r"D:\Public\Data\EnviroAtlas_Public\WebProduction\interactivemap\widgets\BoundaryLayer\config.json"
+DataInPBSWidget = r"D:\Public\Data\EnviroAtlas_Public\WebProduction\interactivemap\widgets\PeopleAndBuildSpaces\config.json"
 EmailAddress = "Rosenbaum.Barbara@epa.gov"
 
 def writeURLintoHTML(failedEaIDArray, InputData, html):

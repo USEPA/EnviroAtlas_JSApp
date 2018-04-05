@@ -394,7 +394,8 @@ define([
                             if (layer.disableclientcaching) {
                                 lLayer.setDisableClientCaching(true);
                             }
-	                        lLayer.on('load', function (evt) {
+
+							lLayer.on('load', function(evt) {
 								if (layer.flyPopups) {
 									var _infoTemps = []
 									evt.layer.layerInfos.forEach(function(layer) {
@@ -418,10 +419,11 @@ define([
 								if (lOptions.maxScale) {
 									evt.layer.setMaxScale(lOptions.maxScale)
 								}
+	
 								if (!lOptions.hasOwnProperty('hidelayers')) {
 									lOptions.hidelayers = []
 								}
-	                            var removeLayers = [];
+								var removeLayers = [];
 								for (var i = 0; i < lOptions.hidelayers.length; i++) {
 									lOptions.hidelayers[i] = parseInt(lOptions.hidelayers[i])
 								}
@@ -462,12 +464,12 @@ define([
 										if (lOptions.hidelayers.indexOf(j) == -1) {
 											if (removeLayers.indexOf(lOptions.hidelayers[i]) == -1) {
 												removeLayers.push(lOptions.hidelayers[i])
-	                                        }
+											}
 										}
 										j = getArrayItemById(evt.layer.layerInfos, j).parentLayerId;
-	                                    }
-	                                }
-	                            array.forEach(removeLayers, function (layerId) {
+									}
+								}
+								array.forEach(removeLayers, function(layerId) {
 									if (lOptions.hidelayers.indexOf(layerId) > -1) {
 										lOptions.hidelayers.splice(lOptions.hidelayers.indexOf(layerId), 1)
 									};
@@ -477,7 +479,9 @@ define([
 									lOptions.hidelayers.push(-1);
 									lOptions.hidelayers.push(-1);
 								}
+
 								evt.layer.setVisibleLayers(lOptions.hidelayers);  
+	
 								if (layer.hasOwnProperty('hideInLegends')) {
 									var hideLegends = JSON.parse(layer.hideInLegends)
 									var finalLegends = []
@@ -490,7 +494,7 @@ define([
 									}
 								}
 								lLayer.layers = evt.layer.layerInfos
-	                        });
+							});	                       
                             lLayer.id = window.layerIdPBSPrefix + layer.eaID.toString();
                             map.setInfoWindowOnClick(true);
 
@@ -693,11 +697,13 @@ define([
                 this.map.setExtent(nExtent);
                 this.map.infoWindow.hide();
             },
+
             startup: function () {
 
                 this.inherited(arguments);
                 selfPBS = this;
                 map = this.map;
+                
                 arrLayers = this.config.layers.layer;
                 arrLayers = arrLayers.sort(function compare(a, b) {
                         if (a.eaTopic + a.name < b.eaTopic + b.name)
