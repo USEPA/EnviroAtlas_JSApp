@@ -418,7 +418,7 @@ define([
         var params = new ImageServiceParameters();
 
         var imageServiceLayer = new ArcGISImageServiceLayer(selectedImageService,{imageServiceParameters: params});
-        imageServiceLayer.id = "ScenarioDataLayer";
+        imageServiceLayer.id = window.timeSeriesLayerId;
         imageServiceLayer.setOpacity(0.6);
 
         
@@ -511,7 +511,7 @@ define([
         //var climateId = document.getElementById("climateSelection").value;
         var climateVar = document.getElementById("climateSelection").value;
         var imageServiceLayer = new ArcGISImageServiceLayer(selectedImageService,{imageServiceParameters: params});
-        imageServiceLayer.id = "ScenarioDataLayer";
+        imageServiceLayer.id = window.timeSeriesLayerId;
         imageServiceLayer.name = "TimeSeries_" + modelValue + "_" + season + "_" + climateVar;
         imageServiceLayer.title = "TimeSeries_" + modelValue + "_" + season + "_" + climateVar;
         imageServiceLayer.setOpacity(0.6);
@@ -539,9 +539,9 @@ define([
     };
     var removeFrameFromMap = function () {
 
-        if (map.getLayer("ScenarioDataLayer")) {
-            console.log(map.getLayer("ScenarioDataLayer"));
-            map.removeLayer(map.getLayer("ScenarioDataLayer"));
+        if (map.getLayer(window.timeSeriesLayerId)) {
+            console.log(map.getLayer(window.timeSeriesLayerId));
+            map.removeLayer(map.getLayer(window.timeSeriesLayerId));
             clearMetadataTab();
             //clearLegendTab();
         }
@@ -562,9 +562,9 @@ define([
             myNode.removeChild(myNode.firstChild);
         }*/     
         console.log("remove data from map");
-        if (map.getLayer("ScenarioDataLayer")) {
-            console.log(map.getLayer("ScenarioDataLayer"));
-            map.removeLayer(map.getLayer("ScenarioDataLayer"));
+        if (map.getLayer(window.timeSeriesLayerId)) {
+            console.log(map.getLayer(window.timeSeriesLayerId));
+            map.removeLayer(map.getLayer(window.timeSeriesLayerId));
             clearMetadataTab();
             //clearLegendTab();
         }
@@ -589,7 +589,7 @@ define([
     }
 	var executeIdentifyTask = function (event) {
         console.log("Executing Ident Task");
-        var currentLayer = map.getLayer("ScenarioDataLayer");
+        var currentLayer = map.getLayer(window.timeSeriesLayerId);
         identifyTask = new ImageServiceIdentifyTask(currentLayer.url);
         
         identifyParams = new ImageServiceIdentifyParameters();
