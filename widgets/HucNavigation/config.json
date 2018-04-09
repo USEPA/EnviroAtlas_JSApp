@@ -1,5 +1,5 @@
 {
-	"navigator_url": "widgets/ttHUC12Nav/wbd-cgi/index.py",
+	"navigator_url": "widgets/HucNavigation/wbd-cgi/index.py",
 	
 	"watersgeo_huc8_mapserver": "https://watersgeo.epa.gov/arcgis/rest/services/NHDPlus_NP21/WBD_NP21_Simplified/MapServer/2",
 	"enviroatlas_huc8_mapserver": "https://enviroatlas.epa.gov/arcgis/rest/services/Other/HydrologicUnits/MapServer/2",
