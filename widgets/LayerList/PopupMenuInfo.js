@@ -779,9 +779,9 @@ define([
       }, {
         key: 'table'
       }],
-      'FeatureLayer': [/*{
+      'FeatureLayer': [{
         key: 'controlPopup'
-      }, */{
+      }, {
         key: 'separator'
       }, {
         key: 'table'
