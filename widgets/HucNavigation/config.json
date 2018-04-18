@@ -21,6 +21,7 @@
       "export2Csv": true,
       "export2Geo": true,
       "export2FC": true,
+      "export2Shp": true,
       "zoomScale": 10000,
       "forceZoomScale": true,
       "shareResult": true,
