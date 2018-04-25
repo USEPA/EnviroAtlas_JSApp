@@ -644,7 +644,6 @@ define(['dojo/_base/declare',
 				}                
                 if ((_ClassificationMethod!=undefined)  || (_nBreaks>0)){
                 	//selfDynamicSymbology._resetElements(currentSymbology[_layerID]['origRenderer']);
-                	console.log("stringified json from config:" +JSON.stringify(renderer.toJson()));
                 	selfDynamicSymbology._resetElements(renderer);
                 } else {
                 	//geoenrichedFeatureLayer.setRenderer(currentSymbology[_layerID]['origRenderer']);
