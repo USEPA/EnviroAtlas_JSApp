@@ -636,20 +636,24 @@ define(['dojo/_base/declare',
     			if (window.communitySelected != window.strAllCommunity) {        
 					$.getJSON( 'configs/CommunitySymbology/' + window.communitySelected + '_JSON_Symbol/Nulls/' + window.communitySelected + '_' + window.hashAttribute[selectedLayerNum] + ".json", function( data ) {
 						renderer = new ClassBreaksRenderer(data);
+		                if ((_ClassificationMethod!=undefined)  || (_nBreaks>0)){
+		                	selfDynamicSymbology._resetElements(renderer);
+		                } else {
+		                	geoenrichedFeatureLayer.setRenderer(renderer);
+		                	geoenrichedFeatureLayer.redraw();
+		                }						
 					})
 				} else {
 					$.getJSON( 'configs/CommunitySymbology/' + 'AllCommunities' + '_JSON_Symbol/Nulls/' + 'CombComm' + '_' + window.hashAttribute[selectedLayerNum] + ".json", function( data ) {
 						renderer = new ClassBreaksRenderer(data);               		
-					})						
-				}                
                 if ((_ClassificationMethod!=undefined)  || (_nBreaks>0)){
-                	//selfDynamicSymbology._resetElements(currentSymbology[_layerID]['origRenderer']);
                 	selfDynamicSymbology._resetElements(renderer);
                 } else {
-                	//geoenrichedFeatureLayer.setRenderer(currentSymbology[_layerID]['origRenderer']);
                 	geoenrichedFeatureLayer.setRenderer(renderer);
                 	geoenrichedFeatureLayer.redraw();
                 }
+					})						
+				}                
                 
             }
         },        
