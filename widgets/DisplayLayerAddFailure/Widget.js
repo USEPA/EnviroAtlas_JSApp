@@ -68,7 +68,7 @@ define([
     		comment.innerHTML = "The following web service(s) failed to load at this time and may be unavailable for this session.";
     	}
     	if (Object.keys(window.faildedEALayerDictionary).length > 0) {
-            $("#sendButton").prop('disabled',false);			
+            enableSendButton();			
     		var hr = document.getElementById('hrFailedEnviroAtlasLayers');
 			hr.style.display = '';	
     		var hrEmail = document.getElementById('hrFailedLayersSendEmail');
@@ -95,7 +95,7 @@ define([
 		}
 
 		if (Object.keys(window.faildedOutsideLayerDictionary).length > 0) {
-            $("#sendButton").prop('disabled',false);
+            enableSendButton();
 			var hr = document.getElementById('hrFailedOutsideLayers');
 			hr.style.display = '';		
     		var commentFaileOursideLayer = document.getElementById("failedOutsideLayersComment");
@@ -119,7 +119,16 @@ define([
 		}
 	};
 
-
+    var disableSendButton = function(){
+        //$("#sendButton").prop('disabled',true);
+        $("#sendButton").hide();
+        $("#message").show();
+    };
+    var enableSendButton = function(){
+        //$("#sendButton").prop('disabled',false);
+        $("#sendButton").show();
+        $("#message").hide();
+    };
 
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
 
@@ -141,7 +150,7 @@ define([
 					xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/SendEmailOfFailed_EA_OutsideLayers.py?failedOutsideLayers=" + failedOutsideLayers, true);
 				} 				
 				xhr.send();
-                $("#sendButton").prop('disabled',true);
+                disableSendButton();
 			  }
 			  catch(error){
 				  console.log(error);
