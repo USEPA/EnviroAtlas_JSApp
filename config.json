@@ -394,7 +394,7 @@
                 "position": {
                     "left": 0,
                     "top": -40,
-                    "width": 380,
+                    "width": 230,
                     "height": 410,
                     "relativeTo": "map"
                 },
@@ -1023,7 +1023,7 @@
                     "position": {
                         "left": 0,
                         "top": -40,
-                        "width": 380,
+                        "width": 230,
                         "height": 410,
                         "relativeTo": "map"
                     },

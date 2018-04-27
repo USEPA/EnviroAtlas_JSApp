@@ -134,8 +134,6 @@ define(['dojo/_base/declare',
               html.setStyle(this.okNode, 'color', utils.invertColor(button.color));//auto color for text
               html.setStyle(this.backNode, 'backgroundColor', button.color);
               html.setStyle(this.backNode, 'color', utils.invertColor(button.color));//auto color for text
-              html.setStyle(this.fwdNode, 'backgroundColor', button.color);
-              html.setStyle(this.fwdNode, 'color', utils.invertColor(button.color));//auto color for text
             }
             if (typeof button.transparency !== "undefined") {
               html.setStyle(this.okNode, 'opacity', (1 - button.transparency));
@@ -357,7 +355,11 @@ define(['dojo/_base/declare',
         welcomeTabs.selectTab("Disclaimer");
       },   
       onTourClick: function(){
-        this.openWidgetById('widgets_Demo_28');
+        this.openWidgetById('widgets_Demo_28').then(lang.hitch(this, function() {
+            var wm = WidgetManager.getInstance();
+            widget = wm.getWidgetById('widgets_Demo_28');
+            widget._startTour(); 
+        }));
         this.close();
       },
       onLearnClick: function(){
