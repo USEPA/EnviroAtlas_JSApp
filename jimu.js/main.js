@@ -155,9 +155,13 @@ define([
     
     window.strAllCommunity = "AllCommunity";	
     window.communityDic = {};
-	window.communityDic["ATX"] = "Austin, TX";
-	window.communityDic["CleOH"] = "Cleveland, OH";
-	window.communityDic["DMIA"] = "Des Moines, IA";
+  	window.communityDic["ATX"] = "Austin, TX";
+    window.communityDic["BirAL"]= "Birmingham, AL";
+    window.communityDic["BMD"]= "Baltimore, MD";
+    window.communityDic["BTX"]= "Brownsville, TX";
+    window.communityDic["CIL"]= "Chicago, IL";
+  	window.communityDic["CleOH"] = "Cleveland, OH";
+  	window.communityDic["DMIA"] = "Des Moines, IA";
     window.communityDic["DNC"]= "Durham, NC";
     window.communityDic["FCA"] = "Fresno, CA";
     window.communityDic["GBWI"] = "Green Bay, WI";
@@ -166,6 +170,7 @@ define([
     //window.communityDic["MSPMN"] = "Minneapolis/St. Paul, MN";
     window.communityDic["MSPMN"] = "Minneapolis-St.Paul, MN";
     window.communityDic["NBMA"] = "New Bedford, MA";
+    window.communityDic["NHCT"] = "New Haven, CT";
     window.communityDic["NYNY"] = "New York, NY";
     window.communityDic["PNJ"] = "Paterson, NJ";
     window.communityDic["PAZ"] = "Phoenix, AZ";
@@ -173,6 +178,7 @@ define([
     window.communityDic["PME"] = "Portland, ME"
     window.communityDic["POR"] = "Portland, OR"
     window.communityDic["TFL"] = "Tampa, FL";
+    window.communityDic["VBWVA"] = "Virginia Beach - Williamsburg, VA";
     window.communityDic["WIA"] = "Woodbine, IA";
     
     window.communitySelected = window.strAllCommunity;

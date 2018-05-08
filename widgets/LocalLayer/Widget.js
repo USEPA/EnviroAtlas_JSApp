@@ -170,10 +170,10 @@ define([
 			popupsTemplate[0] = {
 				infoTemplate : locationTemplate
 			};
-			popupsTemplate[1] = {
-				infoTemplate : boundaryTemplate
-			};
-
+			//popupsTemplate[1] = {
+			//	infoTemplate : boundaryTemplate
+			//};
+			popupsTemplate[1] = null;
 			var communityLocationLayer = new ArcGISDynamicMapServiceLayer(communityBoundaryLayer);
 			communityLocationLayer._titleForLegend = "EnviroAtlas Community Boundaries";
 			communityLocationLayer.title = "EnviroAtlas Community Boundaries";

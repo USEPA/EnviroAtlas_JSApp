@@ -109,10 +109,10 @@ define([
             popupsTemplate[0] = {
                 infoTemplate: locationTemplate
             };
-            popupsTemplate[1] = {
-                infoTemplate: boundaryTemplate
-            };
-
+            //popupsTemplate[1] = {
+            //    infoTemplate: boundaryTemplate
+            //};
+            popupsTemplate[1] = null;
             var communityLocationLayer = new ArcGISDynamicMapServiceLayer(communityBoundaryLayer);
             communityLocationLayer._titleForLegend = "EnviroAtlas Community Boundaries";
             communityLocationLayer.title = "EnviroAtlas Community Boundaries";
@@ -583,8 +583,10 @@ define([
                                 window.hashIDtoCacheLevelNat[layer.eaID.toString()] = layer.cacheLevelNat;
                                 switch(layer.cacheLevelNat) {
                                 	case 12:
-                                		jimuUtils.initTileLayer12(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString()); 
-                                		map.addLayer(new myTiledMapServiceLayer12());
+                                		//jimuUtils.initTileLayer12(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString()); //initTileLayer12 is for level 12 and temporarily commented out
+                                		//map.addLayer(new myTiledMapServiceLayer12());
+                                		jimuUtils.initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString());  //initTileLayer is for level 8, but in short term used here	
+                                		map.addLayer(new myTiledMapServiceLayer());
                                 		break;
     								default:
                                 		jimuUtils.initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString()); 
@@ -630,7 +632,8 @@ define([
                         	var id = lLayer.id.replace(window.layerIdPBSPrefix, "");
                         	if (id in window.hashIDtoCacheLevelNat) {
                                 if (window.hashIDtoCacheLevelNat[id] == 12) {
-                            		lLayer.minScale = 72223.819286;							
+                            		//lLayer.minScale = 72223.819286;	//72223.819286 is for level 12 and temporarily commented out
+                            		lLayer.minScale = 1155581.108577;	//1155581.108577 is for level 8, but in short term used here				
                                 }                        	
                        	 	}
                             if (!(lLayer.title in window.successLayerDictionary)) {

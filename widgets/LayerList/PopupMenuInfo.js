@@ -170,6 +170,25 @@ define([
 
     };
     var displayInfoOnClickAction = function(layerId, clickedURL, actionType) {
+    	if (actionType == "eaDescription") {
+    		if (layerId=="added_ClimateChange"){
+				var mapDescription = new Dialog({
+			        title: "Change analysis layer",
+			        style: "width: 300px",    
+		    	});
+		        mapDescription.show();
+		        mapDescription.set("content", "This map depicts the change in the selected climate variable (max temp, min temp, precipitation, potential evapotranspiration) between two time periods based on the selected RCP scenario (2.6, 4.0, 6.5 8.5) and the selected season."); 		
+    			return;
+    		} else if (layerId==window.timeSeriesLayerId) {
+				var mapDescription = new Dialog({
+			        title: "Time series data",
+			        style: "width: 300px",    
+		    	});
+		        mapDescription.show();
+		        mapDescription.set("content", "This map depicts historical or forecasted time series data for the selected climate variable (max temp, min temp, precipitation, potential evapotranspiration) based on the selected RCP scenario (2.6, 4.0, 6.5 8.5) and the selected season."); 		
+    			return;    			    			
+    		}
+    	}
     	layerInfoFromJson = {};
     	
         var eaID = layerId.replace(window.layerIdPrefix, "").replace(window.layerIdPBSPrefix, "").replace(window.layerIdBndrPrefix, "");
@@ -760,9 +779,9 @@ define([
       }, {
         key: 'table'
       }],
-      'FeatureLayer': [/*{
+      'FeatureLayer': [{
         key: 'controlPopup'
-      }, */{
+      }, {
         key: 'separator'
       }, {
         key: 'table'
