@@ -35,6 +35,7 @@ define(['dojo/_base/declare',
     'esri/layers/FeatureLayer',
     'esri/layers/layer',
     'esri/layers/ArcGISDynamicMapServiceLayer',
+    'esri/layers/ArcGISTiledMapServiceLayer',
     "esri/layers/LayerDrawingOptions",
     'esri/dijit/PopupTemplate',
     "esri/renderers/jsonUtils",
@@ -66,6 +67,7 @@ define(['dojo/_base/declare',
               FeatureLayer,
               layer,
               ArcGISDynamicMapServiceLayer,
+              ArcGISTiledMapServiceLayer,
               LayerDrawingOptions,
               PopupTemplate,
               jsonRendererUtils,
@@ -121,18 +123,18 @@ define(['dojo/_base/declare',
 
                 this.updateUIForSignIn();
 
-                console.log('ChangeWebMap :: postCreate :: completed');
+                //console.log('ChangeWebMap :: postCreate :: completed');
             },
 
             startup: function () {
             	selfAddWebMapData = this;
                 this.inherited(arguments);
-                console.log('ChangeWebMap :: startup');
+                //console.log('ChangeWebMap :: startup');
             },
 
             onOpen: function () {
                 w = this;
-                console.log('ChangeWebMap :: onOpen');
+                //console.log('ChangeWebMap :: onOpen');
             },
 
             onSignIn: function (credential) {
@@ -142,7 +144,7 @@ define(['dojo/_base/declare',
                 this.searchMyContent(this.currentUserId);
 
                 this.updateUIForSignIn();
-                console.log('ChangeWebMap :: onSignIn : user signed in ', this.currentUserId);
+                //console.log('ChangeWebMap :: onSignIn : user signed in ', this.currentUserId);
             },
 
             onSignOut: function () {
@@ -152,11 +154,11 @@ define(['dojo/_base/declare',
                 this.updateUIForSignIn();
                 this.mycontentItemTable.clear();
 
-                console.log('ChangeWebMap :: onSignOut : user signed out ');
+                //console.log('ChangeWebMap :: onSignOut : user signed out ');
             },
 
             doSignIn: function () {
-                console.log("ChangeWebMap :: doSignIn");
+                //console.log("ChangeWebMap :: doSignIn");
 
                 var regOAuth = tokenUtils.registerOAuthInfo(this.config.portalUrl, "S8P0zvjK2t50sCNd");
 
@@ -174,7 +176,7 @@ define(['dojo/_base/declare',
             },
 
             doSignOut: function () {
-                console.log("ChangeWebMap :: doSignOut");
+                //console.log("ChangeWebMap :: doSignOut");
 
                 // fire event for main app to handle
                 // this is not really required since signOutAll publishes the event
@@ -203,7 +205,7 @@ define(['dojo/_base/declare',
                     "userid": this.currentUserId
                 });
 
-                console.log('ChangeWebMap :: updateUIForSignIn :: hasSignIn = ', hasSignIn);
+                //console.log('ChangeWebMap :: updateUIForSignIn :: hasSignIn = ', hasSignIn);
             },
 
             /**
@@ -219,14 +221,14 @@ define(['dojo/_base/declare',
                     buttons: [{
                         label: "No",
                         onClick: lang.hitch(this, function () {
-                            console.log('ChangeWebMap :: promptUserToZoomToItem :: keep current extent');
+                            //console.log('ChangeWebMap :: promptUserToZoomToItem :: keep current extent');
                             dlg.close();
                         })
                     }, {
                         label: "Yes",
                         onClick: lang.hitch(this, function () {
                             dlg.close();
-                            console.log('ChangeWebMap :: promptUserToZoomToItem :: zooming to new extent');
+                            //console.log('ChangeWebMap :: promptUserToZoomToItem :: zooming to new extent');
                             this.zoomToItem(item);
                         })
                     }]
@@ -260,10 +262,10 @@ define(['dojo/_base/declare',
                 // assumes map is in web mercator
                 extentWM = webMercatorUtils.geographicToWebMercator(extentGCS);
 
-                console.log('ChangeWebMap :: zoomToItem :: map itemid ', this.map.itemId);
+                //console.log('ChangeWebMap :: zoomToItem :: map itemid ', this.map.itemId);
                 this.map.setExtent(extentWM, true).then(
                     function () {
-                        console.log('ChangeWebMap :: zoomToItem :: zoomed to ', extentGCS);
+                        //console.log('ChangeWebMap :: zoomToItem :: zoomed to ', extentGCS);
                     },
                     function () {
                         console.error("ChangeWebMap :: zoomToItem :: failed");
@@ -297,7 +299,7 @@ define(['dojo/_base/declare',
                 }, this.tabNode);
 
                 this.own(on(this.tab, "tabChanged", lang.hitch(this, function (title) {
-                    console.log('ChangeWebMap :: tabChanged to ', title);
+                    //console.log('ChangeWebMap :: tabChanged to ', title);
 
                 })));
             },
@@ -307,7 +309,7 @@ define(['dojo/_base/declare',
              * @param {String} userId user id
              */
             searchMyContent: function (userId) {
-                console.log('ChangeWebMap :: searchMyContent :: starting for user = ', userId);
+                //console.log('ChangeWebMap :: searchMyContent :: starting for user = ', userId);
                 this.mycontentItemTable.clear();
 
                 var query = {
@@ -326,7 +328,7 @@ define(['dojo/_base/declare',
              * set the query on the item table in the public tab
              */
             searchPublicContent: function () {
-                console.log("ChangeWebMap :: searchPublicContent :: starting ");
+                //console.log("ChangeWebMap :: searchPublicContent :: starting ");
                 this.publicItemTable.clear();
 
                 var query = {
@@ -340,7 +342,7 @@ define(['dojo/_base/declare',
                 this.publicItemTable.searchAllItems(query);
                 this.publicItemTable.showAllItemsSection();
 
-                console.log("ChangeWebMap :: searchPublicContent :: completed ");
+                //console.log("ChangeWebMap :: searchPublicContent :: completed ");
             },
 
             /**
@@ -381,15 +383,17 @@ define(['dojo/_base/declare',
                 testmap = this.map;
                 tempLayer = false;
                 item.getItemData().then(function(response){
-                    response.operationalLayers.forEach(function(l){
-                        console.log(l);
+                    //process operational layers in reverse order to match AGOL
+                    layersReversed = response.operationalLayers.reverse();
+                    layersReversed.forEach(function(l){
                         if(l.url){
-                            console.log("Web Map Layers:: ",l.layerType);
+                            //console.log("Web Map Layers:: ",l.layerType);
                             if(l.layerType == 'ArcGISMapServiceLayer'){
                                 //Get the layer
                                 tempLayer = new ArcGISDynamicMapServiceLayer(l.url, {
                                     id: l.id,
                                     opacity: l.opacity,
+                                    visible: l.visibility
                                 });
                                 //if layers have popupInfo grab them
                                 if(l.layers){
@@ -449,6 +453,8 @@ define(['dojo/_base/declare',
                                         tempLayer.setLayerDrawingOptions(drawingOptionsArray, true);
                                       }
                                     }
+                                } else if (l.visibleLayers) {
+                                    tempLayer.setVisibleLayers(l.visibleLayers);
                                 }
 
                             }else if(l.layerType == 'ArcGISFeatureLayer'){
@@ -456,9 +462,16 @@ define(['dojo/_base/declare',
                                     mode: FeatureLayer.MODE_ONDEMAND,
                                     id: l.id,
                                     opacity: l.opacity,
+                                    visible: l.visibility,
                                     outFields: ["*"]
                                 });
                                 tempLayer = self._processLayer(tempLayer,l);
+                            }else if(l.layerType == 'ArcGISTiledMapServiceLayer'){
+                                tempLayer = new ArcGISTiledMapServiceLayer(l.url, {
+                                    id: l.id,
+                                    opacity: l.opacity,
+                                    visible: l.visibility
+                                });
                             }
                         }else{
                             if(l.featureCollection){
