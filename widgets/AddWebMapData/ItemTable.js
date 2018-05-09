@@ -358,7 +358,7 @@ define([
 
             if (html.hasClass(target, 'item-details')) {
                 // do not select if user clicks hyperlink
-                console.log("ItemTable :: _onItemsTableClicked :: item details clicked");
+                //console.log("ItemTable :: _onItemsTableClicked :: item details clicked");
                 return;
             }
 
@@ -377,7 +377,7 @@ define([
 
             // fire item selected event
             this.emit('item-selected', itemDiv.item);
-            console.log("ItemTable :: _onItemsTableClicked :: item selected", itemDiv.item);
+            //console.log("ItemTable :: _onItemsTableClicked :: item selected", itemDiv.item);
         },
 
         getSelectedItem: function () {
