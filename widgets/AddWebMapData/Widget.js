@@ -486,7 +486,9 @@ define(['dojo/_base/declare',
                                 console.log("Add Layer Error:: Layer of unknown type");
                                 if (!(l.url in window.faildedEALayerDictionary)){
 							  		window.faildedEALayerDictionary[l.url] = l.url;
-							  		document.getElementById('openFailedLayer').click();
+									selfAddWebMapData.publishData({
+							        	message: "openFailedLayer"
+							    	});							  		
 							  	}	
                             }
                         }

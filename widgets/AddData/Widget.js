@@ -57,6 +57,7 @@ define(["dojo/_base/declare",
           return;
         }
         var self = this,  args = arguments;
+        selfAddData = this;
         this._getUser().then(function(user) {
           //console.warn("AddData.user=",user);
           self._checkConfig();

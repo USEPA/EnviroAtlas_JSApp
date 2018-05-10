@@ -418,7 +418,7 @@ define(['dojo/_base/declare',
                 var session = e.item;
                 sessionLoaded = session;
                 console.log('SaveSession :: onLoadSessionClicked :: session  = ', session);
-                document.getElementById("butRemAllLayers").click();
+                document.getElementById("butRemoveAllLayers").click();
                 this.loadSession(session);
             },
 
@@ -1040,7 +1040,7 @@ define(['dojo/_base/declare',
             setSelectedCommunity: function (settings) {
 				window.communitySelected = settings.selectedCommunity;
 			        this.publishData({
-			        message: window.communitySelected
+			        message: "updateCommunityLayers"
 			    });
             },
             /** 

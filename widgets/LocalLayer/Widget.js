@@ -617,7 +617,9 @@ define([
 
 			window.communitySelected = currentCommunity;
 
-			document.getElementById('butUpdateCommunityLayers').click();
+		    selfLocalLayer.publishData({
+				message : "updateCommunityLayers"
+			}); 			
 
 			var nExtent;
 			if (window.communitySelected != window.strAllCommunity) {

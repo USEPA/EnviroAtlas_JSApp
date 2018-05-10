@@ -938,12 +938,14 @@ define([
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
         baseClass: 'jimu-widget-simplesearchfilter',
 		onReceiveData: function(name, widgetId, data, historyData) {
-			if (name == 'SelectCommunity'){
-			   var stringArray = data.message.split(",");
-			   if (stringArray[0] != "u") {
-				 communitySelected = data.message;
-				 _updateSelectableLayer();
+			if (((name == 'AddData')||(name == 'AddWebMapData'))&&(data.message == "openFailedLayer")){
+				this._onOpenFailedLayerClick();
 			   } 	
+			if (((name == 'LocalLayer')||(name == 'PeopleAndBuildSpaces')||(name == 'SelectCommunity'))&&(data.message == "updateCommunityLayers")){
+				this._onUpdateCommunityLayers();
+			}	
+			if (((name == 'ElevationProfile')||(name == 'Raindrop'))&&(data.message == "mapClickForPopup")){
+				this._onMapClickForPopup();
 			}		  
 		},
 
@@ -1022,16 +1024,7 @@ define([
 		document.getElementById("hideIcons").onclick = function() {
 		    _updateSelectableLayer();
 		};					
-		/*document.getElementById("selectAllLayers").onclick = function() {
-			if (this.checked){
-				showLayerListWidget();
-		    	_onSelectAllLayers();
-			    document.getElementById('butAddAllLayers').click();
-		   } else {
-		   		_onUnselectAllLayers();
-		   		document.getElementById('butRemAllLayers').click();
-		   }
-		};*/
+
 		layersToBeAdded = "a";
 	    
 
@@ -1420,7 +1413,7 @@ define([
 				}
             }
         }); // end of loadNationalMetadataJSON(function(response)
-        document.getElementById('butMapClickForPopup').click();
+        this._onMapClickForPopup();
     },               
                     
 	    _onSingleLayerClick: function() {
@@ -1455,34 +1448,8 @@ define([
 	    });
 	    this.i ++;
     },
-    _onRemLayersClick: function() {
-        layersToBeAdded = "r";
-		for (var key in chkIdDictionary) {
-		  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
-            	layersToBeAdded = layersToBeAdded + "," + key.replace(window.chkSelectableLayer, "");
-		  }
-		}
-        this.publishData({
-	        message: layersToBeAdded
-	    });
-	    this.i ++;
-    },    
     onOpen: function(){
   
-    },	    
-    _onRemoveLayersClick: function() {
-        layersToBeRemoved = "r";
-		for (var key in chkIdDictionary) {
-		  if (chkIdDictionary.hasOwnProperty(key)) {
-		  	if (document.getElementById(key).checked) {
-            	layersToBeRemoved = layersToBeRemoved + "," + key.replace(window.chkSelectableLayer, "") ;
-        	}
-		  }
-		}
-        this.publishData({
-	        message: layersToBeRemoved
-	    });
-	    this.i ++;
     },
     _onOpenFailedLayerClick: function() {
 	        var widgetName = 'DisplayLayerAddFailure';
@@ -1494,9 +1461,7 @@ define([
 		    });
      },
      _onUpdateCommunityLayers: function() {
-     	this.publishData({
-            message: window.communitySelected 
-        });
+
      	arrLayersToChangeSynbology = [];
 	    var lyr;
     	for (i in window.communityLayerNumber) {

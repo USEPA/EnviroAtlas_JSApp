@@ -353,8 +353,12 @@ define([
 		});  */
 		//remove all layers searchable from widget SimpleSearchFilter
     	for (i in window.allLayerNumber) {    		
+		    pbsWidgetId = 'widgets_PeopleAndBuildSpaces_Widget';
+            boundaryWidgetId = 'widgets_BoundaryLayer_Widget';
+            simpleSearchFilterId = 'widgets_SimpleSearchFilter_Widget_37';
     		lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
 			if(lyr != null){
+				this.openWidgetById(simpleSearchFilterId);
             	this.map.removeLayer(lyr);
             	this.uncheckRelatedCheckbox(window.allLayerNumber[i]);
           	}
@@ -364,11 +368,13 @@ define([
           	}          	
     		lyr = this.map.getLayer(window.layerIdPBSPrefix + window.allLayerNumber[i]);
 			if(lyr != null){
+				this.openWidgetById(pbsWidgetId);
             	this.map.removeLayer(lyr);
             	this.uncheckRelatedCheckbox(window.allLayerNumber[i]);
           	}     
           	lyr = this.map.getLayer(window.layerIdBndrPrefix + window.allLayerNumber[i]);
 			if(lyr != null){
+				this.openWidgetById(boundaryWidgetId);
             	this.map.removeLayer(lyr);
             	this.uncheckRelatedCheckbox(window.allLayerNumber[i]);
           	}         	
