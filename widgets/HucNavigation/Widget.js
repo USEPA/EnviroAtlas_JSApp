@@ -2545,13 +2545,13 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         {
           this.initiator = 'graphic';
           
-          queryParams.geometry = geometry;
+          //queryParams.geometry = geometry; tlh
+          queryParams.geometry = geometry.getExtent().getCenter();
           //jab
           this.map_click_point = geometry.getExtent().getCenter();
           this.add_click_point_graphic(this.map_click_point);
           //jab-end
           queryParams.spatialRelationship = spatialRelationship || Query.SPATIAL_REL_INTERSECTS;
-          
           if (this.cbxAddTextQuery.getValue()) {
             var gwhere = this.buildWhereClause(layerIndex, this.expressIndex, theValue);
             queryParams.where = this.lastWhere = gwhere;
