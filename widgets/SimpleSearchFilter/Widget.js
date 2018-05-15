@@ -941,7 +941,7 @@ define([
 			if (((name == 'AddData')||(name == 'AddWebMapData'))&&(data.message == "openFailedLayer")){
 				this._onOpenFailedLayerClick();
 			   } 	
-			if (((name == 'LocalLayer')||(name == 'PeopleAndBuildSpaces')||(name == 'SelectCommunity'))&&(data.message == "updateCommunityLayers")){
+			if (((name == 'LocalLayer')||(name == 'PeopleAndBuildSpaces')||(name == 'SelectCommunity')||(name == 'AddWebMapData'))&&(data.message == "updateCommunityLayers")){
 				this._onUpdateCommunityLayers();
 			}	
 			if (((name == 'ElevationProfile')||(name == 'Raindrop'))&&(data.message == "mapClickForPopup")){
