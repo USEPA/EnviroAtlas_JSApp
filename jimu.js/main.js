@@ -144,13 +144,13 @@ define([
     
     
 	window.topicDicPBS = {};
-    window.topicDicPBS["Housing and Facilities"] = "HaF";
+    window.topicDicPBS["Housing and Schools"] = "HaF";
     window.topicDicPBS["Community Demographics"] = "CD";
     window.topicDicPBS["Employment"] = "E";
     window.topicDicPBS["National Demographics"] = "ND";
     window.topicDicPBS["Commuting and Walkability"] = "CaW";
     window.topicDicPBS["Quality of Life"] = "QoL";
-
+    window.topicDicPBS["EPA Regulated Facilities"] = "RF";
 
     
     window.strAllCommunity = "AllCommunity";	
