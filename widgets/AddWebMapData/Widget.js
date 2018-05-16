@@ -382,6 +382,20 @@ define(['dojo/_base/declare',
             	showLayerListWidget();
                 testmap = this.map;
                 tempLayer = false;
+                //use item.tags and window.communityDic to get the community info 
+                var bIsTaggedCommunity = false;
+                for (var i in item.tags) {
+	                if (window.communityDic.hasOwnProperty(item.tags[i])) {
+	                	bIsTaggedCommunity = true;
+	                	window.communitySelected = item.tags[i];
+	                	break;
+	                }                	
+                }
+                if (bIsTaggedCommunity) {
+				    selfAddWebMapData.publishData({
+				        message : "updateCommunityLayers"
+				    });                	
+                }
                 item.getItemData().then(function(response){
                     //process operational layers in reverse order to match AGOL
                     layersReversed = response.operationalLayers.reverse();
@@ -486,7 +500,9 @@ define(['dojo/_base/declare',
                                 console.log("Add Layer Error:: Layer of unknown type");
                                 if (!(l.url in window.faildedEALayerDictionary)){
 							  		window.faildedEALayerDictionary[l.url] = l.url;
-							  		document.getElementById('openFailedLayer').click();
+									selfAddWebMapData.publishData({
+							        	message: "openFailedLayer"
+							    	});							  		
 							  	}	
                             }
                         }

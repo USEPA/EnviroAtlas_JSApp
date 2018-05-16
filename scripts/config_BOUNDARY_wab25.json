@@ -2,768 +2,762 @@
     "layers": {
         "layer": [
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/Communities/Community_Locations/MapServer",
-                "eaID": 901,
-                "sourceType": "plp",
-                "opacity": 0.6,
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Communities/Community_Locations/MapServer",
                 "eaLyrNum": " ",
-                "visible": false,
-                "eaDfsLink": "Supplemental/CommunityVicinity.pdf",
-                "eaTopic": "Boundaries",
-                "eaScale": "NATIONAL",
-                "eaPBS": "Boundaries",
                 "name": "EnviroAtlas Community Boundaries",
-                "eaMetric": "boundary",
-                "type": "DYNAMIC",
-                "tileLink": "no",
+                "visible": false,
+                "eaScale": "NATIONAL",
+                "eaID": 901,
                 "eaDescription": "EnviroAtlas Communities and vicinities. The EnviroAtlas boundary for the each Community area was determined using the 2010 Census definition of an Urban Area.",
+                "opacity": 0.6,
+                "sourceType": "plp",
+                "tileLink": "no",
                 "eaMetadata": "E007",
                 "eaTags": [
                     "people",
                     "human",
                     "urban"
-                ]
+                ],
+                "eaTopic": "Boundaries",
+                "eaPBS": "Boundaries",
+                "eaDfsLink": "Supplemental/CommunityVicinity.pdf",
+                "eaMetric": "boundary",
+                "type": "DYNAMIC"
             },
             {
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Reference_Boundaries/MapServer",
-                "eaID": 902,
-                "sourceType": "plp",
-                "opacity": 0.6,
                 "eaLyrNum": " ",
-                "visible": false,
-                "eaDfsLink": "Supplemental/TigerBoundaries.pdf",
-                "eaTopic": "Boundaries",
-                "eaScale": "NATIONAL",
-                "eaPBS": "Boundaries",
                 "name": "States, County, and Census Block Group boundaries",
-                "eaMetric": "boundary",
-                "type": "DYNAMIC",
-                "tileLink": "no",
+                "visible": false,
+                "eaScale": "NATIONAL",
+                "eaID": 902,
                 "eaDescription": "Census boundaries for States, Counties, and Census Block Groups",
+                "opacity": 0.6,
+                "sourceType": "plp",
+                "tileLink": "no",
                 "eaMetadata": "E009",
                 "eaTags": [
                     "people",
                     "human",
                     "government"
-                ]
+                ],
+                "eaTopic": "Boundaries",
+                "eaPBS": "Boundaries",
+                "eaDfsLink": "Supplemental/TigerBoundaries.pdf",
+                "eaMetric": "boundary",
+                "type": "DYNAMIC"
             },
             {
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/EPA_Regions/MapServer",
                 "eaID": 903,
-                "sourceType": "plp",
-                "opacity": 0.6,
-                "eaDescription": "US EPA Regions",
-                "visible": false,
-                "eaDfsLink": "Supplemental/EPAregions.pdf",
-                "popup": {
-                    "title": "EPA Region: {EPAREGION}",
-                    "fieldInfos": [
-                        {
-                            "label": "EPA Regions)\u00a0",
-                            "fieldName": "EPAREGION",
-                            "visible": "true"
-                        }
-                    ],
-                    "showAttachments": "false"
-                },
-                "eaScale": "NATIONAL",
-                "eaPBS": "Boundaries",
                 "name": "USEPA Regions",
-                "eaMetric": "boundary",
+                "visible": false,
+                "eaPBS": "Boundaries",
+                "eaScale": "NATIONAL",
                 "eaLyrNum": "  ",
-                "type": "DYNAMIC",
+                "eaDescription": "US EPA Regions",
+                "opacity": 0.6,
+                "sourceType": "plp",
                 "tileLink": "no",
-                "eaTopic": "Boundaries",
                 "eaMetadata": "E012",
                 "eaTags": [
                     "people",
                     "human",
                     "government",
                     "economy"
-                ]
+                ],
+                "eaTopic": "Boundaries",
+                "popup": {
+                    "title": "EPA Region: {EPAREGION}",
+                    "fieldInfos": [
+                        {
+                            "fieldName": "EPAREGION",
+                            "label": "EPA Regions)\u00a0",
+                            "visible": "true"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "eaDfsLink": "Supplemental/EPAregions.pdf",
+                "eaMetric": "boundary",
+                "type": "DYNAMIC"
             },
             {
                 "url": "https://geodata.epa.gov/arcgis/rest/services/OEI/CongressionalDistricts/MapServer",
                 "eaID": 904,
-                "sourceType": "plp",
-                "opacity": 0.6,
-                "eaDescription": "114th Congressional District boundaries and labels",
-                "visible": false,
-                "eaDfsLink": "Supplemental/Congressionaldistricts.pdf",
-                "eaTopic": "Boundaries",
-                "eaScale": "NATIONAL",
-                "eaPBS": "Boundaries",
                 "name": "Congressional District boundaries and labels",
-                "eaMetric": "boundary",
+                "visible": false,
+                "eaScale": "NATIONAL",
                 "layers": [
                     {
-                        "id": 2,
                         "popup": {
-                            "mediaInfos": [],
-                            "showAttachments": true,
+                            "title": "114th Congressional Districts: {STATE}",
                             "fieldInfos": [
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "STATE",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "STATE",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "STATE"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "STATE FIPS",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "STATE_FIPS",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "STATE_FIPS"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Congressional district",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "CONG_DIST",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "CONG_DIST"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Congressional representative",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "CONG_REP",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "CONG_REP"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Party affiliation",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "PARTY_AFF",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "PARTY_AFF"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Congressional representative's website URL",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "URL",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "URL"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Senator 1",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "SENATOR_1",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "SENATOR_1"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Senator 1 party affiliation",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "SEN1_PARTY",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "SEN1_PARTY"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Senator 1 website URL",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "SEN_1_URL",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "SEN_1_URL"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Senator 2",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "SENATOR_2",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "SENATOR_2"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Senator 2 party affiliation",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "SEN2_PARTY",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "SEN2_PARTY"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Senator 2 website URL",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "SEN_2_URL",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "SEN_2_URL"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "State abbreviation",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "STATE_ABBR",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "STATE_ABBR"
                                 },
                                 {
-                                    "label": "State/District Code",
-                                    "tooltip": "",
-                                    "visible": true,
+                                    "stringFieldOption": "textbox",
                                     "format": null,
-                                    "fieldName": "STCD",
-                                    "stringFieldOption": "textbox"
+                                    "label": "State/District Code",
+                                    "visible": true,
+                                    "tooltip": "",
+                                    "fieldName": "STCD"
                                 }
                             ],
-                            "title": "114th Congressional Districts: {STATE}",
-                            "description": null
-                        }
+                            "mediaInfos": [],
+                            "description": null,
+                            "showAttachments": true
+                        },
+                        "id": 2
                     },
                     {
-                        "id": 3,
                         "popup": {
-                            "mediaInfos": [],
-                            "showAttachments": true,
+                            "title": "114th Congressional Districts: {STATE}",
                             "fieldInfos": [
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "STATE",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "STATE",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "STATE"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "STATE FIPS",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "STATE_FIPS",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "STATE_FIPS"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Congressional district",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "CONG_DIST",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "CONG_DIST"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Congressional representative",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "CONG_REP",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "CONG_REP"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Party affiliation",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "PARTY_AFF",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "PARTY_AFF"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Congressional representative's website URL",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "URL",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "URL"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Senator 1",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "SENATOR_1",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "SENATOR_1"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Senator 1 party affiliation",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "SEN1_PARTY",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "SEN1_PARTY"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Senator 1 website URL",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "SEN_1_URL",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "SEN_1_URL"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Senator 2",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "SENATOR_2",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "SENATOR_2"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Senator 2 party affiliation",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "SEN2_PARTY",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "SEN2_PARTY"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Senator 2 website URL",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "SEN_2_URL",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "SEN_2_URL"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "State abbreviation",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "STATE_ABBR",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "STATE_ABBR"
                                 },
                                 {
-                                    "label": "State/District Code",
-                                    "tooltip": "",
-                                    "visible": true,
+                                    "stringFieldOption": "textbox",
                                     "format": null,
-                                    "fieldName": "STCD",
-                                    "stringFieldOption": "textbox"
+                                    "label": "State/District Code",
+                                    "visible": true,
+                                    "tooltip": "",
+                                    "fieldName": "STCD"
                                 }
                             ],
-                            "title": "114th Congressional Districts: {STATE}",
-                            "description": null
-                        }
+                            "mediaInfos": [],
+                            "description": null,
+                            "showAttachments": true
+                        },
+                        "id": 3
                     }
                 ],
-                "type": "DYNAMIC",
+                "eaDescription": "114th Congressional District boundaries and labels",
+                "opacity": 0.6,
+                "sourceType": "plp",
                 "tileLink": "no",
-                "eaLyrNum": " ",
                 "eaMetadata": "E013",
                 "eaTags": [
                     "people",
                     "human",
                     "government",
                     "economy"
-                ]
+                ],
+                "eaTopic": "Boundaries",
+                "eaPBS": "Boundaries",
+                "eaDfsLink": "Supplemental/Congressionaldistricts.pdf",
+                "eaLyrNum": " ",
+                "eaMetric": "boundary",
+                "type": "DYNAMIC"
             },
             {
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Other/HydrologicUnits/MapServer",
                 "eaID": 905,
-                "sourceType": "plp",
-                "opacity": 0.6,
-                "eaDescription": "NHDPlus V2 Hydrologic Unit Code boundaries and labels",
-                "visible": false,
-                "eaDfsLink": "Supplemental/HUC.pdf",
-                "eaTopic": "Boundaries",
-                "eaScale": "NATIONAL",
-                "eaPBS": "Boundaries",
                 "name": "Hydrologic Unit Code (HUC) Boundaries and labels",
-                "eaMetric": "boundary",
+                "visible": false,
+                "eaScale": "NATIONAL",
                 "layers": [
                     {
-                        "id": 0,
                         "popup": {
-                            "mediaInfos": [],
-                            "showAttachments": true,
-                            "fieldInfos": [
-                                {
-                                    "label": "HUC4",
-                                    "visible": false,
-                                    "fieldName": "HUC4",
-                                    "stringFieldOption": "textbox",
-                                    "tooltip": ""
-                                }
-                            ],
                             "title": "HUC (4 Digit) Subregion: {HUC4}",
-                            "description": null
-                        }
-                    },
-                    {
-                        "id": 2,
-                        "popup": {
-                            "mediaInfos": [],
-                            "showAttachments": true,
                             "fieldInfos": [
                                 {
-                                    "label": "HUC8",
-                                    "visible": false,
-                                    "fieldName": "HUC8",
-                                    "stringFieldOption": "textbox",
-                                    "tooltip": ""
-                                }
-                            ],
-                            "title": "HUC (8 Digit) Subbasin: {HUC8}",
-                            "description": null
-                        }
-                    },
-                    {
-                        "id": 4,
-                        "popup": {
-                            "mediaInfos": [],
-                            "showAttachments": true,
-                            "fieldInfos": [
-                                {
-                                    "label": "HUC 12 Digit Subwatershed",
-                                    "visible": true,
-                                    "fieldName": "HUC_12",
-                                    "stringFieldOption": "textbox",
-                                    "tooltip": ""
-                                },
-                                {
-                                    "label": "Pct_Land",
                                     "tooltip": "",
+                                    "stringFieldOption": "textbox",
                                     "visible": false,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "fieldName": "Pct_Land",
-                                    "stringFieldOption": "textbox"
-                                },
-                                {
                                     "label": "HUC4",
-                                    "visible": false,
-                                    "fieldName": "HUC4",
-                                    "stringFieldOption": "textbox",
-                                    "tooltip": ""
-                                },
-                                {
-                                    "label": "HUC8",
-                                    "visible": false,
-                                    "fieldName": "HUC8",
-                                    "stringFieldOption": "textbox",
-                                    "tooltip": ""
+                                    "fieldName": "HUC4"
                                 }
                             ],
+                            "mediaInfos": [],
+                            "description": null,
+                            "showAttachments": true
+                        },
+                        "id": 0
+                    },
+                    {
+                        "popup": {
                             "title": "HUC (8 Digit) Subbasin: {HUC8}",
-                            "description": null
-                        }
+                            "fieldInfos": [
+                                {
+                                    "tooltip": "",
+                                    "stringFieldOption": "textbox",
+                                    "visible": false,
+                                    "label": "HUC8",
+                                    "fieldName": "HUC8"
+                                }
+                            ],
+                            "mediaInfos": [],
+                            "description": null,
+                            "showAttachments": true
+                        },
+                        "id": 2
+                    },
+                    {
+                        "popup": {
+                            "title": "HUC (8 Digit) Subbasin: {HUC8}",
+                            "fieldInfos": [
+                                {
+                                    "tooltip": "",
+                                    "stringFieldOption": "textbox",
+                                    "visible": true,
+                                    "label": "HUC 12 Digit Subwatershed",
+                                    "fieldName": "HUC_12"
+                                },
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "format": {
+                                        "places": 2,
+                                        "digitSeparator": true
+                                    },
+                                    "label": "Pct_Land",
+                                    "visible": false,
+                                    "tooltip": "",
+                                    "fieldName": "Pct_Land"
+                                },
+                                {
+                                    "tooltip": "",
+                                    "stringFieldOption": "textbox",
+                                    "visible": false,
+                                    "label": "HUC4",
+                                    "fieldName": "HUC4"
+                                },
+                                {
+                                    "tooltip": "",
+                                    "stringFieldOption": "textbox",
+                                    "visible": false,
+                                    "label": "HUC8",
+                                    "fieldName": "HUC8"
+                                }
+                            ],
+                            "mediaInfos": [],
+                            "description": null,
+                            "showAttachments": true
+                        },
+                        "id": 4
                     }
                 ],
-                "type": "DYNAMIC",
+                "eaDescription": "NHDPlus V2 Hydrologic Unit Code boundaries and labels",
+                "opacity": 0.6,
+                "sourceType": "plp",
                 "tileLink": "no",
-                "eaLyrNum": " ",
                 "eaMetadata": "N054",
                 "eaTags": [
                     "hydrology",
                     "hydrography"
-                ]
+                ],
+                "eaTopic": "Boundaries",
+                "eaPBS": "Boundaries",
+                "eaDfsLink": "Supplemental/HUC.pdf",
+                "eaLyrNum": " ",
+                "eaMetric": "boundary",
+                "type": "DYNAMIC"
             },
             {
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/NHDPlusV21_EA/MapServer",
                 "eaID": 906,
-                "sourceType": "plp",
-                "opacity": 0.6,
-                "eaDescription": "NHDPlus V2 features for waterbodies, areas, and flowlines. Flowlines are displayed based on Stream Order and Stream Order 1 features are not displayed in this service.",
-                "visible": false,
-                "eaDfsLink": "Supplemental/NHDPlusV2.pdf",
-                "eaTopic": "Boundaries",
-                "eaScale": "NATIONAL",
-                "eaPBS": "Boundaries",
                 "name": "NHDPlus V2 features",
-                "eaMetric": "boundary",
+                "visible": false,
+                "eaScale": "NATIONAL",
                 "layers": [
                     {
-                        "id": 0,
                         "popup": {
-                            "mediaInfos": [],
-                            "showAttachments": true,
+                            "title": "NHDFlowline Main path - Stream Order 4 and higher: {GNIS_NAME}",
                             "fieldInfos": [
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": {
+                                        "places": 0,
+                                        "digitSeparator": false
+                                    },
                                     "label": "COMID",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": {
-                                        "digitSeparator": false,
-                                        "places": 0
-                                    },
-                                    "fieldName": "COMID",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "COMID"
                                 },
                                 {
+                                    "tooltip": "",
+                                    "stringFieldOption": "textbox",
+                                    "visible": true,
                                     "label": "GNIS_NAME",
-                                    "visible": true,
-                                    "fieldName": "GNIS_NAME",
-                                    "stringFieldOption": "textbox",
-                                    "tooltip": ""
+                                    "fieldName": "GNIS_NAME"
                                 },
                                 {
+                                    "tooltip": "",
+                                    "stringFieldOption": "textbox",
+                                    "visible": true,
                                     "label": "REACHCODE",
-                                    "visible": true,
-                                    "fieldName": "REACHCODE",
-                                    "stringFieldOption": "textbox",
-                                    "tooltip": ""
+                                    "fieldName": "REACHCODE"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": {
+                                        "places": 0,
+                                        "digitSeparator": true
+                                    },
                                     "label": "WaterBody AREA COMID",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 0
-                                    },
-                                    "fieldName": "WBAREACOMI",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "WBAREACOMI"
                                 },
                                 {
-                                    "label": "FEATURE TYPE",
-                                    "visible": true,
-                                    "fieldName": "FTYPE",
+                                    "tooltip": "",
                                     "stringFieldOption": "textbox",
-                                    "tooltip": ""
+                                    "visible": true,
+                                    "label": "FEATURE TYPE",
+                                    "fieldName": "FTYPE"
                                 },
                                 {
-                                    "label": "Stream Order (Strahler)",
-                                    "tooltip": "",
-                                    "visible": true,
+                                    "stringFieldOption": "textbox",
                                     "format": {
-                                        "digitSeparator": true,
-                                        "places": 0
+                                        "places": 0,
+                                        "digitSeparator": true
                                     },
-                                    "fieldName": "StreamOrde",
-                                    "stringFieldOption": "textbox"
+                                    "label": "Stream Order (Strahler)",
+                                    "visible": true,
+                                    "tooltip": "",
+                                    "fieldName": "StreamOrde"
                                 }
                             ],
-                            "title": "NHDFlowline Main path - Stream Order 4 and higher: {GNIS_NAME}",
-                            "description": null
-                        }
+                            "mediaInfos": [],
+                            "description": null,
+                            "showAttachments": true
+                        },
+                        "id": 0
                     },
                     {
-                        "id": 1,
                         "popup": {
-                            "mediaInfos": [],
-                            "showAttachments": true,
+                            "title": "NHDFlowline Main path - Stream Order 4 and higher: {GNIS_NAME}",
                             "fieldInfos": [
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": {
+                                        "places": 0,
+                                        "digitSeparator": false
+                                    },
                                     "label": "COMID",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": {
-                                        "digitSeparator": false,
-                                        "places": 0
-                                    },
-                                    "fieldName": "COMID",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "COMID"
                                 },
                                 {
+                                    "tooltip": "",
+                                    "stringFieldOption": "textbox",
+                                    "visible": true,
                                     "label": "GNIS_NAME",
-                                    "visible": true,
-                                    "fieldName": "GNIS_NAME",
-                                    "stringFieldOption": "textbox",
-                                    "tooltip": ""
+                                    "fieldName": "GNIS_NAME"
                                 },
                                 {
+                                    "tooltip": "",
+                                    "stringFieldOption": "textbox",
+                                    "visible": true,
                                     "label": "REACHCODE",
-                                    "visible": true,
-                                    "fieldName": "REACHCODE",
-                                    "stringFieldOption": "textbox",
-                                    "tooltip": ""
+                                    "fieldName": "REACHCODE"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": {
+                                        "places": 0,
+                                        "digitSeparator": true
+                                    },
                                     "label": "WaterBody AREA COMID",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 0
-                                    },
-                                    "fieldName": "WBAREACOMI",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "WBAREACOMI"
                                 },
                                 {
-                                    "label": "FEATURE TYPE",
-                                    "visible": true,
-                                    "fieldName": "FTYPE",
+                                    "tooltip": "",
                                     "stringFieldOption": "textbox",
-                                    "tooltip": ""
+                                    "visible": true,
+                                    "label": "FEATURE TYPE",
+                                    "fieldName": "FTYPE"
                                 },
                                 {
-                                    "label": "Stream Order (Strahler)",
-                                    "tooltip": "",
-                                    "visible": true,
+                                    "stringFieldOption": "textbox",
                                     "format": {
-                                        "digitSeparator": true,
-                                        "places": 0
+                                        "places": 0,
+                                        "digitSeparator": true
                                     },
-                                    "fieldName": "StreamOrde",
-                                    "stringFieldOption": "textbox"
+                                    "label": "Stream Order (Strahler)",
+                                    "visible": true,
+                                    "tooltip": "",
+                                    "fieldName": "StreamOrde"
                                 }
                             ],
-                            "title": "NHDFlowline Main path - Stream Order 4 and higher: {GNIS_NAME}",
-                            "description": null
-                        }
+                            "mediaInfos": [],
+                            "description": null,
+                            "showAttachments": true
+                        },
+                        "id": 1
                     },
                     {
-                        "id": 2,
                         "popup": {
-                            "mediaInfos": [],
-                            "showAttachments": true,
-                            "fieldInfos": [
-                                {
-                                    "label": "COMID",
-                                    "tooltip": "",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": false,
-                                        "places": 0
-                                    },
-                                    "fieldName": "COMID",
-                                    "stringFieldOption": "textbox"
-                                },
-                                {
-                                    "label": "GNIS_ID",
-                                    "visible": true,
-                                    "fieldName": "GNIS_ID",
-                                    "stringFieldOption": "textbox",
-                                    "tooltip": ""
-                                },
-                                {
-                                    "label": "GNIS_NAME",
-                                    "visible": true,
-                                    "fieldName": "GNIS_NAME",
-                                    "stringFieldOption": "textbox",
-                                    "tooltip": ""
-                                },
-                                {
-                                    "label": "AREASQKM",
-                                    "tooltip": "",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "fieldName": "AREASQKM",
-                                    "stringFieldOption": "textbox"
-                                },
-                                {
-                                    "label": "ELEVATION",
-                                    "tooltip": "",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "fieldName": "ELEVATION",
-                                    "stringFieldOption": "textbox"
-                                },
-                                {
-                                    "label": "FTYPE",
-                                    "visible": true,
-                                    "fieldName": "FTYPE",
-                                    "stringFieldOption": "textbox",
-                                    "tooltip": ""
-                                },
-                                {
-                                    "label": "FCODE",
-                                    "tooltip": "",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": false,
-                                        "places": 0
-                                    },
-                                    "fieldName": "FCODE",
-                                    "stringFieldOption": "textbox"
-                                }
-                            ],
                             "title": "NHDArea: {GNIS_NAME}",
-                            "description": null
-                        }
-                    },
-                    {
-                        "id": 3,
-                        "popup": {
-                            "mediaInfos": [],
-                            "showAttachments": true,
                             "fieldInfos": [
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": {
+                                        "places": 0,
+                                        "digitSeparator": false
+                                    },
                                     "label": "COMID",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": {
-                                        "digitSeparator": false,
-                                        "places": 0
-                                    },
-                                    "fieldName": "COMID",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "COMID"
                                 },
                                 {
+                                    "tooltip": "",
+                                    "stringFieldOption": "textbox",
+                                    "visible": true,
                                     "label": "GNIS_ID",
-                                    "visible": true,
-                                    "fieldName": "GNIS_ID",
-                                    "stringFieldOption": "textbox",
-                                    "tooltip": ""
+                                    "fieldName": "GNIS_ID"
                                 },
                                 {
+                                    "tooltip": "",
+                                    "stringFieldOption": "textbox",
+                                    "visible": true,
                                     "label": "GNIS_NAME",
-                                    "visible": true,
-                                    "fieldName": "GNIS_NAME",
-                                    "stringFieldOption": "textbox",
-                                    "tooltip": ""
+                                    "fieldName": "GNIS_NAME"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": {
+                                        "places": 2,
+                                        "digitSeparator": true
+                                    },
                                     "label": "AREASQKM",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "fieldName": "AREASQKM",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "AREASQKM"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": {
+                                        "places": 2,
+                                        "digitSeparator": true
+                                    },
                                     "label": "ELEVATION",
+                                    "visible": true,
                                     "tooltip": "",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "fieldName": "ELEVATION",
-                                    "stringFieldOption": "textbox"
+                                    "fieldName": "ELEVATION"
                                 },
                                 {
-                                    "label": "REACHCODE",
-                                    "visible": true,
-                                    "fieldName": "REACHCODE",
+                                    "tooltip": "",
                                     "stringFieldOption": "textbox",
-                                    "tooltip": ""
-                                },
-                                {
+                                    "visible": true,
                                     "label": "FTYPE",
-                                    "visible": true,
-                                    "fieldName": "FTYPE",
-                                    "stringFieldOption": "textbox",
-                                    "tooltip": ""
+                                    "fieldName": "FTYPE"
                                 },
                                 {
-                                    "label": "FCODE",
-                                    "tooltip": "",
-                                    "visible": true,
+                                    "stringFieldOption": "textbox",
                                     "format": {
-                                        "digitSeparator": false,
-                                        "places": 0
+                                        "places": 0,
+                                        "digitSeparator": false
                                     },
-                                    "fieldName": "FCODE",
-                                    "stringFieldOption": "textbox"
+                                    "label": "FCODE",
+                                    "visible": true,
+                                    "tooltip": "",
+                                    "fieldName": "FCODE"
                                 }
                             ],
+                            "mediaInfos": [],
+                            "description": null,
+                            "showAttachments": true
+                        },
+                        "id": 2
+                    },
+                    {
+                        "popup": {
                             "title": "NHDWaterbody: {GNIS_NAME}",
-                            "description": null
-                        }
+                            "fieldInfos": [
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "format": {
+                                        "places": 0,
+                                        "digitSeparator": false
+                                    },
+                                    "label": "COMID",
+                                    "visible": true,
+                                    "tooltip": "",
+                                    "fieldName": "COMID"
+                                },
+                                {
+                                    "tooltip": "",
+                                    "stringFieldOption": "textbox",
+                                    "visible": true,
+                                    "label": "GNIS_ID",
+                                    "fieldName": "GNIS_ID"
+                                },
+                                {
+                                    "tooltip": "",
+                                    "stringFieldOption": "textbox",
+                                    "visible": true,
+                                    "label": "GNIS_NAME",
+                                    "fieldName": "GNIS_NAME"
+                                },
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "format": {
+                                        "places": 2,
+                                        "digitSeparator": true
+                                    },
+                                    "label": "AREASQKM",
+                                    "visible": true,
+                                    "tooltip": "",
+                                    "fieldName": "AREASQKM"
+                                },
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "format": {
+                                        "places": 2,
+                                        "digitSeparator": true
+                                    },
+                                    "label": "ELEVATION",
+                                    "visible": true,
+                                    "tooltip": "",
+                                    "fieldName": "ELEVATION"
+                                },
+                                {
+                                    "tooltip": "",
+                                    "stringFieldOption": "textbox",
+                                    "visible": true,
+                                    "label": "REACHCODE",
+                                    "fieldName": "REACHCODE"
+                                },
+                                {
+                                    "tooltip": "",
+                                    "stringFieldOption": "textbox",
+                                    "visible": true,
+                                    "label": "FTYPE",
+                                    "fieldName": "FTYPE"
+                                },
+                                {
+                                    "stringFieldOption": "textbox",
+                                    "format": {
+                                        "places": 0,
+                                        "digitSeparator": false
+                                    },
+                                    "label": "FCODE",
+                                    "visible": true,
+                                    "tooltip": "",
+                                    "fieldName": "FCODE"
+                                }
+                            ],
+                            "mediaInfos": [],
+                            "description": null,
+                            "showAttachments": true
+                        },
+                        "id": 3
                     }
                 ],
-                "type": "DYNAMIC",
+                "eaDescription": "NHDPlus V2 features for waterbodies, areas, and flowlines. Flowlines are displayed based on Stream Order and Stream Order 1 features are not displayed in this service.",
+                "opacity": 0.6,
+                "sourceType": "plp",
                 "tileLink": "no",
-                "eaLyrNum": " ",
                 "eaMetadata": "E001",
                 "eaTags": [
                     "National Hydrography Dataset",
@@ -772,203 +766,205 @@
                     "lake",
                     "pond",
                     "hydrology"
-                ]
+                ],
+                "eaTopic": "Boundaries",
+                "eaPBS": "Boundaries",
+                "eaDfsLink": "Supplemental/NHDPlusV2.pdf",
+                "eaLyrNum": " ",
+                "eaMetric": "boundary",
+                "type": "DYNAMIC"
             },
             {
                 "url": "https://gis.fws.gov/arcgis/rest/services/FWS_LCC/MapServer",
                 "eaID": 907,
-                "sourceType": "plp",
-                "opacity": 0.6,
-                "eaDescription": "Landscape Conservation Cooperatives (LCCs) are represented in this map by 22 regions established across the U.S., Alaska, Hawaii, and U.S. territories. LCC groups are created through conservation and science partnerships between federal agencies, states, tribes, non-governmental organizations, universities, and private stakeholders.",
-                "visible": false,
-                "eaDfsLink": "Supplemental/LandscapeConservationCooperatives.pdf",
-                "popup": {
-                    "mediaInfos": [],
-                    "showAttachments": true,
-                    "fieldInfos": [
-                        {
-                            "label": "Shape",
-                            "tooltip": "",
-                            "visible": false,
-                            "format": null,
-                            "fieldName": "Shape",
-                            "stringFieldOption": "textbox"
-                        },
-                        {
-                            "label": "area_names",
-                            "tooltip": "",
-                            "visible": true,
-                            "format": null,
-                            "fieldName": "area_names",
-                            "stringFieldOption": "textbox"
-                        },
-                        {
-                            "label": "Area_Num",
-                            "tooltip": "",
-                            "visible": true,
-                            "format": {
-                                "digitSeparator": true,
-                                "places": 0
-                            },
-                            "fieldName": "Area_Num",
-                            "stringFieldOption": "textbox"
-                        },
-                        {
-                            "label": "OBJECTID",
-                            "tooltip": "",
-                            "visible": false,
-                            "format": null,
-                            "fieldName": "OBJECTID",
-                            "stringFieldOption": "textbox"
-                        },
-                        {
-                            "label": "BCR_number",
-                            "tooltip": "",
-                            "visible": true,
-                            "format": null,
-                            "fieldName": "BCR_number",
-                            "stringFieldOption": "textbox"
-                        },
-                        {
-                            "label": "Shape.area",
-                            "tooltip": "",
-                            "visible": false,
-                            "format": {
-                                "digitSeparator": true,
-                                "places": 2
-                            },
-                            "fieldName": "Shape.area",
-                            "stringFieldOption": "textbox"
-                        },
-                        {
-                            "label": "Shape.len",
-                            "tooltip": "",
-                            "visible": false,
-                            "format": {
-                                "digitSeparator": true,
-                                "places": 2
-                            },
-                            "fieldName": "Shape.len",
-                            "stringFieldOption": "textbox"
-                        },
-                        {
-                            "label": "GlobalID",
-                            "tooltip": "",
-                            "visible": false,
-                            "format": null,
-                            "fieldName": "GlobalID",
-                            "stringFieldOption": "textbox"
-                        }
-                    ],
-                    "title": "Landscape Conservation Cooperatives: {area_names}",
-                    "description": null
-                },
-                "eaScale": "NATIONAL",
                 "name": "Landscape Conservation Cooperatives\u00a0",
-                "eaMetric": "boundary",
-                "type": "DYNAMIC",
+                "visible": false,
+                "eaScale": "NATIONAL",
+                "eaDescription": "Landscape Conservation Cooperatives (LCCs) are represented in this map by 22 regions established across the U.S., Alaska, Hawaii, and U.S. territories. LCC groups are created through conservation and science partnerships between federal agencies, states, tribes, non-governmental organizations, universities, and private stakeholders.",
+                "opacity": 0.6,
+                "sourceType": "plp",
                 "tileLink": "no",
-                "eaTopic": "Boundaries",
                 "eaTags": [
                     "protection",
                     "land",
                     "resources",
                     "habitat"
-                ]
+                ],
+                "eaTopic": "Boundaries",
+                "popup": {
+                    "title": "Landscape Conservation Cooperatives: {area_names}",
+                    "fieldInfos": [
+                        {
+                            "stringFieldOption": "textbox",
+                            "format": null,
+                            "label": "Shape",
+                            "visible": false,
+                            "tooltip": "",
+                            "fieldName": "Shape"
+                        },
+                        {
+                            "stringFieldOption": "textbox",
+                            "format": null,
+                            "label": "area_names",
+                            "visible": true,
+                            "tooltip": "",
+                            "fieldName": "area_names"
+                        },
+                        {
+                            "stringFieldOption": "textbox",
+                            "format": {
+                                "places": 0,
+                                "digitSeparator": true
+                            },
+                            "label": "Area_Num",
+                            "visible": true,
+                            "tooltip": "",
+                            "fieldName": "Area_Num"
+                        },
+                        {
+                            "stringFieldOption": "textbox",
+                            "format": null,
+                            "label": "OBJECTID",
+                            "visible": false,
+                            "tooltip": "",
+                            "fieldName": "OBJECTID"
+                        },
+                        {
+                            "stringFieldOption": "textbox",
+                            "format": null,
+                            "label": "BCR_number",
+                            "visible": true,
+                            "tooltip": "",
+                            "fieldName": "BCR_number"
+                        },
+                        {
+                            "stringFieldOption": "textbox",
+                            "format": {
+                                "places": 2,
+                                "digitSeparator": true
+                            },
+                            "label": "Shape.area",
+                            "visible": false,
+                            "tooltip": "",
+                            "fieldName": "Shape.area"
+                        },
+                        {
+                            "stringFieldOption": "textbox",
+                            "format": {
+                                "places": 2,
+                                "digitSeparator": true
+                            },
+                            "label": "Shape.len",
+                            "visible": false,
+                            "tooltip": "",
+                            "fieldName": "Shape.len"
+                        },
+                        {
+                            "stringFieldOption": "textbox",
+                            "format": null,
+                            "label": "GlobalID",
+                            "visible": false,
+                            "tooltip": "",
+                            "fieldName": "GlobalID"
+                        }
+                    ],
+                    "mediaInfos": [],
+                    "description": null,
+                    "showAttachments": true
+                },
+                "eaDfsLink": "Supplemental/LandscapeConservationCooperatives.pdf",
+                "eaMetric": "boundary",
+                "type": "DYNAMIC"
             },
             {
                 "url": "https://geodata.epa.gov/arcgis/rest/services/ORD/USEPA_Ecoregions_Level_III_and_IV/MapServer",
                 "eaID": 908,
-                "sourceType": "plp",
-                "opacity": 0.6,
-                "eaDescription": "This map illustrates USEPA (Omernik) Level III and IV ecoregions, a geographic framework used for an ecosystem approach to land and water resource management. Ecoregions define relatively homogeneous geographical areas that contain similarities in the character of environmental resources.",
-                "visible": false,
-                "eaDfsLink": "Supplemental/USEPAEcoregions.pdf",
-                "eaTopic": "Boundaries",
-                "eaScale": "NATIONAL",
                 "name": "USEPA Ecoregions (Omernik)",
-                "eaMetric": "boundary",
+                "visible": false,
+                "eaScale": "NATIONAL",
                 "layers": [
                     {
-                        "id": 7,
                         "popup": {
-                            "mediaInfos": [],
-                            "showAttachments": true,
+                            "title": "Level IV Ecoregion Polygons: {US_L4NAME}",
                             "fieldInfos": [
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Level IV",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "L4_KEY",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "L4_KEY"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Level III",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "L3_KEY",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "L3_KEY"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Level II",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "L2_KEY",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "L2_KEY"
                                 },
                                 {
-                                    "label": "Level I",
-                                    "tooltip": "",
-                                    "visible": true,
+                                    "stringFieldOption": "textbox",
                                     "format": null,
-                                    "fieldName": "L1_KEY",
-                                    "stringFieldOption": "textbox"
+                                    "label": "Level I",
+                                    "visible": true,
+                                    "tooltip": "",
+                                    "fieldName": "L1_KEY"
                                 }
                             ],
-                            "title": "Level IV Ecoregion Polygons: {US_L4NAME}",
-                            "description": null
-                        }
+                            "mediaInfos": [],
+                            "description": null,
+                            "showAttachments": true
+                        },
+                        "id": 7
                     },
                     {
-                        "id": 11,
                         "popup": {
-                            "mediaInfos": [],
-                            "showAttachments": true,
+                            "title": "Level IV Ecoregion Polygons: {US_L4NAME}",
                             "fieldInfos": [
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Level III",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "L3_KEY",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "L3_KEY"
                                 },
                                 {
+                                    "stringFieldOption": "textbox",
+                                    "format": null,
                                     "label": "Level II",
-                                    "tooltip": "",
                                     "visible": true,
-                                    "format": null,
-                                    "fieldName": "L2_KEY",
-                                    "stringFieldOption": "textbox"
+                                    "tooltip": "",
+                                    "fieldName": "L2_KEY"
                                 },
                                 {
-                                    "label": "Level I",
-                                    "tooltip": "",
-                                    "visible": true,
+                                    "stringFieldOption": "textbox",
                                     "format": null,
-                                    "fieldName": "L1_KEY",
-                                    "stringFieldOption": "textbox"
+                                    "label": "Level I",
+                                    "visible": true,
+                                    "tooltip": "",
+                                    "fieldName": "L1_KEY"
                                 }
                             ],
-                            "title": "Level IV Ecoregion Polygons: {US_L4NAME}",
-                            "description": null
-                        }
+                            "mediaInfos": [],
+                            "description": null,
+                            "showAttachments": true
+                        },
+                        "id": 11
                     }
                 ],
-                "type": "DYNAMIC",
+                "eaDescription": "This map illustrates USEPA (Omernik) Level III and IV ecoregions, a geographic framework used for an ecosystem approach to land and water resource management. Ecoregions define relatively homogeneous geographical areas that contain similarities in the character of environmental resources.",
+                "opacity": 0.6,
+                "sourceType": "plp",
                 "tileLink": "no",
                 "eaTags": [
                     "habitat",
@@ -986,38 +982,23 @@
                     "streams",
                     "lakes",
                     "ecology"
-                ]
+                ],
+                "eaTopic": "Boundaries",
+                "eaDfsLink": "Supplemental/USEPAEcoregions.pdf",
+                "eaMetric": "boundary",
+                "type": "DYNAMIC"
             },
             {
                 "url": "https://gis1.usgs.gov/arcgis/rest/services/gap/GAP_Land_Cover_Ecological_Systems_Landuse/MapServer",
                 "eaID": 909,
-                "sourceType": "plp",
-                "opacity": 0.6,
-                "eaDescription": "The GAP (Gap Anlaysis Program) Ecological Systems data layer, one of several data layers available in the U.S. Geological Survey (USGS) GAP Land Cover Dataset, depicts native vegetation, agricultural areas, and urban development in 590 land use classes. Ecological Systems refers to the vegetation classification developed by NatureServe to map the natural vegetation of the U.S. Separate Ecological Systems datasets have been created for Alaska (LANDFIRE) and Hawaii (Hawaii Gap Analysis Project).",
-                "visible": false,
-                "eaDfsLink": "Supplemental/GAPEcologicalSystems.pdf",
-                "popup": {
-                    "title": "Block Group ID: {GEOID10}",
-                    "fieldInfos": [
-                        {
-                            "label": "GAP Ecological Systems\u00a0",
-                            "fieldName": "VALUE",
-                            "format": {
-                                "digitSeparator": true,
-                                "places": 2
-                            },
-                            "visible": "true"
-                        }
-                    ],
-                    "showAttachments": "false"
-                },
-                "eaScale": "NATIONAL",
                 "name": "GAP Ecological Systems",
-                "eaMetric": "Additional_landcover",
+                "visible": false,
+                "eaScale": "NATIONAL",
                 "eaLyrNum": " ",
-                "type": "DYNAMIC",
+                "eaDescription": "The GAP (Gap Anlaysis Program) Ecological Systems data layer, one of several data layers available in the U.S. Geological Survey (USGS) GAP Land Cover Dataset, depicts native vegetation, agricultural areas, and urban development in 590 land use classes. Ecological Systems refers to the vegetation classification developed by NatureServe to map the natural vegetation of the U.S. Separate Ecological Systems datasets have been created for Alaska (LANDFIRE) and Hawaii (Hawaii Gap Analysis Project).",
+                "opacity": 0.6,
+                "sourceType": "plp",
                 "tileLink": "no",
-                "eaTopic": "Boundaries",
                 "eaTags": [
                     "habitat",
                     "wildlife",
@@ -1034,39 +1015,39 @@
                     "streams",
                     "lakes",
                     "ecology"
-                ]
-            },
-            {
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/WSIO_SW/MapServer",
-                "eaID": 910,
-                "sourceType": "grid",
-                "numDecimal": 0,
-                "IsSubLayer": true,
-                "opacity": 0.6,
-                "eaDescription": "Surface water identified in EnviroAtlas' hybrid National Land Cover Database-Cropland Data Layer or the NHDPlusV2 catseed grid. The land cover classes, 'Open Water', 'Woody Wetlands', and 'Emergent Herbaceous Wetlands' were considered surface water.",
-                "visible": false,
-                "eaDfsLink": "Supplemental/WaterscapeSurfacewater.pdf",
+                ],
+                "eaTopic": "Boundaries",
                 "popup": {
-                    "title": "Waterscape - Surface water",
+                    "title": "Block Group ID: {GEOID10}",
                     "fieldInfos": [
                         {
-                            "label": "Waterscape - Surface water\u00a0",
-                            "fieldName": "value",
+                            "fieldName": "VALUE",
+                            "label": "GAP Ecological Systems\u00a0",
                             "format": {
-                                "digitSeparator": true,
-                                "places": 0
+                                "places": 2,
+                                "digitSeparator": true
                             },
                             "visible": "true"
                         }
                     ],
                     "showAttachments": "false"
                 },
-                "eaScale": "NATIONAL",
-                "eaPBS": "Boundaries",
+                "eaDfsLink": "Supplemental/GAPEcologicalSystems.pdf",
+                "eaMetric": "Additional_landcover",
+                "type": "DYNAMIC"
+            },
+            {
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/WSIO_SW/MapServer",
+                "eaID": 910,
                 "name": "Waterscape - Surface water",
-                "type": "DYNAMIC",
+                "visible": false,
+                "numDecimal": 0,
+                "eaPBS": "Boundaries",
+                "eaScale": "NATIONAL",
+                "eaDescription": "Surface water identified in EnviroAtlas' hybrid National Land Cover Database-Cropland Data Layer or the NHDPlusV2 catseed grid. The land cover classes, 'Open Water', 'Woody Wetlands', and 'Emergent Herbaceous Wetlands' were considered surface water.",
+                "opacity": 0.6,
+                "sourceType": "grid",
                 "tileLink": "no",
-                "eaTopic": "Boundaries",
                 "eaMetadata": "N067",
                 "eaTags": [
                     "lake",
@@ -1075,39 +1056,39 @@
                     "waterbody",
                     "pond",
                     "hydrology"
-                ]
-            },
-            {
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/WSIO_HCZ/MapServer",
-                "eaID": 911,
-                "sourceType": "grid",
-                "numDecimal": 0,
-                "IsSubLayer": true,
-                "opacity": 0.6,
-                "eaDescription": "Raster showing the hydrologically connected zone, defined as surface water plus any connected cells with high water acculmulation. This map uses a wetness index of 550 from a compound topographic index (CTI) to determine if the area is considered to be wet. ",
-                "visible": false,
-                "eaDfsLink": "Supplemental/WaterscapeHydrologicallyconnectedzone.pdf",
+                ],
+                "eaTopic": "Boundaries",
                 "popup": {
-                    "title": "Waterscape - Hydrologically connected zone",
+                    "title": "Waterscape - Surface water",
                     "fieldInfos": [
                         {
-                            "label": "Waterscape - Hydrologically connected zone\u00a0",
                             "fieldName": "value",
+                            "label": "Waterscape - Surface water\u00a0",
                             "format": {
-                                "digitSeparator": true,
-                                "places": 0
+                                "places": 0,
+                                "digitSeparator": true
                             },
                             "visible": "true"
                         }
                     ],
                     "showAttachments": "false"
                 },
-                "eaScale": "NATIONAL",
-                "eaPBS": "Boundaries",
+                "eaDfsLink": "Supplemental/WaterscapeSurfacewater.pdf",
+                "IsSubLayer": true,
+                "type": "DYNAMIC"
+            },
+            {
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/WSIO_HCZ/MapServer",
+                "eaID": 911,
                 "name": "Waterscape - Hydrologically connected zone",
-                "type": "DYNAMIC",
+                "visible": false,
+                "numDecimal": 0,
+                "eaPBS": "Boundaries",
+                "eaScale": "NATIONAL",
+                "eaDescription": "Raster showing the hydrologically connected zone, defined as surface water plus any connected cells with high water acculmulation. This map uses a wetness index of 550 from a compound topographic index (CTI) to determine if the area is considered to be wet. ",
+                "opacity": 0.6,
+                "sourceType": "grid",
                 "tileLink": "no",
-                "eaTopic": "Boundaries",
                 "eaMetadata": "N068",
                 "eaTags": [
                     "lake",
@@ -1116,42 +1097,39 @@
                     "waterbody",
                     "pond",
                     "hydrology"
-                ]
-            },
-            {
-                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/WSIO_RZ/MapServer",
-                "eaID": 912,
-                "SubLayerIds": [
-                    ""
                 ],
-                "sourceType": "grid",
-                "numDecimal": 0,
-                "IsSubLayer": true,
-                "opacity": 0.6,
-                "eaDescription": "Raster showing the riparian zone, defined as land within 108 meters of surface water identified in the NHDPlusV2 catseed grid or in EnviroAtlas' hybrid National Land Cover Database-Cropland Data Layer (including 'Open Water', 'Woody Wetlands', and 'Emergent Herbaceous Wetlands').",
-                "visible": false,
-                "eaDfsLink": "Supplemental/WaterscapeRiparianzone.pdf",
+                "eaTopic": "Boundaries",
                 "popup": {
-                    "title": "Waterscape - Riparian zone",
+                    "title": "Waterscape - Hydrologically connected zone",
                     "fieldInfos": [
                         {
-                            "label": "Waterscape - Riparian zone\u00a0",
                             "fieldName": "value",
+                            "label": "Waterscape - Hydrologically connected zone\u00a0",
                             "format": {
-                                "digitSeparator": true,
-                                "places": 0
+                                "places": 0,
+                                "digitSeparator": true
                             },
                             "visible": "true"
                         }
                     ],
                     "showAttachments": "false"
                 },
-                "eaScale": "NATIONAL",
-                "eaPBS": "Boundaries",
+                "eaDfsLink": "Supplemental/WaterscapeHydrologicallyconnectedzone.pdf",
+                "IsSubLayer": true,
+                "type": "DYNAMIC"
+            },
+            {
+                "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/WSIO_RZ/MapServer",
+                "eaID": 912,
                 "name": "Waterscape - Riparian zone",
-                "type": "DYNAMIC",
+                "visible": false,
+                "numDecimal": 0,
+                "eaPBS": "Boundaries",
+                "eaScale": "NATIONAL",
+                "eaDescription": "Raster showing the riparian zone, defined as land within 108 meters of surface water identified in the NHDPlusV2 catseed grid or in EnviroAtlas' hybrid National Land Cover Database-Cropland Data Layer (including 'Open Water', 'Woody Wetlands', and 'Emergent Herbaceous Wetlands').",
+                "opacity": 0.6,
+                "sourceType": "grid",
                 "tileLink": "no",
-                "eaTopic": "Boundaries",
                 "eaMetadata": "N069",
                 "eaTags": [
                     "lake",
@@ -1160,7 +1138,29 @@
                     "waterbody",
                     "pond",
                     "hydrology"
-                ]
+                ],
+                "eaTopic": "Boundaries",
+                "popup": {
+                    "title": "Waterscape - Riparian zone",
+                    "fieldInfos": [
+                        {
+                            "fieldName": "value",
+                            "label": "Waterscape - Riparian zone\u00a0",
+                            "format": {
+                                "places": 0,
+                                "digitSeparator": true
+                            },
+                            "visible": "true"
+                        }
+                    ],
+                    "showAttachments": "false"
+                },
+                "eaDfsLink": "Supplemental/WaterscapeRiparianzone.pdf",
+                "SubLayerIds": [
+                    ""
+                ],
+                "IsSubLayer": true,
+                "type": "DYNAMIC"
             }
         ]
     }

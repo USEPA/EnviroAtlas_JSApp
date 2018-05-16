@@ -688,8 +688,9 @@ define([
 
                 window.communitySelected = currentCommunity;
 
-                document.getElementById('butUpdateCommunityLayers').click();
-
+			    selfPBS.publishData({
+					message : "updateCommunityLayers"
+				}); 
                 var nExtent;
                 if (window.communitySelected != window.strAllCommunity) {
                     commnunityWholeName = window.communityDic[window.communitySelected];

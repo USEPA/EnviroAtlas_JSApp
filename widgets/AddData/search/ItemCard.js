@@ -110,7 +110,9 @@ define(["dojo/_base/declare",
 			    }	
                 var indexTobeRemoved = window.onlineDataAlreadyAdded.indexOf(self.item.id);
 		  		window.onlineDataAlreadyAdded.splice(indexTobeRemoved, 1);
-			    document.getElementById('openFailedLayer').click();
+				selfAddData.publishData({
+		        	message: "openFailedLayer"
+		    	}); 			    
             }
           });
         }

@@ -57,6 +57,7 @@ function(declare,
     	
       this.inherited(arguments);
 	  this.displayCommunitySelection();  
+	  selfSelectCommunity = this;
       console.log('startup');
     },
     addRowButton: function(radioId, radioName, labelForRadio, direction) {
@@ -106,7 +107,9 @@ function(declare,
 	    }
 	    this.map.setExtent(nExtent);
 	    
-	    document.getElementById('butUpdateCommunityLayers').click();	    
+	    selfSelectCommunity.publishData({
+			message : "updateCommunityLayers"
+		}); 
 
     },    
     displayCommunitySelection: function() {
