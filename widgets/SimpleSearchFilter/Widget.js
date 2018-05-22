@@ -26,6 +26,11 @@ define([
      'esri/geometry/Extent',
 	 'esri/symbols/SimpleLineSymbol',
 	 'esri/symbols/SimpleFillSymbol',
+	 'esri/symbols/SimpleMarkerSymbol',
+	 'jimu/shared/utils',
+	 'jimu/utils',
+	 'esri/lang',
+	 'esri/dijit/PopupTemplate',
 	 'esri/renderers/SimpleRenderer',
 	 'esri/tasks/QueryTask',
      'esri/tasks/query',
@@ -57,6 +62,11 @@ define([
     Extent,
     SimpleLineSymbol,
     SimpleFillSymbol,
+    SimpleMarkerSymbol,
+    sharedUtils,
+    utils,
+    esriLang,
+    PopupTemplate,
     SimpleRenderer,
     QueryTask,
     query,
@@ -104,6 +114,7 @@ define([
 	    var featuresCollection = [];
 	    var arrLayersForPopup = [];
 	    var numDecimalDigit = 0;
+	    var strDateFormat = '';
 	    var addSingleFeatureForPopup = function(eaID, clickEvt) {
 	    	selfSimpleSearchFilter.map.infoWindow.resize(260, 150 );
         	/*if (window.widthOfInfoWindow > 0 ) {
@@ -113,27 +124,47 @@ define([
 	        selectQuery.geometry = clickEvt.mapPoint;
 	        selectQuery.returnGeometry = true;
 	        selectQuery.spatialRelationship = query.SPATIAL_REL_INTERSECTS;            
+	        if (window.hashPopup[eaID].hasOwnProperty('geometrytype')) {
+	        	if (window.hashPopup[eaID].geometrytype == "point") {
+	        		selectQuery.distance = 180;
+	        	}
+	        }
 	        var queryTask = new QueryTask(window.hashURL[eaID]);
 	        popupField = window.hashPopup[eaID].fieldInfos[0]["fieldName"];
-	        popupFieldName = window.hashPopup[eaID].fieldInfos[0]["label"];
 	        var bIsTextFormat = false;
 	        if (window.hashPopup[eaID].fieldInfos[0].hasOwnProperty('stringFieldOption')) {	        	
 	        	if (window.hashPopup[eaID].fieldInfos[0].stringFieldOption == "textbox") {
 	        		bIsTextFormat = true;
 	        	}
 	        }
-	        popupTitle = window.hashPopup[eaID].title.split(":");
 	        if (window.hashPopup[eaID].fieldInfos[0].hasOwnProperty('format')) {
 	        	if (window.hashPopup[eaID].fieldInfos[0].format.hasOwnProperty('places')) {
 	        		numDecimalDigit = window.hashPopup[eaID].fieldInfos[0].format.places;
 	        	}
 	        }
-	        selectQuery.outFields = ["*"];
+			if (window.hashPopup[eaID].hasOwnProperty('title')) {
+				var popupField = window.hashPopup[eaID].fieldInfos[0]["fieldName"];
+				var popupTitle = window.hashPopup[eaID].title.split(":");
+	        if (window.hashPopup[eaID].fieldInfos[0].hasOwnProperty('format')) {
+	        	if (window.hashPopup[eaID].fieldInfos[0].format.hasOwnProperty('places')) {
+	        		numDecimalDigit = window.hashPopup[eaID].fieldInfos[0].format.places;
+	        	}
+	        }
 	        selectQuery.outFields = [popupField, popupTitle[1].trim().replace("{","").replace("}","")];
+			}else {
+			        selectQuery.outFields = [];
+			        for (var ii=0, il=window.hashPopup[eaID].fieldInfos.length; ii<il; ii++) {
+			        	if (window.hashPopup[eaID].fieldInfos[ii].visible == true) { 
+			        		selectQuery.outFields.push(window.hashPopup[eaID].fieldInfos[ii].fieldName);		        
+				        }	
+			        }
+			}
 	        queryTask.execute(selectQuery, function (features) {
 	        	if (window.hashPopup[eaID] != undefined) {
 					//Performance enhancer - assign featureSet array to a single variable.
+					if (features.features.length >=1){
 					var resultFeatures = features.features;
+						if (resultFeatures[0].geometry.type == "polygon") {
 					var symbol = new SimpleFillSymbol(
 	                  SimpleFillSymbol.STYLE_NULL, 
 	                  new SimpleLineSymbol(
@@ -143,14 +174,76 @@ define([
 	                  ),
 	                  new Color([215, 215, 215,255])
 	                );
+		               }
+					   /*if (resultFeatures[0].geometry.type == "polyline") {
+							var symbol = new SimpleFillSymbol(
+			                  SimpleFillSymbol.STYLE_NULL, 
+			                  new SimpleLineSymbol(
+			                    SimpleLineSymbol.STYLE_SOLID, 
+			                    new Color([0, 0, 200, 255]), 
+			                    1
+			                  ),
+			                  new Color([215, 215, 215,255])
+			                );
+		               }	*/	       
+					   if (resultFeatures[0].geometry.type == "point") {
+							var symbol = new SimpleMarkerSymbol(
+			                  SimpleMarkerSymbol.STYLE_NULL, 
+			                  new SimpleMarkerSymbol(
+			                    SimpleMarkerSymbol.STYLE_SOLID, 
+			                    new Color([0, 0, 200, 255]), 
+			                    1
+			                  ),
+			                  new Color([215, 215, 215,255])
+			                );
+		               }	
 					//Loop through each feature returned
 					for (var i=0, il=resultFeatures.length; i<il; i++) {
-						if (bIsTextFormat == false) {
-						var content = "<b>" + popupTitle[0] + "</b>: $" + popupTitle[1].trim() + "<hr>"+"<b>" + popupFieldName + "</b>: ${" + popupField + ":selfSimpleSearchFilter.formatValue}";	
+							var popupTitle;
+							var content;
+							if (window.hashPopup[eaID].hasOwnProperty('title')) {
+									popupTitle = window.hashPopup[eaID].title.split(":");
+									content = "<b>" + popupTitle[0] + "</b>: $" + popupTitle[1].trim() + "<hr>";
+							}else {
+								content = "";
+							}
+							var indexLineNumber = 0;
+					        for (var ii=0, i2=window.hashPopup[eaID].fieldInfos.length; ii<i2; ii++) {
+					        	var strFirstLine = "";
+					        	if (indexLineNumber==0) {
+					        		strFirstLine = "<b>";
+					        	} else {
+					        		strFirstLine = "<br><b>";
+					        	}
+					        	if ((window.hashPopup[eaID].fieldInfos[ii].visible == true)||window.hashPopup[eaID].fieldInfos[ii].visible == "true") { 
+									if (!(window.hashPopup[eaID].fieldInfos[ii].hasOwnProperty('stringFieldOption')) || (window.hashPopup[eaID].fieldInfos[ii].stringFieldOption != "textbox"))  {
+										if (window.hashPopup[eaID].fieldInfos[ii].hasOwnProperty('format')) {
+								        	if (window.hashPopup[eaID].fieldInfos[ii].format.hasOwnProperty('places')) {
+								        		numDecimalDigit = window.hashPopup[eaID].fieldInfos[ii].format.places;
+								        	}
+								        }				
+									    content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + ":selfSimpleSearchFilter.formatValue}";	
+										indexLineNumber = indexLineNumber + 1;
 						} else {
-							var content = "<b>" + popupTitle[0] + "</b>: $" + popupTitle[1].trim() + "<hr>"+"<b>" + popupFieldName + "</b>: ${" + popupField + "}";	
+										if ((window.hashPopup[eaID].fieldInfos[ii].hasOwnProperty('format')) && (window.hashPopup[eaID].fieldInfos[ii].format.hasOwnProperty('dateFormat'))) {
+								        		strDateFormat = window.hashPopup[eaID].fieldInfos[ii].format.dateFormat;
+								        		var content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + ":selfSimpleSearchFilter.formatDateByFieldInfo}";	
+									     		indexLineNumber = indexLineNumber + 1;
 						}
-						var infoTemplate = new esri.InfoTemplate(popupFieldName, content);
+									     else {
+											var content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + "}";	
+											indexLineNumber = indexLineNumber + 1;
+										}
+									}				        		
+				        		}
+			        		}	
+			        		var infoTitle = "";
+			        		for (var key in window.hashTitleToEAID){
+							  if (window.hashTitleToEAID[key]==eaID) {
+							  	infoTitle = key;
+							  }
+							}					
+							var infoTemplate = new esri.InfoTemplate(infoTitle, content);
 					    var graphic = resultFeatures[i];
 					    graphic.setSymbol(symbol);
 					    graphic.setInfoTemplate(infoTemplate);
@@ -166,7 +259,7 @@ define([
 							selfSimpleSearchFilter.map.infoWindow.show(clickEvt.mapPoint);
 						}
 					}
-	            }
+	           } //end of if (window.hashPopup[eaID] != undefined)
 	        }); 	
 		};
 		var setClickEventForPopup = function(){    		
@@ -1483,8 +1576,29 @@ define([
      formatValue : function (value, key, data){
      	pow10 = Math.pow(10, numDecimalDigit);
      	return parseFloat(Math.round(value * pow10) / pow10).toFixed(numDecimalDigit);
+     },
+	  formatDateByFieldInfo : function(d, fieldInfo) {
+	    var fd = null;
+	    try {
+	      var data = {
+	        date: d instanceof Date ? d.getTime() : d
+	      };
+	      //dateFormat = 'shortDateShortTime';
+	      dateFormat = strDateFormat;
+	      var substOptions = {
+	        dateFormat: {
+	          properties: ['date'],
+	          formatter: 'DateFormat' + PopupTemplate.prototype._dateFormats[dateFormat]
+	        }
+	      };
+	      fd = esriLang.substitute(data, '${date}', substOptions);
+	    }catch (err) {
+	      console.error(err);
+	      fd = d;
      }
 
+    return fd;
+  }
     });
 
     return clazz;
