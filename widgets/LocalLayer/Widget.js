@@ -510,13 +510,19 @@ define([
 									tileLinkAdjusted = layer.tileURL + "/";
 								}
 								window.hashIDtoTileURL[layer.eaID.toString()] = tileLinkAdjusted;
-								jimuUtils.initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString());
-								this._viewerMap.addLayer(new myTiledMapServiceLayer());
-								lyrTiled = this._viewerMap.getLayer(window.layerIdTiledPrefix + layer.eaID.toString());
-								//bji need to be modified to accomodate tile.
-								if (lyrTiled) {
-									lyrTiled.setOpacity(layer.opacity);
-								}
+                                if (tileLinkAdjusted.slice(-11)=="_alllayers/"){
+                                    jimuUtils.initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString());
+                                    this._viewerMap.addLayer(new myTiledMapServiceLayer());
+                                    lyrTiled = this._viewerMap.getLayer(window.layerIdTiledPrefix + layer.eaID.toString());
+                                    //bji need to be modified to accomodate tile.
+                                    if (lyrTiled) {
+                                        lyrTiled.setOpacity(layer.opacity);
+                                    }
+                                }
+                                else{
+                                    lOptions.id = window.layerIdTiledPrefix + layer.eaID.toString();
+                                    this._viewerMap.addLayer(new ArcGISTiledMapServiceLayer(layer.tileURL, lOptions));
+                                }
 							} else if (layer.eaScale == "COMMUNITY") {
 								loadSymbologyConfig(function(response) {
 									var classBreakInfo = JSON.parse(response);
