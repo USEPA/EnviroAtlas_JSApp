@@ -123,12 +123,13 @@ define([
 			var selectQuery = new query();
 	        selectQuery.geometry = clickEvt.mapPoint;
 	        selectQuery.returnGeometry = true;
-	        selectQuery.spatialRelationship = query.SPATIAL_REL_INTERSECTS;            
+	        selectQuery.spatialRelationship = query.SPATIAL_REL_INTERSECTS;  
 	        if (window.hashPopup[eaID].hasOwnProperty('geometrytype')) {
 	        	if (window.hashPopup[eaID].geometrytype == "point") {
 	        		selectQuery.distance = 180;
 	        	}
 	        }
+	                   
 	        var queryTask = new QueryTask(window.hashURL[eaID]);
 	        popupField = window.hashPopup[eaID].fieldInfos[0]["fieldName"];
 	        var bIsTextFormat = false;
@@ -137,20 +138,22 @@ define([
 	        		bIsTextFormat = true;
 	        	}
 	        }
+	        
 	        if (window.hashPopup[eaID].fieldInfos[0].hasOwnProperty('format')) {
 	        	if (window.hashPopup[eaID].fieldInfos[0].format.hasOwnProperty('places')) {
 	        		numDecimalDigit = window.hashPopup[eaID].fieldInfos[0].format.places;
 	        	}
 	        }
+	        
 			if (window.hashPopup[eaID].hasOwnProperty('title')) {
 				var popupField = window.hashPopup[eaID].fieldInfos[0]["fieldName"];
 				var popupTitle = window.hashPopup[eaID].title.split(":");
-	        if (window.hashPopup[eaID].fieldInfos[0].hasOwnProperty('format')) {
-	        	if (window.hashPopup[eaID].fieldInfos[0].format.hasOwnProperty('places')) {
-	        		numDecimalDigit = window.hashPopup[eaID].fieldInfos[0].format.places;
-	        	}
-	        }
-	        selectQuery.outFields = [popupField, popupTitle[1].trim().replace("{","").replace("}","")];
+		        if (window.hashPopup[eaID].fieldInfos[0].hasOwnProperty('format')) {
+		        	if (window.hashPopup[eaID].fieldInfos[0].format.hasOwnProperty('places')) {
+		        		numDecimalDigit = window.hashPopup[eaID].fieldInfos[0].format.places;
+		        	}
+		        }
+				selectQuery.outFields = [popupField, popupTitle[1].trim().replace("{","").replace("}","")];
 			}else {
 			        selectQuery.outFields = [];
 			        for (var ii=0, il=window.hashPopup[eaID].fieldInfos.length; ii<il; ii++) {
@@ -159,21 +162,23 @@ define([
 				        }	
 			        }
 			}
+
 	        queryTask.execute(selectQuery, function (features) {
 	        	if (window.hashPopup[eaID] != undefined) {
 					//Performance enhancer - assign featureSet array to a single variable.
+					
 					if (features.features.length >=1){
-					var resultFeatures = features.features;
+						var resultFeatures = features.features;
 						if (resultFeatures[0].geometry.type == "polygon") {
-					var symbol = new SimpleFillSymbol(
-	                  SimpleFillSymbol.STYLE_NULL, 
-	                  new SimpleLineSymbol(
-	                    SimpleLineSymbol.STYLE_SOLID, 
-	                    new Color([0, 0, 200, 255]), 
-	                    1
-	                  ),
-	                  new Color([215, 215, 215,255])
-	                );
+							var symbol = new SimpleFillSymbol(
+			                  SimpleFillSymbol.STYLE_NULL, 
+			                  new SimpleLineSymbol(
+			                    SimpleLineSymbol.STYLE_SOLID, 
+			                    new Color([0, 0, 200, 255]), 
+			                    1
+			                  ),
+			                  new Color([215, 215, 215,255])
+			                );
 		               }
 					   /*if (resultFeatures[0].geometry.type == "polyline") {
 							var symbol = new SimpleFillSymbol(
@@ -197,8 +202,8 @@ define([
 			                  new Color([215, 215, 215,255])
 			                );
 		               }	
-					//Loop through each feature returned
-					for (var i=0, il=resultFeatures.length; i<il; i++) {
+						//Loop through each feature returned
+						for (var i=0, il=resultFeatures.length; i<il; i++) {
 							var popupTitle;
 							var content;
 							if (window.hashPopup[eaID].hasOwnProperty('title')) {
@@ -222,14 +227,15 @@ define([
 								        		numDecimalDigit = window.hashPopup[eaID].fieldInfos[ii].format.places;
 								        	}
 								        }				
+								        				    
 									    content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + ":selfSimpleSearchFilter.formatValue}";	
 										indexLineNumber = indexLineNumber + 1;
-						} else {
+									} else {
 										if ((window.hashPopup[eaID].fieldInfos[ii].hasOwnProperty('format')) && (window.hashPopup[eaID].fieldInfos[ii].format.hasOwnProperty('dateFormat'))) {
 								        		strDateFormat = window.hashPopup[eaID].fieldInfos[ii].format.dateFormat;
 								        		var content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + ":selfSimpleSearchFilter.formatDateByFieldInfo}";	
 									     		indexLineNumber = indexLineNumber + 1;
-						}
+									     } 
 									     else {
 											var content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + "}";	
 											indexLineNumber = indexLineNumber + 1;
@@ -244,12 +250,14 @@ define([
 							  }
 							}					
 							var infoTemplate = new esri.InfoTemplate(infoTitle, content);
-					    var graphic = resultFeatures[i];
-					    graphic.setSymbol(symbol);
-					    graphic.setInfoTemplate(infoTemplate);
-					    featuresCollection.push(graphic);
-					    selfSimpleSearchFilter.map.graphics.add(graphic);
-					}
+						    var graphic = resultFeatures[i];
+						    graphic.setSymbol(symbol);
+						    graphic.setInfoTemplate(infoTemplate);
+						    featuresCollection.push(graphic);
+						    selfSimpleSearchFilter.map.graphics.add(graphic);
+						}		               	                        
+	               }
+
 					if 	(arrLayersForPopup.length > 0){
 	        			addSingleFeatureForPopup(arrLayersForPopup.pop(),clickEvt);
 	        		}
@@ -632,18 +640,13 @@ define([
 
 		var nSearchableColumns = document.getElementById('tableLyrNameDescrTag').getElementsByTagName('tr')[0].getElementsByTagName('th').length;
 		var eaIDFilteredList = [];
-		tdIndex = 0;
 		
 		$("#tableLyrNameDescrTag").dataTable().$('td',{"filter":"applied"}).each( function (value, index) {
+
 			var currentCellText = $(this).text();
-			
-			if (tdIndex == 0) {
+			if (!isNaN(currentCellText)){
 				eaIDFilteredList.push(currentCellText);
-			}
-			tdIndex = tdIndex + 1;
-			if (tdIndex == nSearchableColumns) {
-				tdIndex = 0;
-			}				
+			}			
 		}); 
 
 		var tableOfRelationship = document.getElementById("tableSelectableLayersArea");
@@ -659,7 +662,7 @@ define([
 
         var numOfSelectableLayers = 0;
         var totalNumOfLayers = 0;
-		var bAtLeastOneTopicSelected = true;//topicsBeingSelected();  
+
 		SelectedTopics = [];          
     	dojo.forEach(items, function(item) {
            	
@@ -720,7 +723,6 @@ define([
 					}
 					break;
 			}    			
-			
 
 			eachLayerCategoryList = eaCategory.split(";");
 			if (bSelectByScale) {
@@ -729,7 +731,8 @@ define([
 				}
 			}// end of if (bSelectByScale)
 
-			if ((currentLayerSelectable || (bAtLeastOneTopicSelected == false)) &&(eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
+			if (currentLayerSelectable && (eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
+		
 				var bLayerSelected = false;
 				if ((window.allLayerNumber.indexOf(eaID)) == -1) {                        	
                 	window.allLayerNumber.push(eaID);
@@ -740,7 +743,7 @@ define([
 			    		bLayerSelected = true;
 		          	}                   	
                 }
-
+	
                 numOfSelectableLayers++;
 				//Add Header for each Topic in list
 				if (SelectedTopics.indexOf(eaTopic) == -1) {
@@ -773,7 +776,6 @@ define([
 				//If not a subLayer create a new Row
 				
 				if (!IsSubLayer) {
-
 					var mainDiv = dojo.create('div', {
 						'class': 'layerDiv'
 						}, layerArea);
@@ -915,6 +917,7 @@ define([
 
 
 		    				chkboxId = window.chkSelectableLayer + SubLayerIds[i];
+
 		    				var checkbox = dojo.create('input', {
 			    				"type": "checkbox",
 								"name": chkboxId,
@@ -1585,6 +1588,7 @@ define([
 	      };
 	      //dateFormat = 'shortDateShortTime';
 	      dateFormat = strDateFormat;
+	
 	      var substOptions = {
 	        dateFormat: {
 	          properties: ['date'],
@@ -1595,7 +1599,7 @@ define([
 	    }catch (err) {
 	      console.error(err);
 	      fd = d;
-     }
+	    }
 
     return fd;
   }
