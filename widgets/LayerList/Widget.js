@@ -193,40 +193,41 @@ define([
 
       _onLayerInfosChanged: function(layerInfo, changedType) {
         //this._refresh();
+        if (layerInfo){
+            if(changedType === "added") {
+              var allLayers = this.map.layerIds.concat(this.map.graphicsLayerIds);
 
-        if(changedType === "added") {
-          var allLayers = this.map.layerIds.concat(this.map.graphicsLayerIds);
+              var layerIndex = array.indexOf(allLayers, layerInfo.id);
+              var refLayerId = null;
+              var refLayerNode = null;
+              var refHrNodeNonGraphic = null;
+              for(var i = layerIndex - 1; i >= 0; i--) {
+                refLayerId = allLayers[i];
+                var layerId = parseInt(refLayerId.replace(window.layerIdPrefix, "").replace(window.layerIdBndrPrefix, "").replace(window.layerIdPBSPrefix, "").replace(window.layerIdTiledPrefix, "").replace(window.addedLayerIdPrefix, ""));
+                if (window.featureLyrNumber.indexOf(layerId) >= 0){
+                    refLayerNode = query("[class~='layer-tr-node-" + refLayerId + "']", this.domNode)[0];	            
+                    if(refLayerNode) {
+                      break;
+                    }
+                }
+              }
+              refHrNode = query("[class~='hrClass']", this.domNode)[0];
+              refHrNodeNonGraphic = query("[class~='hrClassNonGraphic']", this.domNode)[0];
+              var layerId = parseInt(layerInfo.id.replace(window.layerIdPrefix, "").replace(window.layerIdBndrPrefix, "").replace(window.layerIdPBSPrefix, "").replace(window.layerIdTiledPrefix, "").replace(window.addedLayerIdPrefix, ""));
 
-          var layerIndex = array.indexOf(allLayers, layerInfo.id);
-          var refLayerId = null;
-          var refLayerNode = null;
-          var refHrNodeNonGraphic = null;
-          for(var i = layerIndex - 1; i >= 0; i--) {
-            refLayerId = allLayers[i];
-            var layerId = parseInt(refLayerId.replace(window.layerIdPrefix, "").replace(window.layerIdBndrPrefix, "").replace(window.layerIdPBSPrefix, "").replace(window.layerIdTiledPrefix, "").replace(window.addedLayerIdPrefix, ""));
-  			if (window.featureLyrNumber.indexOf(layerId) >= 0){
-	            refLayerNode = query("[class~='layer-tr-node-" + refLayerId + "']", this.domNode)[0];	            
-	            if(refLayerNode) {
-	              break;
-	            }
+              if ((layerInfo.layerObject.type) && (layerInfo.layerObject.type.toUpperCase() == "FEATURE LAYER")) {
+                  if(refLayerNode) {	          	
+                    this.layerListView.drawListNode(layerInfo, 0, refLayerNode, 'before');
+                  } else {
+                    this.layerListView.drawListNode(layerInfo, 0, refHrNode, 'before');
+                  }
+               } else {
+                  this.layerListView.drawListNode(layerInfo, 0, refHrNodeNonGraphic, 'before');
+               }
+
+            } else {
+              this.layerListView.destroyLayerTrNode(layerInfo);
             }
-          }
-          refHrNode = query("[class~='hrClass']", this.domNode)[0];
-          refHrNodeNonGraphic = query("[class~='hrClassNonGraphic']", this.domNode)[0];
-    	  var layerId = parseInt(layerInfo.id.replace(window.layerIdPrefix, "").replace(window.layerIdBndrPrefix, "").replace(window.layerIdPBSPrefix, "").replace(window.layerIdTiledPrefix, "").replace(window.addedLayerIdPrefix, ""));
-
-		  if ((layerInfo.layerObject.type) && (layerInfo.layerObject.type.toUpperCase() == "FEATURE LAYER")) {
-	          if(refLayerNode) {	          	
-	            this.layerListView.drawListNode(layerInfo, 0, refLayerNode, 'before');
-	          } else {
-	            this.layerListView.drawListNode(layerInfo, 0, refHrNode, 'before');
-	          }
-	       } else {
-	       	  this.layerListView.drawListNode(layerInfo, 0, refHrNodeNonGraphic, 'before');
-	       }
-
-        } else {
-          this.layerListView.destroyLayerTrNode(layerInfo);
         }
       },
 
