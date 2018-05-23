@@ -39,7 +39,8 @@ define([
     'jimu/utils',
     'jimu/portalUtils',
     'jimu/portalUrlUtils',
-    'jimu/dijit/LoadingIndicator'
+    'jimu/dijit/LoadingIndicator',
+    'dijit/Dialog'
 ], function (declare,
     _WidgetBase,
     _TemplatedMixin,
@@ -56,7 +57,8 @@ define([
     jimuUtils,
     portalUtils,
     portalUrlUtils,
-    LoadingIndicator) {
+    LoadingIndicator,
+    Dialog) {
     /*jshint unused: false*/
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
         templateString: template,
@@ -344,10 +346,19 @@ define([
             itemSnippet.innerHTML = "<div><p>" + item.snippet + "</p></div>";
             itemSnippet.title = item.snippet;
             itemDetails.innerHTML = this.nls.moreDetails;
-            itemDetails.href = item.detailsPageUrl || "#";
+            //itemDetails.href = item.detailsPageUrl || "#";
             return itemDiv;
         },
 
+        showDetails: function(title,description){
+            var mapDescription = new Dialog({
+                title: title,
+                style: "width: 400px",    
+            });
+            mapDescription.show();
+            mapDescription.set("content", description);
+        },
+        
         /**
          * when an item is clicked on the widget, fire the item selected event
          * unless it is the item details link
@@ -356,16 +367,17 @@ define([
         _onItemsTableClicked: function (event) {
             var target = event.target || event.srcElement;
 
-            if (html.hasClass(target, 'item-details')) {
-                // do not select if user clicks hyperlink
-                //console.log("ItemTable :: _onItemsTableClicked :: item details clicked");
-                return;
-            }
-
             // find the parent item node
             var itemDiv = query(target).parents('.item')[0];
 
             if (!itemDiv) {
+                return;
+            }
+            
+            if (html.hasClass(target, 'item-details')) {
+                // do not select if user clicks hyperlink
+                //console.log("ItemTable :: _onItemsTableClicked :: item details clicked");
+                this.showDetails(itemDiv.item.title,itemDiv.item.description);
                 return;
             }
 
@@ -377,7 +389,8 @@ define([
 
             // fire item selected event
             this.emit('item-selected', itemDiv.item);
-            //console.log("ItemTable :: _onItemsTableClicked :: item selected", itemDiv.item);
+            //console.log("ItemTable :: _onItemsTableClicked :: item selected", itemDiv.item);        
+            
         },
 
         getSelectedItem: function () {
