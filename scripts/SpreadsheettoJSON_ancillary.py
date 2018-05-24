@@ -68,8 +68,14 @@ def main(_argv):
 
         for rowID in rowsToKeep:
             name = inputWorksheet[key["name"]+rowID].value
-            layerJSON = {"opacity": 0.6,
-                        "visible": False}
+            #layerJSON = {"opacity": 0.6,
+            #           "visible": False}
+            if (inputWorksheet[key["eaTopic"]+rowID].value == "EPA Regulated Facilities"):
+                layerJSON = {"opacity": 1.0,
+                            "visible": False}
+            else:
+                layerJSON = {"opacity": 0.6,
+                            "visible": False}
             if (inputWorksheet[key["serviceType"]+rowID].value == "feature"):
                 layerJSON["type"] ="FEATURE"
                 layerJSON["autorefresh"] = 0
