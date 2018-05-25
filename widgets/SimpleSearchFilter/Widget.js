@@ -148,20 +148,17 @@ define([
 			if (window.hashPopup[eaID].hasOwnProperty('title')) {
 				var popupField = window.hashPopup[eaID].fieldInfos[0]["fieldName"];
 				var popupTitle = window.hashPopup[eaID].title.split(":");
-		        if (window.hashPopup[eaID].fieldInfos[0].hasOwnProperty('format')) {
-		        	if (window.hashPopup[eaID].fieldInfos[0].format.hasOwnProperty('places')) {
-		        		numDecimalDigit = window.hashPopup[eaID].fieldInfos[0].format.places;
-		        	}
-		        }
-				selectQuery.outFields = [popupField, popupTitle[1].trim().replace("{","").replace("}","")];
-			}else {
-			        selectQuery.outFields = [];
-			        for (var ii=0, il=window.hashPopup[eaID].fieldInfos.length; ii<il; ii++) {
-			        	if (window.hashPopup[eaID].fieldInfos[ii].visible == true) { 
-			        		selectQuery.outFields.push(window.hashPopup[eaID].fieldInfos[ii].fieldName);		        
-				        }	
-			        }
+
+				selectQuery.outFields = [popupTitle[1].trim().replace("{","").replace("}","")];
+			} else {
+				selectQuery.outFields = [];
 			}
+
+	        for (var ii=0, il=window.hashPopup[eaID].fieldInfos.length; ii<il; ii++) {
+	        	if ((window.hashPopup[eaID].fieldInfos[ii].visible == true)||(window.hashPopup[eaID].fieldInfos[ii].visible == "true")) { 
+	        		selectQuery.outFields.push(window.hashPopup[eaID].fieldInfos[ii].fieldName);		        
+		        }	
+	        }
 
 	        queryTask.execute(selectQuery, function (features) {
 	        	if (window.hashPopup[eaID] != undefined) {
@@ -221,26 +218,20 @@ define([
 					        		strFirstLine = "<br><b>";
 					        	}
 					        	if ((window.hashPopup[eaID].fieldInfos[ii].visible == true)||window.hashPopup[eaID].fieldInfos[ii].visible == "true") { 
-									if (!(window.hashPopup[eaID].fieldInfos[ii].hasOwnProperty('stringFieldOption')) || (window.hashPopup[eaID].fieldInfos[ii].stringFieldOption != "textbox"))  {
-										if (window.hashPopup[eaID].fieldInfos[ii].hasOwnProperty('format')) {
-								        	if (window.hashPopup[eaID].fieldInfos[ii].format.hasOwnProperty('places')) {
-								        		numDecimalDigit = window.hashPopup[eaID].fieldInfos[ii].format.places;
-								        	}
-								        }				
-								        				    
-									    content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + ":selfSimpleSearchFilter.formatValue}";	
-										indexLineNumber = indexLineNumber + 1;
-									} else {
-										if ((window.hashPopup[eaID].fieldInfos[ii].hasOwnProperty('format')) && (window.hashPopup[eaID].fieldInfos[ii].format.hasOwnProperty('dateFormat'))) {
-								        		strDateFormat = window.hashPopup[eaID].fieldInfos[ii].format.dateFormat;
-								        		var content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + ":selfSimpleSearchFilter.formatDateByFieldInfo}";	
-									     		indexLineNumber = indexLineNumber + 1;
-									     } 
-									     else {
-											var content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + "}";	
-											indexLineNumber = indexLineNumber + 1;
-										}
-									}				        		
+									if (window.hashPopup[eaID].fieldInfos[ii].hasOwnProperty('format'))  {
+							        	if (window.hashPopup[eaID].fieldInfos[ii].format.hasOwnProperty('dateFormat')) {
+							        		strDateFormat = window.hashPopup[eaID].fieldInfos[ii].format.dateFormat;
+							        		content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + ":selfSimpleSearchFilter.formatDateByFieldInfo}";	
+								     	}
+								     	else if (window.hashPopup[eaID].fieldInfos[ii].format.hasOwnProperty('places')) {
+								     		numDecimalDigit = window.hashPopup[eaID].fieldInfos[ii].format.places;
+								     		content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + ":selfSimpleSearchFilter.formatValue}";	
+								     	}
+								     } 
+								     else {
+										var content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + "}";	
+									}
+									indexLineNumber = indexLineNumber + 1;												        		
 				        		}
 			        		}	
 			        		var infoTitle = "";
@@ -1362,7 +1353,7 @@ define([
 	                    }
 	                    if(layer.hasOwnProperty('eaTopic')){
 	                    	eaTopic = layer.eaTopic.toString();
-	                    	//console.log("eaID:" + eaID + ", eaTopic: " + eaTopic);
+	                    	console.log("eaID:" + eaID + ", eaTopic: " + eaTopic);
 	                    	window.hashTopic[eaID]  = eaTopic;
 	                    }
 	                    else {
@@ -1577,6 +1568,7 @@ define([
 		  setClickEventForPopup();   	
      },
      formatValue : function (value, key, data){
+
      	pow10 = Math.pow(10, numDecimalDigit);
      	return parseFloat(Math.round(value * pow10) / pow10).toFixed(numDecimalDigit);
      },
