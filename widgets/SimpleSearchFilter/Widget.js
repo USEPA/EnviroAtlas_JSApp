@@ -227,9 +227,10 @@ define([
 								     		numDecimalDigit = window.hashPopup[eaID].fieldInfos[ii].format.places;
 								     		content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + ":selfSimpleSearchFilter.formatValue}";	
 								     	}
-								     } 
-								     else {
-										var content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + "}";	
+								     }  else if (window.hashPopup[eaID].fieldInfos[ii].fieldName.indexOf("_URL")>=0) {
+								     	content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + ":selfSimpleSearchFilter.formatURL}";	
+								     }  else {
+										content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + "}";	
 									}
 									indexLineNumber = indexLineNumber + 1;												        		
 				        		}
@@ -1572,6 +1573,10 @@ define([
      	pow10 = Math.pow(10, numDecimalDigit);
      	return parseFloat(Math.round(value * pow10) / pow10).toFixed(numDecimalDigit);
      },
+     formatURL : function (value, key, data){
+     	var resultURL = "<a href=\"" + value + "\" target=\"_blank\">" + "<div>"+ value + "</div>" +"</a>";
+     	return resultURL;
+     },     
 	  formatDateByFieldInfo : function(d, fieldInfo) {
 	    var fd = null;
 	    try {
