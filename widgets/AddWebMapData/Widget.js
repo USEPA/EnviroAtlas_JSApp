@@ -46,6 +46,7 @@ define(['dojo/_base/declare',
         'jimu/dijit/Message',
         'jimu/dijit/Search',
         'jimu/dijit/TabContainer3',
+        'jimu/WidgetManager',
         './ItemTable'
        ],
     function (declare,
@@ -78,6 +79,7 @@ define(['dojo/_base/declare',
         Message,
         Search,
         TabContainer3,
+        WidgetManager,
         ItemTable) {
         //To create a widget, you need to derive from BaseWidget.
         var showLayerListWidget = function(){
@@ -374,8 +376,46 @@ define(['dojo/_base/declare',
             },
 
 
-            // when a web map is selected make it active, but keep the extent
+            // Ask for the user's confirmation before purging all layers from the layer list widget
             _onItemSelected: function (item) {
+            	this.promptUserforConfirmation(item);
+            },
+
+            /**
+             * prompt the user to zoom to the item
+             * @param {Object} item web map item from Portal
+             */
+            promptUserforConfirmation: function (item) {
+                var dlg = new Message({
+                    message: "This will replace all layers currently added to the map. If you wish to save your current layer selection, please use the save session widget first.",
+                    type: 'question',
+                    buttons: [{
+                        label: "Cancel and save session",
+                        onClick: lang.hitch(this, function () {
+                            //console.log('ChangeWebMap :: promptUserToZoomToItem :: keep current extent');
+                            dlg.close();
+                            //Show Save Session Widget
+                            var widgetName = 'SaveSession';
+                            var pm = PanelManager.getInstance();
+                            var widgets = pm.widgetManager.appConfig.getConfigElementsByName(widgetName);
+                            pm.showPanel(widgets[0]);
+                        })
+                    }, {
+                        label: "Proceed",
+                        onClick: lang.hitch(this, function () {
+                            dlg.close();
+                            //console.log('ChangeWebMap :: promptUserToZoomToItem :: zooming to new extent');
+                            var layerListWidget = WidgetManager.getInstance().getWidgetById("widgets_LayerList_Widget_17");
+                            if (layerListWidget) {
+                                layerListWidget._onRemoveLayersClick();
+                            } 
+                            this._onConfirmation(item);
+                        })
+                    }]
+                });
+            },
+            
+            _onConfirmation: function (item) {
             	//this.promptUserToZoomToItem(item);
                 var self = this;
             	this.zoomToItem(item);
