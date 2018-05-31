@@ -115,6 +115,7 @@ define({
     clearRelates: "Clear Relates",
     _featureAction_eShowStatistics: "Statistics...",
     _featureAction_eExportToCSV: "Export to CSV file",
+    _featureAction_eExportToSHP: "Export to shapefile",
     _featureAction_eShowRelate: "Show Relates"
   }),
   "ar": 0,

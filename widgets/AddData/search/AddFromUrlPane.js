@@ -165,7 +165,9 @@ define(["dojo/_base/declare",
               if (!(url in window.faildedOutsideLayerDictionary)){
 			  	  window.faildedOutsideLayerDictionary[url] = url;
 			  }	
-			  document.getElementById('openFailedLayer').click();                                              
+			  selfAddData.publishData({
+	        	message: "openFailedLayer"
+	    	  });                                             
             }
           }
         });

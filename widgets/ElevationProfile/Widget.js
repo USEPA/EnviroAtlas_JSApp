@@ -248,7 +248,9 @@ define([
           this._displayChartLocation(-1);
         }
         window.toggleOnElevation = false;
-        document.getElementById('butMapClickForPopup').click();
+	    this.publishData({
+			message : "mapClickForPopup"
+		});        
       },
 
       onOpen: function () {
@@ -295,12 +297,16 @@ define([
           	    document.getElementById('searchPointToggle').click();
             } 
           	window.toggleOnElevation = true;
-          	document.getElementById('butMapClickForPopup').click();
+		    this.publishData({
+				message : "mapClickForPopup"
+			});           	
             this.map.setInfoWindowOnClick(false);
             this.disableWebMapPopup();
           } else {
           	window.toggleOnElevation = false;
-          	document.getElementById('butMapClickForPopup').click();
+		    this.publishData({
+				message : "mapClickForPopup"
+			});           	
             this.map.setInfoWindowOnClick(true);
             this.enableWebMapPopup();
           }

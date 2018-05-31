@@ -581,20 +581,25 @@ define([
                                 }
                                 window.hashIDtoTileURL[layer.eaID.toString()] = tileLinkAdjusted;
                                 window.hashIDtoCacheLevelNat[layer.eaID.toString()] = layer.cacheLevelNat;
-                                switch(layer.cacheLevelNat) {
-                                	case 12:
-                                		//jimuUtils.initTileLayer12(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString()); //initTileLayer12 is for level 12 and temporarily commented out
-                                		//map.addLayer(new myTiledMapServiceLayer12());
-                                		jimuUtils.initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString());  //initTileLayer is for level 8, but in short term used here	
-                                		map.addLayer(new myTiledMapServiceLayer());
-                                		break;
-    								default:
-                                		jimuUtils.initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString()); 
-                                		map.addLayer(new myTiledMapServiceLayer());    								
-                                }
-                                lyrTiled = map.getLayer(window.layerIdTiledPrefix + layer.eaID.toString()); 
-                                if (lyrTiled) {
-                                    lyrTiled.setOpacity(layer.opacity);
+                                if (tileLinkAdjusted.slice(-11)=="_alllayers/"){
+                                    switch(layer.cacheLevelNat) {
+                                        case 12:
+                                            //jimuUtils.initTileLayer12(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString()); //initTileLayer12 is for level 12 and temporarily commented out
+                                            //map.addLayer(new myTiledMapServiceLayer12());
+                                            jimuUtils.initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString());  //initTileLayer is for level 8, but in short term used here	
+                                            map.addLayer(new myTiledMapServiceLayer());
+                                            break;
+                                        default:
+                                            jimuUtils.initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString()); 
+                                            map.addLayer(new myTiledMapServiceLayer());    								
+                                    }
+                                    lyrTiled = map.getLayer(window.layerIdTiledPrefix + layer.eaID.toString()); 
+                                    if (lyrTiled) {
+                                        lyrTiled.setOpacity(layer.opacity);
+                                    }
+                                } else {
+                                    lOptions.id = window.layerIdTiledPrefix + layer.eaID.toString();
+                                    this._viewerMap.addLayer(new ArcGISTiledMapServiceLayer(layer.tileURL, lOptions));
                                 }
                             }  else if (layer.eaScale == "COMMUNITY") {
 								loadSymbologyPBSConfig(function(response) {
@@ -688,8 +693,9 @@ define([
 
                 window.communitySelected = currentCommunity;
 
-                document.getElementById('butUpdateCommunityLayers').click();
-
+			    selfPBS.publishData({
+					message : "updateCommunityLayers"
+				}); 
                 var nExtent;
                 if (window.communitySelected != window.strAllCommunity) {
                     commnunityWholeName = window.communityDic[window.communitySelected];

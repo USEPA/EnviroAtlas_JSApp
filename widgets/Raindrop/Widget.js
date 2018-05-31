@@ -26,7 +26,6 @@ define(['dojo/_base/declare',
 function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, SimpleLineSymbol, SimpleMarkerSymbol, Color, Polyline, Extent, TabContainer, HorizontalSlider, ColorPicker, Color, ColorPalette, TooltipDialog, DropDownButton, popup, dom, domClass, domAttr) {
 
   var curMap;
-  var RaindropTool;
   var onMapClick;
   var snapD = 5;  //Snap Distances
   var maxD = 5;   //Max Distance
@@ -143,7 +142,9 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
         //toggle map onclick event
         if(typeof onMapClick != 'undefined'){
 		  window.toggleOnRainDrop = false;
-		  document.getElementById('butMapClickForPopup').click();
+		  RaindropTool.publishData({
+				message : "mapClickForPopup"
+		  });  
           dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#485566'});
           dojo.byId('selectPoint').innerHTML = 'Activate Tool';
 
@@ -165,7 +166,9 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
           }          
 
        	  window.toggleOnRainDrop = true;
-       	  document.getElementById('butMapClickForPopup').click();
+		  RaindropTool.publishData({
+				message : "mapClickForPopup"
+		  });        	  
           //dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#596d87'});
           dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#93A2B7'});
           //add map click event
@@ -320,8 +323,9 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
       }
 
       window.toggleOnRainDrop = false;
-      document.getElementById('butMapClickForPopup').click();
-
+	  RaindropTool.publishData({
+			message : "mapClickForPopup"
+	  }); 
       // console.log('onClose');
     },
 

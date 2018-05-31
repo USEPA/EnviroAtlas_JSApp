@@ -26,6 +26,11 @@ define([
      'esri/geometry/Extent',
 	 'esri/symbols/SimpleLineSymbol',
 	 'esri/symbols/SimpleFillSymbol',
+	 'esri/symbols/SimpleMarkerSymbol',
+	 'jimu/shared/utils',
+	 'jimu/utils',
+	 'esri/lang',
+	 'esri/dijit/PopupTemplate',
 	 'esri/renderers/SimpleRenderer',
 	 'esri/tasks/QueryTask',
      'esri/tasks/query',
@@ -57,6 +62,11 @@ define([
     Extent,
     SimpleLineSymbol,
     SimpleFillSymbol,
+    SimpleMarkerSymbol,
+    sharedUtils,
+    utils,
+    esriLang,
+    PopupTemplate,
     SimpleRenderer,
     QueryTask,
     query,
@@ -104,6 +114,7 @@ define([
 	    var featuresCollection = [];
 	    var arrLayersForPopup = [];
 	    var numDecimalDigit = 0;
+	    var strDateFormat = '';
 	    var addSingleFeatureForPopup = function(eaID, clickEvt) {
 	    	selfSimpleSearchFilter.map.infoWindow.resize(260, 150 );
         	/*if (window.widthOfInfoWindow > 0 ) {
@@ -112,51 +123,133 @@ define([
 			var selectQuery = new query();
 	        selectQuery.geometry = clickEvt.mapPoint;
 	        selectQuery.returnGeometry = true;
-	        selectQuery.spatialRelationship = query.SPATIAL_REL_INTERSECTS;            
+	        selectQuery.spatialRelationship = query.SPATIAL_REL_INTERSECTS;  
+	        if (window.hashPopup[eaID].hasOwnProperty('geometrytype')) {
+	        	if (window.hashPopup[eaID].geometrytype == "point") {
+	        		selectQuery.distance = 180;
+	        	}
+	        }
+	                   
 	        var queryTask = new QueryTask(window.hashURL[eaID]);
 	        popupField = window.hashPopup[eaID].fieldInfos[0]["fieldName"];
-	        popupFieldName = window.hashPopup[eaID].fieldInfos[0]["label"];
 	        var bIsTextFormat = false;
 	        if (window.hashPopup[eaID].fieldInfos[0].hasOwnProperty('stringFieldOption')) {	        	
 	        	if (window.hashPopup[eaID].fieldInfos[0].stringFieldOption == "textbox") {
 	        		bIsTextFormat = true;
 	        	}
 	        }
-	        popupTitle = window.hashPopup[eaID].title.split(":");
+	        
 	        if (window.hashPopup[eaID].fieldInfos[0].hasOwnProperty('format')) {
 	        	if (window.hashPopup[eaID].fieldInfos[0].format.hasOwnProperty('places')) {
 	        		numDecimalDigit = window.hashPopup[eaID].fieldInfos[0].format.places;
 	        	}
 	        }
-	        selectQuery.outFields = ["*"];
-	        selectQuery.outFields = [popupField, popupTitle[1].trim().replace("{","").replace("}","")];
+	        
+			if (window.hashPopup[eaID].hasOwnProperty('title')) {
+				var popupField = window.hashPopup[eaID].fieldInfos[0]["fieldName"];
+				var popupTitle = window.hashPopup[eaID].title.split(":");
+
+				selectQuery.outFields = [popupTitle[1].trim().replace("{","").replace("}","")];
+			} else {
+				selectQuery.outFields = [];
+			}
+
+	        for (var ii=0, il=window.hashPopup[eaID].fieldInfos.length; ii<il; ii++) {
+	        	if ((window.hashPopup[eaID].fieldInfos[ii].visible == true)||(window.hashPopup[eaID].fieldInfos[ii].visible == "true")) { 
+	        		selectQuery.outFields.push(window.hashPopup[eaID].fieldInfos[ii].fieldName);		        
+		        }	
+	        }
+
 	        queryTask.execute(selectQuery, function (features) {
 	        	if (window.hashPopup[eaID] != undefined) {
 					//Performance enhancer - assign featureSet array to a single variable.
-					var resultFeatures = features.features;
-					var symbol = new SimpleFillSymbol(
-	                  SimpleFillSymbol.STYLE_NULL, 
-	                  new SimpleLineSymbol(
-	                    SimpleLineSymbol.STYLE_SOLID, 
-	                    new Color([0, 0, 200, 255]), 
-	                    1
-	                  ),
-	                  new Color([215, 215, 215,255])
-	                );
-					//Loop through each feature returned
-					for (var i=0, il=resultFeatures.length; i<il; i++) {
-						if (bIsTextFormat == false) {
-						var content = "<b>" + popupTitle[0] + "</b>: $" + popupTitle[1].trim() + "<hr>"+"<b>" + popupFieldName + "</b>: ${" + popupField + ":selfSimpleSearchFilter.formatValue}";	
-						} else {
-							var content = "<b>" + popupTitle[0] + "</b>: $" + popupTitle[1].trim() + "<hr>"+"<b>" + popupFieldName + "</b>: ${" + popupField + "}";	
-						}
-						var infoTemplate = new esri.InfoTemplate(popupFieldName, content);
-					    var graphic = resultFeatures[i];
-					    graphic.setSymbol(symbol);
-					    graphic.setInfoTemplate(infoTemplate);
-					    featuresCollection.push(graphic);
-					    selfSimpleSearchFilter.map.graphics.add(graphic);
-					}
+					
+					if (features.features.length >=1){
+						var resultFeatures = features.features;
+						if (resultFeatures[0].geometry.type == "polygon") {
+							var symbol = new SimpleFillSymbol(
+			                  SimpleFillSymbol.STYLE_NULL, 
+			                  new SimpleLineSymbol(
+			                    SimpleLineSymbol.STYLE_SOLID, 
+			                    new Color([0, 0, 200, 255]), 
+			                    1
+			                  ),
+			                  new Color([215, 215, 215,255])
+			                );
+		               }
+					   /*if (resultFeatures[0].geometry.type == "polyline") {
+							var symbol = new SimpleFillSymbol(
+			                  SimpleFillSymbol.STYLE_NULL, 
+			                  new SimpleLineSymbol(
+			                    SimpleLineSymbol.STYLE_SOLID, 
+			                    new Color([0, 0, 200, 255]), 
+			                    1
+			                  ),
+			                  new Color([215, 215, 215,255])
+			                );
+		               }	*/	       
+					   if (resultFeatures[0].geometry.type == "point") {
+							var symbol = new SimpleMarkerSymbol(
+			                  SimpleMarkerSymbol.STYLE_NULL, 
+			                  new SimpleMarkerSymbol(
+			                    SimpleMarkerSymbol.STYLE_SOLID, 
+			                    new Color([0, 0, 200, 255]), 
+			                    1
+			                  ),
+			                  new Color([215, 215, 215,255])
+			                );
+		               }	
+						//Loop through each feature returned
+						for (var i=0, il=resultFeatures.length; i<il; i++) {
+							var popupTitle;
+							var content;
+							if (window.hashPopup[eaID].hasOwnProperty('title')) {
+									popupTitle = window.hashPopup[eaID].title.split(":");
+									content = "<b>" + popupTitle[0] + "</b>: $" + popupTitle[1].trim() + "<hr>";
+							}else {
+								content = "";
+							}
+							var indexLineNumber = 0;
+					        for (var ii=0, i2=window.hashPopup[eaID].fieldInfos.length; ii<i2; ii++) {
+					        	var strFirstLine = "";
+					        	if (indexLineNumber==0) {
+					        		strFirstLine = "<b>";
+					        	} else {
+					        		strFirstLine = "<br><b>";
+					        	}
+					        	if ((window.hashPopup[eaID].fieldInfos[ii].visible == true)||window.hashPopup[eaID].fieldInfos[ii].visible == "true") { 
+									if (window.hashPopup[eaID].fieldInfos[ii].hasOwnProperty('format'))  {
+							        	if (window.hashPopup[eaID].fieldInfos[ii].format.hasOwnProperty('dateFormat')) {
+							        		strDateFormat = window.hashPopup[eaID].fieldInfos[ii].format.dateFormat;
+							        		content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + ":selfSimpleSearchFilter.formatDateByFieldInfo}";	
+								     	}
+								     	else if (window.hashPopup[eaID].fieldInfos[ii].format.hasOwnProperty('places')) {
+								     		numDecimalDigit = window.hashPopup[eaID].fieldInfos[ii].format.places;
+								     		content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + ":selfSimpleSearchFilter.formatValue}";	
+								     	}
+								     }  else if (window.hashPopup[eaID].fieldInfos[ii].fieldName.indexOf("_URL")>=0) {
+								     	content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + ":selfSimpleSearchFilter.formatURL}";	
+								     }  else {
+										content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + "}";	
+									}
+									indexLineNumber = indexLineNumber + 1;												        		
+				        		}
+			        		}	
+			        		var infoTitle = "";
+			        		for (var key in window.hashTitleToEAID){
+							  if (window.hashTitleToEAID[key]==eaID) {
+							  	infoTitle = key;
+							  }
+							}					
+							var infoTemplate = new esri.InfoTemplate(infoTitle, content);
+						    var graphic = resultFeatures[i];
+						    graphic.setSymbol(symbol);
+						    graphic.setInfoTemplate(infoTemplate);
+						    featuresCollection.push(graphic);
+						    selfSimpleSearchFilter.map.graphics.add(graphic);
+						}		               	                        
+	               }
+
 					if 	(arrLayersForPopup.length > 0){
 	        			addSingleFeatureForPopup(arrLayersForPopup.pop(),clickEvt);
 	        		}
@@ -166,7 +259,7 @@ define([
 							selfSimpleSearchFilter.map.infoWindow.show(clickEvt.mapPoint);
 						}
 					}
-	            }
+	           } //end of if (window.hashPopup[eaID] != undefined)
 	        }); 	
 		};
 		var setClickEventForPopup = function(){    		
@@ -539,18 +632,13 @@ define([
 
 		var nSearchableColumns = document.getElementById('tableLyrNameDescrTag').getElementsByTagName('tr')[0].getElementsByTagName('th').length;
 		var eaIDFilteredList = [];
-		tdIndex = 0;
 		
 		$("#tableLyrNameDescrTag").dataTable().$('td',{"filter":"applied"}).each( function (value, index) {
+
 			var currentCellText = $(this).text();
-			
-			if (tdIndex == 0) {
+			if (!isNaN(currentCellText)){
 				eaIDFilteredList.push(currentCellText);
-			}
-			tdIndex = tdIndex + 1;
-			if (tdIndex == nSearchableColumns) {
-				tdIndex = 0;
-			}				
+			}			
 		}); 
 
 		var tableOfRelationship = document.getElementById("tableSelectableLayersArea");
@@ -566,7 +654,7 @@ define([
 
         var numOfSelectableLayers = 0;
         var totalNumOfLayers = 0;
-		var bAtLeastOneTopicSelected = true;//topicsBeingSelected();  
+
 		SelectedTopics = [];          
     	dojo.forEach(items, function(item) {
            	
@@ -627,7 +715,6 @@ define([
 					}
 					break;
 			}    			
-			
 
 			eachLayerCategoryList = eaCategory.split(";");
 			if (bSelectByScale) {
@@ -636,7 +723,8 @@ define([
 				}
 			}// end of if (bSelectByScale)
 
-			if ((currentLayerSelectable || (bAtLeastOneTopicSelected == false)) &&(eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
+			if (currentLayerSelectable && (eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
+		
 				var bLayerSelected = false;
 				if ((window.allLayerNumber.indexOf(eaID)) == -1) {                        	
                 	window.allLayerNumber.push(eaID);
@@ -647,7 +735,7 @@ define([
 			    		bLayerSelected = true;
 		          	}                   	
                 }
-
+	
                 numOfSelectableLayers++;
 				//Add Header for each Topic in list
 				if (SelectedTopics.indexOf(eaTopic) == -1) {
@@ -680,7 +768,6 @@ define([
 				//If not a subLayer create a new Row
 				
 				if (!IsSubLayer) {
-
 					var mainDiv = dojo.create('div', {
 						'class': 'layerDiv'
 						}, layerArea);
@@ -822,6 +909,7 @@ define([
 
 
 		    				chkboxId = window.chkSelectableLayer + SubLayerIds[i];
+
 		    				var checkbox = dojo.create('input', {
 			    				"type": "checkbox",
 								"name": chkboxId,
@@ -938,12 +1026,14 @@ define([
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
         baseClass: 'jimu-widget-simplesearchfilter',
 		onReceiveData: function(name, widgetId, data, historyData) {
-			if (name == 'SelectCommunity'){
-			   var stringArray = data.message.split(",");
-			   if (stringArray[0] != "u") {
-				 communitySelected = data.message;
-				 _updateSelectableLayer();
+			if (((name == 'AddData')||(name == 'AddWebMapData'))&&(data.message == "openFailedLayer")){
+				this._onOpenFailedLayerClick();
 			   } 	
+			if (((name == 'LocalLayer')||(name == 'PeopleAndBuildSpaces')||(name == 'SelectCommunity')||(name == 'AddWebMapData'))&&(data.message == "updateCommunityLayers")){
+				this._onUpdateCommunityLayers();
+			}	
+			if (((name == 'ElevationProfile')||(name == 'Raindrop'))&&(data.message == "mapClickForPopup")){
+				this._onMapClickForPopup();
 			}		  
 		},
 
@@ -1022,16 +1112,7 @@ define([
 		document.getElementById("hideIcons").onclick = function() {
 		    _updateSelectableLayer();
 		};					
-		/*document.getElementById("selectAllLayers").onclick = function() {
-			if (this.checked){
-				showLayerListWidget();
-		    	_onSelectAllLayers();
-			    document.getElementById('butAddAllLayers').click();
-		   } else {
-		   		_onUnselectAllLayers();
-		   		document.getElementById('butRemAllLayers').click();
-		   }
-		};*/
+
 		layersToBeAdded = "a";
 	    
 
@@ -1420,7 +1501,7 @@ define([
 				}
             }
         }); // end of loadNationalMetadataJSON(function(response)
-        document.getElementById('butMapClickForPopup').click();
+        this._onMapClickForPopup();
     },               
                     
 	    _onSingleLayerClick: function() {
@@ -1455,34 +1536,8 @@ define([
 	    });
 	    this.i ++;
     },
-    _onRemLayersClick: function() {
-        layersToBeAdded = "r";
-		for (var key in chkIdDictionary) {
-		  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
-            	layersToBeAdded = layersToBeAdded + "," + key.replace(window.chkSelectableLayer, "");
-		  }
-		}
-        this.publishData({
-	        message: layersToBeAdded
-	    });
-	    this.i ++;
-    },    
     onOpen: function(){
   
-    },	    
-    _onRemoveLayersClick: function() {
-        layersToBeRemoved = "r";
-		for (var key in chkIdDictionary) {
-		  if (chkIdDictionary.hasOwnProperty(key)) {
-		  	if (document.getElementById(key).checked) {
-            	layersToBeRemoved = layersToBeRemoved + "," + key.replace(window.chkSelectableLayer, "") ;
-        	}
-		  }
-		}
-        this.publishData({
-	        message: layersToBeRemoved
-	    });
-	    this.i ++;
     },
     _onOpenFailedLayerClick: function() {
 	        var widgetName = 'DisplayLayerAddFailure';
@@ -1494,9 +1549,7 @@ define([
 		    });
      },
      _onUpdateCommunityLayers: function() {
-     	this.publishData({
-            message: window.communitySelected 
-        });
+
      	arrLayersToChangeSynbology = [];
 	    var lyr;
     	for (i in window.communityLayerNumber) {
@@ -1516,10 +1569,37 @@ define([
 		  setClickEventForPopup();   	
      },
      formatValue : function (value, key, data){
+
      	pow10 = Math.pow(10, numDecimalDigit);
      	return parseFloat(Math.round(value * pow10) / pow10).toFixed(numDecimalDigit);
-     }
+     },
+     formatURL : function (value, key, data){
+     	var resultURL = "<a href=\"" + value + "\" target=\"_blank\">" + "<div>"+ value + "</div>" +"</a>";
+     	return resultURL;
+     },     
+	  formatDateByFieldInfo : function(d, fieldInfo) {
+	    var fd = null;
+	    try {
+	      var data = {
+	        date: d instanceof Date ? d.getTime() : d
+	      };
+	      //dateFormat = 'shortDateShortTime';
+	      dateFormat = strDateFormat;
+	
+	      var substOptions = {
+	        dateFormat: {
+	          properties: ['date'],
+	          formatter: 'DateFormat' + PopupTemplate.prototype._dateFormats[dateFormat]
+	        }
+	      };
+	      fd = esriLang.substitute(data, '${date}', substOptions);
+	    }catch (err) {
+	      console.error(err);
+	      fd = d;
+	    }
 
+    return fd;
+  }
     });
 
     return clazz;

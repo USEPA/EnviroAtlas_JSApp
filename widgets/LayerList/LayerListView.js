@@ -189,7 +189,6 @@ define([
         'class': 'col col15'
       }, layerTrNode);
 
-
       scaleObject = '';
       if (layerInfo.layerObject.eaScale) {
         scaleTitle = 'Community Dataset'
@@ -204,23 +203,11 @@ define([
         }, scaleLabel);
       }
 
-
-
-        
-
-      
-      
-
-
-
-
       var layerTitleText = layerInfo.title
       var layerTitleTdNode = domConstruct.create('div', {
         'class': 'col col2', 
       }, layerTrNode);
-
-      
-      
+     
       var grayedTitleClass = '';
       try {
       	var eaID = layerInfo.id.replace(window.layerIdPrefix, "").replace(window.layerIdPBSPrefix, "");
@@ -238,9 +225,7 @@ define([
           'class':layerTitleDivIdClass + ' div-content jimu-float-leading ' + grayedTitleClass
         }, layerTitleTdNode);
 
-
-
-      //domStyle.set(divLabel, 'width', 263 - level*13 + 'px');
+        //domStyle.set(divLabel, 'width', 263 - level*13 + 'px');
 
       layerTdNode = domConstruct.create('td', {
         'class': 'col col3'
@@ -370,18 +355,20 @@ define([
     },
 
     destroyLayerTrNode: function(layerInfo) {
-      var removedLayerNode = query("[class~='layer-tr-node-" + layerInfo.id + "']", this.domNode)[0];
-      var removedLayerContentNode = query("[layercontenttrnodeid='" + layerInfo.id + "']", this.domNode)[0];
-      if(removedLayerNode) {
-        var rootLayerInfo = layerInfo.getRootLayerInfo();
-        array.forEach(this._layerNodeHandles[rootLayerInfo.id], function(handle) {
-          handle.remove();
-        }, this);
-        delete this._layerNodeHandles[rootLayerInfo.id];
-        domConstruct.destroy(removedLayerNode);
-        if(removedLayerContentNode) {
-          domConstruct.destroy(removedLayerContentNode);
-        }
+      if (layerInfo) {
+          var removedLayerNode = query("[class~='layer-tr-node-" + layerInfo.id + "']", this.domNode)[0];
+          var removedLayerContentNode = query("[layercontenttrnodeid='" + layerInfo.id + "']", this.domNode)[0];
+          if(removedLayerNode) {
+            var rootLayerInfo = layerInfo.getRootLayerInfo();
+            array.forEach(this._layerNodeHandles[rootLayerInfo.id], function(handle) {
+              handle.remove();
+            }, this);
+            delete this._layerNodeHandles[rootLayerInfo.id];
+            domConstruct.destroy(removedLayerNode);
+            if(removedLayerContentNode) {
+              domConstruct.destroy(removedLayerContentNode);
+            }
+          }
       }
     },
 

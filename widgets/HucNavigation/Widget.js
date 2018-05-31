@@ -89,6 +89,8 @@ define([
 	'dojo/dom-construct',
 	'dojo/dom-class',
 	'dojo/topic',
+	'./JS2Shapefile',
+	'./jszip',
 	'jimu/dijit/CheckBox',
 	'dijit/form/DropDownButton',
 	'dijit/Menu',
@@ -127,7 +129,9 @@ function (
 	FeatureSet, 
 	domConstruct, 
 	domClass, 
-	topic
+	topic,
+	JS2Shapefile,
+	JSZip
 ) { /*jshint unused: true*/
 
 return declare([BaseWidget, _WidgetsInTemplateMixin], {
@@ -455,10 +459,14 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         }));
         return featureSet;
       },
-
+      _getGraphicsSet: function(){
+        var layer = this.currentSearchLayer;
+        return layer.graphics;
+      },
       _onBtnMenuClicked: function(evt){
         var position = html.position(evt.target || evt.srcElement);
         var featureSet = this._getFeatureSet();
+        var graphicsSet = this._getGraphicsSet();
 
         var layer = this.currentSearchLayer;
         if(!layer.fields){
@@ -547,7 +555,39 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
             exportCSVAction.data = featureSet;
             actions.push(exportCSVAction);
           }
-
+          if(layerConfig.export2Shp){
+            var exportSHPAction = new BaseFeatureAction({
+              name: "eExportToSHP",
+              iconClass: 'icon-export',
+              label: this.nls._featureAction_eExportToSHP,
+              iconFormat: 'svg',
+              map: this.map,
+              onExecute: lang.hitch(this, function(){
+	            var zip = new JSZip();	
+	            if (featureSet.features.length > 0) {
+	                var outputObject = window.JS2Shapefile.createShapeFiles(graphicsSet,'UTF8',featureSet.features[0].geometry.spatialReference.__proto__._info[featureSet.features[0].geometry.spatialReference.wkid].wkTemplate);
+	                for (var createdFile in outputObject) {
+	                    if (outputObject[createdFile]['successful']) {
+	                        for (var fileInShape in outputObject[createdFile]['shapefile']) {
+	                            zip.file(outputObject[createdFile]['shapefile'][fileInShape]['name'], outputObject[createdFile]['shapefile'][fileInShape]['blob']);
+	                        }
+	                    }
+	                }
+	                zip.generateAsync({ type: "arraybuffer" })
+	                    .then(function (arraybuffer) {
+	                    	  var mimeType = 'application/zip' || 'application/octet-stream';		
+				              var blob = new Blob([arraybuffer], {
+				                  'type': mimeType
+				              });
+							  saveAs(blob, "HucNavigationResult.zip");	                          
+	                    });
+	            }            	
+              })
+            });
+            exportSHPAction.name = "eExportToSHP";
+            exportSHPAction.data = featureSet;
+            actions.push(exportSHPAction);
+          }
           if(this.initiator && this.initiator === 'attribute' && this.config.exportsearchurlchecked){
             var exportUrlAction = new BaseFeatureAction({
               name: "exportSearchUrl",
@@ -2505,13 +2545,13 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         {
           this.initiator = 'graphic';
           
-          queryParams.geometry = geometry;
+          //queryParams.geometry = geometry; tlh
+          queryParams.geometry = geometry.getExtent().getCenter();
           //jab
           this.map_click_point = geometry.getExtent().getCenter();
           this.add_click_point_graphic(this.map_click_point);
           //jab-end
           queryParams.spatialRelationship = spatialRelationship || Query.SPATIAL_REL_INTERSECTS;
-          
           if (this.cbxAddTextQuery.getValue()) {
             var gwhere = this.buildWhereClause(layerIndex, this.expressIndex, theValue);
             queryParams.where = this.lastWhere = gwhere;
