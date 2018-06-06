@@ -141,6 +141,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 	resultLayers: [],
 	operationalLayers: [],
 	relateLayers:[],
+	HUC12_numberOnly:[],
 	graphicLayerIndex: 0,
 	AttributeLayerIndex: 0,
 	spatialLayerIndex: 0,
@@ -151,6 +152,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 	selTab: null,
 	garr: [],
 	pointSearchTolerance: 6,
+	numHUC8Tolerance: 5,
 	polygonsToDiscard: [],
 	autozoomtoresults: false,
 	layerautozoomtoresults: false,
@@ -446,7 +448,8 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
       },
 
       _getFeatureSet: function(){
-        var layer = this.currentSearchLayer;
+        //var layer = this.currentSearchLayer;
+        var layer = this.navHUC12Layer;
         var featureSet = new FeatureSet();
         featureSet.fields = lang.clone(layer.fields);
         featureSet.features = [].concat(layer.graphics);
@@ -460,7 +463,8 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         return featureSet;
       },
       _getGraphicsSet: function(){
-        var layer = this.currentSearchLayer;
+        //var layer = this.currentSearchLayer;
+        var layer = this.navHUC12Layer;
         return layer.graphics;
       },
       _onBtnMenuClicked: function(evt){
@@ -548,7 +552,9 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
               iconFormat: 'svg',
               map: this.map,
               onExecute: lang.hitch(this, function(){
-                CSVUtils.exportCSV(this.currentSearchLayer.name, this.currentCSVResults.data, this.currentCSVResults.columns);
+
+                CSVUtils.exportCSV(this.currentSearchLayer.name, HUC12_numberOnly, ["HUC12_num"]);
+                //CSVUtils.exportCSV(this.currentSearchLayer.name, this.currentCSVResults.data, this.currentCSVResults.columns);
               })
             });
             exportCSVAction.name = "eExportToCSV";
@@ -2552,6 +2558,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
           this.add_click_point_graphic(this.map_click_point);
           //jab-end
           queryParams.spatialRelationship = spatialRelationship || Query.SPATIAL_REL_INTERSECTS;
+          
           if (this.cbxAddTextQuery.getValue()) {
             var gwhere = this.buildWhereClause(layerIndex, this.expressIndex, theValue);
             queryParams.where = this.lastWhere = gwhere;
@@ -2733,6 +2740,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         this.currentCSVResults = null;
         this.initiator = null;
         this.lastWhere = null;
+        HUC12_numberOnly = [];
         this.oidArray = [];
         this.currentFeatures = [];
         this._hideInfoWindow();
@@ -3294,7 +3302,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 	//
 	upstreamNavigationSucceeded: function(data) 
 	{
-		
+		HUC12_numberOnly = [];
 		var that = this;
 		
 		huc_json = this.results_json.huc12;
@@ -3312,9 +3320,15 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 			huc12_ids_len = data.us_huc12_ids.value.length;
 			
 			// get a list of the HUC8s for HUC12s that were found - these will be shown on the map
+			
 			var huc8_ids = [];
+			HUC12_numberOnly.push({'HUC12_num': data.huc12.value});
+
 			array.forEach(data.us_huc12_ids.value, function(huc12_id)
 			{
+				if (huc12_id != data.huc12.value){
+					HUC12_numberOnly.push({'HUC12_num': huc12_id });
+				}
 				var huc8_id = huc12_id.substring(0, 8);
 				// don't add the HUC8 that contains the user clicked HUC12
 				if (huc8_id == data.huc8.value)
@@ -3331,13 +3345,13 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 			// now send off the HUC12 query again, this time with a list of all HUC8s just created
 			// there is a limit of how many huc12_ids can be included.  it might be line length of the query
 			// it seems that the magic number is 90
-			var huc12_ids = []
-			
+			var huc12_ids = [];			
 			
 			var show_all_huc12s = true;
 
 			// extra tests are to allow commenting out this UI element in the widget
-			if (dom.byId("showAllHUC12") != null && dom.byId("showAllHUC12").checked) 
+			//if (dom.byId("showAllHUC12") != null && dom.byId("showAllHUC12").checked) 
+			if (data.upstream_huc8_count_nu.value<this.numHUC8Tolerance) 
 			{
 				// huc12_ids =	this.closest_slice(data.us_huc12_ids.value, 90, data.huc12.value);
 				
@@ -4065,6 +4079,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 		else{
 			csvData = [];
 			this.currentCSVResults = null;
+			
 			// count of features selected
 			this.currentFeatures = results.features;
 		}
