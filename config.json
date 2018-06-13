@@ -467,9 +467,9 @@
             }, {
                 "uri": "widgets/TimeSlider/Widget",
                 "closeable": true,
-                "openAtStart": false,
+                "openAtStart": true,
                 "position": {
-                    "top": -40,
+                    "top": 40,
                     "left": 7,
                     "relativeTo": "map"
                 },
@@ -1096,9 +1096,9 @@
                 }, {
                     "uri": "widgets/TimeSlider/Widget",
                     "closeable": true,
-                    "openAtStart": false,
+                    "openAtStart": true,
                     "position": {
-                        "bottom": -40,
+                        "bottom": 40,
                         "left": 7,
                         "relativeTo": "map"
                     },
