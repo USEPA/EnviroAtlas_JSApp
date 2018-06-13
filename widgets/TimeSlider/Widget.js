@@ -157,11 +157,11 @@ define(['dojo/_base/declare',
         html.setStyle(this.noTimeContentNode, 'display', 'none');
 
         this.createTimeSlider().then(lang.hitch(this, function() {
-          if("undefined" === typeof this.timeSlider){
+          //if("undefined" === typeof this.timeSlider){
+          if(undefined === typeof this.timeSlider){
             this._showNoTimeLayer();
             return;
           }
-
           this.timeProcesser.setTimeSlider(this.timeSlider);
           this._updateTimeSliderUI();
 
@@ -173,7 +173,6 @@ define(['dojo/_base/declare',
           html.setStyle(this.timeContentNode, 'display', 'block');
           html.addClass(this.domNode, 'show-time-slider');
           this._initSpeedMenu();
-
           baseFx.animateProperty({
             node: this.timeContentNode,
             properties: {
@@ -183,10 +182,11 @@ define(['dojo/_base/declare',
               }
             },
             onEnd: lang.hitch(this, function() {
+
               this._showed = true;
               //auto play when open
               if (false === html.hasClass(this.playBtn, "pause")) {
-                on.emit(this.playBtn, 'click', { cancelable: false, bubbles: true });
+                on.emit(this.playBtn, 'click', { cancelable: false, bubbles: true });//TypeError: a is undefined
               }
               this._adaptResponsive();
             }),
@@ -241,7 +241,12 @@ define(['dojo/_base/declare',
               this.timeProcesser._getUpdatedFullTime().then(lang.hitch(this, function (fullTimeExtent) {
                 var start = fullTimeExtent.startTime.getTime();
                 var end = fullTimeExtent.endTime.getTime();
-
+                if (tsProps.startTime == undefined) {
+                	tsProps.startTime = start;
+                }
+                if (tsProps.endTime == undefined) {
+                	tsProps.endTime = end;
+                }
                 if (tsProps.startTime > end || tsProps.endTime < start) {
                   tsProps.startTime = start;
                   tsProps.endTime = end;
