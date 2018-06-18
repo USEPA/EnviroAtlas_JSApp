@@ -175,9 +175,9 @@ define([
         BC_Div.appendChild(scale_img);
 
         datatype_img = document.createElement('div');
-        datatype_img.style.width = '20px';
+        /*datatype_img.style.width = '20px';
         datatype_img.style.height = '20px';
-        datatype_img.style.float = 'left';
+        datatype_img.style.float = 'left';*/
         //datatype_img.style.marginLeft = '20px';
 
         if (type == 'huc12') {
@@ -192,7 +192,8 @@ define([
             datatype_img.title = "Point, line, or polygon data"
         }
 
-        datatype_img.setAttribute("class", type);
+        datatype_img.className = 'icon_style';
+        datatype_img.className += " " + type;
         BC_Div.appendChild(datatype_img);
 
 

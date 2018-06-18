@@ -199,7 +199,7 @@ define([
         scale = layerInfo.layerObject.eaScale
         scaleImage = domConstruct.create('div', {
           'title': scaleTitle,
-          'class': 'layerlist-scale-icon ' + scale
+          'class': 'icon_style ' + scale
         }, scaleLabel);
       }
 

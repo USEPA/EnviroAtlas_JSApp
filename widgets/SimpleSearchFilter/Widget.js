@@ -512,8 +512,8 @@ define([
 	        			dojo.removeClass(infographic_body);
 	        			dojo.addClass(infographic_body, 'bc_infographic ' + bc_id + '_infographic');
 
-	        			dojo.removeClass(header_icon);
-	        			dojo.addClass(header_icon, 'bc_popup_header_icon ' + bc_id);
+	        			/*dojo.removeClass(header_icon);
+	        			dojo.addClass(header_icon, 'bc_popup_header_icon ' + bc_id);*/
 
 	        			dojo.byId(header_text).innerHTML = this.title;
 	        		});
@@ -526,18 +526,18 @@ define([
     				'style': 'background-color: #f4f4f4; width: 100%'
     			}, bc_description.containerNode);
 
-    			var infographic_header = dojo.create('div', {
+    			/*var infographic_header = dojo.create('div', {
     			"style": 'height: 40px',
-    			}, bc_infographic);
+    			}, bc_infographic);*/
 
-    			var header_icon = dojo.create('div', {
+    			/*var header_icon = dojo.create('div', {
     				'class': 'bc_popup_header_icon ' + window.categoryDic[ES_title]
-    			}, infographic_header);
+    			}, infographic_header);*/
 
     			var header_text = dojo.create('div', {
     				'innerHTML': this.title,
     				'class': 'bc_popup_header_text',
-    			}, infographic_header);
+    			}, bc_infographic);
 
     			var infographic_text = dojo.create('div', {
     				'innerHTML': 'Ecosystem goods and services, often shortened to ecosystem \
@@ -939,7 +939,7 @@ define([
 		});	
 
 			dojo.byId("numOfLayers").value = " " + String(numOfSelectableLayers) + " of " + String(totalNumOfLayers) + " Maps";
-		//dojo.byId("selectAllLayers").checked = false;
+			//dojo.byId("selectAllLayers").checked = false;
 		for (var key in chkIdDictionary) {
 		
 	  		if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
