@@ -16,6 +16,7 @@
 define(["dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/array",
+    'dojo/_base/html',
     "dojo/on",
     "dojo/keys",
     "dojo/Deferred",
@@ -46,15 +47,16 @@ define(["dojo/_base/declare",
     "esri/layers/WMSLayer",
     "esri/layers/WMTSLayer",
     "esri/InfoTemplate",
+    "jimu/WidgetManager",
     "dijit/form/Select"
   ],
-  function(declare, lang, array, on, keys, Deferred, all, domClass, win, dom, domStyle, Viewport,
+  function(declare, lang, array, html, on, keys, Deferred, all, domClass, win, dom, domStyle, Viewport,
     _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, i18n,
     LayerLoader, util, ArcGISDynamicMapServiceLayer,
     ArcGISImageServiceLayer, ArcGISTiledMapServiceLayer, CSVLayer,
     FeatureLayer, GeoRSSLayer, ImageParameters, KMLLayer, StreamLayer,
     VectorTileLayer, WFSLayer, WMSLayer, WMTSLayer,
-    InfoTemplate) {
+    InfoTemplate, WidgetManager) {
 
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
@@ -239,6 +241,36 @@ define(["dojo/_base/declare",
         if (type === "ArcGIS") {
           if (lc.indexOf("/featureserver") > 0 || lc.indexOf("/mapserver") > 0) {
             loader._readRestInfo(url).then(function(info) {
+              if (info && (info.timeInfo!=undefined)) {//this is a time-aware layer       
+              	   hurricaneTracks = new esri.layers.FeatureLayer(url, {
+			          mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
+			          outFields: ["*"]
+			       });
+			       hurricaneTracks.id = window.timeSliderLayerId;
+			       hurricaneTracks.on('update-end', function(evt) {
+				       	  var wm = WidgetManager.getInstance();
+				          var widget = wm.getWidgetById('widgets_TimeSlider_Widget_32');
+					      if(!widget.started){
+					        try {
+					          widget.started = true;
+					          widget.startup();
+					        } catch (err) {
+					          console.error('fail to startup widget ' + widget.name + '. ' + err.stack);
+					        }
+					      }
+					      if (widget.state === 'closed') {
+					        html.setStyle(widget.domNode, 'display', '');
+					        widget.setState('opened');
+					        try {
+					          widget.onOpen();
+					        } catch (err) {
+					          console.error('fail to open widget ' + widget.name + '. ' + err.stack);
+					        }
+					      }		
+					});
+			       	map.addLayers([hurricaneTracks]);                
+              }
+              else {//else , this is not time-aware layer
               //console.warn("restInfo",info);
               if (info && typeof info.type === "string" && info.type === "Feature Layer") {
                 layer = new FeatureLayer(url, {
@@ -295,6 +327,7 @@ define(["dojo/_base/declare",
                   self._waitThenAdd(dfd, map, type, loader, layer);
                 }
               }
+	          }//end of else , this is not time-aware layer
             }).otherwise(function(error) {
               dfd.reject(error);
             });

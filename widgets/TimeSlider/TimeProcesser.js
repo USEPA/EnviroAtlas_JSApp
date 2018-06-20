@@ -190,7 +190,9 @@ define(['dojo/_base/declare',
           if (timeExtent.endTime.getTime() - timeExtent.startTime.getTime() > 0) {
             end = timeExtent.endTime;
           }
-        }
+
+        }					  	
+       
 
         if (this.config.timeFormat !== "auto" &&
           !("Custom" === this.config.timeFormat && "" === this.config.customDateFormat)) {
@@ -404,16 +406,27 @@ define(['dojo/_base/declare',
         } else {
           //2. props from map.itemInfo
           var layers = lang.getObject('itemData.operationalLayers', false, itemInfo);
-          if (layers) {
+
+          //if (layers) {
+          if (this.map.layerIds.length >0) {
             var ref = null;
-            for (var i = 0, len = layers.length; i < len; i++) {
+            /*for (var i = 0, len = layers.length; i < len; i++) {
               var layer = layers[i];
               var timeInfos = lang.getObject('resourceInfo.timeInfo', false, layer);
 
               if (timeInfos && timeInfos.timeExtent) {
                 ref = this.getPropsFromMultiLayerInfos(timeInfos, ref);
               }
-            }
+            }*/
+
+		    var layer = this.map.getLayer(window.timeSliderLayerId);
+		    
+		    if(layer != null){
+                var timeInfos = layer.timeInfo;
+                if (timeInfos && timeInfos.timeExtent) {
+                	ref = this.getPropsFromMultiLayerInfos(timeInfos, ref);
+          	    }			  	
+		    }			  
 
             if (null !== ref) {
               ref.startTime = ref.timeExtent[0];

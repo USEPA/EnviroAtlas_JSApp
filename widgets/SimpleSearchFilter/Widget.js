@@ -18,6 +18,7 @@ define([
     'dojo/_base/declare',
     'dijit/_WidgetsInTemplateMixin',
     "dojo/Deferred",
+    'dojo/_base/lang',
     'jimu/BaseWidget',
     'dijit/Dialog',
     'esri/symbols/jsonUtils',
@@ -54,6 +55,7 @@ define([
     declare,
     _WidgetsInTemplateMixin,
     Deferred,
+    lang,
     BaseWidget,
     Dialog,
     esriSymJsonUtils,
@@ -77,7 +79,11 @@ define([
     	var singleLayerToBeAddedRemoved = "";
     	var bNoTopicSelected = false;
     	var communitySelected = "";
+    	var bSimulatedClick = false;
+    	var bSimulatedClickAddressed = true;
+    	var mapClickListenerForPopup;
     	var arrLayersToChangeSynbology = [];
+    	var clickEvent = null;
         var   layerData = {
             identifier: "eaID",  //This field needs to have unique values
             label: "name", //Name field for display. Not pertinent to a grid but may be used elsewhere.
@@ -112,6 +118,8 @@ define([
 		var hashSubTopicforI = {};
 		//set popup info for each featuer layer
 	    var featuresCollection = [];
+	    var previuosMapInfoFromFL = [];
+	    var currentMapInfoFromFL = [];
 	    var arrLayersForPopup = [];
 	    var numDecimalDigit = 0;
 	    var strDateFormat = '';
@@ -246,6 +254,7 @@ define([
 						    graphic.setSymbol(symbol);
 						    graphic.setInfoTemplate(infoTemplate);
 						    featuresCollection.push(graphic);
+						    currentMapInfoFromFL.push(graphic);
 						    selfSimpleSearchFilter.map.graphics.add(graphic);
 						}		               	                        
 	               }
@@ -254,6 +263,19 @@ define([
 	        			addSingleFeatureForPopup(arrLayersForPopup.pop(),clickEvt);
 	        		}
 	        		else {
+						if (selfSimpleSearchFilter.map.infoWindow.features != null){
+							for (ii=0; ii < selfSimpleSearchFilter.map.infoWindow.features.length; ii++) {
+								var bFeatureNotExist = true;
+								for (kk=0; kk < previuosMapInfoFromFL.length; kk++) {
+									if (JSON.stringify(selfSimpleSearchFilter.map.infoWindow.features[ii].attributes) === JSON.stringify(previuosMapInfoFromFL[kk].attributes)) {
+										bFeatureNotExist = false;
+									}
+								}
+								if (bFeatureNotExist) {
+									featuresCollection.push(selfSimpleSearchFilter.map.infoWindow.features[ii]);
+								}
+							}
+						}
 	        			if 	(featuresCollection.length > 0){
 			    			selfSimpleSearchFilter.map.infoWindow.setFeatures(featuresCollection);
 							selfSimpleSearchFilter.map.infoWindow.show(clickEvt.mapPoint);
@@ -263,14 +285,25 @@ define([
 	        }); 	
 		};
 		var setClickEventForPopup = function(){    		
+				bSimulatedClickAddressed = false;
+				bSimulatedClick = false;
 	 			var mapClickListenerForPopup = connect.connect(selfSimpleSearchFilter.map, "onClick", function(evt) {
-				//mapClickListenerForPopup = selfSimpleSearchFilter.map.on("click", function(evt) {
+	 				    if (!bSimulatedClick) {
+	 				    	bSimulatedClickAddressed = false;
+	 				    	previuosMapInfoFromFL = [];	
+	 				    	for (kk=0; kk < currentMapInfoFromFL.length; kk++) {
+	 				    		previuosMapInfoFromFL.push(currentMapInfoFromFL[kk]);
+	 				    	}
+ 				    		featuresCollection = [];
+	 				    	currentMapInfoFromFL = [];	 	
+	 				    }
+						if (bSimulatedClick) {
+			 				if (!bSimulatedClickAddressed) {
 					if ((window.toggleOnHucNavigation == true) || (window.toggleOnRainDrop == true)|| (window.toggleOnElevation == true)) {					
 						connect.disconnect(mapClickListenerForPopup);
 					} 
 					else {
 						selfSimpleSearchFilter.map.graphics.clear();
-						featuresCollection = [];
 						arrLayersForPopup = [];
 			    		for (i in window.featureLyrNumber) {  
 			    			bVisibleFL = false;
@@ -303,6 +336,19 @@ define([
 				    	addSingleFeatureForPopup(arrLayersForPopup.pop(),evt);         
 			        	}       
 			        }
+								//end of addressed
+				 				bSimulatedClickAddressed= true;
+				 				bSimulatedClick = false;
+			 				}
+			 			}
+						setTimeout(lang.hitch(this, function() {
+				          if (!bSimulatedClick && !bSimulatedClickAddressed) {
+				          	bSimulatedClickAddressed = false;
+				          	bSimulatedClick = true;
+				          	selfSimpleSearchFilter.map.emit("click", { bubbles: false, cancelable: true, screenPoint: evt.mapPoint, mapPoint: evt.mapPoint });
+				          }
+				        }), 3000);
+				        //bSimulatedClick = false;
 				})
 		};
 		var updateSelectableLayersArea = function (){
@@ -1032,7 +1078,7 @@ define([
 			if (((name == 'LocalLayer')||(name == 'PeopleAndBuildSpaces')||(name == 'SelectCommunity')||(name == 'AddWebMapData'))&&(data.message == "updateCommunityLayers")){
 				this._onUpdateCommunityLayers();
 			}	
-			if (((name == 'ElevationProfile')||(name == 'Raindrop'))&&(data.message == "mapClickForPopup")){
+			if (((name == 'ElevationProfile')||(name == 'Raindrop')||(name == 'HucNavigation'))&&(data.message == "mapClickForPopup")){
 				this._onMapClickForPopup();
 			}		  
 		},

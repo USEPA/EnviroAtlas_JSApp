@@ -812,6 +812,10 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
       },
 
       onClose: function () {
+      	window.toggleOnHucNavigation = false;
+	    this.publishData({
+			message : "mapClickForPopup"
+		});         	
         this.drawBox.deactivate();
         this._hideInfoWindow();
         this.inherited(arguments);
@@ -826,6 +830,10 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
       },
 
       onOpen: function () {
+      	window.toggleOnHucNavigation = true;
+	    this.publishData({
+			message : "mapClickForPopup"
+		});   
         if (!this.config.bufferDefaults.addtolegend) {
           if (this.graphicsLayerBuffer) {
             this.graphicsLayerBuffer.show();
