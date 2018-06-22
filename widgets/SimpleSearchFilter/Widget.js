@@ -120,9 +120,22 @@ define([
 	    var featuresCollection = [];
 	    var previuosMapInfoFromFL = [];
 	    var currentMapInfoFromFL = [];
+	    var previousMapInfoFromDynamic = [];
+	    var currentMapInfoFromDynamic = [];
+	    var previuosMapInfoFromAll = [];
 	    var arrLayersForPopup = [];
 	    var numDecimalDigit = 0;
 	    var strDateFormat = '';
+	    var featureExistInCollection = function(feature, Collection) {
+			var bFeatureExist = false;
+			for (kk=0; kk < Collection.length; kk++) {
+				if (JSON.stringify(Collection[kk].attributes) === JSON.stringify(feature.attributes)) {
+					bFeatureExist = true;
+					break;
+				}
+			}
+			return bFeatureExist    	
+	    }
 	    var addSingleFeatureForPopup = function(eaID, clickEvt) {
 	    	selfSimpleSearchFilter.map.infoWindow.resize(260, 150 );
         	/*if (window.widthOfInfoWindow > 0 ) {
@@ -254,7 +267,9 @@ define([
 						    graphic.setSymbol(symbol);
 						    graphic.setInfoTemplate(infoTemplate);
 						    featuresCollection.push(graphic);
+						    if (!featureExistInCollection(graphic, currentMapInfoFromFL)) {
 						    currentMapInfoFromFL.push(graphic);
+						    }
 						    selfSimpleSearchFilter.map.graphics.add(graphic);
 						}		               	                        
 	               }
@@ -264,15 +279,26 @@ define([
 	        		}
 	        		else {
 						if (selfSimpleSearchFilter.map.infoWindow.features != null){
+							//test if current infoWindow resulted from  the previous click
+							var bInfoWindowUpdated = true;
+							if (selfSimpleSearchFilter.map.infoWindow.features.length == previuosMapInfoFromAll.length) {
+								bInfoWindowUpdated = false;
 							for (ii=0; ii < selfSimpleSearchFilter.map.infoWindow.features.length; ii++) {
-								var bFeatureNotExist = true;
-								for (kk=0; kk < previuosMapInfoFromFL.length; kk++) {
-									if (JSON.stringify(selfSimpleSearchFilter.map.infoWindow.features[ii].attributes) === JSON.stringify(previuosMapInfoFromFL[kk].attributes)) {
-										bFeatureNotExist = false;
+									if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], previuosMapInfoFromAll)) {
+										bInfoWindowUpdated = true;
+										break;
 									}
 								}
-								if (bFeatureNotExist) {
+							}
+							//end of test if current infoWindow resulted from  the previous click
+							if (bInfoWindowUpdated) {
+								if (selfSimpleSearchFilter.map.infoWindow.isShowing) {
+									for (ii=0; ii < selfSimpleSearchFilter.map.infoWindow.features.length; ii++) {
 									featuresCollection.push(selfSimpleSearchFilter.map.infoWindow.features[ii]);
+										if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], currentMapInfoFromDynamic)) {
+									    	currentMapInfoFromDynamic.push(selfSimpleSearchFilter.map.infoWindow.features[ii]);	
+									    }																			
+									}
 								}
 							}
 						}
@@ -291,11 +317,19 @@ define([
 	 				    if (!bSimulatedClick) {
 	 				    	bSimulatedClickAddressed = false;
 	 				    	previuosMapInfoFromFL = [];	
+	 				    	previousMapInfoFromDynamic = [];
+	 				    	previuosMapInfoFromAll = [];
 	 				    	for (kk=0; kk < currentMapInfoFromFL.length; kk++) {
 	 				    		previuosMapInfoFromFL.push(currentMapInfoFromFL[kk]);
+	 				    		previuosMapInfoFromAll.push(currentMapInfoFromFL[kk]);
 	 				    	}
+	 				    	for (kk=0; kk < currentMapInfoFromDynamic.length; kk++) {
+	 				    		previousMapInfoFromDynamic.push(currentMapInfoFromDynamic[kk]);
+	 				    		previuosMapInfoFromAll.push(currentMapInfoFromDynamic[kk]);
+	 				    	}	 				    	
  				    		featuresCollection = [];
 	 				    	currentMapInfoFromFL = [];	 	
+	 				    	currentMapInfoFromDynamic = [];
 	 				    }
 						if (bSimulatedClick) {
 			 				if (!bSimulatedClickAddressed) {
@@ -303,7 +337,17 @@ define([
 						connect.disconnect(mapClickListenerForPopup);
 					} 
 					else {
+									currentMapInfoFromDynamic = [];
 						selfSimpleSearchFilter.map.graphics.clear();
+									if (selfSimpleSearchFilter.map.infoWindow.features != null){
+										for (ii=0; ii < selfSimpleSearchFilter.map.infoWindow.features.length; ii++) {
+											if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], previuosMapInfoFromFL)) {
+												if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], currentMapInfoFromDynamic)) {
+													currentMapInfoFromDynamic.push(selfSimpleSearchFilter.map.infoWindow.features[ii]);
+												}
+											}									
+										}					
+									}	
 						arrLayersForPopup = [];
 			    		for (i in window.featureLyrNumber) {  
 			    			bVisibleFL = false;
@@ -347,8 +391,7 @@ define([
 				          	bSimulatedClick = true;
 				          	selfSimpleSearchFilter.map.emit("click", { bubbles: false, cancelable: true, screenPoint: evt.mapPoint, mapPoint: evt.mapPoint });
 				          }
-				        }), 3000);
-				        //bSimulatedClick = false;
+				        }), 1000);
 				})
 		};
 		var updateSelectableLayersArea = function (){
