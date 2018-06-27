@@ -242,12 +242,12 @@ define(["dojo/_base/declare",
           if (lc.indexOf("/featureserver") > 0 || lc.indexOf("/mapserver") > 0) {
             loader._readRestInfo(url).then(function(info) {
               if (info && (info.timeInfo!=undefined)) {//this is a time-aware layer       
-              	   hurricaneTracks = new esri.layers.FeatureLayer(url, {
+              	   timeAwareLayer = new esri.layers.FeatureLayer(url, {
 			          mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
 			          outFields: ["*"]
 			       });
-			       hurricaneTracks.id = window.timeSliderLayerId;
-			       hurricaneTracks.on('update-end', function(evt) {
+			       timeAwareLayer.id = window.timeSliderLayerId;
+			       timeAwareLayer.on('update-end', function(evt) {
 				       	  var wm = WidgetManager.getInstance();
 				          var widget = wm.getWidgetById('widgets_TimeSlider_Widget_32');
 					      if(!widget.started){
@@ -268,7 +268,7 @@ define(["dojo/_base/declare",
 					        }
 					      }		
 					});
-			       	map.addLayers([hurricaneTracks]);                
+			       	map.addLayers([timeAwareLayer]);                
               }
               else {//else , this is not time-aware layer
               //console.warn("restInfo",info);

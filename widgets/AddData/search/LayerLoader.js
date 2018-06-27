@@ -2,6 +2,7 @@ define(["dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/array",
     "dojo/promise/all",
+    'dojo/_base/html',
     "dojo/Deferred",
     "dojo/json",
     "dojo/i18n!../nls/strings",
@@ -26,13 +27,14 @@ define(["dojo/_base/declare",
     "esri/InfoTemplate",
     "esri/renderers/jsonUtils",
     "jimu/utils",
+    "jimu/WidgetManager",
     'jimu/PanelManager'
   ],
-  function(declare, lang, array, all, Deferred, djJson, i18n, util, esriLang, esriRequest, agsUtils,
+  function(declare, lang, array, all, html, Deferred, djJson, i18n, util, esriLang, esriRequest, agsUtils,
     ArcGISDynamicMapServiceLayer, ArcGISImageServiceLayer, ArcGISTiledMapServiceLayer,
     DynamicLayerInfo, FeatureLayer, ImageParameters, ImageServiceParameters, KMLLayer,
     LayerDrawingOptions, MosaicRule, RasterFunction, VectorTileLayer, WMSLayer, PopupTemplate,
-    InfoTemplate, jsonRendererUtils, jimuUtils, PanelManager) {
+    InfoTemplate, jsonRendererUtils, jimuUtils, WidgetManager, PanelManager) {
 
     return declare(null, {
 
@@ -104,6 +106,7 @@ define(["dojo/_base/declare",
           if (result && typeof result.type === "string" && result.type === "Feature Layer") {
             // a single layer registered from a service /FeatureServer/1 or /MapServer/2
             var layer = new FeatureLayer(serviceUrl, {
+	              mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
               id: self._generateLayerId(),
               outFields: ["*"]
             });
@@ -118,6 +121,7 @@ define(["dojo/_base/declare",
               }
               if (bAdd) {
                 var layer = new FeatureLayer(serviceUrl + "/" + lyr.id, {
+	                  mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
                   id: self._generateLayerId(),
                   outFields: ["*"]
                 });
@@ -235,6 +239,31 @@ define(["dojo/_base/declare",
         //console.warn("map",this.map);
         var item = this.item;
         if (layer) {
+          if ((layer.timeInfo != null)) {
+			       layer.on('update-end', function(evt) {
+			       	//alert("update-end");
+			       	window.timeSliderLayerId = evt.target.id;
+				       	  var wm = WidgetManager.getInstance();
+				          var widget = wm.getWidgetById('widgets_TimeSlider_Widget_32');
+					      if(!widget.started){
+					        try {
+					          widget.started = true;
+					          widget.startup();
+					        } catch (err) {
+					          console.error('fail to startup widget ' + widget.name + '. ' + err.stack);
+					        }
+					      }
+					      if (widget.state === 'closed') {
+					        html.setStyle(widget.domNode, 'display', '');
+					        widget.setState('opened');
+					        try {
+					          widget.onOpen();
+					        } catch (err) {
+					          console.error('fail to open widget ' + widget.name + '. ' + err.stack);
+					        }
+					      }		
+					});
+		  }        	
           layer.xtnItemId = item.id;
           layer.xtnAddData = true;
           if (!layer.arcgisProps && item) {
