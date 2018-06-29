@@ -600,7 +600,7 @@ define([
                                     }
                                 } else {
                                     lOptions.id = window.layerIdTiledPrefix + layer.eaID.toString();
-                                    this._viewerMap.addLayer(new ArcGISTiledMapServiceLayer(layer.tileURL, lOptions));
+                                    map.addLayer(new ArcGISTiledMapServiceLayer(layer.tileURL, lOptions));
                                 }
                             }  else if (layer.eaScale == "COMMUNITY") {
 								loadSymbologyPBSConfig(function(response) {
