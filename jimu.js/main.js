@@ -63,6 +63,7 @@ define([
     window.addedLayerIdPrefix = "added_";
     window.topLayerID = "";
     window.timeSliderLayerId = "TimeSliderLayer";
+    window.timeSliderPause = false;
     window.addedLayerIndex = 0;
     window.uploadedFeatLayerIdPrefix = "uploaded_";
     window.timeSeriesLayerId = "ScenarioDataLayer";

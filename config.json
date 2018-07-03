@@ -377,6 +377,23 @@
                 "config": "widgets/Demo/config.json"
             }, {
                 "position": {
+                    "left": 595,
+                    "top": 5,
+                    "width": 370,
+                    "height": 270,
+                    "relativeTo": "map"
+                },
+                "placeholderIndex": 1,
+                "id": "widgets_TimeSlider_Widget_32",
+                "name": "TimeSlider",
+                "label": "Time Slider",
+                "version": "2.5",
+                "uri": "widgets/TimeSlider/Widget",
+                "closeable": true,
+                "openAtStart": true,                
+                "config": "widgets/Demo/config.json"
+            }, {
+                "position": {
                     "left": 0,
                     "top": -40,
                     "width": 370,
@@ -464,19 +481,6 @@
                 "name": "Splash",
                 "label": "Disclaimer",
                 "config": "configs/Splash/config_Disclaimer.json"
-            }, {
-                "uri": "widgets/TimeSlider/Widget",
-                "closeable": true,
-                "openAtStart": true,
-                "position": {
-                    "top": 40,
-                    "left": 7,
-                    "relativeTo": "map"
-                },
-                "version": "2.5",
-                "id": "widgets_TimeSlider_Widget_32",
-                "name": "TimeSlider",
-                "label": "Time Slider"
             }, {
                 "uri": "widgets/Swipe/Widget",
                 "closeable": true,
@@ -1004,6 +1008,23 @@
                     "version": "1.3",
                     "uri": "widgets/Demo/Widget",
                     "config": "widgets/Demo/config.json"
+                }, {
+                "position": {
+                    "right": 5,
+                    "top": 320,
+                    "width": 370,
+                    "height": 490,
+                    "relativeTo": "map"
+                },
+                "placeholderIndex": 1,
+                "id": "widgets_TimeSlider_Widget_32",
+                "name": "TimeSlider",
+                "label": "Time Slider",
+                "version": "2.5",
+                "uri": "widgets/TimeSlider/Widget",
+                "closeable": true,
+                "openAtStart": true,                
+                "config": "widgets/Demo/config.json"
                 }, {
                     "position": {
                         "left": 0,

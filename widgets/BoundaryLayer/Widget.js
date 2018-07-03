@@ -276,8 +276,8 @@ define([
 								}
 
 								lLayer.id = window.layerIdBndrPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, "");
-								lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
-
+								//lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
+								lLayer.setVisibility(true);
 								lLayer.on('update-end', function (evt) { //need to use event 'update-end', if use 'load', layer could not be added
 									document.getElementById("map_" + lLayer.id).style.zIndex = "1";
 								});

@@ -2181,7 +2181,8 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
                     });
                 this.loaded = true;
                 this.onLoad(this);
-                this.visible = false;
+                //this.visible = false;
+                this.visible = true;
                 this.id = tiledLayerId;
             },
             getTileUrl: function (level, row, col) {
@@ -2267,7 +2268,8 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
                     });
                 this.loaded = true;
                 this.onLoad(this);
-                this.visible = false;
+                //this.visible = false;
+                this.visible = true;
                 this.id = tiledLayerId;
             },
             getTileUrl: function (level, row, col) {

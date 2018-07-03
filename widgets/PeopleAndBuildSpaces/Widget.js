@@ -564,7 +564,8 @@ define([
                             }
 
                             lLayer.id = window.layerIdPBSPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, "");
-                            lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
+                            //lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
+                            lLayer.setVisibility(true); 
 							if (layer.hasOwnProperty('eaScale')) {
 									if (layer.eaScale == "COMMUNITY") {
 										window.communityLayerNumber.push(layer.eaID.toString());
@@ -663,10 +664,12 @@ define([
                         if (layer.hasOwnProperty('eaScale')) {
                             lLayer.eaScale = layer.eaScale;
                             if (layer.eaScale == "COMMUNITY") {
-                                lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
+                                //lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
+                                lLayer.setVisibility(true);
                                 addCommunityBoundaries();
                             } else { //National
-                                lLayer.setVisibility(false);
+                                //lLayer.setVisibility(false);
+                                lLayer.setVisibility(true);
                                 window.nationalLayerNumber.push(layer.eaID.toString());
                             }
                         }

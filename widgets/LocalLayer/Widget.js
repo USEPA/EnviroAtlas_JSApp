@@ -207,11 +207,12 @@ define([
 						lOptions.opacity = layer.opacity;
 						// 1.0 has no transparency; 0.0 is 100% transparent
 					}
-					if (layer.hasOwnProperty('visible') && !layer.visible) {
+					/*if (layer.hasOwnProperty('visible') && !layer.visible) {
 						lOptions.visible = false;
 					} else {
 						lOptions.visible = true;
-					}
+					}*/
+					lOptions.visible = true;
 					if (layer.name) {
 						lOptions.id = layer.name;
 					}
@@ -579,12 +580,14 @@ define([
 						if (layer.hasOwnProperty('eaScale')) {
 							lLayer.eaScale = layer.eaScale;
 							if (layer.eaScale == "COMMUNITY") {
-								lLayer.setVisibility(false);
+								//lLayer.setVisibility(false);
+								lLayer.setVisibility(true);
 								//turn off the layer when first added to map and let user to turn on
 								window.communityLayerNumber.push(layer.eaID.toString());
 								addCommunityBoundaries();
 							} else {//National
-								lLayer.setVisibility(false);
+								//lLayer.setVisibility(false);
+								lLayer.setVisibility(true);
 								window.nationalLayerNumber.push(layer.eaID.toString());
 							}
 						}

@@ -241,7 +241,6 @@ define(["dojo/_base/declare",
         if (layer) {
           if ((layer.timeInfo != null)) {
 			       layer.on('update-end', function(evt) {
-			       	//alert("update-end");
 			       	window.timeSliderLayerId = evt.target.id;
 				       	  var wm = WidgetManager.getInstance();
 				          var widget = wm.getWidgetById('widgets_TimeSlider_Widget_32');
@@ -253,6 +252,7 @@ define(["dojo/_base/declare",
 					          console.error('fail to startup widget ' + widget.name + '. ' + err.stack);
 					        }
 					      }
+					      if (!window.timeSliderPause){
 					      if (widget.state === 'closed') {
 					        html.setStyle(widget.domNode, 'display', '');
 					        widget.setState('opened');
@@ -260,6 +260,7 @@ define(["dojo/_base/declare",
 					          widget.onOpen();
 					        } catch (err) {
 					          console.error('fail to open widget ' + widget.name + '. ' + err.stack);
+						        }
 					        }
 					      }		
 					});

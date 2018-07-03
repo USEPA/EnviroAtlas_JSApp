@@ -355,8 +355,11 @@ define(['dojo/_base/declare',
             //toggle pause class
             if(html.hasClass(this.playBtn, "pause")){
               html.removeClass(this.playBtn, "pause");
+              window.timeSliderPause = true;
             } else {
               html.addClass(this.playBtn, "pause");
+              this.onOpen();
+              window.timeSliderPause = false;
               if(utils.isRunInMobile()){
                 html.addClass(this.domNode, 'mini-mode');
                 this._adaptResponsive();

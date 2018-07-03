@@ -258,6 +258,7 @@ define(["dojo/_base/declare",
 					          console.error('fail to startup widget ' + widget.name + '. ' + err.stack);
 					        }
 					      }
+					      if (!window.timeSliderPause){
 					      if (widget.state === 'closed') {
 					        html.setStyle(widget.domNode, 'display', '');
 					        widget.setState('opened');
@@ -265,6 +266,7 @@ define(["dojo/_base/declare",
 					          widget.onOpen();
 					        } catch (err) {
 					          console.error('fail to open widget ' + widget.name + '. ' + err.stack);
+						        }
 					        }
 					      }		
 					});
