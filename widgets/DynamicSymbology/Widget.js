@@ -122,6 +122,7 @@ define(['dojo/_base/declare',
         _sliderValueChange: null,
         _symbolPointForPolygon: null,
         _bPolygonAsPoint: null,
+        _bClassificationChanged: null,
         _bSizeUpByValuePolygonAsPoint: null,
         _origSymbol: null,
         featureLayerStatistics: null,
@@ -170,6 +171,7 @@ define(['dojo/_base/declare',
         //startup: function () {
         	_nBreaks = 0;
         	_bPolygonAsPoint = false;
+        	_bClassificationChanged = false;
             selfDynamicSymbology = this;
             _busy = busyIndicator.create("esri-colorinfoslider-container");
 
@@ -411,8 +413,12 @@ define(['dojo/_base/declare',
 		                dynamicSymbology.slider.on("change", function (sliderValueChange) {
 		                	_sliderValueChange = sliderValueChange;
 		                    //change classification dropdown to manual
+		                    if (_bClassificationChanged == true) {
+		                    	_bClassificationChanged = false;
+		                    } else {
 		                    dynamicSymbology.classSelect.set('value', 'manual');
 		                    dynamicSymbology.isSmartMapping = false;	
+		                    }
 		                });
 	                } //if (_ClassificationMethod!=undefined)
 
@@ -446,6 +452,7 @@ define(['dojo/_base/declare',
                
             	//On Classification method change
 	            onClickHandle = on(dynamicSymbology.classSelect, "change", function (c) {
+	            	_bClassificationChanged = true;
 	                    _ClassificationMethod = c;
 	                    if (c != "manual") {
 	                        dynamicSymbology.isSmartMapping = true;
@@ -969,7 +976,7 @@ define(['dojo/_base/declare',
                     }).then(function (statistics) {
                         console.log(statistics);
     					var resultInfos = [];
-						smartRenderer.classBreakInfos.forEach(function (info) {
+						smartRenderer.renderer.infos.forEach(function (info) {
 							if (info.maxValue>-100) {
 								if (info.minValue < -100) {
 									info.minValue = 0;
