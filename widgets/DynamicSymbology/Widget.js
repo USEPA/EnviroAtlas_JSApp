@@ -383,14 +383,15 @@ define(['dojo/_base/declare',
 		                        value: "natural-breaks"
 		                    }, {
 		                        label: "quantile",
-		                        value: "quantile",
-		                        selected: true
+		                        value: "quantile"
+		                        //selected: true
 		                    }, {
 		                        label: "standard-deviation",
 		                        value: "standard-deviation"
 		                    }, {
 		                        label: "manual",
-		                        value: "manual"
+		                        value: "manual",
+		                        selected: true
 		                    }
 		                ];
 		                //Set up Classification dropdown
@@ -462,6 +463,7 @@ define(['dojo/_base/declare',
 	            //On number of classes change
 	            dynamicSymbology.numberClasses.on("change", function (c) {
 	                _NumberOfClasses = c;
+	                _bClassificationChanged = true;
 	                dynamicSymbology.isSmartMapping = true;
 	            });
             } else {
