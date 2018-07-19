@@ -364,11 +364,12 @@ define([
                         if (layer.hasOwnProperty('opacity')) {
                             lOptions.opacity = layer.opacity; // 1.0 has no transparency; 0.0 is 100% transparent
                         }
-                        if (layer.hasOwnProperty('visible') && !layer.visible) {
+                        /*if (layer.hasOwnProperty('visible') && !layer.visible) {
                             lOptions.visible = false;
                         } else {
                             lOptions.visible = true;
-                        }
+                        }*/
+                        lOptions.visible = true;
                         if (layer.name) {
                             lOptions.id = layer.name;
                         }
