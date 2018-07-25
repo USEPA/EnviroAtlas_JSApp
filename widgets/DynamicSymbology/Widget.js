@@ -114,6 +114,7 @@ define(['dojo/_base/declare',
         _NumberOfClasses: null,
         _currentBaseMap: null,
         _scheme: null,
+        _bSchemeColorsChanage: null,
         _symbol: null,
         _style: null,
         _color: null,
@@ -146,6 +147,7 @@ define(['dojo/_base/declare',
         startup: function () {
             this.inherited(arguments);
             _scheme = null;
+            _bSchemeColorsChanage = false;
             minimumSymbolSize = 6;
 
             this.fetchDataByName('LayerList');
@@ -202,6 +204,9 @@ define(['dojo/_base/declare',
             symbolStyler = new SymbolStyler({
                     portal: "https://epa.maps.arcgis.com"
                 }, stylerNode); //this.symbolStyler
+            symbolStyler.on("click", function(evt){
+		 		selfDynamicSymbology._clickSymbolStyler(evt);
+			});			
             var okButton = new Button({
                     label: "OK",
                     onClick: selfDynamicSymbology._getStyle
@@ -709,17 +714,29 @@ define(['dojo/_base/declare',
             selfDynamicSymbology._getHistoAndStats(defaultRenderer, DataJsonStr);
         },
 
+        _clickSymbolStyler: function (evtSymbolStylerClick) {
+        	_bClassificationChanged = true;
+        	if (evtSymbolStylerClick.selectorTarget != undefined) {
+        		if (evtSymbolStylerClick.selectorTarget.tabIndex != undefined) {
+        			if (evtSymbolStylerClick.selectorTarget.tabIndex == 0) {
+        				_bSchemeColorsChanage = true;
+        				//_bClassificationChanged = true;
+        			}         			
+        		}        		
+        	}
+        },
         _getStyle: function () {
             newStyle = symbolStyler.getStyle();
-            if (newStyle.symbol.outline!=undefined) {
-            	newStyle.scheme.outline = newStyle.symbol.outline;
-            }
+            if (_bSchemeColorsChanage) {
             _scheme = newStyle.scheme;
+            }
+            _outline = newStyle.symbol.outline;
             _symbol = newStyle.symbol;
             _style = newStyle.symbol.style;
             _color = newStyle.symbol.color;
-            _outline = newStyle.symbol.outline;
+            
             _width = newStyle.symbol.width;
+            symbolStyler.storeColors();
             
 			var fType = geoenrichedFeatureLayer.geometryType;
 			if (fType == "esriGeometryPolygon") {
@@ -744,14 +761,18 @@ define(['dojo/_base/declare',
             return symbolColors;
         },
         _openSymbolStyler: function () {
-        	if ((_ClassificationMethod!=undefined) || (_nBreaks>0)) {
+        	_bSchemeColorsChanage = false;
         		var currRamp = selfDynamicSymbology._getColorsFromInfos(geoenrichedFeatureLayer.renderer.infos);
-        	}            
 
             var fType = geoenrichedFeatureLayer.geometryType;
             if (fType == "esriGeometryPolygon") {
 	    		if (!_bPolygonAsPoint) {
                 	var dSymbol = new SimpleFillSymbol();
+                	if (typeof _outline != 'undefined'){
+                		if (_outline != null) {
+                			dSymbol.outline = _outline;
+                		}
+                	}
                 }
                 else {
                 	
@@ -765,7 +786,7 @@ define(['dojo/_base/declare',
                     theme: "high-to-low"
                 });
                 symbolStyler.edit(dSymbol, {
-                    activeTab: "fill",
+                    //activeTab: "fill",
                     colorRamp: {
                         colors: currRamp,
                         numStops: _NumberOfClasses,
@@ -929,6 +950,13 @@ define(['dojo/_base/declare',
                 }                
 
 				if (!_bPolygonAsPoint) {
+					smartRenderer.renderer.infos.forEach(function (info) {
+						if (typeof _outline != 'undefined'){
+                			if (_outline != null) {
+								info.symbol.outline = _outline;
+							}
+						}
+		        	});			        	
 					geoenrichedFeatureLayer.setRenderer(smartRenderer.renderer);
 				}
 				else {
