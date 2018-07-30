@@ -111,6 +111,11 @@ define([
     window.categoryClassDriver = "Driver";
     window.categoryClassSpatialExplicit = "Spatially Explicit";
     
+	window.categoryTabDic = {};
+	window.categoryTabDic ["ESB"] = "ESB"; //Ecosystems and Biodiversity
+	window.categoryTabDic ["PBS"] = "PBS"; //People and Built Spaces
+	window.categoryTabDic ["BNF"] = "BNF"; //Boundaries and Natural Features (or Supplemental)
+	
     window.topicDic = {};
     window.topicDic["Carbon Storage"] = "CS";
     //window.topicDic["Climate and Weather"] = "CaW"; Removed/renamed in March 2017
