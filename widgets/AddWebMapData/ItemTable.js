@@ -40,7 +40,8 @@ define([
     'jimu/portalUtils',
     'jimu/portalUrlUtils',
     'jimu/dijit/LoadingIndicator',
-    'dijit/Dialog'
+    'dijit/Dialog',
+    "dijit/form/Button"
 ], function (declare,
     _WidgetBase,
     _TemplatedMixin,
@@ -58,7 +59,8 @@ define([
     portalUtils,
     portalUrlUtils,
     LoadingIndicator,
-    Dialog) {
+    Dialog,
+    Button) {
     /*jshint unused: false*/
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
         templateString: template,
@@ -345,18 +347,41 @@ define([
             itemName.title = itemName.innerHTML;
             itemSnippet.innerHTML = "<div><p>" + item.snippet + "</p></div>";
             itemSnippet.title = item.snippet;
-            itemDetails.innerHTML = this.nls.moreDetails;
+            itemDetails.innerHTML = "Add to map";//this.nls.moreDetails;
             //itemDetails.href = item.detailsPageUrl || "#";
             return itemDiv;
         },
 
-        showDetails: function(title,description){
+        showDetails: function(fcTable, item){
+            if (dijit.byId('addButton')){dijit.byId('addButton').destroy();}
+            if (dijit.byId('agolButton')){dijit.byId('agolButton').destroy();}
+            console.log(item);
+            var itemDetails = "";
+            itemDetails += "<div class='thumbnailDiv'><image alt='Item Thumbnail' style='border:1px solid black' src='"+ item.thumbnailUrl +"'></div>";
+            itemDetails += "<h1>" + item.title + "</h1>";
+            itemDetails += "<div>by <a target='_blank' href='" + item.ownerPageUrl + "'>" + item.owner + "</a></div>"; 
+            var d = new Date(item.modified);            
+            itemDetails += "<div>Last Updated: "+ d.toDateString() + "</div><hr/>";
+            itemDetails += "<div>" + item.snippet + "</div>";
+            itemDetails += "<h2>Description:</h2>";
+            itemDetails += "<div>" + item.description + "</div>";
+            itemDetails += "<footer><button id='addButton' type='button' data-dojo-type='dijit/form/Button'>Add to map</button><button id='agolButton' type='button' data-dojo-type='dijit/form/Button'>View in GeoPlatform</button></footer>";
             var mapDescription = new Dialog({
-                title: title,
-                style: "width: 400px",    
+                //title: item.title,
+                style: "width: 500px",    
             });
             mapDescription.show();
-            mapDescription.set("content", description);
+            mapDescription.set("content", itemDetails);
+            dijit.byId('addButton').label = "Add to map",
+            dijit.byId('addButton').onClick = function(){
+                // fire item selected event
+                fcTable.emit('item-selected', item);
+                mapDescription.destroyRecursive();
+            };
+            dijit.byId('agolButton').label = "View in GeoPlatform",
+            dijit.byId('agolButton').onClick = function(){
+                window.open(item.detailsPageUrl,'_blank');
+            };
         },
         
         /**
@@ -364,6 +389,7 @@ define([
          * unless it is the item details link
          * @param {Object} event [[Description]]
          */
+         //TLH: default functionality inverted - show details is default, and add to map substituted for smaller "show details" link
         _onItemsTableClicked: function (event) {
             var target = event.target || event.srcElement;
 
@@ -374,10 +400,10 @@ define([
                 return;
             }
             
-            if (html.hasClass(target, 'item-details')) {
+            if (!html.hasClass(target, 'item-details')) {
                 // do not select if user clicks hyperlink
                 //console.log("ItemTable :: _onItemsTableClicked :: item details clicked");
-                this.showDetails(itemDiv.item.title,itemDiv.item.description);
+                this.showDetails(this, itemDiv.item);
                 return;
             }
 
