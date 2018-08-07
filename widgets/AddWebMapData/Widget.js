@@ -378,7 +378,12 @@ define(['dojo/_base/declare',
 
             // Ask for the user's confirmation before purging all layers from the layer list widget
             _onItemSelected: function (item) {
-            	this.promptUserforConfirmation(item);
+                //If there are more layers than just the default basemap
+                if (this.map.layerIds.length > 1){
+                    this.promptUserforConfirmation(item);
+                    return;
+                }
+                this._onConfirmation(item);
             },
 
             /**
