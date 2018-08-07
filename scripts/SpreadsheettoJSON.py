@@ -46,7 +46,7 @@ def main(_argv):
     mapTable = open(mapTablePath)
     mapTableReader = csv.DictReader(mapTable,delimiter=',')
     mapDictionary = dict([(row['jsonElem'], row['Column']) for row in mapTableReader])
-
+    
     # Create a dictionary of field titles to column letters
     fieldsToColumns = dict([(cell.value, cell.column) for cell in inputWorksheet[1]])
 
@@ -92,7 +92,7 @@ def main(_argv):
             except:
                 print("This layer had invalid JSON for the popup: " + name)
                 print(popupTxt)
-        stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL","numDecimal","IsSubLayer","SubLayerNames","SubLayerIds","sourceType","cacheLevelNat"]
+        stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL","numDecimal","IsSubLayer","SubLayerNames","SubLayerIds","sourceType","cacheLevelNat","categoryTab"]
         for elem in stringList:
             cell = inputWorksheet[key[elem]+rowID]
             if cell.value != None:
