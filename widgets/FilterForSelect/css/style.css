@@ -1,0 +1,79 @@
+#navlistSearchfilter {
+    position: relative;
+}
+#navlistSearchfilter li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+}
+
+#navlistSearchfilter li, #navlistSearchfilter a {
+    height: 20px;
+    width: 20px;
+    display: block;
+}
+
+#navlistSearchfilter2 {
+    position: relative;
+}
+#navlistSearchfilter2 li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+}
+#navlistSearchfilter2 li, #navlistSearchfilter2 a {
+    height: 18px;
+    width: 18px;
+    display: block;
+}
+.list p{
+    height:auto;
+    margin:0;
+}
+.question {
+	float: left;
+	height: auto;
+	width: 90%;
+	line-height: 15px;
+	padding-left: 20px;
+	margin-bottom: 5px;
+}
+
+.topicTable {
+  margin: 0px;
+  float: left; 
+  width: 50%; 
+  display:inline-block;
+}
+
+.claro .dijitContentPane{
+  padding: 0px;
+}
+
+.claro .dijitTitlePaneContentInner {
+  padding: 0px;
+  height: 0px;
+  background-color: #f4f4f4;
+  /*border: 2px solid #d4d8da;*/
+
+}
+.dijitReset .dijitTitlePaneContentInner{
+	height: 0px;
+}
+.claro .dijitTitlePaneContentOuter {
+  border: None;
+}
+
+.claro .dijitTitlePaneTitleOpen {
+  background-color: #7f9eb4;
+}
+
+.claro .dijitTitlePaneTitleHover {
+  background-color: #808A92;
+}
+
+.claro .dijitTitlePaneTitle {
+  background-color: #7f9eb4;
+}

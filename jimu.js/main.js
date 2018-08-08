@@ -80,6 +80,8 @@ define([
     window.idCommuBoundaryPoint = "Boundary_Point";
     window.timeSeriesDisclaim = false;
     
+    window.filterForSelectOpened = false;
+    window.filterForSelectFirstCreated = true;
     window.dataFactSheet = "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/";
     //window.matadata = "https://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7BBDF514A6-05A8-400D-BF3D-030645461334%7D";
 	window.matadata = "https://edg.epa.gov/metadata/catalog/search/resource/details.page";//?uuid=%7BBDF514A6-05A8-400D-BF3D-030645461334%7D";
@@ -116,38 +118,33 @@ define([
 	window.categoryTabDic ["PBS"] = "PBS"; //People and Built Spaces
 	window.categoryTabDic ["BNF"] = "BNF"; //Boundaries and Natural Features (or Supplemental)
 	
-    window.topicDic = {};
-    window.topicDic["Carbon Storage"] = "CS";
-    //window.topicDic["Climate and Weather"] = "CaW"; Removed/renamed in March 2017
-    window.topicDic["Crop Productivity"] = "CP";
-    window.topicDic["Ecosystem Markets"] = "EM";
-    //window.topicDic["Ecosystems and Ecoregions"] = "EaE"; Removed from topics may 2017- added to boundaries
-    window.topicDic["Energy Potential"] = "EP";
-    window.topicDic["Engagement with Outdoors"] = "EwO";
-    window.topicDic["Health and Economic Outcomes"] = "HaEO";
-    window.topicDic["Impaired Waters"] = "IW";
-    window.topicDic["Land Cover: Near-Water"] = "LCNW";
-    window.topicDic["Land Cover: Type"] = "LCT";
-    window.topicDic["Landscape Pattern"] = "LP";
-    window.topicDic["Near-Road Environments"] = "NRE";
-    //window.topicDic["Pollutant and Runoff Reduction"] = "PaRR"; Removed/renamed  in March 2017
+    window.topicDicESB = {};
+    window.topicDicESB["Carbon Storage"] = "CS";
+    window.topicDicESB["Crop Productivity"] = "CP";
+    window.topicDicESB["Ecosystem Markets"] = "EM";    
+    window.topicDicESB["Energy Potential"] = "EP";
+    window.topicDicESB["Engagement with Outdoors"] = "EwO";
+    window.topicDicESB["Health and Economic Outcomes"] = "HaEO";
+    window.topicDicESB["Impaired Waters"] = "IW";
+    window.topicDicESB["Land Cover: Near-Water"] = "LCNW";
+    window.topicDicESB["Land Cover: Type"] = "LCT";
+    window.topicDicESB["Landscape Pattern"] = "LP";
+    window.topicDicESB["Near-Road Environments"] = "NRE";    
     
-    window.topicDic["Pollutant Reduction: Air"] = "PRA"; //This is newly added Mar 2017    
-    window.topicDic["Pollutant Reduction: Water"] = "PRW"; //This is newly added Mar 2017 
+    window.topicDicESB["Pollutant Reduction: Air"] = "PRA"; //This is newly added Mar 2017    
+    window.topicDicESB["Pollutant Reduction: Water"] = "PRW"; //This is newly added Mar 2017      
      
-    window.topicDic["Pollutants: Nutrients"] = "PN"; 
-    window.topicDic["Pollutants: Other"] = "PO";
+    window.topicDicESB["Pollutants: Nutrients"] = "PN"; 
+    window.topicDicESB["Pollutants: Other"] = "PO";    
     
-    window.topicDic["Protected Lands"] = "PL";
-    window.topicDic["Species: At-Risk and Priority"] = "SARaP";
-    //window.topicDic["Species: Game"] = "SG"; Removed from topics may 2017 - appened to "SO" 
-    window.topicDic["Species: Other"] = "SO";
-    //window.topicDic["Water Supply and Hydrology"] = "WSaH"; Removed/renamed  in March 2017
-    window.topicDic["Water Supply, Runoff, and Flow"] = "WSRaF"; //This is newly added Mar 2017 
+    window.topicDicESB["Protected Lands"] = "PL";
+    window.topicDicESB["Species: At-Risk and Priority"] = "SARaP";
+    window.topicDicESB["Species: Other"] = "SO";
+    window.topicDicESB["Water Supply, Runoff, and Flow"] = "WSRaF"; //This is newly added Mar 2017     
     
-    window.topicDic["Water Use"] = "WU";
-    window.topicDic["Weather and Climate"] = "WaC"; //This is newly added Mar 2017 
-    window.topicDic["Wetlands and Lowlands"] = "WaL";
+    window.topicDicESB["Water Use"] = "WU";
+    window.topicDicESB["Weather and Climate"] = "WaC"; //This is newly added Mar 2017 
+    window.topicDicESB["Wetlands and Lowlands"] = "WaL";
     
     
 	window.topicDicPBS = {};
@@ -158,6 +155,10 @@ define([
     window.topicDicPBS["Commuting and Walkability"] = "CaW";
     window.topicDicPBS["Quality of Life"] = "QoL";
     window.topicDicPBS["EPA Regulated Facilities"] = "RF";
+    window.topicDicBNF = {};
+    window.topicDicPBS["Ecologic Boundaries"] = "EB";
+    window.topicDicPBS["Hydrologic Features"] = "HF";
+    window.topicDicPBS["Political Boundaries"] = "PB";
 
     
     window.strAllCommunity = "AllCommunity";	

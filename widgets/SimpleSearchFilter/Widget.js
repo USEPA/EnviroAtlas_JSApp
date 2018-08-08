@@ -100,7 +100,8 @@ define([
 		    this.eaMetadata = data.eaMetadata;
 		    this.eaScale = data.eaScale;
 		    this.eaTags = data.eaTags;
-		    this.eaTopic = data.eaTopic
+		    this.eaTopic = data.eaTopic;
+		    this.categoryTab = data.categoryTab;
 		}
 		var selectableLayerArray = [];
 		var dicTopicSelected = {};
@@ -136,6 +137,38 @@ define([
 			}
 			return bFeatureExist    	
 	    }
+	    var bSelectedByTopics = function(currentTopic, categoryTab) {
+	    	var topicDictionary = null;
+			switch (categoryTab) {
+				case "ESB":					
+					topicDictionary = window.topicDicESB;
+					break;
+				case "PBS":
+					topicDictionary = window.topicDicPBS;
+					break;
+				case "BNF":
+					topicDictionary = window.topicDicBNF;
+					break;					
+			} 
+			var numTopicSelected = 0;
+			var currentLayerSelectable = false;
+			for (var key in topicDictionary) {
+		        var chkboxId = window.chkTopicPrefix + topicDictionary[key];
+		        var checkbox = document.getElementById(chkboxId);	
+		        if (checkbox != null) {	
+			        if(checkbox.checked == true){
+				        dicTopicSelected[window.topicDicESB[key]]  = true;    	
+				        numTopicSelected = numTopicSelected + 1;
+			        } else {
+			        	dicTopicSelected[window.topicDicESB[key]]  = false; 
+			        }
+		        }
+			}
+			if ((dicTopicSelected[topicDictionary[currentTopic]] == true) || (numTopicSelected ==0)){
+				currentLayerSelectable = true;				
+			}			
+	    	return currentLayerSelectable;
+	    };
 	    var addSingleFeatureForPopup = function(eaID, clickEvt) {
 	    	selfSimpleSearchFilter.map.infoWindow.resize(260, 150 );
         	/*if (window.widthOfInfoWindow > 0 ) {
@@ -337,17 +370,17 @@ define([
 						connect.disconnect(mapClickListenerForPopup);
 					} 
 					else {
-									currentMapInfoFromDynamic = [];
+						currentMapInfoFromDynamic = [];
 						selfSimpleSearchFilter.map.graphics.clear();
-									if (selfSimpleSearchFilter.map.infoWindow.features != null){
-										for (ii=0; ii < selfSimpleSearchFilter.map.infoWindow.features.length; ii++) {
-											if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], previuosMapInfoFromFL)) {
-												if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], currentMapInfoFromDynamic)) {
-													currentMapInfoFromDynamic.push(selfSimpleSearchFilter.map.infoWindow.features[ii]);
-												}
-											}									
-										}					
-									}	
+						if (selfSimpleSearchFilter.map.infoWindow.features != null){
+							for (ii=0; ii < selfSimpleSearchFilter.map.infoWindow.features.length; ii++) {
+								if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], previuosMapInfoFromFL)) {
+									if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], currentMapInfoFromDynamic)) {
+										currentMapInfoFromDynamic.push(selfSimpleSearchFilter.map.infoWindow.features[ii]);
+									}
+								}									
+							}					
+						}	
 						arrLayersForPopup = [];
 			    		for (i in window.featureLyrNumber) {  
 			    			bVisibleFL = false;
@@ -467,10 +500,6 @@ define([
 				var renderer = new ClassBreaksRenderer(data);
         		lyrTobeUpdated.setRenderer(renderer);	
         		lyrTobeUpdated.redraw();
-        		/*if (lyrTobeUpdated.visible == true){
-            		lyrTobeUpdated.setVisibility(false);
-            		lyrTobeUpdated.setVisibility(true);						                			
-        		}*/
         		if 	(arrLayersToChangeSynbology.length > 0){
         			updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
         		}	                		
@@ -601,9 +630,6 @@ define([
 	        			dojo.removeClass(infographic_body);
 	        			dojo.addClass(infographic_body, 'bc_infographic ' + bc_id + '_infographic');
 
-	        			/*dojo.removeClass(header_icon);
-	        			dojo.addClass(header_icon, 'bc_popup_header_icon ' + bc_id);*/
-
 	        			dojo.byId(header_text).innerHTML = this.title;
 	        		});
 	        	};
@@ -614,14 +640,6 @@ define([
     				'id': 'infographic_area',
     				'style': 'background-color: #f4f4f4; width: 100%'
     			}, bc_description.containerNode);
-
-    			/*var infographic_header = dojo.create('div', {
-    			"style": 'height: 40px',
-    			}, bc_infographic);*/
-
-    			/*var header_icon = dojo.create('div', {
-    				'class': 'bc_popup_header_icon ' + window.categoryDic[ES_title]
-    			}, infographic_header);*/
 
     			var header_text = dojo.create('div', {
     				'innerHTML': this.title,
@@ -690,31 +708,26 @@ define([
 		datatype_img.setAttribute("class", type + ' icon_style');
 		BC_Div.appendChild(datatype_img);
 
-
-
-		//BC_Cell.appendChild(BC_Div);
-
 	   }
  	   
-    var	_addSelectableLayerSorted = function(items){	    	
+    var	_addSelectableLayerSorted = function(items){	  
 	    
 		updateTopicToggleButton();
-
 		//If using search bar then search all topics
 		if (document.getElementById('searchFilterText').value != ''){
-			for (var key in window.topicDic) {
-				dicTopicSelected[window.topicDic[key]]  = true;
+			for (var key in window.topicDicESB) {
+				dicTopicSelected[window.topicDicESB[key]]  = true;
 				
 			}
 		} else {
 			// take this out of else to search
-			for (var key in window.topicDic) {
-		        var chkboxId = window.chkTopicPrefix + window.topicDic[key];
+			for (var key in window.topicDicESB) {
+		        var chkboxId = window.chkTopicPrefix + window.topicDicESB[key];
 		        var checkbox = document.getElementById(chkboxId);			
 		        if(checkbox.checked == true){
-			        dicTopicSelected[window.topicDic[key]]  = true;    	
+			        dicTopicSelected[window.topicDicESB[key]]  = true;    	
 		        } else {
-		        	dicTopicSelected[window.topicDic[key]]  = false; 
+		        	dicTopicSelected[window.topicDicESB[key]]  = false; 
 		        }
 			}
 		}
@@ -746,7 +759,6 @@ define([
 
 		SelectedTopics = [];          
     	dojo.forEach(items, function(item) {
-           	
            	var currentLayerSelectable = false;
 			eaLyrNum = layerDataStore.getValue( item, 'eaLyrNum').toString();
 			eaID = layerDataStore.getValue( item, 'eaID').toString();
@@ -761,7 +773,9 @@ define([
 			SubLayerNames = layerDataStore.getValue( item, 'SubLayerNames');
 			SubLayerIds = layerDataStore.getValue( item, 'SubLayerIds');
 			sourceType = layerDataStore.getValue( item, 'sourceType');
-			bSelectByScale = false;
+			categoryTab = layerDataStore.getValue( item, 'categoryTab');
+			bSelectedByNationalOrCommunity = false;
+			
 
 			var chkNationalScale = document.getElementById("chkNational").checked;
 			var chkCommunityScale = document.getElementById("chkCommunity").checked;
@@ -771,46 +785,33 @@ define([
 				chkNationalScale = true;
 				chkCommunityScale = true;
 			}
-
 			switch (eaScale) {
-				case "NATIONAL":
-					
+				case "NATIONAL":					
 					if(chkNationalScale){
-						bSelectByScale = true;
-						if (SubLayerIds.length == 0) {
-							totalNumOfLayers = totalNumOfLayers + 1;
-						}
+						bSelectedByNationalOrCommunity = true;
 					}
 					break;
 				case "COMMUNITY":
 					if(chkCommunityScale){
-						if (SubLayerIds.length == 0) {
-							totalNumOfLayers = totalNumOfLayers + 1;
-						}
-						bSelectByScale = true;
-						/*if ((communitySelected == "") || (communitySelected == window.strAllCommunity)){
-						
-					}
-						else{
-							if (eaMetadata != "") {
-								if (window.communityMetadataDic.hasOwnProperty(eaMetadata)) {
-									communityInfo = window.communityMetadataDic[eaMetadata];
-									if (communityInfo.hasOwnProperty(communitySelected)) {
-										bSelectByScale = true;
-									}
-								}
-							}
-						}*/
+						bSelectedByNationalOrCommunity = true;
 					}
 					break;
 			}    			
+			if ((chkNationalScale == false) && (chkCommunityScale == false)) {
+				bSelectedByNationalOrCommunity = true;
+			}
 
-			eachLayerCategoryList = eaCategory.split(";");
-			if (bSelectByScale) {
-				if (dicTopicSelected[window.topicDic[eaTopic]] == true) {
+			if (SubLayerIds.length == 0) {
+				totalNumOfLayers = totalNumOfLayers + 1;
+			}				
+
+
+			if (bSelectedByNationalOrCommunity) {
+				if (bSelectedByTopics(eaTopic, categoryTab)) {
+				//if (dicTopicSelected[window.topicDicESB[eaTopic]] == true) {
 					currentLayerSelectable = true;				
 				}
-			}// end of if (bSelectByScale)
+			}// end of if (bSelectedByNationalOrCommunity)
 
 			if (currentLayerSelectable && (eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
 		
@@ -1028,7 +1029,7 @@ define([
 		});	
 
 			dojo.byId("numOfLayers").value = " " + String(numOfSelectableLayers) + " of " + String(totalNumOfLayers) + " Maps";
-			//dojo.byId("selectAllLayers").checked = false;
+
 		for (var key in chkIdDictionary) {
 		
 	  		if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
@@ -1052,7 +1053,6 @@ define([
 		var chkNationalScale = document.getElementById("chkNational");
 		var chkCommunityScale = document.getElementById("chkCommunity");
 
-		//var usingSearchBox = false;
 		if (document.getElementById('searchFilterText').value != ''){
 			chkNationalScale.className ="cmn-toggle cmn-toggle-round-flat-grayedout";
 			document.getElementById("chkNational_label").className = 'topicTitleGray';
@@ -1069,7 +1069,7 @@ define([
 			var usingSearchBox = false;
 		}
 				
-	    for (var key in window.topicDic) {
+	    for (var key in window.topicDicESB) {
 	    	var bCurrentTopicDisabled = true;
 	    	
 	    	
@@ -1080,12 +1080,13 @@ define([
 				bCurrentTopicDisabled = false;
 			}
 			
-	        var chkboxId = window.chkTopicPrefix + window.topicDic[key];
+	        var chkboxId = window.chkTopicPrefix + window.topicDicESB[key];
 	        var checkbox = document.getElementById(chkboxId);			
 
 	        var title = document.getElementById(chkboxId + '_label');
 
-	       if (bCurrentTopicDisabled || usingSearchBox) {
+	       //if (bCurrentTopicDisabled || usingSearchBox) {
+	       if (usingSearchBox) {
 		        checkbox.className ="cmn-toggle cmn-toggle-round-flat-grayedout";	
 		        checkbox.removeEventListener("click", _updateSelectableLayer);	   
 		        title.className = 'topicTitleGray';    
@@ -1132,7 +1133,7 @@ define([
 	    var categoCount = 1;
 	    var newRow;
 
-	    var keys = Object.keys(window.topicDic);
+	    var keys = Object.keys(window.topicDicESB);
 	    var half = Math.ceil((keys.length / 2));
 
 	    for (i=0; i<keys.length; i++) {
@@ -1151,7 +1152,7 @@ define([
            	var checkbox = document.createElement('input');
 			checkbox.type = "checkbox";
 			
-	        chkboxId = window.chkTopicPrefix + window.topicDic[keys[i]];
+	        chkboxId = window.chkTopicPrefix + window.topicDicESB[keys[i]];
 
 			checkbox.name = chkboxId;
 			checkbox.value = 0;
@@ -1163,10 +1164,8 @@ define([
 			label.innerHTML = "";
 			newCheckboxCell.appendChild(label);
 
-			//checkbox.addEventListener('click', _updateSelectableLayer);
-			//checkbox.addEventListener('click', function() {
+
 			checkbox.addEventListener('change', function() {
-				//updateSearchBoxDataTable();
 				_updateSelectableLayer();
 				
 			});
@@ -1220,7 +1219,7 @@ define([
 		checkbox.type = "checkbox";
         chkboxId = "chkNational";
 		checkbox.name = chkboxId;
-		checkbox.checked = true;
+		checkbox.checked = false;
 		checkbox.id = chkboxId;
 		checkbox.className ="cmn-toggle cmn-toggle-round-flat";
         newCheckboxCell.appendChild(checkbox);    
@@ -1248,7 +1247,7 @@ define([
 		checkbox.type = "checkbox";
         chkboxId = "chkCommunity";
 		checkbox.name = chkboxId;
-		checkbox.checked = true;
+		checkbox.checked = false;
 		checkbox.id = chkboxId;
 		checkbox.className ="cmn-toggle cmn-toggle-round-flat";
         newCheckboxCell.appendChild(checkbox);    
@@ -1258,15 +1257,7 @@ define([
 		newCheckboxCell.appendChild(label);
 		
 		checkbox.addEventListener('click', function() {
-			//updateTopicToggleButton();
 			_updateSelectableLayer();
-        	/*if (!this.checked){
-				var btn = document.getElementById("butSelectOneCommunity"); 
-				btn.disabled = true;	
-        	} else {
-				var btn = document.getElementById("butSelectOneCommunity"); 
-				btn.disabled = false;        		
-        	}	*/	
 	    });				
 		
 		// add Community title:
@@ -1364,10 +1355,8 @@ define([
 	    this.displayCategorySelection();
 		this.displayGeographySelection();
 	
-		selfSimpleSearchFilter = this;
-		/*dojo.connect(dijit.byId("selectionCriteria"), "toggle", function (){
-			updateSelectableLayersArea();
-		});*/
+		selfSimpleSearchFilter = this;      	
+	
 	    loadBookmarkHomeExtent(function(response){
 	    	var bookmarkClassified = JSON.parse(response);
 	
@@ -1416,7 +1405,12 @@ define([
 	                    else {
 	                    	sourceType = "";
 	                    }
-			                        
+	                    if(layer.hasOwnProperty('categoryTab')){
+	                    	categoryTab = layer.categoryTab;
+	                    }
+	                    else {
+	                    	categoryTab = "";
+	                    }			                        
 			            layerName = "";          
 	                	if(layer.hasOwnProperty('name') ){	                		
 		                	if ((layer.name != null)){
@@ -1499,8 +1493,7 @@ define([
 
 					    eaTagsWhole = eaTagsWhole.substring(0, eaTagsWhole.length - 1);			
 					    if (eaScale	!= "") {//selectable layers should be either National or Community 
-					    	//var layerItem = {eaLyrNum: eaLyrNum, name: layerName, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole};
-					    	var layerItem = {eaLyrNum: eaLyrNum, name: layerName, IsSubLayer:IsSubLayer, SubLayerNames: SubLayerNames, SubLayerIds: SubLayerIds, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole, eaTopic:eaTopic, sourceType:sourceType};
+					    	var layerItem = {eaLyrNum: eaLyrNum, name: layerName, IsSubLayer:IsSubLayer, SubLayerNames: SubLayerNames, SubLayerIds: SubLayerIds, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole, eaTopic:eaTopic, sourceType:sourceType, categoryTab:categoryTab};
 							
 							layerDataStore.newItem(layerItem);
 											
@@ -1555,9 +1548,6 @@ define([
 			searchBox.style.borderColor = 'rgb(0,67,111)';
 			searchBox.style.padding = '2px 2px 2px 2px';
 
-			//_updateSelectableLayer();
-			
-
         });// end of loadJSON(function(response)
         loadCommunityJSON(function(response){
         	var community = JSON.parse(response);
@@ -1592,6 +1582,16 @@ define([
         }); // end of loadNationalMetadataJSON(function(response)
         this._onMapClickForPopup();
     },               
+    onOpen: function(){						
+    	setTimeout(lang.hitch(this, function() {
+			_updateSelectableLayer();
+			/*document.getElementById("butInSearchFilterBox").onclick = function() {
+	            selfSimpleSearchFilter._onButFilterInSimpleSearchClick();
+	         
+	        };*/			
+        }), 2000);
+    },
+
                     
 	    _onSingleLayerClick: function() {
 		    this.publishData({
@@ -1599,9 +1599,6 @@ define([
 		    });
 		},
 	    _onViewActiveLayersClick: function() {
-
-			//var sideBar =  wm.getWidgetById('themes_TabTheme_widgets_SidebarController_Widget_20');
-			//sideBar.selectTab(0);				
 
 			this.openWidgetById('widgets_SelectCommunity_29');
 			var wm = WidgetManager.getInstance();
@@ -1624,10 +1621,8 @@ define([
 	        message: layersToBeAdded
 	    });
 	    this.i ++;
-    },
-    onOpen: function(){
-  
-    },
+    },   
+
     _onOpenFailedLayerClick: function() {
 	        var widgetName = 'DisplayLayerAddFailure';
 	        var widgets = this.appConfig.getConfigElementsByName(widgetName);
@@ -1636,6 +1631,31 @@ define([
 	        this.publishData({
 		        message: ""
 		    });
+     },
+     _onButFilterInSimpleSearchClick: function () {
+
+     	var widgetManager;
+        var filterForSelectWidgetEle = this.appConfig.getConfigElementsByName("FilterForSelect")[0];
+        widgetManager = WidgetManager.getInstance();
+        if (window.filterForSelectOpened == true){
+        	widgetManager.closeWidget(filterForSelectWidgetEle.id);
+        	document.getElementById("titleForFilter").style.display = "none"; 
+        	window.filterForSelectOpened = false;
+        }
+        else {
+        	//widgetManager.triggerWidgetOpen(filterForSelectWidgetEle.id);
+        	if (window.filterForSelectFirstCreated == true) {
+        		widgetManager.closeWidget(filterForSelectWidgetEle.id);
+        		window.filterForSelectFirstCreated = false;
+        		
+        	}
+        	
+        	widgetManager.openWidget(filterForSelectWidgetEle.id);
+        	document.getElementById("titleForFilter").style.display = ""; 
+        	window.filterForSelectOpened = true;
+        }
+        
+
      },
      _onUpdateCommunityLayers: function() {
 
