@@ -353,9 +353,6 @@ define([
         },
 
         showDetails: function(fcTable, item){
-            if (dijit.byId('addButton')){dijit.byId('addButton').destroy();}
-            if (dijit.byId('agolButton')){dijit.byId('agolButton').destroy();}
-            console.log(item);
             var itemDetails = "";
             itemDetails += "<div class='thumbnailDiv'><image alt='Item Thumbnail' style='border:1px solid black' src='"+ item.thumbnailUrl +"'></div>";
             itemDetails += "<h1>" + item.title + "</h1>";
@@ -365,10 +362,15 @@ define([
             itemDetails += "<div>" + item.snippet + "</div>";
             itemDetails += "<h2>Description:</h2>";
             itemDetails += "<div>" + item.description + "</div>";
+            itemDetails += "<h2>Layers:</h2>";
+            itemDetails += "<div id='featuredLayerList'></div>";
             itemDetails += "<footer><button id='addButton' type='button' data-dojo-type='dijit/form/Button'>Add to map</button><button id='agolButton' type='button' data-dojo-type='dijit/form/Button'>View in GeoPlatform</button></footer>";
             var mapDescription = new Dialog({
                 //title: item.title,
-                style: "width: 500px",    
+                style: "width: 500px",
+               onHide: function() {
+                  mapDescription.destroy();
+               }                
             });
             mapDescription.show();
             mapDescription.set("content", itemDetails);
@@ -382,6 +384,22 @@ define([
             dijit.byId('agolButton').onClick = function(){
                 window.open(item.detailsPageUrl,'_blank');
             };
+            /*
+            Need to send rest query to get list of map layers from slashdata:
+            https://epa.maps.arcgis.com/sharing/rest/content/items/1edd53b65d45441690a9f8c25a46c9fa/data?f=json
+            Iterate over Operational Layers and grab Titles.
+            */
+            item.getItemData().then(function(response){
+                var layerList = "<ul>"
+                //process operational layers in reverse order to match AGOL
+                layersReversed = response.operationalLayers.reverse();
+                layersReversed.forEach(function(l){
+                    layerList += "<li>" + l.title + "</li>";
+                });
+                layerList += "<ul>"
+                var llDom = html.toDom(layerList);
+                html.place(llDom, dojo.byId("featuredLayerList"));
+            });
         },
         
         /**

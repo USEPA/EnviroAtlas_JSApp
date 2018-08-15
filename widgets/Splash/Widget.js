@@ -366,7 +366,7 @@ define(['dojo/_base/declare',
         this.openWidgetById('widgets_AddWebMapData');
         var wm = WidgetManager.getInstance();
         widget = wm.getWidgetById('themes_TabTheme_widgets_SidebarController_Widget_20');
-        widget.selectTab(4);
+        widget.selectTab(2);
         this.close();
       },     
       close: function() {
