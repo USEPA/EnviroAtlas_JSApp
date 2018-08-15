@@ -353,9 +353,6 @@ define([
         },
 
         showDetails: function(fcTable, item){
-            if (dijit.byId('addButton')){dijit.byId('addButton').destroy();}
-            if (dijit.byId('agolButton')){dijit.byId('agolButton').destroy();}
-            console.log(item);
             var itemDetails = "";
             itemDetails += "<div class='thumbnailDiv'><image alt='Item Thumbnail' style='border:1px solid black' src='"+ item.thumbnailUrl +"'></div>";
             itemDetails += "<h1>" + item.title + "</h1>";
@@ -370,7 +367,10 @@ define([
             itemDetails += "<footer><button id='addButton' type='button' data-dojo-type='dijit/form/Button'>Add to map</button><button id='agolButton' type='button' data-dojo-type='dijit/form/Button'>View in GeoPlatform</button></footer>";
             var mapDescription = new Dialog({
                 //title: item.title,
-                style: "width: 500px",    
+                style: "width: 500px",
+               onHide: function() {
+                  mapDescription.destroy();
+               }                
             });
             mapDescription.show();
             mapDescription.set("content", itemDetails);
