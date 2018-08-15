@@ -1,0 +1,75 @@
+.dijitTabPaneWrapperForFilter {
+  height: 100%;
+}
+#navlistSearchfilter {
+    position: relative;
+}
+#navlistSearchfilter li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+}
+
+#navlistSearchfilter li, #navlistSearchfilter a {
+    height: 20px;
+    width: 20px;
+    display: block;
+}
+
+#navlistSearchfilter2 {
+    position: relative;
+}
+#navlistSearchfilter2 li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+}
+#navlistSearchfilter2 li, #navlistSearchfilter2 a {
+    height: 18px;
+    width: 18px;
+    display: block;
+}
+.list p{
+    height:auto;
+    margin:0;
+}
+.question {
+	float: left;
+	height: auto;
+	width: 90%;
+	line-height: 15px;
+	padding-left: 20px;
+	margin-bottom: 5px;
+}
+
+.topicTable {
+  margin: 0px;
+  float: left; 
+  width: 50%;   
+  display:inline-block;
+}
+#titlePaneESB .dijitTitlePaneTitle {
+  background: #f4966e !important;
+}
+#titlePaneESB .dijitTitlePaneTitleHover {
+  background: #f27641 !important;
+}
+#titlePanePBS .dijitTitlePaneTitle {
+  background: #b6f4a6 !important;
+}
+#titlePanePBS .dijitTitlePaneTitleHover {
+  background: #729b68 !important;
+}
+#titlePaneBNF .dijitTitlePaneTitle {
+  background: #b3c4f2 !important;
+}
+#titlePaneBNF .dijitTitlePaneTitleHover {
+  background: #8995b7 !important;
+}
+.dijitTitlePaneContentOuter{
+	height: 0px !important;
+}
+
+

@@ -937,7 +937,7 @@ define(['dojo/_base/declare',
 		            lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
 		            if (lyr) {
 		                topicWholeName = window.hashTopic[window.allLayerNumber[i]];
-		                topicShortName = window.topicDic[topicWholeName];
+		                topicShortName = window.topicDicESB[topicWholeName];
                 		if (settings.indexOf(topicShortName) < 0) {
                 			settings.push(topicShortName);
                 		} 

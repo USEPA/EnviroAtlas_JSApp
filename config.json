@@ -471,6 +471,19 @@
                 "name": "AttributeTable",
                 "label": "Attribute Table"
             }, {
+                "uri": "widgets/FilterForSelect/Widget",
+                "position": {
+                    "top": 100,
+                    "width": 0,
+                    "left":-800,
+                    "relativeTo": "map"
+                },
+                
+                "version": "2.5",
+                "id": "widgets_FilterForSelect_Widget",
+                "name": "FilterForSelect",
+                "label": "Filter"
+            },{
                 "uri": "widgets/Splash/Widget",
                 "visible": true,
                 "position": {
@@ -589,22 +602,6 @@
                 "index": 5,
                 "openAtStart": true,
                 "id": "widgets_SimpleSearchFilter_Widget_37"
-            }, {
-                "name": "PeopleAndBuildSpaces",
-                "label": "People and Built Spaces",
-                "version": "1.3",
-                "uri": "widgets/PeopleAndBuildSpaces/Widget",
-                "config": "widgets/PeopleAndBuildSpaces/config.json",
-                "index": 5,
-                "id": "widgets_PeopleAndBuildSpaces_Widget"
-            }, {
-                "name": "BoundaryLayer",
-                "label": "Boundaries and Natural Features",
-                "version": "1.3",
-                "uri": "widgets/BoundaryLayer/Widget",
-                "config": "widgets/BoundaryLayer/config.json",
-                "index": 5,
-                "id": "widgets_BoundaryLayer_Widget"
             }, {
                 "name": "TimeSeries",
                 "label": "Times Series Layers",
@@ -1104,6 +1101,17 @@
                     "name": "AttributeTable",
                     "label": "Attribute Table"
                 }, {
+	                "uri": "widgets/FilterForSelect/Widget",
+	                "position": {
+	                    "top": 100,
+	                    "relativeTo": "map"
+	                },
+	                "closeable": true,
+	                "version": "2.5",
+	                "id": "widgets_FilterForSelect_Widget",
+	                "name": "FilterForSelect",
+	                "label": "Filter"
+	             }, {
                     "uri": "widgets/Splash/Widget",
                     "visible": true,
                     "position": {

@@ -93,7 +93,7 @@ function(declare,
 
 	    this.i ++;
 	    var nExtent;
-	    if (communitySelected != window.strAllCommunity) {
+	    if (window.communitySelected != window.strAllCommunity) {
 	    	commnunityWholeName = window.communityDic[communitySelected];
 	    	extentForCommunity = window.communityExtentDic[window.communityDic[communitySelected]];
 	    	nExtent = Extent(extentForCommunity);
