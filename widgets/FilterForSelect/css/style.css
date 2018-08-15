@@ -1,3 +1,6 @@
+.dijitTabPaneWrapperForFilter {
+  height: 100%;
+}
 #navlistSearchfilter {
     position: relative;
 }
@@ -44,36 +47,29 @@
 .topicTable {
   margin: 0px;
   float: left; 
-  width: 50%; 
+  width: 50%;   
   display:inline-block;
 }
-
-.claro .dijitContentPane{
-  padding: 0px;
+#titlePaneESB .dijitTitlePaneTitle {
+  background: #f4966e !important;
+}
+#titlePaneESB .dijitTitlePaneTitleHover {
+  background: #f27641 !important;
+}
+#titlePanePBS .dijitTitlePaneTitle {
+  background: #b6f4a6 !important;
+}
+#titlePanePBS .dijitTitlePaneTitleHover {
+  background: #729b68 !important;
+}
+#titlePaneBNF .dijitTitlePaneTitle {
+  background: #b3c4f2 !important;
+}
+#titlePaneBNF .dijitTitlePaneTitleHover {
+  background: #8995b7 !important;
+}
+.dijitTitlePaneContentOuter{
+	height: 0px !important;
 }
 
-.claro .dijitTitlePaneContentInner {
-  padding: 0px;
-  height: 0px;
-  background-color: #f4f4f4;
-  /*border: 2px solid #d4d8da;*/
 
-}
-.dijitReset .dijitTitlePaneContentInner{
-	height: 0px;
-}
-.claro .dijitTitlePaneContentOuter {
-  border: None;
-}
-
-.claro .dijitTitlePaneTitleOpen {
-  background-color: #7f9eb4;
-}
-
-.claro .dijitTitlePaneTitleHover {
-  background-color: #808A92;
-}
-
-.claro .dijitTitlePaneTitle {
-  background-color: #7f9eb4;
-}

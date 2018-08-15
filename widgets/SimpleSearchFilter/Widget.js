@@ -154,17 +154,22 @@ define([
 			var currentLayerSelectable = false;
 			for (var key in topicDictionary) {
 		        var chkboxId = window.chkTopicPrefix + topicDictionary[key];
+
 		        var checkbox = document.getElementById(chkboxId);	
 		        if (checkbox != null) {	
-			        if(checkbox.checked == true){
-				        dicTopicSelected[window.topicDicESB[key]]  = true;    	
+
+		        	if(checkbox.checked == true){
+        		
+				        dicTopicSelected[topicDictionary[key]]  = true;    	
 				        numTopicSelected = numTopicSelected + 1;
 			        } else {
-			        	dicTopicSelected[window.topicDicESB[key]]  = false; 
+			        	dicTopicSelected[topicDictionary[key]]  = false; 
 			        }
 		        }
 			}
+
 			if ((dicTopicSelected[topicDictionary[currentTopic]] == true) || (numTopicSelected ==0)){
+
 				currentLayerSelectable = true;				
 			}			
 	    	return currentLayerSelectable;
@@ -712,25 +717,9 @@ define([
  	   
     var	_addSelectableLayerSorted = function(items){	  
 	    
-		updateTopicToggleButton();
-		//If using search bar then search all topics
-		if (document.getElementById('searchFilterText').value != ''){
-			for (var key in window.topicDicESB) {
-				dicTopicSelected[window.topicDicESB[key]]  = true;
-				
-			}
-		} else {
-			// take this out of else to search
-			for (var key in window.topicDicESB) {
-		        var chkboxId = window.chkTopicPrefix + window.topicDicESB[key];
-		        var checkbox = document.getElementById(chkboxId);			
-		        if(checkbox.checked == true){
-			        dicTopicSelected[window.topicDicESB[key]]  = true;    	
-		        } else {
-		        	dicTopicSelected[window.topicDicESB[key]]  = false; 
-		        }
-			}
-		}
+		updateTopicToggleButton("ESB");
+		updateTopicToggleButton("PBS");
+		updateTopicToggleButton("BNF");
 
 		var nSearchableColumns = document.getElementById('tableLyrNameDescrTag').getElementsByTagName('tr')[0].getElementsByTagName('th').length;
 		var eaIDFilteredList = [];
@@ -808,7 +797,6 @@ define([
 
 			if (bSelectedByNationalOrCommunity) {
 				if (bSelectedByTopics(eaTopic, categoryTab)) {
-				//if (dicTopicSelected[window.topicDicESB[eaTopic]] == true) {
 					currentLayerSelectable = true;				
 				}
 			}// end of if (bSelectedByNationalOrCommunity)
@@ -837,7 +825,7 @@ define([
 
 					var topicHeader = dojo.create('div', {
 	    				'id': eaTopic,
-	    				'class': 'topicHeader',
+	    				'class': 'topicHeader'+categoryTab,
 	    				'innerHTML': eaTopic,
 	    				onclick: function(){
 	    					hiderows[this.id] = !hiderows[this.id];
@@ -1048,7 +1036,19 @@ define([
 		}    	
 	};	  	   
 
-	var updateTopicToggleButton = function() {
+	var updateTopicToggleButton = function(categoryTab) {
+		var topicDictionary = null;
+		switch (categoryTab) {
+			case "ESB":					
+				topicDictionary = window.topicDicESB;
+				break;
+			case "PBS":
+				topicDictionary = window.topicDicPBS;
+				break;
+			case "BNF":
+				topicDictionary = window.topicDicBNF;
+				break;					
+		}
 
 		var chkNationalScale = document.getElementById("chkNational");
 		var chkCommunityScale = document.getElementById("chkCommunity");
@@ -1069,7 +1069,7 @@ define([
 			var usingSearchBox = false;
 		}
 				
-	    for (var key in window.topicDicESB) {
+	    for (var key in topicDictionary) {
 	    	var bCurrentTopicDisabled = true;
 	    	
 	    	
@@ -1080,7 +1080,7 @@ define([
 				bCurrentTopicDisabled = false;
 			}
 			
-	        var chkboxId = window.chkTopicPrefix + window.topicDicESB[key];
+	        var chkboxId = window.chkTopicPrefix + topicDictionary[key];
 	        var checkbox = document.getElementById(chkboxId);			
 
 	        var title = document.getElementById(chkboxId + '_label');
@@ -1126,22 +1126,88 @@ define([
 				this._onMapClickForPopup();
 			}		  
 		},
+    displayCloseButton: function() {
+		
+        	indexImage = 0;
 
-    displayCategorySelection: function() {
+    		var tableOfRelationship = document.getElementById('closeFilter');
+    		var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
+
+	    	newRow = tableRef.insertRow(tableRef.rows.length);
+			var newCheckboxCell  = newRow.insertCell(0);
+
+           	var checkbox = document.createElement('input');
+			checkbox.type = "button";
+			
+	        chkboxId = "resizeForFilter";
+			checkbox.id = chkboxId;
+			checkbox.className ="jimu-widget-filterforselect-close";
+
+	        newCheckboxCell.appendChild(checkbox);    
+        
+			checkbox.addEventListener('click', function() {
+				var widgetManager;
+		        var filterForSelectWidgetEle = selfSimpleSearchFilter.appConfig.getConfigElementsByName("FilterForSelect")[0];
+		        widgetManager = WidgetManager.getInstance();
+
+	        	widgetManager.closeWidget(filterForSelectWidgetEle.id);
+	        	document.getElementById("titleForFilter").style.display = "none"; 
+	        	window.filterForSelectOpened = false;
+
+				
+			});
+
+	    	
+	    
+
+
+
+	    
+
+    },		
+    displayResizeButton: function() {
+		
+        	indexImage = 0;
+
+    		var tableOfRelationship = document.getElementById('resizeForFilter');
+    		var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
+
+	    	newRow = tableRef.insertRow(tableRef.rows.length);
+			var newCheckboxCell  = newRow.insertCell(0);
+           	var checkbox = document.createElement('input');
+	        chkboxId = "resizeForFilter";
+			checkbox.id = chkboxId;
+			checkbox.className ="jimu-widget-filterforselect-move";
+	        newCheckboxCell.appendChild(checkbox);    
+
+    },
+    displayCategorySelection: function(categoryTab) {
 		
         indexImage = 0;
 	    var categoCount = 1;
 	    var newRow;
+	    var topicDictionary = null;
+		switch (categoryTab) {
+			case "ESB":					
+				topicDictionary = window.topicDicESB;
+				break;
+			case "PBS":
+				topicDictionary = window.topicDicPBS;
+				break;
+			case "BNF":
+				topicDictionary = window.topicDicBNF;
+				break;					
+		} 
 
-	    var keys = Object.keys(window.topicDicESB);
+	    var keys = Object.keys(topicDictionary);
 	    var half = Math.ceil((keys.length / 2));
 
 	    for (i=0; i<keys.length; i++) {
 	    	if (i < half) {
-	    		var tableOfRelationship = document.getElementById('categoryTableL');
+	    		var tableOfRelationship = document.getElementById(categoryTab + 'categoryTableL');
 	    		var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
 	    	} else {
-	    		var tableOfRelationship = document.getElementById('categoryTableR');
+	    		var tableOfRelationship = document.getElementById(categoryTab + 'categoryTableR');
 	    		var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
 	    	}
 
@@ -1152,7 +1218,7 @@ define([
            	var checkbox = document.createElement('input');
 			checkbox.type = "checkbox";
 			
-	        chkboxId = window.chkTopicPrefix + window.topicDicESB[keys[i]];
+	        chkboxId = window.chkTopicPrefix + topicDictionary[keys[i]];
 
 			checkbox.name = chkboxId;
 			checkbox.value = 0;
@@ -1229,7 +1295,6 @@ define([
 		newCheckboxCell.appendChild(label);
 		
 		checkbox.addEventListener('click', function() {
-			//updateTopicToggleButton();
 			_updateSelectableLayer();
 	    });				
 		/// add National title:
@@ -1351,9 +1416,14 @@ define([
       startup: function() {
 
         this.inherited(arguments);
-	    this.fetchDataByName('SelectCommunity');		 
-	    this.displayCategorySelection();
+	    this.fetchDataByName('SelectCommunity');	
+	     
+	    this.displayCategorySelection("ESB");
+	    this.displayCategorySelection("PBS");
+	    this.displayCategorySelection("BNF");
 		this.displayGeographySelection();
+		this.displayResizeButton();	
+		this.displayCloseButton();
 	
 		selfSimpleSearchFilter = this;      	
 	

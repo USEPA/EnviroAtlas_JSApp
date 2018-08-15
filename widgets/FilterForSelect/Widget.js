@@ -26,7 +26,9 @@ define([
     "dojo/dom-style",
     "dojo/dom-class",
     "dojo/aspect",
+    "dojo/touch",
     "dojo/Deferred",
+    "dojo/query",
     'dijit/TitlePane'
   ],
   function(
@@ -41,7 +43,9 @@ define([
     domStyle,
     domClass,
     aspect,
-    Deferred
+    touch,
+    Deferred,
+    domQuery
   ) {
 
 
@@ -51,6 +55,11 @@ define([
      * @module widgets/FilterForSelect
      */
     var leftPreset = 50;
+    var heightPreset = 700;
+    var triedHeight = 0;
+    var widthPreset = 300;
+    var triedWidth = 0;
+    var minimumWidth = 200;
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
 
       baseClass: 'jimu-widget-FilterForSelect',
@@ -72,19 +81,72 @@ define([
       	else {
       		this._setHeight_Width();      		
       	}    	    	
-      	
+  	
 
+
+        this.own(on(window.document, "mouseup", lang.hitch(this, this._onDragEnd)));
+        this.own(on(window.document, "mousemove", lang.hitch(this, this._onDraging)));
+        this.own(on(window.document, touch.move, lang.hitch(this, this._onDraging)));
+        this.own(on(window.document, touch.release, lang.hitch(this, this._onDragEnd)));
       }, 
-      postCreate:function() {
+      _onDragStart: function(evt) {
+        this.moveMode = true;
+        this.moveY = evt.clientY;
+        this.moveX = evt.clientX;
+        this._dragingHandlers = this._dragingHandlers.concat([
+          on(this.ownerDocument, 'dragstart', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+          }),
+          on(this.ownerDocumentBody, 'selectstart', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+          })
+        ]);
+      },      
 
+      _onDraging: function(evt) {
+        if (this.moveMode ) {
+	        var mapContainer = this.map.container;
+	        var maximumHeight = mapContainer.offsetHeight -150;
+	        triedHeight = heightPreset + evt.clientY - this.moveY;
+	         if (triedHeight > maximumHeight) {
+	          	triedHeight = maximumHeight;
+	        }
+	        html.setStyle(this.domNode, "height", triedHeight + "px");
+	        
+	        
+	        triedWidth = widthPreset + evt.clientX - this.moveX;
+	         if (triedWidth < minimumWidth) {
+	          	triedWidth = minimumWidth;
+	        }
+	        html.setStyle(this.domNode, "width", triedWidth + "px");	        
+        }
       },
-      onClose: function() {
-      	
-      	this._hide();
 
+      _onDragEnd: function() {
+        this.moveMode = false;
+        if (triedHeight>0) {
+        	heightPreset = triedHeight;
+        }   
+        if (triedWidth>0) {
+        	widthPreset = triedWidth;
+        }         
+        var h = this._dragingHandlers.pop();
+        while (h) {
+          h.remove();
+          h = this._dragingHandlers.pop();
+        }
+      },          
+      postCreate:function() {
+      	this._dragingHandlers = [];
+        this.own(on(this.resizeFilter, 'mousedown', lang.hitch(this, this._onDragStart)));
+        this.own(on(this.resizeFilter, touch.press, lang.hitch(this, this._onDragStart)));	    
+      },
+      onClose: function() {      	
+      	this._hide();
       },       
       _setHeight_Width: function() {
-      	var heightPreset = 700;
         html.setStyle(this.domNode, "height", heightPreset + "px");
         if (this.tabContainer && this.tabContainer.domNode &&
           (heightPreset - this.arrowDivHeight >= 0)) {
@@ -94,16 +156,14 @@ define([
             (heightPreset - this.arrowDivHeight) + "px"
           );
         }
-        html.setStyle(this.domNode, "width", 300 + "px");
+        html.setStyle(this.domNode, "width", widthPreset + "px");
         html.setStyle(this.domNode, "left",leftPreset + "px");
-
-
       },
+      
       _hide: function() {
         html.setStyle(this.domNode, "width", 0 + "px");
         html.setStyle(this.domNode, "left",leftPreset + "px");
         document.getElementById("titleForFilter").style.display = "none";
-
       }
     });
 

@@ -156,9 +156,9 @@ define([
     window.topicDicPBS["Quality of Life"] = "QoL";
     window.topicDicPBS["EPA Regulated Facilities"] = "RF";
     window.topicDicBNF = {};
-    window.topicDicPBS["Ecologic Boundaries"] = "EB";
-    window.topicDicPBS["Hydrologic Features"] = "HF";
-    window.topicDicPBS["Political Boundaries"] = "PB";
+    window.topicDicBNF["Ecological Boundaries"] = "EB";
+    window.topicDicBNF["Hydrologic Features"] = "HF";
+    window.topicDicBNF["Political Boundaries"] = "PB";
 
     
     window.strAllCommunity = "AllCommunity";	

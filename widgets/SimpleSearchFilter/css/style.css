@@ -326,19 +326,42 @@ a.esIcons {
   text-decoration: none;
 }
 
-.topicHeader {
+.topicHeaderESB {
   /*padding-bottom: 3px;*/
   font-size: 15px;
   font-weight: bold;
-  background-color: #c3c3c3;
+  background-color: #f4966e;
   /*margin-bottom: 3px;*/
 }
 
-.topicHeader:hover {
-  background-color: #929292;
+.topicHeaderESB:hover {
+  background-color: #f27641;
   cursor: pointer;
 }
+.topicHeaderPBS {
+  /*padding-bottom: 3px;*/
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #b6f4a6;
+  /*margin-bottom: 3px;*/
+}
 
+.topicHeaderPBS:hover {
+  background-color: #729b68;
+  cursor: pointer;
+}
+.topicHeaderBNF {
+  /*padding-bottom: 3px;*/
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #b3c4f2;
+  /*margin-bottom: 3px;*/
+}
+
+.topicHeaderBNF:hover {
+  background-color: #8995b7;
+  cursor: pointer;
+}
 .topicTitleGray {
   color: #969696;
 }
@@ -367,3 +390,27 @@ a.esIcons {
 .factsheetLink:hover{
   cursor: pointer;
 }
+.jimu-widget-filterforselect-move{
+  background: url('../images/page.png');
+  width: 15px;
+  height: 15px;
+  bottom: 0px;
+  right: 0px;
+  border: none;
+}
+.jimu-widget-filterforselect-move:hover{
+  cursor: nw-resize;
+}
+.jimu-widget-filterforselect-move:hover .jimu-widget-filterforselect-thumb{
+	background-image: url(images/page.png);
+  background-color: #fff;
+}
+.jimu-widget-filterforselect-close{
+  background: url('../images/close.png');
+  width: 15px;
+  height: 15px;
+  bottom: 0px;
+  right: 0px;
+  border: none;
+}
+
