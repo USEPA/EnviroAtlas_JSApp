@@ -164,6 +164,8 @@ define([
         html.setStyle(this.domNode, "width", 0 + "px");
         html.setStyle(this.domNode, "left",leftPreset + "px");
         document.getElementById("titleForFilter").style.display = "none";
+        document.getElementById("resizeForFilterArea").style.display = "none";
+        document.getElementById("closeFilterArea").style.display = "none";
       }
     });
 

@@ -1152,6 +1152,8 @@ define([
 
 	        	widgetManager.closeWidget(filterForSelectWidgetEle.id);
 	        	document.getElementById("titleForFilter").style.display = "none"; 
+	        	document.getElementById("resizeForFilterArea").style.display = "none";
+	        	document.getElementById("closeFilterArea").style.display = "none";
 	        	window.filterForSelectOpened = false;
 
 				
@@ -1710,6 +1712,8 @@ define([
         if (window.filterForSelectOpened == true){
         	widgetManager.closeWidget(filterForSelectWidgetEle.id);
         	document.getElementById("titleForFilter").style.display = "none"; 
+        	document.getElementById("resizeForFilterArea").style.display = "none";
+        	document.getElementById("closeFilterArea").style.display = "none";
         	window.filterForSelectOpened = false;
         }
         else {
@@ -1722,6 +1726,8 @@ define([
         	
         	widgetManager.openWidget(filterForSelectWidgetEle.id);
         	document.getElementById("titleForFilter").style.display = ""; 
+        	document.getElementById("resizeForFilterArea").style.display = "";
+        	document.getElementById("closeFilterArea").style.display = "";
         	window.filterForSelectOpened = true;
         }
         

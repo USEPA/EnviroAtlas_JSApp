@@ -1,10 +1,6 @@
 
 <div style="height:100%; width:100%; overflow-y:scroll; background-color: #ece9eb" dojotype="dijit.layout.ContentPane" >
     <div class="FAQ" id= "selectionCriteria">
-        <!--div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Filter EnviroAtlas Data by Geography | Topic', open: true"-->
-
-        
-			<!--button id="butFilter" class="btn Select" data-dojo-attach-event="onclick:_onButFilterClick">Click to filter selectable layers</button-->
             
             <div id="searchboxDiv" dojotype="dijit.layout.ContentPane" style="width:100%; background-color:#f4f4f4">
                 <table id="tableLyrNameDescrTag" cellspacing="0" width="100%" style="display:none">
@@ -23,106 +19,46 @@
                     </tbody>
                 </table>
             </div>
-            <br>
-        <!--/div-->
-        <input id = "butFilterInSimpleSearch" type="button" value="butFilterInSimpleSearch"    data-dojo-attach-event="onclick:_onButFilterInSimpleSearchClick"/> 
+            <br>        
         
         <div id="selectableLayersContainer" dojotype="dijit.layout.ContentPane"  style="background-color: #00436f; width: 100%; height: 20px; border: 0px;padding: 2px 10px 0px 5px;margin:2px 0px -5px 0px">
                 <!-- padding:0 is good enough ; margin:0 does not work--> 
-                <input id="numOfLayers" value = "" type="text" style = "background-color: #00436f; color:white; border: none; float: left; vertical-align:center height: 14px;"/>
+
+								<input id="numOfLayers" value = "" type="text" style = "background-color: #00436f; color:white; border: none; float: left; vertical-align:center height: 14px;"/>
+
+								<input id = "butFilterInSimpleSearch" type="button" title="filter the layers"  data-dojo-attach-event="onclick:_onButFilterInSimpleSearchClick"/> 
+
+			                    <label for="hideIcons" style = "background-color: #00436f; color:white; border: none; float: right;">Hide Icons</label> 
+			                    <input id="hideIcons"  type="checkbox"  style = "background-color: #4a2c3d; color:white; border: none; float: right;vertical-align:center;height: 14px;padding:2px; margin:2px" />
+								
+              
+	            <!--table id="tableForButtonFilterAndHide" style='table-layout:fixed'>
+	                <tbody>
+	                    <tr col=3>
+	                    	<td>
+								<input id="numOfLayers" value = "" type="text" style = "background-color: #00436f; color:white; border: none; float: left; vertical-align:center height: 14px;"/>
+							</td>
+							<td>
+								<input id = "butFilterInSimpleSearch" type="button"   data-dojo-attach-event="onclick:_onButFilterInSimpleSearchClick"/> 
+							</td>
+							<td>
+			                    <label for="hideIcons" style = "background-color: #00436f; color:white; border: none; float: right;">Hide Icons</label> 
+			                    <input id="hideIcons"  type="checkbox"  style = "background-color: #4a2c3d; color:white; border: none; float: right;vertical-align:center;height: 14px;padding:2px; margin:2px" />
+								
+							</td>
+	                    </tr>					    	
+	                </tbody>
+	            </table-->                
                 <div>
-                    <label for="hideIcons" style = "background-color: #00436f; color:white; border: none; float: right;">Hide Icons</label> 
-                    <input id="hideIcons"  type="checkbox"  style = "background-color: #4a2c3d; color:white; border: none; float: right;vertical-align:center;height: 14px;padding:2px; margin:2px" />
+                    
+                </div> 
+                <div>
 
                 </div>      
-            </div>
-            <!-- <div class='header'>
-            <p style='font-size:16px; font-weight:bold'></p>
-            <div style="height:40px; text-align: center; padding-top: 4px">
-                <a class=esIcons href = "https://www.epa.gov/enviroatlas/enviroatlas-benefit-category-clean-air" target="_blank">
-                    <img src="./widgets/SimpleSearchFilter/images/ES_Icons/air.png", style="width:30px" title="Clean Air">
-                </a>
+            </div>       
 
-                <a class=esIcons href = "https://www.epa.gov/enviroatlas/enviroatlas-benefit-category-clean-and-plentiful-water" target="_blank">
-                    <img src="./widgets/SimpleSearchFilter/images/ES_Icons/water.png", style="width:30px" title="Clean and Plentiful Water">
-                </a>
-
-                <a class=esIcons href = "https://www.epa.gov/enviroatlas/enviroatlas-benefit-category-climate-stabilization" target="_blank">
-                    <img src="./widgets/SimpleSearchFilter/images/ES_Icons/clim.png", style="width:30px" title="Climate Stabilization">
-                </a>
-
-                <a class=esIcons href = "https://www.epa.gov/enviroatlas/enviroatlas-benefit-category-natural-hazard-mitigation" target="_blank">
-                    <img src="./widgets/SimpleSearchFilter/images/ES_Icons/haz.png", style="width:30px" title = "Natural Hazard Mitigation">
-                </a>
-
-                <a class=esIcons href = "https://www.epa.gov/enviroatlas/enviroatlas-benefit-category-recreation-culture-and-aesthetics" target="_blank">
-                    <img src="./widgets/SimpleSearchFilter/images/ES_Icons/rec.png", style="width:30px" title = "Recreation, Culture, and Aesthetics">
-                </a>
-
-                <a class=esIcons href = "https://www.epa.gov/enviroatlas/enviroatlas-benefit-category-food-fuel-and-materials" target="_blank">
-                    <img src="./widgets/SimpleSearchFilter/images/ES_Icons/food.png", style="width:30px" title = "Food, Fuel, and Materials">
-                </a>
-
-                <a class=esIcons href = "https://www.epa.gov/enviroatlas/enviroatlas-benefit-category-biodiversity-conservation" target="_blank">
-                    <img src="./widgets/SimpleSearchFilter/images/ES_Icons/bio.png", style="width:30px" title = "Biodiversity Conservation">
-                </a>
-                </div>
-            </div>
-        </div> -->
-        
-        <!--input id="numOfLayers1" value = "test" type="text" style = "text-align: left; background-color: green; color:white;height = 20px; width = 100%"/-->
-        
-        <!-- <div dojotype="dijit.layout.ContentPane" style="padding: 0px 8px 0px 10px;">
-            <input id="selectAllLayers"  type="checkbox"/>
-            <label for="selectAllLayers" style="vertical-align: top"><b>Select All Layers</b></label>       
-        </div> -->
-        
-
-
-        <!--input id="numOfLayers1" value = "test" type="text" style = "text-align: left; background-color: green; color:white;height = 20px; width = 100%"/-->
         <br/>
-        <!-- <div dojotype="dijit.layout.ContentPane" style="padding: 0px 8px 0px 10px;">
-            <input id="selectAllLayers"  type="checkbox"/>
-            <label for="selectAllLayers" style="vertical-align: top"><b>Select All Layers</b></label>			
-        </div> -->
-        <!--Removing supply/demand/driver choices from interface. Awaiting further guidance on layer filter options.-->
-        <!--div id="navcontainer" dojotype="dijit.layout.ContentPane" style="margin: 0px 8px 0px 8px; padding: 0px 0px 0px 12px; display: none;">
-            <ul id="navlistSupplyDemand">
-                <li>
-                    <a href="#">
-                        <div >
-                            <input id="Supply" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked />
-                            <label for="Supply">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Supply</label>
-                        </div>
-                    </a>
-                </li>
-                <li >
-                    <a href="#" style="padding-right: 12px;display: inline-block;list-style-type: none;">
-                        <div >
-                            <input id="Demand" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked/>
-                            <label for="Demand">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Demand</label>
-                        </div>
-                    </a>
-                </li>
 
-                <li>
-                    <a href="#">
-                        <div >
-                            <input id="Driver" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox"  checked/>
-                            <label for="Driver">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Driver</label>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div >
-                            <input id="SpatiallyExplicit" class="cmn-toggle-inLineBlock cmn-toggle-inLineBlock-round-flat" type="checkbox" checked/>
-                            <label for="SpatiallyExplicit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Spatially Explicit</label>
-                        </div>
-                    </a>
-                </li>								
-            </ul>
-        </div-->
         <div id="tableSelectableLayersArea" dojotype="dijit.layout.ContentPane">
             <table id="tableSelectableLayers" style='table-layout:fixed'>
                 <tbody>

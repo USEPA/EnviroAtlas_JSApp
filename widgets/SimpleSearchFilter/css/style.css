@@ -413,4 +413,13 @@ a.esIcons {
   right: 0px;
   border: none;
 }
+#butFilterInSimpleSearch {
+	height: 14px;
+    width: 14px;
+	background: url('../images/filter.png');
+	background-color:  #eaf2f8;
+	margin-left: 70px;
+	vertical-align:center; 
+	margin-top: 2px;
+}
 
