@@ -138,18 +138,10 @@ define([
 			return bFeatureExist    	
 	    }
 	    var bSelectedByTopics = function(currentTopic, categoryTab) {
-	    	var topicDictionary = null;
-			switch (categoryTab) {
-				case "ESB":					
-					topicDictionary = window.topicDicESB;
-					break;
-				case "PBS":
-					topicDictionary = window.topicDicPBS;
-					break;
-				case "BNF":
-					topicDictionary = window.topicDicBNF;
-					break;					
-			} 
+
+	    	var topicDictionaryESB_PBS = Object.assign({}, window.topicDicESB, window.topicDicPBS);
+	    	var topicDictionary = Object.assign({}, topicDictionaryESB_PBS, window.topicDicBNF);
+
 			var numTopicSelected = 0;
 			var currentLayerSelectable = false;
 			for (var key in topicDictionary) {
@@ -734,14 +726,24 @@ define([
 
 		var tableOfRelationship = document.getElementById("tableSelectableLayersArea");
 
-		dojo.destroy('layerArea');
+		dojo.destroy('layerAreaESB');
+		dojo.destroy('layerAreaPBS');
+		dojo.destroy('layerAreaBNF');
 
-		var layerArea = dojo.create('div', {
-			'id': 'layerArea',
+		var layerAreaESB = dojo.create('div', {
+			'id': 'layerAreaESB',
 			'style': 'width: 100%',
 		}, tableOfRelationship);
 		
-
+		var layerAreaPBS = dojo.create('div', {
+			'id': 'layerAreaPBS',
+			'style': 'width: 100%',
+		}, tableOfRelationship);	
+			
+		var layerAreaBNF = dojo.create('div', {
+			'id': 'layerAreaBNF',
+			'style': 'width: 100%',
+		}, tableOfRelationship);
 
         var numOfSelectableLayers = 0;
         var totalNumOfLayers = 0;
@@ -822,16 +824,39 @@ define([
 					}
 					
 					SelectedTopics.push(eaTopic);
+					
+					if (categoryTab == "ESB") {
 
-					var topicHeader = dojo.create('div', {
-	    				'id': eaTopic,
-	    				'class': 'topicHeader'+categoryTab,
-	    				'innerHTML': eaTopic,
-	    				onclick: function(){
-	    					hiderows[this.id] = !hiderows[this.id];
-							_updateSelectableLayer();
-	    				}
-	    			}, layerArea);
+						var topicHeader = dojo.create('div', {
+		    				'id': eaTopic,
+		    				'class': 'topicHeader'+categoryTab,
+		    				'innerHTML': eaTopic,
+		    				onclick: function(){
+		    					hiderows[this.id] = !hiderows[this.id];
+								_updateSelectableLayer();
+		    				}
+		    			}, layerAreaESB);
+			    	} else if (categoryTab == "PBS"){
+						var topicHeader = dojo.create('div', {
+		    				'id': eaTopic,
+		    				'class': 'topicHeader'+categoryTab,
+		    				'innerHTML': eaTopic,
+		    				onclick: function(){
+		    					hiderows[this.id] = !hiderows[this.id];
+								_updateSelectableLayer();
+		    				}
+		    			}, layerAreaPBS);			    		
+					} else if (categoryTab == "BNF"){
+						var topicHeader = dojo.create('div', {
+		    				'id': eaTopic,
+		    				'class': 'topicHeader'+categoryTab,
+		    				'innerHTML': eaTopic,
+		    				onclick: function(){
+		    					hiderows[this.id] = !hiderows[this.id];
+								_updateSelectableLayer();
+		    				}
+		    			}, layerAreaBNF);			    		
+					}
 				}
 				//Finsih add header for each topic	
 
@@ -846,9 +871,22 @@ define([
 				//If not a subLayer create a new Row
 				
 				if (!IsSubLayer) {
-					var mainDiv = dojo.create('div', {
-						'class': 'layerDiv'
-						}, layerArea);
+					
+					if (categoryTab == "ESB") {
+						var mainDiv = dojo.create('div', {
+							'class': 'layerDiv'
+							}, layerAreaESB);						
+					} else if (categoryTab == "PBS"){
+						var mainDiv = dojo.create('div', {
+							'class': 'layerDiv'
+							}, layerAreaPBS);						
+					} else if (categoryTab == "BNF"){
+						var mainDiv = dojo.create('div', {
+							'class': 'layerDiv'
+							}, layerAreaBNF);						
+					}
+					
+
 
 					if (!hiderows[eaTopic]) {
 						mainDiv.style.display = 'None';
@@ -1079,14 +1117,15 @@ define([
 			if((chkCommunityScale.checked) && (communityTopicList.indexOf(key) >= 0)) {
 				bCurrentTopicDisabled = false;
 			}
-			
+			if ((chkNationalScale.checked == false) && (chkCommunityScale.checked == false)) {
+				bCurrentTopicDisabled = false;
+			}			
 	        var chkboxId = window.chkTopicPrefix + topicDictionary[key];
 	        var checkbox = document.getElementById(chkboxId);			
 
 	        var title = document.getElementById(chkboxId + '_label');
 
-	       //if (bCurrentTopicDisabled || usingSearchBox) {
-	       if (usingSearchBox) {
+	       if (bCurrentTopicDisabled || usingSearchBox) {
 		        checkbox.className ="cmn-toggle cmn-toggle-round-flat-grayedout";	
 		        checkbox.removeEventListener("click", _updateSelectableLayer);	   
 		        title.className = 'topicTitleGray';    

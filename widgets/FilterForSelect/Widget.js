@@ -57,7 +57,7 @@ define([
     var leftPreset = 50;
     var heightPreset = 700;
     var triedHeight = 0;
-    var widthPreset = 300;
+    var widthPreset = 460;
     var triedWidth = 0;
     var minimumWidth = 200;
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
