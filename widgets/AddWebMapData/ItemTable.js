@@ -353,32 +353,32 @@ define([
         },
 
         showDetails: function(fcTable, item){
-            var itemDetails = "";
-            itemDetails += "<div class='thumbnailDiv'><image alt='Item Thumbnail' style='border:1px solid black' src='"+ item.thumbnailUrl +"'></div>";
-            itemDetails += "<h1>" + item.title + "</h1>";
-            itemDetails += "<div>by <a target='_blank' href='" + item.ownerPageUrl + "'>" + item.owner + "</a></div>"; 
-            var d = new Date(item.modified);            
-            itemDetails += "<div>Last Updated: "+ d.toDateString() + "</div><hr/>";
-            itemDetails += "<div>" + item.snippet + "</div>";
-            itemDetails += "<h2>Description:</h2>";
-            itemDetails += "<div>" + item.description + "</div>";
-            itemDetails += "<h2>Layers:</h2>";
-            itemDetails += "<div id='featuredLayerList'></div>";
-            itemDetails += "<footer><button id='addButton' type='button' data-dojo-type='dijit/form/Button'>Add to map</button><button id='agolButton' type='button' data-dojo-type='dijit/form/Button'>View in GeoPlatform</button></footer>";
-            var mapDescription = new Dialog({
-                //title: item.title,
-                style: "width: 500px",
-               onHide: function() {
-                  mapDescription.destroy();
-               }                
+            var detailsDialog = dijit.byId('detailsDialog');
+            html.setStyle(detailsDialog.domNode, 'visibility', 'hidden');
+            detailsDialog.show().then(function() {
+                html.setStyle(detailsDialog.domNode, 'position', 'absolute');
+                html.setStyle(detailsDialog.domNode, 'width', '350px');
+                html.setStyle(detailsDialog.domNode, 'height', '100%');
+                html.setStyle(detailsDialog.domNode, 'top', '44px');
+                html.setStyle(detailsDialog.domNode, 'left', '366px');
+                html.setStyle(detailsDialog.domNode, 'visibility', 'visible');
             });
-            mapDescription.show();
-            mapDescription.set("content", itemDetails);
+            dojo.byId('detailsThumbnailDiv').innerHTML = "<image alt='Item Thumbnail' style='border:1px solid black' src='"+ item.thumbnailUrl +"'>"
+            dojo.byId('detailsTitleDiv').innerHTML = "<h1>" + item.title + "</h1>"
+            dojo.byId('detailsOwnerDiv').innerHTML = "by <a target='_blank' href='" + item.ownerPageUrl + "'>" + item.owner + "</a></div>"
+            var d = new Date(item.modified);            
+            dojo.byId('detailsDateDiv').innerHTML = "Last Updated: "+ d.toDateString() + "<br/><hr/>";
+            dojo.byId('detailsSnippetDiv').innerHTML = item.snippet;
+            dojo.byId('detailsDescriptionDiv').innerHTML = item.description;
+            //https://community.esri.com/thread/159596
+            //https://dojotoolkit.org/reference-guide/1.10/dojo/dom-style.html
+            //detailsDialog.set("content", itemDetails);
             dijit.byId('addButton').label = "Add to map",
             dijit.byId('addButton').onClick = function(){
                 // fire item selected event
                 fcTable.emit('item-selected', item);
-                mapDescription.destroyRecursive();
+                var detailsDialog = dijit.byId('detailsDialog');
+                detailsDialog.hide();
             };
             dijit.byId('agolButton').label = "View in GeoPlatform",
             dijit.byId('agolButton').onClick = function(){
@@ -389,7 +389,9 @@ define([
             https://epa.maps.arcgis.com/sharing/rest/content/items/1edd53b65d45441690a9f8c25a46c9fa/data?f=json
             Iterate over Operational Layers and grab Titles.
             */
+            dojo.byId('featuredLayerList').innerHTML = "<image alt='loading...' src='./widgets/AddWebMapData/images/loading.gif'>";
             item.getItemData().then(function(response){
+                dojo.byId('featuredLayerList').innerHTML = "";
                 var layerList = "<ul>"
                 //process operational layers in reverse order to match AGOL
                 layersReversed = response.operationalLayers.reverse();
