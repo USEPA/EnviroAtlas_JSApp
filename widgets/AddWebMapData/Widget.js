@@ -47,6 +47,10 @@ define(['dojo/_base/declare',
         'jimu/dijit/Search',
         'jimu/dijit/TabContainer3',
         'jimu/WidgetManager',
+        'dijit/Dialog',
+        "dijit/form/Button",
+        "dijit/layout/ContentPane",
+        "dijit/layout/LayoutContainer",
         './ItemTable'
        ],
     function (declare,
@@ -80,6 +84,8 @@ define(['dojo/_base/declare',
         Search,
         TabContainer3,
         WidgetManager,
+        Dialog,
+        Button,
         ItemTable) {
         //To create a widget, you need to derive from BaseWidget.
         var showLayerListWidget = function(){
@@ -131,6 +137,44 @@ define(['dojo/_base/declare',
             startup: function () {
             	selfAddWebMapData = this;
                 this.inherited(arguments);
+                var itemDetails = "";
+                itemDetails += "<div id='detailsLayout' data-dojo-type='dijit/layout/LayoutContainer' data-dojo-props='design:\"headline\"'>";
+                itemDetails += "<div data-dojo-type='dijit/layout/ContentPane' data-dojo-props='region:\"center\"' class='detailsContainer'>";
+                itemDetails += "<div class='thumbnailDiv' id='detailsThumbnailDiv'></div>";
+                itemDetails += "<div id='detailsTitleDiv'></div>";
+                itemDetails += "<div id='detailsOwnerDiv'></div>"; 
+                itemDetails += "<div id='detailsDateDiv'></div>"; 
+                itemDetails += "<div id='detailsSnippetDiv'></div>"; 
+                itemDetails += "<h2>Description:</h2>";
+                itemDetails += "<div id='detailsDescriptionDiv'></div>";
+                itemDetails += "<h2>Layers:</h2>";
+                itemDetails += "<div id='featuredLayerList'/><image alt='loading...' src='./widgets/AddWebMapData/images/loading.gif'></div>";
+                itemDetails += "<div data-dojo-type='dijit/layout/ContentPane' data-dojo-props='region:\"bottom\"' class='detailsFooter'><button id='addButton' type='button' data-dojo-type='dijit/form/Button'>Add to map</button><button id='agolButton' type='button' data-dojo-type='dijit/form/Button'>View in GeoPlatform</button></div></div>";
+                var detailsPane = new Dialog({
+                    id: "detailsDialog",
+                    style: "position: absolute; width: 350px; height: 100%; top: 44px; left: 366px; -webkit-animation: fade-in ease-in 1; -moz-animation: fade-in ease-in 1; animation: fade-in ease-in 1; -webkit-animation-fill-mode: forwards; -moz-animation-fill-mode: forwards; animation-fill-mode: forwards; -webkit-animation-duration: 0.5s; -moz-animation-duration: 0.5s; animation-duration: 0.5s;",
+                    title: "Feature Collection Details",
+                    content: itemDetails,
+                    isLayoutContainer: true,
+                    draggable: false
+                });
+                if (window.location.hostname == 'enviroatlas.epa.gov') {
+                    // in production, hide the login option
+                    //var stylesheet = window.document.styleSheets[(window.document.styleSheets.length - 1)];
+                    for (var i in window.document.styleSheets){
+                        if (window.document.styleSheets[i].href && (window.document.styleSheets[i].href.indexOf("widgets/AddWebMapData/css/style.css")>0)){
+                            var stylesheet = window.document.styleSheets[i];
+                            break;
+                        }
+                    }
+                    if( stylesheet.addRule ){
+                        stylesheet.addRule('div.jimu-widget-addwebmapdata .control-node', 'display: none;');
+                        stylesheet.addRule('div.jimu-widget-addwebmapdata > div.tab-container > div.jimu-tab3 > .container-node', 'top: 5px;');
+                    } else if( stylesheet.insertRule ){
+                        stylesheet.insertRule('div.jimu-widget-addwebmapdata .control-node { display: none;}', stylesheet.cssRules.length);
+                        stylesheet.insertRule('div.jimu-widget-addwebmapdata > div.tab-container > div.jimu-tab3 > .container-node {top: 5px;}', stylesheet.cssRules.length);
+                    }
+                }
                 //console.log('ChangeWebMap :: startup');
             },
 
