@@ -413,13 +413,19 @@ a.esIcons {
   right: 0px;
   border: none;
 }
+.jimu-widget-filterforselect-drag{
+  height: 19px;
+  bottom: 0px;
+  left: 0px;
+  border: none;
+}
 #butFilterInSimpleSearch {
-	height: 14px;
-    width: 14px;
+	height: 15px;
+    width: 15px;
 	background: url('../images/filter.png');
 	background-color:  #eaf2f8;
 	margin-left: 70px;
 	vertical-align:center; 
-	margin-top: 2px;
+	margin-top: 3px;
 }
 

@@ -1165,10 +1165,8 @@ define([
 				this._onMapClickForPopup();
 			}		  
 		},
-    displayCloseButton: function() {
-		
+    displayCloseButton: function() {		
         	indexImage = 0;
-
     		var tableOfRelationship = document.getElementById('closeFilter');
     		var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
 
@@ -1178,7 +1176,7 @@ define([
            	var checkbox = document.createElement('input');
 			checkbox.type = "button";
 			
-	        chkboxId = "resizeForFilter";
+	        chkboxId = "closeForFilter";
 			checkbox.id = chkboxId;
 			checkbox.className ="jimu-widget-filterforselect-close";
 
@@ -1193,19 +1191,25 @@ define([
 	        	document.getElementById("titleForFilter").style.display = "none"; 
 	        	document.getElementById("resizeForFilterArea").style.display = "none";
 	        	document.getElementById("closeFilterArea").style.display = "none";
-	        	window.filterForSelectOpened = false;
+	        	window.filterForSelectOpened = false;				
+			}); 
+    },	
+    displayDragButton: function() {		
+        	indexImage = 0;
+    		var tableOfRelationship = document.getElementById('dragFilter');
+    		var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
 
-				
-			});
+	    	newRow = tableRef.insertRow(tableRef.rows.length);
+			var newCheckboxCell  = newRow.insertCell(0);
 
-	    	
-	    
-
-
-
-	    
-
-    },		
+           	var checkbox = document.createElement('input');
+			checkbox.type = "button";
+			
+	        chkboxId = "dragForFilter";
+			checkbox.id = chkboxId;
+			checkbox.className ="jimu-widget-filterforselect-drag";
+	        newCheckboxCell.appendChild(checkbox);    
+    },	
     displayResizeButton: function() {
 		
         	indexImage = 0;
@@ -1464,6 +1468,7 @@ define([
 	    this.displayCategorySelection("BNF");
 		this.displayGeographySelection();
 		this.displayResizeButton();	
+		this.displayDragButton();
 		this.displayCloseButton();
 	
 		selfSimpleSearchFilter = this;      	
