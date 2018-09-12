@@ -271,11 +271,22 @@ define(['dojo/_base/declare',
         var contentMarginButtom = this._getNodeStylePx(this.customContentNode, "margin-bottom"),//between content & confirm text
           footerBottom = this._getNodeStylePx(this.footerNode, "bottom"),//between footer & splashBottom
           contentSpace = containerContent.h - (footerBox.h + footerBottom);
+          //console.log("customContentScrollheight:"+customContentScrollheight+"; contentSpace:"+contentSpace);
+		  //console.log("contentSpace:"+contentSpace+"; contentMarginButtom:"+contentMarginButtom);
+		  //console.log("window.appInfo.isRunInMobile:" + window.appInfo.isRunInMobile);
 
         var isNeedLimitCustomContentHeight = (customContentScrollheight >= contentSpace);
         if (true === isNeedLimitCustomContentHeight || window.appInfo.isRunInMobile) {
           //limit the customContent height   OR   extend height in mobile
-          html.setStyle(this.customContentNode, 'height', (contentSpace - contentMarginButtom) + 'px');
+          
+          html.setStyle(this.tourNode, 'left', '2px');
+          html.setStyle(this.tourNode, 'top', '120px');
+          html.setStyle(this.learnNode, 'left', '2px');
+          html.setStyle(this.learnNode, 'top', '150px');
+          html.setStyle(this.exploreNode, 'left', '2px');
+          html.setStyle(this.exploreNode, 'top', '300px');                    
+          //html.setStyle(this.customContentNode, 'height', (contentSpace - contentMarginButtom) + 'px');
+          html.setStyle(this.customContentNode, 'height', '120px');
         } else {
           html.setStyle(this.customContentNode, 'height', 'auto');
           this._moveContentToMiddle({

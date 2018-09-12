@@ -420,12 +420,12 @@ a.esIcons {
   border: none;
 }
 #butFilterInSimpleSearch {
-	height: 15px;
-    width: 15px;
+	height: 19px;
+    width: 19px;
 	background: url('../images/filter.png');
 	background-color:  #eaf2f8;
-	margin-left: 70px;
 	vertical-align:center; 
-	margin-top: 3px;
+	margin-top: 2px;
+	float: right;
 }
 
