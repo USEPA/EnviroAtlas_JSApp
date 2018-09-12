@@ -286,7 +286,7 @@ define(['dojo/_base/declare',
           html.setStyle(this.exploreNode, 'left', '2px');
           html.setStyle(this.exploreNode, 'top', '300px');                    
           //html.setStyle(this.customContentNode, 'height', (contentSpace - contentMarginButtom) + 'px');
-          html.setStyle(this.customContentNode, 'height', '120px');
+          html.setStyle(this.customContentNode, 'height', '80px');
         } else {
           html.setStyle(this.customContentNode, 'height', 'auto');
           this._moveContentToMiddle({
