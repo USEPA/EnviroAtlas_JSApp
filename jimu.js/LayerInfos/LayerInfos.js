@@ -628,11 +628,15 @@ define([
               array.forEach(serviceDefinition.tables, function(tableDifination) {
                 tableDifination.url = newLayerInfo.getUrl() + '/' + tableDifination.id;
                 tableDifination.id = newLayerInfo.id + '_' + tableDifination.id;
-                tableDifination.title = this._getLayerTitle(tableDifination);
-                var newTalbeInfo = this._addTable(tableDifination, this._finalTableInfos);
-                if (newTalbeInfo) {
-                  newTableInfos.push(newTalbeInfo);
+                //alert("tableDifination.url:"+tableDifination.url);
+                if (tableDifination.url.indexOf("ejscreen")<0) {
+	                tableDifination.title = this._getLayerTitle(tableDifination);
+	                var newTalbeInfo = this._addTable(tableDifination, this._finalTableInfos);
+	                if (newTalbeInfo) {
+	                  newTableInfos.push(newTalbeInfo);
+	                }                	
                 }
+
               }, this);
               this._onTableChange(newTableInfos, 'added');
             }));

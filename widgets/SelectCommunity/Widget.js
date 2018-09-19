@@ -131,7 +131,17 @@ function(declare,
     },
 
     onOpen: function(){
-      console.log('onOpen');
+        console.log('onOpen');
+	    if (window.communitySelected != window.strAllCommunity) {
+	    	commnunityWholeName = window.communityDic[communitySelected];
+	    	extentForCommunity = window.communityExtentDic[window.communityDic[communitySelected]];
+	    	nExtent = Extent(extentForCommunity);
+	    	document.getElementById(prefixRadioCommunity + window.communitySelected).checked = true;
+	
+	    } else {
+
+			document.getElementById(prefixRadioCommunity + window.strAllCommunity).checked = true;
+	    }   
     },
 
     onClose: function(){

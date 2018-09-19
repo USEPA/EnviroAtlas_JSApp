@@ -1,6 +1,6 @@
 
-<div style="height:100%; width:100%; overflow-y:scroll; background-color: #ece9eb" dojotype="dijit.layout.ContentPane" >
-    <div class="FAQ" id= "selectionCriteria">
+<div style="overflow-y:hidden; background-color: #ece9eb;position: absolute;bottom:0px" dojotype="dijit.layout.ContentPane" >
+    <div class="FAQ" style="height:70px" id= "selectionCriteria">
             
             <div id="searchboxDiv" dojotype="dijit.layout.ContentPane" style="width:100%; background-color:#f4f4f4">
                 <table id="tableLyrNameDescrTag" cellspacing="0" width="100%" style="display:none">
@@ -57,10 +57,10 @@
 
                 </div>      
             </div>       
-
+		</div>
         <br/>
 
-        <div id="tableSelectableLayersArea" dojotype="dijit.layout.ContentPane">
+        <div id="tableSelectableLayersArea" data-dojo-attach-point="selectableLayersArea" style="height:900px; width:100%; overflow-y:scroll;" dojotype="dijit.layout.ContentPane">
             <table id="tableSelectableLayers" style='table-layout:fixed'>
                 <tbody>
                     <tr>
@@ -76,6 +76,6 @@
             <input id = "butAddAllLayers" type="button" value="butAddAllLayers" style="display:none"  data-dojo-attach-event="onclick:_onAddLayersClick"/> 
         	
         </div>
-    </div>
+    
 
 </div>

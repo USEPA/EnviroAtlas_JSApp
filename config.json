@@ -593,7 +593,6 @@
                 "version": "1.3",
                 "uri": "widgets/DemographicLayers/Widget",
                 "index": 5,
-                "openAtStart": true,
                 "id": "widgets_DemographicLayers"
             },{
                 "name": "TimeSeries",

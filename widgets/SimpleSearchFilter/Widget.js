@@ -39,6 +39,7 @@ define([
 	 'esri/Color',
 	 'esri/renderers/ClassBreaksRenderer',     
 	 'dojo/_base/connect',
+	 'dojo/_base/html',
     'dijit/layout/AccordionContainer', 
     'dijit/layout/ContentPane',
     'dijit/layout/TabContainer',
@@ -75,7 +76,8 @@ define([
     graphic,
     Color,
     ClassBreaksRenderer,
-    connect) {
+    connect,
+    html) {
     	var singleLayerToBeAddedRemoved = "";
     	var bNoTopicSelected = false;
     	var communitySelected = "";
@@ -138,9 +140,22 @@ define([
 			return bFeatureExist    	
 	    }
 	    var bSelectedByTopics = function(currentTopic, categoryTab) {
+			var topicDictionary = {};
 
-	    	var topicDictionaryESB_PBS = Object.assign({}, window.topicDicESB, window.topicDicPBS);
-	    	var topicDictionary = Object.assign({}, topicDictionaryESB_PBS, window.topicDicBNF);
+	    	if (typeof Object.assign != 'function') {
+				for (var key in window.topicDicESB) {
+					topicDictionary[key] = window.topicDicESB[key];
+				}
+				for (var key in window.topicDicPBS) {
+					topicDictionary[key] = window.topicDicPBS[key];
+				}
+				for (var key in window.topicDicBNF) {
+					topicDictionary[key] = window.topicDicBNF[key];
+				}									    		
+	    	} else {
+		    	var topicDictionaryESB_PBS = Object.assign({}, window.topicDicESB, window.topicDicPBS);
+		    	topicDictionary = Object.assign({}, topicDictionaryESB_PBS, window.topicDicBNF);
+		    }
 
 			var numTopicSelected = 0;
 			var currentLayerSelectable = false;
@@ -723,6 +738,9 @@ define([
 				eaIDFilteredList.push(currentCellText);
 			}			
 		}); 
+			
+		//alert(selfSimpleSearchFilter.domNode.parentNode.clientHeight);
+
 
 		var tableOfRelationship = document.getElementById("tableSelectableLayersArea");
 
@@ -1053,7 +1071,9 @@ define([
 				
 			}//end of if (currentLayerSelectable)
 		});	
-
+		var heightOfSelectableLayersArea = selfSimpleSearchFilter.domNode.parentNode.clientHeight-100;
+		//html.setStyle(this.selectableLayersArea, "height", heightOfSelectableLayersArea + "px");
+		document.getElementById("tableSelectableLayersArea").style.height = heightOfSelectableLayersArea+ 'px';
 			dojo.byId("numOfLayers").value = " " + String(numOfSelectableLayers) + " of " + String(totalNumOfLayers) + " Maps";
 
 		for (var key in chkIdDictionary) {

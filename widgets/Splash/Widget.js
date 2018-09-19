@@ -280,14 +280,35 @@ define(['dojo/_base/declare',
           //limit the customContent height   OR   extend height in mobile
           
           html.setStyle(this.tourNode, 'left', '2px');
-          html.setStyle(this.tourNode, 'top', '120px');
           html.setStyle(this.learnNode, 'left', '2px');
-          html.setStyle(this.learnNode, 'top', '150px');
-          html.setStyle(this.exploreNode, 'left', '2px');
-          html.setStyle(this.exploreNode, 'top', '300px');                    
+          html.setStyle(this.exploreNode, 'left', '2px');   
+          
+          html.setStyle(this.tourNode, 'margin', '5px');
+          html.setStyle(this.tourNode, 'line-height', '16px');
+
+          html.setStyle(this.learnNode, 'margin', '5px');
+		  html.setStyle(this.learnNode, 'line-height', '16px');
+		  
+          html.setStyle(this.exploreNode, 'margin', '5px');
+          html.setStyle(this.exploreNode, 'line-height', '16px');
+          
+          html.setStyle(this.footerNode, 'height','70px');
+          html.setStyle(this.footerNode, 'padding','5px');
+          
           //html.setStyle(this.customContentNode, 'height', (contentSpace - contentMarginButtom) + 'px');
+          
           html.setStyle(this.customContentNode, 'height', '80px');
+          html.setStyle(this.customContentNode, 'margin-bottom', '0px');
+          //var splashContent = html.toDom(this.config.splash.splashContent);
+          //splashContent.firstChild.style.marginBottom = "0px";
         } else {
+
+          html.setStyle(this.tourNode, 'line-height', '33px');
+		  html.setStyle(this.learnNode, 'line-height', '33px'); 
+          html.setStyle(this.exploreNode, 'line-height', '33px'); 
+          
+          html.setStyle(this.customContentNode, 'margin-bottom', '60px');     
+            	
           html.setStyle(this.customContentNode, 'height', 'auto');
           this._moveContentToMiddle({
             contentSpace: contentSpace,

@@ -49,7 +49,8 @@ define([
         'dijit/form/Select',
         'dijit/form/TextBox',
         'dijit/form/Button',
-        'dojo/dom-construct'
+        'dojo/dom-construct',
+        'dijit/TitlePane'
     ],
     function (
         declare,
