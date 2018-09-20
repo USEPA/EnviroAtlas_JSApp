@@ -8,13 +8,13 @@
 		"orient": ["below","below-alt", "above", "above-alt"],
 		"highlight": false
 	},{
-		"node":"widgets_PeopleAndBuildSpaces_Widget",
+		"node":"widgets_SimpleSearchFilter_Widget_37",
 		"content": ["<h1>Data</h1>",
-					"<p>You can access EnviroAtlas data from these three menus.",
+					"<p>You can access EnviroAtlas data from these menus.",
 					"<ul>",
 						"<li>Ecosystem Services and Biodiversity</li>",
-						"<li>People and Built Spaces</li>",
-						"<li>Boundaries and Natural Features</li>",
+						"<li>Demographic Layers</li>",
+						"<li>Timeseries Layers</li>",
 					"</ul>",
 					"</p>"],
 		"orient": ["below","below-alt", "above", "above-alt"],
