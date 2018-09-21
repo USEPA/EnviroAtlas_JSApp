@@ -375,7 +375,7 @@
                 "version": "2.5",
                 "uri": "widgets/TimeSlider/Widget",
                 "closeable": true,
-                "openAtStart": true,                
+                "openAtStart": false,                
                 "config": "widgets/Demo/config.json"
             }, {
                 "position": {
@@ -479,19 +479,6 @@
                 "name": "Splash",
                 "label": "Disclaimer",
                 "config": "configs/Splash/config_Disclaimer.json"
-            }, {
-                "uri": "widgets/Swipe/Widget",
-                "closeable": true,
-                "openAtStart": false,
-                "position": {
-                    "top": -40,
-                    "left": 7,
-                    "relativeTo": "map"
-                },
-                "version": "2.5",
-                "id": "widgets_Swipe_Widget_33",
-                "name": "Swipe",
-                "label": "Swipe"
             }, {
                 "uri": "widgets/ZoomSlider/Widget",
                 "visible": true,
@@ -1110,7 +1097,7 @@
                 }, {
                     "uri": "widgets/TimeSlider/Widget",
                     "closeable": true,
-                    "openAtStart": true,
+                    "openAtStart": false,
                     "position": {
                         "bottom": 40,
                         "left": 7,
@@ -1120,20 +1107,7 @@
                     "id": "widgets_TimeSlider_Widget_32",
                     "name": "TimeSlider",
                     "label": "Time Slider"
-                }, {
-                    "uri": "widgets/Swipe/Widget",
-                    "closeable": true,
-                    "openAtStart": false,
-                    "position": {
-                        "top": -40,
-                        "left": 7,
-                        "relativeTo": "map"
-                    },
-                    "version": "2.5",
-                    "id": "widgets_Swipe_Widget_33",
-                    "name": "Swipe",
-                    "label": "Swipe"
-                }, {
+                },{
                     "uri": "widgets/ZoomSlider/Widget",
                     "visible": true,
                     "position": {
