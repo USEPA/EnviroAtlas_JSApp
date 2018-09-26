@@ -214,8 +214,7 @@ define([
               refHrNode = query("[class~='hrClass']", this.domNode)[0];
               refHrNodeNonGraphic = query("[class~='hrClassNonGraphic']", this.domNode)[0];
               var layerId = parseInt(layerInfo.id.replace(window.layerIdPrefix, "").replace(window.layerIdBndrPrefix, "").replace(window.layerIdPBSPrefix, "").replace(window.layerIdTiledPrefix, "").replace(window.addedLayerIdPrefix, ""));
-
-              if ((layerInfo.layerObject.type) && (layerInfo.layerObject.type.toUpperCase() == "FEATURE LAYER")) {
+              if (((layerInfo.layerObject.type) && (layerInfo.layerObject.type.toUpperCase() == "FEATURE LAYER")) ||((layerInfo.layerObject.url.toUpperCase().indexOf("FEATURESERVER")&&(layerInfo.layerObject.url.toUpperCase().indexOf("ARCGIS.COM"))) )) {
                   if(refLayerNode) {	          	
                     this.layerListView.drawListNode(layerInfo, 0, refLayerNode, 'before');
                   } else {

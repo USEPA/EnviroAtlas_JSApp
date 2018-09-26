@@ -443,8 +443,9 @@ define([
 			    if (dijit.byId('selectionCriteria')._isShown()) {
 			    	if (navigator.userAgent.indexOf("Chrome")>=0) {
 			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 515px)"; 
-			    	} else if(navigator.userAgent.indexOf("Firefox")>=0) {
+			    	} else if(navigator.userAgent.indexOf("Firefox")>=0) {			    		
 			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 630px)"; 
+			    		document.getElementById("tableSelectableLayersArea").style.width = '360px';
 			    	} else {
 			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 530px)"; 
 			    	}
@@ -453,6 +454,7 @@ define([
 			    	if (navigator.userAgent.indexOf("Chrome")>=0) {
 			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 125px)";
 			    	} else if(navigator.userAgent.indexOf("Firefox")>=0) {
+			    		document.getElementById("tableSelectableLayersArea").style.width = '360px';
 			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 125px)"; 
 			    	} else {
 			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 125px)";
@@ -1072,8 +1074,12 @@ define([
 			}//end of if (currentLayerSelectable)
 		});	
 		var heightOfSelectableLayersArea = selfSimpleSearchFilter.domNode.parentNode.clientHeight-100;
+		var widthOfSelectableLayersArea = selfSimpleSearchFilter.domNode.parentNode.clientWidth;
+		//alert("widthOfSelectableLayersArea:"+widthOfSelectableLayersArea);
 		//html.setStyle(this.selectableLayersArea, "height", heightOfSelectableLayersArea + "px");
 		document.getElementById("tableSelectableLayersArea").style.height = heightOfSelectableLayersArea+ 'px';
+		document.getElementById("tableSelectableLayersArea").style.width = widthOfSelectableLayersArea +'px';
+		
 			dojo.byId("numOfLayers").value = " " + String(numOfSelectableLayers) + " of " + String(totalNumOfLayers) + " Maps";
 
 		for (var key in chkIdDictionary) {
@@ -1083,7 +1089,15 @@ define([
 					if (this.checked){
 						showLayerListWidget();	
 						singleLayerToBeAddedRemoved = "a" + "," + this.getAttribute("id").replace(window.chkSelectableLayer, "");
-						document.getElementById('butAddSingleLayer').click();
+						if (window.bLayerListWidgetStarted == false) {
+							window.bLayerListWidgetStarted = true;
+							setTimeout(lang.hitch(this, function() { //LayerList widget need to be started before layer is added.
+								document.getElementById('butAddSingleLayer').click();
+					        }), 3000);							
+						} else {
+							document.getElementById('butAddSingleLayer').click();
+						}
+
 					}
 					else {
 						singleLayerToBeAddedRemoved = "r" + "," + this.getAttribute("id").replace(window.chkSelectableLayer, "");
