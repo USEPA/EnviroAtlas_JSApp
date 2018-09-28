@@ -420,12 +420,26 @@ a.esIcons {
   border: none;
 }
 #butFilterInSimpleSearch {
-	height: 19px;
-    width: 19px;
+	height: 30px;
+    width: 30px;
 	background: url('../images/filter.png');
-	background-color:  #eaf2f8;
-	vertical-align:center; 
-	margin-top: 2px;
-	float: right;
+	background-color: #eaf2f8;
+    vertical-align: middle;
+    background-size: 26px 26px;
+    display: inline-block;
+    margin-left: 50px;
+}
+.selectableLayersText {
+    background-color: #00436f; 
+    color:white; 
+    border: none; 
+    display: inline-block; 
+    vertical-align:middle;  
+    margin:4px;     
+    font-family: 'Avenir Light', Verdana, Geneva, sans-serif;
+    font-size: 14px;
 }
 
+#closeForFilter{
+    background-size:15px;
+}
