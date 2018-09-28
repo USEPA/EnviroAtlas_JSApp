@@ -1680,10 +1680,7 @@ define([
 			page.style.display = 'none';	
 				
 			var searchBox = document.getElementById('searchFilterText');
-			searchBox.style.width= "100%";	
-			searchBox.style.borderColor = 'rgb(0,67,111)';
-			searchBox.style.padding = '2px 2px 2px 2px';
-
+            searchBox.style.cssText = "width:100%; padding:3px; height:40px; font-family:'Avenir Light', Verdana, Geneva, sans-serif; font-size:15px;"
         });// end of loadJSON(function(response)
         loadCommunityJSON(function(response){
         	var community = JSON.parse(response);
