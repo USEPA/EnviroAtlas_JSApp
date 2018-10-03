@@ -243,7 +243,7 @@ define(['dojo/_base/declare',
 
                 //Set layers
 
-                if (dslayer.layerObject.type == "Feature Layer") { //if the layer is feature layer
+                if ((dslayer.layerObject.type == "Feature Layer") || (dslayer.parentLayerInfo.layerObject.tileInfo != null)) { //if the layer is feature layer
 
 	                geoenrichedFeatureLayer = selfDynamicSymbology.map.getLayer(_layerID);
 	                
@@ -375,8 +375,7 @@ define(['dojo/_base/declare',
 								_bSizeUpByValuePolygonAsPoint = true;
 							} else {
 								_bSizeUpByValuePolygonAsPoint = false;
-							}
-				
+							}				
 	         			}
 		
 		                //Classification dropdown
@@ -495,6 +494,9 @@ define(['dojo/_base/declare',
 	        }
         },
         _onApplyBtnClick: function () {
+            if (_ClassificationMethod == undefined) {
+                _ClassificationMethod = dynamicSymbology.classSelect.value;
+            }
 				
 			var bSizeEnlargeByValue = false;		
 			var radios = document.getElementsByName('symbolSizeUpDown');
@@ -508,17 +510,16 @@ define(['dojo/_base/declare',
 				  break;
 			 	}
 			}
-            if ((dynamicSymbology.isSmartMapping == true)&&(_ClassificationMethod!=undefined)) {
+            if (dynamicSymbology.isSmartMapping == true) {
 
                 selfDynamicSymbology._updateSmartMapping2();
             } else {
 				var fType = geoenrichedFeatureLayer.geometryType;
 
                 //symbol.style = _style;
-                if ((_ClassificationMethod!=undefined) || (_nBreaks>0)){
+                if (_nBreaks>0){//There is classbreaks
 
-	                renderer = new ClassBreaksRenderer(null, geoenrichedFeatureLayer.renderer.attributeField);	       
-	
+	                renderer = new ClassBreaksRenderer(null, geoenrichedFeatureLayer.renderer.attributeField);		
 	            	
 	            	var minMin = 1000000000;
 	            	var maxMin = 0;
@@ -552,46 +553,43 @@ define(['dojo/_base/declare',
 	            	var indexSymbolSizeStep = 0;
 
 	                dynamicSymbology.slider.breakInfos.forEach(function (b) {
-	                	if ((typeof variable !== 'undefined') && (_style != null)&& (fType == "esriGeometryPoint")){
-    						if ((fType == "esriGeometryPolygon") && (!_bPolygonAsPoint)) {
-			                	b.symbol = new SimpleFillSymbol();
-			                }
-			                else if (fType == "esriGeometryPolyline") {
-			                	b.symbol = new SimpleLineSymbol();
-			                }
-			                else if ((fType == "esriGeometryPoint") || _bPolygonAsPoint) {
-			                	b.symbol = new SimpleMarkerSymbol();
-			                } 
-			                else if (_bPolygonAsPoint) {
-			                	b.symbol = _symbolPointForPolygon;
-			                }
 
-
-	                	}
-                		if ((b.symbol == undefined)||(b.symbol == null)|(b.symbol == "undefined")) {
-		                	b.symbol = _origSymbol;
+						if ((fType == "esriGeometryPolygon") && (!_bPolygonAsPoint)) {
+                            if (typeof _outline != 'undefined'){
+                                if (_outline != null) {
+                                    b.symbol.outline = _outline;
+                                }
+                            }		                	
 		                }
-                		b.symbol.size = initialSymbolSize + indexSymbolSizeStep * symbolSizeStep;
+		                else if (fType == "esriGeometryPolyline") {
+		                	//b.symbol = new SimpleLineSymbol();
+		                	if (typeof _style != "undefined"){
+                                if (_style != null) {
+                                    b.symbol.style = _style;
+                                }
+                            }
+                            if (typeof _color != 'undefined'){
+                                if (_color != null) {
+                                    b.symbol.color = _color;
+                                }
+                            }
+		                }
+		                else if ((fType == "esriGeometryPoint") || _bPolygonAsPoint) {
+		                	b.symbol = new SimpleMarkerSymbol();
+                            if (typeof _style != "undefined"){
+                                if (_style != null) {
+                                    b.symbol.style = _style;
+                                }
+                            }
+                            if (typeof _color != 'undefined'){
+                                if (_color != null) {
+                                    b.symbol.color = _color;
+                                }
+                            }
+                            b.symbol.size = initialSymbolSize + indexSymbolSizeStep * symbolSizeStep;	                	
+		                } 
+               		
                 		indexSymbolSizeStep = indexSymbolSizeStep + 1;
-                		if (!_bPolygonAsPoint) {
-                			if (typeof _style != "undefined"){
-                				if (_style != null) {
-	                				b.symbol.style = _style;
-	                			}
-	                		}
-	                		if (typeof _color != 'undefined'){
-	                			if (_color != null) {
-	                				b.symbol.color = _color;
-	                			}
-	                		}
-	                		if (typeof _outline != 'undefined'){
-	                			if (_outline != null) {
-		                			b.symbol.outline = _outline;
-		                		}
-	                		}
-	                		b.symbol.imageData = null;
-	                		b.symbol.url = "";	                			
-                		}
 	                	renderer.addBreak(b);
 	                });
 	            	renderStr = JSON.stringify(renderer.toJson());
@@ -599,7 +597,7 @@ define(['dojo/_base/declare',
 	                _ClassificationMethod = renderer.classificationMethod;
 				
 	                selfDynamicSymbology._getHistoAndStats(renderer, null);
-            	} else {
+            	} else {//layer will be rendered as universal size
     		   		if ((fType == "esriGeometryPolygon") && (!_bPolygonAsPoint)) {
 	                	var symbol = new SimpleFillSymbol();
 	                	if (dynamicSymbology.chkTransparentPoly.getValue()!=false) {
@@ -626,15 +624,13 @@ define(['dojo/_base/declare',
 	                		symbol.style = _style;
 	                	}
 	                } 
-
 					
 					if (_color != null) {
 						symbol.color = _color;
 					}
 					if (_outline != null) {
             			symbol.outline = _outline;
-            		}
-            		
+            		}          		
             		
             		var simpleRenderer = new SimpleRenderer(symbol);
             		geoenrichedFeatureLayer.setRenderer(simpleRenderer);
@@ -912,10 +908,9 @@ define(['dojo/_base/declare',
 			            console.log("gRenderer  json in the middle of _getHistoAndStats:" +JSON.stringify(gRenderer.toJson()));
 			            geoenrichedFeatureLayer.setRenderer(gRenderer);
 			            geoenrichedFeatureLayer.redraw(); 
-		        	} 
-                   
+		        	}                    
                 });
-	
+                	
                 _busy.hide();
             }).otherwise(function (error) {
                 _busy.hide();
@@ -969,7 +964,7 @@ define(['dojo/_base/declare',
 	            		initialSymbolSize = minimumSymbolSize;
 	            		symbolSizeStep = 2;
 	            	} else {
-	            		initialSymbolSize = minimumSymbolSize + smartRenderer.renderer.length * 2;
+	            		initialSymbolSize = minimumSymbolSize + smartRenderer.renderer.infos.length * 2;
 	            		symbolSizeStep = -2;            		
 	            	}
 	            	var indexSymbolSizeStep = 0;
@@ -979,7 +974,25 @@ define(['dojo/_base/declare',
 	            	
 					smartRenderer.renderer.infos.forEach(function (info) {
 			                var symbolSize = initialSymbolSize + indexSymbolSizeStep * symbolSizeStep;
-							newSymbol = new SimpleMarkerSymbol(_symbolPointForPolygon.style, symbolSize, _symbolPointForPolygon.outline, _symbolPointForPolygon.color);
+			                
+			                if (_style != null) {
+			                    var style = _style;
+			                } else {
+			                    var style = _symbolPointForPolygon.style;
+			                }
+			                if (_color != null){
+			                    var color = _color;
+			                } else {
+			                    var color = _symbolPointForPolygon.color;
+			                }
+			                if (_outline != null){
+                                var outline = _outline;
+                            } else {
+                                var outline = _symbolPointForPolygon.outline;
+                            }                
+                            
+                            newSymbol = new SimpleMarkerSymbol(style, symbolSize, outline, color);
+						
 	 						polygonAsPointRenderer.addBreak(info.minValue, info.maxValue, newSymbol);
 	                		indexSymbolSizeStep = indexSymbolSizeStep + 1;
 	            	});	            	
@@ -1068,18 +1081,19 @@ define(['dojo/_base/declare',
          
             dynamicSymbology = {};
             
-            _scheme = null;
-	        _symbol = null;
-	        _style = null;
-	        _color = null;
-	        _outline = null;
+            //_scheme = null;
+            
+	        //_symbol = null;
+	        //_style = null;
+	        //_color = null;
+	        
+	        //_outline = null;
 	        _symbolSizeStep = 0;
 	        _symbolSizeInitial = 0;
 	        _nBreaks = 0;
-	        _bPolygonAsPoint = false;
+	        //_bPolygonAsPoint = false;
 
-            _scheme = null;
-            dynamicSymbology.isSmartMapping = true;
+            //dynamicSymbology.isSmartMapping = true;
             
             geoenrichedFeatureLayer.setDefinitionExpression("");
             console.log('onClose');
