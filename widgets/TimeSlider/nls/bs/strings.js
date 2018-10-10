@@ -4,5 +4,6 @@ define({
   "disableTips": "Nema vidljivih ovremenjenih slojeva.",
   "timeExtent": "${FROMTIME} do ${ENDTIME}",
   "layers": "Slojevi: ",
-  "speedLabel": "Brzina reprodukcije"
+  "speedLabel": "Brzina reprodukcije",
+  "liveData": "Podaci uživo"
 });

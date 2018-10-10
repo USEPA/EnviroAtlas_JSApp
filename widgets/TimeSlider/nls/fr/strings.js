@@ -4,5 +4,6 @@ define({
   "disableTips": "Aucune couche temporelle n'est visible.",
   "timeExtent": "${FROMTIME} à ${ENDTIME}",
   "layers": "Couches : ",
-  "speedLabel": "Vitesse de lecture"
+  "speedLabel": "Vitesse de lecture",
+  "liveData": "Données en direct"
 });

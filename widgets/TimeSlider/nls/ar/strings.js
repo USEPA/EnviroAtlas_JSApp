@@ -4,5 +4,6 @@ define({
   "disableTips": "لا تتوفر طبقات مُدارة زمنيًا مرئية.",
   "timeExtent": "${FROMTIME} إلى ${ENDTIME}",
   "layers": "الطبقات: ",
-  "speedLabel": "سرعة التشغيل"
+  "speedLabel": "سرعة التشغيل",
+  "liveData": "البيانات الحية"
 });

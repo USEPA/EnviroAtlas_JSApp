@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,11 +24,12 @@ define(['dojo/_base/declare',
     'dijit/_WidgetsInTemplateMixin',
     'dojo/text!./SpeedMenu.html',
     'dojo/on',
-    'dojo/query'
+    'dojo/query',
+    'jimu/utils'
   ],
   function (declare, lang, html, array,
     Evented, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template,
-    on, query) {
+    on, query, jimuUtils) {
     // box of speed-menu
 
     var clazz = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
@@ -38,6 +39,13 @@ define(['dojo/_base/declare',
       menuBox : {
         w: 75,
         h: 120
+      },
+      _speedList: {
+        x025: 0.25,
+        x05: 0.5,
+        x1: 1,
+        x15: 1.5,
+        x2: 2
       },
 
       postCreate: function() {
@@ -55,11 +63,15 @@ define(['dojo/_base/declare',
       },
 
       _initSpeedMenu: function(){
+        Object.keys(this._speedList).forEach(lang.hitch(this, function (key) {
+          var dom = this[key];
+          dom.innerText = jimuUtils.localizeNumber(this._speedList[key]) + "x";
+        }));
+
         this.own(on(this.domNode, 'click', lang.hitch(this, this._closeSpeedMenu)));
         this._checks = query(".check", this.speedMenu);
 
-        //init display
-        on.emit(this.initSpeedItem, 'click', { cancelable: false, bubbles: true });
+        this.setSpeed("1");//init display
       },
 
       _onSelectSpeedItem: function(evt) {
@@ -67,16 +79,53 @@ define(['dojo/_base/declare',
           html.addClass(check, 'hide');
         }));
 
+        var rateStr, optionItem;
         if (evt.target) {
-          var rateStr = html.getAttr(evt.target, 'speed');
-          var check = query(".check", evt.target)[0];
-          html.removeClass(check, 'hide');
+          rateStr = html.getAttr(evt.target, 'data-speed');
+          if (rateStr) {
+            optionItem = evt.target;
+          } else {
+            optionItem = evt.target.parentNode;//click on checked icon
+            rateStr = html.getAttr(optionItem, 'data-speed');
+          }
+        }
+        if (optionItem) {
+          var check = query(".check", optionItem)[0];
+          if (check) {
+            html.removeClass(check, 'hide');
+          }
+          this.speedLabelNode.innerHTML = optionItem.innerText;
 
-          this.speedLabelNode.innerHTML = evt.target.innerText;
-
+          this._speed = rateStr;
           this.emit("selected", rateStr);
         }
       },
+
+      getSpeed: function () {
+        return this._speed;
+      },
+      setSpeed: function (speed) {
+        var item = null;
+        switch (speed) {
+          case "0.25": {
+            item = this.item025; break;
+          } case "0.5": {
+            item = this.item05; break;
+          } case "1": {
+            item = this.item1; break;
+          } case "1.5": {
+            item = this.item15; break;
+          } case "2": {
+            item = this.item2; break;
+          } default: {
+            item = null;
+          }
+        }
+        if (item) {
+          on.emit(item, 'click', { cancelable: false, bubbles: true });
+        }
+      },
+
       //speed menu
       _setMenuPosition: function() {
         var sPosition = html.position(this.speedLabelNode);

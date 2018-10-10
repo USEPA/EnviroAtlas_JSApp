@@ -376,7 +376,7 @@
                 "uri": "widgets/TimeSlider/Widget",
                 "closeable": true,
                 "openAtStart": false,                
-                "config": "widgets/Demo/config.json"
+                "config": "widgets/TimeSlider/config.json"
             }, {
                 "position": {
                     "left": 0,

@@ -4,5 +4,6 @@ define({
   "disableTips": "시간 인식 레이어를 볼 수 없습니다.",
   "timeExtent": "${FROMTIME} ~ ${ENDTIME}",
   "layers": "레이어: ",
-  "speedLabel": "재생 속도"
+  "speedLabel": "재생 속도",
+  "liveData": "실시간 데이터"
 });

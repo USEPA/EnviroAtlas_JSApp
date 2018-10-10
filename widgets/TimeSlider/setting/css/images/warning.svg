@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="14px" viewBox="0 0 16 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>warning</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="time-settings-calendar" transform="translate(-413.000000, -566.000000)" fill="#CC0000">
+            <g id="Group-6" transform="translate(380.000000, 244.000000)">
+                <g id="Group-12" transform="translate(33.000000, 322.000000)">
+                    <g id="warning">
+                        <path d="M0,13.8181818 L16,13.8181818 L8,0 L0,13.8181818 L0,13.8181818 Z M8.72727273,11.6363636 L7.27272727,11.6363636 L7.27272727,10.1818182 L8.72727273,10.1818182 L8.72727273,11.6363636 L8.72727273,11.6363636 Z M8.72727273,8.72727273 L7.27272727,8.72727273 L7.27272727,5.81818182 L8.72727273,5.81818182 L8.72727273,8.72727273 L8.72727273,8.72727273 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

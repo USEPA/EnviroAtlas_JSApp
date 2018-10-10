@@ -4,5 +4,6 @@ define({
   "disableTips": "Нет отображаемых временных слоев.",
   "timeExtent": "${FROMTIME} до ${ENDTIME}",
   "layers": "Слои: ",
-  "speedLabel": "Скорость воспроизведения"
+  "speedLabel": "Скорость воспроизведения",
+  "liveData": "Живые данные"
 });

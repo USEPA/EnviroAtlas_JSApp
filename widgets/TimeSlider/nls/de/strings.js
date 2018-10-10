@@ -4,5 +4,6 @@ define({
   "disableTips": "Es sind keine zeitbezogenen Layer sichtbar.",
   "timeExtent": "${FROMTIME} bis ${ENDTIME}",
   "layers": "Layer: ",
-  "speedLabel": "Wiedergabegeschwindigkeit"
+  "speedLabel": "Wiedergabegeschwindigkeit",
+  "liveData": "Live-Daten"
 });

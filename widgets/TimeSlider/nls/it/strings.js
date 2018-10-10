@@ -4,5 +4,6 @@ define({
   "disableTips": "Nessun layer abilitato per le variazioni temporali visibile.",
   "timeExtent": "Da ${FROMTIME} a ${ENDTIME}",
   "layers": "Layer: ",
-  "speedLabel": "Velocità di riproduzione"
+  "speedLabel": "Velocità di riproduzione",
+  "liveData": "Dati in tempo reale"
 });

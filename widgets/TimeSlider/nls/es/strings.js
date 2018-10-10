@@ -4,5 +4,6 @@ define({
   "disableTips": "No hay capas con valores de tiempo visibles.",
   "timeExtent": "De ${FROMTIME} a ${ENDTIME}",
   "layers": "Capas: ",
-  "speedLabel": "Velocidad de reproducción"
+  "speedLabel": "Velocidad de reproducción",
+  "liveData": "Datos en directo"
 });

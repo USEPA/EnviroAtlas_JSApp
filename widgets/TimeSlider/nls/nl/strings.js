@@ -4,5 +4,6 @@ define({
   "disableTips": "Er zijn geen lagen met tijdfunctionaliteit zichtbaar.",
   "timeExtent": "${FROMTIME} naar ${ENDTIME}",
   "layers": "Lagen: ",
-  "speedLabel": "Playback speed"
+  "speedLabel": "Playback speed",
+  "liveData": "Live gegevens"
 });

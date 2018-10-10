@@ -4,5 +4,6 @@ define({
   "disableTips": "אין שכבות גלויות המתייחסות לנתוני זמן.",
   "timeExtent": "${FROMTIME} עד ${ENDTIME}",
   "layers": "שכבות: ",
-  "speedLabel": "מהירות הצגה"
+  "speedLabel": "מהירות הצגה",
+  "liveData": "נתונים חיים"
 });

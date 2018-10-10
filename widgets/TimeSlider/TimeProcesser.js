@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 define(['dojo/_base/declare',
   'dojo/_base/lang',
-  'dojo/_base/array',
   'dojo/_base/config',
   'dojo/Evented',
   'dijit/_WidgetBase',
@@ -24,21 +23,24 @@ define(['dojo/_base/declare',
   'dojo/promise/all',
   'dojo/Deferred',
   'esri/request',
+  './utils',
   'moment/moment',
   'dojo/date/locale',
   'dojo/i18n',
   'esri/lang',
   'esri/TimeExtent'
 ],
-  function (declare, lang, array, dojoConfig,
+  function (declare, lang, dojoConfig,
     Evented, _WidgetBase, when, all, Deferred, esriRequest,
-    moment, dateLocale, i18n, esriLang, TimeExtent) {
+    utils, moment, dateLocale, i18n, esriLang, TimeExtent) {
 
     var clazz = declare([_WidgetBase, Evented], {
       nls: null,
       config: null,
       map: null,
       layerInfosObj: null,
+
+      _INIT_TIME_STEAMP: null,//for AutoRefresh
 
       setLayerInfosObj: function (layerInfosObj) {
         this.layerInfosObj = layerInfosObj;
@@ -68,30 +70,11 @@ define(['dojo/_base/declare',
       },
 
       _getFullTimeExtent: function (timeExtents) {
-        var fullTimeExtent = null;
-        array.forEach(timeExtents, lang.hitch(this, function (te) {
-          if (!te) {
-            return;
-          }
-
-          if (!fullTimeExtent) {
-            fullTimeExtent = new TimeExtent(new Date(te.startTime.getTime()),
-              new Date(te.endTime.getTime()));
-          } else {
-            if (fullTimeExtent.startTime > te.startTime) {
-              fullTimeExtent.startTime = new Date(te.startTime.getTime());
-            }
-            if (fullTimeExtent.endTime < te.endTime) {
-              fullTimeExtent.endTime = new Date(te.endTime.getTime());
-            }
-          }
-        }));
-
-        return fullTimeExtent;
+        return utils.getFullTimeExtent(timeExtents);
       },
-
+      //update liveData timeExtent
       _getUpdatedTime: function (layer) {
-        if (layer && layer.url && this.hasLiveData(layer)) {
+        if (layer && layer.url && utils.hasLiveData(layer)) {
           var timeExtent = null;
           return esriRequest({
             url: layer.url,
@@ -105,6 +88,8 @@ define(['dojo/_base/declare',
               timeExtent = new TimeExtent();
               timeExtent.startTime = new Date(result.timeExtent[0]);
               timeExtent.endTime = new Date(result.timeExtent[1]);
+
+              layer.timeInfo.timeExtent = timeExtent;//update live data
             }
           })).always(lang.hitch(this, function () {
             return when(timeExtent || lang.getObject('timeInfo.timeExtent', false, layer) || null);
@@ -137,35 +122,36 @@ define(['dojo/_base/declare',
         }));
       },
 
-      needUpdateFullTime: function () {
-        var i = 0, len, layer, layerId;
-        for (i = 0, len = this.map.layerIds.length; i < len; i++) {
-          layerId = this.map.layerIds[i];
-          layer = this.map.getLayer(layerId);
+      // needUpdateFullTime: function () {
+      //   var i = 0, len, layer, layerId;
+      //   for (i = 0, len = this.map.layerIds.length; i < len; i++) {
+      //     layerId = this.map.layerIds[i];
+      //     layer = this.map.getLayer(layerId);
 
-          if (this.hasLiveData(layer)) {
-            return true;
-          }
-        }
+      //     if (utils.hasLiveData(layer)) {
+      //       return true;
+      //     }
+      //   }
 
-        for (i = 0, len = this.map.graphicsLayerIds.length; i < len; i++) {
-          layerId = this.map.graphicsLayerIds[i];
-          layer = this.map.getLayer(layerId);
+      //   for (i = 0, len = this.map.graphicsLayerIds.length; i < len; i++) {
+      //     layerId = this.map.graphicsLayerIds[i];
+      //     layer = this.map.getLayer(layerId);
 
-          if (this.hasLiveData(layer)) {
-            return true;
-          }
-        }
+      //     if (utils.hasLiveData(layer)) {
+      //       return true;
+      //     }
+      //   }
 
-        return false;
-      },
-      hasLiveData: function (layer) {
-        // doesn't need to consider KMLLayers
-        return layer && layer.useMapTime && layer.timeInfo && layer.timeInfo.hasLiveData;
-      },
+      //   return false;
+      // },
+      // hasLiveData: function (layer) {
+      //   // doesn't need to consider KMLLayers
+      //   return layer && layer.useMapTime && layer.timeInfo && layer.timeInfo.hasLiveData;
+      // },
 
       setTimeSlider: function (timeSlider) {
         this.timeSlider = timeSlider;
+        this._INIT_TIME_STEAMP = new Date().getTime();//for AutoRefresh
       },
       _getTimeFormatLabel: function (timeExtent) {
         var label = this.nls.timeExtent;
@@ -175,11 +161,12 @@ define(['dojo/_base/declare',
         var endTime = "";
 
         if (!timeExtent && this.timeSlider) {
-          if (this.timeSlider.thumbCount === 2) {
-            start = this.timeSlider.timeStops[0];
-            end = this.timeSlider.timeStops[1];
+          //var startTime =
+          if (this.timeSlider.thumbCount === 2) {//TODO
+            start = this.timeSlider.timeStops[this.timeSlider.thumbIndexes[0]];
+            end = this.timeSlider.timeStops[this.timeSlider.thumbIndexes[1]];
           } else {
-            start = this.timeSlider.timeStops[0];
+            start = this.timeSlider.timeStops[this.timeSlider.thumbIndexes[0]];
           }
         } else if (!timeExtent && !this.timeSlider) {
           //No time-aware layers
@@ -190,13 +177,11 @@ define(['dojo/_base/declare',
           if (timeExtent.endTime.getTime() - timeExtent.startTime.getTime() > 0) {
             end = timeExtent.endTime;
           }
-
-        }					  	
-       
+        }
 
         if (this.config.timeFormat !== "auto" &&
           !("Custom" === this.config.timeFormat && "" === this.config.customDateFormat)) {
-          
+
           var format = ("Custom" === this.config.timeFormat ? this.config.customDateFormat : this.config.timeFormat);
           startTime = moment(start.getTime()).format(format);
           if (end) {
@@ -253,6 +238,7 @@ define(['dojo/_base/declare',
             formatLength = "long";
           }
 
+          //start
           startTime = dateLocale.format(start, {
             datePattern: datePattern,
             formatLength: formatLength,
@@ -267,6 +253,10 @@ define(['dojo/_base/declare',
               .replace(/\{1\}/g, startTime).replace(/\{0\}/g, startTime2);
             startTime = startTime3;
           }
+          if(!utils.isValidDataStrByDateLocale(startTime)){
+            startTime = "";
+          }
+
           //end
           if (end) {
             if (showEndDate) {
@@ -289,6 +279,10 @@ define(['dojo/_base/declare',
                 endTime = endTime2;
               }
             }
+          }
+
+          if(!utils.isValidDataStrByDateLocale(endTime)){
+            endTime = "";
           }
         }
 
@@ -364,6 +358,10 @@ define(['dojo/_base/declare',
           }
         }
 
+        if (0 === interval) {
+          interval = 1;//skip api bug, when 0===interval
+        }
+
         return {
           interval: interval,
           units: units
@@ -402,31 +400,53 @@ define(['dojo/_base/declare',
         if (timeSliderProps) {
           //1. props from mapViwer
           tsProps = lang.clone(timeSliderProps);
+
+          // var operLayers = lang.getObject('itemData.operationalLayers', false, itemInfo);
+          // if (operLayers) {
+          //   //TODO not sure
+          //   tsProps.disabledLayers = array.map(operLayers, lang.hitch(this, function (layer) {
+          //     var layerInfo = layer.layerObject;
+
+          //     var isTimeEnabled = layerInfo.timeInfo && layerInfo.timeInfo.timeExtent; //&& !parameterList.layer.timeInfo.hasLiveData;
+          //     var usesTime = true;
+          //     if ("undefined" !== typeof layer.itemProperties.timeAnimation) {
+          //       usesTime = false;// arcgis-portal-app-master\src\js\arcgisonline\map\itemData.js Line#205
+          //     }
+          //     if (false === layer.timeAnimation) {
+          //       usesTime = false;
+          //     }
+          //     if (true === layer.timeAnimation) {
+          //       usesTime = true;
+          //     }
+          //     if ("undefined" !== typeof layer.itemProperties.timeAnimation &&
+          //       "undefined" !== typeof layer.timeAnimation) {
+          //       usesTime = true;
+          //     }
+
+          //     return {
+          //       layerId: layer.id,
+          //       layerUrl: layer.url,
+          //       isTimeEnabled: !!(usesTime && isTimeEnabled)
+          //     };
+          //   }));
+          //}
           def.resolve(tsProps);
         } else {
+          //TODO return null , if there is no config in mapViwer
+          def.resolve(null);
+          /*
           //2. props from map.itemInfo
           var layers = lang.getObject('itemData.operationalLayers', false, itemInfo);
-
-          //if (layers) {
-          if (this.map.layerIds.length >0) {
+          if (layers) {
             var ref = null;
-            /*for (var i = 0, len = layers.length; i < len; i++) {
+            for (var i = 0, len = layers.length; i < len; i++) {
               var layer = layers[i];
               var timeInfos = lang.getObject('resourceInfo.timeInfo', false, layer);
 
               if (timeInfos && timeInfos.timeExtent) {
                 ref = this.getPropsFromMultiLayerInfos(timeInfos, ref);
               }
-            }*/
-
-		    var layer = this.map.getLayer(window.timeSliderLayerId);
-		    
-		    if(layer != null){
-                var timeInfos = layer.timeInfo;
-                if (timeInfos && timeInfos.timeExtent) {
-                	ref = this.getPropsFromMultiLayerInfos(timeInfos, ref);
-          	    }			  	
-		    }			  
+            }
 
             if (null !== ref) {
               ref.startTime = ref.timeExtent[0];
@@ -459,12 +479,97 @@ define(['dojo/_base/declare',
             //            return def.resolve(null);
           } else {
             def.resolve(null);
-          }
+          }*/
         }
 
         return def;
-      }
+      },
+      findClosestThumbIndex: function(timeSlider, timeValue) {
+        var timeStops = timeSlider.timeStops;
+        var lower = timeStops[0];
+        if (timeValue < lower) {
+          return 0;
+        } else {
+          for (var i = 1; i < timeStops.length; i++) {
+            if (timeStops[i] >= timeValue) {
+              if ((timeValue - lower) < (timeStops[i] - timeValue)) {
+                return (i - 1);
+              } else {
+                return i;
+              }
+            } else if (i < timeStops.length - 1) {
+              lower = timeStops[i];
+            } else {
+              // out of upper range
+              return i;
+            }
+          }
+        }
+      },
+      getCurrentTimeStops: function (timeStamp) {
+        var startTime = null, endTime = null;
 
+        if (1 === this.timeSlider.thumbCount) {
+          startTime = this.timeSlider.timeStops[this.timeSlider.thumbIndexes[0]];
+        } else if (2 === this.timeSlider.thumbCount) {
+          startTime = this.timeSlider.timeStops[this.timeSlider.thumbIndexes[0]];
+          endTime = this.timeSlider.timeStops[this.timeSlider.thumbIndexes[1]];
+        }
+
+        return {
+          //TODO interval:
+          timeStamp: timeStamp,
+          thumbCount: this.timeSlider.thumbCount,
+          startTime: new Date(startTime).getTime(),
+          endTime: new Date(endTime).getTime()
+        };
+      },
+
+      //Auto Refresh
+      setAutoRefreshTimer: function (ref) {
+        var config = this.config;
+
+        if (!(config && config.autoRefresh && true === config.autoRefresh.isAutoRefresh)) {
+          this._autoRefreshFlag = false;
+          this.clearAutoRefreshTimer();
+          return;
+        }
+
+        this._autoRefreshFlag = true;
+
+        var time = utils.getAutoRefreshTime(config);
+        if (time) {
+          this._autoRefreshTimer = setTimeout(lang.hitch(this, function () {
+            var stopsObj = this.getCurrentTimeStops(this._INIT_TIME_STEAMP);
+            utils.saveToLocalCache(this.widgetId, stopsObj);
+
+            ref._closeHanlder();
+            ref._openHanlder();
+          }), time);
+        }
+      },
+      clearAutoRefreshTimer: function () {
+        if (this._autoRefreshTimer) {
+          clearTimeout(this._autoRefreshTimer);
+        }
+      },
+      restoreAutoRefreshTimer: function (timeSlider) {
+        var autoRefreshStops = utils.getCacheByKeys(this.widgetId);//timeSteamp
+        if (autoRefreshStops && autoRefreshStops.timeStamp && this._INIT_TIME_STEAMP === autoRefreshStops.timeStamp) {
+
+          var start, end;
+          timeSlider.setThumbCount(autoRefreshStops.thumbCount);
+
+          start = this.findClosestThumbIndex(timeSlider, autoRefreshStops.startTime);
+          if (1 === timeSlider.thumbCount) {
+            timeSlider.setThumbIndexes([start]);
+          } else if (2 === timeSlider.thumbCount) {
+            end = this.findClosestThumbIndex(timeSlider, autoRefreshStops.endTime);
+            //TODO if(start===end){
+            timeSlider.setThumbIndexes([start, end]);
+          }
+        }
+      }
     });
 
     clazz.localeDic = {

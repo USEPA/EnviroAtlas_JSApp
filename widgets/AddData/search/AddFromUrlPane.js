@@ -57,7 +57,10 @@ define(["dojo/_base/declare",
     FeatureLayer, GeoRSSLayer, ImageParameters, KMLLayer, StreamLayer,
     VectorTileLayer, WFSLayer, WMSLayer, WMTSLayer,
     InfoTemplate, WidgetManager) {
-
+    var widgetJsonTimeSlider = {
+        id: 'widgets_TimeSlider_Widget_32',
+        uri: "widgets/TimeSlider/Widget"
+    };
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
       i18n: i18n,
@@ -248,27 +251,17 @@ define(["dojo/_base/declare",
 			       });
 			       timeAwareLayer.id = window.timeSliderLayerId;
 			       timeAwareLayer.on('update-end', function(evt) {
-				       	  var wm = WidgetManager.getInstance();
-				          var widget = wm.getWidgetById('widgets_TimeSlider_Widget_32');
-					      if(!widget.started){
-					        try {
-					          widget.started = true;
-					          widget.startup();
-					        } catch (err) {
-					          console.error('fail to startup widget ' + widget.name + '. ' + err.stack);
-					        }
-					      }
-					      if (!window.timeSliderPause){
-					      if (widget.state === 'closed') {
-					        html.setStyle(widget.domNode, 'display', '');
-					        widget.setState('opened');
-					        try {
-					          widget.onOpen();
-					        } catch (err) {
-					          console.error('fail to open widget ' + widget.name + '. ' + err.stack);
-						        }
-					        }
-					      }		
+				       	var wm = WidgetManager.getInstance();
+				       	wm.loadWidget(widgetJsonTimeSlider)
+                        .then(lang.hitch(this, function(widget){
+                          var position = {
+                            relativeTo: "map"                            
+                          };
+                          position.bottom = "50px";
+                          position.left = "100px";
+                          widget.setPosition(position);
+                          wm.openWidget(widget);
+                        }));
 					});
 			       	map.addLayers([timeAwareLayer]);                
               }

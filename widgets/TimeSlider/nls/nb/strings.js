@@ -4,5 +4,6 @@ define({
   "disableTips": "Ingen tidsbevisste lag er synlige.",
   "timeExtent": "${FROMTIME} til ${ENDTIME}",
   "layers": "Lag: ",
-  "speedLabel": "Avspillingshastighet"
+  "speedLabel": "Avspillingshastighet",
+  "liveData": "Aktive data"
 });

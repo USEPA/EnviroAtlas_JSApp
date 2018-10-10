@@ -4,5 +4,6 @@ define({
   "disableTips": "Nu sunt vizibile straturi tematice care detectează timpul.",
   "timeExtent": "De la ${FROMTIME} până la ${ENDTIME}",
   "layers": "Straturi tematice: ",
-  "speedLabel": "Viteză de redare"
+  "speedLabel": "Viteză de redare",
+  "liveData": "Date în timp real"
 });

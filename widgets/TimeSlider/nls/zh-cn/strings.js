@@ -4,5 +4,6 @@ define({
   "disableTips": "没有任何可见的时间感知型图层。",
   "timeExtent": "${FROMTIME} 至 ${ENDTIME}",
   "layers": "图层: ",
-  "speedLabel": "回放速度"
+  "speedLabel": "回放速度",
+  "liveData": "实时数据"
 });

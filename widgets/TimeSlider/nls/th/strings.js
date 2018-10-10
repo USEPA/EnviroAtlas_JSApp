@@ -4,5 +4,6 @@ define({
   "disableTips": "ไม่มีชั้นข้อมูลเวลาตระหถึงจะมอง",
   "timeExtent": "${FROMTIME} ไปยัง ${ENDTIME}",
   "layers": "ชั้นข้อมูล: ",
-  "speedLabel": "ความเร็วในการเล่นย้อน"
+  "speedLabel": "ความเร็วในการเล่นย้อน",
+  "liveData": "ข้อมูลสด (Live data)"
 });
