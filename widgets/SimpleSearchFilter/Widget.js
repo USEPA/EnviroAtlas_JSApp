@@ -1126,18 +1126,22 @@ define([
 		var chkCommunityScale = document.getElementById("chkCommunity");
 
 		if (document.getElementById('searchFilterText').value != ''){
-			chkNationalScale.className ="cmn-toggle cmn-toggle-round-flat-grayedout";
-			document.getElementById("chkNational_label").className = 'topicTitleGray';
+			//chkNationalScale.className ="cmn-toggle cmn-toggle-round-flat-grayedout";
+			chkNationalScale.disabled = true;
+			//document.getElementById("chkNational_label").className = 'topicTitleGray';
 			
-			chkCommunityScale.className ="cmn-toggle cmn-toggle-round-flat-grayedout";
-			document.getElementById("chkCommunity_label").className = 'topicTitleGray';
+			//chkCommunityScale.className ="cmn-toggle cmn-toggle-round-flat-grayedout";
+			chkCommunityScale.disabled = true;
+			//document.getElementById("chkCommunity_label").className = 'topicTitleGray';
 			
 			var usingSearchBox = true;
 		} else {
-			chkNationalScale.className ="cmn-toggle cmn-toggle-round-flat";
-			document.getElementById("chkNational_label").className = 'none';
-			chkCommunityScale.className ="cmn-toggle cmn-toggle-round-flat";
-			document.getElementById("chkCommunity_label").className = 'none';
+			//chkNationalScale.className ="cmn-toggle cmn-toggle-round-flat";
+			chkNationalScale.disabled = false;
+			//document.getElementById("chkNational_label").className = 'none';
+			//chkCommunityScale.className ="cmn-toggle cmn-toggle-round-flat";
+			chkCommunityScale.disabled = false;
+			//document.getElementById("chkCommunity_label").className = 'none';
 			var usingSearchBox = false;
 		}
 				
@@ -1157,20 +1161,20 @@ define([
 	        var chkboxId = window.chkTopicPrefix + topicDictionary[key];
 	        var checkbox = document.getElementById(chkboxId);			
 
-	        var title = document.getElementById(chkboxId + '_label');
+	        //var title = document.getElementById(chkboxId + '_label');
+	        //var title = document.getElementById(chkboxId);
 
 	       if (bCurrentTopicDisabled || usingSearchBox) {
-		        checkbox.className ="cmn-toggle cmn-toggle-round-flat-grayedout";	
+		        //checkbox.className ="cmn-toggle cmn-toggle-round-flat-grayedout";
+		        checkbox.nextSibling.style.color= "#b3b3b3";
 		        checkbox.removeEventListener("click", _updateSelectableLayer);	   
-		        title.className = 'topicTitleGray';    
+		        //title.className = 'topicTitleGray';    
 		        checkbox.disabled = true;	
 	       } else {
-	       		/*if (checkbox.className == "cmn-toggle cmn-toggle-round-flat-grayedout"){
-	       			checkbox.checked = false;//If the togglebutton is grayed out previously, then it should be off when it is activated
-	       		}*/
-		        checkbox.className ="cmn-toggle cmn-toggle-round-flat";	
+		        //checkbox.className ="cmn-toggle cmn-toggle-round-flat";	
+		        checkbox.nextSibling.style.color= "#000000";
 		        checkbox.addEventListener("click", _updateSelectableLayer);	    
-		        title.className = 'none';  
+		        //title.className = 'none';  
 		        checkbox.disabled = false;	       	
 	       }
 		}
@@ -1241,6 +1245,7 @@ define([
 			
 	        chkboxId = "dragForFilter";
 			checkbox.id = chkboxId;
+			checkbox.value = "Select data by geography | topic";
 			checkbox.className ="jimu-widget-filterforselect-drag";
 	        newCheckboxCell.appendChild(checkbox);    
     },	
@@ -1302,11 +1307,14 @@ define([
 			checkbox.name = chkboxId;
 			checkbox.value = 0;
 			checkbox.id = chkboxId;
-			checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+			//checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+			checkbox.className ="chk-toggle";
 	        newCheckboxCell.appendChild(checkbox);    
 	        var label = document.createElement('label');
 	        label.setAttribute("for",chkboxId);
-			label.innerHTML = "";
+	        label.className ="label-chk-toggle";
+			//label.innerHTML = "";
+			label.innerHTML = keys[i];
 			newCheckboxCell.appendChild(label);
 
 
@@ -1315,15 +1323,14 @@ define([
 				
 			});
 			/// add category title:
-           	var newTitleCell  = newRow.insertCell(1);
+           	/*var newTitleCell  = newRow.insertCell(1);
            	newTitleCell.id = chkboxId + '_label';
            	newTitleCell.style.paddingBottom = "3px";
            	//newTitleCell.style.width = "40%"
         
 			var title = document.createElement('label');
 			title.innerHTML = keys[i];    
-			//title.style.fontSize = "10px";
-			newTitleCell.appendChild(title); 
+			newTitleCell.appendChild(title); */
 	    	
 	    }
 
@@ -1366,7 +1373,7 @@ define([
 		checkbox.name = chkboxId;
 		checkbox.checked = false;
 		checkbox.id = chkboxId;
-		checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+		//checkbox.className ="cmn-toggle cmn-toggle-round-flat";
         newCheckboxCell.appendChild(checkbox);    
         var label = document.createElement('label');
         label.setAttribute("for",chkboxId);
@@ -1393,7 +1400,7 @@ define([
 		checkbox.name = chkboxId;
 		checkbox.checked = false;
 		checkbox.id = chkboxId;
-		checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+		//checkbox.className ="cmn-toggle cmn-toggle-round-flat";
         newCheckboxCell.appendChild(checkbox);    
         var label = document.createElement('label');
         label.setAttribute("for",chkboxId);
@@ -1798,7 +1805,6 @@ define([
         		window.filterForSelectFirstCreated = false;
         		
         	}
-        	
         	widgetManager.openWidget(filterForSelectWidgetEle.id);
         	document.getElementById("titleForFilter").style.display = ""; 
         	document.getElementById("resizeForFilterArea").style.display = "";

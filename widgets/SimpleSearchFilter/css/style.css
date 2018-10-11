@@ -251,6 +251,12 @@ input.cmn-toggle-round-flat-grayedout + label:after {
   -o-transition: margin 0.4s, background 0.6s;
   transition: margin 0.4s, background 0.6s;
 }
+input.chk-toggle {
+	display: none;
+}
+input.chk-toggle:checked + .label-chk-toggle{
+  font-weight: bold;
+}
 /*input.cmn-toggle-round-flat-grayedout:checked + label:before{
   background-color: #8ce196;
 }
@@ -330,36 +336,36 @@ a.esIcons {
   /*padding-bottom: 3px;*/
   font-size: 15px;
   font-weight: bold;
-  background-color: #f4966e;
+  background-color: #b3b3b3;
   /*margin-bottom: 3px;*/
 }
 
 .topicHeaderESB:hover {
-  background-color: #f27641;
+  background-color: #8c8c8c;
   cursor: pointer;
 }
 .topicHeaderPBS {
   /*padding-bottom: 3px;*/
   font-size: 15px;
   font-weight: bold;
-  background-color: #b6f4a6;
+  background-color: #b3b3b3;
   /*margin-bottom: 3px;*/
 }
 
 .topicHeaderPBS:hover {
-  background-color: #729b68;
+  background-color: #8c8c8c;
   cursor: pointer;
 }
 .topicHeaderBNF {
   /*padding-bottom: 3px;*/
   font-size: 15px;
   font-weight: bold;
-  background-color: #b3c4f2;
+  background-color: #b3b3b3;
   /*margin-bottom: 3px;*/
 }
 
 .topicHeaderBNF:hover {
-  background-color: #8995b7;
+  background-color: #8c8c8c;
   cursor: pointer;
 }
 .topicTitleGray {
@@ -418,6 +424,8 @@ a.esIcons {
   bottom: 0px;
   left: 0px;
   border: none;
+  background-color: #00436F;
+  color: white; 
 }
 #butFilterInSimpleSearch {
 	height: 30px;
