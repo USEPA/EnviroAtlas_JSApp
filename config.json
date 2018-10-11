@@ -58,7 +58,7 @@
                 "uri": "widgets/HomeButton/Widget",
                 "position": {
                     "left": 7,
-                    "top": 75,
+                    "top": 147,
                     "relativeTo": "map"
                 },
                 "version": "2.5",
@@ -101,7 +101,7 @@
             }, {
                 "uri": "widgets/CommunityDisplay/Widget",
                 "position": {
-                    "left": 45,
+                    "left": 95,
                     "top": 45,
                     "relativeTo": "map"
                 },
@@ -111,7 +111,7 @@
                 "label": "CommunityDisplay"
             }, {
                 "position": {
-                    "left": 295,
+                    "right": 55,
                     "top": 5,
                     "width": 380,
                     "height": 410,
@@ -126,8 +126,8 @@
                 "config": "configs/eBasemapGallery/config_Enhanced Basemap Gallery.json"
             }, {
                 "position": {
-                    "left": 345,
-                    "top": 5,
+                    "left": 45,
+                    "top": 45,
                     "width": 490,
                     "height": 480,
                     "relativeTo": "map"
@@ -141,10 +141,10 @@
                 "config": "widgets/SelectCommunity/config.json"
             }, {
                 "position": {
-                    "left": 395,
+                    "left": 295,
                     "top": 5,
                     "width": 230,
-                    "height": 310,
+                    "height": 230,
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
@@ -243,7 +243,7 @@
             }, {
                 "position": {
                     "left": 445,
-                    "top": 5,
+                    "top": -40,
                     "width": 350,
                     "height": 310,
                     "relativeTo": "map"
@@ -257,8 +257,8 @@
                 "config": "widgets/Drawer/config.json"
             }, {
                 "position": {
-                    "left": 695,
-                    "top": -40,
+                    "left": 345,
+                    "top": 5,
                     "width": 425,
                     "height": 480,
                     "relativeTo": "map"
@@ -272,23 +272,8 @@
                 "config": "widgets/ECAT/config.json"
             }, {
                 "position": {
-                    "left": 695,
-                    "top": -40,
-                    "width": 425,
-                    "height": 200,
-                    "relativeTo": "map"
-                },
-                "placeholderIndex": 1,
-                "id": "widgets_TimeSeriesViewer_35",
-                "name": "TimeSeriesViewer",
-                "label": "Time Series Viewer",
-                "version": "1.3",
-                "uri": "widgets/TimeSeriesViewer/Widget",
-                "config": "widgets/TimeSeriesViewer/config.json"
-            }, {
-                "position": {
-                    "left": 695,
-                    "top": -40,
+                    "left": 395,
+                    "top": 5,
                     "width": 360,
                     "height": 420,
                     "relativeTo": "map"
@@ -302,8 +287,8 @@
                 "config": "widgets/HucNavigation/config.json"
             }, {
                 "position": {
-                    "left": 645,
-                    "top": -40,
+                    "left": 445,
+                    "top": 5,
                     "width": 440,
                     "height": 410,
                     "relativeTo": "map"
@@ -317,8 +302,8 @@
                 "config": "widgets/Raindrop/config.json"
             }, {
                 "position": {
-                    "left": 695,
-                    "top": -40,
+                    "left": 495,
+                    "top": 5,
                     "width": 380,
                     "height": 410,
                     "relativeTo": "map"
@@ -332,7 +317,7 @@
                 "config": "widgets/ElevationProfile/config.json"
             }, {
                 "position": {
-                    "left": 495,
+                    "left": 545,
                     "top": 5,
                     "width": 380,
                     "height": 410,
@@ -348,7 +333,7 @@
             }, {
                 "position": {
                     "left": 545,
-                    "top": 5,
+                    "top": -40,
                     "width": 370,
                     "height": 270,
                     "relativeTo": "map"
@@ -363,7 +348,7 @@
             }, {
                 "position": {
                     "left": 595,
-                    "top": 5,
+                    "top": -40,
                     "width": 370,
                     "height": 270,
                     "relativeTo": "map"
@@ -437,7 +422,7 @@
                 "inPanel": false,
                 "position": {
                     "left": 7,
-                    "top": 110,
+                    "top": -40,
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
@@ -463,7 +448,6 @@
                     "left":-800,
                     "relativeTo": "map"
                 },
-                
                 "version": "2.5",
                 "id": "widgets_FilterForSelect_Widget",
                 "name": "FilterForSelect",
@@ -495,10 +479,11 @@
                 "uri": "widgets/ExtentNavigate/Widget",
                 "visible": true,
                 "position": {
-                    "top": 147,
+                    "top": 75,
                     "left": 7,
                     "relativeTo": "map"
                 },
+                "placeholderIndex": 1,
                 "version": "2.5",
                 "id": "widgets_ExtentNavigate_Widget_35",
                 "name": "ExtentNavigate"
@@ -506,9 +491,10 @@
                 "uri": "widgets/FullScreen/Widget",
                 "position": {
                     "left": 7,
-                    "top": 212,
+                    "top": -40,
                     "relativeTo": "map"
                 },
+                "placeholderIndex": 1,
                 "version": "2.5",
                 "id": "widgets_FullScreen_Widget_36",
                 "name": "FullScreen"
@@ -571,7 +557,7 @@
                 "label": "Ecosystem Services and Biodiversity",
                 "version": "1.3",
                 "uri": "widgets/SimpleSearchFilter/Widget",
-                "index": 5,
+                "index": 1,
                 "openAtStart": true,
                 "id": "widgets_SimpleSearchFilter_Widget_37"
             }, {
@@ -579,7 +565,7 @@
                 "label": "Demographic Layers",
                 "version": "1.3",
                 "uri": "widgets/DemographicLayers/Widget",
-                "index": 5,
+                "index": 2,
                 "id": "widgets_DemographicLayers"
             },{
                 "name": "TimeSeries",
@@ -587,14 +573,14 @@
                 "version": "1.3",
                 "uri": "widgets/TimeSeries/Widget",
                 "config": "widgets/TimeSeries/config.json",
-                "index": 5,
+                "index": 3,
                 "id": "widgets_TimeSeries_Widget"
             }, {
                 "id": "widgets_AddData_30",
                 "name": "Add Data",
                 "label": "Add Data",
                 "version": "2.5",
-                "index": 5,
+                "index": 4,
                 "uri": "widgets/AddData/Widget",
                 "config": "widgets/AddData/config.json"
             }, {
@@ -887,22 +873,7 @@
                     "version": "1.3",
                     "uri": "widgets/ECAT/Widget",
                     "config": "widgets/ECAT/config.json"
-                }, {
-                    "position": {
-                        "left": 695,
-                        "top": -40,
-                        "width": 425,
-                        "height": 200,
-                        "relativeTo": "map"
-                    },
-                    "placeholderIndex": 1,
-                    "id": "widgets_TimeSeriesViewer_35",
-                    "name": "TimeSeriesViewer",
-                    "label": "Time Series Viewer",
-                    "version": "1.3",
-                    "uri": "widgets/TimeSeriesViewer/Widget",
-                    "config": "widgets/TimeSeriesViewer/config.json"
-                }, {
+                },{
                     "position": {
                         "left": 695,
                         "top": -40,
@@ -965,7 +936,7 @@
                 }, {
                     "position": {
                         "right": 5,
-                        "top": 275,
+                        "top": -40,
                         "width": 370,
                         "height": 490,
                         "relativeTo": "map"
@@ -980,7 +951,7 @@
                 }, {
                 "position": {
                     "right": 5,
-                    "top": 320,
+                    "top": -40,
                     "width": 370,
                     "height": 490,
                     "relativeTo": "map"

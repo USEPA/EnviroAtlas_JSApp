@@ -1,6 +1,6 @@
 .jimu-widget-extent-navigate{
   background-color: #ccc;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.4);
   cursor: pointer;
   font-size: 24px;
   line-height: 25px;
@@ -21,7 +21,7 @@
 
 .jimu-widget-extent-navigate .operation:hover{
   background-color: #848385;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0,0,0,0.6);
 }
 
 .jimu-widget-extent-navigate .operation.jimu-state-disabled{

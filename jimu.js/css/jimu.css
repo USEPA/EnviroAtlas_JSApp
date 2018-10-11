@@ -865,7 +865,7 @@ css for the dijits
 .jimu-widget-onscreen-icon{
   position: absolute;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 50%;
 }
 .jimu-widget-onscreen-icon img{
   width: 20px;
