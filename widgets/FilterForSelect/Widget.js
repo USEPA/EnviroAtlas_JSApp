@@ -58,7 +58,7 @@ define([
      *
      * @module widgets/FilterForSelect
      */
-    var leftPreset = 50;
+    var leftPreset = 0;
     var heightPreset = 700;
     var triedHeight = 0;
     var widthPreset = 460;
@@ -75,7 +75,7 @@ define([
       startup: function() {
         this.inherited(arguments);
         this._hide();
-        this.makeMoveable(this.dragFilter);
+        //this.makeMoveable(this.dragFilter);
 
       },
 
@@ -200,18 +200,22 @@ define([
       	this._draged = false; 	
       	this._hide();
       },       
-      _setHeight_Width: function() {
-        html.setStyle(this.domNode, "height", heightPreset + "px");
-        if (this.tabContainer && this.tabContainer.domNode &&
+      _setHeight_Width: function() {        
+
+        /*if (this.tabContainer && this.tabContainer.domNode &&
           (heightPreset - this.arrowDivHeight >= 0)) {
           html.setStyle(
             this.tabContainer.domNode,
             "height",
             (heightPreset - this.arrowDivHeight) + "px"
           );
-        }
+        }*/
+       
+        var heightOfFilterWidget = selfSimpleSearchFilter.domNode.parentNode.clientHeight-100;
         html.setStyle(this.domNode, "width", widthPreset + "px");
         html.setStyle(this.domNode, "left",leftPreset + "px");
+        html.setStyle(this.domNode, "height", heightOfFilterWidget + "px");
+        html.setStyle(this.domNode, "top", 140-28 + "px");        
       },
       
       _hide: function() {

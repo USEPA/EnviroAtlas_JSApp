@@ -51,22 +51,22 @@
   display:inline-block;
 }
 #titlePaneESB .dijitTitlePaneTitle {
-  background: #f4966e !important;
+  background: #b3b3b3 !important;
 }
 #titlePaneESB .dijitTitlePaneTitleHover {
-  background: #f27641 !important;
+  background: #8c8c8c !important;
 }
 #titlePanePBS .dijitTitlePaneTitle {
-  background: #b6f4a6 !important;
+  background: #b3b3b3 !important;
 }
 #titlePanePBS .dijitTitlePaneTitleHover {
-  background: #729b68 !important;
+  background: #8c8c8c !important;
 }
 #titlePaneBNF .dijitTitlePaneTitle {
-  background: #b3c4f2 !important;
+  background: #b3b3b3 !important;
 }
 #titlePaneBNF .dijitTitlePaneTitleHover {
-  background: #8995b7 !important;
+  background: #8c8c8c !important;
 }
 
 #titlePaneESB .dijitTitlePaneContentOuter {
