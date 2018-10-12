@@ -129,3 +129,11 @@
 .popup-links .link-section.signin a{
   color: #d9dde0;
 }
+
+.mapTourIcon{
+  height: 25px;
+  width: 25px;
+  margin-left: 20px;
+  vertical-align: middle;
+  cursor: pointer;
+}

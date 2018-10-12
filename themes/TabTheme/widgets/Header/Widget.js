@@ -27,11 +27,12 @@ define([
     'jimu/portalUtils',
     'jimu/utils',
     'jimu/dijit/Message',
+    'jimu/PanelManager',
     'dojo/NodeList-dom',
     'dojo/NodeList-manipulate'
   ],
   function(declare, lang, array, html, query, on, topic,
-    BaseWidget, tokenUtils, portalUtils, utils, Message) {
+    BaseWidget, tokenUtils, portalUtils, utils, Message, PanelManager) {
     /* global jimuConfig */
     /*jshint scripturl:true*/
     var clazz = declare([BaseWidget], {
@@ -59,6 +60,7 @@ define([
         this.switchableElements.title = query('.jimu-title', this.domNode);
         this.switchableElements.links = query('.links', this.domNode);
         this.switchableElements.subtitle = query('.jimu-subtitle', this.domNode);
+        this.mapTour = query('#mapTourIcon', this.domNode);
 
         this._handleTitleColorAndLogoLink(this.appConfig);
 
@@ -105,6 +107,13 @@ define([
         } else {
           html.setStyle(this.aboutNode, 'display', 'none');
         }
+        
+        on(this.mapTour, "click", function(){
+            var widgetName = 'Demo';
+            var widget = selfCommunityDisplay.appConfig.getConfigElementsByName(widgetName)[0];
+            var pm = PanelManager.getInstance();
+            pm.showPanel(widget);
+        });
       },
 
       onAppConfigChanged: function(appConfig, reason, changedData) {
