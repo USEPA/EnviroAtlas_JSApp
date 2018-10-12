@@ -101,7 +101,7 @@
             }, {
                 "uri": "widgets/CommunityDisplay/Widget",
                 "position": {
-                    "left": 95,
+                    "left": 45,
                     "top": 45,
                     "relativeTo": "map"
                 },
@@ -127,7 +127,7 @@
             }, {
                 "position": {
                     "left": 45,
-                    "top": 45,
+                    "top": -40,
                     "width": 490,
                     "height": 480,
                     "relativeTo": "map"
@@ -730,7 +730,7 @@
                 }, {
                     "position": {
                         "right": 5,
-                        "top": 95,
+                        "top": -40,
                         "width": 490,
                         "height": 480,
                         "relativeTo": "map"

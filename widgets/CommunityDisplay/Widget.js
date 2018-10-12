@@ -21,6 +21,7 @@ define([
     'dijit/_WidgetsInTemplateMixin',
     'jimu/BaseWidget',
     'jimu/utils',
+    'jimu/PanelManager',
     'dojo/_base/lang',
     'dojo/on',
     "dojo/dom-style",
@@ -35,6 +36,7 @@ define([
     _WidgetsInTemplateMixin,
     BaseWidget,
     utils,
+    PanelManager,
     lang,
     on,
     domStyle,
@@ -66,19 +68,21 @@ define([
 		  } 
 	  },
       startup: function() {
+        selfCommunityDisplay = this;
         this.inherited(arguments);
 		this.communitydisplayInfo.innerHTML = allCommunities;
 		domClass.add(this.communityDisplayBackground, "communitydisplay-background");
         var box = html.getContentBox(this.communityDisplayBackground);
 
         html.setStyle(this.foldContainer, 'width', (box.w) + 'px');
-
-      },
-
-      onOpen: function() {
-
-      }, 
-
+        on(this, "click", function(){
+            var widgetName = 'SelectCommunity';
+            var widget = selfCommunityDisplay.appConfig.getConfigElementsByName(widgetName)[0];
+            var pm = PanelManager.getInstance();
+            widget.panel.position = {left: 43, top: 43, width: 490, height: 480, relativeTo: "map"};
+            pm.showPanel(widget);
+        });
+      }
     });
 
     return clazz;
