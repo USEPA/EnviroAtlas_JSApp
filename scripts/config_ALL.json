@@ -25921,7 +25921,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/Maximum_common_bird_species_in_steep_decline/MapServer",
                 "autorefresh": 0,
@@ -25974,7 +25974,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/Maximum_modeled_G1G2G3_species/MapServer",
                 "autorefresh": 0,
@@ -26028,7 +26028,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/Maximum_modeled_IUCN_threatened_terrestrial_vertebrate_species/MapServer",
                 "autorefresh": 0,
@@ -26082,7 +26082,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/Maximum_modeled_Partners_in_Amphibian_and_Reptile_Conservation_PARC_species/MapServer",
                 "autorefresh": 0,
@@ -26140,7 +26140,7 @@
                 "eaDescription": "This map models the maximum number of rare amphibian species that are likely to be present in any single location within a subwatershed (12-digit HUC) for 2001. Rare species were the 25% of amphibian species with the smallest amount of predicted habitat. This map is based on habitat models, not wildlife observations. The maximum number does not represent the potential richness for the entire watershed.",
                 "eaDfsLink": "ESN/Maxrareamphibianspeciesrichness.pdf",
                 "visible": false,
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "opacity": 0.6,
                 "mode": "ondemand",
                 "sourceType": "huc12",
@@ -26183,7 +26183,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/Maximum_rare_bird_species_richness/MapServer",
                 "autorefresh": 0,
@@ -26241,7 +26241,7 @@
                 "eaDescription": "This map models the maximum number of rare mammal species that are likely to be present in any single location within a subwatershed (12-digit HUC) in the Conterminous US for 2001. Rare species were the 25% of mammal species with the smallest amount of predicted habitat. This map is based on habitat models, not wildlife observations. The maximum number does not represent the potential richness for the entire watershed.",
                 "eaDfsLink": "ESN/Maxraremammalspeciesrichness.pdf",
                 "visible": false,
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "opacity": 0.6,
                 "mode": "ondemand",
                 "sourceType": "huc12",
@@ -26289,7 +26289,7 @@
                 "eaDescription": "This map models the maximum number of rare reptile species that are likely to be present in any single location within a subwatershed (12-digit HUC) in the Conterminous US for 2001. Rare species were the 25% of reptile species with the smallest amount of predicted habitat. This map is based on habitat models, not wildlife observations. The maximum number does not represent the potential richness for the entire watershed.",
                 "eaDfsLink": "ESN/Maxrarereptilespeciesrichness.pdf",
                 "visible": false,
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "opacity": 0.6,
                 "mode": "ondemand",
                 "sourceType": "huc12",
@@ -26337,7 +26337,7 @@
                 "eaDescription": "This map models the maximum number of rare terrestrial vertebrate species that are likely to be present in any single location within a subwatershed (12-digit HUC) in the Conterminous US for 2001. Rare species were the 25% of vertebrate species with the smallest amount of predicted habitat. This map is based on habitat models, not wildlife observations. The maximum number does not represent the potential richness for the entire watershed.",
                 "eaDfsLink": "ESN/Maxrarevertebratespeciesrichness.pdf",
                 "visible": false,
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "opacity": 0.6,
                 "mode": "ondemand",
                 "sourceType": "huc12",
@@ -26380,7 +26380,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/Maximum_summer_bird_species_richness/MapServer",
                 "autorefresh": 0,
@@ -26433,7 +26433,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/Maximum_winter_bird_species_richness/MapServer",
                 "autorefresh": 0,
@@ -26486,7 +26486,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/Mean_common_bird_species_in_steep_decline/MapServer",
                 "autorefresh": 0,
@@ -26539,7 +26539,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/Mean_modeled_G1_G2_G3_species/MapServer",
                 "autorefresh": 0,
@@ -26593,7 +26593,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/Mean_modeled_IUCN_threatened_terrestrial_vertebrate_species/MapServer",
                 "autorefresh": 0,
@@ -26647,7 +26647,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/Mean_modeled_Partners_in_Amphibian_and_Reptile_Conservation_PARC_species/MapServer",
                 "autorefresh": 0,
@@ -26705,7 +26705,7 @@
                 "eaDescription": "This map models the average number of rare amphibian species that are likely to be present in any single location within a subwatershed (12-digit HUC) for 2001. Rare species were the 25% of amphibian species with the smallest amount of predicted habitat. This map is based on habitat models, not wildlife observations.",
                 "eaDfsLink": "ESN/Meanrareamphibianspeciesrichness.pdf",
                 "visible": false,
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "opacity": 0.6,
                 "mode": "ondemand",
                 "sourceType": "huc12",
@@ -26748,7 +26748,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/Mean_rare_bird_species_richness/MapServer",
                 "autorefresh": 0,
@@ -26806,7 +26806,7 @@
                 "eaDescription": "This map models the average number of rare mammal species that are likely to be present in any single location within a subwatershed (12-digit HUC) in the Conterminous US for 2001. Rare species were the 25% of mammal species with the smallest amount of predicted habitat. This map is based on habitat models, not wildlife observations.",
                 "eaDfsLink": "ESN/Meanraremammalspeciesrichness.pdf",
                 "visible": false,
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "opacity": 0.6,
                 "mode": "ondemand",
                 "sourceType": "huc12",
@@ -26854,7 +26854,7 @@
                 "eaDescription": "This map models the average number of rare reptile species that are likely to be present in any single location within a subwatershed (12-digit HUC) in the Conterminous US for 2001. Rare species were the 25% of reptile species with the smallest amount of predicted habitat. This map is based on habitat models, not wildlife observations.",
                 "eaDfsLink": "ESN/Meanrarereptilespeciesrichness.pdf",
                 "visible": false,
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "opacity": 0.6,
                 "mode": "ondemand",
                 "sourceType": "huc12",
@@ -26902,7 +26902,7 @@
                 "eaDescription": "This map models the average number of rare terrestrial vertebrate species that are likely to be present in any single location within a subwatershed (12-digit HUC) in the Conterminous US for 2001. Rare species were the 25% of vertebrate species with the smallest amount of predicted habitat. This map is based on habitat models, not wildlife observations.",
                 "eaDfsLink": "ESN/Meanrarevertebratespeciesrichness.pdf",
                 "visible": false,
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "opacity": 0.6,
                 "mode": "ondemand",
                 "sourceType": "huc12",
@@ -26945,7 +26945,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/Mean_summer_bird_species_richness/MapServer",
                 "autorefresh": 0,
@@ -26998,7 +26998,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/Mean_winter_bird_species_richness/MapServer",
                 "autorefresh": 0,
@@ -27051,7 +27051,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/NIB_common_bird_species_in_steep_decline/MapServer",
                 "autorefresh": 0,
@@ -27104,7 +27104,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/NIB_modeled_G1_G2_G3_species/MapServer",
                 "autorefresh": 0,
@@ -27158,7 +27158,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/NIB_modeled_IUCN_threatened_terrestrial_vertebrate_species/MapServer",
                 "autorefresh": 0,
@@ -27212,7 +27212,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/NIB_modeled_Partners_in_Amphibian_and_Reptile_Conservation_PARC_species/MapServer",
                 "autorefresh": 0,
@@ -27270,7 +27270,7 @@
                 "eaDescription": "This map depicts an index value of rare amphibian species richness for a subwatershed (12-digit HUC) for 2001. Rare species were the 25% of amphibian species with the smallest amount of predicted habitat. This map is based on habitat models, not wildlife observations. The index value is based on average values determined for each HUC.",
                 "eaDfsLink": "ESN/NIBrareamphibianspeciesrichness.pdf",
                 "visible": false,
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "opacity": 0.6,
                 "mode": "ondemand",
                 "sourceType": "huc12",
@@ -27313,7 +27313,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/NIB_rare_bird_species_richness/MapServer",
                 "autorefresh": 0,
@@ -27371,7 +27371,7 @@
                 "eaDescription": "This map depicts an index value of rare mammal species richness for a subwatershed (12-digit HUC) in the Conterminous US for 2001. Rare species were the 25% of mammal species with the smallest amount of predicted habitat. This map is based on habitat models, not wildlife observations. The index value is based on average values determined for each HUC.",
                 "eaDfsLink": "ESN/NIBraremammalspeciesrichness.pdf",
                 "visible": false,
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "opacity": 0.6,
                 "mode": "ondemand",
                 "sourceType": "huc12",
@@ -27419,7 +27419,7 @@
                 "eaDescription": "This map depicts an index value of rare reptile species richness for a subwatershed (12-digit HUC) in the Conterminous US for 2001. Rare species were the 25% of reptile species with the smallest amount of predicted habitat. This map is based on habitat models, not wildlife observations. The index value is based on average values determined for each HUC.",
                 "eaDfsLink": "ESN/NIBrarereptilespeciesrichness.pdf",
                 "visible": false,
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "opacity": 0.6,
                 "mode": "ondemand",
                 "sourceType": "huc12",
@@ -27467,7 +27467,7 @@
                 "eaDescription": "This map depicts an index value of rare terrestrial vertebrate species richness for a subwatershed (12-digit HUC) in the Conterminous US for 2001. Rare species were the 25% of vertebrate species with the smallest amount of predicted habitat. This map is based on habitat models, not wildlife observations. The index value is based on average values determined for each HUC.",
                 "eaDfsLink": "ESN/NIBrarevertebratespeciesrichness.pdf",
                 "visible": false,
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "opacity": 0.6,
                 "mode": "ondemand",
                 "sourceType": "huc12",
@@ -27510,7 +27510,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/NIB_summer_bird_species_richness/MapServer",
                 "autorefresh": 0,
@@ -27563,7 +27563,7 @@
                 }
             },
             {
-                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016/master/MapServer",
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2016_master/MapServer",
                 "sourceType": "huc12",
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/NIB_winter_bird_species_richness/MapServer",
                 "autorefresh": 0,
