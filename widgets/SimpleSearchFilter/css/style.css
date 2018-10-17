@@ -435,7 +435,7 @@ a.esIcons {
     vertical-align: middle;
     background-size: 26px 26px;
     display: inline-block;
-    margin-left: 50px;
+    margin-left: 10px;
 }
 .selectableLayersText {
     background-color: #00436f; 
@@ -450,4 +450,8 @@ a.esIcons {
 
 #closeForFilter{
     background-size:15px;
+}
+.seperator{
+	height:2px;
+	margin:0px;
 }
