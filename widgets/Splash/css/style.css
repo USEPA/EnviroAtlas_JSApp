@@ -146,7 +146,8 @@
   /* margin: 0 40px 10px 40px; */
   position: absolute;
   overflow: hidden;
-  bottom: -5px;
+  height:40px;
+  bottom: 0px;
   width: 100%;
 }
 .jimu-widget-splash .footer .confirmcheck-container{
@@ -170,6 +171,14 @@
   width: 180px;
   height: 170px;
   background-color: #197ec099;
+}
+
+.jimu-widget-splash .mainbtn .btn-icon{
+  margin-bottom:15px;
+  height:50px;
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 
