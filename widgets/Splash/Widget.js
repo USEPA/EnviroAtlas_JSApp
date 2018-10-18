@@ -157,7 +157,7 @@ define(['dojo/_base/declare',
                 }
               }
               html.setStyle(this.splashContainerNode, 'background', bg + repeat);
-            } else if ("color" === background.mode && typeof background.color !== "undefined") {
+            } /*else if ("color" === background.mode && typeof background.color !== "undefined") {
               //color
               if ("undefined" !== typeof background.color) {
                 html.setStyle(this.splashContainerBackground, 'backgroundColor', background.color);
@@ -165,7 +165,7 @@ define(['dojo/_base/declare',
               if ("undefined" !== typeof background.transparency) {
                 html.setStyle(this.splashContainerBackground, 'opacity', (1 - background.transparency));
               }
-            }
+            }*/
           }
           //html.setStyle(query(".label", this.dmoNode)[0], 'color', utils.invertColor(background.color));//auto color for text
           var confirm = this.config.splash.confirm;
@@ -307,9 +307,9 @@ define(['dojo/_base/declare',
 		  html.setStyle(this.learnNode, 'line-height', '33px'); 
           html.setStyle(this.exploreNode, 'line-height', '33px'); 
           
-          html.setStyle(this.customContentNode, 'margin-bottom', '60px');     
+          //html.setStyle(this.customContentNode, 'margin-bottom', '60px');     
             	
-          html.setStyle(this.customContentNode, 'height', 'auto');
+          //html.setStyle(this.customContentNode, 'height', 'auto');
           this._moveContentToMiddle({
             contentSpace: contentSpace,
             customContentScrollheight: customContentScrollheight

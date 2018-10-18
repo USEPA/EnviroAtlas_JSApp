@@ -5,14 +5,37 @@
         <div class="splash-container" data-dojo-attach-point="splashContainerNode">
             <div data-dojo-attach-point="tabMain">
                 <div class="splash-container" data-dojo-attach-point="welcomeTab">
+                    <div class='closebtn' data-dojo-attach-point='exploreNode' data-dojo-attach-event='onclick:onOkClick'>&times;</div>
                     <div class="custom-content" data-dojo-attach-point="customContentNode"></div>
+
                     <div class="custom-content btndiv">
-                        <div class='jimu-btn mainbtn' data-dojo-attach-point='tourNode' data-dojo-attach-event='onclick:onTourClick'>Take A Tour<br><img src="widgets/Demo/images/icon.png?wab_dv=2.5"><br><span style="font-size:small">Show me how to use the map</span></div>
-                        <div class='jimu-btn mainbtn' data-dojo-attach-point='learnNode' data-dojo-attach-event='onclick:onLearnClick'>Learn<br><img src="widgets/AddWebMapData/images/icon.png?wab_dv=2.5"><br><span style="font-size:small">Show me something cool</span></div>
-                        <div class='jimu-btn mainbtn' data-dojo-attach-point='exploreNode' data-dojo-attach-event='onclick:onOkClick'>Explore<br><img src="widgets/SimpleSearchFilter/images/icon.png?wab_dv=2.5"><br><span style="font-size:small">I know what I'm looking for</span></div>
+
+                        <div class='jimu-btn mainbtn' data-dojo-attach-point='tourNode' data-dojo-attach-event='onclick:onTourClick' style='font-size:small'>
+                            <p style='font-size:large; margin:3px 0 10px'>Tour</p>
+                            <img style='margin-bottom:5px' src="widgets/Demo/images/icon.png?wab_dv=2.5">
+                            <br>
+                            <p>Show me how</p>
+                            <p>to use the map</p>
+                        </div>
+                        <div class='jimu-btn mainbtn' data-dojo-attach-point='learnNode' data-dojo-attach-event='onclick:onLearnClick' style='font-size:small'>
+                            <p style="font-size:large; margin:3px 0 10px">Learn</p>
+                            <img style='margin-bottom:5px' src="widgets/AddWebMapData/images/icon.png?wab_dv=2.5">
+                            <br>
+                            <p>Get started</p>
+                            <p>with examples</p>
+                        </div>
+                        <div class='jimu-btn mainbtn' data-dojo-attach-point='exploreNode' data-dojo-attach-event='onclick:onOkClick' style="font-size:small">
+                            <p style='font-size:large; margin:3px 0 10px'>Explore</p>
+                            <img style='margin-bottom:5px' src="widgets/SimpleSearchFilter/images/icon.png?wab_dv=2.5"><br>
+                            <p>Discover data</p>
+                            <p>on my own</p>
+                        </div>
                     </div>
                     <div class="footer" data-dojo-attach-point="footerNode">
-                        <div class="custom-content"><div style="color: yellow">By using the EnviroAtlas interactive map, you acknowledge the limitations outlined in <a href="#" data-dojo-attach-point='fwdNode' data-dojo-attach-event='onclick:onFwdClick'>our disclaimer</a>. </div></div>
+                        <div class="custom-content">
+                            <div style="color: rgb(210, 210, 0); margin-left:10px">By using the EnviroAtlas interactive map, you acknowledge the limitations outlined in our <a href="#" data-dojo-attach-point='fwdNode' data-dojo-attach-event='onclick:onFwdClick' style='color: rgb(210, 210, 0)'>disclaimer</a>. 
+                            </div>
+                        </div>
                         <div style="display:none"><div class="confirmcheck-container" data-dojo-attach-point="confirmCheckContainer">
                             <div data-dojo-attach-point="confirmCheck"/>
                         </div>
@@ -22,7 +45,7 @@
                 <div class="splash-container" style="overflow: auto;" data-dojo-attach-point="disclaimerTab">
                     <div class="custom-content"  data-dojo-attach-point="customDisclaimerNode"></div>
                     <div class="custom-content" >
-                        <div class='jimu-btn jimu-float-trailing' data-dojo-attach-point='backNode' data-dojo-attach-event='onclick:onBackClick' style="width:100px;">Back</div>
+                        <div class='jimu-btn jimu-float-trailing' data-dojo-attach-point='backNode' data-dojo-attach-event='onclick:onBackClick' style="margin-right:10px">Back</div> 
                     </div>
                 </div>
             </div>
