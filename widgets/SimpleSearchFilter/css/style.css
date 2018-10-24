@@ -435,19 +435,30 @@ a.esIcons {
     vertical-align: middle;
     background-size: 26px 26px;
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 18px;
 }
-.selectableLayersText {
+.selectableLayersCheck {
     background-color: #00436f; 
     color:white; 
     border: none; 
     display: inline-block; 
     vertical-align:middle;  
-    margin:4px;     
+    margin:0px;     
     font-family: 'Avenir Light', Verdana, Geneva, sans-serif;
     font-size: 14px;
-}
 
+}
+.selectableLayersLabel{
+    background-color: #00436f; 
+    color:white; 
+    border: none; 
+    display: inline-block; 
+    vertical-align:middle;  
+    margin:0px;     
+    font-family: 'Avenir Light', Verdana, Geneva, sans-serif;
+    font-size: 14px;
+    margin-left: 12px;
+}
 #closeForFilter{
     background-size:15px;
 }
