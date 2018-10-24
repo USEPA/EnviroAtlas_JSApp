@@ -218,10 +218,15 @@ define([
 					}
 					if (layer.hasOwnProperty('hidelayers')) {
 						if (layer.hidelayers) {
-							lOptions.hidelayers = []
+							lOptions.hidelayers = [];
 							lOptions.hidelayers = layer.hidelayers.split(',');
 						}
 					}
+                    if (layer.hasOwnProperty('drawSelectLayer')) {
+                        if (layer.drawSelectLayer) {
+                            lOptions.visiblelayers = layer.drawSelectLayer.map(Number);                            
+                        }
+                    }					
 					if (layer.hasOwnProperty('minScale')) {
 						lOptions.minScale = layer.minScale
 					}
@@ -238,7 +243,8 @@ define([
 							}
 							lOptions.imageParameters = ip;
 						}
-						lLayer = new ArcGISDynamicMapServiceLayer(layer.url, lOptions);
+						lLayer = new ArcGISDynamicMapServiceLayer(layer.url, lOptions);		
+						
 						if (layer.hasOwnProperty('definitionQueries')) {
 							var definitionQueries = JSON.parse(layer.definitionQueries)
 							var layerDefinitions = []
@@ -265,8 +271,9 @@ define([
 						}
 						lLayer.on('error', function(evt) {
 							console.log(evt);
-						})
-						lLayer.on('load', function(evt) {
+						})						
+
+                        lLayer.on('load', function(evt) {
 							if (layer.flyPopups) {
 								var _infoTemps = []
 								evt.layer.layerInfos.forEach(function(layer) {
@@ -290,6 +297,7 @@ define([
 							if (lOptions.maxScale) {
 								evt.layer.setMaxScale(lOptions.maxScale)
 							}
+
 
 							if (!lOptions.hasOwnProperty('hidelayers')) {
 								lOptions.hidelayers = []
@@ -351,8 +359,14 @@ define([
 								lOptions.hidelayers.push(-1);
 							}
 
-							evt.layer.setVisibleLayers(lOptions.hidelayers);
-
+							//evt.layer.setVisibleLayers(lOptions.hidelayers);
+                            if (lOptions.visiblelayers) {
+                                evt.layer.setVisibleLayers([-1],true);
+                                setTimeout(lang.hitch(this, function() {
+                                    evt.layer.setVisibleLayers(lOptions.visiblelayers,true);
+                                    //evt.layer.setVisibleLayers([12],true);
+                                }), 2000);
+                            }
 							if (layer.hasOwnProperty('hideInLegends')) {
 								var hideLegends = JSON.parse(layer.hideInLegends)
 								var finalLegends = []

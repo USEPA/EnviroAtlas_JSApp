@@ -128,13 +128,15 @@
 
 .jimu-widget-splash-desktop .splash-bg{
   z-index: 0;
+  background-color:rgb(72, 85, 102, .8);
 }
 
 .jimu-widget-splash-desktop .custom-content{
   /* width: 560px; */
-  margin: 20px;
+  /*margin: 20px;*/
   /* overflow: auto; */
   color: #fff;
+  margin-bottom: 15px;
   /* max-height: 388px; */
   overflow-x: hidden;
   overflow-y: auto;
@@ -144,7 +146,8 @@
   /* margin: 0 40px 10px 40px; */
   position: absolute;
   overflow: hidden;
-  bottom: 10px;
+  height:40px;
+  bottom: 0px;
   width: 100%;
 }
 .jimu-widget-splash .footer .confirmcheck-container{
@@ -164,9 +167,35 @@
 }
 
 .jimu-widget-splash .mainbtn{
-  margin: 20px;
-  width: 210px;
-  background-color: #518dca;
+  margin: 0px 20px 0px 20px;
+  width: 180px;
+  height: 170px;
+  background-color: #197ec099;
+}
+
+.jimu-widget-splash .mainbtn .btn-icon{
+  margin-bottom:15px;
+  height:50px;
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+
+.jimu-widget-splash .closebtn{
+  float:right;
+  position: relative;
+  top:2px;
+  right:5px;
+  border:none;
+  font-size: 24px;
+  line-height:15px;
+  height:15px;
+  color:white;
+}
+
+.jimu-widget-splash .closebtn:hover{
+  cursor:pointer;
 }
 
 .jimu-widget-splash .btndiv{

@@ -192,7 +192,7 @@ define([
       },
 
       _onLayerInfosChanged: function(layerInfo, changedType) {
-        //this._refresh();
+        //this._refresh();//Comment out this line, otherwise there will some duplicate layer names in LayerList widget
         if (layerInfo){
             if(changedType === "added") {
               var allLayers = this.map.layerIds.concat(this.map.graphicsLayerIds);

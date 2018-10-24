@@ -184,8 +184,9 @@ define([
     window.communityDic["PNJ"] = "Paterson, NJ";
     window.communityDic["PAZ"] = "Phoenix, AZ";
     window.communityDic["PitPA"] = "Pittsburgh, PA";
-    window.communityDic["PME"] = "Portland, ME"
-    window.communityDic["POR"] = "Portland, OR"
+    window.communityDic["PME"] = "Portland, ME";
+    window.communityDic["POR"] = "Portland, OR";
+	window.communityDic["SLCUT"] = "Salt Lake City, UT";
     window.communityDic["TFL"] = "Tampa, FL";
     window.communityDic["VBWVA"] = "Virginia Beach - Williamsburg, VA";
     window.communityDic["WIA"] = "Woodbine, IA";

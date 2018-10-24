@@ -14662,7 +14662,7 @@
                     "and Aesthetics\""
                 ],
                 "eaBC": true,
-                "eaDfsLink": "Supplemental/PotenialWetlandArea.pdf",
+                "eaDfsLink": "Supplemental/PotentialWetlandArea.pdf",
                 "visible": false,
                 "eaDescription": "The EnviroAtlas Potential Wetland Areas (PWA) dataset shows potential wetland areas at 30-meter resolution. Beginning two centuries ago, many wetlands were turned into farm fields or urban areas, yet wetlands play an important role in removing water pollution, regulating water storage and flows, and providing habitat for wildlife. Wetland restoration could help restore these benefits. Potential wetland areas, as developed for this map, are lands that naturally accumulate water due to topography and have historically had poorly or very poorly draining soils. This dataset was produced by the US EPA to support research and online mapping activities related to the EnviroAtlas. EnviroAtlas (https://www.epa.gov/enviroatlas) allows the user to interact with a web-based, easy-to-use, mapping application to view and analyze multiple ecosystem services for the contiguous United States. The dataset is available as downloadable data (https://edg.epa.gov/data/Public/ORD/EnviroAtlas) or as an EnviroAtlas map service. Additional descriptive information about each attribute in this dataset can be found in its associated EnviroAtlas Fact Sheet (https://www.epa.gov/enviroatlas/enviroatlas-fact-sheets). \n\n",
                 "eaBCSDD": [
@@ -16921,7 +16921,7 @@
                     "and Aesthetics\""
                 ],
                 "eaBC": true,
-                "eaDfsLink": "Supplemental/NationalWetlandInventory.pdf",
+                "eaDfsLink": "Supplemental/NationalWetlandsInventory.pdf",
                 "visible": false,
                 "eaDescription": "This National Wetlands Inventory (NWI) map, developed by the U.S. Fish and Wildlife Service, maps and classifies wetlands across the U.S. State and local government agencies use NWI in planning to identify local wetlands and to limit and mitigate wetland losses during economic development.",
                 "eaBCSDD": [

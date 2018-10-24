@@ -129,6 +129,7 @@ define([
 	    var arrLayersForPopup = [];
 	    var numDecimalDigit = 0;
 	    var strDateFormat = '';
+	    var bCollapseClicked = false;
 	    var featureExistInCollection = function(feature, Collection) {
 			var bFeatureExist = false;
 			for (kk=0; kk < Collection.length; kk++) {
@@ -749,21 +750,59 @@ define([
 		dojo.destroy('layerAreaESB');
 		dojo.destroy('layerAreaPBS');
 		dojo.destroy('layerAreaBNF');
-
+		
+        dojo.destroy('hrSeperatorESB');
+        dojo.destroy('hrSeperatorPBS');
+        dojo.destroy('hrSeperatorBNF');		
+		
+        var hrSeperatorESB = dojo.create('div', {
+            'id': 'hrSeperatorESB',
+            'style': 'width: 100%',
+        }, tableOfRelationship);
+        
 		var layerAreaESB = dojo.create('div', {
 			'id': 'layerAreaESB',
 			'style': 'width: 100%',
 		}, tableOfRelationship);
 		
+		var hrSeperatorPBS = dojo.create('div', {
+            'id': 'hrSeperatorPBS',
+            'style': 'width: 100%',
+        }, tableOfRelationship);
+		
 		var layerAreaPBS = dojo.create('div', {
 			'id': 'layerAreaPBS',
 			'style': 'width: 100%',
 		}, tableOfRelationship);	
-			
+		
+        var hrSeperatorBNF = dojo.create('div', {
+            'id': 'hrSeperatorBNF',
+            'style': 'width: 100%',
+        }, tableOfRelationship);
+        			
 		var layerAreaBNF = dojo.create('div', {
 			'id': 'layerAreaBNF',
 			'style': 'width: 100%',
 		}, tableOfRelationship);
+
+        var hrSeperatorESB = dojo.create('hr', {
+            'id': "hrESB",
+            'class': 'seperator',
+        }, hrSeperatorESB);
+        
+        var hrSeperatorPBS = dojo.create('hr', {
+            'id': "hrPBS",
+            'class': 'seperator',
+        }, hrSeperatorPBS);
+        
+        var hrSeperatorBNF = dojo.create('hr', {
+            'id': "hrBNF",
+            'class': 'seperator',
+        }, hrSeperatorBNF);
+
+        document.getElementById("hrESB").style.display = 'none';
+        document.getElementById("hrPBS").style.display = 'none';
+        document.getElementById("hrBNF").style.display = 'none';
 
         var numOfSelectableLayers = 0;
         var totalNumOfLayers = 0;
@@ -846,6 +885,7 @@ define([
 					SelectedTopics.push(eaTopic);
 					
 					if (categoryTab == "ESB") {
+					    document.getElementById("hrESB").style.display = '';
 
 						var topicHeader = dojo.create('div', {
 		    				'id': eaTopic,
@@ -857,6 +897,7 @@ define([
 		    				}
 		    			}, layerAreaESB);
 			    	} else if (categoryTab == "PBS"){
+			    	    document.getElementById("hrPBS").style.display = '';
 						var topicHeader = dojo.create('div', {
 		    				'id': eaTopic,
 		    				'class': 'topicHeader'+categoryTab,
@@ -867,6 +908,7 @@ define([
 		    				}
 		    			}, layerAreaPBS);			    		
 					} else if (categoryTab == "BNF"){
+					    document.getElementById("hrBNF").style.display = '';
 						var topicHeader = dojo.create('div', {
 		    				'id': eaTopic,
 		    				'class': 'topicHeader'+categoryTab,
@@ -905,12 +947,22 @@ define([
 							'class': 'layerDiv'
 							}, layerAreaBNF);						
 					}
-					
-
-
-					if (!hiderows[eaTopic]) {
-						mainDiv.style.display = 'None';
+					if (bCollapseClicked == true) {
+					    if (document.getElementById("collapseIcons").checked) {
+                            mainDiv.style.display = 'None';
+                            hiderows[eaTopic] = false;
+                        } else {
+                            mainDiv.style.display = '';
+                            hiderows[eaTopic] = true;
+                        }
+					} else {
+					    if (!hiderows[eaTopic]) {
+                            mainDiv.style.display = 'None';
+                        }
 					}
+
+
+
 
 					var topicRow = dojo.create('div', {
 						"style" : "display:inline-block; width:100%"
@@ -1179,7 +1231,21 @@ define([
 	       }
 		}
 	}
-	
+	var collapseSelectableLayer = function(){
+	    bCollapseClicked = true;
+	    /*for (var key in hideRows) {
+	        if (document.getElementById("collapseIcons").checked) {
+	            hideRows[key] = true;
+	        } else {
+	            hideRows[key] = false;
+	        }
+	        
+	    }*/
+        setTimeout(lang.hitch(this, function() { //LayerList widget need to be started before layer is added.
+            bCollapseClicked = false;
+        }), 1000);  
+	    _updateSelectableLayer();
+	}
 	
 	var	_updateSelectableLayer = function(){	
 		
@@ -1352,7 +1418,9 @@ define([
 		document.getElementById("hideIcons").onclick = function() {
 		    _updateSelectableLayer();
 		};					
-
+        document.getElementById("collapseIcons").onclick = function() {
+            collapseSelectableLayer();
+        };
 		layersToBeAdded = "a";
 	    
 

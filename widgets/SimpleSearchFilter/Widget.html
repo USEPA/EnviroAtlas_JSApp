@@ -23,12 +23,15 @@
         <div id="selectableLayersContainer" dojotype="dijit.layout.ContentPane"  style="background-color: #00436f; width: 100%; line-height: 36px; display: inline-block; ">
                 <!-- padding:0 is good enough ; margin:0 does not work--> 
 
-								<input id="numOfLayers" value="" type="text" class="selectableLayersText"/>
+								<input id="numOfLayers" value="" type="text" style="width:120px"/>
 
 								<!--input id = "butFilterInSimpleSearch" type="button" title="filter the layers" style = "height: 15px;width: 15px; background: url('../images/filter.png');background-color:  #eaf2f8; vertical-align:center; margin-top: 3px;" data-dojo-attach-event="onclick:_onButFilterInSimpleSearchClick"/--> 
-
-			                    <label for="hideIcons" class="selectableLayersText">Hide Icons</label> 
-			                    <input id="hideIcons"  type="checkbox" class="selectableLayersText" />
+			                    <label for="collapseIcons" class="selectableLayersLabel">Collapse</label> 
+			                    <input id="collapseIcons"  type="checkbox" class="selectableLayersCheck" />		                    
+			                    
+			                    <label for="hideIcons" class="selectableLayersLabel">Hide Icons</label> 
+			                    <input id="hideIcons"  type="checkbox" class="selectableLayersCheck" />
+			                    
 								<input id = "butFilterInSimpleSearch" type="button" title="filter the layers" data-dojo-attach-event="onclick:_onButFilterInSimpleSearchClick"/> 
 								
               
