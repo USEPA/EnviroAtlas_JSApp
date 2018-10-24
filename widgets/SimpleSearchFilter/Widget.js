@@ -1311,7 +1311,7 @@ define([
 			
 	        chkboxId = "dragForFilter";
 			checkbox.id = chkboxId;
-			checkbox.value = "Select data by geography | topic";
+			checkbox.value = "Select data by topic";
 			checkbox.className ="jimu-widget-filterforselect-drag";
 	        newCheckboxCell.appendChild(checkbox);    
     },	

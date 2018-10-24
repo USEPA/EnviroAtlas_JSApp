@@ -254,8 +254,14 @@ input.cmn-toggle-round-flat-grayedout + label:after {
 input.chk-toggle {
 	display: none;
 }
+
+.label-chk-toggle{
+    cursor: pointer;
+}
+
 input.chk-toggle:checked + .label-chk-toggle{
   font-weight: bold;
+  font-family: sans-serif;
 }
 /*input.cmn-toggle-round-flat-grayedout:checked + label:before{
   background-color: #8ce196;
