@@ -44,7 +44,6 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
       tourDialog = new TooltipDialog({
         id: 'tourDialog',
         style: "width: 350px;",
-        class: 'myclass',
         content: helpContent,
       });
 
