@@ -43,7 +43,8 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
 
       tourDialog = new TooltipDialog({
         id: 'tourDialog',
-        style: "width: 300px;",
+        style: "width: 350px;",
+        class: 'myclass',
         content: helpContent,
       });
 
@@ -94,11 +95,11 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
           $('#'+helpTour[stop].highlight).css('z-index', '998');
         } 
 
-
         if (stop == 0) {
           //Open to simple search widget
           $('#widgets_SimpleSearchFilter_Widget_37').click();
           $('#widgets_SimpleSearchFilter_Widget_37_min').click();
+          
           
 
           nodeToHelp = helpTour[stop].node;
@@ -114,6 +115,8 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
 
           
         } else if (stop < numberStops -1) {
+
+
 
           nodeToHelp = helpTour[stop].node;
           helpContent = "<div> \
