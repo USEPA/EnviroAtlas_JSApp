@@ -861,7 +861,10 @@ define([
 					currentLayerSelectable = true;				
 				}
 			}// end of if (bSelectedByNationalOrCommunity)
-
+			//if searchFilterText is not empty then search all EnviroAtalas data
+            if (document.getElementById('searchFilterText').value != ''){
+                currentLayerSelectable = true;
+            }
 			if (currentLayerSelectable && (eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
 		
 				var bLayerSelected = false;
@@ -1662,7 +1665,7 @@ define([
 	                    }
 	                    if(layer.hasOwnProperty('eaTopic')){
 	                    	eaTopic = layer.eaTopic.toString();
-	                    	console.log("eaID:" + eaID + ", eaTopic: " + eaTopic);
+	                    	//console.log("eaID:" + eaID + ", eaTopic: " + eaTopic);
 	                    	window.hashTopic[eaID]  = eaTopic;
 	                    }
 	                    else {
