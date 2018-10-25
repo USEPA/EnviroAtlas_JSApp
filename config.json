@@ -9,6 +9,7 @@
     "title": "EnviroAtlas",
     "subtitle": "",
     "logo": "images/logo.png",
+    "logoLink": "https://www.epa.gov/enviroatlas",
     "geometryService": "https://utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer",
     "links": [{
             "label": "Contact Us",
@@ -1079,18 +1080,6 @@
                     "name": "TimeSlider",
                     "label": "Time Slider"
                 },{
-                    "uri": "widgets/ZoomSlider/Widget",
-                    "visible": true,
-                    "position": {
-                        "top": 5,
-                        "left": 5,
-                        "relativeTo": "map"
-                    },
-                    "version": "2.5",
-                    "id": "widgets_ZoomSlider_Widget_34",
-                    "name": "ZoomSlider",
-                    "label": "Zoom Slider"
-                }, {
                     "uri": "widgets/ExtentNavigate/Widget",
                     "visible": true,
                     "position": {

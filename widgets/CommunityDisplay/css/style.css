@@ -1,9 +1,15 @@
 .communitydisplay-container {
-    background-color:rgba(255, 255, 255, 0.6); 
-    border: grey 1px solid;
+    background-color:rgba(0, 0, 0, 0.5); 
+    border: black 1px solid;
     border-radius: 3px;
-    padding: 3px;
+    padding: 5px;
+    color: white;
 }
+
+.communitydisplay-container:hover {
+    background-color:rgba(0, 0, 0, 0.6); 
+}
+
 
 .jimu-widget-communitydisplay .jimu-align-leading {
     cursor: pointer;
