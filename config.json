@@ -9,6 +9,7 @@
     "title": "EnviroAtlas",
     "subtitle": "",
     "logo": "images/logo.png",
+    "logoLink": "https://www.epa.gov/enviroatlas",
     "geometryService": "https://utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer",
     "links": [{
             "label": "Contact Us",
