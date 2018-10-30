@@ -350,6 +350,18 @@ a.esIcons {
   background-color: #8c8c8c;
   cursor: pointer;
 }
+.topicHeaderPSI {
+  /*padding-bottom: 3px;*/
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #b3b3b3;
+  /*margin-bottom: 3px;*/
+}
+
+.topicHeaderPSI:hover {
+  background-color: #8c8c8c;
+  cursor: pointer;
+}
 .topicHeaderPBS {
   /*padding-bottom: 3px;*/
   font-size: 15px;

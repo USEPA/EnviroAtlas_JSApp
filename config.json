@@ -554,11 +554,19 @@
             }
         },
         "widgets": [{
+                "index": 1,
+                "id": "widgets_AddWebMapData",
+                "name": "AddWebMapData",
+                "label": "Featured Collections",
+                "version": "1.3",
+                "uri": "widgets/AddWebMapData/Widget",
+                "config": "widgets/AddWebMapData/config.json"
+            }, {
                 "name": "SimpleSearchFilter",
-                "label": "Ecosystem Services and Biodiversity",
+                "label": "EnviroAtlas Data",
                 "version": "1.3",
                 "uri": "widgets/SimpleSearchFilter/Widget",
-                "index": 1,
+                "index": 2,
                 "openAtStart": true,
                 "id": "widgets_SimpleSearchFilter_Widget_37"
             }, {
@@ -566,7 +574,7 @@
                 "label": "Demographic Layers",
                 "version": "1.3",
                 "uri": "widgets/DemographicLayers/Widget",
-                "index": 2,
+                "index": 3,
                 "id": "widgets_DemographicLayers"
             },{
                 "name": "TimeSeries",
@@ -574,24 +582,16 @@
                 "version": "1.3",
                 "uri": "widgets/TimeSeries/Widget",
                 "config": "widgets/TimeSeries/config.json",
-                "index": 3,
+                "index": 4,
                 "id": "widgets_TimeSeries_Widget"
             }, {
                 "id": "widgets_AddData_30",
                 "name": "Add Data",
                 "label": "Add Data",
                 "version": "2.5",
-                "index": 4,
+                "index": 5,
                 "uri": "widgets/AddData/Widget",
                 "config": "widgets/AddData/config.json"
-            }, {
-                "index": 5,
-                "id": "widgets_AddWebMapData",
-                "name": "AddWebMapData",
-                "label": "Featured Collections",
-                "version": "1.3",
-                "uri": "widgets/AddWebMapData/Widget",
-                "config": "widgets/AddWebMapData/config.json"
             }
         ],
         "groups": []
@@ -1080,6 +1080,18 @@
                     "name": "TimeSlider",
                     "label": "Time Slider"
                 },{
+                    "uri": "widgets/ZoomSlider/Widget",
+                    "visible": true,
+                    "position": {
+                        "top": 5,
+                        "left": 5,
+                        "relativeTo": "map"
+                    },
+                    "version": "2.5",
+                    "id": "widgets_ZoomSlider_Widget_34",
+                    "name": "ZoomSlider",
+                    "label": "Zoom Slider"
+                }, {
                     "uri": "widgets/ExtentNavigate/Widget",
                     "visible": true,
                     "position": {

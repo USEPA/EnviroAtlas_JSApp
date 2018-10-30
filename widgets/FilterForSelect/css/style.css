@@ -56,6 +56,12 @@
 #titlePaneESB .dijitTitlePaneTitleHover {
   background: #8c8c8c !important;
 }
+#titlePanePSI .dijitTitlePaneTitle {
+  background: #b3b3b3 !important;
+}
+#titlePanePSI .dijitTitlePaneTitleHover {
+  background: #8c8c8c !important;
+}
 #titlePanePBS .dijitTitlePaneTitle {
   background: #b3b3b3 !important;
 }
@@ -70,6 +76,9 @@
 }
 
 #titlePaneESB .dijitTitlePaneContentOuter {
+  height: 0px !important;
+}
+#titlePanePSI .dijitTitlePaneContentOuter {
   height: 0px !important;
 }
 #titlePanePBS .dijitTitlePaneContentOuter {
