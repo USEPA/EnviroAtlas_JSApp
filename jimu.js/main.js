@@ -116,6 +116,7 @@ define([
     
 	window.categoryTabDic = {};
 	window.categoryTabDic ["ESB"] = "ESB"; //Ecosystems and Biodiversity
+	window.categoryTabDic ["PSI"] = "PSI"; //Pollution Sources and Impacts
 	window.categoryTabDic ["PBS"] = "PBS"; //People and Built Spaces
 	window.categoryTabDic ["BNF"] = "BNF"; //Boundaries and Natural Features (or Supplemental)
 	
@@ -126,7 +127,7 @@ define([
     window.topicDicESB["Energy Potential"] = "EP";
     window.topicDicESB["Engagement with Outdoors"] = "EwO";
     window.topicDicESB["Health and Economic Outcomes"] = "HaEO";
-    window.topicDicESB["Impaired Waters"] = "IW";
+    
     window.topicDicESB["Land Cover: Near-Water"] = "LCNW";
     window.topicDicESB["Land Cover: Type"] = "LCT";
     window.topicDicESB["Landscape Pattern"] = "LP";
@@ -135,9 +136,6 @@ define([
     window.topicDicESB["Pollutant Reduction: Air"] = "PRA"; //This is newly added Mar 2017    
     window.topicDicESB["Pollutant Reduction: Water"] = "PRW"; //This is newly added Mar 2017      
      
-    window.topicDicESB["Pollutants: Nutrients"] = "PN"; 
-    window.topicDicESB["Pollutants: Other"] = "PO";    
-    
     window.topicDicESB["Protected Lands"] = "PL";
     window.topicDicESB["Species: At-Risk and Priority"] = "SARaP";
     window.topicDicESB["Species: Other"] = "SO";
@@ -147,6 +145,12 @@ define([
     window.topicDicESB["Weather and Climate"] = "WaC"; //This is newly added Mar 2017 
     window.topicDicESB["Wetlands and Lowlands"] = "WaL";
     
+	  window.topicDicPSI = {};
+    window.topicDicPSI["Impaired Waters"] = "IW";
+	  window.topicDicPSI["Pollutants: Nutrients"] = "PN"; 
+    window.topicDicPSI["Pollutants: Other"] = "PO";    
+    window.topicDicPSI["EPA Regulated Facilities"] = "RF";
+	  window.topicDicPSI["EPA NATA"] = "NATA";
     
 	window.topicDicPBS = {};
     window.topicDicPBS["Housing and Schools"] = "HaF";
