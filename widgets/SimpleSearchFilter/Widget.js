@@ -871,7 +871,7 @@ define([
 					}
 					break;
 			}    			
-			if ((chkNationalScale == false) && (chkCommunityScale == false)) {
+			if (((chkNationalScale == false) && (chkCommunityScale == false)) || (arrCategoryForAllScale.indexOf(categoryTab) >= 0)) {
 				bSelectedByNationalOrCommunity = true;
 			}
 
