@@ -170,8 +170,7 @@
   margin: 0px 20px 0px 20px;
   width: 180px;
   height: 170px;
-  background-color: #197ec0;
-  opacity: 0.6;
+  background-color: rgba(25,126,192,0.6); /*#197ec0;*/
 }
 
 .jimu-widget-splash .mainbtn .btn-icon{
