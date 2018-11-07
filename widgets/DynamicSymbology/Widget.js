@@ -494,10 +494,12 @@ define(['dojo/_base/declare',
 	        }
         },
         _onApplyBtnClick: function () {
-            if (_ClassificationMethod == undefined) {
-                _ClassificationMethod = dynamicSymbology.classSelect.value;
+
+			if (_ClassificationMethod == undefined) {
+			    if (dynamicSymbology.classSelect != undefined){
+			        _ClassificationMethod = dynamicSymbology.classSelect.value;
+			    }                
             }
-				
 			var bSizeEnlargeByValue = false;		
 			var radios = document.getElementsByName('symbolSizeUpDown');
 			for (var i = 0, length = radios.length; i < length; i++)
@@ -758,10 +760,11 @@ define(['dojo/_base/declare',
         },
         _openSymbolStyler: function () {
         	_bSchemeColorsChanage = false;
-        		var currRamp = selfDynamicSymbology._getColorsFromInfos(geoenrichedFeatureLayer.renderer.infos);
+        		
 
             var fType = geoenrichedFeatureLayer.geometryType;
             if (fType == "esriGeometryPolygon") {
+                var currRamp = selfDynamicSymbology._getColorsFromInfos(geoenrichedFeatureLayer.renderer.infos);
 	    		if (!_bPolygonAsPoint) {
                 	var dSymbol = new SimpleFillSymbol();
                 	if (typeof _outline != 'undefined'){
@@ -793,7 +796,7 @@ define(['dojo/_base/declare',
                 });
             } else if (fType == "esriGeometryPolyline") {
                 //var dSymbol = geoenrichedFeatureLayer.renderer.infos[0].symbol;
-                
+                var currRamp = selfDynamicSymbology._getColorsFromInfos(geoenrichedFeatureLayer.renderer.infos);
             	schemes = esriStylesChoropleth.getSchemes({
                     basemap: "hybrid",
                     geometryType: "polyline",
@@ -843,10 +846,14 @@ define(['dojo/_base/declare',
 	                    schemes: schemes
 	                });
                 } else {
-                	dSymbol = new SimpleMarkerSymbol();
+                    if ((geoenrichedFeatureLayer.renderer.symbol != undefined) && (geoenrichedFeatureLayer.renderer.symbol != null)) {
+                        var dSymbol = geoenrichedFeatureLayer.renderer.symbol;
+                    }
+                	else {
+                	    var dSymbol = new SimpleMarkerSymbol();
+                	}
 
 	                symbolStyler.edit(dSymbol, {
-	                    //activeTab: "fill",
 	                    colorRamp: {
 	                        colors: [],
 	                        scheme: schemes.secondarySchemes[39]
