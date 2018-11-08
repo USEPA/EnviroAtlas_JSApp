@@ -1,6 +1,5 @@
 {
 	"configText":"climate",
-	"disclaimer":"<p>Note: These projections are from the NEX-DCP30 dataset, prepared by the Climate Analytics Group and NASA Ames Research Center using the NASA Earth Exchange, and distributed by the NASA Center for Climate Simulation. Climate scenarios provide likely approximations of future conditions given a set of assumptions. The future is inherently uncertain, and the US EPA cannot guarantee that these scenarios reflect what will occur. See Fact Sheets for details.</p>",
 	"scenarios":[{
 		"model":"RCP2.6",
 		"title":"RCP2.6 (Peak Emissions Year 2020)",
@@ -18,9 +17,9 @@
 		"title":"RCP4.5 (Peak Emissions Year 2040)",
 		"description":"This scenario is characterized by increasing GHG emissions over time, and factors in the highest GHG concentration levels of all the scenarios by 2100. The projected global warming increase compared to the reference period 1986-2005 is approximately 6.66 degrees Celsius (range of 4.68 to 8.64) by 2081-2100. Atmospheric CO2 is expected to be approximately 1225 parts per million in 2100."
 	}, {
-		"model":"Hist",
+		"model":"Historic Data",
 		"title":"Historic Data",
-		"description": "These data are based on PRISM historical observations and interpolation of previous climate. Data are provided for the years 1950 -2005."
+		"description": "These data are based on the historical experiment for each model. Data are provided for the years 1950 -2005."
 	}],
 	"climate_variables":[{
 		"v_name":"Maximum Temperature",

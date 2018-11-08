@@ -364,13 +364,13 @@ define([
             var startFuture = 2006;
             var endFuture = 2099;
             if (document.getElementById("modelSelection").value == "Hist") {
-                dojo.byId("subTitle").innerHTML = "Timeline: Years (1950-2005)";
-                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (1950-2005)";
+                dojo.byId("subTitle").innerHTML = "Timeline: 1950 - 2005";
+                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 1950 - 2005";
                 errorMessageYearInput = "Please input a year of single frame (" + String(startHist) + "-" + String(endHist) + ")";
             }
             else {
-                dojo.byId("subTitle").innerHTML = "Timeline: Years (2010-2099)";
-                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (2010-2099)";
+                dojo.byId("subTitle").innerHTML = "Timeline: 2010 - 2099";
+                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 2010 - 2099";
                 errorMessageYearInput = "Please input a year of single frame (" + String(startFuture) + "-" + String(endFuture) + ")";
             }
             
@@ -451,12 +451,12 @@ define([
 	   //if (window.timeSeriesDisclaim) {
 	       if (document.getElementById("seasonSelection").value != "" && document.getElementById("climateSelection").value != "" ) {
 	            if (document.getElementById("modelSelection").item.value == "Hist") {
-	                dojo.byId("subTitle").innerHTML = "Timeline: Years (1950-2005)";
-	                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (1950-2005)";
+	                dojo.byId("subTitle").innerHTML = "Timeline: 1950 - 2005";
+	                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 1950 - 2005";
 	            }
 	            else {
-	                dojo.byId("subTitle").innerHTML = "Timeline: Years (2010-2099)";
-	                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (2010-2099)";
+	                dojo.byId("subTitle").innerHTML = "Timeline: 2010 - 2099";
+	                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 2010 - 2099";
 	            }          
 	            var model = document.getElementById("modelSelection").value.replace(".", "" );
 	            var season = document.getElementById("seasonSelection").value;
@@ -654,15 +654,7 @@ define([
 		        map.on("layers-add-result", makeSliderAndLegend);
 		        map.on("layers-add-result", makeSliderAndLegendOneFrame);       
 		        dojo.byId('titleAndSliderOneFrame').style.display = 'none';
-
-                
-                document.getElementById('ClimateDisclaimer').innerHTML=this.config.disclaimer;
-		        /*document.getElementById("modelSelection").style.width = "320px";
-		        document.getElementById("climateSelection").style.width = "320px";
-		        document.getElementById("seasonSelection").style.width = "320px";*/
-		        
-	          
-                      	
+                  	
 
 			    var frameYear = new TextBox({
 			        id: "frameYearInput",

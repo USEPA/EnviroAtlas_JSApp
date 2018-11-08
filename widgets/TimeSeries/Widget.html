@@ -1,6 +1,10 @@
 
-<div style="height:100%; width:100%; overflow-y:auto; background-color: #ece9eb; padding:10px" dojotype="dijit.layout.ContentPane">
-        <div > <!-- id="titleBarTimeSeries" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Climate Scenarios', open: true"> -->
+<div style="height:100%; width:100%; overflow-y:auto; background-color: #ece9eb" dojotype="dijit.layout.ContentPane">
+    <div style="width:100%; background-color:#b3b3b3; font-size:16px; padding-left:4px; border-bottom: 1px solid rgb(150,150,150)">
+    Climate Scenarios
+  </div>
+
+        <div style="padding:10px"> <!-- id="titleBarTimeSeries" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Climate Scenarios', open: true"> -->
             
             <div id="TimeSeriesScenarios" style="width:100%;height:100%;">
             	<table>
@@ -85,7 +89,7 @@
                       <!-- Climate Change Scenarios -->
                     </div>
                     <div id="subTitle" > 
-                      Timeline: Years (1950-2099)
+                      Timeline: 1950 - 2099
                     </div>
                     <div id="details">
                     </div>
@@ -129,7 +133,10 @@
                 </div>
 
          </div>    
+    
+    <div id='ClimateDisclaimer' style='border-top: 1px solid black; margin-top:15px; padding-top:10px'>
+        <p>Note: These projections are from the NEX-DCP30 dataset, prepared by the Climate Analytics Group and NASA Ames Research Center using the NASA Earth Exchange, and distributed by the NASA Center for Climate Simulation. Climate scenarios provide likely approximations of future conditions given a set of assumptions. The future is inherently uncertain, and the US EPA cannot guarantee that these scenarios reflect what will occur. See Fact Sheets for details.
+        </p>
     </div>
-    <div id='ClimateDisclaimer' style='border-top: 1px solid black; margin-top:15px; padding-top:10px'></div>
-
+</div>
 </div>
