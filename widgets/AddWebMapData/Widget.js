@@ -37,6 +37,7 @@ define(['dojo/_base/declare',
     'esri/layers/ArcGISDynamicMapServiceLayer',
     'esri/layers/ArcGISTiledMapServiceLayer',
     "esri/layers/LayerDrawingOptions",
+    'esri/layers/DynamicLayerInfo',
     'esri/dijit/PopupTemplate',
     "esri/renderers/jsonUtils",
         'jimu/PanelManager',
@@ -74,6 +75,7 @@ define(['dojo/_base/declare',
               ArcGISDynamicMapServiceLayer,
               ArcGISTiledMapServiceLayer,
               LayerDrawingOptions,
+              DynamicLayerInfo,
               PopupTemplate,
               jsonRendererUtils,
               PanelManager,
@@ -158,7 +160,7 @@ define(['dojo/_base/declare',
                     isLayoutContainer: true,
                     draggable: false
                 });
-                if (window.location.hostname == 'enviroatlas.epa.gov') {
+                /*if (window.location.hostname == 'enviroatlas.epa.gov') {
                     // in production, hide the login option
                     //var stylesheet = window.document.styleSheets[(window.document.styleSheets.length - 1)];
                     for (var i in window.document.styleSheets){
@@ -174,7 +176,7 @@ define(['dojo/_base/declare',
                         stylesheet.insertRule('div.jimu-widget-addwebmapdata .control-node { display: none;}', stylesheet.cssRules.length);
                         stylesheet.insertRule('div.jimu-widget-addwebmapdata > div.tab-container > div.jimu-tab3 > .container-node {top: 5px;}', stylesheet.cssRules.length);
                     }
-                }
+                }*/
                 //console.log('ChangeWebMap :: startup');
             },
 
@@ -514,7 +516,7 @@ define(['dojo/_base/declare',
                                         dynamicLayerInfo = null;
                                         source = layerInfo.layerDefinition.source;
                                         if (source.type === "mapLayer") {
-                                          var metaLayerInfos = array.filter(response.layers, function(rlyr) {
+                                          var metaLayerInfos = array.filter(response.operationalLayers, function(rlyr) {
                                             return rlyr.id === source.mapLayerId;
                                           });
                                           if (metaLayerInfos.length) {

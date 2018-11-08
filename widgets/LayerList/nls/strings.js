@@ -2,7 +2,7 @@ define({
   root: ({
     _widgetLabel: "Layer List",
     titleBasemap: "Basemaps",
-    titleLayers: "Operational layers",
+    titleLayers: "Active layers",
     labelLayer: "Layer name",
     itemMapDescription: "Map Description",
     itemZoomTo: "Zoom to",
