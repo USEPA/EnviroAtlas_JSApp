@@ -85,6 +85,7 @@ define([
     	var bSimulatedClickAddressed = true;
     	var mapClickListenerForPopup;
     	var arrLayersToChangeSynbology = [];
+    	var arrCategoryForAllScale = ["PSI", "PBS", "BNF"];
     	var clickEvent = null;
         var   layerData = {
             identifier: "eaID",  //This field needs to have unique values
@@ -147,6 +148,9 @@ define([
 				for (var key in window.topicDicESB) {
 					topicDictionary[key] = window.topicDicESB[key];
 				}
+				for (var key in window.topicDicPSI) {
+                    topicDictionary[key] = window.topicDicPSI[key];
+                }
 				for (var key in window.topicDicPBS) {
 					topicDictionary[key] = window.topicDicPBS[key];
 				}
@@ -154,8 +158,9 @@ define([
 					topicDictionary[key] = window.topicDicBNF[key];
 				}									    		
 	    	} else {
-		    	var topicDictionaryESB_PBS = Object.assign({}, window.topicDicESB, window.topicDicPBS);
-		    	topicDictionary = Object.assign({}, topicDictionaryESB_PBS, window.topicDicBNF);
+		    	var topicDictionaryESB_PSI = Object.assign({}, window.topicDicESB, window.topicDicPSI);
+		    	var topicDictionaryESB_PSI_PBS = Object.assign({}, topicDictionaryESB_PSI, window.topicDicPBS);
+		    	topicDictionary = Object.assign({}, topicDictionaryESB_PSI_PBS, window.topicDicBNF);
 		    }
 
 			var numTopicSelected = 0;
@@ -728,6 +733,7 @@ define([
     var	_addSelectableLayerSorted = function(items){	  
 	    
 		updateTopicToggleButton("ESB");
+		updateTopicToggleButton("PSI");
 		updateTopicToggleButton("PBS");
 		updateTopicToggleButton("BNF");
 
@@ -748,10 +754,12 @@ define([
 		var tableOfRelationship = document.getElementById("tableSelectableLayersArea");
 
 		dojo.destroy('layerAreaESB');
+		dojo.destroy('layerAreaPSI');
 		dojo.destroy('layerAreaPBS');
 		dojo.destroy('layerAreaBNF');
 		
         dojo.destroy('hrSeperatorESB');
+        dojo.destroy('hrSeperatorPSI');
         dojo.destroy('hrSeperatorPBS');
         dojo.destroy('hrSeperatorBNF');		
 		
@@ -764,8 +772,18 @@ define([
 			'id': 'layerAreaESB',
 			'style': 'width: 100%',
 		}, tableOfRelationship);
-		
-		var hrSeperatorPBS = dojo.create('div', {
+
+        var hrSeperatorPSI = dojo.create('div', {
+            'id': 'hrSeperatorPSI',
+            'style': 'width: 100%',
+        }, tableOfRelationship);
+        
+        var layerAreaPSI = dojo.create('div', {
+            'id': 'layerAreaPSI',
+            'style': 'width: 100%',
+        }, tableOfRelationship);    
+        		
+        var hrSeperatorPBS = dojo.create('div', {
             'id': 'hrSeperatorPBS',
             'style': 'width: 100%',
         }, tableOfRelationship);
@@ -789,7 +807,12 @@ define([
             'id': "hrESB",
             'class': 'seperator',
         }, hrSeperatorESB);
-        
+ 
+        var hrSeperatorPSI = dojo.create('hr', {
+            'id': "hrPSI",
+            'class': 'seperator',
+        }, hrSeperatorPSI);
+               
         var hrSeperatorPBS = dojo.create('hr', {
             'id': "hrPBS",
             'class': 'seperator',
@@ -801,6 +824,7 @@ define([
         }, hrSeperatorBNF);
 
         document.getElementById("hrESB").style.display = 'none';
+        document.getElementById("hrPSI").style.display = 'none';
         document.getElementById("hrPBS").style.display = 'none';
         document.getElementById("hrBNF").style.display = 'none';
 
@@ -847,7 +871,7 @@ define([
 					}
 					break;
 			}    			
-			if ((chkNationalScale == false) && (chkCommunityScale == false)) {
+			if (((chkNationalScale == false) && (chkCommunityScale == false)) || (arrCategoryForAllScale.indexOf(categoryTab) >= 0)) {
 				bSelectedByNationalOrCommunity = true;
 			}
 
@@ -861,7 +885,12 @@ define([
 					currentLayerSelectable = true;				
 				}
 			}// end of if (bSelectedByNationalOrCommunity)
-
+			
+			//if searchFilterText is not empty then search all EnviroAtalas data
+            if (document.getElementById('searchFilterText').value != ''){
+                currentLayerSelectable = true;
+            }
+            
 			if (currentLayerSelectable && (eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
 		
 				var bLayerSelected = false;
@@ -896,7 +925,29 @@ define([
 								_updateSelectableLayer();
 		    				}
 		    			}, layerAreaESB);
-			    	} else if (categoryTab == "PBS"){
+			    	} else if (categoryTab == "PSI"){
+                        document.getElementById("hrPSI").style.display = '';
+                        var topicHeader = dojo.create('div', {
+                            'id': eaTopic,
+                            'class': 'topicHeader'+categoryTab,
+                            'innerHTML': eaTopic,
+                            onclick: function(){
+                                hiderows[this.id] = !hiderows[this.id];
+                                _updateSelectableLayer();
+                            }
+                        }, layerAreaPSI);                       
+                    } else if (categoryTab == "PSI"){
+                        document.getElementById("hrPSI").style.display = '';
+                        var topicHeader = dojo.create('div', {
+                            'id': eaTopic,
+                            'class': 'topicHeader'+categoryTab,
+                            'innerHTML': eaTopic,
+                            onclick: function(){
+                                hiderows[this.id] = !hiderows[this.id];
+                                _updateSelectableLayer();
+                            }
+                        }, layerAreaPSI);                       
+                    } else if (categoryTab == "PBS"){
 			    	    document.getElementById("hrPBS").style.display = '';
 						var topicHeader = dojo.create('div', {
 		    				'id': eaTopic,
@@ -938,7 +989,11 @@ define([
 						var mainDiv = dojo.create('div', {
 							'class': 'layerDiv'
 							}, layerAreaESB);						
-					} else if (categoryTab == "PBS"){
+					} else if (categoryTab == "PSI"){
+                        var mainDiv = dojo.create('div', {
+                            'class': 'layerDiv'
+                            }, layerAreaPSI);                       
+                    } else if (categoryTab == "PBS"){
 						var mainDiv = dojo.create('div', {
 							'class': 'layerDiv'
 							}, layerAreaPBS);						
@@ -1166,6 +1221,9 @@ define([
 			case "ESB":					
 				topicDictionary = window.topicDicESB;
 				break;
+            case "PSI":
+                topicDictionary = window.topicDicPSI;
+                break;				
 			case "PBS":
 				topicDictionary = window.topicDicPBS;
 				break;
@@ -1210,6 +1268,10 @@ define([
 			if ((chkNationalScale.checked == false) && (chkCommunityScale.checked == false)) {
 				bCurrentTopicDisabled = false;
 			}			
+			if (arrCategoryForAllScale.indexOf(categoryTab) >= 0) {
+			    bCurrentTopicDisabled = false;
+			}
+			
 	        var chkboxId = window.chkTopicPrefix + topicDictionary[key];
 	        var checkbox = document.getElementById(chkboxId);			
 
@@ -1341,6 +1403,9 @@ define([
 			case "ESB":					
 				topicDictionary = window.topicDicESB;
 				break;
+            case "PSI":
+                topicDictionary = window.topicDicPSI;
+                break;				
 			case "PBS":
 				topicDictionary = window.topicDicPBS;
 				break;
@@ -1573,6 +1638,7 @@ define([
 	    this.fetchDataByName('SelectCommunity');	
 	     
 	    this.displayCategorySelection("ESB");
+	    this.displayCategorySelection("PSI");
 	    this.displayCategorySelection("PBS");
 	    this.displayCategorySelection("BNF");
 		this.displayGeographySelection();
@@ -1662,7 +1728,7 @@ define([
 	                    }
 	                    if(layer.hasOwnProperty('eaTopic')){
 	                    	eaTopic = layer.eaTopic.toString();
-	                    	console.log("eaID:" + eaID + ", eaTopic: " + eaTopic);
+	                    	//console.log("eaID:" + eaID + ", eaTopic: " + eaTopic);
 	                    	window.hashTopic[eaID]  = eaTopic;
 	                    }
 	                    else {
