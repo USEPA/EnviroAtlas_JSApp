@@ -128,7 +128,7 @@
 
 .jimu-widget-splash-desktop .splash-bg{
   z-index: 0;
-  background-color:rgb(72, 85, 102, .8);
+  background-color:rgba(72, 85, 102, .8);
 }
 
 .jimu-widget-splash-desktop .custom-content{
@@ -163,14 +163,14 @@
 }
 
 .jimu-widget-splash .jimu-viewstack{
-  background-color: unset;
+  background-color: transparent;
 }
 
 .jimu-widget-splash .mainbtn{
   margin: 0px 20px 0px 20px;
   width: 180px;
   height: 170px;
-  background-color: #197ec099;
+  background-color: rgba(25,126,192,0.6); /*#197ec0;*/
 }
 
 .jimu-widget-splash .mainbtn .btn-icon{

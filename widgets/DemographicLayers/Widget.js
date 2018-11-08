@@ -8,6 +8,7 @@ define(['dojo/_base/declare',
   'dojo/on',
   "esri/Color",
     'dijit/form/Slider',
+    'dijit/Dialog',
   "esri/renderers/ClassBreaksRenderer",
         "esri/symbols/SimpleFillSymbol",
         "esri/symbols/SimpleMarkerSymbol",
@@ -35,6 +36,7 @@ function(declare,
     on,
     Color,
     Slider,
+    Dialog,
     ClassBreaksRenderer, 
     SimpleFillSymbol, 
     SimpleMarkerSymbol,
@@ -115,6 +117,70 @@ startup: function () {
     this.dtype = "ejdemog";
     this.rendertype = "polygon";
     this.inherited(arguments);
+
+    document.getElementById('censusServiceSelectionHelp').onclick = function (e) {
+        var infobox = new Dialog({
+                            title: "Data Source",
+                            style: 'width: 300px'
+                        });
+
+        infotext = "<h2 style='margin-top:0px'>2011-2015 ACS</h2>";
+        infotext += "<p>Variables derived from a subset of 2011-2015 American Community Survey data.</p>"
+        infotext += "<hr style='margin-top:10px'>";
+        infotext += "<h2 style='margin-top:0px'>2010 Census</h2>";
+        infotext += "<p>Variables derived from a subset of 2010 Census data.</p>";
+        infotext += "<hr style='margin-top:10px'>";
+        infotext += "<h2 style='margin-top:0px'>2000 Census</h2>";
+        infotext += "<p>Variables derived from a subset of 2000 Census data.</p>";
+
+        var infoDiv = dojo.create('div', {
+                        'innerHTML': infotext
+                        }, infobox.containerNode);
+                        infobox.show()
+    };
+
+    document.getElementById('breaksSelectionHelp').onclick = function (e) {
+        var infobox = new Dialog({
+                            title: "Break Type",
+                            style: 'width: 300px'
+                        });
+
+        infotext = "<h2 style='margin-top:0px'>Quantile</h2>";
+        infotext += "<p>Each class contains an equal number of features. A quantile classification is well suited to linearly distributed data. Quantile assigns the same number of data values to each class. There are no empty classes or classes with too few or too many values.</p>";
+        infotext += "<hr style='margin-top:10px'>";
+        infotext += "<h2 style='margin-top:0px'>Natural Breaks</h2>";
+        infotext += "<p>Natural breaks classes are based on natural groupings inherent in the data. Class breaks are identified that best group similar values and that maximize the differences between classes. </p>";
+        infotext += "<hr style='margin-top:10px'>";
+        infotext += "<h2 style='margin-top:0px'>Equal Interval</h2>";
+        infotext += "<p>Equal interval divides the range of attribute values into equal-sized subranges This method emphasizes the amount of an attribute value relative to other values. Equal interval is best applied to familiar data ranges, such as percentages and temperature.</p>";
+        infotext += "<br>"
+        infotext += "<p style='font-size:9px'>Source: <a href='http://pro.arcgis.com/en/pro-app/help/mapping/layer-properties/data-classification-methods.htm' target='_blank'>ESRI</a></p>";
+
+        var infoDiv = dojo.create('div', {
+                        'innerHTML': infotext
+                        }, infobox.containerNode);
+                        infobox.show()
+    };
+
+    document.getElementById('mapStyleSelectionHelp').onclick = function (e) {
+        var infobox = new Dialog({
+                            title: "Map Style",
+                            style: 'width: 300px'
+                        });
+
+        infotext = "<h2 style='margin-top:0px'>Choropleth Map</h2>";
+        infotext += "<p>Choropleth maps use different colors or patterns to represent data (e.g., households below poverty) for different geographies (e.g., county, census tract). These maps are useful for identifying spatial patterns or hotspots.</p>";
+        infotext += "<div><img style='height:120px; margin-top:5px' src='widgets/DemographicLayers/images/thematic.png'></div><br>";
+        infotext += "<hr style='margin-top:10px'>";
+        infotext += "<h2 style='margin-top:0px'>Graduated Symbol Map</h2>";
+        infotext += "<p>Graduated symbol maps use variable size symbols (e.g., circles) to represent discrete changes in data. These maps are useful when added over other thematic maps or basemaps.</p>";
+        infotext += "<div><img style='height:120px; margin-top:5px' src='widgets/DemographicLayers/images/graduated.png'></div><br>";
+        
+        var infoDiv = dojo.create('div', {
+                        'innerHTML': infotext
+                        }, infobox.containerNode);
+                        infobox.show()
+    };
   
 
 },
@@ -160,7 +226,8 @@ createCategory: function (key) {
     var wobj = this;
     wobj.dtype = key;
     var dgObj = _config.demogJSON[key];
-    this.descdiv.innerHTML = dgObj.description;       
+    
+          
 
     if (dgObj.process) {
         wobj.createCatList(key);
@@ -262,6 +329,7 @@ createCategory: function (key) {
 
             }
             wobj.addBtn.disabled = false;
+
         }, function (error) {
             console.log(error);
         });
@@ -850,7 +918,7 @@ rgb2hex: function (red, green, blue) {
 tablePalette: function(count, scolor, ecolor) {
 
 var pctvalue = 100 / (count + 1);
-var divwidth = 12 * (count + 1);
+var divwidth = 32* (count + 1);
 var c1 = new Color(scolor);
 var c2 = new Color(ecolor);
 var deltaR = Math.floor((c2.r - c1.r)/count);
