@@ -68,7 +68,7 @@ cursor: pointer;
 }
 
 #tourDialog .dijitTooltipContainer {
-	background: rgb(72, 85, 102, .8);
+	background: rgba(72, 85, 102, .8);
 	color: white;
 }
 
