@@ -204,6 +204,7 @@ define(['dojo/_base/declare',
             symbolStyler = new SymbolStyler({
                     portal: "https://epa.maps.arcgis.com"
                 }, stylerNode); //this.symbolStyler
+            //symbolStyler = new SymbolStyler({}, "styler");    
             symbolStyler.on("click", function(evt){
 		 		selfDynamicSymbology._clickSymbolStyler(evt);
 			});			
@@ -609,6 +610,15 @@ define(['dojo/_base/declare',
 	                			symbol.style = _style;
 	                		}	                		
 	                	}
+                        if (_color != null) {
+                            symbol.color = _color;
+                        }
+                        if ((_outline != null) && (_outline.style != "none")) {
+                            symbol.outline = _outline;
+                        }  	                
+                        var simpleRenderer = new SimpleRenderer(symbol);
+                        geoenrichedFeatureLayer.setRenderer(simpleRenderer);
+                        geoenrichedFeatureLayer.redraw();	
 	                }
 	                else if (fType == "esriGeometryPolyline") {
 	                	var symbol = new SimpleLineSymbol();
@@ -618,25 +628,64 @@ define(['dojo/_base/declare',
 	                	if ((_width != null) && (_width != undefined)){
 	                		symbol.width = _width;
 	                	}
+	                	if (_color != null) {
+                            symbol.color = _color;
+                        }
+                        if ((_outline != null) && (_outline.style != "none")) {
+                            symbol.outline = _outline;
+                        }  
+                        var simpleRenderer = new SimpleRenderer(symbol);
+                        geoenrichedFeatureLayer.setRenderer(simpleRenderer);
+                        geoenrichedFeatureLayer.redraw();
 	                }
 	                else if ((fType == "esriGeometryPoint") || _bPolygonAsPoint) {
-	                	
-	                	var symbol = new SimpleMarkerSymbol();
-	                	if (_style != null) {
-	                		symbol.style = _style;
-	                	}
+
+	                	if (((_symbol.height == 0)||isNaN(_symbol.height))&&((_symbol.width == 0)||isNaN(_symbol.width))) {
+                            _symbol.height = 20;
+                            _symbol.width = 20;
+                        }
+                        if (_symbol.type == "simplemarkersymbol") {
+                            if (_symbol.color == null) {
+                                _symbol.setColor(new Color([0, 0, 0, 1]));
+                            }
+                            if ((_symbol.style == "x") || (_symbol.style == "cross")) {
+                                if ((_symbol.outline.style == "none")||(_symbol.outline.width == 0)) {
+                                    
+                                    var outline = new SimpleLineSymbol();
+                                    
+                                    if (_symbol.outline.width != 0) {
+                                        outline.setWidth(_symbol.outline.width);
+                                    }
+                                    else {
+                                        outline.setWidth(1);
+                                    }
+                                    
+                                    if (_symbol.outline.style != "none") {
+                                        outline.setStyle(_symbol.outline.style);
+                                    }
+                                    else {
+                                        outline.setStyle("solid");
+                                    }
+                                    
+                                    if (_symbol.outline.color != null) {
+                                        outline.setColor(_symbol.outline.color);
+                                    }
+                                    else {
+                                        outline.setColor(new Color([0, 0, 0, 1]));
+                                    }
+                                    _symbol.setOutline(outline);
+                                }                                
+                            }
+                        }
+                       
+                        var simpleRenderer = new SimpleRenderer(_symbol);
+	                	geoenrichedFeatureLayer.setRenderer(simpleRenderer);
+                        geoenrichedFeatureLayer.redraw();
 	                } 
 					
-					if (_color != null) {
-						symbol.color = _color;
-					}
-					if (_outline != null) {
-            			symbol.outline = _outline;
-            		}          		
+        		
             		
-            		var simpleRenderer = new SimpleRenderer(symbol);
-            		geoenrichedFeatureLayer.setRenderer(simpleRenderer);
-            		geoenrichedFeatureLayer.redraw();
+
                 }
             }
         },
@@ -730,6 +779,7 @@ define(['dojo/_base/declare',
             }
             _outline = newStyle.symbol.outline;
             _symbol = newStyle.symbol;
+
             _style = newStyle.symbol.style;
             _color = newStyle.symbol.color;
             
@@ -852,15 +902,7 @@ define(['dojo/_base/declare',
                 	else {
                 	    var dSymbol = new SimpleMarkerSymbol();
                 	}
-
-	                symbolStyler.edit(dSymbol, {
-	                    colorRamp: {
-	                        colors: [],
-	                        scheme: schemes.secondarySchemes[39]
-	                    },
-	                    externalSizing: false,
-	                    schemes: schemes
-	                });                	
+	                symbolStyler.edit(dSymbol);              	
                 }
             }
         },

@@ -4,7 +4,7 @@
             
             <div id="searchboxDiv" dojotype="dijit.layout.ContentPane" style="width:100%; background-color:#f4f4f4">
                 <table id="tableLyrNameDescrTag" cellspacing="0" width="100%" style="display:none">
-                <!--table id="tableLyrNameDescrTag" cellspacing="0" width="100%"-->
+        		<!--table id="tableLyrNameDescrTag" style="height:80px;width:100px"  cellspacing="0"-->
                     <thead>
                         <tr>
                             <th>eaLyrNum</th>
@@ -34,26 +34,19 @@
 			                    
 								<input id = "butFilterInSimpleSearch" type="button" title="filter the layers" data-dojo-attach-event="onclick:_onButFilterInSimpleSearchClick"/> 
 								
-              
-	            <!--table id="tableForButtonFilterAndHide" style='table-layout:fixed'>
-	                <tbody>
-	                    <tr col=3>
-	                    	<td>
-								<input id="numOfLayers" value = "" type="text" style = "background-color: #00436f; color:white; border: none; float: left; vertical-align:center height: 14px;"/>
-							</td>
-							<td>
-								<input id = "butFilterInSimpleSearch" type="button"   data-dojo-attach-event="onclick:_onButFilterInSimpleSearchClick"/> 
-							</td>
-							<td>
-			                    <label for="hideIcons" style = "background-color: #00436f; color:white; border: none; float: right;">Hide Icons</label> 
-			                    <input id="hideIcons"  type="checkbox"  style = "background-color: #4a2c3d; color:white; border: none; float: right;vertical-align:center;height: 14px;padding:2px; margin:2px" />
-								
-							</td>
-	                    </tr>					    	
-	                </tbody>
-	            </table-->                 
             </div>       
 		</div>
+
+        <div id="tableSelectableWidgetsArea" data-dojo-attach-point="selectableWidgetsArea" style="height:60px; width:100%;  display:none;" dojotype="dijit.layout.ContentPane">
+            <label id="widgetSelectionComment" ></label>
+            <table id="tableSelectableWidgets" style='table-layout:fixed;margin-top:5px;'>
+                <tbody>
+                    <tr>
+
+                    </tr>					    	
+                </tbody>
+            </table>
+        </div>
 
         <div id="tableSelectableLayersArea" data-dojo-attach-point="selectableLayersArea" style="height:900px; width:100%; overflow-y:scroll;" dojotype="dijit.layout.ContentPane">
             <table id="tableSelectableLayers" style='table-layout:fixed'>
@@ -69,8 +62,5 @@
             <input id = "butOpenSelectCommunityWidget" type="button" value="View Active Layers" style="display:none" data-dojo-attach-event="onclick:_onViewActiveLayersClick" />
             <input id = "butAddSingleLayer" type="button" value="butAddSingleLayer" style="display:none"  data-dojo-attach-event="onclick:_onSingleLayerClick"/> 
             <input id = "butAddAllLayers" type="button" value="butAddAllLayers" style="display:none"  data-dojo-attach-event="onclick:_onAddLayersClick"/> 
-        	
-        </div>
-    
-
+        </div>   
 </div>

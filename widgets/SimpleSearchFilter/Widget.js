@@ -114,7 +114,6 @@ define([
 		var hashFactsheetLink = {};
 		var hashLayerNameLink = {};
 		var hashDescriptionforI = {};
-		
 		var hashLayerName = {};
 		var hashEaDescription = {};
 		var hashEaTag = {};
@@ -731,6 +730,7 @@ define([
 	   }
  	   
     var	_addSelectableLayerSorted = function(items){	  
+
 	    
 		updateTopicToggleButton("ESB");
 		updateTopicToggleButton("PSI");
@@ -747,7 +747,8 @@ define([
 				eaIDFilteredList.push(currentCellText);
 			}			
 		}); 
-			
+		
+
 		//alert(selfSimpleSearchFilter.domNode.parentNode.clientHeight);
 
 
@@ -761,7 +762,15 @@ define([
         dojo.destroy('hrSeperatorESB');
         dojo.destroy('hrSeperatorPSI');
         dojo.destroy('hrSeperatorPBS');
-        dojo.destroy('hrSeperatorBNF');		
+        dojo.destroy('hrSeperatorBNF');	
+        	
+		
+		dojo.destroy("button_widgets_DemographicLayers");
+		dojo.destroy("button_widgets_TimeSeries_Widget");
+		dojo.destroy("button_"+"widgets_AddData_30");
+
+		var tableOfWidgets = document.getElementById("tableSelectableWidgetsArea");
+		tableOfWidgets.style.display = 'none';
 		
         var hrSeperatorESB = dojo.create('div', {
             'id': 'hrSeperatorESB',
@@ -827,7 +836,35 @@ define([
         document.getElementById("hrPSI").style.display = 'none';
         document.getElementById("hrPBS").style.display = 'none';
         document.getElementById("hrBNF").style.display = 'none';
-
+        
+        if (eaIDFilteredList.length == 0) {
+            //dojo.byId("widgetSelectionComment").value = "No result is found. Following button will direct to add data widget:";
+            dojo.byId("widgetSelectionComment").innerHTML  = "No data layer is found. Following button will direct to add data widget:";
+            tableOfWidgets = document.getElementById("tableSelectableWidgetsArea");
+            tableOfWidgets.style.display = '';
+            var buttonID = "widget_"+ "widgets_AddData_30";
+            var checkbox = dojo.create('input', {
+                "type": "button",
+                "name": buttonID,
+                "value": "AddData",
+                "style" : "display:inline-block; width:30%",
+                "id": "button_"+"widgets_AddData_30" //SubLayerIds is the widgetID in this case
+            }, tableOfWidgets);
+            checkbox.addEventListener('click', function(evt) {                          
+                 $("#" + "widgets_AddData_30").click();
+                       setTimeout(lang.hitch(this, function() {
+                            $("#widgets_SimpleSearchFilter_Widget_37").click();
+                        }), 10);
+                        setTimeout(lang.hitch(this, function() {
+                           $("#" + "widgets_AddData_30").click();
+                        }), 13);    
+                        setTimeout(lang.hitch(this, function() {
+                           selfSearchInAddData.searchTextBox.value = document.getElementById('searchFilterText').value;
+                           selfSearchInAddData.searchButton.click();//test with "mountain"
+                        }), 1000); 
+                        
+            })
+        }
         var numOfSelectableLayers = 0;
         var totalNumOfLayers = 0;
 
@@ -849,13 +886,43 @@ define([
 			sourceType = layerDataStore.getValue( item, 'sourceType');
 			categoryTab = layerDataStore.getValue( item, 'categoryTab');
 			bSelectedByNationalOrCommunity = false;
-			
+			//add the widget button which has the searched tags
+			//if (document.getElementById('searchFilterText').value != ''){
+			if ((document.getElementById('searchFilterText').value != '')&&(document.getElementById('searchFilterText').value.trim().length >=2)){
+			    if ( (eaIDFilteredList.indexOf(eaID) >= 0)) {
+        			if (parseInt(eaID) < 0) {
+        			    dojo.byId("widgetSelectionComment").innerHTML  = "There are other widgets containing the above key word. Following button will direct to those data widget:";
+            			tableOfWidgets = document.getElementById("tableSelectableWidgetsArea");
+                        tableOfWidgets.style.display = '';
+                        var buttonID = "widget_"+layerName;
+                        var checkbox = dojo.create('input', {
+                            "type": "button",
+                            "name": buttonID,
+                            "value": layerName,
+                            "style" : "display:inline-block; width:30%",
+                            "id": "button_"+SubLayerIds //SubLayerIds is the widgetID in this case
+                        }, tableOfWidgets);
+                        checkbox.addEventListener('click', function(evt) {                          
+                             $("#" + evt.target.id.replace('button_','')).click();
+                                   setTimeout(lang.hitch(this, function() {
+                                        $("#widgets_SimpleSearchFilter_Widget_37").click();
+                                    }), 10);
+                                    setTimeout(lang.hitch(this, function() {
+                                       $("#" + evt.target.id.replace('button_','')).click();
+                                    }), 15);    
+                        })
+                    }
+                }
+            }
+            
+            //end of adding the widget button which has the searched tags
 
 			var chkNationalScale = document.getElementById("chkNational").checked;
 			var chkCommunityScale = document.getElementById("chkCommunity").checked;
 
 			// Search should use both national and community
-			if (document.getElementById('searchFilterText').value != ''){
+			if ((document.getElementById('searchFilterText').value != '')&&(document.getElementById('searchFilterText').value.trim().length >=2)){
+
 				chkNationalScale = true;
 				chkCommunityScale = true;
 			}
@@ -887,7 +954,8 @@ define([
 			}// end of if (bSelectedByNationalOrCommunity)
 			
 			//if searchFilterText is not empty then search all EnviroAtalas data
-            if (document.getElementById('searchFilterText').value != ''){
+            if ((document.getElementById('searchFilterText').value != '')&&(document.getElementById('searchFilterText').value.trim().length >=2)){
+
                 currentLayerSelectable = true;
             }
             
@@ -1180,10 +1248,15 @@ define([
 				
 			}//end of if (currentLayerSelectable)
 		});	
-		var heightOfSelectableLayersArea = selfSimpleSearchFilter.domNode.parentNode.clientHeight-100;
+		var tableOfWidgets = document.getElementById("tableSelectableWidgetsArea");
+		if (tableOfWidgets.style.display == "") {
+		    var heightOfSelectableLayersArea = selfSimpleSearchFilter.domNode.parentNode.clientHeight-160;
+		}
+		else {
+		    var heightOfSelectableLayersArea = selfSimpleSearchFilter.domNode.parentNode.clientHeight-100;
+		}
+		
 		var widthOfSelectableLayersArea = selfSimpleSearchFilter.domNode.parentNode.clientWidth;
-		//alert("widthOfSelectableLayersArea:"+widthOfSelectableLayersArea);
-		//html.setStyle(this.selectableLayersArea, "height", heightOfSelectableLayersArea + "px");
 		document.getElementById("tableSelectableLayersArea").style.height = heightOfSelectableLayersArea+ 'px';
 		document.getElementById("tableSelectableLayersArea").style.width = widthOfSelectableLayersArea +'px';
 		
@@ -1235,7 +1308,8 @@ define([
 		var chkNationalScale = document.getElementById("chkNational");
 		var chkCommunityScale = document.getElementById("chkCommunity");
 
-		if (document.getElementById('searchFilterText').value != ''){
+		if ((document.getElementById('searchFilterText').value != '')&&(document.getElementById('searchFilterText').value.trim().length >=2)){
+
 			//chkNationalScale.className ="cmn-toggle cmn-toggle-round-flat-grayedout";
 			chkNationalScale.disabled = true;
 			//document.getElementById("chkNational_label").className = 'topicTitleGray';
@@ -1646,7 +1720,11 @@ define([
 		this.displayDragButton();
 		this.displayCloseButton();
 	
-		selfSimpleSearchFilter = this;      	
+
+
+    
+		selfSimpleSearchFilter = this;     
+		 	
 	
 	    loadBookmarkHomeExtent(function(response){
 	    	var bookmarkClassified = JSON.parse(response);
@@ -1662,12 +1740,51 @@ define([
 	        }
 	    }); 
         loadJSON(function(response) {
+            var tableOfRelationship = document.getElementById('tableLyrNameDescrTag');
+            var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0]; 
+            for (ii = 0; ii<selfSimpleSearchFilter.config.WidgetTags.length; ++ii){                     
+           
+                
+                
+                widgetName = selfSimpleSearchFilter.config.WidgetTags[ii].name;
+                widgetID = selfSimpleSearchFilter.config.WidgetTags[ii].id;
+                fakeEAID = (-ii-1).toString();
+                var widgetTagsWhole =  "";
+                
+                for (tagsIndex = 0, lenTags = selfSimpleSearchFilter.config.WidgetTags[ii].Tags.length; tagsIndex < lenTags; ++tagsIndex) {
+                    widgetTagsWhole = widgetTagsWhole + selfSimpleSearchFilter.config.WidgetTags[ii].Tags[tagsIndex] + ";";
+                }
+
+                var widgetItem = {eaLyrNum: "", name: widgetName, IsSubLayer:"", SubLayerNames: "", SubLayerIds: widgetID, eaDescription: "", eaDfsLink: "", eaCategory: "", eaID: fakeEAID, eaMetadata: "", eaScale: "", eaTags: widgetTagsWhole, eaTopic:widgetName, sourceType:"", categoryTab:""}; 
+                layerDataStore.newItem(widgetItem);             
+                                                            
+                //add to the table for use of search text       
+                var newRow   = tableRef.insertRow(tableRef.rows.length);
+                
+                var newCell  = newRow.insertCell(0);
+                newCell.appendChild(document.createTextNode(fakeEAID));
+                newRow.appendChild(newCell);
+
+                newCell  = newRow.insertCell(1);
+                newCell.appendChild(document.createTextNode(widgetName));
+                newRow.appendChild(newCell);            
+       
+                newCell  = newRow.insertCell(2);
+                newCell.appendChild(document.createTextNode("kkk"));
+                newRow.appendChild(newCell);
+                
+                newCell  = newRow.insertCell(3);
+                newCell.appendChild(document.createTextNode(widgetTagsWhole));
+                newRow.appendChild(newCell);    
+                
+            }
+           
+            
             var localLayerConfig = JSON.parse(response);
             var arrLayers = localLayerConfig.layers.layer;
             console.log("arrLayers.length:" + arrLayers.length);
 			///search items
-	        var tableOfRelationship = document.getElementById('tableLyrNameDescrTag');
-		    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];    
+   
             for (index = 0, len = arrLayers.length; index < len; ++index) {
                 layer = arrLayers[index];                          
                 var indexCheckbox = 0;

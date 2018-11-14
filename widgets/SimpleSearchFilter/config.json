@@ -1,0 +1,33 @@
+{ "WidgetTags":
+	[
+	 	{
+                "name": "Demographic",
+                "label": "Demographic Layers",
+                "version": "1.3",
+                "uri": "widgets/DemographicLayers/Widget",
+                "index": 3,
+                "id": "widgets_DemographicLayers",
+                "Tags": [
+                    "Demographic",
+                    "Education",
+                    "Household"
+                ]
+        },
+		{
+                "name": "TimeSeries",
+                "label": "Times Series Layers",
+                "version": "1.3",
+                "uri": "widgets/TimeSeries/Widget",
+                "config": "widgets/TimeSeries/config.json",
+                "index": 4,
+                "id": "widgets_TimeSeries_Widget",
+                "Tags": [
+                    "Peak Emissions",
+                    "Education",
+                    "Precipitation"
+                ]
+        }
+
+
+  	]
+}
