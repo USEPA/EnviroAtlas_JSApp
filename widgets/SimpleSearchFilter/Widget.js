@@ -918,7 +918,7 @@ define([
 
 						var topicHeader = dojo.create('div', {
 		    				'id': eaTopic,
-		    				'class': 'topicHeader'+categoryTab,
+		    				'class': 'topicHeader topicHeader'+categoryTab,
 		    				'innerHTML': eaTopic,
 		    				onclick: function(){
 		    					hiderows[this.id] = !hiderows[this.id];
@@ -929,7 +929,7 @@ define([
                         document.getElementById("hrPSI").style.display = '';
                         var topicHeader = dojo.create('div', {
                             'id': eaTopic,
-                            'class': 'topicHeader'+categoryTab,
+                            'class': 'topicHeader topicHeader'+categoryTab,
                             'innerHTML': eaTopic,
                             onclick: function(){
                                 hiderows[this.id] = !hiderows[this.id];
@@ -940,7 +940,7 @@ define([
                         document.getElementById("hrPSI").style.display = '';
                         var topicHeader = dojo.create('div', {
                             'id': eaTopic,
-                            'class': 'topicHeader'+categoryTab,
+                            'class': 'topicHeader topicHeader'+categoryTab,
                             'innerHTML': eaTopic,
                             onclick: function(){
                                 hiderows[this.id] = !hiderows[this.id];
@@ -951,7 +951,7 @@ define([
 			    	    document.getElementById("hrPBS").style.display = '';
 						var topicHeader = dojo.create('div', {
 		    				'id': eaTopic,
-		    				'class': 'topicHeader'+categoryTab,
+		    				'class': 'topicHeader topicHeader'+categoryTab,
 		    				'innerHTML': eaTopic,
 		    				onclick: function(){
 		    					hiderows[this.id] = !hiderows[this.id];
@@ -962,7 +962,7 @@ define([
 					    document.getElementById("hrBNF").style.display = '';
 						var topicHeader = dojo.create('div', {
 		    				'id': eaTopic,
-		    				'class': 'topicHeader'+categoryTab,
+		    				'class': 'topicHeader topicHeader'+categoryTab,
 		    				'innerHTML': eaTopic,
 		    				onclick: function(){
 		    					hiderows[this.id] = !hiderows[this.id];
