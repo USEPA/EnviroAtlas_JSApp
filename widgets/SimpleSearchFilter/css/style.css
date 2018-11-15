@@ -60,53 +60,6 @@
   background-position: 2px 2px;
 }
 
-.bc_popup {
-  width: 25px;
-  height: 25px;
-  border: none;
-  display: inline-block;
-  margin: 0px 5px 0px 5px;
-  border-radius: 15px;
-  background-size: 80%;
-  background-repeat: no-repeat;
-  background-position: 2px 2px;
-}
-
-.bc_popup:hover {
-  cursor: pointer;
-}
-
-.bc_popup_selected{
-  box-shadow: -1px 6px 10px 1px #333;
-}
-
-.bc_infographic{
-  height: 450px;
-  background-size: 100% 100%;
-}
-
-.bc_popup_header_icon {
-  height:35px; 
-  width:35px; 
-  float: left; 
-  position: relative; 
-  top: 5px; 
-  left:10px;
-}
-
-.bc_popup_header_text {
-  font-size: 18px; 
-  font-weight: bold; 
-  height: 30px; 
-  width: 100%;
-  vertical-align:middle; 
-  text-align: center;
-  /*position: relative; 
-  left: 20px*/
-}
-
-
-
 /* clean air */
 #cair2 {background: url('../images/bc_icons.png') -20px -20px;}
 #cpw2 {background: url('../images/bc_icons.png') -20px -40px;}
