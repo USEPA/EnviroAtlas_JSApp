@@ -914,7 +914,7 @@ define([
 					SelectedTopics.push(eaTopic);
 					
 					if (categoryTab == "ESB") {
-					    document.getElementById("hrESB").style.display = '';
+					    //document.getElementById("hrESB").style.display = '';
 
 						var topicHeader = dojo.create('div', {
 		    				'id': eaTopic,
@@ -926,7 +926,7 @@ define([
 		    				}
 		    			}, layerAreaESB);
 			    	} else if (categoryTab == "PSI"){
-                        document.getElementById("hrPSI").style.display = '';
+                        //document.getElementById("hrPSI").style.display = '';
                         var topicHeader = dojo.create('div', {
                             'id': eaTopic,
                             'class': 'topicHeader topicHeader'+categoryTab,
@@ -937,7 +937,7 @@ define([
                             }
                         }, layerAreaPSI);                       
                     } else if (categoryTab == "PSI"){
-                        document.getElementById("hrPSI").style.display = '';
+                        //document.getElementById("hrPSI").style.display = '';
                         var topicHeader = dojo.create('div', {
                             'id': eaTopic,
                             'class': 'topicHeader topicHeader'+categoryTab,
@@ -948,7 +948,7 @@ define([
                             }
                         }, layerAreaPSI);                       
                     } else if (categoryTab == "PBS"){
-			    	    document.getElementById("hrPBS").style.display = '';
+			    	    //document.getElementById("hrPBS").style.display = '';
 						var topicHeader = dojo.create('div', {
 		    				'id': eaTopic,
 		    				'class': 'topicHeader topicHeader'+categoryTab,
@@ -959,7 +959,7 @@ define([
 		    				}
 		    			}, layerAreaPBS);			    		
 					} else if (categoryTab == "BNF"){
-					    document.getElementById("hrBNF").style.display = '';
+					    //document.getElementById("hrBNF").style.display = '';
 						var topicHeader = dojo.create('div', {
 		    				'id': eaTopic,
 		    				'class': 'topicHeader topicHeader'+categoryTab,
