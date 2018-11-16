@@ -1,63 +1,51 @@
 
 /* biodiversity conservation */
-.biod_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/bio_bw.png');}
+.biod_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/bio.png');}
 .biod {background: rgb(46, 174, 74) url('../images/ES_Icons/bio.png');}
-.biod_infographic {background: url('../images/bc_infographics/biod.png') no-repeat;}
 
 /* clean air */
-.cair_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/air_bw.png');}
-.cair {background: rgb(80, 85, 165) url('../images/ES_Icons/air.png');}
-.cair_infographic {background: url('../images/bc_infographics/cair.png') no-repeat;}
+.cair_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/air.png');}
+.cair {background: rgb(127, 129, 186) url('../images/ES_Icons/air.png');}
 
 /* clean and plentiful water */
-.cpw_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/water_bw.png');}
+.cpw_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/water.png');}
 .cpw {background: rgb(116, 204, 209) url('../images/ES_Icons/water.png');}
-.cpw_infographic {background: url('../images/bc_infographics/cpw.png') no-repeat;}
 
 /* climate stabilization */
-.clim_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/clim_bw.png');}
+.clim_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/clim.png');}
 .clim {background: rgb(249, 159, 31) url('../images/ES_Icons/clim.png');}
-.clim_infographic {background: url('../images/bc_infographics/clim.png') no-repeat;}
 
 /* food, fuel, and materials */
-.ffm_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/food_bw.png');}
+.ffm_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/food.png');}
 .ffm {background: rgb(240, 224, 36) url('../images/ES_Icons/food.png');}
-.ffm_infographic {background: url('../images/bc_infographics/ffm.png') no-repeat;}
 
 /* natural hazard mitigation */
-.nhm_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/haz_bw.png');}
-.nhm {background: rgb(206, 33, 42) url('../images/ES_Icons/haz.png');}
-.nhm_infographic {background: url('../images/bc_infographics/nhm.png') no-repeat;}
+.nhm_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/haz.png');}
+.nhm {background: rgb(215, 93, 100) url('../images/ES_Icons/haz.png');}
 
 /* recreation, culture, and aesthetics */
-.rca_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/rec_bw.png');}
-.rca {background: rgb(176, 51, 148) url('../images/ES_Icons/rec.png');}
-.rca_infographic {background: url('../images/bc_infographics/rca.png') no-repeat;}
+.rca_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/rec.png');}
+.rca {background: rgb(199, 112, 180) url('../images/ES_Icons/rec.png');}
 
-.NATIONAL {background: rgb(188, 188, 188) url('../images/ES_Icons/nat.png');}
-
-.COMMUNITY {background: rgb(188, 188, 188) url('../images/ES_Icons/comm.png');}
-
-.huc12 {background: rgb(188, 188, 188) url('../images/ES_Icons/huc12.png');}
-
-.cbg {background: rgb(188, 188, 188) url('../images/ES_Icons/cbg.png');}
-
-.ctr {background: rgb(188, 188, 188) url('../images/ES_Icons/ctr.png');}
-
-.grid {background: rgb(188, 188, 188) url('../images/ES_Icons/grid.png');}
-
-.plp {background: rgb(188, 188, 188) url('../images/ES_Icons/plp.png');}
+/* Scale and data type */
+.NATIONAL {background: rgb(186, 207, 225) url('../images/ES_Icons/nat.png');}
+.COMMUNITY {background: rgb(186, 207, 225)url('../images/ES_Icons/comm.png');}
+.huc12 {background: rgb(186, 207, 225) url('../images/ES_Icons/huc12.png');}
+.cbg {background: rgb(186, 207, 225) url('../images/ES_Icons/cbg.png');}
+.ctr {background: rgb(186, 207, 225) url('../images/ES_Icons/ctr.png');}
+.grid {background: rgb(186, 207, 225) url('../images/ES_Icons/grid.png');}
+.plp {background: rgb(186, 207, 225) url('../images/ES_Icons/plp.png');}
 
 .icon_style {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   float:left;
   margin-right: 5px;
   /*border: 1px solid gray;*/
   border-radius: 15px;
   background-size: 80%;
   background-repeat: no-repeat;
-  background-position: 2px 2px;
+  background-position: center;
 }
 
 /* clean air */

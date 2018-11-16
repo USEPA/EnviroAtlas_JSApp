@@ -601,31 +601,37 @@ define([
 
 	   var add_bc_icons = function(layerArea, scale, type) {
 	   		indexImage = 0;
+	   		bc_and_scale_space='0px'
 
 	   		var BC_Div = dojo.create('div', {
-	   			'style': 'overflow:hidden; padding-left: 16px; position: relative; top: -2px; width:245px'
+	   			'style': 'overflow:hidden; padding-left: 16px; display:inline-block'
 			}, layerArea);
-			
-			for (var key in window.categoryDic) {
 
-				bc_img = document.createElement('div');
-				bc_img.title  = key;
-								
-				if (eaCategory.indexOf(key) !=-1) {
-					bc_img.setAttribute("class",window.categoryDic[key] + ' icon_style');
+	   		// eaCategories have a - in them.
+	   		if (eaCategory.split('-').length > 1) {
+
+				for (var key in window.categoryDic) {
+
+					bc_img = document.createElement('div');
+					bc_img.title  = key;
+									
+					if (eaCategory.indexOf(key) !=-1) {
+						bc_img.setAttribute("class",window.categoryDic[key] + ' icon_style');
+					}
+					else {
+						bc_img.setAttribute("class",window.categoryDic[key] + "_bw icon_style");
+					}
+					
+					indexImage = indexImage + 1;
+					BC_Div.appendChild(bc_img);
+				
+				
 				}
-				else {
-					bc_img.setAttribute("class",window.categoryDic[key] + "_bw icon_style");
-				}
-				
-				indexImage = indexImage + 1;
-				BC_Div.appendChild(bc_img);
-				
-				
+				bc_and_scale_space='20px'
 			}
 
 			scale_img = document.createElement('div');
-			scale_img.style.marginLeft = '20px';
+			scale_img.style.marginLeft = bc_and_scale_space;
 			
 
 			if (scale == "NATIONAL") {
@@ -669,7 +675,9 @@ define([
 		        			}
 		        		});
 
-		        		bc_description.containerNode.style='background:rgb(72,85,102); color:white';
+						// doesn't work in IE but is B/W and legible
+		        		bc_description.containerNode.style.backgroundColor = 'rgb(72,85,102)'; 
+		        		bc_description.containerNode.style.color = 'white';
 		        		
 					    var iconContent = dojo.create('div', {
 	    					'innerHTML': helpContent,
