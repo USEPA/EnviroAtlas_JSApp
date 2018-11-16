@@ -51,28 +51,28 @@
   display:inline-block;
 }
 #titlePaneESB .dijitTitlePaneTitle {
-  background: #b3b3b3 !important;
+  background: #adbb9a !important;
 }
 #titlePaneESB .dijitTitlePaneTitleHover {
-  background: #8c8c8c !important;
+  background: #cdd6c2 !important;
 }
 #titlePanePSI .dijitTitlePaneTitle {
-  background: #b3b3b3 !important;
+  background: #bb9aad !important;
 }
 #titlePanePSI .dijitTitlePaneTitleHover {
-  background: #8c8c8c !important;
+  background: #d6c2cd !important;
 }
 #titlePanePBS .dijitTitlePaneTitle {
-  background: #b3b3b3 !important;
+  background: #9aadbb !important;
 }
 #titlePanePBS .dijitTitlePaneTitleHover {
-  background: #8c8c8c !important;
+  background: #c2cdd6 !important;
 }
 #titlePaneBNF .dijitTitlePaneTitle {
-  background: #b3b3b3 !important;
+  background: #aeaba2 !important;
 }
 #titlePaneBNF .dijitTitlePaneTitleHover {
-  background: #8c8c8c !important;
+  background: #ceccc7 !important;
 }
 
 #titlePaneESB .dijitTitlePaneContentOuter {
