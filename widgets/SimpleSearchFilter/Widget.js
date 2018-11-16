@@ -600,134 +600,93 @@ define([
 
 	   var add_bc_icons = function(layerArea, scale, type) {
 	   		indexImage = 0;
+	   		bc_and_scale_space='0px'
 
 	   		var BC_Div = dojo.create('div', {
-	   			'style': 'overflow:hidden; padding-left: 16px; position: relative; top: -2px'
+	   			'style': 'overflow:hidden; padding-left: 16px; display:inline-block'
 			}, layerArea);
-			
-			for (var key in window.categoryDic) {
 
-				bc_img = document.createElement('div');
-				bc_img.title  = key;
+	   		// eaCategories have a - in them.
+	   		if (eaCategory.split('-').length > 1) {
+
+				for (var key in window.categoryDic) {
+
+					bc_img = document.createElement('div');
+					bc_img.title  = key;
+									
+					if (eaCategory.indexOf(key) !=-1) {
+						bc_img.setAttribute("class",window.categoryDic[key] + ' icon_style');
+					}
+					else {
+						bc_img.setAttribute("class",window.categoryDic[key] + "_bw icon_style");
+					}
+					
+					indexImage = indexImage + 1;
+					BC_Div.appendChild(bc_img);
 				
 				
-				// Add popup dialog box for Benefit Category 
-				bc_img.onclick = function() {
-				ES_title = this.title;
-
-				var bc_description = new Dialog({
-        		title: 'EnviroAtlas Benefit Categories', 
-        		style: 'width: 450px',
-        		onHide: function() {
-        			bc_description.destroy()
-        			}
-        		});
-        		
-
-        		var BC_tabs = dojo.create('div', {
-	        		style: 'text-align: center; padding-bottom: 15px',
-	        	}, bc_description.containerNode);
-
-	        	for (var key in window.categoryDic) {
-	        		bc_icon_links = dojo.create('a', {
-	        		"title": key,
-	        		"id": window.categoryDic[key] + '_id',
-	        		"class": 'bc_popup '+ window.categoryDic[key],
-	        		}, BC_tabs);
-
-
-	        		dojo.connect(bc_icon_links, 'onclick', function(){
-
-	        			bc_id = this.id.split('_')[0];
-
-
-	        			for (key in window.categoryDic) {
-	        					$('#'+window.categoryDic[key]+'_id').removeClass('bc_popup_selected');
-	        				}
-	        			$('#'+this.id).addClass('bc_popup_selected');
-
-	        			dojo.removeClass(infographic_body);
-	        			dojo.addClass(infographic_body, 'bc_infographic ' + bc_id + '_infographic');
-
-	        			dojo.byId(header_text).innerHTML = this.title;
-	        		});
-	        	};
-
-	        	$('#'+window.categoryDic[ES_title]+'_id').addClass('bc_popup_selected');
-
-	        	var bc_infographic = dojo.create('div', {
-    				'id': 'infographic_area',
-    				'style': 'background-color: #f4f4f4; width: 100%'
-    			}, bc_description.containerNode);
-
-    			var header_text = dojo.create('div', {
-    				'innerHTML': this.title,
-    				'class': 'bc_popup_header_text',
-    			}, bc_infographic);
-
-    			var infographic_text = dojo.create('div', {
-    				'innerHTML': 'Ecosystem goods and services, often shortened to ecosystem \
-    							  services (ES), are the benefits that humans receive from nature. \
-    							  These benefits underpin almost every aspect of human well-being, \
-    							  including our food and water, security, health, and economy. \
-    							  <br><br> \
-    							  EnviroAtlas organizes our data into seven benefit categories \
-    							  <br><br>',
-    				'style': 'font-size: 11px',
-    			}, bc_infographic );
-
-    			var infographic_body = dojo.create('div', {
-    				"class": 'bc_infographic ' + window.categoryDic[ES_title] + '_infographic'
-    			}, bc_infographic);
-
-        		bc_description.show();		        		
-			};
-			// End add popup dialog box for Benefit Category 
-								
-			if (eaCategory.indexOf(key) !=-1) {
-				bc_img.setAttribute("class",window.categoryDic[key] + ' icon_style');
+				}
+				bc_and_scale_space='20px'
 			}
-			else {
-				bc_img.setAttribute("class",window.categoryDic[key] + "_bw icon_style");
+
+			scale_img = document.createElement('div');
+			scale_img.style.marginLeft = bc_and_scale_space;
+			
+
+			if (scale == "NATIONAL") {
+					scale_img.title = "National Dataset";
+				} else {
+					scale_img.title = "Community Dataset";
+				}
+			scale_img.setAttribute("class", scale + ' icon_style');
+			BC_Div.appendChild(scale_img);
+
+			datatype_img = document.createElement('div');
+			
+
+			if (type == 'huc12') {
+				datatype_img.title = "Data summarized by 12 digit HUCs";
+			} else if (type == 'cbg') {
+				datatype_img.title = "Data summarized by census block groups";
+			} else if (type == 'ctr') {
+				datatype_img.title = "Data summarized by census tract";
+			} else if (type == 'grid') {
+				datatype_img.title = "Non-summarized grid data";
+			} else if (type == 'plp') {
+				datatype_img.title = "Point, line, or polygon data"
 			}
-			
-			indexImage = indexImage + 1;
-			BC_Div.appendChild(bc_img);
-			
-			
-		}
 
-		scale_img = document.createElement('div');
-		scale_img.style.marginLeft = '20px';
-		
+			datatype_img.setAttribute("class", type + ' icon_style');
+			BC_Div.appendChild(datatype_img);
 
-		if (scale == "NATIONAL") {
-				scale_img.title = "National Dataset";
-			} else {
-				scale_img.title = "Community Dataset";
-			}
-		scale_img.setAttribute("class", scale + ' icon_style');
-		BC_Div.appendChild(scale_img);
+			// Add popup dialog box for Benefit 
+			BC_Div.onclick = function () {
+				
+				$.getJSON("./widgets/Demo/config.json", function(json) {
+						// read from tour stop 4 content
+						helpContent = json['tour'][3]['content'].join("")
 
-		datatype_img = document.createElement('div');
-		
+						var bc_description = new Dialog({
+		        		title: 'EnviroAtlas Icons', 
+		        		style: 'width: 450px',
+		        		onHide: function() {
+		        			bc_description.destroy()
+		        			}
+		        		});
 
-		if (type == 'huc12') {
-			datatype_img.title = "Data summarized by 12 digit HUCs";
-		} else if (type == 'cbg') {
-			datatype_img.title = "Data summarized by census block groups";
-		} else if (type == 'ctr') {
-			datatype_img.title = "Data summarized by census tract";
-		} else if (type == 'grid') {
-			datatype_img.title = "Non-summarized grid data";
-		} else if (type == 'plp') {
-			datatype_img.title = "Point, line, or polygon data"
-		}
+						// doesn't work in IE but is B/W and legible
+		        		bc_description.containerNode.style.backgroundColor = 'rgb(72,85,102)'; 
+		        		bc_description.containerNode.style.color = 'white';
+		        		
+					    var iconContent = dojo.create('div', {
+	    					'innerHTML': helpContent,
+	    				}, bc_description.containerNode);
 
-		datatype_img.setAttribute("class", type + ' icon_style');
-		BC_Div.appendChild(datatype_img);
+	    				bc_description.show();
+					});
+				} // end onclick
 
-	   }
+		   }
  	   
     var	_addSelectableLayerSorted = function(items){	  
 
@@ -982,11 +941,11 @@ define([
 					SelectedTopics.push(eaTopic);
 					
 					if (categoryTab == "ESB") {
-					    document.getElementById("hrESB").style.display = '';
+					    //document.getElementById("hrESB").style.display = '';
 
 						var topicHeader = dojo.create('div', {
 		    				'id': eaTopic,
-		    				'class': 'topicHeader'+categoryTab,
+		    				'class': 'topicHeader topicHeader'+categoryTab,
 		    				'innerHTML': eaTopic,
 		    				onclick: function(){
 		    					hiderows[this.id] = !hiderows[this.id];
@@ -994,10 +953,10 @@ define([
 		    				}
 		    			}, layerAreaESB);
 			    	} else if (categoryTab == "PSI"){
-                        document.getElementById("hrPSI").style.display = '';
+                        //document.getElementById("hrPSI").style.display = '';
                         var topicHeader = dojo.create('div', {
                             'id': eaTopic,
-                            'class': 'topicHeader'+categoryTab,
+                            'class': 'topicHeader topicHeader'+categoryTab,
                             'innerHTML': eaTopic,
                             onclick: function(){
                                 hiderows[this.id] = !hiderows[this.id];
@@ -1005,10 +964,10 @@ define([
                             }
                         }, layerAreaPSI);                       
                     } else if (categoryTab == "PSI"){
-                        document.getElementById("hrPSI").style.display = '';
+                        //document.getElementById("hrPSI").style.display = '';
                         var topicHeader = dojo.create('div', {
                             'id': eaTopic,
-                            'class': 'topicHeader'+categoryTab,
+                            'class': 'topicHeader topicHeader'+categoryTab,
                             'innerHTML': eaTopic,
                             onclick: function(){
                                 hiderows[this.id] = !hiderows[this.id];
@@ -1016,10 +975,10 @@ define([
                             }
                         }, layerAreaPSI);                       
                     } else if (categoryTab == "PBS"){
-			    	    document.getElementById("hrPBS").style.display = '';
+			    	    //document.getElementById("hrPBS").style.display = '';
 						var topicHeader = dojo.create('div', {
 		    				'id': eaTopic,
-		    				'class': 'topicHeader'+categoryTab,
+		    				'class': 'topicHeader topicHeader'+categoryTab,
 		    				'innerHTML': eaTopic,
 		    				onclick: function(){
 		    					hiderows[this.id] = !hiderows[this.id];
@@ -1027,10 +986,10 @@ define([
 		    				}
 		    			}, layerAreaPBS);			    		
 					} else if (categoryTab == "BNF"){
-					    document.getElementById("hrBNF").style.display = '';
+					    //document.getElementById("hrBNF").style.display = '';
 						var topicHeader = dojo.create('div', {
 		    				'id': eaTopic,
-		    				'class': 'topicHeader'+categoryTab,
+		    				'class': 'topicHeader topicHeader'+categoryTab,
 		    				'innerHTML': eaTopic,
 		    				onclick: function(){
 		    					hiderows[this.id] = !hiderows[this.id];

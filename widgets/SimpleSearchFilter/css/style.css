@@ -1,111 +1,52 @@
 
 /* biodiversity conservation */
-.biod_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/bio_bw.png');}
+.biod_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/bio.png');}
 .biod {background: rgb(46, 174, 74) url('../images/ES_Icons/bio.png');}
-.biod_infographic {background: url('../images/bc_infographics/biod.png') no-repeat;}
 
 /* clean air */
-.cair_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/air_bw.png');}
-.cair {background: rgb(80, 85, 165) url('../images/ES_Icons/air.png');}
-.cair_infographic {background: url('../images/bc_infographics/cair.png') no-repeat;}
+.cair_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/air.png');}
+.cair {background: rgb(127, 129, 186) url('../images/ES_Icons/air.png');}
 
 /* clean and plentiful water */
-.cpw_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/water_bw.png');}
+.cpw_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/water.png');}
 .cpw {background: rgb(116, 204, 209) url('../images/ES_Icons/water.png');}
-.cpw_infographic {background: url('../images/bc_infographics/cpw.png') no-repeat;}
 
 /* climate stabilization */
-.clim_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/clim_bw.png');}
+.clim_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/clim.png');}
 .clim {background: rgb(249, 159, 31) url('../images/ES_Icons/clim.png');}
-.clim_infographic {background: url('../images/bc_infographics/clim.png') no-repeat;}
 
 /* food, fuel, and materials */
-.ffm_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/food_bw.png');}
+.ffm_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/food.png');}
 .ffm {background: rgb(240, 224, 36) url('../images/ES_Icons/food.png');}
-.ffm_infographic {background: url('../images/bc_infographics/ffm.png') no-repeat;}
 
 /* natural hazard mitigation */
-.nhm_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/haz_bw.png');}
-.nhm {background: rgb(206, 33, 42) url('../images/ES_Icons/haz.png');}
-.nhm_infographic {background: url('../images/bc_infographics/nhm.png') no-repeat;}
+.nhm_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/haz.png');}
+.nhm {background: rgb(215, 93, 100) url('../images/ES_Icons/haz.png');}
 
 /* recreation, culture, and aesthetics */
-.rca_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/rec_bw.png');}
-.rca {background: rgb(176, 51, 148) url('../images/ES_Icons/rec.png');}
-.rca_infographic {background: url('../images/bc_infographics/rca.png') no-repeat;}
+.rca_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/rec.png');}
+.rca {background: rgb(199, 112, 180) url('../images/ES_Icons/rec.png');}
 
-.NATIONAL {background: rgb(188, 188, 188) url('../images/ES_Icons/nat.png');}
-
-.COMMUNITY {background: rgb(188, 188, 188) url('../images/ES_Icons/comm.png');}
-
-.huc12 {background: rgb(188, 188, 188) url('../images/ES_Icons/huc12.png');}
-
-.cbg {background: rgb(188, 188, 188) url('../images/ES_Icons/cbg.png');}
-
-.ctr {background: rgb(188, 188, 188) url('../images/ES_Icons/ctr.png');}
-
-.grid {background: rgb(188, 188, 188) url('../images/ES_Icons/grid.png');}
-
-.plp {background: rgb(188, 188, 188) url('../images/ES_Icons/plp.png');}
+/* Scale and data type */
+.NATIONAL {background: rgb(186, 207, 225) url('../images/ES_Icons/nat.png');}
+.COMMUNITY {background: rgb(186, 207, 225)url('../images/ES_Icons/comm.png');}
+.huc12 {background: rgb(186, 207, 225) url('../images/ES_Icons/huc12.png');}
+.cbg {background: rgb(186, 207, 225) url('../images/ES_Icons/cbg.png');}
+.ctr {background: rgb(186, 207, 225) url('../images/ES_Icons/ctr.png');}
+.grid {background: rgb(186, 207, 225) url('../images/ES_Icons/grid.png');}
+.plp {background: rgb(186, 207, 225) url('../images/ES_Icons/plp.png');}
 
 .icon_style {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   float:left;
   margin-right: 5px;
   /*border: 1px solid gray;*/
   border-radius: 15px;
   background-size: 80%;
   background-repeat: no-repeat;
-  background-position: 2px 2px;
+  background-position: center;
 }
-
-.bc_popup {
-  width: 25px;
-  height: 25px;
-  border: none;
-  display: inline-block;
-  margin: 0px 5px 0px 5px;
-  border-radius: 15px;
-  background-size: 80%;
-  background-repeat: no-repeat;
-  background-position: 2px 2px;
-}
-
-.bc_popup:hover {
-  cursor: pointer;
-}
-
-.bc_popup_selected{
-  box-shadow: -1px 6px 10px 1px #333;
-}
-
-.bc_infographic{
-  height: 450px;
-  background-size: 100% 100%;
-}
-
-.bc_popup_header_icon {
-  height:35px; 
-  width:35px; 
-  float: left; 
-  position: relative; 
-  top: 5px; 
-  left:10px;
-}
-
-.bc_popup_header_text {
-  font-size: 18px; 
-  font-weight: bold; 
-  height: 30px; 
-  width: 100%;
-  vertical-align:middle; 
-  text-align: center;
-  /*position: relative; 
-  left: 20px*/
-}
-
-
 
 /* clean air */
 #cair2 {background: url('../images/bc_icons.png') -20px -20px;}
@@ -338,54 +279,46 @@ a.esIcons {
   text-decoration: none;
 }
 
-.topicHeaderESB {
-  /*padding-bottom: 3px;*/
+.topicHeader {
   font-size: 15px;
   font-weight: bold;
-  background-color: #b3b3b3;
-  /*margin-bottom: 3px;*/
+  margin-bottom: 2px;
+  padding-left: 3px;
+}
+
+.topicHeaderESB {
+  background-color: #adbb9a;
 }
 
 .topicHeaderESB:hover {
-  background-color: #8c8c8c;
+  background-color: #cdd6c2;
   cursor: pointer;
 }
 .topicHeaderPSI {
-  /*padding-bottom: 3px;*/
-  font-size: 15px;
-  font-weight: bold;
-  background-color: #b3b3b3;
-  /*margin-bottom: 3px;*/
+  background-color: #bb9aad;
 }
 
 .topicHeaderPSI:hover {
-  background-color: #8c8c8c;
+  background-color: #d6c2cd;
   cursor: pointer;
 }
 .topicHeaderPBS {
-  /*padding-bottom: 3px;*/
-  font-size: 15px;
-  font-weight: bold;
-  background-color: #b3b3b3;
-  /*margin-bottom: 3px;*/
+  background-color: #9aadbb;
 }
 
 .topicHeaderPBS:hover {
-  background-color: #8c8c8c;
+  background-color: #c2cdd6;
   cursor: pointer;
 }
 .topicHeaderBNF {
-  /*padding-bottom: 3px;*/
-  font-size: 15px;
-  font-weight: bold;
-  background-color: #b3b3b3;
-  /*margin-bottom: 3px;*/
+  background-color: #aeaba2;
 }
 
 .topicHeaderBNF:hover {
-  background-color: #8c8c8c;
+  background-color: #ceccc7;
   cursor: pointer;
 }
+
 .topicTitleGray {
   color: #969696;
 }
@@ -398,8 +331,7 @@ a.esIcons {
 }
 
 .layerDiv {
-  padding-bottom: 2px;
-  padding-top: 2px;
+  padding: 2px 3px 2px 3px;
   border-bottom: 1px solid rgb(200, 200, 200);
 } 
 
