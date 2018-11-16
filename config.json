@@ -453,6 +453,18 @@
                 "id": "widgets_FilterForSelect_Widget",
                 "name": "FilterForSelect",
                 "label": "Filter"
+            }, {
+                "uri": "widgets/FeaturedCollectionPreview/Widget",
+                "position": {
+                    "top": 100,
+                    "width": 0,
+                    "left":-800,
+                    "relativeTo": "map"
+                },
+                "version": "2.5",
+                "id": "widgets_FeaturedCollectionPreview_Widget",
+                "name": "Featured Collection Details",
+                "label": "Featured Collection Details"
             },{
                 "uri": "widgets/Splash/Widget",
                 "visible": true,
@@ -1055,6 +1067,17 @@
 	                "id": "widgets_FilterForSelect_Widget",
 	                "name": "FilterForSelect",
 	                "label": "Filter"
+	             },{
+	                "uri": "widgets/FeaturedCollectionPreview/Widget",
+	                "position": {
+	                    "top": 100,
+	                    "relativeTo": "map"
+	                },
+	                "closeable": true,
+	                "version": "2.5",
+	                "id": "widgets_FeaturedCollectionPreview_Widget",
+	                "name": "Featured Collection Details",
+	                "label": "Featured Collection Details"
 	             }, {
                     "uri": "widgets/Splash/Widget",
                     "visible": true,
