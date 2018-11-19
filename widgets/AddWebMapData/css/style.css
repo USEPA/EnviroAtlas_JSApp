@@ -142,25 +142,31 @@ div.thumbnailDiv {
 }
 
 div.detailsFooter {
-    position: fixed;
-    left: 375px;
-    bottom: 10px;
     width: 100%;
-}
-
-div#detailsDialog > div.dijitDialogPaneContent {
-    padding-right: 0px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 div.detailsContainer {
-    width: 338px !important;
-    padding-right: 10px !important;
+    padding: 10px !important;
+}
+
+div.detailsContainer > div {
+    padding: 3px;
 }
 
 div.detailsFooter > .dijitButton > .dijitButtonNode{
     width: 160px;
     font-size: 14px;
     font-weight: bold;
+}
+#closeForFCWidget{
+    background-size:15px;
+}
+
+.jimu-widget-FeaturedCollectionPreview {
+    z-index:150;
 }
 
 @keyframes out-left-rtl {

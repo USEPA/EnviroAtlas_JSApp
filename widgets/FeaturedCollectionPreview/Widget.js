@@ -33,6 +33,7 @@ define([
     "dojo/query",
     'dijit/TitlePane',
     "dijit/form/Button",
+    'jimu/WidgetManager'
   ],
   function(
     declare,
@@ -51,7 +52,9 @@ define([
     Deferred,
     domGeometry,
     domQuery,
-    Button
+    TitlePane,
+    Button,
+    WidgetManager
   ) {
 
 
@@ -77,12 +80,11 @@ define([
       startup: function() {
         this.inherited(arguments);
         this._hide();
-        //this.makeMoveable(this.dragFilter);
-
+        this.displayCloseButton();
       },
 
       onOpen: function() {
-      	if (window.filterForSelectFirstCreated == true) {
+      	if (window.fcDetailsFirstCreated == true) {
       		this._hide();
       	} 
       	else {
@@ -144,75 +146,51 @@ define([
       },          
       postCreate:function() {
       	this._draggingHandlers = [];
-        this.own(on(this.resizeFCWidget, 'mousedown', lang.hitch(this, this._onResizeStart)));
-        this.own(on(this.resizeFCWidget, touch.press, lang.hitch(this, this._onResizeStart)));	    
       },
 
-      //moveable
-      makeMoveable: function (handleNode) {
-        this.disableMoveable();
-        var containerBox = domGeometry.getMarginBox(this.map.root);
-        this.moveable = new Move.boxConstrainedMoveable(this.domNode, {
-          box: containerBox,
-          handle: handleNode || this.handleNode,
-          within: true
-        });
-        this.own(on(this.moveable, 'MoveStart', lang.hitch(this, this.onMoveStart)));
-        this.own(on(this.moveable, 'Moving', lang.hitch(this, this.onMoving)));
-        this.own(on(this.moveable, 'MoveStop', lang.hitch(this, this.onMoveStop)));
-      },
-      disableMoveable: function () {
-        if (this.moveable) {
-          this.dragHandler = null;
-          this.moveable.destroy();
-          this.moveable = null;
-        }
-      },
-      onMoveStart: function (mover) {
-        var containerBox = domGeometry.getMarginBox(this.map.root),
-          domBox = domGeometry.getMarginBox(this.domNode);
-        if (window.isRTL) {
-          var rightPx = html.getStyle(mover.node, 'right');
-          html.setStyle(mover.node, 'left', (containerBox.w - domBox.w - parseInt(rightPx, 10)) + 'px');
-          html.setStyle(mover.node, 'right', '');
-        }
-        //move flag
-        if (!this._dragged) {
-          this._dragged = true;
-        }
-      },
-      onMoving: function (/*mover*/) {
-        //html.setStyle(mover.node, 'opacity', 0.9);
-        this._moving = true;
-      },
-      onMoveStop: function (mover) {
-        if (mover && mover.node) {
-          html.setStyle(mover.node, 'opacity', 1);
-          var panelBox = domGeometry.getMarginBox(mover.node);
-          this.position.left = panelBox.l;
-          this.position.top = panelBox.t;
-          setTimeout(lang.hitch(this, function () {
-            this._moving = false;
-          }), 500);
-        }
-      },      
+      displayCloseButton: function() {		
+        indexImage = 0;
+        var tableOfRelationship = document.getElementById('closeFCWidget');
+        var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
+
+        newRow = tableRef.insertRow(tableRef.rows.length);
+        var newCheckboxCell  = newRow.insertCell(0);
+
+        var checkbox = document.createElement('input');
+        checkbox.type = "button";
+        
+        checkbox.id = "closeForFCWidget";
+        checkbox.className ="jimu-widget-filterforselect-close";
+
+        newCheckboxCell.appendChild(checkbox);    
+    
+        checkbox.addEventListener('click', function() {
+            //Close the details widget
+            var widgetManager;
+            var fcDetailsWidgetEle = selfAddWebMapData.appConfig.getConfigElementsByName("FeaturedCollectionPreview")[0];
+            widgetManager = WidgetManager.getInstance();
+            widgetManager.closeWidget(fcDetailsWidgetEle.id);
+            document.getElementById("titleForFCWidget").style.display = "none"; 
+            document.getElementById("closeFCWidgetArea").style.display = "none";
+            window.fcDetailsOpened = false;				
+        }); 
+      },     
       onClose: function() {     
       	this._dragged = false; 	
       	this._hide();
       },       
       _setHeight_Width: function() {        
-        var heightOfFilterWidget = selfSimpleSearchFilter.domNode.parentNode.clientHeight-100;
+        var heightOfFilterWidget = selfAddWebMapData.domNode.parentNode.clientHeight;
         html.setStyle(this.domNode, "width", widthPreset + "px");
         html.setStyle(this.domNode, "left",leftPreset + "px");
         html.setStyle(this.domNode, "height", heightOfFilterWidget + "px");
-        html.setStyle(this.domNode, "top", 140-28 + "px");        
+        html.setStyle(this.domNode, "top", 35 + "px");        
       },
       
       _hide: function() {
         html.setStyle(this.domNode, "width", 0 + "px");
         html.setStyle(this.domNode, "left",leftPreset + "px");
         document.getElementById("titleForFCWidget").style.display = "none";
-        document.getElementById("resizeForFCWidget").style.display = "none";
         document.getElementById("closeFCWidget").style.display = "none";
       }
     });
