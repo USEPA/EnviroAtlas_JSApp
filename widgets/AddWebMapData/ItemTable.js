@@ -41,7 +41,8 @@ define([
     'jimu/portalUrlUtils',
     'jimu/dijit/LoadingIndicator',
     'dijit/Dialog',
-    "dijit/form/Button"
+    "dijit/form/Button",
+    'jimu/WidgetManager'
 ], function (declare,
     _WidgetBase,
     _TemplatedMixin,
@@ -60,7 +61,8 @@ define([
     portalUrlUtils,
     LoadingIndicator,
     Dialog,
-    Button) {
+    Button,
+    WidgetManager) {
     /*jshint unused: false*/
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
         templateString: template,
@@ -353,16 +355,33 @@ define([
         },
 
         showDetails: function(fcTable, item){
-            var detailsDialog = dijit.byId('detailsDialog');
-            html.setStyle(detailsDialog.domNode, 'visibility', 'hidden');
-            detailsDialog.show().then(function() {
-                html.setStyle(detailsDialog.domNode, 'position', 'absolute');
-                html.setStyle(detailsDialog.domNode, 'width', '350px');
-                html.setStyle(detailsDialog.domNode, 'height', '100%');
-                html.setStyle(detailsDialog.domNode, 'top', '44px');
-                html.setStyle(detailsDialog.domNode, 'left', '366px');
-                html.setStyle(detailsDialog.domNode, 'visibility', 'visible');
-            });
+            
+            var widgetManager;
+            var fcDetailsWidgetEle = selfAddWebMapData.appConfig.getConfigElementsByName("FeaturedCollectionPreview")[0];
+            widgetManager = WidgetManager.getInstance();
+            var prevID = dojo.byId('itemIDdiv').innerHTML;
+            if (window.fcDetailsOpened == true && prevID == item.id){
+                widgetManager.closeWidget(fcDetailsWidgetEle.id);
+                document.getElementById("titleForFCWidget").style.display = "none"; 
+                document.getElementById("closeFCWidgetArea").style.display = "none";
+                window.fcDetailsOpened = false;
+            }
+            else {
+                //widgetManager.triggerWidgetOpen(filterForSelectWidgetEle.id);
+                if (window.fcDetailsFirstCreated == true) {
+                    widgetManager.closeWidget(fcDetailsWidgetEle.id);
+                    window.fcDetailsFirstCreated = false;
+                    
+                }
+                widgetManager.openWidget(fcDetailsWidgetEle.id);
+                document.getElementById("titleForFCWidget").style.display = ""; 
+                document.getElementById("closeFCWidgetArea").style.display = "";
+                document.getElementById("closeFCWidget").style.display = "";
+                widgetManager.activateWidget(fcDetailsWidgetEle.id);
+                window.fcDetailsOpened = true;
+            }
+            
+            dojo.byId('itemIDdiv').innerHTML = item.id;
             dojo.byId('detailsThumbnailDiv').innerHTML = "<image alt='Item Thumbnail' style='border:1px solid black' src='"+ item.thumbnailUrl +"'>"
             dojo.byId('detailsTitleDiv').innerHTML = "<h1>" + item.title + "</h1>"
             dojo.byId('detailsOwnerDiv').innerHTML = "by <a target='_blank' href='" + item.ownerPageUrl + "'>" + item.owner + "</a></div>"
@@ -377,8 +396,6 @@ define([
             dijit.byId('addButton').onClick = function(){
                 // fire item selected event
                 fcTable.emit('item-selected', item);
-                var detailsDialog = dijit.byId('detailsDialog');
-                detailsDialog.hide();
             };
             dijit.byId('agolButton').label = "View in GeoPlatform",
             dijit.byId('agolButton').onClick = function(){
