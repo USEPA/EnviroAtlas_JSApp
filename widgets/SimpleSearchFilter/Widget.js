@@ -918,7 +918,7 @@ define([
                 currentLayerSelectable = true;
             }
             
-			if (currentLayerSelectable && (eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
+			if (currentLayerSelectable && (eaIDFilteredList.indexOf(eaID) >= 0) && (parseInt(eaID) >= 0)) {//add the current item as selectable layers
 		
 				var bLayerSelected = false;
 				if ((window.allLayerNumber.indexOf(eaID)) == -1) {                        	

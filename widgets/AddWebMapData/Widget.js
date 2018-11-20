@@ -139,6 +139,7 @@ define(['dojo/_base/declare',
             startup: function () {
             	selfAddWebMapData = this;
                 this.inherited(arguments);
+
                 //console.log('ChangeWebMap :: startup');
             },
 
@@ -448,125 +449,148 @@ define(['dojo/_base/declare',
 				    selfAddWebMapData.publishData({
 				        message : "updateCommunityLayers"
 				    });                	
-                }
+                }//
+                //add tiled first
                 item.getItemData().then(function(response){
                     //process operational layers in reverse order to match AGOL
                     layersReversed = response.operationalLayers.reverse();
                     layersReversed.forEach(function(l){
                         if(l.url){
-                            //console.log("Web Map Layers:: ",l.layerType);
-                            if(l.layerType == 'ArcGISMapServiceLayer'){
-                                //Get the layer
-                                tempLayer = new ArcGISDynamicMapServiceLayer(l.url, {
-                                    id: l.id,
-                                    opacity: l.opacity,
-                                    visible: l.visibility
-                                });
-                                //if layers have popupInfo grab them
-                                if(l.layers){
-                                    var expressions = [];
-                                    var dynamicLayerInfo;
-                                    var dynamicLayerInfos = [];
-                                    var drawingOptions;
-                                    var drawingOptionsArray = [];
-                                    var source;
-                                    array.forEach(l.layers, function(layerInfo){
-                                      if (layerInfo.layerDefinition && layerInfo.layerDefinition.definitionExpression) {
-                                        expressions[layerInfo.id] = layerInfo.layerDefinition.definitionExpression;
-                                      }
-                                      if (layerInfo.layerDefinition && layerInfo.layerDefinition.source) {
-                                        dynamicLayerInfo = null;
-                                        source = layerInfo.layerDefinition.source;
-                                        if (source.type === "mapLayer") {
-                                          var metaLayerInfos = array.filter(response.operationalLayers, function(rlyr) {
-                                            return rlyr.id === source.mapLayerId;
-                                          });
-                                          if (metaLayerInfos.length) {
-                                            dynamicLayerInfo = lang.mixin(metaLayerInfos[0], layerInfo);
-                                          }
-                                        }
-                                        else {
-                                          dynamicLayerInfo = lang.mixin({}, layerInfo);
-                                        }
-                                        if (dynamicLayerInfo) {
-                                          dynamicLayerInfo.source = source;
-                                          delete dynamicLayerInfo.popupInfo;
-                                          dynamicLayerInfo = new DynamicLayerInfo(dynamicLayerInfo);
-                                          if (l.visibleLayers) {
-                                            var vis = ((typeof l.visibleLayers) === "string") ?
-                                              l.visibleLayers.split(",") : l.visibleLayers;
-                                            if (array.indexOf(vis, layerInfo.id) > -1) {
-                                              dynamicLayerInfo.defaultVisibility = true;
-                                            } else {
-                                              dynamicLayerInfo.defaultVisibility = false;
-                                            }
-                                          }
-                                          dynamicLayerInfos.push(dynamicLayerInfo);
-                                        }
-                                      }
-                                      if (layerInfo.layerDefinition && layerInfo.layerDefinition.source &&
-                                          layerInfo.layerDefinition.drawingInfo) {
-                                        drawingOptions = new LayerDrawingOptions(layerInfo.layerDefinition.drawingInfo);
-                                        drawingOptionsArray[layerInfo.id] = drawingOptions;
-                                      }
-                                    });
 
-                                    if (expressions.length > 0) {
-                                      tempLayer.setLayerDefinitions(expressions);
-                                    }
-                                    if (dynamicLayerInfos.length > 0) {
-                                      tempLayer.setDynamicLayerInfos(dynamicLayerInfos, true);
-                                      if (drawingOptionsArray.length > 0) {
-                                        tempLayer.setLayerDrawingOptions(drawingOptionsArray, true);
-                                      }
-                                    }
-                                } else if (l.visibleLayers) {
-                                    tempLayer.setVisibleLayers(l.visibleLayers);
-                                }
-
-                            }else if(l.layerType == 'ArcGISFeatureLayer'){
-                                tempLayer = new FeatureLayer(l.url, {
-                                    mode: FeatureLayer.MODE_ONDEMAND,
-                                    id: l.id,
-                                    opacity: l.opacity,
-                                    visible: l.visibility,
-                                    outFields: ["*"]
-                                });
-                                tempLayer = self._processLayer(tempLayer,l);
-                            }else if(l.layerType == 'ArcGISTiledMapServiceLayer'){
+                            if(l.layerType == 'ArcGISTiledMapServiceLayer'){
                                 tempLayer = new ArcGISTiledMapServiceLayer(l.url, {
                                     id: l.id,
                                     opacity: l.opacity,
                                     visible: l.visibility
                                 });
-                            }
-                        }else{
-                            if(l.featureCollection){
-                                console.log("Web Map Layers:: FeatureCollection");
-                                l.featureCollection.layers.forEach(function(subL){
-                                    tempLayer = new FeatureLayer(subL,{
-                                       id: l.id
+                                tempLayer.title = l.title;
+                            } else if(l.layerType == 'ArcGISFeatureLayer'){
+                                    tempLayer = new FeatureLayer(l.url, {
+                                        mode: FeatureLayer.MODE_ONDEMAND,
+                                        id: l.id,
+                                        opacity: l.opacity,
+                                        visible: l.visibility,
+                                        outFields: ["*"]
                                     });
-                                    tempLayer = self._processLayer(tempLayer,subL);
-                                });
-                            }else{
-                                console.log("Add Layer Error:: Layer of unknown type");
-                                if (!(l.url in window.faildedEALayerDictionary)){
-							  		window.faildedEALayerDictionary[l.url] = l.url;
-									selfAddWebMapData.publishData({
-							        	message: "openFailedLayer"
-							    	});							  		
-							  	}	
-                            }
+                                    tempLayer = self._processLayer(tempLayer,l);
+                                }
                         }
                         if(tempLayer){
-                            tempLayer.title = l.title;
-                        	window.layerID_Portal_WebMap.push(l.id);
+                            
+                            window.layerID_Portal_WebMap.push(l.id);
                             testmap.addLayer(tempLayer);
                         }
                     });
-                });
-                //Close the details widget
+                 });
+                 //finish adding tile layer
+                
+                
+                
+
+                setTimeout(lang.hitch(this, function() {
+                    item.getItemData().then(function(response){
+                        //process operational layers in reverse order to match AGOL
+                        layersReversed = response.operationalLayers.reverse();
+                        layersReversed.forEach(function(l){
+                            if(l.url){
+    
+                                if(l.layerType == 'ArcGISMapServiceLayer'){
+    
+                                    tempLayer = new ArcGISDynamicMapServiceLayer(l.url, {
+                                        id: l.id,
+                                        opacity: l.opacity,
+                                        visible: l.visibility
+                                    });
+                                    tempLayer.title = l.title;
+                                    //if layers have popupInfo grab them
+                                    if(l.layers){
+                                        var expressions = [];
+                                        var dynamicLayerInfo;
+                                        var dynamicLayerInfos = [];
+                                        var drawingOptions;
+                                        var drawingOptionsArray = [];
+                                        var source;
+                                        array.forEach(l.layers, function(layerInfo){
+                                          if (layerInfo.layerDefinition && layerInfo.layerDefinition.definitionExpression) {
+                                            expressions[layerInfo.id] = layerInfo.layerDefinition.definitionExpression;
+                                          }
+                                          if (layerInfo.layerDefinition && layerInfo.layerDefinition.source) {
+                                            dynamicLayerInfo = null;
+                                            source = layerInfo.layerDefinition.source;
+                                            if (source.type === "mapLayer") {
+                                              var metaLayerInfos = array.filter(response.operationalLayers, function(rlyr) {
+                                                return rlyr.id === source.mapLayerId;
+                                              });
+                                              if (metaLayerInfos.length) {
+                                                dynamicLayerInfo = lang.mixin(metaLayerInfos[0], layerInfo);
+                                              }
+                                            }
+                                            else {
+                                              dynamicLayerInfo = lang.mixin({}, layerInfo);
+                                            }
+                                            if (dynamicLayerInfo) {
+                                              dynamicLayerInfo.source = source;
+                                              delete dynamicLayerInfo.popupInfo;
+                                              dynamicLayerInfo = new DynamicLayerInfo(dynamicLayerInfo);
+                                              if (l.visibleLayers) {
+                                                var vis = ((typeof l.visibleLayers) === "string") ?
+                                                  l.visibleLayers.split(",") : l.visibleLayers;
+                                                if (array.indexOf(vis, layerInfo.id) > -1) {
+                                                  dynamicLayerInfo.defaultVisibility = true;
+                                                } else {
+                                                  dynamicLayerInfo.defaultVisibility = false;
+                                                }
+                                              }
+                                              dynamicLayerInfos.push(dynamicLayerInfo);
+                                            }
+                                          }
+                                          if (layerInfo.layerDefinition && layerInfo.layerDefinition.source &&
+                                              layerInfo.layerDefinition.drawingInfo) {
+                                            drawingOptions = new LayerDrawingOptions(layerInfo.layerDefinition.drawingInfo);
+                                            drawingOptionsArray[layerInfo.id] = drawingOptions;
+                                          }
+                                        });
+    
+                                        if (expressions.length > 0) {
+                                          tempLayer.setLayerDefinitions(expressions);
+                                        }
+                                        if (dynamicLayerInfos.length > 0) {
+                                          tempLayer.setDynamicLayerInfos(dynamicLayerInfos, true);
+                                          if (drawingOptionsArray.length > 0) {
+                                            tempLayer.setLayerDrawingOptions(drawingOptionsArray, true);
+                                          }
+                                        }
+                                    } else if (l.visibleLayers) {
+                                        tempLayer.setVisibleLayers(l.visibleLayers);
+                                    }
+    
+                                }
+                            } else{
+                                if(l.featureCollection){
+                                    console.log("Web Map Layers:: FeatureCollection");
+                                    l.featureCollection.layers.forEach(function(subL){
+                                        tempLayer = new FeatureLayer(subL,{
+                                           id: l.id
+                                        });
+                                        tempLayer = self._processLayer(tempLayer,subL);
+                                    });
+                                }else{
+                                    console.log("Add Layer Error:: Layer of unknown type");
+                                    if (!(l.url in window.faildedEALayerDictionary)){
+                                        window.faildedEALayerDictionary[l.url] = l.url;
+                                        selfAddWebMapData.publishData({
+                                            message: "openFailedLayer"
+                                        });                                 
+                                    }   
+                                }
+                            }
+                            if(tempLayer){
+                                window.layerID_Portal_WebMap.push(l.id);
+                                testmap.addLayer(tempLayer);
+                            }
+                        });
+                    });
+                }), 2000);
                 var widgetManager;
                 var fcDetailsWidgetEle = selfAddWebMapData.appConfig.getConfigElementsByName("FeaturedCollectionPreview")[0];
                 widgetManager = WidgetManager.getInstance();
