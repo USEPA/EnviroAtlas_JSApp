@@ -132,7 +132,7 @@ define([
       },
 
       _resizeTitleNode: function(){
-        var nodeWidth = (this.getWidth() / 6);//var nodeWidth = (this.getWidth() / 3);
+        var nodeWidth = (this.getWidth() / 5);//var nodeWidth = (this.getWidth() / 3);
         array.forEach(query('.title-node', this.maxStateNode), function(titleNode){
           html.setStyle(titleNode, 'width', nodeWidth + 'px');
         }, this);
@@ -712,7 +712,7 @@ define([
 
       _createTitleNode: function(config) {
         /*jshint unused:false*/
-        var nodeWidth = (this.getWidth() /6);// var nodeWidth = (this.getWidth() /3);
+        var nodeWidth = (this.getWidth() /5);// var nodeWidth = (this.getWidth() /3);
         var title = config.label,
           iconUrl = config.icon,
           node = html.create('div', {
