@@ -798,7 +798,7 @@ define([
         
         if (eaIDFilteredList.length == 0) {
             //dojo.byId("widgetSelectionComment").value = "No result is found. Following button will direct to add data widget:";
-            dojo.byId("widgetSelectionComment").innerHTML  = "No data layer is found. Following button will direct to add data widget:";
+            dojo.byId("widgetSelectionComment").innerHTML  = "No data matching your search term were found. You can search for external data or use your own with our Add Data Widget.";
             tableOfWidgets = document.getElementById("tableSelectableWidgetsArea");
             tableOfWidgets.style.display = '';
             var buttonID = "widget_"+ "widgets_AddData_30";
@@ -806,7 +806,7 @@ define([
                 "type": "button",
                 "name": buttonID,
                 "value": "AddData",
-                "style" : "display:inline-block; width:30%",
+                "style" : "display:inline-block; width:30%; margin-left:10px",
                 "id": "button_"+"widgets_AddData_30" //SubLayerIds is the widgetID in this case
             }, tableOfWidgets);
             checkbox.addEventListener('click', function(evt) {                          
@@ -850,7 +850,7 @@ define([
 			if ((document.getElementById('searchFilterText').value != '')&&(document.getElementById('searchFilterText').value.trim().length >=2)){
 			    if ( (eaIDFilteredList.indexOf(eaID) >= 0)) {
         			if (parseInt(eaID) < 0) {
-        			    dojo.byId("widgetSelectionComment").innerHTML  = "There are other widgets containing the above key word. Following button will direct to those data widget:";
+        			    dojo.byId("widgetSelectionComment").innerHTML  = "The above keyword could be found in other data tabs. Select a button below to explore.";
             			tableOfWidgets = document.getElementById("tableSelectableWidgetsArea");
                         tableOfWidgets.style.display = '';
                         var buttonID = "widget_"+layerName;
@@ -858,7 +858,7 @@ define([
                             "type": "button",
                             "name": buttonID,
                             "value": layerName,
-                            "style" : "display:inline-block; width:30%",
+                            "style" : "display:inline-block; width:30%; margin-left:10px",
                             "id": "button_"+SubLayerIds //SubLayerIds is the widgetID in this case
                         }, tableOfWidgets);
                         checkbox.addEventListener('click', function(evt) {                          
