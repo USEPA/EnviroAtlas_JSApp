@@ -513,7 +513,7 @@ define(['dojo/_base/declare',
 				  break;
 			 	}
 			}
-            if (dynamicSymbology.isSmartMapping == true) {
+            if ((dynamicSymbology.isSmartMapping == true)&&(_ClassificationMethod != undefined) ){
 
                 selfDynamicSymbology._updateSmartMapping2();
             } else {
