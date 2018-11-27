@@ -151,21 +151,21 @@ define([
     window.topicDicESB["Wetlands and Lowlands"] = "WaL";
     
     window.topicDicPSI = {};
+    window.topicDicPSI["EPA Regulated Facilities"] = "RF";
+    //window.topicDicPSI["EPA NATA"] = "NATA";
     window.topicDicPSI["Impaired Waters"] = "IW";
     window.topicDicPSI["Pollutants: Other"] = "PO";
-    window.topicDicPSI["Pollutants: Nutrients"] = "PN"; 
-    window.topicDicPSI["EPA Regulated Facilities"] = "RF";
+    window.topicDicPSI["Pollutants: Nutrients"] = "PN";     
     
-    
-    
-    
-	window.topicDicPBS = {};
-    window.topicDicPBS["Housing and Schools"] = "HaF";
-    window.topicDicPBS["Community Demographics"] = "CD";
-    window.topicDicPBS["Employment"] = "E";
-    window.topicDicPBS["National Demographics"] = "ND";
+    window.topicDicPBS = {};
     window.topicDicPBS["Commuting and Walkability"] = "CaW";
+    //window.topicDicPBS["Community Demographics"] = "CD";
+    window.topicDicPBS["Employment"] = "E";
+    window.topicDicPBS["Housing and Schools"] = "HaF";
+    //window.topicDicPBS["National Demographics"] = "ND";
+    window.topicDicPBS["Population Distribution"] = "PoD";
     window.topicDicPBS["Quality of Life"] = "QoL";
+    window.topicDicPBS["Vacancy"] = "Vcy";
     
     window.topicDicBNF = {};
     window.topicDicBNF["Ecological Boundaries"] = "EB";
@@ -197,7 +197,7 @@ define([
     window.communityDic["PitPA"] = "Pittsburgh, PA";
     window.communityDic["PME"] = "Portland, ME";
     window.communityDic["POR"] = "Portland, OR";
-	window.communityDic["SLCUT"] = "Salt Lake City, UT";
+  	//window.communityDic["SLCUT"] = "Salt Lake City, UT";
     window.communityDic["TFL"] = "Tampa, FL";
     window.communityDic["VBWVA"] = "Virginia Beach - Williamsburg, VA";
     window.communityDic["WIA"] = "Woodbine, IA";
