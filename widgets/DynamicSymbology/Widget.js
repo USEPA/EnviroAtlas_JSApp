@@ -803,9 +803,11 @@ define(['dojo/_base/declare',
         },
         _getColorsFromInfos: function (currentInfos) {
             var symbolColors = [];
+            if (currentInfos!=undefined){
             currentInfos.forEach(function (s) {
                 symbolColors.push(s.symbol.color);
             });
+            }
             return symbolColors;
         },
         _openSymbolStyler: function () {
