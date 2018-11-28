@@ -244,7 +244,12 @@ createCategory: function (key) {
         query.outFields = ["*"];
         var dirty = (new Date()).getTime();
         query.where = "1=1 AND " + dirty + "=" + dirty;
-
+        if (dgObj.hasOwnProperty('CategoryExcluded')){
+            categoryExcluded = dgObj.CategoryExcluded;
+            for (var indexCategory = 0; indexCategory < categoryExcluded.length; indexCategory++) {
+                query.where = query.where + " AND CATEGORY<>" + "'" + categoryExcluded[indexCategory] + "'";
+            }                
+        }
         //get features in order by cat and label
         query.orderByFields = ["CATEGORY", "DESCRIPTION"];
 

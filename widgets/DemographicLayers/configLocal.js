@@ -3,6 +3,7 @@ define(
     function() {
      var _config = {"demogJSON": {
        "ejdemog": { "title": "2011-2015 ACS", "tiptext": "2010-2014 ACS", "type": "agsdemog", "layerurl": "https://ejscreen.epa.gov/ArcGIS/rest/services/", "service": "ejscreen/census2015acs", "lookupindex": 4,
+            "CategoryExcluded": ["Geography", "Marital Status", "Place of Birth"],
             "description": "2011-2015 ACS demographics are a set of variables derived based on a subset of 2011-2015 American Community Survey data.",
             "process": false,"transparency": "0.8", "defaultCategoryIndex": 8,
             "baselayers": {
@@ -15,6 +16,7 @@ define(
         }
     
         , "census2010": { "title": "2010 Census", "tiptext": "2010 ACS", "type": "agsdemog", "layerurl": "https://ejscreen.epa.gov/ArcGIS/rest/services/", "service": "ejscreen/census2010sf1", "lookupindex": 5,
+            "CategoryExcluded": ["Geography"],
             "description": "2010 Census contains a set of variables derived based on a subset of 2010 Census data.",
             "process": false, "transparency": "0.8", "defaultCategoryIndex": 3,
             "baselayers": {
@@ -27,6 +29,7 @@ define(
             "dynamiclayers": {}
         }
         , "census2k": { "title": "2000 Census", "tiptext": "2000 SF3", "type": "agsdemog", "layerurl": "https://ejscreen.epa.gov/ArcGIS/rest/services/", "service": "ejscreen/census2000sf3", "lookupindex": 4,
+            "CategoryExcluded": ["Geography"],
             "description": "2000 Census contains a set of variables derived based on a subset of 2000 Census data.",
             "process": false, "transparency": "0.8", "defaultCategoryIndex": 6,
             "baselayers": {
