@@ -138,3 +138,7 @@ table.dijitDownArrowButton.dijitSelect.restrict-select-width > tbody > tr > td.d
   border-right-style: none;
   border-left: solid 1px #ccc;
  }
+
+ .tundra .dijitTitlePaneContentInner {
+  padding: 3px !important;
+ }

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -54,12 +54,16 @@ define(['dojo/_base/declare',
 
       _miniModeTimer: null,
 
+      _KEEP_AUTO_RESTART : null,
+      _LAST_SWIPE_TIME : null,
+      _LAST_SPEED_RATE : null,
+
       postCreate: function() {
         this.inherited(arguments);
         this._timeHandles = [];
 
-        this.layerProcesser = new LayerProcesser({map:this.map});
-        this.timeProcesser = new TimeProcesser({map:this.map,nls:this.nls,config:this.config});
+        this.layerProcesser = new LayerProcesser({map:this.map,config:this.config});
+        this.timeProcesser = new TimeProcesser({map:this.map,nls:this.nls,config:this.config,widgetId:this.id});
 
         this._initLayerInfosObj().then(lang.hitch(this, function() {
           this.timeProcesser.setLayerInfosObj(this.layerInfosObj);
@@ -97,6 +101,16 @@ define(['dojo/_base/declare',
             }
           }
         })));
+
+        //set time layer info by config setting
+        if (false === this.config.isHonorWebMap && this.config.customLayersConfig) {
+          utils.setLayersUseMapTimebyConfig(this.layerInfosObj, this.config);
+        }
+        if (utils.isConfigLiveMode(this.config) && this.layerProcesser.hasLiveDataLayer()) {
+          html.removeClass(this.liveIcon, 'hide');//show live icon
+        } else {
+          html.addClass(this.liveIcon, 'hide');
+        }
       },
 
       //overwrite for dijit in header-controller
@@ -116,6 +130,12 @@ define(['dojo/_base/declare',
       },
 
       onOpen: function() {
+        if (this._isTestSizeFlag) {
+          return;
+        }
+
+        this._closeOthersTimeSlider();
+
         this._initLayerInfosObj().then(lang.hitch(this, function () {
           if (!this.layerProcesser.hasVisibleTemporalLayer()) {
             this._showNoTimeLayer();
@@ -128,7 +148,20 @@ define(['dojo/_base/declare',
           //initPosition
           utils.initPosition(this.map, this.domNode, this.position);
           this._adaptResponsive();
+
+          this._setPlayBtnStyleTimer();
         }));
+      },
+      _closeOthersTimeSlider: function () {
+        var allTimeSlider = WidgetManager.getInstance().getWidgetsByName("TimeSlider");
+        array.forEach(allTimeSlider, lang.hitch(this, function (widget) {
+          if (widget.state === "opened" && this.id !== widget.id) {
+            WidgetManager.getInstance().closeWidget(widget);//close others TimeSlider
+          }
+        }));
+      },
+      _openHanlder: function(){
+        WidgetManager.getInstance().openWidget(this);
       },
 
       onClose: function() {
@@ -136,11 +169,19 @@ define(['dojo/_base/declare',
           if (!this.layerProcesser.hasVisibleTemporalLayer()) {
             html.setStyle(this.noTimeContentNode, 'display', 'none');
             this._showed = false;
+
+            if (this.map.removeTimeSlider) {
+              this.map.removeTimeSlider();
+            }
           } else {
             if (this._showed) {
+              this.timeSlider.pause();
               this.closeTimeSlider();
             }
           }
+
+          //this.timeProcesser.clearAutoRefreshTimer();//autoRefresh
+          this._cleanPlayBtnStyleTimer();
         }));
       },
       //on close btn click
@@ -163,6 +204,7 @@ define(['dojo/_base/declare',
           }
 
           this.timeProcesser.setTimeSlider(this.timeSlider);
+          this.layerProcesser.setTimeSlider(this.timeSlider);
           this._updateTimeSliderUI();
 
           //restore playBtn state
@@ -170,6 +212,7 @@ define(['dojo/_base/declare',
             html.removeClass(this.playBtn, "pause");
           }
           //styles
+          html.setStyle(this.domNode, 'display', 'block');
           html.setStyle(this.timeContentNode, 'display', 'block');
           html.addClass(this.domNode, 'show-time-slider');
           this._initSpeedMenu();
@@ -185,7 +228,8 @@ define(['dojo/_base/declare',
             onEnd: lang.hitch(this, function() {
               this._showed = true;
               //auto play when open
-              if (false === html.hasClass(this.playBtn, "pause")) {
+              if (false !== this.config.autoPlay &&
+                false === html.hasClass(this.playBtn, "pause")) {
                 on.emit(this.playBtn, 'click', { cancelable: false, bubbles: true });
               }
               this._adaptResponsive();
@@ -199,6 +243,7 @@ define(['dojo/_base/declare',
         this._draged = false;
         this._isSetPosition = false;
         this._showed = false;
+        this._timeSliderPropsDef = null;
 
         html.setStyle(this.domNode, 'display', 'none');
 
@@ -236,22 +281,23 @@ define(['dojo/_base/declare',
           this.own(this._timeSliderPropsDef);
           //var itemInfo = map && map.itemInfo;
           this.timeProcesser.getTsPros().then(lang.hitch(this, function (tsProps) {
-            if (null !== tsProps &&
+            /*if (null !== tsProps &&
               (this.timeProcesser.needUpdateFullTime() || true === tsProps._needToFindDefaultInterval)) {
               this.timeProcesser._getUpdatedFullTime().then(lang.hitch(this, function (fullTimeExtent) {
                 var start = fullTimeExtent.startTime.getTime();
                 var end = fullTimeExtent.endTime.getTime();
 
+                //TODO reset timeExtent:consider liveData
                 if (tsProps.startTime > end || tsProps.endTime < start) {
                   tsProps.startTime = start;
                   tsProps.endTime = end;
                 } else {
-                  if (tsProps.startTime < start) {
-                    tsProps.startTime = start;
-                  }
-                  if (tsProps.endTime > end) {
-                    tsProps.endTime = end;
-                  }
+                  // if (tsProps.startTime < start) {
+                  //   tsProps.startTime = start;
+                  // }
+                  // if (tsProps.endTime > end) {
+                  //   tsProps.endTime = end;
+                  // }
                 }
 
                 if (true === tsProps._needToFindDefaultInterval) {
@@ -262,18 +308,27 @@ define(['dojo/_base/declare',
               }));
             } else {
               this._timeSliderPropsDef.resolve(tsProps);
-            }
+            }*/
+            this.timeProcesser._getUpdatedFullTime().then(lang.hitch(this, function (fullTimeExtent) {
+              this._timeSliderPropsDef.resolve({
+                prop: tsProps,
+                fulltime: fullTimeExtent
+              });
+            }));
           }));
         }
 
         return this._timeSliderPropsDef;
       },
 
-      createTimeSlider: function() {
-        return this.getTimeSliderProps().then(lang.hitch(this, function(props) {
-          if (!props) {
-            return;
-          }
+      createTimeSlider: function () {
+        return this.getTimeSliderProps().then(lang.hitch(this, function (data) {
+          var props = data.prop,
+            fullTimeExtent = data.fulltime;
+          var timeExtent = null;
+          // if (!props) {
+          //   return;
+          // }
           if (this.timeSlider) {
             return this.timeSlider;
           }
@@ -281,41 +336,198 @@ define(['dojo/_base/declare',
           this.sliderNode = html.create('div', {}, this.sliderNodeContainer);
 
           this.timeSlider = new TimeSlider({}, this.sliderNode);
+          this.map.setTimeSlider(this.timeSlider);
+          /******************  time-extent-change demo ********************
+          this.own(on(this.map.timeSlider, 'time-extent-change', lang.hitch(this, function (res) {
+            //1.time info
+            var startTime = res.startTime,
+              endTime = res.endTime;
+            //2.layer info(LayerInfos.getInstance() ==> this.layerInfosObj)
+            array.forEach(this.layerInfosObj.getLayerInfoArray(), function (info) {
+              if (info.layerObject.setUseMapTime) {
+                var isUseTime = info.layerObject.useMapTime;
+              }
+            });
+          })));
+          **************************************/
 
-          var fromTime = new Date(props.startTime);
-          var endTime = new Date(props.endTime);
-          var timeExtent = new TimeExtent(fromTime, endTime);
-          this.timeSlider.setThumbCount(props.thumbCount);
-          if (props.numberOfStops) {
-            this.timeSlider.createTimeStopsByCount(timeExtent, (props.numberOfStops + 1));
-          } else {
-            this.timeSlider.createTimeStopsByTimeInterval(
-              timeExtent,
-              props.timeStopInterval.interval,
-              props.timeStopInterval.units
-            );
+          if (false === this.config.isHonorWebMap) {
+            //custom layers & custom time
+            var timeConfig = utils.timeCalendarForBuilderConfig(this.config);
+
+            if (null === timeConfig || (!timeConfig.startTime && !timeConfig.endTime)) {
+              console.log("timeSlider: time param error");
+            }
+
+            timeExtent = new TimeExtent(timeConfig.startTime, timeConfig.endTime);
+            //timeConfig.interval = null;//hack
+            // if(null === timeConfig.interval ||
+            // (!timeConfig.interval.number && !timeConfig.interval.units)){
+            //   this.timeSlider.createTimeStopsByCount(timeExtent, (timeConfig.numberOfStops + 1));//TODO
+            // }
+            if (!timeConfig.interval.number && !timeConfig.interval.units) {
+              timeConfig.interval = this.timeProcesser.findDefaultInterval(timeExtent);
+            }
+            this.timeSlider.setThumbCount(timeConfig.thumbCount);
+            //this.timeSlider.setThumbIndexes([0, 1]);//default start
+            this.timeSlider.setThumbMovingRate(2000);
+
+            if (timeConfig.interval.number === "0" || timeConfig.interval.number === 0) {
+              timeConfig.interval.number = 1;
+            }
+
+            this.timeSlider.createTimeStopsByTimeInterval(timeExtent, timeConfig.interval.number,
+              timeConfig.interval.units);
+
+            if (this._LAST_SWIPE_TIME) {
+              this._LAST_SWIPE_TIME = null;
+            }
+          } else {//true === this.config.isHonorWebMap
+
+            //create by webmap config
+            if (props) {
+              //var timeExtent = null;
+              if (props.startTime && props.endTime) {
+                timeExtent = new TimeExtent(new Date(props.startTime), new Date(props.endTime));
+              } else if (props.startTime) {
+                timeExtent = new TimeExtent(new Date(props.startTime), fullTimeExtent.endTime);
+              } else if (props.endTime) {
+                timeExtent = new TimeExtent(fullTimeExtent.startTime, new Date(props.endTime));
+              } else {
+                timeExtent = new TimeExtent(fullTimeExtent.startTime, fullTimeExtent.endTime);
+              }
+              // bug in saved web map?
+              if (timeExtent.startTime > timeExtent.endTime) {
+                timeExtent = new TimeExtent(fullTimeExtent.startTime, fullTimeExtent.endTime);
+              }
+              this.timeSlider.setThumbCount(props.thumbCount);
+              if (props.numberOfStops) {
+                this.timeSlider.createTimeStopsByCount(timeExtent, (props.numberOfStops + 1));
+              } else {
+                this.timeSlider.createTimeStopsByTimeInterval(timeExtent,
+                  props.timeStopInterval.interval, props.timeStopInterval.units);
+              }
+              this.timeSlider.setThumbMovingRate(props.thumbMovingRate);
+
+              //palyback
+              if (props.currentTimeExtent) {
+                if (!props.currentTimeExtent[0]) {
+                  props.currentTimeExtent[0] = timeExtent.startTime.getTime();
+                }
+                if (!props.currentTimeExtent[1]) {
+                  props.currentTimeExtent[1] = timeExtent.endTime.getTime();
+                }
+                //var timeStops = this.timeSlider.timeStops;
+                if (props.thumbCount === 1) {
+                  this.timeSlider.setThumbIndexes(
+                    [this.timeProcesser.findClosestThumbIndex(this.timeSlider, props.currentTimeExtent[1])]);
+                } else {
+                  var start = this.timeProcesser.findClosestThumbIndex(this.timeSlider, props.currentTimeExtent[0]);
+                  if (props.currentTimeExtent[0] === props.currentTimeExtent[1]) {
+                    this.timeSlider.setThumbIndexes([start, start]);
+                  } else {
+                    var end = this.timeProcesser.findClosestThumbIndex(this.timeSlider, props.currentTimeExtent[1]);
+                    if (start < end) {
+                      this.timeSlider.setThumbIndexes([start, end]);
+                    } else {
+                      this.timeSlider.setThumbIndexes([start, start + 1]);
+                    }
+                  }
+                }
+              } else {
+                if (props.thumbCount === 2) {
+                  this.timeSlider.setThumbIndexes([0, 1]);//default start
+                }
+              }
+
+              //layers
+              //this.layerProcesser.processerDisableLayers(props);
+            } else {
+              // no-props: default settings
+              props = {};
+              props.thumbCount = 2;
+              this.timeSlider.setThumbCount(props.thumbCount);
+              this.timeSlider.setThumbIndexes([0, 1]);
+
+              this.timeSlider.setThumbMovingRate(2000);
+              //this.findDefaultInterval();
+              props.timeStopInterval = this.timeProcesser.findDefaultInterval(fullTimeExtent);
+              this.timeSlider.createTimeStopsByTimeInterval(fullTimeExtent,
+                props.timeStopInterval.interval, props.timeStopInterval.units);
+            }
           }
-          this.timeSlider.setThumbMovingRate(props.thumbMovingRate);
 
           if (this.timeSlider.timeStops.length > 25) {
             this.timeSlider.setTickCount(0);
           }
-          if (this.timeSlider.thumbCount === 2) {
-            this.timeSlider.setThumbIndexes([0, 1]);
+
+          var loop = true;
+          if (false === this.config.loopPlay) {
+            loop = false;
           }
-          this.timeSlider.setLoop(true);
+          this.timeSlider.setLoop(loop);
           this.timeSlider.startup();
+
+          //this.timeProcesser.restoreAutoRefreshTimer(this.timeSlider);//set autoRefresh Stops
+
+          if (this._KEEP_AUTO_RESTART) {
+            this.timeSlider.play();
+            this._KEEP_AUTO_RESTART = null;
+          }
 
           this._timeHandles.push(on(
             this.timeSlider,
             'time-extent-change',
-            lang.hitch(this, this.updateTimeExtentLabel)
+            lang.hitch(this, this.onTimeSliderChange)
           ));
-
-          this.map.setTimeSlider(this.timeSlider);
 
           return this.timeSlider;
         }));
+      },
+      onTimeSliderChange: function (timeExtent) {
+        //console.log("playing==>"+this.timeSlider.playing);
+        this.updateTimeExtentLabel(timeExtent);
+
+        if (utils.isConfigLiveMode(this.config)) {
+          this.timeCalendarDataAutoRefresh(timeExtent);//need to rebuild timeExtent
+        }
+      },
+      timeCalendarDataAutoRefresh: function (timeExtent) {
+        if (timeExtent && timeExtent.startTime) {
+          var endLength = this.timeSlider.timeStops.length >= 1 ? this.timeSlider.timeStops.length - 1 : 0;
+          var startTag = this.timeSlider.timeStops[0].getTime();
+          var endTag = this.timeSlider.timeStops[endLength].getTime();
+          var res = false;
+          var currentTime1 = timeExtent.startTime.getTime();
+          var currentTime2 = timeExtent.endTime.getTime();
+
+          if (!this._LAST_SWIPE_TIME) {
+            this._LAST_SWIPE_TIME = {};
+            res = false;
+          } else {
+            if (this.timeSlider.playing) {//when playing
+              if (1 === this.timeSlider.thumbCount) {
+                if (currentTime2 === startTag && this._LAST_SWIPE_TIME.endTime === endTag) {
+                  res = true;
+                }
+              } else {
+                if (currentTime1 === startTag && this._LAST_SWIPE_TIME.endTime === endTag) {
+                  res = true;
+                }
+              }
+            }
+          }
+
+          this._LAST_SWIPE_TIME.startTime = currentTime1;
+          this._LAST_SWIPE_TIME.endTime = currentTime2;
+
+          if (res) {
+            console.log("auto refresh");
+            this._KEEP_AUTO_RESTART = true;
+            this._closeHanlder();
+            this._openHanlder();
+          }
+        }
       },
 
       _updateTimeSliderUI: function () {
@@ -350,11 +562,31 @@ define(['dojo/_base/declare',
             //toggle pause class
             if(html.hasClass(this.playBtn, "pause")){
               html.removeClass(this.playBtn, "pause");
+
+              //this.timeProcesser.clearAutoRefreshTimer();//autoRefresh
             } else {
               html.addClass(this.playBtn, "pause");
               if(utils.isRunInMobile()){
                 html.addClass(this.domNode, 'mini-mode');
                 this._adaptResponsive();
+              }
+
+              //this.timeProcesser.setAutoRefreshTimer(this);//auto refresh
+            }
+
+            //hack loop=false, click play btn can't play again
+            var slider = this.timeSlider._slider, val;
+            if (lang.isArray(slider.value)) {
+              val = slider.value[1];
+            } else {
+              val = slider.value;
+            }
+            if (this.timeSlider.loop !== true && val === slider.maximum) {
+              this.timeSlider.play();
+              if (this.timeSlider.thumbCount > 1) {
+                this.timeSlider.setThumbIndexes([0, 1]);
+              } else {
+                this.timeSlider.setThumbIndexes(0);
               }
             }
 
@@ -366,6 +598,11 @@ define(['dojo/_base/declare',
           this._nextBtnHandler = this.own(on(this.nextBtn, 'click', lang.hitch(this, function () {
             on.emit(this._rawNextBtn, 'click', { cancelable: false, bubbles: true });
           })));
+        }
+        //replace play btns, under RTL
+        if (window.isRTL) {
+          html.place(this.previousBtn, this.playBtn, "after");
+          html.place(this.nextBtn, this.playBtn, "before");
         }
       },
 
@@ -398,7 +635,8 @@ define(['dojo/_base/declare',
         }
       },
 
-      updateTimeExtentLabel: function(timeExtent) {
+      updateTimeExtentLabel: function (timeExtent) {
+        //TODO Humanize duration text
         var label = this.timeProcesser._getTimeFormatLabel(timeExtent);
         //console.log("===>"+label);
         this.timeExtentLabelNode.innerHTML = label;
@@ -409,8 +647,6 @@ define(['dojo/_base/declare',
         if (!this._showed) {
           return;
         }
-
-        this._updateTimeSliderUI();
 
         setTimeout(lang.hitch(this, function () {
           if (utils.isRunInMobile()) {
@@ -444,12 +680,10 @@ define(['dojo/_base/declare',
           } else {
             html.setStyle(this.domNode, 'height','72px');
           }
-          //left
-          //do not center it, if moveed by drag
+
+          //do not initPosition it, if moveed by drag
           if (!this._draged) {
-            var left = utils.getInitLeft(this.map, this.domNode);
-            this.position.left = left;
-            html.setStyle(this.domNode, 'left', this.position.left + 'px');
+            utils.initPosition(this.map, this.domNode, this.position);
           }
 
           if (!this._moving && this.position &&
@@ -509,6 +743,12 @@ define(['dojo/_base/declare',
         if (this.state === 'closed') {
           return;
         }
+
+        //initPosition when widget OutofScreen
+        if (utils.isOutOfScreen(this.map, this.position) && !utils.isRunInMobile()) {
+          utils.initPosition(this.map, this.domNode, this.position);
+        }
+
         this._adaptResponsive();
       },
 
@@ -519,6 +759,21 @@ define(['dojo/_base/declare',
         this.inherited(arguments);
       },
 
+      //play btn style
+      _setPlayBtnStyleTimer: function () {
+        this._playBtnStyleTimer = setInterval(lang.hitch(this, function () {
+          if (this.timeSlider && this.timeSlider.playing) {
+            html.addClass(this.playBtn, "pause");
+          } else {
+            html.removeClass(this.playBtn, "pause");
+          }
+        }), 200);
+      },
+      _cleanPlayBtnStyleTimer: function () {
+        if (this._playBtnStyleTimer) {
+          clearTimeout(this._playBtnStyleTimer);
+        }
+      },
 
       //LayerInfosObj
       _initLayerInfosObj: function () {
@@ -607,6 +862,7 @@ define(['dojo/_base/declare',
           var panelBox = domGeometry.getMarginBox(mover.node);
           this.position.left = panelBox.l;
           this.position.top = panelBox.t;
+          // save move data
           setTimeout(lang.hitch(this, function () {
             this._moving = false;
           }), 500);
@@ -623,12 +879,11 @@ define(['dojo/_base/declare',
 
           this.speedMenu = new SpeedMenu({ nls: this.nls }, this.speedMenuNode);
           this.speedMenuSelectedHanlder = this.own(on(this.speedMenu, 'selected', lang.hitch(this, function (rateStr) {
-            this.getTimeSliderProps().then(lang.hitch(this, function (props) {
-              if (this.timeSlider && props && rateStr) {
-                var rate = parseFloat(rateStr);
-                this.timeSlider.setThumbMovingRate(props.thumbMovingRate / rate);
-              }
-            }));
+            if (this.timeSlider && rateStr) {
+              this._LAST_SPEED_RATE = rateStr;
+              var rate = parseFloat(rateStr);
+              this.timeSlider.setThumbMovingRate(2000 / rate);
+            }
           })));
 
           this.speedMenuOpenHanlder = this.own(on(this.speedMenu, 'open', lang.hitch(this, function () {
@@ -638,6 +893,10 @@ define(['dojo/_base/declare',
           this.speedMenuCloseHanlder = this.own(on(this.speedMenu, 'close', lang.hitch(this, function () {
             this._setMiniModeTimer();
           })));
+
+          if (this._LAST_SPEED_RATE) {
+            this.speedMenu.setSpeed(this._LAST_SPEED_RATE);//keep speed when auto refresh
+          }
         }
       },
       _destroySpeedMenu: function () {

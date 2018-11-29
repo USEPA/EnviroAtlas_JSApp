@@ -1,0 +1,25 @@
+{
+  "name": "DemographicLayers",
+  "label": "Add Demographic Layers",
+  "2D": true,
+  "3D": false,
+  "platform": "HTML",
+  "version": "1.3",
+  "wabVersion": "1.3",
+  "author": "SAIC",
+  "description": "This is the widget to add demographic layers",
+  "copyright": "",
+  "license": "http://www.apache.org/licenses/LICENSE-2.0",
+  "properties": {
+		"inPanel":true,
+    "hasLocale":false,
+    "hasStyle":true,
+    "hasConfig":false,
+    "hasUIFile":true,
+    "hasSettingPage":false,
+    "hasSettingUIFile":false,
+    "hasSettingLocale":false,
+    "hasSettingStyle":false,
+    "IsController":false
+  }
+}

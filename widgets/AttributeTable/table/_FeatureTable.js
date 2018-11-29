@@ -352,6 +352,9 @@ define([
         })
       });
       toolbar.addChild(this.matchingCheckBox);
+      var element =  document.getElementById('queryByCommToggleButton');
+	  if (typeof(element) == 'undefined' || element == null)
+	  {
       this.queryByCommButton = new ToggleButton({//toggle button for communityQuery
           id: "queryByCommToggleButton",
           label: this.nls.queryByCommu,
@@ -360,7 +363,7 @@ define([
           onClick: lang.hitch(this, this.onClickQueryByCommuButton)
         });
         toolbar.addChild(this.queryByCommButton);      
-
+	  }
       this.zoomButton = new Button({
         label: this.nls.zoomto,
         iconClass: "esriAttributeTableZoomImage",
@@ -374,7 +377,9 @@ define([
         onClick: lang.hitch(this, this.clearSelection, true, true)
       });
       toolbar.addChild(this.clearSelectionButton);
-
+      element =  document.getElementById('refreshButton');
+	  if (typeof(element) == 'undefined' || element == null)
+	  {
       this.refreshButton = new Button({
       	id: "refreshButton",
         label: this.nls.refresh,
@@ -383,6 +388,7 @@ define([
         onClick: lang.hitch(this, this.refresh)
       });
       toolbar.addChild(this.refreshButton);
+     }
       
 
       // this.closeButton = new Button({

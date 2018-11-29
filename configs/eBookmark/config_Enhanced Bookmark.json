@@ -304,6 +304,18 @@
             }
           }
         },
+		{
+          "name": "Salt Lake City, UT",
+          "extent": {
+            "xmax": -12392572.9000,
+            "xmin": -12523738.9000,
+            "ymax": 5015804.3800,
+            "ymin": 4913837.3900,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
         {
           "name": "Tampa, FL",
           "extent": {

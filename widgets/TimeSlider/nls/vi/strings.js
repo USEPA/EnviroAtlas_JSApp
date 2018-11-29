@@ -4,5 +4,6 @@ define({
   "disableTips": "Không thấy các lớp có thông tin thời gian.",
   "timeExtent": "${FROMTIME} đến ${ENDTIME}",
   "layers": "Lớp: ",
-  "speedLabel": "Tốc độ phát lại"
+  "speedLabel": "Tốc độ phát lại",
+  "liveData": "Dữ liệu sống"
 });

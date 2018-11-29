@@ -26,10 +26,13 @@ define(['dojo/_base/declare',
     'jimu/utils',
     'esri/lang',
     'jimu/dijit/LoadingShelter',
-    'dojo/Deferred'
+    'dojo/Deferred',
+    "jimu/dijit/TabContainer",
+    'jimu/WidgetManager',
+    'jimu/PanelManager'
   ],
   function(declare, lang, html, on, query, cookie, _WidgetsInTemplateMixin, BaseWidget,
-           CheckBox, utils, esriLang, LoadingShelter, Deferred) {
+           CheckBox, utils, esriLang, LoadingShelter, Deferred, TabContainer, WidgetManager, PanelManager) {
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
       baseClass: 'jimu-widget-splash',
       _hasContent: null,
@@ -53,7 +56,11 @@ define(['dojo/_base/declare',
         if (this._hasContent) {
           this.customContentNode.innerHTML = this.config.splash.splashContent;
         }
-
+        this._hasDisclaimer = this.config.splash && this.config.splash.disclaimerContent;
+        if (this._hasDisclaimer) {
+          this.customDisclaimerNode.innerHTML = this.config.splash.disclaimerContent;
+        }        
+        
         if (!this._requireConfirm && !this._showOption) {
           html.setStyle(this.confirmCheck, 'display', 'none');
           html.addClass(this.okNode, 'enable-btn');
@@ -70,12 +77,33 @@ define(['dojo/_base/declare',
             label: utils.stripHTML(hint),
             checked: false
           }, this.confirmCheck);
-          this.own(on(this.confirmCheck.domNode, 'click', lang.hitch(this, this.onCheckBoxClick)));
           html.setAttr(this.confirmCheck.domNode, 'title', utils.stripHTML(hint));
           this.confirmCheck.startup();
         }
       },
-
+      
+      _initTabContainer: function () {
+          var tabs = [];
+          tabs.push({
+            title: "Welcome",
+            content: this.welcomeTab
+          });
+          tabs.push({
+            title: "Disclaimer",
+            content: this.disclaimerTab
+          });
+          this.selTab = "Welcome"; 
+          this.tabContainer = new TabContainer({
+            tabs: tabs,
+            selected: this.selTab,
+            id: "welcometabContainer"
+          }, this.tabMain);
+          this.tabContainer.startup();
+          this.own(on(this.tabContainer, 'tabChanged', lang.hitch(this, function (title) {
+            this.selTab = title;
+          })));
+        },
+      
       onOpen: function() {
         if (!utils.isInConfigOrPreviewWindow()) {
           var isFirstKey = this._getCookieKey();
@@ -90,7 +118,7 @@ define(['dojo/_base/declare',
         this.inherited(arguments);
         this.shelter.show();
         this._normalizeDomNodePosition();
-
+        this._initTabContainer();
         this._setConfig();
       },
 
@@ -104,6 +132,8 @@ define(['dojo/_base/declare',
             if (typeof button.color !== "undefined") {
               html.setStyle(this.okNode, 'backgroundColor', button.color);
               html.setStyle(this.okNode, 'color', utils.invertColor(button.color));//auto color for text
+              html.setStyle(this.backNode, 'backgroundColor', button.color);
+              html.setStyle(this.backNode, 'color', utils.invertColor(button.color));//auto color for text
             }
             if (typeof button.transparency !== "undefined") {
               html.setStyle(this.okNode, 'opacity', (1 - button.transparency));
@@ -111,7 +141,6 @@ define(['dojo/_base/declare',
           }
           this.okNode.innerHTML = this.config.splash.button.text || this.nls.ok;
           html.attr(this.okNode, "title", this.config.splash.button.text || this.nls.ok);
-
           var background = this.config.splash.background;
           if (typeof background !== "undefined") {
             //image
@@ -128,7 +157,7 @@ define(['dojo/_base/declare',
                 }
               }
               html.setStyle(this.splashContainerNode, 'background', bg + repeat);
-            } else if ("color" === background.mode && typeof background.color !== "undefined") {
+            } /*else if ("color" === background.mode && typeof background.color !== "undefined") {
               //color
               if ("undefined" !== typeof background.color) {
                 html.setStyle(this.splashContainerBackground, 'backgroundColor', background.color);
@@ -136,7 +165,7 @@ define(['dojo/_base/declare',
               if ("undefined" !== typeof background.transparency) {
                 html.setStyle(this.splashContainerBackground, 'opacity', (1 - background.transparency));
               }
-            }
+            }*/
           }
           //html.setStyle(query(".label", this.dmoNode)[0], 'color', utils.invertColor(background.color));//auto color for text
           var confirm = this.config.splash.confirm;
@@ -242,13 +271,45 @@ define(['dojo/_base/declare',
         var contentMarginButtom = this._getNodeStylePx(this.customContentNode, "margin-bottom"),//between content & confirm text
           footerBottom = this._getNodeStylePx(this.footerNode, "bottom"),//between footer & splashBottom
           contentSpace = containerContent.h - (footerBox.h + footerBottom);
+          //console.log("customContentScrollheight:"+customContentScrollheight+"; contentSpace:"+contentSpace);
+		  //console.log("contentSpace:"+contentSpace+"; contentMarginButtom:"+contentMarginButtom);
+		  //console.log("window.appInfo.isRunInMobile:" + window.appInfo.isRunInMobile);
 
         var isNeedLimitCustomContentHeight = (customContentScrollheight >= contentSpace);
         if (true === isNeedLimitCustomContentHeight || window.appInfo.isRunInMobile) {
           //limit the customContent height   OR   extend height in mobile
-          html.setStyle(this.customContentNode, 'height', (contentSpace - contentMarginButtom) + 'px');
+          
+          html.setStyle(this.tourNode, 'left', '2px');
+          html.setStyle(this.learnNode, 'left', '2px');
+          html.setStyle(this.exploreNode, 'left', '2px');   
+          
+          html.setStyle(this.tourNode, 'margin', '5px');
+          html.setStyle(this.tourNode, 'line-height', '16px');
+
+          html.setStyle(this.learnNode, 'margin', '5px');
+		  html.setStyle(this.learnNode, 'line-height', '16px');
+		  
+          html.setStyle(this.exploreNode, 'margin', '5px');
+          html.setStyle(this.exploreNode, 'line-height', '16px');
+          
+          html.setStyle(this.footerNode, 'height','70px');
+          html.setStyle(this.footerNode, 'padding','5px');
+          
+          //html.setStyle(this.customContentNode, 'height', (contentSpace - contentMarginButtom) + 'px');
+          
+          html.setStyle(this.customContentNode, 'height', '80px');
+          html.setStyle(this.customContentNode, 'margin-bottom', '0px');
+          //var splashContent = html.toDom(this.config.splash.splashContent);
+          //splashContent.firstChild.style.marginBottom = "0px";
         } else {
-          html.setStyle(this.customContentNode, 'height', 'auto');
+
+          html.setStyle(this.tourNode, 'line-height', '33px');
+		  html.setStyle(this.learnNode, 'line-height', '33px'); 
+          html.setStyle(this.exploreNode, 'line-height', '33px'); 
+          
+          //html.setStyle(this.customContentNode, 'margin-bottom', '60px');     
+            	
+          //html.setStyle(this.customContentNode, 'height', 'auto');
           this._moveContentToMiddle({
             contentSpace: contentSpace,
             customContentScrollheight: customContentScrollheight
@@ -317,7 +378,34 @@ define(['dojo/_base/declare',
           this.close();
         }
       },
-
+      onBackClick: function(){
+        var welcomeTabs = dijit.byId("welcometabContainer"); 
+        welcomeTabs.selectTab("Welcome");
+      },
+      onFwdClick: function(){
+        var welcomeTabs = dijit.byId("welcometabContainer"); 
+        welcomeTabs.selectTab("Disclaimer");
+      },   
+      onTourClick: function(){
+        this.openWidgetById('widgets_Demo_28').then(lang.hitch(this, function() {
+            var wm = WidgetManager.getInstance();
+            widget = wm.getWidgetById('widgets_Demo_28');
+            widget._startTour(); 
+        }));
+        this.close();
+      },
+      onLearnClick: function(){
+        this.openWidgetById('widgets_AddWebMapData');
+        var wm = WidgetManager.getInstance();
+        widget = wm.getWidgetById('themes_TabTheme_widgets_SidebarController_Widget_20');
+        for (var i=0; i<widget.tabs.length; i++){
+            var tab = widget.tabs[i];
+            if (tab.config.id=="widgets_AddWebMapData"){
+                widget.selectTab(i);
+            }
+        }
+        this.close();
+      },     
       close: function() {
         this._isClosed = true;
         this.widgetManager.closeWidget(this);

@@ -1,4 +1,6 @@
 {
 	"showLabels": false,
-	"timeFormat":  "auto"
+	"autoPlay" : true,
+	"loopPlay": true,
+	"timeFormat": "auto"
 }

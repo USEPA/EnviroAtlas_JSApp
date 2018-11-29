@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>RadioButton_selected</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Builder" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-120.000000, -2589.000000)" id="Group-10">
+            <g transform="translate(66.000000, 2405.000000)">
+                <g id="RadioButton_selected" transform="translate(54.000000, 184.000000)">
+                    <circle id="Oval-2" stroke="#24B5CC" stroke-width="2" cx="8" cy="8" r="7"></circle>
+                    <circle id="Oval-4" fill="#24B5CC" cx="8" cy="8" r="3"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

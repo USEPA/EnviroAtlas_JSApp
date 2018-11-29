@@ -16,6 +16,7 @@
 define(["dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/array",
+    'dojo/_base/html',
     "dojo/on",
     "dojo/keys",
     "dojo/Deferred",
@@ -46,16 +47,20 @@ define(["dojo/_base/declare",
     "esri/layers/WMSLayer",
     "esri/layers/WMTSLayer",
     "esri/InfoTemplate",
+    "jimu/WidgetManager",
     "dijit/form/Select"
   ],
-  function(declare, lang, array, on, keys, Deferred, all, domClass, win, dom, domStyle, Viewport,
+  function(declare, lang, array, html, on, keys, Deferred, all, domClass, win, dom, domStyle, Viewport,
     _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, i18n,
     LayerLoader, util, ArcGISDynamicMapServiceLayer,
     ArcGISImageServiceLayer, ArcGISTiledMapServiceLayer, CSVLayer,
     FeatureLayer, GeoRSSLayer, ImageParameters, KMLLayer, StreamLayer,
     VectorTileLayer, WFSLayer, WMSLayer, WMTSLayer,
-    InfoTemplate) {
-
+    InfoTemplate, WidgetManager) {
+    var widgetJsonTimeSlider = {
+        id: 'widgets_TimeSlider_Widget_32',
+        uri: "widgets/TimeSlider/Widget"
+    };
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
       i18n: i18n,
@@ -239,6 +244,28 @@ define(["dojo/_base/declare",
         if (type === "ArcGIS") {
           if (lc.indexOf("/featureserver") > 0 || lc.indexOf("/mapserver") > 0) {
             loader._readRestInfo(url).then(function(info) {
+              if (info && (info.timeInfo!=undefined)) {//this is a time-aware layer       
+              	   timeAwareLayer = new esri.layers.FeatureLayer(url, {
+			          mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
+			          outFields: ["*"]
+			       });
+			       timeAwareLayer.id = window.timeSliderLayerId;
+			       timeAwareLayer.on('update-end', function(evt) {
+				       	var wm = WidgetManager.getInstance();
+				       	wm.loadWidget(widgetJsonTimeSlider)
+                        .then(lang.hitch(this, function(widget){
+                          var position = {
+                            relativeTo: "map"                            
+                          };
+                          position.bottom = "50px";
+                          position.left = "100px";
+                          widget.setPosition(position);
+                          wm.openWidget(widget);
+                        }));
+					});
+			       	map.addLayers([timeAwareLayer]);                
+              }
+              else {//else , this is not time-aware layer
               //console.warn("restInfo",info);
               if (info && typeof info.type === "string" && info.type === "Feature Layer") {
                 layer = new FeatureLayer(url, {
@@ -295,6 +322,7 @@ define(["dojo/_base/declare",
                   self._waitThenAdd(dfd, map, type, loader, layer);
                 }
               }
+	          }//end of else , this is not time-aware layer
             }).otherwise(function(error) {
               dfd.reject(error);
             });

@@ -29,6 +29,7 @@ define(["dojo/_base/declare",
       templateString: template,
 
       postCreate: function() {
+        selfSearchInAddData = this;
         this.inherited(arguments);
         this._checkClearButton();
 

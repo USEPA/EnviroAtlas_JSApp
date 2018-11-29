@@ -4,5 +4,6 @@ define({
   "disableTips": "Não há camadas com informação temporal  visíveis",
   "timeExtent": "${FROMTIME} a ${ENDTIME}",
   "layers": "camadas: ",
-  "speedLabel": "Velocidade de reprodução"
+  "speedLabel": "Velocidade de reprodução",
+  "liveData": "Dados em tempo real"
 });

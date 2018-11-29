@@ -30,3 +30,5 @@ SubLayerNames,SubLayerNames
 SubLayerIds,SubLayerIds
 sourceType,sourceType
 cacheLevelNat,cacheLevelNat
+categoryTab,categoryTab
+drawSelectLayer,drawSelectLayer

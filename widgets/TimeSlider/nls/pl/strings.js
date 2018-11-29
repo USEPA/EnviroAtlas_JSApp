@@ -4,5 +4,6 @@ define({
   "disableTips": "Warstwy czasowe nie są widoczne.",
   "timeExtent": "${FROMTIME} do ${ENDTIME}",
   "layers": "Warstwy: ",
-  "speedLabel": "Playback speed"
+  "speedLabel": "Playback speed",
+  "liveData": "Dane na żywo"
 });

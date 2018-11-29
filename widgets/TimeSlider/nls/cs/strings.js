@@ -4,5 +4,6 @@ define({
   "disableTips": "Nejsou viditelné žádné vrstvy s časovými informacemi.",
   "timeExtent": "${FROMTIME} do ${ENDTIME}",
   "layers": "Vrstvy: ",
-  "speedLabel": "Rychlost přehrávání"
+  "speedLabel": "Rychlost přehrávání",
+  "liveData": "Živá data"
 });

@@ -4,5 +4,6 @@ define({
   "disableTips": "Tidak ada layer-mengenal-waktu yang muncul.",
   "timeExtent": "${FROMTIME} hingga ${ENDTIME}",
   "layers": "Layer: ",
-  "speedLabel": "Kecepatan putar ulang"
+  "speedLabel": "Kecepatan putar ulang",
+  "liveData": "Data langsung"
 });

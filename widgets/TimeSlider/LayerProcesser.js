@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,11 +18,10 @@ define(['dojo/_base/declare',
   'dojo/_base/lang',
   'dojo/_base/array',
   'dojo/Evented',
-  'dijit/_WidgetBase'
+  'dijit/_WidgetBase',
+  './utils'
 ],
-  function (declare, lang, array,
-    Evented, _WidgetBase) {
-
+  function (declare, lang, array, Evented, _WidgetBase, utils) {
     var clazz = declare([_WidgetBase, Evented], {
       nls: null,
       map: null,
@@ -31,10 +30,15 @@ define(['dojo/_base/declare',
       setLayerInfosObj: function (layerInfosObj) {
         this.layerInfosObj = layerInfosObj;
       },
+      setTimeSlider: function (timeSlider) {
+        this.timeSlider = timeSlider;
+      },
 
+      //hack layer.useMapTime
+      //bacause most of layerData come form API, but mapViewer could set some config in json(eg:disable time)
+      //so we mix those in layerData
       processTimeDisableLayer: function () {
-        var i = 0,
-          len, layer, layerId;
+        var i = 0, len, layer, layerId;
         for (i = 0, len = this.map.layerIds.length; i < len; i++) {
           layerId = this.map.layerIds[i];
           layer = this.map.getLayer(layerId);
@@ -48,16 +52,45 @@ define(['dojo/_base/declare',
 
           this._processTimeUpdate(layer);
         }
+
+        //TODO config
+        //utils.setLayersUseMapTimebyConfig(this.layerInfosObj, this.config);
       },
       _processTimeUpdate: function (layer) {
-        var _layerInfo = null;
-        var timeAnimation = true;
-        _layerInfo = this.layerInfosObj.getLayerInfoById(layer.id);
-        timeAnimation = _layerInfo && _layerInfo.originOperLayer &&
-          (_layerInfo.originOperLayer.timeAnimation !== false);
-        if (!timeAnimation && 'setUseMapTime' in layer) {
-          layer.setUseMapTime(false);
+        // var _layerInfo = null;
+        // var timeAnimation = true;
+        // _layerInfo = this.layerInfosObj.getLayerInfoById(layer.id);
+        // //disable time in mapViewer, when timeAnimation=false
+        // timeAnimation = _layerInfo && _layerInfo.originOperLayer &&
+        //   (_layerInfo.originOperLayer.timeAnimation !== false);
+        // if (!timeAnimation && 'setUseMapTime' in layer) {
+        //   //layer.setUseMapTime(false);
+        // }
+        var isEnabled = utils.isLayerEnabledTime(layer, this.layerInfosObj);
+        if (layer.setUseMapTime) {
+          //restore enable/disable to webmap
+          if (true !== isEnabled) {
+            layer.setUseMapTime(false);
+          } else {
+            layer.setUseMapTime(true);
+          }
         }
+      },
+
+      //TODO should be delete
+      processerDisableLayers: function (props) {
+        if (!props || !props.disabledLayers) {
+          return;
+        }
+
+        array.map(props.disabledLayers, lang.hitch(this, function (layer) {
+          if (true !== layer.isTimeEnabled) {
+            var layerInfo = this.layerInfosObj.getLayerInfoById(layer.layerId);
+            if (layerInfo && layerInfo.layerObject && layerInfo.layerObject.setUseMapTime) {
+              layerInfo.layerObject.setUseMapTime(false);
+            }
+          }
+        }));
       },
 
       hasVisibleTemporalLayer: function () {
@@ -67,7 +100,7 @@ define(['dojo/_base/declare',
           layerId = this.map.layerIds[i];
           layer = this.map.getLayer(layerId);
 
-          if (this._isTimeTemporalLayer(layer, true)) {
+          if (this._isTimeTemporalLayer(layer, true)) {//mustVisible
             return true;
           }
         }
@@ -76,19 +109,24 @@ define(['dojo/_base/declare',
           layerId = this.map.graphicsLayerIds[i];
           layer = this.map.getLayer(layerId);
 
-          if (this._isTimeTemporalLayer(layer, true)) {
+          if (this._isTimeTemporalLayer(layer, true)) {//mustVisible
             return true;
           }
         }
 
         return false;
       },
-      _isTimeTemporalLayer: function (layer, mustVisible) {
-        var _hasValidTime = layer && layer.timeInfo && layer.useMapTime;
-        var _layerInfo = this.layerInfosObj.getLayerInfoById(layer.id);
-        var timeAnimation = _layerInfo && _layerInfo.originOperLayer &&
-          (_layerInfo.originOperLayer.timeAnimation !== false);
-        var condition = _hasValidTime && timeAnimation && (mustVisible ? layer.visible : true);
+      _isTimeTemporalLayer: function (layer, isMustVisible) {
+        if (!layer) {
+          return false;
+        }
+
+        //use useMapTime instead of timeAnimation to filter enable/disable
+        var condition = (layer && layer.timeInfo && layer.useMapTime);
+        //consider with visibility
+        if (true === isMustVisible) {
+          condition = (condition && layer.visible);
+        }
 
         if (condition) {
           var layerType = layer.declaredClass;
@@ -106,9 +144,9 @@ define(['dojo/_base/declare',
           } else if (layer.timeInfo && layer.timeInfo.timeExtent) {
             return true;
           }
+        } else {
+          return false;
         }
-
-        return false;
       },
 
       _getVisibleTemporalLayerNames: function () {
@@ -141,6 +179,7 @@ define(['dojo/_base/declare',
         return names;
       },
 
+      //for layerInfo event changed
       _onLayerInfosIsShowInMapChanged: function (changedLayerInfos) {
         var timeTemporalLayerChanged = array.some(
           changedLayerInfos,
@@ -155,12 +194,9 @@ define(['dojo/_base/declare',
           }));
 
         if (timeTemporalLayerChanged) {
-          lang.hitch(this, function () {
-            this.layerProcesser._onTimeTemportalLayerChanged();
-          });
+          this.layerProcesser._onTimeTemportalLayerChanged(this);
         }
       },
-
       _onLayerInfosChanged: function (layerInfo, changedType, layerInfoSelf) {
         /* jshint unused:true */
         if (changedType === 'added') {
@@ -168,31 +204,49 @@ define(['dojo/_base/declare',
           var visibleTimeTemporalLayerChanged = this.layerProcesser._isTimeTemporalLayer(_layer, true);
 
           if (visibleTimeTemporalLayerChanged) {
-            lang.hitch(this, function () {
-              this.layerProcesser._onTimeTemportalLayerChanged();
-            });
+            this.layerProcesser._onTimeTemportalLayerChanged(this);
           }
         } else if (changedType === 'removed') {
-          lang.hitch(this, function () {
-            this.layerProcesser._onTimeTemportalLayerChanged();
-          });
+          this.layerProcesser._onTimeTemportalLayerChanged(this);
+        }
+      },
+      _onTimeTemportalLayerChanged: function (that) {
+        if (that.state !== 'closed') {
+          if (that.layerProcesser.hasVisibleTemporalLayer()) {
+            if (that.timeSlider) {
+              that.updateLayerLabel();
+            } else {
+              that.showTimeSlider();
+            }
+          } else {
+            if (that.timeSlider) {
+              that.closeTimeSlider();
+            }
+          }
         }
       },
 
-      _onTimeTemportalLayerChanged: function () {
-        if (this.state !== 'closed') {
-          if (this.layerProcesser.hasVisibleTemporalLayer()) {
-            if (this.timeSlider) {
-              this.updateLayerLabel();
-            } else {
-              this.showTimeSlider();
-            }
-          } else {
-            if (this.timeSlider) {
-              this.closeTimeSlider();
-            }
+      hasLiveDataLayer: function () {
+        var i = 0, len, layer, layerId;
+        for (i = 0, len = this.map.layerIds.length; i < len; i++) {
+          layerId = this.map.layerIds[i];
+          layer = this.map.getLayer(layerId);
+
+          if (utils.hasLiveData(layer)) {
+            return true;
           }
         }
+
+        for (i = 0, len = this.map.graphicsLayerIds.length; i < len; i++) {
+          layerId = this.map.graphicsLayerIds[i];
+          layer = this.map.getLayer(layerId);
+
+          if (utils.hasLiveData(layer)) {
+            return true;
+          }
+        }
+
+        return false;
       }
     });
 

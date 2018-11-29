@@ -39,7 +39,10 @@ define([
     'jimu/utils',
     'jimu/portalUtils',
     'jimu/portalUrlUtils',
-    'jimu/dijit/LoadingIndicator'
+    'jimu/dijit/LoadingIndicator',
+    'dijit/Dialog',
+    "dijit/form/Button",
+    'jimu/WidgetManager'
 ], function (declare,
     _WidgetBase,
     _TemplatedMixin,
@@ -56,7 +59,10 @@ define([
     jimuUtils,
     portalUtils,
     portalUrlUtils,
-    LoadingIndicator) {
+    LoadingIndicator,
+    Dialog,
+    Button,
+    WidgetManager) {
     /*jshint unused: false*/
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
         templateString: template,
@@ -343,29 +349,98 @@ define([
             itemName.title = itemName.innerHTML;
             itemSnippet.innerHTML = "<div><p>" + item.snippet + "</p></div>";
             itemSnippet.title = item.snippet;
-            itemDetails.innerHTML = this.nls.moreDetails;
-            itemDetails.href = item.detailsPageUrl || "#";
+            itemDetails.innerHTML = "Add to map";//this.nls.moreDetails;
+            //itemDetails.href = item.detailsPageUrl || "#";
             return itemDiv;
         },
 
+        showDetails: function(fcTable, item){
+            
+            var widgetManager;
+            var fcDetailsWidgetEle = selfAddWebMapData.appConfig.getConfigElementsByName("FeaturedCollectionPreview")[0];
+            widgetManager = WidgetManager.getInstance();
+            var prevID = dojo.byId('itemIDdiv').innerHTML;
+            if (window.fcDetailsOpened == true && prevID == item.id){
+                widgetManager.closeWidget(fcDetailsWidgetEle.id);
+                document.getElementById("titleForFCWidget").style.display = "none"; 
+                document.getElementById("closeFCWidgetArea").style.display = "none";
+                window.fcDetailsOpened = false;
+            }
+            else {
+                //widgetManager.triggerWidgetOpen(filterForSelectWidgetEle.id);
+                if (window.fcDetailsFirstCreated == true) {
+                    widgetManager.closeWidget(fcDetailsWidgetEle.id);
+                    window.fcDetailsFirstCreated = false;
+                    
+                }
+                widgetManager.openWidget(fcDetailsWidgetEle.id);
+                document.getElementById("titleForFCWidget").style.display = ""; 
+                document.getElementById("closeFCWidgetArea").style.display = "";
+                document.getElementById("closeFCWidget").style.display = "";
+                widgetManager.activateWidget(fcDetailsWidgetEle.id);
+                window.fcDetailsOpened = true;
+            }
+            
+            dojo.byId('itemIDdiv').innerHTML = item.id;
+            dojo.byId('detailsThumbnailDiv').innerHTML = "<image alt='Item Thumbnail' style='border:1px solid black' src='"+ item.thumbnailUrl +"'>"
+            dojo.byId('detailsTitleDiv').innerHTML = "<h1>" + item.title + "</h1>"
+            dojo.byId('detailsOwnerDiv').innerHTML = "by <a target='_blank' href='" + item.ownerPageUrl + "'>" + item.owner + "</a></div>"
+            var d = new Date(item.modified);            
+            dojo.byId('detailsDateDiv').innerHTML = "Last Updated: "+ d.toDateString() + "<br/><hr/>";
+            dojo.byId('detailsSnippetDiv').innerHTML = item.snippet;
+            dojo.byId('detailsDescriptionDiv').innerHTML = item.description;
+            //https://community.esri.com/thread/159596
+            //https://dojotoolkit.org/reference-guide/1.10/dojo/dom-style.html
+            //detailsDialog.set("content", itemDetails);
+            dijit.byId('addButton').label = "Add to map",
+            dijit.byId('addButton').onClick = function(){
+                // fire item selected event
+                fcTable.emit('item-selected', item);
+            };
+            dijit.byId('agolButton').label = "View in GeoPlatform",
+            dijit.byId('agolButton').onClick = function(){
+                window.open(item.detailsPageUrl,'_blank');
+            };
+            /*
+            Need to send rest query to get list of map layers from slashdata:
+            https://epa.maps.arcgis.com/sharing/rest/content/items/1edd53b65d45441690a9f8c25a46c9fa/data?f=json
+            Iterate over Operational Layers and grab Titles.
+            */
+            dojo.byId('featuredLayerList').innerHTML = "<image alt='loading...' src='./widgets/AddWebMapData/images/loading.gif'>";
+            item.getItemData().then(function(response){
+                dojo.byId('featuredLayerList').innerHTML = "";
+                var layerList = "<ul>"
+                //process operational layers in reverse order to match AGOL
+                layersReversed = response.operationalLayers.reverse();
+                layersReversed.forEach(function(l){
+                    layerList += "<li>" + l.title + "</li>";
+                });
+                layerList += "<ul>"
+                var llDom = html.toDom(layerList);
+                html.place(llDom, dojo.byId("featuredLayerList"));
+            });
+        },
+        
         /**
          * when an item is clicked on the widget, fire the item selected event
          * unless it is the item details link
          * @param {Object} event [[Description]]
          */
+         //TLH: default functionality inverted - show details is default, and add to map substituted for smaller "show details" link
         _onItemsTableClicked: function (event) {
             var target = event.target || event.srcElement;
-
-            if (html.hasClass(target, 'item-details')) {
-                // do not select if user clicks hyperlink
-                console.log("ItemTable :: _onItemsTableClicked :: item details clicked");
-                return;
-            }
 
             // find the parent item node
             var itemDiv = query(target).parents('.item')[0];
 
             if (!itemDiv) {
+                return;
+            }
+            
+            if (!html.hasClass(target, 'item-details')) {
+                // do not select if user clicks hyperlink
+                //console.log("ItemTable :: _onItemsTableClicked :: item details clicked");
+                this.showDetails(this, itemDiv.item);
                 return;
             }
 
@@ -377,7 +452,8 @@ define([
 
             // fire item selected event
             this.emit('item-selected', itemDiv.item);
-            console.log("ItemTable :: _onItemsTableClicked :: item selected", itemDiv.item);
+            //console.log("ItemTable :: _onItemsTableClicked :: item selected", itemDiv.item);        
+            
         },
 
         getSelectedItem: function () {

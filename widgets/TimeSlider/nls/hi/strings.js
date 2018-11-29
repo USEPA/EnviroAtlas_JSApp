@@ -4,5 +4,6 @@ define({
   "disableTips": "कोई भी टाइम-अवेयर लेयर दिखाई नहीं दे रही हैं।",
   "timeExtent": "${FROMTIME} से ${ENDTIME}",
   "layers": "लेयर्स: ",
-  "speedLabel": "प्लेबैक गति"
+  "speedLabel": "प्लेबैक गति",
+  "liveData": "लाइव डेटा"
 });

@@ -63,6 +63,12 @@ cursor: pointer;
 	z-index:999
 }
 
-.claro .dijitTooltipConnector {
-	background: none;
+#tourDialog .dijitTooltipConnector {
+	display: none;
 }
+
+#tourDialog .dijitTooltipContainer {
+	background: rgba(72, 85, 102, .8);
+	color: white;
+}
+

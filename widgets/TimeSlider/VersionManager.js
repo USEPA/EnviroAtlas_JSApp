@@ -64,6 +64,39 @@ function(BaseVersionManager) {
 
         return newConfig;
       }
+    }, {
+      version: '2.5',
+      upgrader: function(oldConfig){
+        return oldConfig;
+      }
+    }, {
+      version: '2.6',
+      upgrader: function(oldConfig){
+        return oldConfig;
+      }
+    }, {
+      version: '2.7',
+      upgrader: function(oldConfig){
+        return oldConfig;
+      }
+    }, {
+      version: '2.8',
+      upgrader: function(oldConfig){
+        var newConfig = oldConfig;
+        newConfig.autoPlay = true;
+
+        return newConfig;
+      }
+    }, {
+      version: '2.9',
+      upgrader: function(oldConfig){
+        var newConfig = oldConfig;
+        newConfig.loopPlay = true;
+
+        newConfig.isHonorWebMap = true;
+
+        return newConfig;
+      }
     }];
   }
 

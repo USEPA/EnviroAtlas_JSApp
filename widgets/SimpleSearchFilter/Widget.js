@@ -18,6 +18,7 @@ define([
     'dojo/_base/declare',
     'dijit/_WidgetsInTemplateMixin',
     "dojo/Deferred",
+    'dojo/_base/lang',
     'jimu/BaseWidget',
     'dijit/Dialog',
     'esri/symbols/jsonUtils',
@@ -38,6 +39,7 @@ define([
 	 'esri/Color',
 	 'esri/renderers/ClassBreaksRenderer',     
 	 'dojo/_base/connect',
+	 'dojo/_base/html',
     'dijit/layout/AccordionContainer', 
     'dijit/layout/ContentPane',
     'dijit/layout/TabContainer',
@@ -54,6 +56,7 @@ define([
     declare,
     _WidgetsInTemplateMixin,
     Deferred,
+    lang,
     BaseWidget,
     Dialog,
     esriSymJsonUtils,
@@ -73,11 +76,17 @@ define([
     graphic,
     Color,
     ClassBreaksRenderer,
-    connect) {
+    connect,
+    html) {
     	var singleLayerToBeAddedRemoved = "";
     	var bNoTopicSelected = false;
     	var communitySelected = "";
+    	var bSimulatedClick = false;
+    	var bSimulatedClickAddressed = true;
+    	var mapClickListenerForPopup;
     	var arrLayersToChangeSynbology = [];
+    	var arrCategoryForAllScale = ["PSI", "PBS", "BNF"];
+    	var clickEvent = null;
         var   layerData = {
             identifier: "eaID",  //This field needs to have unique values
             label: "name", //Name field for display. Not pertinent to a grid but may be used elsewhere.
@@ -94,7 +103,8 @@ define([
 		    this.eaMetadata = data.eaMetadata;
 		    this.eaScale = data.eaScale;
 		    this.eaTags = data.eaTags;
-		    this.eaTopic = data.eaTopic
+		    this.eaTopic = data.eaTopic;
+		    this.categoryTab = data.categoryTab;
 		}
 		var selectableLayerArray = [];
 		var dicTopicSelected = {};
@@ -104,7 +114,6 @@ define([
 		var hashFactsheetLink = {};
 		var hashLayerNameLink = {};
 		var hashDescriptionforI = {};
-		
 		var hashLayerName = {};
 		var hashEaDescription = {};
 		var hashEaTag = {};
@@ -112,9 +121,71 @@ define([
 		var hashSubTopicforI = {};
 		//set popup info for each featuer layer
 	    var featuresCollection = [];
+	    var previuosMapInfoFromFL = [];
+	    var currentMapInfoFromFL = [];
+	    var previousMapInfoFromDynamic = [];
+	    var currentMapInfoFromDynamic = [];
+	    var previuosMapInfoFromAll = [];
 	    var arrLayersForPopup = [];
 	    var numDecimalDigit = 0;
 	    var strDateFormat = '';
+	    var bCollapseClicked = false;
+	    var featureExistInCollection = function(feature, Collection) {
+			var bFeatureExist = false;
+			for (kk=0; kk < Collection.length; kk++) {
+				if (JSON.stringify(Collection[kk].attributes) === JSON.stringify(feature.attributes)) {
+					bFeatureExist = true;
+					break;
+				}
+			}
+			return bFeatureExist    	
+	    }
+	    var bSelectedByTopics = function(currentTopic, categoryTab) {
+			var topicDictionary = {};
+
+	    	if (typeof Object.assign != 'function') {
+				for (var key in window.topicDicESB) {
+					topicDictionary[key] = window.topicDicESB[key];
+				}
+				for (var key in window.topicDicPSI) {
+                    topicDictionary[key] = window.topicDicPSI[key];
+                }
+				for (var key in window.topicDicPBS) {
+					topicDictionary[key] = window.topicDicPBS[key];
+				}
+				for (var key in window.topicDicBNF) {
+					topicDictionary[key] = window.topicDicBNF[key];
+				}									    		
+	    	} else {
+		    	var topicDictionaryESB_PSI = Object.assign({}, window.topicDicESB, window.topicDicPSI);
+		    	var topicDictionaryESB_PSI_PBS = Object.assign({}, topicDictionaryESB_PSI, window.topicDicPBS);
+		    	topicDictionary = Object.assign({}, topicDictionaryESB_PSI_PBS, window.topicDicBNF);
+		    }
+
+			var numTopicSelected = 0;
+			var currentLayerSelectable = false;
+			for (var key in topicDictionary) {
+		        var chkboxId = window.chkTopicPrefix + topicDictionary[key];
+
+		        var checkbox = document.getElementById(chkboxId);	
+		        if (checkbox != null) {	
+
+		        	if(checkbox.checked == true){
+        		
+				        dicTopicSelected[topicDictionary[key]]  = true;    	
+				        numTopicSelected = numTopicSelected + 1;
+			        } else {
+			        	dicTopicSelected[topicDictionary[key]]  = false; 
+			        }
+		        }
+			}
+
+			if ((dicTopicSelected[topicDictionary[currentTopic]] == true) || (numTopicSelected ==0)){
+
+				currentLayerSelectable = true;				
+			}			
+	    	return currentLayerSelectable;
+	    };
 	    var addSingleFeatureForPopup = function(eaID, clickEvt) {
 	    	selfSimpleSearchFilter.map.infoWindow.resize(260, 150 );
         	/*if (window.widthOfInfoWindow > 0 ) {
@@ -246,6 +317,9 @@ define([
 						    graphic.setSymbol(symbol);
 						    graphic.setInfoTemplate(infoTemplate);
 						    featuresCollection.push(graphic);
+						    if (!featureExistInCollection(graphic, currentMapInfoFromFL)) {
+						    currentMapInfoFromFL.push(graphic);
+						    }
 						    selfSimpleSearchFilter.map.graphics.add(graphic);
 						}		               	                        
 	               }
@@ -254,6 +328,30 @@ define([
 	        			addSingleFeatureForPopup(arrLayersForPopup.pop(),clickEvt);
 	        		}
 	        		else {
+						if (selfSimpleSearchFilter.map.infoWindow.features != null){
+							//test if current infoWindow resulted from  the previous click
+							var bInfoWindowUpdated = true;
+							if (selfSimpleSearchFilter.map.infoWindow.features.length == previuosMapInfoFromAll.length) {
+								bInfoWindowUpdated = false;
+							for (ii=0; ii < selfSimpleSearchFilter.map.infoWindow.features.length; ii++) {
+									if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], previuosMapInfoFromAll)) {
+										bInfoWindowUpdated = true;
+										break;
+									}
+								}
+							}
+							//end of test if current infoWindow resulted from  the previous click
+							if (bInfoWindowUpdated) {
+								if (selfSimpleSearchFilter.map.infoWindow.isShowing) {
+									for (ii=0; ii < selfSimpleSearchFilter.map.infoWindow.features.length; ii++) {
+									featuresCollection.push(selfSimpleSearchFilter.map.infoWindow.features[ii]);
+										if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], currentMapInfoFromDynamic)) {
+									    	currentMapInfoFromDynamic.push(selfSimpleSearchFilter.map.infoWindow.features[ii]);	
+									    }																			
+									}
+								}
+							}
+						}
 	        			if 	(featuresCollection.length > 0){
 			    			selfSimpleSearchFilter.map.infoWindow.setFeatures(featuresCollection);
 							selfSimpleSearchFilter.map.infoWindow.show(clickEvt.mapPoint);
@@ -263,14 +361,43 @@ define([
 	        }); 	
 		};
 		var setClickEventForPopup = function(){    		
+				bSimulatedClickAddressed = false;
+				bSimulatedClick = false;
 	 			var mapClickListenerForPopup = connect.connect(selfSimpleSearchFilter.map, "onClick", function(evt) {
-				//mapClickListenerForPopup = selfSimpleSearchFilter.map.on("click", function(evt) {
+	 				    if (!bSimulatedClick) {
+	 				    	bSimulatedClickAddressed = false;
+	 				    	previuosMapInfoFromFL = [];	
+	 				    	previousMapInfoFromDynamic = [];
+	 				    	previuosMapInfoFromAll = [];
+	 				    	for (kk=0; kk < currentMapInfoFromFL.length; kk++) {
+	 				    		previuosMapInfoFromFL.push(currentMapInfoFromFL[kk]);
+	 				    		previuosMapInfoFromAll.push(currentMapInfoFromFL[kk]);
+	 				    	}
+	 				    	for (kk=0; kk < currentMapInfoFromDynamic.length; kk++) {
+	 				    		previousMapInfoFromDynamic.push(currentMapInfoFromDynamic[kk]);
+	 				    		previuosMapInfoFromAll.push(currentMapInfoFromDynamic[kk]);
+	 				    	}	 				    	
+ 				    		featuresCollection = [];
+	 				    	currentMapInfoFromFL = [];	 	
+	 				    	currentMapInfoFromDynamic = [];
+	 				    }
+						if (bSimulatedClick) {
+			 				if (!bSimulatedClickAddressed) {
 					if ((window.toggleOnHucNavigation == true) || (window.toggleOnRainDrop == true)|| (window.toggleOnElevation == true)) {					
 						connect.disconnect(mapClickListenerForPopup);
 					} 
 					else {
+						currentMapInfoFromDynamic = [];
 						selfSimpleSearchFilter.map.graphics.clear();
-						featuresCollection = [];
+						if (selfSimpleSearchFilter.map.infoWindow.features != null){
+							for (ii=0; ii < selfSimpleSearchFilter.map.infoWindow.features.length; ii++) {
+								if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], previuosMapInfoFromFL)) {
+									if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], currentMapInfoFromDynamic)) {
+										currentMapInfoFromDynamic.push(selfSimpleSearchFilter.map.infoWindow.features[ii]);
+									}
+								}									
+							}					
+						}	
 						arrLayersForPopup = [];
 			    		for (i in window.featureLyrNumber) {  
 			    			bVisibleFL = false;
@@ -303,14 +430,27 @@ define([
 				    	addSingleFeatureForPopup(arrLayersForPopup.pop(),evt);         
 			        	}       
 			        }
+								//end of addressed
+				 				bSimulatedClickAddressed= true;
+				 				bSimulatedClick = false;
+			 				}
+			 			}
+						setTimeout(lang.hitch(this, function() {
+				          if (!bSimulatedClick && !bSimulatedClickAddressed) {
+				          	bSimulatedClickAddressed = false;
+				          	bSimulatedClick = true;
+				          	selfSimpleSearchFilter.map.emit("click", { bubbles: false, cancelable: true, screenPoint: evt.mapPoint, mapPoint: evt.mapPoint });
+				          }
+				        }), 1000);
 				})
 		};
 		var updateSelectableLayersArea = function (){
 			    if (dijit.byId('selectionCriteria')._isShown()) {
 			    	if (navigator.userAgent.indexOf("Chrome")>=0) {
 			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 515px)"; 
-			    	} else if(navigator.userAgent.indexOf("Firefox")>=0) {
+			    	} else if(navigator.userAgent.indexOf("Firefox")>=0) {			    		
 			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 630px)"; 
+			    		document.getElementById("tableSelectableLayersArea").style.width = '360px';
 			    	} else {
 			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 530px)"; 
 			    	}
@@ -319,6 +459,7 @@ define([
 			    	if (navigator.userAgent.indexOf("Chrome")>=0) {
 			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 125px)";
 			    	} else if(navigator.userAgent.indexOf("Firefox")>=0) {
+			    		document.getElementById("tableSelectableLayersArea").style.width = '360px';
 			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 125px)"; 
 			    	} else {
 			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 125px)";
@@ -378,10 +519,6 @@ define([
 				var renderer = new ClassBreaksRenderer(data);
         		lyrTobeUpdated.setRenderer(renderer);	
         		lyrTobeUpdated.redraw();
-        		/*if (lyrTobeUpdated.visible == true){
-            		lyrTobeUpdated.setVisibility(false);
-            		lyrTobeUpdated.setVisibility(true);						                			
-        		}*/
         		if 	(arrLayersToChangeSynbology.length > 0){
         			updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
         		}	                		
@@ -463,172 +600,101 @@ define([
 
 	   var add_bc_icons = function(layerArea, scale, type) {
 	   		indexImage = 0;
+	   		bc_and_scale_space='0px'
 
 	   		var BC_Div = dojo.create('div', {
-	   			'style': 'overflow:hidden; padding-left: 16px; position: relative; top: -2px'
+	   			'style': 'overflow:hidden; padding-left: 16px; display:inline-block'
 			}, layerArea);
-			
-			for (var key in window.categoryDic) {
 
-				bc_img = document.createElement('div');
-				bc_img.title  = key;
+	   		// eaCategories have a - in them.
+	   		if (eaCategory.split('-').length > 1) {
+
+				for (var key in window.categoryDic) {
+
+					bc_img = document.createElement('div');
+					bc_img.title  = key;
+									
+					if (eaCategory.indexOf(key) !=-1) {
+						bc_img.setAttribute("class",window.categoryDic[key] + ' icon_style');
+					}
+					else {
+						bc_img.setAttribute("class",window.categoryDic[key] + "_bw icon_style");
+					}
+					
+					indexImage = indexImage + 1;
+					BC_Div.appendChild(bc_img);
 				
 				
-				// Add popup dialog box for Benefit Category 
-				bc_img.onclick = function() {
-				ES_title = this.title;
-
-				var bc_description = new Dialog({
-        		title: 'EnviroAtlas Benefit Categories', 
-        		style: 'width: 450px',
-        		onHide: function() {
-        			bc_description.destroy()
-        			}
-        		});
-        		
-
-        		var BC_tabs = dojo.create('div', {
-	        		style: 'text-align: center; padding-bottom: 15px',
-	        	}, bc_description.containerNode);
-
-	        	for (var key in window.categoryDic) {
-	        		bc_icon_links = dojo.create('a', {
-	        		"title": key,
-	        		"id": window.categoryDic[key] + '_id',
-	        		"class": 'bc_popup '+ window.categoryDic[key],
-	        		}, BC_tabs);
-
-
-	        		dojo.connect(bc_icon_links, 'onclick', function(){
-
-	        			bc_id = this.id.split('_')[0];
-
-
-	        			for (key in window.categoryDic) {
-	        					$('#'+window.categoryDic[key]+'_id').removeClass('bc_popup_selected');
-	        				}
-	        			$('#'+this.id).addClass('bc_popup_selected');
-
-	        			dojo.removeClass(infographic_body);
-	        			dojo.addClass(infographic_body, 'bc_infographic ' + bc_id + '_infographic');
-
-	        			dojo.removeClass(header_icon);
-	        			dojo.addClass(header_icon, 'bc_popup_header_icon ' + bc_id);
-
-	        			dojo.byId(header_text).innerHTML = this.title;
-	        		});
-	        	};
-
-	        	$('#'+window.categoryDic[ES_title]+'_id').addClass('bc_popup_selected');
-
-	        	var bc_infographic = dojo.create('div', {
-    				'id': 'infographic_area',
-    				'style': 'background-color: #f4f4f4; width: 100%'
-    			}, bc_description.containerNode);
-
-    			var infographic_header = dojo.create('div', {
-    			"style": 'height: 40px',
-    			}, bc_infographic);
-
-    			var header_icon = dojo.create('div', {
-    				'class': 'bc_popup_header_icon ' + window.categoryDic[ES_title]
-    			}, infographic_header);
-
-    			var header_text = dojo.create('div', {
-    				'innerHTML': this.title,
-    				'class': 'bc_popup_header_text',
-    			}, infographic_header);
-
-    			var infographic_text = dojo.create('div', {
-    				'innerHTML': 'Ecosystem goods and services, often shortened to ecosystem \
-    							  services (ES), are the benefits that humans receive from nature. \
-    							  These benefits underpin almost every aspect of human well-being, \
-    							  including our food and water, security, health, and economy. \
-    							  <br><br> \
-    							  EnviroAtlas organizes our data into seven benefit categories \
-    							  <br><br>',
-    				'style': 'font-size: 11px',
-    			}, bc_infographic );
-
-    			var infographic_body = dojo.create('div', {
-    				"class": 'bc_infographic ' + window.categoryDic[ES_title] + '_infographic'
-    			}, bc_infographic);
-
-        		bc_description.show();		        		
-			};
-			// End add popup dialog box for Benefit Category 
-								
-			if (eaCategory.indexOf(key) !=-1) {
-				bc_img.setAttribute("class",window.categoryDic[key] + ' icon_style');
+				}
+				bc_and_scale_space='20px'
 			}
-			else {
-				bc_img.setAttribute("class",window.categoryDic[key] + "_bw icon_style");
+
+			scale_img = document.createElement('div');
+			scale_img.style.marginLeft = bc_and_scale_space;
+			
+
+			if (scale == "NATIONAL") {
+					scale_img.title = "National Dataset";
+				} else {
+					scale_img.title = "Community Dataset";
+				}
+			scale_img.setAttribute("class", scale + ' icon_style');
+			BC_Div.appendChild(scale_img);
+
+			datatype_img = document.createElement('div');
+			
+
+			if (type == 'huc12') {
+				datatype_img.title = "Data summarized by 12 digit HUCs";
+			} else if (type == 'cbg') {
+				datatype_img.title = "Data summarized by census block groups";
+			} else if (type == 'ctr') {
+				datatype_img.title = "Data summarized by census tract";
+			} else if (type == 'grid') {
+				datatype_img.title = "Non-summarized grid data";
+			} else if (type == 'plp') {
+				datatype_img.title = "Point, line, or polygon data"
 			}
-			
-			indexImage = indexImage + 1;
-			BC_Div.appendChild(bc_img);
-			
-			
-		}
 
-		scale_img = document.createElement('div');
-		scale_img.style.marginLeft = '20px';
-		
+			datatype_img.setAttribute("class", type + ' icon_style');
+			BC_Div.appendChild(datatype_img);
 
-		if (scale == "NATIONAL") {
-				scale_img.title = "National Dataset";
-			} else {
-				scale_img.title = "Community Dataset";
-			}
-		scale_img.setAttribute("class", scale + ' icon_style');
-		BC_Div.appendChild(scale_img);
+			// Add popup dialog box for Benefit 
+			BC_Div.onclick = function () {
+				
+				$.getJSON("./widgets/Demo/config.json", function(json) {
+						// read from tour stop 4 content
+						helpContent = json['tour'][3]['content'].join("")
 
-		datatype_img = document.createElement('div');
-		
+						var bc_description = new Dialog({
+		        		title: 'EnviroAtlas Icons', 
+		        		style: 'width: 450px',
+		        		onHide: function() {
+		        			bc_description.destroy()
+		        			}
+		        		});
 
-		if (type == 'huc12') {
-			datatype_img.title = "Data summarized by 12 digit HUCs";
-		} else if (type == 'cbg') {
-			datatype_img.title = "Data summarized by census block groups";
-		} else if (type == 'ctr') {
-			datatype_img.title = "Data summarized by census tract";
-		} else if (type == 'grid') {
-			datatype_img.title = "Non-summarized grid data";
-		} else if (type == 'plp') {
-			datatype_img.title = "Point, line, or polygon data"
-		}
+						// doesn't work in IE but is B/W and legible
+		        		bc_description.containerNode.style.backgroundColor = 'rgb(72,85,102)'; 
+		        		bc_description.containerNode.style.color = 'white';
+		        		
+					    var iconContent = dojo.create('div', {
+	    					'innerHTML': helpContent,
+	    				}, bc_description.containerNode);
 
-		datatype_img.setAttribute("class", type + ' icon_style');
-		BC_Div.appendChild(datatype_img);
+	    				bc_description.show();
+					});
+				} // end onclick
 
-
-
-		//BC_Cell.appendChild(BC_Div);
-
-	   }
+		   }
  	   
-    var	_addSelectableLayerSorted = function(items){	    	
-	    
-		updateTopicToggleButton();
+    var	_addSelectableLayerSorted = function(items){	  
 
-		//If using search bar then search all topics
-		if (document.getElementById('searchFilterText').value != ''){
-			for (var key in window.topicDic) {
-				dicTopicSelected[window.topicDic[key]]  = true;
-				
-			}
-		} else {
-			// take this out of else to search
-			for (var key in window.topicDic) {
-		        var chkboxId = window.chkTopicPrefix + window.topicDic[key];
-		        var checkbox = document.getElementById(chkboxId);			
-		        if(checkbox.checked == true){
-			        dicTopicSelected[window.topicDic[key]]  = true;    	
-		        } else {
-		        	dicTopicSelected[window.topicDic[key]]  = false; 
-		        }
-			}
-		}
+	    
+		updateTopicToggleButton("ESB");
+		updateTopicToggleButton("PSI");
+		updateTopicToggleButton("PBS");
+		updateTopicToggleButton("BNF");
 
 		var nSearchableColumns = document.getElementById('tableLyrNameDescrTag').getElementsByTagName('tr')[0].getElementsByTagName('th').length;
 		var eaIDFilteredList = [];
@@ -640,24 +706,129 @@ define([
 				eaIDFilteredList.push(currentCellText);
 			}			
 		}); 
+		
+
+		//alert(selfSimpleSearchFilter.domNode.parentNode.clientHeight);
+
 
 		var tableOfRelationship = document.getElementById("tableSelectableLayersArea");
 
-		dojo.destroy('layerArea');
+		dojo.destroy('layerAreaESB');
+		dojo.destroy('layerAreaPSI');
+		dojo.destroy('layerAreaPBS');
+		dojo.destroy('layerAreaBNF');
+		
+        dojo.destroy('hrSeperatorESB');
+        dojo.destroy('hrSeperatorPSI');
+        dojo.destroy('hrSeperatorPBS');
+        dojo.destroy('hrSeperatorBNF');	
+        	
+		
+		dojo.destroy("button_widgets_DemographicLayers");
+		dojo.destroy("button_widgets_TimeSeries_Widget");
+		dojo.destroy("button_"+"widgets_AddData_30");
 
-		var layerArea = dojo.create('div', {
-			'id': 'layerArea',
+		var tableOfWidgets = document.getElementById("tableSelectableWidgetsArea");
+		tableOfWidgets.style.display = 'none';
+		
+        var hrSeperatorESB = dojo.create('div', {
+            'id': 'hrSeperatorESB',
+            'style': 'width: 100%',
+        }, tableOfRelationship);
+        
+		var layerAreaESB = dojo.create('div', {
+			'id': 'layerAreaESB',
 			'style': 'width: 100%',
 		}, tableOfRelationship);
+
+        var hrSeperatorPSI = dojo.create('div', {
+            'id': 'hrSeperatorPSI',
+            'style': 'width: 100%',
+        }, tableOfRelationship);
+        
+        var layerAreaPSI = dojo.create('div', {
+            'id': 'layerAreaPSI',
+            'style': 'width: 100%',
+        }, tableOfRelationship);    
+        		
+        var hrSeperatorPBS = dojo.create('div', {
+            'id': 'hrSeperatorPBS',
+            'style': 'width: 100%',
+        }, tableOfRelationship);
 		
+		var layerAreaPBS = dojo.create('div', {
+			'id': 'layerAreaPBS',
+			'style': 'width: 100%',
+		}, tableOfRelationship);	
+		
+        var hrSeperatorBNF = dojo.create('div', {
+            'id': 'hrSeperatorBNF',
+            'style': 'width: 100%',
+        }, tableOfRelationship);
+        			
+		var layerAreaBNF = dojo.create('div', {
+			'id': 'layerAreaBNF',
+			'style': 'width: 100%',
+		}, tableOfRelationship);
 
+        var hrSeperatorESB = dojo.create('hr', {
+            'id': "hrESB",
+            'class': 'seperator',
+        }, hrSeperatorESB);
+ 
+        var hrSeperatorPSI = dojo.create('hr', {
+            'id': "hrPSI",
+            'class': 'seperator',
+        }, hrSeperatorPSI);
+               
+        var hrSeperatorPBS = dojo.create('hr', {
+            'id': "hrPBS",
+            'class': 'seperator',
+        }, hrSeperatorPBS);
+        
+        var hrSeperatorBNF = dojo.create('hr', {
+            'id': "hrBNF",
+            'class': 'seperator',
+        }, hrSeperatorBNF);
 
+        document.getElementById("hrESB").style.display = 'none';
+        document.getElementById("hrPSI").style.display = 'none';
+        document.getElementById("hrPBS").style.display = 'none';
+        document.getElementById("hrBNF").style.display = 'none';
+        
+        if (eaIDFilteredList.length == 0) {
+            //dojo.byId("widgetSelectionComment").value = "No result is found. Following button will direct to add data widget:";
+            dojo.byId("widgetSelectionComment").innerHTML  = "No data matching your search term were found. You can search for external data or use your own with our Add Data Widget.";
+            tableOfWidgets = document.getElementById("tableSelectableWidgetsArea");
+            tableOfWidgets.style.display = '';
+            var buttonID = "widget_"+ "widgets_AddData_30";
+            var checkbox = dojo.create('input', {
+                "type": "button",
+                "name": buttonID,
+                "value": "AddData",
+                "style" : "display:inline-block; width:30%; margin-left:10px",
+                "id": "button_"+"widgets_AddData_30" //SubLayerIds is the widgetID in this case
+            }, tableOfWidgets);
+            checkbox.addEventListener('click', function(evt) {                          
+                 $("#" + "widgets_AddData_30").click();
+                       setTimeout(lang.hitch(this, function() {
+                            $("#widgets_SimpleSearchFilter_Widget_37").click();
+                        }), 10);
+                        setTimeout(lang.hitch(this, function() {
+                           $("#" + "widgets_AddData_30").click();
+                        }), 13);    
+                        setTimeout(lang.hitch(this, function() {
+                           selfSearchInAddData.searchTextBox.value = document.getElementById('searchFilterText').value;
+                           selfSearchInAddData.searchButton.click();//test with "mountain"
+                        }), 1000); 
+                        
+            })
+        }
         var numOfSelectableLayers = 0;
         var totalNumOfLayers = 0;
 
 		SelectedTopics = [];          
     	dojo.forEach(items, function(item) {
-           	
            	var currentLayerSelectable = false;
 			eaLyrNum = layerDataStore.getValue( item, 'eaLyrNum').toString();
 			eaID = layerDataStore.getValue( item, 'eaID').toString();
@@ -672,58 +843,82 @@ define([
 			SubLayerNames = layerDataStore.getValue( item, 'SubLayerNames');
 			SubLayerIds = layerDataStore.getValue( item, 'SubLayerIds');
 			sourceType = layerDataStore.getValue( item, 'sourceType');
-			bSelectByScale = false;
+			categoryTab = layerDataStore.getValue( item, 'categoryTab');
+			bSelectedByNationalOrCommunity = false;
+			//add the widget button which has the searched tags
+			//if (document.getElementById('searchFilterText').value != ''){
+			if ((document.getElementById('searchFilterText').value != '')&&(document.getElementById('searchFilterText').value.trim().length >=2)){
+			    if ( (eaIDFilteredList.indexOf(eaID) >= 0)) {
+        			if (parseInt(eaID) < 0) {
+        			    dojo.byId("widgetSelectionComment").innerHTML  = "The above keyword could be found in other data tabs. Select a button below to explore.";
+            			tableOfWidgets = document.getElementById("tableSelectableWidgetsArea");
+                        tableOfWidgets.style.display = '';
+                        var buttonID = "widget_"+layerName;
+                        var checkbox = dojo.create('input', {
+                            "type": "button",
+                            "name": buttonID,
+                            "value": layerName,
+                            "style" : "display:inline-block; width:30%; margin-left:10px",
+                            "id": "button_"+SubLayerIds //SubLayerIds is the widgetID in this case
+                        }, tableOfWidgets);
+                        checkbox.addEventListener('click', function(evt) {                          
+                             $("#" + evt.target.id.replace('button_','')).click();
+                                   setTimeout(lang.hitch(this, function() {
+                                        $("#widgets_SimpleSearchFilter_Widget_37").click();
+                                    }), 10);
+                                    setTimeout(lang.hitch(this, function() {
+                                       $("#" + evt.target.id.replace('button_','')).click();
+                                    }), 15);    
+                        })
+                    }
+                }
+            }
+            
+            //end of adding the widget button which has the searched tags
 
 			var chkNationalScale = document.getElementById("chkNational").checked;
 			var chkCommunityScale = document.getElementById("chkCommunity").checked;
 
 			// Search should use both national and community
-			if (document.getElementById('searchFilterText').value != ''){
+			if ((document.getElementById('searchFilterText').value != '')&&(document.getElementById('searchFilterText').value.trim().length >=2)){
+
 				chkNationalScale = true;
 				chkCommunityScale = true;
 			}
-
 			switch (eaScale) {
-				case "NATIONAL":
-					
+				case "NATIONAL":					
 					if(chkNationalScale){
-						bSelectByScale = true;
-						if (SubLayerIds.length == 0) {
-							totalNumOfLayers = totalNumOfLayers + 1;
-						}
+						bSelectedByNationalOrCommunity = true;
 					}
 					break;
 				case "COMMUNITY":
 					if(chkCommunityScale){
-						if (SubLayerIds.length == 0) {
-							totalNumOfLayers = totalNumOfLayers + 1;
-						}
-						bSelectByScale = true;
-						/*if ((communitySelected == "") || (communitySelected == window.strAllCommunity)){
-						
-					}
-						else{
-							if (eaMetadata != "") {
-								if (window.communityMetadataDic.hasOwnProperty(eaMetadata)) {
-									communityInfo = window.communityMetadataDic[eaMetadata];
-									if (communityInfo.hasOwnProperty(communitySelected)) {
-										bSelectByScale = true;
-									}
-								}
-							}
-						}*/
+						bSelectedByNationalOrCommunity = true;
 					}
 					break;
 			}    			
+			if (((chkNationalScale == false) && (chkCommunityScale == false)) || (arrCategoryForAllScale.indexOf(categoryTab) >= 0)) {
+				bSelectedByNationalOrCommunity = true;
+			}
 
-			eachLayerCategoryList = eaCategory.split(";");
-			if (bSelectByScale) {
-				if (dicTopicSelected[window.topicDic[eaTopic]] == true) {
+			if (SubLayerIds.length == 0) {
+				totalNumOfLayers = totalNumOfLayers + 1;
+			}				
+
+
+			if (bSelectedByNationalOrCommunity) {
+				if (bSelectedByTopics(eaTopic, categoryTab)) {
 					currentLayerSelectable = true;				
 				}
-			}// end of if (bSelectByScale)
+			}// end of if (bSelectedByNationalOrCommunity)
+			
+			//if searchFilterText is not empty then search all EnviroAtalas data
+            if ((document.getElementById('searchFilterText').value != '')&&(document.getElementById('searchFilterText').value.trim().length >=2)){
 
-			if (currentLayerSelectable && (eaIDFilteredList.indexOf(eaID) >= 0)) {//add the current item as selectable layers
+                currentLayerSelectable = true;
+            }
+            
+			if (currentLayerSelectable && (eaIDFilteredList.indexOf(eaID) >= 0) && (parseInt(eaID) >= 0)) {//add the current item as selectable layers
 		
 				var bLayerSelected = false;
 				if ((window.allLayerNumber.indexOf(eaID)) == -1) {                        	
@@ -744,16 +939,64 @@ define([
 					}
 					
 					SelectedTopics.push(eaTopic);
+					
+					if (categoryTab == "ESB") {
+					    //document.getElementById("hrESB").style.display = '';
 
-					var topicHeader = dojo.create('div', {
-	    				'id': eaTopic,
-	    				'class': 'topicHeader',
-	    				'innerHTML': eaTopic,
-	    				onclick: function(){
-	    					hiderows[this.id] = !hiderows[this.id];
-							_updateSelectableLayer();
-	    				}
-	    			}, layerArea);
+						var topicHeader = dojo.create('div', {
+		    				'id': eaTopic,
+		    				'class': 'topicHeader topicHeader'+categoryTab,
+		    				'innerHTML': eaTopic,
+		    				onclick: function(){
+		    					hiderows[this.id] = !hiderows[this.id];
+								_updateSelectableLayer();
+		    				}
+		    			}, layerAreaESB);
+			    	} else if (categoryTab == "PSI"){
+                        //document.getElementById("hrPSI").style.display = '';
+                        var topicHeader = dojo.create('div', {
+                            'id': eaTopic,
+                            'class': 'topicHeader topicHeader'+categoryTab,
+                            'innerHTML': eaTopic,
+                            onclick: function(){
+                                hiderows[this.id] = !hiderows[this.id];
+                                _updateSelectableLayer();
+                            }
+                        }, layerAreaPSI);                       
+                    } else if (categoryTab == "PSI"){
+                        //document.getElementById("hrPSI").style.display = '';
+                        var topicHeader = dojo.create('div', {
+                            'id': eaTopic,
+                            'class': 'topicHeader topicHeader'+categoryTab,
+                            'innerHTML': eaTopic,
+                            onclick: function(){
+                                hiderows[this.id] = !hiderows[this.id];
+                                _updateSelectableLayer();
+                            }
+                        }, layerAreaPSI);                       
+                    } else if (categoryTab == "PBS"){
+			    	    //document.getElementById("hrPBS").style.display = '';
+						var topicHeader = dojo.create('div', {
+		    				'id': eaTopic,
+		    				'class': 'topicHeader topicHeader'+categoryTab,
+		    				'innerHTML': eaTopic,
+		    				onclick: function(){
+		    					hiderows[this.id] = !hiderows[this.id];
+								_updateSelectableLayer();
+		    				}
+		    			}, layerAreaPBS);			    		
+					} else if (categoryTab == "BNF"){
+					    //document.getElementById("hrBNF").style.display = '';
+						var topicHeader = dojo.create('div', {
+		    				'id': eaTopic,
+		    				'class': 'topicHeader topicHeader'+categoryTab,
+		    				'innerHTML': eaTopic,
+		    				onclick: function(){
+		    					hiderows[this.id] = !hiderows[this.id];
+								_updateSelectableLayer();
+		    				}
+		    			}, layerAreaBNF);			    		
+					}
 				}
 				//Finsih add header for each topic	
 
@@ -768,13 +1011,40 @@ define([
 				//If not a subLayer create a new Row
 				
 				if (!IsSubLayer) {
-					var mainDiv = dojo.create('div', {
-						'class': 'layerDiv'
-						}, layerArea);
-
-					if (!hiderows[eaTopic]) {
-						mainDiv.style.display = 'None';
+					
+					if (categoryTab == "ESB") {
+						var mainDiv = dojo.create('div', {
+							'class': 'layerDiv'
+							}, layerAreaESB);						
+					} else if (categoryTab == "PSI"){
+                        var mainDiv = dojo.create('div', {
+                            'class': 'layerDiv'
+                            }, layerAreaPSI);                       
+                    } else if (categoryTab == "PBS"){
+						var mainDiv = dojo.create('div', {
+							'class': 'layerDiv'
+							}, layerAreaPBS);						
+					} else if (categoryTab == "BNF"){
+						var mainDiv = dojo.create('div', {
+							'class': 'layerDiv'
+							}, layerAreaBNF);						
 					}
+					if (bCollapseClicked == true) {
+					    if (document.getElementById("collapseIcons").checked) {
+                            mainDiv.style.display = 'None';
+                            hiderows[eaTopic] = false;
+                        } else {
+                            mainDiv.style.display = '';
+                            hiderows[eaTopic] = true;
+                        }
+					} else {
+					    if (!hiderows[eaTopic]) {
+                            mainDiv.style.display = 'None';
+                        }
+					}
+
+
+
 
 					var topicRow = dojo.create('div', {
 						"style" : "display:inline-block; width:100%"
@@ -937,9 +1207,20 @@ define([
 				
 			}//end of if (currentLayerSelectable)
 		});	
-
+		var tableOfWidgets = document.getElementById("tableSelectableWidgetsArea");
+		if (tableOfWidgets.style.display == "") {
+		    var heightOfSelectableLayersArea = selfSimpleSearchFilter.domNode.parentNode.clientHeight-160;
+		}
+		else {
+		    var heightOfSelectableLayersArea = selfSimpleSearchFilter.domNode.parentNode.clientHeight-100;
+		}
+		
+		var widthOfSelectableLayersArea = selfSimpleSearchFilter.domNode.parentNode.clientWidth;
+		document.getElementById("tableSelectableLayersArea").style.height = heightOfSelectableLayersArea+ 'px';
+		document.getElementById("tableSelectableLayersArea").style.width = widthOfSelectableLayersArea +'px';
+		
 			dojo.byId("numOfLayers").value = " " + String(numOfSelectableLayers) + " of " + String(totalNumOfLayers) + " Maps";
-		//dojo.byId("selectAllLayers").checked = false;
+
 		for (var key in chkIdDictionary) {
 		
 	  		if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
@@ -947,7 +1228,15 @@ define([
 					if (this.checked){
 						showLayerListWidget();	
 						singleLayerToBeAddedRemoved = "a" + "," + this.getAttribute("id").replace(window.chkSelectableLayer, "");
-						document.getElementById('butAddSingleLayer').click();
+						if (window.bLayerListWidgetStarted == false) {
+							window.bLayerListWidgetStarted = true;
+							setTimeout(lang.hitch(this, function() { //LayerList widget need to be started before layer is added.
+								document.getElementById('butAddSingleLayer').click();
+					        }), 3000);							
+						} else {
+							document.getElementById('butAddSingleLayer').click();
+						}
+
 					}
 					else {
 						singleLayerToBeAddedRemoved = "r" + "," + this.getAttribute("id").replace(window.chkSelectableLayer, "");
@@ -958,29 +1247,48 @@ define([
 		}    	
 	};	  	   
 
-	var updateTopicToggleButton = function() {
+	var updateTopicToggleButton = function(categoryTab) {
+		var topicDictionary = null;
+		switch (categoryTab) {
+			case "ESB":					
+				topicDictionary = window.topicDicESB;
+				break;
+            case "PSI":
+                topicDictionary = window.topicDicPSI;
+                break;				
+			case "PBS":
+				topicDictionary = window.topicDicPBS;
+				break;
+			case "BNF":
+				topicDictionary = window.topicDicBNF;
+				break;					
+		}
 
 		var chkNationalScale = document.getElementById("chkNational");
 		var chkCommunityScale = document.getElementById("chkCommunity");
 
-		//var usingSearchBox = false;
-		if (document.getElementById('searchFilterText').value != ''){
-			chkNationalScale.className ="cmn-toggle cmn-toggle-round-flat-grayedout";
-			document.getElementById("chkNational_label").className = 'topicTitleGray';
+		if ((document.getElementById('searchFilterText').value != '')&&(document.getElementById('searchFilterText').value.trim().length >=2)){
+
+			//chkNationalScale.className ="cmn-toggle cmn-toggle-round-flat-grayedout";
+			chkNationalScale.disabled = true;
+			//document.getElementById("chkNational_label").className = 'topicTitleGray';
 			
-			chkCommunityScale.className ="cmn-toggle cmn-toggle-round-flat-grayedout";
-			document.getElementById("chkCommunity_label").className = 'topicTitleGray';
+			//chkCommunityScale.className ="cmn-toggle cmn-toggle-round-flat-grayedout";
+			chkCommunityScale.disabled = true;
+			//document.getElementById("chkCommunity_label").className = 'topicTitleGray';
 			
 			var usingSearchBox = true;
 		} else {
-			chkNationalScale.className ="cmn-toggle cmn-toggle-round-flat";
-			document.getElementById("chkNational_label").className = 'none';
-			chkCommunityScale.className ="cmn-toggle cmn-toggle-round-flat";
-			document.getElementById("chkCommunity_label").className = 'none';
+			//chkNationalScale.className ="cmn-toggle cmn-toggle-round-flat";
+			chkNationalScale.disabled = false;
+			//document.getElementById("chkNational_label").className = 'none';
+			//chkCommunityScale.className ="cmn-toggle cmn-toggle-round-flat";
+			chkCommunityScale.disabled = false;
+			//document.getElementById("chkCommunity_label").className = 'none';
 			var usingSearchBox = false;
 		}
 				
-	    for (var key in window.topicDic) {
+	    for (var key in topicDictionary) {
 	    	var bCurrentTopicDisabled = true;
 	    	
 	    	
@@ -990,29 +1298,49 @@ define([
 			if((chkCommunityScale.checked) && (communityTopicList.indexOf(key) >= 0)) {
 				bCurrentTopicDisabled = false;
 			}
+			if ((chkNationalScale.checked == false) && (chkCommunityScale.checked == false)) {
+				bCurrentTopicDisabled = false;
+			}			
+			if (arrCategoryForAllScale.indexOf(categoryTab) >= 0) {
+			    bCurrentTopicDisabled = false;
+			}
 			
-	        var chkboxId = window.chkTopicPrefix + window.topicDic[key];
+	        var chkboxId = window.chkTopicPrefix + topicDictionary[key];
 	        var checkbox = document.getElementById(chkboxId);			
 
-	        var title = document.getElementById(chkboxId + '_label');
+	        //var title = document.getElementById(chkboxId + '_label');
+	        //var title = document.getElementById(chkboxId);
 
 	       if (bCurrentTopicDisabled || usingSearchBox) {
-		        checkbox.className ="cmn-toggle cmn-toggle-round-flat-grayedout";	
+		        //checkbox.className ="cmn-toggle cmn-toggle-round-flat-grayedout";
+		        checkbox.nextSibling.style.color= "#b3b3b3";
 		        checkbox.removeEventListener("click", _updateSelectableLayer);	   
-		        title.className = 'topicTitleGray';    
+		        //title.className = 'topicTitleGray';    
 		        checkbox.disabled = true;	
 	       } else {
-	       		/*if (checkbox.className == "cmn-toggle cmn-toggle-round-flat-grayedout"){
-	       			checkbox.checked = false;//If the togglebutton is grayed out previously, then it should be off when it is activated
-	       		}*/
-		        checkbox.className ="cmn-toggle cmn-toggle-round-flat";	
+		        //checkbox.className ="cmn-toggle cmn-toggle-round-flat";	
+		        checkbox.nextSibling.style.color= "#000000";
 		        checkbox.addEventListener("click", _updateSelectableLayer);	    
-		        title.className = 'none';  
+		        //title.className = 'none';  
 		        checkbox.disabled = false;	       	
 	       }
 		}
 	}
-	
+	var collapseSelectableLayer = function(){
+	    bCollapseClicked = true;
+	    /*for (var key in hideRows) {
+	        if (document.getElementById("collapseIcons").checked) {
+	            hideRows[key] = true;
+	        } else {
+	            hideRows[key] = false;
+	        }
+	        
+	    }*/
+        setTimeout(lang.hitch(this, function() { //LayerList widget need to be started before layer is added.
+            bCollapseClicked = false;
+        }), 1000);  
+	    _updateSelectableLayer();
+	}
 	
 	var	_updateSelectableLayer = function(){	
 		
@@ -1032,26 +1360,102 @@ define([
 			if (((name == 'LocalLayer')||(name == 'PeopleAndBuildSpaces')||(name == 'SelectCommunity')||(name == 'AddWebMapData'))&&(data.message == "updateCommunityLayers")){
 				this._onUpdateCommunityLayers();
 			}	
-			if (((name == 'ElevationProfile')||(name == 'Raindrop'))&&(data.message == "mapClickForPopup")){
+			if (((name == 'ElevationProfile')||(name == 'Raindrop')||(name == 'HucNavigation'))&&(data.message == "mapClickForPopup")){
 				this._onMapClickForPopup();
 			}		  
 		},
+    displayCloseButton: function() {		
+        	indexImage = 0;
+    		var tableOfRelationship = document.getElementById('closeFilter');
+    		var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
 
-    displayCategorySelection: function() {
+	    	newRow = tableRef.insertRow(tableRef.rows.length);
+			var newCheckboxCell  = newRow.insertCell(0);
+
+           	var checkbox = document.createElement('input');
+			checkbox.type = "button";
+			
+	        chkboxId = "closeForFilter";
+			checkbox.id = chkboxId;
+			checkbox.className ="jimu-widget-filterforselect-close";
+
+	        newCheckboxCell.appendChild(checkbox);    
+        
+			checkbox.addEventListener('click', function() {
+				var widgetManager;
+		        var filterForSelectWidgetEle = selfSimpleSearchFilter.appConfig.getConfigElementsByName("FilterForSelect")[0];
+		        widgetManager = WidgetManager.getInstance();
+
+	        	widgetManager.closeWidget(filterForSelectWidgetEle.id);
+	        	document.getElementById("titleForFilter").style.display = "none"; 
+	        	document.getElementById("resizeForFilterArea").style.display = "none";
+	        	document.getElementById("closeFilterArea").style.display = "none";
+	        	window.filterForSelectOpened = false;				
+			}); 
+    },	
+    displayDragButton: function() {		
+        	indexImage = 0;
+    		var tableOfRelationship = document.getElementById('dragFilter');
+    		var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
+
+	    	newRow = tableRef.insertRow(tableRef.rows.length);
+			var newCheckboxCell  = newRow.insertCell(0);
+
+           	var checkbox = document.createElement('input');
+			checkbox.type = "button";
+			
+	        chkboxId = "dragForFilter";
+			checkbox.id = chkboxId;
+			checkbox.value = "Select data by topic";
+			checkbox.className ="jimu-widget-filterforselect-drag";
+	        newCheckboxCell.appendChild(checkbox);    
+    },	
+    displayResizeButton: function() {
+		
+        	indexImage = 0;
+
+    		var tableOfRelationship = document.getElementById('resizeForFilter');
+    		var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
+
+	    	newRow = tableRef.insertRow(tableRef.rows.length);
+			var newCheckboxCell  = newRow.insertCell(0);
+           	var checkbox = document.createElement('input');
+	        chkboxId = "resizeForFilter";
+			checkbox.id = chkboxId;
+			checkbox.className ="jimu-widget-filterforselect-move";
+	        newCheckboxCell.appendChild(checkbox);    
+
+    },
+    displayCategorySelection: function(categoryTab) {
 		
         indexImage = 0;
 	    var categoCount = 1;
 	    var newRow;
+	    var topicDictionary = null;
+		switch (categoryTab) {
+			case "ESB":					
+				topicDictionary = window.topicDicESB;
+				break;
+            case "PSI":
+                topicDictionary = window.topicDicPSI;
+                break;				
+			case "PBS":
+				topicDictionary = window.topicDicPBS;
+				break;
+			case "BNF":
+				topicDictionary = window.topicDicBNF;
+				break;					
+		} 
 
-	    var keys = Object.keys(window.topicDic);
+	    var keys = Object.keys(topicDictionary);
 	    var half = Math.ceil((keys.length / 2));
 
 	    for (i=0; i<keys.length; i++) {
 	    	if (i < half) {
-	    		var tableOfRelationship = document.getElementById('categoryTableL');
+	    		var tableOfRelationship = document.getElementById(categoryTab + 'categoryTableL');
 	    		var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
 	    	} else {
-	    		var tableOfRelationship = document.getElementById('categoryTableR');
+	    		var tableOfRelationship = document.getElementById(categoryTab + 'categoryTableR');
 	    		var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
 	    	}
 
@@ -1062,35 +1466,35 @@ define([
            	var checkbox = document.createElement('input');
 			checkbox.type = "checkbox";
 			
-	        chkboxId = window.chkTopicPrefix + window.topicDic[keys[i]];
+	        chkboxId = window.chkTopicPrefix + topicDictionary[keys[i]];
 
 			checkbox.name = chkboxId;
 			checkbox.value = 0;
 			checkbox.id = chkboxId;
-			checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+			//checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+			checkbox.className ="chk-toggle";
 	        newCheckboxCell.appendChild(checkbox);    
 	        var label = document.createElement('label');
 	        label.setAttribute("for",chkboxId);
-			label.innerHTML = "";
+	        label.className ="label-chk-toggle";
+			//label.innerHTML = "";
+			label.innerHTML = keys[i];
 			newCheckboxCell.appendChild(label);
 
-			//checkbox.addEventListener('click', _updateSelectableLayer);
-			//checkbox.addEventListener('click', function() {
+
 			checkbox.addEventListener('change', function() {
-				//updateSearchBoxDataTable();
 				_updateSelectableLayer();
 				
 			});
 			/// add category title:
-           	var newTitleCell  = newRow.insertCell(1);
+           	/*var newTitleCell  = newRow.insertCell(1);
            	newTitleCell.id = chkboxId + '_label';
            	newTitleCell.style.paddingBottom = "3px";
            	//newTitleCell.style.width = "40%"
         
 			var title = document.createElement('label');
 			title.innerHTML = keys[i];    
-			//title.style.fontSize = "10px";
-			newTitleCell.appendChild(title); 
+			newTitleCell.appendChild(title); */
 	    	
 	    }
 
@@ -1112,7 +1516,9 @@ define([
 		document.getElementById("hideIcons").onclick = function() {
 		    _updateSelectableLayer();
 		};					
-
+        document.getElementById("collapseIcons").onclick = function() {
+            collapseSelectableLayer();
+        };
 		layersToBeAdded = "a";
 	    
 
@@ -1131,9 +1537,9 @@ define([
 		checkbox.type = "checkbox";
         chkboxId = "chkNational";
 		checkbox.name = chkboxId;
-		checkbox.checked = true;
+		checkbox.checked = false;
 		checkbox.id = chkboxId;
-		checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+		//checkbox.className ="cmn-toggle cmn-toggle-round-flat";
         newCheckboxCell.appendChild(checkbox);    
         var label = document.createElement('label');
         label.setAttribute("for",chkboxId);
@@ -1141,7 +1547,6 @@ define([
 		newCheckboxCell.appendChild(label);
 		
 		checkbox.addEventListener('click', function() {
-			//updateTopicToggleButton();
 			_updateSelectableLayer();
 	    });				
 		/// add National title:
@@ -1159,9 +1564,9 @@ define([
 		checkbox.type = "checkbox";
         chkboxId = "chkCommunity";
 		checkbox.name = chkboxId;
-		checkbox.checked = true;
+		checkbox.checked = false;
 		checkbox.id = chkboxId;
-		checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+		//checkbox.className ="cmn-toggle cmn-toggle-round-flat";
         newCheckboxCell.appendChild(checkbox);    
         var label = document.createElement('label');
         label.setAttribute("for",chkboxId);
@@ -1169,15 +1574,7 @@ define([
 		newCheckboxCell.appendChild(label);
 		
 		checkbox.addEventListener('click', function() {
-			//updateTopicToggleButton();
 			_updateSelectableLayer();
-        	/*if (!this.checked){
-				var btn = document.getElementById("butSelectOneCommunity"); 
-				btn.disabled = true;	
-        	} else {
-				var btn = document.getElementById("butSelectOneCommunity"); 
-				btn.disabled = false;        		
-        	}	*/	
 	    });				
 		
 		// add Community title:
@@ -1271,14 +1668,23 @@ define([
       startup: function() {
 
         this.inherited(arguments);
-	    this.fetchDataByName('SelectCommunity');		 
-	    this.displayCategorySelection();
+	    this.fetchDataByName('SelectCommunity');	
+	     
+	    this.displayCategorySelection("ESB");
+	    this.displayCategorySelection("PSI");
+	    this.displayCategorySelection("PBS");
+	    this.displayCategorySelection("BNF");
 		this.displayGeographySelection();
+		this.displayResizeButton();	
+		this.displayDragButton();
+		this.displayCloseButton();
 	
-		selfSimpleSearchFilter = this;
-		/*dojo.connect(dijit.byId("selectionCriteria"), "toggle", function (){
-			updateSelectableLayersArea();
-		});*/
+
+
+    
+		selfSimpleSearchFilter = this;     
+		 	
+	
 	    loadBookmarkHomeExtent(function(response){
 	    	var bookmarkClassified = JSON.parse(response);
 	
@@ -1293,12 +1699,51 @@ define([
 	        }
 	    }); 
         loadJSON(function(response) {
+            var tableOfRelationship = document.getElementById('tableLyrNameDescrTag');
+            var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0]; 
+            for (ii = 0; ii<selfSimpleSearchFilter.config.WidgetTags.length; ++ii){                     
+           
+                
+                
+                widgetName = selfSimpleSearchFilter.config.WidgetTags[ii].name;
+                widgetID = selfSimpleSearchFilter.config.WidgetTags[ii].id;
+                fakeEAID = (-ii-1).toString();
+                var widgetTagsWhole =  "";
+                
+                for (tagsIndex = 0, lenTags = selfSimpleSearchFilter.config.WidgetTags[ii].Tags.length; tagsIndex < lenTags; ++tagsIndex) {
+                    widgetTagsWhole = widgetTagsWhole + selfSimpleSearchFilter.config.WidgetTags[ii].Tags[tagsIndex] + ";";
+                }
+
+                var widgetItem = {eaLyrNum: "", name: widgetName, IsSubLayer:"", SubLayerNames: "", SubLayerIds: widgetID, eaDescription: "", eaDfsLink: "", eaCategory: "", eaID: fakeEAID, eaMetadata: "", eaScale: "", eaTags: widgetTagsWhole, eaTopic:widgetName, sourceType:"", categoryTab:""}; 
+                layerDataStore.newItem(widgetItem);             
+                                                            
+                //add to the table for use of search text       
+                var newRow   = tableRef.insertRow(tableRef.rows.length);
+                
+                var newCell  = newRow.insertCell(0);
+                newCell.appendChild(document.createTextNode(fakeEAID));
+                newRow.appendChild(newCell);
+
+                newCell  = newRow.insertCell(1);
+                newCell.appendChild(document.createTextNode(widgetName));
+                newRow.appendChild(newCell);            
+       
+                newCell  = newRow.insertCell(2);
+                newCell.appendChild(document.createTextNode("kkk"));
+                newRow.appendChild(newCell);
+                
+                newCell  = newRow.insertCell(3);
+                newCell.appendChild(document.createTextNode(widgetTagsWhole));
+                newRow.appendChild(newCell);    
+                
+            }
+           
+            
             var localLayerConfig = JSON.parse(response);
             var arrLayers = localLayerConfig.layers.layer;
             console.log("arrLayers.length:" + arrLayers.length);
 			///search items
-	        var tableOfRelationship = document.getElementById('tableLyrNameDescrTag');
-		    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];    
+   
             for (index = 0, len = arrLayers.length; index < len; ++index) {
                 layer = arrLayers[index];                          
                 var indexCheckbox = 0;
@@ -1327,7 +1772,12 @@ define([
 	                    else {
 	                    	sourceType = "";
 	                    }
-			                        
+	                    if(layer.hasOwnProperty('categoryTab')){
+	                    	categoryTab = layer.categoryTab;
+	                    }
+	                    else {
+	                    	categoryTab = "";
+	                    }			                        
 			            layerName = "";          
 	                	if(layer.hasOwnProperty('name') ){	                		
 		                	if ((layer.name != null)){
@@ -1354,7 +1804,7 @@ define([
 	                    }
 	                    if(layer.hasOwnProperty('eaTopic')){
 	                    	eaTopic = layer.eaTopic.toString();
-	                    	console.log("eaID:" + eaID + ", eaTopic: " + eaTopic);
+	                    	//console.log("eaID:" + eaID + ", eaTopic: " + eaTopic);
 	                    	window.hashTopic[eaID]  = eaTopic;
 	                    }
 	                    else {
@@ -1410,8 +1860,7 @@ define([
 
 					    eaTagsWhole = eaTagsWhole.substring(0, eaTagsWhole.length - 1);			
 					    if (eaScale	!= "") {//selectable layers should be either National or Community 
-					    	//var layerItem = {eaLyrNum: eaLyrNum, name: layerName, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole};
-					    	var layerItem = {eaLyrNum: eaLyrNum, name: layerName, IsSubLayer:IsSubLayer, SubLayerNames: SubLayerNames, SubLayerIds: SubLayerIds, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole, eaTopic:eaTopic, sourceType:sourceType};
+					    	var layerItem = {eaLyrNum: eaLyrNum, name: layerName, IsSubLayer:IsSubLayer, SubLayerNames: SubLayerNames, SubLayerIds: SubLayerIds, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole, eaTopic:eaTopic, sourceType:sourceType, categoryTab:categoryTab};
 							
 							layerDataStore.newItem(layerItem);
 											
@@ -1462,13 +1911,7 @@ define([
 			page.style.display = 'none';	
 				
 			var searchBox = document.getElementById('searchFilterText');
-			searchBox.style.width= "100%";	
-			searchBox.style.borderColor = 'rgb(0,67,111)';
-			searchBox.style.padding = '2px 2px 2px 2px';
-
-			//_updateSelectableLayer();
-			
-
+            searchBox.style.cssText = "width:100%; padding:3px; height:40px; font-family:'Avenir Light', Verdana, Geneva, sans-serif; font-size:15px;"
         });// end of loadJSON(function(response)
         loadCommunityJSON(function(response){
         	var community = JSON.parse(response);
@@ -1503,6 +1946,16 @@ define([
         }); // end of loadNationalMetadataJSON(function(response)
         this._onMapClickForPopup();
     },               
+    onOpen: function(){						
+    	setTimeout(lang.hitch(this, function() {
+			_updateSelectableLayer();
+			/*document.getElementById("butInSearchFilterBox").onclick = function() {
+	            selfSimpleSearchFilter._onButFilterInSimpleSearchClick();
+	         
+	        };*/			
+        }), 2000);
+    },
+
                     
 	    _onSingleLayerClick: function() {
 		    this.publishData({
@@ -1510,9 +1963,6 @@ define([
 		    });
 		},
 	    _onViewActiveLayersClick: function() {
-
-			//var sideBar =  wm.getWidgetById('themes_TabTheme_widgets_SidebarController_Widget_20');
-			//sideBar.selectTab(0);				
 
 			this.openWidgetById('widgets_SelectCommunity_29');
 			var wm = WidgetManager.getInstance();
@@ -1535,10 +1985,8 @@ define([
 	        message: layersToBeAdded
 	    });
 	    this.i ++;
-    },
-    onOpen: function(){
-  
-    },
+    },   
+
     _onOpenFailedLayerClick: function() {
 	        var widgetName = 'DisplayLayerAddFailure';
 	        var widgets = this.appConfig.getConfigElementsByName(widgetName);
@@ -1547,6 +1995,34 @@ define([
 	        this.publishData({
 		        message: ""
 		    });
+     },
+     _onButFilterInSimpleSearchClick: function () {
+
+     	var widgetManager;
+        var filterForSelectWidgetEle = this.appConfig.getConfigElementsByName("FilterForSelect")[0];
+        widgetManager = WidgetManager.getInstance();
+        if (window.filterForSelectOpened == true){
+        	widgetManager.closeWidget(filterForSelectWidgetEle.id);
+        	document.getElementById("titleForFilter").style.display = "none"; 
+        	document.getElementById("resizeForFilterArea").style.display = "none";
+        	document.getElementById("closeFilterArea").style.display = "none";
+        	window.filterForSelectOpened = false;
+        }
+        else {
+        	//widgetManager.triggerWidgetOpen(filterForSelectWidgetEle.id);
+        	if (window.filterForSelectFirstCreated == true) {
+        		widgetManager.closeWidget(filterForSelectWidgetEle.id);
+        		window.filterForSelectFirstCreated = false;
+        		
+        	}
+        	widgetManager.openWidget(filterForSelectWidgetEle.id);
+        	document.getElementById("titleForFilter").style.display = ""; 
+        	document.getElementById("resizeForFilterArea").style.display = "";
+        	document.getElementById("closeFilterArea").style.display = "";
+        	window.filterForSelectOpened = true;
+        }
+        
+
      },
      _onUpdateCommunityLayers: function() {
 

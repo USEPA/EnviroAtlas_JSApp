@@ -4,5 +4,6 @@ define({
   "disableTips": "Nav redzams neviens laiku attēlojošs slānis.",
   "timeExtent": "${FROMTIME} līdz ${ENDTIME}",
   "layers": "Slāņi: ",
-  "speedLabel": "Atskaņošanas ātrums"
+  "speedLabel": "Atskaņošanas ātrums",
+  "liveData": "Tiešie dati"
 });

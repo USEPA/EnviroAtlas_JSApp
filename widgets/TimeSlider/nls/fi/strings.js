@@ -4,5 +4,6 @@ define({
   "disableTips": "Yhtään ajan huomioivaa karttatasoa ei ole näkyvissä.",
   "timeExtent": "${FROMTIME} - ${ENDTIME}",
   "layers": "Karttatasot: ",
-  "speedLabel": "Toistonopeus"
+  "speedLabel": "Toistonopeus",
+  "liveData": "Live-aineisto"
 });

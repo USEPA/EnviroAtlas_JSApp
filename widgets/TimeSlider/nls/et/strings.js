@@ -4,5 +4,6 @@ define({
   "disableTips": "Ajateadlikke kihte pole nähtaval.",
   "timeExtent": "${FROMTIME} kuni ${ENDTIME}",
   "layers": "Kihid: ",
-  "speedLabel": "Esituse kiirus"
+  "speedLabel": "Esituse kiirus",
+  "liveData": "Reaalajas andmed"
 });

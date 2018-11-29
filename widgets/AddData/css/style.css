@@ -143,6 +143,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  height: 18px;
 }
 .jimu-widget-add-data .search-pane .item-card div.info {
   color: #898989;

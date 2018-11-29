@@ -1,0 +1,31 @@
+<div >
+	<div id="closeFCWidgetArea" style="display:none; color:#ffffff; height:24px; width:100%;background-color: #00436F" >
+		<table id="closeFCWidget" data-dojo-attach-point="closeFCWidget" align="right" >
+		        <tbody>
+		            <tr>	
+		            </tr>
+		        </tbody>
+		</table> 
+	</div>
+    <div id="titleForFCWidget" style="display:none;height:100%; width:100%; background-color: #fff; overflow-y:scroll;" dojotype="dijit.layout.ContentPane" >
+        <div id='detailsLayout' dojotype="dijit.layout.ContentPane"  data-dojo-props='design:"headline"'>
+            <div dojotype="dijit.layout.ContentPane" data-dojo-props='region:"center"' class='detailsContainer'>
+                <div class='thumbnailDiv' id='detailsThumbnailDiv'></div>
+                <div id='detailsTitleDiv'></div>
+                <div id='detailsOwnerDiv'></div>
+                <div id='detailsDateDiv'></div>
+                <div id='detailsSnippetDiv'></div>
+                <div class='detailsFooter'>
+                    <button id='addButton' type='button' dojotype="dijit.form.Button">Add to map</button>
+                    <button id='agolButton' type='button' dojotype="dijit.form.Button">View in GeoPlatform</button>
+                </div>
+                <h2>Description:</h2>
+                <div id='detailsDescriptionDiv'></div>
+                <h2>Layers:</h2>
+                <div id='featuredLayerList'></div>
+            </div>
+            <div id='itemIDdiv' style="display:none"></div>
+        </div>
+
+	</div>
+</div>

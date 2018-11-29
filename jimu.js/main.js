@@ -62,6 +62,8 @@ define([
     window.layerIdTiledPrefix = "tiledNum_";
     window.addedLayerIdPrefix = "added_";
     window.topLayerID = "";
+    window.timeSliderLayerId = "TimeSliderLayer";
+    window.timeSliderPause = false;
     window.addedLayerIndex = 0;
     window.uploadedFeatLayerIdPrefix = "uploaded_";
     window.timeSeriesLayerId = "ScenarioDataLayer";
@@ -78,6 +80,11 @@ define([
     window.idCommuBoundaryPoint = "Boundary_Point";
     window.timeSeriesDisclaim = false;
     
+    window.filterForSelectOpened = false;
+    window.filterForSelectFirstCreated = true;
+    window.fcDetailsOpened = false;
+    window.fcDetailsFirstCreated = true;    
+    window.bLayerListWidgetStarted = false;
     window.dataFactSheet = "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/";
     //window.matadata = "https://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7BBDF514A6-05A8-400D-BF3D-030645461334%7D";
 	window.matadata = "https://edg.epa.gov/metadata/catalog/search/resource/details.page";//?uuid=%7BBDF514A6-05A8-400D-BF3D-030645461334%7D";
@@ -109,48 +116,61 @@ define([
     window.categoryClassDriver = "Driver";
     window.categoryClassSpatialExplicit = "Spatially Explicit";
     
-    window.topicDic = {};
-    window.topicDic["Carbon Storage"] = "CS";
-    //window.topicDic["Climate and Weather"] = "CaW"; Removed/renamed in March 2017
-    window.topicDic["Crop Productivity"] = "CP";
-    window.topicDic["Ecosystem Markets"] = "EM";
-    //window.topicDic["Ecosystems and Ecoregions"] = "EaE"; Removed from topics may 2017- added to boundaries
-    window.topicDic["Energy Potential"] = "EP";
-    window.topicDic["Engagement with Outdoors"] = "EwO";
-    window.topicDic["Health and Economic Outcomes"] = "HaEO";
-    window.topicDic["Impaired Waters"] = "IW";
-    window.topicDic["Land Cover: Near-Water"] = "LCNW";
-    window.topicDic["Land Cover: Type"] = "LCT";
-    window.topicDic["Landscape Pattern"] = "LP";
-    window.topicDic["Near-Road Environments"] = "NRE";
-    //window.topicDic["Pollutant and Runoff Reduction"] = "PaRR"; Removed/renamed  in March 2017
+	window.categoryTabDic = {};
+	window.categoryTabDic ["ESB"] = "ESB"; //Ecosystems and Biodiversity
+	window.categoryTabDic ["PSI"] = "PSI"; //Pollution Sources and Impacts
+	window.categoryTabDic ["PBS"] = "PBS"; //People and Built Spaces
+	window.categoryTabDic ["BNF"] = "BNF"; //Boundaries and Natural Features (or Supplemental)
+	
+    window.topicDicESB = {};
+    window.topicDicESB["Carbon Storage"] = "CS";
+    window.topicDicESB["Crop Productivity"] = "CP";
+    window.topicDicESB["Ecosystem Markets"] = "EM";    
+    window.topicDicESB["Energy Potential"] = "EP";
+    window.topicDicESB["Engagement with Outdoors"] = "EwO";
+    window.topicDicESB["Health and Economic Outcomes"] = "HaEO";
     
-    window.topicDic["Pollutant Reduction: Air"] = "PRA"; //This is newly added Mar 2017    
-    window.topicDic["Pollutant Reduction: Water"] = "PRW"; //This is newly added Mar 2017 
+    window.topicDicESB["Land Cover: Near-Water"] = "LCNW";
+    window.topicDicESB["Land Cover: Type"] = "LCT";
+    window.topicDicESB["Landscape Pattern"] = "LP";
+    window.topicDicESB["Near-Road Environments"] = "NRE";    
+    
+    window.topicDicESB["Pollutant Reduction: Air"] = "PRA"; //This is newly added Mar 2017    
+    window.topicDicESB["Pollutant Reduction: Water"] = "PRW"; //This is newly added Mar 2017      
      
-    window.topicDic["Pollutants: Nutrients"] = "PN"; 
-    window.topicDic["Pollutants: Other"] = "PO";
     
-    window.topicDic["Protected Lands"] = "PL";
-    window.topicDic["Species: At-Risk and Priority"] = "SARaP";
-    //window.topicDic["Species: Game"] = "SG"; Removed from topics may 2017 - appened to "SO" 
-    window.topicDic["Species: Other"] = "SO";
-    //window.topicDic["Water Supply and Hydrology"] = "WSaH"; Removed/renamed  in March 2017
-    window.topicDic["Water Supply, Runoff, and Flow"] = "WSRaF"; //This is newly added Mar 2017 
+        
     
-    window.topicDic["Water Use"] = "WU";
-    window.topicDic["Weather and Climate"] = "WaC"; //This is newly added Mar 2017 
-    window.topicDic["Wetlands and Lowlands"] = "WaL";
+    window.topicDicESB["Protected Lands"] = "PL";
+    window.topicDicESB["Species: At-Risk and Priority"] = "SARaP";
+    window.topicDicESB["Species: Other"] = "SO";
+    window.topicDicESB["Water Supply, Runoff, and Flow"] = "WSRaF"; //This is newly added Mar 2017     
     
+    window.topicDicESB["Water Use"] = "WU";
+    window.topicDicESB["Weather and Climate"] = "WaC"; //This is newly added Mar 2017 
+    window.topicDicESB["Wetlands and Lowlands"] = "WaL";
     
-	window.topicDicPBS = {};
-    window.topicDicPBS["Housing and Schools"] = "HaF";
-    window.topicDicPBS["Community Demographics"] = "CD";
-    window.topicDicPBS["Employment"] = "E";
-    window.topicDicPBS["National Demographics"] = "ND";
+    window.topicDicPSI = {};
+    window.topicDicPSI["EPA Regulated Facilities"] = "RF";
+    //window.topicDicPSI["EPA NATA"] = "NATA";
+    window.topicDicPSI["Impaired Waters"] = "IW";
+    window.topicDicPSI["Pollutants: Other"] = "PO";
+    window.topicDicPSI["Pollutants: Nutrients"] = "PN";     
+    
+    window.topicDicPBS = {};
     window.topicDicPBS["Commuting and Walkability"] = "CaW";
+    //window.topicDicPBS["Community Demographics"] = "CD";
+    window.topicDicPBS["Employment"] = "E";
+    window.topicDicPBS["Housing and Schools"] = "HaF";
+    //window.topicDicPBS["National Demographics"] = "ND";
+    window.topicDicPBS["Population Distribution"] = "PoD";
     window.topicDicPBS["Quality of Life"] = "QoL";
-    window.topicDicPBS["EPA Regulated Facilities"] = "RF";
+    window.topicDicPBS["Vacancy"] = "Vcy";
+    
+    window.topicDicBNF = {};
+    window.topicDicBNF["Ecological Boundaries"] = "EB";
+    window.topicDicBNF["Hydrologic Features"] = "HF";
+    window.topicDicBNF["Political Boundaries"] = "PB";
 
     
     window.strAllCommunity = "AllCommunity";	
@@ -175,8 +195,9 @@ define([
     window.communityDic["PNJ"] = "Paterson, NJ";
     window.communityDic["PAZ"] = "Phoenix, AZ";
     window.communityDic["PitPA"] = "Pittsburgh, PA";
-    window.communityDic["PME"] = "Portland, ME"
-    window.communityDic["POR"] = "Portland, OR"
+    window.communityDic["PME"] = "Portland, ME";
+    window.communityDic["POR"] = "Portland, OR";
+  	//window.communityDic["SLCUT"] = "Salt Lake City, UT";
     window.communityDic["TFL"] = "Tampa, FL";
     window.communityDic["VBWVA"] = "Virginia Beach - Williamsburg, VA";
     window.communityDic["WIA"] = "Woodbine, IA";

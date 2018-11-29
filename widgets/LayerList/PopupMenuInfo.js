@@ -753,6 +753,28 @@ define([
       }, {
         key: 'metadataDownload'
       } ],
+      'RootLayerAndNonFeatureLayer': [
+      {
+        key: 'transparency'
+      }, {
+        key: 'movetotop'
+      }, {
+        key: 'remove'
+      }, {
+        key: 'separator'
+      },  {
+        key: 'mapDescription'
+      }, {
+        key: 'dataFactSheet'
+      }, {
+        key: 'url'
+      }, {
+        key: 'metadataDownload'
+      }, {
+        key: 'separator'
+      }, {
+        key: 'table'
+      }],      
       'RootLayerAndFeatureLayer': [
       {
         key: 'transparency'
@@ -788,8 +810,6 @@ define([
       }, {
         key: 'separator'
       }, {
-        key: 'changeSymbology'
-      }, {
         key: 'url'
       }],
       'GroupLayer': [{
@@ -806,16 +826,18 @@ define([
     };
 
     layerInfo.getLayerType().then(lang.hitch(this, function(layerType) {
+        //alert("layerType:"+layerType);
     	_layerType = layerType;
       var itemInfoCategory = "";
       if (isRootLayer &&
-          (layerType === "FeatureLayer" ||
-            layerType === "CSVLayer" ||
+          ( layerType === "CSVLayer" ||
             layerType === "ArcGISImageServiceLayer" ||
             layerType === "StreamLayer" ||
             layerType === "ArcGISImageServiceVectorLayer")) {
-        itemInfoCategory = "RootLayerAndFeatureLayer";
-      } else if (isRootLayer) {
+        itemInfoCategory = "RootLayerAndNonFeatureLayer";
+      } else if (isRootLayer && (layerType === "FeatureLayer")) {
+        itemInfoCategory = "RootLayerAndFeatureLayer";        
+      }else if (isRootLayer) {
         itemInfoCategory = "RootLayer";
       } else if (layerType === "FeatureLayer" || layerType === "CSVLayer") {
         itemInfoCategory = "FeatureLayer";

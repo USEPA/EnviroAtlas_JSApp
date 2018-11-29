@@ -139,7 +139,7 @@ input.cmn-toggle-PBS-round-flat-grayedout + label:after {
   transition: margin 0.4s, background 0.6s;
 }
 
-.icon_style {
+/*.icon_style {
   width: 20px;
   height: 20px;
   float: left;
@@ -157,4 +157,4 @@ input.cmn-toggle-PBS-round-flat-grayedout + label:after {
 .topicHeader:hover {
   background-color: #929292;
   cursor: pointer;
-}
+}*/

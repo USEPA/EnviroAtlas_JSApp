@@ -49,7 +49,8 @@ define([
         'dijit/form/Select',
         'dijit/form/TextBox',
         'dijit/form/Button',
-        'dojo/dom-construct'
+        'dojo/dom-construct',
+        'dijit/TitlePane'
     ],
     function (
         declare,
@@ -100,6 +101,7 @@ define([
     var timeSlider, userChosenTimeStep;
     var navToolbar;
     var selfTimeSeries;
+
 
     var widthSelect = "310px";
     var showLayerListWidget = function () {
@@ -362,13 +364,13 @@ define([
             var startFuture = 2006;
             var endFuture = 2099;
             if (document.getElementById("modelSelection").value == "Hist") {
-                dojo.byId("subTitle").innerHTML = "Timeline: Years (1950-2005)";
-                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (1950-2005)";
+                dojo.byId("subTitle").innerHTML = "Timeline: 1950 - 2005";
+                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 1950 - 2005";
                 errorMessageYearInput = "Please input a year of single frame (" + String(startHist) + "-" + String(endHist) + ")";
             }
             else {
-                dojo.byId("subTitle").innerHTML = "Timeline: Years (2010-2099)";
-                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (2010-2099)";
+                dojo.byId("subTitle").innerHTML = "Timeline: 2010 - 2099";
+                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 2010 - 2099";
                 errorMessageYearInput = "Please input a year of single frame (" + String(startFuture) + "-" + String(endFuture) + ")";
             }
             
@@ -446,15 +448,15 @@ define([
     };    
 	var defineService = function () {
 	   //esri.show(loading);
-	   if (window.timeSeriesDisclaim) {
+	   //if (window.timeSeriesDisclaim) {
 	       if (document.getElementById("seasonSelection").value != "" && document.getElementById("climateSelection").value != "" ) {
 	            if (document.getElementById("modelSelection").item.value == "Hist") {
-	                dojo.byId("subTitle").innerHTML = "Timeline: Years (1950-2005)";
-	                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (1950-2005)";
+	                dojo.byId("subTitle").innerHTML = "Timeline: 1950 - 2005";
+	                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 1950 - 2005";
 	            }
 	            else {
-	                dojo.byId("subTitle").innerHTML = "Timeline: Years (2010-2099)";
-	                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: Years (2010-2099)";
+	                dojo.byId("subTitle").innerHTML = "Timeline: 2010 - 2099";
+	                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 2010 - 2099";
 	            }          
 	            var model = document.getElementById("modelSelection").value.replace(".", "" );
 	            var season = document.getElementById("seasonSelection").value;
@@ -468,8 +470,8 @@ define([
 	        else {
 	            alert("Choose options for Season, Metric!");
 	        }
-       }
-       else {
+       //}
+       /*else {
 			var infobox = new Dialog({
     		title: "EnviroAtlas Time Series Disclaimer",
     		style: 'width: 400px'
@@ -496,7 +498,7 @@ define([
 
 			infobox.show();
        		
-       }
+       }*/
     };
 	var addSelectedImageServiceToMap = function(serviceParams) {
         removeDataFromMap();
@@ -637,24 +639,22 @@ define([
                         
             });
     };
+
+
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
 
             baseClass: 'jimu-widget-timeseries',
             startup: function () {
                 this.inherited(arguments);                
                 map = this.map;
+                
                 selfTimeSeries = this;
 		        map.on("update-start", mapLoading);
 		        map.on("update-end", mapFinishedLoading);
 		        map.on("layers-add-result", makeSliderAndLegend);
 		        map.on("layers-add-result", makeSliderAndLegendOneFrame);       
 		        dojo.byId('titleAndSliderOneFrame').style.display = 'none';
-		        document.getElementById("modelSelection").style.width = "320px";
-		        document.getElementById("climateSelection").style.width = "320px";
-		        document.getElementById("seasonSelection").style.width = "320px";
-		        
-	          
-                      	
+                  	
 
 			    var frameYear = new TextBox({
 			        id: "frameYearInput",
@@ -691,59 +691,76 @@ define([
 			    registry.byId("removeServiceBtn").on("click", removeDataFromMap);	
 			    registry.byId("frameYearInput").on("click", clickFrameYear);
     			registry.byId("frameYearInput").on("blur", blurFrameYear);		
-    			
+
+                
+    			// Scenario dialog box
+                var scenario_info = this.config.scenarios;
 				document.getElementById("modelSelectionHelp").onclick = function (e) {
 					var infobox = new Dialog({
-							title: "Scenario Description",
+							title: "Scenarios",
 							style: 'width: 500px'
 						});
+
+                    scenario_text = '';
+                    for (i=0; i<scenario_info.length; i++) {
+                        scenario_text += "<h2 style='margin-top:0px'>" + scenario_info[i].model + "</h2>";
+                        scenario_text += "<p>" + scenario_info[i].description + "</p>";
+                        if (i < scenario_info.length-1) {
+                            scenario_text += "<hr style='margin-top:10px'>";
+                        };
+                        //scenario_text += "<BR>";
+                    };
+
 					var infoDiv = dojo.create('div', {
-							'innerHTML': "<font face='calibri' size='2+'>" +        	
-            
-				            "<b>RCP 2.6</b> – This scenario is characterized as having very low greenhouse gas concentration levels. It is a “peak-and-decline” scenario and assumes that greenhouse gas emissions peak between 2010 and 2020 with emissions declining substantially beyond 2020. The projected global warming increase compared to the reference period (1986-2005) is approximately 1.8 degree Fahrenheit (range of 0.54 to 3.06) by 2081-2100. Atmospheric CO2 is expected to be approximately 425 parts per million in 2100.<BR><BR>" +  
-				
-				            "<b>RCP 4.5</b> – This scenario assumes a stabilization will occur shortly after 2100, and assumes less emissions than RCP 6.0, which is also a stabilization scenario. It is characterized by a peak in emissions around 2040 and then a decline. The projected global warming increase compared to the reference period 1986-2005 is approximately 3.24 degrees Fahrenheit (range of 1.98 to 4.68) by 2081-2100. Atmospheric CO2 is expected to be approximately 600 parts per million in 2100.<BR><BR>" +
-				
-				            "<b>RCP 6.0</b> – This is a stabilization scenario in which the increase in GHG emissions stabilizes shortly after 2100 through the application of a range of technologies and strategies for reducing GHG emissions. It is characterized by a peak in emissions around 2080 and then a decline. The projected global warming increase compared to the reference period 1986-2005 is approximately 3.96 degrees Celsius (range of 2.52 to 5.58) by 2081-2100. Atmospheric CO2 is expected to be approximately 725 parts per million in 2100.<BR><BR>" +
-				
-				            "<b>RCP 8.5</b> – This scenario is characterized by increasing GHG emissions over time, and factors in the highest GHG concentration levels of all the scenarios by 2100. The projected global warming increase compared to the reference period 1986-2005 is approximately 6.66 degrees Celsius (range of 4.68 to 8.64) by 2081-2100. Atmospheric CO2 is expected to be approximately 1225 parts per million in 2100.<BR><BR>" +
-				            
-				            "<b>Historical climate</b> – These data are based on PRISM historical observations and interpolation of previous climate. Data are provided for the years 1950 -2005." +
-				            
-				            "</font>"
+							'innerHTML': scenario_text
 						}, infobox.containerNode);
 						infobox.show()
 				}; //end of modelSelectionHelp click event
 				
+                // Cliamte Variable dialog box
+                var climate_info = this.config.climate_variables;
 				document.getElementById("climateSelectionHelp").onclick = function (e) {
-					var infobox = new Dialog({
-							title: "Climate Description",
-							style: 'width: 500px'
-						});
-					var infoDiv = dojo.create('div', {
-						'innerHTML': "<font face='calibri' size='2+'>" +
-				        	"Maximum Temperature – Average maximum temperature in degrees Fahrenheit for the season or annually. " + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_Temp.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a><br/><br/>" + 
-				            "Minimum Temperature – Average minimum temperature in degrees Fahrenheit for the season or annually. " + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_Temp.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a><br/><br/>" + 
-				            "Precipitation - Total precipitation in inches for the season or annually. " + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_Precip.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a><br/><br/>" + 
-				            "Potential Evapotranspiration - Total potential evapotranspiration in inches for the season or annually. "  + "<a href='https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_PET.pdf' target='_blank'>" + "Access the Fact Sheet" + "</a>" +
-				            "</font>"
-						}, infobox.containerNode);
-						infobox.show()
-				}; //end of climateSelectionHelp click event		
-				
+                    var infobox = new Dialog({
+                        title: "Climate Variables",
+                        style: 'width: 300px'
+                    });
+
+                    variable_text = '';
+                    for (i=0; i<climate_info.length; i++) {
+                        variable_text += "<h2 style='margin-top:0px'>" + climate_info[i].v_name + "</h2>";
+                        variable_text += "<p>" + climate_info[i].description + "</p><br>";
+                        variable_text += "<a href='" + climate_info[i].factsheet + "' target='_blank' class='factsheetLink'>Fact Sheet</a>";
+                        if (i < climate_info.length-1) {
+                            variable_text += "<hr style='margin-top:10px'>";
+                        };
+                    };
+
+                    var infoDiv = dojo.create('div', {
+                        'innerHTML': variable_text
+                        }, infobox.containerNode);
+                        infobox.show()
+                }; //end of climateSelectionHelp click event 
+					
+				// Season dialog box
+                var season_info = this.config.seasons;
 				document.getElementById("seasonSelectionHelp").onclick = function (e) {
 					var infobox = new Dialog({
-							title: "Season Description",
-							style: 'width: 500px'
+							title: "Seasons",
+							style: 'width: 300px'
 						});
+
+                    season_text = '';
+
+                    for (i=0; i<season_info.length; i++) {
+                        season_text += "<h2 style='margin-top:0px'>" + season_info[i].s_name + "</h2>";
+                        season_text += "<p>" + season_info[i].description + "</p>";
+                        if (i < season_info.length-1) {
+                            season_text += "<hr style='margin-top:10px'>";
+                        };
+                    };
+
 					var infoDiv = dojo.create('div', {
-						'innerHTML': "<font face='calibri' size='2+'>" + 
-				            "Winter – December of previous year, January, February<BR><BR>" +
-				            "Spring – March, April, May<BR><BR>" +
-				            "Summer – June, July, August<BR><BR>" +
-				            "Fall – September, October, November<BR><BR>" +
-				            "Annual – January through December of the same calendar year"+
-				            "</font>"
+						'innerHTML': season_text
 						}, infobox.containerNode);
 						infobox.show()
 				}; //end of seasonSelectionHelp click event		

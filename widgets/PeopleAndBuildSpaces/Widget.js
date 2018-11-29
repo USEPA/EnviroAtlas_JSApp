@@ -112,7 +112,7 @@ define([
             //popupsTemplate[1] = {
             //    infoTemplate: boundaryTemplate
             //};
-            popupsTemplate[1] = null;
+			popupsTemplate[1] = null;
             var communityLocationLayer = new ArcGISDynamicMapServiceLayer(communityBoundaryLayer);
             communityLocationLayer._titleForLegend = "EnviroAtlas Community Boundaries";
             communityLocationLayer.title = "EnviroAtlas Community Boundaries";
@@ -175,9 +175,9 @@ define([
         BC_Div.appendChild(scale_img);
 
         datatype_img = document.createElement('div');
-        datatype_img.style.width = '20px';
+        /*datatype_img.style.width = '20px';
         datatype_img.style.height = '20px';
-        datatype_img.style.float = 'left';
+        datatype_img.style.float = 'left';*/
         //datatype_img.style.marginLeft = '20px';
 
         if (type == 'huc12') {
@@ -192,7 +192,8 @@ define([
             datatype_img.title = "Point, line, or polygon data"
         }
 
-        datatype_img.setAttribute("class", type);
+        datatype_img.className = 'icon_style';
+        datatype_img.className += " " + type;
         BC_Div.appendChild(datatype_img);
 
 
@@ -363,11 +364,12 @@ define([
                         if (layer.hasOwnProperty('opacity')) {
                             lOptions.opacity = layer.opacity; // 1.0 has no transparency; 0.0 is 100% transparent
                         }
-                        if (layer.hasOwnProperty('visible') && !layer.visible) {
+                        /*if (layer.hasOwnProperty('visible') && !layer.visible) {
                             lOptions.visible = false;
                         } else {
                             lOptions.visible = true;
-                        }
+                        }*/
+                        lOptions.visible = true;
                         if (layer.name) {
                             lOptions.id = layer.name;
                         }
@@ -563,7 +565,8 @@ define([
                             }
 
                             lLayer.id = window.layerIdPBSPrefix + this.getAttribute("id").replace(window.chkSelectableLayer, "");
-                            lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
+                            //lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
+                            lLayer.setVisibility(true); 
 							if (layer.hasOwnProperty('eaScale')) {
 									if (layer.eaScale == "COMMUNITY") {
 										window.communityLayerNumber.push(layer.eaID.toString());
@@ -584,10 +587,10 @@ define([
                                 if (tileLinkAdjusted.slice(-11)=="_alllayers/"){
                                     switch(layer.cacheLevelNat) {
                                         case 12:
-                                            //jimuUtils.initTileLayer12(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString()); //initTileLayer12 is for level 12 and temporarily commented out
-                                            //map.addLayer(new myTiledMapServiceLayer12());
-                                            jimuUtils.initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString());  //initTileLayer is for level 8, but in short term used here	
-                                            map.addLayer(new myTiledMapServiceLayer());
+                                            jimuUtils.initTileLayer12(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString()); //initTileLayer12 is for level 12 and temporarily commented out
+                                            map.addLayer(new myTiledMapServiceLayer12());
+                                            //jimuUtils.initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString());  //initTileLayer is for level 8, but in short term used here	
+                                            //map.addLayer(new myTiledMapServiceLayer());
                                             break;
                                         default:
                                             jimuUtils.initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString()); 
@@ -599,7 +602,7 @@ define([
                                     }
                                 } else {
                                     lOptions.id = window.layerIdTiledPrefix + layer.eaID.toString();
-                                    this._viewerMap.addLayer(new ArcGISTiledMapServiceLayer(layer.tileURL, lOptions));
+                                    map.addLayer(new ArcGISTiledMapServiceLayer(layer.tileURL, lOptions));
                                 }
                             }  else if (layer.eaScale == "COMMUNITY") {
 								loadSymbologyPBSConfig(function(response) {
@@ -637,8 +640,8 @@ define([
                         	var id = lLayer.id.replace(window.layerIdPBSPrefix, "");
                         	if (id in window.hashIDtoCacheLevelNat) {
                                 if (window.hashIDtoCacheLevelNat[id] == 12) {
-                            		//lLayer.minScale = 72223.819286;	//72223.819286 is for level 12 and temporarily commented out
-                            		lLayer.minScale = 1155581.108577;	//1155581.108577 is for level 8, but in short term used here				
+                            		lLayer.minScale = 72223.819286;	//72223.819286 is for level 12 and temporarily commented out
+                            		//lLayer.minScale = 1155581.108577;	//1155581.108577 is for level 8, but in short term used here				
                                 }                        	
                        	 	}
                             if (!(lLayer.title in window.successLayerDictionary)) {
@@ -662,10 +665,12 @@ define([
                         if (layer.hasOwnProperty('eaScale')) {
                             lLayer.eaScale = layer.eaScale;
                             if (layer.eaScale == "COMMUNITY") {
-                                lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
+                                //lLayer.setVisibility(false); //turn off the layer when first added to map and let user to turn on
+                                lLayer.setVisibility(true);
                                 addCommunityBoundaries();
                             } else { //National
-                                lLayer.setVisibility(false);
+                                //lLayer.setVisibility(false);
+                                lLayer.setVisibility(true);
                                 window.nationalLayerNumber.push(layer.eaID.toString());
                             }
                         }

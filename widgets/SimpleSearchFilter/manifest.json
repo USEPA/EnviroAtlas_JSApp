@@ -8,7 +8,7 @@
   "copyright": "",
   "license": "http://www.apache.org/licenses/LICENSE-2.0",
   "properties": {
-    "hasConfig": false,
+    "hasConfig": true,
     "hasLocale": false,
     "hasStyle": true
   }

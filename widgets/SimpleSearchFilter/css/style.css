@@ -1,157 +1,53 @@
-/*.esriPopup .action.zoomTo { display: none; }*/
-#navlistSearchfilter {
-    position: relative;
-}
-#navlistSearchfilter li {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    position: absolute;
-}
-
-#navlistSearchfilter li, #navlistSearchfilter a {
-    height: 20px;
-    width: 20px;
-    display: block;
-}
-
 
 /* biodiversity conservation */
-.biod_bw {background: url('../images/ES_Icons/bio_bw.png');
-          background-size: cover;}
-.biod {background: url('../images/ES_Icons/bio.png');
-          background-size: cover;}
-.biod_infographic {background: url('../images/bc_infographics/biod.png') no-repeat;}
+.biod_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/bio.png');}
+.biod {background: rgb(46, 174, 74) url('../images/ES_Icons/bio.png');}
 
 /* clean air */
-.cair_bw {background: url('../images/ES_Icons/air_bw.png');
-          background-size: cover;}
-.cair {background: url('../images/ES_Icons/air.png');
-          background-size: cover;}
-.cair_infographic {background: url('../images/bc_infographics/cair.png') no-repeat;}
+.cair_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/air.png');}
+.cair {background: rgb(127, 129, 186) url('../images/ES_Icons/air.png');}
 
 /* clean and plentiful water */
-.cpw_bw {background: url('../images/ES_Icons/water_bw.png');
-          background-size: cover;}
-.cpw {background: url('../images/ES_Icons/water.png');
-          background-size: cover;}
-.cpw_infographic {background: url('../images/bc_infographics/cpw.png') no-repeat;}
+.cpw_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/water.png');}
+.cpw {background: rgb(116, 204, 209) url('../images/ES_Icons/water.png');}
 
 /* climate stabilization */
-.clim_bw {background: url('../images/ES_Icons/clim_bw.png');
-          background-size: cover;}
-.clim {background: url('../images/ES_Icons/clim.png');
-          background-size: cover;}
-.clim_infographic {background: url('../images/bc_infographics/clim.png') no-repeat;}
+.clim_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/clim.png');}
+.clim {background: rgb(249, 159, 31) url('../images/ES_Icons/clim.png');}
 
 /* food, fuel, and materials */
-.ffm_bw {background: url('../images/ES_Icons/food_bw.png');
-          background-size: cover;}
-.ffm {background: url('../images/ES_Icons/food.png');
-          background-size: cover;}
-.ffm_infographic {background: url('../images/bc_infographics/ffm.png') no-repeat;}
+.ffm_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/food.png');}
+.ffm {background: rgb(240, 224, 36) url('../images/ES_Icons/food.png');}
 
 /* natural hazard mitigation */
-.nhm_bw {background: url('../images/ES_Icons/haz_bw.png');
-          background-size: cover;}
-.nhm {background: url('../images/ES_Icons/haz.png');
-          background-size: cover;}
-.nhm_infographic {background: url('../images/bc_infographics/nhm.png') no-repeat;}
+.nhm_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/haz.png');}
+.nhm {background: rgb(215, 93, 100) url('../images/ES_Icons/haz.png');}
 
 /* recreation, culture, and aesthetics */
-.rca_bw {background: url('../images/ES_Icons/rec_bw.png');
-          background-size: cover;}
-.rca {background: url('../images/ES_Icons/rec.png');
-          background-size: cover;}
-.rca_infographic {background: url('../images/bc_infographics/rca.png') no-repeat;}
+.rca_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/rec.png');}
+.rca {background: rgb(199, 112, 180) url('../images/ES_Icons/rec.png');}
 
-.NATIONAL {background: url('../images/ES_Icons/nat.png');
-          background-size: cover;}
-
-.COMMUNITY {background: url('../images/ES_Icons/comm.png');
-          background-size: cover;}
-
-.huc12 {background: url('../images/ES_Icons/huc12.png');
-          background-size: cover;}
-
-.cbg {background: url('../images/ES_Icons/cbg.png');
-          background-size: cover;}
-
-.ctr {background: url('../images/ES_Icons/ctr.png');
-          background-size: cover;}
-
-.grid {background: url('../images/ES_Icons/grid.png');
-          background-size: cover;}
-
-.plp {background: url('../images/ES_Icons/plp.png');
-          background-size: 20px 20px;
-          background-position: -2px -2px;}
+/* Scale and data type */
+.NATIONAL {background: rgb(186, 207, 225) url('../images/ES_Icons/nat.png');}
+.COMMUNITY {background: rgb(186, 207, 225)url('../images/ES_Icons/comm.png');}
+.huc12 {background: rgb(186, 207, 225) url('../images/ES_Icons/huc12.png');}
+.cbg {background: rgb(186, 207, 225) url('../images/ES_Icons/cbg.png');}
+.ctr {background: rgb(186, 207, 225) url('../images/ES_Icons/ctr.png');}
+.grid {background: rgb(186, 207, 225) url('../images/ES_Icons/grid.png');}
+.plp {background: rgb(186, 207, 225) url('../images/ES_Icons/plp.png');}
 
 .icon_style {
   width: 20px;
   height: 20px;
   float:left;
   margin-right: 5px;
-  border: 1px solid gray;
-  border-radius: 2px
+  /*border: 1px solid gray;*/
+  border-radius: 15px;
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-.bc_popup {
-  width: 25px;
-  height: 25px;
-  border: none;
-  display: inline-block;
-  margin: 0px 5px 0px 5px;
-  border: 1px solid gray;
-}
-
-.bc_popup:hover {
-  cursor: pointer;
-}
-
-.bc_popup_selected{
-  box-shadow: -1px 6px 10px 1px #333;
-}
-
-.bc_infographic{
-  height: 450px;
-  background-size: 100% 100%;
-}
-
-.bc_popup_header_icon {
-  height:35px; 
-  width:35px; 
-  float: left; 
-  position: relative; 
-  top: 5px; 
-  left:10px;
-}
-
-.bc_popup_header_text {
-  font-size: 18px; 
-  font-weight: bold; 
-  height: 40px; 
-  display: table-cell; 
-  vertical-align:middle; 
-  position: relative; 
-  left: 20px
-}
-
-
-#navlistSearchfilter2 {
-    position: relative;
-}
-#navlistSearchfilter2 li {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    position: absolute;
-}
-#navlistSearchfilter2 li, #navlistSearchfilter2 a {
-    height: 18px;
-    width: 18px;
-    display: block;
-}
 /* clean air */
 #cair2 {background: url('../images/bc_icons.png') -20px -20px;}
 #cpw2 {background: url('../images/bc_icons.png') -20px -40px;}
@@ -296,6 +192,18 @@ input.cmn-toggle-round-flat-grayedout + label:after {
   -o-transition: margin 0.4s, background 0.6s;
   transition: margin 0.4s, background 0.6s;
 }
+input.chk-toggle {
+	display: none;
+}
+
+.label-chk-toggle{
+    cursor: pointer;
+}
+
+input.chk-toggle:checked + .label-chk-toggle{
+  font-weight: bold;
+  font-family: sans-serif;
+}
 /*input.cmn-toggle-round-flat-grayedout:checked + label:before{
   background-color: #8ce196;
 }
@@ -360,51 +268,7 @@ input.cmn-toggle-round-flat-grayedout:checked + label:after {
 	opacity: 1;
 	margin-bottom: 5px;
 }
-.list p{
-    height:auto;
-    margin:0;
-}
-.question {
-	float: left;
-	height: auto;
-	width: 90%;
-	line-height: 15px;
-	padding-left: 20px;
-	margin-bottom: 5px;
-}
 
-.topicTable {
-  margin: 0px;
-  float: left; 
-  width: 50%; 
-  display:inline-block;
-}
-
-.claro .dijitContentPane{
-  padding: 2px;
-}
-
-.claro .dijitTitlePaneContentInner {
-  padding: 2px;
-  background-color: #f4f4f4;
-  /*border: 2px solid #d4d8da;*/
-
-}
-.claro .dijitTitlePaneContentOuter {
-  border: None;
-}
-
-.claro .dijitTitlePaneTitleOpen {
-  background-color: #7f9eb4;
-}
-
-.claro .dijitTitlePaneTitleHover {
-  background-color: #808A92;
-}
-
-.claro .dijitTitlePaneTitle {
-  background-color: #7f9eb4;
-}
 
 .header {
   text-align: center;
@@ -416,15 +280,42 @@ a.esIcons {
 }
 
 .topicHeader {
-  padding-bottom: 3px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
-  background-color: #c3c3c3;
-  margin-bottom: 3px;
+  margin-bottom: 2px;
+  padding-left: 3px;
 }
 
-.topicHeader:hover {
-  background-color: #929292;
+.topicHeaderESB {
+  background-color: #adbb9a;
+}
+
+.topicHeaderESB:hover {
+  background-color: #cdd6c2;
+  cursor: pointer;
+}
+.topicHeaderPSI {
+  background-color: #bb9aad;
+}
+
+.topicHeaderPSI:hover {
+  background-color: #d6c2cd;
+  cursor: pointer;
+}
+.topicHeaderPBS {
+  background-color: #9aadbb;
+}
+
+.topicHeaderPBS:hover {
+  background-color: #c2cdd6;
+  cursor: pointer;
+}
+.topicHeaderBNF {
+  background-color: #aeaba2;
+}
+
+.topicHeaderBNF:hover {
+  background-color: #ceccc7;
   cursor: pointer;
 }
 
@@ -440,7 +331,8 @@ a.esIcons {
 }
 
 .layerDiv {
-  margin-bottom: 10px;
+  padding: 2px 3px 2px 3px;
+  border-bottom: 1px solid rgb(200, 200, 200);
 } 
 
 .factsheetLink {
@@ -453,4 +345,74 @@ a.esIcons {
 
 .factsheetLink:hover{
   cursor: pointer;
+}
+.jimu-widget-filterforselect-move{
+  background: url('../images/page.png');
+  width: 15px;
+  height: 15px;
+  bottom: 0px;
+  right: 0px;
+  border: none;
+}
+.jimu-widget-filterforselect-move:hover{
+  cursor: nw-resize;
+}
+.jimu-widget-filterforselect-move:hover .jimu-widget-filterforselect-thumb{
+	background-image: url(images/page.png);
+  background-color: #fff;
+}
+.jimu-widget-filterforselect-close{
+  background: url('../images/close.png');
+  width: 15px;
+  height: 15px;
+  bottom: 0px;
+  right: 0px;
+  border: none;
+}
+.jimu-widget-filterforselect-drag{
+  height: 19px;
+  bottom: 0px;
+  left: 0px;
+  border: none;
+  background-color: #00436F;
+  color: white; 
+}
+#butFilterInSimpleSearch {
+	height: 30px;
+    width: 30px;
+	background: url('../images/filter.png');
+	background-color: #eaf2f8;
+    vertical-align: middle;
+    background-size: 26px 26px;
+    display: inline-block;
+    margin-left: 18px;
+}
+.selectableLayersCheck {
+    background-color: #00436f; 
+    color:white; 
+    border: none; 
+    display: inline-block; 
+    vertical-align:middle;  
+    margin:0px;     
+    font-family: 'Avenir Light', Verdana, Geneva, sans-serif;
+    font-size: 14px;
+
+}
+.selectableLayersLabel{
+    background-color: #00436f; 
+    color:white; 
+    border: none; 
+    display: inline-block; 
+    vertical-align:middle;  
+    margin:0px;     
+    font-family: 'Avenir Light', Verdana, Geneva, sans-serif;
+    font-size: 14px;
+    margin-left: 12px;
+}
+#closeForFilter{
+    background-size:15px;
+}
+.seperator{
+	height:2px;
+	margin:0px;
 }

@@ -4,5 +4,6 @@ define({
   "disableTips": "Görünen zamana bağlı katman yok.",
   "timeExtent": "${FROMTIME} - ${ENDTIME}",
   "layers": "Katmanlar: ",
-  "speedLabel": "Oynatma hızı"
+  "speedLabel": "Oynatma hızı",
+  "liveData": "Canlı veri"
 });

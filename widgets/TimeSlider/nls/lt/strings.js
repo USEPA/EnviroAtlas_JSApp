@@ -4,5 +4,6 @@ define({
   "disableTips": "Nėra matomų laiku papildytų sluoksnių.",
   "timeExtent": "${FROMTIME} iki ${ENDTIME}",
   "layers": "Sluoksniai: ",
-  "speedLabel": "Peržiūros greitis"
+  "speedLabel": "Peržiūros greitis",
+  "liveData": "Atnaujinami duomenys"
 });
