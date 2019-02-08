@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Measurement/setting/nls/strings":{defaultAreaUnit:"V\u00fdchoz\u00ed jednotka plochy",defaultLengthUnit:"V\u00fdchoz\u00ed jednotka d\u00e9lky",acres:"Akry",sqMiles:"\u010ctver. m\u00edle",sqKilometers:"\u010ctver. kilometry",hectares:"Hektary",sqYards:"\u010ctver. yardy",sqFeet:"\u010ctver. stopy",sqFeetUS:"\u010ctver. stopy (US)",sqMeters:"\u010ctver. metry",miles:"M\u00edle",kilometers:"Kilometry",feet:"Stopy",feetUS:"Stopy (US)",meters:"Metry",yards:"Yardy",nauticalMiles:"N\u00e1mo\u0159n\u00ed m\u00edle",
+showArea:"Plocha",showDistance:"Vzd\u00e1lenost",showLocation:"Um\u00edst\u011bn\u00ed",showtools:"Zobrazit n\u00e1stroje m\u011b\u0159en\u00ed:",operationalLayer:"P\u0159idejte m\u011b\u0159\u00edc\u00ed grafiku jako opera\u010dn\u00ed vrstvu mapy.",allHidedTips:"Mus\u00ed b\u00fdt vybr\u00e1n alespo\u0148 jeden n\u00e1stroj.",_localized:{}}});

@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Print/setting/nls/strings":{serviceURL:"Service-URL",defaultTitle:"Standaardtitel",defaultAuthor:"Standaardauteur",defaultCopyright:"Standaard copyright",defaultFormat:"Standaardindeling",defaultLayout:"Standaardlay-out",warning:"Onjuiste invoer",urlNotAvailable:"De url is niet beschikbaar",notPrintTask:"De url is geen afdruktaak",advancedOption:"Geavanceerde opties weergeven",ok:"OK",editable:"Bewerkbaar",_localized:{}}});

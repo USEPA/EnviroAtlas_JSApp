@@ -1,0 +1,35 @@
+<div class="default-layer-setting">
+	<div class="layer-section swipe-mode">
+		<span class="layer-text sub-title">${nls.swipeMode}</span>
+		<div class="swipe-radio">
+			<input data-dojo-attach-point="singleLayerRaido" data-dojo-type="dijit/form/RadioButton" type="radio" class="jimu-radio-btn blue-radio"
+			 name="modeRaido" id="singleLayerRaido" />
+			<label data-dojo-attach-point="singleLayerRaidoLabel" for="singleLayerRaido">${nls.singleLayer}</label>
+		</div>
+		<div class="swipe-radio">
+			<input data-dojo-attach-point="multipleLayerRaido" data-dojo-type="dijit/form/RadioButton" type="radio" class="jimu-radio-btn blue-radio"
+			 name="modeRaido" id="multipleLayerRaido" />
+			<label data-dojo-attach-point="multipleLayerRaidoLabel" for="multipleLayerRaido">${nls.MultipleLayers}</label>
+		</div>
+	</div>
+
+	<div class="layer-section">
+		<span class="layer-text">${nls.layersAvailable}</span>
+		<span class="jimu-icon jimu-icon-error hide" data-dojo-attach-point="layersChooserError"></span>
+		<div class="layers-chooser" data-dojo-attach-point="layersChooser"></div>
+	</div>
+	<div class="layer-section">
+		<span class="layer-text" data-dojo-attach-point="layerTextNode">${nls.layerText}</span>
+		<div class="select-container default-layers-selector">
+			<div data-dojo-attach-point="swipeLayersContainer">
+				<div data-dojo-type="dijit/form/Select" data-dojo-attach-point="swipeLayers"></div>
+			</div>
+		
+			<div data-dojo-attach-point="defaultLayersContainer" class="hide">
+				<div data-dojo-attach-point="defaultLayersSelectorContainer"></div>
+			</div>
+		</div>
+
+		<label class="layer-hint">${nls.layerHint}</label>
+	</div>
+</div>

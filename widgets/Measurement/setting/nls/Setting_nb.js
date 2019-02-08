@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Measurement/setting/nls/strings":{defaultAreaUnit:"Standard arealenhet",defaultLengthUnit:"Standard lengdeenhet",acres:"Acre",sqMiles:"mile\u00b2",sqKilometers:"km\u00b2",hectares:"Hektar",sqYards:"yard\u00b2",sqFeet:"fot\u00b2",sqFeetUS:"fot\u00b2 (USA)",sqMeters:"m\u00b2",miles:"Miles",kilometers:"Kilometer",feet:"Fot",feetUS:"fot (USA)",meters:"Meter",yards:"Yards",nauticalMiles:"Nautiske mil",showArea:"Omr\u00e5de",showDistance:"Avstand",showLocation:"Lokasjon",showtools:"Vis m\u00e5leverkt\u00f8y:",
+operationalLayer:"Legg til m\u00e5legrafikken som et operativt lag i kartet.",allHidedTips:"Du m\u00e5 velge minst ett verkt\u00f8y.",_localized:{}}});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Measurement/setting/nls/strings":{defaultAreaUnit:"Unit\u00e9 de surface par d\u00e9faut",defaultLengthUnit:"Unit\u00e9 de longueur par d\u00e9faut",acres:"Acres",sqMiles:"Milles carr\u00e9s",sqKilometers:"Kilom\u00e8tres carr\u00e9s",hectares:"Hectares",sqYards:"Yards carr\u00e9s",sqFeet:"Pieds carr\u00e9s",sqFeetUS:"Pieds carr\u00e9s (US)",sqMeters:"M\u00e8tres carr\u00e9s",miles:"Miles",kilometers:"Kilom\u00e8tres",feet:"Pieds",feetUS:"Pieds (US)",meters:"M\u00e8tres",yards:"Yards",
+nauticalMiles:"Milles marins",showArea:"Surface",showDistance:"Distance",showLocation:"Emplacement",showtools:"Afficher les outils de mesure\u00a0:",operationalLayer:"Ajoutez le graphique de mesure comme couche op\u00e9rationnelle de la carte.",allHidedTips:"Au moins un outil doit \u00eatre s\u00e9lectionn\u00e9.",_localized:{}}});

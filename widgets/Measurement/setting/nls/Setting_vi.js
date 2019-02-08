@@ -1,0 +1,6 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Measurement/setting/nls/strings":{defaultAreaUnit:"\u0110\u01a1n v\u1ecb di\u1ec7n t\u00edch m\u1eb7c \u0111\u1ecbnh",defaultLengthUnit:"\u0110\u01a1n v\u1ecb \u0111\u1ed9 d\u00e0i m\u1eb7c \u0111\u1ecbnh",acres:"M\u1eabu Anh",sqMiles:"D\u1eb7m vu\u00f4ng",sqKilometers:"Kilometer vu\u00f4ng",hectares:"Hecta",sqYards:"Th\u01b0\u1edbc vu\u00f4ng",sqFeet:"Feet vu\u00f4ng",sqFeetUS:"Feet vu\u00f4ng (Hoa K\u1ef3)",sqMeters:"M\u00e9t vu\u00f4ng",miles:"D\u1eb7m",kilometers:"Kil\u00f4m\u00e9t",
+feet:"Feet",feetUS:"Feet (Hoa K\u1ef3)",meters:"M\u00e9t",yards:"Th\u01b0\u1edbc",nauticalMiles:"H\u1ea3i l\u00fd",showArea:"Khu v\u1ef1c",showDistance:"Kho\u1ea3ng c\u00e1ch",showLocation:"V\u1ecb tr\u00ed",showtools:"Hi\u1ec7n c\u00f4ng c\u1ee5 \u0111o l\u01b0\u1eddng:",operationalLayer:"Th\u00eam th\u00f4ng tin \u0111\u1ed3 h\u1ecda \u0111o \u0111\u1ea1c l\u00e0m l\u1edbp ho\u1ea1t \u0111\u1ed9ng c\u1ee7a b\u1ea3n \u0111\u1ed3.",allHidedTips:"Ph\u1ea3i ch\u1ecdn \u00edt nh\u1ea5t m\u1ed9t c\u00f4ng c\u1ee5.",
+_localized:{}}});

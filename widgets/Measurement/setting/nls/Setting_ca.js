@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Measurement/setting/nls/strings":{defaultAreaUnit:"Unitat d'\u00e0rea per defecte",defaultLengthUnit:"Unitat de longitud per defecte",acres:"Acres",sqMiles:"Milles quadrades",sqKilometers:"Quil\u00f2metres quadrats",hectares:"Hect\u00e0rees",sqYards:"Iardes quadrades",sqFeet:"Peus quadrats",sqFeetUS:"Peus quadrats (EE.\u00a0UU.)",sqMeters:"Metres quadrats",miles:"Milles",kilometers:"Quil\u00f2metres",feet:"Peus",feetUS:"Peus (EE.\u00a0UU.)",meters:"Metres",yards:"Iardes",nauticalMiles:"Milles n\u00e0utiques",
+showArea:"\u00c0rea",showDistance:"Dist\u00e0ncia",showLocation:"Ubicaci\u00f3",showtools:"Mostra eines de mesura:",operationalLayer:"Afegiu gr\u00e0fic de mesura com una capa operativa del mapa.",allHidedTips:"S'ha de seleccionar almenys una eina.",_localized:{}}});

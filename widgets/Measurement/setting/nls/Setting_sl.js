@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Measurement/setting/nls/strings":{defaultAreaUnit:"Privzeta enota povr\u0161ine",defaultLengthUnit:"Privzeta enota dol\u017eine",acres:"Akri",sqMiles:"Kvadratne milje",sqKilometers:"Kvadratni kilometri",hectares:"Hektarji",sqYards:"Kvadratni jardi",sqFeet:"Kvadratni \u010devlji",sqFeetUS:"Kvadratni \u010devlji (ZDA)",sqMeters:"Kvadratni metri",miles:"Milje",kilometers:"Kilometri",feet:"\u010cevlji",feetUS:"\u010cevlji (ZDA)",meters:"Metri",yards:"Jardi",nauticalMiles:"Morske milje",
+showArea:"Povr\u0161ina",showDistance:"Razdalja",showLocation:"Lokacija",showtools:"Poka\u017ei orodja za merjenje:",operationalLayer:"Dodaj grafiko meritve kot operativni sloj karte.",allHidedTips:"Izbrano mora biti vsaj eno orodje.",_localized:{}}});
