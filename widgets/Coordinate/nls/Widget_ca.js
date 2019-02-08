@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Coordinate/nls/strings":{_widgetLabel:"Coordenada",hintMessage:"Feu clic al mapa per obtenir les coordenades",defaultLabel:"Per defecte",realtimeLabel:"Moveu el ratol\u00ed per obtenir les coordenades",computing:"S'est\u00e0 calculant...",latitudeLabel:"Latitud",longitudeLabel:"Longitud",loading:"s'est\u00e0 carregant...",enableClick:"Feu clic per habilitar l'obtenci\u00f3 de coordenades en fer clic al mapa",disableClick:"Feu clic per deshabilitar l'obtenci\u00f3 de coordenades en fer clic al mapa",
+Default:"Per defecte",Inches:"Polzades",Foot:"Peus",Foot_US:"Feet_US",Yards:"Iardes",Miles:"Milles",Nautical_Miles:"Milles n\u00e0utiques",Millimeters:"Mil\u00b7l\u00edmetres",Centimeters:"Cent\u00edmetres",Meter:"Metres",Kilometers:"Quil\u00f2metres",Decimeters:"Dec\u00edmetres",Decimal_Degrees:"Graus",Degree_Minutes_Seconds:"Graus minuts segons",MGRS:"MGRS",USNG:"USNG",_localized:{}}});

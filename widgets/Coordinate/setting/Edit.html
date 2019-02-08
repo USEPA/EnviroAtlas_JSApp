@@ -30,14 +30,15 @@
         <tbody>
           <tr>
             <td class="display">
-              <span>${nls.units}</span>
+              <span title=${nls.units}>${nls.units}</span>
             </td>
             <td class="units">
-              <select data-dojo-attach-point="outputUnit" data-dojo-props='style:{width:"462px"}' data-dojo-type="dijit/form/Select">
+              <select data-dojo-attach-point="outputUnit" data-dojo-type="dijit/form/Select">
                 <option value="">${nls.Default}</option>
                 <option type="separator"></option>
                 <option value="INCHES">${nls.Inches}</option>
                 <option value="FOOT">${nls.Foot}</option>
+                <option value="FOOT_US">${nls.Foot_US}</option>
                 <option value="YARDS">${nls.Yards}</option>
                 <option value="MILES">${nls.Miles}</option>
                 <option value="NAUTICAL_MILES">${nls.Nautical_Miles}</option>
