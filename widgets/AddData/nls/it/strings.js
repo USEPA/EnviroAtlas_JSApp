@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Uno shapefile (.zip, archivio ZIP contenente tutti i file shapefile)",
       "CSV": "Un file CSV (.csv, con indirizzo o latitudine, longitudine e virgola, punto e virgola o tabulazione)",
+      "KML": "Un file KML (.kml)",
       "GPX": "Un file GPX (.gpx, GPS Exchange Format)",
       "GeoJSON": "Un file GeoJSON (.geo.json o .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} feature",
     "invalidTypePattern": "{filename}: questo tipo non è supportato",
     "maxFeaturesAllowedPattern": "È consentito un massimo di {count} feature",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "Si è verificato un problema.",
+    "kmlProjectionMismatch": "Il riferimento spaziale della mappa e del layer KML non corrispondono e la conversione non può essere eseguita sul client."
   },
   "layerList": {
     "caption": "Livelli",

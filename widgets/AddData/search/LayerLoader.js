@@ -1,3 +1,18 @@
+///////////////////////////////////////////////////////////////////////////
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
 define(["dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/array",
@@ -22,10 +37,13 @@ define(["dojo/_base/declare",
     "esri/layers/MosaicRule",
     "esri/layers/RasterFunction",
     "esri/layers/VectorTileLayer",
-    'esri/layers/WMSLayer',
+    "esri/layers/WMSLayer",
+    "esri/layers/WMSLayerInfo",
     "esri/dijit/PopupTemplate",
     "esri/InfoTemplate",
     "esri/renderers/jsonUtils",
+    "esri/geometry/Extent",
+    "esri/SpatialReference",
     "jimu/utils",
     "jimu/WidgetManager",
     'jimu/PanelManager'
@@ -33,8 +51,8 @@ define(["dojo/_base/declare",
   function(declare, lang, array, all, html, Deferred, djJson, i18n, util, esriLang, esriRequest, agsUtils,
     ArcGISDynamicMapServiceLayer, ArcGISImageServiceLayer, ArcGISTiledMapServiceLayer,
     DynamicLayerInfo, FeatureLayer, ImageParameters, ImageServiceParameters, KMLLayer,
-    LayerDrawingOptions, MosaicRule, RasterFunction, VectorTileLayer, WMSLayer, PopupTemplate,
-    InfoTemplate, jsonRendererUtils, jimuUtils, WidgetManager, PanelManager) {
+    LayerDrawingOptions, MosaicRule, RasterFunction, VectorTileLayer, WMSLayer, WMSLayerInfo, PopupTemplate, 
+    InfoTemplate, jsonRendererUtils, Extent, SpatialReference, jimuUtils, WidgetManager, PanelManager) {
     var widgetJsonTimeSlider = {
         id: 'widgets_TimeSlider_Widget_32',
         uri: "widgets/TimeSlider/Widget"
@@ -106,31 +124,48 @@ define(["dojo/_base/declare",
 
         }).then(function(result) {
           //console.warn("_addFeatureService.serviceInfo",result);
-          if (result && typeof result.type === "string" && result.type === "Feature Layer") {
+          if (result && typeof result.type === "string" &&
+             (result.type === "Feature Layer" || result.type === "Table")) {
             // a single layer registered from a service /FeatureServer/1 or /MapServer/2
             var layer = new FeatureLayer(serviceUrl, {
-	              mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
+              mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
               id: self._generateLayerId(),
               outFields: ["*"]
             });
             layerDfds.push(self._waitForLayer(layer));
-          } else if (result && result.layers && result.layers.length > 0) {
-            array.forEach(result.layers, function(lyr) {
-              var bAdd = true;
-              if (layerIds !== null && layerIds.length > 0) {
-                bAdd = array.some(layerIds, function(lid) {
-                  return (lid === lyr.id);
-                });
-              }
-              if (bAdd) {
-                var layer = new FeatureLayer(serviceUrl + "/" + lyr.id, {
-	                  mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
-                  id: self._generateLayerId(),
-                  outFields: ["*"]
-                });
-                layerDfds.push(self._waitForLayer(layer));
-              }
-            });
+          } else {
+            var list = [];
+            if (result && result.layers && result.layers.length > 0) {
+              array.forEach(result.layers,function(lyr){
+                list.push(lyr);
+              });
+            }
+            if (result && result.tables && result.tables.length > 0) {
+              array.forEach(result.tables,function(tbl){
+                list.push(tbl);
+              });
+            }
+            if (list.length > 0) {
+              array.forEach(list, function(lyr) {
+                var bAdd = true;
+                if (layerIds !== null && layerIds.length > 0) {
+                  bAdd = array.some(layerIds, function(lid) {
+                    return (lid === lyr.id);
+                  });
+                }
+                if (bAdd) {
+                  var layer = new FeatureLayer(serviceUrl + "/" + lyr.id, {
+                    mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
+                    id: self._generateLayerId(),
+                    outFields: ["*"]
+                  });
+                  layerDfds.push(self._waitForLayer(layer));
+                }
+              });
+            } else {
+              // TODO popup a message here?
+              console.warn("No layers or tables...");
+            }
           }
           return all(layerDfds);
 
@@ -531,10 +566,9 @@ define(["dojo/_base/declare",
           if (layerObject.layerDefinition && layerObject.layerDefinition.definitionExpression) {
             layer.setDefinitionExpression(layerObject.layerDefinition.definitionExpression, true);
           }
-          // TODO setInfoTemplate
-          //if (!options.ignorePopups && layerObject.popupInfo) {
-          //  layer.setInfoTemplate(new clazz(layerObject.popupInfo));
-          //}
+          if (!layerObject.disablePopup && layerObject.popupInfo) {
+            layer.setInfoTemplate(new PopupTemplate(layerObject.popupInfo));
+          }
           /*
           rasterUtil.populateLayerWROInfo(layer,true).then(
             function(){dfd.resolve(layer);},
@@ -712,6 +746,8 @@ define(["dojo/_base/declare",
                 if (layer.infoTemplates === null) {
                   if (templates) {
                     layer.infoTemplates = templates;
+                  } else {
+                    self._setDynamicLayerInfoTemplates(layer);
                   }
                 }
                 /*
@@ -830,15 +866,81 @@ define(["dojo/_base/declare",
         return dfd;
       },
 
-      _newWMSLayer: function() {
+      _newWMSLayer: function(itemData) {
+        var self = this;
+        var item = this.item;
+        var itemHasLayers = false;
+        var wkid = null;
         var options = {
           id: this._generateLayerId()
         };
+        if (itemData) {
+          var visibleLayers = [];
+          var layerInfos = [];
+          array.forEach(itemData.layers, function(layer){
+            itemHasLayers = true;
+            layerInfos.push(new WMSLayerInfo({
+              name: layer.name,
+              title: layer.title,
+              legendURL: layer.legendURL,
+              queryable: layer.queryable,
+              showPopup: layer.showPopup
+            }));
+            visibleLayers.push(layer.name);
+          }, this);
+          if (itemData.visibleLayers) {
+            visibleLayers = itemData.visibleLayers;
+          }
+
+          var resourceInfo = {
+            customLayerParameters: itemData.customLayerParameters,
+            customParameters: itemData.customParameters,
+            layerInfos: layerInfos,
+            version: itemData.version,
+            maxWidth: itemData.maxWidth,
+            maxHeight: itemData.maxHeight,
+            featureInfoFormat: itemData.featureInfoFormat,
+            getFeatureInfoURL: itemData.featureInfoUrl,
+            getMapURL: itemData.mapUrl,
+            spatialReferences: itemData.spatialReferences,
+            title: itemData.title,
+            copyright: itemData.copyright,
+            minScale: itemData.minScale || 0,
+            maxScale: itemData.maxScale || 0,
+            format: itemData.format
+          };
+          // TODO item vs itemData? title copyright
+          if (item && item.extent) {
+            var gcsExtent = new Extent(
+              item.extent[0][0],item.extent[0][1],item.extent[1][0],item.extent[1][1],
+              new SpatialReference({wkid:4326})
+            );
+            resourceInfo.extent = gcsExtent;
+          }
+          if (itemData.spatialReferences && itemData.spatialReferences.length > 0) {
+            wkid = itemData.spatialReferences[0];
+          }
+          options = {
+            id: this._generateLayerId(),
+            visibleLayers: visibleLayers,
+            format: "png",
+            transparent: itemData.firstLayer ? false : true,
+            opacity: itemData.opacity,
+            visible: (itemData.visibility !== null) ? itemData.visibility : true,
+            resourceInfo: resourceInfo,
+            refreshInterval: itemData.refreshInterval
+          };
+        }
+
         var lyr = new WMSLayer(this.serviceUrl, options);
-        var self = this,
-          dfd = this._waitForLayer(lyr);
+        var dfd = this._waitForLayer(lyr);
         dfd.then(function(layer) {
-          self._setWMSVisibleLayers(layer);
+          if (!itemHasLayers) {
+            self._setWMSVisibleLayers(layer);
+          }
+          if (wkid && layer.spatialReference) {
+            layer.spatialReference.wkid = wkid;
+          }
         });
         return dfd;
       },
@@ -960,6 +1062,49 @@ define(["dojo/_base/declare",
           handleAs: "json",
           callbackParamName: "callback"
         }, {});
+      },
+
+      _setDynamicLayerInfoTemplates: function(layer) {
+        var self = this, templates = null, dfds = [];
+
+        var readLayer = function(lInfo) {
+          var dfd = self._readRestInfo(layer.url + "/" + lInfo.id);
+          dfd.then(function(result){
+            try {
+              var popupInfo = self._newPopupInfo(result);
+              if (popupInfo) {
+                templates[lInfo.id] = {
+                  infoTemplate: self._newInfoTemplate(popupInfo)
+                };
+              }
+            } catch(exp) {
+              console.warn("Error setting popup.");
+              console.error(exp);
+            }
+          });
+          return dfd;
+        };
+
+        if (layer.infoTemplates === null) {
+          array.forEach(layer.layerInfos, function(lInfo) {
+            if (templates === null) {
+              templates = {};
+            }
+            if (!lInfo.subLayerIds) {
+              dfds.push(readLayer(lInfo));
+            }
+          });
+        }
+        if (dfds.length > 0) {
+          all(dfds).then(function(){
+            if (templates) {
+              layer.infoTemplates = templates;
+            }
+          }).otherwise(function(ex){
+            console.warn("Error reading sublayers.");
+            console.error(ex);
+          });
+        }
       },
 
       _setFeatureLayerInfoTemplate: function(featureLayer, popupInfo, title) {

@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "ملف الشكل (.zip، أرشيف ZIP الضي يحتوي على كل ملفات الشكل)",
       "CSV": "ملفات CSV (.csv، بعنوان أو دائرة عرض أو خط طول، مُحددة بفاصلة أو فاصلة منقوطة أو علامة تبويب)",
+      "KML": "ملف KML (.kml)",
       "GPX": "ملف GPX (.gpx، تنسيق تبادل GPS)",
       "GeoJSON": "ملف GeoJSON (.geo.json أو .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} معلم (معالم)",
     "invalidTypePattern": "{filename}: هذا النوع غير مدعوم",
     "maxFeaturesAllowedPattern": "يُسمح بحد أقصى {count} معالم",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "توجد مشكلة.",
+    "kmlProjectionMismatch": "لا يتطابق الإسناد المكاني للخريطة وطبقة KML، ويتعذر اتمام التحويل للعميل."
   },
   "layerList": {
     "caption": "طبقات",

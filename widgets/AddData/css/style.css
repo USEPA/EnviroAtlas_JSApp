@@ -1777,6 +1777,12 @@
   content: "\e631";
 }
 
+.ar .esri-icon-question {
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+  display: inline-block;
+}
+
 @-moz-keyframes updload-arrow-animation {
   0% {
     -moz-transform: translateY(0px);

@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Shape fail (.zip, ZIP arhiiv, mis sisaldab kõiki Shape faili komponente)",
       "CSV": "CSV või TXT failid aadressi või laiuskraadi ja pikkuskraadiga (.csv, aadressi või laiuskraadiga, pikkuskraadiga ja koma-, semikoolon- või tabeleraldusega)",
+      "KML": "KML fail (.kml)",
       "GPX": "GPX fail (.gpx, GPS Exchange format)",
       "GeoJSON": "GeoJSON fail (.geo.json või .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} objekt(i)",
     "invalidTypePattern": "{filename}: seda tüüpi ei toetata",
     "maxFeaturesAllowedPattern": "Lubatud on maksimaalselt {count} objekti",
-    "layerNamePattern": "{filename} – {name}"
+    "layerNamePattern": "{filename} – {name}",
+    "generalIssue": "Ilmnes probleem.",
+    "kmlProjectionMismatch": "Kaardi ja KML-kihi koordinaatsüsteemid ei kattu ja teisendamine pole klientrakenduses võimalik."
   },
   "layerList": {
     "caption": "Kihid",

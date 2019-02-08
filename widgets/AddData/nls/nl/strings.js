@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Een shapefile (.zip, ZIP-archief met alle shapefile-bestanden)",
       "CSV": "Een CSV-bestand (.csv met adres of breedtegraad, lengtegraad en komma, puntkomma of tabscheidingstekens)",
+      "KML": "Een KML-bestand (.kml)",
       "GPX": "Een GPX-bestand (.gpx, GPS Exchange Format)",
       "GeoJSON": "Een GeoJSON-bestand (.geo.json of .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} object(en)",
     "invalidTypePattern": "{filename}: dit type wordt niet ondersteund",
     "maxFeaturesAllowedPattern": "Een maximum van {count} objecten is toegestaan",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "Er is een probleem opgetreden.",
+    "kmlProjectionMismatch": "De ruimtelijke referentie van de kaart en de KML-laag stemmen niet overeen, en de conversie kan niet worden uitgevoerd op de client."
   },
   "layerList": {
     "caption": "Kaartlagen",

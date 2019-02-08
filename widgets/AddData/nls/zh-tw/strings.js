@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Shapefile (.zip，包含所有 shapefile 檔案的 ZIP 封存檔)",
       "CSV": "CSV 檔案 (.csv，包含地址或經度、緯度和逗號、分號或索引標籤分隔)",
+      "KML": "KML 檔案 (.kml)",
       "GPX": "GPX 檔案 (.gpx，GPS Exchange 格式)",
       "GeoJSON": "GeoJSON 檔案 (.geo.json 或 .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} 個圖徵",
     "invalidTypePattern": "{filename}: 不支援此類型",
     "maxFeaturesAllowedPattern": "最多允許 {count} 個圖徵",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "發生問題。",
+    "kmlProjectionMismatch": "地圖與 KML 圖層的空間參考不符合，且無法在用戶端上完成轉換。"
   },
   "layerList": {
     "caption": "圖層",

@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Un fichier de formes (.zip, archive ZIP contenant tous les fichiers de formes)",
       "CSV": "Un fichier CSV (.csv, avec adresse ou latitude, longitude et valeurs séparées par des virgules, des points-virgules ou des tabulations)",
+      "KML": "Un fichier KML (.kml)",
       "GPX": "Un fichier GPX (.gpx, GPS Exchange Format)",
       "GeoJSON": "Un fichier GeoJSON (.geo.json ou .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename} : {count} entité(s)",
     "invalidTypePattern": "{filename} : ce type n'est pas pris en charge",
     "maxFeaturesAllowedPattern": "Un maximum de {count} entités est autorisé",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "Un problème s’est produit.",
+    "kmlProjectionMismatch": "La référence spatiale de la carte et la couche KML ne concordent pas et la conversion ne peut pas s’effectuer sur le client."
   },
   "layerList": {
     "caption": "Couches",

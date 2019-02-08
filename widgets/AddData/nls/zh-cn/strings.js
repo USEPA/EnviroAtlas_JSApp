@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Shapefile (.zip 包含所有 shapefile 文件的 ZIP 归档)",
       "CSV": "CSV 文件(.csv，含地址或经度、纬度，以逗号、分号或制表符分隔)",
+      "KML": "KML 文件(.kml)",
       "GPX": "GPX 文件(.gpx，GPS 交换格式)",
       "GeoJSON": "GeoJSON 文件(.geo.json 或 .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}：{count} 个要素",
     "invalidTypePattern": "{filename}：此类型不受支持",
     "maxFeaturesAllowedPattern": "允许最多 {count} 个要素",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "发生问题。",
+    "kmlProjectionMismatch": "地图和 KML 图层的空间参考不匹配，并且无法在客户端上完成转换。"
   },
   "layerList": {
     "caption": "图层",

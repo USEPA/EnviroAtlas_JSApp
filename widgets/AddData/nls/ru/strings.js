@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Шейп-файл (.zip, ZIP-архив, содержащий все файлы шейп-файла)",
       "CSV": "Файл CSV (.csv, с адресами или координатами широты и долготы (с разделителями: запятой, точкой с запятой или табуляцией))",
+      "KML": "Файл KML (.kml)",
       "GPX": "Файл GPX (.gpx, обменный формат GPS)",
       "GeoJSON": "Файл GeoJSON (.geo.json или .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} объектов",
     "invalidTypePattern": "{filename}: этот тип не поддерживается",
     "maxFeaturesAllowedPattern": "Допустимо использовать не более {count} объектов",
-    "layerNamePattern": "{filename} – {name}"
+    "layerNamePattern": "{filename} – {name}",
+    "generalIssue": "Имеется проблема.",
+    "kmlProjectionMismatch": "Пространственная привязка карты и слоя KML не совпадают, конвертация на клиенте не может быть выполнена."
   },
   "layerList": {
     "caption": "Слои",

@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Shapefile (.zip, ไฟล์ ZIP ที่มีไฟล์ shapefile ทั้งหมดอยู่ภายใน)",
       "CSV": "ไฟล์ CSV (.csv ที่มีที่อยู่ หรือค่าลองจิจูด ละติจูด และจุลภาค เซมิคอลอน หรือ คั่นด้วยแท็บ)",
+      "KML": "ไฟล์ KML (.kml)",
       "GPX": "ไฟล์ GPX (.gpx ไฟล์สำหรับการแลกเปลี่ยนรูปแบบจากอุปกรณ์ GPS)",
       "GeoJSON": "ไฟล์ GeoJSON (.geo.json หรือ .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} ชิ้น",
     "invalidTypePattern": "{filename}: ไม่สนับสนุนไฟล์ประเภทนี้",
     "maxFeaturesAllowedPattern": "จำนวนสูงสุด {count} ชิ้น ที่ยอมให้ใช้ได้",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "เกิดปัญหาขึ้น",
+    "kmlProjectionMismatch": "การอ้างอิงเชิงพื้นที่ของชั้นข้อมูลแผนที่และ KML ไม่ตรงกันและการแปลงไม่สามารถทำได้บนไคลเอ็นต์"
   },
   "layerList": {
     "caption": "เลเยอร์",

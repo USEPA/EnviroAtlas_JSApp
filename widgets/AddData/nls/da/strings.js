@@ -62,7 +62,7 @@ define({
     },
     "item": {
       "actions": {
-        "add": "minutter",
+        "add": "Tilføj",
         "close": "Luk",
         "remove": "Fjern",
         "details": "Detaljer",
@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "En shapefil (.-zip, ZIP-arkiv, der indeholder alle shapefiler)",
       "CSV": "En CSV-fil (.csv, med adresse eller længde- og breddegrader samt komma-, semikolon- eller tabulatorsepareret)",
+      "KML": "En KML-fil (.kml)",
       "GPX": "En GPX-fil (.gpx, GPS Exchange Format)",
       "GeoJSON": "En GeoJSON-fil (.geo.json eller .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} objekt(er)",
     "invalidTypePattern": "{filename}: denne type understøttes ikke",
     "maxFeaturesAllowedPattern": "Højst {count} objekter er tilladt",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "Der opstod et problem.",
+    "kmlProjectionMismatch": "Den spatiale reference for kortet og KML-laget passer ikke sammen, og konverteringen kan ikke udføres for klienten."
   },
   "layerList": {
     "caption": "Lag",

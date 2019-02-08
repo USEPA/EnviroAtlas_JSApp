@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2016 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -48,6 +48,7 @@ define(["dojo/_base/declare",
     "esri/layers/WMTSLayer",
     "esri/InfoTemplate",
     "jimu/WidgetManager",
+    "jimu/dijit/Message",
     "dijit/form/Select"
   ],
   function(declare, lang, array, html, on, keys, Deferred, all, domClass, win, dom, domStyle, Viewport,
@@ -56,7 +57,7 @@ define(["dojo/_base/declare",
     ArcGISImageServiceLayer, ArcGISTiledMapServiceLayer, CSVLayer,
     FeatureLayer, GeoRSSLayer, ImageParameters, KMLLayer, StreamLayer,
     VectorTileLayer, WFSLayer, WMSLayer, WMTSLayer,
-    InfoTemplate, WidgetManager) {
+    InfoTemplate, WidgetManager, Message, Select) {
     var widgetJsonTimeSlider = {
         id: 'widgets_TimeSlider_Widget_32',
         uri: "widgets/TimeSlider/Widget"
@@ -110,7 +111,6 @@ define(["dojo/_base/declare",
         }));
 
         this.own(Viewport.on("resize", self.resize()));
-               
       },
 
       destroy: function() {
@@ -286,6 +286,13 @@ define(["dojo/_base/declare",
                     });
                     dfds.push(loader._waitForLayer(lyr));
                     window.hashAddedURLToId[url] = lyr.id;
+                  });
+                  array.forEach(info.tables, function(li) {
+                    var tbl = new FeatureLayer(url + "/" + li.id, {
+                      id: loader._generateLayerId(),
+                      outFields: ["*"]
+                    });
+                    dfds.push(loader._waitForLayer(tbl));
                   });
                   all(dfds).then(function(results) {
                     var lyrs = [];
@@ -482,7 +489,22 @@ define(["dojo/_base/declare",
           window.layerID_Portal_WebMap.push(lyr.id);
           lyr.xtnAddData = true;
           lyr.title = lyr.id;
-          map.addLayer(lyr);
+          if (type === "KML") {
+            var mapSR = map.spatialReference, outSR = lyr._outSR;
+            var projOk = (mapSR && outSR) && (mapSR.equals(outSR) ||
+              mapSR.isWebMercator() && outSR.wkid === 4326 ||
+              outSR.isWebMercator() && mapSR.wkid === 4326);
+            if (projOk) {
+              map.addLayer(lyr);
+            } else {
+              new Message({
+                titleLabel: i18n._widgetLabel,
+                message: i18n.addFromFile.kmlProjectionMismatch
+              });
+            }
+          } else {
+            map.addLayer(lyr);
+          }
           dfd.resolve(lyr);
         }).otherwise(function(error) {
           //console.warn("_waitThenAdd.error",error);

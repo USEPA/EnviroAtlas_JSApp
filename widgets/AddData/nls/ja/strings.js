@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "シェープファイル (*.zip、すべてのシェープ ファイルを含む ZIP アーカイブ)",
       "CSV": "CSV ファイル (*.csv、住所または緯度と経度を含み、カンマ、セミコロン、またはタブ区切り)",
+      "KML": "KML ファイル (*.kml)",
       "GPX": "GPX ファイル (*.gpx、GPS Exchange Format)",
       "GeoJSON": "GeoJSON ファイル (*.geo.json または *.geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} フィーチャ",
     "invalidTypePattern": "{filename}: このタイプはサポートされていません",
     "maxFeaturesAllowedPattern": "最大 {count} フィーチャが許可されています",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "問題が発生しました。",
+    "kmlProjectionMismatch": "マップの空間参照と KML レイヤーが一致しないため、クライアント上で変換を実行できません。"
   },
   "layerList": {
     "caption": "レイヤー",

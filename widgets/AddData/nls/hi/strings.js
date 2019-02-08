@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "एक शेपफाइल (.zip, सभी शेपफाइल्स युक्त ZIP संग्रह)",
       "CSV": "एक CSV फाइल (पते या अक्षांश, देशांतर और अल्पविराम, अर्धविराम या टैब सीमांकित के साथ, .csv)",
+      "KML": "KML फ़ाइल (.kml)",
       "GPX": "एक GPX फाइल (.gpx, GPS एक्सचेंज फॉर्मेट)",
       "GeoJSON": "एक GeoJSON फाइल (.geo.json या .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} फीचर्स",
     "invalidTypePattern": "{filename}: यह प्रकार समर्थित नहीं है",
     "maxFeaturesAllowedPattern": "अधिकतम {count} फीचर की अनुमति है",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "कोई समस्या हुई थी।",
+    "kmlProjectionMismatch": "मैप के स्थानिक संदर्भ और KML लेयर मेल नहीं खाते और क्लाइंट पर रूपांतरण नहीं हो सकता है।"
   },
   "layerList": {
     "caption": "लेयर",

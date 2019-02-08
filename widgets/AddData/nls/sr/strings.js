@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Shapefile (.zip, ZIP arhiva koja sadrži sve Shapefile datoteke)",
       "CSV": "CSV datoteka (.csv, sa adresom ili geografskom širinom/dužinom, uz razdvajanje zarezom, tačkom i zarezom ili tabulatorom)",
+      "KML": "KML datoteka (.kml)",
       "GPX": "GPX datoteka (.gpx, GPS Exchange Format)",
       "GeoJSON": "GeoJSON datoteka (.geo, .json ili .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} geoobjekata",
     "invalidTypePattern": "{filename}: ovaj tip nije podržan",
     "maxFeaturesAllowedPattern": "Dozvoljeno je najviše {count} geoobjekata",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "Došlo je do problema.",
+    "kmlProjectionMismatch": "Prostorna referenca mape i KML sloj se ne podudaraju, a konverziju nije moguće obaviti na klijentu."
   },
   "layerList": {
     "caption": "Slojevi",

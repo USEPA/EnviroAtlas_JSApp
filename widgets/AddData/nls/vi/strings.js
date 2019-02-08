@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Shapefile (.zip, tệp lưu trữ ZIP có chứa tất cả các tệp shapefile)",
       "CSV": "Tệp CSV (.csv, có địa chỉ hoặc kinh độ, vĩ độ, được ngăn cách bằng dấu phẩy, dấu chấm phẩy hoặc tab)",
+      "KML": "Tệp KML (.kml)",
       "GPX": "Tệp GPX (.gpx, Định dạng Trao đổi GPS)",
       "GeoJSON": "Tệp GeoJSON (.geo.json hoặc .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} (các) đối tượng",
     "invalidTypePattern": "{filename}: loại này không được hỗ trợ",
     "maxFeaturesAllowedPattern": "Cho phép tối đa {count} đối tượng",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "Đã có lỗi xảy ra.",
+    "kmlProjectionMismatch": "Tham chiếu không gian của bản đồ và lớp KML không khớp nhau, và không thể thực hiện chuyển đổi trên máy khách."
   },
   "layerList": {
     "caption": "Lớp",

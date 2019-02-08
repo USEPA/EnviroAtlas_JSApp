@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "쉐이프파일(.zip, 모든 쉐이프 파일이 포함된 ZIP 아카이브)",
       "CSV": "CSV 파일(.csv, 주소 또는 위도/경도가 포함된 파일, 세미콜론 또는 탭으로 구분된 파일)",
+      "KML": "KML 파일(.kml)",
       "GPX": "GPX 파일(.gpx, GPS Exchange 형식)",
       "GeoJSON": "GeoJSON 파일(.geo.json 또는 .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: 피처 {count}개",
     "invalidTypePattern": "{filename}: 이 형식은 지원되지 않음",
     "maxFeaturesAllowedPattern": "최대 {count}개 피처가 허용됨",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "문제가 발생했습니다.",
+    "kmlProjectionMismatch": "맵과 KML 레이어의 공간 참조가 일치하지 않으며 클라이언트에서 변환을 수행할 수 없습니다."
   },
   "layerList": {
     "caption": "레이어",

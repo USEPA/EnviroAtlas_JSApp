@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Un Shapefile (.zip, arhivă ZIP care conţine toate fişierele shapefile)",
       "CSV": "Un fişier CSV (.csv, cu adresă sau latitudine, longitudine şi delimitate prin virgulă, punct şi virgulă sau tab)",
+      "KML": "Un fişier KML (.kml)",
       "GPX": "Un fişier GPX (.gpx, format de schimb GPS)",
       "GeoJSON": "Un fişier GeoJSON (.geo.json sau .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} obiecte spaţiale",
     "invalidTypePattern": "{filename}: acest tip nu este acceptat",
     "maxFeaturesAllowedPattern": "Sunt permise maximum {count} obiecte spaţiale",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "A apărut o problemă.",
+    "kmlProjectionMismatch": "Referinţa spaţială a hărții și stratului tematic KML nu corespund, iar conversia nu poate fi realizată pe client."
   },
   "layerList": {
     "caption": "Straturi tematice",
