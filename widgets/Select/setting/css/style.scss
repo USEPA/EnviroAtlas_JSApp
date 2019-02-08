@@ -29,6 +29,7 @@
 
   .inline > div {
     display: inline-block;
+    vertical-align: middle;
   }
 
   .label {
@@ -53,6 +54,13 @@
       position: relative;
       border: 1px solid #DBDBDB;
       border-radius: 1px;
+      color: #666;
+      font-size: 24px;
+      padding: 12px;
+
+      &.point-icon {
+        padding: 12px 17px;
+      }
 
       .jimu-rtl & {
         float: right;
@@ -89,19 +97,7 @@
     }
   }
 
-  .draw-item.polyline{
-    background-image: url(../../../../jimu.js/css/images/draw_polyline.png);
-  }
-
-  .draw-item.extent{
-    background-image: url(../../../../jimu.js/css/images/draw_extent.png);
-  }
-
-  .draw-item.circle{
-    background-image: url(../../../../jimu.js/css/images/draw_circle.png);
-  }
-
-  .draw-item.polygon{
-    background-image: url(../../../../jimu.js/css/images/draw_polygon.png);
+  .jimu-basic-layer-chooser-from-map-lite .check-box-div.jimu-state-disabled {
+    display: none;
   }
 }

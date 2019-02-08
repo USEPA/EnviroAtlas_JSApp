@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Select/nls/strings":{_widgetLabel:"Kiv\u00e1laszt\u00e1s",showActions:"M\u0171veletek megjelen\u00edt\u00e9se a kiv\u00e1lasztott vektoros elemekhez",toggleSelectability:"Kijel\u00f6lhet\u0151s\u00e9g be/kikapcsol\u00e1sa",showSelectedFeatures:"Kattintson a kiv\u00e1lasztott vektoros elemek megjelen\u00edt\u00e9s\u00e9hez",actionsTitle:"Kiv\u00e1laszt\u00e1si m\u0171veletek",turnonAll:"Az \u00f6sszes r\u00e9tegen lehessen kijel\u00f6lni",turnoffAll:"Egyetlen r\u00e9tegen se lehessen kijel\u00f6lni",
+toggleSelect:"Kiv\u00e1laszthat\u00f3s\u00e1g \u00e1tv\u00e1lt\u00e1sa az \u00f6sszes r\u00e9teghez",singleSelect:"Ez legyen az egyetlen r\u00e9teg, amelyen kijel\u00f6l\u00e9s v\u00e9grehajthat\u00f3",_localized:{}}});

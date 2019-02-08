@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Share/nls/strings":{_widgetLabel:"Udost\u0119pnianie",selectSocialNetwork:"Wybierz nast\u0119puj\u0105ce opcje, aby udost\u0119pni\u0107 aplikacj\u0119:",email:"Adres e-mail",facebook:"Facebook",googlePlus:"Google+",twitter:"Twitter",addNew:"Dodaj nowy",socialMediaUrl:"Adres URL Twoich medi\u00f3w spo\u0142eczno\u015bciowych",uploadIcon:"Ikona Prze\u015blij",embedAppInWebsite:"Osad\u017a aplikacj\u0119 w witrynie internetowej",_localized:{}}});

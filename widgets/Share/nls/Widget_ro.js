@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Share/nls/strings":{_widgetLabel:"Partajare",selectSocialNetwork:"Selecta\u0163i urm\u0103toarele op\u0163iuni pentru a partaja aplica\u0163ia:",email:"E-mail",facebook:"Facebook",googlePlus:"Google+",twitter:"Twitter",addNew:"Ad\u0103ugare nou",socialMediaUrl:"Adresa URL a re\u0163elei dvs. de socializare",uploadIcon:"Pictograma \u00cenc\u0103rcare",embedAppInWebsite:"\u00cencorpora\u0163i aplica\u0163ia \u00eentr-un site web",_localized:{}}});

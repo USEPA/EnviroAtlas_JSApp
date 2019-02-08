@@ -4,5 +4,6 @@
     "facebook": true,
     "twitter": true,
     "googlePlus": true
-  }
+  },
+  "useOrgUrl": false
 }

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/OverviewMap/setting/nls/strings":{visible:"\u663e\u793a\u9ed8\u8ba4\u7684\u603b\u89c8\u56fe",minWidth:"\u6700\u5c0f\u5bbd\u5ea6",minHeight:"\u6700\u5c0f\u9ad8\u5ea6",maxWidth:"\u6700\u5927\u5bbd\u5ea6",maxHeight:"\u6700\u5927\u9ad8\u5ea6",minText:"\u6700\u5c0f\u503c",maxText:"\u6700\u5927\u503c",attachText:"\u6307\u5b9a\u8981\u5728\u5730\u56fe\u7684\u54ea\u4e2a\u5730\u65b9\u9644\u52a0\u6b64\u5fae\u4ef6\u3002",expandText:"\u521d\u59cb\u5c55\u5f00\u5fae\u4ef6",topLeft:"\u5de6\u4e0a",
+topRight:"\u53f3\u4e0a",bottomLeft:"\u5de6\u4e0b",bottomRight:"\u53f3\u4e0b",_localized:{}}});

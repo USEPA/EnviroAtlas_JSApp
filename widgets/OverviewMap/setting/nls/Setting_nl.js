@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/OverviewMap/setting/nls/strings":{visible:"Overzichtskaart standaard weergeven",minWidth:"Min. breedte",minHeight:"Min. hoogte",maxWidth:"Max. breedte",maxHeight:"Max. hoogte",minText:"Minimum",maxText:"maximum",attachText:"Geef op welke hoek van de kaart aan deze widget moet worden bevestigd.",expandText:"Klap de widget eerst uit",topLeft:"Linksboven",topRight:"Rechtsboven",bottomLeft:"Linksonder",bottomRight:"Rechtsonder",_localized:{}}});

@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Share/nls/strings":{_widgetLabel:"Freigeben",selectSocialNetwork:"W\u00e4hlen Sie folgende Optionen zum Freigeben der App aus:",email:"E-Mail",facebook:"Facebook",googlePlus:"Google+",twitter:"Twitter",addNew:"Neue hinzuf\u00fcgen",socialMediaUrl:"Ihre Social Media-URL",uploadIcon:"Symbol hochladen",embedAppInWebsite:"Die App in die Website einbetten",_localized:{}}});

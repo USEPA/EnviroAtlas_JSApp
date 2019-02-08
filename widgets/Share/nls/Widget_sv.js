@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Share/nls/strings":{_widgetLabel:"Dela",selectSocialNetwork:"V\u00e4lj f\u00f6ljande alternativ f\u00f6r att dela appen:",email:"E-post",facebook:"Facebook",googlePlus:"Google+",twitter:"Twitter",addNew:"L\u00e4gg till ny",socialMediaUrl:"URL till ditt sociala medium",uploadIcon:"\u00d6verf\u00f6r ikon",embedAppInWebsite:"B\u00e4dda in appen p\u00e5 en webbplats",_localized:{}}});

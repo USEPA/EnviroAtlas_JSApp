@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Share/nls/strings":{_widgetLabel:"\u5206\u4eab",selectSocialNetwork:"\u9078\u64c7\u4e0b\u5217\u9078\u9805\u4ee5\u5206\u4eab\u61c9\u7528\u7a0b\u5f0f:",email:"\u96fb\u5b50\u90f5\u4ef6",facebook:"Facebook",googlePlus:"Google+",twitter:"Twitter",addNew:"\u65b0\u589e",socialMediaUrl:"\u60a8\u7684\u793e\u4ea4\u5a92\u9ad4 URL",uploadIcon:"\u4e0a\u50b3\u5716\u793a",embedAppInWebsite:"\u5728\u7db2\u7ad9\u4e2d\u5d4c\u5165\u61c9\u7528\u7a0b\u5f0f",_localized:{}}});

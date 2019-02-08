@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/MyLocation/nls/strings":{_widgetLabel:"Moja lokacija",title:"Prona\u0111i moju lokaciju",browserError:"Geoolokacija nije podr\u017eana ovim preglednikom.",failureFinding:"Nije mogu\u0107e prona\u0107i lokaciju. Provjerite preglednik kako biste osigurali da je lokacija podijeljena.",httpNotSupportError:"Ovaj je widget dostupan samo kad se aplikaciji pristupi putem HTTPS-a u ovom pregledniku.",_localized:{}}});

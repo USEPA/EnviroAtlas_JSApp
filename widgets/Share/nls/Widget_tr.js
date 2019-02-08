@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Share/nls/strings":{_widgetLabel:"Payla\u015f",selectSocialNetwork:"Uygulamay\u0131 payla\u015fmak i\u00e7in a\u015fa\u011f\u0131daki se\u00e7enekleri belirleyin:",email:"E-posta",facebook:"Facebook",googlePlus:"Google+",twitter:"Twitter",addNew:"Yeni ekle",socialMediaUrl:"Sosyal medya URL'niz",uploadIcon:"Y\u00fckleme simgesi",embedAppInWebsite:"Uygulamay\u0131 web sitesine yerle\u015ftir",_localized:{}}});
