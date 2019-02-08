@@ -23,6 +23,7 @@ define({
   "showAllRecords": "Rodyti visus įrašus",
   "showRelatedRecords": "Rodyti susijusius įrašus",
   "noRelatedRecords": "Susijusių įrašų nerasta",
+  "highlightAllRecords": "Paryškinti visus įrašus žemėlapyje",
   "attachmentColumn": "Nuotraukos ir failai",
   "refresh": "Atnaujinti",
   "features": "elementai",
@@ -33,12 +34,31 @@ define({
   "columns": "Rodyti / slėpti stulpelius",
   "selectionSymbol": "Pasirinkimo simbolis",
   "closeMessage": "Slėpti lentelę (išplėsti ją vėl nuo apačios)",
-  "dataNotAvailable": "Domenų nėra!<br>Bandykite dar kartą spustelėdami mygtuką [Atnaujinti]",
+  "dataNotAvailable": "Duomenų nėra!<br>Bandykite dar kartą spustelėdami mygtuką [Atnaujinti]",
   "openTableTip": "Atidaryti atributų lentelę",
   "closeTableTip": "Slėpti atributų lentelę",
   "sortAsc": "Rūšiuoti didėjimo tvarka",
   "sortDes": "Rūšiuoti mažėjimo tvarka",
   "statistics": "Statistika",
   "attachments": "Priedai",
-  "files": "failai"
+  "files": "failai",
+  "keepRichTextLabel": "Išlaikyti raiškiojo teksto formatą",
+  "whatsThis": "Kas tai?",
+  "richTextMessage": {
+    "explanatoryText": {
+      "line1": "Sluoksnis ${layerName} apima šiuos raiškiojo teksto laukus: ",
+      "line2": " kurie gali apimti teksto formatavimo stilius, pvz., šriftus, spalvas ar teksto dydžius.",
+      "line3": "Eksportavus į CSV, šie formatavimo stiliai bus išlaikyti HTML raktažodžių pavidalu. Galite pasirinkti neišlaikyti raiškiojo teksto formato panaikindami žymę \"Išlaikyti raiškiojo teksto formatą\"."
+    },
+    "example": {
+      "label": "Pavyzdžiui:",
+      "scenarios": {
+        "first": "pagal numatytuosius nustatymus bus eksportuotas kaip šis tekstas:",
+        "second": "ir šis tekstas be raiškiojo teksto formato:"
+      }
+    }
+  },
+  "noTablesAvailable": "Nėra rodyti skirtų lentelių.",
+  "checkConfigutationToSelectLayers": "Eikite į valdiklio parametrų puslapį ir pasirinktie sluoksnius.",
+  "checkLayerListToSelectLayers": "Atributų lentelė sinchronizuojama su matomais žemėlapio sluoksniais. Sluoksniams įjungti / išjungti galite naudoti valdiklį, pvz., Sluoksnių sąrašas."
 });

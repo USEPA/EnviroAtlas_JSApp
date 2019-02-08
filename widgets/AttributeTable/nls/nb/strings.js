@@ -23,6 +23,7 @@ define({
   "showAllRecords": "Vis alle poster",
   "showRelatedRecords": "Vis relaterte poster",
   "noRelatedRecords": "Ingen tilknyttede oppføringer funnet",
+  "highlightAllRecords": "Uthev alle poster på kartet",
   "attachmentColumn": "Bilder og filer",
   "refresh": "Oppdater",
   "features": "geoobjekter",
@@ -40,5 +41,24 @@ define({
   "sortDes": "Sorter synkende",
   "statistics": "Statistikk",
   "attachments": "Vedlegg",
-  "files": "filer"
+  "files": "filer",
+  "keepRichTextLabel": "Behold rikt tekstformat",
+  "whatsThis": "Hva er dette?",
+  "richTextMessage": {
+    "explanatoryText": {
+      "line1": "${layerName} inneholder følgende felt(er) for rik tekst: ",
+      "line2": " som kan inneholde stiler for tekstformatering, som skrifttyper, farger eller tekststørrelser.",
+      "line3": "Når de eksporteres til CSV, bevares formateringsstilene i form av HTML-koder. Du kan velge ikke å beholde rik tekstformatene ved å fjerne avmerkingen av boksen «Behold rikt tekstformat»."
+    },
+    "example": {
+      "label": "Eksempel:",
+      "scenarios": {
+        "first": "blir som standard eksportert som følgende tekst:",
+        "second": "og følgende tekst uten rikt tekstformat:"
+      }
+    }
+  },
+  "noTablesAvailable": "Ingen tabeller tilgjengelig for visning.",
+  "checkConfigutationToSelectLayers": "Gå til siden for miniprograminnstillinger for å velge lag.",
+  "checkLayerListToSelectLayers": "Attributtabellen er synkronisert med synlige lag i kartet; du kan bruke et miniprogram som Lagliste for å aktivere/deaktivere lag."
 });

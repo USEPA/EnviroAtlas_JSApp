@@ -5,6 +5,12 @@ define({
   "actions": "Konfigurasikan kolom layer",
   "field": "Kolom",
   "alias": "Alias",
+  "url": "URL",
+  "sortField": "Urutkan kolom",
+  "sortOrderTooltips": {
+    "toDescending": "Ubah ke urutan turun",
+    "toAscending": "Ubah ke urutan naik"
+  },
   "visible": "Terlihat",
   "linkField": "Kolom tautan",
   "noLayers": "Tidak ada layer fitur yang tersedia",
@@ -12,6 +18,8 @@ define({
   "exportCSV": "Izinkan mengekspor ke CSV",
   "expand": "Perbesar widget sebagai langkah pertama",
   "filterByExtent": "Aktifkan Filter menurut luas peta secara default",
+  "allowTextSelection": "Izinkan pemilihan teks",
+  "highlightColor": "Warna sorotan",
   "restore": "Pulihkan ke nilai default",
   "ok": "Ya",
   "cancel": "Batal",
@@ -26,5 +34,7 @@ define({
   "fieldAlias": "Alias",
   "fieldVisibility": "Visibilitas",
   "fieldActions": "Tindakan",
-  "showAttachments": "Tampilkan lampiran"
+  "showAttachments": "Tampilkan lampiran",
+  "syncWithLayers": "Sinkronkan dengan visibilitas layer",
+  "syncWithLayersHint": "Layer yang ditampilkan di Tabel Atribut disinkronkan dengan visibilitas layer secara dinamis."
 });

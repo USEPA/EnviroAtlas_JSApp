@@ -23,6 +23,7 @@ define({
   "showAllRecords": "Rādīt visus ierakstus",
   "showRelatedRecords": "Rādīt saistītos ierakstus",
   "noRelatedRecords": "Nav atrasti saistīti ieraksti",
+  "highlightAllRecords": "Izcelt visus ierakstus kartē",
   "attachmentColumn": "Fotoattēli un faili",
   "refresh": "Atjaunot",
   "features": "elementi",
@@ -40,5 +41,24 @@ define({
   "sortDes": "Kārtot dilstošā secībā",
   "statistics": "Statistika",
   "attachments": "Pielikumi",
-  "files": "faili"
+  "files": "faili",
+  "keepRichTextLabel": "Saglabājiet bagātināta teksta formātu",
+  "whatsThis": "Kas tas ir?",
+  "richTextMessage": {
+    "explanatoryText": {
+      "line1": "${layerName} satur sekojošu bagātināta teksta lauku(us): ",
+      "line2": " tas var ietvert teksta formatēšanas stilus, piemēram, fontus, krāsas vai teksta izmērus.",
+      "line3": "Eksportējot uz CSV, formatējuma stili tiks saglabāti HTML tagu veidā. Varat izvēlēties nesaglabāt bagātinātā teksta formātus, noņemot atzīmi lodziņā “Saglabāt bagātināta teksta formātu”."
+    },
+    "example": {
+      "label": "Piemēram:",
+      "scenarios": {
+        "first": "pēc noklusējuma tiks eksportēts kā šāds teksts:",
+        "second": "un šāds teksts bez bagātināta teksta formāta:"
+      }
+    }
+  },
+  "noTablesAvailable": "Neviena tabula nav pieejama rādīšanai.",
+  "checkConfigutationToSelectLayers": "Lūdzu, atveriet logrīku iestatījumu lapu, lai atlasītu slāņus.",
+  "checkLayerListToSelectLayers": "Atribūtu tabula ir sinhronizēta ar redzamajiem slāņiem kartē; lai ieslēgtu/izslēgtu slāņus, varat izmantot tādu logrīku kā slāņu sarakstu."
 });

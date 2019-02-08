@@ -23,6 +23,7 @@ define({
   "showAllRecords": "모든 레코드 표시",
   "showRelatedRecords": "릴레이트된 레코드 보기",
   "noRelatedRecords": "릴레이트된 레코드가 없음",
+  "highlightAllRecords": "맵의 모든 레코드 강조 표시",
   "attachmentColumn": "사진과 파일",
   "refresh": "새로고침",
   "features": "피처",
@@ -40,5 +41,24 @@ define({
   "sortDes": "내림차순 정렬",
   "statistics": "통계",
   "attachments": "첨부 파일",
-  "files": "파일"
+  "files": "파일",
+  "keepRichTextLabel": "서식 있는 텍스트 형식 유지",
+  "whatsThis": "이 항목은 무엇인가요?",
+  "richTextMessage": {
+    "explanatoryText": {
+      "line1": "${layerName}에는 다음과 같은 서식 있는 텍스트 필드가 포함되어 있습니다. ",
+      "line2": " 글꼴, 색상 또는 텍스트 크기 등의 텍스트 형식 지정 스타일이 포함될 수 있습니다.",
+      "line3": "CSV로 내보낼 때 형식 지정 스타일은 HTML 태그 형태로 보존됩니다. \"서식 있는 텍스트 형식 유지\" 체크 박스의 선택을 취소하여 서식 있는 텍스트 형식을 유지하지 않도록 선택할 수 있습니다."
+    },
+    "example": {
+      "label": "예를 들면 다음과 같습니다.",
+      "scenarios": {
+        "first": "기본 설정에 따라 다음 텍스트로 내보내집니다.",
+        "second": "서식 있는 텍스트 형식이 없는 다음과 같은 텍스트입니다."
+      }
+    }
+  },
+  "noTablesAvailable": "표시할 테이블이 없습니다.",
+  "checkConfigutationToSelectLayers": "위젯 설정 페이지로 이동하여 레이어를 선택하세요.",
+  "checkLayerListToSelectLayers": "속성 테이블이 맵에 표시된 레이어와 동기화됩니다. 레이어 목록 등 위젯을 사용하여 레이어를 켜거나 끌 수 있습니다."
 });

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,7 +24,9 @@ define([
     'dojo/_base/array',
     'dojo/on',
     'dojo/Deferred',
+    'dojo/promise/all',
     "dojo/query",
+    "dijit/registry",
     "jimu/dijit/Popup",
     "jimu/dijit/Message",
     "jimu/dijit/CheckBox",
@@ -41,7 +43,9 @@ define([
     array,
     on,
     Deferred,
+    promiseAll,
     query,
+    registry,
     Popup,
     Message,
     CheckBox,
@@ -87,7 +91,7 @@ define([
           type: 'text'
         }, {
           name: 'url',
-          title: 'url',
+          title: this.nls.url,
           type: 'text',
           hidden: true
         }, {
@@ -95,6 +99,17 @@ define([
           title: 'index',
           type: 'text',
           hidden: true
+        }, {
+          name: 'sortField',
+          title: this.nls.sortField,
+          type: 'dropdown',
+          width: '130'          
+        }, {
+          name: 'isDescending',
+          title: '',
+          width: '40',
+          type: 'checkbox',
+          'class': 'sort-order'
         }, {
           name: 'actions',
           title: this.nls.actions,
@@ -143,11 +158,25 @@ define([
             'row-click',
             lang.hitch(this, this._verifiedOnShowClick)
           ));
+          this.own(on(
+            this.displayFieldsTable,
+            'row-add',
+            lang.hitch(this, function(tr) {
+              this._addTooltipToSortOrderNode(tr);
+            })
+          ));
+
+          this.own(on(
+            this.syncWithLayersCheck,
+            'change',
+            lang.hitch(this, function(checked) {
+              this._toggleTableShowOption(checked);
+            })
+          ));
 
           this.setConfig(this.config);
         }));
       },
-
 
       editFieldsClick: function(tr) {
         var tds = query(".action-item-parent", tr);
@@ -213,7 +242,10 @@ define([
               show: true
             };
           });
-
+          layerFields = utils.arcade.appendArcadeExpressionsToFields(
+            layerFields, 
+            this._layerInfos[rowIndex]
+          );
           utils.merge(layerFields, fields, 'name', function(d, s) {
             lang.mixin(d, s);
           });
@@ -221,6 +253,23 @@ define([
           return layerFields;
         }));
       },
+
+      _addTooltipToSortOrderNode: function(tr) {
+        var dom = query('.sort-order .jimu-checkbox', tr)[0];
+        var dijit = registry.byNode(dom);
+        var nls = this.nls;
+        var updateTooltip = function(isDescending) {
+          if(isDescending) {
+            dom.title = nls.sortOrderTooltips.toAscending;
+          } else {
+            dom.title = nls.sortOrderTooltips.toDescending;
+          }
+        };
+        if(dijit) {
+          this.own(on(dijit, 'change', updateTooltip));
+          updateTooltip(dijit.checked);
+        }
+      },     
 
       openFieldsDialog: function(tr, fields, idx) {
         /*jshint unused:false*/
@@ -387,19 +436,30 @@ define([
       // must be invoke after initialize this._layerInfos
       _processDelayedLayerInfosAfterInit: function(layerInfos) {
         var count = this._layerInfos.length;
+        var sortFieldRequests = [];
+
         for (var i = 0; i < layerInfos.length; i++) {
           var _configLayerInfo = utils.getConfigInfoFromLayerInfo(layerInfos[i]);
-          var show = _configLayerInfo.show;
-          this.displayFieldsTable.addRow({
+          var show = _configLayerInfo.show,
+              sortField = _configLayerInfo.sortField;
+          var rowData = {
             label: _configLayerInfo.name || _configLayerInfo.title,
             url: _configLayerInfo.layer.url,
             index: "" + (count + i),
+            isDescending: true,
             show: show
-          });
-
+          };
           this._allLayerFields.push(_configLayerInfo.layer.fields);
-          this._layerInfos.push(layerInfos[i]); // this case un get tableInfo
+          this._layerInfos.push(layerInfos[i]);
+          sortFieldRequests.push(this._prepareSortField(rowData, i));
         }
+        promiseAll(sortFieldRequests).then(lang.hitch(this, function(results) {
+          for(var i = 0; i < results.length; i++) {
+            this._addRowToDisplayFieldsTable(results[i]);
+          }
+        }), lang.hitch(this, function(err) {
+          console.error(err);
+        }));
       },
 
       _processDelayedLayerInfos: function() { // must be invoke after initialize this._layerInfos
@@ -437,9 +497,18 @@ define([
                   lang.hitch(this, function(mci, cli) {
                     //mci short for map config layerInfo: layerInfo
                     //cli short for config layer info: layerInfo
+
+                    // append arcade expression fields
+                    var layerInfo = this._getLayerInfoById(mci.id);
+                    mci.layer.fields = utils.arcade.appendArcadeExpressionsToFields(
+                      mci.layer.fields,
+                      layerInfo
+                    );
                     // mci.name = cli.name;
                     mci.show = cli.show;
                     mci.showAttachments = cli.showAttachments;
+                    mci.sortField = cli.sortField;
+                    mci.isDescending = cli.isDescending;
                     mci.layer.url = cli.layer.url;
                     if (lang.getObject('layer.fields.length', false, mci) &&
                       lang.getObject('layer.fields.length', false, cli)) {
@@ -469,7 +538,23 @@ define([
                   this._layerInfos
                 );
 
-                def.resolve(utils.getConfigInfosFromLayerInfos(layerInfos));
+                var configLayerInfos = utils.getConfigInfosFromLayerInfos(layerInfos);
+                // append arcade expression fields
+                // to each layerInfo object if it has any
+                configLayerInfos = array.map(configLayerInfos, 
+                  lang.hitch(this, function(configLayerInfo) {
+                    var layerFields = lang.getObject('layer.fields', false, configLayerInfo);
+                    var layerInfo = this._getLayerInfoById(configLayerInfo.id);
+                    if(layerFields) {
+                      layerFields = utils.arcade.appendArcadeExpressionsToFields(
+                        configLayerInfo.layer.fields,
+                        layerInfo
+                      );
+                      configLayerInfo.layer.fields = layerFields;
+                    }
+                    return configLayerInfo;
+                }));
+                def.resolve(configLayerInfos);
               }
             }), function(err) {
               console.error(err);
@@ -496,17 +581,24 @@ define([
 
       _init: function(layerInfos) {
         var unSupportQueryLayerNames = [];
+        var sortFieldRequests = [];
+
         for (var i = 0; i < layerInfos.length; i++) {
           var show = layerInfos[i].show && this._getSupportTableInfoById(layerInfos[i].id).isSupportQuery;
-          this.displayFieldsTable.addRow({
+          var rowData = {
             label: layerInfos[i].name || layerInfos[i].title,
             url: layerInfos[i].layer.url,
             index: "" + i,
             show: show,
+            sorting: {
+              fields: layerInfos[i].layer.fields,
+              selectedField: layerInfos[i].sortField
+            },
+            isDescending: layerInfos[i].isDescending,
             showAttachments: !!layerInfos[i].showAttachments
-          });
-
+          };
           this._allLayerFields.push(layerInfos[i].layer.fields);
+          sortFieldRequests.push(this._prepareSortField(rowData, i));
 
           if (this._unSpportQueryCampsite.fromConfig) {
             var _layerNames = this._unSpportQueryCampsite.layerNames;
@@ -517,6 +609,13 @@ define([
             }
           }
         }
+        promiseAll(sortFieldRequests).then(lang.hitch(this, function(results) {
+          for(var i = 0; i < results.length; i++) {
+            this._addRowToDisplayFieldsTable(results[i]);
+          }
+        }), lang.hitch(this, function(err) {
+          console.error(err);
+        }));
 
         if (this._unSpportQueryCampsite.fromConfig && unSupportQueryLayerNames.length > 0) {
           new Message({
@@ -555,6 +654,64 @@ define([
         } else {
           this.filterByMapExtent.uncheck();
         }
+
+        if (this.config.allowTextSelection) {
+          this.textSelection.check();
+        } else {
+          this.textSelection.uncheck();
+        }
+
+        if (this.config.syncWithLayers) {
+          this.syncWithLayersCheck.check();
+        } else {
+          this.syncWithLayersCheck.uncheck();
+        }
+      },
+
+      _addRowToDisplayFieldsTable: function(rowData) {
+        this.displayFieldsTable.addRow(rowData);
+      },
+
+      _prepareSortField: function(rowData, layerIndex) {
+        var def= new Deferred();
+
+        if(rowData.sorting && rowData.sorting.fields) {
+          rowData.sortField = this._prepareSortFieldOptions(rowData.sorting);
+          def.resolve(rowData);
+        } else {
+          this._getLayerFields(layerIndex).then(lang.hitch(this, function(fields) {
+            if(rowData.sorting) {
+              rowData.sorting.fields = fields;
+            } else {
+              rowData.sorting = { 'fields': fields };
+            }
+            rowData.sortField = this._prepareSortFieldOptions(rowData.sorting);
+            def.resolve(rowData);
+          }), lang.hitch(this, function(err) {
+            console.error(err);
+            def.reject(err);
+          }));
+        }  
+
+        return def;
+      },
+
+      _prepareSortFieldOptions: function(sortingObj) {
+        if(!(sortingObj && sortingObj.fields && Array.isArray(sortingObj.fields))) return;
+
+        return array.map(sortingObj.fields, function(f) {
+          var option = {
+            value: f.name,
+            label: f.alias
+          };
+          if(sortingObj.selectedField === f.name) {
+            option.selected = true;
+          }
+          if(f.name.indexOf('expression/') === 0) {
+            option.disabled = true;
+          }
+          return option;
+        });
       },
 
       _canUseOpenAtStart: function() {
@@ -594,6 +751,8 @@ define([
             json.layer.fields = this._allLayerFields[idx];
             json.show = data[idx].show;
             json.showAttachments = data[idx].showAttachments;
+            json.sortField = data[idx].sortField;
+            json.isDescending = data[idx].isDescending;
             table.push(json);
           }));
         } else {
@@ -606,6 +765,8 @@ define([
             json.layer.fields = this._allLayerFields[i];
             json.show = data[i].show;
             json.showAttachments = data[i].showAttachments;
+            json.sortField = data[i].sortField;
+            json.isDescending = data[i].isDescending;
             table.push(json);
           }
         }
@@ -614,12 +775,23 @@ define([
         this.config.layerInfos = table;
         this.config.hideExportButton = !this.exportcsv.getValue();
         this.config.filterByMapExtent = this.filterByMapExtent.getValue();
+        this.config.allowTextSelection = this.textSelection.getValue();
+        this.config.syncWithLayers = this.syncWithLayersCheck.getValue();
 
         if (!this._canUseOpenAtStart()) {
           this.config.initiallyExpand = this.expand.getValue();
         }// else never change the property.
 
         return this.config;
+      },
+
+      _toggleTableShowOption: function(isDisabled) {
+        if(!this.displayFieldsTable) return;
+
+        query('.show .jimu-checkbox').forEach(function(checkNode) {
+          var checkDijit = registry.byNode(checkNode);
+          checkDijit.setStatus(!isDisabled);
+        });
       }
     });
   });

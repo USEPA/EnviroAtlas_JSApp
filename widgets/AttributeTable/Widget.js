@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ define([
     "esri/lang",
     'dojo/_base/lang',
     "dojo/on",
+    'dojo/keys',
     'dojo/touch',
     'dojo/topic',
     'dojo/aspect',
@@ -54,6 +55,7 @@ define([
     esriLang,
     lang,
     on,
+    keys,
     touch,
     topic,
     aspect,
@@ -89,9 +91,12 @@ define([
 
       postCreate: function() {
         this.inherited(arguments);
+        html.setAttr(this.domNode, 'aria-label', this.nls._widgetLabel);
+
         utils.loadStyleLink("dgrid", apiUrl + "dgrid/css/dgrid.css");
         this._loadInfoDef = null;
         this.AttributeTableDiv = null;
+        this.NoTableMessageDiv = null;
 
         this._delayedLayerInfos = [];
         this.layerTabPages = [];//[ContentPane]
@@ -151,6 +156,25 @@ define([
         //   'class': 'esriAttributeTableCloseImage close-button'
         // }, this.domNode);
         // this.own(on(this.closeBtn, 'click', lang.hitch(this, '_onCloseBtnClicked')));
+
+        this.own(on(this.domNode, 'keydown', lang.hitch(this, function (evt) {
+          if(html.hasClass(evt.target, this.baseClass) && evt.keyCode === keys.ENTER) {
+            this.focusToDisplay = false;
+          }
+        })));
+
+        this.focusToDisplay = true;
+        this.own(on(this.domNode, 'focus', lang.hitch(this, function () {
+          if(utils.isInNavMode() && this.focusToDisplay &&
+            html.getStyle(this.domNode, 'height') < 10) {
+            this._switchTable(); //show widget temporarily
+          }
+        })));
+        this.own(on(this.domNode, 'blur', lang.hitch(this, function () {
+          if(utils.isInNavMode() && this.focusToDisplay) {
+            this._switchTable(); //hide widget
+          }
+        })));
       },
 
       _createUtilitiesUI: function() {
@@ -183,8 +207,10 @@ define([
       _createSwitchUI: function() {
         if (!this._isOnlyTable()) {
           this.switchBtn = html.create("div", {
-            className: "jimu-widget-attributetable-switch"
+            className: "jimu-widget-attributetable-switch",
+            tabindex: '0'
           }, this.domNode);
+          utils.initFirstFocusNode(this.domNode, this.switchBtn);
           // html.addClass(this.switchBtn, "jimu-widget-attributetable-switch");
           // html.place(this.switchBtn, this.domNode);
           // this.highlightLine = html.create("div", {
@@ -192,6 +218,14 @@ define([
           // }, this.domNode);
 
           this.own(on(this.switchBtn, 'click', lang.hitch(this, this._switchTable)));
+
+          this.own(on(this.switchBtn, 'keydown', lang.hitch(this, function (evt) {
+            if(evt.keyCode === keys.ENTER) {
+              this._switchTable();
+              //back to focus and display widgetDom temperly when set it closed.
+              this.focusToDisplay = this.showing ? false : true;
+            }
+          })));
         }
       },
 
@@ -220,6 +254,8 @@ define([
       },
 
       _openTable: function() {
+        html.removeClass(this.domNode, 'closed');
+
         if (!this._loadInfoDef) {
           this._loadInfoDef = new Deferred();
           this.own(this._loadInfoDef);
@@ -273,6 +309,8 @@ define([
       },
 
       _closeTable: function() {
+        html.addClass(this.domNode, 'closed');
+
         this._changeHeight(0);
         this.showRefreshing(false);
         this._processCloseBarUI();
@@ -319,10 +357,57 @@ define([
         }
       },
 
-      onLayerInfosIsShowInMapChanged: function() {
+      onLayerInfosIsShowInMapChanged: function(changedLayerInfos) {
         if (this._activeTable) {
           this._activeTable.changeToolbarStatus();
         }
+
+        // check if the tabs are configured to synchronize with
+        // layer visibilities: 
+        if(this.config.syncWithLayers) {
+          array.forEach(changedLayerInfos, lang.hitch(this, function(changedLayerInfo) {
+            // check if is leaf layer
+            if(!changedLayerInfo.getSubLayers().length) {
+              var isVisible = changedLayerInfo.isShowInMap();
+              var configInfo = attrUtils.getConfigInfoFromLayerInfo(changedLayerInfo);
+              var page = this.getExistLayerTabPage(configInfo.id);
+
+              if(isVisible) {
+                if (page) {
+                  if(page.closable) {
+                    // remove the "X" button if the layer is turned on
+                    page.set('closable', false);
+                  }
+                } else {
+                  var layerInfoIndex = this._resourceManager.getVisivleLayerInfoIndexById(changedLayerInfo.id);
+                  var isInResources = this._resourceManager.getLayerInfoById(changedLayerInfo.id);
+                  var params = {
+                    layer: changedLayerInfo,
+                    closeable: false,
+                    isActive: false,
+                    index: layerInfoIndex
+                  };
+
+                  if (!isInResources) {
+                    this._resourceManager.updateLayerInfoResources(false)
+                    .then(lang.hitch(this, function() {
+                      layerInfoIndex = this._resourceManager.getVisivleLayerInfoIndexById(changedLayerInfo.id);
+                      params.index = layerInfoIndex;
+                      this._addLayerToTable(params);
+                    }));
+                  } else {
+                    this._addLayerToTable(params);
+                  }
+                }
+              } else {
+                if(page) {
+                  this.layerTabPageClose(configInfo.id, true);
+                }
+              }
+            }
+          }));
+        }
+
       },
 
       onLayerInfosChanged: function(layerInfo, changeType, layerInfoSelf) {
@@ -513,7 +598,8 @@ define([
           this._resourceManager.getQueryTable(
           tabId,
           this.config.filterByMapExtent,
-          this.config.hideExportButton).then(lang.hitch(this, function(result) {
+          this.config.hideExportButton,
+          this.config.allowTextSelection).then(lang.hitch(this, function(result) {
             //prevent overwrite by another asynchronous callback
             if (this._activeLayerInfoId !== tabId || !result) {
               return;
@@ -557,7 +643,7 @@ define([
         }
 
         this._resourceManager.getRelationTable(originalInfoId, relationShipKey,
-          false, this.config.hideExportButton)
+          false, this.config.hideExportButton, this.config.allowTextSelection)
         .then(lang.hitch(this, function(result) {
           //prevent overwrite by another asynchronous callback
           if (this._activeLayerInfoId !== infoId || !result) {
@@ -694,7 +780,9 @@ define([
         if (that._activeTable) {
           that._activeTableHandles.push(on(that._activeTable,
             'show-related-records', function(evt) {
-              that._showRelatedRecords(evt);
+              var layerInfoId = evt.layerInfoId;
+              var selectedIds = evt.objectIds;
+              that._showRelatedRecords(layerInfoId, selectedIds);
             })
           );
           that._activeTableHandles.push(on(that._activeTable,
@@ -814,6 +902,8 @@ define([
         if (len > 0) {
           // tabListWrapperHeight + tolerance
           this.noGridHeight = this._getGridTopSectionHeight() + 5;
+        } else {
+          this._toggleNoTableMessage(true);
         }
         // vertical center
         utils.setVerticalCenter(this.tabContainer.domNode);
@@ -849,23 +939,23 @@ define([
       },
 
 
-      _showRelatedRecords: function() {
+      _showRelatedRecords: function(infoId, objIds) {
         var activeTable = this._activeTable;
         if (activeTable) {
           var layerInfo = activeTable.layerInfo;
-          if (layerInfo && layerInfo.layerObject) {
+          if (layerInfo && layerInfo.id === infoId && layerInfo.layerObject) {
             var _layer = layerInfo.layerObject;
             var ships = _layer.relationships;
-            var objIds = activeTable.getSelectedRows();
+            // var objIds = activeTable.getSelectedRows();
 
             for (var i = 0, len = ships.length; i < len; i++) {
-              this.addNewRelationTab(objIds, ships[i], layerInfo.id);
+              this.addNewRelationTab(objIds, ships[i], layerInfo.id, true, true);
             }
           }
         }
       },
 
-      addNewLayerTab: function(infoId, featureSet) {
+      addNewLayerTab: function(infoId, featureSet, closeable, isActive, index) {
         var layerInfo = this._resourceManager.getLayerInfoById(infoId);
         if (!layerInfo) {
           return;
@@ -875,7 +965,7 @@ define([
         json.title = this.getLayerInfoLabel(layerInfo);
         json.name = json.title;
         json.paneId = this.getLayerInfoId(layerInfo);
-        json.closable = true;
+        json.closable = closeable;
         json.layerType = this._layerTypes.FEATURELAYER;
         json.featureSet = featureSet;
         if (page) {
@@ -897,18 +987,25 @@ define([
 
           page.set("title", json.name);
           // tabContainer will remove the page and destroy the page by itself.
-          this.own(on(page, "close", lang.hitch(this, this.layerTabPageClose, json.paneId)));
-          this.tabContainer.addChild(page);
+          this.own(on(page, "close", lang.hitch(this, this.layerTabPageClose, json.paneId, true)));
+          this.tabContainer.addChild(page, index);
         }
-        this.tabContainer.selectChild(page); // goto tabChanged
+        if(isActive) {
+          this.tabContainer.selectChild(page); // goto tabChanged
+        }
+        if(this.layerTabPages.length === 1) {
+          this._toggleNoTableMessage(false);
+        }
       },
 
-      addNewRelationTab: function(oids, relationShip, originalInfoId) {
-        var lInfo = relationShip && relationShip.shipInfo;
+      addNewRelationTab: function(oids, relationShip, originalInfoId, closeable, isActive) {
+        var relationshipInfo = this._resourceManager.getRelationShipInfo(relationShip);
+        var lInfo = relationShip && relationshipInfo;
         if (!lInfo) {
           return;
         }
-        var page = this.getExistLayerTabPage(relationShip.shipInfo.id);
+        var pageId = relationshipInfo.id;
+        var page = this.getExistLayerTabPage(pageId);
 
         var json = {};
         json.oids = oids;
@@ -918,7 +1015,7 @@ define([
         json.paneId = lInfo.id;
         json.relKey = relationShip._relKey;
         json.originalInfoId = originalInfoId;
-        json.closable = true;
+        json.closable = closeable;
         json.layerType = this._layerTypes.RELATIONSHIPTABLE;
 
         if (page) {
@@ -935,11 +1032,13 @@ define([
           this.layerTabPages.push(page);
           page.set("title", json.name);
           // tabContainer will remove the page and destroy the page by itself.
-          this.own(on(page, "close", lang.hitch(this, this.layerTabPageClose, json.paneId)));
+          this.own(on(page, "close", lang.hitch(this, this.layerTabPageClose, json.paneId, true)));
 
           this.tabContainer.addChild(page);
         }
-        this.tabContainer.selectChild(page); // goto tabChanged
+        if(isActive) {
+          this.tabContainer.selectChild(page); // goto tabChanged
+        }
       },
 
       onReceiveData: function(name, source, params) {
@@ -952,6 +1051,8 @@ define([
             }
           }
           params.layer = params.layer || params.layerInfo;
+          params.closeable = true;
+          params.isActive = true;
 
           if (!this.showing) {
             this._openTable().then(lang.hitch(this, function() {
@@ -989,16 +1090,33 @@ define([
           if (layerObject) {
             layerObject.id = params.layer.id;
             if (layerObject.loaded) {
-              this.addNewLayerTab(layerInfo.id, params.featureSet);
+              this.addNewLayerTab(
+                layerInfo.id, 
+                params.featureSet, 
+                !!params.closeable,
+                !!params.isActive,
+                params.index);
             } else {
               this.own(on(layerObject, "load",
-                lang.hitch(this, this.addNewLayerTab, layerInfo.id, params.featureSet)));
+                lang.hitch(this, 
+                  this.addNewLayerTab, 
+                  layerInfo.id, 
+                  params.featureSet, 
+                  !!params.closeable,
+                  !!params.isActive,
+                  params.index)));
             }
           } else if (params.url) {
             layer = new FeatureLayer(params.url);
             this.own(
               on(layer, "load",
-                lang.hitch(this, this.addNewLayerTab, layerInfo.id, params.featureSet))
+                lang.hitch(this, 
+                  this.addNewLayerTab, 
+                  layerInfo.id, 
+                  params.featureSet, 
+                  !!params.closeable,
+                  !!params.isActive,
+                  params.index))
             );
           }
         }), lang.hitch(this, function(err) {
@@ -1050,8 +1168,9 @@ define([
             if (len === 1) {
               this._activeLayerInfoId = null;
               this.onClose();
+              this._toggleNoTableMessage(true);
               return;
-            }  else if(paneId === this._activeLayerInfoId) {
+            } else if(paneId === this._activeLayerInfoId) {
               var layerIndex = len - 2; // show last contentpane
               this.tabContainer.selectChild(this.layerTabPages[layerIndex]);
             }
@@ -1072,7 +1191,7 @@ define([
               this._resourceManager.collectRelationShips(layerInfo, relatedTableInfos);
               var ships = layerObject.relationships;
               for (var i = 0, len = ships.length; i < len; i++) {
-                this.addNewRelationTab(featureIds, ships[i], layerInfo.id);
+                this.addNewRelationTab(featureIds, ships[i], layerInfo.id, true, true);
               }
             }
           }));
@@ -1098,6 +1217,22 @@ define([
             this._processRelatedRecordsFromPopup(layerInfo, featureIds);
           }));
         }
+      },
+
+      _toggleNoTableMessage: function(show) {
+        if(!this.NoTableMessageDiv) {
+          var srcRef = this.AttributeTableDiv || this.domNode;
+          var messageText = this.nls.noTablesAvailable + '<br/><br/>' +
+          (this.config.syncWithLayers ? 
+          this.nls.checkLayerListToSelectLayers : this.nls.checkConfigutationToSelectLayers);
+          
+          this.NoTableMessageDiv = html.create('div', {
+            innerHTML: messageText,
+            className: 'jimu-widget-attributetable-notable hidden'
+          });
+          html.place(this.NoTableMessageDiv, srcRef);
+        }
+        html[show ? 'removeClass':'addClass'](this.NoTableMessageDiv, 'hidden');
       }
     });
 

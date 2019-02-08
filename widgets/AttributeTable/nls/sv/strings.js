@@ -23,6 +23,7 @@ define({
   "showAllRecords": "Visa alla poster",
   "showRelatedRecords": "Visa relaterade poster",
   "noRelatedRecords": "Inga relaterade poster hittades",
+  "highlightAllRecords": "Markera alla poster i kartan",
   "attachmentColumn": "Foton och filer",
   "refresh": "Uppdatera",
   "features": "geoobjekt",
@@ -40,5 +41,24 @@ define({
   "sortDes": "Sortera fallande",
   "statistics": "Statistik",
   "attachments": "Bilagor",
-  "files": "filer"
+  "files": "filer",
+  "keepRichTextLabel": "Bevara RTF-format",
+  "whatsThis": "Vad är detta?",
+  "richTextMessage": {
+    "explanatoryText": {
+      "line1": "${layerName} innehåller följande RTF-fält: ",
+      "line2": " , som kan inkludera textformatering som typsnitt, färg och textstorlekar.",
+      "line3": "Om det exporteras till CSV bevaras formateringen som HTML-taggar. Du kan välja att inte bevara RTF-formateringen genom att avmarkera rutan Bevara RTF-format."
+    },
+    "example": {
+      "label": "Exempel:",
+      "scenarios": {
+        "first": "exporteras som standard som följande text:",
+        "second": "och följande text utan RTF-format:"
+      }
+    }
+  },
+  "noTablesAvailable": "Inga tabeller finns att visa.",
+  "checkConfigutationToSelectLayers": "Gå till widgetens inställningssida för att välja lager.",
+  "checkLayerListToSelectLayers": "Attributtabellen synkroniseras med synliga lager i kartan. Du kan använda en widget som exempelvis Lagerlista för att växla lager av/på."
 });

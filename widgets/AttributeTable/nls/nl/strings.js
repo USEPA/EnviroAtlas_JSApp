@@ -14,7 +14,7 @@ define({
   "highlight": "Grafische elementen markeren",
   "selectAll": "Records op alle pagina´s selecteren",
   "selectPage": "Records op huidige pagina selecteren",
-  "clearSelection": "Clear selection",
+  "clearSelection": "Selectie opheffen",
   "filter": "Filter",
   "setFilterTip": "Stel filters correct in.",
   "noFilterTip": "Zonder filterexpressie zal deze querytaak alle functies in de opgegeven gegevensbron weergeven.",
@@ -23,6 +23,7 @@ define({
   "showAllRecords": "Alle records weergeven",
   "showRelatedRecords": "Gerelateerde records weergeven",
   "noRelatedRecords": "Geen verwante records gevonden",
+  "highlightAllRecords": "Markeer alle records op de kaart",
   "attachmentColumn": "Foto's en bestanden",
   "refresh": "Vernieuwen",
   "features": "objecten",
@@ -40,5 +41,24 @@ define({
   "sortDes": "Aflopend sorteren",
   "statistics": "Statistieken",
   "attachments": "Bijlagen",
-  "files": "bestanden"
+  "files": "bestanden",
+  "keepRichTextLabel": "Rich text-formaat behouden",
+  "whatsThis": "Wat is dit?",
+  "richTextMessage": {
+    "explanatoryText": {
+      "line1": "${layerName} bevat de volgende rich text-veld(en): ",
+      "line2": " dat kan tekstopmaakstijlen omvatten, zoals lettertypen, kleuren of tekstformaten.",
+      "line3": "Bij export naar CSV worden de opmaakstijlen bewaard in de vorm van HTML-tags. U kunt ervoor kiezen om de rich-text-formaten niet te behouden door het vakje \"Rich text-formaat behouden\" uit te schakelen."
+    },
+    "example": {
+      "label": "Bijvoorbeeld:",
+      "scenarios": {
+        "first": "wordt standaard als de volgende tekst geëxporteerd:",
+        "second": "en de volgende tekst zonder rich text-formaat:"
+      }
+    }
+  },
+  "noTablesAvailable": "Geen tabellen beschikbaar om weer te geven.",
+  "checkConfigutationToSelectLayers": "Ga naar de widgetinstellingenpagina voor het selecteren van lagen.",
+  "checkLayerListToSelectLayers": "Attribuuttabel is gesynchroniseerd met de zichtbare lagen in de tabel. U kunt widgets gebruiken als Lagenlijst om te schakelen tussen het aan- en uitzetten van lagen."
 });

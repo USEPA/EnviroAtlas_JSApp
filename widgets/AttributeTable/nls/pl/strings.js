@@ -23,6 +23,7 @@ define({
   "showAllRecords": "Pokaż wszystkie rekordy",
   "showRelatedRecords": "Pokaż powiązane rekordy",
   "noRelatedRecords": "Nie znaleziono powiązanych rekordów",
+  "highlightAllRecords": "Wyróżnij wszystkie rekordy na mapie",
   "attachmentColumn": "Zdjęcia i pliki",
   "refresh": "Odśwież",
   "features": "obiekty",
@@ -40,5 +41,24 @@ define({
   "sortDes": "Sortuj malejąco",
   "statistics": "Statystyka",
   "attachments": "Załączniki",
-  "files": "plikami"
+  "files": "plikami",
+  "keepRichTextLabel": "Zachowaj format RTF",
+  "whatsThis": "Co to jest?",
+  "richTextMessage": {
+    "explanatoryText": {
+      "line1": "Warstwa ${layerName} zawiera następujące pola w formacie RTF: ",
+      "line2": " , które mogą zawierać style formatowania tekstu, jak np. czcionki, kolory i rozmiary tekstu.",
+      "line3": "Po wyeksportowaniu do pliku CSV style formatowania zostaną zachowane w postaci znaczników HTML. Można zdecydować, że format RTF nie zostanie zachowany, usuwając zaznaczenie pola \"Zachowaj format RTF\"."
+    },
+    "example": {
+      "label": "Przykład:",
+      "scenarios": {
+        "first": "zostanie wyeksportowany domyślnie jako poniższy tekst:",
+        "second": "i poniższy tekst bez formatu RTF:"
+      }
+    }
+  },
+  "noTablesAvailable": "Brak tabel dostępnych do wyświetlenia.",
+  "checkConfigutationToSelectLayers": "Przejdź na stronę ustawień widżetu, aby wybrać warstwy.",
+  "checkLayerListToSelectLayers": "Tabela atrybutów jest synchronizowana z warstwami widocznymi na mapie, warstwy można włączać i wyłączać przy użyciu widżetu, takiego jak Lista warstw."
 });

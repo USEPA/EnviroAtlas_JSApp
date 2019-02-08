@@ -23,6 +23,7 @@ define({
   "showAllRecords": "显示所有记录",
   "showRelatedRecords": "显示相关记录",
   "noRelatedRecords": "未找到相关记录",
+  "highlightAllRecords": "高亮显示地图上的所有记录",
   "attachmentColumn": "照片及文件",
   "refresh": "刷新",
   "features": "要素",
@@ -40,5 +41,24 @@ define({
   "sortDes": "降序排列",
   "statistics": "统计数据",
   "attachments": "附件",
-  "files": "文件"
+  "files": "文件",
+  "keepRichTextLabel": "保持富文本格式",
+  "whatsThis": "这是什么?",
+  "richTextMessage": {
+    "explanatoryText": {
+      "line1": "${layerName} 包含以下富文本字段： ",
+      "line2": " 可能包含文本格式化样式的字段，如字体、颜色或文本大小。",
+      "line3": "将格式化样式导出为 CSV 时，系统将以 HTML 标签的形式保留这些样式。 您可以选择不保持富文本格式，方法是取消选中“保持富文本格式”框。"
+    },
+    "example": {
+      "label": "例如：",
+      "scenarios": {
+        "first": "默认将作为以下文本导出：",
+        "second": "以及不含富文本格式的以下文本："
+      }
+    }
+  },
+  "noTablesAvailable": "无可显示的表格。",
+  "checkConfigutationToSelectLayers": "请转到微件设置页面选择图层。",
+  "checkLayerListToSelectLayers": "属性表与地图中的可见图层同步，您可以使用图层列表等微件打开/关闭图层。"
 });

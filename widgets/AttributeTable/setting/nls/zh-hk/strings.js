@@ -5,6 +5,12 @@ define({
   "actions": "配置圖層欄位",
   "field": "欄位",
   "alias": "別名",
+  "url": "URL",
+  "sortField": "排序欄位",
+  "sortOrderTooltips": {
+    "toDescending": "變更為降冪順序",
+    "toAscending": "變更為升冪順序"
+  },
   "visible": "可見",
   "linkField": "連結欄位",
   "noLayers": "沒有可用的圖徵圖層",
@@ -12,6 +18,8 @@ define({
   "exportCSV": "允許匯出為 CSV",
   "expand": "最初展開的 widget",
   "filterByExtent": "預設會按地圖範圍啟用篩選器",
+  "allowTextSelection": "允許文字選擇",
+  "highlightColor": "突顯顏色",
   "restore": "恢復至預設值",
   "ok": "確定",
   "cancel": "取消",
@@ -26,5 +34,7 @@ define({
   "fieldAlias": "別名",
   "fieldVisibility": "能見度",
   "fieldActions": "操作",
-  "showAttachments": "顯示附件"
+  "showAttachments": "顯示附件",
+  "syncWithLayers": "與圖層可見性同步",
+  "syncWithLayersHint": "屬性表中顯示的圖層會與圖層可見性動態同步。"
 });

@@ -5,6 +5,12 @@ define({
   "actions": "Konfigurovat pole vrstvy",
   "field": "Pole",
   "alias": "Přezdívka",
+  "url": "URL",
+  "sortField": "Pole třídění",
+  "sortOrderTooltips": {
+    "toDescending": "Změnit na sestupné pořadí",
+    "toAscending": "Změnit na vzestupné pořadí"
+  },
   "visible": "Viditelná",
   "linkField": "Pole odkazů",
   "noLayers": "Nejsou k dispozici žádné vrstvy",
@@ -12,6 +18,8 @@ define({
   "exportCSV": "Povolit export do CSV",
   "expand": "Rozšířit widget po přidání",
   "filterByExtent": "Povolit výchozí filtrování podle rozsahu mapy",
+  "allowTextSelection": "Povolit výběr textu",
+  "highlightColor": "Zvýraznit barvu",
   "restore": "Obnovit výchozí hodnotu",
   "ok": "OK",
   "cancel": "Storno",
@@ -26,5 +34,7 @@ define({
   "fieldAlias": "Přezdívka",
   "fieldVisibility": "Viditelnost",
   "fieldActions": "Akce",
-  "showAttachments": "Zobrazit přílohy"
+  "showAttachments": "Zobrazit přílohy",
+  "syncWithLayers": "Synchronizovat s viditelností vrstev",
+  "syncWithLayersHint": "Vrstvy zobrazené v atributové tabulce jsou dynamicky synchronizovány s viditelností nastavenou na vrstvách."
 });

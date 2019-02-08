@@ -23,6 +23,7 @@ define({
   "showAllRecords": "Exibir todos os registos",
   "showRelatedRecords": "Exibir registos relacionados",
   "noRelatedRecords": "Não foram encontrados registos relacionados",
+  "highlightAllRecords": "Realçar todos os registos no mapa",
   "attachmentColumn": "Fotografias e ficheiros",
   "refresh": "Atualizar",
   "features": "elementos",
@@ -40,5 +41,24 @@ define({
   "sortDes": "Ordem decrescente",
   "statistics": "Estatísticas",
   "attachments": "Anexos",
-  "files": "ficheiros"
+  "files": "ficheiros",
+  "keepRichTextLabel": "Manter formato de texto rico",
+  "whatsThis": "O que é isto?",
+  "richTextMessage": {
+    "explanatoryText": {
+      "line1": "${layerName} contém o(s) seguinte(s) campo(s) de texto rico: ",
+      "line2": " que podem incluir estilos de formatação de texto, como tipos de letra, cores ou tamanhos de textos.",
+      "line3": "Quando são exposrtados para CSV, os estilos de formatação serão preservados na forma de etiquetas HTML. Pode optar por não manter os formatos de texto rico, desmarcando a caixa \"Keep rich text format” ."
+    },
+    "example": {
+      "label": "Por exemplo:",
+      "scenarios": {
+        "first": "será exportado como o seguinte texto por predefnição:",
+        "second": "e o seguinte texto sem formato de texto rico:"
+      }
+    }
+  },
+  "noTablesAvailable": "Sem tabelas disponíveis para exibir.",
+  "checkConfigutationToSelectLayers": "Por favor, vá à página de definições do widget para selecionar camadas.",
+  "checkLayerListToSelectLayers": "A Tabela de Atributos encontra-se sincronizada com camadas visíveis no mapa,  pode utilizar um widget, tal como Layer List para alternar camadas entre ligado/desligado."
 });

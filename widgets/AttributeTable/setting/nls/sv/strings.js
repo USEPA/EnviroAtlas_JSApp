@@ -5,6 +5,12 @@ define({
   "actions": "Konfigurera lagerfält",
   "field": "Fält",
   "alias": "Alias",
+  "url": "URL",
+  "sortField": "Sortera fält",
+  "sortOrderTooltips": {
+    "toDescending": "Ändra till fallande ordning",
+    "toAscending": "Ändra till stigande ordning"
+  },
   "visible": "Synlig",
   "linkField": "Länkfält",
   "noLayers": "Inga geoobjektslager är tillgängliga",
@@ -12,6 +18,8 @@ define({
   "exportCSV": "Tillåt export till CSV",
   "expand": "Börja med att expandera widgeten",
   "filterByExtent": "Aktivera filter enligt kartutbredning som standard",
+  "allowTextSelection": "Tillåt textval",
+  "highlightColor": "Markeringsfärg",
   "restore": "Återställ till standardvärde",
   "ok": "OK",
   "cancel": "Avbryt",
@@ -26,5 +34,7 @@ define({
   "fieldAlias": "Alias",
   "fieldVisibility": "Synlighet",
   "fieldActions": "Åtgärder",
-  "showAttachments": "Visa bifogade filer"
+  "showAttachments": "Visa bifogade filer",
+  "syncWithLayers": "Synkronisera med lagrets synligheter",
+  "syncWithLayersHint": "Lagren som visas i attributtabellen synkroniseras dynamiskt med lagrets synligheter."
 });

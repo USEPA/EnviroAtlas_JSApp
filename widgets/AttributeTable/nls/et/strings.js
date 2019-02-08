@@ -1,7 +1,7 @@
 define({
-  "_widgetLabel": "Atribuuditabel",
+  "_widgetLabel": "Atribuuttabel",
   "_featureAction_ShowRelatedRecords": "Kuva seotud kirjed",
-  "_featureAction_ViewInTable": "Vaata atribuuditabelis",
+  "_featureAction_ViewInTable": "Vaata atribuuttabelis",
   "ok": "OK",
   "cancel": "Tühista",
   "unsupportQueryWarning": "Kiht peab toetama päringut, et seda kuvataks atribuuditabeli vidinas. Veenduge, et päringufunktsioon oleks teenuses sisse lülitatud.",
@@ -23,6 +23,7 @@ define({
   "showAllRecords": "Näita kõiki kirjeid",
   "showRelatedRecords": "Kuva seotud kirjed",
   "noRelatedRecords": "Seotud kirjeid ei leitud",
+  "highlightAllRecords": "Tõsta kõik kirjed kaardil esile",
   "attachmentColumn": "Fotod ja failid",
   "refresh": "Värskenda",
   "features": "objektid",
@@ -34,11 +35,30 @@ define({
   "selectionSymbol": "Valiku sümbol",
   "closeMessage": "Peida tabel (laienda seda uuesti altpoolt)",
   "dataNotAvailable": "Andmed ei ole saadaval!<br>Uuesti proovimiseks klikkige nuppu [Värskenda]",
-  "openTableTip": "Ava atribuutide tabel",
-  "closeTableTip": "Peida atribuutide tabel",
+  "openTableTip": "Ava atribuuttabel",
+  "closeTableTip": "Peida atribuuttabel",
   "sortAsc": "Sorteeri kasvavalt",
   "sortDes": "Sorteeri kahanevalt",
   "statistics": "Statistika",
   "attachments": "Manused",
-  "files": "failid"
+  "files": "failid",
+  "keepRichTextLabel": "Säilita rikasteksti formaat",
+  "whatsThis": "Mis see on?",
+  "richTextMessage": {
+    "explanatoryText": {
+      "line1": "${layerName} sisaldab järgmisi rikastekstivälju: ",
+      "line2": " ja need võivad sisaldada teksti vormindamise laade (nt font, värv, tekstisuurus).",
+      "line3": "CSV-faili eksportimisel säilitatakse vorminduslaadid HTML-märgendite abil. Kui Te ei soovi rikasteksti formaate säilitada, tühjendage ruut „Säilita rikasteksti formaat“."
+    },
+    "example": {
+      "label": "Näited.",
+      "scenarios": {
+        "first": "eksporditakse vaikimisi järgmise tekstina:",
+        "second": "ja järgmine tekst rikasteksti formaadita:"
+      }
+    }
+  },
+  "noTablesAvailable": "Puuduvad tabelid, mida kuvada.",
+  "checkConfigutationToSelectLayers": "Kihtide valimiseks minge vidina seadete lehele.",
+  "checkLayerListToSelectLayers": "Atribuuditabel sünkroniseeritakse kaardil nähtavate kihtidega. Kihtide sisse- või väljalülitamiseks saate kasutada näiteks kihiloendi vidinat."
 });

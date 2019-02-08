@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,11 +25,13 @@ define(['dojo/_base/lang',
   "dojo/store/Memory",
   "esri/lang",
   './table/FeatureLayerQueryStore',
-  'jimu/utils'
+  "jimu/ArcadeUtils",
+  'jimu/utils',
+  'esri/graphic'
 ], function(
   lang, array, LayerInfos, Deferred, all,
   exports, Observable, Cache, Memory, esriLang,
-  FeatureLayerQueryStore, utils
+  FeatureLayerQueryStore, ArcadeUtils, utils, Graphic
 ) {
   exports.readLayerInfosObj = function(map) {
     return LayerInfos.getInstance(map, map.itemInfo);
@@ -86,8 +88,8 @@ define(['dojo/_base/lang',
   //used to create dgrid
   //
   //pInfos: PopupInfo
-  exports.generateColumnsFromFields = function(pInfos, fields, typeIdField, types,
-    supportsOrder, supportsStatistics) {
+  exports.generateColumnsFromFields = function(gridColumns, layerInfo, fields, typeIdField, types,
+    supportsOrder, supportsStatistics, layerObject) {
     function getFormatInfo(fieldName) {
       if (pInfos && esriLang.isDefined(pInfos.fieldInfos)) {
         for (var i = 0, len = pInfos.fieldInfos.length; i < len; i++) {
@@ -100,6 +102,22 @@ define(['dojo/_base/lang',
 
       return null;
     }
+
+    function getIsHidden(techFieldName, field) {
+      // Overriding order of column's "hidden" property:
+      // grid's column settings --> Attribute Table's settings -->
+      // Field configuration from map popup --> default field visibilities from the layer / table
+      if(gridColumns && gridColumns[techFieldName]) {
+        return gridColumns[techFieldName].hidden;
+      } else if (field) {
+        return !field.show && esriLang.isDefined(field.show);
+      } else {
+        return false;
+      }
+    }
+
+    var pInfos = layerInfo.getPopupInfo();
+
     var columns = {};
     columns.selectionHandle = {
       label: "",
@@ -126,12 +144,13 @@ define(['dojo/_base/lang',
         _field.type === "esriFieldTypeInteger" ||
         _field.type === "esriFieldTypeSmallInteger";
       var isString = _field.type === "esriFieldTypeString";
+      var isArcadeExpression = _field.name.indexOf('expression/') === 0;
 
       columns[techFieldName] = {
         label: _field.alias || _field.name,
         className: techFieldName,
-        hidden: fields.length === 1 ? false : !_field.show && esriLang.isDefined(_field.show),
-        unhidable: fields.length === 1 ? false :
+        hidden: fields.length === 1 ? false : getIsHidden(techFieldName, _field),
+        unhidable: fields.length === 1 ? false : 
           !_field.show && esriLang.isDefined(_field.show) && _field._pk,
         field: _field.name,
         sortable: false,
@@ -155,37 +174,48 @@ define(['dojo/_base/lang',
       // obj is feature.attributes in the store.
       if (isDomain) {
         // coded value
-        columns[techFieldName].get = lang.hitch(exports, function(field, obj) {
-          return this.getCodeValue(field.domain, obj[field.name]);
-        }, _field);
+        columns[techFieldName].get = lang.hitch(exports, function(layerObject, field, obj) {
+          return this.getCodeValue(layerObject, field.name, obj);
+        }, layerObject, _field);
       } else if(isTypeIdField) {
         columns[techFieldName].get = lang.hitch(exports, function(field, types, obj) {
           return this.getTypeName(obj[field.name], types);
         }, _field, types);
-      } else if (!isDomain && !isDate && !isTypeIdField) {
+      } else if(isArcadeExpression) {
+        var expressionInfos = this.arcade.getExpressionInfosFromLayerInfo(layerInfo);
+        var layerDefinition = utils.getFeatureLayerDefinition(layerObject);
+        // expression columns are not sotable
+        columns[techFieldName]._cache.sortable = false;
+        columns[techFieldName].get = lang.hitch(exports, 
+          function(expressionInfos, field, layerDefinition, obj) {
+          var computedAttrs = this.arcade.getAttributes(obj, expressionInfos, layerDefinition);
+          return computedAttrs[field.name] || '';
+        }, expressionInfos, _field, layerDefinition);
+      } else if (!isDomain && !isDate && !isTypeIdField && !isArcadeExpression) {
         // Not A Date, Domain or Type Field
         // Still need to check for subclass value
         columns[techFieldName].get = lang.hitch(exports,
-          function(field, typeIdField, types, obj) {
+          function(layerObject, field, typeIdField, types, obj) {
             var codeValue = null;
             if (typeIdField && types && types.length > 0) {
               var typeChecks = array.filter(types, lang.hitch(exports, function(item) {
                 // value of typeIdFild has been changed above
-                return item.name === obj[typeIdField];
+                return item.id === obj[typeIdField];
               }));
               var typeCheck = (typeChecks && typeChecks[0]) || null;
 
               if (typeCheck && typeCheck.domains &&
                 typeCheck.domains[field.name] && typeCheck.domains[field.name].codedValues) {
                 codeValue = this.getCodeValue(
-                  typeCheck.domains[field.name],
-                  obj[field.name]
+                  layerObject,
+                  field.name,
+                  obj
                 );
               }
             }
             var _value = codeValue !== null ? codeValue : obj[field.name];
             return _value || isFinite(_value) ? _value : "";
-          }, _field, typeIdField, types);
+          }, layerObject, _field, typeIdField, types);
       }
     }));
 
@@ -196,8 +226,12 @@ define(['dojo/_base/lang',
     return utils.fieldFormatter.getTypeName(value, types);
   };
 
-  exports.getCodeValue = function(domain, v) {
-    return utils.fieldFormatter.getCodedValue(domain, v);
+  exports.getCodeValue = function(layerObject, fieldName, attributes) {
+    var result = utils.getDisplayValueForCodedValueOrSubtype(layerObject, fieldName, attributes);
+    if (result && result.isCodedValueOrSubtype) {
+      return result.displayValue || '';
+    }
+    return '';
   };
 
   exports.urlFormatter = function(str) {
@@ -390,6 +424,61 @@ define(['dojo/_base/lang',
     return order.concat(dest);
   };
 
+  exports.arcade = {};
+
+  // get arcade expressions from single layer
+  exports.arcade.getExpressionInfosFromLayer = function(map, layer) {
+    var profiles = ArcadeUtils.readExprInfo.getArcadeProfilesByType(map, layer, 'infoTemplate');
+    if(profiles.length > 0 && profiles[0].expressionInfos) {
+      return profiles[0].expressionInfos;
+    } 
+    return [];
+  };
+
+  // get arcade expressions from single layerInfo
+  exports.arcade.getExpressionInfosFromLayerInfo = function(layerInfo) {
+    var pInfo = layerInfo && layerInfo.getPopupInfo();
+    return pInfo && pInfo.expressionInfos || [];
+  };
+
+  // get attributes with expression values
+  exports.arcade.getAttributes = function(attributes, expressionInfos, layerDefinition) {
+    var graphic = new Graphic(null, null, attributes);
+    return ArcadeUtils.customExpr.getAttributesFromCustomArcadeExpr(
+      expressionInfos, graphic, layerDefinition) || attributes;
+  };
+
+  exports.arcade.appendArcadeExpressionsToFields = function(ofields, layerInfo) {
+    var arcadeExpressions = exports.arcade.getExpressionInfosFromLayerInfo(layerInfo);
+    if(arcadeExpressions.length > 0) {
+      var prefix = 'expression/';
+      var re = new RegExp('^'+prefix);
+      array.forEach(arcadeExpressions, function(exp) {
+        // compare expressions with original fields list
+        if(!array.some(ofields, function(ofield) {
+          if(re.test(ofield.name)) { // field is an arcade expression
+            var ofieldExprName = ofield.name.substr(prefix.length);
+            return exp.name === ofieldExprName;
+          }
+        })) {
+          // if the expression does not exist in fields,
+          // add it to fields list:
+          ofields.push({
+            name: prefix + exp.name,
+            alias: exp.title,
+            show: true
+          });
+        }
+      });
+    }
+
+    return ofields;
+  };
+
+  exports.arcade.isArcadeExpressionField = function(field) {
+    return field && typeof field.name === 'string' && field.name.indexOf('expression/') === 0;
+  };
+
   function clipValidFields(sFields, rFields) {
     if (!(sFields && sFields.length)) {
       return rFields || [];
@@ -403,6 +492,10 @@ define(['dojo/_base/lang',
       for (var j = 0, len2 = rFields.length; j < len2; j++) {
         var rf = rFields[j];
         if (rf.name === sf.name) {
+          // update alias if needed
+          if(rf.alias !== sf.alias) {
+            sf.alias = rf.alias;
+          }
           validFields.push(sf);
           break;
         }
@@ -410,4 +503,5 @@ define(['dojo/_base/lang',
     }
     return validFields;
   }
+
 });

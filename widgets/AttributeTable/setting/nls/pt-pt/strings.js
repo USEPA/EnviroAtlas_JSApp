@@ -5,6 +5,12 @@ define({
   "actions": "Configurar campos de camadas",
   "field": "Campo",
   "alias": "Nome Alternativo",
+  "url": "URL",
+  "sortField": "Ordenar campo",
+  "sortOrderTooltips": {
+    "toDescending": "Alterar para ordem descendente",
+    "toAscending": "Alterar para ordem ascendente"
+  },
   "visible": "Visível",
   "linkField": "Campo de ligação",
   "noLayers": "Não há camadas de elementos disponíveis",
@@ -12,6 +18,8 @@ define({
   "exportCSV": "Permitir exportar para CSV",
   "expand": "Expandir o widget inicialmente",
   "filterByExtent": "Ativar Filtrar por extensão de mapa por defeito",
+  "allowTextSelection": "Permitir a seleção de texto",
+  "highlightColor": "Destacar cor",
   "restore": "Restaurar para valor padrão",
   "ok": "OK",
   "cancel": "Cancelar",
@@ -26,5 +34,7 @@ define({
   "fieldAlias": "Nome Alternativo",
   "fieldVisibility": "Visibilidade",
   "fieldActions": "Ações",
-  "showAttachments": "Exibir anexos"
+  "showAttachments": "Exibir anexos",
+  "syncWithLayers": "Sincronizar com visibilidades de camadas",
+  "syncWithLayersHint": "As camadas exibidas na Tabela de Atributos são sincronizadas com visibilidades de camadas de forma dinâmica."
 });

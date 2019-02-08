@@ -5,6 +5,12 @@ define({
   "actions": "Konfigurer lagfelt",
   "field": "Felt",
   "alias": "Alias",
+  "url": "URL",
+  "sortField": "Sorter felt",
+  "sortOrderTooltips": {
+    "toDescending": "Endre til synkende rekkefølge",
+    "toAscending": "Endre til stigende rekkefølge"
+  },
   "visible": "Synlig",
   "linkField": "Lenkefelt",
   "noLayers": "Ingen tilgjengelige geoobjektlag",
@@ -12,6 +18,8 @@ define({
   "exportCSV": "Tillat eksport til CSV",
   "expand": "Utvid widget i begynnelsen",
   "filterByExtent": "Aktiver filter etter kartutstrekning som standard",
+  "allowTextSelection": "Tillat tekstmerking",
+  "highlightColor": "Uthevingsfarge",
   "restore": "Gjenopprett til standardverdi",
   "ok": "OK",
   "cancel": "Avbryt",
@@ -26,5 +34,7 @@ define({
   "fieldAlias": "Alias",
   "fieldVisibility": "Synlighet",
   "fieldActions": "Handlinger",
-  "showAttachments": "Vis vedlegg"
+  "showAttachments": "Vis vedlegg",
+  "syncWithLayers": "Synkroniser med lagsynlighet",
+  "syncWithLayersHint": "Lagene som vises i attributtabellen, synkroniseres dynamisk med lagsynlighet."
 });
