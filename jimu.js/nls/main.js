@@ -93,7 +93,8 @@ define({
       stay: "Stay",
       search: "Search",
       searchMore: "Search more",
-      tooltipText: "Tooltip text"
+      tooltipText: "Tooltip text",
+      findAddressOrPlace: "Find address or place"
     },
     errorCode: "Code",
     errorMessage: "Message",
@@ -171,7 +172,9 @@ define({
       selectedSymbol: "Selected symbol",
       value: "Value",
       label: "Label",
-      range: "Range"
+      range: "Range",
+      othersSymbol: "Others",
+      othersSymbolTip: "Show or hide the symbol for unmatched values."
     },
     drawBox: {
       point: "Point",
@@ -255,7 +258,10 @@ define({
       aExpandedList: "an expanded list",
       addValuePlaceHolder: "Double click to set value",
       addLabelPlaceHolder: "Double click to set label",
+      emptyValueTips: "Show or hide empty value in this list.",
+      showAll: "Show all",
       showSelected: "Show selected only",
+      unCheckAll: "Uncheck all",
       noData: "There is no data.",
       none: "None",
       and: "and",
@@ -268,8 +274,8 @@ define({
       stringOperatorEndsWith: "ends with",
       stringOperatorContains: "contains",
       stringOperatorDoesNotContain: "does not contain",
-      stringOperatorIsIn: "is in",//Deprecated
-      stringOperatorIsNotIn: "is not in",//Deprecated
+      stringOperatorIsIn: "is in", //Deprecated
+      stringOperatorIsNotIn: "is not in", //Deprecated
       stringOperatorIsAnyOf: "is any of",
       stringOperatorIsNoneOf: "is none of",
       stringOperatorIsBlank: "is blank",
@@ -324,7 +330,7 @@ define({
       setFilterTip: "Please set filters correctly.",
       noFilterValueTip: "The specified field has no values.",
       listValues: "List values",
-      cascadeFilterTip: "Only show values filtered by previous expressions.",
+      cascadeFilterTip: "Only show values filtered by previous expressions",
       noneCascadeFilterTip: "All unique values of this field",
       previousCascadeFilterTip: "Values filtered by previous expressions",
       allCascadeFilterTip: "Values filtered by all other expressions",
@@ -457,7 +463,7 @@ define({
       featureActions: "Feature actions",
       ZoomTo: "Zoom to",
       PanTo: "Pan to",
-      Flash : "Flash",
+      Flash: "Flash",
       ShowPopup: "Show pop-up",
       CreateLayer: "Create layer",
       ShowStatistics: "Statistics...",
@@ -674,6 +680,11 @@ define({
       ansi_d: "ANSI D",
       ansi_e: "ANSI E"
     },
+    snapping: {
+      pressStr: "Press ",
+      ctrlStr: " CTRL ",
+      snapStr: " to enable snapping"
+    },
     snapshot: {
       snapshot_complete: "Created snapshot successfully.",
       snapshot_failed: "Failed to create snapshot.",
@@ -704,12 +715,65 @@ define({
       addWidgetTip: "Add widgets here through the Widget tab",
       modifyLayout: "Modify layout",
       dragToAdd: "Drag to add",
-      mapArea: "MAP AREA"
+      mapArea: "MAP AREA",
+      sceneArea: "SCENE AREA"
+    },
+    coordinateControl: {
+      notations: {
+        DD: "DD",
+        DDM: "DDM",
+        DMS: "DMS",
+        DDRev: "DDRev",
+        DDMRev: "DDMRev",
+        DMSRev: "DMSRev",
+        USNG: "USNG",
+        MGRS: "MGRS",
+        UTM_H: "UTM (H)",
+        UTM: "UTM",
+        GARS: "GARS",
+        GEOREF: "GEOREF"
+      },
+      DDLatLongNotation: "Decimal Degrees - Latitude/Longitude",
+      DDLongLatNotation: "Decimal Degrees  - Longitude/Latitude",
+      DDMLatLongNotation: "Degrees Decimal Minutes - Latitude/Longitude",
+      DDMLongLatNotation: "Degrees Decimal Minutes - Longitude/Latitude",
+      DMSLatLongNotation: "Degrees Minutes Seconds - Latitude/Longitude",
+      DMSLongLatNotation: "Degrees Minutes Seconds - Longitude/Latitude",
+      GARSNotation: "GARS",
+      GEOREFNotation: "GEOREF",
+      MGRSNotation: "MGRS",
+      USNGNotation: "USNG",
+      UTMBandNotation: "UTM - Band Letter",
+      UTMHemNotation: "UTM - Hemisphere (N/S)",
+      formatInput: "Format Input",
+      copyAll: "Copy All",
+      copySuccessful: "Copy Successful",
+      copyFailed: "Unable to Copy. Please use ctrl+c as an alternative.",
+      parseCoordinatesError: "Unable to parse coordinates. Please check your input.",
+      comfirmInputNotation: "Confirm Input Notation",
+      latLongWarningMessage: "The input coordinate has been detected as having both a prefix and suffix for the latitude or longitude value, returned coordinate is based on the prefix.",
+      cancelButtonLabel: "Cancel",
+      applyButtonLabel: "Apply",
+      posNegPrefixLabel: 'Add "+/-" prefix to positive and negative numbers',
+      editCoordinateDialogTitle: "Set Coordinate Format String",
+      rememberDecisionLabel: "Remember my decision and do not ask again.<br/>",
+      coordinateInputLabel: "Enter coordinates or click on map",
+      zoomLabel: "Zoom",
+      addPointLabel: "Add point from map click",
+      multipleNotationLabel: "notations found that match your input. Please confirm which you would like to use:",
+      copyToClipboard: "Copy to clipboard",
+      formatOutput: "Format output",
+      notationAddedMessage: "New Notation Added",
+      removeCoordinate: "Remove Coordinate",
+      expandOutput: "Expand Output",
+      tooltip: "Click on map to add point"
     },
     //we put these strings in here instead of in common because these strings are not translated.
     noEditPrivileges: "Your account does not have permission to create or modify data.",
     noEditableLayers: "Your account does not have permission to create or modify data. Or this web map does not contain any editable layers.",
-    invalidConfiguration: "Widget is either not configured or the layers in the configuration are no longer in the map.  Please open the app in the builder mode and reconfigure the widget."
+    invalidConfiguration: "Widget is either not configured or the layers in the configuration are no longer in the map.  Please open the app in the builder mode and reconfigure the widget.",
+    essentialAppsLicenseErrorForApp: "Your account is not licensed to use an app that is not public. Please ask your organization administrator to assign you a user type that includes Essential Apps or an add-on Essential Apps license.",
+    essentialAppsLicenseErrorForBuilder: "Your account is not licensed for Web AppBuilder. Please ask your organization administrator to assign you a user type that includes Essential Apps or an add-on Essential Apps license.",
   }),
   "ar": 1,
   "bs": 1,

@@ -1,0 +1,35 @@
+<div class="jimu-list-multiple-select" data-dojo-attach-point="multipleSelect" tabindex="0">
+  <div class="selectedContainer" data-dojo-attach-point="selectedContainer">
+    <div class="jimu-multiple-items-list items-content" data-dojo-attach-point="selectedListContent" tabindex="0">
+    </div>
+  </div>
+  <div>
+    <!-- <div style="position:absolute;height:345px;width:100%;z-index:1;display:none;" data-dojo-attach-point="listContainerOverlay"></div> -->
+    <div class="searchKeyInput" data-dojo-attach-point="searchKeyInput" style="display:none;">
+      <input value="" placeholder="${jimuCommonNls.search}" data-dojo-type="dijit/form/ValidationTextBox"
+       data-dojo-attach-point="valueInput" data-dojo-props='"required":false,intermediateChanges:true' style="width:100%;" tabindex="0"/>
+    </div>
+    <div class="items-content loading-center" data-dojo-attach-point="listContainer">
+      <!-- <div data-dojo-attach-point="listContentStore"style="height:1px;visibility:hidden;overflow:hidden;">
+      </div> -->
+      <div class="jimu-multiple-items-list" data-dojo-attach-point="listContent" tabindex="0">
+      </div>
+      <div data-dojo-attach-point="loadMoreDataBtn" class="jimu-list-multiple-select-Tips load-more-data-Tips">${jimuCommonNls.searchMore}</div>
+      <!-- <div data-dojo-attach-point="noDataTips" class="jimu-list-multiple-select-Tips no-data-Tips">${Nls.noData}</div> -->
+      <div data-dojo-attach-point="noDataTips" class="jimu-list-multiple-select-Tips no-data-Tips">${noDataNls}</div>
+      <!-- <div class="createNewItem" data-dojo-attach-point="createNewItem" data-dojo-attach-event="click:_createTarget">&nbsp;</div> -->
+    </div>
+  </div>
+  <!--
+  <div class="selectedToggleDiv" style="display:none;" data-dojo-attach-point="selectedToggleDiv">
+    <span class="selectedToggle" data-dojo-attach-point="selectedToggle"></span>
+    <span class="toggleTxt" title="${Nls.showSelected}">${Nls.showSelected}</span>
+  </div>
+  -->
+
+  <div class="selectedToggleDiv" style="display:none;" data-dojo-attach-point="selectedToggleDiv">
+      <div class="showAllIcon iconHover jimu-flipx" title="${Nls.showAll}" data-dojo-attach-point="showAllIconBtn"  tabindex="0"></div>
+      <div class="showSelectedIcon jimu-flipx" title="${Nls.showSelected}" data-dojo-attach-point="showSelectedIconBtn" tabindex="0"></div>
+      <div class="clearAllSelectedIcon jimu-flipx" title="${Nls.unCheckAll}" data-dojo-attach-point="clearAllSelectedBtn" tabindex="0"></div>
+    </div>
+</div>

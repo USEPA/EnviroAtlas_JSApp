@@ -1,5 +1,6 @@
 <div>
-  <table data-dojo-attach-event="onclick: _onDropDownClick">
+<table data-dojo-attach-point="dropDownBtn" data-dojo-attach-event="onclick: _onDropDownClick,onkeydown: _onDropDownKeydown"
+  tabindex="0" title="${nls.selectLayer}">
     <colgroup>
       <col width="10px"></col>
       <col width="auto"></col>

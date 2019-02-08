@@ -1,81 +1,8 @@
-///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
-//
-// Licensed under the Apache License Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//    http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-///////////////////////////////////////////////////////////////////////////
-
-define([
-  'dojo/_base/html',
-  'dojo/_base/declare',
-  './ValueProvider',
-  'dijit/_TemplatedMixin',
-  'dijit/_WidgetsInTemplateMixin',
-  'dojo/text!./TwoDatesValueProvider.html',
-  'dijit/form/DateTextBox'
-],
-  function(html, declare, ValueProvider, _TemplatedMixin, _WidgetsInTemplateMixin, template) {
-
-    return declare([ValueProvider, _TemplatedMixin, _WidgetsInTemplateMixin], {
-
-      templateString: template,
-
-      postCreate: function(){
-        this.inherited(arguments);
-        html.addClass(this.domNode, 'jimu-two-dates-filter-value-provider');
-      },
-
-      _onRangeDateBlur:function(){
-        if(this._dijit1.validate() && this._dijit2.validate()){
-          var date1 = this._dijit1.get('value');
-          var time1 = date1.getTime();
-          var date2 = this._dijit2.get('value');
-          var time2 = date2.getTime();
-          if(time1 > time2){
-            this._dijit1.set('value', date2);
-            this._dijit2.set('value', date1);
-          }
-        }
-      },
-
-      getDijits: function(){
-        return [this._dijit1, this._dijit2];
-      },
-
-      setValueObject: function(valueObj){
-        if(this.isDefined(valueObj.value1)){
-          this._dijit1.set('value', new Date(valueObj.value1));
-        }
-        if(this.isDefined(valueObj.value2)){
-          this._dijit2.set('value', new Date(valueObj.value2));
-        }
-      },
-
-      getValueObject: function(){
-        if(this.isValidValue()){
-          return {
-            "isValid": true,
-            "type": this.partObj.valueObj.type,
-            "value1": this._dijit1.get('value').toDateString(),
-            "value2": this._dijit2.get('value').toDateString()
-          };
-        }
-        return null;
-      },
-
-      setRequired: function(required){
-        this._dijit1.set("required", required);
-        this._dijit2.set("required", required);
-      }
-
-    });
-  });
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+require({cache:{"url:jimu/dijit/_filter/TwoDatesValueProvider.html":'\x3cdiv\x3e\r\n\t\x3ctable data-dojo-attach-point\x3d"dateRangeTable" style\x3d"width:100%;border-collapse:collapse;" cellpadding\x3d"0" cellspacing\x3d"0"\x3e\r\n\t\t\x3ctbody\x3e\r\n\t\t\t\x3ctr\x3e\r\n\t\t\t\t\x3ctd style\x3d"width:40%;"\x3e\r\n\t\t\t\t\t\x3c!-- \x3cinput data-dojo-attach-point\x3d"_dijit1" data-dojo-type\x3d"jimu/dijit/_filter/DateValueSelector" data-dojo-attach-event\x3d"change:_onDateValueSelectorChanged" /\x3e --\x3e\r\n\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"_dijitDiv1"  data-dojo-attach-event\x3d"change:_onDateValueSelectorChanged"\x3e\x3c/div\x3e\r\n\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3ctd style\x3d"width:20%;text-align:center;"\x3e\r\n\t\t\t\t\t\x3cspan\x3e${nls.and}\x3c/span\x3e\r\n\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\x3c!-- \x3cinput data-dojo-attach-point\x3d"_dijit2" data-dojo-type\x3d"jimu/dijit/_filter/DateValueSelector" data-dojo-attach-event\x3d"change:_onDateValueSelectorChanged" /\x3e --\x3e\r\n\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"_dijitDiv2"  data-dojo-attach-event\x3d"change:_onDateValueSelectorChanged"\x3e\x3c/div\x3e\r\n\t\t\t\t\x3c/td\x3e\r\n\t\t\t\x3c/tr\x3e\r\n\t\t\x3c/tbody\x3e\r\n\t\x3c/table\x3e\r\n\x3c/div\x3e'}});
+define("dojo/Evented dojo/_base/html dojo/_base/declare ./ValueProvider dijit/_WidgetsInTemplateMixin ./DateValueSelector dojo/text!./TwoDatesValueProvider.html".split(" "),function(d,f,g,h,k,c,l){return g([h,k,d],{templateString:l,postCreate:function(){this.inherited(arguments);f.addClass(this.domNode,"jimu-two-dates-filter-value-provider");this._dijit1=new c({popupInfo:this.popupInfo,_fieldInfo:this.fieldInfo,style:{width:"100%"}},this._dijitDiv1);this._dijit2=new c({popupInfo:this.popupInfo,_fieldInfo:this.fieldInfo,
+style:{width:"100%"}},this._dijitDiv2)},_initDateSelectors:function(){},_onDateValueSelectorChanged:function(){this.emit("change")},getDijits:function(){return[this._dijit1,this._dijit2]},setValueObject:function(a){this._setValueObject(this._dijit1,a,"value1","virtualDate1");this._setValueObject(this._dijit2,a,"value2","virtualDate2")},_setValueObject:function(a,b,c,d){if(this.isDefined(b[c])){var e={value:null,virtualDate:""};e.value=b[c];e.virtualDate=b[d];a.setValueObject(e)}},getValueObject:function(){if(this.isValidValue()){var a=
+this._dijit1.getValueObject(),b=this._dijit2.getValueObject();if(a.value&&b.value)return{isValid:!0,type:this.partObj.valueObj.type,value1:a.value,value2:b.value,virtualDate1:a.virtualDate,virtualDate2:b.virtualDate}}return null},tryGetValueObject:function(){return this.isValidValue()?this.getValueObject():this.isEmptyValue()?{isValid:!0,type:this.partObj.valueObj.type,value1:null,value2:null,virtualDate1:null,virtualDate2:null}:null},getStatus:function(){return 1===this._dijit1.getStatus()&&1===
+this._dijit2.getStatus()?1:-1===this._dijit1.getStatus()||-1===this._dijit2.getStatus()?-1:0},setRequired:function(a){this._dijit1.set("required",a);this._dijit2.set("required",a)}})});
