@@ -1,0 +1,121 @@
+.jimu-widget-header .header-section{
+  height: 100%;
+  float: left;
+}
+.jimu-widget-header .container-section{
+  height: 100%;
+  float: left;
+}
+
+.jimu-widget-header .hide-logo{
+  display: none;
+}
+
+.jimu-widget-header .titles{
+  height: 100%;
+}
+
+.jimu-widget-header .logo{
+  max-height: 40px;
+}
+
+.jimu-widget-header .jimu-title{
+  text-align: center;
+  height: 100%;
+}
+
+.jimu-widget-header .jimu-subtitle{
+  text-align: center;
+  height: 100%;
+}
+.jimu-widget-header .links{
+  height: 100%;
+}
+
+.jimu-widget-header .links .link{
+  margin-left: 12px;
+  height: 100%;
+  color: #d9dde0;
+  display: inline-block;
+  text-decoration: none;
+}
+.jimu-rtl .jimu-widget-header .links .link{
+  margin-left: auto;
+  margin-right: 12px;
+}
+.jimu-widget-header .links .link:link,
+.jimu-widget-header .links .link:visited,
+{
+  color: rgba(255, 255, 255, 0.7);
+}
+.jimu-widget-header .links .link:hover{
+  color: #FFFFFF;
+}
+.jimu-widget-header .links .link:active{
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.jimu-widget-header .signin-section .link{
+  color: #d9dde0;
+}
+
+.jimu-widget-header .group-icon-node{
+  float: right;
+  cursor: pointer;
+  opacity: 0.4;
+  text-align: center;
+  border-right: 1px solid #323e4f;
+}
+.jimu-widget-header .group-icon-node:first-child{
+  border: none;
+}
+.jimu-widget-header .group-icon-node:hover{
+  opacity: 1;
+}
+.jimu-widget-header .group-icon-node.jimu-state-selected{
+  background-color: #697a8c;
+  opacity: 1;
+  border: none;
+  border-top: 2px solid #8491a1;
+}
+
+/**the popup link panel is not appended to container, so, don't add .jimu-widget-header here**/
+.popup-links{
+  background-color: #252824;
+  position: absolute;
+  z-index: 100;
+}
+.popup-links .popup-title{
+
+}
+.popup-links .title{
+  color:#fff;
+  text-align: center;
+  font-size: 24px;
+}
+.popup-links .line{
+  width: 100%;
+  height: 4px;
+  border-top: 1px solid #14161a;
+  border-bottom: 1px solid #393c40;
+}
+.popup-links .link-section{
+  width: 100%;
+  height: 66px;
+  background-color: #252824;
+}
+.popup-links a{
+  color: #6d7685;
+  margin-left: 20px;
+  font-size: 14px;
+  height: 100%;
+  width: 95%;
+  display: inline-block;
+}
+.jimu-rtl .popup-links a {
+  margin-right: 20px;
+  margin-left: auto;
+}
+.popup-links .link-section.signin a{
+  color: #d9dde0;
+}

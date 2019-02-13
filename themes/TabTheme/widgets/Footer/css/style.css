@@ -1,0 +1,17 @@
+.jimu-widget-footer{
+  height: 100%;
+  overflow: hidden;
+  margin-left: 0px;
+  margin-top: 0;
+  width: 100%;
+}
+
+.jimu-widget-footer .footer-widget-copyright{
+  max-width: 800px;
+  color:#4c4c4c;
+  font-size: 12px;
+  text-align: center;
+  line-height: 22px;
+  margin-left: auto;
+  margin-right: auto;
+}
