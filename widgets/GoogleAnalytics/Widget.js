@@ -104,9 +104,10 @@ define([
                */
               // Track New Layers 
               on(this.map, "layer-add", lang.hitch(this, function (event) {
-                  var layer = event.layer
+                  var layer = event.layer;
+                  var searchTerm = document.getElementById("searchFilterText").value;
                   if (layer.url){
-                    ga('send', 'event', 'EnviroAtlas', "layer-add", "ealyr:" + layer.url + "| " + layer.title);
+                    ga('send', 'event', 'EnviroAtlas', "layer-add", "ealyr: " + layer.url + " | " + layer.title + " | " + searchTerm);
                   }
               }));
             /*
