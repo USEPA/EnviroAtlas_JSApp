@@ -123,7 +123,7 @@ define([
                       (maxTimes != false) && maxTimes-- ;
                       setTimeout(function () {
                         waitForSearch(selector, callback, maxTimes);
-                      }, 100);
+                      }, 1000);
                     }
                   }
                 };
@@ -142,7 +142,7 @@ define([
                         ga('send', 'event', 'EnviroAtlas', "layer-search", "searchTerm: " + searchBox.value);
                     }, 2000);
                 }                      
-              },100);
+              },20);
 
               
             /*
