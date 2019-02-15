@@ -62,7 +62,7 @@
 			"abbr" : "sq yd"
 		}
 	],
-	"useGeometryEngine":true,
+	"useGeometryEngine":false,
 	"geometryService":"//tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer",
 	"measureEnabledByDefault" : true,
 	"measurePolygonLabel" : "{{area}} {{areaUnit}}    {{length}} {{lengthUnit}}",

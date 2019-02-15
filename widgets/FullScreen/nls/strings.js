@@ -1,9 +1,10 @@
 define({
   root: ({
-    _widgetLabel: "Full Screen Map (Hide sidebars) - Use F11 to view full screen with sidebars"
+    _widgetLabel: "Full Screen"
   }),
   "ar": 1,
   "bs": 1,
+  "ca": 1,
   "cs": 1,
   "da": 1,
   "de": 1,
@@ -15,6 +16,7 @@ define({
   "he": 1,
   "hi": 1,
   "hr": 1,
+  "hu": 1,
   "it": 1,
   "id": 1,
   "ja": 1,
@@ -28,6 +30,7 @@ define({
   "pt-pt": 1,
   "ro": 1,
   "ru": 1,
+  "sl": 1,
   "sr": 1,
   "sv": 1,
   "th": 1,

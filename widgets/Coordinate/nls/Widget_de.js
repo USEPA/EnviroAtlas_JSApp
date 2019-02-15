@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Coordinate/nls/strings":{_widgetLabel:"Koordinaten",hintMessage:"Zum Abrufen von Koordinaten auf die Karte klicken",defaultLabel:"Standard",realtimeLabel:"Maus zum Abrufen von Koordinaten auf der Karte bewegen",computing:"Wird berechnet...",latitudeLabel:"Breitengrad",longitudeLabel:"L\u00e4ngengrad",loading:"wird geladen...",enableClick:"Klicken Sie, um das Abrufen von Koordinaten durch Klicken auf die Karte zu aktivieren",disableClick:"Klicken Sie, um das Abrufen von Koordinaten durch Klicken auf die Karte zu deaktivieren",
+Default:"Standard",Inches:"Zoll",Foot:"Fu\u00df",Foot_US:"Feet_US",Yards:"Yard",Miles:"Meilen",Nautical_Miles:"Seemeilen",Millimeters:"Millimeter",Centimeters:"Zentimeter",Meter:"Meter",Kilometers:"Kilometer",Decimeters:"Dezimeter",Decimal_Degrees:"Grad",Degree_Minutes_Seconds:"Grad, Minuten, Sekunden",MGRS:"MGRS",USNG:"USNG",_localized:{}}});

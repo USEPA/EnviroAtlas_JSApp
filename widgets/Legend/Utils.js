@@ -99,7 +99,7 @@ define([
       return result;
     });
     return layerInfoConfig[0];
-
+  };
   mo.isSupportedLayerType = function(layer) {
     if (layer &&
         (layer.declaredClass === "esri.layers.ArcGISDynamicMapServiceLayer" ||

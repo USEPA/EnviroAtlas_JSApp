@@ -109,7 +109,9 @@ define([
         /*jshint unused: false*/
         this.inherited(arguments);
         this.initBasemaps();
-        this.defaultBasemapId = this.map.getBasemap();
+        if(this.map.getBasemap()){
+          this.defaultBasemapId = this.map.getBasemap();
+        }
         this.own(
           aspect.before(this, 'destroy', this.beforeDestroy)
         );

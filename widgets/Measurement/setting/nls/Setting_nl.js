@@ -1,5 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define({"widgets/Measurement/setting/nls/strings":{defaultAreaUnit:"Standaard oppervlakte-eenheid",defaultLengthUnit:"Standaard lengte-eenheid",acres:"Acres",sqMiles:"Vierkante mijl",sqKilometers:"Vierkante kilometer",hectares:"Hectare",sqYards:"Vierkante yard",sqFeet:"Vierkante voet",sqFeetUS:"Viekante voet (US)",sqMeters:"Vierkante meter",miles:"Mijl",kilometers:"Kilometer",feet:"Voet",feetUS:"Voet (US)",meters:"Meter",yards:"Yard",nauticalMiles:"Zeemijl",showArea:"Regio",showDistance:"Afstand",
-showLocation:"Locatie",showtools:"Toon meetgereedschappen:",operationalLayer:"Voeg de tekening meten toe als een operationele laag van de kaart.",allHidedTips:"Er moet minimaal \u00e9\u00e9n gereedschap worden geselecteerd.",_localized:{}}});
