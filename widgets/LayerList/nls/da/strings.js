@@ -5,6 +5,7 @@ define({
   "labelLayer": "Navn på lag",
   "itemZoomTo": "Zoom til",
   "itemTransparency": "Gennemsigtighed",
+  "itemSetVisibilityRange": "Indstil synlighedsinterval",
   "itemTransparent": "Gennemsigtig",
   "itemOpaque": "Uigennemsigtig",
   "itemMoveUp": "Flyt op",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Deaktivér alle etiketter",
   "turnAllLabelsOn": "Aktivér alle etiketter",
   "showLabels": "Vis etiketter",
-  "hideLables": "Skjul etiketter"
+  "hideLables": "Skjul etiketter",
+  "keyword": "Nøgleord",
+  "basemapLayers": "Baggrundskortlag",
+  "typeAKeywork": "Skriv et nøgleord",
+  "layers": "Lag"
 });

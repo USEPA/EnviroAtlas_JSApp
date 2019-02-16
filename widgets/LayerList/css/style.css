@@ -30,6 +30,10 @@
   margin-right: 8px;
 }
 
+.jimu-widget-layerList .layers-section .layer-list-title.disable{
+  margin-bottom: 2px;
+}
+
 .jimu-widget-layerList .layer-list-body {
   /*overflow: auto;*/
 }
@@ -49,7 +53,11 @@
 }
 
 .jimu-widget-layerList .layer-row{
-  height: 25px;
+  height: 40px;
+}
+
+.jimu-widget-layerList .layer-row:hover{
+  background-color: #e3ecf2;
 }
 
 .jimu-widget-layerList .layer-row-mouseover{
@@ -126,7 +134,7 @@
   background-position: center;
 }
 
-.jimu-rtl .layer-selector .showLegend-div{
+.jimu-rtl .jimu-widget-layerList .showLegend-div{
   background-image: url("../images/v_left.png");
   margin-left: 0;
   margin-right: 3px;
@@ -200,6 +208,26 @@
 
 .jimu-widget-layerList  .div-select .checkbox{
   cursor: auto;
+}
+
+.jimu-widget-layerList .image-group-div {
+  width: 14px;
+  height: 14px;
+  background-image: url("../images/group_layer.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 14px;
+  margin: 1px 0 0 2px;
+  cursor: auto;
+}
+
+.jimu-rtl .jimu-widget-layerList .image-group-div {
+  margin-left: 4px;
+  margin-right: auto;
+}
+
+.jimu-widget-layerList .image-group-div.disable{
+  display: none;
 }
 
 .jimu-widget-layerList .div-content{
@@ -416,6 +444,45 @@
   display: none;
 }
 
+.jimu-widget-layerList .popup-menu-transparency-body .dijitSliderImageHandleH{
+  /*
+  background-image: none;
+  bottom: 4px;
+  margin: 0 -4px;
+  width: 0;
+  height: 0;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  border-top: 8px solid black;
+  */
+  background: url(./images/slider-handle.png);
+  width: 10px;
+  border: none;
+  height: 14px;
+}
+
+.jimu-widget-layerList .popup-menu-transparency-body .dijitSlider .dijitSliderBar {
+  background: #ddd none;
+  border-color: #999;
+}
+
+.jimu-widget-layerList .popup-menu-transparency-body .dijitSliderHover .dijitSliderBar {
+  background: #ddd none;
+  border-color: #999;
+}
+
+.jimu-widget-layerList .popup-menu-transparency-body .dijitSlider .dijitSliderDecrementIconH, 
+.jimu-widget-layerList .popup-menu-transparency-body .dijitSlider .dijitSliderIncrementIconH {
+  background-color: #ddd;
+  border: solid 1px #b5bcc7;
+}
+
+.jimu-widget-layerList .popup-menu-transparency-body .dijitSliderHover .dijitSliderDecrementIconH,
+.jimu-widget-layerList .popup-menu-transparency-body .dijitSliderHover .dijitSliderIncrementIconH {
+  background-color: #ddd;
+  border: solid 1px #b5bcc7;
+}
+
 .jimu-widget-layerList .popup-menu-transparency-body .transparency-rule{
 }
 
@@ -438,6 +505,30 @@
   height: 15px;
 }
 */
+
+.jimu-widget-layerList .popup-menu-visible-scale-range-body {
+  position: absolute;
+  /*
+  background-color: #d9dde0;
+  outline-color:#ffffff;
+  outline-style:solid;
+  */
+  background-color: #ffffff;
+  box-shadow: 0px 0px 4px 2px rgba(177, 177, 177, 0.5);
+  outline-width:1px;
+  width: 290px;
+  height:50px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #686868;
+  z-index: 2;
+  font-size: 12px;
+  display: none;
+}
+
+.jimu-widget-layerList .popup-menu-visible-scale-range-body .esriVisibleScaleRangeSlider{
+  margin-top: 15px;
+}
 
 /***********************************/
 
@@ -656,4 +747,156 @@
   padding: 10px 5px 10px 5px;
 }
 .hrClass {
+}
+
+.jimu-widget-layerList .layer-list-operations .jimu-loading{
+  font-size: 5px;
+  top: 45px;
+  left: 20px;
+}
+
+.jimu-rtl .jimu-widget-layerList .layer-list-operations .jimu-loading{
+  left: auto;
+  right: 20px;
+}
+
+/*---------------layer filter-----------------*/
+.jimu-widget-layerList .layer-filter-node{
+  position: absolute;
+  /*width: 330px;*/
+  width: 100%;
+  top: 0;
+}
+
+.jimu-widget-layerList .layer-filter{
+  position: relative;
+}
+
+.jimu-widget-layerList .layer-filter .search-input-node{
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 74px;
+}
+
+.jimu-rtl .jimu-widget-layerList .layer-filter .search-input-node{
+  left: 70px;
+  right: 0;
+}
+
+.jimu-widget-layerList .layer-filter .search-input-node .jimu-search .jimu-input-wrapper{
+  border: 1px solid #cccccc;
+  background-color: #ffffff;
+}
+
+.jimu-widget-layerList .layer-filter .search-input-node .jimu-search .jimu-input{
+  border: none;
+  padding-left: 32px;
+  padding-right: 30px;
+}
+
+.jimu-rtl .jimu-widget-layerList .layer-filter .search-input-node .jimu-search .jimu-input{
+  padding-left: 30px;
+  padding-right: 32px;
+}
+
+.jimu-widget-layerList .layer-filter .search-input-node .jimu-search .jimu-input:focus{
+  box-shadow: none;
+}
+
+.jimu-widget-layerList .layer-filter .search-input-node .jimu-search .search-btn{
+  left: 10px;
+}
+
+.jimu-rtl .jimu-widget-layerList .layer-filter .search-input-node .jimu-search .search-btn{
+  right: 10px;
+  left: auto;
+}
+
+.jimu-widget-layerList .layer-filter .search-input-node .jimu-search .search-btn:hover{
+  cursor: auto; 
+  background-position: 0 -291px;
+}
+
+.jimu-widget-layerList .layer-filter .search-input-node.invalid{
+  display: none;
+}
+
+.jimu-widget-layerList .layer-filter .search-button{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: -2px;
+  right: 23px;
+  background-image: url("../images/search_normal.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+.jimu-rtl .jimu-widget-layerList .layer-filter .search-button{
+  left: 23px;
+  right: auto;
+}
+
+.jimu-widget-layerList .layer-filter .search-button:hover{
+  background-image: url("../images/search_hover.svg");
+}
+
+.jimu-widget-layerList .layer-filter .search-button.invalid{
+  display: none;
+}
+
+.jimu-widget-layerList .layer-filter .cancel-button{
+  width: 69px;
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #cccccc;
+  /*border-radius: 3px;*/
+  position: absolute;
+  top: -5px;
+  right: 0;
+  z-index: 1;
+  background-color: #ffffff;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 2px 0 2px;
+}
+
+.jimu-rtl .jimu-widget-layerList .layer-filter .cancel-button{
+  left: 0;
+  right: auto;
+}
+
+.jimu-widget-layerList .layer-filter .cancel-button.invalid{
+  display: none;
+}
+
+.jimu-widget-layerList .layer-filter .search-input-node .clear-input-button{
+  width: 15px;
+  height: 25px;
+  position: absolute;
+  top: 7px;
+  right: 10px;
+  z-index: 1;
+  background-image: url("../images/clear.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 10px 10px;
+}
+
+.jimu-widget-layerList .layer-filter .search-input-node .clear-input-button.disable{
+  display: none;
+}
+
+.jimu-widget-layerList .layer-filter .search-input-node .clear-input-button:hover{
+  background-image: url("../images/clear_hover.svg");
+}
+
+.jimu-rtl .jimu-widget-layerList .layer-filter .search-input-node .clear-input-button{
+  left: 10px;
+  right: auto;
 }

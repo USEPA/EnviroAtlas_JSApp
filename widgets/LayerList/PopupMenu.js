@@ -11,10 +11,12 @@ define([
   'dijit/form/HorizontalRuleLabels',
   'dojo/text!./PopupMenu.html',
   'dojo/dom-style',
+  'esri/dijit/VisibleScaleRangeSlider',
   './NlsStrings',
   './PopupMenuInfo'
 ], function(declare, array, html, lang, query, Deferred, DropMenu,
-  _TemplatedMixin, HorizSlider, HorzRuleLabels, template, domStyle, NlsStrings, PopupMenuInfo) {
+  _TemplatedMixin, HorizSlider, HorzRuleLabels, template, domStyle, VisibleScaleRangeSlider,
+  NlsStrings, PopupMenuInfo) {
   return declare([DropMenu, _TemplatedMixin], {
     templateString: template,
     popupMenuInfo: null,
@@ -42,8 +44,11 @@ define([
     _initDeniedItems: function() {
       var deniedItemsFromConfigKeys = [];
       var menuItemDictionary = {
+        "ZoomTo": "zoomto",
         "Transparency": "transparency",
+        "SetVisibilityRange": "setVisibilityRange",
         "EnableOrDisablePopup": "controlPopup",
+        "ControlLabels": "controlLabels",
         "MoveupOrMovedown": "moveup movedown",
         "OpenAttributeTable": "table",
         "DescriptionOrShowItemDetailsOrDownload": "url"
@@ -229,6 +234,7 @@ define([
     closeDropMenu: function() {
       this.inherited(arguments);
       this.hideTransNode();
+      this.hideSetVisibilityRangeNode();
     },
 
     // about transparcency
@@ -240,6 +246,7 @@ define([
 
     showTransNode: function(transValue) {
       /* global isRTL */
+      this.hideSetVisibilityRangeNode();
       if (!this.transHorizSlider) {
         this._createTransparencyWidget();
         this.transHorizSlider.set("value", 1 - transValue);
@@ -276,6 +283,42 @@ define([
       new HorzRuleLabels({
         container: "bottomDecoration"
       }, this.transparencyRule);
+    },
+
+    _onSetVisibilityRangeNode: function(evt) {
+      // summary:
+      //    response to click transparency in popummenu.
+      evt.stopPropagation();
+    },
+
+    showSetVisibilityRangeNode: function(layerInfo) {
+      /* global isRTL */
+      this.hideTransNode();
+      if (!this.visibleScaleRangeSlider) {
+        var scaleRange = layerInfo.getScaleRange();
+        this.visibleScaleRangeSlider = new VisibleScaleRangeSlider({
+          map: layerInfo.map,
+          minScale: scaleRange.minScale,
+          maxScale: scaleRange.maxScale
+        }).placeAt(this.setVisibilityRangeNode);
+        this.visibleScaleRangeSlider.startup();
+      }
+
+      this.own(this.visibleScaleRangeSlider.on("scale-range-change", lang.hitch(this, function(scaleRange) {
+        layerInfo.setScaleRange(scaleRange.minScale, scaleRange.maxScale);
+      })));
+
+      domStyle.set(this.setVisibilityRangeNode, "top", this._getTransNodePosition().top);
+      if (isRTL) {
+        domStyle.set(this.setVisibilityRangeNode, "left", this._getTransNodePosition().right);
+      } else {
+        domStyle.set(this.setVisibilityRangeNode, "right", this._getTransNodePosition().right);
+      }
+      domStyle.set(this.setVisibilityRangeNode, "display", "block");
+    },
+
+    hideSetVisibilityRangeNode: function() {
+      domStyle.set(this.setVisibilityRangeNode, "display", "none");
     },
 
     hide: function() {

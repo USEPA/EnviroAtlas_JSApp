@@ -5,6 +5,7 @@ define({
   "labelLayer": "Nom de la couche",
   "itemZoomTo": "Zoom",
   "itemTransparency": "Transparence",
+  "itemSetVisibilityRange": "Définir la plage de visibilité",
   "itemTransparent": "Transparent",
   "itemOpaque": "Opaque",
   "itemMoveUp": "Monter",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Désactiver toutes les étiquettes",
   "turnAllLabelsOn": "Activer toutes les étiquettes",
   "showLabels": "Afficher les étiquettes",
-  "hideLables": "Masquer les étiquettes"
+  "hideLables": "Masquer les étiquettes",
+  "keyword": "Mot-clé",
+  "basemapLayers": "Couches de fond de carte",
+  "typeAKeywork": "Saisir un mot-clé",
+  "layers": "Couches"
 });

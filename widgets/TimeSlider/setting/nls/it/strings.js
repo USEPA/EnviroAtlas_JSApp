@@ -1,7 +1,7 @@
 define({
   "showLayerLabels": "Visualizza nomi layer",
   "autoPlay": "Riproduci automaticamente il cursore",
-  "loopPlay": "Loop temporale continuo",
+  "loopPlay": "Ciclo di tempo continuo",
   "dateAndTimeFormat": "Formato data e ora",
   "mapDefault": "Impostazioni predefinite mappa",
   "custom": "Personalizzata",

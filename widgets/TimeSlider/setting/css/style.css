@@ -65,6 +65,7 @@
 }
 .jimu-widget-timeslider-setting .selector{
 	margin-left: 8px;
+	margin-bottom: 30px;
 }
 .jimu-widget-timeslider-setting .time-formats{
 	margin-top: 8px;
@@ -239,7 +240,7 @@
 }
 .timeslider-widget-setting-popup .time-config-container .calendar-inputs{
 	min-width: 100px;
-	max-width: 160px;
+	max-width: 200px;
 	margin: 0 5px;
 }
 .timeslider-widget-setting-popup .time-config-container .calendar-inputs.time-inputs{

@@ -5,6 +5,7 @@ define({
   "labelLayer": "Tên lớp",
   "itemZoomTo": "Phóng tới",
   "itemTransparency": "Độ trong suốt",
+  "itemSetVisibilityRange": "Thiết lập vùng hiển thị",
   "itemTransparent": "Độ trong suốt",
   "itemOpaque": "Độ mờ",
   "itemMoveUp": "Di chuyển lên trên",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Tắt tất cả nhãn",
   "turnAllLabelsOn": "Bật tất cả nhãn",
   "showLabels": "Hiển thị nhãn",
-  "hideLables": "Ẩn nhãn"
+  "hideLables": "Ẩn nhãn",
+  "keyword": "Từ khóa",
+  "basemapLayers": "Các lớp bản đồ nền",
+  "typeAKeywork": "Nhập từ khóa",
+  "layers": "Lớp"
 });

@@ -5,6 +5,7 @@ define({
   "labelLayer": "图层名称",
   "itemZoomTo": "缩放至",
   "itemTransparency": "透明度",
+  "itemSetVisibilityRange": "设置可见性范围",
   "itemTransparent": "透明",
   "itemOpaque": "不透明",
   "itemMoveUp": "上移",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "关闭所有标注",
   "turnAllLabelsOn": "打开所有标注",
   "showLabels": "显示标注",
-  "hideLables": "隐藏标注"
+  "hideLables": "隐藏标注",
+  "keyword": "关键字",
+  "basemapLayers": "底图图层",
+  "typeAKeywork": "键入关键字",
+  "layers": "图层"
 });

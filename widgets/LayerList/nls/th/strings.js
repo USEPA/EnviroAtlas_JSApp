@@ -5,6 +5,7 @@ define({
   "labelLayer": "ชื่อชั้นข้อมูล",
   "itemZoomTo": "ขยายไปยัง",
   "itemTransparency": "โปร่งแสง",
+  "itemSetVisibilityRange": "กำหนดช่วงที่มองเห็นได้",
   "itemTransparent": "โปร่งแสง",
   "itemOpaque": "ทึบแสง",
   "itemMoveUp": "เลื่อนขึ้น",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "ปิดป้ายกำกับทั้งหมด",
   "turnAllLabelsOn": "เปิดป้ายกำกับทั้งหมด",
   "showLabels": "แสดงตัวหนังสือ",
-  "hideLables": "ซ่อนป้ายกำกับ"
+  "hideLables": "ซ่อนป้ายกำกับ",
+  "keyword": "คำสำคัญ",
+  "basemapLayers": "ชั้นข้อมูลแผนที่ฐาน",
+  "typeAKeywork": "พิมพ์คำสำคัญ",
+  "layers": "ชั้นข้อมูล"
 });

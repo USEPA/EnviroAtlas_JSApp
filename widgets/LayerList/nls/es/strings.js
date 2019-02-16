@@ -5,6 +5,7 @@ define({
   "labelLayer": "Nombre de capa",
   "itemZoomTo": "Acercar a",
   "itemTransparency": "Transparencia",
+  "itemSetVisibilityRange": "Definir el rango de visibilidad",
   "itemTransparent": "Transparente",
   "itemOpaque": "Opaco",
   "itemMoveUp": "Mover hacia arriba",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Desactivar todas las etiquetas",
   "turnAllLabelsOn": "Activar todas las etiquetas",
   "showLabels": "Mostrar etiquetas",
-  "hideLables": "Ocultar etiquetas"
+  "hideLables": "Ocultar etiquetas",
+  "keyword": "Palabra clave",
+  "basemapLayers": "Capas de mapa base",
+  "typeAKeywork": "Escriba una palabra clave",
+  "layers": "Capas"
 });

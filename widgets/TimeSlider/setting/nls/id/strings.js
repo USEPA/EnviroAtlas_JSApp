@@ -1,7 +1,7 @@
 define({
   "showLayerLabels": "Tampilkan nama layer",
   "autoPlay": "Putar panel geser secara otomatis",
-  "loopPlay": "Loop waktu secara kontinu",
+  "loopPlay": "Waktu pengulangan terus-menerus",
   "dateAndTimeFormat": "Format tanggal dan waktu",
   "mapDefault": "Default peta",
   "custom": "Khusus",
@@ -19,7 +19,7 @@ define({
   "dddMMMDDhmma": "Sel Jul 21 8:00 pagi",
   "sliderSetting": "Pengaturan penggeser",
   "autoRefresh": "Muat ulang penggeser setiap",
-  "timeSetting": "Pengaturan Waktu",
+  "timeSetting": "Pengaturan waktu",
   "useWebMapSetting": "Ikuti pengaturan waktu web map",
   "useConfigureSetting": "Konfigurasikan pengaturan waktu",
   "timeSettingBtn": "pengaturan",

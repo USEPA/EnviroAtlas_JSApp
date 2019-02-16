@@ -5,6 +5,7 @@ define({
   "labelLayer": "Nama layer",
   "itemZoomTo": "Perbesar hingga",
   "itemTransparency": "Transparansi",
+  "itemSetVisibilityRange": "Atur rentang visibilitas",
   "itemTransparent": "Transparan",
   "itemOpaque": "Buram",
   "itemMoveUp": "Pindahkan ke atas",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Matikan semua label",
   "turnAllLabelsOn": "Hidupkan semua label",
   "showLabels": "Tampilkan label",
-  "hideLables": "Sembunyikan label"
+  "hideLables": "Sembunyikan label",
+  "keyword": "Kata kunci",
+  "basemapLayers": "Layer peta dasar",
+  "typeAKeywork": "Ketikkan kata kunci",
+  "layers": "Layer"
 });

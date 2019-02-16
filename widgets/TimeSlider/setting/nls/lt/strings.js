@@ -1,7 +1,7 @@
 define({
   "showLayerLabels": "Rodyti sluoksnių pavadinimus",
   "autoPlay": "Automatiškai paleisti slankiklį",
-  "loopPlay": "Nuolat kartoti laiką",
+  "loopPlay": "Nuolatinis laiko ciklas",
   "dateAndTimeFormat": "Datos ir laiko formatas",
   "mapDefault": "Numatytieji žemėlapio nustatymai",
   "custom": "Adaptuotas",
@@ -19,7 +19,7 @@ define({
   "dddMMMDDhmma": "Lie 21 d., ant, 8:00",
   "sliderSetting": "Slankiklio nustatymai",
   "autoRefresh": "Atnaujinti slankiklį kas",
-  "timeSetting": "Laiko nustatymai",
+  "timeSetting": "Laiko parametrai",
   "useWebMapSetting": "Paisyti internetinio žemėlapio laiko nustatymų",
   "useConfigureSetting": "Konfigūruoti laiko nustatymus",
   "timeSettingBtn": "nustatymas",

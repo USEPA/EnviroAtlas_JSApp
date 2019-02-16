@@ -5,6 +5,7 @@ define({
   "labelLayer": "שם שכבה",
   "itemZoomTo": "התמקד אל",
   "itemTransparency": "שקיפות",
+  "itemSetVisibilityRange": "קבע טווח ניראות",
   "itemTransparent": "שקוף",
   "itemOpaque": "אטום",
   "itemMoveUp": "הזז למעלה",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "כבה את כל התוויות",
   "turnAllLabelsOn": "הדלק את כל התוויות",
   "showLabels": "הצג תוויות",
-  "hideLables": "הסתר תוויות"
+  "hideLables": "הסתר תוויות",
+  "keyword": "מילת מפתח",
+  "basemapLayers": "שכבות מפת בסיס",
+  "typeAKeywork": "הקלד מילת מפתח",
+  "layers": "שכבות"
 });

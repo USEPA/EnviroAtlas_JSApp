@@ -19,7 +19,7 @@ define({
   "dddMMMDDhmma": "Ter 21 Jul 8:00",
   "sliderSetting": "Definições de Controlo Deslizante",
   "autoRefresh": "Atualizar controlo deslizante a cada",
-  "timeSetting": "Configurações do Tempo",
+  "timeSetting": "Configurações de Tempo",
   "useWebMapSetting": "Respeite as definições de tempo do mapa web",
   "useConfigureSetting": "Configurar definições de tempo",
   "timeSettingBtn": "definição",

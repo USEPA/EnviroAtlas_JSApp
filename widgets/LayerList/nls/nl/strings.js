@@ -5,6 +5,7 @@ define({
   "labelLayer": "Kaartlaagnaam",
   "itemZoomTo": "Zoomen naar",
   "itemTransparency": "Transparant",
+  "itemSetVisibilityRange": "Zichtbaarheidsbereik instellen",
   "itemTransparent": "Transparant",
   "itemOpaque": "Niet transparant",
   "itemMoveUp": "Naar boven verplaatsen",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Zet alle labels uit",
   "turnAllLabelsOn": "Zet alle labels aan",
   "showLabels": "Labels weergeven",
-  "hideLables": "Labels verbergen"
+  "hideLables": "Labels verbergen",
+  "keyword": "Trefwoord",
+  "basemapLayers": "Basiskaart-lagen",
+  "typeAKeywork": "Voer een trefwoord in",
+  "layers": "Lagen"
 });

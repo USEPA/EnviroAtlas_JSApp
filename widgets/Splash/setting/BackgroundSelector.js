@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -93,6 +93,9 @@ define([
           this.sizeType = "tile";
         })));
       },
+      isValid: function () {
+        return this.backgroundColorPicker.isValid();
+      },
       getValues: function() {
         var bg = {};
         bg.mode = this.mode;
@@ -156,9 +159,8 @@ define([
         }
       },
       _selectItem: function(name) {
-        var _radio = this[name];//registry.byNode(query('.jimu-radio', this[name])[0]);
-        if (_radio && _radio.check) {
-          _radio.check(true);
+        if(this[name] && this[name].setChecked){
+          this[name].setChecked(true);
         }
       },
       _clickColorFillBtn: function() {

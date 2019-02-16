@@ -5,6 +5,7 @@ define({
   "labelLayer": "圖層名稱",
   "itemZoomTo": "縮放至",
   "itemTransparency": "透明度",
+  "itemSetVisibilityRange": "設定可見範圍",
   "itemTransparent": "透明",
   "itemOpaque": "不透明",
   "itemMoveUp": "上移",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "關閉所有標籤",
   "turnAllLabelsOn": "開啟所有標籤",
   "showLabels": "顯示標籤",
-  "hideLables": "隱藏標籤"
+  "hideLables": "隱藏標籤",
+  "keyword": "關鍵字",
+  "basemapLayers": "底圖圖層",
+  "typeAKeywork": "輸入關鍵字",
+  "layers": "圖層"
 });

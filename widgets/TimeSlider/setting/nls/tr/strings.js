@@ -1,7 +1,7 @@
 define({
   "showLayerLabels": "Katman adlarını görüntüle",
   "autoPlay": "Kaydırıcıyı otomatik olarak oynat",
-  "loopPlay": "Zamanı sürekli olarak çevir",
+  "loopPlay": "Sürekli zaman döngüsü",
   "dateAndTimeFormat": "Tarih ve zaman biçimi",
   "mapDefault": "Harita varsayılanı",
   "custom": "Özel",
@@ -19,7 +19,7 @@ define({
   "dddMMMDDhmma": "21 Tem Salı 8:00",
   "sliderSetting": "Kaydırıcı ayarları",
   "autoRefresh": "Kaydırıcı yenileme süresi",
-  "timeSetting": "Zaman Ayarları",
+  "timeSetting": "Zaman ayarları",
   "useWebMapSetting": "Web haritası zaman ayarlarını kullan",
   "useConfigureSetting": "Zaman ayarlarını yapılandır",
   "timeSettingBtn": "ayar",

@@ -5,6 +5,7 @@ define({
   "labelLayer": "Lagernamn",
   "itemZoomTo": "Zooma till",
   "itemTransparency": "Transparens",
+  "itemSetVisibilityRange": "Ange visningsintervall",
   "itemTransparent": "Transparent",
   "itemOpaque": "Opak",
   "itemMoveUp": "Flytta uppåt",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Inaktivera alla etiketter",
   "turnAllLabelsOn": "Aktivera alla etiketter",
   "showLabels": "Visa etiketter",
-  "hideLables": "Dölj etiketter"
+  "hideLables": "Dölj etiketter",
+  "keyword": "Nyckelord",
+  "basemapLayers": "Baskartlager",
+  "typeAKeywork": "Ange ett nyckelord",
+  "layers": "Lager"
 });

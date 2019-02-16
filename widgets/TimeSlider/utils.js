@@ -142,13 +142,42 @@ define(['dojo/_base/html', 'dojo/dom-geometry', 'dojo/_base/array',
         return false;
       }
     };
-    mo.initPosition = function (map, domNode, position) {
-      if (position && position.hasMoved) {
-        html.setStyle(domNode, 'top', position.top + 'px');
-        html.setStyle(domNode, 'left', position.left + 'px');
-        return;
+    mo._MINIMODE_HEIGHT = 35;//height of popup
+    mo.getMarginPosition = function (map, domNode, position){
+      var containerBox = domGeometry.getMarginBox(map.root);
+      var mapWidth = containerBox.w;
+      var mapHeight = containerBox.h;
+      var sliderContentBox = html.getContentBox(domNode);
+
+      position.marginPosition = {
+        right: mapWidth - (sliderContentBox.w + position.left),
+        bottom: mapHeight - (mo._MINIMODE_HEIGHT/*sliderContentBox.h*/ + position.top)
+        //right: (mapWidth - (sliderContentBox.w + position.left)) / mapWidth,
+        //bottom: (mapHeight - (mo._MINIMODE_HEIGHT/*sliderContentBox.h*/ + position.top)) / mapHeight
+      };
+    };
+    mo.setMarginPosition = function (map, domNode, position){
+      if (position.marginPosition) {
+        var containerBox = domGeometry.getMarginBox(map.root);
+        var mapWidth = containerBox.w;
+        var mapHeight = containerBox.h;
+        var sliderContentBox = html.getContentBox(domNode);
+        position.top = mapHeight - (mo._MINIMODE_HEIGHT/*sliderContentBox.h*/ + position.marginPosition.bottom);
+        position.left = mapWidth - (sliderContentBox.w + position.marginPosition.right);
+        //position.top = mapHeight - (position.marginPosition.bottom*mapWidth + mo._MINIMODE_HEIGHT);
+        //position.left = mapWidth - (position.marginPosition.right*mapHeight + sliderContentBox.w);
+        if (position.top < 0) {
+          position.top = 0;
+        }
+        if (position.left < 0) {
+          position.left = 0;
+        }
       }
 
+      html.setStyle(domNode, 'top', position.top + 'px');
+      html.setStyle(domNode, 'left', position.left + 'px');
+    };
+    mo.initPosition = function (map, domNode, position) {
       var appConfig = window.getAppConfig();
       var theme;
       if (appConfig && appConfig.theme && appConfig.theme.name) {
@@ -168,7 +197,7 @@ define(['dojo/_base/html', 'dojo/dom-geometry', 'dojo/_base/array',
       var containerBox = domGeometry.getMarginBox(map.root);
       // var sliderContentBox = html.getContentBox(domNode);
       // var popupHeight = sliderContentBox.h;
-      var popupHeight = 35;//height of mini mode
+      var popupHeight = mo._MINIMODE_HEIGHT;//height of mini mode
 
       var marginBottom = mo.initPositionForTheme[theme] ? mo.initPositionForTheme[theme].bottom : 60;
       top = containerBox.h - marginBottom - popupHeight;

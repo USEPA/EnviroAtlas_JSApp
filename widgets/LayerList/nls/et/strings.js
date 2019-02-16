@@ -5,6 +5,7 @@ define({
   "labelLayer": "Kihi nimi",
   "itemZoomTo": "Suumi",
   "itemTransparency": "Läbipaistvus",
+  "itemSetVisibilityRange": "Määra nähtavusvahemik",
   "itemTransparent": "Läbipaistev",
   "itemOpaque": "Läbipaistmatu",
   "itemMoveUp": "Liiguta ülespoole",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Lülita kõik märgised välja",
   "turnAllLabelsOn": "Lülita kõik märgised sisse",
   "showLabels": "Kuva märgised",
-  "hideLables": "Peida märgised"
+  "hideLables": "Peida märgised",
+  "keyword": "Märksõna",
+  "basemapLayers": "Aluskaardi kihid",
+  "typeAKeywork": "Sisestage märksõna",
+  "layers": "Kihid"
 });

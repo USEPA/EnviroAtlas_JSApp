@@ -5,6 +5,7 @@ define({
   "labelLayer": "Karttatason nimi",
   "itemZoomTo": "Tarkenna kohteeseen",
   "itemTransparency": "Läpinäkyvyys",
+  "itemSetVisibilityRange": "Määritä näkyvyysalue",
   "itemTransparent": "Läpinäkyvä",
   "itemOpaque": "Läpinäkymätön",
   "itemMoveUp": "Siirrä ylös",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Poista kaikki tunnustekstit käytöstä",
   "turnAllLabelsOn": "Ota kaikki tunnustekstit käyttöön",
   "showLabels": "Näytä tunnustekstit",
-  "hideLables": "Piilota tunnustekstit"
+  "hideLables": "Piilota tunnustekstit",
+  "keyword": "Avainsana",
+  "basemapLayers": "Peruskarttatasot",
+  "typeAKeywork": "Kirjoita avainsana",
+  "layers": "Karttatasot"
 });

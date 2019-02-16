@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -219,13 +219,13 @@ define([
     //_deniedItems: null,
     _displayItems: null,
     _layerInfo: null,
-    //_layerType: null,
+    _layerType: null,
     _appConfig: null,
 
     constructor: function(layerInfo, displayItemInfos, layerType, layerListWidget) {
       this.nls = NlsStrings.value;
       this._layerInfo = layerInfo;
-      _layerType = layerType;
+      this._layerType = layerType;
       layerInfoFromJson = {};
       this.layerListWidget = layerListWidget;
       this._initCandidateMenuItems();
@@ -237,18 +237,18 @@ define([
       var label;
       var itemLayerId = this._layerInfo.isItemLayer && this._layerInfo.isItemLayer();
       var layerUrl = this._layerInfo.getUrl();
-
-      if (itemLayerId) {
-        url = this._getItemDetailsPageUrl() || layerUrl;
+      var basicItemInfo = this._layerInfo.isItemLayer();
+      if (basicItemInfo) {
+        url = this._getItemDetailsPageUrl(basicItemInfo) || layerUrl;
         label = this.nls.itemShowItemDetails;
       } else if (layerUrl &&
-        (_layerType === "CSVLayer" || _layerType === "KMLLayer")) {
+        (this._layerType === "CSVLayer" || this._layerType === "KMLLayer")) {
         url = layerUrl;
         label = this.nls.itemDownload;
-      } else if (layerUrl && _layerType === "WMSLayer") {
+      } else if (layerUrl && this._layerType === "WMSLayer") {
         url = layerUrl + (layerUrl.indexOf("?") > -1 ? "&" : "?") + "SERVICE=WMS&REQUEST=GetCapabilities";
         label = this.nls.itemDesc;
-      } else if (layerUrl && _layerType === "WFSLayer") {
+      } else if (layerUrl && this._layerType === "WFSLayer") {
         url = layerUrl + (layerUrl.indexOf("?") > -1 ? "&" : "?") + "SERVICE=WFS&REQUEST=GetCapabilities";
         label = this.nls.itemDesc;
       } else if (layerUrl) {
@@ -258,23 +258,14 @@ define([
         url = '';
         label = this.nls.itemDesc;
       }
-
+      this._ATagLabelUrl = url;
       return '<a class="menu-item-description" target="_blank" href="' +
         url + '">' + label + '</a>';
     },
 
-    _getItemDetailsPageUrl: function() {
+    _getItemDetailsPageUrl: function(basicItemInfo) {
       var itemUrl = "";
-      var portalUrl;
-      var appConfig = this.layerListWidget.appConfig;
-      var itemLayerInfo = lang.getObject("_wabProperties.itemLayerInfo", false, this._layerInfo.layerObject);
-      if(this._layerInfo.originOperLayer.itemId) {
-        portalUrl = portalUrlUtils.getStandardPortalUrl(appConfig.map.portalUrl || appConfig.portalUrl);
-        itemUrl = portalUrlUtils.getItemDetailsPageUrl(portalUrl, this._layerInfo.originOperLayer.itemId);
-      } else if(itemLayerInfo && itemLayerInfo.portalUrl && itemLayerInfo.itemId){
-        portalUrl = portalUrlUtils.getStandardPortalUrl(itemLayerInfo.portalUrl);
-        itemUrl = portalUrlUtils.getItemDetailsPageUrl(portalUrl, itemLayerInfo.itemId);
-      }
+      itemUrl = portalUrlUtils.getItemDetailsPageUrl(basicItemInfo.portalUrl, basicItemInfo.itemId);
       return itemUrl;
     },
 
@@ -393,7 +384,7 @@ define([
         });
       }
 
-      if (!this._layerInfo.getUrl()) {
+      if (!this._ATagLabelUrl) {
         dynamicDeniedItems.push({
           'key': 'url',
           'denyType': 'disable'
@@ -405,6 +396,27 @@ define([
         dynamicDeniedItems.push({
           'key': 'controlLabels',
           'denyType': 'hidden'
+        });
+      }
+
+      // deny setVisibilityRange
+      if(this._layerInfo.originOperLayer.featureCollection) {
+        dynamicDeniedItems.push({
+          'key': 'setVisibilityRange',
+          'denyType': 'hidden'
+        });
+      } else if(!this._layerInfo.isRootLayer() &&
+          this._layerInfo.getRootLayerInfo().layerObject.declaredClass === "esri.layers.ArcGISTiledMapServiceLayer") {
+        dynamicDeniedItems.push({
+          'key': 'setVisibilityRange',
+          'denyType': 'hidden'
+        });
+      } else if(!this._layerInfo.isRootLayer() &&
+          this._layerInfo.getRootLayerInfo().layerObject.declaredClass === "esri.layers.ArcGISDynamicMapServiceLayer" &&
+          !this._layerInfo.getRootLayerInfo().layerObject.supportsDynamicLayers) {
+        dynamicDeniedItems.push({
+          'key': 'setVisibilityRange',
+          'denyType': 'disable'
         });
       }
 
@@ -467,6 +479,8 @@ define([
         closeMenu: true
       };
       switch (evt.itemKey) {
+        case 'zoomto' /*this.nls.itemZoomTo'Zoom to'*/ :
+          this._onItemZoomToClick(evt);
         case 'mapDescription':
           this._onItemMapDescriptionClick(evt);
           break;
@@ -520,6 +534,10 @@ define([
       //   layerListView: layerListView
       // }, result;
      **********************************/
+    _onItemZoomToClick: function(evt) {
+      /*jshint unused: false*/
+      this._layerInfo.zoomTo();
+    },
     _onMoveToTopClick: function(evt) {
       /*jshint unused: false*/
 
@@ -735,9 +753,12 @@ define([
     }];
 
     var itemInfoCategoreList = {
-      'RootLayer': [
-      {
+      'RootLayer': [{
+        key: 'zoomto'
+      }, {
         key: 'transparency'
+      }, {
+        key: 'setVisibilityRange'
       }, {
         key: 'movetotop'
       }, {
@@ -774,11 +795,14 @@ define([
         key: 'separator'
       }, {
         key: 'table'
-      }],      
-      'RootLayerAndFeatureLayer': [
-      {
+      }],
+      'RootLayerAndFeatureLayer': [{
+        key: 'zoomto'
+      }, {
         key: 'transparency'
       }, {
+        key: 'setVisibilityRange'
+      },  {
         key: 'movetotop'
       }, {
         key: 'changeSymbology'
@@ -799,9 +823,17 @@ define([
       }, {
         key: 'separator'
       }, {
+        key: 'controlLabels'
+      }, {
+        key: 'separator'
+      }, {
         key: 'table'
       }],
       'FeatureLayer': [{
+        key: 'setVisibilityRange'
+      }, {
+        key: 'separator'
+      },{
         key: 'controlPopup'
       }, {
         key: 'separator'
@@ -812,7 +844,18 @@ define([
       }, {
         key: 'url'
       }],
+      'SublayerOfDynamicMapserviceLayer': [{
+        key: 'setVisibilityRange'
+      }, {
+        key: 'separator'
+      }, {
+        key: 'url'
+      }],
       'GroupLayer': [{
+        key: 'setVisibilityRange'
+      }, {
+        key: 'separator'
+      },{
         key: 'url'
       }],
       'Table': [{
@@ -822,25 +865,40 @@ define([
       }, {
         key: 'url'
       }],
+      'BasemapLayer': [{
+        key: 'zoomto'
+      }, {
+        key: 'transparency'
+      }, {
+        key: 'separator'
+      }, {
+        key: 'url'
+      }],
       'default': defaultItemInfos
     };
 
     layerInfo.getLayerType().then(lang.hitch(this, function(layerType) {
-        //alert("layerType:"+layerType);
-    	_layerType = layerType;
       var itemInfoCategory = "";
-      if (isRootLayer &&
-          ( layerType === "CSVLayer" ||
+      if (layerInfo.isBasemap() && layerInfo.isRootLayer()) {
+        itemInfoCategory = "BasemapLayer";
+      } else if(layerInfo.isBasemap()) {
+        itemInfoCategory = "default";
+      } else if (isRootLayer &&
+          (layerType === "FeatureLayer" ||
+            layerType === "CSVLayer" ||
             layerType === "ArcGISImageServiceLayer" ||
             layerType === "StreamLayer" ||
             layerType === "ArcGISImageServiceVectorLayer")) {
-        itemInfoCategory = "RootLayerAndNonFeatureLayer";
-      } else if (isRootLayer && (layerType === "FeatureLayer")) {
-        itemInfoCategory = "RootLayerAndFeatureLayer";        
-      }else if (isRootLayer) {
+        itemInfoCategory = "RootLayerAndFeatureLayer";
+      } else if (isRootLayer) {
         itemInfoCategory = "RootLayer";
       } else if (layerType === "FeatureLayer" || layerType === "CSVLayer") {
         itemInfoCategory = "FeatureLayer";
+      } else if (layerInfo.isLeaf() &&
+                layerInfo.getRootLayerInfo() &&
+                layerInfo.getRootLayerInfo().layerObject &&
+                layerInfo.getRootLayerInfo().layerObject.declaredClass === "esri.layers.ArcGISDynamicMapServiceLayer") {
+        itemInfoCategory = "SublayerOfDynamicMapserviceLayer";
       } else if (layerType === "GroupLayer") {
         itemInfoCategory = "GroupLayer";
       } else if (layerType === "Table") {

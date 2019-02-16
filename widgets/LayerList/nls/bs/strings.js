@@ -5,6 +5,7 @@ define({
   "labelLayer": "Naziv sloja",
   "itemZoomTo": "Povećaj na",
   "itemTransparency": "Prozirnost",
+  "itemSetVisibilityRange": "Postavi raspon vidljivosti",
   "itemTransparent": "Transparentno",
   "itemOpaque": "Neprozirno",
   "itemMoveUp": "Premjesti gore",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Isključi sve oznake",
   "turnAllLabelsOn": "Uključi sve oznake",
   "showLabels": "Prikaži oznake",
-  "hideLables": "Sakrij oznake"
+  "hideLables": "Sakrij oznake",
+  "keyword": "Ključna riječ",
+  "basemapLayers": "Slojevi kartografske podloge",
+  "typeAKeywork": "Upišite ključnu riječ",
+  "layers": "Slojevi"
 });

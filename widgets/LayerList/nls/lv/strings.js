@@ -5,6 +5,7 @@ define({
   "labelLayer": "Slāņa nosaukums",
   "itemZoomTo": "Pietuvināt",
   "itemTransparency": "Caurspīdīgums",
+  "itemSetVisibilityRange": "Iestatīt redzamības diapazonu",
   "itemTransparent": "Caurspīdīgs",
   "itemOpaque": "Necaurredzams",
   "itemMoveUp": "Pārvietot uz augšu",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Izslēgt visus kartes tekstus",
   "turnAllLabelsOn": "Ieslēgt visus kartes tekstus",
   "showLabels": "Rādīt kartes tekstus",
-  "hideLables": "Paslēpt kartes tekstus"
+  "hideLables": "Paslēpt kartes tekstus",
+  "keyword": "Atslēgvārdi",
+  "basemapLayers": "Pamatkartes slāņi",
+  "typeAKeywork": "Rakstīt atslēgvārdu",
+  "layers": "Slāņi"
 });

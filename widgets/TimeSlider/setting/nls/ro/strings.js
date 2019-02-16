@@ -1,7 +1,7 @@
 define({
   "showLayerLabels": "Afișează numele stratului tematic",
   "autoPlay": "Rulează automat cursorul",
-  "loopPlay": "Timp de redare continuă în buclă",
+  "loopPlay": "Timp de redare în buclă continuu",
   "dateAndTimeFormat": "Format dată şi oră",
   "mapDefault": "Hartă implicită",
   "custom": "Personalizat",
