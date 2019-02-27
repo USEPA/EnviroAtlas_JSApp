@@ -104,11 +104,47 @@ define([
                */
               // Track New Layers 
               on(this.map, "layer-add", lang.hitch(this, function (event) {
-                  var layer = event.layer
+                  var layer = event.layer;
+                  var searchBox = document.getElementById("searchFilterText");
+                  var searchTerm = "";
+                  if (searchBox){
+                      searchTerm = searchBox.value;
+                  }
                   if (layer.url){
-                    ga('send', 'event', 'EnviroAtlas', "layer-add", "ealyr:" + layer.url + "| " + layer.title);
+                    ga('send', 'event', 'EnviroAtlas', "layer-add", "ealyr: " + layer.url + " | " + layer.title + " | " + searchTerm);
                   }
               }));
+              
+              var waitForSearch = function (selector, callback, maxTimes) {
+                  if (jQuery(selector).length) {
+                    callback();
+                  } else {
+                    if (maxTimes === false || maxTimes > 0) {
+                      (maxTimes != false) && maxTimes-- ;
+                      setTimeout(function () {
+                        waitForSearch(selector, callback, maxTimes);
+                      }, 1000);
+                    }
+                  }
+                };
+              
+              
+              waitForSearch("#searchFilterText", function() {
+                 //console.log("search tracking enabled");
+                // Track search terms
+                var searchBox = document.getElementById('searchFilterText');
+                this.timeout = null;
+                searchBox.onkeyup = function (e) {
+                  clearTimeout(this.timeout);
+                  // Make a new timeout set to go off in 800ms
+                    this.timeout = setTimeout(function () {
+                        //console.log('Search Value:', searchBox.value);
+                        ga('send', 'event', 'EnviroAtlas', "layer-search", "searchTerm: " + searchBox.value);
+                    }, 2000);
+                }                      
+              },20);
+
+              
             /*
               // Track Removed Layers 
               on(this.map, "layer-remove", lang.hitch(this, function (event) {
