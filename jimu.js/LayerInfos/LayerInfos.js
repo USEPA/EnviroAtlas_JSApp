@@ -703,7 +703,9 @@ define([
             if(lang.getObject('_wabProperties.isTemporaryLayer', false, newLayer)) {
               newLayerInfo._flag._isTemporaryLayerInfo = true;
             }
-            specifiedLayerInfos.push(newLayerInfo);
+            if ((newLayer.id.indexOf(window.layerIdTiledPrefix)) == -1){
+                specifiedLayerInfos.push(newLayerInfo);
+            }
           }
         }
 
@@ -717,12 +719,12 @@ define([
               array.forEach(serviceDefinition.tables, function(tableDifination) {
                 tableDifination.url = newLayerInfo.getUrl() + '/' + tableDifination.id;
                 tableDifination.id = newLayerInfo.id + '_' + tableDifination.id;
-                tableDifination.title = this._getLayerTitle(tableDifination);
-                // var newTalbeInfo = this._addTable([tableDifination], this._tableInfos);
-                // if (newTalbeInfo) {
-                //   newTableInfos.push(newTalbeInfo);
-                // }
-                tableDifinations.push(tableDifination);
+                //tableDifination.title = this._getLayerTitle(tableDifination);
+                if (tableDifination.url.indexOf("ejscreen")<0) {
+	                tableDifination.title = this._getLayerTitle(tableDifination);
+	                tableDifinations.push(tableDifination);                	
+                }
+                //tableDifinations.push(tableDifination);
               }, this);
               this._addTables(tableDifinations, this._tableInfos);
             }));

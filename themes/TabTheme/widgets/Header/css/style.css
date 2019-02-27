@@ -28,6 +28,16 @@
   text-align: center;
   height: 100%;
 }
+
+.subtitle {
+  position: absolute;
+  bottom: 9px;
+  font-size: 16px;
+  color: #d8d8d8;
+  letter-spacing: .5px;
+
+}
+
 .jimu-widget-header .links{
   height: 100%;
 }
@@ -118,4 +128,12 @@
 }
 .popup-links .link-section.signin a{
   color: #d9dde0;
+}
+
+.mapTourIcon{
+  height: 25px;
+  width: 25px;
+  margin-left: 20px;
+  vertical-align: middle;
+  cursor: pointer;
 }
