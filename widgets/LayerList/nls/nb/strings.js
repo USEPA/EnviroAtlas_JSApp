@@ -5,6 +5,7 @@ define({
   "labelLayer": "Lagnavn",
   "itemZoomTo": "Zoom til",
   "itemTransparency": "Gjennomsiktighet",
+  "itemSetVisibilityRange": "Angi synlighetsområde",
   "itemTransparent": "Gjennomsiktighet",
   "itemOpaque": "Ugjennomsiktig",
   "itemMoveUp": "Flytt opp",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Deaktiver alle etiketter",
   "turnAllLabelsOn": "Aktiver alle etiketter",
   "showLabels": "Vis etiketter",
-  "hideLables": "Skjul etiketter"
+  "hideLables": "Skjul etiketter",
+  "keyword": "Nøkkelord",
+  "basemapLayers": "Bakgrunnskartlag",
+  "typeAKeywork": "Skriv inn et nøkkelord",
+  "layers": "Lag"
 });

@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Shapefile (.zip, tüm shapefile dosyalarını kapsayan ZIP arşivi)",
       "CSV": "CSV Dosyası (.csv, adres veya enlem, boylam ve virgül, noktalı virgül veya sekme ayırmalı)",
+      "KML": "KML Dosyası (.kml)",
       "GPX": "GPX Dosyası (.gpx, GPS Takas Biçimi)",
       "GeoJSON": "GeoJSON Dosyası (.geo.json veya .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} detay",
     "invalidTypePattern": "{filename}: bu tür desteklenmiyor",
     "maxFeaturesAllowedPattern": "Maksimum {count} detaya izin verilir",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "Bir sorun vardı.",
+    "kmlProjectionMismatch": "Harita ve KML katmanının mekansal referansı eşleşmiyor ve istemci üzerinde dönüşüm yapılamıyor."
   },
   "layerList": {
     "caption": "Katmanlar",

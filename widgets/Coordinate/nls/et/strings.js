@@ -12,6 +12,7 @@ define({
   "Default": "Vaikimisi",
   "Inches": "tolli",
   "Foot": "Jalga",
+  "Foot_US": "Feet_US",
   "Yards": "jardi",
   "Miles": "miili",
   "Nautical_Miles": "Meremiili",

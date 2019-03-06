@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2016 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ define(["dojo/_base/declare",
       initOptions: function() {
         var context = this.searchPane.searchContext;
         var hasUsername = (typeof context.username === "string" && context.username.length > 0);
-        var hasOrgId = (typeof context.orgId === "string" && context.orgId.length > 0);
+        //var hasOrgId = (typeof context.orgId === "string" && context.orgId.length > 0);
         var options = this.getConfig().scopeOptions;
         this.curatedFilter = options.Curated.filter;
         var activeNode = null;

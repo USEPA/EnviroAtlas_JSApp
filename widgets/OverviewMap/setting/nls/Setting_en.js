@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/OverviewMap/setting/nls/strings":{visible:"Show overview map by default",minWidth:"Min width",minHeight:"Min meight",maxWidth:"Max width",maxHeight:"Max height",minText:"Minimum",maxText:"maximum",attachText:"Specify which corner of the map to attach this widget.",expandText:"Initially expand the widget",topLeft:"Top left",topRight:"Top right",bottomLeft:"Bottom left",bottomRight:"Bottom right",_localized:{}}});

@@ -12,6 +12,7 @@ define({
   "Default": "ค่าเริ่มต้น",
   "Inches": "นิ้ว",
   "Foot": "ฟุต",
+  "Foot_US": "Feet_US",
   "Yards": "หลา",
   "Miles": "ไมล์",
   "Nautical_Miles": "ไมล์ทะเล",

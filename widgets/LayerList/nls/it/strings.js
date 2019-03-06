@@ -5,6 +5,7 @@ define({
   "labelLayer": "Nome layer",
   "itemZoomTo": "Zoom a",
   "itemTransparency": "Trasparenza",
+  "itemSetVisibilityRange": "Impostare l'intervallo di visibilità",
   "itemTransparent": "Trasparente",
   "itemOpaque": "Opaco",
   "itemMoveUp": "Sposta su",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Disattiva tutte le etichette",
   "turnAllLabelsOn": "Attiva tutte le etichette",
   "showLabels": "Mostra etichette",
-  "hideLables": "Nascondi etichette"
+  "hideLables": "Nascondi etichette",
+  "keyword": "Parola chiave",
+  "basemapLayers": "Layer del basemap",
+  "typeAKeywork": "Digitare una parola chiave",
+  "layers": "Livelli"
 });

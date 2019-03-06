@@ -23,6 +23,7 @@ define({
   "showAllRecords": "Vis alle poster",
   "showRelatedRecords": "Vis relaterede poster",
   "noRelatedRecords": "Ingen relaterede poster fundet",
+  "highlightAllRecords": "Fremhæv alle poster på kortet",
   "attachmentColumn": "Fotos og filer",
   "refresh": "Opdatér",
   "features": "objekter",
@@ -40,5 +41,24 @@ define({
   "sortDes": "Sortér faldende",
   "statistics": "Statistik",
   "attachments": "Vedhæftninger",
-  "files": "filer"
+  "files": "filer",
+  "keepRichTextLabel": "Behold rich text-format",
+  "whatsThis": "Hvad er dette?",
+  "richTextMessage": {
+    "explanatoryText": {
+      "line1": "${layerName} indeholder følgende rich text-felt(er): ",
+      "line2": " det kan omfatte teksttypografier, f.eks. skrifttyper, farver eller tekststørrelser.",
+      "line3": "Når de eksporteres til CSV, bevares typografierne i form af HTML-tags. Du kan vælge ikke at beholde rich text-formaterne ved at fjerne markeringen i feltet \"Behold rich text-format\"."
+    },
+    "example": {
+      "label": "For eksempel:",
+      "scenarios": {
+        "first": "bliver eksporteret som følgende tekst som standard:",
+        "second": "og følgende tekst uden rich text-format:"
+      }
+    }
+  },
+  "noTablesAvailable": "Der er ingen tabeller at vise.",
+  "checkConfigutationToSelectLayers": "Gå til siden for widget-indstillinger for at vælge lag.",
+  "checkLayerListToSelectLayers": "Attribut-tabellen er synkroniseret med de synlige lag i kortet. Du kan bruge widgets som Lagliste til at vise/skjule lag."
 });

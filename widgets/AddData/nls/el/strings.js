@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Ένα Shapefile (.zip, αρχείο ZIP το οποίο περιέχει όλα τα αρχεία shapefile)",
       "CSV": "Ένα αρχείο CSV (.csv, με διεύθυνση ή γεωγραφικό πλάτος, γεωγραφικό μήκος και οριοθετημένο με κόμμα, ελληνικό ερωτηματικό ή tab)",
+      "KML": "Ένα αρχείο KML (.kml)",
       "GPX": "Ένα αρχείο GPX (.gpx, μορφής GPS Exchange)",
       "GeoJSON": "Ένα αρχείο GeoJSON (.geo.json ή .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} στοιχεία",
     "invalidTypePattern": "{filename}: αυτός ο τύπος δεν υποστηρίζεται",
     "maxFeaturesAllowedPattern": "Επιτρέπονται έως {count} στοιχεία",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "Παρουσιάστηκε κάποιο πρόβλημα.",
+    "kmlProjectionMismatch": "Η χωρική αναφορά του χάρτη και του θεματικού επιπέδου KML δεν συμφωνούν και δεν είναι δυνατή η μετατροπή στο πρόγραμμα-πελάτη."
   },
   "layerList": {
     "caption": "Θεμ. επίπ.",

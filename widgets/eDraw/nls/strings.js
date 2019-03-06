@@ -102,7 +102,12 @@ define({
 		west:'W',
 		east:'E',
 		north:'N',
-		south:'S'
+		south:'S',
+		arrow: 'Arrow',
+		arrowNone: 'No',
+		arrowBegin: 'Begin',
+		arrowBeginEnd: 'Begin and End',
+		arrowEnd: 'End'
 	}),
 	"ar" : 1,
 	"cs" : 1,

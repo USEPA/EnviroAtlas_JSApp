@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Shapefile failą (.zip, ZIP archyvą, kuriame yra visi Shapefile failai)",
       "CSV": "CSV failą (.csv, su adresu arba platuma, ilguma, atskirtą kableliu, kabliataškiu arba tabuliavimo žyme)",
+      "KML": "A KML failas (.kml)",
       "GPX": "GPX failą (.gpx, GPS Exchange formato)",
       "GeoJSON": "GeoJSON failą (.geo.json arba .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} elementai (-ų)",
     "invalidTypePattern": "{filename}: šis paslaugos tipas nepalaikomas",
     "maxFeaturesAllowedPattern": "Leidžiama daugiausiai tiek elementų: {count}",
-    "layerNamePattern": "{filename} – {name}"
+    "layerNamePattern": "{filename} – {name}",
+    "generalIssue": "Įvyko klaida.",
+    "kmlProjectionMismatch": "Žemėlapio ir KML sluoksnio koordinatės nesutampa, todėl negalima konvertuoti."
   },
   "layerList": {
     "caption": "Sluoksniai",

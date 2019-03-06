@@ -1,7 +1,7 @@
 define({
   "showLayerLabels": "Parādīt slāņu nosaukumus",
   "autoPlay": "Automātiski atskaņot slīdni",
-  "loopPlay": "Nepārtraukti ciklējiet laiku",
+  "loopPlay": "Cikla laiks — nepārtraukts",
   "dateAndTimeFormat": "Datuma un laika formāts",
   "mapDefault": "Noklusējuma karte",
   "custom": "Pielāgots",

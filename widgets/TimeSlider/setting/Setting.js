@@ -58,34 +58,34 @@ define([
           "label": this.nls.mapDefault,
           "value": "auto"
         }, {
-          "label": this.nls.MMMMYYYY,
+          "label": "July 2015",
           "value": "MMMM YYYY"
         }, {
-          "label": this.nls.MMMYYYY,
+          "label": "Jul 2015",
           "value": "MMM YYYY"
         }, {
-          "label": this.nls.MMMMDYYYY,
+          "label": "July 21,2015",
           "value": "MMMM D,YYYY"
         }, {
-          "label": this.nls.dddMMMDDYYYY,
+          "label": "Tue Jul 21,2015",
           "value": "ddd MMM DD,YYYY"
         }, {
-          "label": this.nls.MDDYYYY,
+          "label": "7/21/2015",
           "value": "M/DD/YYYY"
         }, {
-          "label": this.nls.YYYYMDD,
+          "label": "2015/7/21",
           "value": "YYYY/M/DD"
         }, {
-          "label": this.nls.MDDYY,
+          "label": "7/21/15",
           "value": "M/DD/YY"
         }, {
-          "label": this.nls.YYYY,
+          "label": "2015",
           "value": "YYYY"
         }, {
-          "label": this.nls.MDDYYYYhmma,
+          "label": "7/21/2015 8:00 am",
           "value": "M/DD/YYYY  h:mm a"
         }, {
-          "label": this.nls.dddMMMDDhmma,
+          "label": "Tue Jul 21 8:00 am",
           "value": "ddd MMM DD  h:mm a"
         }, {
           "label": this.nls.custom,

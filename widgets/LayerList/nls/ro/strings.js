@@ -5,6 +5,7 @@ define({
   "labelLayer": "Nume strat tematic",
   "itemZoomTo": "Transfocare la",
   "itemTransparency": "Transparenţă",
+  "itemSetVisibilityRange": "Setare nivel de vizibilitate",
   "itemTransparent": "Transparent",
   "itemOpaque": "Opac",
   "itemMoveUp": "Deplasare în sus",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Dezactivaţi toate etichetele",
   "turnAllLabelsOn": "Activaţi toate etichetele",
   "showLabels": "Afişaţi etichetele",
-  "hideLables": "Ascundeţi etichetele"
+  "hideLables": "Ascundeţi etichetele",
+  "keyword": "Cuvânt cheie",
+  "basemapLayers": "Straturi tematice de hartă fundal",
+  "typeAKeywork": "Introduceți un cuvânt cheie",
+  "layers": "Straturi tematice"
 });

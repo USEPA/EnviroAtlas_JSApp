@@ -44,8 +44,8 @@
 .jimu-subtitle{
   font-size: 12px;
   font-weight: normal;
-  color: #ffffff;
   color: rgba(255, 255, 255, 0.8);
+  font-family: Avenir Medium;
 }
 
 /* css for jimu-footer */
@@ -59,6 +59,8 @@
 .jimu-link{
   font-size: 14px;
   font-weight: normal;
+  color: #ffffff;
+  font-family: Avenir Medium;
 }
 
 .jimu-link:link, .jimu-link:visited{
@@ -68,13 +70,13 @@
 }
 
 .jimu-link:hover{
-  text-decoration: none;
+  text-decoration: underline;
   color: #ffffff;
+  opacity: 1;
 }
 
 .jimu-link:active{
   text-decoration: none;
-  color: #ececec;
   color: rgba(255, 255, 255, 0.9);
 }
 

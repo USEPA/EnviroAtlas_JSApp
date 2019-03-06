@@ -5,6 +5,7 @@ define({
   "labelLayer": "Nome da camada",
   "itemZoomTo": "Efetuar zoom para",
   "itemTransparency": "Transparência",
+  "itemSetVisibilityRange": "Definir intervalo de visibilidade",
   "itemTransparent": "Transparente",
   "itemOpaque": "Opaco",
   "itemMoveUp": "Mover para cima",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Desativar todos os rótulos",
   "turnAllLabelsOn": "Ativar todos os rótulos",
   "showLabels": "Exibir rótulos",
-  "hideLables": "Ocultar rótulos"
+  "hideLables": "Ocultar rótulos",
+  "keyword": "Palavra-chave",
+  "basemapLayers": "Camadas de mapa base",
+  "typeAKeywork": "Digite uma palavra-chave",
+  "layers": "Camadas"
 });

@@ -19,7 +19,7 @@ define({
   "dddMMMDDhmma": "Út 21. července 8:00",
   "sliderSetting": "Nastavení posuvníku",
   "autoRefresh": "Obnovit posuvník každé",
-  "timeSetting": "Nastavení času",
+  "timeSetting": "Časové nastavení dat",
   "useWebMapSetting": "Zohlednit nastavení času webové mapy",
   "useConfigureSetting": "Konfigurovat nastavení času",
   "timeSettingBtn": "nastavení",

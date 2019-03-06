@@ -12,6 +12,7 @@ define({
   "Default": "Domyślnie",
   "Inches": "Cale",
   "Foot": "Stopy",
+  "Foot_US": "Feet_US",
   "Yards": "Jardy",
   "Miles": "Mile",
   "Nautical_Miles": "Mile morskie",

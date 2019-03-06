@@ -5,6 +5,7 @@ define({
   "labelLayer": "اسم الطبقة",
   "itemZoomTo": "تكبير إلى",
   "itemTransparency": "معدل الشفافية:",
+  "itemSetVisibilityRange": "تعيين نطاق الرؤية",
   "itemTransparent": "شفاف",
   "itemOpaque": "غير شفاف",
   "itemMoveUp": "نقل لأعلى",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "إيقاف تشغيل كل التسميات",
   "turnAllLabelsOn": "تشغيل كل التسميات",
   "showLabels": "إظهار لافتات التسمية",
-  "hideLables": "إخفاء التسميات"
+  "hideLables": "إخفاء التسميات",
+  "keyword": "كلمة أساسية",
+  "basemapLayers": "طبقات خريطة الأساس",
+  "typeAKeywork": "اكتب كلمة أساسية",
+  "layers": "الطبقات"
 });

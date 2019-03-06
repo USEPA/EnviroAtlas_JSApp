@@ -12,6 +12,7 @@ define({
   "Default": "Noklusējums",
   "Inches": "Collas",
   "Foot": "Pēdas",
+  "Foot_US": "Pēdas_ASV",
   "Yards": "Jardi",
   "Miles": "Jūdzes",
   "Nautical_Miles": "Jūras jūdzes",

@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "shapefile (.zip, archiv ZIP obsahující všechny soubory shapefile),",
       "CSV": "soubor CSV (.csv, s adresou nebo zeměpisnou šířkou a délkou oddělenými čárkami, středníky nebo tabulátory),",
+      "KML": "Soubor KML (.kml)",
       "GPX": "soubor GPX (.gpx, formát GPX Exchange),",
       "GeoJSON": "soubor GeoJSON (.geo.json nebo .geojson)."
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} prvků",
     "invalidTypePattern": "{filename}: Tento typ není podporován.",
     "maxFeaturesAllowedPattern": "Je povoleno maximálně {count} prvků.",
-    "layerNamePattern": "{filename} – {name}"
+    "layerNamePattern": "{filename} – {name}",
+    "generalIssue": "Vyskytl se problém.",
+    "kmlProjectionMismatch": "Souřadnicový systém mapy a vrstvy KML se neshodují a konverzi nelze u klienta provést."
   },
   "layerList": {
     "caption": "Vrstvy",

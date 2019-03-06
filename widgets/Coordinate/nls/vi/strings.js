@@ -12,6 +12,7 @@ define({
   "Default": "Mặc định",
   "Inches": "Inch",
   "Foot": "Feet",
+  "Foot_US": "Feet_US",
   "Yards": "Thước",
   "Miles": "Dặm",
   "Nautical_Miles": "Hải lý",

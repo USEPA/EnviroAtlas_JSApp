@@ -1,6 +1,6 @@
 define(
 	({
-		_widgetLabel : "Dessin",
+		_widgetLabel : "Dessins avancés",
 		yes:"Oui",
 		no:"Non",
 		selectDrawMode : "Sélectionner le mode de dessin",
@@ -100,5 +100,10 @@ define(
 		west:'O',
 		east:'E',
 		north:'N',
-		south:'S'
+		south:'S',
+		arrow: 'Flèche',
+		arrowNone: 'Non',
+		arrowBegin: 'Début',
+		arrowBeginEnd: 'Début et fin',
+		arrowEnd: 'Fin'
 	}));

@@ -5,13 +5,21 @@ define({
   "actions": "レイヤー フィールドの構成",
   "field": "フィールド",
   "alias": "エイリアス",
+  "url": "URL",
+  "sortField": "並べ替えフィールド",
+  "sortOrderTooltips": {
+    "toDescending": "降順に変更",
+    "toAscending": "昇順に変更"
+  },
   "visible": "表示",
   "linkField": "リンク フィールド",
   "noLayers": "使用できるフィーチャ レイヤーはありません",
   "back": "戻る",
   "exportCSV": "CSV へのエクスポートを許可",
   "expand": "初期画面よりウィジェットを表示",
-  "filterByExtent": "デフォルトでマップ範囲によるフィルターを有効化します",
+  "filterByExtent": "デフォルトでマップ範囲によるフィルターを有効化",
+  "allowTextSelection": "テキスト選択を許可",
+  "highlightColor": "ハイライト表示色",
   "restore": "デフォルト値に戻す",
   "ok": "OK",
   "cancel": "キャンセル",
@@ -26,5 +34,7 @@ define({
   "fieldAlias": "エイリアス",
   "fieldVisibility": "表示設定",
   "fieldActions": "アクション",
-  "showAttachments": "添付ファイルの表示"
+  "showAttachments": "添付ファイルの表示",
+  "syncWithLayers": "レイヤーの表示設定と同期",
+  "syncWithLayersHint": "属性テーブルに表示されたレイヤーはレイヤーの表示設定と動的に同期されます。"
 });

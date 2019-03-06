@@ -1,7 +1,7 @@
 define({
   "showLayerLabels": "Laagnamen weergeven",
   "autoPlay": "De schuifbalk automatisch afspelen",
-  "loopPlay": "Continue looptijd",
+  "loopPlay": "Tijd continue laten doorlopen",
   "dateAndTimeFormat": "Datum- en tijdopmaak",
   "mapDefault": "Kaartstandaard",
   "custom": "Aangepast",

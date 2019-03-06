@@ -1,5 +1,8 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+
 ///////////////////////////////////////////////////////////////////////////
-// Copyright ? 2014 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -80,7 +83,7 @@ var
 
   //This version number will be appended to URL to avoid cache.
   //The reason we do not use wabVersion is to avoid force user to change wabVersion when they are customizing app.
-  deployVersion = '2.5';
+  deployVersion = '2.11';
 
 // console.time('before map');
 
@@ -100,7 +103,7 @@ var
 (function(global){
   //init API URL
   var queryObject = getQueryObject();
-  var apiVersion = '3.23';
+  var apiVersion = '3.27';
 
   ////////uncomment the following line when downloading the app
 
@@ -108,15 +111,17 @@ var
 
   //////////////////////////////////////////////////////////////
   allCookies = getAllCookies();
+
+  if (queryObject.apiurl) {
+    if(!checkApiUrl(queryObject.apiurl)){
+      console.error('?apiurl must point to an ULR that is in the app or in esri.com/arcgis.com domain.');
+      return;
+    }
+    apiUrl = queryObject.apiurl;
+  }
   window.appInfo = {isRunInPortal: !isXT};
   if (!apiUrl) {
-    if (queryObject.apiurl) {
-      if(!checkApiUrl(queryObject.apiurl)){
-        console.error('?apiurl must point to an ULR that is in the app or in esri.com/arcgis.com domain.');
-        return;
-      }
-      apiUrl = queryObject.apiurl;
-    } else if (isXT) {
+    if (isXT) {
       apiUrl = 'https://js.arcgis.com/' + apiVersion;
     } else {
       var portalUrl = getPortalUrlFromLocation();
@@ -291,6 +296,7 @@ var
       }
     }
 
+    dirNode.setAttribute("lang", locale);
     if (isRTLLocale) {
       dirNode.setAttribute("dir", "rtl");
       dirNode.className += " esriRtl jimu-rtl";

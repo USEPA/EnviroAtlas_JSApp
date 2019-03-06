@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Un Shapefile (.zip, archivo ZIP que contiene todos los archivos shapefile)",
       "CSV": "Un archivo CSV (.csv, con dirección o latitud, longitud y delimitados por comas, puntos o tabuladores)",
+      "KML": "Un archivo KML (.kml)",
       "GPX": "Un archivo (.gpx, formato de intercambio GPS)",
       "GeoJSON": "Un archivo GeoJSON (.geo.json o .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} entidad(es)",
     "invalidTypePattern": "{filename}: este tipo no es compatible",
     "maxFeaturesAllowedPattern": "Se permite un máximo de {count} entidades",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "Se ha producido un problema.",
+    "kmlProjectionMismatch": "La referencia espacial del mapa y la capa KML no coinciden y no es posible hacer la conversión en el cliente."
   },
   "layerList": {
     "caption": "Capas",

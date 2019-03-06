@@ -5,6 +5,7 @@ define({
   "labelLayer": "लेयर का नाम",
   "itemZoomTo": "जूम करें",
   "itemTransparency": "पारदर्शिता",
+  "itemSetVisibilityRange": "दृश्यता सीमा सेट करें",
   "itemTransparent": "पारदर्शी",
   "itemOpaque": "अपारदर्शी",
   "itemMoveUp": "ऊपर जाएँ",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "सभी लेबल को बंद करें",
   "turnAllLabelsOn": "सभी लेबल को चालू करें",
   "showLabels": "लेबल दिखाएं",
-  "hideLables": "लेबल छिपाएँ"
+  "hideLables": "लेबल छिपाएँ",
+  "keyword": "कीवर्ड",
+  "basemapLayers": "बेसमैप लेयर्स",
+  "typeAKeywork": "कोई कीवर्ड लिखें",
+  "layers": "लेयर"
 });

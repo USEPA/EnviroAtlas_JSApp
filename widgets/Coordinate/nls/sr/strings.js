@@ -12,6 +12,7 @@ define({
   "Default": "Podrazumevano",
   "Inches": "Inči",
   "Foot": "Stope",
+  "Foot_US": "Feet_US",
   "Yards": "Jardi",
   "Miles": "Milje",
   "Nautical_Miles": "Nautičke milje",

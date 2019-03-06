@@ -5,6 +5,12 @@ define({
   "actions": "กำหนดค่าฟิลด์ของชั้นข้อมูล",
   "field": "คอลัมน์",
   "alias": "นามแฝง",
+  "url": "URL",
+  "sortField": "จัดเรียงฟิลด์",
+  "sortOrderTooltips": {
+    "toDescending": "เปลี่ยนเป็นลำดับจากมากไปน้อย",
+    "toAscending": "เปลี่ยนเป็นลำดับจากน้อยไปมาก"
+  },
   "visible": "มองเห็น",
   "linkField": "ลิงค์ฟิลด์",
   "noLayers": "ไม่ปรากฏชั้นข้อมูลฟีเจอร์",
@@ -12,6 +18,8 @@ define({
   "exportCSV": "นำออกเป็น CSV",
   "expand": "เริ่มจากการขยายวิดเจ็ต",
   "filterByExtent": "เปิดใช้งานการกรองตามขอบเขตแผนที่ตามค่าเริ่มต้น",
+  "allowTextSelection": "อนุญาตการเลือกข้อความ",
+  "highlightColor": "สีที่โดดเด่น",
   "restore": "กลับไปยังค่าตั้งต้น",
   "ok": "ตกลง",
   "cancel": "ยกเลิก",
@@ -26,5 +34,7 @@ define({
   "fieldAlias": "นามแฝง",
   "fieldVisibility": "มองเห็นได้",
   "fieldActions": "กระบวนการ",
-  "showAttachments": "แสดงไฟล์แนบ"
+  "showAttachments": "แสดงไฟล์แนบ",
+  "syncWithLayers": "ซิงโครไนซ์กับการแสดงชั้นข้อมูล",
+  "syncWithLayersHint": "ชั้นข้อมูลที่แสดงในตารางแอตทริบิวต์ จะซิงโครไนซ์กับการแสดงชั้นข้อมูลในแบบไดนามิก"
 });

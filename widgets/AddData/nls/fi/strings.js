@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Shapefile (.zip, ZIP-arkistotiedosto, joka sisältää kaikki shapefile-tiedostot)",
       "CSV": "CSV-tiedosto (pilkuin, puolipistein tai sarkaimin eroteltu .csv-tiedosto, jossa on osoite tai leveys- tai pituusaste)",
+      "KML": "KML-tiedosto (.kml)",
       "GPX": "GPX-tiedosto (.gpx, GPS Exchange Format)",
       "GeoJSON": "GeoJSON-tiedosto (.geo.json tai .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} kohdetta",
     "invalidTypePattern": "{filename}: tätä tyyppiä ei tueta",
     "maxFeaturesAllowedPattern": "Kohteiden sallittu enimmäismäärä on {count}",
-    "layerNamePattern": "{filename} – {name}"
+    "layerNamePattern": "{filename} – {name}",
+    "generalIssue": "On ilmennyt ongelma.",
+    "kmlProjectionMismatch": "Kartan koordinaatistotieto ja KML-karttataso eivät täsmää, eikä muunnosta voi tehdä asiakaskoneessa."
   },
   "layerList": {
     "caption": "Karttatasot",

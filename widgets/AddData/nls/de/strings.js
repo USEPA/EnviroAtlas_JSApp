@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Ein Shapefile (ZIP-Archiv mit allen Shapefile-Dateien)",
       "CSV": "Eine CSV-Datei (CSV-Datei mit Adressen oder Breitengrad, Längengrad und durch Komma, Semikolon oder Tabulatoren getrennt)",
+      "KML": "Eine KML-Datei (.kml)",
       "GPX": "Eine GPX-Datei (GPX-Datei, GPS Exchange Format)",
       "GeoJSON": "Eine GeoJSON-Datei (Dateierweiterung GEO.JSON oder GEOJSON)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} Feature(s)",
     "invalidTypePattern": "{filename}: dieser Typ wird nicht unterstützt",
     "maxFeaturesAllowedPattern": "Maximalwert von {count} Features zulässig",
-    "layerNamePattern": "{filename} – {name}"
+    "layerNamePattern": "{filename} – {name}",
+    "generalIssue": "Es ist ein Fehler aufgetreten.",
+    "kmlProjectionMismatch": "Der Raumbezug der Karte und der des KML-Layers stimmen nicht überein, und die Konvertierung kann auf dem Client nicht durchgeführt werden."
   },
   "layerList": {
     "caption": "Layer",

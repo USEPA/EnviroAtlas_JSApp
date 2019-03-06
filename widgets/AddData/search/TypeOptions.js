@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2016 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ define(["dojo/_base/declare",
     "esri/layers/VectorTileLayer",
     "dijit/TooltipDialog",
     "dijit/form/DropDownButton",
-    "dijit/form/CheckBox"
+    "jimu/dijit/CheckBox"
   ],
   function(declare, array, lang, on, SearchComponent, template, i18n,
     VectorTileLayer) {
@@ -45,6 +45,25 @@ define(["dojo/_base/declare",
           var v = this.searchPane.wabWidget.appConfig.theme.name;
           this.tooltipDialog.domNode.className += " " + v;
         })));
+
+        this.own(on(this.mapServiceToggle,'change',lang.hitch(this,function(){
+          this.search();
+        })));
+        this.own(on(this.featureServiceToggle,'change',lang.hitch(this,function(){
+          this.search();
+        })));
+        this.own(on(this.imageServiceToggle,'change',lang.hitch(this,function(){
+          this.search();
+        })));
+        this.own(on(this.vectorTileServiceToggle,'change',lang.hitch(this,function(){
+          this.search();
+        })));
+        this.own(on(this.kmlToggle,'change',lang.hitch(this,function(){
+          this.search();
+        })));
+        this.own(on(this.wmsToggle,'change',lang.hitch(this,function(){
+          this.search();
+        })));
       },
 
       getOptionWidgets: function() {
@@ -59,7 +78,8 @@ define(["dojo/_base/declare",
       },
 
       optionClicked: function() {
-        this.search();
+        // was working for digit/form/CheckBox but it is not fored for jimu/dijit/CheckBox
+        //this.search();
       },
 
       /* SearchComponent API ============================================= */
@@ -76,9 +96,9 @@ define(["dojo/_base/declare",
           qAll = "",
           hasCheck = false;
         array.forEach(this.getOptionWidgets(), function(widget) {
-          var dq = widget.focusNode.getAttribute("data-option-q");
+          var dq = widget.domNode.getAttribute("data-option-q");
           qAll = appendQ(qAll, dq);
-          if (widget.get("checked")) {
+          if (widget.getValue()) {
             q = appendQ(q, dq);
             hasCheck = true;
           }

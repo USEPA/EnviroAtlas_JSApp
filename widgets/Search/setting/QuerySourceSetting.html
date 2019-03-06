@@ -81,11 +81,27 @@
       </tr>
       <tr data-dojo-attach-point="zoomScaleTr">
         <td class="first">
-          <span class="source-label">${nls.zoomScale}</span>
+          <span class="source-label">${nls.locateResults}</span>
         </td>
         <td class="second">
-          <span class="jimu-float-leading" style="line-height:30px;">1: </span>
-          <div class="jimu-float-trailing" data-dojo-attach-point="zoomScale" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:1},style:{width:'96%'},value:50000"></div>
+          <table class="">
+            <tbody>
+              <tr>
+                <td class="second-sub-td" style="width:30%;">
+                  <input data-dojo-attach-point="panToRadio" data-dojo-type="dijit/form/RadioButton" name="locateResults" type="radio" class="jimu-radio-btn"/>
+                  <label>${nls.panTo}<label>
+                </td>
+                <td class="second-sub-td" style="width:30%;">
+                  <input data-dojo-attach-point="zoomToRadio" data-dojo-type="dijit/form/RadioButton" name="locateResults" type="radio" class="jimu-radio-btn"/>
+                  <label>${nls.zoomToScale}</label>
+                </td>
+                <td class="second-sub-td" style="width:40%;">
+                  <span class="jimu-float-leading" style="line-height:30px;">1: </span>
+                  <div class="jimu-float-trailing" data-dojo-attach-point="zoomScale" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:1},style:{width:'85%'}"></div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </td>
       </tr>
     </table>

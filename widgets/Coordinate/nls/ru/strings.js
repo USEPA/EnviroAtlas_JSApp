@@ -12,6 +12,7 @@ define({
   "Default": "По умолчанию",
   "Inches": "Дюймы",
   "Foot": "Футы",
+  "Foot_US": "Feet_US",
   "Yards": "Ярды",
   "Miles": "Мили",
   "Nautical_Miles": "Морские мили",

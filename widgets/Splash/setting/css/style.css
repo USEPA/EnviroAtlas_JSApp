@@ -25,19 +25,6 @@
 	margin: 10px 0;
 }
 
-.jimu-widget-splash-setting .tabs .jimu-radio-checked .jimu-radio-inner {
-	width: 6px;
-	height: 6px;
-	margin: 4px;
-	border-radius: 50%;
-	background-color: #24B5CC;
-}
-
-.jimu-widget-splash-setting .tabs .jimu-radio{
-	border: 1px solid #ccc;
-  vertical-align: top;
-}
-
 .jimu-widget-splash-setting .jimu-tab>.control>.tab{
 	background-color: #fff;
 	border-top: 0;

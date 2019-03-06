@@ -12,6 +12,7 @@ define({
   "Default": "Varsayılan",
   "Inches": "İnç",
   "Foot": "Fit",
+  "Foot_US": "Fit_ABD",
   "Yards": "Yarda",
   "Miles": "Mil",
   "Nautical_Miles": "Deniz mili",

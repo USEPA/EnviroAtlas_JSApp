@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2015 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,10 +23,11 @@ define([
   'jimu/portalUrlUtils',
   './table/_FeatureTable',
   // './_RelationshipTable',
-  './utils'
+  './utils',
+  'jimu/LayerInfos/LayerInfos'
   ], function(declare, lang, array, Deferred, all,
     esriLang, portalUrlUtils,
-    _FeatureTable,/* _RelationshipTable,*/ attrUtils) {
+    _FeatureTable,/* _RelationshipTable,*/ attrUtils, LayerInfos) {
     return declare(null, {
       _activeLayerInfoId: null,
       _activeRelationshipKey: null,
@@ -44,6 +45,7 @@ define([
       relationshipsSet: {},
       relationshipTableSet: {},
       currentRelationshipKey: null,
+      relationshipInfoMapping: {},
 
       constructor: function(params) {
         this.map = params && params.map;
@@ -56,6 +58,7 @@ define([
         this.relationshipsSet = {};
         this.relationshipTableSet = {};
         this.currentRelationshipKey = null;
+        this.relationshipInfoMapping = {};
       },
 
       setConfig: function(tableConfig) {
@@ -75,7 +78,7 @@ define([
           this._processDelayedLayerInfos();
 
           if (updateConfig) {
-            if (this.config.layerInfos.length === 0) {
+            if (this.config.layerInfos.length === 0 || this.config.syncWithLayers) {
               // if no config only display visible layers
               var configLayerInfos = attrUtils.getConfigInfosFromLayerInfos(layerInfos);
               this.config.layerInfos = array.filter(configLayerInfos, function(layer) {
@@ -163,7 +166,7 @@ define([
       //   table: this.featureTableSet[tabId] // instance of _FeatureTable
       // });
       // tabId: id of layerInfo
-      getQueryTable: function(tabId, enabledMatchingMap, hideExportButton) {
+      getQueryTable: function(tabId, enabledMatchingMap, hideExportButton, allowTextSelection) {
         var def = new Deferred();
         this._activeLayerInfoId = tabId;
 
@@ -195,6 +198,8 @@ define([
               }
               var configFields = lang.getObject('layer.fields', false, configInfo);
               var layerFields = layerObject && layerObject.fields;
+              // add arcade expression fields if any
+              layerFields = attrUtils.arcade.appendArcadeExpressionsToFields(layerFields, activeLayerInfo);
               // remove fields not exist in layerObject.fields
               configInfo.layer.fields = this._clipValidFields(
                 configFields,
@@ -205,6 +210,7 @@ define([
                 map: this.map,
                 matchingMap: enabledMatchingMap,
                 hideExportButton: hideExportButton,
+                allowTextSelection: allowTextSelection,
                 layerInfo: activeLayerInfo,
                 configedInfo: configInfo,
                 nls: this.nls
@@ -232,16 +238,16 @@ define([
         return def;
       },
 
-      getRelationTable: function(originalInfoId, key, enabledMatchingMap, hideExportButton) {
+      getRelationTable: function(originalInfoId, key, enabledMatchingMap, hideExportButton, allowTextSelection) {
         var def = new Deferred();
         var currentShip = this.relationshipsSet[key];
         this._activeRelationshipKey = key;
 
         if (currentShip) {
           var originalInfo = this._getLayerInfoById(originalInfoId);
-          var layerInfoId = lang.getObject('shipInfo.id', false, currentShip);
+          var currentShipInfo = this.getRelationShipInfo(currentShip);
 
-          this.getQueryTable(layerInfoId, enabledMatchingMap, hideExportButton)
+          this.getQueryTable(currentShipInfo.id, enabledMatchingMap, hideExportButton, allowTextSelection)
           .then(lang.hitch(this, function(tableResult) {
             if (tableResult && tableResult.table) {
               var table = tableResult.table;
@@ -282,6 +288,10 @@ define([
         return this._getLayerInfoById(id);
       },
 
+      getVisivleLayerInfoIndexById: function(id) {
+        return this._getVisivleLayerInfoIndexById(id);
+      },
+
       getRelationshipsByInfoId: function(id) {
         var ships = [];
         for (var p in this.relationshipsSet) {
@@ -294,13 +304,25 @@ define([
         return ships;
       },
 
+      getRelationShipInfo: function(relationship) {
+        var relInfo;
+        if(relationship) {
+          for(relKey in this.relationshipInfoMapping) {
+            if(relationship._relKey === relKey) {
+              relInfo = this.relationshipInfoMapping[relKey];
+            }
+          }
+        }
+        return relInfo;
+      },
+
       empty: function() {
         this._delayedLayerInfos = [];
         this._layerInfosFromMap = [];
         this.featureTableSet = {};
         for (var p in this.relationshipsSet) {
           var ship = this.relationshipsSet[p];
-          ship.shipInfo = null;
+          this._removeRelationShipInfo(ship);
         }
         this.relationshipsSet = {};
         this.relationshipTableSet = {};
@@ -327,6 +349,18 @@ define([
         for (var i = 0, len = this._layerInfosFromMap.length; i < len; i++) {
           if (this._layerInfosFromMap[i] && this._layerInfosFromMap[i].id === layerId) {
             return this._layerInfosFromMap[i];
+          }
+        }
+      },
+
+      _getVisivleLayerInfoIndexById: function(layerId) {
+        var counter = -1;
+        for (var i = 0, len = this._layerInfosFromMap.length; i < len; i++) {
+          if (this._layerInfosFromMap[i] && this._layerInfosFromMap[i].isShowInMap()) {
+            counter++;
+            if(this._layerInfosFromMap[i].id === layerId) {
+              return counter;
+            }
           }
         }
       },
@@ -413,19 +447,37 @@ define([
                 portalUrlUtils.removeProtocol(relationUrl.toString().toLowerCase()));
             }));
 
-            if (tableInfos && tableInfos.length > 0) {
-              ship.shipInfo = tableInfos[0];
-            }
-
             var relKey = layerInfo.id + '_' + ship.name + '_' + ship.id;
             ship._relKey = relKey;
             ship._layerInfoId = layerInfo.id;
+
+            if (tableInfos && tableInfos.length > 0) {
+              this._setRelationShipInfo(ship, tableInfos[0]);
+            }
 
             if (!this.relationshipsSet[relKey]) {
               this.relationshipsSet[relKey] = ship;
               this.relationshipsSet[relKey].objectIdField = layerObject.objectIdField;
             }
           }));
+        }
+      },
+
+      _setRelationShipInfo: function(relationship, tableInfo) {
+        if(!(relationship && ('_relKey' in relationship))) {
+          return;
+        }
+        this.relationshipInfoMapping[relationship._relKey] = tableInfo;
+      },
+
+      _removeRelationShipInfo: function(relationship) {
+        if(!(relationship && ('_relKey' in relationship))) {
+          return;
+        }
+        for(relKey in this.relationshipInfoMapping) {
+          if(relationship._relKey === relKey) {
+            delete this.relationshipInfoMapping[relKey];
+          }
         }
       },
 
@@ -445,7 +497,23 @@ define([
         if (!(rFields && rFields.length)) {
           return sFields;
         }
-        var validFields = [];
+        var validFields = [], 
+            newFields = [];
+        // find new fields
+        for (var i = 0, len = rFields.length; i < len; i++) {
+          var rf = rFields[i];
+          for (var j = 0, len2 = sFields.length; j < len2; j++) {
+            var sf = sFields[j];
+            if (sf.name === rf.name) {
+              break;
+            }
+          }
+          // is a new field
+          if(j === len2) {
+            newFields.push(rf);
+          }
+        }
+        // valid fields
         for (var i = 0, len = sFields.length; i < len; i++) {
           var sf = sFields[i];
           for (var j = 0, len2 = rFields.length; j < len2; j++) {
@@ -456,6 +524,9 @@ define([
             }
           }
         }
+        // concatenates new fields to the valid fields
+        validFields = validFields.concat(newFields);
+
         if(validFields.length === 0 && sFields.length > 0){
           var fieldInfos = lang.clone(rFields);
           array.forEach(fieldInfos, lang.hitch(this, function(fieldInfo){
@@ -465,6 +536,7 @@ define([
             }
           }));
         }
+
         return validFields;
       }
     });

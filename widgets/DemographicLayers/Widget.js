@@ -124,8 +124,8 @@ startup: function () {
                             style: 'width: 300px'
                         });
 
-        infotext = "<h2 style='margin-top:0px'>2011-2015 ACS</h2>";
-        infotext += "<p>Variables derived from a subset of 2011-2015 American Community Survey data.</p>"
+        infotext = "<h2 style='margin-top:0px'>2012-2016 ACS</h2>";
+        infotext += "<p>Variables derived from a subset of 2012-2016 American Community Survey data.</p>"
         infotext += "<hr style='margin-top:10px'>";
         infotext += "<h2 style='margin-top:0px'>2010 Census</h2>";
         infotext += "<p>Variables derived from a subset of 2010 Census data.</p>";
@@ -891,30 +891,22 @@ ArrayContains: function (element, inArray) {
     return false;
 },
 generateColors: function(steps, scolor, ecolor) {
-    var newcolors = [];
-    var c1 = new Color(scolor);
-    var c2 = new Color(ecolor);
-    var deltaR = Math.floor((c2.r - c1.r)/(steps-1));
-    var deltaG = Math.floor((c2.g - c1.g)/(steps-1));
-    var deltaB = Math.floor((c2.b - c1.b)/(steps-1));
-
-    
-    
-    //newcolors.push(c1);
-    
-    for (i = 0; i < steps; i++) {
-        var r = c1.r + deltaR * i;
-        var g = c1.g + deltaG * i;
-        var b = c1.b + deltaB * i;
+    var stepFactor = 1 / (steps - 1);
+        var newcolors = [];
+        var c1 = new Color(scolor);
+        var c2 = new Color(ecolor);
+        for (i = 0; i < steps; i++) {
+            var factor = stepFactor * i;
+            var r = Math.round(c1.r + factor * (c2.r - c1.r));
+            var g = Math.round(c1.g + factor * (c2.g - c1.g));
+            var b = Math.round(c1.b + factor * (c2.b - c1.b));
+            var curcolor = new Color([r,g,b]);
+            //var curcolor = this.rgb2hex(r,g,b);
+            newcolors.push(curcolor);
+            
+        }
         
-        var curcolor = new Color([r,g,b]);
-        //var curcolor = this.rgb2hex(r,g,b);
-        newcolors.push(curcolor);
-        
-    }
-    //newcolors.push(c2);
-    
-    return newcolors;
+        return newcolors;
 },
 rgb2hex: function (red, green, blue) {
     var rgb = blue | (green << 8) | (red << 16);

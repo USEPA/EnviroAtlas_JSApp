@@ -6,7 +6,7 @@ define({
     "MyContent": "Povolit Můj obsah",
     "MyOrganization": "Povolit Moji organizaci",
     "ArcGISOnline": "Povolit ArcGIS Online",
-    "Curated": "Povolit stanovené",
+    "Curated": "Povolit data sdílená ve skupině",
     "CuratedFilter": "Filtr stanovených",
     "livingAtlasExample": "Příklad živého atlasu:"
   },

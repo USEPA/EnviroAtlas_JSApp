@@ -12,6 +12,7 @@ define({
   "Default": "Impostazione predefinita",
   "Inches": "Pollici",
   "Foot": "Piedi",
+  "Foot_US": "Piedi (USA)",
   "Yards": "Iarde",
   "Miles": "Miglia",
   "Nautical_Miles": "Miglia nautiche",

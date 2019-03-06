@@ -5,6 +5,7 @@ define({
   "labelLayer": "Jméno vrstvy",
   "itemZoomTo": "Přiblížit na",
   "itemTransparency": "Průhlednost",
+  "itemSetVisibilityRange": "Nastavit rozsah viditelnosti",
   "itemTransparent": "Průhledná",
   "itemOpaque": "Neprůhledná",
   "itemMoveUp": "Přesunout nahoru",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Vypnout všechny popisky",
   "turnAllLabelsOn": "Zapnout všechny popisky",
   "showLabels": "Zobrazit popisky",
-  "hideLables": "Skrýt popisky"
+  "hideLables": "Skrýt popisky",
+  "keyword": "Klíčové slovo",
+  "basemapLayers": "Vrstvy podkladové mapy",
+  "typeAKeywork": "Zadejte klíčové slovo",
+  "layers": "Vrstvy"
 });

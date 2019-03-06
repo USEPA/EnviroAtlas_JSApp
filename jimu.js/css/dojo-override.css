@@ -65,6 +65,35 @@
 .claro .dijitTextBoxHover{
   border-color: #759dc0;
 }
+.claro .jimu-list-multiple-select .searchKeyInput .dijitTextBox{
+  height: 25px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+.claro .jimu-list-multiple-select .searchKeyInput .dijitTextBox .dijitInputInner{
+  height: 21px;
+  line-height: 21px !important;
+  font-size: 12px;
+}
+.claro .jimu-list-multiple-select .searchKeyInput .dijitTextBox .dijitPlaceHolder{
+  height: 21px;
+  font-size: 12px;
+}
+.claro .jimu-list-multiple-select .searchKeyInput .dijitTextBox .dijitInputField {
+  font-size: 13px;
+  line-height: 25px;
+  padding: 1px 0;
+}
+.claro .jimu-list-multiple-select .searchKeyInput .dijitTextBoxHover{
+  border-color: #24B5CC;
+  background-color: initial !important;
+  background-image: none;
+}
+.claro .jimu-list-multiple-select .searchKeyInput .dijitTextBoxFocused{
+  border-color: #24B5CC !important;
+  box-shadow: none;
+  background-image: none;
+}
 .claro .dijitValidationTextBox .dijitValidationContainer,
 .claro .dijitSpinner .dijitSpinnerButtonContainer,
 .claro .dijitSpinner .dijitInputContainer
@@ -131,14 +160,82 @@ table.dijitDownArrowButton.dijitSelect.restrict-select-width > tbody > tr > td.d
 
 /* dgrid*/
 .jimu-rtl .dgrid-rtl-swap .dgrid-header-row {
-    right: 0;
-    left: 17px;
+  right: 0;
+  left: 17px;
 }
- .jimu-rtl .dgrid-cell {
+.jimu-rtl .dgrid-cell {
   border-right-style: none;
   border-left: solid 1px #ccc;
- }
+  text-align: right;
+}
 
- .tundra .dijitTitlePaneContentInner {
+.tundra .dijitTitlePaneContentInner {
   padding: 3px !important;
- }
+}
+
+.jimu-rtl .dgrid-sort-arrow {
+  float: left;
+}
+
+ /* radio button */
+.claro .dijitRadio{
+  width: 16px;
+  height: 16px;
+  background-image: url(images/radioBtn_normal.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  vertical-align: text-bottom;
+}
+.claro .dijitRadio.dijitRadioChecked{
+  background-image: url(images/radioBtn_selected.svg);
+}
+.claro .dijitRadio +.dijitFocusedLabel{
+  outline: none;
+}
+.claro .dijitRadio.dijitDisabled {
+  background-image: url(images/radioBtn_disabled.svg);
+}
+.claro .dijitRadio.dijitDisabled.dijitRadioCheckedDisabled {
+  background-image: url(images/radioBtn_selected_diabled.svg);
+}
+.claro .dijitRadio.dijitDisabled +label{
+  opacity: 0.65;
+  color: #ccc;
+}
+/* checkbox */
+.claro .dijitCheckBox{
+  background-image: url(images/checkbox_default.png);
+  background-repeat: no-repeat;
+  background-position: 0;
+  background-color: transparent;
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  /*cursor: pointer;*/
+}
+.claro .dijitCheckBox.dijitCheckBoxChecked {
+  background-image: url(images/checked_default.png);
+}
+.claro .dijitCheckBox.dijitDisabled{
+  background-image: url(images/checkbox_disabled.png);
+}
+.claro .dijitCheckBox.dijitCheckBoxChecked.dijitDisabled{
+  background-image: url(images/checked_disabled.png);
+}
+.claro .dijitCheckBox +.dijitFocusedLabel{
+  outline: none;
+}
+.claro.jimu-nav-mode .dijitCheckBox.dijitCheckBoxFocused{
+  outline: 2px solid #24B5CC !important;
+}
+/*
+.claro .dijitCheckBox:hover{
+  background-color: #f7f7f7;
+}
+.claro .dijitCheckBox:hover{
+  background-image: url(images/checkbox_hover.png);
+}
+.claro .dijitCheckBox.dijitCheckBoxChecked:hover{
+  background-image: url(images/checked_hover.png);
+}
+*/

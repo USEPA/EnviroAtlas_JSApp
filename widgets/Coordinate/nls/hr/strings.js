@@ -12,6 +12,7 @@ define({
   "Default": "Zadano",
   "Inches": "Inči",
   "Foot": "Stope",
+  "Foot_US": "Stopa_SAD",
   "Yards": "Jardi",
   "Miles": "Milje",
   "Nautical_Miles": "Nautičke milje",

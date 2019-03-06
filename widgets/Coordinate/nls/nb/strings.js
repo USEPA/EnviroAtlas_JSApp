@@ -12,6 +12,7 @@ define({
   "Default": "Standard",
   "Inches": "Tommer",
   "Foot": "Fot",
+  "Foot_US": "Feet_US",
   "Yards": "Yards",
   "Miles": "Miles",
   "Nautical_Miles": "Nautiske mil",

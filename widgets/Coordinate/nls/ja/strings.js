@@ -12,6 +12,7 @@ define({
   "Default": "デフォルト",
   "Inches": "インチ",
   "Foot": "フィート",
+  "Foot_US": "Feet_US",
   "Yards": "ヤード",
   "Miles": "マイル",
   "Nautical_Miles": "海里",

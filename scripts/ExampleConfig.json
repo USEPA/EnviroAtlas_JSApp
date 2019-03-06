@@ -1,0 +1,301 @@
+{
+  "operationalLayers": [
+    {
+      "id": "R1_gSSURGO_7851",
+      "layerType": "ArcGISImageServiceLayer",
+      "url": "https://igeo.epa.gov/arcgis/rest/services/OEI_IGD/R1_gSSURGO/ImageServer",
+      "visibility": false,
+      "opacity": 1,
+      "title": "R1 gSSURGO Image Service",
+      "itemId": "f66d0584a3544d2cbee0e51e84440dd4",
+      "popupInfo": {
+        "title": "OEI_IGD/R1_gSSURGO",
+        "fieldInfos": [
+          {
+            "fieldName": "OBJECTID",
+            "label": "OBJECTID",
+            "tooltip": "",
+            "visible": false,
+            "stringFieldOption": "textbox"
+          },
+          {
+            "fieldName": "Shape",
+            "label": "Shape",
+            "tooltip": "",
+            "visible": false,
+            "stringFieldOption": "textbox"
+          },
+          {
+            "fieldName": "Name",
+            "label": "Name",
+            "tooltip": "",
+            "visible": true,
+            "stringFieldOption": "textbox"
+          },
+          {
+            "fieldName": "MinPS",
+            "label": "MinPS",
+            "tooltip": "",
+            "visible": true,
+            "format": {
+              "places": 2,
+              "digitSeparator": true
+            },
+            "stringFieldOption": "textbox"
+          }
+        ],
+        "description": null,
+        "showAttachments": true,
+        "layerOptions": {
+          "showNoDataRecords": true
+        },
+        "mediaInfos": []
+      }
+    },
+    {
+      "id": "USA_Population_Density_9417",
+      "layerType": "ArcGISTiledMapServiceLayer",
+      "url": "https://services.arcgisonline.com/ArcGIS/rest/services/Demographics/USA_Population_Density/MapServer",
+      "visibility": false,
+      "opacity": 1,
+      "title": "Census - USA Population Density",
+      "itemId": "72b884d14b124ac08fa3dd0010678f04"
+    },
+    {
+      "id": "EcoMarket_2016_425",
+      "layerType": "ArcGISMapServiceLayer",
+      "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Other/EcoMarket_2016/MapServer",
+      "visibility": true,
+      "visibleLayers": [
+        0,
+        4,
+        5,
+        6,
+        7
+      ],
+      "opacity": 1,
+      "title": "EcoMarket_2016",
+      "layers": [
+        {
+          "id": 5,
+          "popupInfo": {
+            "title": "Watersheds - Regional-scale Markets : {Name}",
+            "fieldInfos": [
+              {
+                "fieldName": "OBJECTID",
+                "label": "OBJECTID",
+                "tooltip": "",
+                "visible": false,
+                "format": null,
+                "stringFieldOption": "textbox"
+              },
+              {
+                "fieldName": "Shape",
+                "label": "Shape",
+                "tooltip": "",
+                "visible": false,
+                "format": null,
+                "stringFieldOption": "textbox"
+              },
+              {
+                "fieldName": "ID_INIT",
+                "label": "Initiative Id",
+                "tooltip": "",
+                "visible": true,
+                "format": {
+                  "places": 0,
+                  "digitSeparator": true
+                },
+                "stringFieldOption": "textbox"
+              },
+              {
+                "fieldName": "Name",
+                "label": "Name",
+                "tooltip": "",
+                "visible": true,
+                "format": null,
+                "stringFieldOption": "textbox"
+              },
+              {
+                "fieldName": "TYP_INIT",
+                "label": "Initiative Type",
+                "tooltip": "",
+                "visible": true,
+                "format": null,
+                "stringFieldOption": "textbox"
+              }
+            ],
+            "description": null,
+            "showAttachments": true,
+            "mediaInfos": []
+          }
+        },
+        {
+          "id": 4,
+          "popupInfo": {
+            "title": "Watersheds - Local-scale Markets: {Name}",
+            "fieldInfos": [
+              {
+                "fieldName": "OBJECTID",
+                "label": "OBJECTID",
+                "tooltip": "",
+                "visible": false,
+                "format": null,
+                "stringFieldOption": "textbox"
+              },
+              {
+                "fieldName": "Shape",
+                "label": "Shape",
+                "tooltip": "",
+                "visible": false,
+                "format": null,
+                "stringFieldOption": "textbox"
+              },
+              {
+                "fieldName": "ID_INIT",
+                "label": "Initiative Id",
+                "tooltip": "",
+                "visible": true,
+                "format": {
+                  "places": 0,
+                  "digitSeparator": true
+                },
+                "stringFieldOption": "textbox"
+              },
+              {
+                "fieldName": "Name",
+                "label": "Name",
+                "tooltip": "",
+                "visible": true,
+                "format": null,
+                "stringFieldOption": "textbox"
+              },
+              {
+                "fieldName": "TYP_INIT",
+                "label": "Initiative Type",
+                "tooltip": "",
+                "visible": true,
+                "format": null,
+                "stringFieldOption": "textbox"
+              }
+            ],
+            "description": null,
+            "showAttachments": true,
+            "mediaInfos": []
+          }
+        },
+        {
+          "id": 6,
+          "popupInfo": {
+            "title": "Watersheds - State-scale Markets : {Name}",
+            "fieldInfos": [
+              {
+                "fieldName": "OBJECTID",
+                "label": "OBJECTID",
+                "tooltip": "",
+                "visible": false,
+                "format": null,
+                "stringFieldOption": "textbox"
+              },
+              {
+                "fieldName": "Shape",
+                "label": "Shape",
+                "tooltip": "",
+                "visible": false,
+                "format": null,
+                "stringFieldOption": "textbox"
+              },
+              {
+                "fieldName": "ID_INIT",
+                "label": "Initiative Id",
+                "tooltip": "",
+                "visible": true,
+                "format": {
+                  "places": 0,
+                  "digitSeparator": true
+                },
+                "stringFieldOption": "textbox"
+              },
+              {
+                "fieldName": "Name",
+                "label": "Name",
+                "tooltip": "",
+                "visible": true,
+                "format": null,
+                "stringFieldOption": "textbox"
+              },
+              {
+                "fieldName": "TYP_INIT",
+                "label": "Initiative Type",
+                "tooltip": "",
+                "visible": true,
+                "format": null,
+                "stringFieldOption": "textbox"
+              }
+            ],
+            "description": null,
+            "showAttachments": true,
+            "mediaInfos": []
+          }
+        },
+        {
+          "id": 7,
+          "popupInfo": {
+            "title": "Watersheds - National-scale Markets: {Name}",
+            "fieldInfos": [
+              {
+                "fieldName": "OBJECTID",
+                "label": "OBJECTID",
+                "tooltip": "",
+                "visible": false,
+                "format": null,
+                "stringFieldOption": "textbox"
+              },
+              {
+                "fieldName": "Shape",
+                "label": "Shape",
+                "tooltip": "",
+                "visible": false,
+                "format": null,
+                "stringFieldOption": "textbox"
+              },
+              {
+                "fieldName": "ID_INIT",
+                "label": "Initiative Id",
+                "tooltip": "",
+                "visible": true,
+                "format": {
+                  "places": 0,
+                  "digitSeparator": true
+                },
+                "stringFieldOption": "textbox"
+              }
+            ],
+            "description": null,
+            "showAttachments": true,
+            "mediaInfos": []
+          }
+        }
+      ]
+    }
+  ],
+  "baseMap": {
+    "baseMapLayers": [
+      {
+        "type": "BingMapsAerial",
+        "layerType": "BingMapsAerial",
+        "portalUrl": "https://EPA.maps.arcgis.com/sharing/rest/portals/cJ9YHowT8TU7DUyn",
+        "opacity": 1,
+        "visibility": true,
+        "id": "BingMapsAerial"
+      }
+    ],
+    "title": "Bing Maps Aerial"
+  },
+  "spatialReference": {
+    "wkid": 102100
+  },
+  "authoringApp": "WebMapViewer",
+  "authoringAppVersion": "5.1",
+  "version": "2.8"
+}

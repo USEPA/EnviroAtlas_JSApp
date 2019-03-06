@@ -15,7 +15,7 @@
         </tr>
         <tr>
           <td class="first"></td>
-          <td class="second">
+          <td class="second" colspan="2">
             <span data-dojo-attach-point="messageNode" class="tip"></span>
           </td>
         </tr>
@@ -46,8 +46,10 @@
           <td class="second">
             <input type="text" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="countryCode"
             data-dojo-attach-event="Blur:_onCountryCodeBlur"
-            placeHolder="${nls.countryCodeEg} USA,CHN" data-dojo-props='style:{width:"97%"}'/>
-            <a class="jimu-float-trailing" target="_blank" href="https://developers.arcgis.com/rest/geocode/api-reference/geocode-coverage.htm" style="line-height:30px;">?</a>
+            placeHolder="${nls.countryCodeEg} USA,CHN" data-dojo-props='style:{width:"96%"}'/>
+            <a class="jimu-float-trailing" target="_blank" href="https://developers.arcgis.com/rest/geocode/api-reference/geocode-coverage.htm" style="line-height:30px;">
+              <i class="esri-icon-question"></i>
+            </a>
             <span class="example">${nls.countryCodeHint}</span>
           </td>
         </tr>
@@ -72,11 +74,27 @@
         </tr>
         <tr>
           <td class="first">
-            <span class="source-label">${nls.zoomScale}</span>
+            <span class="source-label">${nls.locateResults}</span>
           </td>
           <td class="second">
-            <span class="jimu-float-leading" style="line-height:30px;">1: </span>
-            <div class="jimu-float-trailing" data-dojo-attach-point="zoomScale" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:1},style:{width:'96%'},value:50000"></div>
+            <table class="">
+              <tbody>
+                <tr>
+                  <td class="second-sub-td" style="width:30%;">
+                    <input data-dojo-attach-point="panToRadio" data-dojo-type="dijit/form/RadioButton" name="locateResults" type="radio" class="jimu-radio-btn"/>
+                    <label data-dojo-attach-point="PanToLabel" for="pan-to-radio">${nls.panTo}</label>
+                  </td>
+                  <td class="second-sub-td" style="width:30%;">
+                    <input data-dojo-attach-point="zoomToRadio" data-dojo-type="dijit/form/RadioButton" name="locateResults" type="radio" class="jimu-radio-btn"/>
+                    <label data-dojo-attach-point="PanToLabel" for="zoom-to-radio">${nls.zoomToScale}</label>
+                  </td>
+                  <td class="second-sub-td" style="width:40%;">
+                    <span class="jimu-float-leading" style="line-height:30px;">1: </span>
+                    <div class="jimu-float-trailing" data-dojo-attach-point="zoomScale" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:1},style:{width:'85%'}"></div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </td>
         </tr>
         <tr>

@@ -19,7 +19,7 @@ define({
   "dddMMMDDhmma": "อ. 21 ก.ค. 8:00 น.",
   "sliderSetting": "การตั้งค่าตัวเลื่อน",
   "autoRefresh": "รีเฟรชตัวเลื่อนทุก ๆ",
-  "timeSetting": "การตั้งเวลา",
+  "timeSetting": "กำหนดเวลา",
   "useWebMapSetting": "ปฏิบัติตามการตั้งค่าเวลาของแผนที่เว็บ",
   "useConfigureSetting": "กำหนดการตั้งค่าเวลา",
   "timeSettingBtn": "การตั้งค่า",

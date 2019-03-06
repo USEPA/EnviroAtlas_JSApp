@@ -5,13 +5,21 @@ define({
   "actions": "Layer-Felder konfigurieren",
   "field": "Feld",
   "alias": "Alias",
+  "url": "URL",
+  "sortField": "Sortierfeld",
+  "sortOrderTooltips": {
+    "toDescending": "In absteigende Reihenfolge ändern",
+    "toAscending": "In aufsteigende Reihenfolge ändern"
+  },
   "visible": "Sichtbar",
   "linkField": "Link-Feld",
   "noLayers": "Keine Feature-Layer verfügbar",
   "back": "Zurück",
   "exportCSV": "Export in CSV zulassen",
-  "expand": "Zuerst das Widget erweitern",
+  "expand": "Das Widget initial einblenden",
   "filterByExtent": "Option \"Nach Kartenausdehnung filtern\" standardmäßig aktivieren",
+  "allowTextSelection": "Textauswahl zulassen",
+  "highlightColor": "Hervorhebungsfarbe",
   "restore": "Standardwert wiederherstellen",
   "ok": "OK",
   "cancel": "Abbrechen",
@@ -26,5 +34,7 @@ define({
   "fieldAlias": "Alias",
   "fieldVisibility": "Sichtbarkeit",
   "fieldActions": "Aktionen",
-  "showAttachments": "Anlagen anzeigen"
+  "showAttachments": "Anlagen anzeigen",
+  "syncWithLayers": "Mit Layer-Sichtbarkeiten synchronisieren",
+  "syncWithLayersHint": "Die Layer in der Attributtabelle werden dynamisch mit den Layer-Sichtbarkeiten synchronisiert."
 });

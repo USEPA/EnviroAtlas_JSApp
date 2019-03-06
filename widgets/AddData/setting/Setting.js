@@ -21,7 +21,7 @@ define(["dojo/_base/declare",
     "jimu/BaseWidgetSetting",
     "dijit/_WidgetsInTemplateMixin",
     "dijit/form/Form",
-    "dijit/form/CheckBox",
+    "jimu/dijit/CheckBox",
     "dijit/form/NumberTextBox",
     "dijit/form/ValidationTextBox"
   ],
@@ -92,7 +92,7 @@ define(["dojo/_base/declare",
           if (!opt) {
             opt = options[name] = {};
           }
-          opt.allow = !!checkBox.get("checked");
+          opt.allow = !!checkBox.getValue();
           if (textBox) {
             opt.label = null;
             var v = textBox.get("value");
@@ -172,7 +172,7 @@ define(["dojo/_base/declare",
           if (typeof opt.allow !== "boolean") {
             opt.allow = true;
           }
-          checkBox.set("checked",opt.allow);
+          checkBox.setValue(opt.allow);
           if (textBox) {
             if (typeof opt.label === "string") {
               var s = lang.trim(opt.label);

@@ -19,7 +19,7 @@ define({
   "dddMMMDDhmma": "Thứ ba, ngày 21 tháng 7 8:00 SA",
   "sliderSetting": "Cài đặt thanh trượt",
   "autoRefresh": "Làm mới thanh trượt mỗi",
-  "timeSetting": "Thiết lập Thời gian",
+  "timeSetting": "Cài đặt thời gian",
   "useWebMapSetting": "Thực hiện thiết lập thời gian của bản đồ web",
   "useConfigureSetting": "Cấu hình thiết lập thời gian",
   "timeSettingBtn": "thiết lập",

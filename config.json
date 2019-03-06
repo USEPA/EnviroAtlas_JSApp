@@ -29,7 +29,7 @@
                     "height": 44,
                     "relativeTo": "browser"
                 },
-                "version": "1.3",
+                "version": "2.11",
                 "id": "themes_TabTheme_widgets_Header_Widget_18",
                 "name": "Header",
                 "label": "Header"
@@ -51,7 +51,7 @@
                     "bottom": 0,
                     "relativeTo": "browser"
                 },
-                "version": "1.3",
+                "version": "2.11",
                 "id": "themes_TabTheme_widgets_SidebarController_Widget_20",
                 "name": "SidebarController",
                 "label": "Sidebar Controller"
@@ -73,7 +73,7 @@
                     "bottom": 10,
                     "relativeTo": "map"
                 },
-                "version": "2.5",
+                "version": "2.11",
                 "id": "widgets_Scalebar_Widget_22",
                 "name": "Scalebar",
                 "label": "Scalebar"
@@ -95,7 +95,7 @@
                     "bottom": 5,
                     "relativeTo": "map"
                 },
-                "version": "2.5",
+                "version": "2.11",
                 "id": "widgets_Coordinate_Widget_24",
                 "name": "Coordinate",
                 "label": "Coordinate"
@@ -122,7 +122,7 @@
                 "id": "basemapGallery_25",
                 "name": "BasemapGallery",
                 "label": "Basemap Gallery",
-                "version": "2.5",
+                "version": "2.8",
                 "uri": "widgets/eBasemapGallery/Widget",
                 "config": "configs/eBasemapGallery/config_Enhanced Basemap Gallery.json"
             }, {
@@ -182,7 +182,7 @@
                 "id": "_27",
                 "name": "Print",
                 "label": "Print",
-                "version": "2.5",
+                "version": "2.11",
                 "uri": "widgets/Print/Widget",
                 "config": "configs/Print/config_Print.json"
             }, {
@@ -195,7 +195,7 @@
                 },
                 "placeholderIndex": 1,
                 "uri": "widgets/eDraw/Widget",
-                "version": "2.1",
+                "version": "2.8",
                 "id": "widgets_DrawMeasure_Widget_36",
                 "name": "eDraw",
                 "label": "Draw and Measure",
@@ -213,19 +213,6 @@
                     "relativeTo": "map"
                 },
                 "id": "widgets_Select_Widget_39"
-            }, {
-                "name": "Share",
-                "version": "2.5",
-                "uri": "widgets/Share/Widget",
-                "position": {
-                    "left": 655,
-                    "top": -40,
-                    "width": 380,
-                    "height": 410,
-                    "relativeTo": "map"
-                },
-                "id": "widgets_Share_Widget_40",
-                "config": "configs/Share/config_Share.json"
             }, {
                 "position": {
                     "left": 695,
@@ -390,7 +377,7 @@
                 "id": "widgets_Legend_Widget_16",
                 "name": "Legend",
                 "label": "Legend",
-                "version": "1.3",
+                "version": "2.11",
                 "uri": "widgets/Legend/Widget",
                 "config": "widgets/Legend/config.json"
             }, {
@@ -405,7 +392,7 @@
                 "id": "widgets_LayerList_Widget_17",
                 "name": "LayerList",
                 "label": "Layer List",
-                "version": "1.3",
+                "version": "2.11",
                 "uri": "widgets/LayerList/Widget"
             }, {
                 "uri": "widgets/OverviewMap/Widget",
@@ -414,7 +401,7 @@
                     "bottom": 0,
                     "relativeTo": "map"
                 },
-                "version": "2.5",
+                "version": "2.11",
                 "id": "widgets_OverviewMap_Widget_28",
                 "name": "OverviewMap",
                 "label": "Overview Map"
@@ -427,7 +414,7 @@
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
-                "version": "2.5",
+                "version": "2.11",
                 "id": "widgets_MyLocation_Widget_29",
                 "name": "MyLocation",
                 "label": "My Location"
@@ -437,7 +424,7 @@
                     "bottom": 0,
                     "relativeTo": "browser"
                 },
-                "version": "2.5",
+                "version": "2.11",
                 "id": "widgets_AttributeTable_Widget_30",
                 "name": "AttributeTable",
                 "label": "Attribute Table"
@@ -497,7 +484,7 @@
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
-                "version": "2.5",
+                "version": "2.11",
                 "id": "widgets_ExtentNavigate_Widget_35",
                 "name": "ExtentNavigate"
             }, {
@@ -600,7 +587,7 @@
                 "id": "widgets_AddData_30",
                 "name": "Add Data",
                 "label": "Add Data",
-                "version": "2.5",
+                "version": "2.11",
                 "index": 5,
                 "uri": "widgets/AddData/Widget",
                 "config": "widgets/AddData/config.json"
@@ -644,7 +631,7 @@
                         "height": 0,
                         "relativeTo": "browser"
                     },
-                    "version": "1.3",
+                    "version": "2.11",
                     "id": "themes_TabTheme_widgets_Header_Widget_18",
                     "name": "Header",
                     "label": "Header"
@@ -666,7 +653,7 @@
                         "bottom": 0,
                         "relativeTo": "browser"
                     },
-                    "version": "1.3",
+                    "version": "2.11",
                     "id": "themes_TabTheme_widgets_SidebarController_Widget_20",
                     "name": "SidebarController",
                     "label": "Sidebar Controller"
@@ -688,7 +675,7 @@
                         "bottom": 10,
                         "relativeTo": "map"
                     },
-                    "version": "2.5",
+                    "version": "2.11",
                     "id": "widgets_Scalebar_Widget_22",
                     "name": "Scalebar",
                     "label": "Scalebar"
@@ -710,7 +697,7 @@
                         "bottom": -100,
                         "relativeTo": "map"
                     },
-                    "version": "2.5",
+                    "version": "2.11",
                     "id": "widgets_Coordinate_Widget_24",
                     "name": "Coordinate",
                     "label": "Coordinate"
@@ -737,7 +724,7 @@
                     "id": "basemapGallery_25",
                     "name": "BasemapGallery",
                     "label": "Basemap Gallery",
-                    "version": "2.5",
+                    "version": "2.8",
                     "uri": "widgets/eBasemapGallery/Widget",
                     "config": "configs/eBasemapGallery/config_Enhanced Basemap Gallery.json"
                 }, {
@@ -797,7 +784,7 @@
                     "id": "_27",
                     "name": "Print",
                     "label": "Print",
-                    "version": "2.5",
+                    "version": "2.11",
                     "uri": "widgets/Print/Widget",
                     "config": "configs/Print/config_Print.json"
                 }, {
@@ -810,7 +797,7 @@
                     },
                     "placeholderIndex": 1,
                     "uri": "widgets/eDraw/Widget",
-                    "version": "2.1",
+                    "version": "2.8",
                     "id": "widgets_DrawMeasure_Widget_36",
                     "name": "eDraw",
                     "label": "Draw and Measure",
@@ -828,19 +815,6 @@
                         "relativeTo": "map"
                     },
                     "id": "widgets_Select_Widget_39"
-                }, {
-                    "name": "Share",
-                    "version": "2.5",
-                    "uri": "widgets/Share/Widget",
-                    "position": {
-                        "left": 655,
-                        "top": -40,
-                        "width": 380,
-                        "height": 410,
-                        "relativeTo": "map"
-                    },
-                    "id": "widgets_Share_Widget_40",
-                    "config": "configs/Share/config_Share.json"
                 }, {
                     "position": {
                         "left": 695,
@@ -973,7 +947,7 @@
                 "id": "widgets_TimeSlider_Widget_32",
                 "name": "TimeSlider",
                 "label": "Time Slider",
-                "version": "2.5",
+                "version": "2.11",
                 "uri": "widgets/TimeSlider/Widget",
                 "closeable": true,
                 "openAtStart": true,                
@@ -1005,7 +979,7 @@
                     "id": "widgets_Legend_Widget_16",
                     "name": "Legend",
                     "label": "Legend",
-                    "version": "1.3",
+                    "version": "2.11",
                     "uri": "widgets/Legend/Widget",
                     "config": "widgets/Legend/config.json"
                 }, {
@@ -1020,7 +994,7 @@
                     "id": "widgets_LayerList_Widget_17",
                     "name": "LayerList",
                     "label": "Layer List",
-                    "version": "1.3",
+                    "version": "2.11",
                     "uri": "widgets/LayerList/Widget"
                 }, {
                     "uri": "widgets/OverviewMap/Widget",
@@ -1029,7 +1003,7 @@
                         "bottom": 0,
                         "relativeTo": "map"
                     },
-                    "version": "2.5",
+                    "version": "2.11",
                     "id": "widgets_OverviewMap_Widget_28",
                     "name": "OverviewMap",
                     "label": "Overview Map"
@@ -1042,7 +1016,7 @@
                         "relativeTo": "map"
                     },
                     "placeholderIndex": 1,
-                    "version": "2.5",
+                    "version": "2.11",
                     "id": "widgets_MyLocation_Widget_29",
                     "name": "MyLocation",
                     "label": "My Location"
@@ -1052,7 +1026,7 @@
                         "bottom": 0,
                         "relativeTo": "browser"
                     },
-                    "version": "2.5",
+                    "version": "2.11",
                     "id": "widgets_AttributeTable_Widget_30",
                     "name": "AttributeTable",
                     "label": "Attribute Table"
@@ -1098,7 +1072,7 @@
                         "left": 7,
                         "relativeTo": "map"
                     },
-                    "version": "2.5",
+                    "version": "2.11",
                     "id": "widgets_TimeSlider_Widget_32",
                     "name": "TimeSlider",
                     "label": "Time Slider"
@@ -1122,7 +1096,7 @@
                         "left": 5,
                         "relativeTo": "map"
                     },
-                    "version": "2.5",
+                    "version": "2.11",
                     "id": "widgets_ExtentNavigate_Widget_35",
                     "name": "ExtentNavigate"
                 }, {

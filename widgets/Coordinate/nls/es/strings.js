@@ -12,6 +12,7 @@ define({
   "Default": "Predeterminado",
   "Inches": "Pulgadas",
   "Foot": "Pies",
+  "Foot_US": "Feet_US",
   "Yards": "Yardas",
   "Miles": "Millas",
   "Nautical_Miles": "Millas náuticas",

@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "En shapefil (.zip, ZIP-arkiv som innehåller alla shapefiler)",
       "CSV": "En CSV-fil (.csv, med adress eller latitud och longitud, komma-, semikolon- eller tabbavgränsade)",
+      "KML": "En KML-fil (.kml)",
       "GPX": "En GPX-fil (.gpx, GPS Exchange Format)",
       "GeoJSON": "En GeoJSON-fil (.geo.json eller .geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} geoobjekt",
     "invalidTypePattern": "{filename}: den här typen stöds inte",
     "maxFeaturesAllowedPattern": "Högst {count} geoobjekt tillåts",
-    "layerNamePattern": "{filename} - {name}"
+    "layerNamePattern": "{filename} - {name}",
+    "generalIssue": "Det uppstod ett problem.",
+    "kmlProjectionMismatch": "Den spatiala referensen av kartan och KML-lagret matchar inte och konvertering kan inte utföras på klienten."
   },
   "layerList": {
     "caption": "Lager",

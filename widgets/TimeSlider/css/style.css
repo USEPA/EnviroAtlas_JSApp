@@ -74,7 +74,7 @@
 }
 .jimu-widget-timeslider .slider-content{
 	position: absolute;
-	max-width: 657px;
+	/*max-width: 657px;*/
 	margin: auto;
 	bottom: 20px;
 	width: 100%;

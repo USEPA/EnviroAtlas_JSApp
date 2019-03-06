@@ -5,6 +5,7 @@ define({
   "labelLayer": "Имя слоя",
   "itemZoomTo": "Приблизить к",
   "itemTransparency": "Прозрачность",
+  "itemSetVisibilityRange": "Задать диапазон видимости",
   "itemTransparent": "Прозрачный",
   "itemOpaque": "Непрозрачный",
   "itemMoveUp": "Выше",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Выключить все надписи",
   "turnAllLabelsOn": "Включить все надписи",
   "showLabels": "Показать подписи",
-  "hideLables": "Скрыть надписи"
+  "hideLables": "Скрыть надписи",
+  "keyword": "Ключевое слово",
+  "basemapLayers": "Слои базовой карты",
+  "typeAKeywork": "Введите ключевое слово",
+  "layers": "Слои"
 });

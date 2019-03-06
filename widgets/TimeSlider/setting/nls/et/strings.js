@@ -1,7 +1,7 @@
 define({
   "showLayerLabels": "Kuva kihtide nimed",
   "autoPlay": "Esita liugur automaatselt",
-  "loopPlay": "Pidev ajatsükkel",
+  "loopPlay": "Korduv ajatsükkel",
   "dateAndTimeFormat": "Kellaaja- ja kuupäevavorming",
   "mapDefault": "Kaardi vaikeseade",
   "custom": "Kohandatud",

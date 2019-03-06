@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ define([
     './BackgroundSelector',
     './SizeSelector',
     './AlignSelector',
-    'dijit/registry',
     'dijit/_WidgetsInTemplateMixin',
     'dijit/Editor',
     'jimu/utils',
@@ -50,13 +49,13 @@ define([
     'dojox/editor/plugins/InsertAnchor',
     'dojox/editor/plugins/Blockquote',
     'dojox/editor/plugins/UploadImage',
-    './ChooseImage',
+    'jimu/dijit/EditorChooseImage',
     'jimu/dijit/EditorTextColor',
     'jimu/dijit/EditorBackgroundColor'
   ],
   function(declare, lang, html, on, aspect, cookie, has, query,
            ColorPickerEditor, BackgroundSelector, SizeSelector, AlignSelector,
-           registry, _WidgetsInTemplateMixin,
+           _WidgetsInTemplateMixin,
            Editor, utils, BaseWidgetSetting, CheckBox, TabContainer, LoadingShelter, Deferred) {
     return declare([BaseWidgetSetting, _WidgetsInTemplateMixin], {
       baseClass: 'jimu-widget-splash-setting',
@@ -184,7 +183,7 @@ define([
           ],
           extraPlugins: [
             '|', 'createLink', 'unlink', 'pastefromword', '|', 'undo', 'redo',
-            '|', 'chooseImage', 'uploadImage', '|', 'viewsource', 'toolbarlinebreak',
+            '|', 'chooseImage', '|', 'viewsource', 'toolbarlinebreak',
             {
               name: "dijit._editor.plugins.FontChoice",
               command: "fontName",
@@ -278,7 +277,16 @@ define([
         return 'isfirst_' + encodeURIComponent(utils.getAppIdFromUrl());
       },
 
-      getConfig: function() {
+      isValid: function () {
+        return this.backgroundSelector.isValid() &&
+          this.buttonColorPicker.isValid() &&
+          this.confirmColorPicker.isValid();
+      },
+      getConfig: function () {
+        if (!this.isValid()) {
+          return false;
+        }
+
         this.config.splash.splashContent = this._getEditorValue();
         this.config.splash.size = this.sizeSelector.getValue();
 
@@ -313,19 +321,19 @@ define([
 
       _changeRequireConfirm: function() {
         var _selectedNode = null;
-
         if (this.get('requireConfirm')) {
-          _selectedNode = this.requireConfirmSplash;
+          _selectedNode = this.requireConfirmRadio;
           html.setStyle(this.confirmContainer, 'display', 'block');
           html.setStyle(this.showOption.domNode, 'display', 'none');
         } else {
-          _selectedNode = this.noRequireConfirmSplash;
+          _selectedNode = this.noRequireRadio;
           html.setStyle(this.showOption.domNode, 'display', 'block');
           html.setStyle(this.confirmContainer, 'display', 'none');
         }
 
-        var _radio = registry.byNode(query('.jimu-radio', _selectedNode)[0]);
-        _radio.check(true);
+        if(_selectedNode && _selectedNode.setChecked){
+          _selectedNode.setChecked(true);
+        }
       },
 
       destroy: function() {
@@ -365,12 +373,6 @@ define([
         } else {
           def.resolve();
           return def;
-        }
-      },
-      _selectItem: function(name) {
-        var _radio = this[name];
-        if (_radio && _radio.check) {
-          _radio.check(true);
         }
       },
 

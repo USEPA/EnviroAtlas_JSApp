@@ -12,6 +12,7 @@ define({
   "Default": "Προκαθορισμένο",
   "Inches": "Ίντσες",
   "Foot": "Πόδια",
+  "Foot_US": "Πόδια ΗΠΑ",
   "Yards": "Γιάρδες",
   "Miles": "Μίλια",
   "Nautical_Miles": "Ναυτικά μίλια",

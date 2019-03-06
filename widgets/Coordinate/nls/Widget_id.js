@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Coordinate/nls/strings":{_widgetLabel:"Koordinat",hintMessage:"Klik peta untuk mendapatkan koordinat",defaultLabel:"Default",realtimeLabel:"Gerakkan mouse untuk mendapatkan koordinat",computing:"Menghitung...",latitudeLabel:"Garis Lintang",longitudeLabel:"Garis Bujur",loading:"memuat...",enableClick:"Klik untuk mengaktifkan pengeklikan peta untuk mendapatkan koordinat",disableClick:"Klik untuk menonaktifkan pengeklikan peta untuk mendapatkan koordinat",Default:"Default",Inches:"Inci",
+Foot:"Kaki",Foot_US:"Feet_US",Yards:"Yard",Miles:"Mil",Nautical_Miles:"Mil laut",Millimeters:"Milimeter",Centimeters:"Sentimeter",Meter:"Meter",Kilometers:"Kilometer",Decimeters:"Desimeter",Decimal_Degrees:"Derajat",Degree_Minutes_Seconds:"Derajat menit detik",MGRS:"MGRS",USNG:"USNG",_localized:{}}});

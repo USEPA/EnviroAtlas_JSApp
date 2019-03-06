@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Coordinate/nls/strings":{_widgetLabel:"Koordinaatti",hintMessage:"Nouda koordinaatit napsauttamalla karttaa",defaultLabel:"Oletus",realtimeLabel:"Nouda koordinaatit siirt\u00e4m\u00e4ll\u00e4 hiirt\u00e4",computing:"Lasketaan...",latitudeLabel:"Leveysaste",longitudeLabel:"Pituusaste",loading:"ladataan ...",enableClick:"Ota napsauttamalla k\u00e4ytt\u00f6\u00f6n koordinaattien nouto karttaa napsauttamalla",disableClick:"Poista napsauttamalla k\u00e4yt\u00f6st\u00e4 koordinaattien nouto karttaa napsauttamalla",
+Default:"Oletus",Inches:"tuumaa",Foot:"Jalkaa",Foot_US:"Jalat_US",Yards:"Jaardia",Miles:"Mailia",Nautical_Miles:"Meripeninkulmaa",Millimeters:"millimetri\u00e4",Centimeters:"senttimetri\u00e4",Meter:"Metri\u00e4",Kilometers:"Kilometri\u00e4",Decimeters:"desimetri\u00e4",Decimal_Degrees:"Asteet",Degree_Minutes_Seconds:"Astetta minuuttia sekuntia",MGRS:"MGRS",USNG:"USNG",_localized:{}}});

@@ -1,5 +1,5 @@
 define({
-  "_widgetLabel": "Koordinate",
+  "_widgetLabel": "Koordinaten",
   "hintMessage": "Zum Abrufen von Koordinaten auf die Karte klicken",
   "defaultLabel": "Standard",
   "realtimeLabel": "Maus zum Abrufen von Koordinaten auf der Karte bewegen",
@@ -12,6 +12,7 @@ define({
   "Default": "Standard",
   "Inches": "Zoll",
   "Foot": "Fuß",
+  "Foot_US": "Feet_US",
   "Yards": "Yard",
   "Miles": "Meilen",
   "Nautical_Miles": "Seemeilen",

@@ -5,6 +5,7 @@ define({
   "labelLayer": "레이어 이름",
   "itemZoomTo": "확대",
   "itemTransparency": "투명도",
+  "itemSetVisibilityRange": "가시 범위 설정",
   "itemTransparent": "투명",
   "itemOpaque": "불투명",
   "itemMoveUp": "위로 이동",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "모든 레이블 끄기",
   "turnAllLabelsOn": "모든 레이블 켜기",
   "showLabels": "레이블 보기",
-  "hideLables": "레이블 숨기기"
+  "hideLables": "레이블 숨기기",
+  "keyword": "키워드",
+  "basemapLayers": "베이스맵 레이어",
+  "typeAKeywork": "키워드 입력",
+  "layers": "레이어"
 });

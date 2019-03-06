@@ -19,7 +19,7 @@ define({
   "dddMMMDDhmma": "الثلاثاء يوليو 21 8:00 ص",
   "sliderSetting": "إعدادات شريط التمرير",
   "autoRefresh": "تحديث شريط التمرير كل",
-  "timeSetting": "الإعدادات الزمنية",
+  "timeSetting": "إعدادات الوقت",
   "useWebMapSetting": "تنفيذ إعدادات الوقت لخريطة الويب",
   "useConfigureSetting": "تكوين إعدادات الوقت",
   "timeSettingBtn": "إعداد",

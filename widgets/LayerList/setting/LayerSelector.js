@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ define([
     },
 
     postCreate: function() {
-      array.forEach(this.operLayerInfos.getLayerInfoArray(), function(layerInfo) {
+      array.forEach(this.operLayerInfos.getLayerInfoArrayOfWebmap(), function(layerInfo) {
         this.drawListNode(layerInfo, 0, this.layerListTable);
       }, this);
 
@@ -322,9 +322,7 @@ define([
           }
           currentLayerInfo = currentLayerInfo.parentLayerInfo;
         }
-        var eaID = layerInfo.id.replace(window.layerIdPrefix, "").replace(window.layerIdPBSPrefix, "");
-        //if(!display) {
-        if((!display)&&(window.hashIDtoTileURL[eaID] == null)) {
+        if(!display) {
           domClass.add(labelDiv, 'grayed-title');
         } else {
           domClass.remove(labelDiv, 'grayed-title');

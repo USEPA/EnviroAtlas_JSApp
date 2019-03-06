@@ -1,7 +1,7 @@
 define({
   "showLayerLabels": "Prikaži nazive slojeva",
   "autoPlay": "Automatski reprodukuj klizač",
-  "loopPlay": "Kontinuirano ponavljaj vreme",
+  "loopPlay": "Ponavljaj vreme neprestano",
   "dateAndTimeFormat": "Format vremena i datuma",
   "mapDefault": "Podrazumevane postavke mape",
   "custom": "Prilagođeno",

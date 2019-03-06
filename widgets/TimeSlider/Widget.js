@@ -33,13 +33,13 @@ define(['dojo/_base/declare',
     'jimu/utils',
     './TimeProcesser',
     './LayerProcesser',
-    './utils',
-    "dojo/throttle"
+    './utils'
+    //"dojo/throttle"
   ],
   function(declare, lang, html, array, baseFx, WidgetManager, Move,
     on, query, Deferred, domGeometry,
     LayerInfos, BaseWidget, TimeExtent, TimeSlider,
-    SpeedMenu, jimuUtils,TimeProcesser,LayerProcesser, utils, throttle) {
+    SpeedMenu, jimuUtils,TimeProcesser,LayerProcesser, utils/*, throttle*/) {
 
     var clazz = declare([BaseWidget], {
       baseClass: 'jimu-widget-timeslider',
@@ -126,7 +126,8 @@ define(['dojo/_base/declare',
       },
 
       resize: function () {
-        throttle(lang.hitch(this, this._onMapResize), 200);
+        //throttle(lang.hitch(this, this._onMapResize), 200);
+        this._onMapResize();
       },
 
       onOpen: function() {
@@ -745,8 +746,13 @@ define(['dojo/_base/declare',
         }
 
         //initPosition when widget OutofScreen
-        if (utils.isOutOfScreen(this.map, this.position) && !utils.isRunInMobile()) {
-          utils.initPosition(this.map, this.domNode, this.position);
+        if(!utils.isRunInMobile()){
+          if (!utils.isOutOfScreen(this.map, this.position)) {
+            utils.getMarginPosition(this.map, this.domNode, this.position);
+          } else if (utils.isOutOfScreen(this.map, this.position)) {
+            //utils.initPosition(this.map, this.domNode, this.position);
+            utils.setMarginPosition(this.map, this.domNode, this.position);
+          }
         }
 
         this._adaptResponsive();
@@ -862,10 +868,12 @@ define(['dojo/_base/declare',
           var panelBox = domGeometry.getMarginBox(mover.node);
           this.position.left = panelBox.l;
           this.position.top = panelBox.t;
+          utils.getMarginPosition(this.map, this.domNode, this.position);
+
           // save move data
           setTimeout(lang.hitch(this, function () {
             this._moving = false;
-          }), 500);
+          }), 10);
         }
       },
       _onHandleClick: function(evt) {

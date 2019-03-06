@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ define([
   'dojo/_base/array',
   'dojo/_base/lang',
   'dojo/Deferred',
+  'dojo/promise/all',
   './LayerInfo',
   'dojox/gfx',
   'dojo/dom-construct',
@@ -32,10 +33,15 @@ define([
   'esri/layers/LabelLayer',
   'esri/layers/LabelClass',
   'esri/dijit/PopupTemplate',
-  'esri/dijit/Legend'
-], function(declare, array, lang, Deferred, LayerInfo, gfx, domConstruct,
+  'esri/dijit/Legend',
+  'esri/graphic',
+  'esri/geometry/Point',
+  'esri/tasks/query',
+  'esri/tasks/RelationshipQuery',
+  'esri/tasks/QueryTask'
+], function(declare, array, lang, Deferred, all, LayerInfo, gfx, domConstruct,
 domAttr, domClass, aspect, portalUrlUtils, portalUtils, jimuUtils, jsonUtils, LabelLayer,
-LabelClass, PopupTemplate, Legend) {
+LabelClass, PopupTemplate, Legend, Graphic, Point, Query, RelationshipQuery, QueryTask) {
   var clazz = declare(LayerInfo, {
     _legendsNode: null,
     controlPopupInfo: null,
@@ -78,6 +84,11 @@ LabelClass, PopupTemplate, Legend) {
                        this.layerObject.name,
                        this.layerObject);
         this.layerObject.name = this.title;
+        // "arcgisProps.title" will be clear out if overwrites the "name".
+        // reset the "arcgisProps.title" for print task to display the legend title.
+        lang.setObject('arcgisProps.title',
+                       this.title,
+                       this.layerObject);
       }
     },
 
@@ -182,18 +193,78 @@ LabelClass, PopupTemplate, Legend) {
       return options;
     },
 
-    getExtent: function() {
-      var extent = this.originOperLayer.layerObject.fullExtent ||
-        this.originOperLayer.layerObject.initialExtent;
-      if(extent) {
-        return this._convertGeometryToMapSpatialRef(extent);
-      } else {
-        var def = new Deferred();
-        def.resolve(null);
-        return def;
-      }
-    },
 
+    _getExtent: function() {
+      var def = new Deferred();
+      //var extent = null;
+      var defaultExtent;
+      if(this.layerObject.graphics && this.layerObject.graphics.length > 0) {
+        defaultExtent = jimuUtils.graphicsExtent(this.layerObject.graphics);
+      } else {
+        defaultExtent = this.layerObject.fullExtent || this.layerObject.initialExtent;
+      }
+      if(!this.layerObject.url) {
+        // feature collection
+        def.resolve(defaultExtent);
+      } else if(this.layerObject.declaredClass === "esri.layers.FeatureLayer") {
+        // feature layer
+        /*
+        var query = new esri.tasks.Query();
+        var filter = this.getFilter();
+        query.where = filter ? filter : "1=1";
+        if(layer.fullExtent && layer.fullExtent.spatialReference) {
+          // the outSpatialReference set by the query object is ignored and the map's spatial reference is used.
+          query.outSpatialReference = layer.fullExtent.spatialReference;
+        }
+        // queryExtent is valid only for hosted feature services and ArcGIS Server 10.3.1 and later.
+        this.layerObject.queryExtent();
+        */
+
+        this.getServiceDefinition().then(lang.hitch(this, function(sd) {
+          var queryTask = new QueryTask(this.layerObject.url);
+          var query = new Query();
+          var filter = this.getFilter();
+          query.where = filter ? filter : "1=1";
+          query.outSpatialReference = this.map.spatialReference;
+          query.returnGeometry = true;
+          if(sd && sd.advancedQueryCapabilities && sd.advancedQueryCapabilities.supportsReturningQueryExtent) {
+            queryTask.executeForExtent(query, lang.hitch(this, function(result) {
+              var extent = result.extent;
+              if(result.count === 1 && this.layerObject.geometryType === "esriGeometryPoint") {
+                /*
+                result.extent.xmin = result.extent.xmin - 0.0001;
+                result.extent.ymin = result.extent.ymin - 0.0001;
+                result.extent.xmax = result.extent.xmax + 0.0001;
+                result.extent.ymax = result.extent.ymax + 0.0001;
+                */
+                var point = new Point(result.extent.xmin, result.extent.ymin, result.extent.spatialReference);
+                if(point) {
+                  extent = jimuUtils.graphicsExtent([new Graphic(point)]);
+                }
+              }
+              def.resolve(extent);
+            }), lang.hitch(this, function() {
+              // using the default extent
+              def.resolve(defaultExtent);
+              console.log("executeForExtent failed.");
+            }));
+          } else {
+            queryTask.execute(query).then(lang.hitch(this, function(featureSet) {
+              var extent = jimuUtils.graphicsExtent(featureSet.features);
+              def.resolve(extent);
+            }), lang.hitch(this, function() {
+              // using the default extent
+              def.resolve(defaultExtent);
+              console.log("query execute failed.");
+            }));
+          }
+        }));
+      } else {
+        // using the default extent
+        def.resolve(defaultExtent);
+      }
+      return def;
+    },
 
     _resetLayerObjectVisiblity: function(layerOptions) {
       var layerOption  = layerOptions ? layerOptions[this.id]: null;
@@ -316,13 +387,14 @@ LabelClass, PopupTemplate, Legend) {
       };
       // backup infoTemplate to layer.
       this.layerObject._infoTemplate = this.layerObject.infoTemplate;
-      aspect.after(this.layerObject, "setInfoTemplate", lang.hitch(this, function(){
+      var handle = aspect.after(this.layerObject, "setInfoTemplate", lang.hitch(this, function(){
         this.layerObject._infoTemplate = this.layerObject.infoTemplate;
         this.controlPopupInfo.infoTemplate = this.layerObject.infoTemplate;
         if(!this.controlPopupInfo.enablePopup) {
           this.layerObject.infoTemplate = null;
         }
       }));
+      this._eventHandles.push(handle);
     },
 
     /***************************************************
@@ -557,9 +629,12 @@ LabelClass, PopupTemplate, Legend) {
       if(defaultPopupInfo) {
         defaultPopupInfo.fieldInfos = array.filter(defaultPopupInfo.fieldInfos, lang.hitch(this, function(fieldInfo) {
           var result;
-          if(fieldInfo.fieldName.toLowerCase() !== object.objectIdField.toLowerCase() &&
-             fieldInfo.fieldName.toLowerCase() !== "globalid" &&
-             fieldInfo.fieldName.toLowerCase() !== "shape") {
+
+          var fieldName = fieldInfo.fieldName.toLowerCase();
+          if(fieldName.indexOf("object") < 0 &&
+             fieldName.indexOf("globalid") < 0 &&
+             fieldName.indexOf("shape") < 0 &&
+             fieldName.indexOf("perimeter") < 0) {
             result = true;
           } else {
             result = false;
@@ -652,6 +727,7 @@ LabelClass, PopupTemplate, Legend) {
       array.forEach(layerObject.relationships, function(relationship) {
         if (!relationshipRole ||
         !relationship.role ||
+        relationship.cardinality === "esriRelCardinalityManyToMany" ||
         relationshipRole === relationship.role) {
           var subUrl = serverUrl + '/' + relationship.relatedTableId.toString();
           relatedUrls.push(subUrl);
@@ -705,11 +781,81 @@ LabelClass, PopupTemplate, Legend) {
       return def;
     },
 
+    _getOrderByFields: function(relationshipId) {
+      var orderByFields = null;
+      if(relationshipId === undefined || relationshipId === null ) {
+        return orderByFields;
+      }
+
+      var popupInfo = this.getPopupInfo();
+      if(popupInfo && popupInfo.relatedRecordsInfo && popupInfo.relatedRecordsInfo.orderByFields) {
+        array.some(popupInfo.relatedRecordsInfo.orderByFields, function(orderByField) {
+          var orderByFieldArray = orderByField.field.split('/');
+          if(orderByFieldArray[1] === relationshipId.toString()) {
+            orderByFields = [orderByFieldArray[2] + ' ' + orderByField.order];
+            return true;
+          }
+        }, this);
+      }
+      return orderByFields;
+    },
+
+    _getOriRelationshipByDestLayer: function(originalLayerObject, relatedLayerObject) {
+      var queryRelationship = null;
+      // compatible with arcgis service 10.0.
+      array.some(originalLayerObject.relationships, function(relationship) {
+        if (relationship.relatedTableId === relatedLayerObject.layerId) {//************
+          queryRelationship = relationship;
+          return true;
+        }
+      }, this);
+      return queryRelationship;
+    },
+
+    getRelatedRecords: function(feature, relatedLayerInfo) {
+      var def = new Deferred();
+      var relatedQuery = new RelationshipQuery();
+      // todo...
+      var originalLayerObjectDef = this.getLayerObject();
+      var relatedLayerObjectDef = relatedLayerInfo.getLayerObject();
+      all({
+        originalLayerObject: originalLayerObjectDef,
+        relatedLayerObject: relatedLayerObjectDef
+      }).then(lang.hitch(this, function(result) {
+        if(!result.originalLayerObject || !result.relatedLayerObject) {
+          def.resolve([]);
+        }
+        var queryRelationship = this._getOriRelationshipByDestLayer(this.layerObject, result.relatedLayerObject);
+        relatedQuery.outFields = ["*"];
+        relatedQuery.relationshipId = queryRelationship && queryRelationship.id;
+        var objectId =
+          feature.attributes[this.layerObject.objectIdField];
+        relatedQuery.objectIds = [objectId];
+        relatedQuery.definitionExpression = relatedLayerInfo.getFilter();
+        relatedQuery.orderByFields = this._getOrderByFields(queryRelationship && queryRelationship.id);
+
+        this.layerObject.queryRelatedFeatures(
+          relatedQuery,
+          lang.hitch(this, function(relatedRecords) {
+            var features = relatedRecords[objectId] && relatedRecords[objectId].features;
+            if(features) {
+              def.resolve(features);
+            } else {
+              def.resolve([]);
+            }
+          }), lang.hitch(this, function() {
+            def.resolve([]);
+          })
+        );
+      }));
+      return def;
+    },
+
     getFilter: function() {
       // summary:
       //   get filter from layerObject.
       // description:
-      //   return null if does not have or cannot get it.
+      //   return null if it does not have or cannot get it.
       var filter;
       if(this.layerObject &&
          !this.layerObject.empty &&
@@ -721,17 +867,21 @@ LabelClass, PopupTemplate, Legend) {
       return filter;
     },
 
-    setFilter: function(layerDefinitionExpression) {
+    setFilter: function(layerDefinitionExpression, objectPassWithFilterChangeEvent) {
       // summary:
       //   set layer definition expression to layerObject.
       // paramtter
       //   layerDefinitionExpression: layer definition expression
       //   set 'null' to delete layer definition express
       // description:
-      //   operation will skip if layer not support filter.
+      //   operation will skip layer if it does not support filter.
       if(this.layerObject &&
          !this.layerObject.empty &&
          this.layerObject.setDefinitionExpression) {
+        var parameterObject = lang.mixin({}, objectPassWithFilterChangeEvent);
+        lang.setObject('_wabProperties.objectPassWithFilterChangeEvent',
+                       parameterObject,
+                       this.layerObject);
         this.layerObject.setDefinitionExpression(layerDefinitionExpression);
       }
     },

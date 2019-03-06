@@ -1,0 +1,70 @@
+<div class='coordinateContainer'>
+    <div class='coordLabel' data-dojo-attach-point='coordNameContainer'>
+      <span data-dojo-attach-point='coordName'>${type}</span>
+    </div>
+    <div class='add-with-icon coordInput'>
+        <textarea id='${uid}' type='text' rows='1' class='ta' data-dojo-attach-point='coordtext' spellcheck='false' placeholder='${nls.coordinateInputLabel}'></textarea>
+    </div>
+    <div class='coordactions'>
+        <div class='add-with-icon'>
+            <span id='${uid}_cpbtn' title='${nls.copyToClipboard}' data-dojo-attach-point='cpbtn' class='cpbtn'></span>
+        </div>
+        <div class='add-with-icon'>
+            <span title="${nls.formatOutput}" class='settingBtn' data-dojo-attach-point='formatButton' ></span>
+        </div>
+        <div class='add-with-icon'>
+            <span title='${nls.zoomLabel}' class='zoomBtn' data-dojo-attach-point='zoomButton'></span>
+        </div>
+        <div class='add-with-icon'>
+            <span title='${nls.addPointLabel}' class='drawPointBtn' data-dojo-attach-point='drawPointButton'></span>
+        </div>
+        <div class='add-with-icon'>
+            <span title='${nls.removeCoordinate}' class='jimu-icon jimu-icon-close' data-dojo-attach-point='removeControlBtn' 
+                    data-dojo-attach-event='onclick: remove'></span>
+        </div>
+        <div class='add-with-icon'>
+            <span title="${nls.expandOutput}" class='expandBtn' data-dojo-attach-point='expandButton'></span>
+        </div>
+    </div>
+    <div data-dojo-attach-point='coordcontrols' class='coordarea'>
+        <div data-dojo-attach-point='sub1' class='coordformat'>
+            <div class='crdfrmtlabel'>
+                <span data-dojo-attach-point='sub1label' />
+            </div>
+            <input readonly data-dojo-attach-point='${uid}sub1val' class='jimu-input crds'></input>
+            <div class='add-with-icon'>
+                <span id='${uid}sub1val~cpbtn' title='${nls.copyToClipboard}' data-dojo-attach-point= 'subVal1CpBtn' class='jimu-icon cpbtn'></span>
+            </div>
+        </div>
+        <div data-dojo-attach-point='sub2' class='coordformat'>
+            <div class='crdfrmtlabel'>
+                <span data-dojo-attach-point='sub2label' />
+            </div>
+            <input readonly data-dojo-attach-point='${uid}sub2val' class='jimu-input crds'></input>
+             <div class='add-with-icon'>
+                <span id='${uid}sub2val~cpbtn' title='${nls.copyToClipboard}' data-dojo-attach-point= 'subVal2CpBtn' class='jimu-icon cpbtn'></span>
+            </div>
+        </div>
+        <div data-dojo-attach-point='sub3' class='coordformat sub3'>
+            <div class='crdfrmtlabel'>
+                 <span data-dojo-attach-point='sub3label' />
+            </div>
+            <input readonly data-dojo-attach-point='${uid}sub3val' class='jimu-input crds'>
+            </input>
+             <div class='add-with-icon'>
+                <span id='${uid}sub3val~cpbtn' title='$${nls.copyToClipboard}' data-dojo-attach-point= 'subVal3CpBtn' class='jimu-icon cpbtn'></span>
+            </div>
+        </div>
+        <div data-dojo-attach-point='sub4' class='coordformat sub4'>
+            <div class='crdfrmtlabel'>
+                <span data-dojo-attach-point='sub4label' />
+            </div>
+            <input readonly data-dojo-attach-point='${uid}sub4val' class='jimu-input crds'>
+            </input>
+             <div class='add-with-icon'>
+                <span id='${uid}sub4val~cpbtn' title='${nls.copyToClipboard}' data-dojo-attach-point='subVal4CpBtn' class='jimu-icon cpbtn'></span>
+            </div>
+        </div>
+        <div class="line-separator"></div>
+    </div>
+</div>

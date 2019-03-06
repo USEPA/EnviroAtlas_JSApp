@@ -64,6 +64,20 @@
                         </tr>
                     </table>
                 </div>
+                <div style="font-weight:bold; margin-bottom: 5px">
+                    <span>${nls.outputSR}</span>
+                    <a href="https://developers.arcgis.com/javascript/jshelp/ref_coordsystems.html" target="blank">WKID</a>
+                    <span>:</span>
+                </div>
+                <div style="margin-bottom: 5px">
+                    <div>
+                        <input type="text" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-attach-event="onChange:_onOutputSRChange"
+                            data-dojo-attach-point="wkidInput" data-dojo-props='style:{width:"100%"}'
+                            data-dojo-props="required: false"/>
+                    </div>
+                    <div class="wkid-label jimu-ellipsis" data-dojo-attach-point="wkidLabel">
+                    </div>
+                </div>
                 <div style="font-weight:bold;" data-dojo-attach-point="labelsTitleNode">
                     ${nls.labels}:
                 </div>
@@ -121,6 +135,20 @@
                                 />
                             </td>
                         </tr>
+                        <tr data-dojo-attach-point="scalebarTr">
+                            <td>
+                                ${nls.scaleBarUnit}:
+                            </td>
+                            <td>
+                                <select data-dojo-type="dijit/form/Select" data-dojo-props="name:'scalebarUnit',style:'width:100%;'"
+                        data-dojo-attach-point="scalebarUnitDijit">
+                                    <option value="Miles" selected="selected">${nls.unitsMiles}</option>
+                                    <option value="Kilometers">${nls.unitsKilometers}</option>
+                                    <option value="Meters">${nls.unitsMeters}</option>
+                                    <option value="Feet">${nls.unitsFeet}</option>
+                                </select>
+                            </td>
+                        </tr>
                     </table>
                 </div>
                 <div style="font-weight:bold;">
@@ -160,6 +188,21 @@
                             <td>
                                 <input type="text" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="name:'dpi',required:true,value:96,style:'width:100px;'"
                                 />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="font-weight:bold;">
+                    ${nls.forceFeatureAttributes}:
+                </div>
+                <div data-dojo-type="dijit/form/Form" data-dojo-attach-point="forceAttributesFormDijit">
+                    <table cellspacing="5">
+                        <tr>
+                            <td style="vertical-align:middle;">
+                                ${nls.includeFeatureAttributes}:
+                            </td>
+                            <td>
+                                <input type="checkbox" data-dojo-type="dijit/form/CheckBox" data-dojo-props="name:'forceFeatureAttributes',value:true,checked:false" />
                             </td>
                         </tr>
                     </table>

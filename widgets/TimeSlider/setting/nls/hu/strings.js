@@ -1,7 +1,7 @@
 define({
   "showLayerLabels": "Rétegnevek megjelenítése",
   "autoPlay": "Automatikus lejátszás a csúszkának",
-  "loopPlay": "Idő folyamatos lejátszás",
+  "loopPlay": "Folyamatos időciklus",
   "dateAndTimeFormat": "Dátum- és időformátum",
   "mapDefault": "Térképi alapértelmezett",
   "custom": "Egyéni",

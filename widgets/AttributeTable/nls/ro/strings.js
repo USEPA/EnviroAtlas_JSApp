@@ -23,6 +23,7 @@ define({
   "showAllRecords": "Afişare toate înregistrările",
   "showRelatedRecords": "Afişare înregistrări corelate",
   "noRelatedRecords": "Nu au fost găsite înregistrări corelate",
+  "highlightAllRecords": "Evidențiați toate înregistrările pe hartă",
   "attachmentColumn": "Fotografii şi fişiere",
   "refresh": "Reîmprospătare",
   "features": "obiecte spaţiale",
@@ -40,5 +41,24 @@ define({
   "sortDes": "Sortare descendentă",
   "statistics": "Statistică",
   "attachments": "Ataşări",
-  "files": "fişiere"
+  "files": "fişiere",
+  "keepRichTextLabel": "Păstrare format de text îmbogățit",
+  "whatsThis": "Ce înseamnă acest lucru?",
+  "richTextMessage": {
+    "explanatoryText": {
+      "line1": "${layerName} conține următorul/următoarele câmp(uri) de text îmbogățit: ",
+      "line2": " care poate/pot include stiluri de formatare a textului, precum fonturi, culori sau dimensiuni de text.",
+      "line3": "Când sunt exportate în CSV, stilurile de formatare se vor păstra sub forma unor etichete HTML. Puteți alege să nu păstrați formatele de text îmbogățit prin debifarea casetei „Păstrați formatul de text îmbogățit”."
+    },
+    "example": {
+      "label": "De exemplu:",
+      "scenarios": {
+        "first": "se va exporta în mod implicit ca următorul text:",
+        "second": "iar următorul text fără format de text îmbogățit:"
+      }
+    }
+  },
+  "noTablesAvailable": "Niciun tabel disponibil pentru afișare.",
+  "checkConfigutationToSelectLayers": "Accesați pagina cu setările widgetului pentru a selecta straturile tematice.",
+  "checkLayerListToSelectLayers": "Tabelul de atribute este sincronizat cu straturile tematice vizibile de pe hartă, puteți utiliza un widget, precum Listă straturi tematice pentru a activa/dezactiva straturile tematice."
 });

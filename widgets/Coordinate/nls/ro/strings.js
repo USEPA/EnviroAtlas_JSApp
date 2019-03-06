@@ -12,6 +12,7 @@ define({
   "Default": "Implicit",
   "Inches": "Inci",
   "Foot": "Ft",
+  "Foot_US": "Feet_US",
   "Yards": "Yarzi",
   "Miles": "Mile",
   "Nautical_Miles": "Mile marine",

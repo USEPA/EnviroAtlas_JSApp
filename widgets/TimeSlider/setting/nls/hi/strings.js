@@ -1,7 +1,7 @@
 define({
   "showLayerLabels": "लेयर नाम प्रदर्शित करें",
   "autoPlay": "स्लाइडर पर स्वचालित रूप से चलाएँ",
-  "loopPlay": "निरंतर रूप से लूप करें",
+  "loopPlay": "निरंतर रूप से लूप समय",
   "dateAndTimeFormat": "दिनांक और समय प्रारूप",
   "mapDefault": "मानचित्र डिफ़ॉल्ट",
   "custom": "कस्टम",

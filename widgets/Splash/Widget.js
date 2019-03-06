@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,10 +18,12 @@ define(['dojo/_base/declare',
     'dojo/_base/lang',
     'dojo/_base/html',
     'dojo/on',
+    'dojo/keys',
     'dojo/query',
     'dojo/cookie',
     'dijit/_WidgetsInTemplateMixin',
     'jimu/BaseWidget',
+    'dojo/topic',
     'jimu/dijit/CheckBox',
     'jimu/utils',
     'esri/lang',
@@ -31,7 +33,7 @@ define(['dojo/_base/declare',
     'jimu/WidgetManager',
     'jimu/PanelManager'
   ],
-  function(declare, lang, html, on, query, cookie, _WidgetsInTemplateMixin, BaseWidget,
+  function(declare, lang, html, on, keys, query, cookie, _WidgetsInTemplateMixin, BaseWidget, topic,
            CheckBox, utils, esriLang, LoadingShelter, Deferred, TabContainer, WidgetManager, PanelManager) {
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
       baseClass: 'jimu-widget-splash',
@@ -41,6 +43,8 @@ define(['dojo/_base/declare',
 
       postCreate: function() {
         this.inherited(arguments);
+        html.setAttr(this.domNode, 'aria-label', this.nls._widgetLabel);
+
         //LoadingShelter
         this.shelter = new LoadingShelter({
           hidden: true
@@ -78,6 +82,7 @@ define(['dojo/_base/declare',
             checked: false
           }, this.confirmCheck);
           html.setAttr(this.confirmCheck.domNode, 'title', utils.stripHTML(hint));
+          this.own(on(this.confirmCheck, 'change', lang.hitch(this, this.onCheckBoxClick)));
           this.confirmCheck.startup();
         }
       },
@@ -112,6 +117,20 @@ define(['dojo/_base/declare',
             this.close();
           }
         }
+        // if (true === this._requireConfirm) {
+        //   //checkbox
+        //   this.confirmCheck.focus();
+        // } else if ((false === this._requireConfirm && false === this._showOption) ||
+        //   (false === this._requireConfirm && true === this._showOption)) {
+        //   this.okNode.focus();
+        // }
+        if (!this._requireConfirm && !this._showOption) {
+          this.okNode.focus();
+        } else {
+          this.confirmCheck.focus();
+        }
+
+        this._eventShow();
       },
 
       startup: function() {
@@ -120,6 +139,31 @@ define(['dojo/_base/declare',
         this._normalizeDomNodePosition();
         this._initTabContainer();
         this._setConfig();
+
+        this.own(on(this.domNode, 'keydown', lang.hitch(this, function(evt){
+          if(html.hasClass(evt.target, this.baseClass) && evt.keyCode === keys.ESCAPE){
+            this.close();
+          }
+        })));
+
+        this.own(on(this.splashDesktop, 'keydown', lang.hitch(this, function(evt){
+          if(html.hasClass(evt.target, 'jimu-widget-splash-desktop')){
+            if(evt.keyCode === keys.TAB){
+              evt.preventDefault();
+            }
+            //allow user to use tab-key to focus first node from widgetDom on this spacial widget.
+            if(evt.keyCode === keys.ENTER || (!evt.shiftKey && evt.keyCode === keys.TAB)){
+              utils.focusFirstFocusNode(this.domNode);
+            }
+          }
+        })));
+
+        var focusableNodes = utils.getFocusNodesInDom(this.domNode);
+        for(var i = 0; i < focusableNodes.length; i ++){
+          html.setAttr(focusableNodes[i], 'tabindex', 0);
+        }
+        utils.initFirstFocusNode(this.domNode, focusableNodes[0]);
+        utils.initLastFocusNode(this.domNode, this.okNode);
       },
 
       _setConfig: function() {
@@ -167,10 +211,10 @@ define(['dojo/_base/declare',
               }
             }*/
           }
-          //html.setStyle(query(".label", this.dmoNode)[0], 'color', utils.invertColor(background.color));//auto color for text
+          //html.setStyle(query(".label", this.domNode)[0], 'color', utils.invertColor(background.color));//auto color for text
           var confirm = this.config.splash.confirm;
-          if (typeof confirm !== "undefined") {
-            var dom = query(".label", this.dmoNode)[0];
+          if (typeof confirm !== "undefined" && this.domNode) {
+            var dom = query(".label", this.domNode)[0];
             if ("undefined" !== typeof confirm.color && dom) {
               html.setStyle(dom, 'color', confirm.color);
             }
@@ -378,6 +422,12 @@ define(['dojo/_base/declare',
           this.close();
         }
       },
+      onOkKeydown: function(evt){
+        if(evt.keyCode === keys.ENTER){
+          this.onOkClick();
+          utils.trapToNextFocusContainer(this.domNode, true);
+        }
+      },
       onBackClick: function(){
         var welcomeTabs = dijit.byId("welcometabContainer"); 
         welcomeTabs.selectTab("Welcome");
@@ -408,6 +458,7 @@ define(['dojo/_base/declare',
       },     
       close: function() {
         this._isClosed = true;
+        this._eventHide();
         this.widgetManager.closeWidget(this);
       },
 
@@ -465,13 +516,22 @@ define(['dojo/_base/declare',
           def.resolve();
           return def;
         }
-      }//,
+      },
       // _setWhiteColorTextForOldVersion: function() {
       //   html.setStyle(this.customContentNode, 'color', "#fff");
       // },
       // _restoreTextColorForNormal: function() {
       //   html.setStyle(this.customContentNode, 'color', "#000");
       // }
+      //event for AppStatePopup
+      _eventShow: function () {
+        setTimeout(lang.hitch(this, function(){
+          topic.publish('splashPopupShow');
+        }), 800);// becauseof MapManager._checkAppState setTimeout 500;
+      },
+      _eventHide: function () {
+        topic.publish('splashPopupHide');
+      }
     });
     return clazz;
   });

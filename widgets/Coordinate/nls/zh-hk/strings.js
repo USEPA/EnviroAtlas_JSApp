@@ -12,6 +12,7 @@ define({
   "Default": "預設",
   "Inches": "英吋",
   "Foot": "英呎",
+  "Foot_US": "Feet_US",
   "Yards": "碼",
   "Miles": "英里",
   "Nautical_Miles": "海浬",

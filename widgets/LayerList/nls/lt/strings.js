@@ -5,6 +5,7 @@ define({
   "labelLayer": "Sluoksnio pavadinimas",
   "itemZoomTo": "Parodyti visą",
   "itemTransparency": "Permatomumas",
+  "itemSetVisibilityRange": "Nustatyti rodymo intervalą",
   "itemTransparent": "Permatomas",
   "itemOpaque": "Nepermatomas",
   "itemMoveUp": "Pakelti aukštyn",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Išjungti visas žymes",
   "turnAllLabelsOn": "Įjungti visas žymes",
   "showLabels": "Rodyti žymes",
-  "hideLables": "Slėpti žymes"
+  "hideLables": "Slėpti žymes",
+  "keyword": "Raktažodis",
+  "basemapLayers": "Pagrindo žemėlapio sluoksniai",
+  "typeAKeywork": "Įveskite raktažodį",
+  "layers": "Sluoksniai"
 });

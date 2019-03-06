@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>UtoD_selected</title>
+    <desc>Created with Sketch.</desc>
+    <g id="swipe" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icons" transform="translate(-247.000000, -150.000000)" fill="#24B5CC" fill-rule="nonzero">
+            <g id="UtoD_selected" transform="translate(247.000000, 150.000000)">
+                <path d="M1,23 L23,23 L23,1 L1,1 L1,23 Z M0,24 L0,2.84217094e-13 L24,2.84217094e-13 L24,24 L0,24 Z M16,15 L12,19 L8,15 L8.7,14.3 L11.5,17.1 L11.5,6 L12.5,6 L12.5,17.1 L15.3,14.3 L16,15 Z M1,12 L1,11 L8,11 L8,12 L1,12 Z M16,12 L16,11 L23,11 L23,12 L16,12 Z M2,2 L12.5,2 L12.5,4.45922852 L10,4.45922852 L10,10 L2,10 L2,2 Z M15.8916016,2 L22.1748047,2 L22.1748047,10 L14,10 L14,5.5 L15.8916016,5.5 L15.8916016,2 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -5,5 +5,7 @@
   },
   "hideExportButton": true,
   "initiallyExpand": false,
-  "filterByMapExtent": true
+  "filterByMapExtent": true,
+  "allowTextSelection": true,
+  "syncWithLayers": false
 }

@@ -12,6 +12,7 @@ define({
   "Default": "Oletus",
   "Inches": "tuumaa",
   "Foot": "Jalkaa",
+  "Foot_US": "Jalat_US",
   "Yards": "Jaardia",
   "Miles": "Mailia",
   "Nautical_Miles": "Meripeninkulmaa",

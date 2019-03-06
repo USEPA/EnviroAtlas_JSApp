@@ -110,7 +110,6 @@ define({
         "GeoRSS": "A GeoRSS File",
         "CSV": "A CSV File"
       },
-
       samplesHint: "Sample URL(s)"
     },
 
@@ -119,6 +118,7 @@ define({
       types: {
         "Shapefile": "A Shapefile (.zip, ZIP archive containing all shapefile files)",
         "CSV": "A CSV File (.csv, with address or latitude, longitude in decimal degrees. The file may be comma, semi-colon, or tab delimited)",
+        "KML": "A KML File (.kml)",
         "GPX": "A GPX File (.gpx, GPS Exchange Format)",
         "GeoJSON": "A GeoJSON File (.geo.json or .geojson)"
       },
@@ -131,7 +131,9 @@ define({
       featureCountPattern: "{filename}: {count} feature(s)",
       invalidTypePattern: "{filename}: this type is not supported",
       maxFeaturesAllowedPattern: "For best performance, limit the number of features to less than {count}.",
-      layerNamePattern: "{filename} - {name}"
+      layerNamePattern: "{filename} - {name}",
+      generalIssue: "There was an issue.",
+      kmlProjectionMismatch: "The spatial reference of the map and KML layer do not match, and the conversion cannot be done on the client."
     },
 
     layerList: {
@@ -144,6 +146,7 @@ define({
   }),
   "ar": 1,
   "bs": 1,
+  "ca": 1,
   "cs": 1,
   "da": 1,
   "de": 1,
@@ -155,6 +158,7 @@ define({
   "he": 1,
   "hi": 1,
   "hr": 1,
+  "hu": 1,
   "it": 1,
   "id": 1,
   "ja": 1,
@@ -168,6 +172,7 @@ define({
   "pt-pt": 1,
   "ro": 1,
   "ru": 1,
+  "sl": 1,
   "sr": 1,
   "sv": 1,
   "th": 1,

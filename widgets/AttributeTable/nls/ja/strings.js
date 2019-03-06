@@ -23,6 +23,7 @@ define({
   "showAllRecords": "すべてのレコードを表示",
   "showRelatedRecords": "関連レコードの表示",
   "noRelatedRecords": "関連するレコードが見つかりませんでした",
+  "highlightAllRecords": "マップ上のすべてのレコードをハイライト表示",
   "attachmentColumn": "写真とファイル",
   "refresh": "更新",
   "features": "フィーチャ",
@@ -40,5 +41,24 @@ define({
   "sortDes": "降順で並べ替え",
   "statistics": "統計",
   "attachments": "添付ファイル",
-  "files": "ファイル"
+  "files": "ファイル",
+  "keepRichTextLabel": "リッチ テキスト フォーマットを維持",
+  "whatsThis": "内容",
+  "richTextMessage": {
+    "explanatoryText": {
+      "line1": "${layerName} には次のリッチ テキスト フィールドが含まれます: ",
+      "line2": " フォント、色、テキスト サイズなど、テキスト書式設定スタイルが含まれる場合があります。",
+      "line3": "CSV にエクスポートする場合、書式設定スタイルは HTML タグの形式で維持されます。 [リッチ テキスト フォーマットを維持] ボックスをオフにすることで、リッチ テキスト フォーマットを維持しないことを選択できます。"
+    },
+    "example": {
+      "label": "例:",
+      "scenarios": {
+        "first": "デフォルトでは、次のテキストとしてエクスポートされます:",
+        "second": "リッチ テキスト フォーマットでない場合次のテキストとしてエクスポートされます:"
+      }
+    }
+  },
+  "noTablesAvailable": "表示できるテーブルはありません。",
+  "checkConfigutationToSelectLayers": "ウィジェット設定ページに移動して、レイヤーを選択してください。",
+  "checkLayerListToSelectLayers": "属性テーブルはマップ内の表示レイヤーと同期しています。レイヤー リストなどのウィジェットを使用して、レイヤーのオン/オフを切り替えることができます。"
 });

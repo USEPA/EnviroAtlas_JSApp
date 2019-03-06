@@ -23,6 +23,7 @@ define({
   "showAllRecords": "Hiện tất cả bản ghi",
   "showRelatedRecords": "Hiện các bản ghi liên quan",
   "noRelatedRecords": "Không tìm thấy hồ sơ liên quan",
+  "highlightAllRecords": "Đánh đấu tất cả bản ghi trên bản đồ",
   "attachmentColumn": "Ảnh và tệp",
   "refresh": "Làm mới",
   "features": "đối tượng",
@@ -40,5 +41,24 @@ define({
   "sortDes": "Sắp xếp giảm dần",
   "statistics": "Thống kê",
   "attachments": "Tệp đính kèm",
-  "files": "tệp"
+  "files": "tệp",
+  "keepRichTextLabel": "Giữ nguyên định dạng rich text (RTF)",
+  "whatsThis": "Tại sao lại vậy?",
+  "richTextMessage": {
+    "explanatoryText": {
+      "line1": "${layerName} có chứa (các) trường văn bản có dạng rich text sau: ",
+      "line2": " mà có thể bao gồm các kiểu định dạng văn bản như phông chữ, màu sắc hoặc kích cỡ văn bản.",
+      "line3": "Khi được xuất sang CSV, các kiểu định dạng này sẽ được giữ nguyên dưới dạng các thẻ HTML. Nếu bạn không muốn giữ nguyên định dạng văn bản rich text, bạn có thể bỏ chọn tùy chọn \"Keep rich text format\" (Giữ nguyên định dạng rich text)."
+    },
+    "example": {
+      "label": "Ví dụ:",
+      "scenarios": {
+        "first": "sẽ được xuất ra dưới dạng văn bản sau theo mặc định:",
+        "second": "và văn bản sau mà không có định dạng rich text:"
+      }
+    }
+  },
+  "noTablesAvailable": "Không có bảng nào để hiển thị.",
+  "checkConfigutationToSelectLayers": "Vui lòng truy cập trang cài đặt tiện ích để chọn lớp.",
+  "checkLayerListToSelectLayers": "Bảng Thuộc tính được đồng bộ hóa với lớp có thể hiển thị trong bản đồ, bạn có thể sử dụng tiện ích như Danh sách lớp để bật/tắt các lớp."
 });

@@ -5,6 +5,7 @@ define({
   "labelLayer": "Layer-Name",
   "itemZoomTo": "Zoomen auf",
   "itemTransparency": "Transparenz",
+  "itemSetVisibilityRange": "Sichtbarkeitsbereich festlegen",
   "itemTransparent": "Transparent",
   "itemOpaque": "Nicht transparent",
   "itemMoveUp": "Nach oben verschieben",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Alle Beschriftungen deaktivieren",
   "turnAllLabelsOn": "Alle Beschriftungen aktivieren",
   "showLabels": "Beschriftungen anzeigen",
-  "hideLables": "Beschriftungen ausblenden"
+  "hideLables": "Beschriftungen ausblenden",
+  "keyword": "Schlüsselwort",
+  "basemapLayers": "Grundkarten-Layer",
+  "typeAKeywork": "Schlüsselwort eingeben",
+  "layers": "Layer"
 });

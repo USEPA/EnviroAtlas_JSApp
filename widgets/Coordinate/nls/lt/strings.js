@@ -12,6 +12,7 @@ define({
   "Default": "Numatytasis",
   "Inches": "Coliai",
   "Foot": "Pėdos",
+  "Foot_US": "Pėdos_JAV",
   "Yards": "Jardai",
   "Miles": "Mylios",
   "Nautical_Miles": "Jūrmylės",

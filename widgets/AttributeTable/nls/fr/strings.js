@@ -23,6 +23,7 @@ define({
   "showAllRecords": "Afficher tous les enregistrements",
   "showRelatedRecords": "Afficher les enregistrements liés",
   "noRelatedRecords": "Aucun enregistrement associé n'a été trouvé",
+  "highlightAllRecords": "Mettre en surbrillance les enregistrements sur la carte",
   "attachmentColumn": "Photos et fichiers",
   "refresh": "Actualiser",
   "features": "entités",
@@ -40,5 +41,24 @@ define({
   "sortDes": "Tri décroissant",
   "statistics": "Statistiques",
   "attachments": "Pièces jointes",
-  "files": "fichiers"
+  "files": "fichiers",
+  "keepRichTextLabel": "Conserver le format de texte enrichi",
+  "whatsThis": "Qu’est-ce que c’est ?",
+  "richTextMessage": {
+    "explanatoryText": {
+      "line1": "${layerName} contient les champs de texte enrichi suivants : ",
+      "line2": " Ces champs peuvent inclure des styles de mise en forme du texte, notamment des polices, des couleurs ou des tailles de texte.",
+      "line3": "Lors de l’exportation vers un fichier CSV, les styles de mise en forme sont conservés sous la forme de balises HTML. Vous pouvez choisir de ne pas conserver les formats de texte enrichi. Le cas échéant, décochez la case « Conserver le format de texte enrichi »."
+    },
+    "example": {
+      "label": "Par exemple :",
+      "scenarios": {
+        "first": "sera exporté par défaut sous la forme textuelle suivante :",
+        "second": "et le texte suivant, sans format de texte enrichi :"
+      }
+    }
+  },
+  "noTablesAvailable": "Aucune table à afficher.",
+  "checkConfigutationToSelectLayers": "Accédez à la page des paramètres des widgets pour sélectionner des couches.",
+  "checkLayerListToSelectLayers": "Le widget Table attributaire est synchronisé avec les couches visibles sur la carte. Vous pouvez utiliser un widget tel que Liste des couches pour activer/désactiver des couches."
 });

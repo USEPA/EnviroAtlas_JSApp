@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>DtoU_selected</title>
+    <desc>Created with Sketch.</desc>
+    <g id="swipe" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icons" transform="translate(-316.000000, -150.000000)" fill="#24B5CC" fill-rule="nonzero">
+            <g id="DtoU_selected" transform="translate(316.000000, 150.000000)">
+                <path d="M1,1 L1,23 L23,23 L23,1 L1,1 Z M0,2.76869214e-14 L24,2.76869214e-14 L24,24 L0,24 L0,2.76869214e-14 Z M16,9 L15.3,9.7 L12.5,6.9 L12.5,18 L11.5,18 L11.5,6.9 L8.7,9.7 L8,9 L12,5 L16,9 Z M1,12 L8,12 L8,13 L1,13 L1,12 Z M16,12 L23,12 L23,13 L16,13 L16,12 Z M2,22 L2,14 L10,14 L10,19.5407715 L12.5,19.5407715 L12.5,22 L2,22 Z M15.8916016,22 L15.8916016,18.5 L14,18.5 L14,14 L22.1748047,14 L22.1748047,22 L15.8916016,22 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -132,7 +132,7 @@ define([
       },
 
       _resizeTitleNode: function(){
-        var nodeWidth = (this.getWidth() / 5);//var nodeWidth = (this.getWidth() / 3);
+        var nodeWidth = (this.getWidth() / 5);//var nodeWidth = (this.getWidth() / 3); var nodeWidth = (this.getWidth() - 2 - 21 - 18 * 4) / 5;
         array.forEach(query('.title-node', this.maxStateNode), function(titleNode){
           html.setStyle(titleNode, 'width', nodeWidth + 'px');
         }, this);
@@ -712,7 +712,7 @@ define([
 
       _createTitleNode: function(config) {
         /*jshint unused:false*/
-        var nodeWidth = (this.getWidth() /5);// var nodeWidth = (this.getWidth() /3);
+        var nodeWidth = (this.getWidth() /5);// var nodeWidth = (this.getWidth() /3);         var nodeWidth = (this.getWidth() - 2 - 21 - 18 * 4) / 5;
         var title = config.label,
           iconUrl = config.icon,
           node = html.create('div', {
@@ -755,6 +755,13 @@ define([
           minImgNode = html.create('img', {
             src: iconUrl
           }, minNode);
+
+        if(window.isRTL && config.mirrorIconForRTL){
+          html.addClass(imgNode, 'jimu-flipx');
+        }
+        if(window.isRTL && config.mirrorIconForRTL){
+          html.addClass(minImgNode, 'jimu-flipx');
+        }
 
         this.own(on(node, 'click', lang.hitch(this, this.onSelect)));
         /*this.own(on(node, mouse.enter, lang.hitch(this, this._onMouseEnter)));

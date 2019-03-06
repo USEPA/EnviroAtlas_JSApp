@@ -23,6 +23,7 @@ define({
   "showAllRecords": "Tampilkan semua catatan",
   "showRelatedRecords": "Tampilkan rekaman terkait",
   "noRelatedRecords": "Tidak Ada Catatan Terkait",
+  "highlightAllRecords": "Sorot semua rekaman pada peta",
   "attachmentColumn": "Foto dan file",
   "refresh": "Segarkan",
   "features": "fitur",
@@ -40,5 +41,24 @@ define({
   "sortDes": "Urutkan turun",
   "statistics": "Statistik",
   "attachments": "Lampiran",
-  "files": "file"
+  "files": "file",
+  "keepRichTextLabel": "Pertahankan format teks kaya",
+  "whatsThis": "Apa ini?",
+  "richTextMessage": {
+    "explanatoryText": {
+      "line1": "${layerName} berisi kolom teks kaya berikut: ",
+      "line2": " yang mungkin mencakup gaya format teks, seperti font, warna, atau ukuran teks.",
+      "line3": "Saat diekspor ke CSV, gaya format akan dipertahankan dalam bentuk tag HTML. Anda dapat memilih untuk tidak mempertahankan format teks kaya dengan menghapus centang pada kotak \"Pertahankan format teks kaya\"."
+    },
+    "example": {
+      "label": "Contoh:",
+      "scenarios": {
+        "first": "akan diekspor sebagai teks berikut secara default:",
+        "second": "dan teks berikut tanpa format teks kaya:"
+      }
+    }
+  },
+  "noTablesAvailable": "Tidak tersedia tabel untuk ditampilkan.",
+  "checkConfigutationToSelectLayers": "Harap buka halaman pengaturan widget untuk memilih layer.",
+  "checkLayerListToSelectLayers": "Tabel Atribut disinkronkan dengan layer yang terlihat pada peta, Anda dapat menggunakan widget seperti Daftar Layer untuk menghidupkan/mematikan layer."
 });

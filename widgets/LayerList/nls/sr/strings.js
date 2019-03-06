@@ -5,6 +5,7 @@ define({
   "labelLayer": "Ime sloja",
   "itemZoomTo": "Uveličaj na",
   "itemTransparency": "Prozirnost",
+  "itemSetVisibilityRange": "Podesi opseg vidljivosti",
   "itemTransparent": "Prozirno",
   "itemOpaque": "Neprozirno",
   "itemMoveUp": "Pomeri se na gore",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Isključi sve oznake",
   "turnAllLabelsOn": "Uključi sve oznake",
   "showLabels": "Prikaži oznake",
-  "hideLables": "Sakrij oznake"
+  "hideLables": "Sakrij oznake",
+  "keyword": "Ključna reč",
+  "basemapLayers": "Slojevi pozadinske mape",
+  "typeAKeywork": "Unesite ključnu reč",
+  "layers": "Slojevi"
 });

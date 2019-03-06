@@ -5,6 +5,7 @@ define({
   "labelLayer": "Όνομα θεματικού επιπέδου",
   "itemZoomTo": "Εστίαση",
   "itemTransparency": "Διαφάνεια",
+  "itemSetVisibilityRange": "Καθορισμός εύρους τιμών ορατότητας",
   "itemTransparent": "Διαφανές",
   "itemOpaque": "Αδιαφανές",
   "itemMoveUp": "Μετακίνηση προς τα επάνω",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Απενεργοποίηση όλων των ετικετών",
   "turnAllLabelsOn": "Ενεργοποίηση όλων των ετικετών",
   "showLabels": "Εμφάνιση ετικετών",
-  "hideLables": "Απόκρυψη ετικετών"
+  "hideLables": "Απόκρυψη ετικετών",
+  "keyword": "Λέξη-κλειδί",
+  "basemapLayers": "Θεματικά επίπεδα υποβάθρου",
+  "typeAKeywork": "Πληκτρολογήστε μια λέξη-κλειδί.",
+  "layers": "Θεμ. επίπ."
 });

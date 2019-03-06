@@ -5,6 +5,7 @@ define({
   "labelLayer": "Katman adı",
   "itemZoomTo": "Şuna Yakınlaştır",
   "itemTransparency": "Saydamlık",
+  "itemSetVisibilityRange": "Görünürlük aralığını ayarla",
   "itemTransparent": "Saydam",
   "itemOpaque": "Opak",
   "itemMoveUp": "Yukarı taşı",
@@ -23,5 +24,9 @@ define({
   "turnAllLabelsOff": "Tüm etiketleri kapat",
   "turnAllLabelsOn": "Tüm etiketleri aç",
   "showLabels": "Etiketleri göster",
-  "hideLables": "Etiketleri gizle"
+  "hideLables": "Etiketleri gizle",
+  "keyword": "Anahtar Kelime",
+  "basemapLayers": "Altlık haritası katmanları",
+  "typeAKeywork": "Bir anahtar kelime yazın",
+  "layers": "Katmanlar"
 });

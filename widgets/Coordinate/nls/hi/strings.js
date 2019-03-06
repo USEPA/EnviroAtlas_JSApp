@@ -12,6 +12,7 @@ define({
   "Default": "डिफॉल्ट",
   "Inches": "इंच",
   "Foot": "फ़ीट",
+  "Foot_US": "Feet_US",
   "Yards": "गज",
   "Miles": "मील",
   "Nautical_Miles": "समुद्री मील",

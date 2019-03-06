@@ -12,6 +12,7 @@ define({
   "Default": "الوضع الافتراضي",
   "Inches": "بوصة",
   "Foot": "قدم",
+  "Foot_US": "Feet_US",
   "Yards": "ياردات",
   "Miles": "أميال",
   "Nautical_Miles": "أميال بحرية",

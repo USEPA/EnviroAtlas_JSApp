@@ -112,6 +112,7 @@ define({
     "types": {
       "Shapefile": "Shapefil (*.zip, ZIP-arkiv som inneholder alle shapefiler)",
       "CSV": "CSV-filer (*.csv, med adresse eller bredde- og lengdegrad og atskilt med komma, semikolon eller tabulator)",
+      "KML": "En KML-fil (.kml)",
       "GPX": "GPX-fil (*.gpx, GPS Exchange Format)",
       "GeoJSON": "GeoJSON-fil (*.geo.json eller *.geojson)"
     },
@@ -124,7 +125,9 @@ define({
     "featureCountPattern": "{filename}: {count} geoobjekt(er)",
     "invalidTypePattern": "{filename}: denne typen støttes ikke",
     "maxFeaturesAllowedPattern": "Maksimum {count} geoobjekter tillates",
-    "layerNamePattern": "{filename} – {name}"
+    "layerNamePattern": "{filename} – {name}",
+    "generalIssue": "Det oppsto et problem.",
+    "kmlProjectionMismatch": "Den romlige referansen for kartet og KML-laget samsvarer ikke, og konverteringen kan ikke utføres på klienten."
   },
   "layerList": {
     "caption": "Lag",

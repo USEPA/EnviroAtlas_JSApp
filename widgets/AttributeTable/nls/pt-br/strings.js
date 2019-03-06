@@ -23,6 +23,7 @@ define({
   "showAllRecords": "Mostrar todos os registros",
   "showRelatedRecords": "Mostrar registros relacionados",
   "noRelatedRecords": "Nenhum registro relacionado encontrado",
+  "highlightAllRecords": "Destaque todos os registros no mapa",
   "attachmentColumn": "Fotos e arquivos",
   "refresh": "Atualizar",
   "features": "recursos",
@@ -40,5 +41,24 @@ define({
   "sortDes": "Ordem decrescente",
   "statistics": "Estatística",
   "attachments": "Anexos",
-  "files": "arquivos"
+  "files": "arquivos",
+  "keepRichTextLabel": "Manter formato rich text",
+  "whatsThis": "O que é Isto?",
+  "richTextMessage": {
+    "explanatoryText": {
+      "line1": "${layerName} contém os seguintes campos de rich text: ",
+      "line2": " Isto pode incluir estilos da formatação de texto, como fontes, cores ou tamanhos de texto.",
+      "line3": "Quando exportados para CSV, os estilos de formatação serão preservados na forma de tags da HTML. Você pode optar por não manter os formatos rich text, desmarcando a caixa \"Manter formato rich text\"."
+    },
+    "example": {
+      "label": "Por exemplo:",
+      "scenarios": {
+        "first": "será exportado como o seguinte texto por padrão:",
+        "second": "e o seguinte texto sem formato rich text:"
+      }
+    }
+  },
+  "noTablesAvailable": "Nenhuma tabela disponível para exibir.",
+  "checkConfigutationToSelectLayers": "Vá até a página de configurações do widget para selecionar camadas.",
+  "checkLayerListToSelectLayers": "A Tabela de Atributo é sincronizada com as camadas visíveis no mapa, você pode utilizar o widget como Lista de Camada para ativar/desativar as camadas."
 });
