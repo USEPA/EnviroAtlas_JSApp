@@ -257,6 +257,18 @@
           }
         },
         {
+          "name": "Philadelphia, PA",
+          "extent": {
+            "xmax": -8273422.0,
+            "xmin":-8481967.0,
+            "ymax": 4945270.0,
+            "ymin": 4750910.0,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
           "name": "Phoenix, AZ",
           "extent": {
             "xmax": -12239729.1972,
@@ -268,7 +280,7 @@
             }
           }
         },
-        {
+	{
           "name": "Pittsburgh, PA",
           "extent": {
             "xmax": -8789583.5795,
@@ -304,13 +316,25 @@
             }
           }
         },
-		{
+	{
           "name": "Salt Lake City, UT",
           "extent": {
             "xmax": -12392572.9000,
             "xmin": -12523738.9000,
             "ymax": 5015804.3800,
             "ymin": 4913837.3900,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
+          "name": "Sonoma, CA",
+          "extent": {
+            "xmax": -13576122.000,
+            "xmin": -13799318.000,
+            "ymax": 4724445.000,
+            "ymin": 4521735.000,
             "spatialReference": {
               "wkid": 102100
             }
