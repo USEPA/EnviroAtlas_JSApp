@@ -12,25 +12,25 @@ div.jimu-widget-savesession .jimu-icon {
 }
 
 .jimu-icon-load {
-    background-position: -0px -47px;
+    background-position: -0px -60px;
     width: 16px;
     height: 16px;
 }
 
 .jimu-icon-load.jimu-state-disabled {
-    background-position: -63px -47px;
+    background-position: -63px -60px;
     width: 16px;
     height: 16px;
 }
 
 .jimu-icon-load.jimu-state-hover {
-    background-position: -21px -47px;
+    background-position: -21px -60px;
     width: 16px;
     height: 16px;
 }
 
 .jimu-icon-load:hover {
-    background-position: -21px -47px;
+    background-position: -21px -60px;
     width: 16px;
     height: 16px;
 }

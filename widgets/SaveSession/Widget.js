@@ -92,6 +92,17 @@ define(['dojo/_base/declare',
         jimuUtils,
         Table,
         TextBox) {
+      var showLayerListWidget = function(){
+            var widgetName = 'LayerList';
+            var widgets = selfSimpleSearchFilter.appConfig.getConfigElementsByName(widgetName);
+            var pm = PanelManager.getInstance();
+            pm.showPanel(widgets[0]);       
+       }
+    var sleep = function(ms) {
+        var unixtime_ms = new Date().getTime();
+        while (new Date().getTime() < unixtime_ms + ms) {
+        }
+    }
         //To create a widget, you need to derive from BaseWidget.
         return declare([BaseWidget, _WidgetsInTemplateMixin], {
             // Custom widget code goes here
@@ -138,14 +149,14 @@ define(['dojo/_base/declare',
               	this.openWidgetById(pbsWidgetId);
               	this.openWidgetById(boundaryWidgetId);
               	
- 				document.getElementById(boundaryWidgetId).onclick = function() {
-			        document.getElementById("resizeButton").click();
-			        document.getElementById("resizeButton").click();  
-				}; 
- 				document.getElementById(simpleSearchFilterId).onclick = function() {
-			        document.getElementById("resizeButton").click();
-			        document.getElementById("resizeButton").click();  
-				}; 
+ 				//document.getElementById(boundaryWidgetId).onclick = function() {
+			    //    document.getElementById("resizeButton").click();
+			    //    document.getElementById("resizeButton").click();  
+				//}; 
+ 				//document.getElementById(simpleSearchFilterId).onclick = function() {
+			    //    document.getElementById("resizeButton").click();
+			    //    document.getElementById("resizeButton").click();  
+				//}; 
 								
               	var widgets = this.appConfig.getConfigElementsByName("AddData");
 		        var pm = PanelManager.getInstance();		
@@ -415,11 +426,19 @@ define(['dojo/_base/declare',
              * @param {Object} e the event args - item = session
              */
             onLoadSessionClicked: function (e) {
+                //showLayerListWidget();
                 var session = e.item;
                 sessionLoaded = session;
                 console.log('SaveSession :: onLoadSessionClicked :: session  = ', session);
-                document.getElementById("butRemoveAllLayers").click();
-                this.loadSession(session);
+                
+                var layerListWidget = WidgetManager.getInstance().getWidgetById("widgets_LayerList_Widget_17");
+                if (layerListWidget) {
+                    layerListWidget._onRemoveLayersClick();
+                }
+
+                    //document.getElementById("butRemoveAllLayers").click();
+
+                    this.loadSession(session);
             },
 
             /**
@@ -1161,18 +1180,53 @@ define(['dojo/_base/declare',
 
             setToggleButtonTopics: function (settings) {
             	for (index = 0, len = settings.length; index < len; ++index) {
-            		var checkbox = document.getElementById(window.chkTopicPrefix + settings[index]);			
-			        if(checkbox.checked == true){
-			        	checkbox.click();			        	
-	            	}
-					checkbox.click();
+            		var checkbox = document.getElementById(window.chkTopicPrefix + settings[index]);
+            		if (checkbox!=null)	{
+                        if(checkbox.checked == true){
+                            checkbox.click();                       
+                        }
+                        checkbox.click();     		    
+            		}		
+
 	            }
             },
             setChkLayerInSearchFilter: function (sessionToLoad) {
             	settings =  sessionToLoad.chkLayerInSearchFilter;
             	layersInfo = sessionToLoad.layers;
-            	
-            	for (index = 0, len = settings.length; index < len; ++index) {
+ 
+ 
+              var i = 0;                     //  set your counter to 1
+                
+                function myLoop () {           //  create a loop function
+                   setTimeout(function () {    //  call a 3s setTimeout when the loop is called
+                        bIsDynamicLayer = false;
+                        layerType = "";
+                        array.forEach(layersInfo, function (layerSettings) {
+                            if (layerSettings.id.indexOf(window.layerIdPrefix) >= 0) {
+                                eaId = layerSettings.id.replace(window.layerIdPrefix, "");
+                                if (eaId == settings[i]) {
+                                    layerType = layerSettings.type;
+                                }                                                   
+                            }                   
+                        })
+                        //alert(window.chkSelectableLayer + settings[index]);
+                        chkbox = document.getElementById(window.chkSelectableLayer + settings[i]);
+                        
+                        if (chkbox != null) {
+                            console.log("check on chkbox:"+window.chkSelectableLayer + settings[i]);
+                            jimuUtils.checkOnCheckbox(chkbox);
+                        }
+                        i++; 
+                                           //  increment the counter
+                        if (i < settings.length) {            //  if the counter < 10, call the loop function
+                            myLoop();             //  ..  again which will trigger another 
+                        }  
+                                           //  ..  setTimeout()
+                   }, 3000)
+                }
+                
+                myLoop();
+            	/*for (index = 0, len = settings.length; index < len; ++index) {
             		bIsDynamicLayer = false;
             		layerType = "";
 	            	array.forEach(layersInfo, function (layerSettings) {
@@ -1188,7 +1242,7 @@ define(['dojo/_base/declare',
             		if (chkbox != null) {
 					    jimuUtils.checkOnCheckbox(chkbox);
             		}
-            	}
+            	}*/
             },
             setToggleButtonPBSTopics: function (settings) {
             	for (index = 0, len = settings.length; index < len; ++index) {

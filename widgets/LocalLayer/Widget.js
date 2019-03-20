@@ -598,7 +598,10 @@ define([
 								lLayer.setVisibility(true);
 								//turn off the layer when first added to map and let user to turn on
 								window.communityLayerNumber.push(layer.eaID.toString());
-								addCommunityBoundaries();
+								setTimeout(function () {
+								    //addCommunityBoundaries();
+								    _addSelectedLayers(layersTobeAdded, "901");
+								 }, 3000)
 							} else {//National
 								//lLayer.setVisibility(false);
 								lLayer.setVisibility(true);
