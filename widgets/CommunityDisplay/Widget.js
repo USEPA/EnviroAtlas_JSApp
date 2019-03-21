@@ -79,11 +79,30 @@ define([
             var widgetName = 'SelectCommunity';
             var widget = selfCommunityDisplay.appConfig.getConfigElementsByName(widgetName)[0];
             var pm = PanelManager.getInstance();
-            widget.panel.position = {left: 43, top: 43, width: 490, height: 480, relativeTo: "map"};
-            pm.showPanel(widget);
+            if (widget.panel.position.top == 53){
+                widget.panel.position = {left: 43, top: -40, width: 490, height: 480, relativeTo: "map"};
+                pm.closePanel(widget.id + "_panel");
+             } else {
+                widget.panel.position = {left: 43, top: 53, width: 490, height: 480, relativeTo: "map"};
+                pm.showPanel(widget);
+            }	
         });
-      }
-    });
+      },
+      
+    onOpen: function(){
+      console.log('onOpen');
+    },
 
+    onClose: function(){
+      console.log('onClose');
+    },
+
+    onMinimize: function(){
+      console.log('onMinimize');
+    },
+    onMaximize: function(){
+      console.log('onMaximize');
+    }
+    });
     return clazz;
   });
