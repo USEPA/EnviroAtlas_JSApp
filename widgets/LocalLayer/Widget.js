@@ -559,7 +559,13 @@ define([
 						var popupConfig = jimuUtils.getPopups(layer);
 						lLayer.setInfoTemplates(popupConfig);
 
-					}
+					} else if (layer.type.toUpperCase() === "WMS") {          
+
+                        lLayer = new WMSLayer(layer.url, {
+                            format: "png",
+                        });
+
+                    } 
 					//All layer types:
 					if (bNeedToBeAdded) {
 						dojo.connect(lLayer, "onError", function(error) {
@@ -725,13 +731,16 @@ define([
 	            this.config = {"layers":{"layer":[{"type":type, "name":urlParams._preview.split("/")[urlParams._preview.split("/").length-2], "url":urlParams._preview, "flyPopups": true}]}} 
 	          }
 	        }			
-			if (this.config.useProxy) {
+			/*if (this.config.useProxy) {
 				urlUtils.addProxyRule({
 					urlPrefix : this.config.proxyPrefix,
 					proxyUrl : this.config.proxyAddress
 				});
-			}
-
+			}*/
+                urlUtils.addProxyRule({
+                    urlPrefix : "https://www.mrlc.gov",
+                    proxyUrl : "https://leb.epa.gov/enviroatlas/natlas/CurrentDevelopment/proxy/proxy.ashx"
+                });
 			loadBookmarkExtent(function(response) {
 				var bookmarkClassified = JSON.parse(response);
 
@@ -837,10 +846,10 @@ define([
 					}
 				})
 			}), true)
-			var dummyLayer = new WMSLayer("__ignore__")
-			dummyLayer.on("error", function(evt) {
-				window._viewerMap.removeLayer(evt.target)
-			})
+			//var dummyLayer = new WMSLayer("__ignore__")
+			//dummyLayer.on("error", function(evt) {
+			//	window._viewerMap.removeLayer(evt.target)
+			//})
 			//window._viewerMap.addLayer(dummyLayer);
 			//window._viewerMap.addLayers(_layersToAdd);
 			window._viewerMap.updatedLayerInfos = LayerInfos.getInstanceSync()

@@ -616,7 +616,7 @@
     "httpProxy": {
         "useProxy": true,
         "alwaysUseProxy": false,
-        "url": "",
+        "url": "https://leb.epa.gov/enviroatlas/natlas/CurrentDevelopment/proxy/proxy.ashx",
         "rules": []
     },
     "mobileLayout": {
