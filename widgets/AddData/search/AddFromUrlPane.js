@@ -170,7 +170,7 @@ define(["dojo/_base/declare",
               if (!(url in window.faildedOutsideLayerDictionary)){
 			  	  window.faildedOutsideLayerDictionary[url] = url;
 			  }	
-			  selfAddData.publishData({
+			  self.AddData.publishData({
 	        	message: "openFailedLayer"
 	    	  });                                             
             }

@@ -617,7 +617,10 @@
         "useProxy": true,
         "alwaysUseProxy": false,
         "url": "https://leb.epa.gov/enviroatlas/natlas/CurrentDevelopment/proxy/proxy.ashx",
-        "rules": []
+        "rules": [{
+			"urlPrefix": "https://landscape10.arcgis.com",
+			"proxyUrl": "https://leb.epa.gov/enviroatlas/natlas/CurrentDevelopment/proxy/proxy.ashx"
+		}]
     },
     "mobileLayout": {
         "widgetOnScreen": {
