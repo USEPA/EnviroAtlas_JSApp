@@ -36,6 +36,7 @@ define(['dojo/_base/declare',
     'esri/layers/layer',
     'esri/layers/ArcGISDynamicMapServiceLayer',
     'esri/layers/ArcGISTiledMapServiceLayer',
+    'esri/layers/ArcGISImageServiceLayer',
     "esri/layers/LayerDrawingOptions",
     'esri/layers/DynamicLayerInfo',
     'esri/dijit/PopupTemplate',
@@ -74,6 +75,7 @@ define(['dojo/_base/declare',
               layer,
               ArcGISDynamicMapServiceLayer,
               ArcGISTiledMapServiceLayer,
+              ArcGISImageServiceLayer,
               LayerDrawingOptions,
               DynamicLayerInfo,
               PopupTemplate,
@@ -107,6 +109,13 @@ define(['dojo/_base/declare',
 
                 if (l.layerType == 'ArcGISTiledMapServiceLayer') {
                     tempLayer = new ArcGISTiledMapServiceLayer(l.url, {
+                        id : l.id,
+                        opacity : l.opacity,
+                        visible : l.visibility
+                    });
+                    tempLayer.title = l.title;
+                }else if (l.layerType == 'ArcGISImageServiceLayer') {
+                    tempLayer = new ArcGISImageServiceLayer(l.url, {
                         id : l.id,
                         opacity : l.opacity,
                         visible : l.visibility
@@ -456,9 +465,9 @@ define(['dojo/_base/declare',
             this.mycontentItemTable.clear();
 
             var query = {
-                q : "type:Web Map AND owner:" + userId,
+                q : 'type:"Web Map" AND owner:' + userId,
                 start : 1,
-                num : 16,
+                num : 100,
                 f : 'json'
             };
 
@@ -477,7 +486,7 @@ define(['dojo/_base/declare',
             var query = {
                 q : this.config.publicContent.query,
                 start : 1,
-                num : 16,
+                num : 100,
                 f : 'json'
             };
 
