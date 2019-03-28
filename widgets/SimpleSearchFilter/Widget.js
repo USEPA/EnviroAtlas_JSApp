@@ -935,7 +935,7 @@ define([
 				//Add Header for each Topic in list
 				if (SelectedTopics.indexOf(eaTopic) == -1) {
 					if (!(eaTopic in hiderows)) {
-						hiderows[eaTopic] = true;
+						hiderows[eaTopic] = false;
 					}
 					
 					SelectedTopics.push(eaTopic);
@@ -1030,7 +1030,7 @@ define([
 							}, layerAreaBNF);						
 					}
 					if (bCollapseClicked == true) {
-					    if (document.getElementById("collapseIcons").checked) {
+					    if (!document.getElementById("collapseIcons").checked) {
                             mainDiv.style.display = 'None';
                             hiderows[eaTopic] = false;
                         } else {
@@ -1319,8 +1319,15 @@ define([
 		        checkbox.disabled = true;	
 	       } else {
 		        //checkbox.className ="cmn-toggle cmn-toggle-round-flat";	
-		        checkbox.nextSibling.style.color= "#000000";
-		        checkbox.addEventListener("click", _updateSelectableLayer);	    
+		                  
+                var checkboxClearAll = document.getElementById("chkClearAll");  
+                if (checkboxClearAll.checked == true){
+                    
+                    checkbox.checked = false;
+                                   
+                } 
+                checkbox.nextSibling.style.color= "#000000";
+	            checkbox.addEventListener("click", _updateSelectableLayer); 
 		        //title.className = 'none';  
 		        checkbox.disabled = false;	       	
 	       }
@@ -1401,14 +1408,40 @@ define([
 	    	newRow = tableRef.insertRow(tableRef.rows.length);
 			var newCheckboxCell  = newRow.insertCell(0);
 
-           	var checkbox = document.createElement('input');
-			checkbox.type = "button";
+           	var dragbox = document.createElement('input');
+			dragbox.type = "button";
 			
-	        chkboxId = "dragForFilter";
-			checkbox.id = chkboxId;
-			checkbox.value = "Select data by topic";
-			checkbox.className ="jimu-widget-filterforselect-drag";
-	        newCheckboxCell.appendChild(checkbox);    
+	        dragboxId = "dragForFilter";
+			dragbox.id = dragboxId;
+			dragbox.value = "Select data by topic";
+			dragbox.className ="jimu-widget-filterforselect-drag";
+	        newCheckboxCell.appendChild(dragbox);    
+	        
+	        //add clear all topic
+	        var newCheckboxCell  = newRow.insertCell(1);
+            
+            var checkbox = document.createElement('input');
+            checkbox.style.marginTop = "2px";
+            checkbox.type = "checkbox";
+            chkboxId = "chkClearAll";
+            checkbox.name = chkboxId;
+            checkbox.checked = false;
+            checkbox.id = chkboxId;
+            //checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+            newCheckboxCell.appendChild(checkbox); 
+        
+            var label = document.createElement('label');
+            label.style.paddingLeft = "6px";
+            label.className ="label-chk-toggle";
+            label.setAttribute("for",chkboxId);
+            label.innerHTML = "clear all topics";
+            newCheckboxCell.appendChild(label);
+            
+            checkbox.addEventListener('click', function() {
+                _updateSelectableLayer();
+            });                      
+
+       
     },	
     displayResizeButton: function() {
 		
@@ -1482,7 +1515,9 @@ define([
 			newCheckboxCell.appendChild(label);
 
 
-			checkbox.addEventListener('change', function() {
+			checkbox.addEventListener('click', function() {
+			    var checkboxClearAll = document.getElementById("chkClearAll"); 
+			    checkboxClearAll.checked = false;
 				_updateSelectableLayer();
 				
 			});
