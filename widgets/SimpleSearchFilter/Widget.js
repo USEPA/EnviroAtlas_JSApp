@@ -884,6 +884,10 @@ define([
 
 				chkNationalScale = true;
 				chkCommunityScale = true;
+				var collapseChk = document.getElementById("collapseIcons");
+                if (!collapseChk.checked) {
+                    collapseChk.click();
+                } 
 			}
 			switch (eaScale) {
 				case "NATIONAL":					
