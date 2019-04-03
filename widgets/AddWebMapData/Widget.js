@@ -121,6 +121,7 @@ define(['dojo/_base/declare',
                         visible : l.visibility
                     });
                     tempLayer.title = l.title;
+                    tempLayer = selfAddWebMapData._processLayer(tempLayer, l);
                 } else if (l.layerType == 'ArcGISFeatureLayer') {
                     tempLayer = new FeatureLayer(l.url, {
                         mode : FeatureLayer.MODE_ONDEMAND,
