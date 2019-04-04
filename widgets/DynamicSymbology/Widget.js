@@ -84,6 +84,7 @@ define(['dojo/_base/declare',
         "esri/symbols/PictureMarkerSymbol",
         "esri/dijit/util/busyIndicator",
         "esri/dijit/SymbolStyler",
+        "esri/styles/basic",
         "esri/request",
         "dijit/ColorPalette",
         "dijit/form/Select",
@@ -100,7 +101,7 @@ define(['dojo/_base/declare',
         "dojo/parser"],
     function (declare, BaseWidget, LayerInfos, dom, domConstruct, on, domStyle, Map, esriStylesChoropleth, Color, ColorInfoSlider,
         ClassedColorSlider, smartMapping, FeatureLayer, FeatureLayerStatistics,
-        ClassBreaksRenderer, rendererJsonUtils, SimpleRenderer, SimpleFillSymbol, SimpleLineSymbol, SimpleMarkerSymbol, PictureMarkerSymbol, busyIndicator, SymbolStyler, esriRequest,
+        ClassBreaksRenderer, rendererJsonUtils, SimpleRenderer, SimpleFillSymbol, SimpleLineSymbol, SimpleMarkerSymbol, PictureMarkerSymbol, busyIndicator, SymbolStyler, basic, esriRequest,
         ColorPalette, select, NumberSpinner, HorizontalSlider, HorizontalRule, HorizontalRuleLabels, TooltipDialog, DropDownButton,
         Button, RadioButton, CheckBox, popup) {
 
@@ -706,6 +707,7 @@ define(['dojo/_base/declare',
                 var pictureMarkerSymbol = new PictureMarkerSymbol(originalSymbology[_layerID], originalSymbolWidth[_layerID], originalSymbolHeight[_layerID]);
                 var rendererFromURL = new SimpleRenderer(pictureMarkerSymbol);
                 geoenrichedFeatureLayer.setRenderer(rendererFromURL);
+                geoenrichedFeatureLayer.redraw(); 
             }
             else {
                 var str = lyrTobeUpdated.url;
@@ -850,6 +852,25 @@ define(['dojo/_base/declare',
 
             return symbolColors;
         },
+        getGeometryType: function(symbol) {
+            var type = symbol.type;
+            return type === "picturefillsymbol" || type === "simplefillsymbol" ? "polygon" :
+                   type === "cartographiclinesymbol" || type === "simplelinesymbol" ? "line" :
+                   "point";
+        },
+        getStylerOptions: function(symbol) {
+
+            var styleModule = basic;
+    
+            return {
+              schemes: styleModule.getSchemes({
+                theme: "default",
+                basemap: "streets",
+                geometryType: selfDynamicSymbology.getGeometryType(symbol)
+              })
+            }
+    
+        },
         _openSymbolStyler: function () {
         	_bSchemeColorsChanage = false;
         		
@@ -938,13 +959,13 @@ define(['dojo/_base/declare',
 	                    schemes: schemes
 	                });
                 } else {
-                    if ((geoenrichedFeatureLayer.renderer.symbol != undefined) && (geoenrichedFeatureLayer.renderer.symbol != null)) {
+                    if ((geoenrichedFeatureLayer.renderer.symbol != undefined) && (geoenrichedFeatureLayer.renderer.symbol != null)&&((geoenrichedFeatureLayer.renderer.symbol.url==undefined)||(geoenrichedFeatureLayer.renderer.symbol.url==null))) {
                         var dSymbol = geoenrichedFeatureLayer.renderer.symbol;
                     }
                 	else {
                 	    var dSymbol = new SimpleMarkerSymbol();
                 	}
-	                symbolStyler.edit(dSymbol);              	
+	                symbolStyler.edit(dSymbol, selfDynamicSymbology.getStylerOptions(dSymbol));              	
                 }
             }
         },
