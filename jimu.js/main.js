@@ -61,6 +61,7 @@ define([
     window.layerIdPrefix = "eaLyrNum_";
     window.layerIdBndrPrefix = "eaLyrBndrNum_";
     window.layerIdPBSPrefix = "eaLyrPBSNum_";
+    window.layerIdDemographPrefix = "eaLyrDEMNum_";
     window.layerIdTiledPrefix = "tiledNum_";
     window.addedLayerIdPrefix = "added_";
     window.topLayerID = "";

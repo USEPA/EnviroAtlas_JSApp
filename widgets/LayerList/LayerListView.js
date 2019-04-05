@@ -792,6 +792,9 @@ define([
         }, {
           key: "collapseAlllayers",
           label: this.nls.collapseAlllayers
+        }, {
+          key: "removeAllLayers",
+          label: this.nls.removeAllLayers
         }],
         box: this.layerListWidget.domNode.parentNode
       }).placeAt(this.layerListOperations);
@@ -838,6 +841,9 @@ define([
         case 'collapseAlllayers':
           this.foldOrUnfoldAllLayers(true);
           return;
+      case 'removeAllLayers':
+        document.getElementById("butRemoveAllLayers").click();        
+        return;
         default:
           return;
       }

@@ -425,6 +425,9 @@ define([
 				if ((currentLayer.id).indexOf(window.layerIdPBSPrefix) > -1) {
 					this.map.removeLayer(currentLayer);
 				}    				
+                if ((currentLayer.id).indexOf(window.layerIdDemographPrefix) > -1) {
+                    this.map.removeLayer(currentLayer);
+                }
 			} 
 		}
 		/*dojo.forEach(this.map.layerIds, function(aLayerId) {  

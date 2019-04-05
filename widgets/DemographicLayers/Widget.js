@@ -566,7 +566,8 @@ _genRender: function (renderobj) {
         _config.demogJSON[mapid].baselayers[activelayer].renderobj[renderuniquekey] = renderer;
         var optionsArray = [];
         var drawingOptions = new esri.layers.LayerDrawingOptions();
-        var layeridstr = mapid + fieldid + "_map";
+        //var layeridstr = mapid + fieldid + "_map";
+        var layeridstr = window.layerIdDemographPrefix+ mapid + fieldid + "_map";
         if (renderobj.rendertype == "polygon") {
             renderobj.renderer = renderer;
             drawingOptions.renderer = renderer;
