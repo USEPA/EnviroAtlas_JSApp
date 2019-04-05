@@ -686,7 +686,8 @@ _mapRender: function(renderobj) {
 
     var optionsArray = [];
     var drawingOptions = new esri.layers.LayerDrawingOptions();
-    var layeridstr = mapid + fieldid + "_map";
+    //var layeridstr = mapid + fieldid + "_map";
+    var layeridstr = window.layerIdDemographPrefix+ mapid + fieldid + "_map";
     if (renderobj.rendertype == "polygon") {
         var mycolors = this.generateColors(renderobj.classes, renderobj.fromcolor, renderobj.tocolor);
         for (var m = 0; m < orgrender.infos.length; m++) {
