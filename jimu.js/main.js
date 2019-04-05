@@ -101,6 +101,7 @@ define([
     window.tiledLayerNumber = [];
     window.imageLayerNumber = [];
     window.layerID_Portal_WebMap = [];
+    window.layerID_Demographics = [];
     window.onlineDataTobeAdded = [];
     window.onlineDataAlreadyAdded = [];
     window.uploadedFileColl = [];

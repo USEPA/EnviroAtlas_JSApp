@@ -471,7 +471,14 @@ define([
 			if(lyr != null){
 	    		this.map.removeLayer(lyr);        	
           	}          	
-        }        
+        }  
+        //remove all layers added from Demographics widget, if not removed already
+        for (i in window.layerID_Demographics) {           
+            lyr = this.map.getLayer(window.layerID_Demographics[i]);
+            if(lyr != null){
+                this.map.removeLayer(lyr);          
+            }           
+        }       
     	for (i in window.uploadedFileColl) {	        
     		lyr = this.map.getLayer(window.uploadedFileColl[i]);
 			if(lyr != null){

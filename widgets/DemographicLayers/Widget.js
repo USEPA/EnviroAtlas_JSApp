@@ -625,7 +625,9 @@ _genRender: function (renderobj) {
                 "opacity": opcvalue,
                 "visible": layervisible
             });
+        window.layerID_Demographics.push(layeridstr);
         wobj.map.addLayer(dmlayer);
+        
         dmlayer.on("update-start",lang.hitch(wobj,wobj.showloading,layeridstr));
         dmlayer.on("update-end",lang.hitch(wobj,wobj.hideloading,layeridstr));
         var infostr = "";
@@ -747,6 +749,7 @@ _mapRender: function(renderobj) {
             "opacity": opcvalue,
             "visible": layervisible
         });
+    window.layerID_Demographics.push(layeridstr);
     this.map.addLayer(dmlayer);
     dmlayer.on("update-start",lang.hitch(this,this.showloading,layeridstr));
     dmlayer.on("update-end",lang.hitch(this,this.hideloading,layeridstr));
