@@ -736,11 +736,11 @@ define([
 					urlPrefix : this.config.proxyPrefix,
 					proxyUrl : this.config.proxyAddress
 				});
-			}*/
+			}
                 urlUtils.addProxyRule({
                     urlPrefix : "https://www.mrlc.gov",
                     proxyUrl : "https://leb.epa.gov/enviroatlas/natlas/CurrentDevelopment/proxy/proxy.ashx"
-                });
+                }); */
 			loadBookmarkExtent(function(response) {
 				var bookmarkClassified = JSON.parse(response);
 
