@@ -321,8 +321,11 @@ define(['dojo/_base/declare',
 
         doSignIn : function() {
             //console.log("ChangeWebMap :: doSignIn");
+            //Inherit the portalUrl and appID from the full application:
+            var portalURL = this.appConfig.portalUrl;
+            var appId = this.appConfig.appId;
 
-            var regOAuth = tokenUtils.registerOAuthInfo(this.config.portalUrl, "S8P0zvjK2t50sCNd");
+            var regOAuth = tokenUtils.registerOAuthInfo(portalURL, appId);
 
             tokenUtils.signInPortal(this.config.portalUrl).then(function(credential) {
                 topic.publish('userSignIn', credential);
