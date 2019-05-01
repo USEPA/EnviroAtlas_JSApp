@@ -418,7 +418,13 @@ define([
           'key': 'setVisibilityRange',
           'denyType': 'disable'
         });
-      }
+      } else if (this._layerInfo.isRootLayer() && (this._layerInfo.getRootLayerInfo().layerObject.declaredClass === "esri.layers.ArcGISImageServiceLayer")){
+         dynamicDeniedItems.push({
+          'key': 'changeSymbology',
+          'denyType': 'hidden'
+        });         
+      }  //deny changeSymbology for ImageService
+      
 
       var loadInfoTemplateDef = this._layerInfo.loadInfoTemplate();
       var getSupportTableInfoDef = this._layerInfo.getSupportTableInfo();
