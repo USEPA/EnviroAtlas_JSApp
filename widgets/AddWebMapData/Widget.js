@@ -102,9 +102,7 @@ define(['dojo/_base/declare',
         pm.showPanel(widgets[0]);
     };
     var addAddItemToMapOperational = function(layersReversed, layerId, response) {
-
         layersReversed.forEach(function(l) {
-
             if ((l.url) && (l.id == layerId)) {
 
                 if (l.layerType == 'ArcGISTiledMapServiceLayer') {
@@ -133,7 +131,7 @@ define(['dojo/_base/declare',
                     tempLayer.title = l.title;
                     tempLayer = selfAddWebMapData._processLayer(tempLayer, l);
                 } else if (l.layerType == 'ArcGISMapServiceLayer') {
-
+                    console.log("mapservice",l);
                     tempLayer = new ArcGISDynamicMapServiceLayer(l.url, {
                         id : l.id,
                         opacity : l.opacity,
@@ -152,6 +150,7 @@ define(['dojo/_base/declare',
                         var _infoTemps = {};
                         var indexTemplate = 0;
                         array.forEach(l.layers, function(layerInfo) {
+                            console.log("mapServiceLayer",layerInfo)
                             if (layerInfo.layerDefinition && layerInfo.layerDefinition.definitionExpression) {
                                 expressions[layerInfo.id] = layerInfo.layerDefinition.definitionExpression;
                             }
@@ -184,6 +183,8 @@ define(['dojo/_base/declare',
                                 dynamicLayerInfo = null;
                                 source = layerInfo.layerDefinition.source;
                                 if (source.type === "mapLayer") {
+                                    console.log("operationalLayerArray",response.operationalLayers);
+                                    console.log("mapLayerId",source.mapLayerId);
                                     var metaLayerInfos = array.filter(response.operationalLayers, function(rlyr) {
                                         return rlyr.id === source.mapLayerId;
                                     });
@@ -220,10 +221,10 @@ define(['dojo/_base/declare',
                             tempLayer.setLayerDefinitions(expressions);
                         }
                         if (dynamicLayerInfos.length > 0) {
-                            //tempLayer.setDynamicLayerInfos(dynamicLayerInfos, true);
-                            if (drawingOptionsArray.length > 0) {
-                                tempLayer.setLayerDrawingOptions(drawingOptionsArray, true);
-                            }
+                            tempLayer.setDynamicLayerInfos(dynamicLayerInfos, true);
+                        }
+                        if (drawingOptionsArray.length > 0) {
+                            tempLayer.setLayerDrawingOptions(drawingOptionsArray, true);
                         }
 
                     } else if (l.visibleLayers) {
@@ -240,7 +241,7 @@ define(['dojo/_base/declare',
                             addAddItemToMapOperational(layersReversed, arrlayerId.pop(), response);
                         }), 1000);
                     }
-                })
+                });
                 //tempLayer.title = l.title;
                 window.layerID_Portal_WebMap.push(l.id);
                 testmap.addLayer(tempLayer);
@@ -595,13 +596,13 @@ define(['dojo/_base/declare',
 
             item.getItemData().then(function(response) {
                 //process operational layers in reverse order to match AGOL
-                //layersReversed = response.operationalLayers.reverse();
-                layersReversed = response.operationalLayers;
+                layersReversed = response.operationalLayers.reverse();
+                //layersReversed = response.operationalLayers;
                 //first push Dynamic layers so that it will be added at last
                 layersReversed.forEach(function(l) {
                     if (l.url) {
                         if (l.id && (l.id != undefined)) {
-                            if (l.layerType == 'ArcGISMapServiceLayer'){
+                            if (l.layerType == 'ArcGISMapServiceLayer' || l.layerType == 'ArcGISImageServiceLayer' || l.layerType == 'ArcGISTiledMapServiceLayer'){
                                 if (arrlayerId.indexOf(l.id) < 0) {
                                     arrlayerId.push(l.id);
                                 }
@@ -613,14 +614,14 @@ define(['dojo/_base/declare',
                 layersReversed.forEach(function(l) {
                     if (l.url) {
                         if (l.id && (l.id != undefined)) {
-                            if (l.layerType != 'ArcGISMapServiceLayer'){
+                            if (l.layerType == 'ArcGISFeatureLayer'){
                                 if (arrlayerId.indexOf(l.id) < 0) {
                                     arrlayerId.push(l.id);
                                 }
                             }
                         }
                     }
-                })                
+                });
                 
                 addAddItemToMapOperational(layersReversed, arrlayerId.pop(), response);
 
@@ -698,6 +699,7 @@ define(['dojo/_base/declare',
             }
             layerDefinition = l.layerDefinition;
             if (layerDefinition) {
+                console.log("layerDefinition",layerDefinition)
                 if (layerDefinition.definitionExpression) {
                     tempLayer.setDefinitionExpression(layerDefinition.definitionExpression);
                 }
