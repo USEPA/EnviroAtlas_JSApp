@@ -96,7 +96,6 @@ define([
 	    LabelClass,
 	    Color) {
 	//To do: set these community boundary layer properties from the config file.
-	var communityBoundaryLayer = "https://leb.epa.gov/arcgis/rest/services/Communities/Community_Locations/MapServer";
 	var communityBoundaryLayerID = "901"
 	var minXCombinedExtent = 9999999999999;
 	var minYCombinedExtent = 9999999999999;
@@ -157,40 +156,6 @@ define([
 		return "<b>" + window.communityDic[commName] + "</b><br /><button id = 'testButton2' dojoType='dijit.form.Button' onclick='selfLocalLayer.selectCurrentCommunity() '>Select this community</button>";
 	};
 
-	var addCommunityBoundaries = function() {
-		var lyrBoundaryPoint = this._viewerMap.getLayer(window.idCommuBoundaryPoint);
-		if (lyrBoundaryPoint == null) {
-			var popupsTemplate = {}
-			var locationTemplate = new InfoTemplate();
-			locationTemplate.setTitle("EnviroAtlas Community Location");
-			locationTemplate.setContent(getTextContent);
-			var boundaryTemplate = new InfoTemplate();
-			boundaryTemplate.setTitle("EnviroAtlas Community Boundary");
-			boundaryTemplate.setContent(getTextContent);
-			popupsTemplate[0] = {
-				infoTemplate : locationTemplate
-			};
-			//popupsTemplate[1] = {
-			//	infoTemplate : boundaryTemplate
-			//};
-			popupsTemplate[1] = null;
-			var communityLocationLayer = new ArcGISDynamicMapServiceLayer(communityBoundaryLayer);
-			communityLocationLayer._titleForLegend = "EnviroAtlas Community Boundaries";
-			communityLocationLayer.title = "EnviroAtlas Community Boundaries";
-			communityLocationLayer.noservicename = true;
-			communityLocationLayer.setInfoTemplates(popupsTemplate);
-
-			communityLocationLayer.id = window.layerIdBndrPrefix + communityBoundaryLayerID;
-			window.dynamicLayerNumber.push(communityBoundaryLayerID);
-			window.idCommuBoundaryPoint = communityLocationLayer.id;
-			chkboxId = window.chkSelectableLayer + communityBoundaryLayerID;
-			if (dojo.byId(chkboxId)) {
-				dojo.byId(chkboxId).checked = true;
-			}
-			selfLocalLayer.map.addLayer(communityLocationLayer);
-		}
-
-	}
 	var _addSelectedLayers = function(layersTobeAdded, selectedLayerNum) {
 		var index,
 		    len;
@@ -243,7 +208,8 @@ define([
 							}
 							lOptions.imageParameters = ip;
 						}
-						lLayer = new ArcGISDynamicMapServiceLayer(layer.url, lOptions);		
+						lLayer = new ArcGISDynamicMapServiceLayer(layer.url, lOptions);	
+
 						
 						if (layer.hasOwnProperty('definitionQueries')) {
 							var definitionQueries = JSON.parse(layer.definitionQueries)
@@ -269,6 +235,7 @@ define([
 						if (layer.disableclientcaching) {
 							lLayer.setDisableClientCaching(true);
 						}
+ 
 						lLayer.on('error', function(evt) {
 							console.log(evt);
 						})						
@@ -380,6 +347,7 @@ define([
 							}
 							lLayer.layers = evt.layer.layerInfos
 						});
+
 
 						this._viewerMap.setInfoWindowOnClick(true);
 					} else if (layer.type.toUpperCase() === 'IMAGE') {
@@ -592,7 +560,29 @@ define([
 						}
 						lLayer.on('load', function(evt) {
 							evt.layer.name = lOptions.id;
+							if (evt.layer.id == window.layerIdPrefix + communityBoundaryLayerID) {
+                                setTimeout(function () {
+                                    var popupsTemplate = {};
+                                    var locationTemplate = new InfoTemplate();
+                                    locationTemplate.setTitle("EnviroAtlas Community Location");
+                                    locationTemplate.setContent(getTextContent);
+                                    var boundaryTemplate = new InfoTemplate();
+                                    boundaryTemplate.setTitle("EnviroAtlas Community Boundary");
+                                    boundaryTemplate.setContent(getTextContent);
+                                    popupsTemplate[0] = {
+                                        infoTemplate : locationTemplate
+                                    };
+        
+                                    popupsTemplate[1] = null;
+                                    evt.layer._titleForLegend = "EnviroAtlas Community Boundaries";
+                                    evt.layer.title = "EnviroAtlas Community Boundaries";
+                                    evt.layer.noservicename = true;
+                                    evt.layer.setInfoTemplates(popupsTemplate);       
+                                }, 1000)                      
+                            }
+							
 						});
+
 
 						lLayer.id = window.layerIdPrefix + layer.eaID.toString();
 
@@ -605,9 +595,8 @@ define([
 								//turn off the layer when first added to map and let user to turn on
 								window.communityLayerNumber.push(layer.eaID.toString());
 								setTimeout(function () {
-								    //addCommunityBoundaries();
-								    _addSelectedLayers(layersTobeAdded, "901");
-								 }, 3000)
+								    _addSelectedLayers(layersTobeAdded, communityBoundaryLayerID);
+								 }, 2000)
 							} else {//National
 								//lLayer.setVisibility(false);
 								lLayer.setVisibility(true);
