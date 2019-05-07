@@ -168,7 +168,7 @@ define(['dojo/_base/declare',
  	
             },
             onReceiveData: function (name, widgetId, data, historyData) {
-                if ((name == 'LocalLayer') ) {
+                if ((name == 'SimpleSearchFilter') ) {
                    this.setLayersVisibilityOpacity(sessionLoaded.layers);
                 }
             },

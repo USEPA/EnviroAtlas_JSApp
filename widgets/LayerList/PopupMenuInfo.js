@@ -194,7 +194,7 @@ define([
         var eaID = layerId.replace(window.layerIdPrefix, "").replace(window.layerIdPBSPrefix, "").replace(window.layerIdBndrPrefix, "");
         var arrXmlPath = [];
         if ((layerId.indexOf(window.layerIdPrefix)) >= 0) {
-			arrXmlPath.push("widgets/LocalLayer/config.json");
+			arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");
 			getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, eaID, actionType);
         }
         else if ((layerId.indexOf(window.layerIdPBSPrefix)) >= 0) {
@@ -207,7 +207,7 @@ define([
         } 
         else {
         	arrXmlPath.push("widgets/BoundaryLayer/config.json");
-        	arrXmlPath.push("widgets/LocalLayer/config.json");
+        	arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");
         	arrXmlPath.push("widgets/PeopleAndBuildSpaces/config.json");        	
         	getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, clickedURL, actionType);
         }    	

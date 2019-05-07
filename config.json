@@ -34,16 +34,6 @@
                 "name": "Header",
                 "label": "Header"
             }, {
-                "name": "LocalLayer",
-                "label": "Local Layer Widget",
-                "version": "1.2",
-                "uri": "widgets/LocalLayer/Widget",
-                "config": "widgets/LocalLayer/config.json",
-                "id": "widgets_LocalLayer_Widget_18",
-                "position": {
-                    "relativeTo": "map"
-                }
-            }, {
                 "uri": "themes/TabTheme/widgets/SidebarController/Widget",
                 "position": {
                     "left": 0,
@@ -641,16 +631,6 @@
                     "id": "themes_TabTheme_widgets_Header_Widget_18",
                     "name": "Header",
                     "label": "Header"
-                }, {
-                    "name": "LocalLayer",
-                    "label": "Local Layer Widget",
-                    "version": "1.2",
-                    "uri": "widgets/LocalLayer/Widget",
-                    "config": "widgets/LocalLayer/config.json",
-                    "id": "widgets_LocalLayer_Widget_18",
-                    "position": {
-                        "relativeTo": "map"
-                    }
                 }, {
                     "uri": "themes/TabTheme/widgets/SidebarController/Widget",
                     "position": {
