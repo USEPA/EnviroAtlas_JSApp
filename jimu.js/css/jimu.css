@@ -6528,7 +6528,7 @@ html.hr .jimu-filter .allExpsBox > div{
   bottom:0;
   height:100%;
   width:100%;
-  z-index:110;
+  z-index:-1 !important;
   background: no-repeat center center;
   font-size:14px;
   line-height:20px;
