@@ -165,9 +165,9 @@ div.detailsFooter > .dijitButton > .dijitButtonNode{
     background-size:15px;
 }
 
-.jimu-widget-FeaturedCollectionPreview {
+/*.jimu-widget-FeaturedCollectionPreview {
     z-index:150;
-}
+}*/
 
 @keyframes out-left-rtl {
   0% {
