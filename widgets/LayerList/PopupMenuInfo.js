@@ -196,19 +196,9 @@ define([
         if ((layerId.indexOf(window.layerIdPrefix)) >= 0) {
 			arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");
 			getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, eaID, actionType);
-        }
-        else if ((layerId.indexOf(window.layerIdPBSPrefix)) >= 0) {
-       		arrXmlPath.push("widgets/PeopleAndBuildSpaces/config.json");
-       		getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, eaID, actionType);
-        } 
-        else if ((layerId.indexOf(window.layerIdBndrPrefix)) >= 0) {
-       		arrXmlPath.push("widgets/BoundaryLayer/config.json");
-       		getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, eaID, actionType);
-        } 
+        }        
         else {
-        	arrXmlPath.push("widgets/BoundaryLayer/config.json");
-        	arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");
-        	arrXmlPath.push("widgets/PeopleAndBuildSpaces/config.json");        	
+        	arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");  	
         	getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, clickedURL, actionType);
         }    	
     };

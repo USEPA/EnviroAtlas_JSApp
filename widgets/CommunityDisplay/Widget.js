@@ -58,7 +58,7 @@ define([
       name: 'CommunityDisplay',
       
 	  onReceiveData: function(name, widgetId, data, historyData) {
-		  if (((name == 'PeopleAndBuildSpaces')||(name == 'SelectCommunity')|| (name == 'SaveSession')||(name == 'AddWebMapData'))&&(data.message == "updateCommunityLayers")){			  
+		  if (((name == 'SelectCommunity')|| (name == 'SaveSession')||(name == 'AddWebMapData'))&&(data.message == "updateCommunityLayers")|| (name == 'SimpleSearchFilter')){			  
 			  if ((window.communitySelected != window.strAllCommunity)){
 			  	this.communitydisplayInfo.innerHTML = window.communityDic[window.communitySelected];
 			  }
