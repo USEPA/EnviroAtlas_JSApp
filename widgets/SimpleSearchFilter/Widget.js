@@ -1948,7 +1948,9 @@ define([
         selectCurrentCommunity : function() {
 
             window.communitySelected = currentCommunity;
-
+            selfSimpleSearchFilter.publishData({
+                message : "updateCommunityLayers"
+            });
             selfSimpleSearchFilter._onUpdateCommunityLayers();
 
             var nExtent;
