@@ -255,18 +255,19 @@ define(['dojo/_base/declare',
 	                geoenrichedFeatureLayer = selfDynamicSymbology.map.getLayer(_layerID);      
 					
 	                var str = geoenrichedFeatureLayer.url;
-		            
-		            if (str.indexOf(lookforEnviroatlas) > -1 ) {
-		                if (str.indexOf(lookforNational) > -1) {
-		                    //add warning for national data
-		                    domStyle.set(dom.byId('nationalDSWarning'), "display", "inline");
-		                    geoenrichedFeatureLayer.setDefinitionExpression(geoenrichedFeatureLayer.renderer.attributeField + " >= 0" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " IS NOT Null");
-		                } else  if (str.indexOf(lookforCommunities) > -1){
-		                    domStyle.set(dom.byId('nationalDSWarning'), "display", "none");
-		                    if (window.communitySelected != "AllCommunity") {
-		                        geoenrichedFeatureLayer.setDefinitionExpression("CommST = '" + window.communitySelected + "'" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " >= 0" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " IS NOT Null");
-		                    }
-		                }
+		            if (str != null){
+    		            if (str.indexOf(lookforEnviroatlas) > -1 ) {
+    		                if (str.indexOf(lookforNational) > -1) {
+    		                    //add warning for national data
+    		                    domStyle.set(dom.byId('nationalDSWarning'), "display", "inline");
+    		                    geoenrichedFeatureLayer.setDefinitionExpression(geoenrichedFeatureLayer.renderer.attributeField + " >= 0" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " IS NOT Null");
+    		                } else  if (str.indexOf(lookforCommunities) > -1){
+    		                    domStyle.set(dom.byId('nationalDSWarning'), "display", "none");
+    		                    if (window.communitySelected != "AllCommunity") {
+    		                        geoenrichedFeatureLayer.setDefinitionExpression("CommST = '" + window.communitySelected + "'" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " >= 0" + " AND " + geoenrichedFeatureLayer.renderer.attributeField + " IS NOT Null");
+    		                    }
+    		                }
+    	                }
 	                }
 	
 	                featureLayerStatistics = new FeatureLayerStatistics({
@@ -876,39 +877,49 @@ define(['dojo/_base/declare',
         		
 
             var fType = geoenrichedFeatureLayer.geometryType;
+            var layerSymbol = geoenrichedFeatureLayer.renderer.symbol;
+            if (layerSymbol != null) {
+                var dSymbol = layerSymbol;
+            } else {
+                var infos = geoenrichedFeatureLayer.renderer.infos;
+                if (infos != null){
+                    layerSymbol = infos[0].symbol;
+                }   
+            }
+            var dSymbol = layerSymbol;
             if (fType == "esriGeometryPolygon") {
                 var currRamp = selfDynamicSymbology._getColorsFromInfos(geoenrichedFeatureLayer.renderer.infos);
 	    		if (!_bPolygonAsPoint) {
-                	var dSymbol = new SimpleFillSymbol();
-                	if (typeof _outline != 'undefined'){
-                		if (_outline != null) {
-                			dSymbol.outline = _outline;
-                		}
-                	}
+                    if (dSymbol == null) {
+                        dSymbol = new SimpleFillSymbol();                     
+                    }
                 }
                 else {
                 	
                 	var dSymbol = new SimpleMarkerSymbol();
                 } 
 
-                //var dSymbol = geoenrichedFeatureLayer.renderer.infos[0].symbol;
-            	schemes = esriStylesChoropleth.getSchemes({
-                    basemap: "hybrid",
-                    geometryType: "polygon",
-                    theme: "high-to-low"
-                });
-                symbolStyler.edit(dSymbol, {
-                    //activeTab: "fill",
-                    colorRamp: {
-                        colors: currRamp,
-                        numStops: _NumberOfClasses,
-                        scheme: schemes.secondarySchemes[39]
-                    },
-                    externalSizing: false,
-                    schemes: schemes
-                });
+                if (currRamp.length > 0){
+                    schemes = esriStylesChoropleth.getSchemes({
+                        basemap: "hybrid",
+                        geometryType: "polygon",
+                        theme: "high-to-low"
+                    });
+                    symbolStyler.edit(dSymbol, {
+                        colorRamp: {
+                            colors: currRamp,
+                            numStops: _NumberOfClasses,
+                            scheme: schemes.secondarySchemes[39]
+                        },
+                        externalSizing: false,
+                        schemes: schemes
+                    });
+                } else 
+                {
+                    symbolStyler.edit(dSymbol, selfDynamicSymbology.getStylerOptions(dSymbol));                    
+                }
+
             } else if (fType == "esriGeometryPolyline") {
-                //var dSymbol = geoenrichedFeatureLayer.renderer.infos[0].symbol;
                 var currRamp = selfDynamicSymbology._getColorsFromInfos(geoenrichedFeatureLayer.renderer.infos);
             	schemes = esriStylesChoropleth.getSchemes({
                     basemap: "hybrid",
@@ -919,7 +930,6 @@ define(['dojo/_base/declare',
               		var dSymbol = geoenrichedFeatureLayer.renderer.infos[0].symbol;
 
 	                symbolStyler.edit(dSymbol, {
-	                    //activeTab: "fill",
 	                    colorRamp: {
 	                        colors: currRamp,
 	                        numStops: _NumberOfClasses,
@@ -929,27 +939,27 @@ define(['dojo/_base/declare',
 	                    schemes: schemes
 	                });
                 } else {
-                	
-                	var dSymbol = new SimpleLineSymbol();
 
+                    if (dSymbol == null) {
+                        dSymbol = new SimpleLineSymbol();                     
+                    }
 	                symbolStyler.edit(dSymbol, {
-	                    //activeTab: "fill",
 	                    externalSizing: false,
 	                    schemes: schemes
 	                });                	
                 }
 
             } else if (fType == "esriGeometryPoint") {
-                
+                if (dSymbol == null) {
+                    dSymbol = new SimpleMarkerSymbol();                     
+                }
             	schemes = esriStylesChoropleth.getSchemes({
                     basemap: "hybrid",
                     geometryType: "point",
                     theme: "high-to-low"
                 }); 
                 if ((_ClassificationMethod!=undefined)  || (_nBreaks>0)){ 
-              		var dSymbol = geoenrichedFeatureLayer.renderer.infos[0].symbol;
 	                symbolStyler.edit(dSymbol, {
-	                    //activeTab: "fill",
 	                    colorRamp: {
 	                        colors: currRamp,
 	                        numStops: _NumberOfClasses,
@@ -959,12 +969,6 @@ define(['dojo/_base/declare',
 	                    schemes: schemes
 	                });
                 } else {
-                    if ((geoenrichedFeatureLayer.renderer.symbol != undefined) && (geoenrichedFeatureLayer.renderer.symbol != null)&&((geoenrichedFeatureLayer.renderer.symbol.url==undefined)||(geoenrichedFeatureLayer.renderer.symbol.url==null))) {
-                        var dSymbol = geoenrichedFeatureLayer.renderer.symbol;
-                    }
-                	else {
-                	    var dSymbol = new SimpleMarkerSymbol();
-                	}
 	                symbolStyler.edit(dSymbol, selfDynamicSymbology.getStylerOptions(dSymbol));              	
                 }
             }

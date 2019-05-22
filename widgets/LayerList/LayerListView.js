@@ -96,7 +96,7 @@ define([
     drawListNode: function(layerInfo, level, toTableNode, position) {
       var nodeAndSubNode, showLegendDiv;
       if(this.isLayerHiddenInWidget(layerInfo) || !this.layerFilter.isValidLayerInfo(layerInfo)) {
-          alert("do nothing;");
+          //alert("do nothing;");
         return;
       }
       nodeAndSubNode = this._layerDomNodeStorage[layerInfo.getObjectId()];
