@@ -113,8 +113,7 @@
                 "name": "BasemapGallery",
                 "label": "Basemap Gallery",
                 "version": "2.8",
-                "uri": "widgets/eBasemapGallery/Widget",
-                "config": "configs/eBasemapGallery/config_Enhanced Basemap Gallery.json"
+                "uri": "widgets/eBasemapGallery/Widget"
             }, {
                 "position": {
                     "left": 45,
@@ -516,7 +515,7 @@
             "bottom": 0,
             "left": 55
         },
-        "itemId": "6e03e8c26aad4b9c92a87c1063ddb0e3",
+        "itemId": "588f0e0acc514c11bc7c898fed9fc651",
         "mapOptions": {
             "extent": {
                 "type": "extent",
@@ -711,8 +710,7 @@
                     "name": "BasemapGallery",
                     "label": "Basemap Gallery",
                     "version": "2.8",
-                    "uri": "widgets/eBasemapGallery/Widget",
-                    "config": "configs/eBasemapGallery/config_Enhanced Basemap Gallery.json"
+                    "uri": "widgets/eBasemapGallery/Widget"
                 }, {
                     "position": {
                         "right": 5,
