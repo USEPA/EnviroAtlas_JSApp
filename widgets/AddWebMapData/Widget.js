@@ -131,7 +131,6 @@ define(['dojo/_base/declare',
                     tempLayer.title = l.title;
                     tempLayer = selfAddWebMapData._processLayer(tempLayer, l);
                 } else if (l.layerType == 'ArcGISMapServiceLayer') {
-                    console.log("mapservice",l);
                     tempLayer = new ArcGISDynamicMapServiceLayer(l.url, {
                         id : l.id,
                         opacity : l.opacity,
@@ -150,7 +149,6 @@ define(['dojo/_base/declare',
                         var _infoTemps = {};
                         var indexTemplate = 0;
                         array.forEach(l.layers, function(layerInfo) {
-                            console.log("mapServiceLayer",layerInfo)
                             if (layerInfo.layerDefinition && layerInfo.layerDefinition.definitionExpression) {
                                 expressions[layerInfo.id] = layerInfo.layerDefinition.definitionExpression;
                             }
@@ -183,8 +181,6 @@ define(['dojo/_base/declare',
                                 dynamicLayerInfo = null;
                                 source = layerInfo.layerDefinition.source;
                                 if (source.type === "mapLayer") {
-                                    console.log("operationalLayerArray",response.operationalLayers);
-                                    console.log("mapLayerId",source.mapLayerId);
                                     var metaLayerInfos = array.filter(response.operationalLayers, function(rlyr) {
                                         return rlyr.id === source.mapLayerId;
                                     });
