@@ -19,12 +19,25 @@ define([
     'dijit/_WidgetsInTemplateMixin',
     "dojo/Deferred",
     'dojo/_base/lang',
+    'dojo/_base/array',
     'jimu/BaseWidget',
     'dijit/Dialog',
     'esri/symbols/jsonUtils',
      'jimu/WidgetManager',
      'jimu/PanelManager',
+     'jimu/utils',
      'esri/geometry/Extent',
+     'jimu/LayerInfos/LayerInfos',
+     'esri/layers/ArcGISDynamicMapServiceLayer',
+    'esri/layers/ArcGISTiledMapServiceLayer',
+    'esri/layers/ArcGISImageServiceLayer',
+    'esri/layers/WMSLayer',
+    'esri/layers/WMSLayerInfo',
+    'esri/layers/FeatureLayer',
+    'esri/layers/WebTiledLayer',
+    'esri/layers/ImageParameters',
+    'esri/layers/ImageServiceParameters',
+    'esri/InfoTemplate',
 	 'esri/symbols/SimpleLineSymbol',
 	 'esri/symbols/SimpleFillSymbol',
 	 'esri/symbols/SimpleMarkerSymbol',
@@ -57,12 +70,25 @@ define([
     _WidgetsInTemplateMixin,
     Deferred,
     lang,
+    array,
     BaseWidget,
     Dialog,
     esriSymJsonUtils,
     WidgetManager,
     PanelManager,
+    jimuUtils,
     Extent,
+    LayerInfos,
+    ArcGISDynamicMapServiceLayer,
+    ArcGISTiledMapServiceLayer,
+    ArcGISImageServiceLayer,
+    WMSLayer,
+    WMSLayerInfo,
+    FeatureLayer,
+    WebTiledLayer,
+    ImageParameters,
+    ImageServiceParameters,
+    InfoTemplate,
     SimpleLineSymbol,
     SimpleFillSymbol,
     SimpleMarkerSymbol,
@@ -92,6 +118,12 @@ define([
             label: "name", //Name field for display. Not pertinent to a grid but may be used elsewhere.
             items: []};
     	var layerDataStore = new dojo.data.ItemFileWriteStore({ data:layerData });
+    	var localLayerConfig = null;
+    	var communityBoundaryLayerID = "901"
+	    var minXCombinedExtent = 9999999999999;
+        var minYCombinedExtent = 9999999999999;
+        var maxXCombinedExtent = -9999999999999;
+        var maxYCombinedExtent = -9999999999999;
 
     	var SelectableLayerFactory = function(data) {
 		    this.eaLyrNum = data.eaLyrNum;
@@ -535,9 +567,9 @@ define([
 	
 	        xobj.overrideMimeType("application/json");
 
-        xobj.open('GET', 'widgets/LocalLayer/config.json', true); 
-
-        xobj.onreadystatechange = function () {
+            xobj.open('GET', 'widgets/SimpleSearchFilter/config_layer.json', true); 
+    
+            xobj.onreadystatechange = function () {
               if (xobj.readyState == 4 && xobj.status == "200") {
 	                callback(xobj.responseText);
 	              }
@@ -550,7 +582,7 @@ define([
 	
 	        xobj.overrideMimeType("application/json");
 
-	        xobj.open('GET', 'widgets/LocalLayer/communitymetadata.json', true); 
+	        xobj.open('GET', 'widgets/SimpleSearchFilter/communitymetadata.json', true); 
 	
 	        xobj.onreadystatechange = function () {
               if (xobj.readyState == 4 && xobj.status == "200") {
@@ -566,7 +598,7 @@ define([
 	
 	        xobj.overrideMimeType("application/json");
 
-	        xobj.open('GET', 'widgets/LocalLayer/nationalmetadata.json', true); 
+	        xobj.open('GET', 'widgets/SimpleSearchFilter/nationalmetadata.json', true); 
 	
 	        xobj.onreadystatechange = function () {
                 if (xobj.readyState == 4 && xobj.status == "200") {
@@ -1362,13 +1394,580 @@ define([
 				onComplete: _addSelectableLayerSorted
 				});
 	};
+	//code copied from LocalLayer widget
+	   var loadBookmarkExtent = function(callback) {
+            var xobj = new XMLHttpRequest();
+            xobj.overrideMimeType("application/json");
+            xobj.open('GET', 'configs/eBookmark/config_Enhanced Bookmark.json', true);
+            xobj.onreadystatechange = function() {
+                if (xobj.readyState == 4 && xobj.status == "200") {
+                    callback(xobj.responseText);
+                }
+            };
+            xobj.send(null);
+       };
+	   var loadSymbologyConfig = function(callback) {
+        var xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+        if (window.communitySelected != window.strAllCommunity) {
+            xobj.open('GET', 'configs/CommunitySymbology/' + window.communitySelected + '_JSON_Symbol/Nulls/' + window.communitySelected + '_' + Attribute + ".json", true);
+        } else {
+            xobj.open('GET', 'configs/CommunitySymbology/' + 'AllCommunities' + '_JSON_Symbol/Nulls/' + 'CombComm' + '_' + Attribute + ".json", true);
+        }
+        xobj.onreadystatechange = function() {
+            if (xobj.readyState == 4 && xobj.status == "200") {
+                callback(xobj.responseText);
+            }
+        };
+        xobj.send(null);
+    };
+    var sleep = function(ms) {
+        var unixtime_ms = new Date().getTime();
+        while (new Date().getTime() < unixtime_ms + ms) {
+        }
+    }
+    var showDisplayLayerAddFailureWidget = function(layerName) {
+
+        var widgetName = 'DisplayLayerAddFailure';
+        var widgets = selfSimpleSearchFilter.appConfig.getConfigElementsByName(widgetName);
+        var pm = PanelManager.getInstance();
+        pm.showPanel(widgets[0]);
+        selfSimpleSearchFilter.publishData({
+            message : layerName
+        });
+    };
+
+    //Function also used in PeopleBuiltSpaces/widget.js, ensure that edits are synchronized
+
+    var getTextContent = function(graphic) {
+        var commName = graphic.attributes.CommST;
+        currentCommunity = commName;
+        return "<b>" + window.communityDic[commName] + "</b><br /><button id = 'testButton2' dojoType='dijit.form.Button' onclick='selfSimpleSearchFilter.selectCurrentCommunity() '>Select this community</button>";
+    };
+
+    var addCommunityBoundaries = function() {
+        var lyrBoundaryPoint = this._viewerMap.getLayer(window.idCommuBoundaryPoint);
+        if (lyrBoundaryPoint == null) {
+            var popupsTemplate = {}
+            var locationTemplate = new InfoTemplate();
+            locationTemplate.setTitle("EnviroAtlas Community Location");
+            locationTemplate.setContent(getTextContent);
+            var boundaryTemplate = new InfoTemplate();
+            boundaryTemplate.setTitle("EnviroAtlas Community Boundary");
+            boundaryTemplate.setContent(getTextContent);
+            popupsTemplate[0] = {
+                infoTemplate : locationTemplate
+            };
+            //popupsTemplate[1] = {
+            //  infoTemplate : boundaryTemplate
+            //};
+            popupsTemplate[1] = null;
+            var communityLocationLayer = new ArcGISDynamicMapServiceLayer(communityBoundaryLayer);
+            communityLocationLayer._titleForLegend = "EnviroAtlas Community Boundaries";
+            communityLocationLayer.title = "EnviroAtlas Community Boundaries";
+            communityLocationLayer.noservicename = true;
+            communityLocationLayer.setInfoTemplates(popupsTemplate);
+
+            communityLocationLayer.id = window.layerIdBndrPrefix + communityBoundaryLayerID;
+            window.dynamicLayerNumber.push(communityBoundaryLayerID);
+            window.idCommuBoundaryPoint = communityLocationLayer.id;
+            chkboxId = window.chkSelectableLayer + communityBoundaryLayerID;
+            if (dojo.byId(chkboxId)) {
+                dojo.byId(chkboxId).checked = true;
+            }
+            selfSimpleSearchFilter.map.addLayer(communityLocationLayer);
+        }
+
+    }
+	   var _addSelectedLayers = function(layersTobeAdded, selectedLayerNum) {
+        var index,
+            len;
+        var selectedLayerArray = selectedLayerNum.split(",");
+        for (i in selectedLayerArray) {
+            for ( index = 0,
+            len = layersTobeAdded.length; index < len; ++index) {
+                layer = layersTobeAdded[index];
+                if (layer.hasOwnProperty('eaID') && ((selectedLayerArray[i]) == (layer.eaID.toString()))) {
+                    var bNeedToBeAdded = true;
+                    var lLayer;
+                    var lOptions = {};
+                    if (layer.hasOwnProperty('opacity')) {
+                        lOptions.opacity = layer.opacity;
+                        // 1.0 has no transparency; 0.0 is 100% transparent
+                    }
+                    /*if (layer.hasOwnProperty('visible') && !layer.visible) {
+                        lOptions.visible = false;
+                    } else {
+                        lOptions.visible = true;
+                    }*/
+                    lOptions.visible = true;
+                    if (layer.name) {
+                        lOptions.id = layer.name;
+                    }
+                    if (layer.hasOwnProperty('hidelayers')) {
+                        if (layer.hidelayers) {
+                            lOptions.hidelayers = [];
+                            lOptions.hidelayers = layer.hidelayers.split(',');
+                        }
+                    }
+                    if (layer.hasOwnProperty('drawSelectLayer')) {
+                        if (layer.drawSelectLayer) {
+                            lOptions.visiblelayers = layer.drawSelectLayer.map(Number);                            
+                        }
+                    }                   
+                    if (layer.hasOwnProperty('minScale')) {
+                        lOptions.minScale = layer.minScale
+                    }
+                    if (layer.hasOwnProperty('maxScale')) {
+                        lOptions.maxScale = layer.maxScale
+                    }
+                    if (layer.type.toUpperCase() === 'DYNAMIC') {
+                        window.dynamicLayerNumber.push(layer.eaID);
+                        if (layer.imageformat) {
+                            var ip = new ImageParameters();
+                            ip.format = layer.imageformat;
+                            if (layer.hasOwnProperty('imagedpi')) {
+                                ip.dpi = layer.imagedpi;
+                            }
+                            lOptions.imageParameters = ip;
+                        }
+                        lLayer = new ArcGISDynamicMapServiceLayer(layer.url, lOptions);     
+                        
+                        if (layer.hasOwnProperty('definitionQueries')) {
+                            var definitionQueries = JSON.parse(layer.definitionQueries)
+                            var layerDefinitions = []
+                            for (var prop in definitionQueries) {
+                                layerDefinitions[prop] = definitionQueries[prop];
+                            }
+                            lLayer.setLayerDefinitions(layerDefinitions);
+                        }
+                        if (layer.name) {
+                            lLayer._titleForLegend = layer.name;
+                            lLayer.title = layer.name;
+                            window.hashTitleToEAID[layer.name] = layer.eaID;
+                            lLayer.noservicename = true;
+                        }
+                        var popupConfig = jimuUtils.getPopups(layer);
+                        lLayer.setInfoTemplates(popupConfig);
+
+                        if (layer.hasOwnProperty('autorefresh')) {
+                            lLayer.refreshInterval = layer.autorefresh;
+
+                        }
+                        if (layer.disableclientcaching) {
+                            lLayer.setDisableClientCaching(true);
+                        }
+                        lLayer.on('error', function(evt) {
+                            console.log(evt);
+                        })                      
+
+                        lLayer.on('load', function(evt) {
+                            if (layer.flyPopups) {
+                                var _infoTemps = []
+                                evt.layer.layerInfos.forEach(function(layer) {
+                                    _infoTemps.push({
+                                        infoTemplate : new PopupTemplate({
+                                            title : layer.name,
+                                            fieldInfos : [{
+                                                fieldName : "*",
+                                                visible : true,
+                                                label : "*"
+                                            }]
+                                        })
+                                    })
+                                })
+                                evt.layer.setInfoTemplates(_infoTemps)
+                            }
+                            //set min/max scales if present
+                            if (lOptions.minScale) {
+                                evt.layer.setMinScale(lOptions.minScale)
+                            }
+                            if (lOptions.maxScale) {
+                                evt.layer.setMaxScale(lOptions.maxScale)
+                            }
+
+
+                            if (!lOptions.hasOwnProperty('hidelayers')) {
+                                lOptions.hidelayers = []
+                            }
+                            var removeLayers = []
+                            for (var i = 0; i < lOptions.hidelayers.length; i++) {
+                                lOptions.hidelayers[i] = parseInt(lOptions.hidelayers[i])
+                            }
+                            var showLayers = []
+                            array.forEach(evt.layer.layerInfos, function(layer) {
+                                showLayers.push(layer.id)
+                            })
+                            array.forEach(lOptions.hidelayers, function(id) {
+                                showLayers.splice(showLayers.indexOf(id), 1)
+                            })
+                            lOptions.hidelayers = showLayers
+                            var getArrayItemById = function(_array, _id) {
+                                var _matchItem;
+                                array.some(_array, function(_arrayItem) {
+                                    if (_arrayItem.id == _id) {
+                                        _matchItem = _arrayItem;
+                                        return true;
+                                    }
+                                })
+                                return _matchItem;
+                            }
+                            array.forEach(evt.layer.layerInfos, function(layer) {
+                                layer.defaultVisibility = false;
+                            })
+                            for (var i = 0; i < lOptions.hidelayers.length; i++) {
+                                getArrayItemById(evt.layer.layerInfos, lOptions.hidelayers[i]).defaultVisibility = true;
+                            }
+                            array.forEach(evt.layer.layerInfos, function(layer) {
+                                if (layer.subLayerIds) {
+                                    if (removeLayers.indexOf(layer.id) == -1) {
+                                        removeLayers.push(layer.id)
+                                    };
+                                }
+                            })
+                            for (var i = 0; i < lOptions.hidelayers.length; i++) {
+                                var j = getArrayItemById(evt.layer.layerInfos, lOptions.hidelayers[i]).parentLayerId
+                                while (j > -1) {
+                                    if (lOptions.hidelayers.indexOf(j) == -1) {
+                                        if (removeLayers.indexOf(lOptions.hidelayers[i]) == -1) {
+                                            removeLayers.push(lOptions.hidelayers[i])
+                                        }
+                                    }
+                                    j = getArrayItemById(evt.layer.layerInfos, j).parentLayerId;
+                                }
+                            }
+                            array.forEach(removeLayers, function(layerId) {
+                                if (lOptions.hidelayers.indexOf(layerId) > -1) {
+                                    lOptions.hidelayers.splice(lOptions.hidelayers.indexOf(layerId), 1)
+                                };
+                            })
+                            if (lOptions.hidelayers.length == 0) {
+                                lOptions.hidelayers.push(-1);
+                                lOptions.hidelayers.push(-1);
+                                lOptions.hidelayers.push(-1);
+                            }
+
+                            //evt.layer.setVisibleLayers(lOptions.hidelayers);
+                            if (lOptions.visiblelayers) {
+                                evt.layer.setVisibleLayers([-1],true);
+                                setTimeout(lang.hitch(this, function() {
+                                    evt.layer.setVisibleLayers(lOptions.visiblelayers,true);
+                                    //evt.layer.setVisibleLayers([12],true);
+                                }), 2000);
+                            }
+                            if (layer.hasOwnProperty('hideInLegends')) {
+                                var hideLegends = JSON.parse(layer.hideInLegends)
+                                var finalLegends = []
+                                for (var prop in hideLegends) {
+                                    array.forEach(evt.layer.layerInfos, lang.hitch(this, function(layerInfo) {
+                                        if (layerInfo.id == parseInt(prop)) {
+                                            layerInfo.showLegend = !hideLegends[prop]
+                                        }
+                                    }))
+                                }
+                            }
+                            lLayer.layers = evt.layer.layerInfos
+                        });
+
+                        this._viewerMap.setInfoWindowOnClick(true);
+                    } else if (layer.type.toUpperCase() === 'IMAGE') {
+                        window.imageLayerNumber.push(layer.eaID);
+                        lOptions.imageServiceParameters = new ImageServiceParameters();
+                        var _popupTemplate;
+                        if (layer.popup) {
+                            _popupTemplate = new PopupTemplate(layer.popup);
+                            lOptions.infoTemplate = _popupTemplate;
+                        }
+                        lLayer = new ArcGISImageServiceLayer(layer.url, lOptions)
+                        if (layer.hasOwnProperty('hideInLegend')) {
+                            lLayer.showLegend = !layer.hideInLegend
+                        }
+                        if (layer.name) {
+                            lLayer._titleForLegend = layer.name;
+                            lLayer.title = layer.name;
+                            window.hashTitleToEAID[layer.name] = layer.eaID;
+                            lLayer.noservicename = true;
+                        }
+                        lLayer.on('load', function(evt) {
+                            if (lOptions.minScale) {
+                                evt.layer.setMinScale(lOptions.minScale)
+                            }
+                            if (lOptions.maxScale) {
+                                evt.layer.setMaxScale(lOptions.maxScale)
+                            }
+                            evt.layer.name = lOptions.id;
+                        });
+                        //_layersToAdd.push(lLayer);
+                    } else if (layer.type.toUpperCase() === 'WEBTILEDLAYER') {
+                        if (layer.hasOwnProperty('subdomains')) {
+                            lOptions.subDomains = layer.subdomains;
+                        }
+                        if (layer.hasOwnProperty('autorefresh')) {
+                            lOptions.refreshInterval = layer.autorefresh;
+                        }
+                        if (layer.hasOwnProperty('opacity')) {
+                            lOptions.opacity = layer.opacity;
+                        }
+                        lLayer = new WebTiledLayer(layer.url, lOptions)
+                        lLayer.on('load', function(evt) {
+                            if (lOptions.minScale) {
+                                evt.layer.setMinScale(lOptions.minScale)
+                            }
+                            if (lOptions.maxScale) {
+                                evt.layer.setMaxScale(lOptions.maxScale)
+                            }
+                            evt.layer.name = lOptions.id;
+                        });
+                        _layersToAdd.push(lLayer);
+                    } else if (layer.type.toUpperCase() === 'WEBTILEDBASEMAP') {
+                        lOptions.type = "WebTiledLayer"
+                        lOptions.url = layer.url
+                        if (layer.hasOwnProperty('subdomains')) {
+                            lOptions.subDomains = layer.subdomains;
+                        }
+                        if (layer.hasOwnProperty('autorefresh')) {
+                            lOptions.refreshInterval = layer.autorefresh;
+                        }
+                        if (layer.hasOwnProperty('opacity')) {
+                            lOptions.opacity = layer.opacity;
+                        }
+                        if (layer.hasOwnProperty('copyright')) {
+                            lOptions.copyright = layer.copyright;
+                        }
+                        var _newBasemap = new Basemap({
+                            id : 'defaultBasemap',
+                            title : layer.name,
+                            layers : [new BasemapLayer(lOptions)]
+                        });
+                        var _basemapGallery = new BasemapGallery({
+                            showArcGISBasemaps : false,
+                            map : this._viewerMap
+                        }, '_tmpBasemapGallery');
+                        _basemapGallery.add(_newBasemap);
+                        _basemapGallery.select('defaultBasemap');
+                        _basemapGallery.destroy();
+                    } else if (layer.type.toUpperCase() === 'FEATURE') {
+                        window.featureLyrNumber.push(layer.eaID);
+                        bPopup = true;
+                        var _popupTemplate;
+                        if (layer.popup) {
+                            window.hashPopup[layer.eaID] = layer.popup;
+                            if (layer.popup.fieldInfos) {
+                                fieldInfos = layer.popup.fieldInfos;
+                                if (fieldInfos[0].hasOwnProperty('fieldName')) {
+                                    if (fieldInfos[0].fieldName == null) {
+                                        bPopup = false;
+                                    } else {
+                                        Attribute = fieldInfos[0].fieldName;
+                                        hashAttribute[layer.eaID.toString()] = Attribute;
+                                    }
+                                } else {
+                                    bPopup = false;
+                                }
+                            } else {
+                                bPopup = false;
+                            }
+                            if (bPopup) {
+                                _popupTemplate = new PopupTemplate(layer.popup);
+                                //lOptions.infoTemplate = _popupTemplate;
+                            } else {
+                                console.log("layer.eaID: " + +layer.eaID.toString() + " with no popup info defined");
+                            }
+                        }
+                        if (layer.hasOwnProperty('mode')) {
+                            var lmode;
+                            if (layer.mode === 'ondemand') {
+                                lmode = 1;
+                            } else if (layer.mode === 'snapshot') {
+                                lmode = 0;
+                            } else if (layer.mode === 'selection') {
+                                lmode = 2;
+                            }
+                            lOptions.mode = lmode;
+                        }
+                        lOptions.outFields = ['*'];
+                        if (layer.hasOwnProperty('autorefresh')) {
+                            lOptions.refreshInterval = layer.autorefresh;
+                        }
+                        if (layer.hasOwnProperty('showLabels')) {
+                            lOptions.showLabels = true;
+                        }
+
+                        if (bPopup) {
+                            if (layer.hasOwnProperty('eaLyrNum')) {
+                                lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
+                                window.hashURL[layer.eaID] = layer.url + "/" + layer.eaLyrNum.toString();
+                            } else {
+                                lLayer = new FeatureLayer(layer.url, lOptions);
+                            }
+                            lLayer.minScale = 1155581.108577;
+                            //LayerInfos.getInstanceSync()._tables.push(lLayer);
+                        }
+
+                        if (bNeedToBeAdded) {
+                            if (layer.tileLink == "yes") {
+                                var tileLinkAdjusted = "";
+                                if (layer.tileURL.slice(-1) == "/") {
+                                    tileLinkAdjusted = layer.tileURL;
+                                } else {
+                                    tileLinkAdjusted = layer.tileURL + "/";
+                                }
+                                window.hashIDtoTileURL[layer.eaID.toString()] = tileLinkAdjusted;
+                                if (tileLinkAdjusted.slice(-11)=="_alllayers/"){
+                                    jimuUtils.initTileLayer(tileLinkAdjusted, window.layerIdTiledPrefix + layer.eaID.toString());
+                                    this._viewerMap.addLayer(new myTiledMapServiceLayer());
+                                    lyrTiled = this._viewerMap.getLayer(window.layerIdTiledPrefix + layer.eaID.toString());
+                                    //bji need to be modified to accomodate tile.
+                                    if (lyrTiled) {
+                                        lyrTiled.setOpacity(layer.opacity);
+                                    }
+                                }
+                                else{
+                                    lOptions.id = window.layerIdTiledPrefix + layer.eaID.toString();
+                                    this._viewerMap.addLayer(new ArcGISTiledMapServiceLayer(layer.tileURL, lOptions));
+                                }
+                            } else if (layer.eaScale == "COMMUNITY") {
+                                loadSymbologyConfig(function(response) {
+                                    var classBreakInfo = JSON.parse(response);
+                                    var renderer = new ClassBreaksRenderer(classBreakInfo);
+                                    lLayer.setRenderer(renderer);
+                                });
+                            }
+                        }
+                    } else if (layer.type.toUpperCase() === 'TILED') {
+                        window.tiledLayerNumber.push(layer.eaID);
+                        if (layer.displayLevels) {
+                            lOptions.displayLevels = layer.displayLevels;
+                        }
+                        if (layer.hasOwnProperty('autorefresh')) {
+                            lOptions.refreshInterval = layer.autorefresh;
+                        }
+                        lLayer = new ArcGISTiledMapServiceLayer(layer.url, lOptions);
+
+                        var popupConfig = jimuUtils.getPopups(layer);
+                        lLayer.setInfoTemplates(popupConfig);
+
+                    } else if (layer.type.toUpperCase() === "WMS") {          
+
+                        lLayer = new WMSLayer(layer.url, {
+                            format: "png",
+                        });
+
+                    } 
+                    //All layer types:
+                    if (bNeedToBeAdded) {
+                        dojo.connect(lLayer, "onError", function(error) {
+                            if ((!(lLayer.title in window.faildedEALayerDictionary)) && (!(lLayer.title in window.successLayerDictionary))) {
+                                window.faildedEALayerDictionary[lLayer.title] = lLayer.title;
+                                showDisplayLayerAddFailureWidget(lLayer.title);
+                            }
+                        });
+
+                        dojo.connect(lLayer, "onLoad", function(error) {
+                            //selfLocalLayer.publishData({
+                            //    message : "AllLoaded"
+                            //});
+                            if (!(lLayer.title in window.successLayerDictionary)) {
+                                window.successLayerDictionary[lLayer.title] = lLayer.title;
+                            }
+                        });
+
+                        if (layer.name) {
+                            lLayer._titleForLegend = layer.name;
+                            lLayer.title = layer.name;
+                            window.hashTitleToEAID[layer.name] = layer.eaID;
+                            lLayer.noservicename = true;
+                        }
+                        lLayer.on('load', function(evt) {
+                            evt.layer.name = lOptions.id;
+                            if (evt.layer.id == window.layerIdPrefix + communityBoundaryLayerID) {
+                                setTimeout(function () {
+                                    var popupsTemplate = {};
+                                    var locationTemplate = new InfoTemplate();
+                                    locationTemplate.setTitle("EnviroAtlas Community Location");
+                                    locationTemplate.setContent(getTextContent);
+                                    var boundaryTemplate = new InfoTemplate();
+                                    boundaryTemplate.setTitle("EnviroAtlas Community Boundary");
+                                    boundaryTemplate.setContent(getTextContent);
+                                    popupsTemplate[0] = {
+                                        infoTemplate : locationTemplate
+                                    };
+        
+                                    popupsTemplate[1] = null;
+                                    evt.layer._titleForLegend = "EnviroAtlas Community Boundaries";
+                                    evt.layer.title = "EnviroAtlas Community Boundaries";
+                                    evt.layer.noservicename = true;
+                                    evt.layer.setInfoTemplates(popupsTemplate);       
+                                }, 1000)                      
+                            }
+                        });
+
+                        lLayer.id = window.layerIdPrefix + layer.eaID.toString();
+
+                        this._viewerMap.addLayer(lLayer);
+                        if (layer.hasOwnProperty('eaScale')) {
+                            lLayer.eaScale = layer.eaScale;
+                            if (layer.eaScale == "COMMUNITY") {
+                                //lLayer.setVisibility(false);
+                                lLayer.setVisibility(true);
+                                //turn off the layer when first added to map and let user to turn on
+                                window.communityLayerNumber.push(layer.eaID.toString());
+                                setTimeout(function () {
+                                    _addSelectedLayers(layersTobeAdded, communityBoundaryLayerID);
+                                 }, 2000)
+                            } else {//National
+                                //lLayer.setVisibility(false);
+                                lLayer.setVisibility(true);
+                                window.nationalLayerNumber.push(layer.eaID.toString());
+                            }
+                        }
+                    }//end of if(bNeedToBeAdded)
+                }
+            }
+        }
+    };
+    var _removeSelectedLayers = function(selectedLayerNum) {
+        var bNeedToBeAdded = false;
+        var stringArray = selectedLayerNum.split(",");
+
+        for (i in stringArray) {
+            lyr = this._viewerMap.getLayer(window.layerIdPrefix + stringArray[i]);
+            if (lyr) {
+                this._viewerMap.removeLayer(lyr);
+            }
+            lyrTiled = this._viewerMap.getLayer(window.layerIdTiledPrefix + stringArray[i]);
+            if (lyrTiled) {
+                this._viewerMap.removeLayer(lyrTiled);
+            }
+        }
+
+    };
+    //end of code copied from LocalLayer widget
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
         baseClass: 'jimu-widget-simplesearchfilter',
+        selectCurrentCommunity : function() {
+
+            window.communitySelected = currentCommunity;
+            selfSimpleSearchFilter.publishData({
+                message : "updateCommunityLayers"
+            });
+            selfSimpleSearchFilter._onUpdateCommunityLayers();
+
+            var nExtent;
+            if (window.communitySelected != window.strAllCommunity) {
+                commnunityWholeName = window.communityDic[window.communitySelected];
+                extentForCommunity = window.communityExtentDic[window.communityDic[window.communitySelected]];
+                nExtent = Extent(extentForCommunity);
+
+            }
+            this.map.setExtent(nExtent);
+            this.map.infoWindow.hide();
+        },
 		onReceiveData: function(name, widgetId, data, historyData) {
 			if (((name == 'AddData')||(name == 'AddWebMapData'))&&(data.message == "openFailedLayer")){
 				this._onOpenFailedLayerClick();
 			   } 	
-			if (((name == 'LocalLayer')||(name == 'PeopleAndBuildSpaces')||(name == 'SelectCommunity')||(name == 'AddWebMapData'))&&(data.message == "updateCommunityLayers")){
+			if (((name == 'SelectCommunity')||(name == 'AddWebMapData'))&&(data.message == "updateCommunityLayers")){
 				this._onUpdateCommunityLayers();
 			}	
 			if (((name == 'ElevationProfile')||(name == 'Raindrop')||(name == 'HucNavigation'))&&(data.message == "mapClickForPopup")){
@@ -1707,6 +2306,37 @@ define([
       startup: function() {
 
         this.inherited(arguments);
+        loadBookmarkExtent(function(response) {
+                var bookmarkClassified = JSON.parse(response);
+
+                for ( index = 0,
+                len = bookmarkClassified.bookmarks.length; index < len; ++index) {
+                    currentBookmarkClass = bookmarkClassified.bookmarks[index];
+                    if (currentBookmarkClass.name == "Community") {
+                        bookmarkCommunity = currentBookmarkClass.items;
+                        for ( indexCommunity = 0,
+                        lenCommunity = bookmarkCommunity.length; indexCommunity < lenCommunity; ++indexCommunity) {
+                            var currentExtent = bookmarkCommunity[indexCommunity].extent;
+                            window.communityExtentDic[bookmarkCommunity[indexCommunity].name] = currentExtent;
+
+                            spatialReference = currentExtent.spatialReference;
+                            if (minXCombinedExtent > currentExtent.xmin) {
+                                minXCombinedExtent = currentExtent.xmin;
+                            }
+                            if (minYCombinedExtent > currentExtent.ymin) {
+                                minYCombinedExtent = currentExtent.ymin;
+                            }
+                            if (maxXCombinedExtent < currentExtent.xmax) {
+                                maxXCombinedExtent = currentExtent.xmax;
+                            }
+                            if (maxYCombinedExtent < currentExtent.ymax) {
+                                maxYCombinedExtent = currentExtent.ymax;
+                            }
+
+                        }
+                    }
+                }
+            });
 	    this.fetchDataByName('SelectCommunity');	
 	     
 	    this.displayCategorySelection("ESB");
@@ -1717,6 +2347,7 @@ define([
 		this.displayResizeButton();	
 		this.displayDragButton();
 		this.displayCloseButton();
+		var testConfig =  this.config_layer;
 	
 
 
@@ -1778,7 +2409,7 @@ define([
             }
            
             
-            var localLayerConfig = JSON.parse(response);
+            localLayerConfig = JSON.parse(response);
             var arrLayers = localLayerConfig.layers.layer;
             console.log("arrLayers.length:" + arrLayers.length);
 			///search items
@@ -1997,9 +2628,8 @@ define([
 
                     
 	    _onSingleLayerClick: function() {
-		    this.publishData({
-		        message: singleLayerToBeAddedRemoved
-		    });
+	        _addSelectedLayers(localLayerConfig.layers.layer, singleLayerToBeAddedRemoved.substring(2));
+
 		},
 	    _onViewActiveLayersClick: function() {
 

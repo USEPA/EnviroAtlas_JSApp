@@ -81,6 +81,7 @@ define([
     window.chkSelectableLayer = "ck";
     window.layerTitlePrefix = "layerTitle_";
     window.idCommuBoundaryPoint = "Boundary_Point";
+    window.PanelId = "";
     window.timeSeriesDisclaim = false;
     
     window.filterForSelectOpened = false;

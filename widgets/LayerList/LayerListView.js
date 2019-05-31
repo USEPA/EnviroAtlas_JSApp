@@ -37,18 +37,7 @@ define([
   CheckBox, PanelManager, DropMenu, LoadingShelter, PopupMenu, _TemplatedMixin, template,
   domAttr, domClass, domStyle, NlsStrings) {
   	var received = "";
-  	var loadJSON = function(callback){   
 
-        var xobj = new XMLHttpRequest();
-        xobj.overrideMimeType("application/json");
-        xobj.open('GET', 'widgets/LocalLayer/config.json', true); 
-        xobj.onreadystatechange = function () {
-              if (xobj.readyState == 4 && xobj.status == "200") {
-                callback(xobj.responseText);
-              }
-        };
-        xobj.send(null);  
-    };
   return declare([_WidgetBase, _TemplatedMixin], {
     templateString: template,
     _currentSelectedLayerRowNode: null,
@@ -107,7 +96,7 @@ define([
     drawListNode: function(layerInfo, level, toTableNode, position) {
       var nodeAndSubNode, showLegendDiv;
       if(this.isLayerHiddenInWidget(layerInfo) || !this.layerFilter.isValidLayerInfo(layerInfo)) {
-          alert("do nothing;");
+          //alert("do nothing;");
         return;
       }
       nodeAndSubNode = this._layerDomNodeStorage[layerInfo.getObjectId()];

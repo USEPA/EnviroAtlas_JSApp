@@ -847,6 +847,21 @@
   display: none;
 }
 
+.jimu-widget-layerList .layers-section .openLegend-button{
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  top: -2px;
+  right: 47px;
+  border:0;
+  background-image: url("../images/open_legend_noHover.png");
+  background-repeat: no-repeat;
+}
+.jimu-widget-layerList .layers-section .openLegend-button:hover{
+  background-image: url("../images/open_legend.png");
+  border:0;
+}
+
 .jimu-widget-layerList .layer-filter .cancel-button{
   width: 69px;
   height: 30px;

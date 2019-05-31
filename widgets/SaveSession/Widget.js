@@ -142,21 +142,8 @@ define(['dojo/_base/declare',
             onOpen: function () {
                 console.log('SaveSession :: onOpen');
                 
-                pbsWidgetId = 'widgets_PeopleAndBuildSpaces_Widget';
-                boundaryWidgetId = 'widgets_BoundaryLayer_Widget';
-                simpleSearchFilterId = 'widgets_SimpleSearchFilter_Widget_37';
 
-              	this.openWidgetById(pbsWidgetId);
-              	this.openWidgetById(boundaryWidgetId);
-              	
- 				//document.getElementById(boundaryWidgetId).onclick = function() {
-			    //    document.getElementById("resizeButton").click();
-			    //    document.getElementById("resizeButton").click();  
-				//}; 
- 				//document.getElementById(simpleSearchFilterId).onclick = function() {
-			    //    document.getElementById("resizeButton").click();
-			    //    document.getElementById("resizeButton").click();  
-				//}; 
+                simpleSearchFilterId = 'widgets_SimpleSearchFilter_Widget_37';
 								
               	var widgets = this.appConfig.getConfigElementsByName("AddData");
 		        var pm = PanelManager.getInstance();		
@@ -168,7 +155,7 @@ define(['dojo/_base/declare',
  	
             },
             onReceiveData: function (name, widgetId, data, historyData) {
-                if ((name == 'LocalLayer') ) {
+                if ((name == 'SimpleSearchFilter') ) {
                    this.setLayersVisibilityOpacity(sessionLoaded.layers);
                 }
             },
@@ -663,16 +650,6 @@ define(['dojo/_base/declare',
 
                 if (sessionToLoad.chkLayerInSearchFilter) {
                 	this.setChkLayerInSearchFilter(sessionToLoad);
-                }
-				//
-                if (sessionToLoad.toggleButtonPBSTopics) {
-                	//this.openWidgetById('widgets_PeopleAndBuildSpaces_Widget');
-                	this.setToggleButtonPBSTopics(sessionToLoad.toggleButtonPBSTopics);
-                }
-
-                if (sessionToLoad.chkLayerInPBS) {
-                	//this.openWidgetById('widgets_PeopleAndBuildSpaces_Widget');
-                	this.setChkLayerInPBS(sessionToLoad.chkLayerInPBS);
                 }
 
                 if (sessionToLoad.chkLayerInBoundary) {

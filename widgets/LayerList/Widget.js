@@ -16,6 +16,7 @@
 
 define([
     'jimu/BaseWidget',
+    'jimu/PanelManager',
     'dojo/_base/declare',
     'dojo/_base/lang',
     'dojo/_base/array',
@@ -23,13 +24,13 @@ define([
     'dojo/dom',
     'dojo/on',
     'dojo/query',
-    'dijit/registry',
+    'dijit/registry',    
     './LayerListView',
     './LayerFilter',
     './NlsStrings',
     'jimu/LayerInfos/LayerInfos'
   ],
-  function(BaseWidget, declare, lang, array, html, dom, on,
+  function(BaseWidget, PanelManager, declare, lang, array, html, dom, on,
   query, registry, LayerListView, LayerFilter, NlsStrings, LayerInfos) {
 
     var clazz = declare([BaseWidget], {
@@ -57,8 +58,22 @@ define([
 
       startup: function() {
         this.inherited(arguments);
+        var thisLayerList = this;
 
         this._createLayerFilter();
+        var openLegendDiv = document.getElementById("openLegendDiv");
+        var butOpenLegend = dojo.create('input', {
+            "type": "button",
+            'class': 'openLegend-button',
+            "id": "button_"+"openLegend" //SubLayerIds is the widgetID in this case
+        }, openLegendDiv);
+        butOpenLegend.addEventListener('click', function(evt) {                          
+            var widgetName = 'Legend';
+            var widgets = thisLayerList.appConfig.getConfigElementsByName(widgetName);
+            var pm = PanelManager.getInstance();
+            pm.showPanel(widgets[0]);                        
+        })
+                    
 
         NlsStrings.value = this.nls;
         this._denyLayerInfosReorderResponseOneTime = false;
@@ -438,8 +453,6 @@ define([
 		});  */
 		//remove all layers searchable from widget SimpleSearchFilter
     	for (i in window.allLayerNumber) {    		
-		    pbsWidgetId = 'widgets_PeopleAndBuildSpaces_Widget';
-            boundaryWidgetId = 'widgets_BoundaryLayer_Widget';
             simpleSearchFilterId = 'widgets_SimpleSearchFilter_Widget_37';
     		lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
 			if(lyr != null){
@@ -451,18 +464,7 @@ define([
 			if(lyr != null){
             	this.map.removeLayer(lyr);
           	}          	
-    		lyr = this.map.getLayer(window.layerIdPBSPrefix + window.allLayerNumber[i]);
-			if(lyr != null){
-				this.openWidgetById(pbsWidgetId);
-            	this.map.removeLayer(lyr);
-            	this.uncheckRelatedCheckbox(window.allLayerNumber[i]);
-          	}     
-          	lyr = this.map.getLayer(window.layerIdBndrPrefix + window.allLayerNumber[i]);
-			if(lyr != null){
-				this.openWidgetById(boundaryWidgetId);
-            	this.map.removeLayer(lyr);
-            	this.uncheckRelatedCheckbox(window.allLayerNumber[i]);
-          	}         	
+       	
         } 
        
         //remove all layers added from portal, webmapdata and upload data

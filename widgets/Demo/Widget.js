@@ -59,22 +59,38 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
 
 
     _startTour: function(){
-
+       var overlayElement = document.getElementById("overlay");
+       if (overlayElement!=null){
+            var overlay1 = dojo.create('div', {
+              "class": "overlay",
+              "id": "overlay"
+            }, dojo.byId('main-page'));
+       }
         
-        var overlay1 = dojo.create('div', {
-          "class": "overlay",
-          "id": "overlay"
-        }, dojo.byId('main-page'));
 
-        var overlay2 = dojo.create('div', {
-          "class": "overlay2",
-          "id": "overlay2"
-        }, dojo.byId('main-page'));
+       var overlay2Element = document.getElementById("overlay");
+       if (overlay2Element!=null){
+            var overlay2 = dojo.create('div', {
+              "class": "overlay2",
+              "id": "overlay2"
+            }, dojo.byId('main-page'));
+       }
 
         //Close the tour main widget
         PanelManager.getInstance().closePanel(this.id + "_panel");
-        
-        stop = 0;
+        console.log(window.PanelId.toUpperCase());
+
+        numberStops = helpTour.length;
+        for (i=0; i<numberStops; i++) {
+            var widgetName = helpTour[i].widgetName;
+            if (widgetName!=null){
+                if (window.PanelId.toUpperCase().indexOf(widgetName.toUpperCase()) >= 0) {
+                    stop = i;
+                }               
+            }            
+        }  
+              
+        //stop = 0;
         this._nextStop(stop);
        
     },

@@ -3793,6 +3793,7 @@ html.hr .jimu-filter .allExpsBox > div{
   flex-grow: 0;
   display: flex;
 }
+.jimu-on-screen-widget-panel>.jimu-panel-title>.btns-container>.help-btn,
 .jimu-on-screen-widget-panel>.jimu-panel-title>.btns-container>.close-btn,
 .jimu-on-screen-widget-panel>.jimu-panel-title>.btns-container>.foldable-btn,
 .jimu-on-screen-widget-panel>.jimu-panel-title>.btns-container>.max-btn{
@@ -3802,6 +3803,9 @@ html.hr .jimu-filter .allExpsBox > div{
   opacity: 1;
   cursor: pointer;
   margin: 0 !important;
+}
+.jimu-on-screen-widget-panel>.jimu-panel-title>.btns-container>.help-btn{
+  background: url(images/help_icon.png) no-repeat center center;
 }
 .jimu-on-screen-widget-panel>.jimu-panel-title>.btns-container>.close-btn{
   background: url(images/white_close_default.png) no-repeat center center;
@@ -5135,6 +5139,9 @@ html.hr .jimu-filter .allExpsBox > div{
 }
 .icon-close:before {
   content: '\e908';
+}
+.icon-help {
+  background: url("images/help_icon.png") no-repeat;
 }
 .icon-copy-attributes:before {
   content: '\e909';
@@ -6528,7 +6535,7 @@ html.hr .jimu-filter .allExpsBox > div{
   bottom:0;
   height:100%;
   width:100%;
-  z-index:110;
+  z-index:-1 !important;
   background: no-repeat center center;
   font-size:14px;
   line-height:20px;

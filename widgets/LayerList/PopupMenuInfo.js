@@ -194,21 +194,11 @@ define([
         var eaID = layerId.replace(window.layerIdPrefix, "").replace(window.layerIdPBSPrefix, "").replace(window.layerIdBndrPrefix, "");
         var arrXmlPath = [];
         if ((layerId.indexOf(window.layerIdPrefix)) >= 0) {
-			arrXmlPath.push("widgets/LocalLayer/config.json");
+			arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");
 			getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, eaID, actionType);
-        }
-        else if ((layerId.indexOf(window.layerIdPBSPrefix)) >= 0) {
-       		arrXmlPath.push("widgets/PeopleAndBuildSpaces/config.json");
-       		getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, eaID, actionType);
-        } 
-        else if ((layerId.indexOf(window.layerIdBndrPrefix)) >= 0) {
-       		arrXmlPath.push("widgets/BoundaryLayer/config.json");
-       		getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, eaID, actionType);
-        } 
+        }        
         else {
-        	arrXmlPath.push("widgets/BoundaryLayer/config.json");
-        	arrXmlPath.push("widgets/LocalLayer/config.json");
-        	arrXmlPath.push("widgets/PeopleAndBuildSpaces/config.json");        	
+        	arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");  	
         	getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, clickedURL, actionType);
         }    	
     };
@@ -418,7 +408,13 @@ define([
           'key': 'setVisibilityRange',
           'denyType': 'disable'
         });
-      }
+      } else if (this._layerInfo.isRootLayer() && (this._layerInfo.getRootLayerInfo().layerObject.declaredClass === "esri.layers.ArcGISImageServiceLayer")){
+         dynamicDeniedItems.push({
+          'key': 'changeSymbology',
+          'denyType': 'hidden'
+        });         
+      }  //deny changeSymbology for ImageService
+      
 
       var loadInfoTemplateDef = this._layerInfo.loadInfoTemplate();
       var getSupportTableInfoDef = this._layerInfo.getSupportTableInfo();

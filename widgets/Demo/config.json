@@ -58,6 +58,7 @@
 		"orient": ["after"],
 		"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20"
 	}, {
+		"widgetName": "SelectCommunity",
 		"node":"widgets_CommunityDisplay_Widget_36",
 		"content": ["<h1>Community Selection Widget</h1>",
 					"<p>EnviroAtlas community data are developed from high resolution land cover (1 meter) and census data for featured urban areas in the U.S.</p>",
@@ -71,6 +72,7 @@
 		"orient": ["below","below-alt", "above", "above-alt"],
 		"highlight": "widgets_CommunityDisplay_Widget_36"
 	},{
+		"widgetName": "DrawerMapping",
 		"node":"dijit__WidgetBase_2",
 		"content": ["<h1>Mapping Tools</h1>",
 					"<ul>",
@@ -82,42 +84,47 @@
 		"orient": ["below","below-alt", "above", "above-alt"],
 		"highlight": "dijit__WidgetBase_2"
 	},{
-		"node":"dijit__WidgetBase_10",
+		"widgetName": "ECAT",
+		"node":"dijit__WidgetBase_9",
 		"content": ["<h1>EnviroAtlas Change Analysis Tool (ECAT)</h1>",
 					"<p>Use the ECAT tool to calculate projected climate change between two self-selected time periods.</p>",
 					"<div><img style='width:330px' src='widgets/Demo/images/ecat_img.jpg'></div>"],
 		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": "dijit__WidgetBase_10"
+		"highlight": "dijit__WidgetBase_9"
 	},{
-		"node":"dijit__WidgetBase_11",
+	  	"widgetName": "HucNavigation",
+		"node":"dijit__WidgetBase_10",
 		"content": ["<h1>HUC Navigation</h1>",
 					"<p>Identify all the upstream or downstream sub-watersheds (12 digit HUC) for any location in the US.</p>",
 					"<div><img style='width:330px' src='widgets/Demo/images/hucnav_img.jpg'></div>"],
 		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": "dijit__WidgetBase_11"
+		"highlight": "dijit__WidgetBase_10"
 	}, {
-		"node":"dijit__WidgetBase_12",
+		"widgetName": "Raindrop",
+		"node":"dijit__WidgetBase_11",
 		"content": ["<h1>Raindrop Tool</h1>",
 					"<p>See the general flow path from any point to the nearest water feature.</p>",
 					"<div><img style='width:330px' src='widgets/Demo/images/raindrop_img.png'></div>"],
 		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": "dijit__WidgetBase_12"
+		"highlight": "dijit__WidgetBase_11"
 	}, {
-		"node":"dijit__WidgetBase_13",
+		"widgetName": "Elevation",
+		"node":"dijit__WidgetBase_12",
 		"content": ["<h1>Elevation Profile</h1>",
 					"<p>Draw a line between two points and see the elevation profile.</p>",
 					"<div><img style='width:330px' src='widgets/Demo/images/elev_img.jpg'></div>"],
 		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": "dijit__WidgetBase_13"
+		"highlight": "dijit__WidgetBase_12"
 	}, {
-		"node":"dijit__WidgetBase_14",
+		"widgetName": "SaveSession",
+		"node":"dijit__WidgetBase_13",
 		"content": ["<h1>Save Session</h1>",
 					"<ul>",
 					"<li>Save your progress</li>",
 					"<li>Share your sessions with other users</li>",
 					"</ul>"],
 		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": "dijit__WidgetBase_14"
+		"highlight": "dijit__WidgetBase_13"
 	},{
 		"node":"dijit__WidgetBase_14",
 		"content": ["<h1>Additional Help</h1>",
