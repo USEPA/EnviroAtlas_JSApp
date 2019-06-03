@@ -7369,3 +7369,6 @@ html.hr .jimu-filter .allExpsBox > div{
   background-position: -0px -123px;
 }
 /* Mult-selector */
+#tourDialog2 .dijitTooltipContainer {
+	background: rgba(72, 85, 102, .8);
+}

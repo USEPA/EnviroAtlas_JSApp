@@ -501,7 +501,21 @@ define([
 			
 		}
 		
-  		
+        var loadWidgetHelpInfo = function(callback){   
+        
+            var xobj = new XMLHttpRequest();
+        
+            xobj.overrideMimeType("application/json");
+        
+            xobj.open('GET', 'widgets/Demo/config.json', true); 
+        
+            xobj.onreadystatechange = function () {
+              if (xobj.readyState == 4 && xobj.status == "200") {
+                    callback(xobj.responseText);
+                  }
+            };
+            xobj.send(null);  
+        };   		
 		var loadBookmarkHomeExtent = function(callback){   
 		
 		    var xobj = new XMLHttpRequest();
@@ -2354,7 +2368,12 @@ define([
     
 		selfSimpleSearchFilter = this;     
 		 	
-	
+        loadWidgetHelpInfo(function(response){
+        
+            var demoConfig = JSON.parse(response);
+            window.helpTour = demoConfig.tour;
+        }); 	
+        
 	    loadBookmarkHomeExtent(function(response){
 	    	var bookmarkClassified = JSON.parse(response);
 	
