@@ -1,0 +1,275 @@
+<?xml version="1.0"?>
+<metadata>
+    <idinfo>
+        <keywords>
+            <theme>
+                <themekt>ISO 19115 Topic Category</themekt>
+                <themekey>environment</themekey>
+            </theme>
+            <theme>
+                <themekt>EPA GIS Keyword Thesaurus</themekt>
+                <themekey>Ecosystem</themekey>
+                <themekey>Environment</themekey>
+            </theme>
+            <theme>
+                <themekt>EnviroAtlas</themekt>
+                <themekey>Communities</themekey>
+                <themekey>Ecosystem Services</themekey>
+                <themekey>EnviroAtlas</themekey>
+                <themekey>Environment</themekey>
+                <themekey>Environmental Atlas</themekey>
+                <themekey>Human Well-being</themekey>
+                <themekey>Recreation</themekey>
+            </theme>
+            <place>
+                <placekt>None</placekt>
+                <placekey>Pennsylvania</placekey>
+                <placekey>Pittsburgh</placekey>
+            </place>
+        </keywords>
+        <citation>
+            <citeinfo>
+                <origin>U.S. Environmental Protection Agency (US EPA)</origin>
+                <title>EnviroAtlas - Pittsburgh, PA - Proximity to Parks</title>
+                <pubinfo>
+                    <publish>U.S. EPA Office of Research and Development (ORD) - National Exposure Research Laboratory (NERL)</publish>
+                    <pubplace>Research Triangle Park, NC</pubplace>
+                </pubinfo>
+                <pubdate>20140731</pubdate>
+				<onlink>https://edg.epa.gov/data/PUBLIC/ORD/ENVIROATLAS</onlink>
+				<onlink>https://enviroatlas.epa.gov/arcgis/rest/services</onlink>
+				<onlink>https://www.epa.gov/enviroatlas/enviroatlas-data</onlink>
+				<onlink>https://www.epa.gov/enviroatlas</onlink>
+            </citeinfo>
+        </citation>
+        <timeperd>
+            <current>Publication date</current>
+            <timeinfo>
+                <sngdate>
+                    <caldate>2011</caldate>
+                </sngdate>
+            </timeinfo>
+        </timeperd>
+        <status>
+            <progress>Complete</progress>
+            <update>As needed</update>
+        </status>
+        <spdom>
+            <bounding>
+                <westbc>-80.29781</westbc>
+                <eastbc>-79.68825</eastbc>
+                <northbc>40.67122</northbc>
+                <southbc>40.24197</southbc>
+            </bounding>
+        </spdom>
+        <accconst>None.</accconst>
+        <useconst>None. Please check sources, scale, accuracy, currency and other available information. Please confirm that you are using the most recent copy of both data and metadata.  Acknowledgement of the EPA would be appreciated.</useconst>
+        <descript>
+            <abstract>This EnviroAtlas dataset shows the approximate walking distance from a park entrance at any given location within the EnviroAtlas community boundary. The zones are estimated in 1/4 km intervals up to 1km then in 1km intervals up to 5km. Park entrances were included in this analysis if they were within 5km of the community boundary. This dataset was produced by the US EPA to support research and online mapping activities related to EnviroAtlas. EnviroAtlas (https://www.epa.gov/enviroatlas) allows the user to interact with a web-based, easy-to-use, mapping application to view and analyze multiple ecosystem services for the contiguous United States. The dataset is available as downloadable data (https://edg.epa.gov/data/Public/ORD/EnviroAtlas) or as an EnviroAtlas map service. Additional descriptive information about each attribute in this dataset can be found in its associated EnviroAtlas Fact Sheet (https://www.epa.gov/enviroatlas/enviroatlas-fact-sheets).</abstract>
+            <purpose>The purpose of this data is to show the expected walking distance from any given point in the EnviroAtlas community boundary to the nearest park entrance. This data can be assessed with other socio-economic factors to identify areas of need. The overall goal of EnviroAtlas is to employ and develop the best available science to map indicators of ecosystem services production, demand, and drivers for the nation.</purpose>
+        </descript>
+		<secinfo>
+			<secsys>https://project-open-data.github.io/schema/#accessLevel</secsys>
+			<secclass>public</secclass>
+			<sechandl>Standard Technical Controls</sechandl>
+		</secinfo>
+		<ptcontac>
+			<cntinfo>
+				<cntperp>
+					<cntorg>U.S. Environmental Protection Agency, Office of Research and Development-Sustainable and Healthy Communities Research Program, EnviroAtlas</cntorg>
+					<cntper>EnviroAtlas Coordinator</cntper>
+				</cntperp>
+				<cntpos>Geospatial Data Owner</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>109 T.W. Alexander Drive</address>
+					<city>Research Triangle Park</city>
+					<state>NC</state>
+					<postal>27709</postal>
+				</cntaddr>
+				<cntvoice>(919) 541-3832</cntvoice>
+				<cntemail>EnviroAtlas@epa.gov</cntemail>
+				<cntinst>https://www.epa.gov/enviroatlas</cntinst>
+			</cntinfo>
+		</ptcontac>
+    </idinfo>
+    <dataqual>
+        <logic>Tests for integrity have not been performed.</logic>
+        <complete>Features represented have not been tested for completeness</complete>
+        <posacc>
+            <horizpa>
+                <horizpar>Data were collected using methods that have unknown accuracy (EPA National Geospatial Data Policy [NGDP] Accuracy Tier 10). For more information, please see EPA's NGDP at https://epa.gov/geospatial/policies.html</horizpar>
+            </horizpa>
+        </posacc>
+        <lineage>
+        </lineage>
+    </dataqual>
+    <spref>
+        <horizsys>
+            <planar>
+                <planci>
+                    <plance>coordinate pair</plance>
+                    <plandu>meters</plandu>
+                    <coordrep>
+                        <absres>0.000001</absres>
+                        <ordres>0.000001</ordres>
+                    </coordrep>
+                </planci>
+                <mapproj>
+                    <mapprojn>Albers Conical Equal Area</mapprojn>
+                    <albers>
+                        <stdparll>29.500000</stdparll>
+                        <stdparll>45.500000</stdparll>
+                        <longcm>-96.000000</longcm>
+                        <latprjo>23.000000</latprjo>
+                        <feast>0.000000</feast>
+                        <fnorth>0.000000</fnorth>
+                    </albers>
+                </mapproj>
+            </planar>
+            <geodetic>
+                <horizdn>North American Datum of 1983</horizdn>
+                <ellips>Geodetic Reference System 80</ellips>
+                <semiaxis>6378137.000000</semiaxis>
+                <denflat>298.257222</denflat>
+            </geodetic>
+        </horizsys>
+    </spref>
+    <distinfo>
+        <resdesc>Downloadable Data</resdesc>
+        <distliab>https://edg.epa.gov/EPA_Data_License.html</distliab>
+		<distrib>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>U.S. Environmental Protection Agency, Office of Research and Development-Sustainable and Healthy Communities Research Program, EnviroAtlas</cntorg>
+					<cntper>EnviroAtlas Coordinator</cntper>
+				</cntorgp>
+				<cntpos>Geospatial Data Owner</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>109 T.W. Alexander Drive</address>
+					<city>Research Triangle Park</city>
+					<state>NC</state>
+					<postal>27709</postal>
+				</cntaddr>
+				<cntvoice>(919) 541-3832</cntvoice>
+				<cntemail>EnviroAtlas@epa.gov</cntemail>
+				<cntinst>https://www.epa.gov/enviroatlas</cntinst>
+			</cntinfo>
+		</distrib>
+    </distinfo>
+    <metainfo>
+        <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+        <metstdv>FGDC-STD-001-1998</metstdv>
+        <metd>20141119</metd>
+        <metfrd>20181119</metfrd>
+		<metc>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>U.S. Environmental Protection Agency, Office of Research and Development-Sustainable and Healthy Communities Research Program, EnviroAtlas</cntorg>
+					<cntper>EnviroAtlas Coordinator</cntper>
+				</cntorgp>
+				<cntpos>Geospatial Data Owner</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>109 T.W. Alexander Drive</address>
+					<city>Research Triangle Park</city>
+					<state>NC</state>
+					<postal>27709</postal>
+				</cntaddr>
+				<cntvoice>(919) 541-3832</cntvoice>
+				<cntemail>EnviroAtlas@epa.gov</cntemail>
+				<cntinst>https://www.epa.gov/enviroatlas</cntinst>
+			</cntinfo>
+		</metc>
+    </metainfo>
+    <eainfo>
+        <detailed>
+            <enttyp>
+                <enttypl>PitPA_Park_Prox</enttypl>
+                <enttypd>Proximity to Parks</enttypd>
+                <enttypds>US EPA</enttypds>
+            </enttyp>
+            <attr>
+                <attrlabl>ParkProxD</attrlabl>
+                <attrdef>The proximity zone identifier.</attrdef>
+                <attrdefs>US EPA</attrdefs>
+                <attrdomv>
+                    <edom>
+                        <edomv>250</edomv>
+                        <edomvd>less than 250m to a park</edomvd>
+                        <edomvds>US EPA</edomvds>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>500</edomv>
+                        <edomvd>250-500m to a park</edomvd>
+                        <edomvds>US EPA</edomvds>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>750</edomv>
+                        <edomvd>500-750m to a park</edomvd>
+                        <edomvds>US EPA</edomvds>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>1000</edomv>
+                        <edomvd>750-1000m to a park</edomvd>
+                        <edomvds>US EPA</edomvds>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>2000</edomv>
+                        <edomvd>1000-2000m to a park</edomvd>
+                        <edomvds>US EPA</edomvds>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>3000</edomv>
+                        <edomvd>2000-3000m to a park</edomvd>
+                        <edomvds>US EPA</edomvds>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>4000</edomv>
+                        <edomvd>3000-4000m to a park</edomvd>
+                        <edomvds>US EPA</edomvds>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>5000</edomv>
+                        <edomvd>4000-5000m to a park</edomvd>
+                        <edomvds>US EPA</edomvds>
+                    </edom>
+                </attrdomv>
+                <attrdomv>
+                    <edom>
+                        <edomv>-99999</edomv>
+                        <edomvd>No Park Entrances Within 5km or not measurable due to lack of roads</edomvd>
+                        <edomvds>US EPA</edomvds>
+                    </edom>
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>Shape</attrlabl>
+                <attrdef>Data attrinute inherent to the ESRI shapefile format, which defines the data as a point, line, or polygon.</attrdef>
+                <attrdefs>ESRI</attrdefs>
+                <attrdomv>
+                    <udom>Coordinates defining the features.</udom>
+                </attrdomv>
+            </attr>
+        </detailed>
+        <overview>
+            <eadetcit>https://www.epa.gov/enviroatlas/enviroatlas-fact-sheets</eadetcit>
+            <eaover>For more information about EnviroAtlas data, go to https://www.epa.gov/enviroatlas/enviroatlas-fact-sheets. This dataset shows the proximity to a park entrance at any given location within the EnviroAtlas community. Processing steps completed using Python scripts. A comprehensive list of metric creation steps is included in the Processing Steps.</eaover>
+        </overview>
+    </eainfo>
+</metadata>

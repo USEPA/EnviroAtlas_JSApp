@@ -1,0 +1,300 @@
+<?xml version="1.0"?>
+<metadata>
+	<idinfo>
+		<keywords>
+			<theme>
+				<themekt>ISO 19115 Topic Category</themekt>
+				<themekey>boundaries</themekey>
+				<themekey>environment</themekey>
+				<themekey>society</themekey>
+			</theme>
+			<theme>
+				<themekt>EPA GIS Keyword Thesaurus</themekt>
+				<themekey>Ecosystem</themekey>
+				<themekey>Environment</themekey>
+				<themekey>Human</themekey>
+			</theme>
+			<theme>
+				<themekt>EnviroAtlas</themekt>
+				<themekey>Boundaries</themekey>
+				<themekey>Census Block Groups</themekey>
+				<themekey>Communities</themekey>
+				<themekey>Demographics</themekey>
+				<themekey>Ecosystem Services</themekey>
+				<themekey>EnviroAtlas</themekey>
+				<themekey>Environment</themekey>
+				<themekey>Environmental Atlas</themekey>
+				<themekey>Human</themekey>
+				<themekey>Society</themekey>
+			</theme>
+			<place>
+				<placekt>None</placekt>
+				<placekey>Maine</placekey>
+				<placekey>Portland, ME</placekey>
+			</place>
+		</keywords>
+		<citation>
+			<citeinfo>
+				<origin>U.S. Environmental Protection Agency (US EPA)</origin>
+				<title>EnviroAtlas - Portland, ME - Demographics by Block Group</title>
+				<pubinfo>
+					<publish>U.S. EPA Office of Research and Development (ORD) - National Exposure Research Laboratory (NERL)</publish>
+					<pubplace>Research Triangle Park, NC</pubplace>
+				</pubinfo>
+				<pubdate>20140807</pubdate>
+				<onlink>https://edg.epa.gov/data/PUBLIC/ORD/ENVIROATLAS</onlink>
+				<onlink>https://enviroatlas.epa.gov/arcgis/rest/services</onlink>
+				<onlink>https://www.epa.gov/enviroatlas/enviroatlas-data</onlink>
+				<onlink>https://www.epa.gov/enviroatlas</onlink>
+			</citeinfo>
+		</citation>
+		<timeperd>
+			<current>Ground condition</current>
+			<timeinfo>
+				<rngdates>
+					<begdate>2006</begdate>
+					<enddate>2010</enddate>
+				</rngdates>
+			</timeinfo>
+		</timeperd>
+		<status>
+			<progress>Complete</progress>
+			<update>As needed</update>
+		</status>
+		<spdom>
+			<bounding>
+				<westbc>-70.493457</westbc>
+				<eastbc>-70.078404</eastbc>
+				<northbc>43.880517</northbc>
+				<southbc>43.446672</southbc>
+			</bounding>
+		</spdom>
+		<accconst>None.</accconst>
+		<useconst>None. Please check sources, scale, accuracy, currency and other available information. Please confirm that you are using the most recent copy of both data and metadata.  Acknowledgement of the EPA would be appreciated.</useconst>
+		<descript>
+			<abstract>This EnviroAtlas dataset is a summary of key demographic groups for the EnviroAtlas community. This dataset was produced by the US EPA to support research and online mapping activities related to EnviroAtlas. EnviroAtlas (https://www.epa.gov/enviroatlas) allows the user to interact with a web-based, easy-to-use, mapping application to view and analyze multiple ecosystem services for the contiguous United States. The dataset is available as downloadable data (https://edg.epa.gov/data/Public/ORD/EnviroAtlas) or as an EnviroAtlas map service. Additional descriptive information about each attribute in this dataset can be found in its associated EnviroAtlas Fact Sheet (https://www.epa.gov/enviroatlas/enviroatlas-fact-sheets).</abstract>
+			<purpose>The purpose of this dataset is to highlight areas where the population is more vulnerable due to age or economic disadvantage. These populations may be at a higher risk for detrimental impacts to their well-being. The overall goal of EnviroAtlas is to employ and develop the best available science to map indicators of ecosystem services production, demand, and drivers for the nation.</purpose>
+		</descript>
+		<secinfo>
+			<secsys>https://project-open-data.github.io/schema/#accessLevel</secsys>
+			<secclass>public</secclass>
+			<sechandl>Standard Technical Controls</sechandl>
+		</secinfo>
+		<ptcontac>
+			<cntinfo>
+				<cntperp>
+					<cntorg>U.S. Environmental Protection Agency, Office of Research and Development-Sustainable and Healthy Communities Research Program, EnviroAtlas</cntorg>
+					<cntper>EnviroAtlas Coordinator</cntper>
+				</cntperp>
+				<cntpos>Geospatial Data Owner</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>109 T.W. Alexander Drive</address>
+					<city>Research Triangle Park</city>
+					<state>NC</state>
+					<postal>27709</postal>
+				</cntaddr>
+				<cntvoice>(919) 541-3832</cntvoice>
+				<cntemail>EnviroAtlas@epa.gov</cntemail>
+				<cntinst>https://www.epa.gov/enviroatlas</cntinst>
+			</cntinfo>
+		</ptcontac>
+	</idinfo>
+	<dataqual>
+		<logic>Tests for integrity have not been performed.</logic>
+		<complete>Features represented have not been tested for completeness</complete>
+		<posacc>
+			<horizpa>
+				<horizpar>Data were collected using methods that have unknown accuracy (EPA National Geospatial Data Policy [NGDP] Accuracy Tier 10). For more information, please see EPA's NGDP at https://epa.gov/geospatial/policies.html</horizpar>
+			</horizpa>
+		</posacc>
+		<lineage>
+		</lineage>
+	</dataqual>
+	<spref>
+		<horizsys>
+			<planar>
+				<planci>
+					<plance>coordinate pair</plance>
+					<plandu>meters</plandu>
+					<coordrep>
+						<absres>0.000001</absres>
+						<ordres>0.000001</ordres>
+					</coordrep>
+				</planci>
+				<mapproj>
+					<mapprojn>Albers Conical Equal Area</mapprojn>
+					<albers>
+						<stdparll>29.500000</stdparll>
+						<stdparll>45.500000</stdparll>
+						<longcm>-96.000000</longcm>
+						<latprjo>23.000000</latprjo>
+						<feast>0.000000</feast>
+						<fnorth>0.000000</fnorth>
+					</albers>
+				</mapproj>
+			</planar>
+			<geodetic>
+				<horizdn>North American Datum of 1983</horizdn>
+				<ellips>Geodetic Reference System 80</ellips>
+				<semiaxis>6378137.000000</semiaxis>
+				<denflat>298.257222</denflat>
+			</geodetic>
+		</horizsys>
+	</spref>
+	<distinfo>
+		<resdesc>Downloadable Data</resdesc>
+		<distliab>https://edg.epa.gov/EPA_Data_License.html</distliab>
+		<distrib>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>U.S. Environmental Protection Agency, Office of Research and Development-Sustainable and Healthy Communities Research Program, EnviroAtlas</cntorg>
+					<cntper>EnviroAtlas Coordinator</cntper>
+				</cntorgp>
+				<cntpos>Geospatial Data Owner</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>109 T.W. Alexander Drive</address>
+					<city>Research Triangle Park</city>
+					<state>NC</state>
+					<postal>27709</postal>
+				</cntaddr>
+				<cntvoice>(919) 541-3832</cntvoice>
+				<cntemail>EnviroAtlas@epa.gov</cntemail>
+				<cntinst>https://www.epa.gov/enviroatlas</cntinst>
+			</cntinfo>
+		</distrib>
+	</distinfo>
+	<metainfo>
+		<metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+		<metstdv>FGDC-STD-001-1998</metstdv>
+		<metd>20140807</metd>
+		<metfrd>20180807</metfrd>
+		<metc>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>U.S. Environmental Protection Agency, Office of Research and Development-Sustainable and Healthy Communities Research Program, EnviroAtlas</cntorg>
+					<cntper>EnviroAtlas Coordinator</cntper>
+				</cntorgp>
+				<cntpos>Geospatial Data Owner</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>109 T.W. Alexander Drive</address>
+					<city>Research Triangle Park</city>
+					<state>NC</state>
+					<postal>27709</postal>
+				</cntaddr>
+				<cntvoice>(919) 541-3832</cntvoice>
+				<cntemail>EnviroAtlas@epa.gov</cntemail>
+				<cntinst>https://www.epa.gov/enviroatlas</cntinst>
+			</cntinfo>
+		</metc>
+	</metainfo>
+	<eainfo>
+		<detailed>
+			<enttyp>
+				<enttypl>PME_BG_Pop</enttypl>
+				<enttypd>Population demographics for the Atlas Area.</enttypd>
+				<enttypds>US EPA</enttypds>
+			</enttyp>
+			<attr>
+				<attrlabl>bgrp</attrlabl>
+				<attrdef>Census block group identifier; a concatenation of 2010 Census state Federal Information Processing Standards (FIPS) code, county FIPS code, census tract code, and block group number</attrdef>
+				<attrdefs>US Census Bureau</attrdefs>
+				<attrdomv>
+					<codesetd>
+						<codesetn>INCITS.38-200x (R2004), Codes for the Identification of the States, the District of Columbia, Puerto Rico, and the Insular Areas of the United States (Formerly FIPS 5-2), INCITS.31-200x (R2007), Codes for the Identification of the Counties and Equivalent Areas of the United States, Puerto Rico, and the Insular Areas of the United States (Formerly FIPS 6-4) and the tract code that appears in TRACTCE10 and the census block group number that appears in BLKGRPCE10</codesetn>
+						<codesets>US Census Bureau</codesets>
+					</codesetd>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>SUM_HOUSIN</attrlabl>
+				<attrdef>The total number of households per block group.</attrdef>
+				<attrdefs>US EPA/US Census Bureau</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>SUM_POP10</attrlabl>
+				<attrdef>The block group population.</attrdef>
+				<attrdefs>US EPA/US Census Bureau</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>under_1</attrlabl>
+				<attrdef>The block group population under 1 year old.</attrdef>
+				<attrdefs>US EPA/US Census Bureau</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>under_1pct</attrlabl>
+				<attrdef>The percentage of the block group population under 1 year of age.</attrdef>
+				<attrdefs>US EPA/US Census Bureau</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>under_13</attrlabl>
+				<attrdef>The block group population under 13 years of age.</attrdef>
+				<attrdefs>US EPA/US Census Bureau</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>under_13pc</attrlabl>
+				<attrdef>The percentage of the block group population that is under 13 years of age.</attrdef>
+				<attrdefs>US EPA/US Census Bureau</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>over_70</attrlabl>
+				<attrdef>The block group population over 70 years of age.</attrdef>
+				<attrdefs>US EPA/US Census Bureau</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>over_70pct</attrlabl>
+				<attrdef>The percentage of the block group population over 70 years of age.</attrdef>
+				<attrdefs>US EPA/US Census Bureau</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>NonWhite</attrlabl>
+				<attrdef>The population of the block group that is not "White Alone" (including white Hispanics).</attrdef>
+				<attrdefs>US EPA/US Census Bureau</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>NonWt_Pct</attrlabl>
+				<attrdef>The percentage of the block group population that is not "White Alone" (including white Hispanics).</attrdef>
+				<attrdefs>US EPA/US Census Bureau</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>PLx2_Pop</attrlabl>
+				<attrdef>The applicable block group population with income less than two times the poverty level.</attrdef>
+				<attrdefs>US EPA/US Census Bureau</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>PLx2_Pct</attrlabl>
+				<attrdef>The percentage of the applicable block group population with income under two times the poverty level.</attrdef>
+				<attrdefs>US EPA/US Census Bureau</attrdefs>
+			</attr>
+		</detailed>
+		<overview>
+			<eadetcit>https://www.epa.gov/enviroatlas/enviroatlas-fact-sheets</eadetcit>
+			<eaover>
+				For more information about EnviroAtlas data, go to https://www.epa.gov/enviroatlas/enviroatlas-fact-sheets. 
+
+				With the exception of poverty level data, these values were extracted from the 2010 Census SF1 Tables. The poverty level attributes (PLx2_Pop and PLx2_Pct) come from the American Community Survey 5-year estimates for 2006-2010. 
+
+				The "applicable block group population" value used in the calculation of the PLx2 attributes represents the "Population for whom poverty level statistics were calculated." According to the Census Bureau, this excludes people living in "group quarters" such as dormitories and elderly living communities. 
+
+				The following values were incorporated into the attributes: 
+
+				Attribute Name: 2010 Census Data Dictionary Reference Name(s):
+				SUM_HOUSIN: H00010001;
+				SUM_POP10: P0010001;
+				under_1: P0120003 + P0140024;
+				under_1pct: under_1/SUM_POP10;
+				under_13: P0140003 + P0140004 + P0140005 + P0140006 + P0140007 + P0140008 + P0140009 + P0140010 + P0140011 + P0140012 + P0140013 + P0140014 + P0140015 + P0140024 + P0140025 + P0140026 + P0140027 + P0140028 + P0140029 + P0140030 + P0140031 + P0140032 + P0140033 +  P0140034 + P0140035 + P0140036;
+				under_13pc: under_13/SUM_POP10;
+				over_70: P0120022 + P0120023 + P0120024 + P0120025 + P0120046 + P0120047 + P0120048 + P0120049;
+				over_70pct: over_70/SUM_POP10;
+				NonWhite_Pop: SUM_POP10 - P0050003;
+				NonWt_Pct: NonWhite_Pop/SUM_POP10.
+				Attribute: 2010 ACS Table Number/Record Number:
+				PLx2_Pop: C17002/001 - C17002/008;
+				PLx2_Pct: PLx2_Pop / C17002/001
+			</eaover>
+		</overview>
+	</eainfo>
+</metadata>

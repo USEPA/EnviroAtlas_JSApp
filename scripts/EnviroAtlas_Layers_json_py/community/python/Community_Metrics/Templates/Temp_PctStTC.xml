@@ -1,0 +1,229 @@
+<?xml version="1.0"?>
+<metadata>
+    <idinfo>
+        <keywords>
+            <theme>
+                <themekt>ISO 19115 Topic Category</themekt>
+                <themekey>environment</themekey>
+                <themekey>health</themekey>
+                <themekey>transportation</themekey>
+            </theme>
+            <theme>
+                <themekt>EPA GIS Keyword Thesaurus</themekt>
+                <themekey>Ecosystem</themekey>
+                <themekey>Environment</themekey>
+            </theme>
+            <theme>
+                <themekt>EnviroAtlas</themekt>
+                <themekey>Air</themekey>
+                <themekey>Communities</themekey>
+                <themekey>Ecosystem Services</themekey>
+                <themekey>EnviroAtlas</themekey>
+                <themekey>Environment</themekey>
+                <themekey>Environmental Atlas</themekey>
+                <themekey>Health</themekey>
+                <themekey>Human Well-being</themekey>
+                <themekey>Land Cover</themekey>
+                <themekey>Transportation</themekey>
+                <themekey>Trees</themekey>
+            </theme>
+            <place>
+                <placekt>None</placekt>
+                <placekey>Ohio</placekey>
+                <placekey>Cleveland, OH</placekey>
+            </place>
+        </keywords>
+        <citation>
+            <citeinfo>
+                <origin>U.S. Environmental Protection Agency (US EPA)</origin>
+                <title>EnviroAtlas - Cleveland, OH - Estimated Percent Tree Cover Along Walkable Roads</title>
+                <pubinfo>
+                    <publish>U.S. EPA Office of Research and Development (ORD) - National Exposure Research Laboratory (NERL)</publish>
+                    <pubplace>Research Triangle Park, NC</pubplace>
+                </pubinfo>
+                <pubdate>20151202</pubdate>
+                <onlink>https://edg.epa.gov/data/PUBLIC/ORD/ENVIROATLAS</onlink>
+                <onlink>https://enviroatlas.epa.gov/arcgis/rest/services</onlink>
+                <onlink>https://www.epa.gov/enviroatlas/enviroatlas-data</onlink>
+                <onlink>https://www.epa.gov/enviroatlas</onlink>
+            </citeinfo>
+        </citation>
+        <timeperd>
+            <current>Ground condition</current>
+            <timeinfo>
+                <mdattim>
+                    <sngdate>
+                        <caldate>2011</caldate>
+                    </sngdate>
+                    <sngdate>
+                        <caldate>MULC</caldate>
+                    </sngdate>
+                </mdattim>
+            </timeinfo>
+        </timeperd>
+        <status>
+            <progress>Complete</progress>
+            <update>As needed</update>
+        </status>
+        <spdom>
+            <bounding>
+                <westbc>-81.00209</westbc>
+                <eastbc>-82.07722</eastbc>
+                <northbc>41.84987</northbc>
+                <southbc>41.20277</southbc>
+            </bounding>
+        </spdom>
+        <accconst>None.</accconst>
+        <useconst>None. Please check sources, scale, accuracy, currency and other available information. Please confirm that you are using the most recent copy of both data and metadata.  Acknowledgement of the EPA would be appreciated.</useconst>
+        <descript>
+            <abstract>This EnviroAtlas dataset estimates tree cover along walkable roads. The road width is estimated for each road and percent tree cover is calculated in a 8.5 meter strip beginning at the estimated road edge. Percent tree cover is calculated for each block between road intersections. REPLACE-MF Tree cover provides valuable benefits to neighborhood residents and walkers by providing shade, improved aesthetics, and outdoor gathering spaces. This dataset was produced by the US EPA to support research and online mapping activities related to EnviroAtlas. EnviroAtlas (https://www.epa.gov/enviroatlas) allows the user to interact with a web-based, easy-to-use, mapping application to view and analyze multiple ecosystem services for the contiguous United States. The dataset is available as downloadable data (https://edg.epa.gov/data/Public/ORD/EnviroAtlas) or as an EnviroAtlas map service. Additional descriptive information about each attribute in this dataset can be found in its associated EnviroAtlas Fact Sheet (https://www.epa.gov/enviroatlas/enviroatlas-fact-sheets).</abstract>
+            <purpose>The purpose of this dataset is to examine tree cover along walkable roads within the study area. The overall goal of EnviroAtlas is to employ and develop the best available science to map indicators of ecosystem services production, demand, and drivers for the nation.</purpose>
+        </descript>
+		<secinfo>
+			<secsys>https://project-open-data.github.io/schema/#accessLevel</secsys>
+			<secclass>public</secclass>
+			<sechandl>Standard Technical Controls</sechandl>
+		</secinfo>
+		<ptcontac>
+			<cntinfo>
+				<cntperp>
+					<cntorg>U.S. Environmental Protection Agency, Office of Research and Development-Sustainable and Healthy Communities Research Program, EnviroAtlas</cntorg>
+					<cntper>EnviroAtlas Coordinator</cntper>
+				</cntperp>
+				<cntpos>Geospatial Data Owner</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>109 T.W. Alexander Drive</address>
+					<city>Research Triangle Park</city>
+					<state>NC</state>
+					<postal>27709</postal>
+				</cntaddr>
+				<cntvoice>(919) 541-3832</cntvoice>
+				<cntemail>EnviroAtlas@epa.gov</cntemail>
+				<cntinst>https://www.epa.gov/enviroatlas</cntinst>
+			</cntinfo>
+		</ptcontac>
+    </idinfo>
+    <dataqual>
+        <logic>Tests for integrity have not been performed.</logic>
+        <complete>Features represented have not been tested for completeness</complete>
+        <posacc>
+            <horizpa>
+                <horizpar>Data were collected using methods that have unknown accuracy (EPA National Geospatial Data Policy [NGDP] Accuracy Tier 10). For more information, please see EPA's NGDP at https://epa.gov/geospatial/policies.html</horizpar>
+            </horizpa>
+        </posacc>
+		<lineage>
+        </lineage>
+    </dataqual>
+    <distinfo>
+        <resdesc>Downloadable Data</resdesc>
+        <distliab>https://edg.epa.gov/EPA_Data_License.html</distliab>
+        <distrib>
+            <cntinfo>
+                <cntorgp>
+                    <cntorg>U.S. Environmental Protection Agency, Office of Research and Development-Sustainable and Healthy Communities Research Program, EnviroAtlas</cntorg>
+                    <cntper>EnviroAtlas Coordinator</cntper>
+                </cntorgp>
+                <cntpos>Geospatial Data Owner</cntpos>
+                <cntaddr>
+                    <addrtype>mailing and physical address</addrtype>
+                    <address>109 T.W. Alexander Drive</address>
+                    <city>Research Triangle Park</city>
+                    <state>NC</state>
+                    <postal>27709</postal>
+                </cntaddr>
+                <cntvoice>(919) 541-3832</cntvoice>
+                <cntemail>EnviroAtlas@epa.gov</cntemail>
+                <cntinst>https://www.epa.gov/enviroatlas</cntinst>
+            </cntinfo>
+        </distrib>
+    </distinfo>
+    <metainfo>
+        <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+        <metstdv>FGDC-STD-001-1998</metstdv>
+        <metd>20151202</metd>
+        <metfrd>20191202</metfrd>
+		<metc>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>U.S. Environmental Protection Agency, Office of Research and Development-Sustainable and Healthy Communities Research Program, EnviroAtlas</cntorg>
+					<cntper>EnviroAtlas Coordinator</cntper>
+				</cntorgp>
+				<cntpos>Geospatial Data Owner</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>109 T.W. Alexander Drive</address>
+					<city>Research Triangle Park</city>
+					<state>NC</state>
+					<postal>27709</postal>
+				</cntaddr>
+				<cntvoice>(919) 541-3832</cntvoice>
+				<cntemail>EnviroAtlas@epa.gov</cntemail>
+				<cntinst>https://www.epa.gov/enviroatlas</cntinst>
+			</cntinfo>
+		</metc>
+    </metainfo>
+    <eainfo>
+        <detailed>
+            <enttyp>
+                <enttypl>CleOH_PctStTC.tif</enttypl>
+                <enttypd>Estimated percent of tree cover along walkable roads.</enttypd>
+                <enttypds>US EPA</enttypds>
+            </enttyp>
+            <attr>
+                <attrlabl>Value</attrlabl>
+                <attrdef>Estimated percent of tree cover along walkable roads.</attrdef>
+                <attrdefs>US EPA</attrdefs>
+                <attrdomv>
+                    <rdom>
+                        <rdommin>0</rdommin>
+                        <rdommax>100</rdommax>
+                    </rdom>
+                </attrdomv>
+            </attr>
+        </detailed>
+        <overview>
+            <eadetcit>https://www.epa.gov/enviroatlas/enviroatlas-fact-sheets</eadetcit>
+            <eaover>For more information about EnviroAtlas data, go to https://www.epa.gov/enviroatlas/enviroatlas-fact-sheets. 
+
+                In this dataset, the percentage of potential street tree cover is displayed for each hypothetically walkable city block. Tree cover within 8.5 meters of either estimated road edge was included in the calculation. This dataset can be used by researchers, communities, and decision-makers to assess road-side green infrastructure.
+
+                Processing steps were completed using Python scripts. 
+
+                A comprehensive list of metric creation steps is included in the Processing Steps.</eaover>
+        </overview>
+    </eainfo>
+    <spref>
+        <horizsys>
+            <planar>
+                <gridsys>
+                    <gridsysn>Universal Transverse Mercator</gridsysn>
+                    <utm>
+                        <utmzone>11</utmzone>
+                        <transmer>
+                            <sfctrmer>0.99960000</sfctrmer>
+                            <longcm>-117</longcm>
+                            <latprjo>0.00000000</latprjo>
+                            <feast>500000.00000000</feast>
+                            <fnorth>0.00000000</fnorth>
+                        </transmer>
+                    </utm>
+                </gridsys>
+                <planci>
+                    <plance>coordinate pair</plance>
+                    <coordrep>
+                        <absres>0.00001</absres>
+                        <ordres>0.00001</ordres>
+                    </coordrep>
+                    <plandu>meters</plandu>
+                </planci>
+            </planar>
+            <geodetic>
+                <horizdn>North American Datum of 1983</horizdn>
+                <ellips>Geodetic Reference System 1980</ellips>
+                <semiaxis>6378137.000000</semiaxis>
+                <denflat>298.257222</denflat>
+            </geodetic>
+        </horizsys>
+    </spref>
+</metadata>

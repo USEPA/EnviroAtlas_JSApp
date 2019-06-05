@@ -1,0 +1,619 @@
+﻿<?xml version="1.0"?>
+<metadata>
+	<idinfo>
+		<keywords>
+			<theme>
+				<themekt>ISO 19115 Topic Category</themekt>
+				<themekey>environment</themekey>
+			</theme>
+			<theme>
+				<themekt>EPA GIS Keyword Thesaurus</themekt>
+				<themekey>Ecosystem</themekey>
+				<themekey>Environment</themekey>
+			</theme>
+			<theme>
+				<themekt>EnviroAtlas</themekt>
+				<themekey>Census Block Groups</themekey>
+				<themekey>Communities</themekey>
+				<themekey>Demand for Ecosystem Services</themekey>
+				<themekey>Demographics</themekey>
+				<themekey>Ecosystem</themekey>
+				<themekey>Ecosystem Services</themekey>
+				<themekey>EnviroAtlas</themekey>
+				<themekey>Environment</themekey>
+				<themekey>Environmental Atlas</themekey>
+				<themekey>Hazards</themekey>
+				<themekey>Health</themekey>
+				<themekey>Human</themekey>
+				<themekey>Human Well-being</themekey>
+				<themekey>Land Cover</themekey>
+				<themekey>Risk</themekey>
+				<themekey>Water</themekey>
+				<themekey>Flood</themekey>
+				<themekey>Floodplain</themekey>
+			</theme>
+			<place>
+				<placekt>None</placekt>
+				<placekey>Salt Lake City, UT</placekey>
+				<placekey>Utah</placekey>
+			</place>
+		</keywords>
+		<citation>
+			<citeinfo>
+				<origin>US Environmental Protection Agency (US EPA)</origin>
+				<title>EnviroAtlas - Salt Lake City, UT - People and Land Cover in Floodplains by Block Group</title>
+				<pubinfo>
+					<publish>U.S. EPA Office of Research &amp; Development (ORD) - National Exposure Research Laboratory (NERL)</publish>
+					<pubplace>Research Triangle Park, NC</pubplace>
+				</pubinfo>
+				<pubdate>20170628</pubdate>
+				<onlink>https://edg.epa.gov/data/PUBLIC/ORD/ENVIROATLAS</onlink>
+				<onlink>https://enviroatlas.epa.gov/arcgis/rest/services</onlink>
+				<onlink>https://www.epa.gov/enviroatlas/enviroatlas-data</onlink>
+				<onlink>https://www.epa.gov/enviroatlas</onlink>
+			</citeinfo>
+		</citation>
+		<timeperd>
+			<current>Publication date</current>
+			<timeinfo>
+				<sngdate>
+					<caldate>20170130</caldate>
+				</sngdate>
+			</timeinfo>
+		</timeperd>
+		<status>
+			<progress>Complete</progress>
+			<update>As needed</update>
+		</status>
+		<spdom>
+			<bounding>
+                <westbc>-112.25671</westbc>
+                <eastbc>-111.5557</eastbc>
+                <northbc>40.92497</northbc>
+                <southbc>40.41146</southbc>
+			</bounding>
+		</spdom>
+		<accconst>None</accconst>
+		<useconst>None. Please check sources, scale, accuracy, currency and other available information. Please confirm that you are using the most recent copy of both data and metadata.  Acknowledgement of the EPA would be appreciated.</useconst>
+		<descript>
+			<abstract>This EnviroAtlas dataset describes the total counts and percentage of population, land area, and impervious surface in the 1% Annual Chance Flood Hazard area or 0.2% Annual Chance Flood Hazard area of each block group. The flood hazard area is defined by the National Flood Hazard Layer (NFHL) produced by the Federal Emergency Management Agency (FEMA, www.fema.gov). This dataset was produced by the US EPA to support research and online mapping activities related to EnviroAtlas. EnviroAtlas (https://www.epa.gov/enviroatlas) allows the user to interact with a web-based, easy-to-use, mapping application to view and analyze multiple ecosystem services for the contiguous United States. The dataset is available as downloadable data (https://edg.epa.gov/data/Public/ORD/EnviroAtlas) or as an EnviroAtlas map service. Additional descriptive information about each attribute in this dataset can be found in its associated EnviroAtlas Fact Sheet (https://www.epa.gov/enviroatlas/enviroatlas-fact-sheets).</abstract>
+			<purpose>The purpose of this dataset is to describe the population, land area, and impervious surfaces in the high-risk flood hazard area (i.e., 1% Annual Chance Flood Hazard or 0.2% Annual Chance Flood Hazard) within the EnviroAtlas Community. The overall goal of EnviroAtlas is to employ and develop the best available science to map indicators of ecosystem services production, demand, and drivers for the nation.</purpose>
+		</descript>
+		<secinfo>
+			<secsys>https://project-open-data.github.io/schema/#accessLevel</secsys>
+			<secclass>public</secclass>
+			<sechandl>Standard Technical Controls</sechandl>
+		</secinfo>
+		<ptcontac>
+			<cntinfo>
+				<cntperp>
+					<cntorg>U.S. Environmental Protection Agency, Office of Research and Development-Sustainable and Healthy Communities Research Program, EnviroAtlas</cntorg>
+					<cntper>EnviroAtlas Coordinator</cntper>
+				</cntperp>
+				<cntpos>Geospatial Data Owner</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>109 T.W. Alexander Drive</address>
+					<city>Research Triangle Park</city>
+					<state>NC</state>
+					<postal>27709</postal>
+				</cntaddr>
+				<cntvoice>(919) 541-3832</cntvoice>
+				<cntemail>EnviroAtlas@epa.gov</cntemail>
+				<cntinst>https://www.epa.gov/enviroatlas</cntinst>
+			</cntinfo>
+		</ptcontac>
+	</idinfo>
+	<dataqual>
+		<logic>Tests for integrity have not been performed.</logic>
+		<complete>Features represented have not been tested for completeness</complete>
+		<posacc>
+			<horizpa>
+				<horizpar>Data were collected using methods that have unknown accuracy (EPA National Geospatial Data Policy [NGDP] Accuracy Tier 10). For more information, please see EPA's NGDP at https://epa.gov/geospatial/policies.html</horizpar>
+			</horizpa>
+		</posacc>
+		<lineage>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Begin with National Flood Hazard Layer dataset (NFHL).</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Clip the NFHL to the EnviroAtlas community boundary.</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Concatenate FLD_ZONE and ZONE_SUBTY fields to identify 1% Annual Chance Flood Hazard area and 0.2% Annual Chance Flood Hazard area</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Select by Attribute the flood areas that are identified as 1% Annual Chance Flood Hazard area</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Project the flood layer for the EnviroAtlas community to the same projection as Dasymetrics (February 2016 Version)</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Calculate Zonal Statistics as Table for the EnviroAtlas Dasymetrics (February 2016 Version) with the selected area being the 2010 block groups within the EnviroAtlas community boundary. Add resulting population sums to the community block groups as FP1_Pop_C.</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Select by Attribute the flood areas that are identified as 0.2% Annual Chance Flood Hazard area</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Calculate Zonal Statistics as Table for the EnviroAtlas Dasymetrics (February 2016 Version) with the selected area being the 2010 block groups within the EnviroAtlas community boundary. Add resulting population sums to the community block groups as FP02_Pop_C.</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Calculate Zonal Statistics as Table for the EnviroAtlas Dasymetrics (February 2016 Version) with the 2010 block groups within the EnviroAtlas community boundary for total population. Add resulting population sums to the community block groups as Dasy_Pop.</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Project the flood layer for the EnviroAtlas community to the same projection as land cover dataset for the community</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Select by Attribute the flood areas that are identified as 1% Annual Chance Flood Hazard area</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Calculate Tabulate Area of each land cover type within the 1% Annual Chance Flood Hazard area using 1-m Land Cover Classification for the EnviroAtlas community in each census block group</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Add Field named FP1_Land_M for total land area in the 1% Annual Chance Flood Hazard area and FP1_Imp_M for total impervious surfaces in the 1% Annual Chance Flood Hazard area</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Calculate FP1_Land_M = Land cover classes 20+30+40+52+70+80+82+91+92 (where present) and FP1_Imp_M = 20. Some land cover classes are not present in every community.</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Select by Attribute the flood areas that are identified as 0.2% Annual Chance Flood Hazard area</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Calculate Tabulate Area of each land cover type within the 0.2% Annual Chance Flood Hazard area using 1-m Land Cover Classification for the EnviroAtlas community in each census block group</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Add Field named FP02_Land_M for total land area in the 0.2% Annual Chance Flood Hazard area and FP02_Imp_M for total impervious surfaces in the 0.2% Annual Chance Flood Hazard area</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Calculate FP02_Land_M = Land cover classes 20+30+40+52+70+80+82+91+92 (where present) and FP02_Imp_M = 20. Some land cover classes are not present in every community.</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Join LCSum table for the EnviroAtlas Community and add LandA_M for total land area in a block group to the table</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Create a new table based on the EnviroAtlas community block groups table retaining the BGRP, Dasy_Pop, FP1_Pop_C, FP02_Pop_C, FP1_Land_M, FP1_Imp_M, FP02_Land_M, and FP02_Imp_M fields</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Add Fields named FP1_Pop_P, FP1_Land_P, and FP1_Imp_P for percentage of dasymetric population, land area, and impervious surface in the 1% Annual Chance Flood Hazard area, fields named FP02_Pop_P, FP02_Land_P, and FP02_Imp_P for percentage of dasymetric population, land area, and impervious surface in the 0.2% Annual Chance Flood Hazard area</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Calculate Field FP1_Pop_P = FP1_Pop_C / Dasy_Pop and FP02_Pop_P = FP02_Pop_C / Dasy_Pop</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Calculate Field FP1_Land_P = FP1_Land_M / LandA_M and FP02_Land_P = FP02_Land_M / LandA_M</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Calculate Field FP1_Imp_P = FP1_Imp_M / FP1_Land_M and ImpA02PCT_P = ImpA02PCT_M / FP02_Land_M</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Select by Location from the features that intersect with areas without FEMA coverages</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Calculate Field where there is no FEMA coverage: FP1_Pop_C, FP1_Pop_P, FP02_Pop_C, FP02_Pop_P, FP1_Land_M, FP1_Land_P, FP02_Land_M, FP02_Land_P, FP1_Imp_M, FP1_Imp_P, FP02_Imp_M, FP02_Imp_P = -99997</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Calculate Field where no flood hazard or no people living in block group: FP1_Pop_C, FP1_Pop_P, FP02_Pop_C, FP02_Pop_P, FP1_Land_M, FP1_Land_P, FP02_Land_M, FP02_Land_P, FP1_Imp_M, FP1_Imp_P, FP02_Imp_M, FP02_Imp_P = -99999</procdesc>
+			</procstep>
+			<procstep>
+				<procdate>20180716</procdate>
+				<procdesc>Export the fields to be displayed in the EnviroAtlas to a final gdb table. FP1_Pop_C, FP1_Pop_P, FP02_Pop_C, FP02_Pop_P, FP1_Land_M, FP1_Land_P, FP02_Land_M, FP02_Land_P, FP1_Imp_M, FP1_Imp_P, FP02_Imp_M, and FP02_Imp_P</procdesc>
+			</procstep>
+		</lineage>
+	</dataqual>
+	<distinfo>
+		<resdesc>Downloadable Data</resdesc>
+		<distliab>https://edg.epa.gov/EPA_Data_License.html</distliab>
+		<distrib>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>U.S. Environmental Protection Agency, Office of Research and Development-Sustainable and Healthy Communities Research Program, EnviroAtlas</cntorg>
+					<cntper>EnviroAtlas Coordinator</cntper>
+				</cntorgp>
+				<cntpos>Geospatial Data Owner</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>109 T.W. Alexander Drive</address>
+					<city>Research Triangle Park</city>
+					<state>NC</state>
+					<postal>27709</postal>
+				</cntaddr>
+				<cntvoice>(919) 541-3832</cntvoice>
+				<cntemail>EnviroAtlas@epa.gov</cntemail>
+				<cntinst>https://www.epa.gov/enviroatlas</cntinst>
+			</cntinfo>
+		</distrib>
+	</distinfo>
+	<metainfo>
+		<metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+		<metstdv>FGDC-STD-001-1998</metstdv>
+		<metd>20180830</metd>
+		<metfrd>20220830</metfrd>
+		<metc>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>U.S. Environmental Protection Agency, Office of Research and Development-Sustainable and Healthy Communities Research Program, EnviroAtlas</cntorg>
+					<cntper>EnviroAtlas Coordinator</cntper>
+				</cntorgp>
+				<cntpos>Geospatial Data Owner</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>109 T.W. Alexander Drive</address>
+					<city>Research Triangle Park</city>
+					<state>NC</state>
+					<postal>27709</postal>
+				</cntaddr>
+				<cntvoice>(919) 541-3832</cntvoice>
+				<cntemail>EnviroAtlas@epa.gov</cntemail>
+				<cntinst>https://www.epa.gov/enviroatlas</cntinst>
+			</cntinfo>
+		</metc>
+	</metainfo>
+	<eainfo>
+		<detailed>
+			<enttyp>
+				<enttypl>SLCUT_Floodplain</enttypl>
+				<enttypd>People and Land Cover in Floodplains by Block Group</enttypd>
+				<enttypds>US EPA</enttypds>
+			</enttyp>
+			<attr>
+				<attrlabl>bgrp</attrlabl>
+				<attrdef>Census Block Group Identifier; A concatenation of the current state Federal Information Processing Standard (FIPS) code, county FIPS code, census tract FIPS code, and block group FIPS code.</attrdef>
+				<attrdefs>US Census Bureau</attrdefs>
+				<attrdomv>
+					<codesetd>
+						<codesetn>INCITS.38-200x (R2004), Codes for the Identification of the States, the District of Columbia, Puerto Rico, and the Insular Areas of the United States (Formerly FIPS 5-2), INCITS.31-200x (R2007), Codes for the Identification of the Counties and Equivalent Areas of the United States, Puerto Rico, and the Insular Areas of the United States (Formerly FIPS 6-4), and the census tract code found in TRACTCE10 and block group number found in BLKGRPCE10</codesetn>
+						<codesets>US Census Bureau</codesets>
+					</codesetd>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>FP1_Land_M</attrlabl>
+				<attrdef>Total land area in 1% Annual Chance Flood Hazard area (m2)</attrdef>
+				<attrdefs>US EPA</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>0 - 139829113</edomv>
+						<edomvd>Total land area that is in 1% Annual Chance Flood Hazard area.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99997</edomv>
+						<edomvd>No FEMA Coverage.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>FP1_Land_P</attrlabl>
+				<attrdef>Percent land area in 1% Annual Chance Flood Hazard area</attrdef>
+				<attrdefs>US EPA</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>0 - 68.7</edomv>
+						<edomvd>Percent land area that is in 1% Annual Chance Flood Hazard area.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99997</edomv>
+						<edomvd>No FEMA Coverage.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>FP02_Land_M</attrlabl>
+				<attrdef>Total land area in 0.2% Annual Chance Flood Hazard area (m2)</attrdef>
+				<attrdefs>US EPA</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>0 - 5299399</edomv>
+						<edomvd>Total land area that is in 0.2% Annual Chance Flood Hazard area.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99997</edomv>
+						<edomvd>No FEMA Coverage.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>FP02_Land_P</attrlabl>
+				<attrdef>Percent land area in 0.2% Annual Chance Flood Hazard area</attrdef>
+				<attrdefs>US EPA</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>0 - 98.12</edomv>
+						<edomvd>Percent land area that is in 0.2% Annual Chance Flood Hazard area.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99997</edomv>
+						<edomvd>No FEMA Coverage.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>FP1_Imp_M</attrlabl>
+				<attrdef>Total impervious surface in 1% Annual Chance Flood Hazard area (m2)</attrdef>
+				<attrdefs>US EPA</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>0 - 901655</edomv>
+						<edomvd>Total impervious surface area in 1% Annual Chance Flood Hazard area.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99999</edomv>
+						<edomvd>No 1% Annual Chance Flood Hazard.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99997</edomv>
+						<edomvd>No FEMA Coverage.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>FP1_Imp_P</attrlabl>
+				<attrdef>Percent impervious surface in 1% Annual Chance Flood Hazard land area</attrdef>
+				<attrdefs>US EPA</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>0 - 100</edomv>
+						<edomvd>Percent impervious surfaces that are in 1% Annual Chance Flood Hazard area.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99999</edomv>
+						<edomvd>No 1% Annual Chance Flood Hazard.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99997</edomv>
+						<edomvd>No FEMA Coverage.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>FP02_Imp_M</attrlabl>
+				<attrdef>Total impervious surface in 0.2% Annual Chance Flood Hazard area (m2)</attrdef>
+				<attrdefs>US EPA</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>0 - 4242910</edomv>
+						<edomvd>Total impervious surface area in 0.2% Annual Chance Flood Hazard area.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99999</edomv>
+						<edomvd>No 0.2% Annual Chance Flood Hazard.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99997</edomv>
+						<edomvd>No FEMA Coverage.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>FP02_Imp_P</attrlabl>
+				<attrdef>Percent impervious surface in 0.2% Annual Chance Flood Hazard land area</attrdef>
+				<attrdefs>US EPA</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>0 - 100</edomv>
+						<edomvd>Percent impervious surfaces that are in 0.2% Annual Chance Flood Hazard area.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99999</edomv>
+						<edomvd>No 0.2% Annual Chance Flood Hazard.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99997</edomv>
+						<edomvd>No FEMA Coverage.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>FP1_Pop_C</attrlabl>
+				<attrdef>Total dasymetric population in 1% Annual Chance Flood Hazard area (person)</attrdef>
+				<attrdefs>US EPA</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>0 - 1497.45</edomv>
+						<edomvd>Total dasymetric population in 1% Annual Chance Flood Hazard area.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99999</edomv>
+						<edomvd>No 1% Annual Chance Flood Hazard or No people living in block group.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99997</edomv>
+						<edomvd>No FEMA Coverage.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>FP1_Pop_P</attrlabl>
+				<attrdef>Percent dasymetric population in 1% Annual Chance Flood Hazard area</attrdef>
+				<attrdefs>US EPA</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>0 - 65.71</edomv>
+						<edomvd>Percent dasymetric population in 1% Annual Chance Flood Hazard area.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99999</edomv>
+						<edomvd>No 1% Annual Chance Flood Hazard or No people living in block group.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99997</edomv>
+						<edomvd>No FEMA Coverage.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>FP02_Pop_C</attrlabl>
+				<attrdef>Total dasymetric population in 0.2% Annual Chance Flood Hazard area (person)</attrdef>
+				<attrdefs>US EPA</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>0 - 1328.49</edomv>
+						<edomvd>Total dasymetric population in 0.2% Annual Chance Flood Hazard area.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99999</edomv>
+						<edomvd>No 0.2% Annual Chance Flood Hazard or No people living in block group.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99997</edomv>
+						<edomvd>No FEMA Coverage.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>FP02_Pop_P</attrlabl>
+				<attrdef>Percent dasymetric population in 0.2% Annual Chance Flood Hazard area</attrdef>
+				<attrdefs>US EPA</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>0 - 98.37</edomv>
+						<edomvd>Percent dasymetric population in 0.2% Annual Chance Flood Hazard area.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99999</edomv>
+						<edomvd>No 0.2% Annual Chance Flood Hazard or No people living in block group.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>-99997</edomv>
+						<edomvd>No FEMA Coverage.</edomvd>
+						<edomvds>US EPA</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+		</detailed>
+		<overview>
+			<eadetcit>https://www.epa.gov/enviroatlas/enviroatlas-fact-sheets</eadetcit>
+			<eaover>These layers describe the FEMA flood zones of 1% Annual Chance Flood Hazard and 0.2% Annual Chance Flood Hazard within each block group. Processing steps completed using python scripts. A comprehensive list of metric creation steps is included in the Processing Steps.
+                         Slivers may exist in the National Flood Hazard Layer. The slivers were not filled in when the EnviroAtlas floodplains metrics were calculated. For more information about slivers, please contact Federal Emergency Management Agency. 
+                         When calculating the EnviroAtlas Dasymetric Population Map, people are not allocated to certain land cover types or areas with steep slopes. Because of this, the modeled dasymetric population for 4 Salt Lake City block groups are missing a total of 49.0 people as compared to the Census data due to steep slopes. All percentages were calculated using the total dasymetric population per block group, rather than the census population for accuracy's sake.</eaover>
+		</overview>
+	</eainfo>
+	<spref>
+		<horizsys>
+			<planar>
+				<planci>
+					<plance>coordinate pair</plance>
+					<plandu>meters</plandu>
+					<coordrep>
+						<absres>0.000001</absres>
+						<ordres>0.000001</ordres>
+					</coordrep>
+				</planci>
+				<mapproj>
+					<mapprojn>Albers Conical Equal Area</mapprojn>
+					<albers>
+						<stdparll>29.500000</stdparll>
+						<stdparll>45.500000</stdparll>
+						<longcm>-96.000000</longcm>
+						<latprjo>23.000000</latprjo>
+						<feast>0.000000</feast>
+						<fnorth>0.000000</fnorth>
+					</albers>
+				</mapproj>
+			</planar>
+			<geodetic>
+				<horizdn>North American Datum of 1983</horizdn>
+				<ellips>Geodetic Reference System 80</ellips>
+				<semiaxis>6378137.000000</semiaxis>
+				<denflat>298.257222</denflat>
+			</geodetic>
+		</horizsys>
+	</spref>
+</metadata>

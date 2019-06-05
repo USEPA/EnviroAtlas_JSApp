@@ -1,0 +1,103 @@
+field,breakNumber,NoDataMetric,decimal_places,null_label
+Ag_P,4,1,2, n/a
+Ag_PC,4,1,2, No People Living in Block Group
+BODmean,4,0,4, n/a
+BODmed,4,0,4, n/a
+BWDP_Pct,4,0,2, No People Living in Block Group
+BWDP_Pop,4,0,0, No People Living in Block Group
+Buff_Pct,4,0,2, No People Living in Block Group
+Buff_Pop,4,0,0, No People Living in Block Group
+COAQYr,4,0,4, n/a
+CODmean,4,0,4, n/a
+CODmed,4,0,4, n/a
+CORemoval,4,0,4, n/a
+COValue,4,0,4, n/a
+Change,4,0,4, n/a
+Cumean,4,0,4, n/a
+Cumed,4,0,4, n/a
+DOLCSEQ,4,0,4, n/a
+DOLCSTOR,4,0,4, n/a
+DWDbyBG,4,0,4, n/a
+Day_Count,5,0,0, n/a
+Day_Low,4,0,0, No Day Cares
+Green_P,4,0,2, n/a
+Green_PC,4,0,2, No People Living in Block Group
+IBuff_Pop,4,0,0, No People Living in Block Group
+IWDP_Pct,4,0,2, No People Living in Block Group
+IWDP_Pop,4,0,0, No People Living in Block Group
+Imp_P,4,0,2, n/a
+Imp_PC,4,0,2, No People Living in Block Group
+K12_Count,5,0,0, n/a
+K12_Low,4,0,0, No Schools
+KGCSEQ,4,0,4, n/a
+KGCSTOR,4,0,4, n/a
+Lane_PctIB,4,0,2, n/a
+Lane_PctSB,4,0,2, n/a
+MFor_P,4,0,2, n/a
+MFor_PC,4,0,2, No People Living in Block Group
+MTCSEQ,4,0,4, n/a
+MTCSTOR,4,0,4, n/a
+NO23mean,4,0,4, n/a
+NO2AQYr,4,0,4, n/a
+NO2Removal,4,0,4, n/a
+NO2_3med,4,0,4, n/a
+NO2_Asthma_Exacerbation_I,4,0,4, n/a
+NO2_Asthma_Exacerbation_V,4,0,4, n/a
+NO2_Hospital_Admissions_V,4,0,4, n/a
+NonWhite,5,0,0, n/a
+NonWt_Pct,5,0,4, n/a
+O3AQYr,4,0,4, n/a
+O3Removal,4,0,4, n/a
+O3_Acute_Respiratory_Symptoms_I,4,0,4, n/a
+O3_Mortality_V,4,0,4, n/a
+O3_School_Loss_Days_I,4,0,4, n/a
+O3_School_Loss_Days_V,4,0,4, n/a
+P10AQYr,4,0,4, n/a
+P25AQYr,4,0,4, n/a
+PLx2_Pct,5,0,4, n/a
+PLx2_Pop,5,0,0, n/a
+PM10Remova,4,0,4, n/a
+PM10Value,4,0,4, n/a
+PM25Remova,4,0,4, n/a
+PM25_Acute_Respiratory_Symptoms_I,4,0,4, n/a
+PM25_Mortality_V,4,0,4, n/a
+RB15_ForP,4,0,2, No Buffer Area
+RB15_ImpP,4,0,2, No Buffer Area
+RB15_LABGP,4,0,2, n/a
+RB15_LArea,4,0,0, n/a
+RB15_VegP,4,0,2, No Buffer Area
+RB50_ForP,4,0,2, No Buffer Area
+RB50_ImpP,4,0,2, No Buffer Area
+RB50_LABGP,4,0,2, n/a
+RB50_LArea,4,0,0, n/a
+RB50_VegP,4,0,2, No Buffer Area
+Runoff,4,0,4, n/a
+SBuff_Pop,4,0,0, No People Living in Block Group
+SO2AQYr,4,0,4, n/a
+SO2Removal,4,0,4, n/a
+SO2_Asthma_Exacerbation_I,4,0,4, n/a
+SO2_Asthma_Exacerbation_V,4,0,4, n/a
+SO2_Hospital_Admissions_V,4,0,4, n/a
+SUM_POP10,5,0,0, n/a
+SolPmean,4,0,4, n/a
+SolPmed,4,0,4, n/a
+TKNmean,4,0,4, n/a
+TKNmed,4,0,4, n/a
+TPmean,4,0,4, n/a
+TSSmean,4,0,4, n/a
+TSSmed,4,0,4, n/a
+Tpmed,4,0,4, n/a
+WVT_Pct,4,0,2, No People Living in Block Group
+WVT_Pop,4,0,0, No People Living in Block Group
+WVW_Pct,4,0,2, No People Living in Block Group
+WVW_Pop,4,0,0, No People Living in Block Group
+Wet_P,4,1,2, n/a
+maxtempreduction,4,1,4, n/a
+maxtempreductionnight,4,1,4, n/a
+over_70,5,0,0, n/a
+over_70pct,5,0,4, n/a
+total_his_count,4,0,4, n/a
+under_1,5,0,0, n/a
+under_13,5,0,0, n/a
+under_13pc,5,0,4, n/a
+under_1pct,5,0,4, n/a

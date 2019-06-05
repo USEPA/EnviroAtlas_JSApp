@@ -1,0 +1,270 @@
+<?xml version="1.0"?>
+<metadata>
+    <idinfo>
+        <keywords>
+            <theme>
+                <themekt>ISO 19115 Topic Category</themekt>
+                <themekey>environment</themekey>
+            </theme>
+            <theme>
+                <themekt>EPA GIS Keyword Thesaurus</themekt>
+                <themekey>Ecosystem</themekey>
+                <themekey>Environment</themekey>
+            </theme>
+            <theme>
+                <themekt>EnviroAtlas</themekt>
+                <themekey>Air</themekey>
+                <themekey>Census Block Groups</themekey>
+                <themekey>Communities</themekey>
+                <themekey>Ecosystem Services</themekey>
+                <themekey>EnviroAtlas</themekey>
+                <themekey>Environment</themekey>
+                <themekey>Environmental Atlas</themekey>
+                <themekey>Health</themekey>
+                <themekey>Human Well-being</themekey>
+                <themekey>Land Cover</themekey>
+                <themekey>Transportation</themekey>
+                <themekey>Trees</themekey>
+            </theme>
+            <place>
+                <placekt>None</placekt>
+                <placekey>Nebraska</placekey>
+                <placekey>New Jersey</placekey>
+            </place>
+        </keywords>
+        <citation>
+            <citeinfo>
+                <origin>U.S. Environmental Protection Agency (US EPA)</origin>
+                <title>EnviroAtlas - Paterson, NJ - Tree Cover Along Walkable Roads by Block Group</title>
+                <pubinfo>
+                    <publish>U.S. EPA Office of Research and Development (ORD) - National Exposure Research Laboratory (NERL)</publish>
+                    <pubplace>Research Triangle Park, NC</pubplace>
+                </pubinfo>
+                <pubdate>20140807</pubdate>
+				<onlink>https://edg.epa.gov/data/PUBLIC/ORD/ENVIROATLAS</onlink>
+				<onlink>https://enviroatlas.epa.gov/arcgis/rest/services</onlink>
+				<onlink>https://www.epa.gov/enviroatlas/enviroatlas-data</onlink>
+				<onlink>https://www.epa.gov/enviroatlas</onlink>
+            </citeinfo>
+        </citation>
+        <timeperd>
+            <current>Ground condition</current>
+            <timeinfo>
+                <mdattim>
+                    <sngdate>
+                        <caldate>MULC</caldate>
+                    </sngdate>
+                    <sngdate>
+                        <caldate>2010</caldate>
+                    </sngdate>
+                    <sngdate>
+                        <caldate>2011</caldate>
+                    </sngdate>
+                </mdattim>
+            </timeinfo>
+        </timeperd>
+        <status>
+            <progress>Complete</progress>
+            <update>As needed</update>
+        </status>
+        <spdom>
+            <bounding>
+                <westbc>-74.2065317</westbc>
+                <eastbc>-74.1286112</eastbc>
+                <northbc>40.9414447</northbc>
+                <southbc>40.8890137</southbc>
+            </bounding>
+        </spdom>
+        <accconst>None.</accconst>
+        <useconst>None. Please check sources, scale, accuracy, currency and other available information. Please confirm that you are using the most recent copy of both data and metadata.  Acknowledgement of the EPA would be appreciated.</useconst>
+        <descript>
+            <abstract>This EnviroAtlas dataset addresses the tree buffer along heavily traveled roads. The roads are interstates, arterials, and collectors within the EnviroAtlas community boundary. REPLACE-MF Sufficient tree bufferage is defined as 25% coverage within the circular moving window with a radius of 14.5m at any given point along the roadway. There are potential negative health affects for those living in a location without a sufficient tree buffer. Those populations are estimated here using dasymetric data calculated for the EnviroAtlas. There are potential negative health effects for those living in a location without a sufficient tree buffer. This dataset was produced by the US EPA to support research and online mapping activities related to EnviroAtlas. EnviroAtlas (https://www.epa.gov/enviroatlas) allows the user to interact with a web-based, easy-to-use, mapping application to view and analyze multiple ecosystem services for the contiguous United States. The dataset is available as downloadable data (https://edg.epa.gov/data/Public/ORD/EnviroAtlas) or as an EnviroAtlas map service. Additional descriptive information about each attribute in this dataset can be found in its associated EnviroAtlas Fact Sheet (https://www.epa.gov/enviroatlas/enviroatlas-fact-sheets).</abstract>
+            <purpose>The purpose of this dataset is to identify areas that could benefit from additional tree buffers, and the populations living in those areas. The overall goal of EnviroAtlas is to employ and develop the best available science to map indicators of ecosystem services production, demand, and drivers for the nation.</purpose>
+        </descript>
+		<secinfo>
+			<secsys>https://project-open-data.github.io/schema/#accessLevel</secsys>
+			<secclass>public</secclass>
+			<sechandl>Standard Technical Controls</sechandl>
+		</secinfo>
+		<ptcontac>
+			<cntinfo>
+				<cntperp>
+					<cntorg>U.S. Environmental Protection Agency, Office of Research and Development-Sustainable and Healthy Communities Research Program, EnviroAtlas</cntorg>
+					<cntper>EnviroAtlas Coordinator</cntper>
+				</cntperp>
+				<cntpos>Geospatial Data Owner</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>109 T.W. Alexander Drive</address>
+					<city>Research Triangle Park</city>
+					<state>NC</state>
+					<postal>27709</postal>
+				</cntaddr>
+				<cntvoice>(919) 541-3832</cntvoice>
+				<cntemail>EnviroAtlas@epa.gov</cntemail>
+				<cntinst>https://www.epa.gov/enviroatlas</cntinst>
+			</cntinfo>
+		</ptcontac>
+    </idinfo>
+    <dataqual>
+        <logic>Tests for integrity have not been performed.</logic>
+        <complete>Features represented have not been tested for completeness</complete>
+        <posacc>
+            <horizpa>
+                <horizpar>Data were collected using methods that have unknown accuracy (EPA National Geospatial Data Policy [NGDP] Accuracy Tier 10). For more information, please see EPA's NGDP at https://epa.gov/geospatial/policies.html</horizpar>
+            </horizpa>
+        </posacc>
+        <lineage>
+        </lineage>
+    </dataqual>
+    <spref>
+        <horizsys>
+            <planar>
+                <planci>
+                    <plance>coordinate pair</plance>
+                    <plandu>meters</plandu>
+                    <coordrep>
+                        <absres>0.000001</absres>
+                        <ordres>0.000001</ordres>
+                    </coordrep>
+                </planci>
+                <mapproj>
+                    <mapprojn>Albers Conical Equal Area</mapprojn>
+                    <albers>
+                        <stdparll>29.500000</stdparll>
+                        <stdparll>45.500000</stdparll>
+                        <longcm>-96.000000</longcm>
+                        <latprjo>23.000000</latprjo>
+                        <feast>0.000000</feast>
+                        <fnorth>0.000000</fnorth>
+                    </albers>
+                </mapproj>
+            </planar>
+            <geodetic>
+                <horizdn>North American Datum of 1983</horizdn>
+                <ellips>Geodetic Reference System 80</ellips>
+                <semiaxis>6378137.000000</semiaxis>
+                <denflat>298.257222</denflat>
+            </geodetic>
+        </horizsys>
+    </spref>
+    <distinfo>
+        <resdesc>Downloadable Data</resdesc>
+        <distliab>https://edg.epa.gov/EPA_Data_License.html</distliab>
+		<distrib>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>U.S. Environmental Protection Agency, Office of Research and Development-Sustainable and Healthy Communities Research Program, EnviroAtlas</cntorg>
+					<cntper>EnviroAtlas Coordinator</cntper>
+				</cntorgp>
+				<cntpos>Geospatial Data Owner</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>109 T.W. Alexander Drive</address>
+					<city>Research Triangle Park</city>
+					<state>NC</state>
+					<postal>27709</postal>
+				</cntaddr>
+				<cntvoice>(919) 541-3832</cntvoice>
+				<cntemail>EnviroAtlas@epa.gov</cntemail>
+				<cntinst>https://www.epa.gov/enviroatlas</cntinst>
+			</cntinfo>
+		</distrib>
+    </distinfo>
+    <metainfo>
+        <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+        <metstdv>FGDC-STD-001-1998</metstdv>
+        <metd>20150202</metd>
+        <metfrd>20190202</metfrd>
+		<metc>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>U.S. Environmental Protection Agency, Office of Research and Development-Sustainable and Healthy Communities Research Program, EnviroAtlas</cntorg>
+					<cntper>EnviroAtlas Coordinator</cntper>
+				</cntorgp>
+				<cntpos>Geospatial Data Owner</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>109 T.W. Alexander Drive</address>
+					<city>Research Triangle Park</city>
+					<state>NC</state>
+					<postal>27709</postal>
+				</cntaddr>
+				<cntvoice>(919) 541-3832</cntvoice>
+				<cntemail>EnviroAtlas@epa.gov</cntemail>
+				<cntinst>https://www.epa.gov/enviroatlas</cntinst>
+			</cntinfo>
+		</metc>
+    </metainfo>
+    <eainfo>
+        <detailed>
+            <enttyp>
+                <enttypl>PNJ_NrRd_Pop</enttypl>
+                <enttypd>Shows the amount of roads and population potentially affected by traffic pollution, summarized by Census Block Group.</enttypd>
+                <enttypds>US EPA</enttypds>
+            </enttyp>
+            <attr>
+                <attrlabl>BGRP</attrlabl>
+                <attrdef>Census block group identifier; a concatenation of 2010 Census state Federal Information Processing Standards (FIPS) code, county FIPS code, census tract code, and block group number.</attrdef>
+                <attrdefs>U.S. Census Bureau</attrdefs>
+                <attrdomv>
+                    <codesetd>
+                        <codesetn>INCITS.38-200x (R2004), Codes for the Identification of the States, the District of Columbia, Puerto Rico, and the Insular Areas of the United States (Formerly FIPS 5-2), INCITS.31-200x (R2007), Codes for the Identification of the Counties and Equivalent Areas of the United States, Puerto Rico, and the Insular Areas of the United States (Formerly FIPS 6-4) and the tract code that appears in TRACTCE10 and the census block group number that appears in BLKGRPCE10.</codesetn>
+                        <codesets>U.S. Census Bureau</codesets>
+                    </codesetd>
+                </attrdomv>
+            </attr>
+            <attr>
+                <attrlabl>Lane_PctIB</attrlabl>
+                <attrdef>Percent of busy roadway bordered by &lt; 25 percent tree buffer.</attrdef>
+                <attrdefs>US EPA</attrdefs>
+            </attr>
+            <attr>
+                <attrlabl>Lane_PctSB</attrlabl>
+                <attrdef>Percent of busy roadway bordered by &gt; 25 percent tree buffer.</attrdef>
+                <attrdefs>US EPA</attrdefs>
+            </attr>
+            <attr>
+                <attrlabl>SBuff_Pop</attrlabl>
+                <attrdef>Estimated residential population within 300m of a busy roadway with &gt; 25 percent tree buffer. Excludes population within 26m of a road that may be between the road and tree buffer as well as any population that is within 300m and has sufficient buffer from one road, but also has insufficient buffer in another direction.</attrdef>
+                <attrdefs>US EPA</attrdefs>
+            </attr>
+            <attr>
+                <attrlabl>IBuff_Pop</attrlabl>
+                <attrdef>Estimated residential population within 300m of a busy roadway with &lt; 25 percent tree buffer.</attrdef>
+                <attrdefs>US EPA</attrdefs>
+            </attr>
+            <attr>
+                <attrlabl>Buff_Pop</attrlabl>
+                <attrdef>Estimated residential population within 300m of a busy roadway.</attrdef>
+                <attrdefs>US EPA</attrdefs>
+            </attr>
+            <attr>
+                <attrlabl>Buff_Pct</attrlabl>
+                <attrdef>Estimated percent of residential population within 300m of a busy roadway.</attrdef>
+                <attrdefs>US EPA</attrdefs>
+            </attr>
+        </detailed>
+        <overview>
+            <eadetcit>https://www.epa.gov/enviroatlas/enviroatlas-fact-sheets</eadetcit>
+            <eaover>For more information about EnviroAtlas data, go to https://www.epa.gov/enviroatlas/enviroatlas-fact-sheets. 
+
+This dataset describes the population potentially affected by the presence or absence of near-road tree cover. 
+
+The processing steps were completed using Python scripts.
+
+A comprehensive list of metric creation steps is included in the Processing Steps. 
+
+This dataset is based on the land cover data derived for each EnviroAtlas community, the best available local road layer that included either surface width or number of lanes as an attribute, and the 2010 U.S. Census of the Population. The land cover data were created from one-meter aerial photography through remote-sensing methods. A moving-window analysis first determined the percent of tree cover within a given distance from every point in the community. Then the roads layer was used to extract only those windows that captured percent tree cover along road edges. The 25% threshold estimates a 10m buffer depth, which was selected to represent three adjacent rows of trees. On average across all possible orientations of the roadway within the moving window, a 10m strip of tree cover that is parallel to the road is equivalent to 25% of the area of the moving window. The population estimate was calculated by creating a 300m buffer on each side of the roads and extracting the modeled population values for all areas adjacent to buffered roadways from EPA's "dasymetric" population product, mapped to 30m resolution, from 2010 Census block-level data.
+
+Residents estimated to live within 26 meters of the edge of a buffered road were excluded from the population total because there is uncertainty with the methods used as to where the tree cover is located within the moving window. Therefore, it cannot be determined if people living within the window itself are buffered from traffic pollution. 
+
+Each 1m pixel was attributed with the total number of tree-cover pixels in the surrounding window (circular moving window with at radius of 14.5m for a 26m buffer with a 3m road overlap). By retaining only the pixels along a set distance from road edges, the analysis captured tree cover beyond the road shoulder and cleared right-of-way, if present, and avoided tree cover in the median, if present, and on the opposite side of the road. The fact sheets for the Near Road Environments metric contain a diagram further explaining the moving window analysis. 
+
+SBuff/SB = Sufficient Buffer
+IBuff/IB = Insufficient Buffer.
+
+When calculating the EnviroAtlas Dasymetric Population Map, people are not allocated to certain land cover types or areas with steep slopes. All percentages were calculated using the total dasymetric population per block group rather than the census population for accuracy's sake. REPLACE-MISSPOP All percentages were calculated using the total dasymetric population per block group rather than the census population for accuracy's sake. </eaover>
+        </overview>
+    </eainfo>
+</metadata>
