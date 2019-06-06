@@ -2647,7 +2647,12 @@ define([
 
                     
 	    _onSingleLayerClick: function() {
-	        _addSelectedLayers(localLayerConfig.layers.layer, singleLayerToBeAddedRemoved.substring(2));
+	        if (singleLayerToBeAddedRemoved.substring(0, 2) == "a,") {
+	            _addSelectedLayers(localLayerConfig.layers.layer, singleLayerToBeAddedRemoved.substring(2));
+	        } else if (singleLayerToBeAddedRemoved.substring(0, 2) == "r,") {
+	            _removeSelectedLayers(singleLayerToBeAddedRemoved.substring(2));
+	        }
+	        
 
 		},
 	    _onViewActiveLayersClick: function() {
