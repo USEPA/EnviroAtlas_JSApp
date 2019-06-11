@@ -137,6 +137,7 @@ define(['dojo/_base/declare',
                         visible : l.visibility,
                         "showAttribution" : false
                     });
+           
                     tempLayer.title = l.title;
                     //if layers have popupInfo grab them
                     if (l.layers) {
@@ -181,6 +182,7 @@ define(['dojo/_base/declare',
                                 dynamicLayerInfo = null;
                                 source = layerInfo.layerDefinition.source;
                                 if (source.type === "mapLayer") {
+
                                     var metaLayerInfos = array.filter(response.operationalLayers, function(rlyr) {
                                         return rlyr.id === source.mapLayerId;
                                     });
@@ -232,18 +234,41 @@ define(['dojo/_base/declare',
 
             if (tempLayer) {
                 tempLayer.on('load', function(evt) {
+                    var chkToBeClicked =  null;
+                        
+                    var i = 0;                     //  set your counter to 1
+                    var maximumCount = 10;
+                    
+                    function lookForChkBoxLoop () {           //  create a loop function
+                       setTimeout(function () {  
+                            i++; 
+                            chkBoxes = document.getElementsByClassName("jimu-icon-checkbox");
+                            chkToBeClicked = chkBoxes.item(2);
+                            if (chkToBeClicked==null) {
+                                if (i < maximumCount) { // if not reach maximumCount and still not find the checkbox, call the loop function
+                                    lookForChkBoxLoop(); 
+                                }                                  
+                            } else {
+                                chkToBeClicked.click();
+                                setTimeout(lang.hitch(this, function() {
+                                        chkToBeClicked.click();
+                                }), 300);
+                            }
+                       }, 200)
+
+                    }
+                    if (evt.layer.visibleLayers!=null) {
+                        lookForChkBoxLoop();  
+                    }                                    
                     if (arrlayerId.length > 0) {
                         setTimeout(lang.hitch(this, function() {
                             addAddItemToMapOperational(layersReversed, arrlayerId.pop(), response);
                         }), 1000);
                     }
                 });
-                //tempLayer.title = l.title;
                 window.layerID_Portal_WebMap.push(l.id);
                 testmap.addLayer(tempLayer);
             }
-
-            //end of set time out
         });
 
     };
