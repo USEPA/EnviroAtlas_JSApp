@@ -40,6 +40,17 @@ define([
     'esri/IdentityManager',
     'jimu/portalUrlUtils',
     './utils',
+    
+    'widgets/Demo/help/help_Welcome',
+    'widgets/Demo/help/help_Elevation',
+    'widgets/Demo/help/help_Demographic',
+    'widgets/Demo/help/help_EnviroAtlasDataSearch',
+    'widgets/Demo/help/help_SelectCommunity',
+    'widgets/Demo/help/help_DrawerMapping',
+    'widgets/Demo/help/help_ECAT',
+    'widgets/Demo/help/help_HucNavigation',
+    'widgets/Demo/help/help_Raindrop',
+    'widgets/Demo/help/help_EndPage',      
     'require',
     'dojo/i18n',
     'dojo/i18n!./nls/main',
@@ -49,7 +60,8 @@ define([
   function(ConfigManager, LayoutManager, DataManager, WidgetManager, FeatureActionManager, SelectionManager,
     DataSourceManager, FilterManager, html, lang, array, on, keys, mouse,
     topic, cookie, Deferred, all, ioquery, esriConfig, esriRequest, urlUitls, IdentityManager,
-    portalUrlUtils, jimuUtils, require, i18n, mainBundle, esriMain, dojoReady) {
+    portalUrlUtils, jimuUtils, help_Welcome, help_Elevation, help_Demographic, help_EnviroAtlasDataSearch,    
+    help_SelectCommunity, help_DrawerMapping, help_ECAT, help_HucNavigation, help_Raindrop, help_EndPage, require, i18n, mainBundle, esriMain, dojoReady) {
     /* global jimuConfig:true */
     var mo = {}, appConfig;
 
@@ -106,6 +118,20 @@ define([
     window.onlineDataTobeAdded = [];
     window.onlineDataAlreadyAdded = [];
     window.uploadedFileColl = [];
+    
+    window.formatters = {};
+    window.formatters['help_Elevation'] = help_Elevation;
+    window.formatters['help_Welcome'] =  help_Welcome;  
+    window.formatters['help_Demographic'] = help_Demographic;
+    window.formatters['help_EnviroAtlasDataSearch'] =  help_EnviroAtlasDataSearch; 
+    window.formatters['help_SelectCommunity'] = help_SelectCommunity;
+    
+    window.formatters['help_DrawerMapping'] = help_DrawerMapping;
+    window.formatters['help_ECAT'] =  help_ECAT;  
+    window.formatters['help_HucNavigation'] = help_HucNavigation;
+    window.formatters['help_Raindrop'] = help_Raindrop;
+    window.formatters['help_EndPage'] =  help_EndPage;    
+ 
     window.categoryDic = {};
     window.categoryDic["Clean Air"] = "cair";
     window.categoryDic["Clean and Plentiful Water"] = "cpw";

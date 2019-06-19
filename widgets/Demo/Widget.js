@@ -6,9 +6,11 @@ define(['dojo/_base/declare',
   'dijit/popup',
   'dijit/layout/AccordionContainer',
   'dijit/layout/ContentPane',
+  'widgets/Demo/help/help_Welcome',
+  'widgets/Demo/help/help_Elevation',
   'dojo/on',
   'dojo/dom'],
-function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, AccordionContainer, ContentPane, on, dom) {
+function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, AccordionContainer, ContentPane, help_Welcome, help_Elevation, on, dom) {
   //To create a widget, you need to derive from BaseWidget.
   return declare([BaseWidget], {
     // DemoWidget code goes here
@@ -97,9 +99,43 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
           $('#widgets_SimpleSearchFilter_Widget_37').click();
           $('#widgets_SimpleSearchFilter_Widget_37_min').click();
           
+          //start new code
+              nodeToHelp = window.helpTour[0].node;
+
+              helperClass = window.formatters[window.helpTour[0].helpFile];
+              helpContent = new helperClass();              
+              var newDiv = document.createElement("div");
+              var newlink = document.createElement('a');
+              newlink.setAttribute('class', 'exit_button');
+              newlink.setAttribute('onclick', 'selfDemo._endTour()');
+              newlink.innerHTML = '&#10006';
+              newlink.setAttribute('title', '&#10006');
+              newDiv.appendChild(newlink);
+              helpContent.domNode.insertBefore(newDiv, helpContent.domNode.firstChild);
+              
+              //insert clickNext button
+              newDiv = document.createElement("div");
+              newlink = document.createElement('button');
+              //newlink.setAttribute('onclick', 'selfDemo._nextStop("+ stop+1 +")');
+              newlink.setAttribute('onclick', "selfDemo._nextStop("+ (stop+1).toString() +")");
+              newlink.innerHTML = 'Next &raquo;';
+              newlink.setAttribute('title', 'Next &raquo;');
+              newDiv.appendChild(newlink);
+              helpContent.domNode.appendChild(newDiv);
+              
+              //insert page number
+              newlink = document.createElement("div");
+              newlink.setAttribute('class', 'counter');
+              newlink.innerHTML = (stop+1).toString() +"/"+ numberStops.toString();
+              newlink.setAttribute('title', (stop+1).toString() +"/"+ numberStops.toString());
+              helpContent.domNode.appendChild(newlink);                       
+
+              tourDialog.set("content", helpContent);         
+          //end of new code
+          
           
 
-          nodeToHelp = helpTour[stop].node;
+         /* nodeToHelp = helpTour[stop].node;
           helpContent = "<div> \
                           <a class='exit_button' onclick='selfDemo._endTour()'>&#10006</a> \
                         </div>"+
@@ -108,14 +144,55 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
                           <button type='button' onclick='selfDemo._nextStop("+ stop+1 +")'>Next &raquo;</button> \
                         </div> \
                         <div class='counter'>" + (stop+1).toString() +"/"+ numberStops.toString()+"</div>";
-          tourDialog.set("content", helpContent);
+          tourDialog.set("content", helpContent);*/
 
           
         } else if (stop < numberStops -1) {
+              nodeToHelp = window.helpTour[stop].node;
+
+              helperClass = window.formatters[window.helpTour[stop].helpFile];
+              helpContent = new helperClass();              
+              var newDiv = document.createElement("div");
+              var newlink = document.createElement('a');
+              newlink.setAttribute('class', 'exit_button');
+              newlink.setAttribute('onclick', 'selfDemo._endTour()');
+              newlink.innerHTML = '&#10006';
+              newlink.setAttribute('title', '&#10006');
+              newDiv.appendChild(newlink);
+              helpContent.domNode.insertBefore(newDiv, helpContent.domNode.firstChild);
+              
+              //insert clickPrevious button
+              newDiv = document.createElement("div");
+              newlink = document.createElement('button');
+              newlink.setAttribute('onclick', "selfDemo._nextStop("+ (stop-1).toString() +")");
+              newlink.innerHTML = '&laquo Previous';
+              newlink.setAttribute('title', '&laquo Previous');
+              newDiv.appendChild(newlink);
+
+              //insert space
+              newDiv.appendChild(document.createTextNode( '\u00A0' ));   
+                         
+              //insert clickNext button
+              newlink = document.createElement('button');
+              newlink.setAttribute('onclick', "selfDemo._nextStop("+ (stop+1).toString() +")");
+              newlink.innerHTML = 'Next &raquo;';
+              newlink.setAttribute('title', 'Next &raquo;');
+              newDiv.appendChild(newlink);
+              
+              helpContent.domNode.appendChild(newDiv);
+              
+              //insert page number
+              newlink = document.createElement("div");
+              newlink.setAttribute('class', 'counter');
+              newlink.innerHTML = (stop+1).toString() +"/"+ numberStops.toString();
+              newlink.setAttribute('title', (stop+1).toString() +"/"+ numberStops.toString());
+              helpContent.domNode.appendChild(newlink);                       
+
+              tourDialog.set("content", helpContent);   
+              
 
 
-
-          nodeToHelp = helpTour[stop].node;
+         /* nodeToHelp = helpTour[stop].node;
           helpContent = "<div> \
                         <a class='exit_button' onclick='selfDemo._endTour()'>&#10006</a> \
                       </div>"+
@@ -128,10 +205,51 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
                       <div class='counter'>" + (stop+1).toString() + "/" + numberStops.toString() + "</div>";
 
           //Change tooltipdialog content
-          tourDialog.set("content", helpContent);
+          tourDialog.set("content", helpContent);*/
 
           } else {
-            nodeToHelp = helpTour[stop].node;
+              nodeToHelp = window.helpTour[stop].node;
+
+              helperClass = window.formatters[window.helpTour[stop].helpFile];
+              helpContent = new helperClass();              
+              var newDiv = document.createElement("div");
+              var newlink = document.createElement('a');
+              newlink.setAttribute('class', 'exit_button');
+              newlink.setAttribute('onclick', 'selfDemo._endTour()');
+              newlink.innerHTML = '&#10006';
+              newlink.setAttribute('title', '&#10006');
+              newDiv.appendChild(newlink);
+              helpContent.domNode.insertBefore(newDiv, helpContent.domNode.firstChild);
+              
+              //insert clickPrevious button
+              newDiv = document.createElement("div");
+              newlink = document.createElement('button');
+              newlink.setAttribute('onclick', "selfDemo._nextStop("+ (stop-1).toString() +")");
+              newlink.innerHTML = '&laquo Previous';
+              newlink.setAttribute('title', '&laquo Previous');
+              newDiv.appendChild(newlink);
+
+              //insert space
+              newDiv.appendChild(document.createTextNode( '\u00A0' ));   
+                         
+              //insert End button
+              newlink = document.createElement('button');
+              newlink.setAttribute('onclick', 'selfDemo._endTour()');
+              newlink.innerHTML = 'End';
+              newlink.setAttribute('title', 'End');
+              newDiv.appendChild(newlink);
+              
+              helpContent.domNode.appendChild(newDiv);
+              
+              //insert page number
+              newlink = document.createElement("div");
+              newlink.setAttribute('class', 'counter');
+              newlink.innerHTML = (stop+1).toString() +"/"+ numberStops.toString();
+              newlink.setAttribute('title', (stop+1).toString() +"/"+ numberStops.toString());
+              helpContent.domNode.appendChild(newlink);                       
+
+              tourDialog.set("content", helpContent);              
+            /*nodeToHelp = helpTour[stop].node;
             helpContent = "<div> \
                         <a class='exit_button' onclick='selfDemo._endTour()'>&#10006</a> \
                       </div>"+
@@ -145,7 +263,7 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
 
 
             //Change tooltipdialog content
-            tourDialog.set("content", helpContent);   
+            tourDialog.set("content", helpContent);   */
         }
 
          popup.open({

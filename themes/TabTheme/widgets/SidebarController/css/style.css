@@ -7,6 +7,7 @@
   right: 0;
   top: 2px;
   height: 34px;
+  float:left;
   
 }
 .jimu-widget-sidebar-controller .title-node{
@@ -379,5 +380,13 @@
   color: white;
   border-top: 1px solid #3a3a3a;
 }
+#data_help {
 
+	background: url('../images/help_icon.png') no-repeat center center;
+	width: 15px;
+	height: 15px;
+    margin-right: 45px;
+    margin-top: 5px;
+    float:right;
+}
 .
