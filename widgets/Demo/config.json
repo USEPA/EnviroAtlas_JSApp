@@ -8,17 +8,44 @@
 					"key functions and options for displaying and analyzing maps.<br><br></p>"],
 		"orient": ["below","below-alt", "above", "above-alt"],
 		"highlight": false
-	},{
+	},
+	{
+		"widgetName": "FeaturedCollections",
+		"node":"themes_TabTheme_widgets_SidebarController_Widget_20",
+		"helpFile": "help_FeaturedCollections",
+		"content": [],
+		"orient": ["after"],
+		"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20"
+	},
+    {
+		"widgetName": "EnviroAtlasData",
+		"node":"selectableLayersContainer",
+		"helpFile": "help_EnviroAtlasDataSearch",
+		"content": [],
+		"orient": ["after"],
+		"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20"
+	}, {
 	    "widgetName": "Demographic",
-		"node":"DemoDisclaimer",
+		"node":"themes_TabTheme_widgets_SidebarController_Widget_20",
 		"helpFile": "help_Demographic",
 		"content": [],
 		"orient": ["after"],
 		"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20"
-	},{
-		"widgetName": "EnviroAtlasData",
-		"node":"selectableLayersContainer",
-		"helpFile": "help_EnviroAtlasDataSearch",
+	},
+	{
+	    "widgetName": "TimesSeries",
+		"node2":"ClimateDisclaimer",
+		"node":"themes_TabTheme_widgets_SidebarController_Widget_20",
+		"helpFile": "help_TimesSeries",
+		"content": [],
+		"orient": ["after"],
+		"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20"
+	},
+	{
+	    "widgetName": "AddData",
+		"node2":"widgets_AddData_30",
+		"node":"themes_TabTheme_widgets_SidebarController_Widget_20",
+		"helpFile": "help_AddData",
 		"content": [],
 		"orient": ["after"],
 		"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20"

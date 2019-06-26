@@ -61,21 +61,27 @@ define([
     'dijit/popup',
     'dijit/registry',
     'dojo/dom',
+    'widgets/Demo/help/help_Welcome',
     'widgets/Demo/help/help_Elevation',
+    'widgets/Demo/help/help_FeaturedCollections',
     'widgets/Demo/help/help_Demographic',
+    'widgets/Demo/help/help_EnviroAtlasDataSearch',
+    'widgets/Demo/help/help_TimesSeries',
+    'widgets/Demo/help/help_AddData',
     'widgets/Demo/help/help_SelectCommunity',
     'widgets/Demo/help/help_DrawerMapping',
     'widgets/Demo/help/help_ECAT',
     'widgets/Demo/help/help_HucNavigation',
-    'widgets/Demo/help/help_Raindrop'
+    'widgets/Demo/help/help_Raindrop',
+    'widgets/Demo/help/help_EndPage'
   ],
 
 function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on, json, cookie,
   dojoNumber, dateLocale, nlsBundle, base64, esriLang, arcgisUtils, PopupTemplate, SpatialReference,
   Extent, geometryEngine, Multipoint, Polyline, Polygon, webMercatorUtils, GeometryService, ProjectParameters,
   FeatureSet, PictureMarkerSymbol, esriUrlUtils, esriRequest, EsriQuery, QueryTask, graphicsUtils, IdentityManager,
-  OAuthInfo, portalUrlUtils, sharedUtils, accessibleUtils, zoomToUtils, TooltipDialog, popup, registry, dom, help_Elevation, help_Demographic,     
-    help_SelectCommunity, help_DrawerMapping, help_ECAT, help_HucNavigation,help_Raindrop
+  OAuthInfo, portalUrlUtils, sharedUtils, accessibleUtils, zoomToUtils, TooltipDialog, popup, registry, dom, help_Welcome, help_Elevation, help_FeaturedCollections, help_Demographic, help_EnviroAtlasDataSearch, help_TimesSeries, help_AddData,
+    help_SelectCommunity, help_DrawerMapping, help_ECAT, help_HucNavigation, help_Raindrop, help_EndPage
 ) {
   /* global esriConfig, dojoConfig, ActiveXObject, testLoad */
   var mo = {};
@@ -5108,6 +5114,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
                     popup: tourDialogOnScreenWidget,
                     around: dom.byId(nodeToHelp),
                     orient: window.helpTour[stop].orient,
+                    maxHeight: 600,
                     padding: {x:100, y:100}
                     }); 
                      

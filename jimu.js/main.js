@@ -43,8 +43,11 @@ define([
     
     'widgets/Demo/help/help_Welcome',
     'widgets/Demo/help/help_Elevation',
+    'widgets/Demo/help/help_FeaturedCollections',
     'widgets/Demo/help/help_Demographic',
     'widgets/Demo/help/help_EnviroAtlasDataSearch',
+    'widgets/Demo/help/help_TimesSeries',
+    'widgets/Demo/help/help_AddData',
     'widgets/Demo/help/help_SelectCommunity',
     'widgets/Demo/help/help_DrawerMapping',
     'widgets/Demo/help/help_ECAT',
@@ -60,7 +63,7 @@ define([
   function(ConfigManager, LayoutManager, DataManager, WidgetManager, FeatureActionManager, SelectionManager,
     DataSourceManager, FilterManager, html, lang, array, on, keys, mouse,
     topic, cookie, Deferred, all, ioquery, esriConfig, esriRequest, urlUitls, IdentityManager,
-    portalUrlUtils, jimuUtils, help_Welcome, help_Elevation, help_Demographic, help_EnviroAtlasDataSearch,    
+    portalUrlUtils, jimuUtils, help_Welcome, help_Elevation, help_FeaturedCollections, help_Demographic, help_EnviroAtlasDataSearch, help_TimesSeries, help_AddData,
     help_SelectCommunity, help_DrawerMapping, help_ECAT, help_HucNavigation, help_Raindrop, help_EndPage, require, i18n, mainBundle, esriMain, dojoReady) {
     /* global jimuConfig:true */
     var mo = {}, appConfig;
@@ -122,8 +125,11 @@ define([
     window.formatters = {};
     window.formatters['help_Elevation'] = help_Elevation;
     window.formatters['help_Welcome'] =  help_Welcome;  
+    window.formatters['help_FeaturedCollections'] = help_FeaturedCollections;
     window.formatters['help_Demographic'] = help_Demographic;
     window.formatters['help_EnviroAtlasDataSearch'] =  help_EnviroAtlasDataSearch; 
+    window.formatters['help_TimesSeries'] =  help_TimesSeries; 
+    window.formatters['help_AddData'] =  help_AddData; 
     window.formatters['help_SelectCommunity'] = help_SelectCommunity;
     
     window.formatters['help_DrawerMapping'] = help_DrawerMapping;
