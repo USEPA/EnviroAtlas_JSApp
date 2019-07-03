@@ -1,4 +1,4 @@
 {
 	"configText":"Drawer",
-	"includeWidgets":["ECAT", "Raindrop", "ElevationProfile", "HucNavigation", "Select"]
+	"includeWidgets":["ECAT", "Raindrop", "ElevationProfile", "CFERSTentry", "HucNavigation", "Select"]
 }

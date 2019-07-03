@@ -247,9 +247,26 @@
                 "version": "1.3",
                 "uri": "widgets/ECAT/Widget",
                 "config": "widgets/ECAT/config.json"
-            }, {
+            }, 
+            {
                 "position": {
                     "left": 395,
+                    "top": 5,
+                    "width": 360,
+                    "height": 420,
+                    "relativeTo": "map"
+                },
+                "placeholderIndex": 1,
+                "id": "widgets_CFERSTentry",
+                "name": "CFERSTentry",
+                "label": "CFERSTentry",
+                "version": "1.3",
+                "uri": "widgets/CFERSTentry/Widget",
+                "config": "widgets/CFERSTentry/config.json"
+            },
+            {
+                "position": {
+                    "left": 445,
                     "top": 5,
                     "width": 360,
                     "height": 420,
@@ -264,7 +281,7 @@
                 "config": "widgets/HucNavigation/config.json"
             }, {
                 "position": {
-                    "left": 445,
+                    "left": 495,
                     "top": 5,
                     "width": 440,
                     "height": 410,
@@ -279,7 +296,7 @@
                 "config": "widgets/Raindrop/config.json"
             }, {
                 "position": {
-                    "left": 495,
+                    "left": 545,
                     "top": 5,
                     "width": 380,
                     "height": 410,
@@ -294,7 +311,7 @@
                 "config": "widgets/ElevationProfile/config.json"
             }, {
                 "position": {
-                    "left": 545,
+                    "left": 595,
                     "top": 5,
                     "width": 380,
                     "height": 410,
@@ -844,7 +861,24 @@
                     "version": "1.3",
                     "uri": "widgets/ECAT/Widget",
                     "config": "widgets/ECAT/config.json"
-                },{
+                },
+                {
+	                "position": {
+	                    "left": 695,
+	                    "top": -40,
+	                    "width": 360,
+	                    "height": 420,
+	                    "relativeTo": "map"
+	                },
+	                "placeholderIndex": 1,
+	                "id": "widgets_CFERSTentry",
+	                "name": "CFERSTentry",
+	                "label": "CFERSTentry",
+	                "version": "1.3",
+	                "uri": "widgets/CFERSTentry/Widget",
+	                "config": "widgets/CFERSTentry/config.json"
+	            },
+				{
                     "position": {
                         "left": 695,
                         "top": -40,
