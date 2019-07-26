@@ -25,12 +25,10 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
     },
 
     startup: function() {
-      self = this;
+      selfDemo = this;
       this.inherited(arguments);
-        activeContainer = null;
-        this.fetchData();
-
-      
+      activeContainer = null;
+      this.fetchData();      
 
       //Tour setup
       helpTour = this.config.tour; //tour info from config.json file
@@ -39,7 +37,7 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
       tourDialog = null; //container for dialog
 
       nodeToHelp = helpTour[stop].node;
-      helpContent = helpTour[stop].content + "<div><button type='button' onclick='self._nextStop()'>Next</button></div>";
+      helpContent = helpTour[stop].content + "<div><button type='button' onclick='selfDemo._nextStop()'>Next</button></div>";
 
       tourDialog = new TooltipDialog({
         id: 'tourDialog',
@@ -119,11 +117,11 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
 
           nodeToHelp = helpTour[stop].node;
           helpContent = "<div> \
-                          <a class='exit_button' onclick='self._endTour()'>&#10006</a> \
+                          <a class='exit_button' onclick='selfDemo._endTour()'>&#10006</a> \
                         </div>"+
                         helpTour[stop].content.join("") +
                         "<div> \
-                          <button type='button' onclick='self._nextStop("+ stop+1 +")'>Next &raquo;</button> \
+                          <button type='button' onclick='selfDemo._nextStop("+ stop+1 +")'>Next &raquo;</button> \
                         </div> \
                         <div class='counter'>" + (stop+1).toString() +"/"+ numberStops.toString()+"</div>";
           tourDialog.set("content", helpContent);
@@ -135,13 +133,13 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
 
           nodeToHelp = helpTour[stop].node;
           helpContent = "<div> \
-                        <a class='exit_button' onclick='self._endTour()'>&#10006</a> \
+                        <a class='exit_button' onclick='selfDemo._endTour()'>&#10006</a> \
                       </div>"+
                       helpTour[stop].content.join("") +
                       "<div> \
-                        <button type='button' onclick='self._nextStop("+ (stop-1).toString() +")'>&laquo Previous</button> \
+                        <button type='button' onclick='selfDemo._nextStop("+ (stop-1).toString() +")'>&laquo Previous</button> \
                         &nbsp \
-                        <button type='button' onclick='self._nextStop("+ (stop+1).toString() +")'>Next &raquo;</button> \
+                        <button type='button' onclick='selfDemo._nextStop("+ (stop+1).toString() +")'>Next &raquo;</button> \
                       </div> \
                       <div class='counter'>" + (stop+1).toString() + "/" + numberStops.toString() + "</div>";
 
@@ -151,13 +149,13 @@ function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, Accord
           } else {
             nodeToHelp = helpTour[stop].node;
             helpContent = "<div> \
-                        <a class='exit_button' onclick='self._endTour()'>&#10006</a> \
+                        <a class='exit_button' onclick='selfDemo._endTour()'>&#10006</a> \
                       </div>"+
                       helpTour[stop].content.join("") +
                       "<div> \
-                        <button type='button' onclick='self._nextStop("+ (stop-1).toString() +")'>&laquo Previous</button> \
+                        <button type='button' onclick='selfDemo._nextStop("+ (stop-1).toString() +")'>&laquo Previous</button> \
                         &nbsp \
-                        <button type='button' onclick='self._endTour()'>End</button> \
+                        <button type='button' onclick='selfDemo._endTour()'>End</button> \
                       </div> \
                       <div class='counter'>" + (stop+1).toString() + "/" + numberStops.toString() + "</div>";
 

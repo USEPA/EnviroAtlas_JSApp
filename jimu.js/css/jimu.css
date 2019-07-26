@@ -7369,3 +7369,28 @@ html.hr .jimu-filter .allExpsBox > div{
   background-position: -0px -123px;
 }
 /* Mult-selector */
+#tourDialog2 .dijitTooltipContainer {
+	background: rgba(72, 85, 102, .8);
+	color: white;
+}
+.overlayOnScreenWidget {
+	opacity:0.7; 
+	background-color:#000; 
+	position:fixed; 
+	width:100%; 
+	height:100%; 
+	top:0px; 
+	left:0px; 
+	z-index:997
+}
+
+.overlay2OnScreenWidget {
+	opacity:0.1; 
+	background-color:#000; 
+	position:fixed; 
+	width:100%; 
+	height:100%; 
+	top:0px; 
+	left:0px; 
+	z-index:999
+}
