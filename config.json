@@ -259,7 +259,7 @@
                 "placeholderIndex": 1,
                 "id": "widgets_CFERSTentry",
                 "name": "CFERSTentry",
-                "label": "CFERSTentry",
+                "label": "Compare my Area",
                 "version": "1.3",
                 "uri": "widgets/CFERSTentry/Widget",
                 "config": "widgets/CFERSTentry/config.json"
