@@ -4,7 +4,8 @@ function() {
 
     var natamapservice = "https://leb.epa.gov/arcgis/rest/services/Other/NATA/MapServer"; 
     //var natamapservice = "https://gis8.saic.com/arcgis/rest/services/NATA/NATA/MapServer";    //error for tract 
-    var watershedmapservice = "https://gis8.saic.com/arcgis/rest/services/NATA/watershed/MapServer";//error for watershed
+    var watershedmapservice = "http://leb.epa.gov/arcgis/rest/services/Other/watershed/MapServer";
+    //var watershedmapservice = "https://gis8.saic.com/arcgis/rest/services/NATA/watershed/MapServer";//error for watershed
     var demogmapservice = "https://geopub.epa.gov/arcgis/rest/services/ejscreen/census2016acs/MapServer";
     var printservice = "https://gis8.saic.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
 var _config = {
