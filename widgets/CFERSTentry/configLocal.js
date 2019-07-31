@@ -8,8 +8,8 @@ function() {
     //var watershedmapservice = "https://gis8.saic.com/arcgis/rest/services/NATA/watershed/MapServer";//error for watershed
     var demogmapservice = "https://geopub.epa.gov/arcgis/rest/services/ejscreen/census2016acs/MapServer";
     //var printservice = //"https://gis8.saic.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
-    //var printservice = //"https://leb.epa.gov/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
-    var printservice = "https://enviroatlas.epa.gov/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
+    var printservice = "https://leb.epa.gov/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
+    //var printservice = //"https://enviroatlas.epa.gov/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
 var _config = {
     "nata":{
         "mapurl": natamapservice,
