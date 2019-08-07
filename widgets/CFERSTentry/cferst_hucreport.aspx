@@ -80,6 +80,7 @@ input[type=submit] {
     <script>
       require([
         "dojo/dom", "dojo/on","dojo/promise/all",
+        "dojo/dom-style",
         './configLocal.js',
         'dojo/_base/Color',
         "esri/symbols/SimpleFillSymbol",
@@ -104,7 +105,7 @@ input[type=submit] {
 'dojox/charting/axis2d/Default',
 'dojox/gfx/utils',
  "dojo/domReady!"
-      ], function (dom, on,all,_config, 
+      ], function (dom, on,all,domStyle,_config, 
       Color,
       SimpleFillSymbol,
   SimpleMarkerSymbol,
@@ -244,6 +245,12 @@ input[type=submit] {
                 var headerstr = "Community Data for the " + hucname + " Watershed (" + huc12id + ")";
                
                 dojo.byId('hucid').innerHTML = headerstr;
+                
+                heightNum = 531*dojo.byId('CFERST_bannerHUC').width/2560;
+                heightStr = Math.ceil(heightNum).toString();
+                dojo.setStyle("CFERST_bannerHUC", "height", heightStr + "px");
+                //domStyle.set("CFERST_bannerHUC", "height", "240px");
+
                 document.forms['Form1']['titlestr'].value = headerstr;
                 generateChart();
                 
@@ -627,7 +634,7 @@ input[type=submit] {
   <body class="claro">
     <div class="container">
         
-                <img src="images/c_ferst_header.png" style="width: 100%; height: 160px;" alt="CFERST banner" /><br/>
+                <img id="CFERST_bannerHUC" src="images/c_ferst_header.png" style="width: 100%; height: 231px;" alt="CFERST banner" /><br/>
         <div style="font-size: 32px;width: 100%; text-align: center;" id='hucid'></div>
         <form id="Form1" runat="server" target="_blank"> 	
             <asp:Button ID="pdfBut" runat="server" Text="Save as PDF" title="Save this report as PDF" style="display: none;" />

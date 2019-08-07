@@ -133,6 +133,10 @@ input[type=submit] {
   SimpleRenderer,
    Query, QueryTask,PrintTask, PrintParameters, PrintTemplate,
    Chart,ClusteredColumns,SelectableLegend,Highlight,Tooltip) {
+        heightNum = 531*dojo.byId('CFERST_bannerHUC').width/2560;
+        heightStr = Math.ceil(heightNum).toString();
+        dojo.setStyle("CFERST_bannerHUC", "height", heightStr + "px");
+        //dojo.setStyle("CFERST_bannerHUC", "height", heightStr + "px");
         var tractid = getQueryVariable('tract');
         if ((!(tractid)) || (tractid.length != 11)) {
             alert("Please pass in 11-digits Tract ID!");
@@ -322,6 +326,7 @@ input[type=submit] {
         function handleNataResults(results) {
             
             try {
+                            
                 if (results[0].features.length == 0) {
                     dojo.byId("container").innerHTML = "Did not find the tract '" + tractid + "'";
                     return false;
@@ -777,7 +782,7 @@ input[type=submit] {
   <body class="claro">
         <a name="top"></a>
     <div id="container" class="container">
-        <img src="images/c_ferst_header.png" style="width: 100%; height: 160px;" alt="CFERST banner" />
+        <img id="CFERST_bannerHUC" src="images/c_ferst_header.png" style="width: 100%; height: 231px;" alt="CFERST banner" />
         <div style="font-size: 32px;width: 100%; text-align: center;">Community Data Table for Census Tract <span id="titlediv"></span></div>
             <form id="Form1" runat="server" target="_blank"> 	
              <asp:Button ID="pdfBut" runat="server" Text="Save as PDF" title="Save this report as PDF" style="display: none;" />

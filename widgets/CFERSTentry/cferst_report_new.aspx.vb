@@ -47,7 +47,7 @@ Partial Class cferst_report_new
             doc.Open()
             dim bannername as string = System.Web.HttpContext.Current.Server.MapPath("images/c_ferst_header.png")
             Dim bannerimg As Image = Image.GetInstance(bannername)
-            bannerimg.ScaleAbsolute(524f,80f)
+            bannerimg.ScaleToFit(524F, 120F)
             bannerimg.Alignment = 1
             doc.Add(bannerimg)
             Dim titlefont As Font = FontFactory.GetFont("Arial", 14, Font.BOLD)
