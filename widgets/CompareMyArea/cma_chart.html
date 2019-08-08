@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     
     <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
-    <title>Community Data Table | C-FERST | US EPA</title>
+    <title>Compare My Area| EnviroAtlas | US EPA</title>
     <link rel="stylesheet" href="https://js.arcgis.com/3.24/dijit/themes/claro/claro.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -108,7 +108,7 @@ button {
         }
         dojo.byId('tractnum').innerHTML = tractid;
         var defTab = "envcon";
-        var cferstmap = _config.nata.mapurl;
+        var cmamap = _config.nata.mapurl;
         var enotestr = _config.nata.enote;
         var acsmapurl = _config.demog.mapurl;
         var nataLayers = _config.nata.natalayers;
@@ -253,10 +253,10 @@ button {
 
 
         function pushQuery(layerid,wherestr) {
-            console.log(cferstmap + "/" + layerid);
+            console.log(cmamap + "/" + layerid);
             query.returnGeometry = false;
             query.where = wherestr;
-            var queryTask = new QueryTask(cferstmap + "/" + layerid);
+            var queryTask = new QueryTask(cmamap + "/" + layerid);
             queryArray.push(queryTask.execute(query));
         }
         function pushDemogQuery(layerid,wherestr) {
@@ -638,7 +638,7 @@ button {
         }
         function download_csv(gridid) {
             
-            var filename = "cferst_" + gridid + ".csv";
+            var filename = "cma_" + gridid + ".csv";
             var grid = dijit.byId(gridid);
             var store = grid.store;
             store.fetch({
