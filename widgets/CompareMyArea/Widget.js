@@ -63,9 +63,9 @@ function(
   //To create a widget, you need to derive from BaseWidget.
   return declare([BaseWidget], {
     // Custom widget code goes here   
-    baseClass: 'jimu-widget-CFERSTentry',    
+    baseClass: 'jimu-widget-CompareMyArea',    
     //this property is set by the framework when widget is loaded.
-     name: 'CFERSTentry',    
+     name: 'CompareMyArea',    
     // wabWidget: null,
    //methods to communication with app container:
     postCreate: function() {
