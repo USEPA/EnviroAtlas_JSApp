@@ -1,11 +1,11 @@
-<%@ Page Language="VB" AutoEventWireup="false" CodeFile="cferst_report_new.aspx.vb" Inherits="cferst_report_new" %>
+<%@ Page Language="VB" AutoEventWireup="false" CodeFile="cma_report.aspx.vb" Inherits="cma_report" %>
 <!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     
     <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
-    <title>Community Data Table | C-FERST | US EPA</title>
+    <title>Compare My Area| EnviroAtlas | US EPA</title>
     <link rel="stylesheet" href="//js.arcgis.com/3.24/dijit/themes/claro/claro.css" />
     <link rel="stylesheet" href="//js.arcgis.com/3.24/esri/css/esri.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -133,10 +133,10 @@ input[type=submit] {
   SimpleRenderer,
    Query, QueryTask,PrintTask, PrintParameters, PrintTemplate,
    Chart,ClusteredColumns,SelectableLegend,Highlight,Tooltip) {
-        heightNum = 531*dojo.byId('CFERST_bannerHUC').width/2560;
+        heightNum = 531*dojo.byId('CMA_bannerHUC').width/2560;
         heightStr = Math.ceil(heightNum).toString();
-        dojo.setStyle("CFERST_bannerHUC", "height", heightStr + "px");
-        //dojo.setStyle("CFERST_bannerHUC", "height", heightStr + "px");
+        dojo.setStyle("CMA_bannerHUC", "height", heightStr + "px");
+        //dojo.setStyle("CMA_bannerHUC", "height", heightStr + "px");
         var tractid = getQueryVariable('tract');
         if ((!(tractid)) || (tractid.length != 11)) {
             alert("Please pass in 11-digits Tract ID!");
@@ -144,7 +144,7 @@ input[type=submit] {
             window.stop();
             if ((i = navigator.userAgent.indexOf('MSIE')) >= 0) {document.execCommand("Stop");};
         }
-        var cferstmap = _config.nata.mapurl;
+        var cmamap = _config.nata.mapurl;
         var enotestr = _config.nata.enote;
         var acsmapurl = _config.demog.mapurl;
         var printServerURL = _config.print.mapurl;
@@ -311,10 +311,10 @@ input[type=submit] {
         }
 
         function pushQuery(layerid,wherestr) {
-            //console.log(cferstmap + "/" + layerid);
+            //console.log(cmamap + "/" + layerid);
             query.returnGeometry = false;
             query.where = wherestr;
-            var queryTask = new QueryTask(cferstmap + "/" + layerid);
+            var queryTask = new QueryTask(cmamap + "/" + layerid);
             queryArray.push(queryTask.execute(query));
         }
         function pushDemogQuery(layerid,wherestr) {
@@ -551,7 +551,7 @@ input[type=submit] {
                 new Color([255,0,0]), 2),new Color([255,255,0,0.25]));
            
             
-                var queryTask = new QueryTask(cferstmap + "/" + trindex);
+                var queryTask = new QueryTask(cmamap + "/" + trindex);
                 var tractidfld = nataLayers.tract.idfield;
                 var wherestr = tractidfld + "='" + tractid + "'";
                 var query = new Query();
@@ -782,7 +782,7 @@ input[type=submit] {
   <body class="claro">
         <a name="top"></a>
     <div id="container" class="container">
-        <img id="CFERST_bannerHUC" src="images/c_ferst_header.png" style="width: 100%; height: 231px;" alt="CFERST banner" />
+        <img id="CMA_bannerHUC" src="images/header.png" style="width: 100%; height: 231px;" alt="CMA banner" />
         <div style="font-size: 32px;width: 100%; text-align: center;">Community Data Table for Census Tract <span id="titlediv"></span></div>
             <form id="Form1" runat="server" target="_blank"> 	
              <asp:Button ID="pdfBut" runat="server" Text="Save as PDF" title="Save this report as PDF" style="display: none;" />

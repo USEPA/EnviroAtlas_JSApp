@@ -78,11 +78,11 @@ function(
      search.startup();
      this.own(on(search,"select-result", lang.hitch(this, this.addGraphic)));    
      this.idtype = "tract";
-     if (this.map.getLayer("CFERSTLayer")) {
-        this.cferstLayer = this.map.getLayer("CFERSTLayer");
+     if (this.map.getLayer("CMALayer")) {
+        this.CMALayer = this.map.getLayer("CMALayer");
     } else {
-        this.cferstLayer = new GraphicsLayer({ id: "CFERSTLayer" });
-        this.map.addLayer(this.cferstLayer);
+        this.CMALayer = new GraphicsLayer({ id: "CMALayer" });
+        this.map.addLayer(this.CMALayer);
         
     }
      
@@ -109,7 +109,7 @@ console.log("evtid: " + evtid)
    addGraphic: function(evt) {
     
     if(evt.result){
-        this.cferstLayer.clear();
+        this.CMALayer.clear();
         var epoint = evt.result.feature.geometry;
         //this.map.setExtent(evt.result.extent.expand(1.25), true);
         console.log("type: " + this.idtype)
@@ -151,7 +151,7 @@ console.log("evtid: " + evtid)
         identifyTask.execute(identifyParams, 
             function(results){
                 if (results.length > 0) {
-                    wobj.cferstLayer.clear();
+                    wobj.CMALayer.clear();
                     var hucfillSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
                         new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT,
                         new Color([255,0,0]), 2),new Color([255,255,0,0.25]));
@@ -165,7 +165,7 @@ console.log("evtid: " + evtid)
                     .setColor(new Color([255,0,0,0.5]));
         
                     var graphic = new Graphic(geomPoint, symbol);
-                    wobj.cferstLayer.add(graphic);
+                    wobj.CMALayer.add(graphic);
                     var unionExtent = null;
                     for (var j = 0; j < results.length; j++) {
                         var feat = results[j].feature;
@@ -190,7 +190,7 @@ console.log("evtid: " + evtid)
                         }
                 
                         
-                        wobj.cferstLayer.add(feat);
+                        wobj.CMALayer.add(feat);
                         var uExtent = feat.geometry.getExtent();
                         if (unionExtent == null) unionExtent = uExtent;
                         else unionExtent.union(uExtent);
@@ -237,7 +237,7 @@ console.log("evtid: " + evtid)
      query.outFields = ['*'];
      queryTask.execute(query, function(results) {
          if (results.features.length>0) {
-             wobj.cferstLayer.clear();
+             wobj.CMALayer.clear();
             
              var fillSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
              new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT,
@@ -248,13 +248,13 @@ console.log("evtid: " + evtid)
              .setColor(new Color([255,0,0,0.5]));
 
              var graphic = new Graphic(geomPoint, symbol);
-             wobj.cferstLayer.add(graphic);
+             wobj.CMALayer.add(graphic);
              
              var idvalue = '';
              var idfld = _config[itype].idfield;
              var feat = results.features[0];
              feat.setSymbol(fillSymbol);
-             wobj.cferstLayer.add(feat);
+             wobj.CMALayer.add(feat);
              var uExtent = feat.geometry.getExtent();
              //wobj.map.setExtent(uExtent, true);
              if (feat.attributes[idfld]) {

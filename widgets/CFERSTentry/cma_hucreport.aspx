@@ -1,11 +1,11 @@
-<%@ Page Language="VB" AutoEventWireup="false" CodeFile="cferst_hucreport.aspx.vb" Inherits="cferst_hucreport" %>
+<%@ Page Language="VB" AutoEventWireup="false" CodeFile="cma_hucreport.aspx.vb" Inherits="cma_hucreport" %>
 <!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     
     <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
-    <title>Watershed Report | C-FERST | US EPA</title>
+    <title>Watershed Report | EnviroAtlas | US EPA</title>
     <link rel="stylesheet" href="https://js.arcgis.com/3.24/dijit/themes/claro/claro.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -130,7 +130,7 @@ input[type=submit] {
             window.stop();
             if ((i = navigator.userAgent.indexOf('MSIE')) >= 0) {document.execCommand("Stop");};
         } */
-        var cferstmap = _config.watershed.mapurl;
+        var cmamap = _config.watershed.mapurl;
         var printServerURL = _config.print.mapurl;
         var layerid = _config.watershed.layerindex;
         var watershedlayers = _config.watershed.layers;
@@ -180,7 +180,7 @@ input[type=submit] {
             query.outFields = ['*'];
             for (var wlayer in watershedlayers) {
                 var wlayerid = watershedlayers[wlayer].layerid;
-                var queryurl = cferstmap + "/" + wlayerid;
+                var queryurl = cmamap + "/" + wlayerid;
                 //console.log(queryurl)
                 var queryTask = new QueryTask(queryurl);
                 queryArray.push(queryTask.execute(query));
@@ -246,10 +246,10 @@ input[type=submit] {
                
                 dojo.byId('hucid').innerHTML = headerstr;
                 
-                heightNum = 531*dojo.byId('CFERST_bannerHUC').width/2560;
+                heightNum = 531*dojo.byId('CMA_bannerHUC').width/2560;
                 heightStr = Math.ceil(heightNum).toString();
-                dojo.setStyle("CFERST_bannerHUC", "height", heightStr + "px");
-                //domStyle.set("CFERST_bannerHUC", "height", "240px");
+                dojo.setStyle("CMA_bannerHUC", "height", heightStr + "px");
+                //domStyle.set("CMA_bannerHUC", "height", "240px");
 
                 document.forms['Form1']['titlestr'].value = headerstr;
                 generateChart();
@@ -314,7 +314,7 @@ input[type=submit] {
             var pctfld = notelayer.pctfield;
             var orderstr = pctfld + " DESC";
             var wherestr = idfield + "='" + hucid + "'";
-            var queryurl = cferstmap + "/" + nlayeridx;
+            var queryurl = cmamap + "/" + nlayeridx;
             var query = new Query();
             query.returnGeometry = false;
             query.where = wherestr;
@@ -465,7 +465,7 @@ input[type=submit] {
             new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT,
             new Color([255,0,0]), 2),new Color([255,255,0,0.25]));
            
-            var queryTask = new QueryTask(cferstmap + "/" + layerid);
+            var queryTask = new QueryTask(cmamap + "/" + layerid);
             var query = new Query();
             query.returnGeometry = true;
             query.geometry = geomPoint;
@@ -634,7 +634,7 @@ input[type=submit] {
   <body class="claro">
     <div class="container">
         
-                <img id="CFERST_bannerHUC" src="images/c_ferst_header.png" style="width: 100%; height: 231px;" alt="CFERST banner" /><br/>
+                <img id="CMA_bannerHUC" src="images/header.png" style="width: 100%; height: 231px;" alt="CMA banner" /><br/>
         <div style="font-size: 32px;width: 100%; text-align: center;" id='hucid'></div>
         <form id="Form1" runat="server" target="_blank"> 	
             <asp:Button ID="pdfBut" runat="server" Text="Save as PDF" title="Save this report as PDF" style="display: none;" />

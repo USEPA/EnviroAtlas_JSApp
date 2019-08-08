@@ -14,7 +14,7 @@ Imports System.Web.Services
 Imports System.Drawing.Imaging
 Imports Svg
 
-Partial Class cferst_report_new
+Partial Class cma_report_new
     Inherits System.Web.UI.Page
 
     dim note1 as string = "The default indicators in the table are based on EPA-related issues, stakeholder feedback, and available data."
@@ -45,7 +45,7 @@ Partial Class cferst_report_new
             Dim writer As PdfWriter = PdfWriter.GetInstance(doc, output)
             writer.PageEvent = new PDFFooter()
             doc.Open()
-            dim bannername as string = System.Web.HttpContext.Current.Server.MapPath("images/c_ferst_header.png")
+            dim bannername as string = System.Web.HttpContext.Current.Server.MapPath("images/header.png")
             Dim bannerimg As Image = Image.GetInstance(bannername)
             bannerimg.ScaleToFit(524F, 120F)
             bannerimg.Alignment = 1

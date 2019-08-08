@@ -28,15 +28,15 @@ vertical-align:middle;
             <div data-dojo-attach-point="tractdiv" style="display: block;">
                     <b>Tract (${idvalue})</b><br />
                 <li class="chart">
-                <a href="javascript: void(0);" onclick='window.open("${folderUrl}cferst_charts_new.html?tract=${idvalue}");'>View Community Data Chart</a>
+                <a href="javascript: void(0);" onclick='window.open("${folderUrl}cma_chart.html?tract=${idvalue}");'>View Community Data Chart</a>
                 </li>
                 <li class="pdf">
-                <a href="javascript: void(0);" onclick='window.open("${folderUrl}cferst_report_new.aspx?tract=${idvalue}");'>View Community Data Table</a>
+                <a href="javascript: void(0);" onclick='window.open("${folderUrl}cma_report.aspx?tract=${idvalue}");'>View Community Data Table</a>
                 </li>
             </div>
             <div data-dojo-attach-point="hucdiv" style="display: none;">
                 <b>Watershed: ${name} (${idvalue})</b><br />
-                <li class="pdf"><a href="javascript: void(0);" onclick='window.open("${folderUrl}cferst_hucreport.aspx?lat=${lat}&amp;lon=${lon}");'>Watershed report</a></li>
+                <li class="pdf"><a href="javascript: void(0);" onclick='window.open("${folderUrl}cma_hucreport.aspx?lat=${lat}&amp;lon=${lon}");'>Watershed report</a></li>
             </div>
         </ul>
         <a href='javascript: void(0)' data-dojo-attach-event="onclick: _deleteGraphic">Delete this ${idtype}</a>
