@@ -1206,15 +1206,11 @@ define([
 						SubLayerIds = SubLayerIds.split(';');
 
 						var subTopicRow = dojo.create('div', {
-							"style" : "display:inline-block; width:100%"
-							//"style": "display:inline-block; width:100%"
+							"style" : "display:inline-block",
+							"class": "subtopicrow"
 		    			}, mainDiv);
 
-		    			var Checkbox_div = dojo.create('div', {
-		    				'class': 'checkbox_cell',
-		    				'innerHTML': '&nbsp'
-		    			}, subTopicRow);
-
+						
 		    			for (i=0; i< SubLayerNames.length; i++) {
 
 							bLayerSelected = false;
@@ -1223,9 +1219,13 @@ define([
 					    		bLayerSelected = true;
 				          	}     
 
+				          	var subtopicBoxAndText = dojo.create('div', {
+				          		"style": 'float: left; margin-left:15px'
+				          	}, subTopicRow);
+
 				          	var Checkbox_div = dojo.create('div', {
-			    				'class': 'checkbox_cell',
-			    			}, subTopicRow);
+			    				'class': 'checkbox_cell'
+			    			}, subtopicBoxAndText);
 
 
 		    				chkboxId = window.chkSelectableLayer + SubLayerIds[i];
@@ -1242,9 +1242,9 @@ define([
 
 			    			var SubLayerDiv = dojo.create('div', {
 		    					"innerHTML": SubLayerNames[i],
-			        			"style" : "float: left; margin-right: 12px; font-style: italic",
+			        			"style" : "float: left; font-style: italic",
 			        			"title" :eaDescription
-		    				}, subTopicRow);
+		    				}, subtopicBoxAndText);
 
 		    				chkIdDictionary[chkboxId] = SubLayerNames[i] + layerName;
 		    			}
