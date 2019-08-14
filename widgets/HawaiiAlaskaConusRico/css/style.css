@@ -54,6 +54,7 @@
   width: 30px;
   height: 30px;
   background: url('../images/Hawaii.png') center no-repeat;
+  background-size: contain;
   cursor: pointer;
 }
 .Alaska {
@@ -61,6 +62,7 @@
   width: 30px;
   height: 30px;
   background: url('../images/Alaska.png') center no-repeat;
+  background-size: contain;
   cursor: pointer;
 }
 .Conus {
@@ -68,6 +70,7 @@
   width: 30px;
   height: 30px;
   background: url('../images/Conus.png') center no-repeat;
+  background-size: contain;
   cursor: pointer;
 }
 .PRVI {
@@ -75,5 +78,6 @@
   width: 30px;
   height: 30px;
   background: url('../images/PRVI.png') center no-repeat;
+  background-size: contain;
   cursor: pointer;
 }
