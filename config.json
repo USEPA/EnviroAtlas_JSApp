@@ -46,17 +46,6 @@
                 "name": "SidebarController",
                 "label": "Sidebar Controller"
             }, {
-                "uri": "widgets/HomeButton/Widget",
-                "position": {
-                    "left": 7,
-                    "top": 147,
-                    "relativeTo": "map"
-                },
-                "version": "2.5",
-                "id": "widgets_HomeButton_Widget_21",
-                "name": "HomeButton",
-                "label": "Home Button"
-            }, {
                 "uri": "widgets/Scalebar/Widget",
                 "position": {
                     "left": 10,
@@ -505,6 +494,20 @@
                 "id": "widgets_FullScreen_Widget_36",
                 "name": "FullScreen"
             }, {
+                "uri": "widgets/HawaiiAlaskaConusRico/Widget",
+                "visible": true,
+                "position": {
+                    "top": 145,
+                    "left": 7,
+                    "width": "30px",
+                    "height": "120px",
+                    "relativeTo": "map"
+                },
+                "placeholderIndex": 1,
+                "version": "2.11",
+                "id": "widgets_HawaiiAlaskaConusRico",
+                "name": "HawaiiAlaskaConusRico"
+            }, {
                 "uri": "widgets/GoogleAnalytics/Widget",
                 "position": {
                     "left": 7,
@@ -659,17 +662,6 @@
                     "id": "themes_TabTheme_widgets_SidebarController_Widget_20",
                     "name": "SidebarController",
                     "label": "Sidebar Controller"
-                }, {
-                    "uri": "widgets/HomeButton/Widget",
-                    "position": {
-                        "left": 5,
-                        "top": 70,
-                        "relativeTo": "map"
-                    },
-                    "version": "2.5",
-                    "id": "widgets_HomeButton_Widget_21",
-                    "name": "HomeButton",
-                    "label": "Home Button"
                 }, {
                     "uri": "widgets/Scalebar/Widget",
                     "position": {
