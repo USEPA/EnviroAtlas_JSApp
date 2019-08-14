@@ -14,7 +14,7 @@ Imports System.Web.Services
 Imports System.Drawing.Imaging
 Imports Svg
 
-Partial Class cma_report_new
+Partial Class cma_report
     Inherits System.Web.UI.Page
 
     dim note1 as string = "The default indicators in the table are based on EPA-related issues, stakeholder feedback, and available data."
