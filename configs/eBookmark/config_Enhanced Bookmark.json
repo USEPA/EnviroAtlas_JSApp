@@ -20,37 +20,7 @@
       "expanded": false
     },
     {
-      "name": "Regional",
-      "items": [
-        {
-          "name": "SE Biodiversity",
-          "extent": {
-            "xmax": -6615000,
-            "xmin": -12324000 ,
-            "ymax": 5325000,
-            "ymin": 2624000,
-            "spatialReference": {
-              "wkid": 102100
-            }
-          }
-        },
-        {
-          "name": "SW Biodiversity",
-          "extent": {
-            "xmax": -11382000,
-            "xmin":-14237000  ,
-            "ymax": 5204000,
-            "ymin": 3854000,
-            "spatialReference": {
-              "wkid": 102100
-            }
-          }
-        }
-      ],
-      "expanded": false
-    },
-    {
-      "name": "Community",
+      "name": "Community: A-M",
       "items": [
         {
           "name": "Austin, TX",
@@ -207,7 +177,13 @@
               "wkid": 102100
             }
           }
-        },
+        }
+      ],
+      "expanded": false
+	}
+    {
+      "name": "Community: N-Z",
+      "items": [
         {
           "name": "New Bedford, MA",
           "extent": {
@@ -359,6 +335,18 @@
             "xmin": -8620047,
             "ymax": 4512000,
             "ymin": 4340990,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
+          "name": "Washington, DC",
+          "extent": {
+            "xmax": -8509358,
+            "xmin": -8680509,
+            "ymax": 4789682,
+            "ymin": 4620208,
             "spatialReference": {
               "wkid": 102100
             }

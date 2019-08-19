@@ -1,0 +1,164 @@
+{
+    "field": "RB50_VegP",
+    "classificationMethod": "esriClassifyQuantile",
+    "classBreakInfos": [
+        {
+            "classMaxValue": -99999,
+            "symbol": {
+                "color": [
+                    204,
+                    204,
+                    204,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "No Buffer Area"
+        },
+        {
+            "classMaxValue": 71.75,
+            "symbol": {
+                "color": [
+                    255,
+                    255,
+                    128,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "0.0 - 71.7"
+        },
+        {
+            "classMaxValue": 84.25,
+            "symbol": {
+                "color": [
+                    113,
+                    235,
+                    47,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "71.8 - 84.3"
+        },
+        {
+            "classMaxValue": 91.0199966430664,
+            "symbol": {
+                "color": [
+                    61,
+                    184,
+                    104,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "84.3 - 91.0"
+        },
+        {
+            "classMaxValue": 95.5199966430664,
+            "symbol": {
+                "color": [
+                    33,
+                    110,
+                    158,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "91.1 - 95.5"
+        },
+        {
+            "classMaxValue": 100.0,
+            "symbol": {
+                "color": [
+                    12,
+                    16,
+                    120,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "95.6 - 100.0"
+        }
+    ],
+    "type": "classBreaks",
+    "minValue": -99999.0
+}

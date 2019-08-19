@@ -239,6 +239,7 @@ define([
   	window.communityDic["SLCUT"] = "Salt Lake City, UT";
     window.communityDic["TFL"] = "Tampa, FL";
     window.communityDic["VBWVA"] = "Virginia Beach - Williamsburg, VA";
+    window.communityDic["WDC"] = "Washington, DC";
     window.communityDic["WIA"] = "Woodbine, IA";
     
     window.communitySelected = window.strAllCommunity;
