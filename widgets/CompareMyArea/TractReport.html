@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     
     <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
-    <title>Compare My Area| EnviroAtlas | US EPA</title>
+    <title>Compare My Area | EnviroAtlas | US EPA</title>
     <link rel="stylesheet" href="https://js.arcgis.com/3.24/dijit/themes/claro/claro.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -33,7 +33,7 @@
 }
 .chart {
     width: 96%;
-    height: 400px;
+    height: 500px;
 }
 .legend {
     width: 96%;
@@ -44,8 +44,8 @@
 }
 .gridtable {
     
-    width: 100%; 
-    height: 280px;
+    width: 96%; 
+    height: auto;
 }
 .claro .dojoxGrid {
     border-width: 0!important;
@@ -89,6 +89,7 @@ button {
 'dojo/data/ItemFileWriteStore',
 'dojox/charting/Chart',
 'dojox/charting/plot2d/ClusteredColumns',
+'dojox/charting/plot2d/ClusteredBars',
 'dojox/charting/widget/SelectableLegend',
 'dojox/charting/action2d/Highlight',
 'dojox/charting/action2d/Tooltip',
@@ -98,7 +99,7 @@ button {
 'dojox/gfx/utils',
  "dojo/domReady!"
       ], function (dom, on,all,_config, Query, QueryTask,PrintTask, PrintParameters, PrintTemplate,DataGrid,ItemFileWriteStore,
-      Chart,ClusteredColumns,SelectableLegend,Highlight,Tooltip) {
+      Chart,ClusteredColumns,ClusteredBars,SelectableLegend,Highlight,Tooltip) {
         var tractid = getQueryVariable('tract');
         if ((!(tractid)) || (tractid.length != 11)) {
             alert("Please pass in 11-digits Tract ID!");
@@ -106,8 +107,9 @@ button {
             window.stop();
             if ((i = navigator.userAgent.indexOf('MSIE')) >= 0) {document.execCommand("Stop");};
         }
-        dojo.byId('tractnum').innerHTML = tractid;
-        var defTab = "envcon";
+        
+        
+        var defTab = "demog";
         var cmamap = _config.nata.mapurl;
         var enotestr = _config.nata.enote;
         var acsmapurl = _config.demog.mapurl;
@@ -131,8 +133,9 @@ button {
             dquery.returnGeometry = false;
             dquery.outFields = acsfields;
 
-        processNata();
         processDemog();
+        processNata();
+        
         //document.getElementById("expodiv").innerHTML = 'loading...';
         $('.nav-tabs a').on('shown.bs.tab', function(event){
             var themeid = event.target.id;
@@ -149,6 +152,7 @@ button {
                         dojo.byId("ejchartNode" + ldivid).style.display = "block";
                         dojo.byId("ejlegendNode" + ldivid).style.display = "block";
                         dojo.byId("ejTableNode" + ldivid).style.display = "block";
+                        dojo.byId('notediv2').innerHTML = themeObj[themeid].subsets[subtheme].note;
                         if (!(themeObj[themeid].subsets[subtheme].hasChart)) generateChart(themeid);
                     } else {
                         dojo.byId("ejchartNode" + ldivid).style.display = "none";
@@ -174,6 +178,7 @@ button {
                     dojo.byId("ejchartNode" + ldivid).style.width = "100%";
                     dojo.byId("ejlegendNode" + ldivid).style.display = "block";
                     dojo.byId("ejTableNode" + ldivid).style.display = "block";
+                    dojo.byId('notediv2').innerHTML = themeObj['risk'].subsets[s].note;
                     if (!(themeObj["risk"].subsets[subtheme].hasChart)) generateChart("risk");
                 } else {
                     dojo.byId("ejchartNode" + ldivid).style.display = "none";
@@ -218,11 +223,14 @@ button {
         function handleDemogResults(results) {
             var demogFieldObj = themeObj["demog"].fields;
             for (var dfield in demogFieldObj) {
+                var is_pop_count = demogFieldObj[dfield].cumulate;
                 if (results[0].features.length > 0) {
                     var tractatts = results[0].features[0].attributes;
                     var dvalue = tractatts[dfield];
                     if (dvalue == null) {
                         demogFieldObj[dfield]["tract"] = dvalue;
+                    } else if (is_pop_count) {
+                        demogFieldObj[dfield]["tract"] = dvalue.toLocaleString(undefined, { minimumFractionDigits: 0});
                     } else {
                         demogFieldObj[dfield]["tract"] = dvalue.toFixed(1);
                     }
@@ -232,6 +240,8 @@ button {
                     var dvalue = cntyatts[dfield];
                     if (dvalue == null) {
                         demogFieldObj[dfield]["county"] = dvalue;
+                    } else if (is_pop_count) {
+                        demogFieldObj[dfield]["county"] = dvalue.toLocaleString(undefined, { minimumFractionDigits: 0});
                     } else {
                         demogFieldObj[dfield]["county"] = dvalue.toFixed(1);
                     }
@@ -242,6 +252,8 @@ button {
                     var dvalue = statts[dfield];
                     if (dvalue == null) {
                         demogFieldObj[dfield]["state"] = dvalue;
+                    } else if (is_pop_count) {
+                        demogFieldObj[dfield]["state"] = dvalue.toLocaleString(undefined, { minimumFractionDigits: 0});
                     } else {
                         demogFieldObj[dfield]["state"] = dvalue.toFixed(1);
                     }
@@ -276,7 +288,9 @@ button {
                 nataLayers["county"].name = cntyatt[cnamefld]
                 var snamefld = nataLayers["state"].namefield;
                 nataLayers["state"].name =stateatt[snamefld];
-                
+
+                dojo.byId('tractid').innerHTML = 'Census Tract: '+ tractid + '<br>' + cntyatt.NAME10 + ' County, ' + stateatt.NAME10;
+
                 for (var theme in themeObj) {
                     
                     if (themeObj[theme].isNATA) {
@@ -391,20 +405,22 @@ button {
           }
           function generateTable() {
               var tablegrid = "allgrid";
-            var button = document.createElement('button');
-            button.innerHTML = 'Download';
-            button.title = 'Download the data';
-            button.onclick = function(){
-                download_csv(tablegrid);return false;
-            };
-            dojo.byId("gridDiv").appendChild(button);
+            // var button = document.createElement('button');
+            // button.innerHTML = 'Download';
+            // button.title = 'Download the data';
+            // button.onclick = function(){
+            //     download_csv(tablegrid);return false;
+            // };
+            // dojo.byId("gridDiv").appendChild(button);
             var subdata = {
                 identifier: "rowid",
     
                 items: []
             };
             var rowcount = 1;
-            for (var tm in themeObj) {
+            //for (var tm in themeObj) {
+            for (i=(Object.keys(themeObj).length)-1; i>=0; i--) {
+                var tm = Object.keys(themeObj)[i];
                 if (tm == "risk") {
                     for (var rm in themeObj[tm].subsets) {
                         var tdata = themeObj[tm].subsets[rm].fields;
@@ -414,7 +430,7 @@ button {
                             var ldesc = tdata[c].description;
                             //recjson["id"] = tm +"_" + c;
                             //console.log(tm + " -- " + ldesc + "--" + tdata["tract"][c]);
-                            recjson["cat"] = themeObj[tm].subsets[rm].description;
+                            recjson["cat"] = themeObj[tm].subsets[rm].description + " (" + themeObj[tm].subsets[rm].unit +")";
                             recjson["desc"] = ldesc;
                             recjson["tract"] = tdata[c]["tract"];
                             recjson["county"] = tdata[c]["county"];
@@ -431,11 +447,19 @@ button {
                             var recjson = {};
                             recjson["rowid"] = rowcount;
                             var ldesc = tdata[c].description;
+
                            
                             //recjson["id"] = tm +"_" + c;
                             //console.log(tm + " -- " + ldesc + "--" + tdata["tract"][c]);
+
                             recjson["cat"] = themeObj[tm].description;
-                            recjson["desc"] = ldesc;
+                            if (tm=='demog' && (!(tdata[c].cumulate))) {
+                            recjson["desc"] = 'Percent ' + ldesc;
+                        } else {
+                           recjson["desc"] = ldesc;
+                        }
+
+                            //recjson["desc"] = ldesc;
                             recjson["tract"] = tdata[c]["tract"];
                             recjson["county"] = tdata[c]["county"];
                             recjson["state"] = tdata[c]["state"];
@@ -452,7 +476,7 @@ button {
             //console.log(subdata.items);
 
                 var layout = [[
-                { 'name': 'Row', 'field': 'rowid', 'width': '5%' },
+                //{ 'name': 'Row', 'field': 'rowid', 'width': '5%' },
                 { 'name': 'Category', 'field': 'cat', 'width': '30%' },
                 { 'name': 'Variable', 'field': 'desc', 'width': '20%' },
                 { 'name': 'Tract (' + tractid +')', 'field': 'tract', 'styles': 'text-align:right;', 'width': '15%' },
@@ -464,7 +488,10 @@ button {
                 var grid = new DataGrid({
                     id: tablegrid,
                     store: store,
-                    structure: layout
+                    structure: layout,
+                    canSort:false,
+                    selectable:true,
+                    autoHeight: 21
                     //style: "width:98%",
                     //escapeHTMLInData: false,
                     //rowSelector: '20px'
@@ -504,11 +531,12 @@ button {
                 var chartCounty = [];
                 var chartState = [];
                 var chartLabels = [];
-                for (var c in chartobj) {
-                    var obj = chartobj[c];
+                for (c=(Object.keys(chartobj).length)-1; c>=0; c--) {
+                //for (var c in chartobj) {
+                    var obj = chartobj[Object.keys(chartobj)[c]];
                     if (!(obj.cumulate)) {
                         var ldesc = obj["description"];
-                        
+                       
                         chartLabels.push(ldesc);
                         chartTract.push(Number(obj["tract"]));
                         chartCounty.push(Number(obj["county"]));
@@ -553,28 +581,30 @@ button {
 
                 //main chart
                 chart.addPlot("default", {
-                    type: ClusteredColumns,
+                    type: ClusteredBars,
                     markers: true,
-                    gap: 12
+                    gap: 5
                 });
                 //background lines on chart
                 chart.addPlot("grid", { type: dojox.charting.plot2d.Grid,
-                    hMajorLines: true,
+                    hMajorLines: false,
                     hMinorLines: false,
-                    vMajorLines: false,
+                    vMajorLines: true,
                     vMinorLines: false,
-                    width: 800,
-                    majorHLine: { color: "#D3D3D3", width: 1 },
+                    width: 400,
+                    majorVLine: { color: "#D3D3D3", width: 1 },
                     renderOnAxis: false
                 });
 
-                chart.addAxis("x", { title: tstr, htmlLabels: false, titleOrientation: "away", titleFont: "normal normal normal 9pt Tahoma", labels: xLabels, dropLabels: false, rotation: 30, font: "normal normal normal 7pt Verdana", fontColor: "#000000", majorTick: { length: 0 }, minorTick: { length: 0 }, majorTickStep: 1, minorTickStep: 0, minorLabels: false }); //set major tick to 1, minor to 0 so draws every step of data but doesn't fill in decimals between integers.
-                chart.addAxis("y", { title: unitstr,  htmlLabels: true, titleFont: "normal normal normal 9pt Tahoma", vertical: true,min: 0}); //gridline fix: set max to 101 and fixUpper to minor ticks. 100 cuts off top grid line. 101 adds bit of padding.
-
-                chart.addSeries(levelegObj.state.label, chartDataObj.stateVals, { stroke: 'white', fill: levelegObj.state.color });
-                chart.addSeries(levelegObj.county.label, chartDataObj.countyVals, { stroke: 'white', fill: levelegObj.county.color });
+                
+                chart.addAxis("x", { title: unitstr,  htmlLabels: false, titleFont: "normal normal normal 9pt Tahoma", vertical: false,min: 0, titleOrientation: 'away'}); //gridline fix: set max to 101 and fixUpper to marginsnor ticks. 100 cuts off top grid line. 101 adds bit of padding.
+                chart.addAxis("y", { title: tstr, htmlLabels: false, titleOrientation: "away", titleFont: "normal normal normal 9pt Tahoma", labels: xLabels, dropLabels: false, rotation: 0, font: "normal normal normal 7pt Verdana", vertical: true, fontColor: "#000000", majorTick: { length: 0 }, minorTick: { length: 0 }, majorTickStep: 1, minorTickStep: 0, minorLabels: false, titleOrientation: 'axis' }); //set major tick to 1, minor to 0 so draws every step of data but doesn't fill in decimals between integers.
+            
+                
+                
                 chart.addSeries(levelegObj.tract.label, chartDataObj.tractVals, { stroke: 'white', fill: levelegObj.tract.color });
-
+                chart.addSeries(levelegObj.county.label, chartDataObj.countyVals, { stroke: 'white', fill: levelegObj.county.color });
+                chart.addSeries(levelegObj.state.label, chartDataObj.stateVals, { stroke: 'white', fill: levelegObj.state.color });
 
                 new dojox.charting.action2d.Highlight(chart, "default");
                 var pattern = "<span style='font-family:Verdana;font-size: 9px !important'><strong>{0}</strong><br>{1}:&nbsp;{2}</span>";
@@ -585,16 +615,16 @@ button {
                 });
 
                 chart.render();
-                var columnsLegend = new dojox.charting.widget.SelectableLegend({ chart: chart,series: chart.series.reverse()}, legendid);
+                var columnsLegend = new dojox.charting.widget.SelectableLegend({ chart: chart,series: chart.series}, legendid);
 
-                var button = document.createElement('button');
-                    button.innerHTML = 'Download';
-                    button.title = 'Download the data';
-                    button.onclick = function(){
-                    download_csv('dgrid'+s);
-                    return false;
-                };
-                dojo.byId("ejTableNode" + s).appendChild(button);
+                // var button = document.createElement('button');
+                //     button.innerHTML = 'Download';
+                //     button.title = 'Download the data';
+                //     button.onclick = function(){
+                //     download_csv('dgrid'+s);
+                //     return false;
+                // };
+                // dojo.byId("ejTableNode" + s).appendChild(button);
                 var tsubdata = {
                     identifier: "trowid",
                     items: []
@@ -602,21 +632,25 @@ button {
                 var k = 1;
                 for (var c in workobj.fields) {
                     var dobj = workobj.fields[c];
-                    if (!(dobj.cumulate)) {
+                    // if (!(dobj.cumulate)) {
                         var rowjson = {};
                         rowjson["trowid"] = k;
-                        rowjson["desc"] = dobj["description"];
+                        if (theme=='demog' && (!(dobj.cumulate))) {
+                            rowjson["desc"] = 'Percent ' + dobj["description"];
+                        } else {
+                           rowjson["desc"] = dobj["description"];
+                        }
                         rowjson["tract"] = dobj["tract"];
                         rowjson["county"] = dobj["county"];
                         rowjson["state"] = dobj["state"];
                         tsubdata.items.push(rowjson);
                         k = k + 1
-                    }
+                    // }
                 }
 
                 var tstore = new ItemFileWriteStore({ data: tsubdata });
                 var tlayout = [[
-                    { 'name': 'Row', 'field': 'trowid', 'width': '5%' },
+                    //{ 'name': 'Row', 'field': 'trowid', 'width': '5%' },
                     { 'name': 'Variable', 'field': 'desc', 'width': '50%' },
                     { 'name': 'Tract (' + tractid +')', 'field': 'tract', 'styles': 'text-align:right;', 'width': '15%' },
                     { 'name': 'County ('+ nataLayers["county"].name + ')', 'field': 'county', 'styles': 'text-align:right;', 'width': '15%' },
@@ -625,7 +659,10 @@ button {
                 var tgrid = new DataGrid({
                     id: 'dgrid'+s,
                     store: tstore,
-                    structure: tlayout
+                    structure: tlayout,
+                    canSort:false,
+                    selectable:true,
+                    autoHeight: true
                     //style: "width:98%",
                     //escapeHTMLInData: false,
                     //rowSelector: '20px'
@@ -646,7 +683,7 @@ button {
                 sort: grid.getSortProps(),
                 queryOptions: grid.queryOptions,
                 onComplete: function (items) {
-                    var first_row = [];
+                    var first_row = ['this is data from EnviroAtlas\n'];
                     dojo.forEach(grid.layout.cells, function (cell) {
                         first_row.push(cell.name);
                     });
@@ -684,104 +721,127 @@ button {
     </script>
   </head>
 
-  <body class="claro">
-    <div class="container">
-        <span style="font-size: 32px;">Community Data Table Chart</span>
-        <div id="imgDiv" style="text-align:center"></div>
+    <body class="claro" style='background-color: lightgrey'>
+        <div class="container" style='background-color: white'>
+            <img id="CMA_bannerHUC" src="images/CompareMyArea_Header.png" style="width: 100%;" alt="CMA banner" /><br/>
 
-        
-        <p style='font-size: 12pt; font-weight: bold'>Click each tab to view a chart/table for Tract <span id='tractnum'></span>.</p>
-      
-        <ul class="nav nav-tabs">
-          <li><a data-toggle="tab" href="#home" id="envcon">Environmental Concentration Estimates</a></li>
-          <li><a data-toggle="tab" href="#menu1" id="humanexpo">Human Exposure Estimates</a></li>
-          <li><a data-toggle="tab" href="#menu2" id="risk">Health Risk Estimates</a></li>
-          <li><a data-toggle="tab" href="#menu3" id="demog">Demographic Indicators</a></li>
-          <li><a data-toggle="tab" href="#menu4" id="dtable">Data Table</a></li>
-        </ul>
-      
-        <div class="tab-content">
-          <div id="home" class="tab-pane fade">
-              <br />
-           <p>
-                The National Emissions Inventory (NEI) is EPA’s comprehensive emissions inventory. 
-                It is used to support air quality modeling and other activities within the Air Toxics Program. 
-                The 2014 NEI, after review by State, Local, and Tribal agencies, was used as input to the AERMOD and 
-                CMAQ models to generate ambient concentrations.  
-           </p>
-            <div id="ejchartNode1" class="chart"></div>    
-            <br />
-            <center><div id="ejlegendNode1" class="legend"></div></center>
-           <div id="ejTableNode1" class="gridtable"></div>
-           <br /><br />
-           <div id="notediv1" class="note"></div>
-           <br /><br /><br />
-          </div>
-          <div id="menu1" class="tab-pane fade">
-              <br />
-            <p>
-            The ambient concentrations were used as input to the inhalation exposure model (HAPEM7) to generate exposure concentrations.
-             Exposure modeling is an important step in this assessment because it takes into account that people move from one location to another 
-             (e.g., from outside environments to inside environments).  
-            </p>
-            
-            <div id="ejchartNode2" class="chart"></div>
-            <br />
-            <center><div id="ejlegendNode2" class="legend"></div></center>
-            <div id="ejTableNode2" class="gridtable"></div>
-            <br /><br />
-            <div id="notediv2" class="note"></div>
-            <br /><br /><br />
-          </div>
-          <div id="menu2" class="tab-pane fade">
-              <br />
-            <p>
-            Exposure concentrations were used with health-benchmark information to estimate risks or hazards. 
-            </p>
-            <p>
-                <input type="radio" name="risktype" value="cancer" checked>&nbsp;Cancer Risk&nbsp;&nbsp;
-                <input type="radio" name="risktype" value="resp">&nbsp;Non-Cancer Respiratory&nbsp;&nbsp;
-                <input type="radio" name="risktype" value="neuro">&nbsp;Non-Cancer Neurological Risk
-            </p>
-            <br />    
-            <div id="ejchartNode3-1" class="chart"></div>
-            <div id="ejchartNode3-2" class="chart"></div>
-            <div id="ejchartNode3-3" class="chart"></div>
-            <br />
-            <center>
-                <div id="ejlegendNode3-1" class="legend"></div>
-                <div id="ejlegendNode3-2" class="legend" style="display: none;"></div>
-                <div id="ejlegendNode3-3" class="legend" style="display: none;"></div>
-            </center>
-            <div id="ejTableNode3-1" class="gridtable"></div>
-            <div id="ejTableNode3-2" class="gridtable"></div>
-            <div id="ejTableNode3-3" class="gridtable"></div>
-            <br /><br />
-            <div id="notediv3" class="note"></div>
-            <br /><br /><br />
-          </div>
-          <div id="menu3" class="tab-pane fade">
-              <br/>
-            <p>
-                    Demographic indicators are a subset of variables derived based the <a href='https://www.census.gov/programs-surveys/acs/data/summary-file.2016.html' target='_blank'>2012-2016 American Community Survey data</a>.
-                </p>
-            <div id="ejchartNode4" class="chart"></div>
-            <br />
-            <center><div id="ejlegendNode4" class="legend"></div></center>
-            <div id="ejTableNode4" class="gridtable"></div>
-            <br /><br />
-                <div id="notediv4" class="note"></div>
-            <br /><br /><br />
-          </div>
-          <div id="menu4" class="tab-pane fade">
-                <br/>
-                <div id="gridDiv" style="width: 100%; height: 500px;"></div>
-                <br /><br /><br />
-                <div id="notediv5" class="note"></div>
-                <br /><br />
-          </div>
+            <!-- <span style="font-size: 32px;">Community Data Table Chart</span> -->
+            <!-- <div id="imgDiv" style="text-align:center"></div> -->
+            <hr>
+            <center style='font-size:24px' id='tractid'></center>
+            <!-- <center style='font-size: 12pt'><span id='tractnum'></span></center>
+            <center style='font-size: 12pt'><span id='countyname'></span><span id='statename'></span></center> -->
+            <hr>
+            <ul class="nav nav-tabs">   
+                <li><a data-toggle="tab" href="#menu3" id="demog">Demographic Indicators</a></li>
+                <li><a data-toggle="tab" href="#menu2" id="risk">National Air Toxics Assessment</a></li>
+                <li><a data-toggle="tab" href="#menu4" id="dtable">Data Table</a></li>
+            </ul>
+          
+            <div class="tab-content">
+                <div id="home" class="tab-pane fade">
+                    <br />
+                    <p>
+                        The National Emissions Inventory (NEI) is EPA’s comprehensive emissions inventory. 
+                        It is used to support air quality modeling and other activities within the Air Toxics Program. 
+                        The 2014 NEI, after review by State, Local, and Tribal agencies, was used as input to the AERMOD and 
+                        CMAQ models to generate ambient concentrations.  
+                    </p>
+                    <div id="ejchartNode1" class="chart"></div>    
+                    <br/>
+                    
+                    <center><div id="ejlegendNode1" class="legend"></div></center>
+                    <div id="ejTableNode1" class="gridtable"></div>
+                    <br />
+                    <br />
+                    <div id="notediv1" class="note"></div>
+                    <br />
+                    <br />
+                    <br />
+                    </div>
+                
+                <div id="menu1" class="tab-pane fade">
+                    <br />
+                    <p>
+                        The ambient concentrations were used as input to the inhalation exposure model (HAPEM7) to generate exposure concentrations.
+                        Exposure modeling is an important step in this assessment because it takes into account that people move from one location to another 
+                        (e.g., from outside environments to inside environments).  
+                    </p>
+                
+                    <div id="ejchartNode2" class="chart"></div>
+                    <br />
+                    <center><div id="ejlegendNode2" class="legend"></div></center>
+                    <div id="ejTableNode2" class="gridtable"></div>
+                    <br />
+                    <br />
+                    <!-- <div id="notediv2" class="note"></div> -->
+                    <br />
+                    <br />
+                    <br />
+                </div>
+              
+                <div id="menu2" class="tab-pane fade">
+                    <br />
+                    <p>
+                        These data were sourced from U.S. EPA <a href='https://www.epa.gov/national-air-toxics-assessment' target='_blank'>2014 National Air Toxics Assessment</a> (NATA). NATA calculates these air toxics concentrations and risks at the census tract level. It only includes outdoor sources of pollutants.
+                        
+                    </p>
+                    <div>
+                        <div style='float:left; margin-right:9px'><input type="radio" name="risktype" value="amb_conc" checked>Ambient Concentrations</div>
+                        <div style='float:left; margin-right:9px'><input type="radio" name="risktype" value="cancer">Cancer Risk<sup>1</sup></div>
+                        <div style='float:left; margin-right:9px'><input type="radio" name="risktype" value="resp">Non-Cancer Respiratory Risk</div>
+                        <div><input type="radio" name="risktype" value="neuro">Non-Cancer Neurological Risk</div>
+                    </div>
+                    <br />
+                    <div id="notediv2" class="note"></div>
+                    <br />    
+                    <div id="ejchartNode3-1" class="chart"></div>
+                    <div id="ejchartNode3-2" class="chart"></div>
+                    <div id="ejchartNode3-3" class="chart"></div>
+                    <div id="ejchartNode3-4" class="chart"></div>
+                    <br />
+                    <center>
+                        <div id="ejlegendNode3-1" class="legend"></div>
+                        <div id="ejlegendNode3-2" class="legend" style="display: none;"></div>
+                        <div id="ejlegendNode3-3" class="legend" style="display: none;"></div>
+                        <div id="ejlegendNode3-4" class="legend" style="display: none;"></div>
+                    </center>
+                    <div id="ejTableNode3-1" class="gridtable"></div>
+                    <div id="ejTableNode3-2" class="gridtable"></div>
+                    <div id="ejTableNode3-3" class="gridtable"></div>
+                    <div id="ejTableNode3-4" class="gridtable"></div>
+                    
+                    <div id="notediv3" class="note"></div>
+                    <br />
+                    <br />
+                    <br />
+                </div>
+              
+                <div id="menu3" class="tab-pane fade">
+                    <br/>
+                    <p style='font-style:italic'>These data are selected demographics from the 2012-2016 American Community Survey.
+                    </p>
+                    
+                    <div id="ejchartNode4" class="chart"></div>
+                    <br />
+                    <center><div id="ejlegendNode4" class="legend"></div></center>
+                    <div id="ejTableNode4" class="gridtable"></div>
+                    <br>
+                    <div id="notediv4" class="note"></div>
+                    <br />
+                    
+                    <br />
+                </div>
+                    
+                <div id="menu4" class="tab-pane fade">
+                    <br/>
+                    <div id="gridDiv" style="width: 100%; height: 500px;"></div>
+                    
+                    <div id="notediv5" class="note"></div>
+                    <br /><br />
+                </div>
+            </div>
         </div>
-      </div>
-  </body>
+    </body>
 </html>
 
