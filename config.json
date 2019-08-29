@@ -248,7 +248,7 @@
                 "placeholderIndex": 1,
                 "id": "widgets_CompareMyArea",
                 "name": "CompareMyArea",
-                "label": "Compare my Area",
+                "label": "Compare My Area",
                 "version": "1.3",
                 "uri": "widgets/CompareMyArea/Widget",
                 "config": "widgets/CompareMyArea/config.json"

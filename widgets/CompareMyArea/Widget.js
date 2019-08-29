@@ -77,7 +77,7 @@ function(
      }, this.searchNode);
      search.startup();
      this.own(on(search,"select-result", lang.hitch(this, this.addGraphic)));    
-     this.idtype = "tract";
+     this.idtype = "watershed";
      if (this.map.getLayer("CMALayer")) {
         this.CMALayer = this.map.getLayer("CMALayer");
     } else {
@@ -203,7 +203,7 @@ console.log("evtid: " + evtid)
                             var attr = {"idvalue": idvalue, "idtype": itype, "name": iname};
                             graphic.attributes = attr;
                             var tinfoTemplate = new esri.InfoTemplate();
-                            tinfoTemplate.setTitle("Chart or Report");
+                            tinfoTemplate.setTitle("Compare My Area");
                             tinfoTemplate.setContent(lang.hitch(wobj,wobj.SetDesc));
                             graphic.setInfoTemplate(tinfoTemplate);
                             wobj._showInfoWin(graphic);
@@ -213,7 +213,11 @@ console.log("evtid: " + evtid)
                     }
     
                     
+                } else {
+                  console.log("Did not find a feature.");
+                  wobj._hideloading();
                 }
+
             },
             function (error) {
                 console.log("error occurred when identify layers: " + error);
@@ -263,13 +267,15 @@ console.log("evtid: " + evtid)
              var attr = {"idvalue": idvalue, "idtype": itype, "name": ""};
              graphic.attributes = attr;
              var tinfoTemplate = new esri.InfoTemplate();
-             tinfoTemplate.setTitle("Chart or Report");
+             tinfoTemplate.setTitle("Compare My Area");
              tinfoTemplate.setContent(lang.hitch(wobj,wobj.SetDesc));
              graphic.setInfoTemplate(tinfoTemplate);
              wobj._showInfoWin(graphic);
              wobj._hideloading();
          } else {
-             console.log("Did not find a feature.");
+            console.log("Did not find a feature.");
+            wobj._hideloading();
+             
          }
      }, function(err){
          wobj._hideloading();
