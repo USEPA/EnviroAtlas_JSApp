@@ -542,13 +542,20 @@ define([
         	var topLayerChkbox = document.getElementById(window.layerTitlePrefix + window.topLayerID);
         	if (topLayerChkbox != null) {
         		topLayerChkbox.style['font-weight'] = '400';
-        	}        	
+        	}     
+        	if (window.topLayerID.indexOf("eaLyrDEMNum_") >= 0) {
+                dynamicLayerElem = document.getElementById("map_" + window.topLayerID);
+                if (dynamicLayerElem != null){
+                    dynamicLayerElem.style.zIndex = "0";//with 0 z-index, the layer will be drawing at bottom
+                }
+            }   	
         }
         window.topLayerID = this._layerInfo.id;
         document.getElementById(window.layerTitlePrefix + this._layerInfo.id).style['font-weight'] = 'bold';
         isDynamicLayer = false;
         isTiledLayer = false;
         isImageLayer = false;
+        isDemographicLayer = false;
 		if(lyr){
 			for (ii in window.dynamicLayerNumber) {
 				eachDynamicLyrId = window.layerIdPrefix + window.dynamicLayerNumber[ii];
@@ -589,7 +596,10 @@ define([
 					}
 				}
 		  	}		  	
-			if ((isDynamicLayer == true)||(isTiledLayer == true)||(isImageLayer == true)) {
+            if (this._layerInfo.id.indexOf("eaLyrDEMNum_") >= 0) {
+                isDemographicLayer = true;
+            }
+			if ((isDynamicLayer == true)||(isTiledLayer == true)||(isImageLayer == true)||(isDemographicLayer == true)) {
      			document.getElementById("map_" + this._layerInfo.id).style.zIndex = "1";
 	     	} 	
 	     	else {
