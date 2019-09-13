@@ -521,156 +521,159 @@ button {
             if (workobj.fields)  {
                 var chartobj = workobj.fields;
                 var s =workobj.divid;
-                var ctitle = workobj.description;
-                var unitstr = workobj.unit;
-                var tstr = workobj.xtitle;
-                var legendid = "ejlegendNode" + s;
-                var chartid = "ejchartNode" + s;
 
-                var chartTract = [];
-                var chartCounty = [];
-                var chartState = [];
-                var chartLabels = [];
-                for (c=(Object.keys(chartobj).length)-1; c>=0; c--) {
-                //for (var c in chartobj) {
-                    var obj = chartobj[Object.keys(chartobj)[c]];
-                    if (!(obj.cumulate)) {
-                        var ldesc = obj["description"];
-                       
-                        chartLabels.push(ldesc);
-                        chartTract.push(Number(obj["tract"]));
-                        chartCounty.push(Number(obj["county"]));
-                        chartState.push(Number(obj["state"]));
-                        //console.log(ldesc + ": " +obj["tract"]);
-                    }
-
-                }
-                
-
-
-                chartDataObj = {
-                    "tractVals": chartTract,
-                    "countyVals": chartCounty,
-                    "stateVals": chartState,
-                    "labels": chartLabels
-                };
-                
-
-                var xLabels = [];
-                for (var i = 0; i < chartDataObj.labels.length; i++) {
-                    xLabels.push({ value: i + 1, text: chartDataObj.labels[i] });
-                }
-
-                levelegObj = {
-                    tract: { color: "#ff9966", highlight: "#ff5500", label: "Tract (" + tractid + ")"},
-                    county: { color: "#99cc66", highlight: "#557733", label: "County (" + nataLayers["county"].name + ")" },
-                    state: { color: "#3399ff", highlight: "#2266BB", label: "State (" + nataLayers["state"].name + ")" }
-
-                }
-
-                chart = new Chart(chartid, {
-                    title: ctitle,
-                    titlePos: "top",
-                    titleGap: 0,
-                    titleFont: "normal normal normal 12pt Tahoma",
-                    titleFontColor: "black",
-                    htmlLabels: false,
-                    margins: { l: 0, t: 0, r: 0, b: 0 }
-
-                });
-
-                //main chart
-                chart.addPlot("default", {
-                    type: ClusteredBars,
-                    markers: true,
-                    gap: 5
-                });
-                //background lines on chart
-                chart.addPlot("grid", { type: dojox.charting.plot2d.Grid,
-                    hMajorLines: false,
-                    hMinorLines: false,
-                    vMajorLines: true,
-                    vMinorLines: false,
-                    width: 400,
-                    majorVLine: { color: "#D3D3D3", width: 1 },
-                    renderOnAxis: false
-                });
-
-                
-                chart.addAxis("x", { title: unitstr,  htmlLabels: false, titleFont: "normal normal normal 9pt Tahoma", vertical: false,min: 0, titleOrientation: 'away'}); //gridline fix: set max to 101 and fixUpper to marginsnor ticks. 100 cuts off top grid line. 101 adds bit of padding.
-                chart.addAxis("y", { title: tstr, htmlLabels: false, titleOrientation: "away", titleFont: "normal normal normal 9pt Tahoma", labels: xLabels, dropLabels: false, rotation: 0, font: "normal normal normal 7pt Verdana", vertical: true, fontColor: "#000000", majorTick: { length: 0 }, minorTick: { length: 0 }, majorTickStep: 1, minorTickStep: 0, minorLabels: false, titleOrientation: 'axis' }); //set major tick to 1, minor to 0 so draws every step of data but doesn't fill in decimals between integers.
+                setTimeout(function () {
+                   var ctitle = workobj.description;
+                   var unitstr = workobj.unit;
+                   var tstr = workobj.xtitle;
+                   var legendid = "ejlegendNode" + s;
+                   var chartid = "ejchartNode" + s;
+   
+                   var chartTract = [];
+                   var chartCounty = [];
+                   var chartState = [];
+                   var chartLabels = [];
+                   for (c=(Object.keys(chartobj).length)-1; c>=0; c--) {
+                   //for (var c in chartobj) {
+                       var obj = chartobj[Object.keys(chartobj)[c]];
+                       if (!(obj.cumulate)) {
+                           var ldesc = obj["description"];
+                          
+                           chartLabels.push(ldesc);
+                           chartTract.push(Number(obj["tract"]));
+                           chartCounty.push(Number(obj["county"]));
+                           chartState.push(Number(obj["state"]));
+                           //console.log(ldesc + ": " +obj["tract"]);
+                       }
+   
+                   }
+                   
+   
+   
+                   chartDataObj = {
+                       "tractVals": chartTract,
+                       "countyVals": chartCounty,
+                       "stateVals": chartState,
+                       "labels": chartLabels
+                   };
+                   
+   
+                   var xLabels = [];
+                   for (var i = 0; i < chartDataObj.labels.length; i++) {
+                       xLabels.push({ value: i + 1, text: chartDataObj.labels[i] });
+                   }
+   
+                   levelegObj = {
+                       tract: { color: "#ff9966", highlight: "#ff5500", label: "Tract (" + tractid + ")"},
+                       county: { color: "#99cc66", highlight: "#557733", label: "County (" + nataLayers["county"].name + ")" },
+                       state: { color: "#3399ff", highlight: "#2266BB", label: "State (" + nataLayers["state"].name + ")" }
+   
+                   }
+   
+                   chart = new Chart(chartid, {
+                       title: ctitle,
+                       titlePos: "top",
+                       titleGap: 0,
+                       titleFont: "normal normal normal 12pt Tahoma",
+                       titleFontColor: "black",
+                       htmlLabels: false,
+                       margins: { l: 0, t: 0, r: 0, b: 0 }
+   
+                   });
+   
+                   //main chart
+                   chart.addPlot("default", {
+                       type: ClusteredBars,
+                       markers: true,
+                       gap: 5
+                   });
+                   //background lines on chart
+                   chart.addPlot("grid", { type: dojox.charting.plot2d.Grid,
+                       hMajorLines: false,
+                       hMinorLines: false,
+                       vMajorLines: true,
+                       vMinorLines: false,
+                       width: 400,
+                       majorVLine: { color: "#D3D3D3", width: 1 },
+                       renderOnAxis: false
+                   });
+   
+                   
+                   chart.addAxis("x", { title: unitstr,  htmlLabels: false, titleFont: "normal normal normal 9pt Tahoma", vertical: false,min: 0, titleOrientation: 'away'}); //gridline fix: set max to 101 and fixUpper to marginsnor ticks. 100 cuts off top grid line. 101 adds bit of padding.
+                   chart.addAxis("y", { title: tstr, htmlLabels: false, titleOrientation: "away", titleFont: "normal normal normal 9pt Tahoma", labels: xLabels, dropLabels: false, rotation: 0, font: "normal normal normal 7pt Verdana", vertical: true, fontColor: "#000000", majorTick: { length: 0 }, minorTick: { length: 0 }, majorTickStep: 1, minorTickStep: 0, minorLabels: false, titleOrientation: 'axis' }); //set major tick to 1, minor to 0 so draws every step of data but doesn't fill in decimals between integers.
             
                 
                 
-                chart.addSeries(levelegObj.tract.label, chartDataObj.tractVals, { stroke: 'white', fill: levelegObj.tract.color });
-                chart.addSeries(levelegObj.county.label, chartDataObj.countyVals, { stroke: 'white', fill: levelegObj.county.color });
-                chart.addSeries(levelegObj.state.label, chartDataObj.stateVals, { stroke: 'white', fill: levelegObj.state.color });
-
-                new dojox.charting.action2d.Highlight(chart, "default");
-                var pattern = "<span style='font-family:Verdana;font-size: 9px !important'><strong>{0}</strong><br>{1}:&nbsp;{2}</span>";
-                var tip = new dojox.charting.action2d.Tooltip(chart, "default", { text:
-                function (o) {
-                    return dojo.replace(pattern, [o.run.name, xLabels[o.index].text, o.y]);
-                }
-                });
-
-                chart.render();
-                var columnsLegend = new dojox.charting.widget.SelectableLegend({ chart: chart,series: chart.series}, legendid);
-
-                // var button = document.createElement('button');
-                //     button.innerHTML = 'Download';
-                //     button.title = 'Download the data';
-                //     button.onclick = function(){
-                //     download_csv('dgrid'+s);
-                //     return false;
-                // };
-                // dojo.byId("ejTableNode" + s).appendChild(button);
-                var tsubdata = {
-                    identifier: "trowid",
-                    items: []
-                };
-                var k = 1;
-                for (var c in workobj.fields) {
-                    var dobj = workobj.fields[c];
-                    // if (!(dobj.cumulate)) {
-                        var rowjson = {};
-                        rowjson["trowid"] = k;
-                        if (theme=='demog' && (!(dobj.cumulate))) {
-                            rowjson["desc"] = 'Percent ' + dobj["description"];
-                        } else {
-                           rowjson["desc"] = dobj["description"];
-                        }
-                        rowjson["tract"] = dobj["tract"];
-                        rowjson["county"] = dobj["county"];
-                        rowjson["state"] = dobj["state"];
-                        tsubdata.items.push(rowjson);
-                        k = k + 1
-                    // }
-                }
-
-                var tstore = new ItemFileWriteStore({ data: tsubdata });
-                var tlayout = [[
-                    //{ 'name': 'Row', 'field': 'trowid', 'width': '5%' },
-                    { 'name': 'Variable', 'field': 'desc', 'width': '50%' },
-                    { 'name': 'Tract (' + tractid +')', 'field': 'tract', 'styles': 'text-align:right;', 'width': '15%' },
-                    { 'name': 'County ('+ nataLayers["county"].name + ')', 'field': 'county', 'styles': 'text-align:right;', 'width': '15%' },
-                    { 'name': 'State ('+ nataLayers["state"].name + ')', 'field': 'state', 'styles': 'text-align:right;', 'width': '15%' }
-                ]];
-                var tgrid = new DataGrid({
-                    id: 'dgrid'+s,
-                    store: tstore,
-                    structure: tlayout,
-                    canSort:false,
-                    selectable:true,
-                    autoHeight: true
-                    //style: "width:98%",
-                    //escapeHTMLInData: false,
-                    //rowSelector: '20px'
-                });
-                tgrid.placeAt("ejTableNode" + s);
-                tgrid.startup();
-                tgrid.resize();
-                workobj.hasChart = true;
+                   chart.addSeries(levelegObj.tract.label, chartDataObj.tractVals, { stroke: 'white', fill: levelegObj.tract.color });
+                   chart.addSeries(levelegObj.county.label, chartDataObj.countyVals, { stroke: 'white', fill: levelegObj.county.color });
+                   chart.addSeries(levelegObj.state.label, chartDataObj.stateVals, { stroke: 'white', fill: levelegObj.state.color });
+   
+                   new dojox.charting.action2d.Highlight(chart, "default");
+                   var pattern = "<span style='font-family:Verdana;font-size: 9px !important'><strong>{0}</strong><br>{1}:&nbsp;{2}</span>";
+                   var tip = new dojox.charting.action2d.Tooltip(chart, "default", { text:
+                   function (o) {
+                       return dojo.replace(pattern, [o.run.name, xLabels[o.index].text, o.y]);
+                   }
+                   });
+   
+                   chart.render();
+                   var columnsLegend = new dojox.charting.widget.SelectableLegend({ chart: chart,series: chart.series}, legendid);
+   
+                   // var button = document.createElement('button');
+                   //     button.innerHTML = 'Download';
+                   //     button.title = 'Download the data';
+                   //     button.onclick = function(){
+                   //     download_csv('dgrid'+s);
+                   //     return false;
+                   // };
+                   // dojo.byId("ejTableNode" + s).appendChild(button);
+                   var tsubdata = {
+                       identifier: "trowid",
+                       items: []
+                   };
+                   var k = 1;
+                   for (var c in workobj.fields) {
+                       var dobj = workobj.fields[c];
+                       // if (!(dobj.cumulate)) {
+                           var rowjson = {};
+                           rowjson["trowid"] = k;
+                           if (theme=='demog' && (!(dobj.cumulate))) {
+                               rowjson["desc"] = 'Percent ' + dobj["description"];
+                           } else {
+                              rowjson["desc"] = dobj["description"];
+                           }
+                           rowjson["tract"] = dobj["tract"];
+                           rowjson["county"] = dobj["county"];
+                           rowjson["state"] = dobj["state"];
+                           tsubdata.items.push(rowjson);
+                           k = k + 1
+                       // }
+                   }
+   
+                   var tstore = new ItemFileWriteStore({ data: tsubdata });
+                   var tlayout = [[
+                       //{ 'name': 'Row', 'field': 'trowid', 'width': '5%' },
+                       { 'name': 'Variable', 'field': 'desc', 'width': '50%' },
+                       { 'name': 'Tract (' + tractid +')', 'field': 'tract', 'styles': 'text-align:right;', 'width': '15%' },
+                       { 'name': 'County ('+ nataLayers["county"].name + ')', 'field': 'county', 'styles': 'text-align:right;', 'width': '15%' },
+                       { 'name': 'State ('+ nataLayers["state"].name + ')', 'field': 'state', 'styles': 'text-align:right;', 'width': '15%' }
+                   ]];
+                   var tgrid = new DataGrid({
+                       id: 'dgrid'+s,
+                       store: tstore,
+                       structure: tlayout,
+                       canSort:false,
+                       selectable:true,
+                       autoHeight: true
+                       //style: "width:98%",
+                       //escapeHTMLInData: false,
+                       //rowSelector: '20px'
+                   });
+                   tgrid.placeAt("ejTableNode" + s);
+                   tgrid.startup();
+                   tgrid.resize();
+                   workobj.hasChart = true;
+                }, 3000);
             }
         }
         function download_csv(gridid) {
