@@ -187,7 +187,7 @@ var _config = {
                 'PCT_LOWINC':{'description':'Low Income (<2x poverty level)'},
                 'PCT_AGE_LT5':{'description':'Less than age 5'},
                 'PCT_AGE_LT18':{'description':'Less than age 18'},
-                'PCT_AGE_GT64':{'description':'Less than age 64'},
+                'PCT_AGE_GT64':{'description':'Greater than age 64'},
                 'PCT_EDU_LTHS':{'description':'Greater than age 25 with less than a H.S. degree'},
                 'PCT_LINGISO':{'description':'Linguistically Isolated Households'},
                 'PCT_AMERIND':{'description':'American Indian and Alaskan Native'},
