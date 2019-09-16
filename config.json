@@ -256,8 +256,6 @@
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
-<<<<<<< HEAD
-=======
                 "id": "widgets_CompareMyArea",
                 "name": "CompareMyArea",
                 "label": "Compare My Area",
@@ -274,7 +272,6 @@
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
->>>>>>> 91066435... CompareMyArea redesign
                 "id": "widgets_HucNavigation_35",
                 "name": "HucNavigation",
                 "label": "HUC Navigation",
@@ -283,7 +280,7 @@
                 "config": "widgets/HucNavigation/config.json"
             }, {
                 "position": {
-                    "left": 445,
+                    "left": 495,
                     "top": 5,
                     "width": 440,
                     "height": 410,
@@ -298,7 +295,7 @@
                 "config": "widgets/Raindrop/config.json"
             }, {
                 "position": {
-                    "left": 495,
+                    "left": 545,
                     "top": 5,
                     "width": 380,
                     "height": 410,
@@ -313,7 +310,7 @@
                 "config": "widgets/ElevationProfile/config.json"
             }, {
                 "position": {
-                    "left": 545,
+                    "left": 595,
                     "top": 5,
                     "width": 380,
                     "height": 410,
