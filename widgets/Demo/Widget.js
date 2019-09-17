@@ -115,7 +115,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 newlink.setAttribute('class', 'exit_button');
                 newlink.setAttribute('onclick', 'selfDemo._endTour()');
                 newlink.innerHTML = '&#10006';
-                newlink.setAttribute('title', '&#10006');
+                newlink.setAttribute('title', 'close');
                 newDiv.appendChild(newlink);
                 helpContent.domNode.insertBefore(newDiv, helpContent.domNode.firstChild);
 
@@ -180,7 +180,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 newlink.setAttribute('class', 'exit_button');
                 newlink.setAttribute('onclick', 'selfDemo._endTour()');
                 newlink.innerHTML = '&#10006';
-                newlink.setAttribute('title', '&#10006');
+                newlink.setAttribute('title', 'close');
                 newDiv.appendChild(newlink);
                 helpContent.domNode.insertBefore(newDiv, helpContent.domNode.firstChild);
 
@@ -225,7 +225,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 newlink.setAttribute('class', 'exit_button');
                 newlink.setAttribute('onclick', 'selfDemo._endTour()');
                 newlink.innerHTML = '&#10006';
-                newlink.setAttribute('title', '&#10006');
+                newlink.setAttribute('title', 'close');
                 newDiv.appendChild(newlink);
                 helpContent.domNode.insertBefore(newDiv, helpContent.domNode.firstChild);
 
