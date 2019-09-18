@@ -2,7 +2,7 @@ define(
 [],
 function() {
 
-    var natamapservice = "https://leb.epa.gov/arcgis/rest/services/Other/CMA_Air_Tosics/MapServer"; 
+    var natamapservice = "https://leb.epa.gov/arcgis/rest/services/Other/CMA_Air_Toxics/MapServer"; 
     //var natamapservice = "https://gis8.saic.com/arcgis/rest/services/NATA/NATA/MapServer";    //error for tract 
     var watershedmapservice = "https://leb.epa.gov/arcgis/rest/services/Other/CMA_Landscape/MapServer";
     //var watershedmapservice = "https://gis8.saic.com/arcgis/rest/services/NATA/watershed/MapServer";//error for watershed
