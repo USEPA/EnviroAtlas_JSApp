@@ -191,7 +191,7 @@ define([
     window.topicDicPSI["EPA Regulated Facilities"] = "RF";
     //window.topicDicPSI["EPA NATA"] = "NATA";
     window.topicDicPSI["Impaired Waters"] = "IW";
-	window.topicDicPSI["EPA NATA"] = "NATA";
+	window.topicDicPSI["National Air Toxics Assessment"] = "NATA";
     window.topicDicPSI["Pollutants: Other"] = "PO";
     window.topicDicPSI["Pollutants: Nutrients"] = "PN";     
     
