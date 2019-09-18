@@ -16,12 +16,12 @@
     </div>
     <div id="load-file-panel">
         <a href="#" class="link-btn" data-dojo-attach-point="loadFromFileButton" data-dojo-attach-event="onclick:onLoadFromFileButtonClicked">Load from file</a>
-        <a href="#" class="link-btn" data-dojo-attach-point="saveToFileButton" data-dojo-attach-event="onclick:onSaveToFileButtonClicked">Save to file</a>
-        <a href="#" class="link-btn" data-dojo-attach-point="saveSingleSession" style="display: none">Save single session to file</a>
+        <a href="#" class="link-btn"  target="_blank" data-dojo-attach-point="saveToFileButton" data-dojo-attach-event="onclick:onSaveToFileButtonClicked">Save to file</a>
+        <a href="#" class="link-btn" target="_blank" data-dojo-attach-point="saveSingleSession" style="display: none">Save single session to file</a>
     </div>
     <!-- hidden form to return file to save -->
     <!-- clientside download is not supported in all browsers http://caniuse.com/#search=download -->
-    <form action="" method="post" style="display:none" data-dojo-attach-point="saveToFileForm">
+    <form action="" method="post" target="_blank"  data-dojo-attach-point="saveToFileForm">
         <input type="hidden" name="filename" value="" data-dojo-attach-point="saveToFileName">
         <input type="hidden" name="content" value="" data-dojo-attach-point="saveToFileContent">
     </form>

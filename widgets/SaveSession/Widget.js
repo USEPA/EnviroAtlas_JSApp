@@ -477,18 +477,27 @@ define(['dojo/_base/declare',
              */
             onSaveToFileButtonClicked: function (e) {
 
+
                 if (!this.config.useServerToDownloadFile) {
                     // skipping since there is no url to submit to
                     console.log('SaveSession :: onSaveToFileButtonClicked :: saveToFileForm submit canceled.');
                     return;
                 }
+                
                 var sessionString = JSON.stringify(this.sessions);
                 // update form values
-                this.saveToFileName.value = this.config.fileNameForAllSessions;
+                
+                /*this.saveToFileName.value = this.config.fileNameForAllSessions;
                 this.saveToFileContent.value = sessionString;
-
                 // trigger the post to server side
-                this.saveToFileForm.submit();
+                this.saveToFileForm.submit();*/
+                var text2 = new Blob([sessionString], { type: 'text/csv'});
+                var down2 = document.createElement("a");
+                down2.download = this.config.fileNameForAllSessions;//"simple.csv";
+                down2.href = window.URL.createObjectURL(text2);
+                down2.addEventListener("onclick", function(){ if (navigator.msSaveOrOpenBlob) {navigator.msSaveOrOpenBlob(text2,this.config.fileNameForAllSessions); return false;}});
+                document.body.appendChild(down2);
+                down2.innerText="download file";               
 
                 console.log('SaveSession :: onSaveToFileButtonClicked :: end');
             },
