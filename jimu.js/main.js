@@ -109,6 +109,7 @@ define([
 	window.matadata = "https://edg.epa.gov/metadata/catalog/search/resource/details.page";//?uuid=%7BBDF514A6-05A8-400D-BF3D-030645461334%7D";
     
     window.bFirstLoadFilterWidget = true;
+    window.cmaMapPoint = null;
     window.allLayerNumber = [];
     window.featureLyrNumber = [];
     window.nationalLayerNumber = [];

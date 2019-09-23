@@ -89,12 +89,15 @@ function(
     },
    startup: function() {
      this.inherited(arguments);     
+     window.cmaMapPoint = null;
    },
    clickAction: function(evt) {
        
         var evtid = evt.target.id;
 console.log("evtid: " + evtid)
         if (evtid == "map_gc")  {
+            
+            window.cmaMapPoint = evt.mapPoint;
         
             if (this.idtype == "watershed") {
                 this.identifyLayers(evt.mapPoint);
@@ -105,6 +108,13 @@ console.log("evtid: " + evtid)
    },
    _changetype: function(e) {
     this.idtype = e.target.value;
+    if (window.cmaMapPoint != null) {
+        if (this.idtype == "watershed") {
+            this.identifyLayers(window.cmaMapPoint);
+        } else {
+            this.queryLayers(window.cmaMapPoint);
+        }
+    }
    },
    addGraphic: function(evt) {
     
