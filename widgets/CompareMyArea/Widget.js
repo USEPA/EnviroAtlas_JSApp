@@ -121,6 +121,7 @@ console.log("evtid: " + evtid)
     if(evt.result){
         this.CMALayer.clear();
         var epoint = evt.result.feature.geometry;
+        window.cmaMapPoint = epoint;
         //this.map.setExtent(evt.result.extent.expand(1.25), true);
         console.log("type: " + this.idtype)
         if (this.idtype == "watershed") {
