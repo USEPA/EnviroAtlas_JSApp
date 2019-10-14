@@ -108,7 +108,7 @@ define([
 
           //html.addClass(this.btnNext, this._cornerBottom);
         }else{
-          html.addClass(this.domNode, this._horizontalClass);
+          //html.addClass(this.domNode, this._horizontalClass);
           //html.addClass(this.btnNext, this._floatClass);
           //html.addClass(this.btnNext, this._cornerTrailing);
         }
