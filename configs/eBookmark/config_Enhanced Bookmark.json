@@ -143,6 +143,17 @@
           }
         },
         {
+          "name": "Los Angeles, CA",
+          "extent": {
+            "xmax": -13055000,
+            "xmin":-13281000,
+            "ymax": 4165000,
+            "ymin": 3920000,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },        {
           "name": "Memphis, TN",
           "extent": {
             "xmax": -9857488,
@@ -286,7 +297,19 @@
             }
           }
         },
-	{
+		{
+          "name": "Saint Louis, MO",
+          "extent": {
+            "xmax": -9960000,
+            "xmin": -10150000,
+            "ymax": 4733000,
+            "ymin": 4588000,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+		{
           "name": "Salt Lake City, UT",
           "extent": {
             "xmax": -12392572.9000,
