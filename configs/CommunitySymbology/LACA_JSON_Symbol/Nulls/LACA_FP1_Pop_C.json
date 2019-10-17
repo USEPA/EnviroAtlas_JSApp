@@ -1,0 +1,164 @@
+{
+    "field": "FP1_Pop_C",
+    "classificationMethod": "esriClassifyQuantile",
+    "classBreakInfos": [
+        {
+            "classMaxValue": -99999,
+            "symbol": {
+                "color": [
+                    204,
+                    204,
+                    204,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "No Floodplain Area or No People in Block Group"
+        },
+        {
+            "classMaxValue": 0.41999998688697817,
+            "symbol": {
+                "color": [
+                    255,
+                    255,
+                    128,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "0"
+        },
+        {
+            "classMaxValue": 8.979999542236329,
+            "symbol": {
+                "color": [
+                    113,
+                    235,
+                    47,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "1 - 9"
+        },
+        {
+            "classMaxValue": 29.65999984741211,
+            "symbol": {
+                "color": [
+                    61,
+                    184,
+                    104,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "10 - 30"
+        },
+        {
+            "classMaxValue": 87.68000030517578,
+            "symbol": {
+                "color": [
+                    33,
+                    110,
+                    158,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "31 - 88"
+        },
+        {
+            "classMaxValue": 1787.0,
+            "symbol": {
+                "color": [
+                    12,
+                    16,
+                    120,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "89 - 1787"
+        }
+    ],
+    "type": "classBreaks",
+    "minValue": -99999.0
+}

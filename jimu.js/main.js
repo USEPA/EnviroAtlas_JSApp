@@ -224,6 +224,7 @@ define([
     window.communityDic["DNC"]= "Durham, NC";
     window.communityDic["FCA"] = "Fresno, CA";
     window.communityDic["GBWI"] = "Green Bay, WI";
+	window.communityDic["LACA"] = "Los Angeles, CA";
     window.communityDic["MTN"] = "Memphis, TN";
     window.communityDic["MWI"] = "Milwaukee, WI";
     //window.communityDic["MSPMN"] = "Minneapolis/St. Paul, MN";
@@ -237,8 +238,9 @@ define([
     window.communityDic["PitPA"] = "Pittsburgh, PA";
     window.communityDic["PME"] = "Portland, ME";
     window.communityDic["POR"] = "Portland, OR";
+	window.communityDic["SLMO"] = "Saint Louis, MO";
+	window.communityDic["SLCUT"] = "Salt Lake City, UT";
     window.communityDic["SonCA"] = "Sonoma County, CA";
-  	window.communityDic["SLCUT"] = "Salt Lake City, UT";
     window.communityDic["TFL"] = "Tampa, FL";
     window.communityDic["VBWVA"] = "Virginia Beach - Williamsburg, VA";
     window.communityDic["WDC"] = "Washington, DC";

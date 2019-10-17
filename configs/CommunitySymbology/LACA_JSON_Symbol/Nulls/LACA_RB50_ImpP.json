@@ -1,0 +1,190 @@
+{
+    "field": "RB50_ImpP",
+    "classificationMethod": "esriClassifyQuantile",
+    "classBreakInfos": [
+        {
+            "classMaxValue": -99999,
+            "symbol": {
+                "color": [
+                    204,
+                    204,
+                    204,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "No Buffer Area"
+        },
+        {
+            "classMaxValue": -99998,
+            "symbol": {
+                "color": [
+                    156,
+                    156,
+                    156,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "Block Group Beyond Analysis Extent"
+        },
+        {
+            "classMaxValue": 20.979999542236329,
+            "symbol": {
+                "color": [
+                    255,
+                    255,
+                    128,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "0 - 21"
+        },
+        {
+            "classMaxValue": 45.5,
+            "symbol": {
+                "color": [
+                    113,
+                    235,
+                    47,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "22 - 46"
+        },
+        {
+            "classMaxValue": 59.33000183105469,
+            "symbol": {
+                "color": [
+                    61,
+                    184,
+                    104,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "47 - 59"
+        },
+        {
+            "classMaxValue": 71.19999694824219,
+            "symbol": {
+                "color": [
+                    33,
+                    110,
+                    158,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "60 - 71"
+        },
+        {
+            "classMaxValue": 100.0,
+            "symbol": {
+                "color": [
+                    12,
+                    16,
+                    120,
+                    255
+                ],
+                "style": "esriSFSSolid",
+                "type": "esriSFS",
+                "outline": {
+                    "color": [
+                        110,
+                        110,
+                        110,
+                        255
+                    ],
+                    "width": 1,
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS"
+                }
+            },
+            "description": "",
+            "label": "72 - 100"
+        }
+    ],
+    "type": "classBreaks",
+    "minValue": -99999.0
+}
