@@ -128,10 +128,8 @@ define(['dojo/_base/declare',
         _color: null,
         _outline: null,
         _width: null,
-        _sliderValueChange: null,
         _symbolPointForPolygon: null,
         _bPolygonAsPoint: null,
-        _bClassificationChanged: null,
         _bSizeUpByValuePolygonAsPoint: null,
         _origSymbol: null,
         featureLayerStatistics: null,
@@ -179,7 +177,6 @@ define(['dojo/_base/declare',
         //startup: function () {
         	_nBreaks = 0;
         	_bPolygonAsPoint = false;
-        	_bClassificationChanged = false;
             selfDynamicSymbology = this;
             _busy = busyIndicator.create("esri-colorinfoslider-container");
 
@@ -418,18 +415,7 @@ define(['dojo/_base/declare',
 		
 		                //get Histogram and Stats
 		                selfDynamicSymbology._getHistoAndStats(geoenrichedFeatureLayer.renderer, null);
-		
-		                //on change event for slider
-		                dynamicSymbology.slider.on("change", function (sliderValueChange) {
-		                	_sliderValueChange = sliderValueChange;
-		                    //change classification dropdown to manual
-		                    if (_bClassificationChanged == true) {
-		                    	_bClassificationChanged = false;
-		                    } else {
-		                    dynamicSymbology.classSelect.set('value', 'manual');
-		                    dynamicSymbology.isSmartMapping = false;	
-		                    }
-		                });
+
 	                } //if (_ClassificationMethod!=undefined)
 
 	                //set apply renderer button
@@ -462,17 +448,18 @@ define(['dojo/_base/declare',
                
             	//On Classification method change
 	            onClickHandle = on(dynamicSymbology.classSelect, "change", function (c) {
-	            	_bClassificationChanged = true;
 	                    _ClassificationMethod = c;
 	                    if (c != "manual") {
 	                        dynamicSymbology.isSmartMapping = true;
+	                    }
+	                    else {
+	                        dynamicSymbology.isSmartMapping = false;
 	                    }
 	                });
 	
 	            //On number of classes change
 	            dynamicSymbology.numberClasses.on("change", function (c) {
 	                _NumberOfClasses = c;
-	                _bClassificationChanged = true;
 	                dynamicSymbology.isSmartMapping = true;
 	            });
             } else {
@@ -517,6 +504,7 @@ define(['dojo/_base/declare',
 				  break;
 			 	}
 			}
+
             if ((dynamicSymbology.isSmartMapping == true)&&(_ClassificationMethod != undefined) ){
 
                 selfDynamicSymbology._updateSmartMapping2();
@@ -532,7 +520,8 @@ define(['dojo/_base/declare',
 	            	var maxMin = 0;
 	            	var index = 0;
 	            	var bValueGoingUp = true;
-	            	_sliderValueChange.forEach(function (b) {
+	            	
+	            	dynamicSymbology.slider.breakInfos.forEach(function (b) {
 	            		if (index == 1) {
 	            			if (b.minValue < minMin){
 	            				bValueGoingUp = false;
@@ -804,12 +793,10 @@ define(['dojo/_base/declare',
         },
 
         _clickSymbolStyler: function (evtSymbolStylerClick) {
-        	_bClassificationChanged = true;
         	if (evtSymbolStylerClick.selectorTarget != undefined) {
         		if (evtSymbolStylerClick.selectorTarget.tabIndex != undefined) {
         			if (evtSymbolStylerClick.selectorTarget.tabIndex == 0) {
         				_bSchemeColorsChanage = true;
-        				//_bClassificationChanged = true;
         			}         			
         		}        		
         	}
