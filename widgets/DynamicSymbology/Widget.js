@@ -450,9 +450,11 @@ define(['dojo/_base/declare',
 	            onClickHandle = on(dynamicSymbology.classSelect, "change", function (c) {
 	                    _ClassificationMethod = c;
 	                    if (c != "manual") {
+	                        dom.byId("dropDownButtonContainer").style.visibility = "visible";
 	                        dynamicSymbology.isSmartMapping = true;
 	                    }
 	                    else {
+	                        dom.byId("dropDownButtonContainer").style.visibility = "hidden";
 	                        dynamicSymbology.isSmartMapping = false;
 	                    }
 	                });
