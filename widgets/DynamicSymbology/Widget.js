@@ -744,6 +744,7 @@ define(['dojo/_base/declare',
                                 var oriRendererFromSaved = rendererJsonUtils.fromJson(window.hashRenderer[_layerID.replace(window.layerIdPrefix, "")]);
     
                                 geoenrichedFeatureLayer.setRenderer(oriRendererFromSaved);                                
+                                geoenrichedFeatureLayer.redraw();                               
                             });  
 
     				} else {
@@ -763,6 +764,7 @@ define(['dojo/_base/declare',
                                  var oriRendererFromSaved = rendererJsonUtils.fromJson(window.hashRenderer[_layerID.replace(window.layerIdPrefix, "")]);
     
                                 geoenrichedFeatureLayer.setRenderer(oriRendererFromSaved);                                  
+                                geoenrichedFeatureLayer.redraw();                            
                             });  		
     				} 
     				               
