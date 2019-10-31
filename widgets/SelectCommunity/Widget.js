@@ -115,7 +115,7 @@ function(declare,
     displayCommunitySelection: function() {
     	//this.addRowButton(prefixRadioCommunity + window.strAllCommunity, "community", "Combined Communities", "R");
     	var i = -1;
-    	var half = Math.ceil((Object.keys(window.communityDic).length / 2));
+    	var half = Math.ceil((Object.keys(window.communityDic).length / 2))-1;
 
     	for (var key in window.communityDic) {
     		if (i<half) {
@@ -126,7 +126,7 @@ function(declare,
     		i++;
     		this.addRowButton(prefixRadioCommunity + key, "community", window.communityDic[key], direction);
     	}
-    	this.addRowButton(prefixRadioCommunity + window.strAllCommunity, "community", "Combined Communities", "R");
+    	this.addRowButton(prefixRadioCommunity + window.strAllCommunity, "community", "Combined Communities", "L");
     	
     },
 
