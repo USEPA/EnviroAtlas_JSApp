@@ -90,6 +90,7 @@ define([
     window.toggleOnHucNavigation = false;
     window.toggleOnRainDrop = false;
     window.toggleOnElevation = false;
+    window.mapClickListenerForPopup = null;
     window.removeAllMessage = "removeAll";
     window.chkTopicPrefix = "ckTopic_";
     window.chkTopicPBSPrefix = "ckTopicPBS_";

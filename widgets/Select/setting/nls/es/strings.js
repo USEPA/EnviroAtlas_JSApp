@@ -3,5 +3,7 @@ define({
   "selectionMode": "Modo de selección interactivo",
   "partiallyWithin": "Parcialmente dentro",
   "whollyWithin": "Completamente dentro",
-  "allowExport": "Permitir exportación de entidades seleccionadas"
+  "allowExport": "Permitir exportación de entidades seleccionadas",
+  "layerToSelect": "Elegir qué capas están disponibles para seleccionar",
+  "includeRuntimeLayers": "Poder seleccionar capas generadas en tiempo de ejecución"
 });

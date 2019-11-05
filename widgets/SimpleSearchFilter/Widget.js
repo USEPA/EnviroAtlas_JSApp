@@ -109,7 +109,7 @@ define([
     	var communitySelected = "";
     	var bSimulatedClick = false;
     	var bSimulatedClickAddressed = true;
-    	var mapClickListenerForPopup;
+    	//var mapClickListenerForPopup;
     	var arrLayersToChangeSynbology = [];
     	var arrCategoryForAllScale = ["PSI", "PBS", "BNF"];
     	var clickEvent = null;
@@ -395,7 +395,8 @@ define([
 		var setClickEventForPopup = function(){    		
 				bSimulatedClickAddressed = false;
 				bSimulatedClick = false;
-	 			var mapClickListenerForPopup = connect.connect(selfSimpleSearchFilter.map, "onClick", function(evt) {
+				window.mapClickListenerForPopup = connect.connect(selfSimpleSearchFilter.map, "onClick", function(evt) {
+	 			//var mapClickListenerForPopup = connect.connect(selfSimpleSearchFilter.map, "onClick", function(evt) {
 	 				    if (!bSimulatedClick) {
 	 				    	bSimulatedClickAddressed = false;
 	 				    	previuosMapInfoFromFL = [];	
@@ -416,7 +417,7 @@ define([
 						if (bSimulatedClick) {
 			 				if (!bSimulatedClickAddressed) {
 					if ((window.toggleOnHucNavigation == true) || (window.toggleOnRainDrop == true)|| (window.toggleOnElevation == true)) {					
-						connect.disconnect(mapClickListenerForPopup);
+						connect.disconnect(window.mapClickListenerForPopup);
 					} 
 					else {
 						currentMapInfoFromDynamic = [];
@@ -2665,6 +2666,9 @@ define([
 				pm.showPanel(widget);  
 			}    
 	    },	
+        _onSelectByLinePolygon: function() {
+            this._onMapClickForPopup();
+        },
     _onAddLayersClick: function() {
         layersToBeAdded = "a";
 		for (var key in chkIdDictionary) {

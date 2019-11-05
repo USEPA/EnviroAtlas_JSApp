@@ -1,8 +1,97 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:widgets/Select/FeatureItem.html":'\x3cdiv\x3e\r\n  \x3cdiv class\x3d"feature-item-row"\x3e\r\n    \x3cdiv class\x3d"feature-icon" data-dojo-attach-point\x3d"iconNode"\x3e\x3c/div\x3e\r\n    \x3cdiv class\x3d"light-label label-node jimu-ellipsis" data-dojo-attach-point\x3d"nameNode"\x3e\x3c/div\x3e\r\n    \x3cdiv class\x3d"action-btn feature-action icon-more" title\x3d"${nls.showActions}"\r\n     data-dojo-attach-point\x3d"actionBtn"\x3e\x3c/div\x3e\r\n  \x3c/div\x3e\r\n\x3c/div\x3e'}});
-define("dojo/_base/declare dojo/_base/lang dojo/_base/html dojo/_base/event dojo/on dojo/dom-geometry dijit/_WidgetBase dijit/_TemplatedMixin dojo/text!./FeatureItem.html jimu/utils jimu/symbolUtils jimu/dijit/FeatureActionPopupMenu jimu/featureActions/PanTo jimu/featureActions/ShowPopup".split(" "),function(e,b,f,g,c,h,k,l,m,d,n,p,q,r){return e([k,l],{baseClass:"graphic-item",templateString:m,allowExport:!1,postCreate:function(){this.inherited(arguments);var a;this.featureLayer&&this.featureLayer.renderer&&
-this.featureLayer.renderer.getSymbol?a=this.featureLayer.renderer.getSymbol(this.graphic):this.graphic.symbol&&(a=this.graphic.symbol);a&&(a=n.createSymbolNode(a,{width:36,height:36}),f.place(a,this.iconNode));this.popupMenu=p.getInstance();a=this.featureLayer&&this.featureLayer.infoTemplate&&"function"===typeof this.featureLayer.infoTemplate.title?this.featureLayer.infoTemplate.title(this.graphic):this.graphic.attributes[this.displayField]||this.graphic.attributes[this.objectIdField];this.nameNode.innerHTML=
-a;this.nameNode.title=a;this.own(c(this.actionBtn,"click",b.hitch(this,this._showActions)));this.own(c(this.iconNode,"click",b.hitch(this,this._highlight)));this.own(c(this.nameNode,"click",b.hitch(this,this._highlight)))},_highlight:function(){var a=d.toFeatureSet([this.graphic]),b=new q({map:this.map});(new r({map:this.map})).onExecute(a);b.onExecute(a)},_showActions:function(a){g.stop(a);var c=d.toFeatureSet([this.graphic]);this.popupMenu.prepareActions(c,this.allowExport).then(b.hitch(this,function(){var b=
-h.position(a.target);this.popupMenu.show(b)}))}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define(['dojo/_base/declare',
+  'dojo/_base/lang',
+  'dojo/_base/html',
+  'dojo/_base/event',
+  'dojo/on',
+  'dojo/dom-geometry',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dojo/text!./FeatureItem.html',
+  'jimu/utils',
+  'jimu/symbolUtils',
+  'jimu/dijit/FeatureActionPopupMenu',
+  'jimu/featureActions/PanTo',
+  'jimu/featureActions/ShowPopup'
+], function(declare, lang, html, Event, on, domGeom, _WidgetBase, _TemplatedMixin,
+template, jimuUtils, symbolUtils, PopupMenu, PanToAction, ShowPopupAction) {
+  return declare([_WidgetBase, _TemplatedMixin], {
+    baseClass: 'graphic-item',
+    templateString: template,
+
+    allowExport: false,
+
+    postCreate: function() {
+      this.inherited(arguments);
+
+      // create icon
+      var symbol;
+      if(this.featureLayer && this.featureLayer.renderer && this.featureLayer.renderer.getSymbol) {
+        symbol = this.featureLayer.renderer.getSymbol(this.graphic);
+      } else if (this.graphic.symbol) {
+        symbol = this.graphic.symbol;
+      }
+
+      if(symbol) {
+        var iconDiv = symbolUtils.createSymbolNode(symbol, {width: 36, height: 36});
+        html.place(iconDiv, this.iconNode);
+      }
+
+      this.popupMenu = PopupMenu.getInstance();
+      var title;
+      if (this.featureLayer && this.featureLayer.infoTemplate &&
+        typeof this.featureLayer.infoTemplate.title === 'function') {
+        title = this.featureLayer.infoTemplate.title(this.graphic);
+      } else {
+        title = this.graphic.attributes[this.displayField] ||
+          this.graphic.attributes[this.objectIdField];
+      }
+      this.nameNode.innerHTML = title;
+      this.nameNode.title = title;
+
+      this.own(on(this.actionBtn, 'click', lang.hitch(this, this._showActions)));
+
+      this.own(on(this.iconNode, 'click', lang.hitch(this, this._highlight)));
+      this.own(on(this.nameNode, 'click', lang.hitch(this, this._highlight)));
+    },
+
+    _highlight: function() {
+      var featureSet = jimuUtils.toFeatureSet([this.graphic]);
+      var panToAction = new PanToAction({
+        map: this.map
+      });
+      var showPopupAction = new ShowPopupAction({
+        map: this.map
+      });
+
+      showPopupAction.onExecute(featureSet);
+      panToAction.onExecute(featureSet);
+    },
+
+    _showActions: function(event) {
+      Event.stop(event);
+
+      var featureSet = jimuUtils.toFeatureSet([this.graphic]);
+      this.popupMenu.prepareActions(featureSet, this.allowExport).then(lang.hitch(this, function() {
+        var position = domGeom.position(event.target);
+
+        this.popupMenu.show(position);
+      }));
+    }
+  });
+});
