@@ -3,8 +3,10 @@
   "selectionMode": "partial",
   "allowExport": true,
   "geometryTypes": [
+    "POLYLINE",
     "EXTENT",
     "CIRCLE",
+    "POLYGON",
     "FREEHAND_POLYGON"
   ]
 }
