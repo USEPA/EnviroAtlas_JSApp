@@ -178,7 +178,7 @@ SelectableLayerItem, FeatureItem, connect) {
         this.selectDijit.deactivate();
       }
 
-      document.getElementById("butSelectByLinePolygon").click();
+      document.getElementById("butInitClickEventForPopup").click();
 
     },
     onDestroy: function() {

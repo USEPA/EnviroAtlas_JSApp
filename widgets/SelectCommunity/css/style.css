@@ -29,7 +29,12 @@ td{
   width: 50%; 
   display:inline-block;
 }
-
+.communityTableCombined {
+  margin: 0px;
+  float: left; 
+  width: 100%; 
+  display:inline-block;
+}
 .selectCommunityHeader {
   font-weight: bold;
 }

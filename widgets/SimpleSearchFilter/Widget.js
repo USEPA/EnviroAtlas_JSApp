@@ -416,7 +416,7 @@ define([
 	 				    }
 						if (bSimulatedClick) {
 			 				if (!bSimulatedClickAddressed) {
-					if ((window.toggleOnHucNavigation == true) || (window.toggleOnRainDrop == true)|| (window.toggleOnElevation == true)) {					
+					if ((window.toggleOnHucNavigation == true) || (window.toggleOnRainDrop == true)) {					
 						connect.disconnect(window.mapClickListenerForPopup);
 					} 
 					else {
@@ -1986,7 +1986,7 @@ define([
 				this._onUpdateCommunityLayers();
 			}	
 			if (((name == 'ElevationProfile')||(name == 'Raindrop')||(name == 'HucNavigation'))&&(data.message == "mapClickForPopup")){
-				this._onMapClickForPopup();
+				setClickEventForPopup();
 			}		  
 		},
     displayCloseButton: function() {		
@@ -2634,7 +2634,7 @@ define([
 				}
             }
         }); // end of loadNationalMetadataJSON(function(response)
-        this._onMapClickForPopup();
+        setClickEventForPopup();
     },               
     onOpen: function(){						
     	setTimeout(lang.hitch(this, function() {
@@ -2666,8 +2666,8 @@ define([
 				pm.showPanel(widget);  
 			}    
 	    },	
-        _onSelectByLinePolygon: function() {
-            this._onMapClickForPopup();
+        initClickEventForPopup: function() {
+            setClickEventForPopup();
         },
     _onAddLayersClick: function() {
         layersToBeAdded = "a";
@@ -2738,9 +2738,7 @@ define([
 
         updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
      },
-     _onMapClickForPopup: function() {
-		  setClickEventForPopup();   	
-     },
+
      formatValue : function (value, key, data){
 
      	pow10 = Math.pow(10, numDecimalDigit);
