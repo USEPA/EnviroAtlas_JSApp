@@ -172,6 +172,12 @@ function(declare,
 
     onOpen: function(){
         console.log('onOpen');
+        var panel = this.getPanel();
+        var pos = panel.position;
+        pos.height = 540;
+        panel.setPosition(pos);
+        panel.panelManager.normalizePanel(panel);
+        
 	    if (window.communitySelected != window.strAllCommunity) {
 	    	commnunityWholeName = window.communityDic[communitySelected];
 	    	extentForCommunity = window.communityExtentDic[window.communityDic[communitySelected]];
