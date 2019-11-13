@@ -2384,7 +2384,10 @@ define([
 	        		bookmarkNational = currentBookmarkClass.items;	        		
         			var currentExtent = bookmarkNational[0].extent;
         			nExtent = Extent(currentExtent);
-        			selfSimpleSearchFilter.map.setExtent(nExtent);	        		
+        			if (window.extentFromURL == null){
+        			    selfSimpleSearchFilter.map.setExtent(nExtent);
+        			}
+       		
 	        	}
 	        }
 	    }); 

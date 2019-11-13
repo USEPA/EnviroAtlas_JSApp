@@ -258,6 +258,7 @@ define([
     window.changedExtentByOtherFrameYmin = null;
     window.changedExtentByOtherFrameYmax = null;   
     window.frameBeClicked = 1;
+    window.extentFromURL = null;
     window.communityMetadataDic = {};
     window.faildedEALayerDictionary = {};
     window.faildedOutsideLayerDictionary = {};
