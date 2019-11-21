@@ -312,6 +312,19 @@
                 },
                 "id": "widgets_Select_Widget_39"
             }, {
+                "name": "NavHuc",
+                "version": "2.5",
+                "uri": "widgets/NavHuc/Widget",
+                "position": {
+                    "left": 695,
+                    "top": 5,
+                    "width": 400,
+                    "height": 460,
+                    "relativeTo": "map"
+                },
+                "id": "widgets_NavHuc_Widget",
+        		"closeable": true
+            },{
                 "position": {
                     "left": 545,
                     "top": -40,
