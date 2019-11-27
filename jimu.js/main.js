@@ -259,6 +259,8 @@ define([
     window.changedExtentByOtherFrameYmax = null;   
     window.frameBeClicked = 1;
     window.extentFromURL = null;
+    window.eaLayerFromURL = null;
+    window.eaCommunityFromURL = null;
     window.communityMetadataDic = {};
     window.faildedEALayerDictionary = {};
     window.faildedOutsideLayerDictionary = {};

@@ -50,7 +50,8 @@ define([
      'esri/tasks/query',
 	 'esri/graphic',
 	 'esri/Color',
-	 'esri/renderers/ClassBreaksRenderer',     
+	 'esri/renderers/ClassBreaksRenderer',  
+	 'jimu/PanelManager',
 	 'dojo/_base/connect',
 	 'dojo/_base/html',
     'dijit/layout/AccordionContainer', 
@@ -102,6 +103,7 @@ define([
     graphic,
     Color,
     ClassBreaksRenderer,
+    PanelManager,
     connect,
     html) {
     	var singleLayerToBeAddedRemoved = "";
@@ -2642,11 +2644,38 @@ define([
     onOpen: function(){						
     	setTimeout(lang.hitch(this, function() {
 			_updateSelectableLayer();
-			/*document.getElementById("butInSearchFilterBox").onclick = function() {
-	            selfSimpleSearchFilter._onButFilterInSimpleSearchClick();
-	         
-	        };*/			
+	
         }), 2000);
+        
+        setTimeout(lang.hitch(this, function() {
+            if (window.eaLayerFromURL != null){
+                var layerId= window.eaLayerFromURL.split("_")[1];//eaId
+                var checkIdForLayer = window.chkSelectableLayer + layerId;
+                if ((chkIdDictionary.hasOwnProperty(checkIdForLayer)) && (document.getElementById(checkIdForLayer)!=null) ){
+                    document.getElementById(checkIdForLayer).click();     
+                }
+            }
+        }), 3000);
+        
+        if (window.eaCommunityFromURL != null){
+            var pm = PanelManager.getInstance();        
+            var widgetName = 'SelectCommunity';
+            var widgets = selfSimpleSearchFilter.appConfig.getConfigElementsByName(widgetName);
+            var pm = PanelManager.getInstance();
+            pm.showPanel(widgets[0]);
+            
+            var Commuinty= window.eaCommunityFromURL;
+            var radioButtonForCommuni = "radio_" + Commuinty;
+            setTimeout(lang.hitch(this, function() {            
+                if (document.getElementById(radioButtonForCommuni)!=null ){
+                    document.getElementById(radioButtonForCommuni).click();    
+                    //pm.closePanel(widgets[0]); 
+                }
+            }), 2500);
+        }
+
+
+
     },
 
                     
