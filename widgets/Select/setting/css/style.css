@@ -22,6 +22,7 @@
 }
 .jimu-widget-select-setting .inline > div {
   display: inline-block;
+  vertical-align: middle;
 }
 .jimu-widget-select-setting .label {
   color: #353535;
@@ -42,6 +43,12 @@
   position: relative;
   border: 1px solid #DBDBDB;
   border-radius: 1px;
+  color: #666;
+  font-size: 24px;
+  padding: 12px;
+}
+.jimu-widget-select-setting .drawing-tools-container .draw-item.point-icon {
+  padding: 12px 17px;
 }
 .jimu-rtl .jimu-widget-select-setting .drawing-tools-container .draw-item {
   float: right;
@@ -69,17 +76,8 @@
 .jimu-widget-select-setting .drawing-tools-container .draw-item.selected .draw-item-icon {
   display: block;
 }
-.jimu-widget-select-setting .draw-item.polyline {
-  background-image: url(../../../../jimu.js/css/images/draw_polyline.png);
-}
-.jimu-widget-select-setting .draw-item.extent {
-  background-image: url(../../../../jimu.js/css/images/draw_extent.png);
-}
-.jimu-widget-select-setting .draw-item.circle {
-  background-image: url(../../../../jimu.js/css/images/draw_circle.png);
-}
-.jimu-widget-select-setting .draw-item.polygon {
-  background-image: url(../../../../jimu.js/css/images/draw_polygon.png);
+.jimu-widget-select-setting .jimu-basic-layer-chooser-from-map-lite .check-box-div.jimu-state-disabled {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */

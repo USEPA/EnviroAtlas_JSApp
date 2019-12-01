@@ -19,10 +19,6 @@ define(['dojo/_base/declare',
     'dojo/on',
     'dojo/keys',
     'dojo/dnd/move',
-    'dijit/TooltipDialog',
-    'dijit/popup',
-    "dijit/registry",
-    'dojo/dom',
     'dijit/_TemplatedMixin',
     'jimu/BaseWidgetPanel',
     'jimu/utils',
@@ -30,10 +26,11 @@ define(['dojo/_base/declare',
     'dojo/touch'
   ],
   function(
-    declare, lang, html, on, keys, Move, TooltipDialog, popup, registry, dom, 
+    declare, lang, html, on, keys, Move,   
     _TemplatedMixin, BaseWidgetPanel, utils, ResizeHandle
   ) {
       var numberStops = null;
+      
 
     /* global jimuConfig */
     return declare([BaseWidgetPanel, _TemplatedMixin], {
@@ -75,7 +72,7 @@ define(['dojo/_base/declare',
 
       startup: function() {
         self = this;
-        tourDialogOnScreenWidget = null;
+        //tourDialogOnScreenWidget = null;
         var helpExist = false;
         
             for (var i=0, il=window.helpTour.length; i<il; i++) {
@@ -155,131 +152,7 @@ define(['dojo/_base/declare',
           evt.preventDefault();
         }
       },
-      _startTour: function(){
-          tourDialogOnScreenWidget = document.getElementById("tourDialog2");
-          if (tourDialogOnScreenWidget==null){
-              tourDialogOnScreenWidget = new TooltipDialog({
-                id: 'tourDialog2',
-                style: "width: 350px;",
-                content: "",
-              });
-          }
-           var overlayElement = document.getElementById("overlay");
-           if (overlayElement==null){
-                var overlay1 = dojo.create('div', {
-                  "class": "overlayOnScreenWidget",
-                  "id": "overlay"
-                }, dojo.byId('main-page'));
-           }           
-    
-           var overlay2Element = document.getElementById("overlay");
-           if (overlay2Element==null){
-                var overlay2 = dojo.create('div', {
-                  "class": "overlay2OnScreenWidget",
-                  "id": "overlay2"
-                }, dojo.byId('main-page'));
-           }
-    
-            //Close the tour main widget   
-            numberStops = window.helpTour.length;
-            for (i=0; i<numberStops; i++) {
-                var widgetName = window.helpTour[i].widgetName;
-                if (widgetName!=null){
-                    if (window.PanelId.toUpperCase().indexOf(widgetName.toUpperCase()) >= 0) {
-                        stop = i;
-                    }               
-                }            
-            }  
-            this._nextStop(stop);           
-        },
-    
-        _nextStop: function(stop){            
-            
-            if(tourDialogOnScreenWidget!=null){
-              popup.close(tourDialogOnScreenWidget);
-            }
-    
-            //change z-index to selected element
-            for (i=0; i<numberStops; i++) {
-                $('#'+window.helpTour[i].highlight).css('z-index', '');
-              }
-            if (window.helpTour[stop].highlight) {
-              $('#'+window.helpTour[stop].highlight).css('z-index', '998');
-            } 
-    
-            if (stop == 0) {
-              //Open to simple search widget
-              $('#widgets_SimpleSearchFilter_Widget_37').click();
-              $('#widgets_SimpleSearchFilter_Widget_37_min').click();
-              
-              
-    
-              nodeToHelp = window.helpTour[stop].node;
-              helpContent = "<div> \
-                              <a class='exit_button' onclick='self._endTour()'>&#10006</a> \
-                            </div>"+
-                            window.helpTour[stop].content.join("") +
-                            "<div> \
-                              <button type='button' onclick='self._nextStop("+ stop+1 +")'>Next &raquo;</button> \
-                            </div> \
-                            <div class='counter'>" + (stop+1).toString() +"/"+ numberStops.toString()+"</div>";
-              tourDialogOnScreenWidget.set("content", helpContent);
-    
-              
-            } else if (stop < numberStops -1) {       
-    
-              nodeToHelp = window.helpTour[stop].node;
-              helpContent = "<div> \
-                            <a class='exit_button' onclick='self._endTour()'>&#10006</a> \
-                          </div>"+
-                          window.helpTour[stop].content.join("");
-                        
-    
-              //Change tooltipdialog content
-              tourDialogOnScreenWidget.set("content", helpContent);
-    
-              } else {
-                nodeToHelp = window.helpTour[stop].node;
-                helpContent = "<div> \
-                            <a class='exit_button' onclick='self._endTour()'>&#10006</a> \
-                          </div>"+
-                          window.helpTour[stop].content.join("") +
-                          "<div> \
-                            <button type='button' onclick='self._nextStop("+ (stop-1).toString() +")'>&laquo Previous</button> \
-                            &nbsp \
-                            <button type='button' onclick='self._endTour()'>End</button> \
-                          </div> \
-                          <div class='counter'>" + (stop+1).toString() + "/" + numberStops.toString() + "</div>";
-    
-    
-                //Change tooltipdialog content
-                tourDialogOnScreenWidget.set("content", helpContent);   
-            }   
 
-             popup.open({
-                    popup: tourDialogOnScreenWidget,
-                    around: dom.byId(nodeToHelp),
-                    orient: window.helpTour[stop].orient,
-                    padding: {x:100, y:100}
-                    });    
-        },
-    
-        
-        _endTour: function(){
-            popup.close(tourDialogOnScreenWidget);
-            var pTourDialog = registry.byId('tourDialog2');
-            if (pTourDialog) {               
-               pTourDialog.destroyRecursive();
-            }         
-
-            dojo.destroy("overlay");
-            dojo.destroy("overlay2");
-            for (i=0; i<numberStops; i++) {
-                $('#'+window.helpTour[i].highlight).css('z-index', '');
-              }
-
-           console.log("End the Guided Tour");
-        },
       _onHelpBtnClicked: function(evt) {
         
 
@@ -291,7 +164,8 @@ define(['dojo/_base/declare',
         }
         
         window.PanelId = this.id;    
-        this._startTour();
+
+        utils.startTour();
       },
       _onCloseBtnClicked: function(evt) {
 

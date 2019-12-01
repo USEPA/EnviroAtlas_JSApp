@@ -20,36 +20,6 @@
       "expanded": false
     },
     {
-      "name": "Regional",
-      "items": [
-        {
-          "name": "SE Biodiversity",
-          "extent": {
-            "xmax": -6615000,
-            "xmin": -12324000 ,
-            "ymax": 5325000,
-            "ymin": 2624000,
-            "spatialReference": {
-              "wkid": 102100
-            }
-          }
-        },
-        {
-          "name": "SW Biodiversity",
-          "extent": {
-            "xmax": -11382000,
-            "xmin":-14237000  ,
-            "ymax": 5204000,
-            "ymin": 3854000,
-            "spatialReference": {
-              "wkid": 102100
-            }
-          }
-        }
-      ],
-      "expanded": false
-    },
-    {
       "name": "Community",
       "items": [
         {
@@ -173,6 +143,17 @@
           }
         },
         {
+          "name": "Los Angeles, CA",
+          "extent": {
+            "xmax": -13055000,
+            "xmin":-13281000,
+            "ymax": 4165000,
+            "ymin": 3920000,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },        {
           "name": "Memphis, TN",
           "extent": {
             "xmax": -9857488,
@@ -317,6 +298,18 @@
           }
         },
 	{
+          "name": "Saint Louis, MO",
+          "extent": {
+            "xmax": -9960000,
+            "xmin": -10150000,
+            "ymax": 4733000,
+            "ymin": 4588000,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+	{
           "name": "Salt Lake City, UT",
           "extent": {
             "xmax": -12392572.9000,
@@ -359,6 +352,18 @@
             "xmin": -8620047,
             "ymax": 4512000,
             "ymin": 4340990,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+        {
+          "name": "Washington, DC",
+          "extent": {
+            "xmax": -8509358,
+            "xmin": -8680509,
+            "ymax": 4789682,
+            "ymin": 4620208,
             "spatialReference": {
               "wkid": 102100
             }

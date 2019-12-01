@@ -50,7 +50,8 @@ define([
      'esri/tasks/query',
 	 'esri/graphic',
 	 'esri/Color',
-	 'esri/renderers/ClassBreaksRenderer',     
+	 'esri/renderers/ClassBreaksRenderer',  
+	 'jimu/PanelManager',
 	 'dojo/_base/connect',
 	 'dojo/_base/html',
     'dijit/layout/AccordionContainer', 
@@ -102,6 +103,7 @@ define([
     graphic,
     Color,
     ClassBreaksRenderer,
+    PanelManager,
     connect,
     html) {
     	var singleLayerToBeAddedRemoved = "";
@@ -109,7 +111,7 @@ define([
     	var communitySelected = "";
     	var bSimulatedClick = false;
     	var bSimulatedClickAddressed = true;
-    	var mapClickListenerForPopup;
+    	//var mapClickListenerForPopup;
     	var arrLayersToChangeSynbology = [];
     	var arrCategoryForAllScale = ["PSI", "PBS", "BNF"];
     	var clickEvent = null;
@@ -395,7 +397,8 @@ define([
 		var setClickEventForPopup = function(){    		
 				bSimulatedClickAddressed = false;
 				bSimulatedClick = false;
-	 			var mapClickListenerForPopup = connect.connect(selfSimpleSearchFilter.map, "onClick", function(evt) {
+				window.mapClickListenerForPopup = connect.connect(selfSimpleSearchFilter.map, "onClick", function(evt) {
+	 			//var mapClickListenerForPopup = connect.connect(selfSimpleSearchFilter.map, "onClick", function(evt) {
 	 				    if (!bSimulatedClick) {
 	 				    	bSimulatedClickAddressed = false;
 	 				    	previuosMapInfoFromFL = [];	
@@ -415,8 +418,8 @@ define([
 	 				    }
 						if (bSimulatedClick) {
 			 				if (!bSimulatedClickAddressed) {
-					if ((window.toggleOnHucNavigation == true) || (window.toggleOnRainDrop == true)|| (window.toggleOnElevation == true)) {					
-						connect.disconnect(mapClickListenerForPopup);
+					if ((window.toggleOnHucNavigation == true) || (window.toggleOnRainDrop == true)) {					
+						connect.disconnect(window.mapClickListenerForPopup);
 					} 
 					else {
 						currentMapInfoFromDynamic = [];
@@ -1985,7 +1988,7 @@ define([
 				this._onUpdateCommunityLayers();
 			}	
 			if (((name == 'ElevationProfile')||(name == 'Raindrop')||(name == 'HucNavigation'))&&(data.message == "mapClickForPopup")){
-				this._onMapClickForPopup();
+				setClickEventForPopup();
 			}		  
 		},
     displayCloseButton: function() {		
@@ -2383,7 +2386,10 @@ define([
 	        		bookmarkNational = currentBookmarkClass.items;	        		
         			var currentExtent = bookmarkNational[0].extent;
         			nExtent = Extent(currentExtent);
-        			selfSimpleSearchFilter.map.setExtent(nExtent);	        		
+        			if (window.extentFromURL == null){
+        			    selfSimpleSearchFilter.map.setExtent(nExtent);
+        			}
+       		
 	        	}
 	        }
 	    }); 
@@ -2633,16 +2639,50 @@ define([
 				}
             }
         }); // end of loadNationalMetadataJSON(function(response)
-        this._onMapClickForPopup();
+        setClickEventForPopup();
     },               
     onOpen: function(){						
     	setTimeout(lang.hitch(this, function() {
 			_updateSelectableLayer();
-			/*document.getElementById("butInSearchFilterBox").onclick = function() {
-	            selfSimpleSearchFilter._onButFilterInSimpleSearchClick();
-	         
-	        };*/			
+	
         }), 2000);
+        
+        if (window.eaCommunityFromURL != null){
+
+            setTimeout(lang.hitch(this, function() {       
+                var pm = PanelManager.getInstance();        
+                var widgetName = 'SelectCommunity';
+                var widgets = selfSimpleSearchFilter.appConfig.getConfigElementsByName(widgetName);
+                var pm = PanelManager.getInstance();
+                pm.showPanel(widgets[0]);
+                
+                var Commuinty= window.eaCommunityFromURL;
+                var radioButtonForCommuni = "radio_" + Commuinty;     
+                setTimeout(lang.hitch(this, function() {
+                    if (document.getElementById(radioButtonForCommuni)!=null ){
+                        document.getElementById(radioButtonForCommuni).click();    
+                        //pm.closePanel(widgets[0]); 
+                    }
+                }), 1000);
+            }), 2500);
+        }       
+        
+        if (window.eaLayerFromURL != null){
+            setTimeout(lang.hitch(this, function() {
+                
+                    var layerId= window.eaLayerFromURL.split("_")[1];//eaId
+                    var checkIdForLayer = window.chkSelectableLayer + layerId;
+                    if ((chkIdDictionary.hasOwnProperty(checkIdForLayer)) && (document.getElementById(checkIdForLayer)!=null) ){
+                        document.getElementById(checkIdForLayer).click();     
+                    }
+                
+            }), 3000);
+        }
+        
+
+
+
+
     },
 
                     
@@ -2665,6 +2705,9 @@ define([
 				pm.showPanel(widget);  
 			}    
 	    },	
+        initClickEventForPopup: function() {
+            setClickEventForPopup();
+        },
     _onAddLayersClick: function() {
         layersToBeAdded = "a";
 		for (var key in chkIdDictionary) {
@@ -2734,9 +2777,7 @@ define([
 
         updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
      },
-     _onMapClickForPopup: function() {
-		  setClickEventForPopup();   	
-     },
+
      formatValue : function (value, key, data){
 
      	pow10 = Math.pow(10, numDecimalDigit);

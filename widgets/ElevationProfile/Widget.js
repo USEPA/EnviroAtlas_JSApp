@@ -52,6 +52,7 @@ define([
   'jimu/dijit/Message',
   'dojo/dom-construct',
   'dojo/dom-attr',
+  'dojo/_base/connect',
   'dojo/_base/window',
   'dojo/window',
   'dojo/_base/fx',
@@ -64,7 +65,7 @@ define([
     Chart, Default, Grid, Areas, MouseIndicator, TouchIndicator, ThreeD, esriSniff,
     esriRequest, Geoprocessor, Polyline, SimpleLineSymbol, SimpleMarkerSymbol,
     Graphic, FeatureSet, LinearUnit, geodesicUtils, webMercatorUtils, Units, jimuUtils,
-    Measurement, html, ProgressBar, TabContainer, Message, domConstruct, domAttr, baseWin, win, fx, gfxUtils) {
+    Measurement, html, ProgressBar, TabContainer, Message, domConstruct, domAttr, connect, baseWin, win, fx, gfxUtils) {
     return declare([BaseWidget, _OnDijitClickMixin, _WidgetsInTemplateMixin, Evented], {
 
       baseClass: 'widget-elevation-profile',
@@ -247,13 +248,12 @@ define([
           this.measureTool.clearResult();
           this._displayChartLocation(-1);
         }
-        window.toggleOnElevation = false;
-	    this.publishData({
-			message : "mapClickForPopup"
-		});        
+      
+		document.getElementById("butInitClickEventForPopup").click();
       },
 
       onOpen: function () {
+        connect.disconnect(window.mapClickListenerForPopup);
         var widgetTitlebar = this.domNode.parentNode.parentNode.parentNode.childNodes[0];
         if(typeof widgetTitlebar.onmousedown !== "function") {
            this.own(on(widgetTitlebar, 'mousedown', lang.hitch(this, function(event) {
@@ -297,16 +297,10 @@ define([
           	    document.getElementById('searchPointToggle').click();
             } 
           	window.toggleOnElevation = true;
-		    this.publishData({
-				message : "mapClickForPopup"
-			});           	
             this.map.setInfoWindowOnClick(false);
             this.disableWebMapPopup();
           } else {
           	window.toggleOnElevation = false;
-		    this.publishData({
-				message : "mapClickForPopup"
-			});           	
             this.map.setInfoWindowOnClick(true);
             this.enableWebMapPopup();
           }

@@ -87,6 +87,45 @@ function(declare,
 			
 	    });
     },
+    addRowButtonCombinedCommunity: function(radioId, radioName, labelForRadio, direction) {
+        var tableOfRelationship = document.getElementById('communityTableCombined' );
+        var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];        
+        indexImage = 0;
+        var newRow   = tableRef.insertRow(tableRef.rows.length);
+        
+        newRow.style.height = "20px";
+
+        var newCheckboxCell  = newRow.insertCell(0);
+        var radioCommunity = document.createElement("input");
+        radioCommunity.setAttribute("type", "radio");
+        radioCommunity.setAttribute("id", radioId);         
+        
+        radioCommunity.setAttribute("name", radioName);
+        newCheckboxCell.appendChild(radioCommunity);    
+        var label = document.createElement('label');
+        label.setAttribute('style', 'vertical-align: top');
+        label.setAttribute("for", radioId);
+        label.innerHTML = "  " + labelForRadio;
+        newCheckboxCell.appendChild(label);
+        
+        radioCommunity.addEventListener('click', function() {
+            communitySelected = this.id.replace(prefixRadioCommunity, "");
+            document.getElementById('butSelectCommunity').click();
+            
+        });
+        
+        var newRowHr   = tableRef.insertRow(tableRef.rows.length);
+        
+        newRowHr.style.height = "1px";
+
+        var newCheckboxCellHr  = newRowHr.insertCell(0);
+        var radioCommunityHr = document.createElement("HR");
+        radioCommunityHr.setAttribute('style', 'height: 1px; margin-top: 0px');
+        
+        radioCommunityHr.setAttribute("name", "hr"+radioName);
+        newCheckboxCellHr.appendChild(radioCommunityHr); 
+  
+    },
     _onSelectCommunityClick: function() {
 
 		window.communitySelected = communitySelected;
@@ -114,8 +153,9 @@ function(declare,
     },    
     displayCommunitySelection: function() {
     	//this.addRowButton(prefixRadioCommunity + window.strAllCommunity, "community", "Combined Communities", "R");
+    	this.addRowButtonCombinedCommunity(prefixRadioCommunity + window.strAllCommunity, "community", "Combined Communities", "L");
     	var i = -1;
-    	var half = Math.ceil((Object.keys(window.communityDic).length / 2));
+    	var half = Math.ceil((Object.keys(window.communityDic).length / 2))-1;
 
     	for (var key in window.communityDic) {
     		if (i<half) {
@@ -126,12 +166,18 @@ function(declare,
     		i++;
     		this.addRowButton(prefixRadioCommunity + key, "community", window.communityDic[key], direction);
     	}
-    	this.addRowButton(prefixRadioCommunity + window.strAllCommunity, "community", "Combined Communities", "R");
+    	//this.addRowButton(prefixRadioCommunity + window.strAllCommunity, "community", "Combined Communities", "L");
     	
     },
 
     onOpen: function(){
         console.log('onOpen');
+        var panel = this.getPanel();
+        var pos = panel.position;
+        pos.height = 540;
+        panel.setPosition(pos);
+        panel.panelManager.normalizePanel(panel);
+        
 	    if (window.communitySelected != window.strAllCommunity) {
 	    	commnunityWholeName = window.communityDic[communitySelected];
 	    	extentForCommunity = window.communityExtentDic[window.communityDic[communitySelected]];

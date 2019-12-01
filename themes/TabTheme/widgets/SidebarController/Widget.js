@@ -426,7 +426,13 @@ define([
           this.currentTab = tab;
         }
       },
+      _onButHelpSidebarClick: function(){
+          //alert($('#data_title_id p')[0].innerHTML);
+        window.PanelId = $('#data_title_id p')[0].innerHTML.replace(/ /g,'');    
 
+        utils.startTour();
+
+      },
       showGroupContent: function(g, tab) {
         var groupPane;
         if (g.widgets && g.widgets.length > 1) {

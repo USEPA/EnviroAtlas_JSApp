@@ -1,55 +1,1471 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dojo/_base/lang dojo/_base/array dojo/_base/html dojo/topic dojo/Deferred dojo/on ./utils ./WidgetManager ./shared/AppVersionManager ./ConfigLoader ./tokenUtils ./dijit/AGOLLoading ./portalUtils esri/config esri/tasks/GeometryService".split(" "),function(q,e,g,m,d,r,n,f,t,u,v,w,x,y,z,A){function p(a,b){var c=e.clone(a),h=f.widgetProperties;"undefined"===typeof b&&(b=!1);delete c.mode;delete c.configWabVersion;f.visitElement(c,function(a,e){a.widgets?(delete a.isOnScreen,
-delete a.gid,"jimu.js/images/group_icon.png"===a.icon&&delete a.icon,delete a.openType,e.isOnScreen&&a.panel&&f.isEqual(a.panel,c.widgetOnScreen.panel)&&delete a.panel):(a.icon&&a.icon===a.folderUrl+"images/icon.png?wab_dv\x3d"+window.deployVersion&&delete a.icon,delete a.panel,delete a.folderUrl,delete a.amdFolder,delete a.thumbnail,delete a.configFile,delete a.gid,delete a.isOnScreen,delete a.isRemote,delete a.featureActions,h.forEach(function(b){delete a[b]}),b?"undefined"===typeof a.openAtStart&&
-(a.openAtStart=!1):(a.visible&&delete a.visible,a.manifest&&a.label===a.manifest.label&&delete a.label,a.isDefaultConfig&&(delete a.config,delete a.isDefaultConfig)),delete a.manifest,a.itemId&&delete a.uri)});delete c.rawAppConfig;delete c._ssl;delete c.getConfigElementById;delete c.getConfigElementsByName;delete c.processNoUriWidgets;delete c.addElementId;delete c.getCleanConfig;delete c.visitElement;delete c.agolConfig;delete c._itemData;delete c.oldWabVersion;delete c.titleColor;return c}var k=
-null,l;l=q(null,{urlParams:null,appConfig:null,configFile:null,_configLoaded:!1,portalSelf:null,constructor:function(a){this.urlParams=a||{};this.listenBuilderEvents();this.versionManager=new u;this.widgetManager=t.getInstance();this.configLoader=v.getInstance(this.urlParams,{versionManager:this.versionManager});"config"===this.urlParams.mode&&window.parent.setConfigViewerTopic&&e.isFunction(window.parent.setConfigViewerTopic)&&window.parent.setConfigViewerTopic(d);"preview"===this.urlParams.mode&&
-window.parent.setPreviewViewerTopic&&e.isFunction(window.parent.setPreviewViewerTopic)&&window.parent.setPreviewViewerTopic(d);f.isMobileUa()||n(window,"resize",e.hitch(this,this._onWindowResize));n(window,"orientationchange",e.hitch(this,this._onOrientationChange))},listenBuilderEvents:function(){d.subscribe("builder/widgetChanged",e.hitch(this,this._onWidgetChanged));d.subscribe("builder/groupChanged",e.hitch(this,this._onGroupChanged));d.subscribe("builder/layoutDefinitionChanged",e.hitch(this,
-this._onLayoutDefinitionChanged));d.subscribe("builder/onScreenGroupsChanged",e.hitch(this,this._onOnScreenGroupsChanged));d.subscribe("builder/widgetPoolChanged",e.hitch(this,this._onWidgetPoolChanged));d.subscribe("builder/openAtStartChange",e.hitch(this,this._onOpenAtStartChanged));d.subscribe("builder/onScreenOrderChanged",e.hitch(this,this._onScreenOrderChanged));d.subscribe("builder/mapContentModified",e.hitch(this,this._onMapContentModified));d.subscribe("builder/mapChanged",e.hitch(this,this._onMapChanged));
-d.subscribe("builder/mapOptionsChanged",e.hitch(this,this._onMapOptionsChanged));d.subscribe("builder/mapRefreshIntervalChanged",e.hitch(this,this._onMapRefreshIntervalChanged));d.subscribe("builder/appAttributeChanged",e.hitch(this,this._onAppAttributeChanged));d.subscribe("builder/dataSourceChanged",e.hitch(this,this._onDataSourceChanged));d.subscribe("builder/setAppConfig",e.hitch(this,this._onAppConfigSet));d.subscribe("builder/themeChanged",e.hitch(this,this._onThemeChanged));d.subscribe("builder/layoutChanged",
-e.hitch(this,this._onLayoutChanged));d.subscribe("builder/styleChanged",e.hitch(this,this._onStyleChanged));d.subscribe("builder/syncExtent",e.hitch(this,this._onSyncExtent));d.subscribe("builder/loadingPageChanged",e.hitch(this,this._onLoadingPageChanged));d.subscribe("builder/templateConfigChanged",e.hitch(this,this._onTemplateConfigChanged));d.subscribe("builder/appProxyForMapChanged",e.hitch(this,this._onAppProxyForMapChanged));d.subscribe("builder/appProxyForUrlChanged",e.hitch(this,this._onAppProxyForUrlChanged));
-d.subscribe("builder/sharedThemeChanged",e.hitch(this,this._onSharedThemeChanged))},loadConfig:function(){if("preview"!==this.urlParams.mode&&"config"!==this.urlParams.mode){var a=new x;a.placeAt(window.jimuConfig.layoutId);return this.configLoader.loadConfig().then(e.hitch(this,function(b){this.portalSelf=this.configLoader.portalSelf;this.appConfig=this._addDefaultValues(b);console.timeEnd("Load Config");window.appInfo.isRunInMobile=f.inMobileSize();b=this.getAppConfig();a.destroy();d.publish("appConfigLoaded",
-b);return b}),e.hitch(this,function(b){a.destroy();console.error(b);b&&b.message&&"string"===typeof b.message&&this._showErrorMessage(b.message)}))}},_showErrorMessage:function(a){m.create("div",{"class":"app-error",innerHTML:f.sanitizeHTML(a)},document.body);m.setStyle(jimuConfig.loadingId,"display","none")},getAppConfig:function(){var a;window.appInfo.isRunInMobile?(a=e.clone(this._getMobileConfig(this.appConfig)),a._originConfig=e.clone(this.appConfig)):a=e.clone(this.appConfig);a.getConfigElementById=
-function(a){return f.getConfigElementById(this,a)};a.getConfigElementsByName=function(a){return f.getConfigElementsByName(this,a)};a.getCleanConfig=function(a){return this._originConfig?p(this._originConfig,a):p(this,a)};a.visitElement=function(a){f.visitElement(this,a)};return a},_onOrientationChange:function(){this.appConfig&&d.publish("appConfigChanged",this.getAppConfig(),"layoutChange")},_onWindowResize:function(){var a=f.inMobileSize();window.appInfo.isRunInMobile!==a&&(window.appInfo.isRunInMobile=
-a,this.appConfig&&d.publish("appConfigChanged",this.getAppConfig(),"layoutChange"))},_getMobileConfig:function(a){return f.mixinAppConfigPosition(a,a.mobileLayout)},_updateDataSourceForWidget:function(a){this._deleteDataSourcesFromWidget(a);this._addDataSourcesForWidget(a)},_deleteDataSourcesFromWidget:function(a){for(var b in this.appConfig.dataSource.dataSources)b.startWith("widget~"+a.id+"~")&&delete this.appConfig.dataSource.dataSources[b]},_addDataSourcesForWidget:function(a){g.forEach(a.provideDataSources,
-function(b){var c="widget~"+a.id+"~"+b.id;b.id=c;this.appConfig.dataSource.dataSources[c]=b},this);delete a.provideDataSources},_addIdForWidgets:function(a){var b=0,c;this.getAppConfig().visitElement(function(a){if(a.id){a.id=a.id.replace(/\//g,"_");var h=a.id.lastIndexOf("_");-1<h&&(c=a.id.substr(h+1),b=Math.max(b,c))}});g.forEach(a,function(a){a.id||(b++,a.id=a.itemId?a.itemId+"_"+b:a.uri?a.uri.replace(/\//g,"_")+"_"+b:"_"+b)})},_onWidgetChanged:function(a){var b=f.reCreateObject(a);a=f.getConfigElementById(this.appConfig,
-a.id);this._updateDataSourceForWidget(b);!1!==b.inPanel||a.uri||(b.closeable=!0);for(var c in b)a[c]=b[c];delete a.isDefaultConfig;this.configLoader.addNeedValues(this.appConfig);this._addDefaultValues(this.appConfig);d.publish("appConfigChanged",this.getAppConfig(),"widgetChange",b)},_onGroupChanged:function(a){var b=f.reCreateObject(a);a=f.getConfigElementById(this.appConfig,a.id);this._handleDataSourceForWidgets(a,b);for(var c in b)a[c]=b[c];this.configLoader.addNeedValues(this.appConfig);this._addDefaultValues(this.appConfig);
-d.publish("appConfigChanged",this.getAppConfig(),"groupChange",b)},_handleDataSourceForWidgets:function(a,b){var c=g.filter(b.widgets,function(b){return b.id?0===g.filter(a.widgets,function(a){return b.id===a.id}).length:!0},this);this._addIdForWidgets(c);g.forEach(c,function(a){this._addDataSourcesForWidget(a)},this);c=g.filter(a.widgets,function(a){return 0===g.filter(b.widgets,function(b){return b.id===a.id}).length},this);g.forEach(c,function(a){this._deleteDataSourcesFromWidget(a)},this);g.forEach(b.widgets,
-function(b){g.forEach(a.widgets,function(a){b.id===a.id&&b.provideDataSources&&this._updateDataSourceForWidget(b)},this)},this)},_onWidgetPoolChanged:function(a){var b=f.reCreateObject(a);this._handleDataSourceForWidgetsSection(this.appConfig.widgetPool,b);1===this.widgetManager.getControllerWidgets().length?(this.appConfig.widgetPool.widgets=b.widgets,this.appConfig.widgetPool.groups=b.groups):(a=f.getConfigElementById(this.appConfig,b.controllerId),g.forEach(a.controlledWidgets,function(a){this._removeWidgetOrGroupFromPoolById(this.appConfig,
-a)},this),g.forEach(a.controlledGroups,function(a){this._removeWidgetOrGroupFromPoolById(this.appConfig,a)},this),this.appConfig.widgetPool.widgets="undefined"===typeof this.appConfig.widgetPool.widgets?b.widgets:this.appConfig.widgetPool.widgets.concat(b.widgets),this.appConfig.widgetPool.groups="undefined"===typeof this.appConfig.widgetPool.groups?b.groups:this.appConfig.widgetPool.groups.concat(b.groups),a.controlledWidgets=g.map(b.widgets,function(a){return a.id}),a.controlledGroups=g.map(b.groups,
-function(a){return a.id}));this.configLoader.addNeedValues(this.appConfig);this.configLoader.loadAndUpgradeAllWidgetsConfig(this.appConfig).then(e.hitch(this,function(a){this.appConfig=a;this._addDefaultValues(this.appConfig);d.publish("appConfigChanged",this.getAppConfig(),"widgetPoolChange",b)}))},_handleDataSourceForWidgetsSection:function(a,b){var c=b.widgets;g.forEach(b.groups,function(a){c=c.concat(a.widgets)},this);var h=a.widgets;g.forEach(a.groups,function(a){h=h.concat(a.widgets)},this);
-this._handleDataSourceForWidgets({widgets:h},{widgets:c})},_removeWidgetOrGroupFromPoolById:function(a,b){g.some(a.widgetPool.widgets,function(c,h){if(c.id===b)return a.widgetPool.widgets.splice(h,1),!0});g.some(a.widgetPool.groups,function(c,h){if(c.id===b)return a.widgetPool.groups.splice(h,1),!0})},_onOpenAtStartChanged:function(a){var b=f.reCreateObject(a),c=this.appConfig;a.isOnScreen?(c=c.widgetOnScreen&&c.widgetOnScreen.widgets)&&0<c.length&&g.forEach(c,e.hitch(this,function(b){b.id===a.id?
-b.openAtStart=!b.openAtStart:delete b.openAtStart})):((c=c.widgetPool)&&c.groups&&0<c.groups.length&&g.forEach(c.groups,e.hitch(this,function(b){b.id===a.id?b.openAtStart=!b.openAtStart:delete b.openAtStart})),c&&c.widgets&&0<c.widgets.length&&g.forEach(c.widgets,e.hitch(this,function(b){b.id===a.id?b.openAtStart=!b.openAtStart:delete b.openAtStart})));d.publish("appConfigChanged",this.getAppConfig(),"openAtStartChange",b)},_onScreenOrderChanged:function(a){var b=f.reCreateObject(a);g.forEach(this.appConfig.widgetOnScreen.widgets,
-function(a){a.isController||(!1!==a.inPanel||!0!==a.closeable)&&!0!==a.inPanel&&a.uri||g.some(b,function(b){if(a.id===b.id)return a.position=b.position,!0})},this);d.publish("appConfigChanged",this.getAppConfig(),"onScreenOrderChange",b)},_onAppAttributeChanged:function(a){a=f.reCreateObject(a);e.mixin(this.appConfig,a);this.configLoader.processProxy(this.appConfig);this.configLoader.addNeedValues(this.appConfig);this._addDefaultValues(this.appConfig);d.publish("appConfigChanged",this.getAppConfig(),
-"attributeChange",a)},_onDataSourceChanged:function(a){var b=f.reCreateObject(a);this.appConfig.dataSource=b;d.publish("appConfigChanged",this.getAppConfig(),"dataSourceChange",a)},_onLoadingPageChanged:function(a){a=f.reCreateObject(a);var b;"backgroundColor"in a?this.appConfig.loadingPage.backgroundColor=a.backgroundColor:"backgroundImage"in a?(b=this.appConfig.loadingPage.backgroundImage||{},this.appConfig.loadingPage.backgroundImage=e.mixin(b,a.backgroundImage)):"loadingGif"in a&&(b=this.appConfig.loadingPage.loadingGif||
-{},this.appConfig.loadingPage.loadingGif=e.mixin(b,a.loadingGif));this.configLoader.addNeedValues(this.appConfig);this._addDefaultValues(this.appConfig);d.publish("appConfigChanged",this.getAppConfig(),"loadingPageChange",a)},_onAppProxyForMapChanged:function(a){a=f.reCreateObject(a);"appProxy"in this.appConfig.map?this.appConfig.map.appProxy.mapItemId!==a.mapItemId?this.appConfig.map.appProxy=a:g.forEach(a.proxyItems,e.hitch(this,function(a){if(!g.some(this.appConfig.map.appProxy.proxyItems,function(b){if(b.sourceUrl===
-a.sourceUrl)return b.useProxy=a.useProxy,b.proxyUrl=a.proxyUrl||"",b.proxyId=a.proxyId||"",isNaN(a.hitsPerInterval)||(b.hitsPerInterval=a.hitsPerInterval),isNaN(a.intervalSeconds)||(b.intervalSeconds=a.intervalSeconds),!0})&&a.useProxy&&a.proxyUrl){var b=this.appConfig.map.appProxy.proxyItems||[];b.push(a);this.appConfig.map.appProxy.proxyItems=b}})):this.appConfig.map.appProxy=a;d.publish("appConfigChanged",this.getAppConfig(),"appProxyChange",a)},_onAppProxyForUrlChanged:function(a){a=f.reCreateObject(a);
-this.appConfig.appProxies=a;d.publish("appConfigChanged",this.getAppConfig(),"appProxyChange",a)},_onTemplateConfigChanged:function(a){a=f.reCreateObject(a);this.appConfig.templateConfig=a;this.configLoader.addNeedValues(this.appConfig);this._addDefaultValues(this.appConfig);d.publish("appConfigChanged",this.getAppConfig(),"templateConfigChange",a)},_onMapContentModified:function(){d.publish("mapContentModified")},_onMapChanged:function(a){var b=f.reCreateObject(a);this.appConfig.map.mapOptions&&
-f.deleteMapOptions(this.appConfig.map.mapOptions);this.appConfig.map.mapRefreshInterval={useWebMapRefreshInterval:!0};e.mixin(this.appConfig.map,b);this._deleteDataSourcesFromMap();this.configLoader.addNeedValues(this.appConfig);this.configLoader.loadAndUpgradeAllWidgetsConfig(this.appConfig).then(e.hitch(this,function(a){this.appConfig=a;this._addDefaultValues(this.appConfig);d.publish("appConfigChanged",this.getAppConfig(),"mapChange",b)}))},_deleteDataSourcesFromMap:function(){g.forEach(Object.keys(this.appConfig.dataSource.dataSources),
-function(a){a.startWith("map")&&delete this.appConfig.dataSource.dataSources[a]},this)},_onMapOptionsChanged:function(a){a=f.reCreateObject(a);this.appConfig.map.mapOptions||(this.appConfig.map.mapOptions={});e.mixin(this.appConfig.map.mapOptions,a);d.publish("appConfigChanged",this.getAppConfig(),"mapOptionsChange",a)},_onMapRefreshIntervalChanged:function(a){a=f.reCreateObject(a);this.appConfig.map.mapRefreshInterval||(this.appConfig.map.mapRefreshInterval={});e.mixin(this.appConfig.map.mapRefreshInterval,
-a);this.appConfig.map.mapRefreshInterval.useWebMapRefreshInterval&&delete this.appConfig.map.mapRefreshInterval.minutes;d.publish("appConfigChanged",this.getAppConfig(),"mapRefreshIntervalChange",a)},_onThemeChanged:function(a){this._getAppConfigFromTheme(a).then(e.hitch(this,function(b){var c=e.clone(this.appConfig.widgetOnScreen);this.appConfig=b;this._handleDataSourceForWidgetsSection(c,{});d.publish("appConfigChanged",this.getAppConfig(),"themeChange",a.getName())}))},_onLayoutChanged:function(a){this.appConfig=
-f.mixinAppConfigPosition(this.appConfig,a.layoutConfig);this.appConfig.layoutDefinition=a.layoutConfig.layoutDefinition;this.configLoader.addNeedValues(this.appConfig);this._addDefaultValues(this.appConfig);d.publish("appConfigChanged",this.getAppConfig(),"layoutChange",a.name)},_onStyleChanged:function(a){this.appConfig.theme.styles=this._genStyles(this.appConfig.theme.styles,a.name);a.isCustom?this.appConfig.theme.customStyles={mainBackgroundColor:a.styleColor}:(delete this.appConfig.theme.customStyles,
-delete this.appConfig.titleColor,this.appConfig.theme.sharedTheme={isPortalSupport:this.appConfig.theme.sharedTheme.isPortalSupport,useHeader:!1,useLogo:!1});d.publish("appConfigChanged",this.getAppConfig(),"styleChange",a.name)},_onOnScreenGroupsChanged:function(a){a=f.reCreateObject(a);this.appConfig.widgetOnScreen.groups=a.groups;d.publish("appConfigChanged",this.getAppConfig(),"onScreenGroupsChange",a.groups)},_onLayoutDefinitionChanged:function(a){a=f.reCreateObject(a);f.isEqual(this.appConfig.layoutDefinition,
-a.layoutDefinition)||(this.appConfig.layoutDefinition=a.layoutDefinition,this.appConfig.widgetOnScreen.groups=f.handleGridLayoutOnScreenGroupChange(this.appConfig.widgetOnScreen.groups,a.groupIds),this.configLoader.addNeedValues(this.appConfig),this._addDefaultValues(this.appConfig),d.publish("appConfigChanged",this.getAppConfig(),"layoutDefinitionChange",a.layoutDefinition))},_onSharedThemeChanged:function(a){var b=this.appConfig.theme.sharedTheme;a=f.reCreateObject(a);a.useHeader&&!b.useHeader&&
-(this.portalSelf.portalProperties&&this.portalSelf.portalProperties.sharedTheme?(this.appConfig.theme.customStyles={mainBackgroundColor:this.portalSelf.portalProperties.sharedTheme.header.background},this.appConfig.titleColor=this.portalSelf.portalProperties.sharedTheme.header.text,this._onAppAttributeChanged({titleColor:this.appConfig.titleColor})):console.error("Portal does not support sharedTheme."));!a.useHeader&&b.useHeader&&(delete this.appConfig.titleColor,this._onAppAttributeChanged({titleColor:this.appConfig.titleColor}));
-a.useLogo&&!b.useLogo&&(this.portalSelf.portalProperties&&this.portalSelf.portalProperties.sharedTheme?(this.appConfig.logo=this.portalSelf.portalProperties.sharedTheme.logo.small?this.portalSelf.portalProperties.sharedTheme.logo.small:"images/app-logo.png",this.appConfig.logoLink=this.portalSelf.portalProperties.sharedTheme.logo.link,this._onAppAttributeChanged({logo:this.appConfig.logo,logoLink:this.appConfig.logoLink})):console.error("Portal does not support sharedTheme."));!a.useLogo&&b.useLogo&&
-this._onAppAttributeChanged({logo:this.appConfig.logo});e.mixin(b,a);d.publish("appConfigChanged",this.getAppConfig(),"sharedThemeChange",a)},_onSyncExtent:function(a){d.publish("syncExtent",a)},_genStyles:function(a,b){var c=[];c.push(b);g.forEach(a,function(a){0>c.indexOf(a)&&c.push(a)});return c},_getAppConfigFromTheme:function(a){var b=new r,c,h=[],d=this.getAppConfig().getCleanConfig();d.mode=this.urlParams.mode;g.forEach(d.widgetPool.groups,function(a){delete a.panel},this);if(a.appConfig)c=
-e.clone(a.appConfig),c.map=d.map,c.map.position=a.appConfig.map.position,this._copyPoolToThemePool(d,c),c.links=d.links,c.title=d.title,c.subtitle=d.subtitle,c.logo=d.logo;else{var f=a.getCurrentLayout(),h=a.getCurrentStyle();c=e.clone(d);f=e.clone(f.layoutConfig);c.widgetOnScreen=f.widgetOnScreen;f.widgetPool&&(g.forEach(f.widgetPool.widgets,function(a){a.isPreconfiguredInTheme=!0}),g.forEach(f.widgetPool.groups,function(a){a.isPreconfiguredInTheme=!0}));this._copyPoolToThemePool(d,f);c.widgetPool=
-f.widgetPool;f.map&&f.map.position&&(c.map.position=f.map.position);c.mobileLayout=f.mobileLayout;c.layoutDefinition=f.layoutDefinition;h=this._genStyles(g.map(a.getStyles(),function(a){return a.name}),h.name);c.theme={name:a.getName(),styles:h,version:a.getVersion()};this.portalSelf.portalProperties&&this.portalSelf.portalProperties.sharedTheme?(c.theme.sharedTheme={useHeader:!0,useLogo:!0,isPortalSupport:!0},c.theme.customStyles={mainBackgroundColor:this.portalSelf.portalProperties.sharedTheme.header.background}):
-(c.theme.sharedTheme={useHeader:!1,useLogo:!1,isPortalSupport:!1},c.theme.customStyles={mainBackgroundColor:""});c.titleColor=d.titleColor;c.logoLink=d.logoLink}this.configLoader.addNeedValues(c);this.configLoader.loadWidgetsManifest(c).then(e.hitch(this,function(a){return this.configLoader.loadAndUpgradeAllWidgetsConfig(a)})).then(e.hitch(this,function(){this._addDefaultValues(c);b.resolve(c)}));return b},_copyPoolToThemePool:function(a,b){var c=a.widgetPool;b.widgetPool||(b.widgetPool={});a=b.widgetPool;
-var d=g.filter(a.widgets,function(a){if(a.isPreconfiguredInTheme||!g.some(c.widgets,function(b){return b.name===a.name}))return!0}),e=g.filter(a.groups,function(a){return a.isPreconfiguredInTheme}),f=g.filter(c.widgets,function(a){return!a.isPreconfiguredInTheme}),k=g.filter(c.groups,function(a){return!a.isPreconfiguredInTheme}),f=this._getPoolWidgetsWithoutDuplicated(f,b.widgetOnScreen.widgets||[]);a.widgets=f.concat(d);a.groups=k.concat(e)},_getPoolWidgetsWithoutDuplicated:function(a,b){for(var c=
-e.clone(a),d=this.getAppConfig(),g=a.length-1;0<=g;g--)for(var k=b.length-1;0<=k;k--)if(b[k].uri){var l=b[k].name;l||(l=f.getWidgetNameFromUri(b[k].uri));var m=d.getConfigElementById(a[g].id);a[g]&&a[g].name===l&&!1===m.supportMultiInstance&&(console.log("Widget",a[g].name,"is not copied to new theme because this widget exists in new theme."),c.splice(g,1))}return c},_onAppConfigSet:function(a){a=f.reCreateObject(a);window.appInfo.isRunInMobile=f.inMobileSize();this.configLoader.processProxy(a);this.configLoader.addNeedValues(a);
-this.configLoader.loadAndUpgradeAllWidgetsConfig(a).then(e.hitch(this,function(a){this._addDefaultValues(a);w.setPortalUrl(a.portalUrl);window.portalUrl=a.portalUrl;this.appConfig?(f.deleteMapOptions(a.map.mapOptions),this.appConfig=a,this._deleteDataSourcesFromMap(),d.publish("appConfigChanged",this.getAppConfig(),"resetConfig",a)):(this.appConfig=a,y.getPortal(a.portalUrl).loadSelfInfo().then(e.hitch(this,function(a){this.portalSelf=a;d.publish("appConfigLoaded",this.getAppConfig())})))}))},_addDefaultValues:function(a){this._addDefaultPortalUrl(a);
-this._addDefaultGeometryService(a);this._addDefaultStyle(a);this._addDefaultMap(a);this._addDefaultVisible(a);this._addDefaultDataSource(a);this._addDefaultSharedTheme(a);"undefined"===typeof a.widgetOnScreen&&(a.widgetOnScreen={});"undefined"===typeof a.widgetPool&&(a.widgetPool={});this._addDefaultPanelAndPosition(a);this._addDefaultOfWidgetGroup(a);(a.widgetPool.widgets&&0<a.widgetPool.widgets.length&&void 0===a.widgetPool.widgets[0].index||a.widgetPool.groups&&0<a.widgetPool.groups.length&&void 0===
-a.widgetPool.groups[0].index)&&this._addIndexForWidgetPool(a);return a},_addDefaultDataSource:function(a){a.dataSource?(a.dataSource.dataSources||(a.dataSource.dataSources={}),a.dataSource.settings||(a.dataSource.settings={})):a.dataSource={dataSources:{},settings:{}}},_addDefaultPortalUrl:function(a){"undefined"===typeof a.portalUrl&&(a.portalUrl="http://www.arcgis.com/");a.portalUrl&&"/"!==a.portalUrl.substr(a.portalUrl.length-1)&&(a.portalUrl+="/")},_addDefaultGeometryService:function(a){var b=
-a&&a.geometryService,b=b&&"string"===typeof b&&e.trim(b)?e.trim(b):this.portalSelf.helperServices.geometry.url;a.geometryService=b;z.defaults.geometryService=new A(a.geometryService)},_addDefaultStyle:function(a){!a.theme||a.theme.styles&&0!==a.theme.styles.length||(a.theme.styles=["default"])},_addDefaultMap:function(a){a.map.id="map";"undefined"===typeof a.map["3D"]&&"undefined"===typeof a.map["2D"]&&(a.map["2D"]=!0);"undefined"===typeof a.map.position&&(a.map.position={left:0,right:0,top:0,bottom:0});
-"undefined"===typeof a.map.portalUrl&&(a.map.portalUrl=a.portalUrl)},_addDefaultVisible:function(a){f.visitElement(a,function(a){void 0===a.visible&&(a.visible=!0)})},_addDefaultSharedTheme:function(a){a.theme.sharedTheme?("undefined"===typeof a.theme.sharedTheme.useHeader&&(a.theme.sharedTheme.useHeader=!1),"undefined"===typeof a.theme.sharedTheme.useLogo&&(a.theme.sharedTheme.useLogo=!1)):a.theme.sharedTheme={useHeader:!1,useLogo:!1}},_addDefaultPanelAndPosition:function(a){this._addOnScreenDefaultPanelAndPosition(a);
-this._addPoolDefaultPanelAndPosition(a)},_addOnScreenDefaultPanelAndPosition:function(a){var b,c;if(a=a.widgetOnScreen){b=a.panel&&a.panel.positionRelativeTo?a.panel.positionRelativeTo:"map";"undefined"===typeof a.panel||"undefined"===typeof a.panel.uri?a.panel={uri:"jimu/OnScreenWidgetPanel",position:{relativeTo:b}}:"undefined"===typeof a.panel.position?a.panel.position={relativeTo:b}:"undefined"===typeof a.panel.position.relativeTo&&(a.panel.position.relativeTo=b);if(a.widgets)for(b=0;b<a.widgets.length;b++)a.widgets[b].position||
-(a.widgets[b].position={}),a.widgets[b].position.relativeTo||(a.widgets[b].position.relativeTo=a.widgets[b]&&a.widgets[b].positionRelativeTo?a.widgets[b].positionRelativeTo:"map"),!0!==a.widgets[b].inPanel||a.widgets[b].panel||(a.widgets[b].panel=e.clone(a.panel),a.widgets[b].panel.position=a.widgets[b].position,a.widgets[b].panel.position.relativeTo=a.widgets[b].position.relativeTo);if(a.groups)for(b=0;b<a.groups.length;b++)for(a.groups[b].panel||(a.groups[b].panel=a.panel),a.groups[b].panel&&!a.groups[b].panel.position&&
-(a.groups[b].panel.position={}),a.groups[b].panel.position.relativeTo||(a.groups[b].panel.position.relativeTo=a.groups[b].panel.positionRelativeTo?a.groups[b].panel.positionRelativeTo:"map"),a.groups[b].widgets||(a.groups[b].widgets=[]),c=0;c<a.groups[b].widgets.length;c++)a.groups[b].widgets[c].panel=a.groups[b].panel}},_addPoolDefaultPanelAndPosition:function(a){var b,c,d=a.widgetPool;if(d){b=d.panel&&d.panel.positionRelativeTo?d.panel.positionRelativeTo:"map";"undefined"===typeof d.panel||"undefined"===
-typeof d.panel.uri?d.panel={uri:"jimu/OnScreenWidgetPanel",position:{relativeTo:b}}:"undefined"===typeof d.panel.position?d.panel.position={relativeTo:b}:"undefined"===typeof d.panel.position.relativeTo&&(d.panel.position.relativeTo=b);if(d.groups)for(b=0;b<d.groups.length;b++)for(d.groups[b].panel?d.groups[b].panel.position.relativeTo||(d.groups[b].panel.position.relativeTo=d.groups[b].panel.positionRelativeTo?d.groups[b].panel.positionRelativeTo:"map"):d.groups[b].panel=d.panel,d.groups[b].widgets||
-(d.groups[b].widgets=[]),c=0;c<d.groups[b].widgets.length;c++)d.groups[b].widgets[c].panel=d.groups[b].panel;if(d.widgets)for(b=0;b<d.widgets.length;b++)!1===d.widgets[b].inPanel?(c=d.widgets[b].positionRelativeTo?d.widgets[b].positionRelativeTo:"map",d.widgets[b].position)?d.widgets[b].position.relativeTo||(d.widgets[b].position.relativeTo=c):d.widgets[b].position={relativeTo:c}:d.widgets[b].panel||(d.widgets[b].panel=a.widgetPool.panel)}},_addDefaultOfWidgetGroup:function(a){f.visitElement(a,e.hitch(this,
-function(a,c){a.isOnScreen=c.isOnScreen;a.widgets?(a.gid=a.id,1===a.widgets.length?(a.label||(a.label=a.widgets[0].label?a.widgets[0].label:window.apiNls.common.groupLabel),a.icon||(a.icon=a.widgets[0].uri?this._getDefaultIconFromUri(a.widgets[0].uri):"jimu.js/images/group_icon.png")):(a.icon=a.icon?a.icon:"jimu.js/images/group_icon.png",a.label=a.label?a.label:window.apiNls.common.groupLabel+" "+c.index)):a.gid=c.groupId}))},_getDefaultIconFromUri:function(a){a=a.split("/");a.pop();return a.join("/")+
-"/images/icon.png?wab_dv\x3d"+window.deployVersion},_addIndexForWidgetPool:function(a){var b=0,c,d;if(a.widgetPool.widgets)for(c=0;c<a.widgetPool.widgets.length;c++)a.widgetPool.widgets[c].index=b,b++;if(a.widgetPool.groups)for(c=0;c<a.widgetPool.groups.length;c++)for(a.widgetPool.groups[c].index=b,b++,d=0;d<a.widgetPool.groups[c].widgets.length;d++)a.widgetPool.groups[c].widgets[d].index=d}});l.getInstance=function(a){null===k?k=new l(a):a&&(k.urlParams=a,k.configLoader&&(k.configLoader.urlParams=
-a));window.getAppConfig=e.hitch(k,k.getAppConfig);return k};return l});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'dojo/_base/html',
+  'dojo/topic',
+  'dojo/Deferred',
+  'dojo/on',
+  './utils',
+  './WidgetManager',
+  './shared/AppVersionManager',
+  './ConfigLoader',
+  './tokenUtils',
+  './dijit/AGOLLoading',
+  './portalUtils',
+  'esri/config',
+  'esri/tasks/GeometryService'
+],
+function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetManager,
+  AppVersionManager, ConfigLoader, tokenUtils, AGOLLoading, portalUtils, esriConfig, GeometryService) {
+  var instance = null, clazz;
+
+  clazz = declare(null, {
+    urlParams: null,
+    appConfig: null,
+    configFile: null,
+    _configLoaded: false,
+    portalSelf: null,
+
+    constructor: function (urlParams) {
+      this.urlParams = urlParams || {};
+      if (this.urlParams.extent != undefined) {
+          window.extentFromURL = this.urlParams.extent;
+      }
+      if (this.urlParams.eaLayer != undefined) {
+          window.eaLayerFromURL = this.urlParams.eaLayer;
+      }
+      if (this.urlParams.eaCommunity != undefined) {
+          window.eaCommunityFromURL = this.urlParams.eaCommunity;
+      }      
+      this.listenBuilderEvents();
+      this.versionManager = new AppVersionManager();
+      this.widgetManager = WidgetManager.getInstance();
+      this.configLoader = ConfigLoader.getInstance(this.urlParams, {
+        versionManager: this.versionManager
+      });
+
+      if(this.urlParams.mode === 'config' && window.parent.setConfigViewerTopic &&
+        lang.isFunction(window.parent.setConfigViewerTopic)){
+        window.parent.setConfigViewerTopic(topic);
+      }
+      if(this.urlParams.mode === 'preview' && window.parent.setPreviewViewerTopic &&
+        lang.isFunction(window.parent.setPreviewViewerTopic)){
+        window.parent.setPreviewViewerTopic(topic);
+      }
+
+      if (!jimuUtils.isMobileUa()) {
+        //mobile devices do NOT listen to the 'resize' event
+        //avoid to virtual-keyboard appears and then app switches between "Mobile Mode" and "Desktop Mode"
+        on(window, 'resize', lang.hitch(this, this._onWindowResize));
+      }
+      on(window, "orientationchange", lang.hitch(this, this._onOrientationChange));
+    },
+
+    listenBuilderEvents: function(){
+      //whatever(app, map, widget, widgetPoolChanged) config changed, publish this event.
+      //*when app changed, the id is "app", the data is app's properties, like title, subtitle.
+      //*when map changed, the id is "map", the data is itemId
+      //*when widget that is in preloadwidget/widgetpool changed, the id is widget's id,
+      //  the data is widget's setting
+      //*when anything in the widget pool changed, the id is "widgetPool", the data is
+      //  widgets and groups
+
+      topic.subscribe('builder/widgetChanged', lang.hitch(this, this._onWidgetChanged));
+      topic.subscribe('builder/groupChanged', lang.hitch(this, this._onGroupChanged));
+
+      topic.subscribe('builder/layoutDefinitionChanged', lang.hitch(this, this._onLayoutDefinitionChanged));
+      topic.subscribe('builder/onScreenGroupsChanged', lang.hitch(this, this._onOnScreenGroupsChanged));
+
+      topic.subscribe('builder/widgetPoolChanged', lang.hitch(this, this._onWidgetPoolChanged));
+      topic.subscribe('builder/openAtStartChange', lang.hitch(this, this._onOpenAtStartChanged));
+      topic.subscribe('builder/onScreenOrderChanged', lang.hitch(this, this._onScreenOrderChanged));
+
+      topic.subscribe('builder/mapContentModified', lang.hitch(this, this._onMapContentModified));
+      topic.subscribe('builder/mapChanged', lang.hitch(this, this._onMapChanged));
+      topic.subscribe('builder/mapOptionsChanged', lang.hitch(this, this._onMapOptionsChanged));
+      topic.subscribe('builder/mapRefreshIntervalChanged', lang.hitch(this, this._onMapRefreshIntervalChanged));
+      topic.subscribe('builder/appAttributeChanged', lang.hitch(this, this._onAppAttributeChanged));
+
+      topic.subscribe('builder/dataSourceChanged', lang.hitch(this, this._onDataSourceChanged));
+
+      //actionTriggered event is proccessed by layout manager.
+      // topic.subscribe('builder/actionTriggered', lang.hitch(this, this._onConfigChanged));
+
+      topic.subscribe('builder/setAppConfig', lang.hitch(this, this._onAppConfigSet));
+
+      topic.subscribe('builder/themeChanged', lang.hitch(this, this._onThemeChanged));
+      topic.subscribe('builder/layoutChanged', lang.hitch(this, this._onLayoutChanged));
+      topic.subscribe('builder/styleChanged', lang.hitch(this, this._onStyleChanged));
+
+      topic.subscribe('builder/syncExtent', lang.hitch(this, this._onSyncExtent));
+
+      topic.subscribe('builder/loadingPageChanged', lang.hitch(this, this._onLoadingPageChanged));
+
+      topic.subscribe('builder/templateConfigChanged',
+        lang.hitch(this, this._onTemplateConfigChanged));
+
+      topic.subscribe('builder/appProxyForMapChanged', lang.hitch(this,
+        this._onAppProxyForMapChanged));
+
+      topic.subscribe('builder/appProxyForUrlChanged', lang.hitch(this,
+        this._onAppProxyForUrlChanged));
+
+      topic.subscribe('builder/sharedThemeChanged', lang.hitch(this,
+        this._onSharedThemeChanged));
+    },
+
+    loadConfig: function(){
+      if(this.urlParams.mode === 'preview' ||
+        this.urlParams.mode === 'config'){
+        //in preview/config mode, the config is set by the builder.
+        return;
+      }
+
+      var loading = new AGOLLoading();
+      loading.placeAt(window.jimuConfig.layoutId);
+      return this.configLoader.loadConfig().then(lang.hitch(this, function(appConfig){
+        this.portalSelf = this.configLoader.portalSelf;
+        this.appConfig = this._addDefaultValues(appConfig);
+
+        console.timeEnd('Load Config');
+
+        window.appInfo.isRunInMobile = jimuUtils.inMobileSize();
+
+        var _ac = this.getAppConfig();
+        loading.destroy();
+        topic.publish("appConfigLoaded", _ac);
+        return _ac;
+      }), lang.hitch(this, function(err){
+        loading.destroy();
+        console.error(err);
+        if(err && err.message && typeof err.message === 'string'){
+          this._showErrorMessage(err.message);
+        }
+      }));
+    },
+
+    _showErrorMessage: function(msg){
+      html.create('div', {
+        'class': 'app-error',
+        innerHTML: jimuUtils.sanitizeHTML(msg)
+      }, document.body);
+      /*globals jimuConfig*/
+      html.setStyle(jimuConfig.loadingId, 'display', 'none');
+    },
+
+    getAppConfig: function () {
+      var c;
+      if(window.appInfo.isRunInMobile){
+        // console.log('Switch to mobile mode.');
+        c = lang.clone(this._getMobileConfig(this.appConfig));
+        c._originConfig = lang.clone(this.appConfig);
+      }else{
+        // console.log('Switch to desktop mode.');
+        c = lang.clone(this.appConfig);
+      }
+
+      c.getConfigElementById = function(id){
+        return jimuUtils.getConfigElementById(this, id);
+      };
+
+      c.getConfigElementsByName = function(name){
+        return jimuUtils.getConfigElementsByName(this, name);
+      };
+
+      c.getCleanConfig = function(isForAGOLTemplate){
+        if(this._originConfig){
+          return getCleanConfig(this._originConfig, isForAGOLTemplate);
+        }else{
+          return getCleanConfig(this, isForAGOLTemplate);
+        }
+      };
+
+      c.visitElement = function(cb){
+        jimuUtils.visitElement(this, cb);
+      };
+      return c;
+    },
+
+    _onOrientationChange: function() {
+      if (this.appConfig) {
+        topic.publish("appConfigChanged", this.getAppConfig(), 'layoutChange');
+      }
+    },
+    _onWindowResize: function () {
+      var runInMobile = jimuUtils.inMobileSize();
+      if(window.appInfo.isRunInMobile === runInMobile){
+        return;
+      }
+      window.appInfo.isRunInMobile = runInMobile;
+
+      if(this.appConfig){
+        topic.publish("appConfigChanged", this.getAppConfig(), 'layoutChange');
+      }
+    },
+
+    _getMobileConfig: function(appConfig) {
+      return jimuUtils.mixinAppConfigPosition(appConfig, appConfig.mobileLayout);
+    },
+
+    _updateDataSourceForWidget: function(newJson){
+      this._deleteDataSourcesFromWidget(newJson);
+      this._addDataSourcesForWidget(newJson);
+    },
+
+    _deleteDataSourcesFromWidget: function(widgetJson){
+      //remove all data sources of this widget
+      for(var p in this.appConfig.dataSource.dataSources){
+        if(p.startWith('widget~' + widgetJson.id + '~')){
+          delete this.appConfig.dataSource.dataSources[p];
+        }
+      }
+    },
+
+    _addDataSourcesForWidget: function(widgetJson){
+      array.forEach(widgetJson.provideDataSources, function(ds){
+        var dsId = 'widget~' + widgetJson.id + '~' + ds.id;
+        ds.id = dsId;
+        this.appConfig.dataSource.dataSources[dsId] = ds;
+      }, this);
+
+      delete widgetJson.provideDataSources;
+    },
+
+    _addIdForWidgets: function (widgetJsons){
+      var maxId = 0, i;
+
+      this.getAppConfig().visitElement(function(e){
+        if(!e.id){
+          return;
+        }
+        //fix element id
+        e.id = e.id.replace(/\//g, '_');
+
+        var li = e.id.lastIndexOf('_');
+        if(li > -1){
+          i = e.id.substr(li + 1);
+          maxId = Math.max(maxId, i);
+        }
+      });
+
+      array.forEach(widgetJsons, function(e){
+        if(!e.id){
+          maxId ++;
+          if(e.itemId){
+            e.id = e.itemId + '_' + maxId;
+          }else if(e.uri){
+            e.id = e.uri.replace(/\//g, '_') + '_' + maxId;
+          }else{
+            e.id = ''  + '_' + maxId;
+          }
+        }
+      });
+    },
+
+    _onWidgetChanged: function(_newJson){
+      // transfer obj to another iframe may cause problems on IE8
+      var newJson = jimuUtils.reCreateObject(_newJson);
+      var oldJson = jimuUtils.getConfigElementById(this.appConfig, _newJson.id);
+
+      this._updateDataSourceForWidget(newJson);
+
+      //for placeholder, add off panel
+      if(newJson.inPanel === false && !oldJson.uri){
+        newJson.closeable = true;
+      }
+
+      //for now, we can add/update property only
+      for(var p in newJson){
+        oldJson[p] = newJson[p];
+      }
+
+      delete oldJson.isDefaultConfig;
+
+      this.configLoader.addNeedValues(this.appConfig);
+      this._addDefaultValues(this.appConfig);
+      topic.publish('appConfigChanged', this.getAppConfig(), 'widgetChange', newJson);
+    },
+
+    _onGroupChanged: function(_newJson){
+      // transfer obj to another iframe may cause problems on IE8
+      var newJson = jimuUtils.reCreateObject(_newJson);
+      var oldJson = jimuUtils.getConfigElementById(this.appConfig, _newJson.id);
+
+      this._handleDataSourceForWidgets(oldJson, newJson);
+
+      //for now, we can add/update property only
+      for(var p in newJson){
+        oldJson[p] = newJson[p];
+      }
+
+      this.configLoader.addNeedValues(this.appConfig);
+      this._addDefaultValues(this.appConfig);
+
+      topic.publish('appConfigChanged', this.getAppConfig(), 'groupChange', newJson);
+    },
+
+    /**
+     * this function can handle widget array (group or pool) changes
+     * @param  {[type]} oldJson [description]
+     * @param  {[type]} newJson [description]
+     * @return {[type]}         [description]
+     */
+    _handleDataSourceForWidgets: function(oldJson, newJson){
+      var newAddedWidgets = array.filter(newJson.widgets, function(nw){
+        if(!nw.id){
+          return true;
+        }else{
+          return array.filter(oldJson.widgets, function(ow){return nw.id === ow.id;}).length === 0;
+        }
+      }, this);
+      this._addIdForWidgets(newAddedWidgets);
+      array.forEach(newAddedWidgets, function(w){
+        this._addDataSourcesForWidget(w);
+      }, this);
+
+      var removedWidgets = array.filter(oldJson.widgets, function(ow){
+        return array.filter(newJson.widgets, function(nw){return nw.id === ow.id;}).length === 0;
+      }, this);
+      array.forEach(removedWidgets, function(w){
+        this._deleteDataSourcesFromWidget(w);
+      }, this);
+
+      array.forEach(newJson.widgets, function(nw){
+        array.forEach(oldJson.widgets, function(ow){
+          if(nw.id === ow.id && nw.provideDataSources){
+            this._updateDataSourceForWidget(nw);
+          }
+        }, this);
+      }, this);
+    },
+
+    _onWidgetPoolChanged: function(_newJson){
+      // transfer obj to another iframe may cause problems on IE8
+      var newJson = jimuUtils.reCreateObject(_newJson);
+      var oldJson = this.appConfig.widgetPool;
+
+      this._handleDataSourceForWidgetsSection(oldJson, newJson);
+
+      var controllerWidgets = this.widgetManager.getControllerWidgets();
+      if(controllerWidgets.length === 1){
+        this.appConfig.widgetPool.widgets = newJson.widgets;
+        this.appConfig.widgetPool.groups = newJson.groups;
+      }else{
+        var controllerJson = jimuUtils.getConfigElementById(this.appConfig, newJson.controllerId);
+
+        //remove old jsons from pool
+        array.forEach(controllerJson.controlledWidgets, function(widgetId){
+          this._removeWidgetOrGroupFromPoolById(this.appConfig, widgetId);
+        }, this);
+
+        array.forEach(controllerJson.controlledGroups, function(groupId){
+          this._removeWidgetOrGroupFromPoolById(this.appConfig, groupId);
+        }, this);
+
+        //add new jsons into pool
+        if(typeof this.appConfig.widgetPool.widgets === 'undefined'){
+          this.appConfig.widgetPool.widgets = newJson.widgets;
+        }else{
+          this.appConfig.widgetPool.widgets =
+            this.appConfig.widgetPool.widgets.concat(newJson.widgets);
+        }
+        if(typeof this.appConfig.widgetPool.groups === 'undefined'){
+          this.appConfig.widgetPool.groups = newJson.groups;
+        }else{
+          this.appConfig.widgetPool.groups =
+            this.appConfig.widgetPool.groups.concat(newJson.groups);
+        }
+
+        //update controller setting
+        controllerJson.controlledWidgets = array.map(newJson.widgets, function(widgetJson){
+          return widgetJson.id;
+        });
+        controllerJson.controlledGroups = array.map(newJson.groups, function(groupJson){
+          return groupJson.id;
+        });
+      }
+      this.configLoader.addNeedValues(this.appConfig);
+      this.configLoader.loadAndUpgradeAllWidgetsConfig(this.appConfig).then(lang.hitch(this, function(appConfig){
+        this.appConfig = appConfig;
+        this._addDefaultValues(this.appConfig);
+        topic.publish('appConfigChanged', this.getAppConfig(), 'widgetPoolChange', newJson);
+      }));
+    },
+
+    _handleDataSourceForWidgetsSection: function(oldJson, newJson){
+      var newWidgets = newJson.widgets;
+      array.forEach(newJson.groups, function(g){
+        newWidgets = newWidgets.concat(g.widgets);
+      }, this);
+
+      var oldWidgets = oldJson.widgets;
+      array.forEach(oldJson.groups, function(g){
+        oldWidgets = oldWidgets.concat(g.widgets);
+      }, this);
+
+      this._handleDataSourceForWidgets({widgets: oldWidgets}, {widgets: newWidgets});
+    },
+
+    _removeWidgetOrGroupFromPoolById: function(appConfig, id){
+      array.some(appConfig.widgetPool.widgets, function(widget, i){
+        if(widget.id === id){
+          appConfig.widgetPool.widgets.splice(i, 1);
+          return true;
+        }
+      });
+
+      array.some(appConfig.widgetPool.groups, function(group, i){
+        if(group.id === id){
+          appConfig.widgetPool.groups.splice(i, 1);
+          return true;
+        }
+      });
+    },
+
+    _onOpenAtStartChanged: function(_newJson) {
+      // transfer obj to another iframe may cause problems on IE8
+      var newJson = jimuUtils.reCreateObject(_newJson);
+      //TODO we support only one controller for now, so we don't do much here
+      var appConfig = this.appConfig;
+      if (_newJson.isOnScreen) {
+        var onScreenWidgets = appConfig.widgetOnScreen && appConfig.widgetOnScreen.widgets;
+        if (onScreenWidgets && onScreenWidgets.length > 0) {
+          array.forEach(onScreenWidgets, lang.hitch(this, function(w) {
+            if (w.id === _newJson.id) {
+              w.openAtStart = !w.openAtStart;
+            } else {
+              delete w.openAtStart;
+            }
+          }));
+        }
+      } else {
+        var pool = appConfig.widgetPool;
+        if (pool && pool.groups && pool.groups.length > 0) {
+          array.forEach(pool.groups, lang.hitch(this, function(g) {
+            if (g.id === _newJson.id) {
+              g.openAtStart = !g.openAtStart;
+            } else {
+              delete g.openAtStart;
+            }
+          }));
+        }
+        if (pool && pool.widgets && pool.widgets.length > 0) {
+          array.forEach(pool.widgets, lang.hitch(this, function(w) {
+            if (w.id === _newJson.id) {
+              w.openAtStart = !w.openAtStart;
+            } else {
+              delete w.openAtStart;
+            }
+          }));
+        }
+      }
+
+      topic.publish('appConfigChanged', this.getAppConfig(), 'openAtStartChange', newJson);
+    },
+
+    _onScreenOrderChanged: function(_newJson) {
+      var onscreenWidgets = jimuUtils.reCreateObject(_newJson);
+      var appConfig = this.appConfig;
+
+      // non-controller and removeable OnScreen Widgets
+      array.forEach(appConfig.widgetOnScreen.widgets, function(widget){
+        if (!widget.isController && (widget.inPanel === false && widget.closeable === true ||
+            widget.inPanel === true || !widget.uri)) {
+          array.some(onscreenWidgets, function(item) {
+            if (widget.id === item.id) {
+              widget.position = item.position;
+              return true;
+            }
+          });
+        }
+      }, this);
+
+      topic.publish('appConfigChanged', this.getAppConfig(), 'onScreenOrderChange', onscreenWidgets);
+    },
+
+    _onAppAttributeChanged: function(_newJson){
+      // transfer obj to another iframe may cause problems on IE8
+      var newJson = jimuUtils.reCreateObject(_newJson);
+
+      lang.mixin(this.appConfig, newJson);
+
+      this.configLoader.processProxy(this.appConfig);
+
+      this.configLoader.addNeedValues(this.appConfig);
+      this._addDefaultValues(this.appConfig);
+      topic.publish('appConfigChanged', this.getAppConfig(), 'attributeChange', newJson);
+    },
+
+    _onDataSourceChanged: function(_dataSource){
+      var newDataSource = jimuUtils.reCreateObject(_dataSource);
+      this.appConfig.dataSource = newDataSource;
+
+      topic.publish('appConfigChanged', this.getAppConfig(), 'dataSourceChange', _dataSource);
+    },
+
+    _onLoadingPageChanged: function(_newJson){
+      // transfer obj to another iframe may cause problems on IE8
+      var newJson = jimuUtils.reCreateObject(_newJson);
+      var oldConfig;
+
+      if('backgroundColor' in newJson){
+        this.appConfig.loadingPage.backgroundColor = newJson.backgroundColor;
+      }else if('backgroundImage' in newJson){
+        oldConfig = this.appConfig.loadingPage.backgroundImage || {};
+        this.appConfig.loadingPage.backgroundImage =
+            lang.mixin(oldConfig, newJson.backgroundImage);
+      }else if('loadingGif' in newJson){
+        oldConfig = this.appConfig.loadingPage.loadingGif || {};
+        this.appConfig.loadingPage.loadingGif =
+            lang.mixin(oldConfig, newJson.loadingGif);
+      }
+
+      this.configLoader.addNeedValues(this.appConfig);
+      this._addDefaultValues(this.appConfig);
+      topic.publish('appConfigChanged', this.getAppConfig(), 'loadingPageChange', newJson);
+    },
+
+    /**
+     * _newJson pattern:
+     * {
+     *   mapItemId: itemId,
+     *   proxyItems: [{
+     *     sourceUrl: string;
+     *     title: string;
+     *     premium: boolean;
+     *     consumeCredits: boolean;
+     *     useProxy: boolean;
+     *     proxyUrl?: string;
+     *     proxyId?: string;
+     *   }]
+     * }
+     */
+    _onAppProxyForMapChanged: function(_newJson) {
+      var newJson = jimuUtils.reCreateObject(_newJson);
+
+      if (!('appProxy' in this.appConfig.map)) {
+        // Set appProxy if there is no such property
+        this.appConfig.map.appProxy = newJson;
+      } else if (this.appConfig.map.appProxy.mapItemId !== newJson.mapItemId) {
+        // Replace the app proxy if map changed.
+        this.appConfig.map.appProxy = newJson;
+      } else {
+        // Update proxy items
+        array.forEach(newJson.proxyItems, lang.hitch(this, function(item) {
+          var exists = array.some(this.appConfig.map.appProxy.proxyItems, function(configItem) {
+            if (configItem.sourceUrl === item.sourceUrl) {
+              configItem.useProxy = item.useProxy;
+              configItem.proxyUrl = item.proxyUrl || '';
+              configItem.proxyId = item.proxyId || '';
+              if (!isNaN(item.hitsPerInterval)) {
+                configItem.hitsPerInterval = item.hitsPerInterval;
+              }
+              if (!isNaN(item.intervalSeconds)) {
+                configItem.intervalSeconds = item.intervalSeconds;
+              }
+              return true;
+            }
+          });
+          // web map may have added new premium layers in map viewer,
+          // To avoid changing appConfig, they will not be added until they are
+          // configured to use app proxy
+          if (!exists && item.useProxy && item.proxyUrl) {
+            var proxyItems = this.appConfig.map.appProxy.proxyItems || [];
+            proxyItems.push(item);
+            this.appConfig.map.appProxy.proxyItems = proxyItems;
+          }
+        }));
+      }
+
+      topic.publish('appConfigChanged', this.getAppConfig(), 'appProxyChange', newJson);
+    },
+
+    /**
+     * _newJson pattern is array of:
+     * {
+     *   sourceUrl: string,
+     *   proxyUrl?: string,
+     *   proxyId?: string,
+     *   useProxy: boolean,
+     *   title: string,
+     *   premium: boolean,
+     *   consumeCredits: boolean
+     * }
+     */
+    _onAppProxyForUrlChanged: function(_newJson) {
+      var newJson = jimuUtils.reCreateObject(_newJson);
+
+      this.appConfig.appProxies = newJson;
+
+      topic.publish('appConfigChanged', this.getAppConfig(), 'appProxyChange', newJson);
+    },
+
+    _onTemplateConfigChanged: function(_newJson){
+      var newJson = jimuUtils.reCreateObject(_newJson);
+      this.appConfig.templateConfig = newJson;
+
+      this.configLoader.addNeedValues(this.appConfig);
+      this._addDefaultValues(this.appConfig);
+      topic.publish('appConfigChanged', this.getAppConfig(), 'templateConfigChange', newJson);
+    },
+
+    _onMapContentModified: function() {
+      // Doesn't change appConfig
+      topic.publish('mapContentModified');
+    },
+
+    _onMapChanged: function(_newJson){
+      // transfer obj to another iframe may cause problems on IE8
+      var newJson = jimuUtils.reCreateObject(_newJson);
+
+      //remove the options that are relative to map's display when map is changed.
+      if(this.appConfig.map.mapOptions){
+        jimuUtils.deleteMapOptions(this.appConfig.map.mapOptions);
+      }
+
+      this.appConfig.map.mapRefreshInterval = {
+        useWebMapRefreshInterval: true
+      };
+
+      lang.mixin(this.appConfig.map, newJson);
+
+      this._deleteDataSourcesFromMap();
+
+      this.configLoader.addNeedValues(this.appConfig);
+
+      this.configLoader.loadAndUpgradeAllWidgetsConfig(this.appConfig).then(lang.hitch(this, function(appConfig){
+        this.appConfig = appConfig;
+        this._addDefaultValues(this.appConfig);
+        topic.publish('appConfigChanged', this.getAppConfig(), 'mapChange', newJson);
+      }));
+    },
+
+    _deleteDataSourcesFromMap: function(){
+      array.forEach(Object.keys(this.appConfig.dataSource.dataSources), function(dsId){
+        if(dsId.startWith('map')){
+          delete this.appConfig.dataSource.dataSources[dsId];
+        }
+      }, this);
+    },
+
+    _onMapOptionsChanged: function(_newJson){
+      // transfer obj to another iframe may cause problems on IE8
+      var newJson = jimuUtils.reCreateObject(_newJson);
+      if(!this.appConfig.map.mapOptions){
+        this.appConfig.map.mapOptions = {};
+      }
+      lang.mixin(this.appConfig.map.mapOptions, newJson);
+      topic.publish('appConfigChanged', this.getAppConfig(), 'mapOptionsChange', newJson);
+    },
+
+    _onMapRefreshIntervalChanged: function(_newJson){
+      // transfer obj to another iframe may cause problems on IE8
+      var newJson = jimuUtils.reCreateObject(_newJson);
+      if(!this.appConfig.map.mapRefreshInterval){
+        this.appConfig.map.mapRefreshInterval = {};
+      }
+      lang.mixin(this.appConfig.map.mapRefreshInterval, newJson);
+      if(this.appConfig.map.mapRefreshInterval.useWebMapRefreshInterval){
+        delete this.appConfig.map.mapRefreshInterval.minutes;
+      }
+      topic.publish('appConfigChanged', this.getAppConfig(), 'mapRefreshIntervalChange', newJson);
+    },
+
+    _onThemeChanged: function(theme){
+      this._getAppConfigFromTheme(theme).then(lang.hitch(this, function(config){
+        var oldOnScreen = lang.clone(this.appConfig.widgetOnScreen);
+        this.appConfig = config;
+        this._handleDataSourceForWidgetsSection(oldOnScreen, {});
+        topic.publish('appConfigChanged', this.getAppConfig(), 'themeChange', theme.getName());
+      }));
+    },
+
+    _onLayoutChanged: function(layout){
+      //summary:
+      //  * Layout contains widget/group position, panel uri.
+      //  * For default layout, use the same format with app config to define it.
+      //  * For other layouts, we support 2 ways:
+      //    * Use array, one by one
+      //    * Use object, key is widget uri, or ph_<index>(placeholder), or g_<index>(group)
+
+      this.appConfig = jimuUtils.mixinAppConfigPosition(this.appConfig, layout.layoutConfig);
+      this.appConfig.layoutDefinition = layout.layoutConfig.layoutDefinition;
+
+      this.configLoader.addNeedValues(this.appConfig);
+      this._addDefaultValues(this.appConfig);
+      topic.publish('appConfigChanged', this.getAppConfig(), 'layoutChange', layout.name);
+    },
+
+    _onStyleChanged: function(style){
+      this.appConfig.theme.styles = this._genStyles(this.appConfig.theme.styles, style.name);
+      if (style.isCustom) {
+        this.appConfig.theme.customStyles = {
+          mainBackgroundColor: style.styleColor
+        };
+      } else {
+        delete this.appConfig.theme.customStyles;
+        delete this.appConfig.titleColor;
+        this.appConfig.theme.sharedTheme = {
+          isPortalSupport: this.appConfig.theme.sharedTheme.isPortalSupport,
+          useHeader: false,
+          useLogo: false
+        };
+      }
+      topic.publish('appConfigChanged', this.getAppConfig(), 'styleChange', style.name);
+    },
+
+    _onOnScreenGroupsChanged: function(_data){
+      var newData = jimuUtils.reCreateObject(_data);
+      this.appConfig.widgetOnScreen.groups = newData.groups;
+
+      topic.publish('appConfigChanged', this.getAppConfig(), 'onScreenGroupsChange', newData.groups);
+    },
+
+    _onLayoutDefinitionChanged: function(_data){
+      var newData = jimuUtils.reCreateObject(_data);
+      var oldDefinition = this.appConfig.layoutDefinition;
+      if(jimuUtils.isEqual(oldDefinition, newData.layoutDefinition)){
+        return;
+      }
+      this.appConfig.layoutDefinition = newData.layoutDefinition;
+
+      var newGroupIds = newData.groupIds;
+      this.appConfig.widgetOnScreen.groups =
+        jimuUtils.handleGridLayoutOnScreenGroupChange(this.appConfig.widgetOnScreen.groups, newGroupIds);
+
+      this.configLoader.addNeedValues(this.appConfig);
+      this._addDefaultValues(this.appConfig);
+      topic.publish('appConfigChanged', this.getAppConfig(), 'layoutDefinitionChange', newData.layoutDefinition);
+    },
+
+    _onSharedThemeChanged: function(_sharedTheme){
+      var oldSharedTheme = this.appConfig.theme.sharedTheme;
+      var newSharedTheme = jimuUtils.reCreateObject(_sharedTheme);
+
+      //whenever shared theme change, the styleChange event will be published and handled in _onStyleChanged.
+      if(newSharedTheme.useHeader && !oldSharedTheme.useHeader){
+        if(this.portalSelf.portalProperties && this.portalSelf.portalProperties.sharedTheme){
+          this.appConfig.theme.customStyles = {
+            mainBackgroundColor: this.portalSelf.portalProperties.sharedTheme.header.background
+          };
+          this.appConfig.titleColor = this.portalSelf.portalProperties.sharedTheme.header.text;
+
+          this._onAppAttributeChanged({
+            titleColor: this.appConfig.titleColor
+          });
+        }else{
+          console.error('Portal does not support sharedTheme.');
+        }
+      }
+
+      if(!newSharedTheme.useHeader && oldSharedTheme.useHeader){
+        //in this case, mainBackgroundColor will be handled by style change event, so it's not handled here.
+
+        delete this.appConfig.titleColor;
+
+        this._onAppAttributeChanged({
+          titleColor: this.appConfig.titleColor
+        });
+      }
+
+      if(newSharedTheme.useLogo && !oldSharedTheme.useLogo){
+        if(this.portalSelf.portalProperties && this.portalSelf.portalProperties.sharedTheme){
+          if(this.portalSelf.portalProperties.sharedTheme.logo.small){
+            this.appConfig.logo = this.portalSelf.portalProperties.sharedTheme.logo.small;
+          }else{
+            this.appConfig.logo = 'images/app-logo.png';
+          }
+
+          this.appConfig.logoLink = this.portalSelf.portalProperties.sharedTheme.logo.link;
+
+          this._onAppAttributeChanged({
+            logo: this.appConfig.logo,
+            logoLink: this.appConfig.logoLink
+          });
+        }else{
+          console.error('Portal does not support sharedTheme.');
+        }
+      }
+
+      if(!newSharedTheme.useLogo && oldSharedTheme.useLogo){
+        this._onAppAttributeChanged({
+          logo: this.appConfig.logo
+        });
+      }
+
+      lang.mixin(oldSharedTheme, newSharedTheme);
+      topic.publish('appConfigChanged', this.getAppConfig(), 'sharedThemeChange', newSharedTheme);
+    },
+
+    _onSyncExtent: function(map){
+      topic.publish('syncExtent', map);
+    },
+
+    _genStyles: function(allStyle, currentStyle){
+      var styles = [];
+      styles.push(currentStyle);
+      array.forEach(allStyle, function(_style){
+        if(styles.indexOf(_style) < 0){
+          styles.push(_style);
+        }
+      });
+      return styles;
+    },
+
+    /**************************************
+    Keep the following same between themes:
+    1. map config excluding map's position
+    2. widget pool config excluding pool panel config
+    ***************************************/
+    _getAppConfigFromTheme: function(theme){
+      var def = new Deferred();
+      var config, styles = [];
+      var currentConfig = this.getAppConfig().getCleanConfig();
+
+      currentConfig.mode = this.urlParams.mode;
+
+      //because we don't allow user config panel for group,
+      //and group's panel should be different between differrent theme
+      //so, we delete group panel
+      array.forEach(currentConfig.widgetPool.groups, function(group){
+        delete group.panel;
+      }, this);
+      //theme has already appConfig object, use it but keep something
+      if(theme.appConfig){
+        config = lang.clone(theme.appConfig);
+        config.map = currentConfig.map;
+        config.map.position = theme.appConfig.map.position;
+        this._copyPoolToThemePool(currentConfig, config);
+
+        config.links = currentConfig.links;
+        config.title = currentConfig.title;
+        config.subtitle = currentConfig.subtitle;
+        config.logo = currentConfig.logo;
+      }else{
+        //use layout and style to create a new appConfig, which may contain some place holders
+        var layout = theme.getCurrentLayout();
+        var style = theme.getCurrentStyle();
+
+        config = lang.clone(currentConfig);
+        var layoutConfig = lang.clone(layout.layoutConfig);
+
+        //use onscreen
+        config.widgetOnScreen = layoutConfig.widgetOnScreen;
+
+        //add flag
+        if(layoutConfig.widgetPool){
+          array.forEach(layoutConfig.widgetPool.widgets, function(w){
+            w.isPreconfiguredInTheme = true;
+          });
+          array.forEach(layoutConfig.widgetPool.groups, function(g){
+            g.isPreconfiguredInTheme = true;
+          });
+        }
+
+        //copy pool
+        this._copyPoolToThemePool(currentConfig, layoutConfig);
+        config.widgetPool = layoutConfig.widgetPool;
+
+        if(layoutConfig.map && layoutConfig.map.position){
+          config.map.position = layoutConfig.map.position;
+        }
+        config.mobileLayout = layoutConfig.mobileLayout;
+        config.layoutDefinition = layoutConfig.layoutDefinition;
+
+        //put all styles into the style array, and the current style is the first element
+        styles = this._genStyles(array.map(theme.getStyles(), function(style){
+          return style.name;
+        }), style.name);
+        config.theme = {
+          name: theme.getName(),
+          styles: styles,
+          version: theme.getVersion()
+        };
+
+        if (this.portalSelf.portalProperties && this.portalSelf.portalProperties.sharedTheme) {
+          config.theme.sharedTheme = {
+            "useHeader": true,
+            "useLogo": true,
+            isPortalSupport: true
+          };
+          config.theme.customStyles = {
+            mainBackgroundColor: this.portalSelf.portalProperties.sharedTheme.header.background
+          };
+        } else {
+          config.theme.sharedTheme = {
+            "useHeader": false,
+            "useLogo": false,
+            isPortalSupport: false
+          };
+          config.theme.customStyles = {
+            mainBackgroundColor: ''
+          };
+        }
+
+        config.titleColor = currentConfig.titleColor;
+        config.logoLink = currentConfig.logoLink;
+      }
+
+      this.configLoader.addNeedValues(config);
+      this.configLoader.loadWidgetsManifest(config).then(lang.hitch(this, function(config){
+        return this.configLoader.loadAndUpgradeAllWidgetsConfig(config);
+      })).then(lang.hitch(this, function(){
+        this._addDefaultValues(config);
+        def.resolve(config);
+      }));
+      return def;
+    },
+
+    _copyPoolToThemePool: function(currentAppConfig, themeAppConfig){
+      var cpool = currentAppConfig.widgetPool;
+
+      if(!themeAppConfig.widgetPool){
+        themeAppConfig.widgetPool = {};
+      }
+      var tpool = themeAppConfig.widgetPool;
+
+      //widgets/groups defined in theme
+      var themePoolWidgets = array.filter(tpool.widgets, function(tw){
+        if(tw.isPreconfiguredInTheme){
+          return true;
+        }
+
+        //widgets that exists in the theme only(added by user, not pre-configured)
+        if(!array.some(cpool.widgets, function(cw){
+          return cw.name === tw.name;
+        })){
+          return true;
+        }
+      });
+      var themePoolGroups = array.filter(tpool.groups, function(g){
+        return g.isPreconfiguredInTheme;
+      });
+
+      //widgets/groups are shared
+      var currentPoolWidgets = array.filter(cpool.widgets, function(w){
+        return !w.isPreconfiguredInTheme;
+      });
+      var currentPoolGroups = array.filter(cpool.groups, function(g){
+        return !g.isPreconfiguredInTheme;
+      });
+
+      currentPoolWidgets = this._getPoolWidgetsWithoutDuplicated(currentPoolWidgets,
+          themeAppConfig.widgetOnScreen.widgets || []);
+
+      tpool.widgets = currentPoolWidgets.concat(themePoolWidgets);
+      tpool.groups = currentPoolGroups.concat(themePoolGroups);
+    },
+
+    _getPoolWidgetsWithoutDuplicated: function(currentPoolWidgets, themeOnScreeWidgets){
+      var ret = lang.clone(currentPoolWidgets);
+      var currentAppConfig = this.getAppConfig();
+      //we don't care groups and theme pool, because all in-panel widgets are not singleton
+      for(var i = currentPoolWidgets.length - 1; i >= 0; i --){
+        for(var j = themeOnScreeWidgets.length - 1; j >= 0; j --){
+          if(!themeOnScreeWidgets[j].uri){
+            continue;
+          }
+          var wname = themeOnScreeWidgets[j].name;
+          if(!wname){
+            wname = jimuUtils.getWidgetNameFromUri(themeOnScreeWidgets[j].uri);
+          }
+
+          var wid = currentPoolWidgets[i].id;
+          var wjson = currentAppConfig.getConfigElementById(wid);
+          if(currentPoolWidgets[i] && currentPoolWidgets[i].name === wname &&
+            wjson.supportMultiInstance === false){
+            console.log('Widget', currentPoolWidgets[i].name,
+              'is not copied to new theme because this widget exists in new theme.');
+            ret.splice(i, 1);
+          }
+        }
+      }
+      return ret;
+    },
+
+    _onAppConfigSet: function(c){
+      //summary:
+      //  this method may be called by builder or UT
+      c = jimuUtils.reCreateObject(c);
+
+      window.appInfo.isRunInMobile = jimuUtils.inMobileSize();
+
+      this.configLoader.processProxy(c);
+
+      this.configLoader.addNeedValues(c);
+
+      this.configLoader.loadAndUpgradeAllWidgetsConfig(c).then(lang.hitch(this, function(c){
+        this._addDefaultValues(c);
+
+        tokenUtils.setPortalUrl(c.portalUrl);
+        window.portalUrl = c.portalUrl;
+
+        if(this.appConfig){
+          //remove the options that are relative to map's display when map is changed.
+          jimuUtils.deleteMapOptions(c.map.mapOptions);
+          this.appConfig = c;
+          this._deleteDataSourcesFromMap();
+          topic.publish('appConfigChanged', this.getAppConfig(), 'resetConfig', c);
+        }else{
+          this.appConfig = c;
+
+          var portal = portalUtils.getPortal(c.portalUrl);
+          portal.loadSelfInfo().then(lang.hitch(this, function(portalSelf){
+            this.portalSelf = portalSelf;
+            topic.publish("appConfigLoaded", this.getAppConfig());
+          }));
+        }
+      }));
+    },
+
+    /**********************************************
+    * Add default values
+    ************************************************/
+    _addDefaultValues: function(config) {
+      this._addDefaultPortalUrl(config);
+      this._addDefaultGeometryService(config);
+      this._addDefaultStyle(config);
+      this._addDefaultMap(config);
+      this._addDefaultVisible(config);
+      this._addDefaultDataSource(config);
+      this._addDefaultSharedTheme(config);
+
+      //preload widgets
+      if(typeof config.widgetOnScreen === 'undefined'){
+        config.widgetOnScreen = {};
+      }
+
+      if(typeof config.widgetPool === 'undefined'){
+        config.widgetPool = {};
+      }
+
+      this._addDefaultPanelAndPosition(config);
+      this._addDefaultOfWidgetGroup(config);
+      //if the first widget or first group doesn't have index property, we add it
+      if(config.widgetPool.widgets && config.widgetPool.widgets.length > 0 &&
+        config.widgetPool.widgets[0].index === undefined ||
+        config.widgetPool.groups && config.widgetPool.groups.length > 0 &&
+        config.widgetPool.groups[0].index === undefined){
+        this._addIndexForWidgetPool(config);
+      }
+      return config;
+    },
+
+    _addDefaultDataSource: function(config){
+      if(!config.dataSource){
+        config.dataSource = {
+          dataSources: {},
+          settings: {}
+        };
+      }else{
+        if(!config.dataSource.dataSources){
+          config.dataSource.dataSources = {};
+        }
+
+        if(!config.dataSource.settings){
+          config.dataSource.settings = {};
+        }
+      }
+    },
+
+    _addDefaultPortalUrl: function(config){
+      if(typeof config.portalUrl === 'undefined'){
+        config.portalUrl = 'http://www.arcgis.com/';
+      }
+      if(config.portalUrl && config.portalUrl.substr(config.portalUrl.length - 1) !== '/'){
+        config.portalUrl += '/';
+      }
+    },
+
+    _addDefaultGeometryService: function(appConfig){
+      var geoServiceUrl = appConfig && appConfig.geometryService;
+      var validGeoServiceUrl = geoServiceUrl && typeof geoServiceUrl === 'string' &&
+      lang.trim(geoServiceUrl);
+      if(validGeoServiceUrl){
+        geoServiceUrl = lang.trim(geoServiceUrl);
+      }
+      else{
+        //TODO this.portalSelf is null if app is loaded in builder.
+        //but we can ensure appConfig.geometryService is not null if app is created by builder,
+        //so this line will not be executed.
+        geoServiceUrl = this.portalSelf.helperServices.geometry.url;
+      }
+      appConfig.geometryService = geoServiceUrl;
+      esriConfig.defaults.geometryService = new GeometryService(appConfig.geometryService);
+    },
+
+    _addDefaultStyle: function(config){
+      if(config.theme){
+        if(!config.theme.styles || config.theme.styles.length === 0){
+          config.theme.styles = ['default'];
+        }
+      }
+    },
+
+    _addDefaultMap: function(config){
+      config.map.id = 'map';
+
+      if(typeof config.map['3D'] === 'undefined' && typeof config.map['2D'] === 'undefined'){
+        config.map['2D'] = true;
+      }
+
+      if(typeof config.map.position === 'undefined'){
+        config.map.position = {
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0
+        };
+      }
+
+      if(typeof config.map.portalUrl === 'undefined'){
+        config.map.portalUrl = config.portalUrl;
+      }
+    },
+
+    _addDefaultVisible: function(config){
+      jimuUtils.visitElement(config, function(e){
+        if(e.visible === undefined){
+          e.visible = true;
+        }
+      });
+    },
+
+    _addDefaultSharedTheme: function(config){
+      if(!config.theme.sharedTheme){
+        config.theme.sharedTheme = {
+          useHeader: false,
+          useLogo: false
+        };
+      }else{
+        if(typeof config.theme.sharedTheme.useHeader === 'undefined'){
+          config.theme.sharedTheme.useHeader = false;
+        }
+        if(typeof config.theme.sharedTheme.useLogo === 'undefined'){
+          config.theme.sharedTheme.useLogo = false;
+        }
+      }
+    },
+
+    _addDefaultPanelAndPosition: function(config){
+      this._addOnScreenDefaultPanelAndPosition(config);
+      this._addPoolDefaultPanelAndPosition(config);
+    },
+
+    _addOnScreenDefaultPanelAndPosition: function(config){
+      var i, j, screenSectionConfig = config.widgetOnScreen;
+
+      if(!screenSectionConfig){
+        return;
+      }
+
+      var panelDefaultPositionR =
+        screenSectionConfig.panel && screenSectionConfig.panel.positionRelativeTo?
+        screenSectionConfig.panel.positionRelativeTo: 'map';
+
+      if(typeof screenSectionConfig.panel === 'undefined' ||
+        typeof screenSectionConfig.panel.uri === 'undefined'){
+        screenSectionConfig.panel = {
+          uri: 'jimu/OnScreenWidgetPanel',
+          //positionRelativeTo: 'map',
+          position: {
+            //move positionRelativeTo to position.relativeTo
+            relativeTo: panelDefaultPositionR
+          }
+        };
+      }else if(typeof screenSectionConfig.panel.position === 'undefined'){
+        screenSectionConfig.panel.position = {relativeTo: panelDefaultPositionR};
+      }else if(typeof screenSectionConfig.panel.position.relativeTo === 'undefined'){
+        screenSectionConfig.panel.position.relativeTo = panelDefaultPositionR;
+      }
+
+      if(screenSectionConfig.widgets){
+        for(i = 0; i < screenSectionConfig.widgets.length; i++){
+          if(!screenSectionConfig.widgets[i].position){
+            screenSectionConfig.widgets[i].position = {};
+          }
+          if(!screenSectionConfig.widgets[i].position.relativeTo){
+            screenSectionConfig.widgets[i].position.relativeTo =
+              screenSectionConfig.widgets[i] && screenSectionConfig.widgets[i].positionRelativeTo?
+              screenSectionConfig.widgets[i].positionRelativeTo: 'map';
+          }
+          if(screenSectionConfig.widgets[i].inPanel === true &&
+            !screenSectionConfig.widgets[i].panel){
+            screenSectionConfig.widgets[i].panel = lang.clone(screenSectionConfig.panel);
+            screenSectionConfig.widgets[i].panel.position = screenSectionConfig.widgets[i].position;
+            screenSectionConfig.widgets[i].panel.position.relativeTo =
+            screenSectionConfig.widgets[i].position.relativeTo;
+          }
+        }
+      }
+
+      if(screenSectionConfig.groups){
+        for(i = 0; i < screenSectionConfig.groups.length; i++){
+          if(!screenSectionConfig.groups[i].panel){
+            screenSectionConfig.groups[i].panel = screenSectionConfig.panel;
+          }
+
+          if(screenSectionConfig.groups[i].panel && !screenSectionConfig.groups[i].panel.position){
+            screenSectionConfig.groups[i].panel.position = {};
+          }
+
+          if(!screenSectionConfig.groups[i].panel.position.relativeTo){
+            screenSectionConfig.groups[i].panel.position.relativeTo =
+              screenSectionConfig.groups[i].panel.positionRelativeTo?
+              screenSectionConfig.groups[i].panel.positionRelativeTo:'map';
+          }
+
+          if(!screenSectionConfig.groups[i].widgets){
+            screenSectionConfig.groups[i].widgets = [];
+          }
+          for(j = 0; j < screenSectionConfig.groups[i].widgets.length; j++){
+            screenSectionConfig.groups[i].widgets[j].panel = screenSectionConfig.groups[i].panel;
+          }
+        }
+      }
+    },
+
+    _addPoolDefaultPanelAndPosition: function(config){
+      var i, j, poolSectionConfig = config.widgetPool;
+
+      if(!poolSectionConfig){
+        return;
+      }
+
+      var panelDefaultPositionR =
+        poolSectionConfig.panel && poolSectionConfig.panel.positionRelativeTo?
+        poolSectionConfig.panel.positionRelativeTo: 'map';
+
+      if(typeof poolSectionConfig.panel === 'undefined' ||
+        typeof poolSectionConfig.panel.uri === 'undefined'){
+        poolSectionConfig.panel = {
+          uri: 'jimu/OnScreenWidgetPanel',
+          position: {
+            relativeTo: panelDefaultPositionR
+          }
+        };
+      }else if(typeof poolSectionConfig.panel.position === 'undefined'){
+        poolSectionConfig.panel.position = {relativeTo: panelDefaultPositionR};
+      }else if(typeof poolSectionConfig.panel.position.relativeTo === 'undefined'){
+        poolSectionConfig.panel.position.relativeTo = panelDefaultPositionR;
+      }
+
+      if(poolSectionConfig.groups){
+        for(i = 0; i < poolSectionConfig.groups.length; i++){
+          if(!poolSectionConfig.groups[i].panel){
+            poolSectionConfig.groups[i].panel = poolSectionConfig.panel;
+          }else if(!poolSectionConfig.groups[i].panel.position.relativeTo){
+            poolSectionConfig.groups[i].panel.position.relativeTo =
+              poolSectionConfig.groups[i].panel.positionRelativeTo?
+              poolSectionConfig.groups[i].panel.positionRelativeTo: 'map';
+          }
+
+          if(!poolSectionConfig.groups[i].widgets){
+            poolSectionConfig.groups[i].widgets = [];
+          }
+          for(j = 0; j < poolSectionConfig.groups[i].widgets.length; j++){
+            poolSectionConfig.groups[i].widgets[j].panel = poolSectionConfig.groups[i].panel;
+          }
+        }
+      }
+
+      if(poolSectionConfig.widgets){
+        for(i = 0; i < poolSectionConfig.widgets.length; i++){
+          if(poolSectionConfig.widgets[i].inPanel === false){
+            var defaultWidgetPositionR = poolSectionConfig.widgets[i].positionRelativeTo?
+                poolSectionConfig.widgets[i].positionRelativeTo: 'map';
+            if(!poolSectionConfig.widgets[i].position){
+              poolSectionConfig.widgets[i].position = {
+                relativeTo: defaultWidgetPositionR
+              };
+            }else if(!poolSectionConfig.widgets[i].position.relativeTo){
+              poolSectionConfig.widgets[i].position.relativeTo = defaultWidgetPositionR;
+            }
+          }else if(!poolSectionConfig.widgets[i].panel){
+            poolSectionConfig.widgets[i].panel = config.widgetPool.panel;
+          }
+        }
+      }
+    },
+
+    _addDefaultOfWidgetGroup: function(config){
+      //group/widget labe, icon
+      jimuUtils.visitElement(config, lang.hitch(this, function(e, info){
+        e.isOnScreen = info.isOnScreen;
+        if(e.widgets){
+          //it's group
+          e.gid = e.id;
+          if(e.widgets.length === 1){
+            if(!e.label){
+              e.label = e.widgets[0].label? e.widgets[0].label: window.apiNls.common.groupLabel;
+            }
+            if(!e.icon){
+              if(e.widgets[0].uri){
+                e.icon = this._getDefaultIconFromUri(e.widgets[0].uri);
+              }else{
+                e.icon = 'jimu.js/images/group_icon.png';
+              }
+            }
+          }else{
+            e.icon = e.icon? e.icon: 'jimu.js/images/group_icon.png';
+            e.label = e.label? e.label: (window.apiNls.common.groupLabel + ' ' + info.index);
+          }
+        }else{
+          e.gid = info.groupId;
+        }
+      }));
+    },
+
+    _getDefaultIconFromUri: function(uri){
+      var segs = uri.split('/');
+      segs.pop();
+      return segs.join('/') + '/images/icon.png?wab_dv=' + window.deployVersion;
+    },
+
+    _addIndexForWidgetPool: function(config){
+      //be default, widgets are in front
+      var index = 0, i, j;
+      if(config.widgetPool.widgets){
+        for(i = 0; i < config.widgetPool.widgets.length; i++){
+          config.widgetPool.widgets[i].index = index;
+          index ++;
+        }
+      }
+
+      if(config.widgetPool.groups){
+        for(i = 0; i < config.widgetPool.groups.length; i++){
+          config.widgetPool.groups[i].index = index;
+          index ++;
+          for(j = 0; j < config.widgetPool.groups[i].widgets.length; j++){
+            config.widgetPool.groups[i].widgets[j].index = j;
+          }
+        }
+      }
+    }
+
+  });
+
+  clazz.getInstance = function (urlParams) {
+    if(instance === null) {
+      instance = new clazz(urlParams);
+    }else{
+      if(urlParams){
+        instance.urlParams = urlParams;
+        if(instance.configLoader){
+          instance.configLoader.urlParams = urlParams;
+        }
+      }
+    }
+
+    window.getAppConfig = lang.hitch(instance, instance.getAppConfig);
+    return instance;
+  };
+
+  function getCleanConfig(config, isForAGOLTemplate){
+    //delete the properties that framework add
+    var newConfig = lang.clone(config);
+    var properties = jimuUtils.widgetProperties;
+
+    if(typeof isForAGOLTemplate === 'undefined'){
+      isForAGOLTemplate = false;
+    }
+    delete newConfig.mode;
+    delete newConfig.configWabVersion;
+    jimuUtils.visitElement(newConfig, function(e, info){
+      if(e.widgets){
+        delete e.isOnScreen;
+        delete e.gid;
+        if(e.icon === 'jimu.js/images/group_icon.png'){
+          delete e.icon;
+        }
+        delete e.openType;
+        if(info.isOnScreen){
+          if(e.panel && jimuUtils.isEqual(e.panel, newConfig.widgetOnScreen.panel)){
+            delete e.panel;
+          }
+        }
+        return;
+      }
+
+      if(e.icon && e.icon === e.folderUrl + 'images/icon.png?wab_dv=' + window.deployVersion){
+        delete e.icon;
+      }
+
+      delete e.panel;
+      delete e.folderUrl;
+      delete e.amdFolder;
+      delete e.thumbnail;
+      delete e.configFile;
+      delete e.gid;
+      delete e.isOnScreen;
+      delete e.isRemote;
+      delete e.featureActions;
+
+      properties.forEach(function(p){
+        delete e[p];
+      });
+
+      if(!isForAGOLTemplate){
+        if(e.visible){
+          delete e.visible;
+        }
+
+        if(e.manifest && e.label === e.manifest.label){
+          delete e.label;
+        }
+
+        if(e.isDefaultConfig){
+          delete e.config;
+          delete e.isDefaultConfig;
+        }
+      }else{
+        if(typeof e.openAtStart === 'undefined'){
+          e.openAtStart = false;
+        }
+      }
+
+      delete e.manifest;
+
+      if(e.itemId){
+        delete e.uri;//uri will be get from item url
+      }
+    });
+    delete newConfig.rawAppConfig;
+    //the _ssl property is added by esriRequest
+    delete newConfig._ssl;
+    //delete all of the methods
+    delete newConfig.getConfigElementById;
+    delete newConfig.getConfigElementsByName;
+    delete newConfig.processNoUriWidgets;
+    delete newConfig.addElementId;
+    delete newConfig.getCleanConfig;
+    delete newConfig.visitElement;
+
+    delete newConfig.agolConfig;
+    delete newConfig._itemData;
+    delete newConfig.oldWabVersion;
+
+    delete newConfig.titleColor;
+
+    return newConfig;
+  }
+
+  return clazz;
+});

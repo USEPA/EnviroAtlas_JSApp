@@ -40,6 +40,20 @@ define([
     'esri/IdentityManager',
     'jimu/portalUrlUtils',
     './utils',
+    
+    'widgets/Demo/help/help_Welcome',
+    'widgets/Demo/help/help_Elevation',
+    'widgets/Demo/help/help_FeaturedCollections',
+    'widgets/Demo/help/help_Demographic',
+    'widgets/Demo/help/help_EnviroAtlasDataSearch',
+    'widgets/Demo/help/help_TimesSeries',
+    'widgets/Demo/help/help_AddData',
+    'widgets/Demo/help/help_SelectCommunity',
+    'widgets/Demo/help/help_DrawerMapping',
+    'widgets/Demo/help/help_ECAT',
+    'widgets/Demo/help/help_HucNavigation',
+    'widgets/Demo/help/help_Raindrop',
+    'widgets/Demo/help/help_EndPage',      
     'require',
     'dojo/i18n',
     'dojo/i18n!./nls/main',
@@ -49,7 +63,8 @@ define([
   function(ConfigManager, LayoutManager, DataManager, WidgetManager, FeatureActionManager, SelectionManager,
     DataSourceManager, FilterManager, html, lang, array, on, keys, mouse,
     topic, cookie, Deferred, all, ioquery, esriConfig, esriRequest, urlUitls, IdentityManager,
-    portalUrlUtils, jimuUtils, require, i18n, mainBundle, esriMain, dojoReady) {
+    portalUrlUtils, jimuUtils, help_Welcome, help_Elevation, help_FeaturedCollections, help_Demographic, help_EnviroAtlasDataSearch, help_TimesSeries, help_AddData,
+    help_SelectCommunity, help_DrawerMapping, help_ECAT, help_HucNavigation, help_Raindrop, help_EndPage, require, i18n, mainBundle, esriMain, dojoReady) {
     /* global jimuConfig:true */
     var mo = {}, appConfig;
 
@@ -75,6 +90,7 @@ define([
     window.toggleOnHucNavigation = false;
     window.toggleOnRainDrop = false;
     window.toggleOnElevation = false;
+    window.mapClickListenerForPopup = null;
     window.removeAllMessage = "removeAll";
     window.chkTopicPrefix = "ckTopic_";
     window.chkTopicPBSPrefix = "ckTopicPBS_";
@@ -94,6 +110,7 @@ define([
 	window.matadata = "https://edg.epa.gov/metadata/catalog/search/resource/details.page";//?uuid=%7BBDF514A6-05A8-400D-BF3D-030645461334%7D";
     
     window.bFirstLoadFilterWidget = true;
+    window.cmaMapPoint = null;
     window.allLayerNumber = [];
     window.featureLyrNumber = [];
     window.nationalLayerNumber = [];
@@ -106,6 +123,23 @@ define([
     window.onlineDataTobeAdded = [];
     window.onlineDataAlreadyAdded = [];
     window.uploadedFileColl = [];
+    
+    window.formatters = {};
+    window.formatters['help_Elevation'] = help_Elevation;
+    window.formatters['help_Welcome'] =  help_Welcome;  
+    window.formatters['help_FeaturedCollections'] = help_FeaturedCollections;
+    window.formatters['help_Demographic'] = help_Demographic;
+    window.formatters['help_EnviroAtlasDataSearch'] =  help_EnviroAtlasDataSearch; 
+    window.formatters['help_TimesSeries'] =  help_TimesSeries; 
+    window.formatters['help_AddData'] =  help_AddData; 
+    window.formatters['help_SelectCommunity'] = help_SelectCommunity;
+    
+    window.formatters['help_DrawerMapping'] = help_DrawerMapping;
+    window.formatters['help_ECAT'] =  help_ECAT;  
+    window.formatters['help_HucNavigation'] = help_HucNavigation;
+    window.formatters['help_Raindrop'] = help_Raindrop;
+    window.formatters['help_EndPage'] =  help_EndPage;    
+ 
     window.categoryDic = {};
     window.categoryDic["Clean Air"] = "cair";
     window.categoryDic["Clean and Plentiful Water"] = "cpw";
@@ -191,6 +225,7 @@ define([
     window.communityDic["DNC"]= "Durham, NC";
     window.communityDic["FCA"] = "Fresno, CA";
     window.communityDic["GBWI"] = "Green Bay, WI";
+	window.communityDic["LACA"] = "Los Angeles, CA";
     window.communityDic["MTN"] = "Memphis, TN";
     window.communityDic["MWI"] = "Milwaukee, WI";
     //window.communityDic["MSPMN"] = "Minneapolis/St. Paul, MN";
@@ -204,10 +239,12 @@ define([
     window.communityDic["PitPA"] = "Pittsburgh, PA";
     window.communityDic["PME"] = "Portland, ME";
     window.communityDic["POR"] = "Portland, OR";
+	window.communityDic["SLMO"] = "Saint Louis, MO";
+	window.communityDic["SLCUT"] = "Salt Lake City, UT";
     window.communityDic["SonCA"] = "Sonoma County, CA";
-  	window.communityDic["SLCUT"] = "Salt Lake City, UT";
     window.communityDic["TFL"] = "Tampa, FL";
     window.communityDic["VBWVA"] = "Virginia Beach - Williamsburg, VA";
+    window.communityDic["WDC"] = "Washington, DC";
     window.communityDic["WIA"] = "Woodbine, IA";
     
     window.communitySelected = window.strAllCommunity;
@@ -221,6 +258,9 @@ define([
     window.changedExtentByOtherFrameYmin = null;
     window.changedExtentByOtherFrameYmax = null;   
     window.frameBeClicked = 1;
+    window.extentFromURL = null;
+    window.eaLayerFromURL = null;
+    window.eaCommunityFromURL = null;
     window.communityMetadataDic = {};
     window.faildedEALayerDictionary = {};
     window.faildedOutsideLayerDictionary = {};

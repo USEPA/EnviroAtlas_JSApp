@@ -119,7 +119,7 @@
                     "left": 45,
                     "top": -40,
                     "width": 490,
-                    "height": 480,
+                    "height": 580,
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
@@ -168,7 +168,7 @@
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
-                "id": "_27",
+                "id": "widgets_config_Print_27",
                 "name": "Print",
                 "label": "Print",
                 "version": "2.11",
@@ -189,19 +189,6 @@
                 "name": "eDraw",
                 "label": "Draw and Measure",
                 "config": "widgets/eDraw/config.json"
-            }, {
-                "name": "Select",
-                "version": "2.5",
-                "uri": "widgets/Select/Widget",
-                "config": "configs/Select/config_Select.json",
-                "position": {
-                    "left": 655,
-                    "top": -40,
-                    "width": 380,
-                    "height": 410,
-                    "relativeTo": "map"
-                },
-                "id": "widgets_Select_Widget_39"
             }, {
                 "position": {
                     "left": 695,
@@ -256,14 +243,13 @@
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
-                "id": "widgets_CompareMyArea",
+                "id": "widgets_CompareMyArea_37",
                 "name": "CompareMyArea",
                 "label": "Compare My Area",
                 "version": "1.3",
                 "uri": "widgets/CompareMyArea/Widget",
                 "config": "widgets/CompareMyArea/config.json"
-            },
-            {
+            }, {
                 "position": {
                     "left": 445,
                     "top": 5,
@@ -324,6 +310,19 @@
                 "uri": "widgets/SaveSession/Widget",
                 "config": "widgets/SaveSession/config.json"
             }, {
+                "name": "Select",
+                "version": "2.5",
+                "uri": "widgets/Select/Widget",
+                "config": "configs/Select/config_Select.json",
+                "position": {
+                    "left": 645,
+                    "top": 5,
+                    "width": 380,
+                    "height": 410,
+                    "relativeTo": "map"
+                },
+                "id": "widgets_Select_Widget_39"
+            }, {
                 "position": {
                     "left": 545,
                     "top": -40,
@@ -360,7 +359,7 @@
                     "left": 0,
                     "top": -40,
                     "width": 370,
-                    "height": 600,
+                    "height": 630,
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
@@ -732,7 +731,7 @@
                         "right": 5,
                         "top": -40,
                         "width": 490,
-                        "height": 480,
+                        "height": 580,
                         "relativeTo": "map"
                     },
                     "placeholderIndex": 1,
@@ -745,7 +744,7 @@
                 }, {
                     "position": {
                         "right": 5,
-                        "top": 140,
+                        "top": 95,
                         "width": 230,
                         "height": 385,
                         "relativeTo": "map"
@@ -781,7 +780,7 @@
                         "relativeTo": "map"
                     },
                     "placeholderIndex": 1,
-                    "id": "_27",
+                    "id": "widgets_config_Print_27",
                     "name": "Print",
                     "label": "Print",
                     "version": "2.11",
@@ -803,19 +802,6 @@
                     "label": "Draw and Measure",
                     "config": "widgets/eDraw/config.json"
                 }, {
-                    "name": "Select",
-                    "version": "2.5",
-                    "uri": "widgets/Select/Widget",
-                    "config": "configs/Select/config_Select.json",
-                    "position": {
-                        "left": 655,
-                        "top": -40,
-                        "width": 380,
-                        "height": 410,
-                        "relativeTo": "map"
-                    },
-                    "id": "widgets_Select_Widget_39"
-                }, {
                     "position": {
                         "left": 695,
                         "top": -40,
@@ -833,7 +819,7 @@
                 }, {
                     "position": {
                         "right": 5,
-                        "top": 185,
+                        "top": 140,
                         "width": 350,
                         "height": 340,
                         "relativeTo": "map"
@@ -860,7 +846,22 @@
                     "version": "1.3",
                     "uri": "widgets/ECAT/Widget",
                     "config": "widgets/ECAT/config.json"
-                },{
+                }, {
+	                "position": {
+                        "left": 695,
+                        "top": -40,
+                        "width": 425,
+                        "height": 480,
+	                    "relativeTo": "map"
+	                },
+	                "placeholderIndex": 1,
+	                "id": "widgets_CompareMyArea_37",
+	                "name": "CompareMyArea",
+	                "label": "Compare My Area",
+	                "version": "1.3",
+	                "uri": "widgets/CompareMyArea/Widget",
+	                "config": "widgets/CompareMyArea/config.json"
+	            }, {
                     "position": {
                         "left": 695,
                         "top": -40,
@@ -908,7 +909,7 @@
                 }, {
                     "position": {
                         "right": 5,
-                        "top": 230,
+                        "top": 185,
                         "width": 380,
                         "height": 410,
                         "relativeTo": "map"
@@ -916,10 +917,23 @@
                     "placeholderIndex": 1,
                     "id": "widgets_SaveSession_28",
                     "name": "SaveSession",
-                    "label": "SaveSession",
+                    "label": "Save Session",
                     "version": "1.3",
                     "uri": "widgets/SaveSession/Widget",
                     "config": "widgets/SaveSession/config.json"
+                }, {
+                    "name": "Select",
+                    "version": "2.5",
+                    "uri": "widgets/Select/Widget",
+                    "config": "configs/Select/config_Select.json",
+                    "position": {
+                        "left": 655,
+                        "top": -40,
+                        "width": 380,
+                        "height": 410,
+                        "relativeTo": "map"
+                    },
+                    "id": "widgets_Select_Widget_39"
                 }, {
                     "position": {
                         "right": 5,
@@ -950,8 +964,9 @@
                 "version": "2.11",
                 "uri": "widgets/TimeSlider/Widget",
                 "closeable": true,
-                "openAtStart": true,                
-                "config": "widgets/Demo/config.json"
+                "openAtStart": false,   
+                "visible": false,
+                "config": "widgets/TimeSlider/config.json"
                 }, {
                     "position": {
                         "left": 0,
@@ -1012,7 +1027,7 @@
                     "inPanel": false,
                     "position": {
                         "left": 5,
-                        "top": 105,
+                        "top": 70,
                         "relativeTo": "map"
                     },
                     "placeholderIndex": 1,
@@ -1064,19 +1079,6 @@
                     "label": "Disclaimer",
                     "config": "configs/Splash/config_Disclaimer.json"
                 }, {
-                    "uri": "widgets/TimeSlider/Widget",
-                    "closeable": true,
-                    "openAtStart": false,
-                    "position": {
-                        "bottom": 40,
-                        "left": 7,
-                        "relativeTo": "map"
-                    },
-                    "version": "2.11",
-                    "id": "widgets_TimeSlider_Widget_32",
-                    "name": "TimeSlider",
-                    "label": "Time Slider"
-                },{
                     "uri": "widgets/ZoomSlider/Widget",
                     "visible": true,
                     "position": {
@@ -1092,7 +1094,7 @@
                     "uri": "widgets/ExtentNavigate/Widget",
                     "visible": true,
                     "position": {
-                        "top": 142,
+                        "top": 105,
                         "left": 5,
                         "relativeTo": "map"
                     },
@@ -1104,7 +1106,7 @@
                     "openAtStart": false,
                     "position": {
                         "left": 5,
-                        "top": 212,
+                        "top": -90,
                         "relativeTo": "map"
                     },
                     "version": "2.5",

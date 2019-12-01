@@ -3,5 +3,7 @@ define({
   "selectionMode": "מצב בחירה אינטראקטיבית",
   "partiallyWithin": "חלקית בתוך",
   "whollyWithin": "לחלוטין בתוך",
-  "allowExport": "אפשר ייצוא של ישויות נבחרות"
+  "allowExport": "אפשר ייצוא של ישויות נבחרות",
+  "layerToSelect": "בחר אילו שכבות יהיו מזינות לבחירה",
+  "includeRuntimeLayers": "קבל אפשרות לבחור שכבות שנוצרו בזמן הריצה"
 });

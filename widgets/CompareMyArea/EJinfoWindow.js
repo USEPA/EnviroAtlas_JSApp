@@ -85,6 +85,7 @@ define(
         _deleteGraphic: function () {
             var cLayer = this.currentGraphic.getLayer();
             cLayer.clear();
+            window.cmaMapPoint = null;
             this.map.infoWindow.hide();
 
         },

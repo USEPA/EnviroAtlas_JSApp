@@ -56,14 +56,32 @@ define([
     'jimu/portalUrlUtils',
     './shared/utils',
     './accessibleUtils',
-    './zoomToUtils'
+    './zoomToUtils',
+    'dijit/TooltipDialog',
+    'dijit/popup',
+    'dijit/registry',
+    'dojo/dom',
+    'widgets/Demo/help/help_Welcome',
+    'widgets/Demo/help/help_Elevation',
+    'widgets/Demo/help/help_FeaturedCollections',
+    'widgets/Demo/help/help_Demographic',
+    'widgets/Demo/help/help_EnviroAtlasDataSearch',
+    'widgets/Demo/help/help_TimesSeries',
+    'widgets/Demo/help/help_AddData',
+    'widgets/Demo/help/help_SelectCommunity',
+    'widgets/Demo/help/help_DrawerMapping',
+    'widgets/Demo/help/help_ECAT',
+    'widgets/Demo/help/help_HucNavigation',
+    'widgets/Demo/help/help_Raindrop',
+    'widgets/Demo/help/help_EndPage'
   ],
 
 function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on, json, cookie,
   dojoNumber, dateLocale, nlsBundle, base64, esriLang, arcgisUtils, PopupTemplate, SpatialReference,
   Extent, geometryEngine, Multipoint, Polyline, Polygon, webMercatorUtils, GeometryService, ProjectParameters,
   FeatureSet, PictureMarkerSymbol, esriUrlUtils, esriRequest, EsriQuery, QueryTask, graphicsUtils, IdentityManager,
-  OAuthInfo, portalUrlUtils, sharedUtils, accessibleUtils, zoomToUtils
+  OAuthInfo, portalUrlUtils, sharedUtils, accessibleUtils, zoomToUtils, TooltipDialog, popup, registry, dom, help_Welcome, help_Elevation, help_FeaturedCollections, help_Demographic, help_EnviroAtlasDataSearch, help_TimesSeries, help_AddData,
+    help_SelectCommunity, help_DrawerMapping, help_ECAT, help_HucNavigation, help_Raindrop, help_EndPage
 ) {
   /* global esriConfig, dojoConfig, ActiveXObject, testLoad */
   var mo = {};
@@ -5024,6 +5042,105 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
       });
     }
   };
+      mo.startTour = function(){
+          tourDialogOnScreenWidget = document.getElementById("tourDialog2");
+          if (tourDialogOnScreenWidget==null){
+              tourDialogOnScreenWidget = new TooltipDialog({
+                id: 'tourDialog2',
+                style: "width: 350px;",
+                content: "",
+              });
+          }
+           var overlayElement = document.getElementById("overlay");
+           if (overlayElement==null){
+                var overlay1 = dojo.create('div', {
+                  "class": "overlayOnScreenWidget",
+                  "id": "overlay"
+                }, dojo.byId('main-page'));
+           }           
+    
+           var overlay2Element = document.getElementById("overlay");
+           if (overlay2Element==null){
+                var overlay2 = dojo.create('div', {
+                  "class": "overlay2OnScreenWidget",
+                  "id": "overlay2"
+                }, dojo.byId('main-page'));
+           }
+    
+            //Close the tour main widget   
+            numberStops = window.helpTour.length;
+            for (i=0; i<numberStops; i++) {
+                var widgetName = window.helpTour[i].widgetName;
+                if (widgetName!=null){
+                    if (window.PanelId.toUpperCase().indexOf(widgetName.toUpperCase()) >= 0) {
+                        stop = i;
+                    }               
+                }            
+            }  
+            this._nextStop(stop);           
+        };
+    
+        mo._nextStop = function(stop){            
+            
+             if(tourDialogOnScreenWidget!=null){
+                popup.close(tourDialogOnScreenWidget);
+             }
+    
+             //change z-index to selected element
+             for (i=0; i<numberStops; i++) {
+                $('#'+window.helpTour[i].highlight).css('z-index', '');
+              }
+             if (window.helpTour[stop].highlight) {
+                $('#'+window.helpTour[stop].highlight).css('z-index', '998');
+             }    
+    
+             nodeToHelp = window.helpTour[stop].node;
 
+             helperClass = window.formatters[window.helpTour[stop].helpFile];
+             helpContent = new helperClass();
+           
+              var newDiv = document.createElement("div");
+              var newlink = document.createElement('a');
+              newlink.setAttribute('class', 'exit_buttonOnScreenWidget');
+
+              newlink.innerHTML = '&#10006';
+              newlink.setAttribute('title', '&#10006');
+              newDiv.appendChild(newlink);
+              helpContent.domNode.insertBefore(newDiv, helpContent.domNode.firstChild);
+
+              tourDialogOnScreenWidget.set("content", helpContent);
+
+              popup.open({
+                    popup: tourDialogOnScreenWidget,
+                    around: dom.byId(nodeToHelp),
+                    orient: window.helpTour[stop].orient,
+                    maxHeight: 600,
+                    padding: {x:100, y:100}
+                    }); 
+                     
+              exitButtons = document.getElementsByClassName("exit_buttonOnScreenWidget");
+              exitButton = exitButtons.item(0);
+              exitButton.addEventListener('click', function () {
+                    mo._endTour();
+              });                      
+          
+        };
+    
+        
+        mo._endTour = function(){
+            popup.close(tourDialogOnScreenWidget);
+            var pTourDialog = registry.byId('tourDialog2');
+            if (pTourDialog) {               
+               pTourDialog.destroyRecursive();
+            }         
+
+            dojo.destroy("overlay");
+            dojo.destroy("overlay2");
+            for (i=0; i<numberStops; i++) {
+                $('#'+window.helpTour[i].highlight).css('z-index', '');
+              }
+
+           console.log("End the Guided Tour 2");
+        };
   return mo;
 });

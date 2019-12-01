@@ -6,6 +6,7 @@
     "POLYLINE",
     "EXTENT",
     "CIRCLE",
-    "POLYGON"
+    "POLYGON",
+    "FREEHAND_POLYGON"
   ]
 }
