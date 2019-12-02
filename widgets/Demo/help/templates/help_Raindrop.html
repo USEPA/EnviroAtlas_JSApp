@@ -1,0 +1,23 @@
+<div>
+   <h1>Raindrop Tool</h1>
+   <p>
+      See the general flow path from any point to the nearest water feature.
+   </p>
+   <div><img style='width:330px' src='widgets/Demo/images/raindrop_img.png'>
+   </div>
+   <p>The <strong>Raindrop </strong>tool generates a flow path and calculates the distance from an interactively selected point on the map to the nearest water feature in the <a href="https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/NationalHydrographyDataset.pdf">National Hydrography Dataset Plus (NHDPlus)</a>. The flow path follows topographical features in an underlying digital elevation model (DEM). The tool pop-up window includes three tabs: <strong>About</strong>, <strong>Results</strong>, and <strong>Settings</strong>.</p>
+<p><em>Note: Consider displaying the NHDPlus V2 features layer group while using this tool to provide context about the hydrologic network. The NHD layers are in the </em><a href="#_Boundaries_and_Natural"><em>Boundaries and Natural Features</em></a><em> panel.</em></p>
+<p><em>This tool is built using nationally available 30-meter DEM data. The data does not account for buildings or engineered stormwater infrastructure (such as culverts and pipes) and is not for use in heavily engineered locations.</em></p>
+<p>To use the <strong>Raindrop </strong>tool with default settings, click the <strong>Activate Tool</strong> button, move the mouse pointer over the location of interest on the map and click. The tool returns a red point at the location of interest and a line showing the flow path of water from the location of interest to the nearest NHDPlus V2 water body or flowline.</p>
+<p><em>Note: </em><strong>Select Point(s)</strong> <em>remains active until the button is clicked again, at which point the tool is deactivated.</em></p>
+<p>Click the <strong>Results</strong> tab to find the path distance from the selected point to the nearest NHDPlus water body.</p>
+<p>To remove the graphic features from the map, click the <strong>Clear</strong> button.</p>
+<p><strong>Raindrop </strong>tool settings may be adjusted to improve results. Click on the <strong>Settings</strong> tab to access these:</p>
+<ul>
+<li><strong>Max Distance (km):</strong> Use the slider bar to set the maximum distance the raindrop will travel along the flow path, from 0 to 5 kilometers. Once the flowline reaches the Max Distance, the line snaps to the nearest NHD feature (within the Snap Distance tolerance). The default is 5 kilometers.</li>
+<li><strong>Snap Distance (km):</strong> Use the slider bar to set the distance the raindrop tool will search for the nearest NHD feature after traveling the Max Distance. The line will snap to the nearest NHD feature within the Snap Distance. The default snap distance is 5 kilometers.</li>
+<li><strong>Line Thickness and Color:</strong> Use the slider bar to set the line thickness. Click the color box to select the line color. The default is a 1-point dashed red line.&nbsp;</li>
+</ul>
+<p>Once the settings are adjusted, use the <strong>Select Raindrop Point</strong> button and click on the location of interest. If the Max Distance and Snap Distance criteria are met, the flowline displays on the map with a red circle indicating the starting point.</p>
+<p><em>Note: When finished with the</em> <strong>Raindrop</strong> <em>tool, remove the graphic features from the map by clicking the </em><strong>Clear</strong> <em>button</em><em> and dismiss the tool by clicking the</em> "<strong>_</strong>" <em>in the upper right corner of the pop-up.</em></p>
+</div>
