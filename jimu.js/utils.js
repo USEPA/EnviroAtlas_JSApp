@@ -5104,7 +5104,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
               newlink.setAttribute('class', 'exit_buttonOnScreenWidget');
 
               newlink.innerHTML = '&#10006';
-              newlink.setAttribute('title', '&#10006');
+              newlink.setAttribute('title', 'close');
               newDiv.appendChild(newlink);
               helpContent.domNode.insertBefore(newDiv, helpContent.domNode.firstChild);
 
