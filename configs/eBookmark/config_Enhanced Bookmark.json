@@ -297,8 +297,8 @@
             }
           }
         },
-		{
-          "name": "Saint Louis, MO",
+	{
+          "name": "St Louis, MO",
           "extent": {
             "xmax": -9960000,
             "xmin": -10150000,
@@ -309,7 +309,7 @@
             }
           }
         },
-		{
+	{
           "name": "Salt Lake City, UT",
           "extent": {
             "xmax": -12392572.9000,

@@ -239,7 +239,7 @@ define([
     window.communityDic["PitPA"] = "Pittsburgh, PA";
     window.communityDic["PME"] = "Portland, ME";
     window.communityDic["POR"] = "Portland, OR";
-	window.communityDic["SLMO"] = "Saint Louis, MO";
+	window.communityDic["SLMO"] = "St Louis, MO";
 	window.communityDic["SLCUT"] = "Salt Lake City, UT";
     window.communityDic["SonCA"] = "Sonoma County, CA";
     window.communityDic["TFL"] = "Tampa, FL";
