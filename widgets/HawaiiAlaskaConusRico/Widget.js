@@ -54,6 +54,7 @@ define([
           if (currentItem.name === "Hawaii"){
             var nExtent = Extent(currentItem.extent);
             this.map.setExtent(nExtent);
+            document.getElementById("areaGeographyHawaii").click();
           }
         }          
       },
@@ -63,6 +64,8 @@ define([
           if (currentItem.name === "Alaska"){
             var nExtent = Extent(currentItem.extent);
             this.map.setExtent(nExtent);
+            document.getElementById("areaGeographyAlaska").click();
+            
           }
         }          
       },
@@ -72,6 +75,7 @@ define([
           if (currentItem.name === "Conus"){
             var nExtent = Extent(currentItem.extent);
             this.map.setExtent(nExtent);
+            document.getElementById("areaGeographyConus").click();
           }
         }          
       },
@@ -81,6 +85,7 @@ define([
           if (currentItem.name === "PRVI"){
             var nExtent = Extent(currentItem.extent);
             this.map.setExtent(nExtent);
+            document.getElementById("areaGeographyPR").click();
           }
         }          
       },
