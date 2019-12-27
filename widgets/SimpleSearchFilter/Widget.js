@@ -440,13 +440,17 @@ define([
 				    		lyrFL = selfSimpleSearchFilter.map.getLayer(window.layerIdPrefix + window.featureLyrNumber[i]);		    		
 				    		if (lyrFL != null) {		    			
 								if (lyrFL.visible == true){
-									bVisibleFL = true;
+								    if (lyrFL.visibleAtMapScale==true){
+									   bVisibleFL = true;
+									}
 								}
 							} else {
 								lyrFL = selfSimpleSearchFilter.map.getLayer(window.layerIdPBSPrefix + window.featureLyrNumber[i]);	
 								if (lyrFL != null) {
 									if (lyrFL.visible == true){
-										bVisibleFL = true;
+									    if (lyrFL.visibleAtMapScale==true){
+										  bVisibleFL = true;
+										}
 									}
 								}
 							}
@@ -964,7 +968,7 @@ define([
 					currentLayerSelectable = true;				
 				}
 			}// end of if (bSelectedByNationalOrCommunity)
-			
+
 			//if searchFilterText is not empty then search all EnviroAtalas data
             if ((document.getElementById('searchFilterText').value != '')&&(document.getElementById('searchFilterText').value.trim().length >=2)){
 
@@ -2491,6 +2495,7 @@ define([
 	                    else {
 	                    	eaDfsLink = "";
 	                    }
+
 	                    if(layer.hasOwnProperty('eaMetadata')){
 	                    	eaMetadata = layer.eaMetadata.toString();
 	                    }
