@@ -3265,7 +3265,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 		}
 		else
 		{
-			this.huc12_mapserver = this.enviroatlas_huc12_mapserver
+			this.huc12_mapserver = this.watersgeo_huc12_mapserver
 		}
 		
 		this.qtHUC12 = new QueryTask(this.huc12_mapserver);
