@@ -65,7 +65,8 @@ define(['dojo/_base/declare',
           this.customDisclaimerNode.innerHTML = this.config.splash.disclaimerContent;
         }        
         
-        if (!this._requireConfirm && !this._showOption) {
+        //if (!this._requireConfirm && !this._showOption) {            
+        if ((!this._requireConfirm && !this._showOption) || (window.extentFromURL != null) || (window.eaLayerFromURL  != null) || (window.eaCommunityFromURL != null)) {
           html.setStyle(this.confirmCheck, 'display', 'none');
           html.addClass(this.okNode, 'enable-btn');
         } else {
@@ -110,6 +111,9 @@ define(['dojo/_base/declare',
         },
       
       onOpen: function() {
+        if( (window.extentFromURL != null) || (window.eaLayerFromURL  != null) || (window.eaCommunityFromURL != null)) {
+            this.close();
+        }
         if (!utils.isInConfigOrPreviewWindow()) {
           var isFirstKey = this._getCookieKey();
           var isfirst = cookie(isFirstKey);
