@@ -20,7 +20,7 @@ define(["dojo/_base/declare",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
-    "dojo/text!./templates/help_Demographic.html"
+    "dojo/text!./templates/help_Elevation2.html"
   ],
   function(declare, array, locale, domClass, _WidgetBase, _TemplatedMixin,
     _WidgetsInTemplateMixin, template) {
@@ -28,6 +28,7 @@ define(["dojo/_base/declare",
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
       templateString: template,
+      //templateString: "<div> <a class='exit_button' onclick='self._endTour()'>&#10006</a></div>"+ template,
 
       canRemove: false,
       item: null,

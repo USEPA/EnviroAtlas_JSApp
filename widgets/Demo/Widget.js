@@ -1,19 +1,30 @@
 define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/TooltipDialog', 'dijit/form/Button', 'dijit/popup', 'dijit/layout/AccordionContainer', 'dijit/layout/ContentPane', 'dojo/_base/lang',
     'widgets/Demo/help/help_Welcome',
-    'widgets/Demo/help/help_Elevation',
-    'widgets/Demo/help/help_FeaturedCollections',
-    'widgets/Demo/help/help_Demographic',
-    'widgets/Demo/help/help_EnviroAtlasDataSearch',
-    'widgets/Demo/help/help_TimesSeries',
-    'widgets/Demo/help/help_AddData',
-    'widgets/Demo/help/help_SelectCommunity',
-    'widgets/Demo/help/help_DrawerMapping',
-    'widgets/Demo/help/help_ECAT',
-    'widgets/Demo/help/help_HucNavigation',
-    'widgets/Demo/help/help_Raindrop',
+    'widgets/Demo/help/help_Elevation1',
+    'widgets/Demo/help/help_Elevation2',
+    'widgets/Demo/help/help_FeaturedCollections1',
+    'widgets/Demo/help/help_FeaturedCollections2',
+    'widgets/Demo/help/help_Demographic1',
+    'widgets/Demo/help/help_Demographic2',
+    'widgets/Demo/help/help_EnviroAtlasDataSearch1',
+    'widgets/Demo/help/help_EnviroAtlasDataSearch2',
+    'widgets/Demo/help/help_TimesSeries1',
+    'widgets/Demo/help/help_TimesSeries2',
+    'widgets/Demo/help/help_AddData1',
+    'widgets/Demo/help/help_AddData2',
+    'widgets/Demo/help/help_SelectCommunity1',
+    'widgets/Demo/help/help_SelectCommunity2',
+    'widgets/Demo/help/help_DrawerMapping1',
+    'widgets/Demo/help/help_DrawerMapping2',
+    'widgets/Demo/help/help_ECAT1',
+    'widgets/Demo/help/help_ECAT2',
+    'widgets/Demo/help/help_HucNavigation1',
+    'widgets/Demo/help/help_HucNavigation2',
+    'widgets/Demo/help/help_Raindrop1',
+    'widgets/Demo/help/help_Raindrop2',
     'widgets/Demo/help/help_EndPage',   
- 'dojo/on', 'dojo/dom'], function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, AccordionContainer, ContentPane, lang, help_Welcome, help_Elevation, help_FeaturedCollections, help_Demographic, help_EnviroAtlasDataSearch, help_TimesSeries, help_AddData,
-    help_SelectCommunity, help_DrawerMapping, help_ECAT, help_HucNavigation, help_Raindrop, help_EndPage, on, dom) {
+ 'dojo/on', 'dojo/dom'], function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, AccordionContainer, ContentPane, lang, help_Welcome, help_Elevation1, help_Elevation2, help_FeaturedCollections1, help_FeaturedCollections2, help_Demographic1, help_Demographic2, help_EnviroAtlasDataSearch1, help_EnviroAtlasDataSearch2, help_TimesSeries1, help_TimesSeries2, help_AddData1, help_AddData2,
+    help_SelectCommunity1, help_SelectCommunity2, help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_HucNavigation1, help_HucNavigation2, help_Raindrop1, help_Raindrop2, help_EndPage, on, dom) {
     //To create a widget, you need to derive from BaseWidget.
     return declare([BaseWidget], {
         // DemoWidget code goes here
@@ -108,11 +119,13 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 //start new code
                 nodeToHelp = window.helpTour[0].node;
 
-                helperClass = window.formatters[window.helpTour[0].helpFile];
+                helperClass = window.formatters[window.helpTour[0].helpFile];            
+
                 helpContent = new helperClass();
                 var newDiv = document.createElement("div");
                 var newlink = document.createElement('a');
-                newlink.setAttribute('class', 'exit_button');
+                //newlink.setAttribute('class', 'exit_button');
+                newlink.setAttribute('class', 'exit_buttonOnScreenWidget');
                 newlink.setAttribute('onclick', 'selfDemo._endTour()');
                 newlink.innerHTML = '&#10006';
                 newlink.setAttribute('title', 'close');
@@ -125,7 +138,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 //newlink.setAttribute('onclick', 'selfDemo._nextStop("+ stop+1 +")');
                 newlink.setAttribute('onclick', "selfDemo._nextStop(" + (stop + 1).toString() + ")");
                 newlink.innerHTML = 'Next &raquo;';
-                newlink.setAttribute('title', 'Next &raquo;');
+                newlink.setAttribute('title', 'Next');
                 newDiv.appendChild(newlink);
                 helpContent.domNode.appendChild(newDiv);
 
@@ -143,9 +156,12 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 var bSidebarWidget = false;
                 nodeToHelp = window.helpTour[stop].node;
 
-                helperClass = window.formatters[window.helpTour[stop].helpFile];
-                helpContent = new helperClass();
-
+                //helperClass = window.formatters[window.helpTour[stop].helpFile];
+                //helpContent = new helperClass();
+                helperClass1 = window.formatters[window.helpTour[stop].helpFile+"1"];
+                helperClass2 = window.formatters[window.helpTour[stop].helpFile+"2"];
+                helpContent = new helperClass1();
+                helpContent2 = new helperClass2();
                 switch(window.helpTour[stop].helpFile) {
                     case "help_FeaturedCollections":
                         $('#widgets_AddWebMapData').click();
@@ -177,19 +193,24 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
 
                 var newDiv = document.createElement("div");
                 var newlink = document.createElement('a');
-                newlink.setAttribute('class', 'exit_button');
+                //newlink.setAttribute('class', 'exit_button');
+                newlink.setAttribute('class', 'exit_buttonOnScreenWidget');
                 newlink.setAttribute('onclick', 'selfDemo._endTour()');
                 newlink.innerHTML = '&#10006';
                 newlink.setAttribute('title', 'close');
                 newDiv.appendChild(newlink);
                 helpContent.domNode.insertBefore(newDiv, helpContent.domNode.firstChild);
+                
+                
+                
+                
 
                 //insert clickPrevious button
                 newDiv = document.createElement("div");
                 newlink = document.createElement('button');
                 newlink.setAttribute('onclick', "selfDemo._nextStop(" + (stop - 1).toString() + ")");
                 newlink.innerHTML = '&laquo Previous';
-                newlink.setAttribute('title', '&laquo Previous');
+                newlink.setAttribute('title', 'Previous');
                 newDiv.appendChild(newlink);
 
                 //insert space
@@ -199,10 +220,12 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 newlink = document.createElement('button');
                 newlink.setAttribute('onclick', "selfDemo._nextStop(" + (stop + 1).toString() + ")");
                 newlink.innerHTML = 'Next &raquo;';
-                newlink.setAttribute('title', 'Next &raquo;');
+                newlink.setAttribute('title', 'Next');
                 newDiv.appendChild(newlink);
 
                 helpContent.domNode.appendChild(newDiv);
+                
+                helpContent.domNode.appendChild(helpContent2.domNode);
 
                 //insert page number
                 newlink = document.createElement("div");
@@ -222,7 +245,8 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 helpContent = new helperClass();
                 var newDiv = document.createElement("div");
                 var newlink = document.createElement('a');
-                newlink.setAttribute('class', 'exit_button');
+                //newlink.setAttribute('class', 'exit_button');
+                newlink.setAttribute('class', 'exit_buttonOnScreenWidget');
                 newlink.setAttribute('onclick', 'selfDemo._endTour()');
                 newlink.innerHTML = '&#10006';
                 newlink.setAttribute('title', 'close');
@@ -234,7 +258,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 newlink = document.createElement('button');
                 newlink.setAttribute('onclick', "selfDemo._nextStop(" + (stop - 1).toString() + ")");
                 newlink.innerHTML = '&laquo Previous';
-                newlink.setAttribute('title', '&laquo Previous');
+                newlink.setAttribute('title', 'Previous');
                 newDiv.appendChild(newlink);
 
                 //insert space

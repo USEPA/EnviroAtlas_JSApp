@@ -42,17 +42,28 @@ define([
     './utils',
     
     'widgets/Demo/help/help_Welcome',
-    'widgets/Demo/help/help_Elevation',
-    'widgets/Demo/help/help_FeaturedCollections',
-    'widgets/Demo/help/help_Demographic',
-    'widgets/Demo/help/help_EnviroAtlasDataSearch',
-    'widgets/Demo/help/help_TimesSeries',
-    'widgets/Demo/help/help_AddData',
-    'widgets/Demo/help/help_SelectCommunity',
-    'widgets/Demo/help/help_DrawerMapping',
-    'widgets/Demo/help/help_ECAT',
-    'widgets/Demo/help/help_HucNavigation',
-    'widgets/Demo/help/help_Raindrop',
+    'widgets/Demo/help/help_Elevation1',
+    'widgets/Demo/help/help_Elevation2',
+    'widgets/Demo/help/help_FeaturedCollections1',
+    'widgets/Demo/help/help_FeaturedCollections2',
+    'widgets/Demo/help/help_Demographic1',
+    'widgets/Demo/help/help_Demographic2',
+    'widgets/Demo/help/help_EnviroAtlasDataSearch1',
+    'widgets/Demo/help/help_EnviroAtlasDataSearch2',
+    'widgets/Demo/help/help_TimesSeries1',
+    'widgets/Demo/help/help_TimesSeries2',
+    'widgets/Demo/help/help_AddData1',
+    'widgets/Demo/help/help_AddData2',
+    'widgets/Demo/help/help_SelectCommunity1',
+    'widgets/Demo/help/help_SelectCommunity2',
+    'widgets/Demo/help/help_DrawerMapping1',
+    'widgets/Demo/help/help_DrawerMapping2',
+    'widgets/Demo/help/help_ECAT1',
+    'widgets/Demo/help/help_ECAT2',
+    'widgets/Demo/help/help_HucNavigation1',
+    'widgets/Demo/help/help_HucNavigation2',
+    'widgets/Demo/help/help_Raindrop1',
+    'widgets/Demo/help/help_Raindrop2',   
     'widgets/Demo/help/help_EndPage',      
     'require',
     'dojo/i18n',
@@ -63,8 +74,7 @@ define([
   function(ConfigManager, LayoutManager, DataManager, WidgetManager, FeatureActionManager, SelectionManager,
     DataSourceManager, FilterManager, html, lang, array, on, keys, mouse,
     topic, cookie, Deferred, all, ioquery, esriConfig, esriRequest, urlUitls, IdentityManager,
-    portalUrlUtils, jimuUtils, help_Welcome, help_Elevation, help_FeaturedCollections, help_Demographic, help_EnviroAtlasDataSearch, help_TimesSeries, help_AddData,
-    help_SelectCommunity, help_DrawerMapping, help_ECAT, help_HucNavigation, help_Raindrop, help_EndPage, require, i18n, mainBundle, esriMain, dojoReady) {
+    portalUrlUtils, jimuUtils, help_Welcome, help_Elevation1,help_Elevation2, help_FeaturedCollections1, help_FeaturedCollections2, help_Demographic1, help_Demographic2, help_EnviroAtlasDataSearch1, help_EnviroAtlasDataSearch2, help_TimesSeries1, help_TimesSeries2, help_AddData1, help_AddData2, help_SelectCommunity1, help_SelectCommunity2, help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_HucNavigation1, help_HucNavigation2, help_Raindrop1, help_Raindrop2, help_EndPage, require, i18n, mainBundle, esriMain, dojoReady) {
     /* global jimuConfig:true */
     var mo = {}, appConfig;
 
@@ -125,21 +135,33 @@ define([
     window.uploadedFileColl = [];
     
     window.formatters = {};
-    window.formatters['help_Elevation'] = help_Elevation;
-    window.formatters['help_Welcome'] =  help_Welcome;  
-    window.formatters['help_FeaturedCollections'] = help_FeaturedCollections;
-    window.formatters['help_Demographic'] = help_Demographic;
-    window.formatters['help_EnviroAtlasDataSearch'] =  help_EnviroAtlasDataSearch; 
-    window.formatters['help_TimesSeries'] =  help_TimesSeries; 
-    window.formatters['help_AddData'] =  help_AddData; 
-    window.formatters['help_SelectCommunity'] = help_SelectCommunity;
+    window.formatters['help_Welcome'] =  help_Welcome;
+    window.formatters['help_EndPage'] =  help_EndPage; 
+    window.formatters['help_FeaturedCollections1'] = help_FeaturedCollections1;
+    window.formatters['help_FeaturedCollections2'] = help_FeaturedCollections2;
+        
+    window.formatters['help_Elevation1'] = help_Elevation1;  
+    window.formatters['help_Demographic1'] = help_Demographic1;
+    window.formatters['help_EnviroAtlasDataSearch1'] =  help_EnviroAtlasDataSearch1; 
+    window.formatters['help_TimesSeries1'] =  help_TimesSeries1; 
+    window.formatters['help_AddData1'] =  help_AddData1; 
+    window.formatters['help_SelectCommunity1'] = help_SelectCommunity1;    
+    window.formatters['help_DrawerMapping1'] = help_DrawerMapping1;
+    window.formatters['help_ECAT1'] =  help_ECAT1;  
+    window.formatters['help_HucNavigation1'] = help_HucNavigation1;
+    window.formatters['help_Raindrop1'] = help_Raindrop1;
+       
+    window.formatters['help_Elevation2'] = help_Elevation2;  
+    window.formatters['help_Demographic2'] = help_Demographic2;
+    window.formatters['help_EnviroAtlasDataSearch2'] =  help_EnviroAtlasDataSearch2; 
+    window.formatters['help_TimesSeries2'] =  help_TimesSeries2; 
+    window.formatters['help_AddData2'] =  help_AddData2; 
+    window.formatters['help_SelectCommunity2'] = help_SelectCommunity2;    
+    window.formatters['help_DrawerMapping2'] = help_DrawerMapping2;
+    window.formatters['help_ECAT2'] =  help_ECAT2;  
+    window.formatters['help_HucNavigation2'] = help_HucNavigation2;
+    window.formatters['help_Raindrop2'] = help_Raindrop2; 
     
-    window.formatters['help_DrawerMapping'] = help_DrawerMapping;
-    window.formatters['help_ECAT'] =  help_ECAT;  
-    window.formatters['help_HucNavigation'] = help_HucNavigation;
-    window.formatters['help_Raindrop'] = help_Raindrop;
-    window.formatters['help_EndPage'] =  help_EndPage;    
- 
     window.categoryDic = {};
     window.categoryDic["Clean Air"] = "cair";
     window.categoryDic["Clean and Plentiful Water"] = "cpw";

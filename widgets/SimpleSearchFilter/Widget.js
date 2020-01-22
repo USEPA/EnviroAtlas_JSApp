@@ -2674,6 +2674,14 @@ define([
         setClickEventForPopup();
     },               
     onOpen: function(){						
+       document.onkeydown = function(evt) {
+            evt.stopPropagation();
+            if (evt.keyCode == 27) {
+                exitButtons = document.getElementsByClassName("exit_buttonOnScreenWidget");
+                exitButton = exitButtons.item(0);
+                exitButton.click();
+            }
+        };
     	setTimeout(lang.hitch(this, function() {
 			_updateSelectableLayer();
 	        var selectedAreaGeog = document.getElementsByName('areaGeographySelection');

@@ -20,7 +20,7 @@ define(["dojo/_base/declare",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
-    "dojo/text!./templates/help_SelectCommunity.html"
+    "dojo/text!./templates/help_HucNavigation2.html"
   ],
   function(declare, array, locale, domClass, _WidgetBase, _TemplatedMixin,
     _WidgetsInTemplateMixin, template) {

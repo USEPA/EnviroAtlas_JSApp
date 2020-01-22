@@ -20,7 +20,7 @@ define(["dojo/_base/declare",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
-    "dojo/text!./templates/help_EnviroAtlasDataSearch.html"
+    "dojo/text!./templates/help_ECAT1.html"
   ],
   function(declare, array, locale, domClass, _WidgetBase, _TemplatedMixin,
     _WidgetsInTemplateMixin, template) {
