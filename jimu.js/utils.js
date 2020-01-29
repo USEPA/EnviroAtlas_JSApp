@@ -5140,10 +5140,15 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
                     }); 
                      
               exitButtons = document.getElementsByClassName("exit_buttonOnScreenWidget");
-              exitButton = exitButtons.item(0);
-              exitButton.addEventListener('click', function () {
-                    mo._endTour();
-              });                      
+
+              for (ii = 0; ii< exitButtons.length; ii++)
+              {
+                  exitButton = exitButtons.item(ii);
+                  exitButton.addEventListener('click', function () {
+                        mo._endTour();
+                  });                   
+              }
+                    
           
         };
     
