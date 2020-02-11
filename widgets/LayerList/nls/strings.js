@@ -21,7 +21,7 @@ define({
     removePopup: "Disable ID Pop-up",
     enablePopup: "Enable ID Pop-up",
     itemDataFactSheet: "Data Fact Sheet",
-    itemMetadataDownload: "Metadata/Download",
+    itemMetadataDownload: "Metadata",
     itemChangeSymbology: "Change Appearance",
     itemRemove: "Remove Layer",    
     turnAllLayersOff: "Turn all layers off",
