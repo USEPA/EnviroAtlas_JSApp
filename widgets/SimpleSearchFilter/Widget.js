@@ -717,9 +717,9 @@ define([
 			// Add popup dialog box for Benefit 
 			BC_Div.onclick = function () {
 				
-				$.getJSON("./widgets/Demo/config.json", function(json) {
+				$.getJSON("./widgets/Demo/config_for_BC_help.json", function(json) {
 						// read from tour stop 4 content
-						helpContent = json['tour'][3]['content'].join("")
+						helpContent = json['tour'][0]['content'].join("")
 
 						var bc_description = new Dialog({
 		        		title: 'EnviroAtlas Icons', 
