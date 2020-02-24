@@ -437,31 +437,32 @@ define([
 			    		for (i in window.featureLyrNumber) {  
 			    			bVisibleFL = false;
 			    			bVisibleTL = false;
-				    		lyrFL = selfSimpleSearchFilter.map.getLayer(window.layerIdPrefix + window.featureLyrNumber[i]);		    		
+			    			layerEAID = window.featureLyrNumber[i];
+				    		lyrFL = selfSimpleSearchFilter.map.getLayer(window.layerIdPrefix + layerEAID);		    		
 				    		if (lyrFL != null) {		    			
 								if (lyrFL.visible == true){
-								    if (lyrFL.visibleAtMapScale==true){
+								    if (((window.nationalLayerNumber.indexOf(layerEAID.toString()) >= 0)) || (lyrFL.visibleAtMapScale==true)){
 									   bVisibleFL = true;
 									}
 								}
 							} else {
-								lyrFL = selfSimpleSearchFilter.map.getLayer(window.layerIdPBSPrefix + window.featureLyrNumber[i]);	
+								lyrFL = selfSimpleSearchFilter.map.getLayer(window.layerIdPBSPrefix + layerEAID);	
 								if (lyrFL != null) {
 									if (lyrFL.visible == true){
-									    if (lyrFL.visibleAtMapScale==true){
+									    if (((window.nationalLayerNumber.indexOf(layerEAID.toString()) >= 0)) || (lyrFL.visibleAtMapScale==true)){
 										  bVisibleFL = true;
 										}
 									}
 								}
 							}
-							lyrTL = selfSimpleSearchFilter.map.getLayer(window.layerIdTiledPrefix + window.featureLyrNumber[i]);
+							lyrTL = selfSimpleSearchFilter.map.getLayer(window.layerIdTiledPrefix + layerEAID);
 				    		if (lyrTL != null) {		    			
 								if (lyrTL.visible == true){
 									bVisibleTL = true;							
 								}
 							}		
 							if ((bVisibleFL == true) || (lyrTL == true)) {
-								arrLayersForPopup.push(window.featureLyrNumber[i]);
+								arrLayersForPopup.push(layerEAID);
 							}		    		
 				    	}
 				    	//start to popup for first layer:
@@ -715,9 +716,9 @@ define([
 			// Add popup dialog box for Benefit 
 			BC_Div.onclick = function () {
 				
-				$.getJSON("./widgets/Demo/config.json", function(json) {
+				$.getJSON("./widgets/Demo/config_for_BC_help.json", function(json) {
 						// read from tour stop 4 content
-						helpContent = json['tour'][3]['content'].join("")
+						helpContent = json['tour'][0]['content'].join("")
 
 						var bc_description = new Dialog({
 		        		title: 'EnviroAtlas Icons', 

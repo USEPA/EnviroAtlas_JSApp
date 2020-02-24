@@ -1,0 +1,25 @@
+ {
+	"configText":"the help content for Benefit Category",
+	"tour":[{
+		"content": ["<p style='font-size:18px'>Icons give you information about each data layer.</p>",
+					"<br>",
+					"<p style='text-decoration:underline'>Associated ecosystem services benefit categories</p>",
+					"<div style='height:24px'><div class='cair icon_style'></div><p>Clean Air</p></div>",
+					"<div style='height:24px'><div class='cpw icon_style'></div><p>Clean and Plentiful Water</p></div>",
+					"<div style='height:24px'><div class='clim icon_style'></div><p>Climate Stabilization</p></div>",
+					"<div style='height:24px'><div class='nhm icon_style'></div><p>Natural Hazard Mitigation</p></div>",
+					"<div style='height:24px'><div class='rca icon_style'></div><p>Recreation, Culture, and Aesthetics</p></div>",
+					"<div style='height:24px'><div class='ffm icon_style'></div><p>Food, Fuel, and Materials</p></div>",
+					"<div style='height:24px'><div class='biod icon_style'></div><p>Biodiversity Conservation</p></div>",
+					"<br>",
+					"<p style='text-decoration:underline'>Spatial extent</p>",
+					"<div><div class='NATIONAL icon_style'></div><p>National dataset. Most national data provide wall-to-wall coverage for the contiguous U.S.</p></div>",
+					"<div><div class='COMMUNITY icon_style'></div><p>Community dataset. High resolution data developed for one of our EnviroAtlas featured communities. </p></div>",
+					"<br>",
+					"<p style='text-decoration:underline'>Data type</p>",
+					"<div style='height:24px'><div class='huc12 icon_style'></div>Data summarized by sub-watershed (12 digit HUC)</div>",
+					"<div style='height:24px'><div class='cbg icon_style'></div>Data summarized by Census block group</div>",
+					"<div style='height:24px'><div class='plp icon_style'></div>Non-summarized point, line, or polygon data</div>",
+					"<div style='height:24px'><div class='grid icon_style'></div>Non-summarized gridded data</div>"]
+	}]
+}
