@@ -19331,11 +19331,11 @@
                 "eaCPW": true,
                 "visible": false,
                 "popup": {
-                    "title": "Potentially Restorable Wetlands on Agricultural Land",
+                    "title": "Potential Wetland Area",
                     "showAttachments": "false",
                     "fieldInfos": [
                         {
-                            "label": "Potentially Restorable Wetlands on Agricultural Land",
+                            "label": "Potential Wetland Area",
                             "visible": "true",
                             "fieldName": "Value"
                         }
@@ -19423,11 +19423,11 @@
                 "eaCPW": true,
                 "visible": false,
                 "popup": {
-                    "title": "Rare Ecosystems",
+                    "title": "Potentially Restorable Wetlands on Agricultural Land",
                     "showAttachments": "false",
                     "fieldInfos": [
                         {
-                            "label": "Rare Ecosystems",
+                            "label": "Potentially Restorable Wetlands on Agricultural Land",
                             "visible": "true",
                             "fieldName": "Value"
                         }
@@ -19511,13 +19511,13 @@
                 "DownloadSource": "ftp://newftp.epa.gov/epadatacommons/ORD/EnviroAtlas/Rare_Ecosystems.zip",
                 "visible": false,
                 "popup": {
-                    "title": "MSPA Water as Background with 30m edge",
+                    "title": "Rare Ecosystems",
                     "showAttachments": "false",
                     "fieldInfos": [
                         {
-                            "label": "States\u00a0",
+                            "label": "Rare Ecosystems",
                             "visible": "true",
-                            "fieldName": "GEOID10"
+                            "fieldName": "Value"
                         }
                     ]
                 },
@@ -19599,7 +19599,7 @@
                 "eaMetric": "foundational",
                 "eaID": 259,
                 "eaScale": "NATIONAL",
-                "eaMetadata": "E058",
+                "eaMetadata": "N058",
                 "eaBCSDD": [
                     "Biodiversity Conservation - x",
                     "Recreation, Culture, and Aesthetics - x"
@@ -19650,7 +19650,7 @@
                 "eaMetric": "foundational",
                 "eaID": 260,
                 "eaScale": "NATIONAL",
-                "eaMetadata": "E059",
+                "eaMetadata": "N059",
                 "eaBCSDD": [
                     "Biodiversity Conservation - x",
                     "Recreation, Culture, and Aesthetics - x"
@@ -19701,7 +19701,7 @@
                 "eaMetric": "foundational",
                 "eaID": 261,
                 "eaScale": "NATIONAL",
-                "eaMetadata": "E060",
+                "eaMetadata": "N060",
                 "eaBCSDD": [
                     "Biodiversity Conservation - x",
                     "Recreation, Culture, and Aesthetics - x"
@@ -19752,7 +19752,7 @@
                 "eaMetric": "foundational",
                 "eaID": 262,
                 "eaScale": "NATIONAL",
-                "eaMetadata": "E061",
+                "eaMetadata": "N061",
                 "eaBCSDD": [
                     "Biodiversity Conservation - x",
                     "Recreation, Culture, and Aesthetics - x"
@@ -19803,7 +19803,7 @@
                 "eaMetric": "foundational",
                 "eaID": 263,
                 "eaScale": "NATIONAL",
-                "eaMetadata": "E062",
+                "eaMetadata": "N062",
                 "eaBCSDD": [
                     "Biodiversity Conservation - x",
                     "Recreation, Culture, and Aesthetics - x"
@@ -19854,7 +19854,7 @@
                 "eaMetric": "foundational",
                 "eaID": 264,
                 "eaScale": "NATIONAL",
-                "eaMetadata": "E063",
+                "eaMetadata": "N063",
                 "eaBCSDD": [
                     "Biodiversity Conservation - x",
                     "Recreation, Culture, and Aesthetics - x"
@@ -46866,10 +46866,10 @@
                     "Climate Stabilization"
                 ],
                 "eaCS": true,
-                "eaDescription": "These maps portray carbon stored in the above-ground biomass of trees by census block group as Total (mt/yr) or Value ($/yr).",
+                "eaDescription": "These maps portray carbon stored in the above-ground biomass of trees by census block group as Total (mt) or Value ($).",
                 "SubLayerNames": [
-                    "Total (mt/yr)",
-                    "Value ($/yr)"
+                    "Total (mt)",
+                    "Value ($)"
                 ],
                 "visible": false,
                 "opacity": 0.6,
