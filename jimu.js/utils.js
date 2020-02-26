@@ -5057,7 +5057,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
           if (tourDialogOnScreenWidget==null){
               tourDialogOnScreenWidget = new TooltipDialog({
                 id: 'tourDialog2',
-                style: "width: 350px;",
+                style : "width: 390px;overflow-y:hidden;",//350 ori
                 content: "",
               });
           }
@@ -5136,9 +5136,43 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
                     around: dom.byId(nodeToHelp),
                     orient: window.helpTour[stop].orient,
                     maxHeight: 600,
+                    'overflow-y':'hidden',
                     padding: {x:100, y:100}
                     }); 
-                     
+                    
+                    elemHelpContents1 = document.getElementsByClassName("helpContent1");
+                    Content1Height = 0;
+                    for (ii = 0; ii< elemHelpContents1.length; ii++)
+                    {
+                        if (elemHelpContents1.item(ii).clientHeight > Content1Height) {
+                            Content1Height = elemHelpContents1.item(ii).clientHeight;
+                        }
+                    }
+                    
+                    elemHelpContent2Height = 600-Content1Height-25;                
+                    elemHelpContents2 = document.getElementsByClassName("helpContent2");
+                    for (ii = 0; ii< elemHelpContents2.length; ii++) {
+                        elemHelpContent2 = elemHelpContents2.item(ii);
+                        
+                        if (elemHelpContent2 != null)
+                        {
+                            
+                            elemHelpContent2.style.height = elemHelpContent2Height.toString()+"px";
+                        }                             
+                    }
+                    
+                    popupContentsForScroll = document.getElementsByClassName("dijitTooltipDialogPopup");
+                    for (ii = 0; ii< popupContentsForScroll.length; ii++) {
+                        popupContentForScroll = popupContentsForScroll.item(ii);
+                        
+                        if (popupContentForScroll != null) {
+                            popupContentForScroll.style.overflow='hidden';
+                        }
+                        //popupContentForScroll.style.overflow='hidden';
+                        //popupContentForScroll.item(ii).style.overflow='hidden';
+                    }
+
+                                        
               exitButtons = document.getElementsByClassName("exit_buttonOnScreenWidget");
 
               for (ii = 0; ii< exitButtons.length; ii++)

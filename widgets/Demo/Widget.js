@@ -61,7 +61,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
 
             tourDialog = new TooltipDialog({
                 id : 'tourDialog',
-                style : "width: 350px;",
+                style : "width: 390px;overflow-y:hidden;",//350 ori
                 content : helpContent,
             });
 
@@ -288,6 +288,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                         popup : tourDialog,
                         around : dom.byId(nodeToHelp),
                         orient : helpTour[stop].orient,
+                        overflow:'hidden',
                         maxHeight: 600,
                         padding : {
                             x : 100,
@@ -302,6 +303,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                     popup : tourDialog,
                     around : dom.byId(nodeToHelp),
                     orient : helpTour[stop].orient,
+                    overflow:'hidden',
                     padding : {
                         x : 100,
                         y : 100
@@ -310,8 +312,23 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 
             }
                 
-
-
+            elemHelpContents1 = document.getElementsByClassName("helpContent1");
+            elemHelpContent1 = elemHelpContents1.item(0);
+            if (elemHelpContent1 != null)
+            {
+                Content1Height = elemHelpContent1.clientHeight;                   
+                elemHelpContents2 = document.getElementsByClassName("helpContent2");
+                elemHelpContent2 = elemHelpContents2.item(0);
+                
+                if (elemHelpContent2 != null)
+                {
+                    elemHelpContent2Height = 600-Content1Height-50;
+                    elemHelpContent2.style.height = elemHelpContent2Height.toString()+"px";
+                }                    
+            }
+            popupContentsForScroll = document.getElementsByClassName("dijitTooltipDialogPopup");
+            popupContentForScroll = popupContentsForScroll.item(0);
+            popupContentForScroll.style.overflow='hidden';
         },
 
         _endTour : function() {
