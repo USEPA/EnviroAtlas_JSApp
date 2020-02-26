@@ -19,7 +19,7 @@
 	},
     {
 		"widgetName": "EnviroAtlasData",
-		"node":"selectableLayersContainer",
+		"node":"themes_TabTheme_widgets_SidebarController_Widget_20",
 		"helpFile": "help_EnviroAtlasDataSearch",
 		"content": [],
 		"orient": ["after"],
