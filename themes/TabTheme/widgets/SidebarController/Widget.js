@@ -878,6 +878,12 @@ define([
         });
 
         this.stateNode = this.minStateNode;
+        //TODO: A better way to handle this is by using the topic.subscribe function following example in Header\Widget.js
+        //this.own(topic.subscribe('changeMapPosition', lang.hitch(this, this._onMapResize)));
+        var helpWidget = dojo.byId("themes_TabTheme_widgets_SidebarController_Widget_20_dropdown");
+        if (helpWidget){
+          helpWidget.style.setProperty("left","0px");
+        }
       },
 
       _resizeToMax: function() {
@@ -901,6 +907,11 @@ define([
         }
 
         this.stateNode = this.maxStateNode;
+        //TODO: A better way to handle this is by using the topic.subscribe function.
+        var helpWidget = dojo.byId("themes_TabTheme_widgets_SidebarController_Widget_20_dropdown");
+        if (helpWidget){
+          helpWidget.style.setProperty("left","365px");
+        }
       }
     });
     return clazz;

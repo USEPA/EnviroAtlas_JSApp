@@ -23,8 +23,8 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
     'widgets/Demo/help/help_Raindrop1',
     'widgets/Demo/help/help_Raindrop2',
     'widgets/Demo/help/help_EndPage',   
- 'dojo/on', 'dojo/dom'], function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, AccordionContainer, ContentPane, lang, help_Welcome, help_Elevation1, help_Elevation2, help_FeaturedCollections1, help_FeaturedCollections2, help_Demographic1, help_Demographic2, help_EnviroAtlasDataSearch1, help_EnviroAtlasDataSearch2, help_TimesSeries1, help_TimesSeries2, help_AddData1, help_AddData2,
-    help_SelectCommunity1, help_SelectCommunity2, help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_HucNavigation1, help_HucNavigation2, help_Raindrop1, help_Raindrop2, help_EndPage, on, dom) {
+ 'dojo/on', 'dojo/dom', 'dojo/topic'], function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, AccordionContainer, ContentPane, lang, help_Welcome, help_Elevation1, help_Elevation2, help_FeaturedCollections1, help_FeaturedCollections2, help_Demographic1, help_Demographic2, help_EnviroAtlasDataSearch1, help_EnviroAtlasDataSearch2, help_TimesSeries1, help_TimesSeries2, help_AddData1, help_AddData2,
+    help_SelectCommunity1, help_SelectCommunity2, help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_HucNavigation1, help_HucNavigation2, help_Raindrop1, help_Raindrop2, help_EndPage, on, dom, topic) {
     //To create a widget, you need to derive from BaseWidget.
     return declare([BaseWidget], {
         // DemoWidget code goes here
@@ -60,12 +60,12 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
             helpContent = helpTour[stop].content + "<div><button type='button' onclick='selfDemo._nextStop()'>Next</button></div>";
 
             tourDialog = new TooltipDialog({
-                id : 'tourDialog',
-                style : "width: 390px;overflow-y:hidden;",//350 ori
-                content : helpContent,
+                "id" : 'tourDialog',
+                "class" : "tourDialog",
+                "content" : helpContent
             });
 
-            console.log('startup');
+            console.log('Help/Tour startup');
         },
 
         onReceiveData : function(name, widgetId, data, historyData) {
@@ -189,8 +189,6 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                         $('#widgets_SimpleSearchFilter_Widget_37_min').click();
                 }
 
-                
-
                 var newDiv = document.createElement("div");
                 var newlink = document.createElement('a');
                 //newlink.setAttribute('class', 'exit_button');
@@ -200,10 +198,6 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 newlink.setAttribute('title', 'close');
                 newDiv.appendChild(newlink);
                 helpContent.domNode.insertBefore(newDiv, helpContent.domNode.firstChild);
-                
-                
-                
-                
 
                 //insert clickPrevious button
                 newDiv = document.createElement("div");
@@ -370,6 +364,6 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
 
         onSignOut : function() {
             console.log('onSignOut');
-        }
+
     });
 });
