@@ -5057,8 +5057,8 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
           if (tourDialogOnScreenWidget==null){
               tourDialogOnScreenWidget = new TooltipDialog({
                 id: 'tourDialog2',
-                style : "width: 390px;overflow-y:hidden;",//350 ori
-                content: "",
+                "class" : "tourDialog",
+                content: ""
               });
           }
            var overlayElement = document.getElementById("overlay");
