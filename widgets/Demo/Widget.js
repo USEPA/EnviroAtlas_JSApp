@@ -364,6 +364,6 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
 
         onSignOut : function() {
             console.log('onSignOut');
-
+        }
     });
 });
