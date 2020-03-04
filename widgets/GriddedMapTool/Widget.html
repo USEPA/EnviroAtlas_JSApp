@@ -1,0 +1,58 @@
+<div>
+  <div data-dojo-attach-point="tabMain">
+    <div class="${baseClass} profile-tab-node" data-dojo-attach-point="tabNode1">
+      <div>
+        <div>
+          <p>To begin, first please select a unit area and click within the map on a focus location:</p>
+        </div>
+        <div class="unit-select-wrapper">
+          <select id="gridded-map-unit-input" name="unit-input">
+            <option disabled selected value="">Select one...</option>
+            <option value="area">Draw an area</option>
+            <option value="district">Congressional District</option>
+            <option value="huc">HUC-12</option>
+            <option value="county">County</option>
+            <!-- <option value="state">State</option> -->
+            <option value="point">Specific Point</option>
+          </select>
+          <button id="gridded-map-clear-button"></button>
+        </div>
+        <div id="gridded-map-unit-details"  style="display: none">
+          <div class="point-controls">
+            <div>
+              <input type="radio" id="gridded-map-mile" name="metric" value="miles">
+              <label for="gridded-map-mile">Mile</label>
+            </div>
+            <div>
+              <input type="radio" id="gridded-map-kilometer" name="metric" value="kilometers" checked>
+              <label for="gridded-map-kilometer">Kilometer</label>
+            </div>
+          </div>
+          <div class="point-buffer">
+            <label for="gridded-map-buffer">Buffer distance:</label>
+            <input type="number" id="gridded-map-buffer" name="buffer" min="0.5" value="0.5">
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="margin-top: 15px">
+          <p>Then, select a national indicator to summarize.</p>
+        </div>
+        <select id="gridded-map-indicator-input" name="indicator-input">
+          <option selected value="nlcd">National Land Cover Dataset (2012)</option>
+        </select>
+      </div>
+      <p id="gridded-map-selection-name"></p>
+      <div class="calculate-button-wrapper">
+        <button disabled id="gridded-map-calculate-button"></button>
+      </div>
+      <p id="gridded-map-error"></p>
+    </div>
+    <div class="${baseClass} profile-tab-node" data-dojo-attach-point="tabNode2">
+      <div id="gridded-map-input-table-wrapper" class="table-wrapper">
+      </div>
+      <div id="gridded-map-output-table-wrapper" class="table-wrapper">
+      </div>
+    </div>
+  </div>
+</div>

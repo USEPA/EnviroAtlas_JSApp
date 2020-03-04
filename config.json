@@ -324,7 +324,24 @@
                 },
                 "id": "widgets_NavHuc_Widget",
         		"closeable": true
-            },{
+            },
+            {
+				"position": {
+					"left": 745,
+					"top": 5,
+					"width": 587,
+					"height": 500,
+					"relativeTo": "map"
+				},
+				"placeholderIndex": 1,
+				"id": "widgets_Gridded_Map_28",
+				"name": "GriddedMapTool",
+				"label": "Gridded Map Tool",
+				"version": "0.1",
+				"uri": "widgets/GriddedMapTool/Widget",
+				"config": "widgets/GriddedMapTool/config.json"
+			},            
+            {
                 "position": {
                     "left": 545,
                     "top": -40,
@@ -356,7 +373,9 @@
                 "closeable": true,
                 "openAtStart": false,                
                 "config": "widgets/TimeSlider/config.json"
-            }, {
+            }, 
+
+            {
                 "position": {
                     "left": 0,
                     "top": -40,

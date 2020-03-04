@@ -1,0 +1,264 @@
+.widget-gridded-map {
+  position:relative;
+  width:100%;
+  height:100%;
+  min-width:265px;
+  min-height:279px;
+}
+
+.jimu-widget-frame>.widget-gridded-map>.jimu-tab>.control{
+  margin:-14px -14px 0 -14.7px;
+}
+
+.widget-gridded-mapInfoDiv {
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -moz-user-select:-moz-none;
+  -ms-user-select: none;
+  user-select: none;
+  color: blue;
+  float:left;
+}
+
+.widget-gridded-map>.jimu-tab>.jimu-viewstack{
+  position: absolute !important;
+  top:45px !important;
+  left:0 !important;
+  right:0 !important;
+  bottom:0 !important;
+  height: auto;
+  margin-bottom:-14px;
+}
+
+.widget-gridded-mapinfo-icon{
+  cursor: pointer;
+  display: inline-block;
+  font-size: 18px;
+  line-height: 20px;
+  background: none repeat scroll 0% 0% #518DCA;
+  color: #FFF;
+  border-radius:99px;
+  -moz-border-radius:99px;
+  -webkit-border-radius:99px;
+  font-weight:bold;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -moz-user-select:-moz-none;
+  -ms-user-select: none;
+  user-select: none;
+  float: left;
+  width:20px;
+  height:20px;
+  padding-left:7px;
+}
+
+.widget-gridded-map .profile-tab-node{
+  position:absolute !important;
+  width:100% !important;
+  height:auto !important;
+  top:0 !important;
+  bottom:0 !important;
+  overflow: hidden;
+}
+
+#gridded-map-unit-input, #gridded-map-indicator-input {
+  margin-top: 15px;
+  width: 275px;
+  height: 20px;
+  border: 1px solid #cacacaca;
+  background: #ffffff;
+}
+
+#gridded-map-unit-input:hover, #gridded-map-indicator-input:hover {
+  cursor: pointer;
+}
+
+#gridded-map-clear-button {
+  background: none;
+  border: none;
+  color: #5b7da9;
+  text-decoration: underline;
+}
+
+#gridded-map-clear-button:hover {
+  cursor: pointer;
+}
+
+#gridded-map-error {
+  text-align: center;
+    color: #dc1c1c;
+}
+
+#gridded-map-clear-button:active {
+  color: #485566;
+}
+
+.point-controls {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 275px;
+}
+
+.point-controls label, .point-buffer label {
+  margin: 0 5px;
+}
+
+.point-buffer {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  justify-content: flex-end;
+  width: 250px;
+}
+
+#gridded-map-buffer {
+  width: 100px;
+  height: 20px;
+}
+
+#gridded-map-selection-name {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 15px;
+  height: 22px;
+}
+
+.calculate-button-wrapper {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#gridded-map-calculate-button {
+  height: 35px;
+  width: 275px;
+  border: none;
+  background-color: #485566;
+  border-radius: 5px;
+  font-size: 12px;
+  color: #ffffff;
+  font-weight: 100;
+}
+
+#gridded-map-feet:hover, #gridded-map-mile:hover, #gridded-map-kilometer:hover {
+  cursor: pointer;
+}
+
+#gridded-map-calculate-button:disabled {
+  background-color: #D9DDE0;
+  cursor: not-allowed;
+}
+
+#gridded-map-calculate-button:active {
+  background-color: #5b7da9;
+}
+
+#gridded-map-calculate-button:hover:not(:disabled) {
+  cursor: pointer;
+}
+
+.table-wrapper {
+  max-width: 515px;
+  margin: 0 auto;
+}
+
+.table-wrapper table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+.table-wrapper table th {
+  background-color: #FEF2CC;
+  font-weight: 700;
+}
+
+.table-wrapper table th, .table-wrapper table td {
+  border: 2px solid #d3d3d3;
+  height: 35px;
+  width: 50%;
+  margin: 0;
+  padding: 0 10px;
+}
+
+.index-results {
+  height: 60px;
+}
+
+.output-table-cell.attr > p {
+  margin-bottom: 5px;
+}
+
+.output-table-cell.val > p {
+  margin-bottom: 10px;
+}
+
+.output-table-cell.val > a {
+  color: #13679F;
+}
+
+.output-table-cell.val > a:visited {
+  color: #6620ad;
+}
+
+.output-table-cell.attr > .legend {
+  height: 20px;
+  width: 190px;
+  border: 1px solid #979797;
+}
+
+.gradient-23 {
+  background: linear-gradient(90deg,
+    #B50402, #E9D1D2, #F4EEEE);
+}
+
+.gradient-31 {
+  background: #D2CDC0;
+}
+
+.gradient-90 {
+  background: #64B3D5;
+}
+
+.gradient-42 {
+  background: linear-gradient(90deg,
+    #85C77E, #37814E, #D4E7B1);
+}
+
+.gradient-71 {
+  background: linear-gradient(90deg,
+    #D2CDC0, #DFDFC2, #D1D182);
+}
+
+.gradient-82 {
+  background: linear-gradient(90deg,
+    #FBF65D, #CA9147);
+}
+
+
+.table-wrapper table tr:nth-of-type(1n) {
+  background-color: #F9F9F9;
+}
+
+.table-wrapper table tr:nth-of-type(2n) {
+  background-color: #F0F0F0;
+}
+
+.esat-tab-disabled {
+  cursor: not-allowed !important;
+}
+
+.overflow {
+  overflow: hidden !important;
+  overflow-y: auto !important;
+}
