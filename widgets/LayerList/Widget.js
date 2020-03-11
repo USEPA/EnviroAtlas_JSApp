@@ -62,18 +62,6 @@ define([
 
         this._createLayerFilter();
         var openLegendDiv = document.getElementById("openLegendDiv");
-        var butOpenLegend = dojo.create('input', {
-            "type": "button",
-            'class': 'openLegend-button',
-            "id": "button_"+"openLegend" //SubLayerIds is the widgetID in this case
-        }, openLegendDiv);
-        butOpenLegend.addEventListener('click', function(evt) {                          
-            var widgetName = 'Legend';
-            var widgets = thisLayerList.appConfig.getConfigElementsByName(widgetName);
-            var pm = PanelManager.getInstance();
-            pm.showPanel(widgets[0]);                        
-        })
-                    
 
         NlsStrings.value = this.nls;
         this._denyLayerInfosReorderResponseOneTime = false;
@@ -112,6 +100,12 @@ define([
         this.layerFilter = new LayerFilter({layerListWidget: this}).placeAt(this.layerFilterNode);
       },
 
+	  _onOpenLegendBtnClick: function() {
+        var widgetName = 'Legend';
+        var widgets = this.appConfig.getConfigElementsByName(widgetName);
+        var pm = PanelManager.getInstance();
+        pm.showPanel(widgets[0]);     
+      },
       destroy: function() {
         this._clearLayers();
         this.inherited(arguments);

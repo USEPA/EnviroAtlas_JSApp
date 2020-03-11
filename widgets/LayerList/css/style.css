@@ -683,7 +683,18 @@
   background-image: url("../images/operation_normal.svg"); 
   background-color: rgba(255, 255, 255, 0);
 }
-
+.jimu-widget-layerList .layer-list-operations:hover::after{
+	content: "All Layers Menu";
+	 position: absolute ;
+	 top: 1.1em ;
+	 left: -5em ;
+	 min-width: 200px ;
+	 /*border: 1px #808080 solid ;*/
+	 border:none;
+	 padding: 8px ;
+	 color: black ;
+	 /*background-color: #cfc ;*/
+}
 
 .jimu-rtl .jimu-widget-layerList .layer-list-operations .jimu-icon-btn{
   left: auto;
@@ -833,6 +844,18 @@
   background-position: center;
   cursor: pointer;
 }
+.jimu-widget-layerList .layer-filter .search-button:hover::after{
+	content: "Search";
+	 position: absolute ;
+	 top: 1.1em ;
+	 left: 0.5em ;
+	 min-width: 200px ;
+	 /*border: 1px #808080 solid ;*/
+	 border:none;
+	 padding: 8px ;
+	 color: black ;
+	 /*background-color: #cfc ;*/
+}
 
 .jimu-rtl .jimu-widget-layerList .layer-filter .search-button{
   left: 23px;
@@ -860,6 +883,16 @@
 .jimu-widget-layerList .layers-section .openLegend-button:hover{
   background-image: url("../images/open_legend.png");
   border:0;
+}
+.jimu-widget-layerList .openLegend-button:hover::after{
+	content: "Legend";
+	 position: absolute ;
+	 top: 1.1em ;
+	 left: 0.5em ;
+	 min-width: 200px ;
+	 border:none;
+	 padding: 8px ;
+	 color: black ;
 }
 
 .jimu-widget-layerList .layer-filter .cancel-button{

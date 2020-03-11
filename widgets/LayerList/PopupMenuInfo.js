@@ -196,7 +196,13 @@ define([
         if ((layerId.indexOf(window.layerIdPrefix)) >= 0) {
 			arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");
 			getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, eaID, actionType);
-        }        
+        }     
+        else if (eaID=="ScenarioDataLayer") {
+    		var climateVar = document.getElementById("climateSelection").value;
+        	metaDataIDFromVariable = window.timeSeriesMetadata[climateVar];
+        	metaDataID = window.nationalMetadataDic[metaDataIDFromVariable];
+            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");	       	
+        }   
         else {
         	arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");  	
         	getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, clickedURL, actionType);

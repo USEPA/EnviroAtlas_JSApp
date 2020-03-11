@@ -95,6 +95,12 @@ define([
     window.addedLayerIndex = 0;
     window.uploadedFeatLayerIdPrefix = "uploaded_";
     window.timeSeriesLayerId = "ScenarioDataLayer";
+    window.timeSeriesMetadata = {};
+    window.timeSeriesMetadata['PET'] =  "T001";
+    window.timeSeriesMetadata['TempMin'] =  "T002";
+    window.timeSeriesMetadata['TempMax'] =  "T003";
+    window.timeSeriesMetadata['Precip'] =  "T004";
+
     window.widthOfInfoWindow = 0;
     window.heightOfInfoWindow = 0;
     window.toggleOnHucNavigation = false;
