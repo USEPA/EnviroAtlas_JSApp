@@ -686,8 +686,8 @@
 .jimu-widget-layerList .layer-list-operations:hover::after{
 	content: "All Layers Menu";
 	 position: absolute ;
-	 top: 1.1em ;
-	 left: -5em ;
+	 top: -1.8em ;
+	 left: -6em ;
 	 min-width: 200px ;
 	 /*border: 1px #808080 solid ;*/
 	 border:none;
@@ -847,8 +847,8 @@
 .jimu-widget-layerList .layer-filter .search-button:hover::after{
 	content: "Search";
 	 position: absolute ;
-	 top: 1.1em ;
-	 left: 0.5em ;
+	 top: -1.8em ;
+	 left: 0em ;
 	 min-width: 200px ;
 	 /*border: 1px #808080 solid ;*/
 	 border:none;
@@ -887,8 +887,8 @@
 .jimu-widget-layerList .openLegend-button:hover::after{
 	content: "Legend";
 	 position: absolute ;
-	 top: 1.1em ;
-	 left: 0.5em ;
+	 top: -1.8em ;
+	 left: 0em ;
 	 min-width: 200px ;
 	 border:none;
 	 padding: 8px ;
