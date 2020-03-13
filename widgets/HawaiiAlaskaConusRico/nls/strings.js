@@ -1,10 +1,10 @@
 define({
   root: ({
     _widgetLabel: "Extent Navigate",
-    Hawaii: "Hawaii",
-    Alaska: "Alaska",
+    Hawaii: "Hawaii - filters data and zooms",
+    Alaska: "Alaska - filters data and zooms",
     Conus: "Continental US",
-    PRVI: "Puerto Rico/Virgin Islands",
+    PRVI: "Puerto Rico/Virgin Islands - filters data and zooms",
   }),
   "ar": 1,
   "bs": 1,
