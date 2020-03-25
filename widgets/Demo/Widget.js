@@ -145,7 +145,6 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 helpContent = new helperClass();
                 var newDiv = document.createElement("div");
                 var newlink = document.createElement('a');
-                //newlink.setAttribute('class', 'exit_button');
                 newlink.setAttribute('class', 'exit_buttonOnScreenWidget');
                 newlink.setAttribute('onclick', 'selfDemo._endTour()');
                 newlink.innerHTML = '&#10006';
@@ -156,19 +155,18 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 //insert clickNext button
                 newDiv = document.createElement("div");
                 newlink = document.createElement('button');
-                //newlink.setAttribute('onclick', 'selfDemo._nextStop("+ stop+1 +")');
                 newlink.setAttribute('onclick', "selfDemo._nextStop(" + (stop + 1).toString() + ")");
                 newlink.innerHTML = 'Next &raquo;';
                 newlink.setAttribute('title', 'Next');
                 newDiv.appendChild(newlink);
-                helpContent.domNode.appendChild(newDiv);
 
                 //insert page number
                 newlink = document.createElement("div");
                 newlink.setAttribute('class', 'counter');
                 newlink.innerHTML = (stop + 1).toString() + "/" + numberStops.toString();
                 newlink.setAttribute('title', (stop + 1).toString() + "/" + numberStops.toString());
-                helpContent.domNode.appendChild(newlink);
+                newDiv.appendChild(newlink);
+                helpContent.domNode.appendChild(newDiv);
 
                 tourDialog.set("content", helpContent);
                 //end of new code
@@ -212,7 +210,6 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
 
                 var newDiv = document.createElement("div");
                 var newlink = document.createElement('a');
-                //newlink.setAttribute('class', 'exit_button');
                 newlink.setAttribute('class', 'exit_buttonOnScreenWidget');
                 newlink.setAttribute('onclick', 'selfDemo._endTour()');
                 newlink.innerHTML = '&#10006';
@@ -237,12 +234,15 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 newlink.innerHTML = 'Next &raquo;';
                 newlink.setAttribute('title', 'Next');
                 newDiv.appendChild(newlink);
-
-                //helpContent.domNode.appendChild(newDiv);
                 
+                //insert page number
+                newlink = document.createElement("div");
+                newlink.setAttribute('class', 'counter');
+                newlink.innerHTML = (stop + 1).toString() + "/" + numberStops.toString();
+                newlink.setAttribute('title', (stop + 1).toString() + "/" + numberStops.toString());            
+                newDiv.appendChild(newlink);    
 
 		    	//insert More infomation button
-                //newDiv = document.createElement("div");
                 newlink = document.createElement('button');
                 newlink.setAttribute('onclick', "selfDemo._displayMoreInformation(" + ")");
                 newlink.innerHTML = 'More information';
@@ -250,17 +250,9 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 newlink.setAttribute('class', 'topicHeader');
                 newlink.setAttribute('style', 'width:100%;background-color: #9aadbb; margin-top:20px');
                 newDiv.appendChild(newlink);
-                helpContent.domNode.appendChild(newDiv);
-                
+                helpContent.domNode.appendChild(newDiv);                
                 		
                 helpContent.domNode.appendChild(helpContent2.domNode);
-
-                //insert page number
-                newlink = document.createElement("div");
-                newlink.setAttribute('class', 'counter');
-                newlink.innerHTML = (stop + 1).toString() + "/" + numberStops.toString();
-                newlink.setAttribute('title', (stop + 1).toString() + "/" + numberStops.toString());
-                helpContent.domNode.appendChild(newlink);
 
                 tourDialog.set("content", helpContent);
 
@@ -273,7 +265,6 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 helpContent = new helperClass();
                 var newDiv = document.createElement("div");
                 var newlink = document.createElement('a');
-                //newlink.setAttribute('class', 'exit_button');
                 newlink.setAttribute('class', 'exit_buttonOnScreenWidget');
                 newlink.setAttribute('onclick', 'selfDemo._endTour()');
                 newlink.innerHTML = '&#10006';
@@ -299,14 +290,16 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 newlink.setAttribute('title', 'End');
                 newDiv.appendChild(newlink);
 
-                helpContent.domNode.appendChild(newDiv);
-
                 //insert page number
                 newlink = document.createElement("div");
                 newlink.setAttribute('class', 'counter');
                 newlink.innerHTML = (stop + 1).toString() + "/" + numberStops.toString();
                 newlink.setAttribute('title', (stop + 1).toString() + "/" + numberStops.toString());
-                helpContent.domNode.appendChild(newlink);
+                newDiv.appendChild(newlink);
+                helpContent.domNode.appendChild(newDiv);
+
+
+
 
                 tourDialog.set("content", helpContent);
             }
