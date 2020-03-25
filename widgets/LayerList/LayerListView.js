@@ -173,9 +173,8 @@ define([
 		layerId = layerInfo.id;
 		if (layerId.indexOf(window.layerIdPrefix) >= 0) {
 		    eaId = layerId.replace(window.layerIdPrefix, "");                     	
-		} else if (layerId.indexOf(window.layerIdPBSPrefix) >= 0) {
-		    eaId = layerId.replace(window.layerIdPBSPrefix, "");                     	
-		}       
+		} 
+		     
       ckSelect = new CheckBox({
         checked: layerInfo.isVisible()||window.allLayersTurnedOn[eaId], //layerInfo.visible
         'class': "visible-checkbox-" + layerInfo.id
@@ -240,7 +239,7 @@ define([
      
       var grayedTitleClass = '';
       try {
-      	var eaID = layerInfo.id.replace(window.layerIdPrefix, "").replace(window.layerIdPBSPrefix, "");
+      	var eaID = layerInfo.id.replace(window.layerIdPrefix, "");
         if ((!layerInfo.isInScale())&&(window.hashIDtoTileURL[eaID] == null)) {
           grayedTitleClass = 'grayed-title';
         }
@@ -576,9 +575,8 @@ define([
 	    layerId = layerInfo.id;
 	    if (layerId.indexOf(window.layerIdPrefix) >= 0) {
 	        eaId = layerId.replace(window.layerIdPrefix, "");                     	
-	    } else if (layerId.indexOf(window.layerIdPBSPrefix) >= 0) {
-	        eaId = layerId.replace(window.layerIdPBSPrefix, "");                     	
-	 	} 
+	    } 
+	    
 		lyrTiled = layerInfo.map.getLayer(window.layerIdTiledPrefix + eaId);   
 		if (ckSelect.checked) {
 	        if(lyrTiled){
@@ -940,9 +938,8 @@ define([
 			layerId = layerInfo.id;
 			if (layerId.indexOf(window.layerIdPrefix) >= 0) {
 			    eaId = layerId.replace(window.layerIdPrefix, "");                     	
-			} else if (layerId.indexOf(window.layerIdPBSPrefix) >= 0) {
-			    eaId = layerId.replace(window.layerIdPBSPrefix, "");                     	
 			} 
+			
 			window.allLayersTurnedOn[eaId] = isOnOrOff;
 			lyrTiled = layerInfo.map.getLayer(window.layerIdTiledPrefix + eaId);   
 			if (isOnOrOff) {

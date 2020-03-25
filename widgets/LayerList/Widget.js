@@ -245,7 +245,7 @@ define([
               var refHrNodeNonGraphic = null;
               for(var i = layerIndex - 1; i >= 0; i--) {
                 refLayerId = allLayers[i];
-                var layerId = parseInt(refLayerId.replace(window.layerIdPrefix, "").replace(window.layerIdBndrPrefix, "").replace(window.layerIdPBSPrefix, "").replace(window.layerIdTiledPrefix, "").replace(window.addedLayerIdPrefix, ""));
+                var layerId = parseInt(refLayerId.replace(window.layerIdPrefix, "").replace(window.layerIdTiledPrefix, "").replace(window.addedLayerIdPrefix, ""));
                 if (window.featureLyrNumber.indexOf(layerId) >= 0){
                     refLayerNode = query("[class~='layer-tr-node-" + refLayerId + "']", this.domNode)[0];	            
                     if(refLayerNode) {
@@ -255,7 +255,7 @@ define([
               }
               refHrNode = query("[class~='hrClass']", this.domNode)[0];
               refHrNodeNonGraphic = query("[class~='hrClassNonGraphic']", this.domNode)[0];
-              var layerId = parseInt(layerInfo.id.replace(window.layerIdPrefix, "").replace(window.layerIdBndrPrefix, "").replace(window.layerIdPBSPrefix, "").replace(window.layerIdTiledPrefix, "").replace(window.addedLayerIdPrefix, ""));
+              var layerId = parseInt(layerInfo.id.replace(window.layerIdPrefix, "").replace(window.layerIdTiledPrefix, "").replace(window.addedLayerIdPrefix, ""));
               if (((layerInfo.layerObject.type) && (layerInfo.layerObject.type.toUpperCase() == "FEATURE LAYER")) ||((layerInfo.layerObject.url.toUpperCase().indexOf("FEATURESERVER")&&(layerInfo.layerObject.url.toUpperCase().indexOf("ARCGIS.COM"))) )) {
                   if(refLayerNode) {	          	
                     this.layerListView.drawListNode(layerInfo, 0, refLayerNode, 'before');
@@ -320,7 +320,7 @@ define([
           query("[class~='layer-title-div-" + layerInfo.id + "']", this.domNode)
           .forEach(function(layerTitleDivIdDomNode) {
             try {
-              var eaID = layerInfo.id.replace(window.layerIdPrefix, "").replace(window.layerIdPBSPrefix, "");
+              var eaID = layerInfo.id.replace(window.layerIdPrefix, "");
               if ((layerInfo.isInScale()) || (window.hashIDtoTileURL[eaID] != null)) {
                 html.removeClass(layerTitleDivIdDomNode, 'grayed-title');
               } else {
@@ -428,12 +428,7 @@ define([
 				if ((currentLayer.id).indexOf(window.layerIdPrefix) > -1) {
 					this.map.removeLayer(currentLayer);
 				} 
-				if ((currentLayer.id).indexOf(window.layerIdBndrPrefix) > -1) {
-					this.map.removeLayer(currentLayer);
-				} 
-				if ((currentLayer.id).indexOf(window.layerIdPBSPrefix) > -1) {
-					this.map.removeLayer(currentLayer);
-				}    				
+ 				
                 if ((currentLayer.id).indexOf(window.layerIdDemographPrefix) > -1) {
                     this.map.removeLayer(currentLayer);
                 }

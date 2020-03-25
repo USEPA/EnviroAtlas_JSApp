@@ -725,7 +725,7 @@ define(['dojo/_base/declare',
     
                 } else {
                      var renderer;
-                    var selectedLayerNum = _layerID.replace(window.layerIdPrefix, "").replace(window.layerIdBndrPrefix, "").replace(window.layerIdPBSPrefix, "");                   
+                    var selectedLayerNum = _layerID.replace(window.layerIdPrefix, "");                   
                      
         			if (window.communitySelected != window.strAllCommunity) { 
         			    fileLocation = 'configs/CommunitySymbology/' + window.communitySelected + '_JSON_Symbol/Nulls/' + window.communitySelected + '_' + window.hashAttribute[selectedLayerNum] + ".json";

@@ -84,8 +84,6 @@ define([
     esriConfig.defaults.io.timeout = 60000 * 3;
 
     window.layerIdPrefix = "eaLyrNum_";
-    window.layerIdBndrPrefix = "eaLyrBndrNum_";
-    window.layerIdPBSPrefix = "eaLyrPBSNum_";
     window.layerIdDemographPrefix = "eaLyrDEMNum_";
     window.layerIdTiledPrefix = "tiledNum_";
     window.addedLayerIdPrefix = "added_";
@@ -100,6 +98,8 @@ define([
     window.timeSeriesMetadata['TempMin'] =  "T002";
     window.timeSeriesMetadata['TempMax'] =  "T003";
     window.timeSeriesMetadata['Precip'] =  "T004";
+    
+    window.displayMoreInfor = "false";
 
     window.widthOfInfoWindow = 0;
     window.heightOfInfoWindow = 0;
@@ -298,7 +298,6 @@ define([
     window.hashPopup = {};
     window.hashURL = {};
     window.hashTopic = {};
-    window.hashTopicPBS = {};
     window.hashFieldsAddedFeatureLayer = {};
     window.hashVisibleLayersForDynamic = {};
     window.hashTitleToEAID = {};

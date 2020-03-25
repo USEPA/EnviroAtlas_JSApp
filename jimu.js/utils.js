@@ -153,6 +153,33 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     }
   }
 
+  function displayMoreInformation() {
+
+	elemHelpContents2 = document.getElementsByClassName("helpContent2");
+    
+	if (window.displayMoreInfor=="true"){    
+		
+		for (ii = 0; ii< elemHelpContents2.length; ii++) {	
+			elemHelpContent2 = elemHelpContents2.item(ii);	
+	        if (elemHelpContent2 != null)
+	        {
+	            elemHelpContent2.style.display = '';
+	            window.displayMoreInfor = "false";
+	        }      
+        }    
+	} else {
+		
+        for (ii = 0; ii< elemHelpContents2.length; ii++) {	
+        
+        	elemHelpContent2 = elemHelpContents2.item(ii);	
+	        if (elemHelpContent2 != null)
+	        {
+	            elemHelpContent2.style.display = 'None';
+	            window.displayMoreInfor = "true";
+	        }             	
+        }	
+	}
+  }
   //if no beforeId, append to head tag, or insert before the id
   function loadStyleLink(id, href, beforeId) {
     var def = new Deferred(), styleNode, styleLinkNode;
@@ -5125,17 +5152,32 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
               newlink.setAttribute('title', 'close');
               newDiv.appendChild(newlink);
               helpContent.domNode.insertBefore(newDiv, helpContent.domNode.firstChild);
+              
+              
+              var newDiv = document.createElement("div");
+              newlink = document.createElement('button');
+
+			  newlink.innerHTML = 'More information';
+			  newlink.setAttribute('title', 'More information');
+			  newlink.setAttribute('class', 'topicHeader');
+			  newlink.setAttribute('style', 'width:100%;background-color: #9aadbb; margin-top:20px');
+			  newlink.setAttribute('id', 'helpContent2TriggerButton');
+			  newDiv.appendChild(newlink);
+			  helpContent.domNode.appendChild(newDiv);
+                
+                
               if ((stop != 0) && (stop != numberStops -1)){  
                   helpContent.domNode.appendChild(helpContent2.domNode);
               }
 
               tourDialogOnScreenWidget.set("content", helpContent);
+              var dialogHeightTotal = 770; 
 
               popup.open({
                     popup: tourDialogOnScreenWidget,
                     around: dom.byId(nodeToHelp),
                     orient: window.helpTour[stop].orient,
-                    maxHeight: 600,
+                    maxHeight: dialogHeightTotal,
                     'overflow-y':'hidden',
                     padding: {x:100, y:100}
                     }); 
@@ -5149,7 +5191,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
                         }
                     }
                     
-                    elemHelpContent2Height = 600-Content1Height-25;                
+                    elemHelpContent2Height = dialogHeightTotal-Content1Height-75;                
                     elemHelpContents2 = document.getElementsByClassName("helpContent2");
                     for (ii = 0; ii< elemHelpContents2.length; ii++) {
                         elemHelpContent2 = elemHelpContents2.item(ii);
@@ -5168,11 +5210,20 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
                         if (popupContentForScroll != null) {
                             popupContentForScroll.style.overflow='hidden';
                         }
-                        //popupContentForScroll.style.overflow='hidden';
-                        //popupContentForScroll.item(ii).style.overflow='hidden';
                     }
 
-                                        
+	    		elemHelpContents2 = document.getElementsByClassName("helpContent2");
+	    		for (ii = 0; ii< elemHelpContents2.length; ii++) {
+		            elemHelpContent2 = elemHelpContents2.item(ii);
+		
+		            if (elemHelpContent2 != null)
+		            {
+		                elemHelpContent2.style.display = 'None';
+		                window.displayMoreInfor = "true";
+		            }      
+	            }  
+	            document.getElementById("helpContent2TriggerButton").addEventListener("click", displayMoreInformation); 
+                                                    
               exitButtons = document.getElementsByClassName("exit_buttonOnScreenWidget");
 
               for (ii = 0; ii< exitButtons.length; ii++)

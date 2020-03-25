@@ -34,6 +34,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
 
         baseClass : 'jimu-widget-demo',
         activeContainer : null,
+        
 
         postCreate : function() {
             this.inherited(arguments);
@@ -41,6 +42,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
         },
 
         startup : function() {
+        	
             selfDemo = this;
             this.inherited(arguments);
             activeContainer = null;
@@ -93,6 +95,25 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
             stop = 0;
             this._nextStop(stop);
 
+        },
+        
+        _displayMoreInformation : function() {
+
+    		elemHelpContents2 = document.getElementsByClassName("helpContent2");
+            elemHelpContent2 = elemHelpContents2.item(0);
+        	if (window.displayMoreInfor=="true"){    		
+                if (elemHelpContent2 != null)
+                {
+                    elemHelpContent2.style.display = '';
+                    window.displayMoreInfor = "false";
+                }          
+        	} else {
+                if (elemHelpContent2 != null)
+                {
+                    elemHelpContent2.style.display = 'None';
+                    window.displayMoreInfor = "true";
+                }             		
+        	}
         },
 
         _nextStop : function(stop) {
@@ -217,8 +238,21 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 newlink.setAttribute('title', 'Next');
                 newDiv.appendChild(newlink);
 
+                //helpContent.domNode.appendChild(newDiv);
+                
+
+		    	//insert More infomation button
+                //newDiv = document.createElement("div");
+                newlink = document.createElement('button');
+                newlink.setAttribute('onclick', "selfDemo._displayMoreInformation(" + ")");
+                newlink.innerHTML = 'More information';
+                newlink.setAttribute('title', 'More information');
+                newlink.setAttribute('class', 'topicHeader');
+                newlink.setAttribute('style', 'width:100%;background-color: #9aadbb; margin-top:20px');
+                newDiv.appendChild(newlink);
                 helpContent.domNode.appendChild(newDiv);
                 
+                		
                 helpContent.domNode.appendChild(helpContent2.domNode);
 
                 //insert page number
@@ -276,6 +310,8 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
 
                 tourDialog.set("content", helpContent);
             }
+            
+            var dialogHeightTotal = 820; 
             if (bSidebarWidget==true) {
                 //setTimeout(lang.hitch(this, function() {
                     popup.open({
@@ -283,7 +319,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                         around : dom.byId(nodeToHelp),
                         orient : helpTour[stop].orient,
                         overflow:'hidden',
-                        maxHeight: 600,
+                        maxHeight: dialogHeightTotal,
                         padding : {
                             x : 100,
                             y : 100
@@ -316,10 +352,25 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 
                 if (elemHelpContent2 != null)
                 {
-                    elemHelpContent2Height = 600-Content1Height-50;
+                    elemHelpContent2Height = dialogHeightTotal-Content1Height-100;//originally 50
                     elemHelpContent2.style.height = elemHelpContent2Height.toString()+"px";
                 }                    
             }
+            
+        	
+
+            
+    		elemHelpContents2 = document.getElementsByClassName("helpContent2");
+            elemHelpContent2 = elemHelpContents2.item(0);
+
+            if (elemHelpContent2 != null)
+            {
+                elemHelpContent2.style.display = 'None';
+                window.displayMoreInfor = "true";
+            }             		
+                  
+
+            
             popupContentsForScroll = document.getElementsByClassName("dijitTooltipDialogPopup");
             popupContentForScroll = popupContentsForScroll.item(0);
             popupContentForScroll.style.overflow='hidden';

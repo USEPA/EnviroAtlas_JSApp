@@ -697,10 +697,8 @@ define(['dojo/_base/declare',
                     var eaId = "";
                     if (layerSettings.id.indexOf(window.layerIdPrefix) >= 0) {
                    		eaId = layerSettings.id.replace(window.layerIdPrefix, "");                     	
-                    } else if (layerSettings.id.indexOf(window.layerIdPBSPrefix) >= 0) {
-                   		eaId = layerSettings.id.replace(window.layerIdPBSPrefix, "");                     	
                     } 
-                    
+                                        
                     layer = this.map.getLayer(layerSettings.id);
                     if (layer != null) {
                         if (window.hashRenderer[eaId] != null) {
@@ -799,9 +797,6 @@ define(['dojo/_base/declare',
                 settings.graphics = this.getGraphicsForCurrentMap();//This will save the graphics for uploaded featurelayer only
                 settings.toggleButtonTopics = this.getToggleButtonTopics();
                 settings.chkLayerInSearchFilter = this.getChkLayerInSearchFilter();
-                settings.toggleButtonPBSTopics = this.getToggleButtonPBSTopics();
-                settings.chkLayerInPBS = this.getChkLayerInPBS();
-                settings.chkLayerInBoundary = this.getChkLayerInBoundary();
                 settings.addedURL = this.getAddedURL();
 
                 // have to use async to get layers
@@ -942,10 +937,26 @@ define(['dojo/_base/declare',
 		            lyr = this.map.getLayer(window.layerIdPrefix + window.allLayerNumber[i]);
 		            if (lyr) {
 		                topicWholeName = window.hashTopic[window.allLayerNumber[i]];
+		                
 		                topicShortName = window.topicDicESB[topicWholeName];
                 		if (settings.indexOf(topicShortName) < 0) {
                 			settings.push(topicShortName);
                 		} 
+                		
+		                topicShortName = window.topicDicPBS[topicWholeName];
+                		if (settings.indexOf(topicShortName) < 0) {
+                			settings.push(topicShortName);
+                		} 
+                		
+		                topicShortName = window.topicDicPSI[topicWholeName];
+                		if (settings.indexOf(topicShortName) < 0) {
+                			settings.push(topicShortName);
+                		} 
+                		
+		                topicShortName = window.topicDicBNF[topicWholeName];
+                		if (settings.indexOf(topicShortName) < 0) {
+                			settings.push(topicShortName);
+                		}                 		                		                		
 		            }
 		        }
 		        return settings;
@@ -963,49 +974,7 @@ define(['dojo/_base/declare',
 		        }
 		        return settings;
             },
-            /**
-             * return all the settings for the toggle buttons of topics
-             */
-            getToggleButtonPBSTopics: function () {
-				var settings = [];
-		        for (i in window.allLayerNumber) {
-		            lyr = this.map.getLayer(window.layerIdPBSPrefix + window.allLayerNumber[i]);
-		            if (lyr) {
-		                topicWholeName = window.hashTopicPBS[window.allLayerNumber[i]];
-		                topicShortName = window.topicDicPBS[topicWholeName];
-                		if (settings.indexOf(topicShortName) < 0) {
-                			settings.push(topicShortName);
-                		} 
-		            }
-		        }
-		        return settings;
-            },
-            getChkLayerInPBS: function () {
-				var settings = [];
-		        for (i in window.allLayerNumber) {
-		            lyr = this.map.getLayer(window.layerIdPBSPrefix + window.allLayerNumber[i]);
-		            if (lyr) {
-						chkBoxIndex = window.allLayerNumber[i];
-                		if (settings.indexOf(chkBoxIndex) < 0) {
-                			settings.push(chkBoxIndex);
-                		} 
-		            }
-		        }
-		        return settings;
-            },
-            getChkLayerInBoundary: function () {
-				var settings = [];
-		        for (i in window.allLayerNumber) {
-		            lyr = this.map.getLayer(window.layerIdBndrPrefix + window.allLayerNumber[i]);
-		            if (lyr) {
-						chkBoxIndex = window.allLayerNumber[i];
-                		if (settings.indexOf(chkBoxIndex) < 0) {
-                			settings.push(chkBoxIndex);
-                		} 
-		            }
-		        }
-		        return settings;
-            },  
+
             getAddedURL: function () {
             	var addedURL = "";
             	for (var key in window.hashAddedURLToType) {
@@ -1178,10 +1147,9 @@ define(['dojo/_base/declare',
             },
             setChkLayerInSearchFilter: function (sessionToLoad) {
             	settings =  sessionToLoad.chkLayerInSearchFilter;
-            	layersInfo = sessionToLoad.layers;
+            	layersInfo = sessionToLoad.layers; 
  
- 
-              var i = 0;                     //  set your counter to 1
+                var i = 0;                     //  set your counter to 1
                 
                 function myLoop () {           //  create a loop function
                    setTimeout(function () {    //  call a 3s setTimeout when the loop is called
@@ -1206,6 +1174,13 @@ define(['dojo/_base/declare',
                                            //  increment the counter
                         if (i < settings.length) {            //  if the counter < 10, call the loop function
                             myLoop();             //  ..  again which will trigger another 
+                        }  
+                        else {
+                        	var checkboxClearAll = document.getElementById("chkClearAll");
+                        	if (checkboxClearAll!=null) {
+                        		 checkboxClearAll.click();
+                			}          
+							
                         }  
                                            //  ..  setTimeout()
                    }, 3000)
