@@ -97,12 +97,130 @@ define(['dojo/_base/declare',
             var widgets = selfSimpleSearchFilter.appConfig.getConfigElementsByName(widgetName);
             var pm = PanelManager.getInstance();
             pm.showPanel(widgets[0]);       
-       }
+      };
     var sleep = function(ms) {
         var unixtime_ms = new Date().getTime();
         while (new Date().getTime() < unixtime_ms + ms) {
         }
-    }
+    } ;
+
+	var setDemographicLayerInfo = function(sessionToLoad) {
+		settings = sessionToLoad.demographicLayerInfo;
+		demogLayerInfoArray = settings.split(">>>>");
+		var index1 = 0;
+		var index2 = 0;
+		var timeOutNextInput = 500;
+		singleDemogLayerInfo = demogLayerInfoArray[index1];
+		function setDemographicInputLoop() {//  create a loop function
+			setTimeout(function() {
+
+					singleDemogLayerInfoArray = singleDemogLayerInfo.split(";");
+					eachInput = singleDemogLayerInfoArray[index2];
+
+					eachInputArray = eachInput.split("::");
+					switch (eachInputArray[0]) {
+						case "serviceNode":
+							timeOutNextInput = 2000;
+							selfDemographic.serviceNode.value = eachInputArray[1];
+							selfDemographic._changeService();
+							break;
+						case "demogTypeNode":
+							timeOutNextInput = 2000;
+							selfDemographic.demogTypeNode.value = eachInputArray[1];
+							selfDemographic._changeDemog();
+							break;
+						case "demogListNode":
+							timeOutNextInput = 100;
+							selfDemographic.demogListNode.value = eachInputArray[1];
+							break;
+
+						case "rendertype":
+							timeOutNextInput = 500;
+							selfDemographic.rendertype = eachInputArray[1];
+							//selfDemographic._changeRendertype();
+							var rtype = selfDemographic.rendertype;
+							if (rtype == "polygon") {
+								selfDemographic.polyNode.style.display = "block";
+								selfDemographic.pointNode.style.display = "none";
+								selfDemographic.colormarkertd.innerHTML = "Colors:";
+								document.getElementById("RendeAsPolygon").checked = true;
+							} else {
+								selfDemographic.polyNode.style.display = "none";
+								selfDemographic.pointNode.style.display = "block";
+								selfDemographic.colormarkertd.innerHTML = "Marker:";
+								document.getElementById("RendeAsPoint").checked = true;
+							}
+						case "classTypeNode":
+							timeOutNextInput = 100;
+							selfDemographic.classTypeNode.value = eachInputArray[1];
+							break;
+						case "classNumNode":
+							timeOutNextInput = 100;
+							selfDemographic.classNumNode.value = eachInputArray[1];
+							//selfDemographic._changeCat();
+							break;
+
+						//for polygon only
+						case "currentk":
+							timeOutNextInput = 100;
+							selfDemographic.currentk = eachInputArray[1];
+							break;
+						case "reverseStatus":
+							timeOutNextInput = 100;
+							selfDemographic.reverseStatus = eachInputArray[1];
+							selfDemographic.drawPalette(selfDemographic.classNumNode.value, selfDemographic.currentk, selfDemographic.reverseStatus);
+							break;
+						//for point only
+						case "colorpnt":
+							timeOutNextInput = 100;
+							selfDemographic.colorpnt.setColor(new Color(eachInputArray[1]));
+							break;
+						case "minsizeNode":
+							timeOutNextInput = 100;
+							selfDemographic.minsizeNode.value = eachInputArray[1];
+							break;
+						case "maxsizeNode":
+							timeOutNextInput = 100;
+							selfDemographic.maxsizeNode.value = eachInputArray[1];
+							break;
+						//for both polygon and point
+						case "demogsliderNode":
+							timeOutNextInput = 100;
+							selfDemographic.demogsliderNode.set("value", eachInputArray[1]);
+							break;
+						case "bWidthNode":
+							timeOutNextInput = 100;
+							selfDemographic.bWidthNode.value = eachInputArray[1];
+							break;
+					}
+
+					index2++;
+					//  increment the counter
+					if (index2 < singleDemogLayerInfoArray.length - 1) {//  if the counter < number of input for single layer, call the loop function
+						setDemographicInputLoop();
+					} else {
+						document.getElementById("mapDemogLayer").click();
+						index1 = index1 + 1;
+						if (index1 < demogLayerInfoArray.length) {//  start for the next layer inputs	
+							singleDemogLayerInfo = demogLayerInfoArray[index1];													
+							index2 = 0;
+							setDemographicInputLoop();
+						}					
+					}
+
+			}, timeOutNextInput);
+
+
+		}
+		if (demogLayerInfoArray.length > 0) {
+			if (demogLayerInfoArray[0] != "") {
+				setDemographicInputLoop();
+			}
+			
+		}
+		
+	}; 
+
         //To create a widget, you need to derive from BaseWidget.
         return declare([BaseWidget, _WidgetsInTemplateMixin], {
             // Custom widget code goes here
@@ -666,6 +784,7 @@ define(['dojo/_base/declare',
                 }
                 console.log('SaveSession :: loadSession :: session  = ', sessionToLoad);
             },
+
             setAddedURL:function (settings) {
 
     	        urlArray = settings.split(";");
@@ -784,9 +903,9 @@ define(['dojo/_base/declare',
                     toggleButtonTopics: [],
                     chkLayerInSearchFilter: [], 
                     toggleButtonPBSTopics: [],
-                    chkLayerInPBS: [],
                     chkLayerInBoundary: [],                   
                     graphics: [],
+                    demographicLayerInfo: null,
                     addedURL: null,            
                     onlineDataItems:window.onlineDataAlreadyAdded,       
                 };
@@ -797,6 +916,7 @@ define(['dojo/_base/declare',
                 settings.graphics = this.getGraphicsForCurrentMap();//This will save the graphics for uploaded featurelayer only
                 settings.toggleButtonTopics = this.getToggleButtonTopics();
                 settings.chkLayerInSearchFilter = this.getChkLayerInSearchFilter();
+                settings.demographicLayerInfo = this.getDemographicLayerInfo();
                 settings.addedURL = this.getAddedURL();
 
                 // have to use async to get layers
@@ -974,7 +1094,23 @@ define(['dojo/_base/declare',
 		        }
 		        return settings;
             },
+            getDemographicLayerInfo: function () {
+            	var addedDemographic = "";
+            	for (var key1 in window.demographicLayerSetting) {
+				  if (window.demographicLayerSetting[key1] != null) {
+				  	singleDemogInfo = window.demographicLayerSetting[key1];
+				  	for (var key2 in singleDemogInfo) {
+				  		addedDemographic = addedDemographic + key2 + "::" + singleDemogInfo[key2] + ";";
+				  	}
+				  	addedDemographic = addedDemographic + ">>>>";
+				  	
+				  	//addedURL = addedURL + key + "," + window.hashAddedURLToType[key] + ";";
+				  }
+				}
+				addedDemographic = addedDemographic.substring(0, addedDemographic.length - 3);			
+            	return addedDemographic;
 
+            },
             getAddedURL: function () {
             	var addedURL = "";
             	for (var key in window.hashAddedURLToType) {
@@ -1181,7 +1317,13 @@ define(['dojo/_base/declare',
                         		 checkboxClearAll.click();
                 			}          
 							
-                        }  
+
+			
+			   				document.getElementById("widgets_DemographicLayers").click();      
+			   				setTimeout(function () {  	
+			   					setDemographicLayerInfo(sessionToLoad);
+			   				 }, 500)
+                        }
                                            //  ..  setTimeout()
                    }, 3000)
                 }
@@ -1215,14 +1357,6 @@ define(['dojo/_base/declare',
 					checkbox.click();
 	            }
             },            
-            setChkLayerInPBS: function (settings) {
-            	for (index = 0, len = settings.length; index < len; ++index) {
-            		chkbox = document.getElementById(window.chkSelectableLayer + settings[index]);
-            		if (chkbox != null) {
-					    jimuUtils.checkOnCheckbox(chkbox);
-            		}
-            	}
-            },  
             setChkLayerInBoundary: function (settings) {
             	for (index = 0, len = settings.length; index < len; ++index) {
             		chkbox = document.getElementById(window.chkSelectableLayer + settings[index]);

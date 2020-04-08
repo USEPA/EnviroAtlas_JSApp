@@ -413,9 +413,30 @@ define([
     	}
       },   
       _onRemoveLayersClick: function() {
-		for (var j=0, jl=this.map.layerIds.length; j<jl; j++) {
-			var currentLayer = this.map.getLayer(this.map.layerIds[j]);
+      	var currentLayer = null;
+      	var graphicsLayerIDs = [];
+      	//remove HucLayer Result
+      	for (var j=0, jl=this.map.graphicsLayerIds.length; j<jl; j++) {
+      		var layerId = this.map.graphicsLayerIds[j];
+        	if (layerId.indexOf("graphicsLayer") > -1  ) {
+	        	graphicsLayerIDs.push(layerId);
+	        }
+        }
+        for (var j=0, jl=graphicsLayerIDs.length; j<jl; j++) {
+        	currentLayer = this.map.getLayer(graphicsLayerIDs[j]);       	
+        	
+        	if(currentLayer != null){
+	            for (gL = currentLayer.graphics.length; gL>=0; gL--){
+                    currentLayer.remove(currentLayer.graphics[gL]);
+           		}
+            	this.map.removeLayer(currentLayer);      
+            }
+        }
+		for (var j=0, jl=this.map.layerIds.length; j<jl; j++) {                
+
+			currentLayer = this.map.getLayer(this.map.layerIds[j]);
 			if(currentLayer != null){
+				
 				if ((currentLayer.id).indexOf(window.addedLayerIdPrefix) > -1) {
 					this.map.removeLayer(currentLayer);
 				}    
@@ -432,14 +453,14 @@ define([
                 if ((currentLayer.id).indexOf(window.layerIdDemographPrefix) > -1) {
                     this.map.removeLayer(currentLayer);
                 }
+
+                //remove TimeSeries Result
+                if ((currentLayer.id).indexOf(window.timeSeriesLayerId) > -1) {
+                    this.map.removeLayer(currentLayer);
+                }                
 			} 
 		}
-		/*dojo.forEach(this.map.layerIds, function(aLayerId) {  
-			 alert("aLayerId from dojo.forEach:" + aLayerId);
-					   });  
-		array.forEach(this.map.layerIds, function(aLayerId, i){
-		    alert("aLayerId from array.forEach:" + aLayerId);
-		});  */
+
 		//remove all layers searchable from widget SimpleSearchFilter
     	for (i in window.allLayerNumber) {    		
             simpleSearchFilterId = 'widgets_SimpleSearchFilter_Widget_37';
@@ -463,13 +484,17 @@ define([
 	    		this.map.removeLayer(lyr);        	
           	}          	
         }  
-        //remove all layers added from Demographics widget, if not removed already
-        for (i in window.layerID_Demographics) {           
-            lyr = this.map.getLayer(window.layerID_Demographics[i]);
-            if(lyr != null){
-                this.map.removeLayer(lyr);          
-            }           
-        }       
+        //remove all layers added from Demographics widget.    
+    	for (var key1 in window.demographicLayerSetting) {
+    		if (window.demographicLayerSetting[key1] != null) {		  	
+			  	lyr = this.map.getLayer(key1);
+	            if(lyr != null){
+	                this.map.removeLayer(lyr);
+	            }   
+				window.demographicLayerSetting[key1] = null;
+		    }
+		}
+				   
     	for (i in window.uploadedFileColl) {	        
     		lyr = this.map.getLayer(window.uploadedFileColl[i]);
 			if(lyr != null){

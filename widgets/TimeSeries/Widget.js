@@ -590,9 +590,9 @@ define([
         dojo.byId("layerMetadata").innerHTML = imgServiceDesc;
     }
 	var executeIdentifyTask = function (event) {
-        console.log("Executing Ident Task");
+        //console.log("Executing Ident Task");
         var currentLayer = map.getLayer(window.timeSeriesLayerId);
-        if ((currentLayer!=null) && (currentLayer.visible == false)){
+        if ((currentLayer==undefined) || (currentLayer.visible == false)){
         	return;
         }
         identifyTask = new ImageServiceIdentifyTask(currentLayer.url);

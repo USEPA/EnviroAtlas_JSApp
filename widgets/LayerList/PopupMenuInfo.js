@@ -712,7 +712,11 @@ define([
 		if(lyr){
         	this._layerInfo.map.removeLayer(lyr);
         	uncheckRelatedCheckbox(layerId.replace(window.layerIdPrefix, ""));
-      	}          
+        	if (window.demographicLayerSetting[layerId] != undefined) {
+        		window.demographicLayerSetting[layerId] = null;
+        	}
+      	}    
+      	
 		lyrTiled = this._layerInfo.map.getLayer(layerId.replace(window.layerIdPrefix, window.layerIdTiledPrefix));
 		if(lyrTiled){
        		this._layerInfo.map.removeLayer(lyrTiled);
