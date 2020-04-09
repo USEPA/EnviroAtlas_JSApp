@@ -32,7 +32,6 @@ define([
   ],
   function(BaseWidget, PanelManager, declare, lang, array, html, dom, on,
   query, registry, LayerListView, LayerFilter, NlsStrings, LayerInfos) {
-
     var clazz = declare([BaseWidget], {
       //these two properties is defined in the BaseWiget
       baseClass: 'jimu-widget-layerList',
@@ -413,6 +412,8 @@ define([
     	}
       },   
       _onRemoveLayersClick: function() {
+      	var that = this;
+      	
       	var currentLayer = null;
       	var graphicsLayerIDs = [];
       	//remove HucLayer Result
@@ -426,40 +427,48 @@ define([
         	currentLayer = this.map.getLayer(graphicsLayerIDs[j]);       	
         	
         	if(currentLayer != null){
-	            for (gL = currentLayer.graphics.length; gL>=0; gL--){
-                    currentLayer.remove(currentLayer.graphics[gL]);
-           		}
+
             	this.map.removeLayer(currentLayer);      
             }
         }
-		for (var j=0, jl=this.map.layerIds.length; j<jl; j++) {                
-
+        //remove labels of the graphics such as HUC infor
+        while (this.map.graphics.graphics.length>=1) {
+	        this.map.graphics.graphics.forEach(function(g){    
+    			that.map.graphics.remove(g); 
+	        });  
+        }
+        
+        //remove added layer, tile layer, Time series layer, demographic layer
+      	var AlladdedLayerIDs = [];
+        
+		for (var j=0, jl=this.map.layerIds.length; j<jl; j++) {               
 			currentLayer = this.map.getLayer(this.map.layerIds[j]);
-			if(currentLayer != null){
-				
+			if(currentLayer != null){				
 				if ((currentLayer.id).indexOf(window.addedLayerIdPrefix) > -1) {
-					this.map.removeLayer(currentLayer);
+					AlladdedLayerIDs.push(this.map.layerIds[j]);
 				}    
 				if ((currentLayer.id).indexOf(window.uploadedFeatLayerIdPrefix) > -1) {
-					this.map.removeLayer(currentLayer);
+					AlladdedLayerIDs.push(this.map.layerIds[j]);
 				} 
 				if ((currentLayer.id).indexOf(window.layerIdTiledPrefix) > -1) {
-					this.map.removeLayer(currentLayer);
+					AlladdedLayerIDs.push(this.map.layerIds[j]);
 				}  
 				if ((currentLayer.id).indexOf(window.layerIdPrefix) > -1) {
-					this.map.removeLayer(currentLayer);
-				} 
- 				
+					AlladdedLayerIDs.push(this.map.layerIds[j]);
+				}  				
                 if ((currentLayer.id).indexOf(window.layerIdDemographPrefix) > -1) {
-                    this.map.removeLayer(currentLayer);
+                    AlladdedLayerIDs.push(this.map.layerIds[j]);
                 }
-
-                //remove TimeSeries Result
                 if ((currentLayer.id).indexOf(window.timeSeriesLayerId) > -1) {
-                    this.map.removeLayer(currentLayer);
+                    AlladdedLayerIDs.push(this.map.layerIds[j]);
                 }                
 			} 
 		}
+
+        for (var j=0, jl=AlladdedLayerIDs.length; j<jl; j++) {
+        	currentLayer = this.map.getLayer(AlladdedLayerIDs[j]);  
+        	this.map.removeLayer(currentLayer);                  
+        }
 
 		//remove all layers searchable from widget SimpleSearchFilter
     	for (i in window.allLayerNumber) {    		
