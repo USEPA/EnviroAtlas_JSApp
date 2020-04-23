@@ -741,6 +741,32 @@ define(['dojo/_base/declare',
                         tempLayer.setOpacity(1 - (layerDefinition.drawingInfo.transparency / 100));
                     }
                 }
+                else {
+                	var tileURL = "";
+                	var lebURL = "";
+                	var eaIDinSearchFilter = "";
+                	if (window.hashURLtoTile.hasOwnProperty(l.url)) {
+                		tileURL = window.hashURLtoTile[l.url];
+                	}
+                	else { 
+                		lebURL = l.url.replace("enviroatlas.epa.gov", "leb.epa.gov");
+                		if(window.hashURLtoTile.hasOwnProperty(lebURL)) {
+                			tileURL = window.hashURLtoTile[lebURL];                	
+                		}                		
+                	}
+                	if (tileURL!="") {
+                		for (var key in window.hashURL){//window.hashURL[layer.eaID.toString()] = eaURL; 
+						  if ((window.hashURL[key]==l.url) || (window.hashURL[key]==lebURL)) {
+						  	eaIDinSearchFilter = key;
+						  }
+						}	
+	                	lOptions = {};
+                        lOptions.id = window.layerIdTiledPrefix + eaIDinSearchFilter;
+                        window.featureLyrNumber.push(eaIDinSearchFilter);
+                        this.map.addLayer(new ArcGISTiledMapServiceLayer(tileURL, lOptions));
+                    }
+                	
+                }
                 if (esriLang.isDefined(layerDefinition.minScale)) {
                     tempLayer.setMinScale(layerDefinition.minScale);
                 }

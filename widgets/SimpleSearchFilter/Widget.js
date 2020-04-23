@@ -454,7 +454,7 @@ define([
 									bVisibleTL = true;							
 								}
 							}		
-							if ((bVisibleFL == true) || (lyrTL == true)) {
+							if ((bVisibleFL == true) || (bVisibleTL == true)) {
 								arrLayersForPopup.push(layerEAID);
 							}		    		
 				    	}
@@ -2512,6 +2512,33 @@ define([
 	                    else {
 	                    	eaMetadata = "";
 	                    }
+	                    if(layer.hasOwnProperty('url')&&(layer.url!=null)){
+	                    	eaURL1 = layer.url.toString();
+	                    	if(layer.hasOwnProperty('eaLyrNum')){
+	                    		eaURL = eaURL1 + "/" + layer.eaLyrNum.toString();
+	                    		if(layer.hasOwnProperty('tileLink') && layer.tileLink.toString() == "yes"){
+	                    			window.hashURLtoTile[eaURL] = layer.tileURL.toString();
+	                    			window.hashURL[layer.eaID.toString()] = eaURL; 
+	                    		}	                    		
+	                    	}
+	                    	if (layer.popup) {
+	                            window.hashPopup[layer.eaID] = layer.popup;
+	                            if (layer.popup.fieldInfos) {
+	                                fieldInfos = layer.popup.fieldInfos;
+	                                if (fieldInfos[0].hasOwnProperty('fieldName')) {
+	                                    if (fieldInfos[0].fieldName == null) {
+	                                        bPopup = false;
+	                                    } else {
+	                                        Attribute = fieldInfos[0].fieldName;
+	                                        hashAttribute[layer.eaID.toString()] = Attribute;
+	                                    }
+	                                } 
+	                            } 
+
+	                        }
+	                    }	
+	                    
+	                                       
 	                    if(layer.hasOwnProperty('eaTopic')){
 	                    	eaTopic = layer.eaTopic.toString();
 	                    	//console.log("eaID:" + eaID + ", eaTopic: " + eaTopic);
