@@ -191,12 +191,18 @@ define([
     	}
     	layerInfoFromJson = {};
     	
-        var eaID = layerId.replace(window.layerIdPrefix, "").replace(window.layerIdPBSPrefix, "").replace(window.layerIdBndrPrefix, "");
+        var eaID = layerId.replace(window.layerIdPrefix, "");
         var arrXmlPath = [];
         if ((layerId.indexOf(window.layerIdPrefix)) >= 0) {
 			arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");
 			getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, eaID, actionType);
-        }        
+        }     
+        else if (eaID=="ScenarioDataLayer") {
+    		var climateVar = document.getElementById("climateSelection").value;
+        	metaDataIDFromVariable = window.timeSeriesMetadata[climateVar];
+        	metaDataID = window.nationalMetadataDic[metaDataIDFromVariable];
+            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");	       	
+        }   
         else {
         	arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");  	
         	getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, clickedURL, actionType);
@@ -677,12 +683,7 @@ define([
        		lyrTiled.setVisibility(false);
 		  }	
 	  }
-	  if (layerId.indexOf(window.layerIdPBSPrefix) > -1) {			
-	      lyrTiledPBS = this._layerInfo.map.getLayer(layerId.replace(window.layerIdPBSPrefix, window.layerIdTiledPrefix));
-		  if(lyrTiledPBS){
-       		lyrTiledPBS.setVisibility(false);
-		  }	
-	  }
+
       this.layerListWidget.publishData({
         message: layerId
       }, true);
@@ -711,9 +712,11 @@ define([
 		if(lyr){
         	this._layerInfo.map.removeLayer(lyr);
         	uncheckRelatedCheckbox(layerId.replace(window.layerIdPrefix, ""));
-        	uncheckRelatedCheckbox(layerId.replace(window.layerIdBndrPrefix, ""));
-        	uncheckRelatedCheckbox(layerId.replace(window.layerIdPBSPrefix, ""));
-      	}          
+        	if (window.demographicLayerSetting[layerId] != undefined) {
+        		window.demographicLayerSetting[layerId] = null;
+        	}
+      	}    
+      	
 		lyrTiled = this._layerInfo.map.getLayer(layerId.replace(window.layerIdPrefix, window.layerIdTiledPrefix));
 		if(lyrTiled){
        		this._layerInfo.map.removeLayer(lyrTiled);

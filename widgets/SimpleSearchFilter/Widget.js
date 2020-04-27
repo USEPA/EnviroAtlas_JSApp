@@ -445,16 +445,8 @@ define([
 									   bVisibleFL = true;
 									}
 								}
-							} else {
-								lyrFL = selfSimpleSearchFilter.map.getLayer(window.layerIdPBSPrefix + layerEAID);	
-								if (lyrFL != null) {
-									if (lyrFL.visible == true){
-									    if (((window.nationalLayerNumber.indexOf(layerEAID.toString()) >= 0)) || (lyrFL.visibleAtMapScale==true)){
-										  bVisibleFL = true;
-										}
-									}
-								}
-							}
+							} 
+							
 							lyrTL = selfSimpleSearchFilter.map.getLayer(window.layerIdTiledPrefix + layerEAID);
 				    		if (lyrTL != null) {		    			
 								if (lyrTL.visible == true){
@@ -551,9 +543,7 @@ define([
 		};
     var updateSingleCommunityLayer = function(selectedLayerNum){    	
 		lyrTobeUpdated = selfSimpleSearchFilter.map.getLayer(window.layerIdPrefix + selectedLayerNum);	 
-		if(lyrTobeUpdated == null){				
-    		lyrTobeUpdated = selfSimpleSearchFilter.map.getLayer(window.layerIdPBSPrefix + selectedLayerNum);
-      	}  
+ 
 		if (window.communitySelected != window.strAllCommunity) {        
 			$.getJSON( 'configs/CommunitySymbology/' + window.communitySelected + '_JSON_Symbol/Nulls/' + window.communitySelected + '_' + window.hashAttribute[selectedLayerNum] + ".json", function( data ) {
 				var renderer = new ClassBreaksRenderer(data);
@@ -979,7 +969,7 @@ define([
 			if (currentLayerSelectable && (eaIDFilteredList.indexOf(eaID) >= 0) && (parseInt(eaID) >= 0)) {//add the current item as selectable layers
 		
 				var bLayerSelected = false;
-				if ((window.allLayerNumber.indexOf(eaID)) == -1) {                        	
+				if ((window.allLayerNumber.indexOf(eaID)) == -1) {      	
                 	window.allLayerNumber.push(eaID);
                 }
                 else {
@@ -1490,7 +1480,7 @@ define([
             communityLocationLayer.noservicename = true;
             communityLocationLayer.setInfoTemplates(popupsTemplate);
 
-            communityLocationLayer.id = window.layerIdBndrPrefix + communityBoundaryLayerID;
+            communityLocationLayer.id = window.layerIdPrefix + communityBoundaryLayerID;
             window.dynamicLayerNumber.push(communityBoundaryLayerID);
             window.idCommuBoundaryPoint = communityLocationLayer.id;
             chkboxId = window.chkSelectableLayer + communityBoundaryLayerID;
@@ -2774,11 +2764,7 @@ define([
     		lyr = this.map.getLayer(window.layerIdPrefix + window.communityLayerNumber[i]);
 			if(lyr){				
 	    		arrLayersToChangeSynbology.push(lyr.id.replace(window.layerIdPrefix, ""));
-          	}          	
-    		lyrPBS = this.map.getLayer(window.layerIdPBSPrefix + window.communityLayerNumber[i]);
-			if(lyrPBS){				
-	    		arrLayersToChangeSynbology.push(lyrPBS.id.replace(window.layerIdPBSPrefix, ""));
-          	}           	        	
+          	}         	        	
         } 	    
 
         updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());

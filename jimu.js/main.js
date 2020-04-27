@@ -74,8 +74,6 @@ define([
     esriConfig.defaults.io.timeout = 60000 * 3;
 
     window.layerIdPrefix = "eaLyrNum_";
-    window.layerIdBndrPrefix = "eaLyrBndrNum_";
-    window.layerIdPBSPrefix = "eaLyrPBSNum_";
     window.layerIdDemographPrefix = "eaLyrDEMNum_";
     window.layerIdTiledPrefix = "tiledNum_";
     window.addedLayerIdPrefix = "added_";
@@ -85,6 +83,11 @@ define([
     window.addedLayerIndex = 0;
     window.uploadedFeatLayerIdPrefix = "uploaded_";
     window.timeSeriesLayerId = "ScenarioDataLayer";
+    window.timeSeriesMetadata = {};
+    window.timeSeriesMetadata['PET'] =  "T001";
+    window.timeSeriesMetadata['TempMin'] =  "T002";
+    window.timeSeriesMetadata['TempMax'] =  "T003";
+    window.timeSeriesMetadata['Precip'] =  "T004";
     window.widthOfInfoWindow = 0;
     window.heightOfInfoWindow = 0;
     window.toggleOnHucNavigation = false;
@@ -119,7 +122,8 @@ define([
     window.tiledLayerNumber = [];
     window.imageLayerNumber = [];
     window.layerID_Portal_WebMap = [];
-    window.layerID_Demographics = [];
+    window.index_Demographics = 0;
+    window.demographicLayerSetting = {};
     window.onlineDataTobeAdded = [];
     window.onlineDataAlreadyAdded = [];
     window.uploadedFileColl = [];
@@ -270,7 +274,6 @@ define([
     window.hashPopup = {};
     window.hashURL = {};
     window.hashTopic = {};
-    window.hashTopicPBS = {};
     window.hashFieldsAddedFeatureLayer = {};
     window.hashVisibleLayersForDynamic = {};
     window.hashTitleToEAID = {};
