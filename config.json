@@ -340,7 +340,22 @@
 				"version": "0.1",
 				"uri": "widgets/GriddedMapTool/Widget",
 				"config": "widgets/GriddedMapTool/config.json"
-			},            
+			},           
+			{
+				"position": {
+					"left": 795,
+					"top": 5,
+					"width": 587,
+					"height": 500,
+					"relativeTo": "map"
+				},
+				"placeholderIndex": 1,
+				"id": "DemographicLayers_ori_28",
+				"name": "DemographicLayers_ori",
+				"label": "DemographicLayers_ori",
+				"version": "0.1",
+				"uri": "widgets/DemographicLayers_ori/Widget"
+			},  			
             {
                 "position": {
                     "left": 545,

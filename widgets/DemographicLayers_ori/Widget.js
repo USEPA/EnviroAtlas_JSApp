@@ -108,7 +108,7 @@ colorThemes:
 //methods to communication with app container:
 
 startup: function () {
-    selfDemographic = this;
+        
     this.catType = "";
     this.dfield = "";
     this._serviceWidgets = [];
@@ -202,8 +202,7 @@ _adjustToState: function () {
         var tobj = a;
         var mid = tobj.mid;
         var lid = tobj.fid;
-        //var layeruniqueid = mid + lid + "_map";
-        var layeruniqueid = window.layerIdDemographPrefix + mid + lid + "_map";
+        var layeruniqueid = mid + lid + "_map";
         if (wobj.map.getLayer(layeruniqueid)) {
             var orgactivelayer = tobj.actlayer;
             tobj.layervisible = wobj.map.getLayer(layeruniqueid).visible;
@@ -567,9 +566,7 @@ _genRender: function (renderobj) {
         _config.demogJSON[mapid].baselayers[activelayer].renderobj[renderuniquekey] = renderer;
         var optionsArray = [];
         var drawingOptions = new esri.layers.LayerDrawingOptions();
-        //var layeridstr = mapid + fieldid + "_map";
-        var layeridstr = window.layerIdDemographPrefix+ mapid + fieldid + "_map";
-        
+        var layeridstr = mapid + fieldid + "_map";
         if (renderobj.rendertype == "polygon") {
             renderobj.renderer = renderer;
             drawingOptions.renderer = renderer;
@@ -627,38 +624,7 @@ _genRender: function (renderobj) {
                 "opacity": opcvalue,
                 "visible": layervisible
             });
-            
-        window.demographicLayerSetting[layeridstr]={};
-        //It is very important to save the infor in following order. They will be used to load value in saveSession widget in the desired order
-        window.demographicLayerSetting[layeridstr]["serviceNode"] = selfDemographic.serviceNode.value; 			//It is Source such as: 2012-2016 ACS
-        window.demographicLayerSetting[layeridstr]["demogTypeNode"] = selfDemographic.demogTypeNode.value;       //It is Category such as "EDUCATION"
-        window.demographicLayerSetting[layeridstr]["demogListNode"] = selfDemographic.demogListNode.value;       //It is variable such as: 10th Grade    
-        //radio button
-        window.demographicLayerSetting[layeridstr]["rendertype"]  = selfDemographic.rendertype;  //It is polygon or point
-        
-        window.demographicLayerSetting[layeridstr]["classTypeNode"] = selfDemographic.classTypeNode.value;       //It is Method such as: Quantile
-        window.demographicLayerSetting[layeridstr]["classNumNode"] = selfDemographic.classNumNode.value;         //It is Breaks such as: 1, 2,..., 5       
-      
-        //for polygon only
-        if (window.demographicLayerSetting[layeridstr]["rendertype"] == "polygon") {
-	        window.demographicLayerSetting[layeridstr]["currentk"] = selfDemographic.currentk; 						// It is the Color break Selection; it determines the color scheme index starting from 0; end with 11
-			window.demographicLayerSetting[layeridstr]["reverseStatus"] = selfDemographic.reverseStatus;				// It is true or false;  it is called in this.drawPalette
-        }
-        
-        //for point only
-        if (window.demographicLayerSetting[layeridstr]["rendertype"] == "point") {
-	        window.demographicLayerSetting[layeridstr]["colorpnt"] = selfDemographic.colorpnt.picker.value; 
-	        
-	        window.demographicLayerSetting[layeridstr]["minsizeNode"] = selfDemographic.minsizeNode.value;
-	        window.demographicLayerSetting[layeridstr]["maxsizeNode"] = selfDemographic.maxsizeNode.value;          	
-        }
-
-        
-        window.demographicLayerSetting[layeridstr]["demogsliderNode"] = selfDemographic.demogsliderNode.value;
-        window.demographicLayerSetting[layeridstr]["bWidthNode"] = selfDemographic.bWidthNode.value;
-        
         wobj.map.addLayer(dmlayer);
-        
         dmlayer.on("update-start",lang.hitch(wobj,wobj.showloading,layeridstr));
         dmlayer.on("update-end",lang.hitch(wobj,wobj.hideloading,layeridstr));
         var infostr = "";
@@ -719,8 +685,7 @@ _mapRender: function(renderobj) {
 
     var optionsArray = [];
     var drawingOptions = new esri.layers.LayerDrawingOptions();
-    //var layeridstr = mapid + fieldid + "_map";
-	var layeridstr = window.layerIdDemographPrefix+ mapid + fieldid + "_map"; 
+    var layeridstr = mapid + fieldid + "_map";
     if (renderobj.rendertype == "polygon") {
         var mycolors = this.generateColors(renderobj.classes, renderobj.fromcolor, renderobj.tocolor);
         for (var m = 0; m < orgrender.infos.length; m++) {
@@ -780,7 +745,6 @@ _mapRender: function(renderobj) {
             "opacity": opcvalue,
             "visible": layervisible
         });
-
     this.map.addLayer(dmlayer);
     dmlayer.on("update-start",lang.hitch(this,this.showloading,layeridstr));
     dmlayer.on("update-end",lang.hitch(this,this.hideloading,layeridstr));
