@@ -88,11 +88,11 @@ define([
     window.layerIdTiledPrefix = "tiledNum_";
     window.addedLayerIdPrefix = "added_";
     window.topLayerID = "";
-    window.timeSliderLayerId = "TimeSliderLayer";
+    window.timeSliderLayerId = "TimeSliderLayer";//This is only used in AddData widget (added time aware layer)
     window.timeSliderPause = false;
     window.addedLayerIndex = 0;
     window.uploadedFeatLayerIdPrefix = "uploaded_";
-    window.timeSeriesLayerId = "ScenarioDataLayer";
+    window.timeSeriesLayerId = "ScenarioDataLayer";//This is for Time Series Layer from sidebar controller
     window.timeSeriesMetadata = {};
     window.timeSeriesMetadata['PET'] =  "T001";
     window.timeSeriesMetadata['TempMin'] =  "T002";
@@ -135,7 +135,6 @@ define([
     window.tiledLayerNumber = [];
     window.imageLayerNumber = [];
     window.layerID_Portal_WebMap = [];
-    window.index_Demographics = 0;
     window.demographicLayerSetting = {};
     window.onlineDataTobeAdded = [];
     window.onlineDataAlreadyAdded = [];

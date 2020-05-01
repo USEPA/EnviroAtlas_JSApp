@@ -189,6 +189,14 @@ define([
     			return;    			    			
     		}
     	}
+    	else if (actionType == "eaDfsLink") {
+    		if (layerId==window.timeSeriesLayerId) {
+	    		var climateVar = document.getElementById("climateSelection").value;
+	    		var climateVar2 = climateVar.replace("Max", "").replace("Min", "");
+    			window.open(window.dataFactSheet + "Supplemental/Climate_" + climateVar2 + ".pdf");
+    			return; 
+    		}
+    	}
     	layerInfoFromJson = {};
     	
         var eaID = layerId.replace(window.layerIdPrefix, "");
@@ -197,7 +205,7 @@ define([
 			arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");
 			getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, eaID, actionType);
         }     
-        else if (eaID=="ScenarioDataLayer") {
+        else if (eaID==window.timeSeriesLayerId) {
     		var climateVar = document.getElementById("climateSelection").value;
         	metaDataIDFromVariable = window.timeSeriesMetadata[climateVar];
         	metaDataID = window.nationalMetadataDic[metaDataIDFromVariable];
@@ -672,6 +680,20 @@ define([
     },
     _onItemDataFactSheetClick: function(evt) {
         layerId = this._layerInfo.id;        
+		if (layerId==window.addedLayerIdPrefix + "ClimateChange") {
+			var layerTitle  = this._layerInfo.title;
+			
+			if (layerTitle.indexOf("Temp") >=0) {
+				window.open(window.dataFactSheet + "Supplemental/Climate_" + "Temp" + ".pdf");
+				return; 
+			} else if (layerTitle.indexOf("PET") >=0) {
+				window.open(window.dataFactSheet + "Supplemental/Climate_" + "PET" + ".pdf");
+				return; 
+			} if (layerTitle.indexOf("Precip") >=0) {
+				window.open(window.dataFactSheet + "Supplemental/Climate_" + "Precip" + ".pdf");
+				return; 
+			} 
+		}
         var clickedURL = this._layerInfo.layerObject.url;        
         displayInfoOnClickAction(layerId, clickedURL, 'eaDfsLink');
     },
@@ -701,6 +723,24 @@ define([
     },    
     _onItemMetadataDownloadClick: function(evt) {
         layerId = this._layerInfo.id;        
+        if (layerId==window.addedLayerIdPrefix + "ClimateChange") {
+			var layerTitle  = this._layerInfo.title;
+			var climateVariable = "";
+			
+			if (layerTitle.indexOf("TempMax") >=0) {
+				climateVariable = "TempMax";				 
+			} else if (layerTitle.indexOf("TempMin") >=0) {
+				climateVariable = "TempMin";
+			} else if (layerTitle.indexOf("PET") >=0) {
+				climateVariable = "PET";
+			} else if (layerTitle.indexOf("Precip") >=0) {
+				climateVariable = "Precip";
+			}
+			metaDataIDFromVariable = window.timeSeriesMetadata[climateVariable];
+        	metaDataID = window.nationalMetadataDic[metaDataIDFromVariable];
+            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D"); 
+            return; 
+		}
         var clickedURL = this._layerInfo.layerObject.url;        
         displayInfoOnClickAction(layerId, clickedURL, 'eaMetadata');
         
