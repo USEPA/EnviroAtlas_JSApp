@@ -309,7 +309,9 @@ define([
 	window.hashAddedURLToId = {};
 	window.hashIDtoTileURL = {};
 	window.hashIDtoCacheLevelNat = {};
+	window.hashFeaturedCollectionToEAID = {};
 	window.allLayersTurnedOn = {};
+	
                 
     //patch for JS API 3.10
     var hasMethod = typeof cookie.getAll === 'function';

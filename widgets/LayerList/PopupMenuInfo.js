@@ -749,18 +749,39 @@ define([
     _onItemRemoveClick: function(evt) {
         layerId = this._layerInfo.id;
 		lyr = this._layerInfo.map.getLayer(layerId);
-		if(lyr){
+		if(lyr){  		
         	this._layerInfo.map.removeLayer(lyr);
         	uncheckRelatedCheckbox(layerId.replace(window.layerIdPrefix, ""));
         	if (window.demographicLayerSetting[layerId] != undefined) {
         		window.demographicLayerSetting[layerId] = null;
         	}
+        	
+			var eaID = window.hashFeaturedCollectionToEAID[layerId]; //check if this layer is Featured Collection layer
+    		if (((eaID != null) && (eaID != undefined))) {
+    			var indexID = window.featureLyrNumber.indexOf(eaID);
+				if (indexID > -1) {
+				  window.featureLyrNumber.splice(indexID, 1);
+				}
+    			
+    			
+				lyrTiled = this._layerInfo.map.getLayer( window.layerIdTiledPrefix + eaID);
+				if(lyrTiled){
+		       		this._layerInfo.map.removeLayer(lyrTiled);
+		      	} 	    			
+    		}
+    		        	
       	}    
       	
 		lyrTiled = this._layerInfo.map.getLayer(layerId.replace(window.layerIdPrefix, window.layerIdTiledPrefix));
 		if(lyrTiled){
+		    var indexID = window.featureLyrNumber.indexOf(layerId.replace(window.layerIdPrefix, "" ));
+			if (indexID > -1) {
+			  window.featureLyrNumber.splice(indexID, 1);
+			}
        		this._layerInfo.map.removeLayer(lyrTiled);
-      	}        	
+      	} 
+      	
+	
     },    
     _onTransparencyChanged: function(evt) {
       this._layerInfo.setOpacity(1 - evt.extraData.newTransValue);

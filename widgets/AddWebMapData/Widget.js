@@ -154,7 +154,7 @@ define(['dojo/_base/declare',
                                 expressions[layerInfo.id] = layerInfo.layerDefinition.definitionExpression;
                             }
                             //get infoTemplate
-                            if (layerInfo.popupInfo) {
+                            /*if (layerInfo.popupInfo) {
                                 popInfo = layerInfo.popupInfo;
                                 jsonPopInfo = djJson.parse(djJson.stringify(popInfo));
                                 //infoTemplate = new PopupTemplate(jsonPopInfo);
@@ -176,7 +176,7 @@ define(['dojo/_base/declare',
                                 _infoTemps[indexTemplate]["infoTemplate"] = infoTemplate;
 
                                 //tempLayer.setInfoTemplate(infoTemplate);
-                            }
+                            }*/
                             //end of getting infoTemplate
                             if (layerInfo.layerDefinition && layerInfo.layerDefinition.source) {
                                 dynamicLayerInfo = null;
@@ -206,7 +206,7 @@ define(['dojo/_base/declare',
                                     }
                                     dynamicLayerInfos.push(dynamicLayerInfo);
                                 }
-                            }
+                            } 
                             if (layerInfo.layerDefinition && layerInfo.layerDefinition.source && layerInfo.layerDefinition.drawingInfo) {
                                 drawingOptions = new LayerDrawingOptions(layerInfo.layerDefinition.drawingInfo);
                                 drawingOptionsArray[layerInfo.id] = drawingOptions;
@@ -695,13 +695,37 @@ define(['dojo/_base/declare',
         _processLayer : function(tempLayer, l) {
             // Borrowed from AddData/search/LayerLoader.js _processFeatureLayer
             var layerDefinition, renderer = false;
-            var popInfo, infoTemplate;
-            if (l.popupInfo) {
-                popInfo = l.popupInfo;
-                jsonPopInfo = djJson.parse(djJson.stringify(popInfo));
-                infoTemplate = new PopupTemplate(jsonPopInfo);
-                tempLayer.setInfoTemplate(infoTemplate);
-            }
+            
+        	var tileURL = "";
+        	var lebURL = "";
+        	var eaIDinSearchFilter = "";
+        	if (window.hashURLtoTile.hasOwnProperty(l.url)) {
+        		tileURL = window.hashURLtoTile[l.url];
+        	}
+        	else { 
+        		lebURL = l.url.replace("enviroatlas.epa.gov", "leb.epa.gov");
+        		if(window.hashURLtoTile.hasOwnProperty(lebURL)) {
+        			tileURL = window.hashURLtoTile[lebURL];                	
+        		}                		
+        	}
+       	
+        	if (tileURL=="") {
+	            var popInfo, infoTemplate;
+	            if (l.popupInfo) {
+	                popInfo = l.popupInfo;
+	                jsonPopInfo = djJson.parse(djJson.stringify(popInfo));
+	                infoTemplate = new PopupTemplate(jsonPopInfo);
+	                tempLayer.setInfoTemplate(infoTemplate);
+	            }
+           } else {
+         		for (var key in window.hashURL){//window.hashURL[layer.eaID.toString()] = eaURL; 
+				  if ((window.hashURL[key]==l.url) || (window.hashURL[key]==lebURL)) {
+				  	eaIDinSearchFilter = key;
+				  }
+				}	
+   	            window.featureLyrNumber.push(eaIDinSearchFilter);
+                window.hashFeaturedCollectionToEAID[l.id] = eaIDinSearchFilter;
+           }
             if (esriLang.isDefined(l.showLabels)) {
                 tempLayer.setShowLabels(l.showLabels);
             }
@@ -742,27 +766,13 @@ define(['dojo/_base/declare',
                     }
                 }
                 else {
-                	var tileURL = "";
-                	var lebURL = "";
-                	var eaIDinSearchFilter = "";
-                	if (window.hashURLtoTile.hasOwnProperty(l.url)) {
-                		tileURL = window.hashURLtoTile[l.url];
-                	}
-                	else { 
-                		lebURL = l.url.replace("enviroatlas.epa.gov", "leb.epa.gov");
-                		if(window.hashURLtoTile.hasOwnProperty(lebURL)) {
-                			tileURL = window.hashURLtoTile[lebURL];                	
-                		}                		
-                	}
+
+
                 	if (tileURL!="") {
-                		for (var key in window.hashURL){//window.hashURL[layer.eaID.toString()] = eaURL; 
-						  if ((window.hashURL[key]==l.url) || (window.hashURL[key]==lebURL)) {
-						  	eaIDinSearchFilter = key;
-						  }
-						}	
+
 	                	lOptions = {};
                         lOptions.id = window.layerIdTiledPrefix + eaIDinSearchFilter;
-                        window.featureLyrNumber.push(eaIDinSearchFilter);
+
                         this.map.addLayer(new ArcGISTiledMapServiceLayer(tileURL, lOptions));
                     }
                 	

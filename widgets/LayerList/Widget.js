@@ -451,6 +451,11 @@ define([
 					AlladdedLayerIDs.push(this.map.layerIds[j]);
 				} 
 				if ((currentLayer.id).indexOf(window.layerIdTiledPrefix) > -1) {
+					var EAID = currentLayer.id.replace(window.layerIdTiledPrefix, "" );
+					var indexID = window.featureLyrNumber.indexOf(EAID);
+					if (indexID > -1) {
+					  window.featureLyrNumber.splice(indexID, 1);
+					}
 					AlladdedLayerIDs.push(this.map.layerIds[j]);
 				}  
 				if ((currentLayer.id).indexOf(window.layerIdPrefix) > -1) {
@@ -490,7 +495,21 @@ define([
     	for (i in window.layerID_Portal_WebMap) {	        
     		lyr = this.map.getLayer(window.layerID_Portal_WebMap[i]);
 			if(lyr != null){
-	    		this.map.removeLayer(lyr);        	
+	    		this.map.removeLayer(lyr);    
+	    		var eaID = window.hashFeaturedCollectionToEAID[window.layerID_Portal_WebMap[i]];
+	    		if (((eaID != null) && (eaID != undefined))) {
+	    			var indexID = window.featureLyrNumber.indexOf(eaID);
+					if (indexID > -1) {
+					  window.featureLyrNumber.splice(indexID, 1);
+					}
+	    			
+	    			
+					lyrTiled = this._layerInfo.map.getLayer( window.layerIdTiledPrefix + eaID);
+					if(lyrTiled){
+			       		this._layerInfo.map.removeLayer(lyrTiled);
+			      	} 	    			
+	    		}
+ 	  
           	}          	
         }  
         //remove all layers added from Demographics widget.    

@@ -438,6 +438,7 @@ define([
 			    		for (i in window.featureLyrNumber) {  
 			    			bVisibleFL = false;
 			    			bVisibleTL = false;
+			    			
 			    			layerEAID = window.featureLyrNumber[i];
 				    		lyrFL = selfSimpleSearchFilter.map.getLayer(window.layerIdPrefix + layerEAID);		    		
 				    		if (lyrFL != null) {		    			
@@ -447,6 +448,19 @@ define([
 									}
 								}
 							} 
+							
+							//check if FL from Featured Collection is visible
+					    	for (j in window.layerID_Portal_WebMap) {	        
+					    		lyr = selfSimpleSearchFilter.map.getLayer(window.layerID_Portal_WebMap[j]);
+								if(lyr != null){
+						    		var eaID = window.hashFeaturedCollectionToEAID[window.layerID_Portal_WebMap[j]];
+						    		if ((lyr.visibleAtMapScale == true) && (window.featureLyrNumber[i] == eaID)){
+    									bVisibleFL = true;
+						    		}
+					 	  
+					          	}          	
+					        }  							
+							
 							
 							lyrTL = selfSimpleSearchFilter.map.getLayer(window.layerIdTiledPrefix + layerEAID);
 				    		if (lyrTL != null) {		    			
