@@ -1,0 +1,6 @@
+[0504/153819.163:ERROR:crashpad_client_win.cc(384)] OpenProcess: Access is denied. (0x5)
+[0504/153827.121:ERROR:crashpad_client_win.cc(384)] OpenProcess: Access is denied. (0x5)
+[0504/153842.154:ERROR:crashpad_client_win.cc(384)] OpenProcess: Access is denied. (0x5)
+[0504/153853.352:ERROR:crashpad_client_win.cc(384)] OpenProcess: Access is denied. (0x5)
+[0504/154021.114:ERROR:crashpad_client_win.cc(384)] OpenProcess: Access is denied. (0x5)
+[0505/105020.182:ERROR:crashpad_client_win.cc(384)] OpenProcess: Access is denied. (0x5)
