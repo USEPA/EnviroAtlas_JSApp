@@ -272,7 +272,7 @@ define([
     window.hashAttribute = {};
     window.hashPopup = {};
     window.hashURL = {};
-
+    window.hashURLtoTile = {};
     window.hashTopic = {};
     window.hashFieldsAddedFeatureLayer = {};
     window.hashVisibleLayersForDynamic = {};
