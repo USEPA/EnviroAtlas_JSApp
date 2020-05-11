@@ -323,12 +323,12 @@
                 },
                 "id": "widgets_Select_Widget_39"
             }, {
-				"position": {
-					"left": 795,
-					"top": 5,
-					"width": 587,
-					"height": 500,
-					"relativeTo": "map"
+                "position": {
+                    "left": 565,
+                    "top": -40,
+                    "width": 370,
+                    "height": 270,
+                    "relativeTo": "map"
 				},
 				"placeholderIndex": 1,
 				"id": "DemographicLayers_ori_28",
