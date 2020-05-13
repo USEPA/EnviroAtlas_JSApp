@@ -240,7 +240,15 @@ define([
       var grayedTitleClass = '';
       try {
       	var eaID = layerInfo.id.replace(window.layerIdPrefix, "");
-        if ((!layerInfo.isInScale())&&(window.hashIDtoTileURL[eaID] == null)) {
+
+  	    bTileOnMap = false;
+    	tileLayer = layerInfo.map.getLayer(window.layerIdTiledPrefix + window.hashFeaturedCollectionToEAID[layerInfo.id]);         	
+    	if(tileLayer != null){
+        	bTileOnMap = true;      
+        } 
+      	var indexID = window.featureLyrNumber.indexOf(window.hashFeaturedCollectionToEAID[layerInfo.id]);
+      	//use ((indexID >= 0) && (bTileOnMap == true)) to check if tileLayer corresponding to Featured Collection exist.
+        if ((!layerInfo.isInScale())&&(window.hashIDtoTileURL[eaID] == null)&&((indexID >= 0) && (bTileOnMap == true))) {
           grayedTitleClass = 'grayed-title';
         }
       } catch (err) {
@@ -576,6 +584,12 @@ define([
 	    if (layerId.indexOf(window.layerIdPrefix) >= 0) {
 	        eaId = layerId.replace(window.layerIdPrefix, "");                     	
 	    } 
+	    else {
+	    	eaIDFromFeaturedCollection = window.hashFeaturedCollectionToEAID[layerId];
+	    	if (((eaIDFromFeaturedCollection != null) && (eaIDFromFeaturedCollection != undefined))) {
+	    		eaId = eaIDFromFeaturedCollection;
+	    	}
+	    }
 	    
 		lyrTiled = layerInfo.map.getLayer(window.layerIdTiledPrefix + eaId);   
 		if (ckSelect.checked) {
