@@ -2,46 +2,39 @@
    <p>
       Use the ECAT tool to calculate projected climate change between two self-selected time periods.
    </p>
-   <div><img style='width:330px' src='widgets/Demo/images/ecat_img.jpg'>
-   </div>
    <p>
-      The <strong>EnviroAtlas Change Analysis Tool</strong> allows a selected climate variable (maximum temperature, minimum temperature, potential evapotranspiration, or precipitation) to be compared between time periods. The calculations result in a map layer displaying in the EnviroAtlas map that depicts the change in the variable between the two time periods. Acceptable entries for the time periods are the years from 1950 to 2099 and include historic data as well as modeled future scenarios.
+      The <strong>EnviroAtlas Change Analysis Tool</strong> allows a selected climate variable to be compared between time periods. The calculations result in a layer displaying in the EnviroAtlas map that depicts the change in the variable between the two time periods. The tool includes historic data as well as modeled future scenarios.
    </p>
-   <h4>ECAT Functionality</h4>
+   <h2>ECAT Functionality</h2>
+	<img style="width:330px; margin-right:5px" src='widgets/Demo/images/ECAT1.PNG'></p>
    <p>
-      The ECAT pop-up contains several adjustable parameters. Selections for each parameter provide the variables that control the climate comparison displayed on the map. The parameters are as follows:
+      The ECAT pop-up contains several adjustable parameters. The parameters provide the variables that control the climate comparison displayed on the map. The parameters are as follows:
    </p>
-   <ul>
+   <ol>
       <li>
-         The Data Fact Sheet explains the model differences
+         <strong>Climate Scenario </strong>&ndash; Click the <strong>circular </strong>&ldquo;<strong>i</strong>&rdquo; <strong>icon</strong> to review the model differences, then select the desired scenario.
       </li>
-   </ul>
-   <ol start="2">
       <li>
-         <strong>Starting year for baseline </strong>&ndash; the &ldquo;baseline&rdquo; is the year or period of consecutive years that will be compared to a comparison year (or period) to reveal changes in the climate variable over time. <u>If the baseline is a period of multiple consecutive years, this should be the first year of the baseline period.</u>
+         <strong>Starting year for baseline </strong>&ndash; the &ldquo;baseline&rdquo; is the year or period of consecutive years that will be compared to a comparison year (or period) to reveal changes in the climate variable over time. <i>If the baseline is a period of multiple consecutive years, this should be the first year of the baseline period.</i>
       </li>
       <li>
          <strong>Ending year for baseline</strong> &ndash; select the year that marks the end of the baseline period. The ending year must be equal to or later than the starting year. If the baseline is only one year, select the same year as the starting year.
       </li>
-   </ol>
-   <ol start="4">
       <li>
          <strong>Starting year for comparison</strong> &ndash; the &ldquo;comparison&rdquo; is the year or period of consecutive years that will be compared to the baseline year (or period). If the comparison is a period of multiple consecutive years, this should be the first year of the comparison period.
       </li>
       <li>
          <strong>Ending year for comparison</strong> &ndash; select the year that marks the end of the comparison period. The ending year must be equal to or later than the starting year. If the comparison is only one year, select the same year as the starting year.
       </li>
-   </ol>
-   <ol start="6">
       <li>
          <strong>Climate variable</strong> &ndash; select the metric (temperature, precipitation, etc.) to be mapped.
       </li>
       <li>
-         <strong>Season or Annual</strong> &ndash; select the season to be displayed on the map, or &ldquo;Annual&rdquo; for annual mean values.
+         <strong>Season or Annual</strong> &ndash; select the season to be mapped, or &ldquo;Annual&rdquo; for annual mean values.
       </li>
    </ol>
    <p>
-      The <strong>circular </strong>&ldquo;<strong>i</strong>&rdquo; <strong>icon</strong> to the right of some parameters indicates that supporting information is available for the parameter. Click the icon to reveal detailed information about the available selections for each (Described in the Data Fact Sheet).
+      The <strong>circular </strong>&ldquo;<strong>i</strong>&rdquo; <strong>icon</strong> to the right of some parameters indicates that supporting information is available. Click the icon to reveal details about available selections.
    </p>
    <p>
       Once the parameters have been selected, click the <strong>Calculate Change</strong> button in the ECAT pop-up.
@@ -49,17 +42,22 @@
    <p>
       <em>Note:</em><em>The calculation may take several minutes to complete. While calculations run in the background, other aspects of the EnviroAtlas interactive map may continue to be used. </em>
    </p>
+	<img style="width:530px; margin-right:5px" src='widgets/Demo/images/ECAT2.PNG'></p>
    <p>
-      Once complete, the map displays a layer of grid cells (800-meter resolution) detailing the change in the climate variable selected between the baseline year or period and the comparison year or period. The example above depicts the change in maximum temperature in summer when comparing the baseline period of 1950-1954 to the comparison period of 2049-2053. Clicking on a location on the map provides a pop-up that identifies the amount of change at the location. This example shows that the clicked location will experience an estimated maximum temperature increase of 4.16&deg; F in 2049-53 versus the baseline period of 1950-1954.
+      Once complete, the map displays a layer of grid cells (800-meter resolution) detailing the change in the climate variable selected between the baseline year or period and the comparison year or period. The example above depicts the change in maximum temperature in summer when comparing the baseline period of 1950-1980 to the comparison period of 2020-2050. Clicking on a location on the map provides a pop-up that identifies the amount of change at the location. This example shows that the clicked location will experience an estimated maximum temperature increase of 3.97&deg; F in 2020-50 versus the baseline period of 1950-1980.
    </p>
    <p>
-      Open the <a href="#_Legend"  class="demoLink">Legend</a> from the <a href="#_Mapping_Tools_1" class="demoLink">Mapping Tools</a> drawer to view the ranges of values that each color represents in the ECAT map. If desired, use the transparency slider bar to adjust the transparency of the new layer so that features below the layer are visible.
+      Open the Layer List to view the ranges of values that each color represents in the ECAT map. If desired, use the transparency slider bar to adjust the transparency of the new layer so that features below the layer are visible.
+   </p>
+	<img style="width:530px; margin-right:5px" src='widgets/Demo/images/ECAT4.PNG'></p>
+   <p>
+      To remove the ECAT change results from the map, click the <strong>Clear Layers</strong> button in the ECAT pop-up. Alternatively, you may remove the ECAT layer from the Layer List.
    </p>
    <p>
-      To remove the ECAT change results from the map, click the <strong>Clear Layers</strong> button in the ECAT pop-up. Alternatively, open the <a href="#_Layer_Function_Menu" class="demoLink">Layer List</a> and remove the ECAT layer from there.
-   </p>
+      The <strong>Download HUC12 average values (CSV) </strong>button creates a comma-separated value (CSV) file with the average of all ECAT values within each USGS 12-digit HUC in the conterminous U.S.
+	  	<img style="width:330px; margin-right:5px" src='widgets/Demo/images/ECAT5.PNG'></p>
    <p>
-      The <strong>Download HUC12 average values (CSV) </strong>button creates a comma-separated value (CSV) file with the average of all ECAT values within each USGS 12-digit HUC in the conterminous U.S. When the button is clicked, a pop-up opens to save the CSV file. The resulting CSV may be viewed in a text editor or in a spreadsheet. The file contains the following fields:
+	  When the button is clicked, a pop-up opens to save the CSV file. The resulting CSV may be viewed in a text editor or in a spreadsheet. The file contains the following fields:
    </p>
    <ul>
       <li>
@@ -72,10 +70,10 @@
          <strong>ZONE_CODE</strong> &ndash; identifier used for processing.
       </li>
       <li>
-         <strong>COUNT </strong>&ndash; the number of ECAT layer grid cells within the HUC used to calculate the mean value.
+         <strong>COUNT </strong>&ndash; the number of ECAT grid cells within the HUC used to calculate the mean value.
       </li>
       <li>
-         <strong>AREA</strong> &ndash; area of the HUC.
+         <strong>AREA</strong> &ndash; area of the HUC (square meters).
       </li>
       <li>
          <strong>MEAN</strong> &ndash;average value of the climate variable grid cells within the HUC.
