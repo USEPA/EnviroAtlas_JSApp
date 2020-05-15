@@ -20,7 +20,7 @@
       "expanded": false
     },
     {
-      "name": "Community: A-M",
+      "name": "Community",
       "items": [
         {
           "name": "Austin, TX",
@@ -153,8 +153,7 @@
               "wkid": 102100
             }
           }
-        },
-        {
+        },        {
           "name": "Memphis, TN",
           "extent": {
             "xmax": -9857488,
@@ -189,13 +188,7 @@
               "wkid": 102100
             }
           }
-        }
-      ],
-      "expanded": false
-	},
-    {
-      "name": "Community: N-Z",
-      "items": [
+        },
         {
           "name": "New Bedford, MA",
           "extent": {
@@ -304,7 +297,7 @@
             }
           }
         },
-        {
+	{
           "name": "St. Louis, MO",
           "extent": {
             "xmax": -9960000,

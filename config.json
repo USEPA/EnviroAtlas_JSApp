@@ -343,10 +343,10 @@
 			},           
 			{
 				"position": {
-					"left": 795,
-					"top": 5,
-					"width": 587,
-					"height": 500,
+					"left": 565,
+					"top": -40,
+					"width": 370,
+					"height": 270,
 					"relativeTo": "map"
 				},
 				"placeholderIndex": 1,
