@@ -1272,7 +1272,7 @@ define([
 					    		bLayerSelected = true;
 				          	}     
 				          	//check if url of eaID layer matches one Feature Collection layer on map
-				    		if (arrEAIDMatchingCurrentFeaturedCollection.indexOf(eaID) >= 0) {
+				    		if (arrEAIDMatchingCurrentFeaturedCollection.indexOf(SubLayerIds[i]) >= 0) {
 								bLayerSelected = true;
 				    		} 
 				          	var subtopicBoxAndText = dojo.create('div', {
@@ -1309,7 +1309,7 @@ define([
 					if (!(document.getElementById("hideIcons").checked)) {
 						add_bc_icons(mainDiv, eaScale, sourceType);
 					} 
-				}		
+				}// end of if (!IsSubLayer) 
 				
 			}//end of if (currentLayerSelectable)
 		});	
@@ -1346,14 +1346,11 @@ define([
 					}
 					else {
 						eaID = this.getAttribute("id").replace(window.chkSelectableLayer, "");
-						//alert("check box eaID: " + eaID);
-
 						
 						if (arrEAIDMatchingCurrentFeaturedCollection.indexOf(eaID) >= 0){//if thi check box is corresponding to a Featured Collection layer
 					    	for (iPortal in window.layerID_Portal_WebMap) {	  
 					    		var eaIDofPortal = window.hashFeaturedCollectionToEAID[window.layerID_Portal_WebMap[iPortal]];  
 								if (eaIDofPortal == eaID) {
-									//alert("eaIDofPortal:" + eaIDofPortal + "; eaID: " + eaID);
 									
 						    		lyr = selfSimpleSearchFilter.map.getLayer(window.layerID_Portal_WebMap[iPortal]);
 									if(lyr != null){
@@ -2586,11 +2583,13 @@ define([
 	                    }
 	                    if(layer.hasOwnProperty('url')&&(layer.url!=null)){
 	                    	eaURL1 = layer.url.toString();
+	                    	
 	                    	if(layer.hasOwnProperty('eaLyrNum')){
 	                    		eaURL = eaURL1 + "/" + layer.eaLyrNum.toString();
+	                    		window.hashURL[layer.eaID.toString()] = eaURL; 
 	                    		if(layer.hasOwnProperty('tileLink') && layer.tileLink.toString() == "yes"){
 	                    			window.hashURLtoTile[eaURL] = layer.tileURL.toString();
-	                    			window.hashURL[layer.eaID.toString()] = eaURL; 
+	                    			
 	                    		}	                    		
 	                    	}
 	                    	if (layer.popup) {
@@ -2630,7 +2629,8 @@ define([
 	                    		if (communityTopicList.indexOf(eaTopic) < 0) {
 	                    			communityTopicList.push(eaTopic);
 	                    		}	                    		
-	                    	}	                    	
+	                    	}	          
+	                    	window.hashScale[eaID]  = eaScale;          	
 	                    }
 	                    else {
 	                    	eaScale = "";

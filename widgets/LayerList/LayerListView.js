@@ -217,15 +217,31 @@ define([
       scaleLabel = domConstruct.create('td', {
         'class': 'col col15'
       }, layerTrNode);
-
+      
+  	  bTileOnMap = false;
+      tileLayer = layerInfo.map.getLayer(window.layerIdTiledPrefix + window.hashFeaturedCollectionToEAID[layerInfo.id]);         	
+      if(tileLayer != null){
+        	bTileOnMap = true;      
+      } 
+      
+      var eaIDinFeatureCollection = window.hashFeaturedCollectionToEAID[layerInfo.id];
+      var indexID = window.featureLyrNumber.indexOf(eaIDinFeatureCollection);
+      	
       scaleObject = '';
-      if (layerInfo.layerObject.eaScale) {
-        scaleTitle = 'Community Dataset'
-        if (layerInfo.layerObject.eaScale == 'NATIONAL') {
+
+      if ((layerInfo.layerObject.eaScale) || ((eaIDinFeatureCollection !=null) && (eaIDinFeatureCollection !=undefined))) {
+        scaleTitle = 'Community Dataset';
+        if ((layerInfo.layerObject.eaScale == 'NATIONAL') ||(window.hashScale[window.hashFeaturedCollectionToEAID[layerInfo.id]]== 'NATIONAL')){
           scaleTitle = 'National Dataset';
         };
         
-        scale = layerInfo.layerObject.eaScale
+        scaleForFeaturedCollection = window.hashScale[window.hashFeaturedCollectionToEAID[layerInfo.id]];
+        if (((scaleForFeaturedCollection != null) && (scaleForFeaturedCollection != undefined))) {
+        	scale = scaleForFeaturedCollection;
+        } else {
+        	scale = layerInfo.layerObject.eaScale;
+        }
+        
         scaleImage = domConstruct.create('div', {
           'title': scaleTitle,
           'class': 'icon_style ' + scale
@@ -241,12 +257,7 @@ define([
       try {
       	var eaID = layerInfo.id.replace(window.layerIdPrefix, "");
 
-  	    bTileOnMap = false;
-    	tileLayer = layerInfo.map.getLayer(window.layerIdTiledPrefix + window.hashFeaturedCollectionToEAID[layerInfo.id]);         	
-    	if(tileLayer != null){
-        	bTileOnMap = true;      
-        } 
-      	var indexID = window.featureLyrNumber.indexOf(window.hashFeaturedCollectionToEAID[layerInfo.id]);
+
       	//use ((indexID >= 0) && (bTileOnMap == true)) to check if tileLayer corresponding to Featured Collection exist.
         if ((!layerInfo.isInScale())&&(window.hashIDtoTileURL[eaID] == null)&&((indexID >= 0) && (bTileOnMap == true))) {
           grayedTitleClass = 'grayed-title';

@@ -299,6 +299,7 @@ define([
     window.hashURL = {};
     window.hashURLtoTile = {};
     window.hashTopic = {};
+    window.hashScale = {};
     window.hashFieldsAddedFeatureLayer = {};
     window.hashVisibleLayersForDynamic = {};
     window.hashTitleToEAID = {};

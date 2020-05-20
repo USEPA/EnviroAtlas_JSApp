@@ -708,7 +708,14 @@ define(['dojo/_base/declare',
         			tileURL = window.hashURLtoTile[lebURL];                	
         		}                		
         	}
-       	
+
+
+   	       for (var key in window.hashURL){//window.hashURL[layer.eaID.toString()] = eaURL; 
+			  if ((window.hashURL[key]==l.url) || (window.hashURL[key]==lebURL)) {
+			  	eaIDinSearchFilter = key;
+			  }
+			}
+			window.hashFeaturedCollectionToEAID[l.id] = eaIDinSearchFilter;  
         	if (tileURL=="") {
 	            var popInfo, infoTemplate;
 	            if (l.popupInfo) {
@@ -719,14 +726,11 @@ define(['dojo/_base/declare',
 	            }
            } else {//Its url matches the EnviroAtlas layer
            	
-         		for (var key in window.hashURL){//window.hashURL[layer.eaID.toString()] = eaURL; 
-				  if ((window.hashURL[key]==l.url) || (window.hashURL[key]==lebURL)) {
-				  	eaIDinSearchFilter = key;
-				  }
-				}	
+	
    	            window.featureLyrNumber.push(eaIDinSearchFilter);
-                window.hashFeaturedCollectionToEAID[l.id] = eaIDinSearchFilter;                
+                              
            }
+           
             if (esriLang.isDefined(l.showLabels)) {
                 tempLayer.setShowLabels(l.showLabels);
             }

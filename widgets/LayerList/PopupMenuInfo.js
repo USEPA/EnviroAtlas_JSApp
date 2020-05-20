@@ -200,8 +200,17 @@ define([
     	layerInfoFromJson = {};
     	
         var eaID = layerId.replace(window.layerIdPrefix, "");
+        
+		//check if layer is from Featured Collection   	
+		bFeaturedCollection = false;
+		var eaIDFromFeaturedCollection = window.hashFeaturedCollectionToEAID[layerId]; 
+		if (((eaIDFromFeaturedCollection != null) && (eaIDFromFeaturedCollection != undefined))) {
+    			eaID = eaIDFromFeaturedCollection;
+    			bFeaturedCollection = true;
+		}
+        
         var arrXmlPath = [];
-        if ((layerId.indexOf(window.layerIdPrefix)) >= 0) {
+        if (((layerId.indexOf(window.layerIdPrefix)) >= 0)||(bFeaturedCollection == true)) {
 			arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");
 			getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, eaID, actionType);
         }     
