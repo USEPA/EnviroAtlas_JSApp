@@ -37040,7 +37040,7 @@
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/Dasymetric_WMerc/MapServer",
                 "eaTopic": "Population Distribution",
                 "eaDfsLink": "Supplemental/Dasymetricallocationofpopulation.pdf",
-                "DownloadSource": "ftp://newftp.epa.gov/epadatacommons/ORD/EnviroAtlas/Estimated_floodplain_CONUS.zip",
+                "DownloadSource": "ftp://newftp.epa.gov/EPADataCommons/ORD/EnviroAtlas/dasymetric_us_20160208.zip",
                 "name": "Dasymetric allocation of population",
                 "eaTags": [
                     "people",
