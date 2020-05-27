@@ -581,6 +581,9 @@ define([
         		if 	(arrLayersToChangeSynbology.length > 0){
         			updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
         		}
+        		else if (arrFeatureCollectionsToChangeSynbology.length > 0) {
+        			updateSingleFeatureCollectionLayer(arrFeatureCollectionsToChangeSynbology.pop());
+        		}          		
         		
 			})
 		} else {
@@ -590,11 +593,41 @@ define([
         		lyrTobeUpdated.redraw();
         		if 	(arrLayersToChangeSynbology.length > 0){
         			updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
+        		}	
+        		else if (arrFeatureCollectionsToChangeSynbology.length > 0) {
+        			updateSingleFeatureCollectionLayer(arrFeatureCollectionsToChangeSynbology.pop());
+        		}                		
+			})						
+		}
+   };
+    var updateSingleFeatureCollectionLayer = function(selectedFeatureCollection){    	
+		lyrTobeUpdated = selfSimpleSearchFilter.map.getLayer(selectedFeatureCollection);	 
+ 		var selectedLayerNum = window.hashFeaturedCollectionToEAID[selectedFeatureCollection];
+		if (window.communitySelected != window.strAllCommunity) {        
+			$.getJSON( 'configs/CommunitySymbology/' + window.communitySelected + '_JSON_Symbol/Nulls/' + window.communitySelected + '_' + window.hashAttribute[selectedLayerNum] + ".json", function( data ) {
+				var renderer = new ClassBreaksRenderer(data);
+        		lyrTobeUpdated.setRenderer(renderer);	
+        		lyrTobeUpdated.redraw();
+        		if (lyrTobeUpdated.visible == true){
+            		lyrTobeUpdated.setVisibility(false);
+            		lyrTobeUpdated.setVisibility(true);						                			
+        		}
+        		if 	(arrFeatureCollectionsToChangeSynbology.length > 0){
+        			updateSingleFeatureCollectionLayer(arrFeatureCollectionsToChangeSynbology.pop());
+        		}
+        		
+			})
+		} else {
+			$.getJSON( 'configs/CommunitySymbology/' + 'AllCommunities' + '_JSON_Symbol/Nulls/' + 'CombComm' + '_' + window.hashAttribute[selectedLayerNum] + ".json", function( data ) {
+				var renderer = new ClassBreaksRenderer(data);
+        		lyrTobeUpdated.setRenderer(renderer);	
+        		lyrTobeUpdated.redraw();
+        		if 	(arrFeatureCollectionsToChangeSynbology.length > 0){
+        			updateSingleFeatureCollectionLayer(arrFeatureCollectionsToChangeSynbology.pop());
         		}	                		
 			})						
 		}
    };
-
 		var chkIdDictionary = {};
 		var nationalTopicList = [];
 		var communityTopicList = [];
@@ -1859,7 +1892,7 @@ define([
                                         bPopup = false;
                                     } else {
                                         Attribute = fieldInfos[0].fieldName;
-                                        hashAttribute[layer.eaID.toString()] = Attribute;
+                                        hashAttribute[layer.eaID.toString()] = Attribute;//It will be used as window.hashAttribute
                                     }
                                 } else {
                                     bPopup = false;
@@ -2601,7 +2634,7 @@ define([
 	                                        bPopup = false;
 	                                    } else {
 	                                        Attribute = fieldInfos[0].fieldName;
-	                                        hashAttribute[layer.eaID.toString()] = Attribute;
+	                                        hashAttribute[layer.eaID.toString()] = Attribute;//It will be used as window.hashAttribute
 	                                    }
 	                                } 
 	                            } 
@@ -2901,6 +2934,7 @@ define([
      _onUpdateCommunityLayers: function() {
 
      	arrLayersToChangeSynbology = [];
+     	arrFeatureCollectionsToChangeSynbology = [];
 	    var lyr;
     	for (i in window.communityLayerNumber) {
     		lyr = this.map.getLayer(window.layerIdPrefix + window.communityLayerNumber[i]);
@@ -2908,8 +2942,19 @@ define([
 	    		arrLayersToChangeSynbology.push(lyr.id.replace(window.layerIdPrefix, ""));
           	}         	        	
         } 	    
-
-        updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
+        
+		for (var key in window.hashFeaturedCollectionToEAID){
+			lyr = this.map.getLayer(key);
+			if(lyr && (window.hashScale[window.hashFeaturedCollectionToEAID[lyr.id]]== 'COMMUNITY')){			
+	    		arrFeatureCollectionsToChangeSynbology.push(lyr.id);
+          	} 
+		}
+		if (arrLayersToChangeSynbology.length > 0) {
+        	updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
+        } else if (arrFeatureCollectionsToChangeSynbology.length > 0){
+      		updateSingleFeatureCollectionLayer(arrFeatureCollectionsToChangeSynbology.pop());
+        }
+      
      },
 
      formatValue : function (value, key, data){
