@@ -2445,7 +2445,7 @@ define([
                 for ( index = 0,
                 len = bookmarkClassified.bookmarks.length; index < len; ++index) {
                     currentBookmarkClass = bookmarkClassified.bookmarks[index];
-                    if (currentBookmarkClass.name == "Community") {
+                    if (currentBookmarkClass.name.indexOf("Community")>=0) {
                         bookmarkCommunity = currentBookmarkClass.items;
                         for ( indexCommunity = 0,
                         lenCommunity = bookmarkCommunity.length; indexCommunity < lenCommunity; ++indexCommunity) {
