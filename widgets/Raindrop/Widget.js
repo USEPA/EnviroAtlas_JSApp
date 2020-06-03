@@ -13,9 +13,10 @@ define(['dojo/_base/declare',
         'esri/geometry/Extent',
       'jimu/dijit/TabContainer',
     'esri/dijit/HorizontalSlider',
+    'esri/toolbars/draw',
     'esri/dijit/ColorPicker',
     'esri/Color',
-      "dijit/ColorPalette",
+    "dijit/ColorPalette",
       "dijit/TooltipDialog",
     "dijit/form/DropDownButton",
         "dijit/popup",
@@ -23,7 +24,7 @@ define(['dojo/_base/declare',
     "dojo/dom-class",
     "dojo/dom-attr",
     "dojo/parser"],
-function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, SimpleLineSymbol, SimpleMarkerSymbol, Color, Polyline, Extent, TabContainer, HorizontalSlider, ColorPicker, Color, ColorPalette, TooltipDialog, DropDownButton, popup, dom, domClass, domAttr) {
+function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, SimpleLineSymbol, SimpleMarkerSymbol, Color, Polyline, Extent, TabContainer, HorizontalSlider, Draw, ColorPicker, Color, ColorPalette, TooltipDialog, DropDownButton, popup, dom, domClass, domAttr) {
 
   var curMap;
   var onMapClick;
@@ -31,6 +32,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
   var maxD = 5;   //Max Distance
   var lineTh = 1; //line thickness
   var curColor = new Color("#ff0000");
+  
 
 
   return declare([BaseWidget], {
@@ -40,6 +42,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
     //templateString: template,
 
     baseClass: 'jimu-widget-demo',
+    drawTool: null,
 
 
     postCreate: function() {
@@ -52,6 +55,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
     startup: function() {
       this.inherited(arguments);
       //this.mapIdNode.innerHTML = 'map id:' + this.map.id;
+
 
       RaindropTool = this;
       curMap = this.map;
@@ -147,6 +151,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
 		  });  
           dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#485566'});
           dojo.byId('selectPoint').innerHTML = 'Activate Tool';
+          RaindropTool.drawTool.deactivate();
 
           //remove map click event
           onMapClick.remove();
@@ -157,6 +162,7 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
           //Add border to button
           domClass.add(dojo.byId('selectPoint'), 'rainDropButtonSelected');
           dojo.byId('selectPoint').innerHTML = 'Select Point(s)';
+          RaindropTool.drawTool.activate(Draw['POINT']);
           //deactivate the HUC tool and Elevation tool
           if (window.toggleOnHucNavigation == true) {
           	document.getElementById('searchPointToggle').click();
@@ -310,9 +316,21 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
 
     onOpen: function(){
       // console.log('onOpen');
+        if (this.drawTool) {
+          this.drawTool.deactivate();
+        }
+        else {
+        	this.drawTool = new Draw(this.map);
+        }
     },
 
     onClose: function(){
+
+       if (RaindropTool.drawTool) {
+          RaindropTool.drawTool.deactivate();
+          RaindropTool.drawTool = null;
+        }
+        
       if(typeof onMapClick != 'undefined'){
         onMapClick.remove();
         onMapClick = undefined;

@@ -20,6 +20,7 @@ define([
  'esri/symbols/SimpleMarkerSymbol',
  'esri/symbols/SimpleLineSymbol',
  'esri/renderers/SimpleRenderer',
+ 'esri/toolbars/draw',
  'esri/request',
  'esri/InfoTemplate',
  'esri/geometry/Point',
@@ -51,6 +52,7 @@ function(
   SimpleMarkerSymbol,
   SimpleLineSymbol,
   SimpleRenderer,
+  Draw,
   esriRequest,
   InfoTemplate,
   Point,
@@ -90,6 +92,10 @@ function(
    startup: function() {
      this.inherited(arguments);     
      window.cmaMapPoint = null;
+     if (this.drawTool) {
+        this.drawTool.deactivate();
+     }
+     this.drawTool = new Draw(this.map);
    },
    clickAction: function(evt) {
        
@@ -320,10 +326,13 @@ _showInfoWin: function (g) {
 },
 
    onOpen: function() {
+   	this.drawTool.activate(Draw['POINT']);
     this.mapClickEvt = on(this.map,"click", lang.hitch(this, this.clickAction)); 
+    
    },
    onClose: function() {
     this.mapClickEvt.remove();
+    this.drawTool.deactivate();
    },
      _showloading: function() {
         this.map.disableMapNavigation();
