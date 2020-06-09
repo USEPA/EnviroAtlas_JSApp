@@ -106,6 +106,7 @@ define([
     window.toggleOnHucNavigation = false;
     window.toggleOnRainDrop = false;
     window.toggleOnElevation = false;
+    window.toggleOnCMA = false;
     window.mapClickListenerForPopup = null;
     window.removeAllMessage = "removeAll";
     window.chkTopicPrefix = "ckTopic_";

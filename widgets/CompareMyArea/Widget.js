@@ -327,11 +327,18 @@ _showInfoWin: function (g) {
 
    onOpen: function() {
    	this.drawTool.activate(Draw['POINT']);
-    this.mapClickEvt = on(this.map,"click", lang.hitch(this, this.clickAction)); 
+   	window.toggleOnCMA = true;
+    
+    this.publishData({
+		message : "mapClickForPopup"
+	}); 
+	this.mapClickEvt = on(this.map,"click", lang.hitch(this, this.clickAction)); 
     
    },
    onClose: function() {
     this.mapClickEvt.remove();
+    window.toggleOnCMA = false;
+    document.getElementById("butInitClickEventForPopup").click();
     this.drawTool.deactivate();
    },
      _showloading: function() {

@@ -326,11 +326,11 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
 
     onClose: function(){
 
-       if (RaindropTool.drawTool) {
+      if (RaindropTool.drawTool) {
           RaindropTool.drawTool.deactivate();
           RaindropTool.drawTool = null;
-        }
-        
+      }
+      
       if(typeof onMapClick != 'undefined'){
         onMapClick.remove();
         onMapClick = undefined;
@@ -341,9 +341,8 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
       }
 
       window.toggleOnRainDrop = false;
-	  RaindropTool.publishData({
-			message : "mapClickForPopup"
-	  }); 
+      document.getElementById("butInitClickEventForPopup").click();
+
       // console.log('onClose');
     },
 

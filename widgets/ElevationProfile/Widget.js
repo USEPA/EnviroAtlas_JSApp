@@ -248,7 +248,7 @@ define([
           this.measureTool.clearResult();
           this._displayChartLocation(-1);
         }
-      
+        window.toggleOnElevation = false;
 		document.getElementById("butInitClickEventForPopup").click();
       },
 
@@ -297,6 +297,9 @@ define([
           	    document.getElementById('searchPointToggle').click();
             } 
           	window.toggleOnElevation = true;
+		    this.publishData({
+				message : "mapClickForPopup"
+			});           	
             this.map.setInfoWindowOnClick(false);
             this.disableWebMapPopup();
           } else {

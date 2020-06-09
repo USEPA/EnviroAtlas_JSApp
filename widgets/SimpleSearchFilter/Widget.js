@@ -409,7 +409,7 @@ define([
 				bSimulatedClickAddressed = false;
 				bSimulatedClick = false;
 				window.mapClickListenerForPopup = connect.connect(selfSimpleSearchFilter.map, "onClick", function(evt) {
-	 			//var mapClickListenerForPopup = connect.connect(selfSimpleSearchFilter.map, "onClick", function(evt) {
+					if ((window.toggleOnHucNavigation == false) && (window.toggleOnRainDrop == false) && (window.toggleOnCMA == false) && (window.toggleOnElevation == false)) {
 	 				    if (!bSimulatedClick) {
 	 				    	bSimulatedClickAddressed = false;
 	 				    	previuosMapInfoFromFL = [];	
@@ -429,64 +429,60 @@ define([
 	 				    }
 						if (bSimulatedClick) {
 			 				if (!bSimulatedClickAddressed) {
-								if ((window.toggleOnHucNavigation == true) || (window.toggleOnRainDrop == true)) {					
-									connect.disconnect(window.mapClickListenerForPopup);
-								} 
-								else {
-									currentMapInfoFromDynamic = [];
-									selfSimpleSearchFilter.map.graphics.clear();
-									if (selfSimpleSearchFilter.map.infoWindow.features != null){
-										for (ii=0; ii < selfSimpleSearchFilter.map.infoWindow.features.length; ii++) {
-											if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], previuosMapInfoFromFL)) {
-												if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], currentMapInfoFromDynamic)) {
-													currentMapInfoFromDynamic.push(selfSimpleSearchFilter.map.infoWindow.features[ii]);
-												}
-											}									
-										}					
-									}	
-									arrLayersForPopup = [];
-						    		for (i in window.featureLyrNumber) {  
-						    			bVisibleFL = false;
-						    			bVisibleTL = false;
-						    			
-						    			layerEAID = window.featureLyrNumber[i];
-							    		lyrFL = selfSimpleSearchFilter.map.getLayer(window.layerIdPrefix + layerEAID);		    		
-							    		if (lyrFL != null) {		    			
-											if (lyrFL.visible == true){
-											    if (((window.nationalLayerNumber.indexOf(layerEAID.toString()) >= 0)) || (lyrFL.visibleAtMapScale==true)){
-												   bVisibleFL = true;
-												}
+								currentMapInfoFromDynamic = [];
+								selfSimpleSearchFilter.map.graphics.clear();
+								if (selfSimpleSearchFilter.map.infoWindow.features != null){
+									for (ii=0; ii < selfSimpleSearchFilter.map.infoWindow.features.length; ii++) {
+										if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], previuosMapInfoFromFL)) {
+											if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], currentMapInfoFromDynamic)) {
+												currentMapInfoFromDynamic.push(selfSimpleSearchFilter.map.infoWindow.features[ii]);
 											}
-										} 
-										
-										//check if FL from Featured Collection is visible
-								    	for (j in window.layerID_Portal_WebMap) {	        
-								    		lyr = selfSimpleSearchFilter.map.getLayer(window.layerID_Portal_WebMap[j]);
-											if(lyr != null){
-									    		var eaID = window.hashFeaturedCollectionToEAID[window.layerID_Portal_WebMap[j]];
-									    		if ((lyr.visibleAtMapScale == true) && (lyr.visible == true) && (window.featureLyrNumber[i] == eaID)){
-			    									bVisibleFL = true;
-									    		}
-								 	  
-								          	}          	
-								        }  							
-										
-										
-										lyrTL = selfSimpleSearchFilter.map.getLayer(window.layerIdTiledPrefix + layerEAID);
-							    		if (lyrTL != null) {		    			
-											if (lyrTL.visible == true){
-												bVisibleTL = true;							
+										}									
+									}					
+								}	
+								arrLayersForPopup = [];
+					    		for (i in window.featureLyrNumber) {  
+					    			bVisibleFL = false;
+					    			bVisibleTL = false;
+					    			
+					    			layerEAID = window.featureLyrNumber[i];
+						    		lyrFL = selfSimpleSearchFilter.map.getLayer(window.layerIdPrefix + layerEAID);		    		
+						    		if (lyrFL != null) {		    			
+										if (lyrFL.visible == true){
+										    if (((window.nationalLayerNumber.indexOf(layerEAID.toString()) >= 0)) || (lyrFL.visibleAtMapScale==true)){
+											   bVisibleFL = true;
 											}
-										}		
-										if ((bVisibleFL == true) || (bVisibleTL == true)) {
-											arrLayersForPopup.push(layerEAID);
-										}		    		
-							    	}
-							    	//start to popup for first layer:
-							    	if 	(arrLayersForPopup.length > 0){
-							    	addSingleFeatureForPopup(arrLayersForPopup.pop(),evt);         
-						        	}       
-						        }
+										}
+									} 
+									
+									//check if FL from Featured Collection is visible
+							    	for (j in window.layerID_Portal_WebMap) {	        
+							    		lyr = selfSimpleSearchFilter.map.getLayer(window.layerID_Portal_WebMap[j]);
+										if(lyr != null){
+								    		var eaID = window.hashFeaturedCollectionToEAID[window.layerID_Portal_WebMap[j]];
+								    		if ((lyr.visibleAtMapScale == true) && (lyr.visible == true) && (window.featureLyrNumber[i] == eaID)){
+		    									bVisibleFL = true;
+								    		}
+							 	  
+							          	}          	
+							        }  							
+									
+									
+									lyrTL = selfSimpleSearchFilter.map.getLayer(window.layerIdTiledPrefix + layerEAID);
+						    		if (lyrTL != null) {		    			
+										if (lyrTL.visible == true){
+											bVisibleTL = true;							
+										}
+									}		
+									if ((bVisibleFL == true) || (bVisibleTL == true)) {
+										arrLayersForPopup.push(layerEAID);
+									}		    		
+						    	}
+						    	//start to popup for first layer:
+						    	if 	(arrLayersForPopup.length > 0){
+						    	addSingleFeatureForPopup(arrLayersForPopup.pop(),evt);         
+					        	}       
+						        
 								//end of addressed
 				 				bSimulatedClickAddressed= true;
 				 				bSimulatedClick = false;
@@ -499,6 +495,7 @@ define([
 				          	selfSimpleSearchFilter.map.emit("click", { bubbles: false, cancelable: true, screenPoint: evt.mapPoint, mapPoint: evt.mapPoint });
 				          }
 				        }), 1000);
+			       }//end of if ((window.toggleOnHucNavigation == false)...
 				})
 		};
 		var updateSelectableLayersArea = function (){
@@ -2103,8 +2100,8 @@ define([
 			if (((name == 'SelectCommunity')||(name == 'AddWebMapData'))&&(data.message == "updateCommunityLayers")){
 				this._onUpdateCommunityLayers();
 			}	
-			if (((name == 'ElevationProfile')||(name == 'Raindrop')||(name == 'HucNavigation'))&&(data.message == "mapClickForPopup")){
-				setClickEventForPopup();
+			if (((name == 'ElevationProfile')||(name == 'Raindrop')||(name == 'HucNavigation') ||(name == 'NavHuc') || (name == 'CompareMyArea'))&&(data.message == "mapClickForPopup")){
+				connect.disconnect(window.mapClickListenerForPopup);
 			}		  
 		},
     displayCloseButton: function() {		
@@ -2877,7 +2874,9 @@ define([
 			}    
 	    },	
         initClickEventForPopup: function() {
-            setClickEventForPopup();
+        	if ((window.toggleOnHucNavigation == false) && (window.toggleOnRainDrop == false) && (window.toggleOnCMA == false) && (window.toggleOnElevation == false)) {
+            	setClickEventForPopup();
+            }
         },
     _onAddLayersClick: function() {
         layersToBeAdded = "a";
