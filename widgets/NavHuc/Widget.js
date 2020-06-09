@@ -909,10 +909,14 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
       closeDDs: function () {
         this.selectLayerAttribute.closeDropDown();
         this.selectLayerGraphical.closeDropDown();
-        this.selectExpression.closeDropDown();
-        this.selectLayerSpatial.closeDropDown();
+        
+        //this.selectExpression.closeDropDown();
+        //this.selectLayerSpatial.closeDropDown();
+        
 //        this.gSelectType.closeDropDown();
 //        this.aSelectType.closeDropDown();
+
+
       },
 
       onDeactivate: function() {
@@ -929,11 +933,21 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         if (!this.config.bufferDefaults.addtolegend) {
           if (this.graphicsLayerBuffer) {
             this.graphicsLayerBuffer.hide();
+            
           }
         }
         if (this.tempResultLayer) {
           this.tempResultLayer.hide();
         }
+        
+        //copy from destroy
+        
+        this._hideInfoWindow();
+        this._resetDrawBox();
+        this._removeAllResultLayers();
+        this._clearRelateLayers();
+        
+        this.map.graphics.clear();
         document.getElementById("butInitClickEventForPopup").click();
       },
 
@@ -942,6 +956,11 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 	    this.publishData({
 			message : "mapClickForPopup"
 		});  
+
+        //if(this.autoactivatedtool){
+        //  this.drawBox.activate(this.autoactivatedtool.toUpperCase());
+        //}
+		 
         if (!this.config.bufferDefaults.addtolegend) {
           if (this.graphicsLayerBuffer) {
             this.graphicsLayerBuffer.show();
@@ -950,6 +969,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         if (this.tempResultLayer) {
           this.tempResultLayer.show();
         }
+
       },
 
       _resetDrawBox: function () {
@@ -3242,6 +3262,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 	
 	navigate_upstream: function(results)
 	{
+
 		var that = this;
 		
 		var featureAttributes = results.features[0].attributes;
@@ -4438,6 +4459,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 
 	add_click_point_graphic: function(point)
 	{
+		this.map.graphics.clear();
 		var that = this;
 		
 		dojo.some(this.map.graphics.graphics, function(g) {  
