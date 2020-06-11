@@ -1355,11 +1355,11 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         });
         html.replaceClass(this.tabNodeAggregate, 'search-tab-node', 'search-tab-node-hidden');
 
-        tabs.push({
+        /*tabs.push({
             title: "Downloads",
             content: this.tabNodeDownloads
         });
-        html.replaceClass(this.tabNodeDownloads, 'search-tab-node', 'search-tab-node-hidden');
+        html.replaceClass(this.tabNodeDownloads, 'search-tab-node', 'search-tab-node-hidden');*/
 
         this.tabContainer = new TabContainer({
           tabs: tabs,
