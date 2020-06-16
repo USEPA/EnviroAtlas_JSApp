@@ -2010,6 +2010,8 @@ define([
                         }
                         lLayer.on('load', function(evt) {
                             evt.layer.name = lOptions.id;
+                            currentEAID = evt.layer.id.replace(window.layerIdPrefix, "");
+                            
                             if (evt.layer.id == window.layerIdPrefix + communityBoundaryLayerID) {
                                 setTimeout(function () {
                                     var popupsTemplate = {};
@@ -2028,7 +2030,16 @@ define([
                                     evt.layer.title = "EnviroAtlas Community Boundaries";
                                     evt.layer.noservicename = true;
                                     evt.layer.setInfoTemplates(popupsTemplate);       
+                                    
+                                
+                                
                                 }, 1000)                      
+                            }
+                            else if (window.nationalLayerNumber.includes(currentEAID)){
+                            	setTimeout(function () {
+	    							jimuUtils.adjustMapExtent(selfSimpleSearchFilter.map);   			    
+                            	}, 50) 
+                            	
                             }
                         });
 
@@ -2063,7 +2074,14 @@ define([
         for (i in stringArray) {
             lyr = this._viewerMap.getLayer(window.layerIdPrefix + stringArray[i]);
             if (lyr) {
+            	currentEAID = lyr.id.replace(window.layerIdPrefix, "");
                 this._viewerMap.removeLayer(lyr);
+                if (window.nationalLayerNumber.includes(currentEAID)){
+                	setTimeout(function () {
+						jimuUtils.adjustMapExtent(selfSimpleSearchFilter.map);   			    
+                	}, 10) 
+                            	
+                 }
             }
             lyrTiled = this._viewerMap.getLayer(window.layerIdTiledPrefix + stringArray[i]);
             if (lyrTiled) {

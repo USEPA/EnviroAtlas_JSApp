@@ -28,13 +28,14 @@ define([
   'jimu/dijit/LoadingShelter',
   './PopupMenu',
   'dijit/_TemplatedMixin',
+  'jimu/utils',
   'dojo/text!./LayerListView.html',
   'dojo/dom-attr',
   'dojo/dom-class',
   'dojo/dom-style',
   './NlsStrings'
 ], function(_WidgetBase, declare, lang, array, domConstruct, on, query,
-  CheckBox, PanelManager, DropMenu, LoadingShelter, PopupMenu, _TemplatedMixin, template,
+  CheckBox, PanelManager, DropMenu, LoadingShelter, PopupMenu, _TemplatedMixin, jimuUtils, template,
   domAttr, domClass, domStyle, NlsStrings) {
   	var received = "";
 
@@ -615,6 +616,11 @@ define([
 	      	}         
 	    }     
 	    //end of set visibility for corresponding tiled layers
+	    
+		if (window.nationalLayerNumber.includes(eaId)){//check if it is national layer. If yes, then set warning sign by triggering extent-change event
+			jimuUtils.adjustMapExtent(layerInfo.map);   			                            	
+        } 
+        
         layerInfo.setTopLayerVisible(ckSelect.checked);
       }
       evt.stopPropagation();
@@ -981,6 +987,7 @@ define([
 			}           
         }
       }, this);
+      jimuUtils.adjustMapExtent(this.operLayerInfos.map);
     },
 
     turnAllSameLevelLayers: function(layerInfo, isOnOrOff) {

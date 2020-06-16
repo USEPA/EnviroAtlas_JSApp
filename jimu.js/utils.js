@@ -1054,7 +1054,20 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
 
     return def;
   };
-
+  mo.adjustMapExtent = function(map) {
+	var adjustForFurtherSynchronize = 0;//0.01
+	var oriExtent = map.extent;                            		
+	var xmin = oriExtent.xmin+adjustForFurtherSynchronize;
+    var ymin = oriExtent.ymin+adjustForFurtherSynchronize;
+    var xmax = oriExtent.xmax+adjustForFurtherSynchronize;
+    var ymax = oriExtent.ymax+adjustForFurtherSynchronize;
+    
+	nExtent = new Extent({
+	    "xmin":xmin,"ymin":ymin,"xmax":xmax,"ymax":ymax,
+	    "spatialReference":oriExtent.spatialReference
+	});
+	return map.setExtent(nExtent); 
+  };
   mo.getAncestorWindow = function() {
     var w = window;
     while (w && w.parent && w !== w.parent) {

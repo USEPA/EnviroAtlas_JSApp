@@ -24,6 +24,7 @@ define([
     'dojo/dom',
     'dojo/on',
     'dojo/query',
+    'jimu/utils',
     'dijit/registry',    
     './LayerListView',
     './LayerFilter',
@@ -31,7 +32,7 @@ define([
     'jimu/LayerInfos/LayerInfos'
   ],
   function(BaseWidget, PanelManager, declare, lang, array, html, dom, on,
-  query, registry, LayerListView, LayerFilter, NlsStrings, LayerInfos) {
+  query, jimuUtils, registry, LayerListView, LayerFilter, NlsStrings, LayerInfos) {
     var clazz = declare([BaseWidget], {
       //these two properties is defined in the BaseWiget
       baseClass: 'jimu-widget-layerList',
@@ -542,6 +543,7 @@ define([
 		if(lyrCommunityBoundary != null){
     		this.map.removeLayer(lyrCommunityBoundary);        	
       	} 
+      	jimuUtils.adjustMapExtent(this.map);   
       }
     });
 

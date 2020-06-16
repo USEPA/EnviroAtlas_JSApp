@@ -78,6 +78,18 @@
                 "id": "widgets_Coordinate_Widget_24",
                 "name": "Coordinate",
                 "label": "Coordinate"
+            }, 
+            {
+                "uri": "widgets/FeatureLimit/Widget",
+                "position": {
+                    "left": 350,
+                    "bottom": 5,
+                    "relativeTo": "map"
+                },
+                "version": "2.11",
+                "id": "widgets_FeatureLimit",
+                "name": "FeatureLimit",
+                "label": "FeatureLimit"
             }, {
                 "uri": "widgets/CommunityDisplay/Widget",
                 "position": {

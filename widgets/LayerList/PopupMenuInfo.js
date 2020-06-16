@@ -20,6 +20,7 @@ define([
   'dojo/_base/lang',
   'dojo/Deferred',
   'dojo/promise/all',
+  'jimu/utils',
   'jimu/portalUrlUtils',
   'jimu/WidgetManager',
   'jimu/PanelManager',
@@ -27,7 +28,7 @@ define([
   'esri/graphicsUtils',
   './NlsStrings',
   'dijit/Dialog'
-], function(declare, array, lang, Deferred, all, portalUrlUtils, WidgetManager, PanelManager, esriLang,
+], function(declare, array, lang, Deferred, all, jimuUtils, portalUrlUtils, WidgetManager, PanelManager, esriLang,
   graphicsUtils, NlsStrings,Dialog) {
   var mapDescriptionStr = "";
   var topLayerIndex = 300;
@@ -757,6 +758,8 @@ define([
     },    
     _onItemRemoveClick: function(evt) {
         layerId = this._layerInfo.id;
+        
+        
 		lyr = this._layerInfo.map.getLayer(layerId);
 		if(lyr){  		
         	this._layerInfo.map.removeLayer(lyr);
@@ -764,6 +767,11 @@ define([
         	if (window.demographicLayerSetting[layerId] != undefined) {
         		window.demographicLayerSetting[layerId] = null;
         	}
+        	
+        	currentEAID = layerId.replace(window.layerIdPrefix, "");
+			if (window.nationalLayerNumber.includes(currentEAID)){//check if it is national layer
+				jimuUtils.adjustMapExtent(this._layerInfo.map);   			                            	
+            }        	
         	
 			var eaID = window.hashFeaturedCollectionToEAID[layerId]; //check if this layer is Featured Collection layer
     		if (((eaID != null) && (eaID != undefined))) {
