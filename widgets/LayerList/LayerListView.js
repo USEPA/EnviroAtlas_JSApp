@@ -600,6 +600,13 @@ define([
 	    	eaIDFromFeaturedCollection = window.hashFeaturedCollectionToEAID[layerId];
 	    	if (((eaIDFromFeaturedCollection != null) && (eaIDFromFeaturedCollection != undefined))) {
 	    		eaId = eaIDFromFeaturedCollection;
+				var bNationalFeaturedCollection = false;
+			    var eaIDinFeatureCollection = window.hashFeaturedCollectionToEAID[layerId];
+			    if (((eaIDinFeatureCollection !=null) && (eaIDinFeatureCollection !=undefined))) {
+			          if ((window.hashScale[eaIDinFeatureCollection]== 'NATIONAL')){
+			          		bNationalFeaturedCollection = true;
+			          };
+			    }	    		
 	    	}
 	    }
 	    
@@ -617,7 +624,7 @@ define([
 	    }     
 	    //end of set visibility for corresponding tiled layers
 	    
-		if (window.nationalLayerNumber.includes(eaId)){//check if it is national layer. If yes, then set warning sign by triggering extent-change event
+		if (window.nationalLayerNumber.includes(eaId) || (bNationalFeaturedCollection == true)){//check if it is national layer. If yes, then set warning sign by triggering extent-change event
 			jimuUtils.adjustMapExtent(layerInfo.map);   			                            	
         } 
         

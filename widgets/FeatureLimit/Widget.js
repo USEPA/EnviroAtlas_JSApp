@@ -46,10 +46,26 @@ define(['dojo/_base/declare', 'dojo/_base/html', 'dijit/_WidgetsInTemplateMixin'
 			var maxRecordCount = null;
 			for ( kk = featureLimit.map.graphicsLayerIds.length - 1; kk >= 0; kk--) {
 				nationalLayerEAID = featureLimit.map.graphicsLayerIds[kk].replace(window.layerIdPrefix, "");
-				if (!(window.nationalLayerNumber.includes(nationalLayerEAID))) {
+				
+				//check if it is Feaured Collection
+				var bNationalFeaturedCollection = false;
+			    var eaIDinFeatureCollection = window.hashFeaturedCollectionToEAID[featureLimit.map.graphicsLayerIds[kk]];
+			    if (((eaIDinFeatureCollection !=null) && (eaIDinFeatureCollection !=undefined))) {
+			          if ((window.hashScale[window.hashFeaturedCollectionToEAID[featureLimit.map.graphicsLayerIds[kk]]]== 'NATIONAL')){
+			          		bNationalFeaturedCollection = true;
+			          };
+			    }
+			    
+				if (!(window.nationalLayerNumber.includes(nationalLayerEAID)) && (bNationalFeaturedCollection == false)) {
 					continue;
 				}
-				lyrFL = this.map.getLayer(window.layerIdPrefix + nationalLayerEAID);
+				if (bNationalFeaturedCollection = false) {
+					lyrFL = this.map.getLayer(window.layerIdPrefix + nationalLayerEAID);
+				}
+				else {
+					lyrFL = this.map.getLayer(featureLimit.map.graphicsLayerIds[kk]);
+				}
+				
 				if (lyrFL != null) {
 					if (lyrFL.visible != false) {
 						urlForQuery = lyrFL.url;

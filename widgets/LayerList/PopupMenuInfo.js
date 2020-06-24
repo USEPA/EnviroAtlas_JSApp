@@ -768,8 +768,16 @@ define([
         		window.demographicLayerSetting[layerId] = null;
         	}
         	
+			var bNationalFeaturedCollection = false;
+		    var eaIDinFeatureCollection = window.hashFeaturedCollectionToEAID[layerId];
+		    if (((eaIDinFeatureCollection !=null) && (eaIDinFeatureCollection !=undefined))) {
+		          if ((window.hashScale[eaIDinFeatureCollection]== 'NATIONAL')){
+		          		bNationalFeaturedCollection = true;
+		          };
+		    }	  
+			            	
         	currentEAID = layerId.replace(window.layerIdPrefix, "");
-			if (window.nationalLayerNumber.includes(currentEAID)){//check if it is national layer
+        	if (window.nationalLayerNumber.includes(currentEAID) || (bNationalFeaturedCollection == true)){
 				jimuUtils.adjustMapExtent(this._layerInfo.map);   			                            	
             }        	
         	

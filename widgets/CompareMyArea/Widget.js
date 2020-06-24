@@ -100,8 +100,8 @@ function(
    clickAction: function(evt) {
        
         var evtid = evt.target.id;
-console.log("evtid: " + evtid)
-        if (evtid == "map_gc")  {
+		console.log("evtid: " + evtid)
+        //if (evtid == "map_gc")  {
             
             window.cmaMapPoint = evt.mapPoint;
         
@@ -110,7 +110,7 @@ console.log("evtid: " + evtid)
             } else {
                 this.queryLayers(evt.mapPoint);
             }
-        }
+        //}
    },
    _changetype: function(e) {
     this.idtype = e.target.value;

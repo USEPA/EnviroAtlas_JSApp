@@ -1388,7 +1388,12 @@ define([
 						    			var indexID = arrEAIDMatchingCurrentFeaturedCollection.indexOf(eaID);
 										if (indexID > -1) {
 										  arrEAIDMatchingCurrentFeaturedCollection.splice(indexID, 1);
-										}				    			
+										}
+								        if ((window.hashScale[eaID]== 'NATIONAL')){
+								          		setTimeout(function () {
+													jimuUtils.adjustMapExtent(selfSimpleSearchFilter.map);   			    
+							                	}, 10) 
+								        };				
 						    			
 										lyrTiled = selfSimpleSearchFilter.map.getLayer( window.layerIdTiledPrefix + eaID);
 										if(lyrTiled){
@@ -2075,8 +2080,17 @@ define([
             lyr = this._viewerMap.getLayer(window.layerIdPrefix + stringArray[i]);
             if (lyr) {
             	currentEAID = lyr.id.replace(window.layerIdPrefix, "");
+            	
+				var bNationalFeaturedCollection = false;
+			    var eaIDinFeatureCollection = window.hashFeaturedCollectionToEAID[lyr.id];
+			    if (((eaIDinFeatureCollection !=null) && (eaIDinFeatureCollection !=undefined))) {
+			          if ((window.hashScale[eaIDinFeatureCollection]== 'NATIONAL')){
+			          		bNationalFeaturedCollection = true;
+			          };
+			    }	
+			                	
                 this._viewerMap.removeLayer(lyr);
-                if (window.nationalLayerNumber.includes(currentEAID)){
+                if (window.nationalLayerNumber.includes(currentEAID) || (bNationalFeaturedCollection == true)){
                 	setTimeout(function () {
 						jimuUtils.adjustMapExtent(selfSimpleSearchFilter.map);   			    
                 	}, 10) 
