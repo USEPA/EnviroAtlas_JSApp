@@ -1,0 +1,33 @@
+/*.jimu-widget-demo div:first-child{*/
+  /*color: red;*/
+/*}*/
+
+.formSlider{
+  margin-top: 10px;
+  font-size: small;
+}
+.sliderLbl{
+  font-size: small;
+  margin-left: 5px;
+}
+
+.noResultsLbl{
+  font-size: medium;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.color{
+  height: 20px;
+  width: 20px;
+  margin-left: 5px;
+}
+
+.rainDropButtonSelected {
+   border-width: 2px;
+   border-color: red;
+ }
+
+.zoom-btn{
+    font-size: smaller;
+}

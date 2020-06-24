@@ -1,0 +1,2 @@
+//>>built
+define(["dojo/_base/declare","../BaseFeatureAction","jimu/utils"],function(c,d,e){return c([d],{name:"ShowPopup",iconClass:"icon-show-popup",isFeatureSupported:function(a,b){return a&&a.features&&1===a.features.length&&b&&b.infoTemplate},onExecute:function(a){e.featureAction.showPopup(this.map,a.features)}})});

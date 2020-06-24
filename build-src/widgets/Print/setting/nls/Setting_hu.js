@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Print/setting/nls/strings":{serviceURL:"Szolg\u00e1ltat\u00e1s URL-c\u00edme",defaultTitle:"Alap\u00e9rtelmezett c\u00edm",defaultAuthor:"Alap\u00e9rtelmezett szerz\u0151",defaultCopyright:"Alap\u00e9rtelmezett szerz\u0151i jog",defaultFormat:"Alap\u00e9rtelmezett form\u00e1tum",defaultLayout:"Alap\u00e9rtelmezett elrendez\u00e9s",warning:"Helytelen adatbevitel",urlNotAvailable:"Az URL nem \u00e9rhet\u0151 el",notPrintTask:"Az URL nem nyomtat\u00e1si feladat",advancedOption:"Halad\u00f3 be\u00e1ll\u00edt\u00e1sok mutat\u00e1sa",
+ok:"OK",editable:"Szerkeszthet\u0151",_localized:{}}});

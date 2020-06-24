@@ -1,0 +1,10 @@
+{
+  "name": "Raindrop",
+  "platform": "HTML",
+  "version": "2.5",
+  "wabVersion": "2.5",
+  "author": "U.S. EPA EnviroAtlas Developer Team (David Yarnell)",
+  "description": "This widget leverages EPA's Point Indexing Service https://www.epa.gov/waterdata/point-indexing-service to utilize the NHDPlus Flow Direction Grid to travel 'downhill' to the nearest NHD flowline and show the results in a WebAppBuilder application.",
+  "copyright": "",
+  "license": "http://www.apache.org/licenses/LICENSE-2.0"
+}

@@ -1,0 +1,37 @@
+
+<div style="height:100%; width:100%; overflow:hidden;" dojotype="dijit.layout.ContentPane" >
+	<div id = "failedLayersComment"> </div>	
+	<hr id = "hrFailedEnviroAtlasLayers" style="margin: 5px 0; display:none">
+	
+	<div style="font-weight: bold" id = "failedEnviroAtlasLayersComment"> </div>
+    <table id="failedEALayers" class="failedLayersStyle" >
+        <tbody>
+            <tr >
+
+            </tr>					    	
+        </tbody>
+    </table>
+    
+    <hr id = "hrFailedOutsideLayers" style="margin: 5px 0; display:none">
+	<div style="font-weight: bold" id = "failedOutsideLayersComment"> </div>
+
+    <table id="failedOutLayers" class="failedLayersStyle" >
+        <tbody>
+            <tr >
+
+            </tr>					    	
+        </tbody>
+    </table>
+    <hr id = "hrFailedLayersSendEmail" style="margin: 5px 0; display:none">
+	<div id="eMailOption" >
+		<!--<div>
+			<label>The service provided is not working.</b>
+				Click below to send the URL for this service to the EnviroAtlas support team for further investigation.</label>
+		</div>-->
+
+		<div>
+			<button id="sendButton" class="jimu-btn" type="button" data-dojo-attach-event="ondijitclick:sendEmail">Send</button>
+			<label id="message" style="display:none">Thanks for letting us know!</label>
+		</div>
+	</div>
+</div>

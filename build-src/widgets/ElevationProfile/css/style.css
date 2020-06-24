@@ -1,0 +1,208 @@
+.widget-elevation-profile{
+  position:relative;
+  width:100%;
+  height:100%;
+  min-width:265px;
+  min-height:279px;
+}
+
+.esriMeasurement .esriButton .dijitButtonNode {
+  height: 32px;
+}
+
+.LaunchpadTheme .esriMeasurement .esriButton + .esriButton .dijitButtonNode {
+  border: 1px solid #DDD  !important;
+}
+
+.LaunchpadTheme .esriMeasurement:first-child .dijitButtonNode {
+  border-radius: 2px  !important;
+}
+
+.LaunchpadTheme .esriMeasurement .esriMeasurementSeparator {
+  display: inline-block !important;
+}
+
+.LaunchpadTheme .esriMeasurement .esriToggleButton {
+  display: inline-block !important;
+}
+
+.LaunchpadTheme .esriMeasurement {
+  top: 36px !important;
+}
+
+.jimu-widget-frame>.widget-elevation-profile>.jimu-tab>.control{
+  margin:-14px -14px 0 -14.7px;
+}
+
+.widget-elevation-profileInfoDiv {
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -moz-user-select:-moz-none;
+  -ms-user-select: none;
+  user-select: none;
+  color: blue;
+  float:left;
+}
+
+.widget-elevation-profile>.jimu-tab>.jimu-viewstack{
+  position: absolute !important;
+  top:45px !important;
+  left:0 !important;
+  right:0 !important;
+  bottom:0 !important;
+  height: auto;
+  margin-bottom:-14px;
+}
+
+.widget-elevation-profileinfo-icon{
+  cursor: pointer;
+  display: inline-block;
+  font-size: 18px;
+  line-height: 20px;
+  background: none repeat scroll 0% 0% #518DCA;
+  color: #FFF;
+  border-radius:99px;
+  -moz-border-radius:99px;
+  -webkit-border-radius:99px;
+  font-weight:bold;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -moz-user-select:-moz-none;
+  -ms-user-select: none;
+  user-select: none;
+  float:left;
+  width:20px;
+  height:20px;
+  padding-left:7px;
+}
+
+.widget-elevation-profile-profile-info-label {
+  float:left;
+  cursor: pointer;
+  padding-left: 4px;
+}
+
+.widget-elevation-profile .profile-tab-node{
+  position:absolute !important;
+  width:100% !important;
+  height:auto !important;
+  top:0 !important;
+  bottom:0 !important;
+  overflow: hidden;
+}
+
+.widget-elevation-profile .result-div{
+  font-size:14px;
+  padding-left:10px;
+  padding-bottom:5px;
+}
+
+.widget-elevation-profileChartNode {
+  height: 83%;
+  width: 100%;
+  min-height: 200px;
+  overflow: hidden;
+}
+
+.widget-elevation-profile .PanelMax {
+  height: 320px;
+}
+
+.widget-elevation-profileLabel {
+  color: #000;
+  font-weight: bolder;
+  font-size: 0.8em;
+  line-height: 1.0em;
+}
+
+.widget-elevation-profileGainLossLabel {
+  width: 30%;
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  text-align: left;
+  white-space: nowrap;
+  display: inline-block;
+  position: absolute;
+}
+
+.esriRTL .widget-elevation-profileGainLossLabel {
+  right: 10px;
+  text-align: right;
+}
+
+.widget-elevation-profileSourceLabel {
+  width: 30%;
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+  text-align: right;
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: keep-all;
+  word-wrap: normal;
+  text-overflow: ellipsis;
+}
+
+.esriRTL .widget-elevation-profileSourceLabel {
+  left: 10px;
+  text-align: left;
+}
+
+.widget-elevation-profilePopupRequirementLabel {
+  color: #000;
+  padding-left: 6px;
+  font-size: smaller;
+}
+
+#tooltip
+{
+  text-align: center;
+  color: #fff;
+  background: #111;
+  position: absolute;
+  z-index: 100;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid white;
+}
+
+#tooltip:after /* triangle decoration */
+{
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #111;
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  margin-left: -10px;
+}
+
+#tooltip.top:after
+{
+  border-top-color: transparent;
+  border-bottom: 10px solid #111;
+  top: -20px;
+  bottom: auto;
+}
+
+#tooltip.left:after
+{
+  left: 10px;
+  margin: 0;
+}
+
+#tooltip.right:after
+{
+  right: 10px;
+  left: auto;
+  margin: 0;
+}

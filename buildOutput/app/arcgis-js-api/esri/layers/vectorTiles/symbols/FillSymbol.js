@@ -1,0 +1,2 @@
+//>>built
+define(["./Symbol","./SimpleLineSymbol"],function(a,b){return a.createSubclass({declaredClass:"esri.symbols.FillSymbol",properties:{outline:{type:b,json:{read:{default:null},write:!0}},type:null}})});

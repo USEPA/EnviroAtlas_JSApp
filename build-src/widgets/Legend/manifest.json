@@ -1,0 +1,13 @@
+{
+  "name": "Legend",
+  "platform": "HTML",
+  "version": "2.11",
+  "wabVersion": "2.11",
+  "author": "Esri R&D Center Beijing",
+  "description": "",
+  "copyright": "",
+  "license": "http://www.apache.org/licenses/LICENSE-2.0",
+  "properties":{
+    "mirrorIconForRTL": true
+  }
+}

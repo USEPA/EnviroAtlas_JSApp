@@ -1,0 +1,15 @@
+<div class="auto-refresh-container">
+  <div class="clearFix">
+    <div data-dojo-attach-point="autoRefreshCheckBox"></div>
+  </div>
+
+  <div class="time-items">
+    <div class="clearFix interval-tips">
+      ${nls.interval}
+    </div>
+    <input class="interval-number" data-dojo-attach-point="intervalNumber" data-dojo-type="dijit/form/ValidationTextBox"
+      required="true" data-dojo-props="trim:true" />
+
+    <div class="interval-units" data-dojo-attach-point="intervalUnits"></div>
+  </div>
+</div>

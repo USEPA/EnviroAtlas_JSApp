@@ -1,5 +1,5 @@
 {
-  "serviceURL": "https://map22.epa.gov/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task",
+  "serviceURL": "https://leb.epa.gov/arcgis/rest/services/EPAPrintTool/GPServer/Export%20Web%20Map",
   "defaultTitle": "EnviroAtlas Map Export",
   "defaultAuthor": "EnviroAtlas User",
   "defaultCopyright": "U.S. Environmental Protection Agency",

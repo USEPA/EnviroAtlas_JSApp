@@ -1,0 +1,33 @@
+<div class="time-config-container" data-dojo-attach-point="timeConfigContainer">
+  <div class="title">${nls.timeSpan}</div>
+
+  <div class="error-info">
+    <div data-dojo-attach-point="errorIcon" class="error-icon"></div>
+    <div>${nls.calenderError}</div>
+  </div>
+
+  <div class="time-span">
+    <div class="time-items items">
+      <div class="time-tips">${nls.startTime}</div>
+      <div data-dojo-attach-point="startTimeCalendar"></div>
+    </div>
+    <div class="time-items items">
+      <div class="time-tips">${nls.endTime}</div>
+      <div data-dojo-attach-point="endTimeCalendar"></div>
+    </div>
+  </div>
+
+  <div class="title">${nls.timeDisplay}</div>
+  <div class="time-display">
+    <div class="time-tips">${nls.displayDataIn}</div>
+    <input type="text" data-dojo-type="dijit/form/NumberSpinner" value="0"  required="true"
+      data-dojo-attach-point="intervalNumber" data-dojo-props="smallDelta:1,intermediateChanges:true,constraints: {min:0, places:0},trim:true"
+      class="time-selector calender-number calendar-inputs customdate ">
+    <div data-dojo-attach-point="intervalUnits"></div>
+    <div class="time-tips">${nls.interval}</div>
+  </div>
+
+  <div class="clearFix items">
+    <div data-dojo-attach-point="displayAllTheData"></div>
+  </div>
+</div>

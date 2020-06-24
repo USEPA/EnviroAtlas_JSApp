@@ -1,0 +1,2 @@
+//>>built
+define({"esri/layers/vectorTiles/nls/common":{_localized:{}},"widgets/Search/nls/strings":{_widgetLabel:"Pretra\u017ei",searchResult:"Rezultat pretrage",showAllResults:"Prika\u017ei rezultate pretrage za ",showAll:"Prika\u017ei rezultate pretrage",more:"vi\u0161e",untitled:"Bez naslova",_localized:{}}});

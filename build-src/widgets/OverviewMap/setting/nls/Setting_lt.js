@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/OverviewMap/setting/nls/strings":{visible:"Rodyti ap\u017evalgos \u017eem\u0117lap\u012f pagal numatym\u0105",minWidth:"Min. plotis",minHeight:"Min. auk\u0161tis",maxWidth:"Maks. plotis",maxHeight:"Maks. auk\u0161tis",minText:"Minimumas",maxText:"maksimumas",attachText:"Nurodykite, kuriame \u017eem\u0117lapio kampe talpinti \u0161\u012f valdikl\u012f.",expandText:"Atverti valdikl\u012f i\u0161 prad\u017ei\u0173",topLeft:"Vir\u0161uje kair\u0117je",topRight:"Vir\u0161uje de\u0161in\u0117je",
+bottomLeft:"Apa\u010dioje kair\u0117je",bottomRight:"Apa\u010dioje de\u0161in\u0117je",_localized:{}}});

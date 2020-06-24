@@ -1,0 +1,2 @@
+//>>built
+define({"esri/layers/vectorTiles/nls/common":{_localized:{}},"widgets/Search/nls/strings":{_widgetLabel:"Cari",searchResult:"Hasil pencarian",showAllResults:"Tampilkan hasil pencarian untuk ",showAll:"Tampilkan hasil pencarian",more:"lebih banyak",untitled:"Tidak berjudul",_localized:{}}});

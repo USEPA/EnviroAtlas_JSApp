@@ -1,0 +1,22 @@
+<div class="time-calendar-container">
+  <div>
+    <div data-dojo-attach-point="modeSelector" class="mode-selector"></div>
+
+    <span data-dojo-attach-point="timeMode" class="hide">
+      <div data-dojo-attach-point="dateBoxContainer" class="time-selector time-date"></div>
+      <div data-dojo-attach-point="timeTextBoxContainer" class="time-selector time-text"></div>
+    </span>
+    <span data-dojo-attach-point="calenderMode" class="hide">
+      <div data-dojo-attach-point="operatorContainer" class="time-selector calender-operator"></div>
+      <input type="text" data-dojo-type="dijit/form/NumberSpinner" value="0"
+         data-dojo-attach-point="numberSpinner" data-dojo-props="smallDelta:1,intermediateChanges:true,constraints: {min:0, places:0}"
+         class="time-selector calender-number calendar-inputs">
+      <div data-dojo-attach-point="unitContainer" class="calender-unit"></div>
+    </span>
+    <span data-dojo-attach-point="maxminMode">
+      <div data-dojo-attach-point="maxminDateBoxContainer" class="time-selector time-date"></div>
+      <div data-dojo-attach-point="maxminTimeTextBoxContainer" class="time-selector time-text"></div>
+    </span>
+
+  </div>
+</div>

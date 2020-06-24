@@ -1,0 +1,73 @@
+
+
+#infobtn{
+  margin-left: 5px;
+}
+
+.glowing-border {
+  border: 2px solid #dadada;
+  border-radius: 7px;
+}
+
+.glowing-border:focus {
+  outline: none;
+  border-color: #9ecaed;
+  box-shadow: 0 0 10px #9ecaed;
+}
+
+.helpModalCSS {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+
+.divSplashScreenContainer {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.65);
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 100000;
+    display: none;
+}
+
+.divSplashScreenContent {
+    background-color: #FFFFFF;
+    border-radius: 0px;
+    box-shadow: 0 0 10px #00FFFF;
+    text-align: left;
+    width: 500px;
+    z-index: 1000;
+}
+
+.divSplashContainer {
+    overflow: hidden;
+    position: relative;
+}
+
+.divSplashContent {
+    overflow: hidden;
+    padding-left: 10px;
+    text-align: left;
+    width: 95%;
+    font-size:9pt;
+}
+
+.closeIcon {
+    border: medium none;
+    border-radius: 5px;
+    cursor: pointer;
+    float: inherit;
+    margin-bottom: 20px;
+    overflow: hidden;
+}

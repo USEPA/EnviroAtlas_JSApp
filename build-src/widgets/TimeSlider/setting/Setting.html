@@ -1,0 +1,56 @@
+<div>
+	<div class="title">${nls.timeSetting}</div>
+	<div class="clearFix items">
+		<div class="config-radio-container">
+			<div>
+				<input data-dojo-attach-point="webMapSettingRaido" data-dojo-type="dijit/form/RadioButton" type="radio" class="jimu-radio-btn blue-radio"
+				 name="modeRaido" id="webMapSettingRaido" />
+				<label data-dojo-attach-point="webMapSettingLabel" for="webMapSettingRaido">${nls.useWebMapSetting}</label>
+			</div>
+		</div>
+		<div class="config-radio-container">
+			<div>
+				<input data-dojo-attach-point="configureSettingRaido" data-dojo-type="dijit/form/RadioButton" type="radio" class="jimu-radio-btn blue-radio"
+				 name="modeRaido" id="configureSettingRaido" />
+				<label data-dojo-attach-point="configureSettingLabel" for="configureSettingRaido">${nls.useConfigureSetting}</label>
+			</div>
+
+			<div class="time-setting-btn" data-dojo-attach-point="timeSettingBtn">
+				<div class="time-setting-icon" title="${nls.timeSettingBtn}"></div>
+			</div>
+		</div>
+	</div>
+	<div class="clearFix items hide">
+		<div data-dojo-attach-point="configureTimeSettingsContainer"></div>
+	</div>
+
+
+	<div class="title">${nls.sliderSetting}</div>
+	<div class="clearFix items">
+		<div data-dojo-attach-point="autoPlay"></div>
+	</div>
+	<div class="clearFix items">
+		<div data-dojo-attach-point="loopPlay"></div>
+	</div>
+	<div class="clearFix items">
+		<div data-dojo-attach-point="showLabelsBox"></div>
+	</div>
+
+	<div class="clearFix items date-time-format tips">${nls.dateAndTimeFormat}</div>
+	<div class="clearFix selector">
+		<div class="time-formats jimu-float-leading">
+			<div data-dojo-attach-point="timeFormat"></div>
+		</div>
+
+		<div data-dojo-attach-point="customDateContainer" class="time-formats customdate-container jimu-float-leading hide">
+			<input class="customdate jimu-input jimu-float-trailing" data-dojo-attach-point="customDateFormat" data-dojo-attach-event="blur:_onCustomDateFormatBlur"
+			 required="true" data-dojo-type="dijit/form/ValidationTextBox" />
+
+			<a class="help-icon" data-dojo-attach-point="helpIcon" href="http://momentjs.com/docs/#/displaying/format/" title="${nls.formatInstruction}"
+			 target="_blank"></a>
+		</div>
+	</div>
+
+
+	<div data-dojo-attach-point="autoRefreshContainer" class="hide"></div>
+</div>

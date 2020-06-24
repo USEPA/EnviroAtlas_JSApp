@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="12px" viewBox="0 0 14 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/all/selected</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="filter" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="select-component" transform="translate(-243.000000, -765.000000)" fill="#999999">
+            <path d="M243,765 L257,765 L257,767 L243,767 L243,765 Z M243,770 L257,770 L257,772 L243,772 L243,770 Z M243,775 L257,775 L257,777 L243,777 L243,775 Z" id="icons/all/selected"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,2 @@
+//>>built
+define(["require","exports","esri/config"],function(c,d,a){return Object.defineProperty(a,"workers",{get:function(){return a.defaults.workers},set:function(b){return a.defaults.workers=b}}),a});

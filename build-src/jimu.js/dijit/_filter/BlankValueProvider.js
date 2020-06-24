@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define(["dojo/_base/html","dojo/_base/declare","./ValueProvider"],function(a,b,c){return b([c],{templateString:"\x3cdiv\x3e\x3c/div\x3e",postCreate:function(){this.inherited(arguments);a.addClass(this.domNode,"jimu-filter-blank-value-provider")},getDijits:function(){return[]},getStatus:function(){return 1},setValueObject:function(){},getValueObject:function(){return{isValid:!0,type:this.partObj.valueObj.type,value:null}},isBlankValueProvider:function(){return!0}})});

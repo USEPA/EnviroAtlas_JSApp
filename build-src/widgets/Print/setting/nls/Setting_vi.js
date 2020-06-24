@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Print/setting/nls/strings":{serviceURL:"URL D\u1ecbch v\u1ee5",defaultTitle:"Ti\u00eau \u0111\u1ec1 m\u1eb7c \u0111\u1ecbnh",defaultAuthor:"T\u00e1c gi\u1ea3 m\u1eb7c \u0111\u1ecbnh",defaultCopyright:"B\u1ea3n quy\u1ec1n m\u1eb7c \u0111\u1ecbnh",defaultFormat:"\u0110\u1ecbnh d\u1ea1ng m\u1eb7c \u0111\u1ecbnh",defaultLayout:"B\u1ed1 c\u1ee5c m\u1eb7c \u0111\u1ecbnh",warning:"\u0110\u1ea7u v\u00e0o kh\u00f4ng \u0111\u00fang",urlNotAvailable:"url kh\u00f4ng kh\u1ea3 d\u1ee5ng",notPrintTask:"url kh\u00f4ng ph\u1ea3i l\u00e0 t\u00e1c v\u1ee5 in",
+advancedOption:"Hi\u1ec7n t\u00f9y ch\u1ecdn n\u00e2ng cao",ok:"OK",editable:"C\u00f3 th\u1ec3 ch\u1ec9nh s\u1eeda",_localized:{}}});

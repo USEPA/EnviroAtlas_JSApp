@@ -1,0 +1,83 @@
+{ "WidgetTags":
+	[
+	 	{
+                "name": "Demographic",
+                "label": "Demographic Layers",
+                "version": "1.3",
+                "uri": "widgets/DemographicLayers/Widget",
+                "index": 3,
+                "id": "widgets_DemographicLayers",
+                "Tags": [
+                    "Demographics",
+                    "Education",
+                    "Households",
+                    "Minority",
+                    "At-risk",
+                    "Gender",
+                    "Age",
+                    "Census",
+                    "Grade",
+                    "College",
+                    "School",
+                    "Graduate",
+                    "Employment",
+                    "Unemployment",
+                    "Jobs",
+                    "Wage",
+                    "Salary",
+                    "Housing",
+                    "Rent",
+                    "Income",
+                    "Poverty",
+                    "Population",
+                    "Commute",
+                    "Commuting",
+                    "Race",
+                    "Languages",
+                    "English", 
+                    "Spanish", 
+                    "French"
+                ]
+        },
+		{
+                "name": "TimeSeries",
+                "label": "Times Series Layers",
+                "version": "1.3",
+                "uri": "widgets/TimeSeries/Widget",
+                "config": "widgets/TimeSeries/config.json",
+                "index": 4,
+                "id": "widgets_TimeSeries_Widget",
+                "Tags": [
+                    "Peak Emissions",
+                    "Education",
+                    "Precipitation",
+					"Climate",
+					"Change",
+					"RCP",
+					"IPCC",
+					"Scenario",
+					"Greenhouse",
+					"GHG",
+					"Global",
+					"Warming",
+					"Carbon",
+					"CO2",
+					"Emissions",
+					"Atmosphere",
+					"Future",
+					"Historic",
+					"Precipitation",
+					"Evapotranspiration",
+					"Evaporation",
+					"Temperature",
+					"Season",
+					"Time",
+					"Heat",
+					"Change",
+					"Rainfall"
+                ]
+        }
+
+
+  	]
+}

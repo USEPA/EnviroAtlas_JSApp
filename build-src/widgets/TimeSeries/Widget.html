@@ -1,0 +1,142 @@
+
+<div style="height:100%; width:100%; overflow-y:auto; background-color: #ece9eb" dojotype="dijit.layout.ContentPane">
+    <div style="width:100%; background-color:#b3b3b3; font-size:16px; padding-left:4px; border-bottom: 1px solid rgb(150,150,150)">
+    Climate Scenarios
+  </div>
+
+        <div style="padding:10px"> <!-- id="titleBarTimeSeries" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Climate Scenarios', open: true"> -->
+            
+            <div id="TimeSeriesScenarios" style="width:100%;height:100%;">
+            	<table>
+            		<tr>
+            			<td>
+                            Scenario:
+                        </td>
+                        <td style="width:100%">
+                            <select id="modelSelection" style="width:100%" required="">
+            				   <option value="RCP2.6">RCP2.6 (Peak Emissions Year 2020)</option>
+						        <option value="RCP4.5">RCP4.5 (Peak Emissions Year 2040)</option>
+						        <option value="RCP6.0">RCP6.0 (Peak Emissions Year 2080)</option>
+						        <option value="RCP8.5">RCP8.5 (Peak Emissions After 2100)</option>
+						        <option value="Hist">Historic Data</option>								        
+						    </select>
+            			</td>
+            			<td>
+            				<input  id="modelSelectionHelp" class="i-button" style="line-height: 3px;" type="button">
+            			</td>                    			
+            		</tr>
+            		<tr>
+                        <td>
+                            Climate Variable:
+                        </td>
+            			<td style="width:100%">
+            				<select id="climateSelection" name="climateSelection" style="width:100%" required="">
+						       
+						        <option value="Precip">Precipitation</option>
+						        <option value="TempMax">Maximum Temperature</option>
+						        <option value="TempMin">Minimum Temperature</option>
+						        <option value="PET">Evapotranspiration</option>
+						    </select>                    				
+            			</td>
+            			<td>
+            				<input  id="climateSelectionHelp" class="i-button" style="line-height: 3px;" type="button">
+            			</td>                    			
+            		</tr>
+            		<tr>
+                        <td>
+                            Season:
+                        </td>
+            			<td style="width:100%">
+            				<select id="seasonSelection" name="seasonSelection" style="width:100%" required="">
+						        
+						        <option value="Spring">Spring</option>
+						        <option value="Summer">Summer</option>
+						        <option value="Fall">Fall</option>
+						        <option value="Winter">Winter</option>
+						        <option value="Annual">Annual</option>
+						    </select>                      				
+            			</td>
+            			<td>
+            				<input  id="seasonSelectionHelp" class="i-button" style="line-height: 3px;" type="button">
+            			</td>                    			
+            		</tr>
+            		<!--tr>
+            			<td>
+            				<input id="frameYearInput"/>
+            			</td>
+            			<td>
+            				<input  id="frameYearInputHelp" class="i-button" style="line-height: 3px;" type="button"> 
+            			</td>                    			
+            		</tr-->                    		                    		
+
+				</table>
+                <div style="display:table; margin:10px auto">	
+				
+							<button id="loadServiceBtn" type="button"    >Add to Map</button>
+						&nbsp;
+							<button id="removeServiceBtn" type="button"  >Clear Map</button> 
+						
+                           
+				 
+                </div>               
+            </div>
+        
+        <!-- <div data-dojo-type="dijit/TitlePane"
+                     data-dojo-props="title:'Climate Change Scenarios'">   -->      
+            <div id="titleAndSlider" class="timeWindow">
+                <div id="timeSliderWin" class="shadow">
+                    <div id="title">
+                      <!-- Climate Change Scenarios -->
+                    </div>
+                    <div id="subTitle" > 
+                      Timeline: 1950 - 2099
+                    </div>
+                    <div id="details">
+                    </div>
+                    <div id="frameOrSlide" style="display:none" >
+                    </div>
+                                        
+                    <div id="timeSliderDivOneFrame" data-dojo-attach-point="frameNodeContainer" style="width:100%;height:100%;">
+                    </div>                    
+                    <div id="timeSliderDiv" data-dojo-attach-point="sliderNodeContainer" style="width:100%;height:100%;">
+                    </div>
+                    
+                </div>
+            </div>
+            <div id="titleAndSliderOneFrame" class="timeWindow" >
+                <div id="timeSliderWinOneFrame" class="shadow">
+                    <div id="titleOneFrame">
+                      <!-- Climate Change Scenarios -->
+                    </div>
+                    <div id="subTitleOneFrame"> 
+						Timeline: Years (1950-2099)
+                    </div>                    
+                </div>
+            </div>            
+         <!-- </div>   --> 
+        <div id="rightPane"
+            data-dojo-type="dijit/layout/ContentPane"
+            data-dojo-props="region:'right',splitter:'true'"
+            style="display:none">
+                <div data-dojo-type="dijit/TitlePane"
+                     data-dojo-props="title:'Scenario Information'">
+                     <div id="layerMetadata" style="height: 100%;"></div>
+                     
+                     
+                </div>            
+                <div data-dojo-type="dijit/TitlePane" 
+                	id="legendPane"
+                    data-dojo-props="title:'Result'"
+                    >
+                    <!--div id="table_container"></div-->
+                    <div id="identResult"></div>
+                </div>
+
+         </div>    
+    
+    <div id='ClimateDisclaimer' style='border-top: 1px solid black; margin-top:15px; padding-top:10px'>
+        <p>Note: These projections are from the NEX-DCP30 dataset, prepared by the Climate Analytics Group and NASA Ames Research Center using the NASA Earth Exchange, and distributed by the NASA Center for Climate Simulation. Climate scenarios provide likely approximations of future conditions given a set of assumptions. The future is inherently uncertain, and the US EPA cannot guarantee that these scenarios reflect what will occur. See Fact Sheets for details.
+        </p>
+    </div>
+</div>
+</div>

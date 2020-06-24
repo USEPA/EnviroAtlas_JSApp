@@ -1,0 +1,2 @@
+//>>built
+define({"esri/layers/vectorTiles/nls/common":{_localized:{}},"widgets/Search/nls/strings":{_widgetLabel:"Pesquisar",searchResult:"Pesquisar recultados",showAllResults:"Mostrar resultados de pesquisa para ",showAll:"Mostrar resultados de pesquisa",more:"mais",untitled:"Sem t\u00edtulo",_localized:{}}});

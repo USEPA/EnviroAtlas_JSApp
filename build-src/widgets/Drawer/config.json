@@ -1,0 +1,4 @@
+{
+	"configText":"Drawer",
+	"includeWidgets":["ECAT", "Raindrop", "ElevationProfile", "CompareMyArea", "HucNavigation", "Select"]
+}

@@ -1,0 +1,138 @@
+{
+	"field": "BWDP_Pct",
+	"classificationMethod": "esriClassifyQuantile",
+	"classBreakInfos": [
+		{
+			"classMaxValue": 22.6299991607666,
+			"symbol": {
+				"color": [
+					255,
+					255,
+					128,
+					255
+				],
+				"style": "esriSFSSolid",
+				"type": "esriSFS",
+				"outline": {
+					"color": [
+						110,
+						110,
+						110,
+						255
+					],
+					"width": 1,
+					"style": "esriSLSSolid",
+					"type": "esriSLS"
+				}
+			},
+			"description": "",
+			"label": "0 - 23"
+		},
+		{
+			"classMaxValue": 47.599998474121097,
+			"symbol": {
+				"color": [
+					113,
+					235,
+					47,
+					255
+				],
+				"style": "esriSFSSolid",
+				"type": "esriSFS",
+				"outline": {
+					"color": [
+						110,
+						110,
+						110,
+						255
+					],
+					"width": 1,
+					"style": "esriSLSSolid",
+					"type": "esriSLS"
+				}
+			},
+			"description": "",
+			"label": "24 - 48"
+		},
+		{
+			"classMaxValue": 77.9800033569336,
+			"symbol": {
+				"color": [
+					61,
+					184,
+					104,
+					255
+				],
+				"style": "esriSFSSolid",
+				"type": "esriSFS",
+				"outline": {
+					"color": [
+						110,
+						110,
+						110,
+						255
+					],
+					"width": 1,
+					"style": "esriSLSSolid",
+					"type": "esriSLS"
+				}
+			},
+			"description": "",
+			"label": "49 - 78"
+		},
+		{
+			"classMaxValue": 98.5199966430664,
+			"symbol": {
+				"color": [
+					33,
+					110,
+					158,
+					255
+				],
+				"style": "esriSFSSolid",
+				"type": "esriSFS",
+				"outline": {
+					"color": [
+						110,
+						110,
+						110,
+						255
+					],
+					"width": 1,
+					"style": "esriSLSSolid",
+					"type": "esriSLS"
+				}
+			},
+			"description": "",
+			"label": "79 - 99"
+		},
+		{
+			"classMaxValue": 100.0,
+			"symbol": {
+				"color": [
+					12,
+					16,
+					120,
+					255
+				],
+				"style": "esriSFSSolid",
+				"type": "esriSFS",
+				"outline": {
+					"color": [
+						110,
+						110,
+						110,
+						255
+					],
+					"width": 1,
+					"style": "esriSLSSolid",
+					"type": "esriSLS"
+				}
+			},
+			"description": "",
+			"label": "100"
+		}
+	],
+	"type": "classBreaks",
+	"minValue": 0.0
+}

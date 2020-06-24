@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Print/setting/nls/strings":{serviceURL:"URL usluge",defaultTitle:"Zadani naslov",defaultAuthor:"Zadani autor",defaultCopyright:"Zadano autorsko pravo",defaultFormat:"Zadani format",defaultLayout:"Zadani izgled",warning:"Neispravan unos",urlNotAvailable:"URL nije dostupan.",notPrintTask:"URL nije zadatak ispisa",advancedOption:"Prika\u017ei napredne opcije",ok:"U redu",editable:"Mo\u017ee se ure\u0111ivati",_localized:{}}});

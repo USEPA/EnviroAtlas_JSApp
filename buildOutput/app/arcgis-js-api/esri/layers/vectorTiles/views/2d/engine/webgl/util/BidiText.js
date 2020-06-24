@@ -1,0 +1,2 @@
+//>>built
+define(["require","exports","dojox/string/BidiEngine"],function(e,a,d){Object.defineProperty(a,"__esModule",{value:!0});var c=new d;a.bidiText=function(b){if(!c.hasBidiChar(b))return[b,!1];var a;return a="rtl"===c.checkContextual(b)?"IDNNN":"ICNNN",[c.bidiTransform(b,a,"VLYSN"),!0]}});

@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define("dojo/_base/declare dijit/_WidgetBase dojo/_base/lang dojo/_base/html dojo/on dojo/Evented".split(" "),function(b,c,d,a,e,f){return b([c,f],{baseClass:"jimu-toggle-button",declaredClass:"jimu.dijit.ToggleButton",checked:!1,postCreate:function(){this.innerNode=a.create("div",{"class":"inner"},this.domNode);this.checked&&a.addClass(this.domNode,"checked");this.own(e(this.domNode,"click",d.hitch(this,function(){this.toggle()})))},check:function(){this.checked=!0;a.addClass(this.domNode,"checked");
+this.emit("change",this.checked)},uncheck:function(){this.checked=!1;a.removeClass(this.domNode,"checked");this.emit("change",this.checked)},toggle:function(){this.checked?this.uncheck():this.check()},setValue:function(a){this.checked!==a&&this.toggle()}})});

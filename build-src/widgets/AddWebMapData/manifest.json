@@ -1,0 +1,23 @@
+{
+    "name": "AddWebMapData",
+    "platform": "HTML",
+    "version": "1.2.0",
+    "wabVersion": "1.2",
+    "author": "Softwhere Solutions",
+    "description": "Add Web Map Data",
+    "copyright": "",
+    "license": "http://www.apache.org/licenses/LICENSE-2.0",
+    "properties": {
+        "inPanel": true,
+        "hasLocale": false,
+        "hasStyle": true,
+        "hasConfig": true,
+        "hasUIFile": true,
+        "hasSettingPage": false,
+        "hasSettingUIFile": false,
+        "hasSettingLocale": false,
+        "hasSettingStyle": false,
+        "IsController": false
+    }
+
+}

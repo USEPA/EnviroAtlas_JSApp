@@ -1,0 +1,31 @@
+﻿{
+	"splash": {
+		"splashContent": "<div style='margin: 0px 15px 0px 15px'><br><p style='font-size:14px; text-align:center''>Welcome! The EnviroAtlas Interactive Map is a discovery and analysis tool for hundreds of data layers relating to ecosystem services, biodiversity, people, and the built environment.</p><br><p style='font-size:18px; text-align: center'>Choose an option to continue</p></div>",
+        "disclaimerContent": "<div style='padding:5px;'><ul style='padding-right:20px;'><li><b>It is the responsibility of the user to read and evaluate data limitations and restrictions especially with regard to intended use.</b> To the best of our knowledge, the data and information on this website are as accurate as possible, but no warranty expressed or implied is made regarding the accuracy or utility of the data for general or scientific purposes, nor shall the act of distribution constitute any such warranty. All modeled geographic data are, by their nature, imperfect; the data provided in EnviroAtlas should not be taken as absolute truth but as the best approximation of the truth based on best available data.</li><li><b>Neither EPA, EPA contractors, nor any other organizations cooperating with EPA assume any responsibility for damages or other liabilities</b> related to the accuracy, availability, use or misuse of the information provided on this website. EPA reserves the right to change information at any time without public notice. Any errors or omissions should be reported to the EnviroAtlas Team. We are always happy to hear your feedback and use that feedback for future enhancements.</li><li><b>For site-specific data, EnviroAtlas data will not replace “boots-on-the-ground measurements” or local knowledge. </b>Better data may be available from local sources.</li></ul></div>",
+		"requireConfirm": false,
+        "confirm": {
+          "text": "I understand and agree to the terms and conditions of this disclaimer, do not show the disclaimer again.",
+          "color": "#000",
+          "transparency": 0
+        },
+        "showOption": true,
+        "confirmEverytime": true,
+        "contentVertical": "top",
+        "size": {
+          "mode": "wh",
+          "wh": {
+            "w": 800,
+            "h": 450
+          }
+        },
+        "background": {
+          "mode": "color",
+          "color": "#485566",
+          "transparency": "0"
+        },
+        "button": {
+          "color": "#518dca",
+          "transparency": "0"
+        }
+	}
+}

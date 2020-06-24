@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Coordinate/nls/strings":{_widgetLabel:"Koordinat",hintMessage:"Klicka p\u00e5 kartan f\u00f6r att h\u00e4mta koordinater",defaultLabel:"Standard",realtimeLabel:"Flytta musen f\u00f6r att h\u00e4mta koordinater",computing:"Ber\u00e4knar ...",latitudeLabel:"Latitud",longitudeLabel:"Longitud",loading:"l\u00e4ser in...",enableClick:"Klicka om du vill aktivera att f\u00e5 koordinater genom att klicka p\u00e5 kartan",disableClick:"Klicka om du vill inaktivera att f\u00e5 koordinater genom att klicka p\u00e5 kartan",
+Default:"Standard",Inches:"Tum",Foot:"Fot",Foot_US:"Fot_US",Yards:"Yard",Miles:"Engelska mil",Nautical_Miles:"Nautiska mil",Millimeters:"Millimeter",Centimeters:"Centimeter",Meter:"Meter",Kilometers:"Kilometer",Decimeters:"Decimeter",Decimal_Degrees:"Grader",Degree_Minutes_Seconds:"Grader minuter sekunder",MGRS:"MGRS",USNG:"USNG",_localized:{}}});

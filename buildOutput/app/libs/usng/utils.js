@@ -1,0 +1,2 @@
+//>>built
+define(["libs/usng/usng"],function(d){return{lookupMgrs:function(c){var b=null;try{var a=[];d.USNGtoLL(c,a);b=2<=a.length&&!isNaN(a[0])&&!isNaN(a[1])?{text:c.toUpperCase(),latitude:a[0],longitude:a[1]}:null}catch(e){b=null}return b}}});

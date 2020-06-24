@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/Coordinate/nls/strings":{_widgetLabel:"Koordinate",hintMessage:"Za pridobitev koordinat kliknite karto",defaultLabel:"Privzeto",realtimeLabel:"Za pridobitev koordinat premaknite mi\u0161ko",computing:"Ra\u010dunam...",latitudeLabel:"Geografska \u0161irina",longitudeLabel:"Geografska dol\u017eina",loading:"nalaganje...",enableClick:"Kliknite, da omogo\u010dite klikanje zemljevida za pridobivanje koordinat",disableClick:"Kliknite, da onemogo\u010dite klikanje zemljevida za pridobivanje koordinat",
+Default:"Privzeto",Inches:"Palci",Foot:"\u010cevlji",Foot_US:"\u010cevlji_ZDA",Yards:"Jardi",Miles:"Milje",Nautical_Miles:"Morske milje",Millimeters:"Milimetri",Centimeters:"Centimetri",Meter:"Metri",Kilometers:"Kilometri",Decimeters:"Decimetri",Decimal_Degrees:"Stopinje",Degree_Minutes_Seconds:"Stopinj minut sekund",MGRS:"MGRS",USNG:"USNG",_localized:{}}});

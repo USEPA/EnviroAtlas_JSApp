@@ -1,0 +1,4 @@
+{
+	"configText":"Drawer",
+	"includeWidgets":["eBookmark", "Print", "eDraw", "Legend"]
+}

@@ -1,0 +1,4 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define({"widgets/MyLocation/nls/strings":{_widgetLabel:"Moja lokacija",title:"Najdi mojo lokacijo",browserError:"Geolokacija v tem brskalniku ni podprta.",failureFinding:"Va\u0161e lokacije ni mogo\u010de najti. Preverite svoj brskalnik, da se prepri\u010date, da je va\u0161a lokacija deljena.",httpNotSupportError:"Ta pripomo\u010dek je na voljo samo, ko do aplikacije v tem brskalniku dostopate preko HTTPS.",_localized:{}}});

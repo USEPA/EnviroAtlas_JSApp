@@ -1,0 +1,166 @@
+
+<div>
+
+	<div>
+        <table  >
+            <tr>
+                <td>
+                    Climate Scenario:
+                </td>
+                <td>
+					<select data-dojo-id="scenario" name="scenario" id="scenario" style="width: 160px;" data-dojo-type="dijit/form/Select">
+					    <option value="RCP26">Scenario I</option>
+					    <option value="RCP45">Scenario II</option>
+					    <option value="RCP60">Scenario III</option>
+					    <option value="RCP85">Scenario IV</option>
+					</select>
+                </td>
+                <td>
+                	<input type='button' class='i-button' data-dojo-attach-event="ondijitclick:OnScenarioSelectHelpClick" />
+                </td>                
+            </tr>
+            
+            <tr>
+                <td>
+                    Starting year for baseline:
+                </td>
+                <td>
+					<select data-dojo-id="startYearBaseline" name="startYearBaseline" id="startYearBaseline" style="width: 160px;" data-dojo-type="dijit/form/Select">
+					</select>
+                </td>
+            </tr> 
+
+            <tr>
+                <td>
+                    Ending year for baseline:
+                </td>
+                <td>
+					<select data-dojo-id="endYearBaseline" name="endYearBaseline" id="endYearBaseline" style="width: 160px;" data-dojo-type="dijit/form/Select">
+					</select>
+                </td>
+            </tr> 
+            
+            <tr>
+                <td>
+                    Starting year for comparison:
+                </td>
+                <td>
+					<select data-dojo-id="startYearComparison" name="startYearComparison" id="startYearComparison" style="width: 160px;" data-dojo-type="dijit/form/Select">
+					</select>
+                </td>
+            </tr>                         
+            
+            <tr>
+                <td>
+                    Ending year for comparison:
+                </td>
+                <td>
+					<select data-dojo-id="endYearComparison" name="endYearComparison" id="endYearComparison" style="width: 160px;" data-dojo-type="dijit/form/Select">
+					</select>
+                </td>
+            </tr>             
+            
+            <tr>
+                <td>
+                    Climate variable:
+                </td>
+                <td>
+					<select data-dojo-id="climateVariable" name="climateVariable" id="climateVariable" style="width: 160px;" data-dojo-type="dijit/form/Select">
+					    <option value="TempMax">Maximum Temperature</option>
+					    <option value="TempMin">Minimum Temperature</option>
+					    <option value="PET">Potential Evapotranspiration</option>
+					    <option value="Precip">Precipitation</option>
+					</select>
+                </td>
+                <td>
+                	<input type='button' class='i-button' data-dojo-attach-event="ondijitclick:OnClimateVariableHelpClick" />
+                </td>                
+            </tr>   
+            
+            <tr>
+                <td>
+                    Season or Annual:
+                </td>
+                <td>
+					<select data-dojo-id="season" name="season" id="season" style="width: 160px;" data-dojo-type="dijit/form/Select">
+					    <option value="Spring">Spring</option>
+					    <option value="Summer">Summer</option>
+					    <option value="Fall">Fall</option>
+					    <option value="Winter">Winter</option>
+					    <option value="Annual">Annual</option>
+					</select>
+                </td>
+                <td>
+                	<input type='button' class='i-button' data-dojo-attach-event="ondijitclick:OnSeasonSelectHelpClick" />
+                </td>                
+            </tr>                       
+        </table>
+	</div>
+	<br>
+	<div>
+	    <table  >
+	        <tr>
+	            <td>
+		    		<button id="calculateChangeBtn" type="button">Calculate Change</button> &nbsp;
+			    </td>	
+	        	<td>
+			    	<button id="clearLayersBtn" type="button"  >Clear Layers</button> &nbsp;
+				</td>   
+				<td>
+			    	<img id="loadingWrap2" src="${folderUrl}images/bigrotation2.gif" style="width:20px;height:20px"/>
+			    </td>
+			    <td>
+			    	<label id="ECATgpFail" style="display:none;">gp tool failed</label>
+			    </td>
+	    	</tr>
+		</table  >
+	</div>
+	<div style="line-height:60%;">
+	    <br>
+	</div>
+    <button id="downloadCSVBtn" type="button"  >Download HUC12 average values (CSV)</button>    			
+
+	<div>
+	    <br>
+	</div>    
+	<hr>
+    <!-- <div id="slider" ></div> -->
+    
+    <br>
+ 	<div > 		
+ 		<p>
+ 			We recommend at least 30 year increments for the baseline period and the comparison time period (e.g., use 1950 to 1980 for a baseline period) because of the inherent uncertainty in the climate models. The calculation may take a few minutes. You may continue to use the map while the ECAT calculation takes place.
+ 		</p>
+ 		<br>
+ 		<a target = "_blank" href="https://www.epa.gov/sites/production/files/2015-05/documents/enviroatlasuserguide.pdf">Learn more in our User Guide (pdf)</a>
+ 	</div>
+	<div id="helpModal" class="helpModalCSS">
+			<div id="divSplashScreenContainer" class="divSplashScreenContainer" >
+				<table style="width: 100%; height: 100%;">
+					<tr align="center" valign="middle">
+						<td>
+							<div id="divSplashScreenContent" class="hideContainer divSplashScreenContent">
+								<table style="width: 100%;">
+									<tr>
+										<td>
+											<div id="divSplashContainer" class="divSplashContainer" style="margin-top: 10px;">
+												<div id="divSplashContent" class="divSplashContent">
+													
+												</div>
+												<br>
+											</div>
+										</td>
+									</tr>
+									<tr align="center" valign="middle">
+										<td>
+											<div><button id="helpCloseButton" type="button" class="closeIcon">OK</button></div>
+										</td> 
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</table>
+		</div>	
+	</div>
+</div>
