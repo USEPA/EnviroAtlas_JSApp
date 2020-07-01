@@ -16,6 +16,7 @@ define({
   "author": "ผู้เขียน",
   "copyright": "ลิขสิทธิ์",
   "fullLayoutOptions": "ตัวเลือกโครงร่างแบบเต็ม",
+  "scaleBarUnit": "หน่วยแถบมาตราส่วน",
   "scaleBarUnitsMetric": "แถบมาตราส่วนหน่วยเมตริก",
   "scaleBarUnitsNonMetric": "แถบมาตราส่วนหน่วยอื่นๆ",
   "unitsMiles": "ไมล์",
@@ -33,5 +34,9 @@ define({
   "print": "พิมพ์",
   "clearList": "ล้างภาพพิมพ์",
   "creatingPrint": "การสร้างงานพิมพ์",
-  "printError": "ข้อผิดพลาด ลองอีกครั้ง"
+  "printError": "ข้อผิดพลาด ลองอีกครั้ง",
+  "forceFeatureAttributes": "ฟีเจอร์แอตทริบิวต์",
+  "includeFeatureAttributes": "รวมแอตทริบิวด์",
+  "outputSR": "เอาท์พุทการอ้างอิงเชิงพื้นที่",
+  "invalidWkid": "wkid ใช้ไม่ได้"
 });

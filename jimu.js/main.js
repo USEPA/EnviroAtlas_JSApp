@@ -304,6 +304,7 @@ define([
     window.hashFieldsAddedFeatureLayer = {};
     window.hashVisibleLayersForDynamic = {};
     window.hashTitleToEAID = {};
+    window.hashEAIDToTitle = {};
     window.hashGeometryTypeAddedFeatLyr = {};
     window.hashInfoTemplate = {};
 	window.hashRenderer = {};

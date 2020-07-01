@@ -9,5 +9,6 @@ define({
   "urlNotAvailable": "Adresa URL není k dispozici.",
   "notPrintTask": "Adresa URL neodkazuje na tiskovou úlohu.",
   "advancedOption": "Zobrazit pokročilé možnosti",
-  "ok": "OK"
+  "ok": "OK",
+  "editable": "Editovatelné"
 });

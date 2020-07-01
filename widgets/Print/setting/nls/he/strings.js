@@ -9,5 +9,6 @@ define({
   "urlNotAvailable": "כתובת ה-URL אינה זמינה",
   "notPrintTask": "כתובת ה-URL אינה משימת הדפסה",
   "advancedOption": "הצג אפשרויות מתקדמות",
-  "ok": "אישור"
+  "ok": "אישור",
+  "editable": "ניתן לעריכה"
 });

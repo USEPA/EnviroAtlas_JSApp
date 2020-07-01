@@ -16,6 +16,7 @@ define({
   "author": "Auteur",
   "copyright": "Copyright",
   "fullLayoutOptions": "Volledige lay-outopties",
+  "scaleBarUnit": "Eenheid voor schaalbalk",
   "scaleBarUnitsMetric": "Eenheden voor schaalbalk metrisch",
   "scaleBarUnitsNonMetric": "Eenheden voor schaalbalk niet-metrisch",
   "unitsMiles": "Mijl",
@@ -33,5 +34,9 @@ define({
   "print": "Afdrukken",
   "clearList": "Afdrukken wissen",
   "creatingPrint": "Afdruk maken",
-  "printError": "Fout, probeer het opnieuw"
+  "printError": "Fout, probeer het opnieuw",
+  "forceFeatureAttributes": "Objectattributen",
+  "includeFeatureAttributes": "Attributen opnemen",
+  "outputSR": "Uitvoer ruimtelijke referentie",
+  "invalidWkid": "Ongeldige wkid"
 });

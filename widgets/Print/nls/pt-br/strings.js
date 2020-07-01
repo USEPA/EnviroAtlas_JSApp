@@ -16,6 +16,7 @@ define({
   "author": "Autor",
   "copyright": "Direitos Autorais",
   "fullLayoutOptions": "Opções completas de layout",
+  "scaleBarUnit": "Unidade da barra de escala",
   "scaleBarUnitsMetric": "Unidades métricas da barra de escala",
   "scaleBarUnitsNonMetric": "Unidades não métricas da barra de escala",
   "unitsMiles": "Milhas",
@@ -33,5 +34,9 @@ define({
   "print": "Imprimir",
   "clearList": "Limpar impressões",
   "creatingPrint": "Criando impressão",
-  "printError": "Erro, tente novamente"
+  "printError": "Erro, tente novamente",
+  "forceFeatureAttributes": "Atributos da feição",
+  "includeFeatureAttributes": "Incluir atributos",
+  "outputSR": "Referência espacial de saída",
+  "invalidWkid": "Wkid inválido"
 });

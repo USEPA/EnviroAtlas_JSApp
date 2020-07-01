@@ -16,6 +16,7 @@ define({
   "author": "Автор",
   "copyright": "Авторские права",
   "fullLayoutOptions": "Указать параметры компоновки",
+  "scaleBarUnit": "Единицы измерения масштабной линейки",
   "scaleBarUnitsMetric": "Метрические единицы шкалы масштабов",
   "scaleBarUnitsNonMetric": "Неметрические единицы шкалы масштабов",
   "unitsMiles": "Мили",
@@ -33,5 +34,9 @@ define({
   "print": "Печать",
   "clearList": "Очистить список печати",
   "creatingPrint": "Создание документа печати",
-  "printError": "Ошибка, попробуйте еще раз"
+  "printError": "Ошибка, попробуйте еще раз",
+  "forceFeatureAttributes": "Атрибуты пространственных объектов",
+  "includeFeatureAttributes": "Включить атрибуты",
+  "outputSR": "Выходная пространственная привязка",
+  "invalidWkid": "Неверный wkid"
 });

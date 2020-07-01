@@ -9,5 +9,6 @@ define({
   "urlNotAvailable": "URL'en er ikke tilgængelig.",
   "notPrintTask": "URL'en er ikke en udskrivningsopgave",
   "advancedOption": "Vis avancerede indstillinger",
-  "ok": "OK"
+  "ok": "OK",
+  "editable": "Redigérbar"
 });

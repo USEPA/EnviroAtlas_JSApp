@@ -16,6 +16,7 @@ define({
   "author": "Oppretter",
   "copyright": "Copyright",
   "fullLayoutOptions": "Komplette layoutalternativer",
+  "scaleBarUnit": "Målestokkenhet",
   "scaleBarUnitsMetric": "Målestokklinjal metriske måleenheter",
   "scaleBarUnitsNonMetric": "Målestokklinjal ikke-metriske måleenheter",
   "unitsMiles": "Miles",
@@ -33,5 +34,9 @@ define({
   "print": "Skriv ut",
   "clearList": "Fjern utskrifter",
   "creatingPrint": "Oppretter utskrift",
-  "printError": "Feil, prøv igjen"
+  "printError": "Feil, prøv igjen",
+  "forceFeatureAttributes": "Geoobjekters attributter",
+  "includeFeatureAttributes": "Inkluder attributter",
+  "outputSR": "Geografisk referanse for utdata",
+  "invalidWkid": "Ugyldig wkid"
 });

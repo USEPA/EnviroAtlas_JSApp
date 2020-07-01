@@ -16,6 +16,7 @@ define({
   "author": "Yazar",
   "copyright": "Telif Hakkı",
   "fullLayoutOptions": "Tam düzen seçenekleri",
+  "scaleBarUnit": "Ölçek çubuk birimi",
   "scaleBarUnitsMetric": "Ölçek çubuğu birimi, metrik",
   "scaleBarUnitsNonMetric": "Ölçek çubuğu birimi, metrik olmayan",
   "unitsMiles": "Mil",
@@ -33,5 +34,9 @@ define({
   "print": "Yazdır",
   "clearList": "Baskıları temizle",
   "creatingPrint": "Baskı oluşturuluyor",
-  "printError": "Hata, yeniden deneyin"
+  "printError": "Hata, yeniden deneyin",
+  "forceFeatureAttributes": "Öznitelikleri belirt",
+  "includeFeatureAttributes": "Öznitelikleri dahil et",
+  "outputSR": "Çıktı mekansal referansı",
+  "invalidWkid": "Geçersiz wkid"
 });

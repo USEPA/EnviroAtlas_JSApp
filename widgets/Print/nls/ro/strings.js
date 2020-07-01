@@ -16,6 +16,7 @@ define({
   "author": "Autor",
   "copyright": "Drepturi de autor",
   "fullLayoutOptions": "Opţiuni de configurare complete",
+  "scaleBarUnit": "Unitatea scării gradate",
   "scaleBarUnitsMetric": "Unităţi metrice pentru bara de scară",
   "scaleBarUnitsNonMetric": "Unităţi nemetrice pentru bara de scară",
   "unitsMiles": "Mile",
@@ -33,5 +34,9 @@ define({
   "print": "Imprimare",
   "clearList": "Golire imprimări",
   "creatingPrint": "În curs de creare imprimare",
-  "printError": "Eroare, reîncercaţi"
+  "printError": "Eroare, reîncercaţi",
+  "forceFeatureAttributes": "Atribute de obiecte spațiale",
+  "includeFeatureAttributes": "Includeți atributele",
+  "outputSR": "Referință spațială de ieșire",
+  "invalidWkid": "wkid nevalid"
 });

@@ -9,5 +9,6 @@ define({
   "urlNotAvailable": "URL は利用できません。",
   "notPrintTask": "URL は印刷タスクではありません。",
   "advancedOption": "高度な設定を表示",
-  "ok": "OK"
+  "ok": "OK",
+  "editable": "編集可能"
 });

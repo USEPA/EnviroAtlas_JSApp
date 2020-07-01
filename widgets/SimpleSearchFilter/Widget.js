@@ -1680,6 +1680,7 @@ define([
                             lLayer._titleForLegend = layer.name;
                             lLayer.title = layer.name;
                             window.hashTitleToEAID[layer.name] = layer.eaID;
+                            window.hashEAIDToTitle[layer.eaID] = layer.name;
                             lLayer.noservicename = true;
                         }
                         var popupConfig = jimuUtils.getPopups(layer);
@@ -1821,6 +1822,7 @@ define([
                             lLayer._titleForLegend = layer.name;
                             lLayer.title = layer.name;
                             window.hashTitleToEAID[layer.name] = layer.eaID;
+                            window.hashEAIDToTitle[layer.eaID] = layer.name;
                             lLayer.noservicename = true;
                         }
                         lLayer.on('load', function(evt) {
@@ -2011,6 +2013,7 @@ define([
                             lLayer._titleForLegend = layer.name;
                             lLayer.title = layer.name;
                             window.hashTitleToEAID[layer.name] = layer.eaID;
+                            window.hashEAIDToTitle[layer.eaID] = layer.name;
                             lLayer.noservicename = true;
                         }
                         lLayer.on('load', function(evt) {

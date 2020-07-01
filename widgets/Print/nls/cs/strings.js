@@ -16,6 +16,7 @@ define({
   "author": "Autor",
   "copyright": "Autorská práva",
   "fullLayoutOptions": "Všechny možnosti rozvržení",
+  "scaleBarUnit": "Jednotka grafického měřítka",
   "scaleBarUnitsMetric": "Grafické měřítko v metrických jednotkách",
   "scaleBarUnitsNonMetric": "Grafické měřítko v nemetrických jednotkách",
   "unitsMiles": "Míle",
@@ -33,5 +34,9 @@ define({
   "print": "Tisk",
   "clearList": "Vymazat výtisky",
   "creatingPrint": "Vytváření výtisku",
-  "printError": "Chyba, zkuste to znovu."
+  "printError": "Chyba, zkuste to znovu.",
+  "forceFeatureAttributes": "Atributy prvků",
+  "includeFeatureAttributes": "Zahrnout atributy",
+  "outputSR": "Výstupní souřadnicový systém",
+  "invalidWkid": "Neplatné wkid"
 });

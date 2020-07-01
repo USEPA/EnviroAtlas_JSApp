@@ -9,5 +9,6 @@ define({
   "urlNotAvailable": "Url tidak tersedia",
   "notPrintTask": "Url bukan tugas cetak",
   "advancedOption": "Tampilkan opsi lanjutan",
-  "ok": "Ya"
+  "ok": "Ya",
+  "editable": "Dapat Diedit"
 });

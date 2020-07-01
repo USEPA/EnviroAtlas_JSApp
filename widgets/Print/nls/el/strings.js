@@ -16,6 +16,7 @@ define({
   "author": "Συντάκτης",
   "copyright": "Πνευματικά δικαιώματα",
   "fullLayoutOptions": "Επιλογές πλήρους διάταξης",
+  "scaleBarUnit": "Μονάδα γραμμής κλίμακας",
   "scaleBarUnitsMetric": "Μετρικό σύστημα μονάδων γραμμής κλίμακας",
   "scaleBarUnitsNonMetric": "Μη μετρικό σύστημα μονάδων γραμμής κλίμακας",
   "unitsMiles": "Μίλια",
@@ -33,5 +34,9 @@ define({
   "print": "Εκτύπωση",
   "clearList": "Απαλοιφή εκτυπώσεων",
   "creatingPrint": "Δημιουργία εκτύπωσης",
-  "printError": "Σφάλμα, δοκιμάστε ξανά"
+  "printError": "Σφάλμα, δοκιμάστε ξανά",
+  "forceFeatureAttributes": "Γνωρίσματα στοιχείων",
+  "includeFeatureAttributes": "Συμπερίληψη γνωρισμάτων",
+  "outputSR": "Χωρική αναφορά εξόδου",
+  "invalidWkid": "Μη έγκυρο wkid"
 });

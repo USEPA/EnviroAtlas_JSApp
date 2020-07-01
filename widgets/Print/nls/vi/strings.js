@@ -16,6 +16,7 @@ define({
   "author": "Tác giả",
   "copyright": "Bản quyền",
   "fullLayoutOptions": "Tùy chọn bố cục đầy đủ",
+  "scaleBarUnit": "Đơn vị của thanh tỷ lệ",
   "scaleBarUnitsMetric": "Đơn vị của thanh tỷ lệ theo hệ mét",
   "scaleBarUnitsNonMetric": "Đơn vị của thanh tỷ lệ không theo hệ mét",
   "unitsMiles": "Dặm",
@@ -33,5 +34,9 @@ define({
   "print": "In",
   "clearList": "Xóa bản in",
   "creatingPrint": "Đang tạo bản in",
-  "printError": "Lỗi, thử lại"
+  "printError": "Lỗi, thử lại",
+  "forceFeatureAttributes": "Thuộc tính đối tượng",
+  "includeFeatureAttributes": "Bao gồm thuộc tính",
+  "outputSR": "Tham chiếu không gian đầu ra",
+  "invalidWkid": "Wkid không hợp lệ"
 });

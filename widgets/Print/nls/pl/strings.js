@@ -16,6 +16,7 @@ define({
   "author": "Autor",
   "copyright": "Prawa autorskie",
   "fullLayoutOptions": "Wszystkie opcje układu",
+  "scaleBarUnit": "Jednostka podziałki liniowej",
   "scaleBarUnitsMetric": "Podziałka liniowa — jednostki metryczne",
   "scaleBarUnitsNonMetric": "Podziałka liniowa — jednostki niemetryczne",
   "unitsMiles": "Mile",
@@ -33,5 +34,9 @@ define({
   "print": "Drukuj",
   "clearList": "Wyczyść wydruki",
   "creatingPrint": "Tworzenie wydruku",
-  "printError": "Błąd, spróbuj ponownie"
+  "printError": "Błąd, spróbuj ponownie",
+  "forceFeatureAttributes": "Atrybuty obiektów",
+  "includeFeatureAttributes": "Dodaj atrybuty",
+  "outputSR": "Wynikowe odniesienie przestrzenne",
+  "invalidWkid": "Nieprawidłowy identyfikator wkid"
 });

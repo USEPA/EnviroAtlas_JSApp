@@ -16,6 +16,7 @@ define({
   "author": "Tekijä",
   "copyright": "Copyright",
   "fullLayoutOptions": "Täydelliset asetteluvaihtoehdot",
+  "scaleBarUnit": "Mittakaavapalkin yksikkö",
   "scaleBarUnitsMetric": "Mittakaavapalkin yksiköt, metriset",
   "scaleBarUnitsNonMetric": "Mittakaavapalkin yksiköt, ei-metriset",
   "unitsMiles": "Mailia",
@@ -33,5 +34,9 @@ define({
   "print": "Tulosta",
   "clearList": "Tyhjennä tulosteet",
   "creatingPrint": "Luodaan tulostetta",
-  "printError": "Virhe, yritä uudelleen"
+  "printError": "Virhe, yritä uudelleen",
+  "forceFeatureAttributes": "Kohteen ominaisuustiedot",
+  "includeFeatureAttributes": "Sisällytä ominaisuustiedot",
+  "outputSR": "Tulosaineiston koordinaattijärjestelmä",
+  "invalidWkid": "Virheellinen wkid-tunnus"
 });

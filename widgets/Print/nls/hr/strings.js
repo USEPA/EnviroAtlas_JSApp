@@ -16,6 +16,7 @@ define({
   "author": "Autor",
   "copyright": "Autorsko pravo",
   "fullLayoutOptions": "Opcije cijelog izgleda",
+  "scaleBarUnit": "Jedinica grafičkog mjerila",
   "scaleBarUnitsMetric": "Metričke jedinice grafičkog mjerila",
   "scaleBarUnitsNonMetric": "Jedinice grafičkog mjerila koje nisu metričke",
   "unitsMiles": "Milje",
@@ -33,5 +34,9 @@ define({
   "print": "Ispis",
   "clearList": "Izbriši ispise",
   "creatingPrint": "Stvaranje ispisa",
-  "printError": "Pogreška, pokušajte ponovno"
+  "printError": "Pogreška, pokušajte ponovno",
+  "forceFeatureAttributes": "Atributi geoobjekata",
+  "includeFeatureAttributes": "Uključi atribute",
+  "outputSR": "Izvoz prostorne reference",
+  "invalidWkid": "Nevažeći wkid"
 });

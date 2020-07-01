@@ -9,5 +9,6 @@ define({
   "urlNotAvailable": "Vietrādis URL nav pieejams",
   "notPrintTask": "Vietrādis URL nav drukas uzdevums",
   "advancedOption": "Rādīt papildu opcijas",
-  "ok": "Labi"
+  "ok": "Labi",
+  "editable": "Rediģējams"
 });

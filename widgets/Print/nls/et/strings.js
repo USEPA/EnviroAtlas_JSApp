@@ -16,6 +16,7 @@ define({
   "author": "Autor",
   "copyright": "Autoriõigus",
   "fullLayoutOptions": "Kõik paigutuse valikud",
+  "scaleBarUnit": "Mõõtkavariba ühik",
   "scaleBarUnitsMetric": "Mõõtkavariba meetermõõdustiku ühikud",
   "scaleBarUnitsNonMetric": "Mõõtkavariba muud kui meetermõõdustiku ühikud",
   "unitsMiles": "Miili",
@@ -33,5 +34,9 @@ define({
   "print": "Prindi",
   "clearList": "Tühista printimine",
   "creatingPrint": "Printimise tühistamine",
-  "printError": "Viga, proovige uuesti"
+  "printError": "Viga, proovige uuesti",
+  "forceFeatureAttributes": "Objekti atribuudid",
+  "includeFeatureAttributes": "Kaasa atribuudid",
+  "outputSR": "Väljundi koordinaatsüsteem",
+  "invalidWkid": "Kehtetu wkid"
 });
