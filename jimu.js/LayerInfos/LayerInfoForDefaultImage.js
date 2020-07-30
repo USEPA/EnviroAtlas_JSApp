@@ -87,7 +87,7 @@ define([
                 "src": imgSrc
               }, symbolDiv);
 				//alert(legend.label);//this is called for displaying the label
-				if (this.layerObject.id === "ScenarioDataLayer") {
+				if (this.layerObject.id === window.timeSeriesLayerId) {
 					newLegendLabel = legend.label;
 					legendSplit = legend.label.split("-");
 					if (legendSplit.length==1) {

@@ -50,3 +50,15 @@ background-color: #34669a;
   background-color: #002137;
   background: linear-gradient(#002137, #197ec0);
 }
+
+.tourDialog, .tourDialog2{
+  width: 600px;
+  overflow-y: hidden;
+}
+
+@media screen and (max-width: 965px) {
+  .tourDialog, .tourDialog2{
+    width: 100%;
+    background: rgba(72, 85, 102, 1) !important;
+  }
+}

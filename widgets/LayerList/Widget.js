@@ -24,6 +24,7 @@ define([
     'dojo/dom',
     'dojo/on',
     'dojo/query',
+    'jimu/utils',
     'dijit/registry',    
     './LayerListView',
     './LayerFilter',
@@ -31,7 +32,7 @@ define([
     'jimu/LayerInfos/LayerInfos'
   ],
   function(BaseWidget, PanelManager, declare, lang, array, html, dom, on,
-  query, registry, LayerListView, LayerFilter, NlsStrings, LayerInfos) {
+  query, jimuUtils, registry, LayerListView, LayerFilter, NlsStrings, LayerInfos) {
     var clazz = declare([BaseWidget], {
       //these two properties is defined in the BaseWiget
       baseClass: 'jimu-widget-layerList',
@@ -320,7 +321,15 @@ define([
           .forEach(function(layerTitleDivIdDomNode) {
             try {
               var eaID = layerInfo.id.replace(window.layerIdPrefix, "");
-              if ((layerInfo.isInScale()) || (window.hashIDtoTileURL[eaID] != null)) {
+
+              bTileOnMap = false;
+        	  tileLayer = this.map.getLayer(window.layerIdTiledPrefix + window.hashFeaturedCollectionToEAID[layerInfo.id]);         	
+        	  if(tileLayer != null){
+            	bTileOnMap = true;      
+              }                        
+              var indexID = window.featureLyrNumber.indexOf(window.hashFeaturedCollectionToEAID[layerInfo.id]);
+              //use ((indexID >= 0) && (bTileOnMap == true)) to check if tileLayer corresponding to Featured Collection exist.
+              if ((layerInfo.isInScale()) || (window.hashIDtoTileURL[eaID] != null)||((indexID >= 0) && (bTileOnMap == true))) {
                 html.removeClass(layerTitleDivIdDomNode, 'grayed-title');
               } else {
                 html.addClass(layerTitleDivIdDomNode, 'grayed-title');
@@ -498,15 +507,15 @@ define([
 	    		this.map.removeLayer(lyr);    
 	    		var eaID = window.hashFeaturedCollectionToEAID[window.layerID_Portal_WebMap[i]];
 	    		if (((eaID != null) && (eaID != undefined))) {
+	    			
 	    			var indexID = window.featureLyrNumber.indexOf(eaID);
 					if (indexID > -1) {
 					  window.featureLyrNumber.splice(indexID, 1);
 					}
-	    			
-	    			
-					lyrTiled = this._layerInfo.map.getLayer( window.layerIdTiledPrefix + eaID);
+
+					lyrTiled = this.map.getLayer( window.layerIdTiledPrefix + eaID);
 					if(lyrTiled){
-			       		this._layerInfo.map.removeLayer(lyrTiled);
+			       		this.map.removeLayer(lyrTiled);
 			      	} 	    			
 	    		}
  	  
@@ -534,6 +543,7 @@ define([
 		if(lyrCommunityBoundary != null){
     		this.map.removeLayer(lyrCommunityBoundary);        	
       	} 
+      	jimuUtils.adjustMapExtent(this.map);   
       }
     });
 

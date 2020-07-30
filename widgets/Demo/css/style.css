@@ -21,10 +21,10 @@ cursor: pointer;
 }
 
 .counter {
-	font-size:10px; 
+	font-size:13px; 
 	float:right; 
-	position:relative; 
-	top:-10px
+	position:relative;
+	top:5px
 }
 
 #tourDialog h1 {
@@ -71,4 +71,3 @@ cursor: pointer;
 	background: rgba(72, 85, 102, .8);
 	color: white;
 }
-

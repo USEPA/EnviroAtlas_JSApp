@@ -1,0 +1,20 @@
+{
+  "name": "NavHuc",
+  "label": "EnviroAtlas HUC12 Navigator",
+  "platform": "HTML",
+  "version": "4.0",
+  "wabVersion": "2.5",
+  "author": "Jimmy Bisese Tetra Tech built from eSearch by Robert Scheitlin & Esri R&D Center Beijing",
+  "description": "This widget provides navigation upstream and downstream on the Watershed Boundary Dataset.",
+  "copyright": "2019",
+  "license": "http://www.apache.org/licenses/LICENSE-2.0",
+  "properties": {
+    "hasVersionManager": true
+  },
+  "featureActions": [
+    {
+      "name": "eShowStatistics",
+      "uri": "featureActions/eShowStatistics"
+    }
+  ]
+}

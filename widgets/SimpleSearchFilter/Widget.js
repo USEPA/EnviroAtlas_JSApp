@@ -363,34 +363,44 @@ define([
 	        		}
 	        		else {
 						if (selfSimpleSearchFilter.map.infoWindow.features != null){
-							//test if current infoWindow resulted from  the previous click
-							var bInfoWindowUpdated = true;
-							if (selfSimpleSearchFilter.map.infoWindow.features.length == previuosMapInfoFromAll.length) {
-								bInfoWindowUpdated = false;
+							
+							//test if current infoWindow resulted from  the previous click							
+							bInfoWindowUpdated = false;
+							bAllDynamic = true;
 							for (ii=0; ii < selfSimpleSearchFilter.map.infoWindow.features.length; ii++) {
-									if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], previuosMapInfoFromAll)) {
-										bInfoWindowUpdated = true;
-										break;
-									}
-								}
+								// as long as one infoWindow feature not included in previuosMapInfoFromAll, which means user click a new point different from previous click
+								if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], previuosMapInfoFromAll)) {
+									bInfoWindowUpdated = true;
+									break;
+								}	
+								// on the condition that all infoWindow features are included in previuosMapInfoFromAll, check if they are included in previousMapInfoFromDynamic, which means user click at the same location as previous one		
+								if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], previousMapInfoFromDynamic)) {
+									bAllDynamic = false;
+								}						
+							}
+							
+							if (bAllDynamic == true) {
+								bInfoWindowUpdated = true;
 							}
 							//end of test if current infoWindow resulted from  the previous click
+							
 							if (bInfoWindowUpdated) {
 								if (selfSimpleSearchFilter.map.infoWindow.isShowing) {
 									for (ii=0; ii < selfSimpleSearchFilter.map.infoWindow.features.length; ii++) {
-									featuresCollection.push(selfSimpleSearchFilter.map.infoWindow.features[ii]);
+										featuresCollection.push(selfSimpleSearchFilter.map.infoWindow.features[ii]);
 										if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], currentMapInfoFromDynamic)) {
 									    	currentMapInfoFromDynamic.push(selfSimpleSearchFilter.map.infoWindow.features[ii]);	
 									    }																			
 									}
 								}
 							}
-						}
+						} // end of if (selfSimpleSearchFilter.map.infoWindow.features != null)
+						
 	        			if 	(featuresCollection.length > 0){
 			    			selfSimpleSearchFilter.map.infoWindow.setFeatures(featuresCollection);
 							selfSimpleSearchFilter.map.infoWindow.show(clickEvt.mapPoint);
 						}
-					}
+					} //end of if (arrLayersForPopup.length > 0) else
 	           } //end of if (window.hashPopup[eaID] != undefined)
 	        }); 	
 		};
@@ -398,7 +408,7 @@ define([
 				bSimulatedClickAddressed = false;
 				bSimulatedClick = false;
 				window.mapClickListenerForPopup = connect.connect(selfSimpleSearchFilter.map, "onClick", function(evt) {
-	 			//var mapClickListenerForPopup = connect.connect(selfSimpleSearchFilter.map, "onClick", function(evt) {
+					if ((window.toggleOnHucNavigation == false) && (window.toggleOnRainDrop == false) && (window.toggleOnCMA == false) && (window.toggleOnElevation == false)) {
 	 				    if (!bSimulatedClick) {
 	 				    	bSimulatedClickAddressed = false;
 	 				    	previuosMapInfoFromFL = [];	
@@ -418,64 +428,60 @@ define([
 	 				    }
 						if (bSimulatedClick) {
 			 				if (!bSimulatedClickAddressed) {
-					if ((window.toggleOnHucNavigation == true) || (window.toggleOnRainDrop == true)) {					
-						connect.disconnect(window.mapClickListenerForPopup);
-					} 
-					else {
-						currentMapInfoFromDynamic = [];
-						selfSimpleSearchFilter.map.graphics.clear();
-						if (selfSimpleSearchFilter.map.infoWindow.features != null){
-							for (ii=0; ii < selfSimpleSearchFilter.map.infoWindow.features.length; ii++) {
-								if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], previuosMapInfoFromFL)) {
-									if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], currentMapInfoFromDynamic)) {
-										currentMapInfoFromDynamic.push(selfSimpleSearchFilter.map.infoWindow.features[ii]);
-									}
-								}									
-							}					
-						}	
-						arrLayersForPopup = [];
-			    		for (i in window.featureLyrNumber) {  
-			    			bVisibleFL = false;
-			    			bVisibleTL = false;
-			    			
-			    			layerEAID = window.featureLyrNumber[i];
-				    		lyrFL = selfSimpleSearchFilter.map.getLayer(window.layerIdPrefix + layerEAID);		    		
-				    		if (lyrFL != null) {		    			
-								if (lyrFL.visible == true){
-								    if (((window.nationalLayerNumber.indexOf(layerEAID.toString()) >= 0)) || (lyrFL.visibleAtMapScale==true)){
-									   bVisibleFL = true;
-									}
-								}
-							} 
-							
-							//check if FL from Featured Collection is visible
-					    	for (j in window.layerID_Portal_WebMap) {	        
-					    		lyr = selfSimpleSearchFilter.map.getLayer(window.layerID_Portal_WebMap[j]);
-								if(lyr != null){
-						    		var eaID = window.hashFeaturedCollectionToEAID[window.layerID_Portal_WebMap[j]];
-						    		if ((lyr.visibleAtMapScale == true) && (window.featureLyrNumber[i] == eaID)){
-    									bVisibleFL = true;
-						    		}
-					 	  
-					          	}          	
-					        }  							
-							
-							
-							lyrTL = selfSimpleSearchFilter.map.getLayer(window.layerIdTiledPrefix + layerEAID);
-				    		if (lyrTL != null) {		    			
-								if (lyrTL.visible == true){
-									bVisibleTL = true;							
-								}
-							}		
-							if ((bVisibleFL == true) || (lyrTL == true)) {
-								arrLayersForPopup.push(layerEAID);
-							}		    		
-				    	}
-				    	//start to popup for first layer:
-				    	if 	(arrLayersForPopup.length > 0){
-				    	addSingleFeatureForPopup(arrLayersForPopup.pop(),evt);         
-			        	}       
-			        }
+								currentMapInfoFromDynamic = [];
+								selfSimpleSearchFilter.map.graphics.clear();
+								if (selfSimpleSearchFilter.map.infoWindow.features != null){
+									for (ii=0; ii < selfSimpleSearchFilter.map.infoWindow.features.length; ii++) {
+										if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], previuosMapInfoFromFL)) {
+											if (!featureExistInCollection(selfSimpleSearchFilter.map.infoWindow.features[ii], currentMapInfoFromDynamic)) {
+												currentMapInfoFromDynamic.push(selfSimpleSearchFilter.map.infoWindow.features[ii]);
+											}
+										}									
+									}					
+								}	
+								arrLayersForPopup = [];
+					    		for (i in window.featureLyrNumber) {  
+					    			bVisibleFL = false;
+					    			bVisibleTL = false;
+					    			
+					    			layerEAID = window.featureLyrNumber[i];
+						    		lyrFL = selfSimpleSearchFilter.map.getLayer(window.layerIdPrefix + layerEAID);		    		
+						    		if (lyrFL != null) {		    			
+										if (lyrFL.visible == true){
+										    if (((window.nationalLayerNumber.indexOf(layerEAID.toString()) >= 0)) || (lyrFL.visibleAtMapScale==true)){
+											   bVisibleFL = true;
+											}
+										}
+									} 
+									
+									//check if FL from Featured Collection is visible
+							    	for (j in window.layerID_Portal_WebMap) {	        
+							    		lyr = selfSimpleSearchFilter.map.getLayer(window.layerID_Portal_WebMap[j]);
+										if(lyr != null){
+								    		var eaID = window.hashFeaturedCollectionToEAID[window.layerID_Portal_WebMap[j]];
+								    		if ((lyr.visibleAtMapScale == true) && (lyr.visible == true) && (window.featureLyrNumber[i] == eaID)){
+		    									bVisibleFL = true;
+								    		}
+							 	  
+							          	}          	
+							        }  							
+									
+									
+									lyrTL = selfSimpleSearchFilter.map.getLayer(window.layerIdTiledPrefix + layerEAID);
+						    		if (lyrTL != null) {		    			
+										if (lyrTL.visible == true){
+											bVisibleTL = true;							
+										}
+									}		
+									if ((bVisibleFL == true) || (bVisibleTL == true)) {
+										arrLayersForPopup.push(layerEAID);
+									}		    		
+						    	}
+						    	//start to popup for first layer:
+						    	if 	(arrLayersForPopup.length > 0){
+						    	addSingleFeatureForPopup(arrLayersForPopup.pop(),evt);         
+					        	}       
+						        
 								//end of addressed
 				 				bSimulatedClickAddressed= true;
 				 				bSimulatedClick = false;
@@ -488,6 +494,7 @@ define([
 				          	selfSimpleSearchFilter.map.emit("click", { bubbles: false, cancelable: true, screenPoint: evt.mapPoint, mapPoint: evt.mapPoint });
 				          }
 				        }), 1000);
+			       }//end of if ((window.toggleOnHucNavigation == false)...
 				})
 		};
 		var updateSelectableLayersArea = function (){
@@ -570,6 +577,9 @@ define([
         		if 	(arrLayersToChangeSynbology.length > 0){
         			updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
         		}
+        		else if (arrFeatureCollectionsToChangeSynbology.length > 0) {
+        			updateSingleFeatureCollectionLayer(arrFeatureCollectionsToChangeSynbology.pop());
+        		}          		
         		
 			})
 		} else {
@@ -579,11 +589,41 @@ define([
         		lyrTobeUpdated.redraw();
         		if 	(arrLayersToChangeSynbology.length > 0){
         			updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
+        		}	
+        		else if (arrFeatureCollectionsToChangeSynbology.length > 0) {
+        			updateSingleFeatureCollectionLayer(arrFeatureCollectionsToChangeSynbology.pop());
+        		}                		
+			})						
+		}
+   };
+    var updateSingleFeatureCollectionLayer = function(selectedFeatureCollection){    	
+		lyrTobeUpdated = selfSimpleSearchFilter.map.getLayer(selectedFeatureCollection);	 
+ 		var selectedLayerNum = window.hashFeaturedCollectionToEAID[selectedFeatureCollection];
+		if (window.communitySelected != window.strAllCommunity) {        
+			$.getJSON( 'configs/CommunitySymbology/' + window.communitySelected + '_JSON_Symbol/Nulls/' + window.communitySelected + '_' + window.hashAttribute[selectedLayerNum] + ".json", function( data ) {
+				var renderer = new ClassBreaksRenderer(data);
+        		lyrTobeUpdated.setRenderer(renderer);	
+        		lyrTobeUpdated.redraw();
+        		if (lyrTobeUpdated.visible == true){
+            		lyrTobeUpdated.setVisibility(false);
+            		lyrTobeUpdated.setVisibility(true);						                			
+        		}
+        		if 	(arrFeatureCollectionsToChangeSynbology.length > 0){
+        			updateSingleFeatureCollectionLayer(arrFeatureCollectionsToChangeSynbology.pop());
+        		}
+        		
+			})
+		} else {
+			$.getJSON( 'configs/CommunitySymbology/' + 'AllCommunities' + '_JSON_Symbol/Nulls/' + 'CombComm' + '_' + window.hashAttribute[selectedLayerNum] + ".json", function( data ) {
+				var renderer = new ClassBreaksRenderer(data);
+        		lyrTobeUpdated.setRenderer(renderer);	
+        		lyrTobeUpdated.redraw();
+        		if 	(arrFeatureCollectionsToChangeSynbology.length > 0){
+        			updateSingleFeatureCollectionLayer(arrFeatureCollectionsToChangeSynbology.pop());
         		}	                		
 			})						
 		}
    };
-
 		var chkIdDictionary = {};
 		var nationalTopicList = [];
 		var communityTopicList = [];
@@ -748,7 +788,16 @@ define([
  	   
     var	_addSelectableLayerSorted = function(items){	  
 
-	    
+	    var arrEAIDMatchingCurrentFeaturedCollection = [];
+    	for (i in window.layerID_Portal_WebMap) {	        
+    		lyr = selfSimpleSearchFilter.map.getLayer(window.layerID_Portal_WebMap[i]);
+			if(lyr != null){
+	    		var eaID = window.hashFeaturedCollectionToEAID[window.layerID_Portal_WebMap[i]];
+	    		if ((eaID != null) && (eaID != undefined) && (arrEAIDMatchingCurrentFeaturedCollection.indexOf(eaID) < 0)) {
+					arrEAIDMatchingCurrentFeaturedCollection.push(eaID);
+	    		} 	  
+          	}          	
+        } 
 		updateTopicToggleButton("ESB");
 		updateTopicToggleButton("PSI");
 		updateTopicToggleButton("PBS");
@@ -992,7 +1041,10 @@ define([
 			    		bLayerSelected = true;
 		          	}                   	
                 }
-	
+                //check if url of eaID layer matches one Feature Collection layer on map
+	    		if (arrEAIDMatchingCurrentFeaturedCollection.indexOf(eaID) >= 0) {
+					bLayerSelected = true;
+	    		} 	
                 numOfSelectableLayers++;
 				//Add Header for each Topic in list
 				if (SelectedTopics.indexOf(eaTopic) == -1) {
@@ -1230,7 +1282,10 @@ define([
 							if(lyr){
 					    		bLayerSelected = true;
 				          	}     
-
+				          	//check if url of eaID layer matches one Feature Collection layer on map
+				    		if (arrEAIDMatchingCurrentFeaturedCollection.indexOf(SubLayerIds[i]) >= 0) {
+								bLayerSelected = true;
+				    		} 
 				          	var subtopicBoxAndText = dojo.create('div', {
 				          		"style": 'float: left; margin-left:15px'
 				          	}, subTopicRow);
@@ -1265,7 +1320,7 @@ define([
 					if (!(document.getElementById("hideIcons").checked)) {
 						add_bc_icons(mainDiv, eaScale, sourceType);
 					} 
-				}		
+				}// end of if (!IsSubLayer) 
 				
 			}//end of if (currentLayerSelectable)
 		});	
@@ -1301,8 +1356,43 @@ define([
 
 					}
 					else {
-						singleLayerToBeAddedRemoved = "r" + "," + this.getAttribute("id").replace(window.chkSelectableLayer, "");
-						document.getElementById('butAddSingleLayer').click();
+						eaID = this.getAttribute("id").replace(window.chkSelectableLayer, "");
+						
+						if (arrEAIDMatchingCurrentFeaturedCollection.indexOf(eaID) >= 0){//if thi check box is corresponding to a Featured Collection layer
+					    	for (iPortal in window.layerID_Portal_WebMap) {	  
+					    		var eaIDofPortal = window.hashFeaturedCollectionToEAID[window.layerID_Portal_WebMap[iPortal]];  
+								if (eaIDofPortal == eaID) {
+									
+						    		lyr = selfSimpleSearchFilter.map.getLayer(window.layerID_Portal_WebMap[iPortal]);
+									if(lyr != null){
+							    		selfSimpleSearchFilter.map.removeLayer(lyr);    						    		
+						    			var indexID = arrEAIDMatchingCurrentFeaturedCollection.indexOf(eaID);
+										if (indexID > -1) {
+										  arrEAIDMatchingCurrentFeaturedCollection.splice(indexID, 1);
+										}
+								        if ((window.hashScale[eaID]== 'NATIONAL')){
+								          		setTimeout(function () {
+													jimuUtils.adjustMapExtent(selfSimpleSearchFilter.map);   			    
+							                	}, 10) 
+								        };				
+						    			
+										lyrTiled = selfSimpleSearchFilter.map.getLayer( window.layerIdTiledPrefix + eaID);
+										if(lyrTiled){
+								       		selfSimpleSearchFilter.map.removeLayer(lyrTiled);
+								      	} 	
+								      	break;				 	  
+						          	}  								}
+								
+ 					    			
+   
+       	
+					        }  							
+						} else {
+							singleLayerToBeAddedRemoved = "r" + "," + eaID;
+							//singleLayerToBeAddedRemoved = "r" + "," + this.getAttribute("id").replace(window.chkSelectableLayer, "");
+							document.getElementById('butAddSingleLayer').click();							
+						}
+
 					}				
 	    		});
 	  		}
@@ -1571,6 +1661,7 @@ define([
                             lLayer._titleForLegend = layer.name;
                             lLayer.title = layer.name;
                             window.hashTitleToEAID[layer.name] = layer.eaID;
+                            window.hashEAIDToTitle[layer.eaID] = layer.name;
                             lLayer.noservicename = true;
                         }
                         var popupConfig = jimuUtils.getPopups(layer);
@@ -1712,6 +1803,7 @@ define([
                             lLayer._titleForLegend = layer.name;
                             lLayer.title = layer.name;
                             window.hashTitleToEAID[layer.name] = layer.eaID;
+                            window.hashEAIDToTitle[layer.eaID] = layer.name;
                             lLayer.noservicename = true;
                         }
                         lLayer.on('load', function(evt) {
@@ -1785,7 +1877,7 @@ define([
                                         bPopup = false;
                                     } else {
                                         Attribute = fieldInfos[0].fieldName;
-                                        hashAttribute[layer.eaID.toString()] = Attribute;
+                                        hashAttribute[layer.eaID.toString()] = Attribute;//It will be used as window.hashAttribute
                                     }
                                 } else {
                                     bPopup = false;
@@ -1902,10 +1994,13 @@ define([
                             lLayer._titleForLegend = layer.name;
                             lLayer.title = layer.name;
                             window.hashTitleToEAID[layer.name] = layer.eaID;
+                            window.hashEAIDToTitle[layer.eaID] = layer.name;
                             lLayer.noservicename = true;
                         }
                         lLayer.on('load', function(evt) {
                             evt.layer.name = lOptions.id;
+                            currentEAID = evt.layer.id.replace(window.layerIdPrefix, "");
+                            
                             if (evt.layer.id == window.layerIdPrefix + communityBoundaryLayerID) {
                                 setTimeout(function () {
                                     var popupsTemplate = {};
@@ -1924,7 +2019,16 @@ define([
                                     evt.layer.title = "EnviroAtlas Community Boundaries";
                                     evt.layer.noservicename = true;
                                     evt.layer.setInfoTemplates(popupsTemplate);       
+                                    
+                                
+                                
                                 }, 1000)                      
+                            }
+                            else if (window.nationalLayerNumber.includes(currentEAID)){
+                            	setTimeout(function () {
+	    							jimuUtils.adjustMapExtent(selfSimpleSearchFilter.map);   			    
+                            	}, 50) 
+                            	
                             }
                         });
 
@@ -1959,7 +2063,23 @@ define([
         for (i in stringArray) {
             lyr = this._viewerMap.getLayer(window.layerIdPrefix + stringArray[i]);
             if (lyr) {
+            	currentEAID = lyr.id.replace(window.layerIdPrefix, "");
+            	
+				var bNationalFeaturedCollection = false;
+			    var eaIDinFeatureCollection = window.hashFeaturedCollectionToEAID[lyr.id];
+			    if (((eaIDinFeatureCollection !=null) && (eaIDinFeatureCollection !=undefined))) {
+			          if ((window.hashScale[eaIDinFeatureCollection]== 'NATIONAL')){
+			          		bNationalFeaturedCollection = true;
+			          };
+			    }	
+			                	
                 this._viewerMap.removeLayer(lyr);
+                if (window.nationalLayerNumber.includes(currentEAID) || (bNationalFeaturedCollection == true)){
+                	setTimeout(function () {
+						jimuUtils.adjustMapExtent(selfSimpleSearchFilter.map);   			    
+                	}, 10) 
+                            	
+                 }
             }
             lyrTiled = this._viewerMap.getLayer(window.layerIdTiledPrefix + stringArray[i]);
             if (lyrTiled) {
@@ -1996,8 +2116,8 @@ define([
 			if (((name == 'SelectCommunity')||(name == 'AddWebMapData'))&&(data.message == "updateCommunityLayers")){
 				this._onUpdateCommunityLayers();
 			}	
-			if (((name == 'ElevationProfile')||(name == 'Raindrop')||(name == 'HucNavigation'))&&(data.message == "mapClickForPopup")){
-				setClickEventForPopup();
+			if (((name == 'ElevationProfile')||(name == 'Raindrop')||(name == 'HucNavigation') ||(name == 'NavHuc') || (name == 'CompareMyArea'))&&(data.message == "mapClickForPopup")){
+				connect.disconnect(window.mapClickListenerForPopup);
 			}		  
 		},
     displayCloseButton: function() {		
@@ -2338,7 +2458,7 @@ define([
                 for ( index = 0,
                 len = bookmarkClassified.bookmarks.length; index < len; ++index) {
                     currentBookmarkClass = bookmarkClassified.bookmarks[index];
-                    if (currentBookmarkClass.name == "Community") {
+                    if (currentBookmarkClass.name.indexOf("Community")>=0) {
                         bookmarkCommunity = currentBookmarkClass.items;
                         for ( indexCommunity = 0,
                         lenCommunity = bookmarkCommunity.length; indexCommunity < lenCommunity; ++indexCommunity) {
@@ -2507,6 +2627,35 @@ define([
 	                    else {
 	                    	eaMetadata = "";
 	                    }
+	                    if(layer.hasOwnProperty('url')&&(layer.url!=null)){
+	                    	eaURL1 = layer.url.toString();
+	                    	
+	                    	if(layer.hasOwnProperty('eaLyrNum')){
+	                    		eaURL = eaURL1 + "/" + layer.eaLyrNum.toString();
+	                    		window.hashURL[layer.eaID.toString()] = eaURL; 
+	                    		if(layer.hasOwnProperty('tileLink') && layer.tileLink.toString() == "yes"){
+	                    			window.hashURLtoTile[eaURL] = layer.tileURL.toString();
+	                    			
+	                    		}	                    		
+	                    	}
+	                    	if (layer.popup) {
+	                            window.hashPopup[layer.eaID] = layer.popup;
+	                            if (layer.popup.fieldInfos) {
+	                                fieldInfos = layer.popup.fieldInfos;
+	                                if (fieldInfos[0].hasOwnProperty('fieldName')) {
+	                                    if (fieldInfos[0].fieldName == null) {
+	                                        bPopup = false;
+	                                    } else {
+	                                        Attribute = fieldInfos[0].fieldName;
+	                                        hashAttribute[layer.eaID.toString()] = Attribute;//It will be used as window.hashAttribute
+	                                    }
+	                                } 
+	                            } 
+
+	                        }
+	                    }	
+	                    
+	                                       
 	                    if(layer.hasOwnProperty('eaTopic')){
 	                    	eaTopic = layer.eaTopic.toString();
 	                    	//console.log("eaID:" + eaID + ", eaTopic: " + eaTopic);
@@ -2526,7 +2675,8 @@ define([
 	                    		if (communityTopicList.indexOf(eaTopic) < 0) {
 	                    			communityTopicList.push(eaTopic);
 	                    		}	                    		
-	                    	}	                    	
+	                    	}	          
+	                    	window.hashScale[eaID]  = eaScale;          	
 	                    }
 	                    else {
 	                    	eaScale = "";
@@ -2652,6 +2802,14 @@ define([
         setClickEventForPopup();
     },               
     onOpen: function(){						
+       document.onkeydown = function(evt) {
+            evt.stopPropagation();
+            if (evt.keyCode == 27) {
+                exitButtons = document.getElementsByClassName("exit_buttonOnScreenWidget");
+                exitButton = exitButtons.item(0);
+                exitButton.click();
+            }
+        };
     	setTimeout(lang.hitch(this, function() {
 			_updateSelectableLayer();
 	
@@ -2716,7 +2874,9 @@ define([
 			}    
 	    },	
         initClickEventForPopup: function() {
-            setClickEventForPopup();
+        	if ((window.toggleOnHucNavigation == false) && (window.toggleOnRainDrop == false) && (window.toggleOnCMA == false) && (window.toggleOnElevation == false)) {
+            	setClickEventForPopup();
+            }
         },
     _onAddLayersClick: function() {
         layersToBeAdded = "a";
@@ -2773,6 +2933,7 @@ define([
      _onUpdateCommunityLayers: function() {
 
      	arrLayersToChangeSynbology = [];
+     	arrFeatureCollectionsToChangeSynbology = [];
 	    var lyr;
     	for (i in window.communityLayerNumber) {
     		lyr = this.map.getLayer(window.layerIdPrefix + window.communityLayerNumber[i]);
@@ -2780,8 +2941,19 @@ define([
 	    		arrLayersToChangeSynbology.push(lyr.id.replace(window.layerIdPrefix, ""));
           	}         	        	
         } 	    
-
-        updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
+        
+		for (var key in window.hashFeaturedCollectionToEAID){
+			lyr = this.map.getLayer(key);
+			if(lyr && (window.hashScale[window.hashFeaturedCollectionToEAID[lyr.id]]== 'COMMUNITY')){			
+	    		arrFeatureCollectionsToChangeSynbology.push(lyr.id);
+          	} 
+		}
+		if (arrLayersToChangeSynbology.length > 0) {
+        	updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
+        } else if (arrFeatureCollectionsToChangeSynbology.length > 0){
+      		updateSingleFeatureCollectionLayer(arrFeatureCollectionsToChangeSynbology.pop());
+        }
+      
      },
 
      formatValue : function (value, key, data){

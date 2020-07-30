@@ -20,6 +20,7 @@ define([
   'dojo/_base/lang',
   'dojo/Deferred',
   'dojo/promise/all',
+  'jimu/utils',
   'jimu/portalUrlUtils',
   'jimu/WidgetManager',
   'jimu/PanelManager',
@@ -27,7 +28,7 @@ define([
   'esri/graphicsUtils',
   './NlsStrings',
   'dijit/Dialog'
-], function(declare, array, lang, Deferred, all, portalUrlUtils, WidgetManager, PanelManager, esriLang,
+], function(declare, array, lang, Deferred, all, jimuUtils, portalUrlUtils, WidgetManager, PanelManager, esriLang,
   graphicsUtils, NlsStrings,Dialog) {
   var mapDescriptionStr = "";
   var topLayerIndex = 300;
@@ -200,8 +201,17 @@ define([
     	layerInfoFromJson = {};
     	
         var eaID = layerId.replace(window.layerIdPrefix, "");
+        
+		//check if layer is from Featured Collection   	
+		bFeaturedCollection = false;
+		var eaIDFromFeaturedCollection = window.hashFeaturedCollectionToEAID[layerId]; 
+		if (((eaIDFromFeaturedCollection != null) && (eaIDFromFeaturedCollection != undefined))) {
+    			eaID = eaIDFromFeaturedCollection;
+    			bFeaturedCollection = true;
+		}
+        
         var arrXmlPath = [];
-        if ((layerId.indexOf(window.layerIdPrefix)) >= 0) {
+        if (((layerId.indexOf(window.layerIdPrefix)) >= 0)||(bFeaturedCollection == true)) {
 			arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");
 			getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, eaID, actionType);
         }     
@@ -748,6 +758,8 @@ define([
     },    
     _onItemRemoveClick: function(evt) {
         layerId = this._layerInfo.id;
+        
+        
 		lyr = this._layerInfo.map.getLayer(layerId);
 		if(lyr){  		
         	this._layerInfo.map.removeLayer(lyr);
@@ -755,6 +767,19 @@ define([
         	if (window.demographicLayerSetting[layerId] != undefined) {
         		window.demographicLayerSetting[layerId] = null;
         	}
+        	
+			var bNationalFeaturedCollection = false;
+		    var eaIDinFeatureCollection = window.hashFeaturedCollectionToEAID[layerId];
+		    if (((eaIDinFeatureCollection !=null) && (eaIDinFeatureCollection !=undefined))) {
+		          if ((window.hashScale[eaIDinFeatureCollection]== 'NATIONAL')){
+		          		bNationalFeaturedCollection = true;
+		          };
+		    }	  
+			            	
+        	currentEAID = layerId.replace(window.layerIdPrefix, "");
+        	if (window.nationalLayerNumber.includes(currentEAID) || (bNationalFeaturedCollection == true)){
+				jimuUtils.adjustMapExtent(this._layerInfo.map);   			                            	
+            }        	
         	
 			var eaID = window.hashFeaturedCollectionToEAID[layerId]; //check if this layer is Featured Collection layer
     		if (((eaID != null) && (eaID != undefined))) {

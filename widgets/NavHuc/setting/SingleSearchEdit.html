@@ -1,0 +1,369 @@
+<div style="width:100%;padding-bottom:10px;">
+  <div class="error-message-div" data-dojo-attach-point="errorMessage"></div>
+  <div data-dojo-attach-point="singlesearchSection">
+    <table class="input-table" style="width:100%;" cellspacing="0">
+      <tbody>
+        <tr>
+          <td style="width:115px;text-align:left;">${nls.searchUrl}</td>
+          <td style="width:auto;">
+            <input type="text" data-dojo-type="jimu/dijit/ServiceURLInput" data-dojo-attach-point="layerUrl" data-dojo-props="style:{width:'100%'}" required="true" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <table style="width:100%;" cellspacing="0">
+              <tr>
+                <td style="width:40%;">
+                  <table style="width:100%;" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <td style="width:115px;text-align:left;">
+                          <span>${nls.title}</span>
+                        </td>
+                        <td style="width:auto;">
+                          <input type="text" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="layerName" style="width:100%;" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+                <td style="width:60%;">
+                  <table style="width:100%;" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <td style="width:190px;text-align:left;">
+                          <span style="margin-left:20px;">${nls.definitionexpr}</span>
+                        </td>
+                        <td style="width:auto;">
+                          <input type="text" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="definitionExpression" style="width:100%;" placeholder="${nls.defExprPlaceholder}" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <table style="width:100%;" cellspacing="0">
+              <tr>
+                <td style="width:100%;">
+                  <table style="width:100%;" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <td style="width:155px;">
+                          <span>${nls.usePopupFrom}</span>
+                        </td>
+                        <td style="width:200px;text-align:left;">
+                          <div data-dojo-type="dijit/form/Form" data-dojo-attach-point="popupFormDijit">
+                            <input data-dojo-attach-point="popupWebmapRadio" type="radio" />
+                            <label data-dojo-attach-point="popupWebmapLabel" title="${nls.popupWebmapTip}">${nls.popupWebmap}</label>&nbsp;&nbsp;
+                            <input data-dojo-attach-point="popupeSearchRadio" checked="true" type="radio" />
+                            <label data-dojo-attach-point="popupeSearchLabel">${nls.popupeSearch}</label>
+                          </div>
+                        </td>
+                        <td><span>${nls.usePopupFrom2}</span></td>
+                        <td style="width:auto;">
+                          <table style="width:100%;margin-top:9px;" cellspacing="0">
+                            <tbody>
+                              <tr>
+                                <td style="width:auto;">
+                                  <div data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="allowCSVExport" data-dojo-props="label:'${nls.allowcsvexport}'" />
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                        <td style="width:auto;">
+                          <table style="width:100%;margin-top:9px;" cellspacing="0">
+                            <tbody>
+                              <tr>
+                                <td style="width:auto;">
+                                  <div data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="allowFCExport" data-dojo-props="label:'${nls.allowfcexport}'" />
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <table style="width:100%;" cellspacing="0">
+              <tr>
+                <td style="width:20%;">
+                  <table style="width:100%;margin-top:9px;" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <td style="width:auto;">
+                          <div data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="allowGeoExport" data-dojo-props="label:'${nls.allowgeoexport}'" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+                <td style="width:20%;">
+                  <table style="width:100%;margin-top:9px;" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <td style="width:auto;">
+                          <div data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="isSpatialLayer" data-dojo-props="label:'${nls.spatialSearchLayer}'" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+                <td style="width:60%;">
+                  <table style="width:100%;" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <td style="width:190px;text-align:left;">
+                          <span style="margin-left:20px;">${nls.layerSymbology}</span>
+                        </td>
+                        <td style="width:auto;">
+                          <div data-dojo-type="dijit/form/Form" data-dojo-attach-point="symFormDijit">
+                            <input data-dojo-attach-point="serverSymRadio" checked="true" type="radio" />
+                            <label data-dojo-attach-point="serverSymRadioLabel">${nls.symbolServer}</label>&nbsp;&nbsp;
+                            <input data-dojo-attach-point="defaultSymRadio" type="radio" />
+                            <label data-dojo-attach-point="defaultSymRadioLabel">${nls.symbolConfig}</label>
+                            <input data-dojo-attach-point="layerSymRadio" type="radio" style="margin-left: 6px;" />
+                            <label data-dojo-attach-point="layerSymRadioLabel">${nls.symbolLayer}</label>
+                          </div>
+                          <div class="btn-add-section" data-dojo-attach-point="btnAddSymbol">
+                            <span class="btn-add-icon"></span>
+                            <span class="btn-add-label">${nls.addSymbol}</span>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <table style="width:100%;" cellspacing="0">
+              <tr>
+                <td style="width:40%;">
+                  <table class="zoom-scale-table">
+                    <tbody>
+                      <tr>
+                        <td style="vertical-align:text-top;">${nls.zoomScale}</td>
+                        <td style="vertical-align:text-top;">
+                          <div>
+                            <span>1:</span>
+                            <input type="text" data-dojo-attach-point="zoomScale" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="style:{width:'120px'},required:true,value:10000,constraints:{min:0,places:0}" />
+                          </div>
+                        </td>
+                        <td>
+                          <div style="padding-left:8px;padding-top:8px;">
+                            <div data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="forceScaleCbx" data-dojo-props="label:'${nls.forceScale}'" title="${nls.zoomscaletip}" />
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+                <td style="width:60%;">
+                  <table style="width:100%;margin-top: 9px;" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <td style="vertical-align:text-top;">
+                          <div>
+                            <div data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="shareCbx" data-dojo-props="label:'${nls.operationalLayerTip}'" />
+                          </div>
+                        </td>
+                        <td style="vertical-align:text-top;">
+                          <div>
+                            <div data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="attribTableCbx" data-dojo-props="label:'${nls.showinattributetable}'" />
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <table style="width:100%;" cellspacing="0">
+              <tr>
+                <td style="width:100%;">
+                  <table style="width:100%;" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <td style="vertical-align:text-top;">
+                          <div>
+                            <div data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="showAttachmentsCbx" data-dojo-props="label:'${nls.showattachments}'" />
+                          </div>
+                        </td>
+                        <td style="vertical-align:text-top;">
+                          <div>
+                            <div data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="hideNullDataCbx" data-dojo-props="label:'${nls.hidenulldata}'" />
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+                <td style="width:60%;">
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <table style="width:100%;" cellspacing="0">
+              <tr>
+                <td style="width:100%;">
+                  <table style="width:100%;margin-top: 9px;" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <td style="width:300px;">
+                          <span>${nls.globalOverrides}</span>
+                        </td>
+                        <td style="vertical-align:text-top;">
+                          <div>
+                            <div data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="autoZoomCbx" data-dojo-props="label:'${nls.autoZoom}'" />
+                          </div>
+                        </td>
+                        <td style="vertical-align:text-top;">
+                          <div>
+                            <div data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="disPopupCbx" data-dojo-props="label:'${nls.disablePopups}'" />
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="3">
+            <table style="width:100%;" cellspacing="0">
+              <tbody>
+                <tr>
+                  <td style="width:auto;vertical-align:top;">
+                    <div class="btn-add-section" data-dojo-attach-point="btnAddExpression">
+                      <span class="btn-add-icon"></span>
+                      <span class="btn-add-label">${nls.addExpression}</span>
+                    </div>
+                    <div class="expressions-table" style="width:100%;" data-dojo-attach-point="expressionsTable" data-dojo-type="jimu/dijit/SimpleTable" data-dojo-props="_rowHeight:40,autoHeight:true,selectable:true,fields:[{name:'alias',title:'${nls.expressionsTitle}',type:'text',editable:false},{name:'actions',title:'${nls.actions}',width:'120px',type:'actions',actions:['up','down','edit','delete']}]"></div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table style="width:100%;margin-top:15px;">
+      <tbody>
+        <tr>
+          <td style="width:171px;vertical-align:top;">
+            <div style="margin-bottom:10px;">${nls.availableFields}</div>
+            <div data-dojo-attach-point="allFieldsTableDiv" style="width:100%;"></div>
+          </td>
+          <td style="width:75px;vertical-align:middle;padding-left:10px;padding-right:10px;">
+            <div data-dojo-attach-point="includeButtonDiv"></div>
+            <div data-dojo-attach-point="includeAllButtonDiv"></div>
+          </td>
+          <td style="width:auto;vertical-align:top;">
+            <div style="margin-bottom:10px;">${nls.includedFields}</div>
+            <div style="width:100%;" class="searchLayerFieldsTableDiv" data-dojo-attach-point="displayFieldsTableDiv"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="sorting-table">
+      <colgroup>
+        <col width="170px" />
+        <col width="auto" />
+        <col width="24px" />
+      </colgroup>
+      <tbody>
+        <tr>
+          <td>
+            <span>${nls.resultItemSorting}:</span>
+          </td>
+          <td data-dojo-attach-point="tdSortFields">
+            <div data-dojo-attach-point="sortFieldsDiv" class="sort-fields-div jimu-ellipsis"></div>
+          </td>
+          <td>
+            <div data-dojo-attach-point="btnSortFields" class="btn-sort-fields jimu-float-trailing" data-dojo-attach-event="onclick:_onBtnSortFieldsClicked" title="${nls.sortDisabledMsg}"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table style="width:100%;margin-top:8px;">
+      <tbody>
+        <tr>
+          <td colspan="3">
+            <table style="width:100%;" cellspacing="0">
+              <tbody>
+                <tr>
+                  <td style="width:auto;vertical-align:top;">
+                    <div class="btn-add-section" data-dojo-attach-point="btnAddLink">
+                      <span class="btn-add-icon"></span>
+                      <span class="btn-add-label">${nls.addLink}</span>
+                    </div>
+                    <div class="link-table" style="width:100%;" data-dojo-attach-point="linksTable" data-dojo-type="jimu/dijit/SimpleTable" data-dojo-props="_rowHeight:40,autoHeight:true,selectable:true,fields:[
+                                          {name:'alias',title:'${nls.linksTitle}',type:'text',editable:false},
+                                          {name:'actions',title:'${nls.actions}',width:'120px',type:'actions',actions:['up','down','edit','delete']}
+                                          ]"></div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table style="width:100%;margin-top:8px;">
+      <tbody>
+        <tr>
+          <td colspan="3">
+            <table style="width:100%;" cellspacing="0">
+              <tbody>
+                <tr>
+                  <td style="width:auto;vertical-align:top;">
+                    <div class="btn-add-section" data-dojo-attach-point="btnAddRelate">
+                      <span class="btn-add-icon"></span>
+                      <span class="btn-add-label">${nls.addRelate}</span>
+                    </div>
+                    <div class="relate-table" style="width:100%;" data-dojo-attach-point="relatesTable" data-dojo-type="jimu/dijit/SimpleTable" data-dojo-props="_rowHeight:40,autoHeight:true,selectable:true,fields:[
+                                          {name:'alias',title:'${nls.relatesTitle}',type:'text',editable:false},
+                                          {name:'actions',title:'${nls.actions}',width:'120px',type:'actions',actions:['up','down','edit','delete']}
+                                          ]"></div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="single-expressions-section" style="display:none;" data-dojo-attach-point="singleExpressionsSection">
+  </div>
+  <div class="single-links-section" style="display:none;" data-dojo-attach-point="singleLinksSection">
+  </div>
+  <div class="single-relates-section" style="display:none;" data-dojo-attach-point="singleRelatesSection">
+  </div>
+</div>

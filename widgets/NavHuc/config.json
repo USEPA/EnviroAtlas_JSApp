@@ -1,0 +1,242 @@
+{
+	"navigator_urlOLD": "/wbd-cgi/index.py",
+    "navigator_url": "/wbd",
+    "watersgeo_huc8_mapserver": "https://leb.epa.gov/arcgis/rest/services/Other/WBD_NP21_Simplified/MapServer/2",
+	"enviroatlas_huc8_mapserver": "https://enviroatlas.epa.gov/arcgis/rest/services/Other/HydrologicUnits/MapServer/2",
+	
+	"NOTE1": "This one is too slow and times out",
+	"enviroatlas_huc12_mapserver": "https://enviroatlas.epa.gov/arcgis/rest/services/Other/HydrologicUnits/MapServer/4",
+	"watersgeo_huc12_mapserver": "https://leb.epa.gov/arcgis/rest/services/Other/WBD_NP21_Simplified/MapServer/0",
+	
+	
+	"huc12_array_slice_size": 250,
+	
+  "layers": [
+    {
+      "name": "Subwatersheds (HUC12)",
+      "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Other/HydrologicUnits/MapServer/4",
+      "HOLDurl": "https://watersgeo.epa.gov/arcgis/rest/services/OW/WBD_WMERC/MapServer/0",
+      "definitionexpression": "",
+      "spatialsearchlayer": true,
+      "export2Csv": true,
+      "export2Geo": true,
+      "export2FC": true,
+      "zoomScale": 10000,
+      "forceZoomScale": true,
+      "shareResult": true,
+      "addToAttrib": false,
+      "expressions": {
+        "expression": []
+      },
+      "titlefield": null,
+      "fields": {
+        "all": false,
+        "HOLDfield": [
+          {
+            "name": "HUC_12",
+            "alias": "HUC12"
+          }
+        ],
+        "field": [
+          {
+            "name": "HUC_12",
+            "alias": "HUC12"
+          },
+          {
+            "name": "HU_12_Name",
+            "alias": "HUC12 NAME"
+          }
+        ]
+      },
+      "links": {
+        "link": []
+      },
+      "relates": {
+        "relate": []
+      },
+      "orderByFields": [],
+      "showattachments": false,
+      "layersymbolfrom": "layer",
+      "symbology": {
+        "color": [
+          255,
+          170,
+          0,
+          125
+        ],
+        "outline": {
+          "color": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "width": 0.75,
+          "type": "esriSLS",
+          "style": "esriSLSSolid",
+          "marker": null
+        },
+        "type": "esriSFS",
+        "style": "esriSFSSolid"
+      }
+    }
+  ],
+  "initialView": "text",
+  "selectfilter": "contains",
+  "disabledtabs": [
+    "text",
+    "spatial"
+  ],
+  "enablePopupsOnResultClick": true,
+  "disablePopups": false,
+  "disableuvcache": false,
+  "exportsearchurlchecked": false,
+  "limitsearch2mapextentchecked": false,
+  "autozoomtoresults": true,
+  "mouseovergraphics": false,
+  "bufferDefaults": {
+    "addtolegend": false,
+    "bufferUnits": {
+      "bufferUnit": [
+        {
+          "name": "UNIT_FOOT",
+          "label": "Feet"
+        },
+        {
+          "name": "UNIT_STATUTE_MILE",
+          "label": "Miles"
+        },
+        {
+          "name": "UNIT_METER",
+          "label": "Meter"
+        }
+      ]
+    },
+    "bufferDefaultValue": 3,
+    "bufferWKID": 102003,
+    "simplefillsymbol": {
+      "color": [
+        1,
+        185,
+        253,
+        128
+      ],
+      "outline": {
+        "color": [
+          1,
+          185,
+          253,
+          204
+        ],
+        "width": 0.75,
+        "type": "esriSLS",
+        "style": "esriSLSSolid",
+        "marker": null
+      },
+      "type": "esriSFS",
+      "style": "esriSFSSolid"
+    }
+  },
+  "spatialrelationships": {
+    "spatialrelationship": [
+      {
+        "name": "esriSpatialRelContains",
+        "label": "entirely contained in"
+      },
+      {
+        "name": "esriSpatialRelIntersects",
+        "label": "intersected by"
+      },
+      {
+        "name": "esriSpatialRelEnvelopeIntersects",
+        "label": "intersected by envelope of"
+      }
+    ]
+  },
+  "graphicalsearchoptions": {
+    "enablepointselect": true,
+    "enableextentselect": false,
+    "enablecircleselect": false,
+    "enablepolyselect": false,
+    "showmultigraphicsgraphicaloption": false,
+    "showaddtolerancegraphicaloption": false,
+    "showaddsqltextgraphicaloption": true,
+    "showbuffergraphicaloption": false,
+    "buffercheckedbydefaultgraphicaloption": false,
+    "multipartgraphicsearchchecked": false,
+    "addpointtolerancechecked": true,
+    "toleranceforpointgraphicalselection": 3,
+    "keepgraphicalsearchenabled": true,
+    "autoactivatedtool": "point"
+  },
+  "symbols": {
+    "simplemarkersymbol": null,
+    "picturemarkersymbol": {
+      "angle": 0,
+      "xoffset": 0,
+      "yoffset": 0,
+      "type": "esriPMS",
+      "url": "images/i_search.png",
+      "width": 20.00025,
+      "height": 20.00025
+    },
+    "simplelinesymbol": {
+      "color": [
+        255,
+        0,
+        0,
+        204
+      ],
+      "width": 2.25,
+      "type": "esriSLS",
+      "style": "esriSLSSolid",
+      "marker": null
+    },
+    "simplefillsymbol": {
+      "color": [
+        255,
+        0,
+        0,
+        128
+      ],
+      "outline": {
+        "color": [
+          255,
+          0,
+          0,
+          204
+        ],
+        "width": 1.5,
+        "type": "esriSLS",
+        "style": "esriSLSSolid",
+        "marker": null
+      },
+      "type": "esriSFS",
+      "style": "esriSFSSolid"
+    }
+  },
+  "resultFormat": {
+    "attTitlesymbol": {
+      "bold": false,
+      "italic": true,
+      "underline": false,
+      "color": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    "attValuesymbol": {
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "color": [
+        0,
+        0,
+        0,
+        255
+      ]
+    }
+  }
+}

@@ -369,15 +369,20 @@ define(['dojo/_base/declare',
 								
 							}				
 							var index = 0;	
-							var minVale0 = geoenrichedFeatureLayer.renderer.infos[0].minValue;
-							var minVale1 = geoenrichedFeatureLayer.renderer.infos[1].minValue;
-							var size0 = geoenrichedFeatureLayer.renderer.infos[0].symbol.size;
-							var size1 = geoenrichedFeatureLayer.renderer.infos[1].symbol.size;
-							if (((minVale0 > minVale1) && (size0 > size1)) || ((minVale0 < minVale1) && (size0 < size1))){								 
-								_bSizeUpByValuePolygonAsPoint = true;
+							if (geoenrichedFeatureLayer.renderer.infos.length > 1) {
+								var minVale0 = geoenrichedFeatureLayer.renderer.infos[0].minValue;
+								var minVale1 = geoenrichedFeatureLayer.renderer.infos[1].minValue;
+								var size0 = geoenrichedFeatureLayer.renderer.infos[0].symbol.size;
+								var size1 = geoenrichedFeatureLayer.renderer.infos[1].symbol.size;
+								if (((minVale0 > minVale1) && (size0 > size1)) || ((minVale0 < minVale1) && (size0 < size1))){								 
+									_bSizeUpByValuePolygonAsPoint = true;
+								} else {
+									_bSizeUpByValuePolygonAsPoint = false;
+								}									
 							} else {
 								_bSizeUpByValuePolygonAsPoint = false;
-							}				
+							}
+			
 	         			}
 		
 		                //Classification dropdown
@@ -760,7 +765,7 @@ define(['dojo/_base/declare',
                                     geoenrichedFeatureLayer.redraw();
                                 }                            
                             })
-                            .fail(function (jqXHR, textStatus, errorThrown) { 
+                            .fail(function (jqXHR, textStatus, errorThrown) { //if there is no render file found, such as the case of Featured Collection layers
                                  var oriRendererFromSaved = rendererJsonUtils.fromJson(window.hashRenderer[_layerID.replace(window.layerIdPrefix, "")]);
     
                                 geoenrichedFeatureLayer.setRenderer(oriRendererFromSaved);                                  

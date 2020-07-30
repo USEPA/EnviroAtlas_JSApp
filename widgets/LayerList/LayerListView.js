@@ -28,13 +28,14 @@ define([
   'jimu/dijit/LoadingShelter',
   './PopupMenu',
   'dijit/_TemplatedMixin',
+  'jimu/utils',
   'dojo/text!./LayerListView.html',
   'dojo/dom-attr',
   'dojo/dom-class',
   'dojo/dom-style',
   './NlsStrings'
 ], function(_WidgetBase, declare, lang, array, domConstruct, on, query,
-  CheckBox, PanelManager, DropMenu, LoadingShelter, PopupMenu, _TemplatedMixin, template,
+  CheckBox, PanelManager, DropMenu, LoadingShelter, PopupMenu, _TemplatedMixin, jimuUtils, template,
   domAttr, domClass, domStyle, NlsStrings) {
   	var received = "";
 
@@ -217,15 +218,31 @@ define([
       scaleLabel = domConstruct.create('td', {
         'class': 'col col15'
       }, layerTrNode);
-
+      
+  	  bTileOnMap = false;
+      tileLayer = layerInfo.map.getLayer(window.layerIdTiledPrefix + window.hashFeaturedCollectionToEAID[layerInfo.id]);         	
+      if(tileLayer != null){
+        	bTileOnMap = true;      
+      } 
+      
+      var eaIDinFeatureCollection = window.hashFeaturedCollectionToEAID[layerInfo.id];
+      var indexID = window.featureLyrNumber.indexOf(eaIDinFeatureCollection);
+      	
       scaleObject = '';
-      if (layerInfo.layerObject.eaScale) {
-        scaleTitle = 'Community Dataset'
-        if (layerInfo.layerObject.eaScale == 'NATIONAL') {
+
+      if ((layerInfo.layerObject.eaScale) || ((eaIDinFeatureCollection !=null) && (eaIDinFeatureCollection !=undefined))) {
+        scaleTitle = 'Community Dataset';
+        if ((layerInfo.layerObject.eaScale == 'NATIONAL') ||(window.hashScale[window.hashFeaturedCollectionToEAID[layerInfo.id]]== 'NATIONAL')){
           scaleTitle = 'National Dataset';
         };
         
-        scale = layerInfo.layerObject.eaScale
+        scaleForFeaturedCollection = window.hashScale[window.hashFeaturedCollectionToEAID[layerInfo.id]];
+        if (((scaleForFeaturedCollection != null) && (scaleForFeaturedCollection != undefined))) {
+        	scale = scaleForFeaturedCollection;
+        } else {
+        	scale = layerInfo.layerObject.eaScale;
+        }
+        
         scaleImage = domConstruct.create('div', {
           'title': scaleTitle,
           'class': 'icon_style ' + scale
@@ -240,7 +257,10 @@ define([
       var grayedTitleClass = '';
       try {
       	var eaID = layerInfo.id.replace(window.layerIdPrefix, "");
-        if ((!layerInfo.isInScale())&&(window.hashIDtoTileURL[eaID] == null)) {
+
+
+      	//use ((indexID >= 0) && (bTileOnMap == true)) to check if tileLayer corresponding to Featured Collection exist.
+        if ((!layerInfo.isInScale())&&(window.hashIDtoTileURL[eaID] == null)&&((indexID >= 0) && (bTileOnMap == true))) {
           grayedTitleClass = 'grayed-title';
         }
       } catch (err) {
@@ -576,6 +596,19 @@ define([
 	    if (layerId.indexOf(window.layerIdPrefix) >= 0) {
 	        eaId = layerId.replace(window.layerIdPrefix, "");                     	
 	    } 
+	    else {
+	    	eaIDFromFeaturedCollection = window.hashFeaturedCollectionToEAID[layerId];
+	    	if (((eaIDFromFeaturedCollection != null) && (eaIDFromFeaturedCollection != undefined))) {
+	    		eaId = eaIDFromFeaturedCollection;
+				var bNationalFeaturedCollection = false;
+			    var eaIDinFeatureCollection = window.hashFeaturedCollectionToEAID[layerId];
+			    if (((eaIDinFeatureCollection !=null) && (eaIDinFeatureCollection !=undefined))) {
+			          if ((window.hashScale[eaIDinFeatureCollection]== 'NATIONAL')){
+			          		bNationalFeaturedCollection = true;
+			          };
+			    }	    		
+	    	}
+	    }
 	    
 		lyrTiled = layerInfo.map.getLayer(window.layerIdTiledPrefix + eaId);   
 		if (ckSelect.checked) {
@@ -590,6 +623,11 @@ define([
 	      	}         
 	    }     
 	    //end of set visibility for corresponding tiled layers
+	    
+		if (window.nationalLayerNumber.includes(eaId) || (bNationalFeaturedCollection == true)){//check if it is national layer. If yes, then set warning sign by triggering extent-change event
+			jimuUtils.adjustMapExtent(layerInfo.map);   			                            	
+        } 
+        
         layerInfo.setTopLayerVisible(ckSelect.checked);
       }
       evt.stopPropagation();
@@ -956,6 +994,7 @@ define([
 			}           
         }
       }, this);
+      jimuUtils.adjustMapExtent(this.operLayerInfos.map);
     },
 
     turnAllSameLevelLayers: function(layerInfo, isOnOrOff) {

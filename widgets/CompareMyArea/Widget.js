@@ -20,6 +20,7 @@ define([
  'esri/symbols/SimpleMarkerSymbol',
  'esri/symbols/SimpleLineSymbol',
  'esri/renderers/SimpleRenderer',
+ 'esri/toolbars/draw',
  'esri/request',
  'esri/InfoTemplate',
  'esri/geometry/Point',
@@ -51,6 +52,7 @@ function(
   SimpleMarkerSymbol,
   SimpleLineSymbol,
   SimpleRenderer,
+  Draw,
   esriRequest,
   InfoTemplate,
   Point,
@@ -90,12 +92,16 @@ function(
    startup: function() {
      this.inherited(arguments);     
      window.cmaMapPoint = null;
+     if (this.drawTool) {
+        this.drawTool.deactivate();
+     }
+     this.drawTool = new Draw(this.map);
    },
    clickAction: function(evt) {
        
         var evtid = evt.target.id;
-console.log("evtid: " + evtid)
-        if (evtid == "map_gc")  {
+		console.log("evtid: " + evtid)
+        //if (evtid == "map_gc")  {
             
             window.cmaMapPoint = evt.mapPoint;
         
@@ -104,7 +110,7 @@ console.log("evtid: " + evtid)
             } else {
                 this.queryLayers(evt.mapPoint);
             }
-        }
+        //}
    },
    _changetype: function(e) {
     this.idtype = e.target.value;
@@ -320,10 +326,20 @@ _showInfoWin: function (g) {
 },
 
    onOpen: function() {
-    this.mapClickEvt = on(this.map,"click", lang.hitch(this, this.clickAction)); 
+   	this.drawTool.activate(Draw['POINT']);
+   	window.toggleOnCMA = true;
+    
+    this.publishData({
+		message : "mapClickForPopup"
+	}); 
+	this.mapClickEvt = on(this.map,"click", lang.hitch(this, this.clickAction)); 
+    
    },
    onClose: function() {
     this.mapClickEvt.remove();
+    window.toggleOnCMA = false;
+    document.getElementById("butInitClickEventForPopup").click();
+    this.drawTool.deactivate();
    },
      _showloading: function() {
         this.map.disableMapNavigation();

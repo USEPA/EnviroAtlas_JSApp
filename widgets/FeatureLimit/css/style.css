@@ -1,0 +1,54 @@
+
+.jimu-widget-featurelimit .featurelimit{
+  width: 33px;
+  height: 30px;
+  margin-top: 35px;
+  background: url(images/warning.png) center no-repeat;
+}
+.jimu-widget-featurelimit .featurelimit-container{
+  width: 33px;
+  height: 65px;  
+  border-right: 1px solid rgba(255,255,255,0.4);
+}
+.featurelimit-container .tooltiptext {
+  visibility: hidden;
+  width: 240px;
+  height: 65px;
+  margin-left: 10px;
+  background-color: white;
+  color: black;
+  text-align: justify;
+  border-radius: 6px;
+  padding: 5px 5px 5px 5px;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.featurelimit-container:hover .tooltiptext {
+  visibility: visible;
+}
+.jimu-widget-featurelimit .featurelimit-info-menu-empty .featurelimit-container {
+  border-style: none !important;
+}
+
+.jimu-rtl .jimu-widget-featurelimit .featurelimit-container{
+  border-right-style: none;
+  border-left: 1px solid rgba(255,255,255,0.4);
+}
+
+.jimu-rtl .jimu-widget-featurelimit .featurelimit-container:hover .featurelimit,
+.jimu-rtl .jimu-widget-featurelimit .featurelimit-container-active .featurelimit{
+  background-position: right center;
+}
+
+.jimu-rtl .jimu-widget-featurelimit .featurelimit-foldable-container{
+  border-left-style: none;
+  border-right: 1px solid rgba(255,255,255,0.4);
+}
+
+/* DartTheme */
+.DartTheme .jimu-widget-featurelimit {
+  z-index: 102 !important;
+}

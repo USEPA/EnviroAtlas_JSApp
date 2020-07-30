@@ -62,17 +62,28 @@ define([
     'dijit/registry',
     'dojo/dom',
     'widgets/Demo/help/help_Welcome',
-    'widgets/Demo/help/help_Elevation',
-    'widgets/Demo/help/help_FeaturedCollections',
-    'widgets/Demo/help/help_Demographic',
-    'widgets/Demo/help/help_EnviroAtlasDataSearch',
-    'widgets/Demo/help/help_TimesSeries',
-    'widgets/Demo/help/help_AddData',
-    'widgets/Demo/help/help_SelectCommunity',
-    'widgets/Demo/help/help_DrawerMapping',
-    'widgets/Demo/help/help_ECAT',
-    'widgets/Demo/help/help_HucNavigation',
-    'widgets/Demo/help/help_Raindrop',
+    'widgets/Demo/help/help_Elevation1',
+    'widgets/Demo/help/help_Elevation2',
+    'widgets/Demo/help/help_FeaturedCollections1',
+    'widgets/Demo/help/help_FeaturedCollections2',
+    'widgets/Demo/help/help_Demographic1',
+    'widgets/Demo/help/help_Demographic2',
+    'widgets/Demo/help/help_EnviroAtlasDataSearch1',
+    'widgets/Demo/help/help_EnviroAtlasDataSearch2',
+    'widgets/Demo/help/help_TimesSeries1',
+    'widgets/Demo/help/help_TimesSeries2',
+    'widgets/Demo/help/help_AddData1',
+    'widgets/Demo/help/help_AddData2',
+    'widgets/Demo/help/help_SelectCommunity1',
+    'widgets/Demo/help/help_SelectCommunity2',
+    'widgets/Demo/help/help_DrawerMapping1',
+    'widgets/Demo/help/help_DrawerMapping2',
+    'widgets/Demo/help/help_ECAT1',
+    'widgets/Demo/help/help_ECAT2',
+    'widgets/Demo/help/help_HucNavigation1',
+    'widgets/Demo/help/help_HucNavigation2',
+    'widgets/Demo/help/help_Raindrop1',
+    'widgets/Demo/help/help_Raindrop2',    
     'widgets/Demo/help/help_EndPage'
   ],
 
@@ -80,8 +91,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
   dojoNumber, dateLocale, nlsBundle, base64, esriLang, arcgisUtils, PopupTemplate, SpatialReference,
   Extent, geometryEngine, Multipoint, Polyline, Polygon, webMercatorUtils, GeometryService, ProjectParameters,
   FeatureSet, PictureMarkerSymbol, esriUrlUtils, esriRequest, EsriQuery, QueryTask, graphicsUtils, IdentityManager,
-  OAuthInfo, portalUrlUtils, sharedUtils, accessibleUtils, zoomToUtils, TooltipDialog, popup, registry, dom, help_Welcome, help_Elevation, help_FeaturedCollections, help_Demographic, help_EnviroAtlasDataSearch, help_TimesSeries, help_AddData,
-    help_SelectCommunity, help_DrawerMapping, help_ECAT, help_HucNavigation, help_Raindrop, help_EndPage
+  OAuthInfo, portalUrlUtils, sharedUtils, accessibleUtils, zoomToUtils, TooltipDialog, popup, registry, dom, help_Welcome, help_Elevation1, help_Elevation2, help_FeaturedCollections1, help_FeaturedCollections2, help_Demographic1, help_Demographic2, help_EnviroAtlasDataSearch1, help_EnviroAtlasDataSearch2, help_TimesSeries1, help_TimesSeries2, help_AddData1, help_AddData2, help_SelectCommunity1, help_SelectCommunity2, help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_HucNavigation1, help_HucNavigation2, help_Raindrop1, help_Raindrop2, help_EndPage
 ) {
   /* global esriConfig, dojoConfig, ActiveXObject, testLoad */
   var mo = {};
@@ -143,6 +153,33 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     }
   }
 
+  function displayMoreInformation() {
+
+	elemHelpContents2 = document.getElementsByClassName("helpContent2");
+    
+	if (window.displayMoreInfor=="true"){    
+		
+		for (ii = 0; ii< elemHelpContents2.length; ii++) {	
+			elemHelpContent2 = elemHelpContents2.item(ii);	
+	        if (elemHelpContent2 != null)
+	        {
+	            elemHelpContent2.style.display = '';
+	            window.displayMoreInfor = "false";
+	        }      
+        }    
+	} else {
+		
+        for (ii = 0; ii< elemHelpContents2.length; ii++) {	
+        
+        	elemHelpContent2 = elemHelpContents2.item(ii);	
+	        if (elemHelpContent2 != null)
+	        {
+	            elemHelpContent2.style.display = 'None';
+	            window.displayMoreInfor = "true";
+	        }             	
+        }	
+	}
+  }
   //if no beforeId, append to head tag, or insert before the id
   function loadStyleLink(id, href, beforeId) {
     var def = new Deferred(), styleNode, styleLinkNode;
@@ -1017,7 +1054,20 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
 
     return def;
   };
-
+  mo.adjustMapExtent = function(map) {
+	var adjustForFurtherSynchronize = 0;//0.01
+	var oriExtent = map.extent;                            		
+	var xmin = oriExtent.xmin+adjustForFurtherSynchronize;
+    var ymin = oriExtent.ymin+adjustForFurtherSynchronize;
+    var xmax = oriExtent.xmax+adjustForFurtherSynchronize;
+    var ymax = oriExtent.ymax+adjustForFurtherSynchronize;
+    
+	nExtent = new Extent({
+	    "xmin":xmin,"ymin":ymin,"xmax":xmax,"ymax":ymax,
+	    "spatialReference":oriExtent.spatialReference
+	});
+	return map.setExtent(nExtent); 
+  };
   mo.getAncestorWindow = function() {
     var w = window;
     while (w && w.parent && w !== w.parent) {
@@ -5047,8 +5097,8 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
           if (tourDialogOnScreenWidget==null){
               tourDialogOnScreenWidget = new TooltipDialog({
                 id: 'tourDialog2',
-                style: "width: 350px;",
-                content: "",
+                "class" : "tourDialog",
+                content: ""
               });
           }
            var overlayElement = document.getElementById("overlay");
@@ -5095,9 +5145,17 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
              }    
     
              nodeToHelp = window.helpTour[stop].node;
-
-             helperClass = window.formatters[window.helpTour[stop].helpFile];
-             helpContent = new helperClass();
+             numberStops = window.helpTour.length;
+             if ((stop != 0) && (stop != numberStops -1)){                      
+                helperClass1 = window.formatters[window.helpTour[stop].helpFile+"1"];
+                helperClass2 = window.formatters[window.helpTour[stop].helpFile+"2"];
+                helpContent = new helperClass1();
+                helpContent2 = new helperClass2();                     
+             }
+             else {
+                 helperClass = window.formatters[window.helpTour[stop].helpFile];
+                 helpContent = new helperClass();                        
+             }
            
               var newDiv = document.createElement("div");
               var newlink = document.createElement('a');
@@ -5107,17 +5165,78 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
               newlink.setAttribute('title', 'close');
               newDiv.appendChild(newlink);
               helpContent.domNode.insertBefore(newDiv, helpContent.domNode.firstChild);
+              
+              
+              var newDiv = document.createElement("div");
+              newlink = document.createElement('button');
+
+			  newlink.innerHTML = 'More information';
+			  newlink.setAttribute('title', 'More information');
+			  newlink.setAttribute('class', 'topicHeader');
+			  newlink.setAttribute('style', 'width:100%;background-color: #9aadbb; margin-top:20px');
+			  newlink.setAttribute('id', 'helpContent2TriggerButton');
+			  newDiv.appendChild(newlink);
+			  helpContent.domNode.appendChild(newDiv);
+                
+                
+              if ((stop != 0) && (stop != numberStops -1)){  
+                  helpContent.domNode.appendChild(helpContent2.domNode);
+              }
 
               tourDialogOnScreenWidget.set("content", helpContent);
+              var dialogHeightTotal = 770; 
 
               popup.open({
                     popup: tourDialogOnScreenWidget,
                     around: dom.byId(nodeToHelp),
                     orient: window.helpTour[stop].orient,
-                    maxHeight: 600,
+                    maxHeight: dialogHeightTotal,
+                    'overflow-y':'hidden',
                     padding: {x:100, y:100}
                     }); 
-                     
+                    
+                    elemHelpContents1 = document.getElementsByClassName("helpContent1");
+                    Content1Height = 0;
+                    for (ii = 0; ii< elemHelpContents1.length; ii++)
+                    {
+                        if (elemHelpContents1.item(ii).clientHeight > Content1Height) {
+                            Content1Height = elemHelpContents1.item(ii).clientHeight;
+                        }
+                    }
+                    
+                    elemHelpContent2Height = dialogHeightTotal-Content1Height-75;                
+                    elemHelpContents2 = document.getElementsByClassName("helpContent2");
+                    for (ii = 0; ii< elemHelpContents2.length; ii++) {
+                        elemHelpContent2 = elemHelpContents2.item(ii);
+                        
+                        if (elemHelpContent2 != null)
+                        {
+                            
+                            elemHelpContent2.style.height = elemHelpContent2Height.toString()+"px";
+                        }                             
+                    }
+                    
+                    popupContentsForScroll = document.getElementsByClassName("dijitTooltipDialogPopup");
+                    for (ii = 0; ii< popupContentsForScroll.length; ii++) {
+                        popupContentForScroll = popupContentsForScroll.item(ii);
+                        
+                        if (popupContentForScroll != null) {
+                            popupContentForScroll.style.overflow='hidden';
+                        }
+                    }
+
+	    		elemHelpContents2 = document.getElementsByClassName("helpContent2");
+	    		for (ii = 0; ii< elemHelpContents2.length; ii++) {
+		            elemHelpContent2 = elemHelpContents2.item(ii);
+		
+		            if (elemHelpContent2 != null)
+		            {
+		                elemHelpContent2.style.display = 'None';
+		                window.displayMoreInfor = "true";
+		            }      
+	            }  
+	            document.getElementById("helpContent2TriggerButton").addEventListener("click", displayMoreInformation); 
+                                                    
               exitButtons = document.getElementsByClassName("exit_buttonOnScreenWidget");
 
               for (ii = 0; ii< exitButtons.length; ii++)
