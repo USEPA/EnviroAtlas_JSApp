@@ -1961,7 +1961,16 @@ define([
                                 }
                                 else{
                                     lOptions.id = window.layerIdTiledPrefix + layer.eaID.toString();
-                                    this._viewerMap.addLayer(new ArcGISTiledMapServiceLayer(layer.tileURL, lOptions));
+                                    var tileLayerForFeature = new ArcGISTiledMapServiceLayer(layer.tileURL, lOptions);
+                                    tileLayerForFeature.setMaxScale(2000000);
+                                    /*tileLayerForFeature.on('load', function(evt) {
+			                                setTimeout(function () {
+			                                    evt.layer.setMaxScale(2000000);     
+			                                }, 100)                      			                            
+
+			                        });*/
+                                    this._viewerMap.addLayer(tileLayerForFeature);
+                                    
                                 }
                             } else if (layer.eaScale == "COMMUNITY") {
                                 loadSymbologyConfig(function(response) {
@@ -2652,6 +2661,7 @@ define([
 	                    	if(layer.hasOwnProperty('eaLyrNum')){
 	                    		eaURL = eaURL1 + "/" + layer.eaLyrNum.toString();
 	                    		window.hashURL[layer.eaID.toString()] = eaURL; 
+	                    		window.hashEAIDToTitle[layer.eaID] = layer.name;
 	                    		if(layer.hasOwnProperty('tileLink') && layer.tileLink.toString() == "yes"){
 	                    			window.hashURLtoTile[eaURL] = layer.tileURL.toString();
 	                    			
