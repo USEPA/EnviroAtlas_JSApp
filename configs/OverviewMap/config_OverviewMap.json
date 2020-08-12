@@ -2,6 +2,11 @@
   "overviewMap": {
     "visible": false,
     "attachTo": "bottom-right",
-    "maximizeButton": true
+    "maximizeButton": true,
+	"baseLayer": {
+		"url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer",
+		"type": "tiledMapService",
+		"veLayerInfo": {"isKeyInPortal": true}
+	}
   }
 }
