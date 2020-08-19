@@ -1,6 +1,6 @@
 {
   "scalebar": {
-    "scalebarStyle": "",
-    "scalebarUnit": ""
+    "scalebarStyle": "ruler",
+    "scalebarUnit": "english"
   }
 }
