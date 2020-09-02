@@ -108,6 +108,34 @@ define([
 
     getLayerInfoArray: function() {
       return array.filter(this._finalLayerInfos, function(layerInfo) {
+  		//layerInfo.title : Demographics - 10th grade (2012-2016 ACS)
+  		//layerInfo._layerInfos._finalLayerInfos[0].id: eaLyrDEMNum_ejdemogEDU_10_map
+  		//layerInfo._layerInfos._finalLayerInfos[0].title: Demographics - 10th grade (2012-2016 ACS)
+  		//layerInfo._layerInfos._finalLayerInfos[0].subId: eaLyrDEMNum_ejdemogEDU_10_map
+  		
+      	if ((layerInfo.title != null) &&(layerInfo.title.indexOf(window.demographicsTitlePrefix) == 0)){
+      		layerTitle = layerInfo.title;
+      		for (ii = 0; ii< layerInfo.layerObject.layerInfos.length; ii++){
+      			currentSublayerName = layerInfo.layerObject.layerInfos[ii].name;
+      			if ((window.demographicsTitlePrefix + currentSublayerName).indexOf(layerTitle) < 0) {
+      				layerInfo.layerObject.layerInfos[ii].name = layerTitle.replace(window.demographicsTitlePrefix, "") + " " + currentSublayerName;
+      				if ((layerInfo.newSubLayers != undefined)&& (layerInfo.newSubLayers.length>ii)) {
+      					layerInfo.newSubLayers[ii].title = layerInfo.layerObject.layerInfos[ii].name;
+      				}    				
+      			}      			
+      		}
+      		for (jj = 0; jj<layerInfo._layerInfos._finalLayerInfos.length; jj++ ){
+      			if (layerInfo._layerInfos._finalLayerInfos[jj].title ==  layerTitle) {
+		      		for (kk = 0; kk< layerInfo._layerInfos._finalLayerInfos[jj]._jsapiLayerInfos.length; kk++){
+		      			currentSublayerName = layerInfo._layerInfos._finalLayerInfos[jj]._jsapiLayerInfos[kk].name;
+		      			if ((window.demographicsTitlePrefix + currentSublayerName).indexOf(layerTitle) < 0) {
+		      				layerInfo._layerInfos._finalLayerInfos[jj]._jsapiLayerInfos[kk].name = layerTitle.replace(window.demographicsTitlePrefix, "") + " " + currentSublayerName;
+		      			}      			
+		      		}      				
+      			}
+      		}
+      	}
+      	
         // supports to set isTemporaryLayer when layerObject already added to map.
         if(lang.getObject("_wabProperties.isTemporaryLayer", false, layerInfo.layerObject)) {
           layerInfo._flag._isTemporaryLayerInfo = true;

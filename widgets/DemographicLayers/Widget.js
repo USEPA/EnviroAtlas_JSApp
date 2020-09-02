@@ -105,6 +105,7 @@ colorThemes:
         , { "startcolor": "#ffffcc", "endcolor": "#006837" }
         , { "startcolor": "#ccccff", "endcolor": "#000066" }
         ],
+demographicLayerName: "",
 //methods to communication with app container:
 
 startup: function () {
@@ -772,9 +773,11 @@ _genRender: function (renderobj) {
         dmlayer.setVisibleLayers([alyrindex]);
         dmlayer.setLayerDrawingOptions(optionsArray);
 
-            var dtitle = fielddesc + " (" + svcdesc + ")";
+            //var dtitle = fielddesc + " (" + svcdesc + ")";
+            var dtitle = window.demographicsTitlePrefix + fielddesc + " (" + svcdesc + ")";
             //dmlayer.name = fielddesc;
             dmlayer.title = dtitle;
+            this.demographicLayerName = dtitle;
             dmlayer.isDynamic = true;
             dmlayer.renderField = fieldid;
             dmlayer.layerType = mapid + "_" + alyrindex;
@@ -904,9 +907,12 @@ _mapRender: function(renderobj) {
     dmlayer.setVisibleLayers([alyrindex]);
     dmlayer.setLayerDrawingOptions(optionsArray);
 
-        var dtitle = fielddesc + " (" + svcdesc + ")";
+        //var dtitle = fielddesc + " (" + svcdesc + ")";
+        var dtitle = window.demographicsTitlePrefix + fielddesc + " (" + svcdesc + ")";
         //dmlayer.name = fielddesc;
-        dmlayer.title = dtitle;
+        dmlayer.title = dtitle; 
+        this.demographicLayerName = dtitle;        
+        
         dmlayer.isDynamic = true;
         dmlayer.renderField = fieldid;
         dmlayer.layerType = mapid + "_" + alyrindex;

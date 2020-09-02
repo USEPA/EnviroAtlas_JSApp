@@ -87,6 +87,7 @@ define([
     window.layerIdDemographPrefix = "eaLyrDEMNum_";
     window.layerIdTiledPrefix = "tiledNum_";
     window.addedLayerIdPrefix = "added_";
+    window.demographicsTitlePrefix = "Demographics - ";
     window.topLayerID = "";
     window.timeSliderLayerId = "TimeSliderLayer";//This is only used in AddData widget (added time aware layer)
     window.timeSliderPause = false;
