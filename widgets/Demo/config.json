@@ -94,6 +94,55 @@
 		"orient": ["below","below-alt", "above", "above-alt"],
 		"highlight": "dijit__WidgetBase_12"
 	}, {
+		"widgetName": "Select",
+		"helpFile": "help_SelectByTopic",
+		"node":"widgets_Select_Widget_39",
+		"content": [],
+		"orient": ["below","below-alt", "above", "above-alt"],
+		"highlight": "widgets_Select_Widget_39"
+	},{
+		"widgetName": "DynamicSymbology",
+		"helpFile": "help_DynamicSymbology",
+		"node":"widgets_DynamicSymbology_28",
+		"content": [],
+		"orient": ["below","below-alt", "above", "above-alt"],
+		"highlight": "widgets_DynamicSymbology_28"
+	},{
+		"widgetName": "LayerList",
+		"helpFile": "help_LayerList",
+		"node":"widgets_LayerList_Widget_17",
+		"content": [],
+		"orient": ["below","below-alt", "above", "above-alt"],
+		"highlight": "widgets_LayerList_Widget_17"
+	},{
+		"widgetName": "AttributeTable",
+		"helpFile": "help_AttributeTable",
+		"node":"widgets_AttributeTable_Widget_30",
+		"content": [],
+		"orient": ["below","below-alt", "above", "above-alt"],
+		"highlight": "widgets_AttributeTable_Widget_30"
+	},{
+		"widgetName": "eDraw",
+		"helpFile": "help_DrawMeasure",
+		"node":"widgets_DrawMeasure_Widget_36",
+		"content": [],
+		"orient": ["below","below-alt", "above", "above-alt"],
+		"highlight": "widgets_DrawMeasure_Widget_36"
+	},{
+		"widgetName": "Print",
+		"helpFile": "help_Print",
+		"node":"widgets_config_Print_27",
+		"content": [],
+		"orient": ["below","below-alt", "above", "above-alt"],
+		"highlight": "widgets_config_Print_27"
+	},{
+		"widgetName": "eBookmark",
+		"helpFile": "help_EnhancedBookmarks",
+		"node":"widgets_eBookmark_Widget_18",
+		"content": [],
+		"orient": ["below","below-alt", "above", "above-alt"],
+		"highlight": "widgets_eBookmark_Widget_18"
+	},{
 		"node":"dijit__WidgetBase_14",
 		"helpFile": "help_EndPage",
 		"content": [],
