@@ -63,7 +63,9 @@ define([
     'widgets/Demo/help/help_HucNavigation1',
     'widgets/Demo/help/help_HucNavigation2',
     'widgets/Demo/help/help_Raindrop1',
-    'widgets/Demo/help/help_Raindrop2',   
+    'widgets/Demo/help/help_Raindrop2',  
+    'widgets/Demo/help/help_EnhancedBookmarks1',
+    'widgets/Demo/help/help_EnhancedBookmarks2',       
     'widgets/Demo/help/help_EndPage',      
     'require',
     'dojo/i18n',
@@ -74,7 +76,7 @@ define([
   function(ConfigManager, LayoutManager, DataManager, WidgetManager, FeatureActionManager, SelectionManager,
     DataSourceManager, FilterManager, html, lang, array, on, keys, mouse,
     topic, cookie, Deferred, all, ioquery, esriConfig, esriRequest, urlUitls, IdentityManager,
-    portalUrlUtils, jimuUtils, help_Welcome, help_Elevation1,help_Elevation2, help_FeaturedCollections1, help_FeaturedCollections2, help_Demographic1, help_Demographic2, help_EnviroAtlasDataSearch1, help_EnviroAtlasDataSearch2, help_TimesSeries1, help_TimesSeries2, help_AddData1, help_AddData2, help_SelectCommunity1, help_SelectCommunity2, help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_HucNavigation1, help_HucNavigation2, help_Raindrop1, help_Raindrop2, help_EndPage, require, i18n, mainBundle, esriMain, dojoReady) {
+    portalUrlUtils, jimuUtils, help_Welcome, help_Elevation1,help_Elevation2, help_FeaturedCollections1, help_FeaturedCollections2, help_Demographic1, help_Demographic2, help_EnviroAtlasDataSearch1, help_EnviroAtlasDataSearch2, help_TimesSeries1, help_TimesSeries2, help_AddData1, help_AddData2, help_SelectCommunity1, help_SelectCommunity2, help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_HucNavigation1, help_HucNavigation2, help_Raindrop1, help_Raindrop2, help_EnhancedBookmarks1, help_EnhancedBookmarks2, help_EndPage, require, i18n, mainBundle, esriMain, dojoReady) {
     /* global jimuConfig:true */
     var mo = {}, appConfig;
 
@@ -158,6 +160,7 @@ define([
     window.formatters['help_ECAT1'] =  help_ECAT1;  
     window.formatters['help_HucNavigation1'] = help_HucNavigation1;
     window.formatters['help_Raindrop1'] = help_Raindrop1;
+    window.formatters['help_EnhancedBookmarks1'] = help_EnhancedBookmarks1;
        
     window.formatters['help_Elevation2'] = help_Elevation2;  
     window.formatters['help_Demographic2'] = help_Demographic2;
@@ -169,6 +172,7 @@ define([
     window.formatters['help_ECAT2'] =  help_ECAT2;  
     window.formatters['help_HucNavigation2'] = help_HucNavigation2;
     window.formatters['help_Raindrop2'] = help_Raindrop2; 
+    window.formatters['help_EnhancedBookmarks2'] = help_EnhancedBookmarks2;
     
     window.categoryDic = {};
     window.categoryDic["Clean Air"] = "cair";
