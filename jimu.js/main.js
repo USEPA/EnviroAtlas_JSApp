@@ -64,8 +64,20 @@ define([
     'widgets/Demo/help/help_HucNavigation2',
     'widgets/Demo/help/help_Raindrop1',
     'widgets/Demo/help/help_Raindrop2',  
+    'widgets/Demo/help/help_AttributeTable1',
+    'widgets/Demo/help/help_AttributeTable2',
+    'widgets/Demo/help/help_SelectByTopic1',
+    'widgets/Demo/help/help_SelectByTopic2',
+    'widgets/Demo/help/help_DrawMeasure1',
+    'widgets/Demo/help/help_DrawMeasure2',
     'widgets/Demo/help/help_EnhancedBookmarks1',
-    'widgets/Demo/help/help_EnhancedBookmarks2',       
+    'widgets/Demo/help/help_EnhancedBookmarks2',
+    'widgets/Demo/help/help_DynamicSymbology1',
+    'widgets/Demo/help/help_DynamicSymbology2',
+    'widgets/Demo/help/help_Print1',
+    'widgets/Demo/help/help_Print2',
+    'widgets/Demo/help/help_LayerList1',
+    'widgets/Demo/help/help_LayerList2',	      
     'widgets/Demo/help/help_EndPage',      
     'require',
     'dojo/i18n',
@@ -76,7 +88,7 @@ define([
   function(ConfigManager, LayoutManager, DataManager, WidgetManager, FeatureActionManager, SelectionManager,
     DataSourceManager, FilterManager, html, lang, array, on, keys, mouse,
     topic, cookie, Deferred, all, ioquery, esriConfig, esriRequest, urlUitls, IdentityManager,
-    portalUrlUtils, jimuUtils, help_Welcome, help_Elevation1,help_Elevation2, help_FeaturedCollections1, help_FeaturedCollections2, help_Demographic1, help_Demographic2, help_EnviroAtlasDataSearch1, help_EnviroAtlasDataSearch2, help_TimesSeries1, help_TimesSeries2, help_AddData1, help_AddData2, help_SelectCommunity1, help_SelectCommunity2, help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_HucNavigation1, help_HucNavigation2, help_Raindrop1, help_Raindrop2, help_EnhancedBookmarks1, help_EnhancedBookmarks2, help_EndPage, require, i18n, mainBundle, esriMain, dojoReady) {
+    portalUrlUtils, jimuUtils, help_Welcome, help_Elevation1,help_Elevation2, help_FeaturedCollections1, help_FeaturedCollections2, help_Demographic1, help_Demographic2, help_EnviroAtlasDataSearch1, help_EnviroAtlasDataSearch2, help_TimesSeries1, help_TimesSeries2, help_AddData1, help_AddData2, help_SelectCommunity1, help_SelectCommunity2, help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_HucNavigation1, help_HucNavigation2, help_Raindrop1, help_Raindrop2, help_AttributeTable1, help_AttributeTable2, help_SelectByTopic1, help_SelectByTopic2, help_DrawMeasure1, help_DrawMeasure2, help_EnhancedBookmarks1, help_EnhancedBookmarks2, help_DynamicSymbology1, help_DynamicSymbology2, help_Print1, help_Print2, help_LayerList1, help_LayerList2, help_EndPage, require, i18n, mainBundle, esriMain, dojoReady) {
     /* global jimuConfig:true */
     var mo = {}, appConfig;
 
@@ -160,8 +172,14 @@ define([
     window.formatters['help_ECAT1'] =  help_ECAT1;  
     window.formatters['help_HucNavigation1'] = help_HucNavigation1;
     window.formatters['help_Raindrop1'] = help_Raindrop1;
+    window.formatters['help_AttributeTable1'] = help_AttributeTable1;
+    window.formatters['help_SelectByTopic1'] = help_SelectByTopic1;
+    window.formatters['help_DrawMeasure1'] = help_DrawMeasure1;
     window.formatters['help_EnhancedBookmarks1'] = help_EnhancedBookmarks1;
-       
+    window.formatters['help_DynamicSymbology1'] = help_DynamicSymbology1;					
+    window.formatters['help_Print1'] = help_Print1;
+    window.formatters['help_LayerList1'] = help_LayerList1;
+	
     window.formatters['help_Elevation2'] = help_Elevation2;  
     window.formatters['help_Demographic2'] = help_Demographic2;
     window.formatters['help_EnviroAtlasDataSearch2'] =  help_EnviroAtlasDataSearch2; 
@@ -172,7 +190,13 @@ define([
     window.formatters['help_ECAT2'] =  help_ECAT2;  
     window.formatters['help_HucNavigation2'] = help_HucNavigation2;
     window.formatters['help_Raindrop2'] = help_Raindrop2; 
+    window.formatters['help_AttributeTable2'] = help_AttributeTable2;
+    window.formatters['help_SelectByTopic2'] = help_SelectByTopic2;
+    window.formatters['help_DrawMeasure2'] = help_DrawMeasure2;
     window.formatters['help_EnhancedBookmarks2'] = help_EnhancedBookmarks2;
+    window.formatters['help_DynamicSymbology2'] = help_DynamicSymbology2;					
+    window.formatters['help_Print2'] = help_Print2;
+    window.formatters['help_LayerList2'] = help_LayerList2;
     
     window.categoryDic = {};
     window.categoryDic["Clean Air"] = "cair";
