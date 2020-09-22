@@ -96,10 +96,10 @@
 	}, {
 		"widgetName": "Select",
 		"helpFile": "help_SelectByTopic",
-		"node":"widgets_Select_Widget_39",
+		"node":"dijit__WidgetBase_14",
 		"content": [],
 		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": "widgets_Select_Widget_39"
+		"highlight": "dijit__WidgetBase_14"
 	},{
 		"widgetName": "DynamicSymbology",
 		"helpFile": "help_DynamicSymbology",
