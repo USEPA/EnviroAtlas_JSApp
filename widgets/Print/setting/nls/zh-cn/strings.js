@@ -9,5 +9,6 @@ define({
   "urlNotAvailable": "url 不可用。",
   "notPrintTask": "此 url 不是一个打印任务",
   "advancedOption": "显示高级选项",
-  "ok": "确定"
+  "ok": "确定",
+  "editable": "可编辑"
 });

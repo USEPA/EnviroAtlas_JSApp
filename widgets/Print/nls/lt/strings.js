@@ -16,6 +16,7 @@ define({
   "author": "Autorius",
   "copyright": "Autoriaus teisės",
   "fullLayoutOptions": "Visos maketo parinktys",
+  "scaleBarUnit": "Mastelio juostos vienetai",
   "scaleBarUnitsMetric": "Mastelio juostos vienetai metriniai",
   "scaleBarUnitsNonMetric": "Mastelio juostos vienetai ne metriniai",
   "unitsMiles": "Mylios",
@@ -33,5 +34,9 @@ define({
   "print": "Spausdinti",
   "clearList": "Išvalyti spaudinius",
   "creatingPrint": "Kuriamas spaudinys",
-  "printError": "Klaida, bandykite dar kartą"
+  "printError": "Klaida, bandykite dar kartą",
+  "forceFeatureAttributes": "Elementų atributai",
+  "includeFeatureAttributes": "Apima atributus",
+  "outputSR": "Išvesties koordinačių sistema",
+  "invalidWkid": "Netinkamas wkid"
 });

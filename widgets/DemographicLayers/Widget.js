@@ -105,6 +105,7 @@ colorThemes:
         , { "startcolor": "#ffffcc", "endcolor": "#006837" }
         , { "startcolor": "#ccccff", "endcolor": "#000066" }
         ],
+demographicLayerName: "",
 //methods to communication with app container:
 
 startup: function () {
@@ -124,8 +125,8 @@ startup: function () {
                             style: 'width: 300px'
                         });
 
-        infotext = "<h2 style='margin-top:0px'>2012-2016 ACS</h2>";
-        infotext += "<p>Variables derived from a subset of 2012-2016 American Community Survey data.</p>"
+        infotext = "<h2 style='margin-top:0px'>2013-2017 ACS</h2>";
+        infotext += "<p>Variables derived from a subset of 2013-2017 American Community Survey data.</p>"
         infotext += "<hr style='margin-top:10px'>";
         infotext += "<h2 style='margin-top:0px'>2010 Census</h2>";
         infotext += "<p>Variables derived from a subset of 2010 Census data.</p>";
@@ -482,11 +483,12 @@ classbreak: function (renderobj) {
         this._mapRender(renderobj);
     } else {
         this._genRender(renderobj);
+        //this._mapRender(renderobj);
     }
 
 },
-_genRender: function (renderobj) {
-    var wobj = this;
+_getRenderer: function (currentLayer, optionsArray, renderobj){
+
     var fielddesc = renderobj.fielddesc;
     var svcdesc = renderobj.svcdesc;
     var opcvalue = renderobj.opcvalue;
@@ -498,6 +500,8 @@ _genRender: function (renderobj) {
     var headerfields = _config.demogJSON[mapid].baselayers[activelayer].headerfields;
     
     renderobj.actlayer = activelayer;
+    
+    
     var renderuniquekey = fieldid + "_" + renderobj.method + "_" + renderobj.classes;
     
     var linewidth = renderobj.linewidth;
@@ -525,34 +529,35 @@ _genRender: function (renderobj) {
         );
         classDef.baseSymbol = bsymbol;
         classDef.colorRamp = colorRamp;
-    }
-
-    var minfield = activelayer + "_min";
-    var maxfield = activelayer + "_max";
+    }	
+	
+    var minfield = currentLayer + "_min";
+    var maxfield = currentLayer + "_max";
     var layerminvalue = null;
     var layermaxvalue = null;
     if (_config.demogJSON[mapid].dynamiclayers[fieldid][minfield]) layerminvalue = _config.demogJSON[mapid].dynamiclayers[fieldid][minfield];
     if (_config.demogJSON[mapid].dynamiclayers[fieldid][maxfield]) layermaxvalue = _config.demogJSON[mapid].dynamiclayers[fieldid][maxfield];
 
     if ((layerminvalue == null) && (layermaxvalue == null)) {
-        if (activelayer == "blk") {
-            activelayer = "bg";
-        } else if (activelayer == "bg") {
-            activelayer = "tr";
-        } else if (activelayer == "tr") {
-            activelayer = "cnty";
+        if (currentLayer == "blk") {
+            currentLayer = "bg";
+        } else if (currentLayer == "bg") {
+            currentLayer = "tr";
+        } else if (currentLayer == "tr") {
+            currentLayer = "cnty";
         }
-        var minfield = activelayer + "_min";
-        var maxfield = activelayer + "_max";
+        var minfield = currentLayer + "_min";
+        var maxfield = currentLayer + "_max";
         layerminvalue = _config.demogJSON[mapid].dynamiclayers[fieldid][minfield];
         layermaxvalue = _config.demogJSON[mapid].dynamiclayers[fieldid][maxfield];
-        renderobj.actlayer = activelayer;
+        
     }
     //this.levelDiv.innerHTML = _config.demogJSON[mapid].baselayers[activelayer].level;
     var params = new esri.tasks.GenerateRendererParameters();
     params.classificationDefinition = classDef;
     var dataUrl = _config.demogJSON[mapid].layerurl + _config.demogJSON[mapid].service + "/MapServer";
-    var alyrindex = _config.demogJSON[mapid].baselayers[activelayer].layeridx;
+    var alyrindex = _config.demogJSON[mapid].baselayers[currentLayer].layeridx;
+    
 
     var generateRenderer = new esri.tasks.GenerateRendererTask(dataUrl + "/" + alyrindex);
 
@@ -564,8 +569,7 @@ _genRender: function (renderobj) {
             renderer.infos[m].symbol.setColor(mycolors[m]);
             renderer.infos[m].label = Number(renderer.infos[m].minValue).toFixed(0) + " - " + Number(renderer.infos[m].maxValue).toFixed(0);
         }
-        _config.demogJSON[mapid].baselayers[activelayer].renderobj[renderuniquekey] = renderer;
-        var optionsArray = [];
+        _config.demogJSON[mapid].baselayers[currentLayer].renderobj[renderuniquekey] = renderer;
         var drawingOptions = new esri.layers.LayerDrawingOptions();
         //var layeridstr = mapid + fieldid + "_map";
         var layeridstr = window.layerIdDemographPrefix+ mapid + fieldid + "_map";
@@ -574,6 +578,8 @@ _genRender: function (renderobj) {
             renderobj.renderer = renderer;
             drawingOptions.renderer = renderer;
             optionsArray[alyrindex] = drawingOptions;
+
+            
         } else {
             var pntrenderer = new ClassBreaksRenderer();
             pntrenderer.attributeField = renderer.attributeField;
@@ -612,10 +618,101 @@ _genRender: function (renderobj) {
                 });
             
             }
-            renderobj.renderer = pntrenderer;
             drawingOptions.renderer = pntrenderer;
             optionsArray[alyrindex] = drawingOptions;
         }
+    });
+        
+        //end of setting optionsArray	
+	
+},
+_genRender: function (renderobj) {
+    var wobj = this;
+    var fielddesc = renderobj.fielddesc;
+    var svcdesc = renderobj.svcdesc;
+    var opcvalue = renderobj.opcvalue;
+    var mapid = renderobj.mid;
+    var fieldid = renderobj.fid;
+    var layervisible = renderobj.layervisible;
+    //console.log(mapid + "; " + fieldid + "; " + renderobj.rendertype)
+    var activelayer = this.getActiveLayer(mapid, fieldid);
+    var headerfields = _config.demogJSON[mapid].baselayers[activelayer].headerfields;
+    
+    renderobj.actlayer = activelayer;
+    
+    
+    var renderuniquekey = fieldid + "_" + renderobj.method + "_" + renderobj.classes;
+    
+    var linewidth = renderobj.linewidth;
+    var linecolor = renderobj.linecolor;
+    var mycolors = this.generateColors(renderobj.classes, renderobj.fromcolor, renderobj.tocolor);
+    var classDef = new esri.tasks.ClassBreaksDefinition();
+    classDef.classificationField = fieldid;
+    classDef.classificationMethod = renderobj.method; // always natural breaks
+    classDef.breakCount = renderobj.classes; // always five classes
+    if (renderobj.rendertype == "polygon") {
+        var colorRamp = new esri.tasks.AlgorithmicColorRamp();
+        colorRamp.fromColor = new dojo.colorFromHex(renderobj.fromcolor);
+        colorRamp.toColor = new dojo.colorFromHex(renderobj.tocolor);
+        colorRamp.algorithm = "hsv"; // options are:  "cie-lab", "hsv", "lab-lch"
+        var linesym = new esri.symbol.SimpleLineSymbol(
+            esri.symbol.SimpleLineSymbol.STYLE_SOLID,
+            new dojo.Color(linecolor)
+            );
+        if (linewidth > 0) linesym.setWidth(linewidth);
+        else linesym = null;
+        var bsymbol = new esri.symbol.SimpleFillSymbol(
+            esri.symbol.SimpleFillSymbol.STYLE_SOLID,
+        linesym,
+            null
+        );
+        classDef.baseSymbol = bsymbol;
+        classDef.colorRamp = colorRamp;
+    }
+    //arrayLayer = ["bg", "cnty", "st", "tr"];
+	
+
+	
+	
+    var minfield = activelayer + "_min";
+    var maxfield = activelayer + "_max";
+    var layerminvalue = null;
+    var layermaxvalue = null;
+    if (_config.demogJSON[mapid].dynamiclayers[fieldid][minfield]) layerminvalue = _config.demogJSON[mapid].dynamiclayers[fieldid][minfield];
+    if (_config.demogJSON[mapid].dynamiclayers[fieldid][maxfield]) layermaxvalue = _config.demogJSON[mapid].dynamiclayers[fieldid][maxfield];
+
+    if ((layerminvalue == null) && (layermaxvalue == null)) {
+        if (activelayer == "blk") {
+            activelayer = "bg";
+        } else if (activelayer == "bg") {
+            activelayer = "tr";
+        } else if (activelayer == "tr") {
+            activelayer = "cnty";
+        }
+        var minfield = activelayer + "_min";
+        var maxfield = activelayer + "_max";
+        layerminvalue = _config.demogJSON[mapid].dynamiclayers[fieldid][minfield];
+        layermaxvalue = _config.demogJSON[mapid].dynamiclayers[fieldid][maxfield];
+        renderobj.actlayer = activelayer;
+    }
+    //this.levelDiv.innerHTML = _config.demogJSON[mapid].baselayers[activelayer].level;
+    var params = new esri.tasks.GenerateRendererParameters();
+    params.classificationDefinition = classDef;
+    var dataUrl = _config.demogJSON[mapid].layerurl + _config.demogJSON[mapid].service + "/MapServer";
+    var optionsArray = [];          
+    var blayers = _config.demogJSON[mapid].baselayers;
+    for (var currentLayer in blayers) {
+		wobj._getRenderer(currentLayer, optionsArray, renderobj);
+    }
+    
+
+    
+
+        
+    //end of setting optionsArray
+    var alyrindex = _config.demogJSON[mapid].baselayers[activelayer].layeridx;
+    var layeridstr = window.layerIdDemographPrefix+ mapid + fieldid + "_map";
+ 	setTimeout(lang.hitch(this, function() {       
         if (wobj.map.getLayer(layeridstr)) {
             var dmlayer = wobj.map.getLayer(layeridstr);
             wobj.map.removeLayer(dmlayer);
@@ -672,13 +769,15 @@ _genRender: function (renderobj) {
         var iTemplates = {};
         iTemplates[alyrindex] = {infoTemplate: infoTemplate};
 
-        dmlayer.setInfoTemplates(iTemplates)
+        dmlayer.setInfoTemplates(iTemplates);
         dmlayer.setVisibleLayers([alyrindex]);
         dmlayer.setLayerDrawingOptions(optionsArray);
 
-            var dtitle = fielddesc + " (" + svcdesc + ")";
+            //var dtitle = fielddesc + " (" + svcdesc + ")";
+            var dtitle = window.demographicsTitlePrefix + fielddesc + " (" + svcdesc + ")";
             //dmlayer.name = fielddesc;
             dmlayer.title = dtitle;
+            this.demographicLayerName = dtitle;
             dmlayer.isDynamic = true;
             dmlayer.renderField = fieldid;
             dmlayer.layerType = mapid + "_" + alyrindex;
@@ -692,12 +791,10 @@ _genRender: function (renderobj) {
 
      
         wobj.removespining();
+    }), 6000);
 
-    }, function (err) {
-        console.log("error");
-       
-        wobj.removespining();
-    });
+
+
 },
 _mapRender: function(renderobj) {
     var fielddesc = renderobj.fielddesc;
@@ -710,65 +807,76 @@ _mapRender: function(renderobj) {
     var activelayer = this.getActiveLayer(mapid, fieldid);
     var headerfields = _config.demogJSON[mapid].baselayers[activelayer].headerfields;
     renderobj.actlayer = activelayer;
-    var alyrindex = _config.demogJSON[mapid].baselayers[activelayer].layeridx;
+    var alyrindex = null;
     var dataUrl = _config.demogJSON[mapid].layerurl + _config.demogJSON[mapid].service + "/MapServer";
     var renderuniquekey = fieldid + "_" + renderobj.method + "_" + renderobj.classes;
-    var orgrender = _config.demogJSON[mapid].baselayers[activelayer].renderobj[renderuniquekey];
+    var orgrender = null;
     var linewidth = renderobj.linewidth;
     var linecolor = renderobj.linecolor;
-
+	
     var optionsArray = [];
-    var drawingOptions = new esri.layers.LayerDrawingOptions();
     //var layeridstr = mapid + fieldid + "_map";
 	var layeridstr = window.layerIdDemographPrefix+ mapid + fieldid + "_map"; 
-    if (renderobj.rendertype == "polygon") {
-        var mycolors = this.generateColors(renderobj.classes, renderobj.fromcolor, renderobj.tocolor);
-        for (var m = 0; m < orgrender.infos.length; m++) {
-            //console.log(mycolors[m]);
-            orgrender.infos[m].symbol.setColor(mycolors[m]);
-            orgrender.infos[m].symbol.outline.setColor(new Color(linecolor));
-            orgrender.infos[m].symbol.outline.setWidth(linewidth);
-
-        }
-        renderobj.renderer = orgrender;
-        drawingOptions.renderer = orgrender;
-        optionsArray[alyrindex] = drawingOptions;
-    } else {
-        var pntrenderer = new ClassBreaksRenderer();
-        pntrenderer.attributeField = orgrender.attributeField;
-        var fillSymbol = new SimpleFillSymbol();
-        fillSymbol.setColor(new Color([0, 0, 0, 0]));
-        fillSymbol.outline.setColor(new Color([133, 133, 133, .5]));
-        fillSymbol.outline.setWidth(0);
-
-        pntrenderer.backgroundFillSymbol = fillSymbol;
-        pntrenderer.valueExpressionTitle = fielddesc;
-        var pntcolor = renderobj.circlecolor;
-       
-        var minsize = Number(renderobj.circlemins);
-        var maxsize = Number(renderobj.circlemaxs);
-        var sinterval = (maxsize - minsize) / (Number(renderobj.classes)-1);
-        for (var m = 0; m < orgrender.infos.length; m++) {
-            var markerSymbol = new SimpleMarkerSymbol();
-            markerSymbol.setColor(new Color(pntcolor));
-            
-            markerSymbol.outline.setColor(new Color(linecolor));
-            markerSymbol.outline.setWidth(linewidth);
-            var s = parseInt(minsize + m*sinterval);
-            //console.log("size: " + s);
-            markerSymbol.setSize(s);
-            pntrenderer.addBreak({
-                minValue: orgrender.infos[m].minValue,
-                maxValue: orgrender.infos[m].maxValue,
-                label: orgrender.infos[m].label,
-                symbol: markerSymbol
-            });
-        
-        }
-        renderobj.renderer = pntrenderer;
-        drawingOptions.renderer = pntrenderer;
-        optionsArray[alyrindex] = drawingOptions;
+	//get renderer for all layers
+    var blayers = _config.demogJSON[mapid].baselayers;
+    for (var currentLayer in blayers) {
+		orgrender = _config.demogJSON[mapid].baselayers[currentLayer].renderobj[renderuniquekey];
+		alyrindex = _config.demogJSON[mapid].baselayers[currentLayer].layeridx;
+	    if (renderobj.rendertype == "polygon") {
+	        var mycolors = this.generateColors(renderobj.classes, renderobj.fromcolor, renderobj.tocolor);
+	        for (var m = 0; m < orgrender.infos.length; m++) {
+	            //console.log(mycolors[m]);
+	            orgrender.infos[m].symbol.setColor(mycolors[m]);
+	            orgrender.infos[m].symbol.outline.setColor(new Color(linecolor));
+	            orgrender.infos[m].symbol.outline.setWidth(linewidth);
+	
+	        }
+	        renderobj.renderer = orgrender;
+	        var drawingOptions = new esri.layers.LayerDrawingOptions();
+	        drawingOptions.renderer = orgrender;	        
+	        optionsArray[alyrindex] = drawingOptions;
+	    } else {
+	        var pntrenderer = new ClassBreaksRenderer();
+	        pntrenderer.attributeField = orgrender.attributeField;
+	        var fillSymbol = new SimpleFillSymbol();
+	        fillSymbol.setColor(new Color([0, 0, 0, 0]));
+	        fillSymbol.outline.setColor(new Color([133, 133, 133, .5]));
+	        fillSymbol.outline.setWidth(0);
+	
+	        pntrenderer.backgroundFillSymbol = fillSymbol;
+	        pntrenderer.valueExpressionTitle = fielddesc;
+	        var pntcolor = renderobj.circlecolor;
+	       
+	        var minsize = Number(renderobj.circlemins);
+	        var maxsize = Number(renderobj.circlemaxs);
+	        var sinterval = (maxsize - minsize) / (Number(renderobj.classes)-1);
+	        for (var m = 0; m < orgrender.infos.length; m++) {
+	            var markerSymbol = new SimpleMarkerSymbol();
+	            markerSymbol.setColor(new Color(pntcolor));
+	            
+	            markerSymbol.outline.setColor(new Color(linecolor));
+	            markerSymbol.outline.setWidth(linewidth);
+	            var s = parseInt(minsize + m*sinterval);
+	            //console.log("size: " + s);
+	            markerSymbol.setSize(s);
+	            pntrenderer.addBreak({
+	                minValue: orgrender.infos[m].minValue,
+	                maxValue: orgrender.infos[m].maxValue,
+	                label: orgrender.infos[m].label,
+	                symbol: markerSymbol
+	            });
+	        
+	        }
+	        renderobj.renderer = pntrenderer;
+	        var drawingOptions = new esri.layers.LayerDrawingOptions();
+	        drawingOptions.renderer = pntrenderer;
+	        optionsArray[alyrindex] = drawingOptions;
+	    }
     }
+    alyrindex = _config.demogJSON[mapid].baselayers[activelayer].layeridx;
+    //end of getting renderer for all layers
+    
+
     if (this.map.getLayer(layeridstr)) {
         var dmlayer = this.map.getLayer(layeridstr);
         this.map.removeLayer(dmlayer);
@@ -799,9 +907,12 @@ _mapRender: function(renderobj) {
     dmlayer.setVisibleLayers([alyrindex]);
     dmlayer.setLayerDrawingOptions(optionsArray);
 
-        var dtitle = fielddesc + " (" + svcdesc + ")";
+        //var dtitle = fielddesc + " (" + svcdesc + ")";
+        var dtitle = window.demographicsTitlePrefix + fielddesc + " (" + svcdesc + ")";
         //dmlayer.name = fielddesc;
-        dmlayer.title = dtitle;
+        dmlayer.title = dtitle; 
+        this.demographicLayerName = dtitle;        
+        
         dmlayer.isDynamic = true;
         dmlayer.renderField = fieldid;
         dmlayer.layerType = mapid + "_" + alyrindex;

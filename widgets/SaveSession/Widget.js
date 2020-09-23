@@ -1222,7 +1222,7 @@ define(['dojo/_base/declare',
 				        };
 				        
 				        //set drawingInfo.renderer for uploaded CSV file whose GeometryType is esriGeometryPoint and fields includes "__OBJECTID"		        
-				        if ((hashGeometryTypeAddedFeatLyr[settingsForLayer.id] == "esriGeometryPoint") && (hashFieldsAddedFeatureLayer[settingsForLayer.id].indexOf("__OBJECTID")>=0)) {
+				        if ((hashGeometryTypeAddedFeatLyr[settingsForLayer.id] == "esriGeometryPoint")) {
 				        	featureCollection.layerDefinition.drawingInfo ={
 		                        "renderer": {
 		                            "type": "simple",
@@ -1236,8 +1236,9 @@ define(['dojo/_base/declare',
 		                            }
 		                        }
 		                   };
-				        } 				
-
+				        } 		
+ 			
+						
 						if (window.hashInfoTemplate[settingsForLayer.id] == null) {
 					        var jsonfl = new esri.layers.FeatureLayer(featureCollection, {
 					          mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
@@ -1259,7 +1260,17 @@ define(['dojo/_base/declare',
                         	var rendererJson = window.hashRenderer[settingsForLayer.id];
 		                	jsonfl.setRenderer(new SimpleRenderer(rendererJson));				        	
 				        }*/
-				        
+				        if ((hashGeometryTypeAddedFeatLyr[settingsForLayer.id] == "esriGeometryPolygon")) {
+				        	symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+	                            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+	                            new Color([0, 0, 0]), 1), new Color([76, 129, 205, 0.75]));
+                            jsonfl.setRenderer(new SimpleRenderer(symbol));
+
+				        } else if ((hashGeometryTypeAddedFeatLyr[settingsForLayer.id] == "esriGeometryPolyline")) {
+				        	symbol = new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([165, 83, 183]), 1);
+                            jsonfl.setRenderer(new SimpleRenderer(symbol));
+
+				        }
 				        addGraphicsToLayer(jsonfl, settingsForLayer);
 				        this.map.addLayer(jsonfl);
 	            	}

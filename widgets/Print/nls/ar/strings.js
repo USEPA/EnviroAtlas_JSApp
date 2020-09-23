@@ -16,6 +16,7 @@ define({
   "author": "المؤلف",
   "copyright": "حقوق النشر",
   "fullLayoutOptions": "خيارات التخطيط الكامل",
+  "scaleBarUnit": "وحدة شريط القياس",
   "scaleBarUnitsMetric": "وحدات شريط مقياس الرسم المترية",
   "scaleBarUnitsNonMetric": "وحدات شريط مقياس الرسم غير المترية",
   "unitsMiles": "أميال",
@@ -33,5 +34,9 @@ define({
   "print": "طباعة",
   "clearList": "مسح الطباعة",
   "creatingPrint": "مسح الطباعة",
-  "printError": "خطأ، الرجاء إعادة المحاولة"
+  "printError": "خطأ، الرجاء إعادة المحاولة",
+  "forceFeatureAttributes": "جداول بيانات المعالم",
+  "includeFeatureAttributes": "تضمين جداول البيانات",
+  "outputSR": "الإسناد المكاني الناتج",
+  "invalidWkid": "wkid غير صحيح"
 });

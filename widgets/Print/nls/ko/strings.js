@@ -16,6 +16,7 @@ define({
   "author": "작성자",
   "copyright": "저작권",
   "fullLayoutOptions": "전체 레이아웃 옵션",
+  "scaleBarUnit": "스케일바 단위",
   "scaleBarUnitsMetric": "축척 막대 단위(미터법)",
   "scaleBarUnitsNonMetric": "축척 막대 단위(비미터법)",
   "unitsMiles": "마일",
@@ -33,5 +34,9 @@ define({
   "print": "인쇄",
   "clearList": "인쇄 지우기",
   "creatingPrint": "인쇄를 생성 중",
-  "printError": "오류가 있습니다. 다시 시도하세요."
+  "printError": "오류가 있습니다. 다시 시도하세요.",
+  "forceFeatureAttributes": "피처 속성",
+  "includeFeatureAttributes": "속성 포함",
+  "outputSR": "결과 공간 참조",
+  "invalidWkid": "잘못된 wkid"
 });

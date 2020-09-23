@@ -16,6 +16,7 @@ define({
   "author": "Forfatter",
   "copyright": "Ophavsret",
   "fullLayoutOptions": "Indstillinger for fuldt layout",
+  "scaleBarUnit": "Målestoksenhed",
   "scaleBarUnitsMetric": "Målestokslinje metriske enheder",
   "scaleBarUnitsNonMetric": "Målestokslinje ikke-metriske enheder",
   "unitsMiles": "Miles",
@@ -33,5 +34,9 @@ define({
   "print": "Udskriv",
   "clearList": "Ryd udskrifter",
   "creatingPrint": "Opretter udskrift",
-  "printError": "Fejl. Prøv igen"
+  "printError": "Fejl. Prøv igen",
+  "forceFeatureAttributes": "Objekters attributter",
+  "includeFeatureAttributes": "Medtag attributter",
+  "outputSR": "Output-spatial reference",
+  "invalidWkid": "Ugyldig wkid"
 });

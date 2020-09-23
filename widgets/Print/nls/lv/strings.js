@@ -16,6 +16,7 @@ define({
   "author": "Autors",
   "copyright": "Autortiesības",
   "fullLayoutOptions": "Pilna izkārtojuma opcijas",
+  "scaleBarUnit": "Grafiskā mēroga mērvienība",
   "scaleBarUnitsMetric": "Metriskas mēroga joslas vienības",
   "scaleBarUnitsNonMetric": "Ne metriskas mēroga joslas vienības",
   "unitsMiles": "Jūdzes",
@@ -33,5 +34,9 @@ define({
   "print": "Drukāt",
   "clearList": "Notīrīt izdrukas",
   "creatingPrint": "Drukas izveide",
-  "printError": "Kļūda, mēģiniet vēlreiz"
+  "printError": "Kļūda, mēģiniet vēlreiz",
+  "forceFeatureAttributes": "Elementu atribūti",
+  "includeFeatureAttributes": "Iekļaut atribūtus",
+  "outputSR": "Izvades telpiskā atskaite",
+  "invalidWkid": "Nederīgs WKID"
 });

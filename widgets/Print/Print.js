@@ -1,31 +1,782 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:widgets/Print/templates/Print.html":'\x3cdiv class\x3d"gis_PrintDijit"\x3e\r\n    \x3cdiv class\x3d"formContainer"\x3e\r\n        \x3cdiv data-dojo-type\x3d"dijit/form/Form" data-dojo-attach-point\x3d"printSettingsFormDijit"\x3e\r\n            \x3ctable cellspacing\x3d"5" style\x3d"width:100%;"\x3e\r\n                \x3ctr data-dojo-attach-point\x3d"titleTr"\x3e\r\n                    \x3ctd style\x3d"width:65px;"\x3e\r\n                        ${nls.title}:\r\n                    \x3c/td\x3e\r\n                    \x3ctd\x3e\r\n                        \x3cinput type\x3d"text" data-dojo-attach-point\x3d"titleNode" data-dojo-type\x3d"dijit/form/ValidationTextBox" data-dojo-props\x3d"name:\'title\',trim:true,required:true,style:\'width:100%;\'" /\x3e\r\n                    \x3c/td\x3e\r\n                \x3c/tr\x3e\r\n                \x3ctr style\x3d"display: none"\x3e\r\n                    \x3ctd\x3e\r\n                        ${nls.layout}:\r\n                    \x3c/td\x3e\r\n                    \x3ctd\x3e\r\n                        \x3cinput type\x3d"select" data-dojo-type\x3d"dijit/form/Select" data-dojo-props\x3d"name:\'layout\',style:\'width:100%;\'"\r\n                        data-dojo-attach-point\x3d"layoutDijit" data-dojo-attach-event\x3d"Change:onLayoutChange"/\x3e\r\n                    \x3c/td\x3e\r\n                \x3c/tr\x3e\r\n                \x3ctr style\x3d"display: none"\x3e\r\n                    \x3ctd\x3e\r\n                        ${nls.format}:\r\n                    \x3c/td\x3e\r\n                    \x3ctd\x3e\r\n                        \x3cinput type\x3d"select" data-dojo-type\x3d"dijit/form/Select" data-dojo-props\x3d"name:\'format\',style:\'width:100%;\'"\r\n                        data-dojo-attach-point\x3d"formatDijit" /\x3e\r\n                    \x3c/td\x3e\r\n                \x3c/tr\x3e\r\n            \x3c/table\x3e\r\n        \x3c/div\x3e\r\n    \x3c/div\x3e\r\n    \x3cdiv class\x3d"buttonActionBar jimu-align-trailing"\x3e\r\n        \x3cdiv class\x3d"jimu-btn" data-dojo-attach-point\x3d"advancedButtonDijit" style\x3d"display: none"\r\n            data-dojo-attach-event\x3d"onclick:showSettings"\x3e\x3cdiv class\x3d"btn-icon settingsIcon"\x3e\x3c/div\x3e${nls.settings}\x3c/div\x3e\r\n        \x3cdiv data-dojo-type\x3d"dijit/TooltipDialog" data-dojo-attach-point\x3d"settingsDialog"\r\n            style\x3d"display: none" class\x3d"gis_PrintDijit"\x3e\r\n            \x3cdiv style\x3d"width:250px;"\x3e\r\n                \x3cdiv style\x3d"font-weight:bold;"\x3e\r\n                    ${nls.mapScaleExtent}:\r\n                \x3c/div\x3e\r\n                \x3cdiv data-dojo-type\x3d"dijit/form/Form" data-dojo-attach-point\x3d"preserveFormDijit"\x3e\r\n                    \x3ctable cellspacing\x3d"5"\x3e\r\n                        \x3ctr\x3e\r\n                            \x3ctd style\x3d"vertical-align:middle;"\x3e\r\n                                ${nls.preserve}:\r\n                            \x3c/td\x3e\r\n                            \x3ctd\x3e\r\n                                \x3cinput type\x3d"radio" data-dojo-attach-point\x3d"printWidgetMapScale" data-dojo-type\x3d"dijit/form/RadioButton" data-dojo-props\x3d"name:\'preserveScale\',checked:true,value:\'true\'"\r\n                                /\x3e\x3clabel data-dojo-attach-point\x3d"printWidgetMapScaleLabel"\x3e${nls.mapScale}\x3c/label\x3e\r\n                                \x3cbr /\x3e\r\n                                \x3cinput type\x3d"radio" data-dojo-attach-point\x3d"printWidgetMapExtent" data-dojo-type\x3d"dijit/form/RadioButton" data-dojo-props\x3d"name:\'preserveScale\',value:\'false\'"\r\n                                /\x3e\x3clabel data-dojo-attach-point\x3d"printWidgetMapExtentLabel"\x3e${nls.mapExtent}\x3c/label\x3e\r\n                            \x3c/td\x3e\r\n                            \x3ctr\x3e\r\n                                \x3ctd\x3e\r\n                                    ${nls.forceScale}:\r\n                                \x3c/td\x3e\r\n                                \x3ctd\x3e\r\n                                    \x3cinput type\x3d"radio" data-dojo-type\x3d"dijit/form/RadioButton" data-dojo-props\x3d"name:\'preserveScale\',value:\'force\',checked:false"/\x3e \x3cinput type\x3d"text" data-dojo-type\x3d"dijit/form/NumberTextBox" data-dojo-props\x3d"name:\'forcedScale\',required:false,style:\'width:100px;\'" data-dojo-attach-point\x3d"forceScaleNTB"/\x3e \x3ca href\x3d"#" data-dojo-attach-event\x3d"click:getCurrentMapScale"\x3e${nls.getCurrentScale}\x3c/a\x3e\r\n                                \x3c/td\x3e\r\n                            \x3c/tr\x3e\r\n                        \x3c/tr\x3e\r\n                    \x3c/table\x3e\r\n                \x3c/div\x3e\r\n                \x3cdiv style\x3d"font-weight:bold; margin-bottom: 5px"\x3e\r\n                    \x3cspan\x3e${nls.outputSR}\x3c/span\x3e\r\n                    \x3ca href\x3d"https://developers.arcgis.com/javascript/jshelp/ref_coordsystems.html" target\x3d"blank"\x3eWKID\x3c/a\x3e\r\n                    \x3cspan\x3e:\x3c/span\x3e\r\n                \x3c/div\x3e\r\n                \x3cdiv style\x3d"margin-bottom: 5px"\x3e\r\n                    \x3cdiv\x3e\r\n                        \x3cinput type\x3d"text" data-dojo-type\x3d"dijit/form/ValidationTextBox" data-dojo-attach-event\x3d"onChange:_onOutputSRChange"\r\n                            data-dojo-attach-point\x3d"wkidInput" data-dojo-props\x3d\'style:{width:"100%"}\'\r\n                            data-dojo-props\x3d"required: false"/\x3e\r\n                    \x3c/div\x3e\r\n                    \x3cdiv class\x3d"wkid-label jimu-ellipsis" data-dojo-attach-point\x3d"wkidLabel"\x3e\r\n                    \x3c/div\x3e\r\n                \x3c/div\x3e\r\n                \x3cdiv style\x3d"font-weight:bold;" data-dojo-attach-point\x3d"labelsTitleNode"\x3e\r\n                    ${nls.labels}:\r\n                \x3c/div\x3e\r\n                \x3cdiv data-dojo-type\x3d"dijit/form/Form" data-dojo-attach-point\x3d"labelsFormDijit"\x3e\r\n                    \x3ctable cellspacing\x3d"5"\x3e\r\n                        \x3ctr\x3e\r\n                            \x3ctd style\x3d"vertical-align:middle;"\x3e\r\n                                ${nls.showLabels}:\r\n                            \x3c/td\x3e\r\n                            \x3ctd\x3e\r\n                                \x3cinput type\x3d"checkbox" data-dojo-type\x3d"dijit/form/CheckBox" data-dojo-props\x3d"name:\'showLabels\',value:true,checked:true" /\x3e\r\n                            \x3c/td\x3e\r\n                        \x3c/tr\x3e\r\n                    \x3c/table\x3e\r\n                \x3c/div\x3e\r\n                \x3cdiv style\x3d"font-weight:bold;"\x3e\r\n                    ${nls.mapMetadata}:\r\n                \x3c/div\x3e\r\n                \x3cdiv data-dojo-type\x3d"dijit/form/Form" data-dojo-attach-point\x3d"layoutMetadataDijit"\x3e\r\n                    \x3ctable cellspacing\x3d"5" style\x3d"width:100%;"\x3e\r\n                        \x3ctr data-dojo-attach-point\x3d"authorTr"\x3e\r\n                            \x3ctd\x3e\r\n                                ${nls.author}:\r\n                            \x3c/td\x3e\r\n                            \x3ctd\x3e\r\n                                \x3cinput type\x3d"text" data-dojo-attach-point\x3d"authorNode" data-dojo-type\x3d"dijit/form/ValidationTextBox" data-dojo-props\x3d"name:\'author\',trim:true,required:false,style:\'width:100%;\'" data-dojo-attach-point\x3d"authorTB"\r\n                                /\x3e\r\n                            \x3c/td\x3e\r\n                        \x3c/tr\x3e\r\n                        \x3ctr data-dojo-attach-point\x3d"copyrightTr"\x3e\r\n                            \x3ctd\x3e\r\n                                ${nls.copyright}:\r\n                            \x3c/td\x3e\r\n                            \x3ctd\x3e\r\n                                \x3ctextarea data-dojo-attach-point\x3d"copyrightNode" name\x3d"copyright"\r\n                                    data-dojo-type\x3d"dijit/form/SimpleTextarea"\r\n                                    style\x3d"width:100%;height:60px;resize:none;"\x3e\x3c/textarea\x3e\r\n                            \x3c/td\x3e\r\n                        \x3c/tr\x3e\r\n                    \x3c/table\x3e\r\n                \x3c/div\x3e\r\n                \x3cdiv data-dojo-type\x3d"dijit/form/Form" data-dojo-attach-point\x3d"customTextElementsDijit"\x3e\r\n                    \x3ctable cellspacing\x3d"5" style\x3d"width:100%;" data-dojo-attach-point\x3d"customTextElementsTable"\x3e\r\n\r\n                    \x3c/table\x3e\r\n                \x3c/div\x3e\r\n                \x3cdiv data-dojo-type\x3d"dijit/form/Form" data-dojo-attach-point\x3d"layoutFormDijit"\x3e\r\n                    \x3ctable cellspacing\x3d"5"\x3e\r\n                        \x3ctr data-dojo-attach-point\x3d"legendTr"\x3e\r\n                            \x3ctd\x3e\r\n                                ${nls.lncludeLegend}:\r\n                            \x3c/td\x3e\r\n                            \x3ctd\x3e\r\n                                \x3cinput type\x3d"checkbox" data-dojo-type\x3d"dijit/form/CheckBox" data-dojo-props\x3d"name:\'legend\',value:true,checked:true"\r\n                                /\x3e\r\n                            \x3c/td\x3e\r\n                        \x3c/tr\x3e\r\n                        \x3ctr data-dojo-attach-point\x3d"scalebarTr"\x3e\r\n                            \x3ctd\x3e\r\n                                ${nls.scaleBarUnit}:\r\n                            \x3c/td\x3e\r\n                            \x3ctd\x3e\r\n                                \x3cselect data-dojo-type\x3d"dijit/form/Select" data-dojo-props\x3d"name:\'scalebarUnit\',style:\'width:100%;\'"\r\n                        data-dojo-attach-point\x3d"scalebarUnitDijit"\x3e\r\n                                    \x3coption value\x3d"Miles" selected\x3d"selected"\x3e${nls.unitsMiles}\x3c/option\x3e\r\n                                    \x3coption value\x3d"Kilometers"\x3e${nls.unitsKilometers}\x3c/option\x3e\r\n                                    \x3coption value\x3d"Meters"\x3e${nls.unitsMeters}\x3c/option\x3e\r\n                                    \x3coption value\x3d"Feet"\x3e${nls.unitsFeet}\x3c/option\x3e\r\n                                \x3c/select\x3e\r\n                            \x3c/td\x3e\r\n                        \x3c/tr\x3e\r\n                    \x3c/table\x3e\r\n                \x3c/div\x3e\r\n                \x3cdiv style\x3d"font-weight:bold;"\x3e\r\n                    ${nls.mapOnlyOptions}:\r\n                \x3c/div\x3e\r\n                \x3cdiv data-dojo-type\x3d"dijit/form/Form" data-dojo-attach-point\x3d"mapOnlyFormDijit"\x3e\r\n                    \x3ctable cellspacing\x3d"5"\x3e\r\n                        \x3ctr\x3e\r\n                            \x3ctd\x3e\r\n                                ${nls.width}:\r\n                            \x3c/td\x3e\r\n                            \x3ctd\x3e\r\n                                \x3cinput type\x3d"text" data-dojo-type\x3d"dijit/form/NumberTextBox" data-dojo-props\x3d"name:\'width\',required:true,value:670,style:\'width:100px;\'"\r\n                                /\x3e\r\n                            \x3c/td\x3e\r\n                        \x3c/tr\x3e\r\n                        \x3ctr\x3e\r\n                            \x3ctd\x3e\r\n                                ${nls.height}:\r\n                            \x3c/td\x3e\r\n                            \x3ctd\x3e\r\n                                \x3cinput type\x3d"text" data-dojo-type\x3d"dijit/form/NumberTextBox" data-dojo-props\x3d"name:\'height\',required:true,value:500,style:\'width:100px;\'"\r\n                                /\x3e\r\n                            \x3c/td\x3e\r\n                        \x3c/tr\x3e\r\n                    \x3c/table\x3e\r\n                \x3c/div\x3e\r\n                \x3cdiv style\x3d"font-weight:bold;"\x3e\r\n                    ${nls.printQualityOptions}:\r\n                \x3c/div\x3e\r\n                \x3cdiv data-dojo-type\x3d"dijit/form/Form" data-dojo-attach-point\x3d"mapQualityFormDijit"\x3e\r\n                    \x3ctable cellspacing\x3d"5"\x3e\r\n                        \x3ctr\x3e\r\n                            \x3ctd\x3e\r\n                                ${nls.dpi}:\r\n                            \x3c/td\x3e\r\n                            \x3ctd\x3e\r\n                                \x3cinput type\x3d"text" data-dojo-type\x3d"dijit/form/NumberTextBox" data-dojo-props\x3d"name:\'dpi\',required:true,value:96,style:\'width:100px;\'"\r\n                                /\x3e\r\n                            \x3c/td\x3e\r\n                        \x3c/tr\x3e\r\n                    \x3c/table\x3e\r\n                \x3c/div\x3e\r\n                \x3cdiv style\x3d"font-weight:bold;"\x3e\r\n                    ${nls.forceFeatureAttributes}:\r\n                \x3c/div\x3e\r\n                \x3cdiv data-dojo-type\x3d"dijit/form/Form" data-dojo-attach-point\x3d"forceAttributesFormDijit"\x3e\r\n                    \x3ctable cellspacing\x3d"5"\x3e\r\n                        \x3ctr\x3e\r\n                            \x3ctd style\x3d"vertical-align:middle;"\x3e\r\n                                ${nls.includeFeatureAttributes}:\r\n                            \x3c/td\x3e\r\n                            \x3ctd\x3e\r\n                                \x3cinput type\x3d"checkbox" data-dojo-type\x3d"dijit/form/CheckBox" data-dojo-props\x3d"name:\'forceFeatureAttributes\',value:true,checked:false" /\x3e\r\n                            \x3c/td\x3e\r\n                        \x3c/tr\x3e\r\n                    \x3c/table\x3e\r\n                \x3c/div\x3e\r\n            \x3c/div\x3e\r\n        \x3c/div\x3e\r\n        \x3cdiv class\x3d"jimu-btn" data-dojo-attach-point\x3d"printButtonDijit"\r\n            data-dojo-attach-event\x3d"onclick:print"\x3e\x3cdiv class\x3d"btn-icon printIcon"\x3e\x3c/div\x3e${nls.print}\x3c/div\x3e\r\n    \x3c/div\x3e\r\n    \x3c!-- \x3chr calss\x3d"spacer"\x3e --\x3e\r\n    \x3cdiv data-dojo-attach-point\x3d"printResultsNode" class\x3d"resultsContainer"\x3e\r\n    \x3c/div\x3e\r\n    \x3cdiv data-dojo-attach-point\x3d"clearActionBarNode" class\x3d"buttonActionBar"\r\n    style\x3d"display:none;padding:0;"\x3e\r\n        \x3cdiv class\x3d"jimu-btn" data-dojo-attach-event\x3d"onclick:clearResults"\x3e\r\n            \x3cdiv class\x3d"btn-icon clearIcon"\x3e\x3c/div\x3e${nls.clearList}\r\n        \x3c/div\x3e\r\n    \x3c/div\x3e\r\n\x3c/div\x3e\r\n',
-"url:widgets/Print/templates/PrintResult.html":'\x3cdiv class\x3d"printResult" data-dojo-attach-point\x3d"resultNode" data-dojo-attach-event\x3d"onclick:_openPrint"\x3e\r\n  \x3ctable class\x3d"printResultTable"\x3e\r\n    \x3ctr\x3e\r\n      \x3ctd width\x3d"25px"\x3e\r\n        \x3cspan class\x3d"bold"\x3e${count}.\x3c/span\x3e\r\n      \x3c/td\x3e\r\n      \x3ctd width\x3d"30px"\x3e\r\n        \x3cimg src\x3d"${icon}"\x3e\r\n      \x3c/td\x3e\r\n      \x3ctd data-dojo-attach-point\x3d"nameNode"\x3e\r\n        \x3cdiv data-dojo-attach-point\x3d"progressBar" data-dojo-type\x3d"dijit/ProgressBar" data-dojo-props\x3d\'value:Infinity\'\x3e\x3c/div\x3e\r\n        \x3cspan data-dojo-attach-point\x3d"successNode" class\x3d"bold" style\x3d"display:none;"\x3e${docName}\x3c/span\x3e\r\n        \x3cdiv data-dojo-attach-point\x3d"errNode" style\x3d"display:none;"\x3e\r\n          \x3cspan class\x3d"bold"\x3e${nls.printError}\x3c/span\x3e\r\n          \x3cdiv class\x3d"jimu-icon jimu-icon-error jimu-float-trailing"\x3e\x3c/div\x3e\r\n        \x3c/div\x3e\r\n      \x3c/td\x3e\r\n    \x3c/tr\x3e\r\n  \x3c/table\x3e\r\n\x3c/div\x3e\r\n'}});
-define("dojo/_base/declare dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin esri/tasks/PrintTask esri/tasks/PrintParameters esri/tasks/PrintTemplate esri/request esri/lang esri/arcgis/utils esri/SpatialReference dojo/_base/config dojo/_base/lang dojo/_base/array dojo/_base/html dojo/dom-style dojo/dom-construct dojo/dom-class dojo/promise/all dojo/Deferred jimu/portalUrlUtils dojo/text!./templates/Print.html dojo/text!./templates/PrintResult.html dojo/aspect dojo/query jimu/LayerInfos/LayerInfos jimu/dijit/LoadingIndicator jimu/dijit/Message jimu/utils jimu/SpatialReference/srUtils dojo/on dijit/popup dijit/form/ValidationTextBox dijit/form/Form dijit/form/Select dijit/form/NumberTextBox dijit/form/Button dijit/form/CheckBox dijit/ProgressBar dijit/form/DropDownButton dijit/TooltipDialog dijit/form/RadioButton dijit/form/SimpleTextarea esri/IdentityManager dojo/store/Memory".split(" "),
-function(u,v,w,x,F,G,H,y,I,z,J,K,c,e,b,k,L,A,M,B,C,q,N,r,D,O,P,Q,E,n,R,t,S){q=u([v,w,x],{widgetsInTemplate:!0,templateString:q,map:null,count:1,results:[],authorText:null,copyrightText:null,copyrightEditable:!0,defaultTitle:null,defaultFormat:null,defaultLayout:null,baseClass:"gis_PrintDijit",pdfIcon:require.toUrl("./widgets/Print/images/pdf.png"),imageIcon:require.toUrl("./widgets/Print/images/image.png"),printTaskURL:null,printTask:null,async:!1,_showSettings:!1,_currentTemplateInfo:null,postCreate:function(){this.inherited(arguments);
-this.printTask=new F(this.printTaskURL,{async:this.async});this.printparams=new G;this.printparams.map=this.map;this.shelter=new P({hidden:!0});this.shelter.placeAt(this.domNode);this.shelter.startup();this.shelter.show();this.titleNode.set("value",this.defaultTitle);this.authorNode.set("value",this.defaultAuthor);this.copyrightNode.set("value",this.defaultCopyright);this.copyrightNode.set("readOnly",!this.copyrightEditable);n.loadResource().then(c.hitch(this,function(){var a;n.isValidWkid(this.map.spatialReference.wkid)?
-(this.wkidInput.set("value",this.map.spatialReference.wkid),a=n.getSRLabel(this.map.spatialReference.wkid),this.wkidLabel.innerHTML=a,this.wkidLabel.title=a):(this.wkidInput.set("value",""),this.wkidLabel.innerHTML="",this.wkidLabel.title="");this.wkidInput.set("invalidMessage",this.nls.invalidWkid);this.wkidInput.validator=function(a){return n.isValidWkid(+a)}}));var a=C.setHttpProtocol(this.printTaskURL),f=C.getNewPrintUrl(this.appConfig.portalUrl);this._isNewPrintUrl=a===f||/sharing\/tools\/newPrint$/.test(a);
-a=D("input",this.printWidgetMapScale.domNode)[0];f=D("input",this.printWidgetMapExtent.domNode)[0];E.combineRadioCheckBoxWithLabel(a,this.printWidgetMapScaleLabel);E.combineRadioCheckBoxWithLabel(f,this.printWidgetMapExtentLabel);"MAP_ONLY"===this.defaultLayout?b.setStyle(this.titleTr,"display","none"):b.setStyle(this.titleTr,"display","");this._hasLabelLayer()?(b.setStyle(this.labelsFormDijit.domNode,"display",""),b.setStyle(this.labelsTitleNode,"display","")):(b.setStyle(this.labelsFormDijit.domNode,
-"display","none"),b.setStyle(this.labelsTitleNode,"display","none"));O.getInstance(this.map,this.map.itemInfo).then(c.hitch(this,function(a){this.layerInfosObj=a;return M([this._getPrintTaskInfo(),this._getLayerTemplatesInfo()]).then(c.hitch(this,function(a){var d=a[0];(a=a[1])&&!a.error?(a=a&&a.results)&&0<a.length&&(e.some(a,c.hitch(this,function(a){return a&&"Output_JSON"===a.paramName?this.templateInfos=a.value:!1})),this.templateInfos&&0<this.templateInfos.length&&(this.templateNames=e.map(this.templateInfos,
-function(a){return a.layoutTemplate}))):console.warn("Get Layout Templates Info Error",a&&a.error);!I.isDefined(d)||d&&d.error?this._handleError(d.error):this._handlePrintInfo(d)}))})).always(c.hitch(this,function(){this.shelter.hide()}));this.printTask._getPrintDefinition&&r.after(this.printTask,"_getPrintDefinition",c.hitch(this,"printDefInspector"),!1);this.printTask._createOperationalLayers&&(r.after(this.printTask,"_createOperationalLayers",c.hitch(this,"_fixInvalidSymbol")),r.after(this.printTask,
-"_createOperationalLayers",c.hitch(this,"_excludeInvalidLegend")))},_onOutputSRChange:function(a){n.isValidWkid(+a)?(a=n.getSRLabel(+a),this.wkidLabel.innerHTML=a,this.wkidLabel.title=a):(this.wkidLabel.innerHTML="",this.wkidLabel.title="")},_hasLabelLayer:function(){return e.some(this.map.graphicsLayerIds,function(a){return(a=this.map.getLayer(a))&&"esri.layers.LabelLayer"===a.declaredClass},this)},_getPrintTaskInfo:function(){var a=new B;this._isNewPrintUrl?a.resolve({isGPPrint:!1}):y({url:this.printTaskURL,
-content:{f:"json"},callbackParamName:"callback",handleAs:"json",timeout:6E4}).then(c.hitch(this,function(f){a.resolve({isGPPrint:!0,data:f})}),c.hitch(this,function(f){a.resolve({error:f})}));return a},_getLayerTemplatesInfo:function(){var a=new B,f=this.printTaskURL.split("/"),b=f.indexOf("GPServer");if(-1<b){var d=null,d=/Utilities\/PrintingTools\/GPServer/.test(this.printTaskURL)?f.slice(0,b+1).join("/")+"/"+encodeURIComponent("Get Layout Templates Info Task")+"/execute":f.slice(0,b+1).join("/")+
-"/"+encodeURIComponent("Get Layout Templates Info")+"/execute";y({url:d,content:{f:"json"},callbackParamName:"callback",handleAs:"json",timeout:6E4}).then(c.hitch(this,function(d){a.resolve(d)}),c.hitch(this,function(d){a.resolve({error:d})}))}else a.resolve(null);return a},_fixInvalidSymbol:function(a){e.forEach(a,function(a){"map_graphics"===a.id&&(a=c.getObject("featureCollection.layers",!1,a))&&0<a.length&&e.forEach(a,function(a){a&&a.featureSet&&"esriGeometryPoint"===a.featureSet.geometryType&&
-e.forEach(a.featureSet.features,function(a){a&&a.symbol&&!a.symbol.style&&(a.symbol.style="esriSMSSquare")})})},this);return a},_excludeInvalidLegend:function(a){function b(a){return e.filter(a.subLayerIds,c.hitch(this,function(d){return(d=this.layerInfosObj.getLayerInfoById(a.id+"_"+d))&&d.getShowLegendOfWebmap()}))}if(this.printTask.allLayerslegend){for(var g=z.getLegendLayers({map:this.map,itemInfo:this.map.itemInfo}),g=e.map(g,function(a){return{id:a.layer.id}}),d=this.printTask.allLayerslegend,
-p=[],h=0;h<d.length;h++){var l=d[h],m=this.map.getLayer(l.id),k=this.layerInfosObj.getLayerInfoById(l.id),n=m&&m.declaredClass&&"esri.layers.GraphicsLayer"!==m.declaredClass,m=!m.renderer||m.renderer&&!m.renderer.hasVisualVariables(),k=k&&k.getShowLegendOfWebmap();n&&m&&k&&(l.subLayerIds&&(l.subLayerIds=c.hitch(this,b,l)()),p.push(l))}e.forEach(g,c.hitch(this,function(a){var d=e.some(p,c.hitch(this,function(d){return d.id===a.id})),b=this.layerInfosObj.getLayerInfoById(a.id),b=b&&b.getShowLegendOfWebmap()&&
-b.isShowInMap();!d&&b&&p.push(a)}));this.printTask.allLayerslegend=p}return a},printDefInspector:function(a){"force"===this.preserve.preserveScale&&(a.mapOptions.scale=this.preserve.forcedScale);return a},_handleError:function(a){console.log("print widget load error: ",a);new Q({message:a.message||a})},onLayoutChange:function(a){var f=this.templateNames&&this.templateNames.indexOf(a);if(-1<f){b.empty(this.customTextElementsTable);a=this._currentTemplateInfo=this.templateInfos[f];if((f=c.getObject("layoutOptions.customTextElements",
-!1,a))&&0<f.length){var g=[];e.forEach(f,c.hitch(this,function(a){for(var d in a)if(0>g.indexOf(d)){var c=this.customTextElementsTable.insertRow(-1);c.insertCell(-1).appendChild(b.toDom(d+": "));c.insertCell(-1).appendChild((new S({name:d,trim:!0,required:!1,value:a[d],style:"width:100%"})).domNode);g.push(d)}}))}c.getObject("layoutOptions.hasAuthorText",!1,a)?b.setStyle(this.authorTr,"display",""):b.setStyle(this.authorTr,"display","none");c.getObject("layoutOptions.hasCopyrightText",!1,a)?b.setStyle(this.copyrightTr,
-"display",""):b.setStyle(this.copyrightTr,"display","none");c.getObject("layoutOptions.hasTitleText",!1,a)?b.setStyle(this.titleTr,"display",""):b.setStyle(this.titleTr,"display","none");c.getObject("layoutOptions.hasLegend",!1,a)?b.setStyle(this.legendTr,"display",""):b.setStyle(this.legendTr,"display","none")}else"MAP_ONLY"===a?(b.setStyle(this.authorTr,"display","none"),b.setStyle(this.copyrightTr,"display","none"),b.setStyle(this.titleTr,"display","none"),b.setStyle(this.legendTr,"display","none"),
-this._currentTemplateInfo={layoutOptions:{hasTitleText:!1,hasCopyrightText:!1,hasAuthorText:!1,hasLegend:!1}}):(b.setStyle(this.authorTr,"display",""),b.setStyle(this.copyrightTr,"display",""),b.setStyle(this.titleTr,"display",""),b.setStyle(this.legendTr,"display",""),this._currentTemplateInfo={layoutOptions:{hasTitleText:!0,hasCopyrightText:!0,hasAuthorText:!0,hasLegend:!0}})},_getMapAttribution:function(){var a=this.map.attribution;return a&&a.domNode?b.getProp(a.domNode,"textContent"):""},showSettings:function(a){a.preventDefault();
-a.stopPropagation();this._showSettings?(t.close(this.settingsDialog),this._showSettings=!1):(t.open({popup:this.settingsDialog,around:this.advancedButtonDijit}),this._showSettings=!0)},_handlePrintInfo:function(a){if(a.isGPPrint){a=a.data;k.set(this.layoutDijit.domNode.parentNode.parentNode,"display","");k.set(this.formatDijit.domNode.parentNode.parentNode,"display","");k.set(this.advancedButtonDijit,"display","");this.own(R(document.body,"click",c.hitch(this,function(a){if(this._showSettings){a=
-a.target||a.srcElement;var d=this.settingsDialog.domNode;a===d||b.isDescendant(a,d)||(t.close(this.settingsDialog),this._showSettings=!1)}})));var f=e.filter(a.parameters,function(a){return"Layout_Template"===a.name});if(0===f.length)console.log('print service parameters name for templates must be "Layout_Template"');else{var g=e.map(f[0].choiceList,function(a){return{label:a,value:a}});g.sort(function(a,b){return a.label>b.label?1:b.label>a.label?-1:0});this.layoutDijit.addOption(g);this.defaultLayout?
-this.layoutDijit.set("value",this.defaultLayout):this.layoutDijit.set("value",f[0].defaultValue);a=e.filter(a.parameters,function(a){return"Format"===a.name});0===a.length?console.log('print service parameters name for format must be "Format"'):(f=e.map(a[0].choiceList,function(a){return{label:a,value:a}}),f.sort(function(a,b){return a.label>b.label?1:b.label>a.label?-1:0}),this.formatDijit.addOption(f),this.defaultFormat?this.formatDijit.set("value",this.defaultFormat):this.formatDijit.set("value",
-a[0].defaultValue))}}else k.set(this.layoutDijit.domNode.parentNode.parentNode,"display","none"),k.set(this.formatDijit.domNode.parentNode.parentNode,"display","none"),k.set(this.advancedButtonDijit,"display","none")},print:function(){if(this.printSettingsFormDijit.isValid()){var a=this.printSettingsFormDijit.get("value");c.mixin(a,this.layoutMetadataDijit.get("value"));c.mixin(a,this.forceAttributesFormDijit.get("value"));c.mixin(a,this.labelsFormDijit.get("value"));this.preserve=this.preserveFormDijit.get("value");
-c.mixin(a,this.preserve);this.layoutForm=this.layoutFormDijit.get("value");var b=this.mapQualityFormDijit.get("value"),g=this.mapOnlyFormDijit.get("value");c.mixin(g,b);var d=this.customTextElementsDijit.get("value"),b=[],e=!1,h=K.locale||"en",l;for(l in d){var m={};"Date"===l&&(e=!0);m[l]=d[l];b.push(m)}e||b.push({Date:(new Date).toLocaleString(h)});e=this._currentTemplateInfo;l=c.getObject("layoutOptions.hasAuthorText",!1,e);d=c.getObject("layoutOptions.hasCopyrightText",!1,e);e=c.getObject("layoutOptions.hasTitleText",
-!1,e);h=new H;h.format=a.format;h.layout=a.layout;h.preserveScale="true"===a.preserveScale||"force"===a.preserveScale;h.forceFeatureAttributes=a.forceFeatureAttributes&&a.forceFeatureAttributes[0];h.label=a.title;h.exportOptions=g;h.showLabels=a.showLabels&&a.showLabels[0];h.layoutOptions={authorText:l?a.author:"",copyrightText:d?a.copyright||this._getMapAttribution():"",legendLayers:this._getLegendLayers(),titleText:e?a.title:"",customTextElements:b,scalebarUnit:this.layoutForm.scalebarUnit};this.printparams.template=
-h;this.printparams.extraParameters={printFlag:!0};g=+this.wkidInput.get("value");n.isValidWkid(g)?this.printparams.outSpatialReference=new J(g):this.printparams.outSpatialReference=this.map.spatialReference;g=this.printTask.execute(this.printparams);(new T({count:this.count.toString(),icon:"PDF"===a.format?this.pdfIcon:this.imageIcon,docName:a.title,title:a.format+", "+a.layout,fileHandle:g,nls:this.nls})).placeAt(this.printResultsNode,"last").startup();k.set(this.clearActionBarNode,"display","block");
-this.count++}else this.printSettingsFormDijit.validate()},_getLegendLayers:function(){var a=c.getObject("layoutOptions.hasLegend",!1,this._currentTemplateInfo),b=0<this.layoutForm.legend.length&&this.layoutForm.legend[0];if(this.printTask&&!this.printTask._createOperationalLayers){var g=[];a&&b&&(a=z.getLegendLayers({map:this.map,itemInfo:this.map.itemInfo}),g=e.map(a,function(a){return{layerId:a.layer.id}}));return g}return a&&b?null:[]},clearResults:function(){L.empty(this.printResultsNode);k.set(this.clearActionBarNode,
-"display","none");this.count=1},updateAuthor:function(a){(a=a||"")&&this.authorTB&&this.authorTB.set("value",a)},getCurrentMapScale:function(){this.forceScaleNTB.set("value",this.map.getScale())}});var T=u([v,w,x],{widgetsInTemplate:!0,templateString:N,url:null,postCreate:function(){this.inherited(arguments);this.progressBar.set("label",this.nls.creatingPrint);this.fileHandle.then(c.hitch(this,"_onPrintComplete"),c.hitch(this,"_onPrintError"))},_onPrintComplete:function(a){a.url?(this.url=a.url,b.setStyle(this.progressBar.domNode,
-"display","none"),b.setStyle(this.successNode,"display","inline-block"),A.add(this.resultNode,"printResultHover")):this._onPrintError(this.nls.printError)},_onPrintError:function(a){console.log(a);b.setStyle(this.progressBar.domNode,"display","none");b.setStyle(this.errNode,"display","block");A.add(this.resultNode,"printResultError");b.setAttr(this.domNode,"title",a.details||a.message||"")},_openPrint:function(){null!==this.url&&window.open(this.url)}});return q});
+define([
+  'dojo/_base/declare',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dijit/_WidgetsInTemplateMixin',
+  'esri/tasks/PrintTask',
+  "esri/tasks/PrintParameters",
+  "esri/tasks/PrintTemplate",
+  "esri/request",
+  'esri/lang',
+  'esri/arcgis/utils',
+  'esri/SpatialReference',
+  'dojo/_base/config',
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'dojo/_base/html',
+  'dojo/dom-style',
+  'dojo/dom-construct',
+  'dojo/dom-class',
+  'dojo/promise/all',
+  'dojo/Deferred',
+  'jimu/portalUrlUtils',
+  'dojo/text!./templates/Print.html',
+  'dojo/text!./templates/PrintResult.html',
+  'dojo/aspect',
+  'dojo/query',
+  'jimu/LayerInfos/LayerInfos',
+  'jimu/dijit/LoadingIndicator',
+  'jimu/dijit/Message',
+  'jimu/utils',
+  'jimu/SpatialReference/srUtils',
+  'dojo/on',
+  'dijit/popup',
+  'dijit/form/ValidationTextBox',
+  'dijit/form/Form',
+  'dijit/form/Select',
+  'dijit/form/NumberTextBox',
+  'dijit/form/Button',
+  'dijit/form/CheckBox',
+  'dijit/ProgressBar',
+  'dijit/form/DropDownButton',
+  'dijit/TooltipDialog',
+  'dijit/form/RadioButton',
+  'dijit/form/SimpleTextarea',
+  'esri/IdentityManager',
+  'dojo/store/Memory'
+], function(
+  declare,
+  _WidgetBase,
+  _TemplatedMixin,
+  _WidgetsInTemplateMixin,
+  PrintTask,
+  PrintParameters,
+  PrintTemplate,
+  esriRequest,
+  esriLang,
+  arcgisUtils,
+  SpatialReference,
+  dojoConfig,
+  lang,
+  array,
+  html,
+  domStyle,
+  domConstruct,
+  domClass,
+  all,
+  Deferred,
+  portalUrlUtils,
+  printTemplate,
+  printResultTemplate,
+  aspect,
+  query,
+  LayerInfos,
+  LoadingIndicator,
+  Message,
+  utils,
+  srUtils,
+  on,
+  popup,
+  ValidationTextBox) {
+  // Main print dijit
+  var PrintDijit = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
+    widgetsInTemplate: true,
+    templateString: printTemplate,
+    map: null,
+    count: 1,
+    results: [],
+    authorText: null,
+    copyrightText: null,
+    copyrightEditable: true,
+    defaultTitle: null,
+    defaultFormat: null,
+    defaultLayout: null,
+    baseClass: "gis_PrintDijit",
+    pdfIcon: require.toUrl("./widgets/Print/images/pdf.png"),
+    imageIcon: require.toUrl("./widgets/Print/images/image.png"),
+    printTaskURL: null,
+    printTask: null,
+    async: false,
+    // showAdvancedOption: true,
+    _showSettings: false,
+
+    _currentTemplateInfo: null,
+
+    postCreate: function() {
+      this.inherited(arguments);
+      var printParams = {
+        async: this.async
+      };
+      // var _handleAs = 'json';
+
+      this.printTask = new PrintTask(this.printTaskURL, printParams);
+      this.printparams = new PrintParameters();
+      this.printparams.map = this.map;
+      //fix issue #7141
+      // this.printparams.outSpatialReference = this.map.spatialReference;
+
+      this.shelter = new LoadingIndicator({
+        hidden: true
+      });
+      this.shelter.placeAt(this.domNode);
+      this.shelter.startup();
+      this.shelter.show();
+
+      this.titleNode.set('value', this.defaultTitle);
+      this.authorNode.set('value', this.defaultAuthor);
+      this.copyrightNode.set('value', this.defaultCopyright);
+      this.copyrightNode.set('readOnly', !this.copyrightEditable);
+
+      srUtils.loadResource().then(lang.hitch(this, function() {
+        var wkidLabel;
+        if (srUtils.isValidWkid(this.map.spatialReference.wkid)) {
+          this.wkidInput.set('value', this.map.spatialReference.wkid);
+          wkidLabel = srUtils.getSRLabel(this.map.spatialReference.wkid);
+          this.wkidLabel.innerHTML = wkidLabel;
+          this.wkidLabel.title = wkidLabel;
+        } else {
+          this.wkidInput.set('value', '');
+          this.wkidLabel.innerHTML = '';
+          this.wkidLabel.title = '';
+        }
+        this.wkidInput.set('invalidMessage', this.nls.invalidWkid);
+        this.wkidInput.validator = function(value) {
+          return srUtils.isValidWkid(+value);
+        };
+      }));
+
+      var serviceUrl = portalUrlUtils.setHttpProtocol(this.printTaskURL);
+      var portalNewPrintUrl = portalUrlUtils.getNewPrintUrl(this.appConfig.portalUrl);
+      this._isNewPrintUrl = serviceUrl === portalNewPrintUrl ||
+        /sharing\/tools\/newPrint$/.test(serviceUrl);
+      var scaleRadio = query('input', this.printWidgetMapScale.domNode)[0];
+      var extentRadio = query('input', this.printWidgetMapExtent.domNode)[0];
+      utils.combineRadioCheckBoxWithLabel(scaleRadio, this.printWidgetMapScaleLabel);
+      utils.combineRadioCheckBoxWithLabel(extentRadio, this.printWidgetMapExtentLabel);
+
+      if (this.defaultLayout === 'MAP_ONLY') {
+        html.setStyle(this.titleTr, 'display', 'none');
+      } else {
+        html.setStyle(this.titleTr, 'display', '');
+      }
+
+      if (this._hasLabelLayer()) {
+        html.setStyle(this.labelsFormDijit.domNode, 'display', '');
+        html.setStyle(this.labelsTitleNode, 'display', '');
+      } else {
+        html.setStyle(this.labelsFormDijit.domNode, 'display', 'none');
+        html.setStyle(this.labelsTitleNode, 'display', 'none');
+      }
+
+      LayerInfos.getInstance(this.map, this.map.itemInfo)
+        .then(lang.hitch(this, function(layerInfosObj) {
+          this.layerInfosObj = layerInfosObj;
+          return all([this._getPrintTaskInfo(), this._getLayerTemplatesInfo()])
+            .then(lang.hitch(this, function(results) {
+              var taksInfo = results[0],
+                templatesInfo = results[1];
+              if (templatesInfo && !templatesInfo.error) {
+                var parameters = templatesInfo && templatesInfo.results;
+                if (parameters && parameters.length > 0) {
+                  array.some(parameters, lang.hitch(this, function(p) {
+                    return p && p.paramName === 'Output_JSON' ?
+                      this.templateInfos = p.value : false;
+                  }));
+                  if (this.templateInfos && this.templateInfos.length > 0) {
+                    this.templateNames = array.map(this.templateInfos, function(ti) {
+                      return ti.layoutTemplate;
+                    });
+                  }
+                }
+              } else {
+                console.warn('Get Layout Templates Info Error',
+                  templatesInfo && templatesInfo.error);
+              }
+              if (!esriLang.isDefined(taksInfo) || (taksInfo && taksInfo.error)) {
+                this._handleError(taksInfo.error);
+              } else {
+                this._handlePrintInfo(taksInfo);
+              }
+            }));
+        })).always(lang.hitch(this, function() {
+          this.shelter.hide();
+        }));
+
+      if (this.printTask._getPrintDefinition) {
+        aspect.after(
+          this.printTask,
+          '_getPrintDefinition',
+          lang.hitch(this, 'printDefInspector'),
+          false);
+      }
+      if (this.printTask._createOperationalLayers) {
+        // if opLayers contains markerSymbol of map.infoWindow, the print job will failed
+        aspect.after(
+          this.printTask,
+          '_createOperationalLayers',
+          lang.hitch(this, '_fixInvalidSymbol')
+        );
+        aspect.after(
+          this.printTask,
+          '_createOperationalLayers',
+          lang.hitch(this, '_fixLayerTitle')
+        );       
+        aspect.after(
+          this.printTask,
+          '_createOperationalLayers',
+          lang.hitch(this, '_excludeInvalidLegend')
+        );
+      }
+    },
+
+    _onOutputSRChange: function(newValue) {
+      var wkidLabel;
+      if (srUtils.isValidWkid(+newValue)) {
+        wkidLabel = srUtils.getSRLabel(+newValue);
+        this.wkidLabel.innerHTML = wkidLabel;
+        this.wkidLabel.title = wkidLabel;
+      } else {
+        this.wkidLabel.innerHTML = '';
+        this.wkidLabel.title = '';
+      }
+    },
+
+    _hasLabelLayer: function() {
+      return array.some(this.map.graphicsLayerIds, function(glid) {
+        var l = this.map.getLayer(glid);
+        return l && l.declaredClass === 'esri.layers.LabelLayer';
+      }, this);
+    },
+
+    _getPrintTaskInfo: function() {
+      // portal own print url: portalname/arcgis/sharing/tools/newPrint
+      var def = new Deferred();
+      if (this._isNewPrintUrl) { // portal own print url
+        def.resolve({
+          isGPPrint: false
+        });
+      } else {
+        esriRequest({
+          url: this.printTaskURL,
+          content: {
+            f: "json"
+          },
+          callbackParamName: "callback",
+          handleAs: "json",
+          timeout: 60000
+        }).then(lang.hitch(this, function(data) {
+            def.resolve({
+              isGPPrint: true,
+              data: data
+            });
+          }), lang.hitch(this, function(err) {
+            def.resolve({
+              error: err
+            });
+          })
+        );
+      }
+
+      return def;
+    },
+
+    _getLayerTemplatesInfo: function() {
+      var def = new Deferred();
+      var parts = this.printTaskURL.split('/');
+      var pos = parts.indexOf('GPServer');
+      if (pos > -1) {
+        var url = null;
+        if (/Utilities\/PrintingTools\/GPServer/.test(this.printTaskURL)) {
+          url = parts.slice(0, pos + 1).join('/') + '/' +
+            encodeURIComponent('Get Layout Templates Info Task') + '/execute';
+        } else {
+          url = parts.slice(0, pos + 1).join('/') + '/' +
+            encodeURIComponent('Get Layout Templates Info') + '/execute';
+        }
+        esriRequest({
+          url: url,
+          content: {
+            f: "json"
+          },
+          callbackParamName: "callback",
+          handleAs: "json",
+          timeout: 60000
+        }).then(lang.hitch(this, function(info) {
+          def.resolve(info);
+        }), lang.hitch(this, function(err) {
+          def.resolve({
+            error: err
+          });
+        }));
+      } else {
+        def.resolve(null);
+      }
+
+      return def;
+    },
+
+    _fixInvalidSymbol: function(opLayers) {
+      array.forEach(opLayers, function(ol) {
+        if (ol.id === 'map_graphics') {
+          var layers = lang.getObject('featureCollection.layers', false, ol);
+          if (layers && layers.length > 0) {
+            array.forEach(layers, function(layer) {
+              if (layer && layer.featureSet &&
+                layer.featureSet.geometryType === "esriGeometryPoint") {
+                array.forEach(layer.featureSet.features, function(f) {
+                  if (f && f.symbol && !f.symbol.style) {
+                    f.symbol.style = "esriSMSSquare";
+                  }
+                });
+              }
+            });
+          }
+        }
+
+      }, this);
+      return opLayers;
+    },
+    _fixLayerTitle: function(opLayers) {
+      array.forEach(opLayers, function(ol) {
+        if ((ol.id.indexOf(window.layerIdPrefix) >= 0) || (ol.id.indexOf(window.idCommuBoundaryPoint) >= 0)) {
+        	EAID = ol.id.replace(window.layerIdPrefix, "");
+        	var maxLength = 18;//18 is works for leb; 15 works for map22
+        	arrLayerTitle = window.hashEAIDToTitle[EAID].split(" ");
+        	var newLayerTitle = "";
+        	var currentIndex = 0;
+        	var currentLine = "";
+        	while (currentIndex <= arrLayerTitle.length - 1) {
+	        	for (var i = currentIndex; i < arrLayerTitle.length; i++) {
+	        		testCurrentLine = currentLine;
+	        		currentLine = currentLine + arrLayerTitle[i] + " ";
+	        		
+	        		if ((currentLine.length > maxLength)|| (i == (arrLayerTitle.length - 1))) {
+	        			if (((i == currentIndex) && (currentLine.length > maxLength)) || ((i == (arrLayerTitle.length - 1))&& (currentLine.length <= maxLength))){
+		        			currentIndex = i+1 ;
+		        			newLayerTitle = newLayerTitle + currentLine + "\n";
+		        			currentLine =  "";	        				
+	        			} else {
+		        			currentIndex = i ;
+		        			newLayerTitle = newLayerTitle + testCurrentLine + "\n";
+		        			currentLine =  "";		        				
+	        			}
+	        			break;
+	        		}
+	        	}
+	        }
+	        if (newLayerTitle.substring(newLayerTitle.length-2, newLayerTitle.length) == " \n") {
+	        	newLayerTitle = newLayerTitle.substring(0, newLayerTitle.length-2);
+	        }
+
+        	//console.log("title layer: " + window.hashEAIDToTitle[EAID]);
+        	ol.title = newLayerTitle;
+        }
+      }, this);
+      return opLayers;
+    },
+    _excludeInvalidLegend: function(opLayers) {
+      function getSubLayerIds(legendLayer) {
+        return array.filter(legendLayer.subLayerIds, lang.hitch(this, function(subLayerId) {
+          var subLayerInfo = this.layerInfosObj.getLayerInfoById(legendLayer.id + '_' + subLayerId);
+          return subLayerInfo && subLayerInfo.getShowLegendOfWebmap();
+        }));
+      }
+
+      if (this.printTask.allLayerslegend) {
+        var legends = arcgisUtils.getLegendLayers({map: this.map, itemInfo: this.map.itemInfo});
+        var legendLayersOfWebmap = array.map(legends, function(legend) {
+          return {
+            id: legend.layer.id
+          };
+        });
+
+        var legendArray = this.printTask.allLayerslegend;
+        var arr = [];
+        for (var i = 0; i < legendArray.length; i++) {
+          var legendLayer = legendArray[i];
+          var layer = this.map.getLayer(legendLayer.id);
+          var layerInfo = this.layerInfosObj.getLayerInfoById(legendLayer.id);
+          var validLayerType = layer && layer.declaredClass &&
+            layer.declaredClass !== "esri.layers.GraphicsLayer";
+          var validRenderer = !layer.renderer ||
+            (layer.renderer && !layer.renderer.hasVisualVariables());
+          var showLegendInMap = layerInfo && layerInfo.getShowLegendOfWebmap();
+          if (validLayerType && validRenderer && showLegendInMap) {
+            if (legendLayer.subLayerIds) {
+              legendLayer.subLayerIds = lang.hitch(this, getSubLayerIds, legendLayer)();
+            }
+
+            arr.push(legendLayer);
+          }
+        }
+
+        // fix issue 6072
+        array.forEach(legendLayersOfWebmap, lang.hitch(this, function(legend) {
+          var inLegends = array.some(arr, lang.hitch(this, function(l) {
+            return l.id === legend.id;
+          }));
+          var layerInfo = this.layerInfosObj.getLayerInfoById(legend.id);
+          var showLegend = layerInfo && layerInfo.getShowLegendOfWebmap() &&
+            layerInfo.isShowInMap();
+          if (!inLegends && showLegend) {
+            arr.push(legend);
+          }
+        }));
+        this.printTask.allLayerslegend = arr;
+      }
+      return opLayers;
+    },
+
+    printDefInspector: function(printDef) {
+      //do what you want here then return the object.
+      if (this.preserve.preserveScale === 'force') {
+        printDef.mapOptions.scale = this.preserve.forcedScale;
+      }
+      return printDef;
+    },
+
+    _handleError: function(err) {
+      console.log('print widget load error: ', err);
+      new Message({
+        message: err.message || err
+      });
+    },
+
+    onLayoutChange: function(newValue) {
+      var pos = this.templateNames && this.templateNames.indexOf(newValue);
+      if (pos > -1) {
+        html.empty(this.customTextElementsTable);
+        var templateInfo = this._currentTemplateInfo = this.templateInfos[pos];
+        var customTextElements =  lang.getObject(
+          "layoutOptions.customTextElements",
+          false, templateInfo);
+        if (customTextElements && customTextElements.length > 0) {
+          var textNames = [];
+          array.forEach(customTextElements, lang.hitch(this, function(cte) {
+            for (var p in cte) {
+              if (textNames.indexOf(p) < 0) {
+                var row = this.customTextElementsTable.insertRow(-1);
+                var cell0 = row.insertCell(-1);
+                cell0.appendChild(html.toDom(p + ': '));
+                var cell1 = row.insertCell(-1);
+                cell1.appendChild((new ValidationTextBox({
+                  name: p,
+                  trim: true,
+                  required: false,
+                  value: cte[p],
+                  style: 'width:100%'
+                })).domNode);
+                textNames.push(p);
+              }
+            }
+          }));
+        }
+
+        var hasAuthorText = lang.getObject('layoutOptions.hasAuthorText', false, templateInfo);
+        if (!hasAuthorText) {
+          html.setStyle(this.authorTr, 'display', 'none');
+        } else {
+          html.setStyle(this.authorTr, 'display', '');
+        }
+        var hasCopyrightText = lang.getObject(
+          'layoutOptions.hasCopyrightText', false, templateInfo);
+        if (!hasCopyrightText) {
+          html.setStyle(this.copyrightTr, 'display', 'none');
+        } else {
+          html.setStyle(this.copyrightTr, 'display', '');
+        }
+        var hasTitleText = lang.getObject('layoutOptions.hasTitleText', false, templateInfo);
+        if (!hasTitleText) {
+          html.setStyle(this.titleTr, 'display', 'none');
+        } else {
+          html.setStyle(this.titleTr, 'display', '');
+        }
+        var hasLegend = lang.getObject('layoutOptions.hasLegend', false, templateInfo);
+        if (!hasLegend) {
+          html.setStyle(this.legendTr, 'display', 'none');
+        } else {
+          html.setStyle(this.legendTr, 'display', '');
+        }
+      } else if (newValue === 'MAP_ONLY') {
+        html.setStyle(this.authorTr, 'display', 'none');
+        html.setStyle(this.copyrightTr, 'display', 'none');
+        html.setStyle(this.titleTr, 'display', 'none');
+        html.setStyle(this.legendTr, 'display', 'none');
+
+        this._currentTemplateInfo = {
+          layoutOptions: {
+            hasTitleText: false,
+            hasCopyrightText: false,
+            hasAuthorText: false,
+            hasLegend: false
+          }
+        };
+      } else {
+        html.setStyle(this.authorTr, 'display', '');
+        html.setStyle(this.copyrightTr, 'display', '');
+        html.setStyle(this.titleTr, 'display', '');
+        html.setStyle(this.legendTr, 'display', '');
+        this._currentTemplateInfo = {
+          layoutOptions: {
+            hasTitleText: true,
+            hasCopyrightText: true,
+            hasAuthorText: true,
+            hasLegend: true
+          }
+        };
+      }
+    },
+
+    _getMapAttribution: function() {
+      var attr = this.map.attribution;
+      if (attr && attr.domNode) {
+        return html.getProp(attr.domNode, 'textContent');
+      } else {
+        return "";
+      }
+    },
+
+    showSettings: function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (this._showSettings) {
+        popup.close(this.settingsDialog);
+        this._showSettings = false;
+      } else {
+        popup.open({
+          popup: this.settingsDialog,
+          around: this.advancedButtonDijit
+        });
+        this._showSettings = true;
+      }
+    },
+
+    _handlePrintInfo: function(rData) {
+      if (!rData.isGPPrint) {
+        domStyle.set(this.layoutDijit.domNode.parentNode.parentNode, 'display', 'none');
+        domStyle.set(this.formatDijit.domNode.parentNode.parentNode, 'display', 'none');
+        domStyle.set(this.advancedButtonDijit, 'display', 'none');
+      } else {
+        var data = rData.data;
+        domStyle.set(this.layoutDijit.domNode.parentNode.parentNode, 'display', '');
+        domStyle.set(this.formatDijit.domNode.parentNode.parentNode, 'display', '');
+        domStyle.set(this.advancedButtonDijit, 'display', '');
+
+        this.own(on(document.body, 'click', lang.hitch(this, function (event) {
+          if (!this._showSettings) {
+            return;
+          }
+          var target = event.target || event.srcElement;
+          var node = this.settingsDialog.domNode;
+          var isInternal = target === node || html.isDescendant(target, node);
+          if (!isInternal) {
+            popup.close(this.settingsDialog);
+            this._showSettings = false;
+          }
+        })));
+        // if (this.showAdvancedOption) {
+        //   domStyle.set(this.advancedButtonDijit.domNode, 'display', '');
+        // } else {
+        //   domStyle.set(this.advancedButtonDijit.domNode, 'display', 'none');
+        // }
+        var Layout_Template = array.filter(data.parameters, function(param) {
+          return param.name === "Layout_Template";
+        });
+        if (Layout_Template.length === 0) {
+          console.log("print service parameters name for templates must be \"Layout_Template\"");
+          return;
+        }
+        var layoutItems = array.map(Layout_Template[0].choiceList, function(item) {
+          return {
+            label: item,
+            value: item
+          };
+        });
+        layoutItems.sort(function(a, b) {
+          return (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0);
+        });
+        this.layoutDijit.addOption(layoutItems);
+        if (this.defaultLayout) {
+          this.layoutDijit.set('value', this.defaultLayout);
+        } else {
+          this.layoutDijit.set('value', Layout_Template[0].defaultValue);
+        }
+
+        var Format = array.filter(data.parameters, function(param) {
+          return param.name === "Format";
+        });
+        if (Format.length === 0) {
+          console.log("print service parameters name for format must be \"Format\"");
+          return;
+        }
+        var formatItems = array.map(Format[0].choiceList, function(item) {
+          return {
+            label: item,
+            value: item
+          };
+        });
+        formatItems.sort(function(a, b) {
+          return (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0);
+        });
+        this.formatDijit.addOption(formatItems);
+        if (this.defaultFormat) {
+          this.formatDijit.set('value', this.defaultFormat);
+        } else {
+          this.formatDijit.set('value', Format[0].defaultValue);
+        }
+      }
+    },
+
+    print: function() {
+      if (this.printSettingsFormDijit.isValid()) {
+        var form = this.printSettingsFormDijit.get('value');
+        lang.mixin(form, this.layoutMetadataDijit.get('value'));
+        lang.mixin(form, this.forceAttributesFormDijit.get('value'));
+        lang.mixin(form, this.labelsFormDijit.get('value'));
+        this.preserve = this.preserveFormDijit.get('value');
+        lang.mixin(form, this.preserve);
+        this.layoutForm = this.layoutFormDijit.get('value');
+        var mapQualityForm = this.mapQualityFormDijit.get('value');
+        var mapOnlyForm = this.mapOnlyFormDijit.get('value');
+        lang.mixin(mapOnlyForm, mapQualityForm);
+
+        var elementsObj = this.customTextElementsDijit.get('value');
+        var cteArray = [], hasDate = false, locale = dojoConfig.locale || 'en';
+        for (var p in elementsObj) {
+          var cte = {};
+          if (p === 'Date') {
+            hasDate = true;
+          }
+          cte[p] = elementsObj[p];
+          cteArray.push(cte);
+        }
+        if(!hasDate) {
+          cteArray.push({ Date: new Date().toLocaleString(locale) });
+        }
+
+        var templateInfo = this._currentTemplateInfo;
+        var hasAuthorText = lang.getObject('layoutOptions.hasAuthorText', false, templateInfo);
+        var hasCopyrightText = lang.getObject('layoutOptions.hasCopyrightText',
+          false, templateInfo);
+        var hasTitleText = lang.getObject('layoutOptions.hasTitleText', false, templateInfo);
+
+        var template = new PrintTemplate();
+        template.format = form.format;
+        template.layout = form.layout;
+        template.preserveScale = (form.preserveScale === 'true' || form.preserveScale === 'force');
+        template.forceFeatureAttributes = form.forceFeatureAttributes && form.forceFeatureAttributes[0];
+        template.label = form.title;
+        template.exportOptions = mapOnlyForm;
+        template.showLabels = form.showLabels && form.showLabels[0];
+        template.layoutOptions = {
+          authorText: hasAuthorText ? form.author : "",
+          copyrightText: hasCopyrightText ? (form.copyright || this._getMapAttribution()) : "",
+          legendLayers: this._getLegendLayers(), // fix issue 7744
+          titleText: hasTitleText ? form.title : "",
+          customTextElements: cteArray,
+          scalebarUnit: this.layoutForm.scalebarUnit
+        };
+        this.printparams.template = template;
+        this.printparams.extraParameters = { // come from source code of jsapi
+          printFlag: true
+        };
+        var outWkid = +this.wkidInput.get('value');
+        if (srUtils.isValidWkid(outWkid)) {
+          this.printparams.outSpatialReference = new SpatialReference(outWkid);
+        } else {
+          this.printparams.outSpatialReference = this.map.spatialReference;
+        }
+        var fileHandel = this.printTask.execute(this.printparams);
+
+        var result = new printResultDijit({
+          count: this.count.toString(),
+          icon: (form.format === "PDF") ? this.pdfIcon : this.imageIcon,
+          docName: form.title,
+          title: form.format + ', ' + form.layout,
+          fileHandle: fileHandel,
+          nls: this.nls
+        }).placeAt(this.printResultsNode, 'last');
+        result.startup();
+        domStyle.set(this.clearActionBarNode, 'display', 'block');
+        this.count++;
+      } else {
+        this.printSettingsFormDijit.validate();
+      }
+    },
+
+    _getLegendLayers: function() {
+      var hasLegend = lang.getObject('layoutOptions.hasLegend', false, this._currentTemplateInfo);
+      var enabledLegend = this.layoutForm.legend.length > 0 && this.layoutForm.legend[0];
+      if (this.printTask && !this.printTask._createOperationalLayers) {
+        // if don't have _createOptionalLayers function
+        var legendLayers = [];
+        if (hasLegend && enabledLegend) {
+          var legends = arcgisUtils.getLegendLayers({map: this.map, itemInfo: this.map.itemInfo});
+          legendLayers = array.map(legends, function(legend) {
+            return {
+              layerId: legend.layer.id
+            };
+          });
+        }
+
+        return legendLayers;
+      } else {
+        return (hasLegend && enabledLegend) ? null : [];
+      }
+
+    },
+
+    clearResults: function() {
+      domConstruct.empty(this.printResultsNode);
+      domStyle.set(this.clearActionBarNode, 'display', 'none');
+      this.count = 1;
+    },
+
+    updateAuthor: function(user) {
+      user = user || '';
+      if (user && this.authorTB) {
+        this.authorTB.set('value', user);
+      }
+    },
+
+    getCurrentMapScale: function() {
+      this.forceScaleNTB.set('value', this.map.getScale());
+    }
+  });
+
+  // Print result dijit
+  var printResultDijit = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
+    widgetsInTemplate: true,
+    templateString: printResultTemplate,
+    url: null,
+    postCreate: function() {
+      this.inherited(arguments);
+      this.progressBar.set('label', this.nls.creatingPrint);
+      this.fileHandle.then(lang.hitch(this, '_onPrintComplete'), lang.hitch(this, '_onPrintError'));
+    },
+    _onPrintComplete: function(data) {
+      if (data.url) {
+        this.url = data.url;
+        html.setStyle(this.progressBar.domNode, 'display', 'none');
+        html.setStyle(this.successNode, 'display', 'inline-block');
+        domClass.add(this.resultNode, "printResultHover");
+      } else {
+        this._onPrintError(this.nls.printError);
+      }
+    },
+    _onPrintError: function(err) {
+      console.log(err);
+      html.setStyle(this.progressBar.domNode, 'display', 'none');
+      html.setStyle(this.errNode, 'display', 'block');
+      domClass.add(this.resultNode, "printResultError");
+
+      html.setAttr(this.domNode, 'title', err.details || err.message || "");
+    },
+    _openPrint: function() {
+      if (this.url !== null) {
+        window.open(this.url);
+      }
+    }
+  });
+  return PrintDijit;
+});

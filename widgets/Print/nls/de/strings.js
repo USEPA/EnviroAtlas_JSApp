@@ -16,6 +16,7 @@ define({
   "author": "Autor",
   "copyright": "Copyright",
   "fullLayoutOptions": "Optionen für vollständiges Layout",
+  "scaleBarUnit": "Maßstabsleisteneinheit",
   "scaleBarUnitsMetric": "Metrik der Maßstabsleisteneinheiten",
   "scaleBarUnitsNonMetric": "Nicht metrische Maßstabsleisteneinheiten",
   "unitsMiles": "Meilen",
@@ -33,5 +34,9 @@ define({
   "print": "Drucken",
   "clearList": "Ausdrucke löschen",
   "creatingPrint": "Ausdruck wird erstellt",
-  "printError": "Fehler, versuchen Sie es erneut"
+  "printError": "Fehler, versuchen Sie es erneut",
+  "forceFeatureAttributes": "Feature-Attribute",
+  "includeFeatureAttributes": "Attribute einbeziehen",
+  "outputSR": "Ausgabe-Raumbezug",
+  "invalidWkid": "Ungültige WKID"
 });

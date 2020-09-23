@@ -16,6 +16,7 @@ define({
   "author": "लेखक",
   "copyright": "कॉपीराईट",
   "fullLayoutOptions": "पूर्ण रूपरेखा विकल्प",
+  "scaleBarUnit": "स्केल बार की इकाई",
   "scaleBarUnitsMetric": "स्केल बार की इकाई मीट्रिक",
   "scaleBarUnitsNonMetric": "स्केल बार की इकाई गैर-मेट्रिक",
   "unitsMiles": "मील",
@@ -33,5 +34,9 @@ define({
   "print": "प्रिंट करें",
   "clearList": "साफ प्रिंट",
   "creatingPrint": "प्रिंट बनाना",
-  "printError": "त्रुटि, फिर से कोशिश करें"
+  "printError": "त्रुटि, फिर से कोशिश करें",
+  "forceFeatureAttributes": "सुविधा एट्रिब्यूट",
+  "includeFeatureAttributes": "एट्रिब्यूट शामिल करें",
+  "outputSR": "आउटपुट स्थानिक संदर्भ",
+  "invalidWkid": "अमान्य wkid"
 });

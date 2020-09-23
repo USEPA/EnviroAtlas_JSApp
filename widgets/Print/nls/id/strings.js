@@ -16,6 +16,7 @@ define({
   "author": "Pembuat",
   "copyright": "Hak cipta",
   "fullLayoutOptions": "Opsi tata letak penuh",
+  "scaleBarUnit": "Unit bilah skala",
   "scaleBarUnitsMetric": "Unit bilah skala metrik",
   "scaleBarUnitsNonMetric": "Unit bilah skala non-metrik",
   "unitsMiles": "Mil",
@@ -33,5 +34,9 @@ define({
   "print": "Cetak",
   "clearList": "Bersihkan cetakan",
   "creatingPrint": "Membuat cetakan",
-  "printError": "Eror, coba lagi"
+  "printError": "Eror, coba lagi",
+  "forceFeatureAttributes": "Atribut fitur",
+  "includeFeatureAttributes": "Sertakan atribut",
+  "outputSR": "Referensi spasial output",
+  "invalidWkid": "wkid tidak valid"
 });

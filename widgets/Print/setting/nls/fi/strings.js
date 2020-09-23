@@ -9,5 +9,6 @@ define({
   "urlNotAvailable": "URL-osoite ei ole käytettävissä",
   "notPrintTask": "URL-osoite ei ole tulostustyö",
   "advancedOption": "Näytä lisäasetukset",
-  "ok": "OK"
+  "ok": "OK",
+  "editable": "Muokattavissa"
 });

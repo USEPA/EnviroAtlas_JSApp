@@ -3,7 +3,7 @@
   "table": {
     "pageSizeOptions": [25, 50, 100, 1000]
   },
-  "hideExportButton": true,
+  "hideExportButton": false,
   "initiallyExpand": false,
   "filterByMapExtent": true,
   "allowTextSelection": true,

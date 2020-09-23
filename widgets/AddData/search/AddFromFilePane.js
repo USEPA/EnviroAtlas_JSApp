@@ -251,6 +251,15 @@ define(["dojo/_base/declare",
               .replace("{name}",featureLayer.name);
           }
           featureLayer.id = window.uploadedFeatLayerIdPrefix + featureLayer.name;
+          // record the fields
+	      var fields = "";
+	      for (index = 0, len = featureCollection.layers[0].layerDefinition.fields.length; index < len; ++index) {
+	        	fields = fields + featureCollection.layers[0].layerDefinition.fields[index].name + ":" + featureCollection.layers[0].layerDefinition.fields[index].type + ";";
+	        }
+	      fields = fields.substring(0, fields.length - 1);
+	      window.hashFieldsAddedFeatureLayer[featureLayer.id] = fields;
+	      window.hashGeometryTypeAddedFeatLyr[featureLayer.id] = featureLayer.geometryType;
+        
           window.uploadedFileColl.push(featureLayer.id);
           loader._setFeatureLayerInfoTemplate(featureLayer,null,null);
           if (featureLayer.fullExtent) {

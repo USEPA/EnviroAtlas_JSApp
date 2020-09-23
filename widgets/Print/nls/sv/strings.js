@@ -16,6 +16,7 @@ define({
   "author": "Författare",
   "copyright": "Copyright",
   "fullLayoutOptions": "Fullständiga layoutalternativ",
+  "scaleBarUnit": "Enhet för skalstock",
   "scaleBarUnitsMetric": "Metriska enheter för skalfältet",
   "scaleBarUnitsNonMetric": "Icke-metriska enheter för skalfältet",
   "unitsMiles": "Engelska mil",
@@ -33,5 +34,9 @@ define({
   "print": "Skriv ut",
   "clearList": "Rensa utskrifter",
   "creatingPrint": "Skapar utskrift",
-  "printError": "Fel, försök igen"
+  "printError": "Fel, försök igen",
+  "forceFeatureAttributes": "Geoobjektattribut",
+  "includeFeatureAttributes": "Inkludera attribut",
+  "outputSR": "Geografisk referens för utdata",
+  "invalidWkid": "Ogiltigt wkid"
 });

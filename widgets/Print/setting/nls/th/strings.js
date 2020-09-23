@@ -9,5 +9,6 @@ define({
   "urlNotAvailable": "URL ที่ไม่สามารถใช้ได้",
   "notPrintTask": "URL ที่ไม่สามารถพิมพ์ได้",
   "advancedOption": "แสดงทางเลือก",
-  "ok": "ตกลง"
+  "ok": "ตกลง",
+  "editable": "ที่สามารถแก้ไขได้"
 });

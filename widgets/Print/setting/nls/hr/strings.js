@@ -9,5 +9,6 @@ define({
   "urlNotAvailable": "URL nije dostupan.",
   "notPrintTask": "URL nije zadatak ispisa",
   "advancedOption": "Prikaži napredne opcije",
-  "ok": "U redu"
+  "ok": "U redu",
+  "editable": "Može se uređivati"
 });

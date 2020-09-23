@@ -9,5 +9,6 @@ define({
   "urlNotAvailable": "URL-ul nu este disponibil",
   "notPrintTask": "URL-ul nu este o activitate de imprimare",
   "advancedOption": "Afişare opţiuni avansate",
-  "ok": "OK"
+  "ok": "OK",
+  "editable": "Editabil"
 });

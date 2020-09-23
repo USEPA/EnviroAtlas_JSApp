@@ -16,6 +16,7 @@ define({
   "author": "作者",
   "copyright": "版权所有",
   "fullLayoutOptions": "完整布局选项",
+  "scaleBarUnit": "比例尺单位",
   "scaleBarUnitsMetric": "比例尺单位(公制)",
   "scaleBarUnitsNonMetric": "比例尺单位(非公制)",
   "unitsMiles": "英里",
@@ -33,5 +34,9 @@ define({
   "print": "打印",
   "clearList": "清除打印",
   "creatingPrint": "正在创建打印",
-  "printError": "出现错误，请重试"
+  "printError": "出现错误，请重试",
+  "forceFeatureAttributes": "要素属性",
+  "includeFeatureAttributes": "包括属性",
+  "outputSR": "输出空间参考",
+  "invalidWkid": "无效的 wkid"
 });

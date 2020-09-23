@@ -9,5 +9,6 @@ define({
   "urlNotAvailable": "URL pole kättesaadav.",
   "notPrintTask": "URL pole printimistoiming",
   "advancedOption": "Näita täiustatud valikuid",
-  "ok": "OK"
+  "ok": "OK",
+  "editable": "Muudetav"
 });

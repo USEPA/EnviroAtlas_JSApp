@@ -87,6 +87,7 @@ define([
     window.layerIdDemographPrefix = "eaLyrDEMNum_";
     window.layerIdTiledPrefix = "tiledNum_";
     window.addedLayerIdPrefix = "added_";
+    window.demographicsTitlePrefix = "Demographics - ";
     window.topLayerID = "";
     window.timeSliderLayerId = "TimeSliderLayer";//This is only used in AddData widget (added time aware layer)
     window.timeSliderPause = false;
@@ -205,9 +206,6 @@ define([
     
     window.topicDicESB["Pollutant Reduction: Air"] = "PRA"; //This is newly added Mar 2017    
     window.topicDicESB["Pollutant Reduction: Water"] = "PRW"; //This is newly added Mar 2017      
-     
-    
-        
     
     window.topicDicESB["Protected Lands"] = "PL";
     window.topicDicESB["Species: At-Risk and Priority"] = "SARaP";

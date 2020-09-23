@@ -332,7 +332,7 @@ define([
 								     		numDecimalDigit = window.hashPopup[eaID].fieldInfos[ii].format.places;
 								     		content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + ":selfSimpleSearchFilter.formatValue}";	
 								     	}
-								     }  else if (window.hashPopup[eaID].fieldInfos[ii].fieldName.indexOf("_URL")>=0) {
+								        else if (window.hashPopup[eaID].fieldInfos[ii].fieldName.indexOf("_URL")>=0) {
 								     	content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + ":selfSimpleSearchFilter.formatURL}";	
 								     }  else {
 										content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + "}";	
@@ -2633,6 +2633,7 @@ define([
 	                    	if(layer.hasOwnProperty('eaLyrNum')){
 	                    		eaURL = eaURL1 + "/" + layer.eaLyrNum.toString();
 	                    		window.hashURL[layer.eaID.toString()] = eaURL; 
+	                    		window.hashEAIDToTitle[layer.eaID] = layer.name;
 	                    		if(layer.hasOwnProperty('tileLink') && layer.tileLink.toString() == "yes"){
 	                    			window.hashURLtoTile[eaURL] = layer.tileURL.toString();
 	                    			

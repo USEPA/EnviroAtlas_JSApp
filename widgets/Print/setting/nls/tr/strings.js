@@ -9,5 +9,6 @@ define({
   "urlNotAvailable": "Url kullanılamıyor",
   "notPrintTask": "Url bir baskı görevi değil",
   "advancedOption": "Gelişmiş seçenekleri göster",
-  "ok": "Tamam"
+  "ok": "Tamam",
+  "editable": "Düzenlenebilir"
 });

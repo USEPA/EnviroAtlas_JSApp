@@ -16,6 +16,7 @@ define({
   "author": "作者",
   "copyright": "版權所有",
   "fullLayoutOptions": "完整排版選項",
+  "scaleBarUnit": "比例尺單位",
   "scaleBarUnitsMetric": "比例尺單位(公制)",
   "scaleBarUnitsNonMetric": "比例尺單位(非公制)",
   "unitsMiles": "英里",
@@ -33,5 +34,9 @@ define({
   "print": "列印",
   "clearList": "清除列印",
   "creatingPrint": "正在建立列印",
-  "printError": "出現錯誤，請重試"
+  "printError": "出現錯誤，請重試",
+  "forceFeatureAttributes": "圖徵屬性",
+  "includeFeatureAttributes": "包含屬性",
+  "outputSR": "輸出空間參考",
+  "invalidWkid": "wkid 無效"
 });

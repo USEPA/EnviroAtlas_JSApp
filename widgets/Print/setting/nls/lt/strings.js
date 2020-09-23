@@ -9,5 +9,6 @@ define({
   "urlNotAvailable": "URL nepasiekiamas",
   "notPrintTask": "URL nėra spausdinimo užduotis",
   "advancedOption": "Rodyti išplėstinius nustatymus",
-  "ok": "Gerai"
+  "ok": "Gerai",
+  "editable": "Redaguojama"
 });

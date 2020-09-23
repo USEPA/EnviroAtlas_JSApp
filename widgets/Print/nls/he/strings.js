@@ -16,6 +16,7 @@ define({
   "author": "מחבר",
   "copyright": "זכות יוצרים",
   "fullLayoutOptions": "אפשרויות תצוגת מפה מלאות",
+  "scaleBarUnit": "יחידת סרגל קנ\"מ",
   "scaleBarUnitsMetric": "יחידות סרגל קנה מידה מטריות",
   "scaleBarUnitsNonMetric": "יחידות סרגל קנה מידה לא מטריות",
   "unitsMiles": "מיילים",
@@ -33,5 +34,9 @@ define({
   "print": "הדפס",
   "clearList": "נקה הדפסות",
   "creatingPrint": "יוצר הדפסה",
-  "printError": "שגיאה, נסה שנית"
+  "printError": "שגיאה, נסה שנית",
+  "forceFeatureAttributes": "מאפייני ישות",
+  "includeFeatureAttributes": "כלול מאפיינים",
+  "outputSR": "יחוס מרחבי לנתוני הפלט",
+  "invalidWkid": "wkid לא חוקי"
 });

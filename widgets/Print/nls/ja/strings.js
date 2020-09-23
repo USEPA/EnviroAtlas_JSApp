@@ -16,6 +16,7 @@ define({
   "author": "作成者",
   "copyright": "著作権",
   "fullLayoutOptions": "全レイアウト オプション",
+  "scaleBarUnit": "縮尺記号の単位",
   "scaleBarUnitsMetric": "メートル法の単位の縮尺記号",
   "scaleBarUnitsNonMetric": "メートル法以外の単位の縮尺記号",
   "unitsMiles": "マイル",
@@ -33,5 +34,9 @@ define({
   "print": "印刷",
   "clearList": "印刷結果の消去",
   "creatingPrint": "印刷中",
-  "printError": "エラーが発生しました。もう一度試してください。"
+  "printError": "エラーが発生しました。もう一度試してください。",
+  "forceFeatureAttributes": "フィーチャ属性",
+  "includeFeatureAttributes": "属性を含む",
+  "outputSR": "出力データの空間参照",
+  "invalidWkid": "無効な WKID"
 });
