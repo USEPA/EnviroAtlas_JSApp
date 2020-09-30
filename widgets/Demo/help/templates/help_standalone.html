@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>EnviroAtlas Help</title>
+    <script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            /* jQuery module to get URL parameters. Copied from: https://stackoverflow.com/questions/19491336/get-url-parameter-jquery */
+            $.urlParam=function(a){var b=new RegExp("[?&]"+a+"=([^&#]*)").exec(window.location.href);if(b==null){return null}else{return b[1]||0}};
+            let singlePage = $.urlParam('page');
+            if (singlePage != null) {
+                $("#pageHeader").css("display","none");
+                $('#header').load("help_" + singlePage + "1.html");
+                $('#body').load("help_" + singlePage + "2.html");
+            } else {
+                $.each(['AddData','AttributeTable','Demographic','DrawerMapping','DrawMeasure','DynamicSymbology',
+                    'ECAT','Elevation','EnhancedBookmarks','EnviroAtlasDataSearch','FeaturedCollections','HucNavigation',
+                    'LayerList','Print','Raindrop','SelectByTopic','SelectCommunity','TimeSeries'], function(index,value){
+                    $('#contents').append('<a class="list-group-item list-group-item-action" href="#'+ value +'Header">'+ value + '</a>');
+                    $('#helpContent').append('<div id="'+ value + 'Card" class="card bg-light mb-3">');
+                    $('#' + value + 'Card').append('<div id="' + value + 'Header" class="card-header"></div>');
+                    $('#' + value + 'Card').append('<div id="' + value + 'Body" class="card-body"></div>');
+                    $('#' + value + 'Header').load("help_" + value + "1.html");
+                    $('#' + value + 'Body').load("help_" + value + "2.html");
+                });
+
+            }
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <div id="pageHeader">
+        <h1>EnviroAtlas Help</h1>
+        <div id="contents" class="list-group"></div>
+    </div>
+    <div id="helpContent"></div>
+    <div id="header"></div>
+    <div id="body"></div>
+</div>
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-L8ZB"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":
+        new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src=
+    "//www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,"script","dataLayer","GTM-L8ZB");</script>
+<!-- End Google Tag Manager -->
+</body>
+</html>
