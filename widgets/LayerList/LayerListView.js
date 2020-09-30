@@ -428,7 +428,15 @@ define([
       }
     },
 
-
+    redrawLegends: function(layerInfo) {
+      var legendsNode = query("div[legendsDivId='" + layerInfo.id + "']", this.layerListTable)[0];
+      if(legendsNode) {
+        if(legendsNode._legendDijit && legendsNode._legendDijit.destroy) {
+          legendsNode._legendDijit.destroy();
+        }
+        layerInfo.drawLegends(legendsNode, this.layerListWidget.appConfig.portalUrl);
+      }
+    },
 
     // destroyLayerTrNode: function(layerInfo) {
     //   var removedLayerNode = query("[class~='layer-tr-node-" + layerInfo.id + "']", this.domNode)[0];
@@ -566,15 +574,7 @@ define([
       }
       return state;
     },
-    redrawLegends: function(layerInfo) {
-      var legendsNode = query("div[legendsDivId='" + layerInfo.id + "']", this.layerListTable)[0];
-      if(legendsNode) {
-        if(legendsNode._legendDijit && legendsNode._legendDijit.destroy) {
-          legendsNode._legendDijit.destroy();
-        }
-        layerInfo.drawLegends(legendsNode, this.layerListWidget.appConfig.portalUrl);
-      }
-    },
+
     _foldOrUnfoldLayers: function(layerInfos, isFold) {
       array.forEach(layerInfos, function(layerInfo) {
         this._foldOrUnfoldLayer(layerInfo, isFold);
@@ -797,7 +797,98 @@ define([
       return steps;
     },
  
+    moveUpLayer: function(layerInfo) {
+      // summary:
+      //    move up layer in layer list.
+      // description:
+      //    call the moveUpLayer method of LayerInfos to change the layer order in map,
+      //    and update the data in LayerInfos
+      //    then, change layerNodeTr and layerContentTr domNode
+      var steps = this._getMovedSteps(layerInfo, 'moveup');
+      this.layerListWidget._denyLayerInfosReorderResponseOneTime = true;
+      var beChangedLayerInfo = this.operLayerInfos.moveUpLayer(layerInfo, steps);
+      if (beChangedLayerInfo) {
+        this._exchangeLayerTrNode(beChangedLayerInfo, layerInfo);
+      }
+    },
 
+    moveDownLayer: function(layerInfo) {
+      // summary:
+      //    move down layer in layer list.
+      // description:
+      //    call the moveDownLayer method of LayerInfos to change the layer order in map,
+      //    and update the data in LayerInfos
+      //    then, change layerNodeTr and layerContentTr domNode
+      var steps = this._getMovedSteps(layerInfo, 'movedown');
+      this.layerListWidget._denyLayerInfosReorderResponseOneTime = true;
+      var beChangedLayerInfo = this.operLayerInfos.moveDownLayer(layerInfo, steps);
+      if (beChangedLayerInfo) {
+        this._exchangeLayerTrNode(layerInfo, beChangedLayerInfo);
+      }
+    },
+        isLayerHiddenInWidget: function(layerInfo) {
+      var isHidden = false;
+      var currentLayerInfo = layerInfo;
+      if(layerInfo &&
+         this.config.layerOptions &&
+         this.config.layerOptions[layerInfo.id] !== undefined) {
+        while(currentLayerInfo) {
+          isHidden = isHidden ||  !this.config.layerOptions[currentLayerInfo.id].display;
+          if(isHidden) {
+            break;
+          }
+          currentLayerInfo = currentLayerInfo.parentLayerInfo;
+        }
+      } else {
+        // if config has not been configured, default value is 'true'.
+        // if config has been configured, but new layer of webmap is ont in config file,
+        //   default value is 'true'.
+        isHidden = false;
+      }
+      return isHidden;
+    },
+
+     isFirstDisplayedLayerInfo: function(layerInfo) {
+      var isFirst;
+      var steps;
+      var layerInfoIndex;
+      var layerInfoArray;
+      if(layerInfo.isFirst || !layerInfo.isRootLayer() || layerInfo.isBasemap()) {
+        isFirst = true;
+      } else {
+        steps = this._getMovedSteps(layerInfo, "moveup");
+        layerInfoArray = this.operLayerInfos.getLayerInfoArray();
+        layerInfoIndex = this.operLayerInfos._getTopLayerInfoIndexById(layerInfo.id);
+        if(this.isLayerHiddenInWidget(layerInfoArray[layerInfoIndex - steps]) ||
+            !this.layerFilter.isValidLayerInfo(layerInfoArray[layerInfoIndex - steps])) {
+          isFirst = true;
+        } else {
+          isFirst = false;
+        }
+      }
+      return isFirst;
+    },
+
+    isLastDisplayedLayerInfo: function(layerInfo) {
+      var isLast;
+      var steps;
+      var layerInfoIndex;
+      var layerInfoArray;
+      if(layerInfo.isLast || !layerInfo.isRootLayer() || layerInfo.isBasemap()) {
+        isLast = true;
+      } else {
+        steps = this._getMovedSteps(layerInfo, "movedown");
+        layerInfoArray = this.operLayerInfos.getLayerInfoArray();
+        layerInfoIndex = this.operLayerInfos._getTopLayerInfoIndexById(layerInfo.id);
+        if(this.isLayerHiddenInWidget(layerInfoArray[layerInfoIndex + steps])  ||
+            !this.layerFilter.isValidLayerInfo(layerInfoArray[layerInfoIndex + steps])) {
+          isLast = true;
+        } else {
+          isLast = false;
+        }
+      }
+      return isLast;
+    },   
     /***************************************************
      * methods for control operation.
      ***************************************************/
@@ -873,100 +964,10 @@ define([
           return;
       }
     },
-    isFirstDisplayedLayerInfo: function(layerInfo) {
-      var isFirst;
-      var steps;
-      var layerInfoIndex;
-      var layerInfoArray;
-      if(layerInfo.isFirst || !layerInfo.isRootLayer() || layerInfo.isBasemap()) {
-        isFirst = true;
-      } else {
-        steps = this._getMovedSteps(layerInfo, "moveup");
-        layerInfoArray = this.operLayerInfos.getLayerInfoArray();
-        layerInfoIndex = this.operLayerInfos._getTopLayerInfoIndexById(layerInfo.id);
-        if(this.isLayerHiddenInWidget(layerInfoArray[layerInfoIndex - steps]) ||
-            !this.layerFilter.isValidLayerInfo(layerInfoArray[layerInfoIndex - steps])) {
-          isFirst = true;
-        } else {
-          isFirst = false;
-        }
-      }
-      return isFirst;
-    },
 
-    isLastDisplayedLayerInfo: function(layerInfo) {
-      var isLast;
-      var steps;
-      var layerInfoIndex;
-      var layerInfoArray;
-      if(layerInfo.isLast || !layerInfo.isRootLayer() || layerInfo.isBasemap()) {
-        isLast = true;
-      } else {
-        steps = this._getMovedSteps(layerInfo, "movedown");
-        layerInfoArray = this.operLayerInfos.getLayerInfoArray();
-        layerInfoIndex = this.operLayerInfos._getTopLayerInfoIndexById(layerInfo.id);
-        if(this.isLayerHiddenInWidget(layerInfoArray[layerInfoIndex + steps])  ||
-            !this.layerFilter.isValidLayerInfo(layerInfoArray[layerInfoIndex + steps])) {
-          isLast = true;
-        } else {
-          isLast = false;
-        }
-      }
-      return isLast;
-    },
-    moveUpLayer: function(layerInfo) {
-      // summary:
-      //    move up layer in layer list.
-      // description:
-      //    call the moveUpLayer method of LayerInfos to change the layer order in map,
-      //    and update the data in LayerInfos
-      //    then, change layerNodeTr and layerContentTr domNode
-      var steps = this._getMovedSteps(layerInfo, 'moveup');
-      this.layerListWidget._denyLayerInfosReorderResponseOneTime = true;
-      var beChangedLayerInfo = this.operLayerInfos.moveUpLayer(layerInfo, steps);
-      if (beChangedLayerInfo) {
-        this._exchangeLayerTrNode(beChangedLayerInfo, layerInfo);
-      }
-    },
 
-    moveDownLayer: function(layerInfo) {
-      // summary:
-      //    move down layer in layer list.
-      // description:
-      //    call the moveDownLayer method of LayerInfos to change the layer order in map,
-      //    and update the data in LayerInfos
-      //    then, change layerNodeTr and layerContentTr domNode
-      var steps = this._getMovedSteps(layerInfo, 'movedown');
-      this.layerListWidget._denyLayerInfosReorderResponseOneTime = true;
-      var beChangedLayerInfo = this.operLayerInfos.moveDownLayer(layerInfo, steps);
-      if (beChangedLayerInfo) {
-        this._exchangeLayerTrNode(layerInfo, beChangedLayerInfo);
-      }
-    },
 
-    isLayerHiddenInWidget: function(layerInfo) {
-      var isHidden = false;
-      var currentLayerInfo = layerInfo;
-      if(layerInfo &&
-         this.config.layerOptions &&
-         this.config.layerOptions[layerInfo.id] !== undefined) {
-        while(currentLayerInfo) {
-          isHidden = isHidden ||  !this.config.layerOptions[currentLayerInfo.id].display;
-          if(isHidden) {
-            break;
-          }
-          currentLayerInfo = currentLayerInfo.parentLayerInfo;
-        }
-      } else {
-        // if config has not been configured, default value is 'true'.
-        // if config has been configured, but new layer of webmap is ont in config file,
-        //   default value is 'true'.
-        isHidden = false;
-      }
-      return isHidden;
-    },
 
-    
     turnAllRootLayers: function(isOnOrOff) {
       var layerInfoArray = this.operLayerInfos.getLayerInfoArray();
       array.forEach(layerInfoArray, function(layerInfo) {
