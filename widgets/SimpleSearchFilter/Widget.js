@@ -1942,7 +1942,16 @@ define([
                                 }
                                 else{
                                     lOptions.id = window.layerIdTiledPrefix + layer.eaID.toString();
-                                    this._viewerMap.addLayer(new ArcGISTiledMapServiceLayer(layer.tileURL, lOptions));
+                                    var tileLayerForFeature = new ArcGISTiledMapServiceLayer(layer.tileURL, lOptions);
+                                    tileLayerForFeature.setMaxScale(2000000);
+                                    /*tileLayerForFeature.on('load', function(evt) {
+			                                setTimeout(function () {
+			                                    evt.layer.setMaxScale(2000000);     
+			                                }, 100)                      			                            
+
+			                        });*/
+                                    this._viewerMap.addLayer(tileLayerForFeature);
+                                    
                                 }
                             } else if (layer.eaScale == "COMMUNITY") {
                                 loadSymbologyConfig(function(response) {

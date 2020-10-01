@@ -2,7 +2,7 @@
     "theme": {
         "name": "TabTheme",
         "styles": ["EnviroAtlas"],
-        "version": "2.5"
+        "version": "2.11"
     },
     "portalUrl": "https://epa.maps.arcgis.com",
     "appId": "1EMBh2U8U1dvqVh5",
@@ -464,7 +464,7 @@
                 "position": {
                     "top": 100,
                     "width": 0,
-                    "left":-800,
+                    "left": -800,
                     "relativeTo": "map"
                 },
                 "version": "2.5",
@@ -476,7 +476,7 @@
                 "position": {
                     "top": 100,
                     "width": 0,
-                    "left":-800,
+                    "left": -800,
                     "relativeTo": "map"
                 },
                 "version": "2.5",
@@ -660,7 +660,6 @@
         "widgetOnScreen": {
             "widgets": [{
                     "uri": "themes/TabTheme/widgets/Header/Widget",
-                    "visible": false,
                     "position": {
                         "left": 0,
                         "top": -100,
@@ -709,7 +708,7 @@
                 }, {
                     "uri": "widgets/Search/Widget",
                     "position": {
-                        "left": 45,
+                        "left": 5,
                         "top": 5,
                         "relativeTo": "map"
                     },
@@ -720,8 +719,8 @@
                 }, {
                     "uri": "widgets/Coordinate/Widget",
                     "position": {
-                        "left": 160,
-                        "bottom": -100,
+                        "left": -160,
+                        "top": -1000,
                         "relativeTo": "map"
                     },
                     "version": "2.11",
@@ -729,9 +728,20 @@
                     "name": "Coordinate",
                     "label": "Coordinate"
                 }, {
+					"uri": "widgets/FeatureLimit/Widget",
+					"position": {
+						"left": 350,
+						"bottom": 5,
+						"relativeTo": "map"
+					},
+					"version": "2.11",
+					"id": "widgets_FeatureLimit",
+					"name": "FeatureLimit",
+					"label": "FeatureLimit"
+				}, {
                     "uri": "widgets/CommunityDisplay/Widget",
                     "position": {
-                        "left": 45,
+                        "left": 5,
                         "top": 45,
                         "relativeTo": "map"
                     },
@@ -1053,7 +1063,7 @@
                     "inPanel": false,
                     "position": {
                         "left": 5,
-                        "top": 70,
+                        "top": 100,
                         "relativeTo": "map"
                     },
                     "placeholderIndex": 1,
@@ -1108,7 +1118,7 @@
                     "uri": "widgets/ZoomSlider/Widget",
                     "visible": true,
                     "position": {
-                        "top": 5,
+                        "top": -100,
                         "left": 5,
                         "relativeTo": "map"
                     },
@@ -1120,7 +1130,7 @@
                     "uri": "widgets/ExtentNavigate/Widget",
                     "visible": true,
                     "position": {
-                        "top": 105,
+                        "top": 135,
                         "left": 5,
                         "relativeTo": "map"
                     },
