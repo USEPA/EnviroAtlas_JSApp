@@ -22,7 +22,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
     'widgets/Demo/help/help_HucNavigation2',
     'widgets/Demo/help/help_Raindrop1',
     'widgets/Demo/help/help_Raindrop2',
-	'widgets/Demo/help/help_AttributeTable1',
+    'widgets/Demo/help/help_AttributeTable1',
     'widgets/Demo/help/help_AttributeTable2',
     'widgets/Demo/help/help_SelectByTopic1',
     'widgets/Demo/help/help_SelectByTopic2',
