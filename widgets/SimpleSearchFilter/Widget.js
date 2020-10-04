@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////
 // Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
@@ -333,7 +333,7 @@ define([
 								     		numDecimalDigit = window.hashPopup[eaID].fieldInfos[ii].format.places;
 								     		content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + ":selfSimpleSearchFilter.formatValue}";	
 								     	}
-								        else if (window.hashPopup[eaID].fieldInfos[ii].fieldName.indexOf("_URL")>=0) {
+								     }  else if (window.hashPopup[eaID].fieldInfos[ii].fieldName.indexOf("_URL")>=0) {
 								     	content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + ":selfSimpleSearchFilter.formatURL}";	
 								     }  else {
 										content = content +  strFirstLine + window.hashPopup[eaID].fieldInfos[ii].label + "</b>: ${" + window.hashPopup[eaID].fieldInfos[ii].fieldName + "}";	
