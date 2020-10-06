@@ -4,8 +4,11 @@
     "attachTo": "bottom-right",
     "maximizeButton": true,
 	"baseLayer": {
-		"url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer",
-		"type": "tiledMapService",
+		"url": "",
+		"type": "bingMapsRoad",
+		"spatialReference": {
+			"wkid": 102100
+		},
 		"veLayerInfo": {"isKeyInPortal": true}
 	}
   }
