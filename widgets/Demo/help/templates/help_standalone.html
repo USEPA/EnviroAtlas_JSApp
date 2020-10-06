@@ -9,26 +9,35 @@
     <script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready(function(){
-            let appRoot = "https://lz18h1nthultgre.aa.ad.epa.gov/EnviroAtlas/"
-            let configURL = appRoot + "widgets/Demo/config.json";
-            let imgFix = function() {
+            // Set the root path for staging or production
+            const appRoot = "//leb.epa.gov/EnviroAtlas_WAB/"
+            //const appRoot = "//enviroatlas.epa.gov/enviroatlas/interactivemap/"
+            // Set the relative path to the help configuration
+            const configURL = appRoot + "widgets/Demo/config.json";
+            // Define function to fix image src paths
+            const imgFix = function() {
                 $('img').each(function () {
                     let relSrc = $(this).attr('src');
-                    console.log(relSrc.slice(0, 8));
                     if (relSrc.slice(0, 8) === "widgets/") {
                         $(this).attr('src', appRoot + relSrc);
                     }
                 });
             }
-            //TODO: last piece, need to implement sort/filter
+            // Fetch the help configuration and sort
             $.getJSON( configURL, function( data ) {
+                data["tour"].sort(function(a,b){
+                    return parseInt(a["displayOrder"]) - parseInt(b["displayOrder"])
+                });
+                // Build the page from the individual html segments
                 $.each(data["tour"], function (index, value) {
-                    $('#contents').append('<a class="list-group-item list-group-item-action" href="#' + value["widgetName"] + 'Header">' + value["title"] + '</a>');
-                    $('#helpContent').append('<div id="' + value["widgetName"] + 'Card" class="card bg-light mb-3">');
-                    $('#' + value["widgetName"] + 'Card').append('<div id="' + value["widgetName"] + 'Header" class="card-header"></div>');
-                    $('#' + value["widgetName"] + 'Card').append('<div id="' + value["widgetName"] + 'Body" class="card-body"></div>');
-                    $('#' + value["widgetName"] + 'Header').load(appRoot + "widgets/Demo/help/templates/" + value["helpFile"] + "1.html",imgFix);
-                    $('#' + value["widgetName"] + 'Body').load(appRoot + "widgets/Demo/help/templates/" + value["helpFile"] + "2.html",imgFix);
+                    if (value["displayOrder"] > 0){
+                        $('#contents').append('<a class="list-group-item list-group-item-action" href="#' + value["widgetName"] + 'Header">' + value["title"] + '</a>');
+                        $('#helpContent').append('<div id="' + value["widgetName"] + 'Card" class="card bg-light mb-3">');
+                        $('#' + value["widgetName"] + 'Card').append('<div id="' + value["widgetName"] + 'Header" class="card-header"></div>');
+                        $('#' + value["widgetName"] + 'Card').append('<div id="' + value["widgetName"] + 'Body" class="card-body"></div>');
+                        $('#' + value["widgetName"] + 'Header').load(appRoot + "widgets/Demo/help/templates/" + value["helpFile"] + "1.html",imgFix);
+                        $('#' + value["widgetName"] + 'Body').load(appRoot + "widgets/Demo/help/templates/" + value["helpFile"] + "2.html",imgFix);
+                    }
                 });
             });
         });
