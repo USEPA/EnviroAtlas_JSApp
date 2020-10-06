@@ -33,7 +33,7 @@
                 "id": "themes_TabTheme_widgets_Header_Widget_18",
                 "name": "Header",
                 "label": "Header"
-            }, {
+            },{
                 "uri": "themes/TabTheme/widgets/SidebarController/Widget",
                 "position": {
                     "left": 0,
