@@ -38182,7 +38182,6 @@
                         }
                     ]
                 },
-                ],
                 "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/GIC7_Percentage_of_land_area_in_estimated_floodplains_classified_as_rangeland_202006/MapServer",
                 "eaMetric": "Metric"
             },
