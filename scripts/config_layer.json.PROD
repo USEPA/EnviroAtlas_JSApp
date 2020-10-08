@@ -46822,6 +46822,76 @@
                 "eaMetadata": "N069"
             },
             {
+                "visible": false,
+                "sourceType": "plp",
+                "eaTags": [
+                    "people",
+                    "human",
+                    "government",
+                    "boundary",
+                    "boundaries",
+                    "political",
+                    "Tribal Boundaries",
+                    "Alaska Native Villages",
+                    "Alaska Reservations",
+                    "Alaska native Allotments",
+                    "Tribal Areas"
+                ],
+                "opacity": 0.6,
+                "eaTopic": "Political Boundaries",
+                "url": "https://geopub.epa.gov/arcgis/rest/services/EMEF/tribal/MapServer",
+                "eaScale": "NATIONAL",
+                "eaDescription": "Map of the tribal areas for lower 48 states and Alaska Native Villages, Alaska Native Allotments and Alaska Reservations in Alaska.",
+                "tileLink": "no",
+                "DownloadSource": 0,
+                "eaID": 913,
+                "categoryTab": "BNF",
+                "eaMetadata": "",
+                "eaLyrNum": " ",
+                "eaPBS": "Boundaries",
+                "areaGeog": [
+                    "CONUS"
+                ],
+                "type": "DYNAMIC",
+                "name": "Tribal Boundaries",
+                "eaDfsLink": "Supplemental/MissingFactSheet.pdf",
+                "eaMetric": "boundary"
+            },
+            {
+                "visible": false,
+                "sourceType": "ctr",
+                "eaTags": [
+                    "people",
+                    "human",
+                    "government",
+                    "boundary",
+                    "boundaries",
+                    "political",
+                    "Opportunity Zones",
+                    "OCR",
+                    "CFDI"
+                ],
+                "opacity": 0.6,
+                "eaTopic": "Political Boundaries",
+                "url": "https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/Qualified_Opportunity_Zones_WFL1/FeatureServer",
+                "eaScale": "NATIONAL",
+                "eaDescription": "This layer contains Census Tracts that have been designated as Qualified Opportunity Zones.  Based on nominations of eligible census tracts by the Chief Executive Officers of each State, Treasury has completed its designation of Qualified Opportunity Zones. Each State nominated the maximum number of eligible tracts, per statute, and these designations are final. ",
+                "tileLink": "no",
+                "DownloadSource": 0,
+                "eaID": 914,
+                "categoryTab": "BNF",
+                "eaMetadata": "",
+                "eaLyrNum": " ",
+                "eaPBS": "Boundaries",
+                "areaGeog": [
+                    "CONUS"
+                ],
+                "type": "DYNAMIC",
+                "name": "Qualified Opportuninty Zones",
+                "eaDfsLink": "Supplemental/MissingFactSheet.pdf",
+                "eaMetric": "boundary"
+            },
+            {
                 "eaBCSDD": [
                     "Climate Stabilization - x"
                 ],

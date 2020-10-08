@@ -46,17 +46,6 @@
                 "name": "SidebarController",
                 "label": "Sidebar Controller"
             }, {
-                "uri": "widgets/HomeButton/Widget",
-                "position": {
-                    "left": 7,
-                    "top": 147,
-                    "relativeTo": "map"
-                },
-                "version": "2.5",
-                "id": "widgets_HomeButton_Widget_21",
-                "name": "HomeButton",
-                "label": "Home Button"
-            }, {
                 "uri": "widgets/Scalebar/Widget",
                 "position": {
                     "left": 10,
@@ -89,8 +78,7 @@
                 "id": "widgets_Coordinate_Widget_24",
                 "name": "Coordinate",
                 "label": "Coordinate"
-            }, 
-            {
+            }, {
                 "uri": "widgets/FeatureLimit/Widget",
                 "position": {
                     "left": 350,
@@ -341,15 +329,14 @@
                     "width": 370,
                     "height": 270,
                     "relativeTo": "map"
-				},
-				"placeholderIndex": 1,
-				"id": "DemographicLayers_ori_28",
-				"name": "DemographicLayers_ori",
-				"label": "DemographicLayers_ori",
-				"version": "0.1",
-				"uri": "widgets/DemographicLayers_ori/Widget"
-			},  			
-            {
+                },
+                "placeholderIndex": 1,
+                "id": "DemographicLayers_ori_28",
+                "name": "DemographicLayers_ori",
+                "label": "DemographicLayers_ori",
+                "version": "0.1",
+                "uri": "widgets/DemographicLayers_ori/Widget"
+            }, {
                 "position": {
                     "left": 545,
                     "top": -40,
@@ -379,11 +366,9 @@
                 "version": "2.5",
                 "uri": "widgets/TimeSlider/Widget",
                 "closeable": true,
-                "openAtStart": false,                
+                "openAtStart": false,
                 "config": "widgets/TimeSlider/config.json"
-            }, 
-
-            {
+            }, {
                 "position": {
                     "left": 0,
                     "top": -40,
@@ -427,18 +412,7 @@
                 "label": "Layer List",
                 "version": "2.11",
                 "uri": "widgets/LayerList/Widget"
-            }, {
-                "uri": "widgets/OverviewMap/Widget",
-                "position": {
-                    "right": 0,
-                    "bottom": 0,
-                    "relativeTo": "map"
-                },
-                "version": "2.11",
-                "id": "widgets_OverviewMap_Widget_28",
-                "name": "OverviewMap",
-                "label": "Overview Map"
-            }, {
+            },  {
                 "uri": "widgets/MyLocation/Widget",
                 "inPanel": false,
                 "position": {
@@ -485,7 +459,7 @@
                 "id": "widgets_FeaturedCollectionPreview_Widget",
                 "name": "Featured Collection Details",
                 "label": "Featured Collection Details"
-            },{
+            }, {
                 "uri": "widgets/Splash/Widget",
                 "visible": true,
                 "position": {
@@ -531,6 +505,20 @@
                 "version": "2.5",
                 "id": "widgets_FullScreen_Widget_36",
                 "name": "FullScreen"
+            }, {
+                "uri": "widgets/HawaiiAlaskaConusRico/Widget",
+                "visible": true,
+                "position": {
+                    "top": 145,
+                    "left": 7,
+                    "width": "30px",
+                    "height": "120px",
+                    "relativeTo": "map"
+                },
+                "placeholderIndex": 1,
+                "version": "2.11",
+                "id": "widgets_HawaiiAlaskaConusRico",
+                "name": "HawaiiAlaskaConusRico"
             }, {
                 "uri": "widgets/GoogleAnalytics/Widget",
                 "position": {
@@ -608,7 +596,7 @@
                 "uri": "widgets/DemographicLayers/Widget",
                 "index": 3,
                 "id": "widgets_DemographicLayers"
-            },{
+            }, {
                 "name": "TimeSeries",
                 "label": "Times Series Layers",
                 "version": "1.3",
@@ -651,12 +639,13 @@
         "alwaysUseProxy": false,
         "url": "https://map11.epa.gov/gpoproxy/proxy.ashx",
         "rules": [{
-			"urlPrefix": "https://landscape10.arcgis.com",
-			"proxyUrl": "https://map11.epa.gov/gpoproxy/proxy.ashx"
-		},{
-			"urlPrefix": "https://landscape11.arcgis.com",
-			"proxyUrl": "https://map11.epa.gov/gpoproxy/proxy.ashx"
-		}]
+                "urlPrefix": "https://landscape10.arcgis.com",
+                "proxyUrl": "https://map11.epa.gov/gpoproxy/proxy.ashx"
+            }, {
+                "urlPrefix": "https://landscape11.arcgis.com",
+                "proxyUrl": "https://map11.epa.gov/gpoproxy/proxy.ashx"
+            }
+        ]
     },
     "mobileLayout": {
         "widgetOnScreen": {
@@ -685,18 +674,7 @@
                     "id": "themes_TabTheme_widgets_SidebarController_Widget_20",
                     "name": "SidebarController",
                     "label": "Sidebar Controller"
-                }, {
-                    "uri": "widgets/HomeButton/Widget",
-                    "position": {
-                        "left": 5,
-                        "top": 70,
-                        "relativeTo": "map"
-                    },
-                    "version": "2.5",
-                    "id": "widgets_HomeButton_Widget_21",
-                    "name": "HomeButton",
-                    "label": "Home Button"
-                }, {
+                }, {					
                     "uri": "widgets/Scalebar/Widget",
                     "position": {
                         "left": 10,
@@ -886,21 +864,21 @@
                     "uri": "widgets/ECAT/Widget",
                     "config": "widgets/ECAT/config.json"
                 }, {
-	                "position": {
+                    "position": {
                         "left": 695,
                         "top": -40,
                         "width": 425,
                         "height": 480,
-	                    "relativeTo": "map"
-	                },
-	                "placeholderIndex": 1,
-	                "id": "widgets_CompareMyArea_37",
-	                "name": "CompareMyArea",
-	                "label": "Compare My Area",
-	                "version": "1.3",
-	                "uri": "widgets/CompareMyArea/Widget",
-	                "config": "widgets/CompareMyArea/config.json"
-	            }, {
+                        "relativeTo": "map"
+                    },
+                    "placeholderIndex": 1,
+                    "id": "widgets_CompareMyArea_37",
+                    "name": "CompareMyArea",
+                    "label": "Compare My Area",
+                    "version": "1.3",
+                    "uri": "widgets/CompareMyArea/Widget",
+                    "config": "widgets/CompareMyArea/config.json"
+                }, {
                     "position": {
                         "left": 695,
                         "top": -40,
@@ -989,23 +967,23 @@
                     "uri": "widgets/Demo/Widget",
                     "config": "widgets/Demo/config.json"
                 }, {
-                "position": {
-                    "right": 5,
-                    "top": -40,
-                    "width": 370,
-                    "height": 490,
-                    "relativeTo": "map"
-                },
-                "placeholderIndex": 1,
-                "id": "widgets_TimeSlider_Widget_32",
-                "name": "TimeSlider",
-                "label": "Time Slider",
-                "version": "2.11",
-                "uri": "widgets/TimeSlider/Widget",
-                "closeable": true,
-                "openAtStart": false,   
-                "visible": false,
-                "config": "widgets/TimeSlider/config.json"
+                    "position": {
+                        "right": 5,
+                        "top": -40,
+                        "width": 370,
+                        "height": 490,
+                        "relativeTo": "map"
+                    },
+                    "placeholderIndex": 1,
+                    "id": "widgets_TimeSlider_Widget_32",
+                    "name": "TimeSlider",
+                    "label": "Time Slider",
+                    "version": "2.11",
+                    "uri": "widgets/TimeSlider/Widget",
+                    "closeable": true,
+                    "openAtStart": false,
+                    "visible": false,
+                    "config": "widgets/TimeSlider/config.json"
                 }, {
                     "position": {
                         "left": 0,
@@ -1050,18 +1028,7 @@
                     "label": "Layer List",
                     "version": "2.11",
                     "uri": "widgets/LayerList/Widget"
-                }, {
-                    "uri": "widgets/OverviewMap/Widget",
-                    "position": {
-                        "right": 0,
-                        "bottom": 0,
-                        "relativeTo": "map"
-                    },
-                    "version": "2.11",
-                    "id": "widgets_OverviewMap_Widget_28",
-                    "name": "OverviewMap",
-                    "label": "Overview Map"
-                }, {
+                },  {
                     "uri": "widgets/MyLocation/Widget",
                     "inPanel": false,
                     "position": {
@@ -1085,28 +1052,28 @@
                     "name": "AttributeTable",
                     "label": "Attribute Table"
                 }, {
-	                "uri": "widgets/FilterForSelect/Widget",
-	                "position": {
-	                    "top": 100,
-	                    "relativeTo": "map"
-	                },
-	                "closeable": true,
-	                "version": "2.5",
-	                "id": "widgets_FilterForSelect_Widget",
-	                "name": "FilterForSelect",
-	                "label": "Filter"
-	             },{
-	                "uri": "widgets/FeaturedCollectionPreview/Widget",
-	                "position": {
-	                    "top": 100,
-	                    "relativeTo": "map"
-	                },
-	                "closeable": true,
-	                "version": "2.5",
-	                "id": "widgets_FeaturedCollectionPreview_Widget",
-	                "name": "Featured Collection Details",
-	                "label": "Featured Collection Details"
-	             }, {
+                    "uri": "widgets/FilterForSelect/Widget",
+                    "position": {
+                        "top": 100,
+                        "relativeTo": "map"
+                    },
+                    "closeable": true,
+                    "version": "2.5",
+                    "id": "widgets_FilterForSelect_Widget",
+                    "name": "FilterForSelect",
+                    "label": "Filter"
+                }, {
+                    "uri": "widgets/FeaturedCollectionPreview/Widget",
+                    "position": {
+                        "top": 100,
+                        "relativeTo": "map"
+                    },
+                    "closeable": true,
+                    "version": "2.5",
+                    "id": "widgets_FeaturedCollectionPreview_Widget",
+                    "name": "Featured Collection Details",
+                    "label": "Featured Collection Details"
+                }, {
                     "uri": "widgets/Splash/Widget",
                     "visible": true,
                     "position": {
@@ -1152,16 +1119,31 @@
                     "id": "widgets_FullScreen_Widget_36",
                     "name": "FullScreen"
                 }, {
-                "uri": "widgets/GoogleAnalytics/Widget",
-                "position": {
-                    "left": 7,
-                    "top": -40,
-                    "relativeTo": "map"
-                },
-                "version": "2.5",
-                "id": "widgets_GoogleAnalytics_Widget_37",
-                "name": "GoogleAnalytics"
-            }
+                    "uri": "widgets/HawaiiAlaskaConusRico/Widget",
+                    "openAtStart": false,
+					"visible": false,
+                    "position": {
+                        "top": -170,
+                        "left": 7,
+                        "width": "30px",
+                        "height": "120px",
+                        "relativeTo": "map"
+                    },
+                    "placeholderIndex": 1,
+                    "version": "2.11",
+                    "id": "widgets_HawaiiAlaskaConusRico",
+                    "name": "HawaiiAlaskaConusRico"
+                }, {
+                    "uri": "widgets/GoogleAnalytics/Widget",
+                    "position": {
+                        "left": 7,
+                        "top": -40,
+                        "relativeTo": "map"
+                    },
+                    "version": "2.5",
+                    "id": "widgets_GoogleAnalytics_Widget_37",
+                    "name": "GoogleAnalytics"
+                }
             ],
             "panel": {
                 "uri": "jimu/OnScreenWidgetPanel",

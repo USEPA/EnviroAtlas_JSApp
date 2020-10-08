@@ -87,5 +87,8 @@
 #titlePaneBNF .dijitTitlePaneContentOuter {
   height: 0px !important;
 }
+#titlePaneGEOG .dijitTitlePaneContentOuter {
+  height: 0px !important;
+}
 
 

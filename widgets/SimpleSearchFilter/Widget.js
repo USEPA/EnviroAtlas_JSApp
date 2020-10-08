@@ -139,6 +139,7 @@ define([
 		    this.eaTags = data.eaTags;
 		    this.eaTopic = data.eaTopic;
 		    this.categoryTab = data.categoryTab;
+		    this.areaGeog = data.areaGeog;
 		}
 		var selectableLayerArray = [];
 		var dicTopicSelected = {};
@@ -951,6 +952,7 @@ define([
 			SubLayerIds = layerDataStore.getValue( item, 'SubLayerIds');
 			sourceType = layerDataStore.getValue( item, 'sourceType');
 			categoryTab = layerDataStore.getValue( item, 'categoryTab');
+			areaGeog = layerDataStore.getValue( item, 'areaGeog');
 			bSelectedByNationalOrCommunity = false;
 			//add the widget button which has the searched tags
 			//if (document.getElementById('searchFilterText').value != ''){
@@ -1019,7 +1021,24 @@ define([
 
 			if (bSelectedByNationalOrCommunity) {
 				if (bSelectedByTopics(eaTopic, categoryTab)) {
-					currentLayerSelectable = true;				
+				    //since there is no button for "Virgin Islands", it will be represented by "Puerto Rico"
+				    areaGeog = areaGeog.replace("Virgin Islands", "Puerto Rico");
+				    layerAreaGeogList = areaGeog.split(';');
+				    
+				    //selectedAreaGeog = document.getElementsByName("areaGeographySelection").value;
+				    var selectedAreaGeog = document.getElementsByName('areaGeographySelection');
+                    var selectedAreaGeog_value;
+                    for(var i = 0; i < selectedAreaGeog.length; i++){
+                        if(selectedAreaGeog[i].checked){
+                            selectedAreaGeog_value = selectedAreaGeog[i].value;                           
+                            
+                            //console.log(selectedAreaGeog_value);
+                        }
+                    }
+                    if(layerAreaGeogList.indexOf(selectedAreaGeog_value) >= 0) {
+                        currentLayerSelectable = true;
+                    }
+									
 				}
 			}// end of if (bSelectedByNationalOrCommunity)
 
@@ -2547,7 +2566,7 @@ define([
                     widgetTagsWhole = widgetTagsWhole + selfSimpleSearchFilter.config.WidgetTags[ii].Tags[tagsIndex] + ";";
                 }
 
-                var widgetItem = {eaLyrNum: "", name: widgetName, IsSubLayer:"", SubLayerNames: "", SubLayerIds: widgetID, eaDescription: "", eaDfsLink: "", eaCategory: "", eaID: fakeEAID, eaMetadata: "", eaScale: "", eaTags: widgetTagsWhole, eaTopic:widgetName, sourceType:"", categoryTab:""}; 
+                var widgetItem = {eaLyrNum: "", name: widgetName, IsSubLayer:"", SubLayerNames: "", SubLayerIds: widgetID, eaDescription: "", eaDfsLink: "", eaCategory: "", eaID: fakeEAID, eaMetadata: "", eaScale: "", eaTags: widgetTagsWhole, eaTopic:widgetName, sourceType:"", categoryTab:"", areaGeog:""}; 
                 layerDataStore.newItem(widgetItem);             
                                                             
                 //add to the table for use of search text       
@@ -2705,7 +2724,12 @@ define([
 					    		eaTagsWhole = eaTagsWhole + layer.eaTags[tagsIndex] + ";";
 					    	}
 					    }
-
+                        var areaGeogWhole =  "";
+                        if(layer.hasOwnProperty('areaGeog')){
+                            for (tagsIndex = 0, lenTags = layer.areaGeog.length; tagsIndex < lenTags; ++tagsIndex) {
+                                areaGeogWhole = areaGeogWhole + layer.areaGeog[tagsIndex] + ";";
+                            }
+                        }
 					    var SubLayerNames =  "";
 					    if(layer.hasOwnProperty('SubLayerNames')){
 					    	for (categoryIndex = 0, lenCategory = layer.SubLayerNames.length; categoryIndex < lenCategory; ++categoryIndex) {
@@ -2724,8 +2748,10 @@ define([
 
 
 					    eaTagsWhole = eaTagsWhole.substring(0, eaTagsWhole.length - 1);			
+					    areaGeogWhole = areaGeogWhole.substring(0, areaGeogWhole.length - 1);    
+					    console.log("areaGeogWhole:"+areaGeogWhole);
 					    if (eaScale	!= "") {//selectable layers should be either National or Community 
-					    	var layerItem = {eaLyrNum: eaLyrNum, name: layerName, IsSubLayer:IsSubLayer, SubLayerNames: SubLayerNames, SubLayerIds: SubLayerIds, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole, eaTopic:eaTopic, sourceType:sourceType, categoryTab:categoryTab};
+					    	var layerItem = {eaLyrNum: eaLyrNum, name: layerName, IsSubLayer:IsSubLayer, SubLayerNames: SubLayerNames, SubLayerIds: SubLayerIds, eaDescription: eaDescription, eaDfsLink: eaDfsLink, eaCategory: eaCategoryWhole, eaID: layer.eaID.toString(), eaMetadata: eaMetadata, eaScale: eaScale, eaTags:eaTagsWhole, eaTopic:eaTopic, sourceType:sourceType, categoryTab:categoryTab, areaGeog:areaGeogWhole};
 							
 							layerDataStore.newItem(layerItem);
 											
@@ -2822,6 +2848,15 @@ define([
         };
     	setTimeout(lang.hitch(this, function() {
 			_updateSelectableLayer();
+	        var selectedAreaGeog = document.getElementsByName('areaGeographySelection');
+
+            for(var i = 0; i < selectedAreaGeog.length; i++){                        
+                    selectedAreaGeog[i].onclick = function() {
+                        _updateSelectableLayer(); 
+                    };
+                                             
+            }
+
 	
         }), 2000);
         
