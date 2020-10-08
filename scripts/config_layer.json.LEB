@@ -14676,7 +14676,7 @@
                 "eaScale": "NATIONAL",
                 "mode": "ondemand",
                 "cacheLevelNat": 8,
-                "eaDescription": "This map depicts the percent of land managed as cropland in each subwatershed (12-digit HUC) for 2011. For this map, EnviroAtlas uses all crop types in the Cropland Data Layer created by the United States Department of Agriculture.",
+                "eaDescription": "This map depicts the percent of land managed as cropland in each subwatershed (12-digit HUC). For cropland classifications, the conterminous US is based on the EnviroAtlas 2016 Cropland Data Layer-National Land Cover Database hybrid; Alaska is based on the 2016 National Land Cover Database; Hawaii is based on 2005-2011 NOAA Coastal Change Analysis Program (C-CAP) data; Puerto Rico is based on 2010 NOAA C-CAP data; and the US Virgin Islands is based on 2012 NOAA C-CAP data.",
                 "DownloadSource": "EARest",
                 "eaCA": true,
                 "tileLink": "yes",
@@ -14766,7 +14766,7 @@
                 "eaScale": "NATIONAL",
                 "mode": "ondemand",
                 "cacheLevelNat": 8,
-                "eaDescription": "This map estimates the amount of developed land within each subwatershed (12-digit HUC) for 2011. For the purposes of this map, developed land cover includes a variety of development, such as single family homes, multifamily housing units, retail, commercial, industrial sites, and associated infrastructure. Developed land cover is not confined to city limits.",
+                "eaDescription": "This map estimates the amount of developed land within each subwatershed (12-digit HUC). For the purposes of this map, developed land cover includes a variety of development, such as single family homes, multifamily housing units, retail, commercial, industrial sites, and associated infrastructure. Developed land cover is not confined to city limits. For land use/land cover classifications, the conterminous US is based on the EnviroAtlas 2016 Cropland Data Layer-National Land Cover Database hybrid; Alaska is based on the 2016 National Land Cover Database; Hawaii is based on 2005-2011 NOAA Coastal Change Analysis Program (C-CAP) data; Puerto Rico is based on 2010 NOAA C-CAP data; and the US Virgin Islands is based on 2012 NOAA C-CAP data.",
                 "DownloadSource": "EARest",
                 "eaNHM": true,
                 "tileLink": "yes",
@@ -14857,7 +14857,7 @@
                 "eaScale": "NATIONAL",
                 "mode": "ondemand",
                 "cacheLevelNat": 8,
-                "eaDescription": "This map depicts the percent of land comprised of emergent herbaceous wetlands in each subwatershed (12-digit HUC) for 2011. For this map, EnviroAtlas uses the National Land Cover Database and its definition of  emergent herbaceous wetlands.",
+                "eaDescription": "This map depicts the percentage of land comprised of emergent herbaceous wetlands in each subwatershed (12-digit HUC). For land use/land cover classifications, the conterminous US is based on the EnviroAtlas 2016 Cropland Data Layer-National Land Cover Database hybrid; Alaska is based on the 2016 National Land Cover Database; Hawaii is based on 2005-2011 NOAA Coastal Change Analysis Program (C-CAP) data; Puerto Rico is based on 2010 NOAA C-CAP data; and the US Virgin Islands is based on 2012 NOAA C-CAP data.",
                 "DownloadSource": "EARest",
                 "eaNHM": true,
                 "tileLink": "yes",
@@ -14945,7 +14945,7 @@
                 "eaScale": "NATIONAL",
                 "mode": "ondemand",
                 "cacheLevelNat": 8,
-                "eaDescription": "This map illustrates the percentage of total land within each subwatershed (12-digit HUC) that is covered by trees and forest for 2011.",
+                "eaDescription": "This map illustrates the percentage of total land within each subwatershed (12-digit HUC) that is covered by trees and forest. For land use/land cover classifications, the conterminous US is based on the EnviroAtlas 2016 Cropland Data Layer-National Land Cover Database hybrid; Alaska is based on the 2016 National Land Cover Database; Hawaii is based on 2005-2011 NOAA Coastal Change Analysis Program (C-CAP) data; Puerto Rico is based on 2010 NOAA C-CAP data; and the US Virgin Islands is based on 2012 NOAA C-CAP data.",
                 "DownloadSource": "EARest",
                 "eaNHM": true,
                 "tileLink": "yes",
@@ -15040,7 +15040,7 @@
                 "eaScale": "NATIONAL",
                 "mode": "ondemand",
                 "cacheLevelNat": 8,
-                "eaDescription": "This map illustrates the percentage of total land within each subwatershed (12-digit HUC) that is covered by trees and forest or woody wetlands for 2011. EnviroAtlas uses the National Land Cover Database definition of woody wetlands.",
+                "eaDescription": "This map illustrates the percentage of total land within each subwatershed (12-digit HUC) that is covered by trees and forest or woody wetlands. For land use/land cover classifications, the conterminous US is based on the EnviroAtlas 2016 Cropland Data Layer-National Land Cover Database hybrid; Alaska is based on the 2016 National Land Cover Database; Hawaii is based on 2005-2011 NOAA Coastal Change Analysis Program (C-CAP) data; Puerto Rico is based on 2010 NOAA C-CAP data; and the US Virgin Islands is based on 2012 NOAA C-CAP data.",
                 "DownloadSource": "EARest",
                 "eaNHM": true,
                 "tileLink": "yes",
@@ -15547,7 +15547,7 @@
                 "eaScale": "NATIONAL",
                 "mode": "ondemand",
                 "cacheLevelNat": 8,
-                "eaDescription": "This map illustrates the percent of total land within each subwatershed (12-digit HUC) that is impervious for 2011. Impervious surfaces do not allow the penetration of water and include buildings, roads, and sidewalks.",
+                "eaDescription": "This map illustrates the percent of total land within each subwatershed (12-digit HUC) that is impervious for 2016 for the conterminous United States. This is based on the NLCD Imperviousness layer. Impervious surfaces do not allow the penetration of water and include buildings, roads, and sidewalks.",
                 "DownloadSource": "EARest",
                 "eaNHM": true,
                 "tileLink": "yes",
@@ -16489,7 +16489,7 @@
                 "eaScale": "NATIONAL",
                 "mode": "ondemand",
                 "cacheLevelNat": 8,
-                "eaDescription": "This map illustrates the percent of total land within each subwatershed (12-digit HUC) that has natural land cover for 2011. Natural land cover includes forests, shrubs, grasslands, barren land, and wetlands; it excludes agriculture and impervious surfaces.",
+                "eaDescription": "This map illustrates the percent of total land within each subwatershed (12-digit HUC) that has natural land cover. Natural land cover includes forests, shrubs, grasslands, barren land, and wetlands; it excludes agriculture and impervious surfaces. For land use/land cover classifications, the conterminous US is based on the EnviroAtlas 2016 Cropland Data Layer-National Land Cover Database hybrid; Alaska is based on the 2016 National Land Cover Database; Hawaii is based on 2005-2011 NOAA Coastal Change Analysis Program (C-CAP) data; Puerto Rico is based on 2010 NOAA C-CAP data; and the US Virgin Islands is based on 2012 NOAA C-CAP data.",
                 "DownloadSource": "EARest",
                 "eaNHM": true,
                 "tileLink": "yes",
@@ -16937,7 +16937,7 @@
                 "eaScale": "NATIONAL",
                 "mode": "ondemand",
                 "cacheLevelNat": 8,
-                "eaDescription": "This map depicts the percent of land managed as pasture in each subwatershed (12-digit HUC) for 2011. Pasture areas are planted for livestock grazing or the production of seed or hay crops.",
+                "eaDescription": "This map depicts the percent of land managed as pasture in each subwatershed (12-digit HUC). Pasture areas are planted for livestock grazing or the production of seed or hay crops. For land use/land cover classifications, the conterminous US is based on the EnviroAtlas 2016 Cropland Data Layer-National Land Cover Database hybrid; Alaska is based on the 2016 National Land Cover Database; Hawaii is based on 2005-2011 NOAA Coastal Change Analysis Program (C-CAP) data; Puerto Rico is based on 2010 NOAA C-CAP data; and the US Virgin Islands is based on 2012 NOAA C-CAP data.",
                 "DownloadSource": "EARest",
                 "eaCA": true,
                 "tileLink": "yes",
@@ -17329,7 +17329,7 @@
                 "eaScale": "NATIONAL",
                 "mode": "ondemand",
                 "cacheLevelNat": 8,
-                "eaDescription": "This map depicts the percent of land comprised of woody and emergent herbaceous wetlands in each subwatershed (12-digit HUC) for 2011. For this map, EnviroAtlas uses the National Land Cover Database and its definitions of woody and emergent herbaceous wetlands.",
+                "eaDescription": "This map depicts the percent of land comprised of woody and emergent herbaceous wetlands in each subwatershed (12-digit HUC) for 2011. For this map, EnviroAtlas uses the National Land Cover Database and its definitions of woody and emergent herbaceous wetlands.This map estimates the percent of land area that is covered by tree canopy within each subwatershed (12-digit HUC). For tree canopy classification, the conterminous US, Hawaii, Puerto Rico, and the U.S. Virgin Islands are based on the 2016 NLCD USFS Tree Canopy Cover.",
                 "DownloadSource": "EARest",
                 "eaNHM": true,
                 "tileLink": "yes",
@@ -32363,7 +32363,7 @@
                 "eaScale": "NATIONAL",
                 "mode": "ondemand",
                 "cacheLevelNat": 8,
-                "eaDescription": "This map estimates the percent of land area that is covered by tree canopy within each subwatershed (12-digit HUC) for 2011.",
+                "eaDescription": "This map estimates the percent of land area that is covered by tree canopy within each subwatershed (12-digit HUC). For tree canopy classification, the conterminous US, Hawaii, Puerto Rico, and the U.S. Virgin Islands are based on the 2016 NLCD USFS Tree Canopy Cover.",
                 "DownloadSource": "EARest",
                 "eaNHM": true,
                 "tileLink": "yes",
@@ -36868,7 +36868,7 @@
                 "eaCPW": true,
                 "sourceType": "huc12",
                 "mode": "ondemand",
-                "eaDescription": "This map shows the percentage of land area in estimated floodplains in the subwatershed (12-digit HUC) classified as natural. NULL values indicate that no floodplain area was found within the hydrologic unit.",
+                "eaDescription": "This map shows the percentage of land area in estimated floodplains in the subwatershed (12-digit HUC) classified as natural for 2016. NULL values indicate that no floodplain area was found within the hydrologic unit.",
                 "DownloadSource": "EARest",
                 "eaNHM": true,
                 "eaTags": [
@@ -36924,7 +36924,7 @@
                 "eaCPW": true,
                 "sourceType": "huc12",
                 "mode": "ondemand",
-                "eaDescription": "This map shows the percentage of land area in estimated floodplains in the subwatershed (12-digit HUC) classified as forest.  NULL values indicate that no floodplain area was found within the hydrologic unit.",
+                "eaDescription": "This map shows the percentage of land area in estimated floodplains in the subwatershed (12-digit HUC) classified as forest for 2016.  NULL values indicate that no floodplain area was found within the hydrologic unit.",
                 "DownloadSource": "EARest",
                 "eaNHM": true,
                 "eaTags": [
@@ -36981,7 +36981,7 @@
                 "eaCPW": true,
                 "sourceType": "huc12",
                 "mode": "ondemand",
-                "eaDescription": "This map shows the percentage of land area in estimated floodplains in the subwatershed (12-digit HUC) classified as shrubland.  NULL values indicate that no floodplain area was found within the hydrologic unit.",
+                "eaDescription": "This map shows the percentage of land area in estimated floodplains in the subwatershed (12-digit HUC) classified as shrubland for 2016.  NULL values indicate that no floodplain area was found within the hydrologic unit.",
                 "DownloadSource": "EARest",
                 "eaNHM": true,
                 "eaTags": [
@@ -37039,7 +37039,7 @@
                 "eaCPW": true,
                 "sourceType": "huc12",
                 "mode": "ondemand",
-                "eaDescription": "This map shows the percentage of land area in estimated floodplains in the subwatershed (12-digit HUC) classified as wetland.  NULL values indicate that no floodplain area was found within the hydrologic unit.",
+                "eaDescription": "This map shows the percentage of land area in estimated floodplains in the subwatershed (12-digit HUC) classified as wetland for 2016.  NULL values indicate that no floodplain area was found within the hydrologic unit.",
                 "DownloadSource": "EARest",
                 "eaNHM": true,
                 "eaTags": [
@@ -37096,7 +37096,7 @@
                 "eaCPW": true,
                 "sourceType": "huc12",
                 "mode": "ondemand",
-                "eaDescription": "This map shows the percentage of land area in estimated floodplains in the subwatershed (12-digit HUC) classified as developed.  NULL values indicate that no floodplain area was found within the hydrologic unit.",
+                "eaDescription": "This map shows the percentage of land area in estimated floodplains in the subwatershed (12-digit HUC) classified as developed for 2016.  NULL values indicate that no floodplain area was found within the hydrologic unit.",
                 "DownloadSource": "EARest",
                 "eaNHM": true,
                 "eaTags": [
@@ -37151,7 +37151,7 @@
                 "eaCPW": true,
                 "sourceType": "huc12",
                 "mode": "ondemand",
-                "eaDescription": "This map shows the percentage of land area in estimated floodplains in the subwatershed (12-digit HUC) classified as agriculture.  NULL values indicate that no floodplain area was found within the hydrologic unit.",
+                "eaDescription": "This map shows the percentage of land area in estimated floodplains in the subwatershed (12-digit HUC) classified as agriculture for 2016. NULL values indicate that no floodplain area was found within the hydrologic unit.",
                 "DownloadSource": "EARest",
                 "eaNHM": true,
                 "eaTags": [
@@ -37210,7 +37210,7 @@
                 "eaCPW": true,
                 "sourceType": "huc12",
                 "mode": "ondemand",
-                "eaDescription": "This map shows the percentage of land area in estimated floodplains in the subwatershed (12-digit HUC) classified as agriculture - cropland.  NULL values indicate that no floodplain area was found within the hydrologic unit.",
+                "eaDescription": "This map shows the percentage of land area in estimated floodplains in the subwatershed (12-digit HUC) classified as agriculture - cropland for 2016. NULL values indicate that no floodplain area was found within the hydrologic unit.",
                 "DownloadSource": "EARest",
                 "eaNHM": true,
                 "eaTags": [
@@ -37373,7 +37373,7 @@
                 "eaCPW": true,
                 "sourceType": "huc12",
                 "mode": "ondemand",
-                "eaDescription": "This map shows the percentage of the subwatershed (12-digit HUC) that is both classified as land and within the estimated floodplain. This layer can be compared to layers showing percentages of land cover classes in floodplains. ",
+                "eaDescription": "This map shows the percentage of the subwatershed (12-digit HUC) that is both classified as land and within the estimated floodplain. This layer can be compared to layers showing percentages of land cover classes in floodplains.",
                 "DownloadSource": "EARest",
                 "eaNHM": true,
                 "eaTags": [
@@ -37857,7 +37857,7 @@
                 "eaCPW": true,
                 "eaScale": "NATIONAL",
                 "mode": "ondemand",
-                "eaDescription": "This map depicts the percentage of land comprised of tundra in each subwatershed (12-digit HUC) for 2011. For this map, EnviroAtlas includes the dwarf shrub, sedge/herbaceous, lichen, and moss classes from the National Land Cover Database.",
+                "eaDescription": "This map depicts the percentage of land comprised of tundra in each subwatershed (12-digit HUC) for Alaska. For this map, EnviroAtlas includes the dwarf shrub, sedge/herbaceous, lichen, and moss classes from the 2016 National Land Cover Database.",
                 "DownloadSource": "EARest",
                 "eaCA": true,
                 "tileLink": "yes",
@@ -37929,7 +37929,7 @@
                 "eaCPW": true,
                 "eaScale": "NATIONAL",
                 "mode": "ondemand",
-                "eaDescription": "This map depicts the percentage of land comprised of shrubland in each subwatershed (12-digit HUC) for 2011.",
+                "eaDescription": "This map depicts the percentage of land comprised of shrubland in each subwatershed (12-digit HUC) for Alaska. It is based on the 2016 National Land Cover Database.",
                 "DownloadSource": "EARest",
                 "eaCA": true,
                 "tileLink": "yes",
@@ -38001,7 +38001,7 @@
                 "eaCPW": true,
                 "eaScale": "NATIONAL",
                 "mode": "ondemand",
-                "eaDescription": "This map depicts the percentage of land comprised of grassland or herbaceous land cover in each subwatershed (12-digit HUC) for 2011.",
+                "eaDescription": "This map depicts the percentage of land comprised of grassland/herbaceous land cover in each subwatershed (12-digit HUC) for Alaska. It is based on the 2016 National Land Cover Database.",
                 "DownloadSource": "EARest",
                 "eaCA": true,
                 "tileLink": "yes",
@@ -38073,7 +38073,7 @@
                 "eaCPW": true,
                 "eaScale": "NATIONAL",
                 "mode": "ondemand",
-                "eaDescription": "This map depicts the percentage of land comprised of perennial ice or snow in each subwatershed (12-digit HUC) for 2011. ",
+                "eaDescription": "This map depicts the percentage of land comprised of perennial ice or snow in each subwatershed (12-digit HUC)  for Alaska. It is based on the 2016 National Land Cover Database.",
                 "DownloadSource": "EARest",
                 "categoryTab": "ESB",
                 "eaTags": [
@@ -38107,7 +38107,7 @@
                 "sourceType": "huc12",
                 "eaCS": true,
                 "eaID": 401,
-                "tileLink": "no",
+                "tileLink": "yes",
                 "eaLyrNum": 33,
                 "eaDfsLink": "ESN/PercentPerennialIceSnow.pdf",
                 "type": "FEATURE",
@@ -38127,10 +38127,63 @@
                         }
                     ]
                 },
+                "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/GIC7_Percent_perennial_ice_or_snow_202006/MapServer",
                 "areaGeog": [
                     "CONUS",
                     "Alaska"
                 ],
+                "eaMetric": "Metric"
+            },
+            {
+                "eaCPW": true,
+                "sourceType": "huc12",
+                "mode": "ondemand",
+                "eaDescription": "This map shows the percentage of land area in estimated floodplains in the subwatershed (12-digit HUC) classified as rangeland for 2016. NULL values indicate that no floodplain area was found within the hydrologic unit.",
+                "DownloadSource": "EARest",
+                "eaNHM": true,
+                "eaTags": [
+                    "flooding",
+					"land use",
+					"grazing",
+                    "Clean and Plentiful Water",
+                    "Natural Hazard Mitigation"
+                ],
+                "numDecimal": 0,
+                "url": "https://leb.epa.gov/arcgis/rest/services/National/National2017_metrics/MapServer",
+                "eaMetadata": "N104",
+                "eaDfsLink": "ESN/Percentageoflandareainestimatedfloodplainsrangeland.pdf",
+                "visible": false,
+                "autorefresh": 0,
+                "opacity": 0.6,
+                "eaTopic": "Land Cover: Near-Water",
+                "eaBCSDD": [
+                    "Clean and Plentiful Water - x",
+                    "Natural Hazard Mitigation - x"
+                ],
+                "eaScale": "NATIONAL",
+                "categoryTab": "ESB",
+                "eaID": 402,
+                "tileLink": "yes",
+                "eaLyrNum": 77,
+                "type": "FEATURE",
+                "name": "Percentage of land area in estimated floodplains classified as rangeland",
+                "popup": {
+                    "showAttachments": "false",
+                    "title": "HUC 12 ID: {HUC_12}",
+                    "fieldInfos": [
+                        {
+                            "visible": "true",
+                            "format": {
+                                "places": 3,
+                                "digitSeparator": true
+                            },
+                            "label": "Percentage of land area in estimated floodplains classified as rangeland\u00a0",
+                            "fieldName": "FP_PRNGL"
+                        }
+                    ]
+                },
+                ],
+                "tileURL": "https://tiles.arcgis.com/tiles/cJ9YHowT8TU7DUyn/arcgis/rest/services/GIC7_Percentage_of_land_area_in_estimated_floodplains_classified_as_rangeland_202006/MapServer",
                 "eaMetric": "Metric"
             },
             {
@@ -48486,6 +48539,76 @@
                     "CONUS"
                 ],
                 "numDecimal": 0
+            },
+            {
+                "visible": false,
+                "sourceType": "plp",
+                "eaTags": [
+                    "people",
+                    "human",
+                    "government",
+                    "boundary",
+                    "boundaries",
+                    "political",
+                    "Tribal Boundaries",
+                    "Alaska Native Villages",
+                    "Alaska Reservations",
+                    "Alaska native Allotments",
+                    "Tribal Areas"
+                ],
+                "opacity": 0.6,
+                "eaTopic": "Political Boundaries",
+                "url": "https://geopub.epa.gov/arcgis/rest/services/EMEF/tribal/MapServer",
+                "eaScale": "NATIONAL",
+                "eaDescription": "Map of the tribal areas for lower 48 states and Alaska Native Villages, Alaska Native Allotments and Alaska Reservations in Alaska.",
+                "tileLink": "no",
+                "DownloadSource": 0,
+                "eaID": 913,
+                "categoryTab": "BNF",
+                "eaMetadata": "",
+                "eaLyrNum": " ",
+                "eaPBS": "Boundaries",
+                "areaGeog": [
+                    "CONUS"
+                ],
+                "type": "DYNAMIC",
+                "name": "Tribal Boundaries",
+                "eaDfsLink": "Supplemental/MissingFactSheet.pdf",
+                "eaMetric": "boundary"
+            },
+            {
+                "visible": false,
+                "sourceType": "ctr",
+                "eaTags": [
+                    "people",
+                    "human",
+                    "government",
+                    "boundary",
+                    "boundaries",
+                    "political",
+                    "Opportunity Zones",
+                    "OCR",
+                    "CFDI"
+                ],
+                "opacity": 0.6,
+                "eaTopic": "Political Boundaries",
+                "url": "https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/Qualified_Opportunity_Zones_WFL1/FeatureServer",
+                "eaScale": "NATIONAL",
+                "eaDescription": "This layer contains Census Tracts that have been designated as Qualified Opportunity Zones.  Based on nominations of eligible census tracts by the Chief Executive Officers of each State, Treasury has completed its designation of Qualified Opportunity Zones. Each State nominated the maximum number of eligible tracts, per statute, and these designations are final. ",
+                "tileLink": "no",
+                "DownloadSource": 0,
+                "eaID": 914,
+                "categoryTab": "BNF",
+                "eaMetadata": "",
+                "eaLyrNum": " ",
+                "eaPBS": "Boundaries",
+                "areaGeog": [
+                    "CONUS"
+                ],
+                "type": "DYNAMIC",
+                "name": "Qualified Opportuninty Zones",
+                "eaDfsLink": "Supplemental/MissingFactSheet.pdf",
+                "eaMetric": "boundary"
             },
             {
                 "visible": false,
