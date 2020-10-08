@@ -31,7 +31,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
     'widgets/Demo/help/help_EnhancedBookmarks1',
     'widgets/Demo/help/help_EnhancedBookmarks2',
     'widgets/Demo/help/help_DynamicSymbology1',
-    'widgets/Demo/help/help_DynamicSymbology',
+    'widgets/Demo/help/help_DynamicSymbology2',
     'widgets/Demo/help/help_Print1',
     'widgets/Demo/help/help_Print2',
     'widgets/Demo/help/help_LayerList1',
