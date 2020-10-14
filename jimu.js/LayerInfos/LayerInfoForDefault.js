@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -86,6 +86,9 @@ LabelClass, PopupTemplate, Legend, Graphic, Point, Query, RelationshipQuery, Que
         this.layerObject.name = this.title;
         // "arcgisProps.title" will be clear out if overwrites the "name".
         // reset the "arcgisProps.title" for print task to display the legend title.
+        if(this.layerObject.arcgisProps === undefined || this.layerObject.arcgisProps === null) {
+          this.layerObject.arcgisProps = {};
+        }
         lang.setObject('arcgisProps.title',
                        this.title,
                        this.layerObject);
@@ -206,20 +209,7 @@ LabelClass, PopupTemplate, Legend, Graphic, Point, Query, RelationshipQuery, Que
       if(!this.layerObject.url) {
         // feature collection
         def.resolve(defaultExtent);
-      } else if(this.layerObject.declaredClass === "esri.layers.FeatureLayer") {
-        // feature layer
-        /*
-        var query = new esri.tasks.Query();
-        var filter = this.getFilter();
-        query.where = filter ? filter : "1=1";
-        if(layer.fullExtent && layer.fullExtent.spatialReference) {
-          // the outSpatialReference set by the query object is ignored and the map's spatial reference is used.
-          query.outSpatialReference = layer.fullExtent.spatialReference;
-        }
-        // queryExtent is valid only for hosted feature services and ArcGIS Server 10.3.1 and later.
-        this.layerObject.queryExtent();
-        */
-
+      } else {
         this.getServiceDefinition().then(lang.hitch(this, function(sd) {
           var queryTask = new QueryTask(this.layerObject.url);
           var query = new Query();
@@ -249,19 +239,22 @@ LabelClass, PopupTemplate, Legend, Graphic, Point, Query, RelationshipQuery, Que
               console.log("executeForExtent failed.");
             }));
           } else {
-            queryTask.execute(query).then(lang.hitch(this, function(featureSet) {
-              var extent = jimuUtils.graphicsExtent(featureSet.features);
-              def.resolve(extent);
-            }), lang.hitch(this, function() {
-              // using the default extent
-              def.resolve(defaultExtent);
-              console.log("query execute failed.");
+            this.getSupportTableInfo().then(lang.hitch(this, function(result) {
+              if(result.isSupportQuery) {
+                queryTask.execute(query).then(lang.hitch(this, function(featureSet) {
+                  var extent = jimuUtils.graphicsExtent(featureSet.features);
+                  def.resolve(extent);
+                }), lang.hitch(this, function() {
+                  // using the default extent
+                  def.resolve(defaultExtent);
+                  console.log("query execute failed.");
+                }));
+              } else {
+                def.resolve(defaultExtent);
+              }
             }));
           }
         }));
-      } else {
-        // using the default extent
-        def.resolve(defaultExtent);
       }
       return def;
     },
@@ -523,11 +516,11 @@ LabelClass, PopupTemplate, Legend, Graphic, Point, Query, RelationshipQuery, Que
             }, legendInfo.legendDiv);
             legendInfo.labelDiv = domConstruct.create("div", {
               "class": "legend-label jimu-float-leading",
-              "innerHTML": legendInfo.label || " "
+              "innerHTML": jimuUtils.sanitizeHTML(legendInfo.label) || " "
             }, legendInfo.legendDiv);
 
             if(legendInfo.symbol.type === "textsymbol") {
-              domAttr.set(legendInfo.symbolDiv, "innerHTML", legendInfo.symbol.text);
+              domAttr.set(legendInfo.symbolDiv, "innerHTML", jimuUtils.sanitizeHTML(legendInfo.symbol.text));
             } else {
               var mySurface = gfx.createSurface(legendInfo.symbolDiv, 50, 50);
               var descriptors = jsonUtils.getShapeDescriptors(legendInfo.symbol);
@@ -587,7 +580,6 @@ LabelClass, PopupTemplate, Legend, Graphic, Point, Query, RelationshipQuery, Que
         this.layerObject.setOpacity(opacity);
       }
     },
-
     _getCustomPopupInfo: function(object, fieldNames) {
       // return popupInfo with all fieldInfos if the fieldName is null;
       var popupInfo = null;
@@ -630,8 +622,9 @@ LabelClass, PopupTemplate, Legend, Graphic, Point, Query, RelationshipQuery, Que
         defaultPopupInfo.fieldInfos = array.filter(defaultPopupInfo.fieldInfos, lang.hitch(this, function(fieldInfo) {
           var result;
 
-          var fieldName = fieldInfo.fieldName.toLowerCase();
-          if(fieldName.indexOf("object") < 0 &&
+          var fieldName = fieldInfo.fieldName && fieldInfo.fieldName.toLowerCase();
+          if(fieldName &&
+             fieldName.indexOf("object") < 0 &&
              fieldName.indexOf("globalid") < 0 &&
              fieldName.indexOf("shape") < 0 &&
              fieldName.indexOf("perimeter") < 0) {
@@ -683,6 +676,18 @@ LabelClass, PopupTemplate, Legend, Graphic, Point, Query, RelationshipQuery, Que
         isPopupEnabled = false;
       }
       return isPopupEnabled;
+    },
+
+    isSupportPopup: function() {
+      var def = new Deferred();
+      this.loadInfoTemplate().then(lang.hitch(this, function(infoTemplate) {
+        if(infoTemplate) {
+          def.resolve(true);
+        } else {
+          def.resolve(false);
+        }
+      }));
+      return def;
     },
 
     /*
@@ -752,24 +757,21 @@ LabelClass, PopupTemplate, Legend, Graphic, Point, Query, RelationshipQuery, Que
           def.resolve(relatedTableInfoArray);
         } else {
           this._getLayerInfosObj().traversalAll(lang.hitch(this, function(layerInfo) {
-            var relatedUrlIndex = -1;
             if(relatedUrls.length === 0) {
               // all were found
               return true;
             } else {
               array.forEach(relatedUrls, function(relatedUrl, index) {
                 if(lang.getObject("layerObject.url", false, layerInfo) &&
+                   relatedUrl &&
                    (portalUrlUtils.removeProtocol(relatedUrl.toString().toLowerCase()).replace(/\/+/g, '/') ===
                    portalUrlUtils.removeProtocol(
                                  layerInfo.layerObject.url.toString().toLowerCase()).replace(/\/+/g, '/'))
                 ) {
                   relatedTableInfoArray.push(layerInfo);
-                  relatedUrlIndex = index;
+                  relatedUrls[index] = '';
                 }
               }, this);
-              if(relatedUrlIndex >= 0) {
-                relatedUrls.splice(relatedUrlIndex, 1);
-              }
               return false;
             }
           }));
@@ -800,19 +802,21 @@ LabelClass, PopupTemplate, Legend, Graphic, Point, Query, RelationshipQuery, Que
       return orderByFields;
     },
 
-    _getOriRelationshipByDestLayer: function(originalLayerObject, relatedLayerObject) {
+    getOriRelationshipByDestLayer: function(originalLayerObject, relatedLayerObject, relationshipIndex) {
       var queryRelationship = null;
       // compatible with arcgis service 10.0.
-      array.some(originalLayerObject.relationships, function(relationship) {
+      var queryRelationships = array.filter(originalLayerObject.relationships, function(relationship) {
         if (relationship.relatedTableId === relatedLayerObject.layerId) {//************
-          queryRelationship = relationship;
           return true;
         }
       }, this);
+      queryRelationship = queryRelationships[relationshipIndex] ?
+                          queryRelationships[relationshipIndex] :
+                          queryRelationships[0];
       return queryRelationship;
     },
 
-    getRelatedRecords: function(feature, relatedLayerInfo) {
+    getRelatedRecords: function(feature, relatedLayerInfo, relationshipIndex) {
       var def = new Deferred();
       var relatedQuery = new RelationshipQuery();
       // todo...
@@ -825,7 +829,9 @@ LabelClass, PopupTemplate, Legend, Graphic, Point, Query, RelationshipQuery, Que
         if(!result.originalLayerObject || !result.relatedLayerObject) {
           def.resolve([]);
         }
-        var queryRelationship = this._getOriRelationshipByDestLayer(this.layerObject, result.relatedLayerObject);
+        var queryRelationship = this.getOriRelationshipByDestLayer(this.layerObject,
+                                                                    result.relatedLayerObject,
+                                                                    relationshipIndex);
         relatedQuery.outFields = ["*"];
         relatedQuery.relationshipId = queryRelationship && queryRelationship.id;
         var objectId =

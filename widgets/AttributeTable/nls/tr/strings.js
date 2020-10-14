@@ -15,6 +15,8 @@ define({
   "selectAll": "Tüm sayfalardaki kayıtları seç",
   "selectPage": "Geçerli sayfadaki kayıtları seç",
   "clearSelection": "Seçimi temizle",
+  "selectionHandleLabel": "Seçim kolu",
+  "selectionHandleDescription": "Harita üzerinde detayları vurgulamak için ENTER veya SPACE tuşuna basın",
   "filter": "Filtrele",
   "setFilterTip": "Filtreleri düzgün şekilde ayarlayın.",
   "noFilterTip": "Tanımlı filtre ifadesi olmadan, bu sorgu görevi belirtilen veri kaynağındaki tüm detayları listeler.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Görüntülenecek tablo yok.",
   "checkConfigutationToSelectLayers": "Katmanları seçmek için lütfen araç ayarları sayfasına gidin.",
-  "checkLayerListToSelectLayers": "Öznitelik Tablosu, haritadaki görünür katmanlar ile senkronize edilir, katmanları açma/kapama arasında geçiş yapmak için Katman Listesi gibi araçları kullanabilirsiniz."
+  "checkLayerListToSelectLayers": "Öznitelik Tablosu, haritadaki görünür katmanlar ile senkronize edilir, katmanları açma/kapama arasında geçiş yapmak için Katman Listesi gibi araçları kullanabilirsiniz.",
+  "rowHeaderColumnTitle": "Satır ${layerName}, üzerinde dolaştırılmış, üzerinde dolaştırılan satırları seçmek için Enter tuşuna basın"
 });

@@ -27,6 +27,7 @@ define({
   "timeSpan": "Ajaline ulatus",
   "startTime": "Algusaeg",
   "endTime": "Lõppaeg",
+  "unit": "Ühik",
   "timeDisplay": "Aja kuvamine",
   "displayDataIn": "Kuva andmed",
   "interval": "Intervall",

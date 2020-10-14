@@ -22,7 +22,6 @@ define({
   "imageFill": "Đổ hình ảnh",
   "chooseFile": "Chọn tệp",
   "noFileChosen": "Không có tệp được chọn",
-  "transparency": "Độ trong suốt",
   "sizeFill": "Tô",
   "sizeFit": "Đặt vừa",
   "sizeStretch": "Kéo để đổ",

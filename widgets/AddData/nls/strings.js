@@ -133,7 +133,8 @@ define({
       maxFeaturesAllowedPattern: "For best performance, limit the number of features to less than {count}.",
       layerNamePattern: "{filename} - {name}",
       generalIssue: "There was an issue.",
-      kmlProjectionMismatch: "The spatial reference of the map and KML layer do not match, and the conversion cannot be done on the client."
+      kmlProjectionMismatch: "The spatial reference of the map and KML layer do not match, and the conversion cannot be done on the client.",
+      featureLocationsCouldNotBeFound: "Features could not be located: unknown or invalid location fields. The file will be added as a table."
     },
 
     layerList: {
@@ -156,7 +157,6 @@ define({
   "fi": 1,
   "fr": 1,
   "he": 1,
-  "hi": 1,
   "hr": 1,
   "hu": 1,
   "it": 1,
@@ -177,6 +177,7 @@ define({
   "sv": 1,
   "th": 1,
   "tr": 1,
+  "uk": 1,
   "vi": 1,
   "zh-cn": 1,
   "zh-hk": 1,

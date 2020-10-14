@@ -53,6 +53,14 @@
           data-option-q='type:&quot;WMS&quot;'></div>
         ${i18n.search.typeOptions.wms}
       </label>
+      <label for="${id}_wfsId" class="search-type-option">
+        <div id="${id}_wfsId"
+          data-dojo-type="jimu/dijit/CheckBox"
+          data-dojo-attach-point="wfsToggle"
+          data-dojo-attach-event="onClick: optionClicked"
+          data-option-q='type:&quot;WFS&quot;'></div>
+        WFS
+      </label>
     </div>
   </div>
 </div>

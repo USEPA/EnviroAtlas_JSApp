@@ -9,8 +9,8 @@ define({
   "attributeTable": "Vis i attributtabell",
   "url": "Beskrivelse / Vis elementdetaljer / Last ned",
   "showHideLabels": "Vis/skjul etiketter",
-  "expandAllLayers": "Vis alle lag",
-  "expandAllLayersByDefault": "Vis alle lag som standard",
+  "expandAllLayers": "Utvid alle lag",
+  "expandAllLayersByDefault": "Utvid alle lag som standard",
   "layerSelectorTitle": "Velg hvilke lag som skal vises i listen",
   "showTitle": "Vis tittel",
   "showBasemap": "Vis bakgrunnskart"

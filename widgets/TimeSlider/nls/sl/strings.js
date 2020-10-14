@@ -5,5 +5,10 @@ define({
   "timeExtent": "${FROMTIME} do ${ENDTIME}",
   "layers": "Sloji: ",
   "speedLabel": "Hitrost predvajanja",
-  "liveData": "Živi podatki"
+  "liveData": "Živi podatki",
+  "previous": "prejšnji interval",
+  "next": "naslednji interval",
+  "play": "igra",
+  "pause": "premor",
+  "speed": "hitrost"
 });

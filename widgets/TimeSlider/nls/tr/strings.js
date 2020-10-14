@@ -5,5 +5,10 @@ define({
   "timeExtent": "${FROMTIME} - ${ENDTIME}",
   "layers": "Katmanlar: ",
   "speedLabel": "Oynatma hızı",
-  "liveData": "Canlı veri"
+  "liveData": "Canlı veri",
+  "previous": "önceki aralık",
+  "next": "sonraki aralık",
+  "play": "oyun",
+  "pause": "duraklamak",
+  "speed": "hız"
 });

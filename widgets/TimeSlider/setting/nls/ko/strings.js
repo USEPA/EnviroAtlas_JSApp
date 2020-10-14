@@ -27,6 +27,7 @@ define({
   "timeSpan": "시간 범위",
   "startTime": "시작 시간",
   "endTime": "종료 시간",
+  "unit": "단위",
   "timeDisplay": "시간 보기",
   "displayDataIn": "데이터 보기",
   "interval": "간격",

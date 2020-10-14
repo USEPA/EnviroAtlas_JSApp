@@ -27,6 +27,7 @@ define({
   "timeSpan": "Zaman aralığı",
   "startTime": "Başlama Zamanı",
   "endTime": "Bitiş Zamanı",
+  "unit": "Birim",
   "timeDisplay": "Zaman göstergesi",
   "displayDataIn": "Verileri",
   "interval": "Aralık",

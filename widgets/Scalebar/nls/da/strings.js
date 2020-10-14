@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "Målestok"
+  "_widgetLabel": "Målestok",
+  "scale": "Målestok"
 });

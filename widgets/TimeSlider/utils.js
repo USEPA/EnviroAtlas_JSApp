@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,28 +21,28 @@ define(['dojo/_base/html', 'dojo/dom-geometry', 'dojo/_base/array',
     var mo = {};
 
     mo.intervalUnitOptions = [{
-      "label": window.jimuNls.timeUnit.years,
+      "label": window.jimuNls.timeUnit.year,
       "value": esriTimeInfo.UNIT_YEARS
     }, {
-      "label": window.jimuNls.timeUnit.months,
+      "label": window.jimuNls.timeUnit.month,
       "value": esriTimeInfo.UNIT_MONTHS
     }, {
-      "label": window.jimuNls.timeUnit.weeks,
+      "label": window.jimuNls.timeUnit.week,
       "value": esriTimeInfo.UNIT_WEEKS
     }, {
-      "label": window.jimuNls.timeUnit.days,
+      "label": window.jimuNls.timeUnit.day,
       "value": esriTimeInfo.UNIT_DAYS
     }, {
-      "label": window.jimuNls.timeUnit.hours,
+      "label": window.jimuNls.timeUnit.hour,
       "value": esriTimeInfo.UNIT_HOURS
     }, {
-      "label": window.jimuNls.timeUnit.minutes,
+      "label": window.jimuNls.timeUnit.minute,
       "value": esriTimeInfo.UNIT_MINUTES
     }, {
-      "label": window.jimuNls.timeUnit.seconds,
+      "label": window.jimuNls.timeUnit.second,
       "value": esriTimeInfo.UNIT_SECONDS
     }, {
-      "label": window.jimuNls.timeUnit.milliSeconds,
+      "label": window.jimuNls.timeUnit.milliSecond,
       "value": esriTimeInfo.UNIT_MILLISECONDS
     }];
 

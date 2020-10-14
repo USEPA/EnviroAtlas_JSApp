@@ -14,13 +14,14 @@ define({
   "generalSetting": "Pengaturan umum",
   "allPlaceholder": "Teks placehoder untuk mencari semua: ",
   "showInfoWindowOnSelect": "Tampilkan pop-up untuk fitur atau lokasi yang ditemukan",
+  "showInfoWindowOnSelect2": "Perlihatkan pop-up jika fitur atau lokasi ditemukan.",
   "searchInCurrentMapExtent": "Cari hanya dalam jangkauan peta saat ini",
   "zoomScale": "Skala zoom",
   "locatorUrl": "URL Geocoder",
   "locatorName": "Nama geocoder",
   "locatorExample": "Contoh",
   "locatorWarning": "Versi service geocoding ini tidak didukung. Widget mendukung service geocoding 10.1 dan di atasnya.",
-  "locatorTips": "Saran tidak tersedia karena geocode service tidak mendukung kemampuan saran.",
+  "locatorTips": "Saran tidak tersedia karena layanan geocoding tidak mendukung kemampuan saran.",
   "layerSource": "Sumber layer",
   "searchLayerTips": "Saran tidak tersedia karena feature service tidak mendukung kemampuan penomoran halaman.",
   "placeholder": "Teks placeholder",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "Alias",
   "ok": "YA",
   "cancel": "Batal",
-  "invalidUrlTip": "URL ${URL} tidak valid atau tidak dapat diakses."
+  "invalidUrlTip": "URL ${URL} tidak valid atau tidak dapat diakses.",
+  "locateResults": "Tentukan hasil",
+  "panTo": "Geser hingga",
+  "zoomToScale": "Zoom ke skala"
 });

@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "Mõõtkava"
+  "_widgetLabel": "Mõõtkava",
+  "scale": "Mõõtkava"
 });

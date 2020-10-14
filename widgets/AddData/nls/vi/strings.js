@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Cho phép tối đa {count} đối tượng",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "Đã có lỗi xảy ra.",
-    "kmlProjectionMismatch": "Tham chiếu không gian của bản đồ và lớp KML không khớp nhau, và không thể thực hiện chuyển đổi trên máy khách."
+    "kmlProjectionMismatch": "Tham chiếu không gian của bản đồ và lớp KML không khớp nhau, và không thể thực hiện chuyển đổi trên máy khách.",
+    "featureLocationsCouldNotBeFound": "Không thể định vị đối tượng: trường vị trí không xác định hoặc không hợp lệ. Tệp sẽ được thêm dưới dạng bảng."
   },
   "layerList": {
     "caption": "Lớp",

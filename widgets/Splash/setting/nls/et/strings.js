@@ -22,7 +22,6 @@ define({
   "imageFill": "Pilditäide",
   "chooseFile": "Vali fail",
   "noFileChosen": "Faili pole valitud",
-  "transparency": "Läbipaistvus",
   "sizeFill": "Täitevärv",
   "sizeFit": "Sobita",
   "sizeStretch": "Venita täitmiseks",

@@ -7,7 +7,7 @@ define({
     "MyOrganization": "Povolit Moji organizaci",
     "ArcGISOnline": "Povolit ArcGIS Online",
     "Curated": "Povolit data sdílená ve skupině",
-    "CuratedFilter": "Filtr stanovených",
+    "CuratedFilter": "Filtr (ID skupiny)",
     "livingAtlasExample": "Příklad živého atlasu:"
   },
   "addFromUrl": {

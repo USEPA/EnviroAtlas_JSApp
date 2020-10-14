@@ -15,6 +15,8 @@ define({
   "selectAll": "Odaberite zapise na svim stranicama",
   "selectPage": "Odaberite zapise na trenutačnoj stranici",
   "clearSelection": "Očisti odabir",
+  "selectionHandleLabel": "Ručica za odabir",
+  "selectionHandleDescription": "Pritisnite tipku ENTER ili RAZMAKNICA kako biste na karti istaknuli geoobjekt(e)",
   "filter": "Filtar",
   "setFilterTip": "Ispravno postavite filtre.",
   "noFilterTip": "Ako izraz za filtre nije definiran, ovaj zadatak upita izlistat će sve geoobjekte u određenom izvoru podataka.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Nema tablica za prikaz.",
   "checkConfigutationToSelectLayers": "Idite na stranicu postavki widgeta kako biste odabrali slojeve.",
-  "checkLayerListToSelectLayers": "Atributna tablica sinkronizirana je s vidljivim slojevima na karti. Možete upotrijebiti widget kao što je Popis slojeva da uključite/isključite prikaz slojeva."
+  "checkLayerListToSelectLayers": "Atributna tablica sinkronizirana je s vidljivim slojevima na karti. Možete upotrijebiti widget kao što je Popis slojeva da uključite/isključite prikaz slojeva.",
+  "rowHeaderColumnTitle": "Redak ${layerName}, iznad kojeg je pokazivač, pritisnite Enter da biste odabrali retke iznad kojih je pokazivač"
 });

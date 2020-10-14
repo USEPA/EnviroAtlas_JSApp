@@ -5,5 +5,10 @@ define({
   "timeExtent": "${FROMTIME} iki ${ENDTIME}",
   "layers": "Sluoksniai: ",
   "speedLabel": "Peržiūros greitis",
-  "liveData": "Atnaujinami duomenys"
+  "liveData": "Atnaujinami duomenys",
+  "previous": "ankstesnis intervalas",
+  "next": "tolesnis intervalas",
+  "play": "žaisti",
+  "pause": "sustabdyti",
+  "speed": "greitis"
 });

@@ -27,6 +27,7 @@ define({
   "timeSpan": "Tidsperiod",
   "startTime": "Starttid",
   "endTime": "Sluttid",
+  "unit": "Enhet",
   "timeDisplay": "Tidsvisning",
   "displayDataIn": "Visa data i",
   "interval": "Intervall",

@@ -5,5 +5,10 @@ define({
   "timeExtent": "${FROMTIME} till ${ENDTIME}",
   "layers": "Lager: ",
   "speedLabel": "Uppspelningshastighet",
-  "liveData": "Realtidsdata"
+  "liveData": "Realtidsdata",
+  "previous": "föregående intervall",
+  "next": "nästa intervall",
+  "play": "spela",
+  "pause": "pausa",
+  "speed": "hastighet"
 });

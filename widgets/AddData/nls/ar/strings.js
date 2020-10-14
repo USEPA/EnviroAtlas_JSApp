@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "يُسمح بحد أقصى {count} معالم",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "توجد مشكلة.",
-    "kmlProjectionMismatch": "لا يتطابق الإسناد المكاني للخريطة وطبقة KML، ويتعذر اتمام التحويل للعميل."
+    "kmlProjectionMismatch": "لا يتطابق الإسناد المكاني للخريطة وطبقة KML، ويتعذر اتمام التحويل للعميل.",
+    "featureLocationsCouldNotBeFound": "يتعذر تحديد موقع المعالم: حقول الموقع غير معروفة أو غير صالحة. ستتم إضافة الملف كجدول."
   },
   "layerList": {
     "caption": "طبقات",

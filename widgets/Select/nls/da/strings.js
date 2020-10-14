@@ -7,5 +7,6 @@ define({
   "turnonAll": "Gør alle lag valgbare",
   "turnoffAll": "Gør alle lag ikke-valgbare",
   "toggleSelect": "Slå valgbarheden til og fra for alle lag",
-  "singleSelect": "Gør dette lag til det eneste valgbare lag"
+  "singleSelect": "Gør dette lag til det eneste valgbare lag",
+  "enableByDefault": "Aktivér valgværktøjet som standard"
 });

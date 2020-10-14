@@ -14,6 +14,7 @@ define({
   "generalSetting": "Generelle innstillinger",
   "allPlaceholder": "Plassholdertekst for søk i alt: ",
   "showInfoWindowOnSelect": "Vis popuptekst for funnet geoobjekt eller lokasjon",
+  "showInfoWindowOnSelect2": "Vis popup når geoobjektet eller lokasjonen blir funnet.",
   "searchInCurrentMapExtent": "Søk kun i gjeldende kartutstrekning",
   "zoomScale": "Zoomeskala",
   "locatorUrl": "Geokoder-URL",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "Alias",
   "ok": "OK",
   "cancel": "Avbryt",
-  "invalidUrlTip": "URL-en ${URL} er ugyldig eller ikke tilgjengelig."
+  "invalidUrlTip": "URL-en ${URL} er ugyldig eller ikke tilgjengelig.",
+  "locateResults": "Finn resultater",
+  "panTo": "Panorer til",
+  "zoomToScale": "Zoom til målestokk"
 });

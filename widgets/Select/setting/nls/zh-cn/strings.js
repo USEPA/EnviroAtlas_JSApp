@@ -5,5 +5,6 @@ define({
   "whollyWithin": "全部位于",
   "allowExport": "允许导出所选要素",
   "layerToSelect": "选择可供选择的图层",
-  "includeRuntimeLayers": "可以选择运行时生成的图层"
+  "includeRuntimeLayers": "允许选择在运行时生成的图层",
+  "enableByDefault": "默认情况下启用选择按钮"
 });

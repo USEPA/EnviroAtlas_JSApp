@@ -1,5 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define({"widgets/MyLocation/setting/nls/strings":{timeout:"\u0938\u092e\u092f \u0938\u092e\u093e\u092a\u094d\u0924",highlightLocation:"\u0938\u094d\u0925\u093e\u0928 \u0915\u094b \u0939\u093e\u0907\u0932\u093e\u0907\u091f \u0915\u0930\u0947\u0902",useTracking:"\u0938\u094d\u0925\u093e\u0928 \u092a\u0930\u093f\u0935\u0930\u094d\u0924\u0928 \u0915\u0947 \u0932\u093f\u090f \u0926\u0947\u0916\u0947\u0902",warning:"\u0917\u0932\u0924 \u0907\u0928\u092a\u0941\u091f",zoomScale:"\u0938\u094d\u0915\u0947\u0932 \u0915\u094b \u091c\u093c\u0942\u092e \u0915\u0930\u0947\u0902",
-_localized:{}}});

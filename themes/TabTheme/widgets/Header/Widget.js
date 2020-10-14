@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2016 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -46,6 +46,11 @@ define([
 
       constructor: function() {
         this.height = this.getHeaderHeight() + 'px';
+      },
+
+      postMixInProperties: function() {
+        this.inherited(arguments);
+        this.isRenderIdForAttrs = true;
       },
 
       postCreate: function() {
@@ -107,7 +112,6 @@ define([
         } else {
           html.setStyle(this.aboutNode, 'display', 'none');
         }
-        
         on(this.mapTour, "click", function(){
             var widgetName = 'Demo';
             var widget = selfCommunityDisplay.appConfig.getConfigElementsByName(widgetName)[0];
@@ -118,11 +122,11 @@ define([
 
       onAppConfigChanged: function(appConfig, reason, changedData) {
         switch (reason) {
-        case 'attributeChange':
-          this._onAttributeChange(appConfig, changedData);
-          break;
-        default:
-          return;
+          case 'attributeChange':
+            this._onAttributeChange(appConfig, changedData);
+            break;
+          default:
+            return;
         }
         this.appConfig = appConfig;
         this.resize();
@@ -178,13 +182,11 @@ define([
           html.setStyle(this.switchableElements.title, 'color', '');
         }
 
-        if(appConfig.logoLink){
-          html.setAttr(this.logoLinkNode, 'href', appConfig.logoLink);
-          html.setStyle(this.logoNode, 'cursor', 'pointer');
-        }else{
-          html.setAttr(this.logoLinkNode, 'href', 'javascript:void(0)');
-          html.setStyle(this.logoNode, 'cursor', 'default');
-        }
+        utils.themesHeaderLogoA11y(appConfig, this.tabIndex, {
+          link: this.logoLinkNode,
+          logo: this.logoNode,
+          icon: this.logoNode
+        });
       },
 
       _setElementsSize: function() {
@@ -211,6 +213,8 @@ define([
         array.forEach(links, function(link) {
           html.create('a', {
             href: link.url,
+            'role': 'link',
+            'tabindex': this.tabIndex,
             target: '_blank',
             rel: "noopener noreferrer",
             innerHTML: utils.sanitizeHTML(link.label),

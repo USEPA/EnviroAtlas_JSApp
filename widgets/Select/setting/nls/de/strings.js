@@ -5,5 +5,6 @@ define({
   "whollyWithin": "Vollständig in",
   "allowExport": "Exportieren von ausgewählten Features zulassen",
   "layerToSelect": "Auswählbare Layer festlegen",
-  "includeRuntimeLayers": "Während der Laufzeit erstellte Layer auswählen können"
+  "includeRuntimeLayers": "Auswählen von während der Laufzeit erstellten Layern zulassen",
+  "enableByDefault": "Die Schaltfläche \"Auswählen\" standardmäßig aktivieren"
 });

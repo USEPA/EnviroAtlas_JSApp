@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "Mastelio juosta"
+  "_widgetLabel": "Mastelio juosta",
+  "scale": "Mastelis"
 });

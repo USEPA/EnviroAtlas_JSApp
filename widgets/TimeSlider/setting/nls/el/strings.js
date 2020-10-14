@@ -27,6 +27,7 @@ define({
   "timeSpan": "Χρονικό εύρος",
   "startTime": "Ώρα έναρξης",
   "endTime": "Ώρα λήξης",
+  "unit": "Μονάδα",
   "timeDisplay": "Παρουσίαση ώρας",
   "displayDataIn": "Εμφάνιση δεδομένων σε διαστήματα των",
   "interval": "Διάστημα",

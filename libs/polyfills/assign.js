@@ -1,0 +1,31 @@
+//The following code is adapted from the polyfill hosted here:
+//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+//
+//The polyfill hosted there was added to the MDN wiki after August 2010 and is therefore in the public domain.
+//Reference: https://developer.mozilla.org/en-US/docs/MDN/About#Copyrights_and_licenses
+
+Object.defineProperty(Object, 'assign', {
+    enumerable: false,
+    value: function (target, varArgs) { // .length of function is 2
+        'use strict';
+        if (target == null) { // TypeError if undefined or null
+            throw new TypeError('Cannot convert undefined or null to object');
+        }
+
+        var to = Object(target);
+
+        for (var index = 1; index < arguments.length; index++) {
+            var nextSource = arguments[index];
+
+            if (nextSource != null) { // Skip over if undefined or null
+                for (var nextKey in nextSource) {
+                    // Avoid bugs when hasOwnProperty is shadowed
+                    if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                        to[nextKey] = nextSource[nextKey];
+                    }
+                }
+            }
+        }
+        return to;
+    }
+});

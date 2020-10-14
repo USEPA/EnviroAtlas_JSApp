@@ -15,6 +15,8 @@ define({
   "selectAll": "בחר רשומות בכל הדפים",
   "selectPage": "בחר רשומות בדף הנוכחי",
   "clearSelection": "נקה בחירה",
+  "selectionHandleLabel": "ידית בחירה",
+  "selectionHandleDescription": "הקש על ENTER או על מקש הרווח כדי להדגיש את הישויות במפה",
   "filter": "פילטר",
   "setFilterTip": "הגדר בבקשה מסננים תקינים.",
   "noFilterTip": "מבלי להגדיר ביטוי לסינון, שאילתה זו תציג את כל הישויות במקור הנתונים שצוין.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "אין טבלאות זמינות להצגה.",
   "checkConfigutationToSelectLayers": "עבור לדף הגדרות הווידג'ט כדי לבחור שכבות.",
-  "checkLayerListToSelectLayers": "טבלת המאפיינים מסונכרנת עם השכבות הגלויות במפה, תוכל להשתמש בווידג'ט כגון 'רשימת שכבות' כדי להפעיל/לכבות שכבות."
+  "checkLayerListToSelectLayers": "טבלת המאפיינים מסונכרנת עם השכבות הגלויות במפה, תוכל להשתמש בווידג'ט כגון 'רשימת שכבות' כדי להפעיל/לכבות שכבות.",
+  "rowHeaderColumnTitle": "שורה${layerName}, ברחיפה, יש ללחוץ Enter כדי לבחור שורות ברחיפה."
 });

@@ -5,5 +5,6 @@ define({
   "whollyWithin": "Totalmente incluído",
   "allowExport": "Permitir exportar elementos selecionados",
   "layerToSelect": "Selecionar que camadas estão disponíveis para seleção",
-  "includeRuntimeLayers": "Ter a capacidade de selecionar camadas geradas no arranque"
+  "includeRuntimeLayers": "Permitir selecionar camadas geradas no arranque",
+  "enableByDefault": "Ativar o botão selecionar por predefinição"
 });

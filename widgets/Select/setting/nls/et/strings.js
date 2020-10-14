@@ -5,5 +5,6 @@ define({
   "whollyWithin": "Täielikult vahemikus",
   "allowExport": "Luba valitud objektide eksportimine",
   "layerToSelect": "Valige, millised kihid on valimiseks saadaval",
-  "includeRuntimeLayers": "Võimalus valida käitusajal genereeritud kihte"
+  "includeRuntimeLayers": "Luba käitusajal genereeritud kihtide valimine",
+  "enableByDefault": "Luba valikunupp vaikimisi"
 });

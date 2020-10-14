@@ -27,6 +27,7 @@ define({
   "timeSpan": "Tidsrum",
   "startTime": "Starttid",
   "endTime": "Sluttid",
+  "unit": "Enhed",
   "timeDisplay": "Tidsvisning",
   "displayDataIn": "Vis data i",
   "interval": "Interval",

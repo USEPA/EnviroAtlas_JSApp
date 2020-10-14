@@ -22,7 +22,6 @@ define({
   "imageFill": "מילוי תמונה",
   "chooseFile": "בחר קובץ",
   "noFileChosen": "לא נבחר קובץ",
-  "transparency": "שקיפות",
   "sizeFill": "מילוי",
   "sizeFit": "מותאם",
   "sizeStretch": "מתח עד למילוי",

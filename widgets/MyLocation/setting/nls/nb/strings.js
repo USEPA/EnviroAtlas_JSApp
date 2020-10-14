@@ -3,5 +3,7 @@ define({
   "highlightLocation": "Uthev lokasjon",
   "useTracking": "Se etter lokasjonsendringer",
   "warning": "Feil inndata",
-  "zoomScale": "Zoomeskala"
+  "zoomScale": "Zoom målestokk",
+  "useCompass": "Vis kompassretning",
+  "useAccCircle": "Vis lokasjonsnøyaktighet"
 });

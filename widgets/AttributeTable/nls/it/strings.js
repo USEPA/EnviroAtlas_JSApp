@@ -15,6 +15,8 @@ define({
   "selectAll": "Seleziona record in tutte le pagine",
   "selectPage": "Seleziona record nella pagina corrente",
   "clearSelection": "Cancella selezione",
+  "selectionHandleLabel": "Maniglia di selezione",
+  "selectionHandleDescription": "Premere ENTER o SPACE per evidenziare le feature sulla mappa",
   "filter": "Filtro",
   "setFilterTip": "Impostare i filtri correttamente.",
   "noFilterTip": "Se non si definisce nessuna espressione di filtro, questa attività di interrogazione restituirà tutte le feature presenti nell'origine dati specificata.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Nessuna tabella disponibile per la visualizzazione.",
   "checkConfigutationToSelectLayers": "Accedere alla pagina delle impostazioni del widget per selezionare i layer.",
-  "checkLayerListToSelectLayers": "La Tabella attributi è sincronizzata con i layer visibili nella mappa; è possibile usare widget come Elenco layer per attivare/disattivare i layer."
+  "checkLayerListToSelectLayers": "La Tabella attributi è sincronizzata con i layer visibili nella mappa; è possibile usare widget come Elenco layer per attivare/disattivare i layer.",
+  "rowHeaderColumnTitle": "Riga ${layerName}, attivata al passaggio del mouse, premere Invio per selezionare le righe attivate al passaggio del mouse"
 });

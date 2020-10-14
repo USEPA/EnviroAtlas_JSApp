@@ -7,5 +7,6 @@ define({
   "turnonAll": "Bật chể độ cho phép lựa chọn với tất cả các lớp",
   "turnoffAll": "Tắt chể độ cho phép lựa chọn với tất cả các lớp",
   "toggleSelect": "Chuyển đổi khả năng chọn lựa cho tất cả các lớp",
-  "singleSelect": "Chỉnh lớp này thành lớp duy nhất có thể lựa chọn"
+  "singleSelect": "Chỉnh lớp này thành lớp duy nhất có thể lựa chọn",
+  "enableByDefault": "Kích hoạt chọn công cụ theo mặc định"
 });

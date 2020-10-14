@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Maksimālais atļautais elementu skaits: {count}",
     "layerNamePattern": "{filename} — {name}",
     "generalIssue": "Radās kāda problēma.",
-    "kmlProjectionMismatch": "Kartes telpiskā atskaite un KML slānis nesakrīt, un klientam nav iespējams veikt konvertāciju."
+    "kmlProjectionMismatch": "Kartes telpiskā atskaite un KML slānis nesakrīt, un klientam nav iespējams veikt konvertāciju.",
+    "featureLocationsCouldNotBeFound": "Nevarēja atrast elementus: nezināmi vai nederīgi atrašanās vietas lauki. Fails tiks pievienots kā tabula."
   },
   "layerList": {
     "caption": "Slāņi",

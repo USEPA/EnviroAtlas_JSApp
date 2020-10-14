@@ -15,6 +15,8 @@ define({
   "selectAll": "Pilih catatan di semua halaman",
   "selectPage": "Pilih catatan di halaman saat ini",
   "clearSelection": "Bersihkan pilihan",
+  "selectionHandleLabel": "Handle pilihan",
+  "selectionHandleDescription": "Tekan ENTER atau SPASI untuk menyorot fitur di peta",
   "filter": "Filter",
   "setFilterTip": "Atur filter dengan benar.",
   "noFilterTip": "Tanpa ekspresi filter yang ditetapkan, tugas kueri ini akan mencantumkan semua fitur di sumber data yang ditentukan.",
@@ -43,7 +45,7 @@ define({
   "attachments": "Lampiran",
   "files": "file",
   "keepRichTextLabel": "Pertahankan format teks kaya",
-  "whatsThis": "Apa ini?",
+  "whatsThis": "Apakah ini?",
   "richTextMessage": {
     "explanatoryText": {
       "line1": "${layerName} berisi kolom teks kaya berikut: ",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Tidak tersedia tabel untuk ditampilkan.",
   "checkConfigutationToSelectLayers": "Harap buka halaman pengaturan widget untuk memilih layer.",
-  "checkLayerListToSelectLayers": "Tabel Atribut disinkronkan dengan layer yang terlihat pada peta, Anda dapat menggunakan widget seperti Daftar Layer untuk menghidupkan/mematikan layer."
+  "checkLayerListToSelectLayers": "Tabel Atribut disinkronkan dengan layer yang terlihat pada peta, Anda dapat menggunakan widget seperti Daftar Layer untuk menghidupkan/mematikan layer.",
+  "rowHeaderColumnTitle": "Baris ${layerName}, melayang, tekan Enter untuk memilih baris yang melayang"
 });

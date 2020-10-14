@@ -1,9 +1,13 @@
 define({
-  "unit": "Vienība",
+  "unit": "Mērvienības",
   "style": "Stils",
-  "dual": "dubults",
+  "dual": "dubulta",
   "english": "angļu",
   "metric": "metriska",
   "ruler": "lineāls",
-  "line": "līnija"
+  "line": "līnija",
+  "number": "skaitlis",
+  "spinnerLabel": "Noapaļot mēroga skaitli līdz: ",
+  "decimalPlace": "decimālvieta",
+  "separator": "Rādīt tūkstošdaļu atdalītājus"
 });

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,16 +20,17 @@ define([
   'dojo/_base/lang',
   'dojo/Deferred',
   'dojo/promise/all',
-  'jimu/utils',
   'jimu/portalUrlUtils',
   'jimu/WidgetManager',
-  'jimu/PanelManager',
   'esri/lang',
-  'esri/graphicsUtils',
   './NlsStrings',
-  'dijit/Dialog'
-], function(declare, array, lang, Deferred, all, jimuUtils, portalUrlUtils, WidgetManager, PanelManager, esriLang,
-  graphicsUtils, NlsStrings,Dialog) {
+   'jimu/utils',
+   'jimu/PanelManager',
+   'esri/graphicsUtils',
+   'dijit/Dialog'
+   
+], function(declare, array, lang, Deferred, all,  portalUrlUtils, WidgetManager, esriLang, NlsStrings, jimuUtils, PanelManager, 
+  graphicsUtils, Dialog) {
   var mapDescriptionStr = "";
   var topLayerIndex = 300;
   var layerInfoFromJson = {};
@@ -345,34 +346,55 @@ define([
       }, this);
     },
 
-    _isSupportedByAT: function() {
-      return true;
+    _getSupportTableInfoForAllSublayers: function(layerInfo) {
+      var defs = [];
+      layerInfo.traversal(function(subLayerInfo) {
+        var def = new Deferred();
+        subLayerInfo.getSupportTableInfo().then(function(supportedInfo) {
+          supportedInfo.layerInfo = subLayerInfo;
+          def.resolve(supportedInfo);
+        });
+        defs.push(def);
+      });
+      return all(defs);
     },
 
-    _isSupportedByAT_bk: function(attributeTableWidget, supportTableInfo) {
-      var isSupportedByAT;
-      var isLayerHasBeenConfigedInAT;
-      var ATConfig = attributeTableWidget.config;
+    _isSupportedByAT: function(attributeTableWidget, allSupportedInfo) {
+      /*jshint unused: false*/
+      var isSupported = array.some(allSupportedInfo, function(supportTableInfo) {
+        if(supportTableInfo.isSupportedLayer) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      return isSupported;
+    },
 
-      if(ATConfig.layerInfos.length === 0) {
-        isLayerHasBeenConfigedInAT = true;
-      } else {
-        isLayerHasBeenConfigedInAT = array.some(ATConfig.layerInfos, function(layerInfo) {
-          if(layerInfo.id === this._layerInfo.id && layerInfo.show) {
+    /*
+    _isPopupSupported: function() {
+      var def = new Deferred();
+      var defs = [];
+      this._layerInfo.traversal(function(layerInfo) {
+        if(layerInfo.isLeaf()) {
+          defs.push(layerInfo.loadInfoTemplate());
+        }
+      });
+
+      all(defs).then(function(infoTemplates) {
+        array.some(infoTemplates, function(infoTemplates) {
+          if(infoTemplates) {
+            def.resolve(true);
             return true;
+          } else {
+            def.resolve(false);
+            return false;
           }
-        }, this);
-      }
-      if (!supportTableInfo.isSupportedLayer ||
-          !supportTableInfo.isSupportQuery ||
-          supportTableInfo.otherReasonCanNotSupport ||
-          !isLayerHasBeenConfigedInAT) {
-        isSupportedByAT = false;
-      } else {
-        isSupportedByAT = true;
-      }
-      return isSupportedByAT;
+        });
+      });
+      return def;
     },
+    */
 
     getDeniedItems: function() {
       // summary:
@@ -440,19 +462,21 @@ define([
       }  //deny changeSymbology for ImageService
       
 
-      var loadInfoTemplateDef = this._layerInfo.loadInfoTemplate();
-      var getSupportTableInfoDef = this._layerInfo.getSupportTableInfo();
+      //var loadInfoTemplateDef = this._layerInfo.loadInfoTemplate();
+      var isPopupSupportedDef = this._layerInfo.isSupportPopupNested();
+      var getSupportTableInfoDef = this._getSupportTableInfoForAllSublayers(this._layerInfo);
 
       all({
-        infoTemplate: loadInfoTemplateDef,
+        //infoTemplate: loadInfoTemplateDef,
+        isPopupSupported: isPopupSupportedDef,
         supportTableInfo: getSupportTableInfoDef
       }).then(lang.hitch(this, function(result) {
 
         // deny controlPopup
-        if (!result.infoTemplate) {
+        if (!result.isPopupSupported) {
           dynamicDeniedItems.push({
             'key': 'controlPopup',
-            'denyType': 'disable'
+            'denyType': 'hidden'
           });
         }
 
@@ -467,6 +491,11 @@ define([
             'denyType': 'hidden'
           });
         } else if (!this._isSupportedByAT(attributeTableWidget, supportTableInfo)) {
+          dynamicDeniedItems.push({
+            'key': 'table',
+            'denyType': 'disable'
+          });
+          /*
           if(this._layerInfo.parentLayerInfo &&
              this._layerInfo.parentLayerInfo.isMapNotesLayerInfo()) {
             dynamicDeniedItems.push({
@@ -479,6 +508,7 @@ define([
               'denyType': 'disable'
             });
           }
+          */
 
         }
         defRet.resolve(dynamicDeniedItems);
@@ -665,19 +695,28 @@ define([
     },
 
     _onTableItemClick: function(evt) {
-      this._layerInfo.getSupportTableInfo().then(lang.hitch(this, function(supportTableInfo) {
+      this._getSupportTableInfoForAllSublayers(this._layerInfo).then(lang.hitch(this, function(allSupportTableInfo) {
         var widgetManager;
         var attributeTableWidgetEle =
                     this.layerListWidget.appConfig.getConfigElementsByName("AttributeTable")[0];
-        if(this._isSupportedByAT(attributeTableWidgetEle, supportTableInfo)) {
+        if(this._isSupportedByAT(attributeTableWidgetEle, allSupportTableInfo)) {
           widgetManager = WidgetManager.getInstance();
-          widgetManager.triggerWidgetOpen(attributeTableWidgetEle.id)
-          .then(lang.hitch(this, function() {
-            evt.layerListWidget.publishData({
-              'target': 'AttributeTable',
-              'layer': this._layerInfo
-            });
-          }));
+
+          array.forEach(allSupportTableInfo, function(supportTableInfo) {
+            if(supportTableInfo.isSupportedLayer) {
+              widgetManager.triggerWidgetOpen(attributeTableWidgetEle.id)
+              .then(lang.hitch(this, function(atWidget) {
+                if (atWidget) {
+                  widgetManager.activateWidget(atWidget);
+                }
+                evt.layerListWidget.publishData({
+                  'target': 'AttributeTable',
+                  'layer': supportTableInfo.layerInfo
+                });
+              }));
+            }
+          }, this);
+
         }
       }));
     },
@@ -809,6 +848,7 @@ define([
 	
     },    
     _onTransparencyChanged: function(evt) {
+      this.layerListWidget._denyLayerInfosOpacityResponseOneTime = true;
       this._layerInfo.setOpacity(1 - evt.extraData.newTransValue);
       layerId = this._layerInfo.id;
 	  lyrTiled = this._layerInfo.map.getLayer(layerId.replace(window.layerIdPrefix, window.layerIdTiledPrefix));
@@ -819,10 +859,11 @@ define([
 
     _onControlPopup: function(evt) {
       /*jshint unused: false*/
-      if (this._layerInfo.controlPopupInfo.enablePopup) {
-        this._layerInfo.disablePopup();
+      //if (this._layerInfo.controlPopupInfo.enablePopup) {
+      if(this._layerInfo.isPopupNestedEnabled()) {
+        this._layerInfo.disablePopupNested();
       } else {
-        this._layerInfo.enablePopup();
+        this._layerInfo.enablePopupNested();
       }
       this._layerInfo.map.infoWindow.hide();
     },
@@ -843,9 +884,13 @@ define([
     var retDef = new Deferred();
     var isRootLayer = layerInfo.isRootLayer();
     var defaultItemInfos = [{
-      key: 'url',
-      onClick: null
-    }];
+        key: 'controlPopup'
+      }, {
+        key: 'separator'
+      }, {
+        key: 'url',
+        onClick: null
+      }];
 
     var itemInfoCategoreList = {
       'RootLayer': [{
@@ -950,7 +995,7 @@ define([
         key: 'setVisibilityRange'
       }, {
         key: 'separator'
-      },{
+      }, {
         key: 'url'
       }],
       'Table': [{

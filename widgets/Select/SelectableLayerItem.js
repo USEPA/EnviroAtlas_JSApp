@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ define(['dojo/_base/declare',
   'dojo/_base/html',
   'dojo/_base/lang',
   'dojo/_base/event',
+  'dojo/_base/array',
   'dojo/on',
   'dojo/Evented',
   'dojo/dom-geometry',
@@ -28,7 +29,7 @@ define(['dojo/_base/declare',
   'dijit/_WidgetsInTemplateMixin',
   'dojo/text!./SelectableLayerItem.html',
   './ClearSelectionAction'
-], function(declare, html, lang, Event, on, Evented, domGeom,
+], function(declare, html, lang, Event, array, on, Evented, domGeom,
 jimuUtils, PopupMenu, _WidgetBase, _TemplatedMixin,
 _WidgetsInTemplateMixin, template, ClearSelectionAction) {
   return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
@@ -50,7 +51,7 @@ _WidgetsInTemplateMixin, template, ClearSelectionAction) {
     init: function(layerObject) {
       this.featureLayer = layerObject;
 
-      var selectedCount = this.featureLayer.getSelectedFeatures().length;
+      var selectedCount = this._filteredSelection().length;
       this.layerName = this.layerInfo.title || 'layer';
 
       this.selectedCountNode.innerHTML = selectedCount;
@@ -62,7 +63,7 @@ _WidgetsInTemplateMixin, template, ClearSelectionAction) {
       }
 
       this.own(on(this.featureLayer, 'selection-complete', lang.hitch(this, function(){
-        var selectedCount = this.featureLayer.getSelectedFeatures().length;
+        var selectedCount = this._filteredSelection().length;
         this.selectedCountNode.innerHTML = selectedCount;
         if(selectedCount === 0) {
           html.addClass(this.domNode, 'no-action');
@@ -76,7 +77,7 @@ _WidgetsInTemplateMixin, template, ClearSelectionAction) {
         html.addClass(this.domNode, 'no-action');
       })));
 
-      this.layerNameNode.innerHTML = this.layerName;
+      this.layerNameNode.innerHTML = jimuUtils.sanitizeHTML(this.layerName);
       this.layerNameNode.title = this.layerName;
 
       if(!this.layerVisible) {
@@ -169,7 +170,7 @@ _WidgetsInTemplateMixin, template, ClearSelectionAction) {
       if(html.hasClass(this.domNode, 'no-action')) {
         return;
       }
-      var graphics = this.featureLayer.getSelectedFeatures();
+      var graphics = this._filteredSelection();
       var selectedFeatureSet = jimuUtils.toFeatureSet(graphics);
 
       this.popupMenu.prepareActions(selectedFeatureSet, this.allowExport).then(lang.hitch(this, function() {
@@ -182,6 +183,14 @@ _WidgetsInTemplateMixin, template, ClearSelectionAction) {
         }
         this.popupMenu.show(position, this.nls.actionsTitle);
       }));
+    },
+
+    _filteredSelection: function() {
+      var selection = this.featureLayer.getSelectedFeatures() || [];
+
+      return array.filter(selection, function(feature) {
+        return feature.visible;
+      });
     }
   });
 });

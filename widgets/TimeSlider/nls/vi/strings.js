@@ -5,5 +5,10 @@ define({
   "timeExtent": "${FROMTIME} đến ${ENDTIME}",
   "layers": "Lớp: ",
   "speedLabel": "Tốc độ phát lại",
-  "liveData": "Dữ liệu sống"
+  "liveData": "Dữ liệu sống",
+  "previous": "khoảng thời gian trước",
+  "next": "khoảng thời gian tiếp",
+  "play": "phát",
+  "pause": "tạm dừng",
+  "speed": "tốc độ"
 });

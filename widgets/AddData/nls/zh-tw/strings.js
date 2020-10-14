@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "最多允許 {count} 個圖徵",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "發生問題。",
-    "kmlProjectionMismatch": "地圖與 KML 圖層的空間參考不符合，且無法在用戶端上完成轉換。"
+    "kmlProjectionMismatch": "地圖與 KML 圖層的空間參考不符合，且無法在用戶端上完成轉換。",
+    "featureLocationsCouldNotBeFound": "找不到圖徵: 不明或無效的位置欄位。 會將檔案新增為表格。"
   },
   "layerList": {
     "caption": "圖層",

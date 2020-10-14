@@ -20,13 +20,14 @@ define({
   "sliderSetting": "Slīdņa iestatījumi",
   "autoRefresh": "Atjaunojiet slīdni katru",
   "timeSetting": "Laika iestatījumi",
-  "useWebMapSetting": "Pagodiniet tīmekļa kartes laika iestatījumus",
+  "useWebMapSetting": "Tīmekļa kartes laika iestatījumi",
   "useConfigureSetting": "Konfigurēt laika iestatījumus",
   "timeSettingBtn": "iestatījums",
-  "calenderError": "Startēšanas laikam ir jābūt mazākam par Beigu laiku.",
+  "calenderError": "Sākuma laikam ir jābūt mazākam par Beigu laiku.",
   "timeSpan": "Laika sprīdis",
   "startTime": "Sākuma laiks",
   "endTime": "Beigu laiks",
+  "unit": "Mērvienība",
   "timeDisplay": "Laika displejs",
   "displayDataIn": "Rādīt datus",
   "interval": "Intervāls",
@@ -40,5 +41,5 @@ define({
   "now": "Tagad",
   "today": "Šodien",
   "maximum": "Maksimālais no visiem izvēlētiem",
-  "minimum": "Minimums no visiem izvēlētiem"
+  "minimum": "Minimālais no visiem izvēlētiem"
 });

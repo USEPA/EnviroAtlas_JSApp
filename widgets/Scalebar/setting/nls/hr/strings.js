@@ -5,5 +5,9 @@ define({
   "english": "engleski",
   "metric": "metrički",
   "ruler": "ravnalo",
-  "line": "linija"
+  "line": "linija",
+  "number": "broj",
+  "spinnerLabel": "Zaokruži broj mjerila na: ",
+  "decimalPlace": "decimalno mjesto",
+  "separator": "Prikaži razdjelnik tisućica"
 });

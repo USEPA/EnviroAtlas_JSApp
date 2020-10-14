@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>RadioButton_selected_focus_1</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1366" transform="translate(-424.000000, -229.000000)">
+            <g id="RadioButton_selected_focus_1" transform="translate(425.000000, 230.000000)">
+                <circle id="Oval-2" stroke="#24B5CC" stroke-width="2" cx="9" cy="9" r="9"></circle>
+                <circle id="Oval-2" stroke="#24B5CC" cx="9" cy="9" r="7.5"></circle>
+                <circle id="Oval-4" fill="#24B5CC" cx="9" cy="9" r="3"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

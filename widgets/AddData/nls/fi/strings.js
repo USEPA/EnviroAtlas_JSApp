@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Kohteiden sallittu enimmäismäärä on {count}",
     "layerNamePattern": "{filename} – {name}",
     "generalIssue": "On ilmennyt ongelma.",
-    "kmlProjectionMismatch": "Kartan koordinaatistotieto ja KML-karttataso eivät täsmää, eikä muunnosta voi tehdä asiakaskoneessa."
+    "kmlProjectionMismatch": "Kartan koordinaatistotieto ja KML-karttataso eivät täsmää, eikä muunnosta voi tehdä asiakaskoneessa.",
+    "featureLocationsCouldNotBeFound": "Kohteita ei löytynyt: tuntemattomia tai virheellisiä sijaintikenttiä. Tiedosto lisätään tauluna."
   },
   "layerList": {
     "caption": "Karttatasot",

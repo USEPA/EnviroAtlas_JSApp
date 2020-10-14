@@ -28,5 +28,11 @@ define({
   "keyword": "Kata kunci",
   "basemapLayers": "Layer peta dasar",
   "typeAKeywork": "Ketikkan kata kunci",
-  "layers": "Layer"
+  "layers": "Layer",
+  "tipLayerSearch": "Cari layer",
+  "tipLayerListOperation": "Operasi daftar layer",
+  "tipLayerOperation": "Menu layer",
+  "tipClearText": "Hapus teks",
+  "collapseLayer": "Tutup",
+  "expandLayer": "Perbesar"
 });

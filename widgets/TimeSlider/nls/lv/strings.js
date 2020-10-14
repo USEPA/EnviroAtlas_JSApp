@@ -5,5 +5,10 @@ define({
   "timeExtent": "${FROMTIME} līdz ${ENDTIME}",
   "layers": "Slāņi: ",
   "speedLabel": "Atskaņošanas ātrums",
-  "liveData": "Tiešie dati"
+  "liveData": "Reāllaika dati",
+  "previous": "iepriekšējais intervāls",
+  "next": "nākamais intervāls",
+  "play": "demonstrēt",
+  "pause": "pauzēt",
+  "speed": "ātrums"
 });

@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "Razmernik"
+  "_widgetLabel": "Razmernik",
+  "scale": "Razmera"
 });

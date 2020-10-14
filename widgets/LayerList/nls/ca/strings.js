@@ -28,5 +28,11 @@ define({
   "keyword": "Paraula clau",
   "basemapLayers": "Capes de mapa base",
   "typeAKeywork": "Escriviu una paraula clau",
-  "layers": "Capes"
+  "layers": "Capes",
+  "tipLayerSearch": "Cerca capes",
+  "tipLayerListOperation": "Operacions de la llista de capes",
+  "tipLayerOperation": "Menús de capa",
+  "tipClearText": "Esborra el text",
+  "collapseLayer": "Redueix",
+  "expandLayer": "Expandeix"
 });

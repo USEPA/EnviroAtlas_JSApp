@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "Skalfält"
+  "_widgetLabel": "Skalfält",
+  "scale": "Skala"
 });

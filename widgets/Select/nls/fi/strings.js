@@ -7,5 +7,6 @@ define({
   "turnonAll": "Tee kaikista karttatasoista valittavia",
   "turnoffAll": "Tee kaikista karttatasoista sellaisia, ettei niitä voi valita",
   "toggleSelect": "Vaihda kaikkien karttatasojen valittavuutta",
-  "singleSelect": "Muuta tämä ainoaksi valittavaksi karttatasoksi"
+  "singleSelect": "Muuta tämä ainoaksi valittavaksi karttatasoksi",
+  "enableByDefault": "Ota valintatyökalu käyttöön oletusarvoisesti"
 });

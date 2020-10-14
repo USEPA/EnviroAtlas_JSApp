@@ -5,5 +5,10 @@ define({
   "timeExtent": "${FROMTIME} 至 ${ENDTIME}",
   "layers": "图层: ",
   "speedLabel": "回放速度",
-  "liveData": "实时数据"
+  "liveData": "实时数据",
+  "previous": "上一间隔",
+  "next": "下一间隔",
+  "play": "播放",
+  "pause": "暂停",
+  "speed": "速度"
 });

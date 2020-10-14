@@ -7,5 +7,6 @@ define({
   "turnonAll": "Rendi tutti i layer selezionabili",
   "turnoffAll": "Rendi tutti i layer non selezionabili",
   "toggleSelect": "Attiva/disattiva la selezionabilità per tutti i layer",
-  "singleSelect": "Rendi questo l'unico layer selezionabile"
+  "singleSelect": "Rendi questo l'unico layer selezionabile",
+  "enableByDefault": "Abilita lo strumento di selezione per impostazione predefinita"
 });

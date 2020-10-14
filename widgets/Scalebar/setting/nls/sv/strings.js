@@ -5,5 +5,9 @@ define({
   "english": "metric",
   "metric": "metric",
   "ruler": "linjal",
-  "line": "linje"
+  "line": "linje",
+  "number": "nummer",
+  "spinnerLabel": "Avrunda skalnummer till: ",
+  "decimalPlace": "decimal",
+  "separator": "Visa tusentalsavgränsare"
 });

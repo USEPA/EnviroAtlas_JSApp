@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "Μπάρα κλίμακας"
+  "_widgetLabel": "Μπάρα κλίμακας",
+  "scale": "Κλίμακα"
 });

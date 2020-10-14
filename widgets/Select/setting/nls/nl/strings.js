@@ -5,5 +5,6 @@ define({
   "whollyWithin": "Volledig binnen",
   "allowExport": "Toestaan om geselecteerde objecten te exporteren",
   "layerToSelect": "Kies de lagen die beschikbaar zijn om te selecteren",
-  "includeRuntimeLayers": "In staat zijn om lagen te selecteren die in runtime gegenereerd zijn"
+  "includeRuntimeLayers": "Toestaan om lagen te selecteren die in runtime gegenereerd zijn",
+  "enableByDefault": "De selectieknop standaard inschakelen"
 });

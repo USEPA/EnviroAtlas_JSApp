@@ -8,7 +8,8 @@ define({
     turnonAll: "Make all layers selectable",
     turnoffAll: "Make all layers unselectable",
     toggleSelect: "Toggle selectability for all layers",
-    singleSelect: "Make this the only selectable layer"
+    singleSelect: "Make this the only selectable layer",
+    enableByDefault: "Enable the select tool by default"
   }),
   "ar": 1,
   "bs": 1,
@@ -22,7 +23,6 @@ define({
   "fi": 1,
   "fr": 1,
   "he": 1,
-  "hi": 1,
   "hr": 1,
   "hu": 1,
   "it": 1,
@@ -43,6 +43,7 @@ define({
   "sv": 1,
   "th": 1,
   "tr": 1,
+  "uk": 1,
   "vi": 1,
   "zh-cn": 1,
   "zh-hk": 1,

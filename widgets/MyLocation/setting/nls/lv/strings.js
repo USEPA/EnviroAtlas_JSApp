@@ -1,7 +1,9 @@
 define({
   "timeout": "Pārtraukums",
-  "highlightLocation": "Izcelt atrašanās vietu",
-  "useTracking": "Skatīties atrašanās vietas izmaiņas",
+  "highlightLocation": "Iekrāsot atrašanās vietu",
+  "useTracking": "Izsekot atrašanās vietas izmaiņas",
   "warning": "Nepareiza ievade",
-  "zoomScale": "Mērogmaiņas skala"
+  "zoomScale": "Mērogmaiņas skala",
+  "useCompass": "Rādīt kompasa orientāciju",
+  "useAccCircle": "Rādīt atrašanās vietas precizitāti"
 });

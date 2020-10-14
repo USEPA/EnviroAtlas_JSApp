@@ -28,5 +28,11 @@ define({
   "keyword": "Schlüsselwort",
   "basemapLayers": "Grundkarten-Layer",
   "typeAKeywork": "Schlüsselwort eingeben",
-  "layers": "Layer"
+  "layers": "Layer",
+  "tipLayerSearch": "Layer durchsuchen",
+  "tipLayerListOperation": "Operationen für Layer-Liste",
+  "tipLayerOperation": "Layer-Menüs",
+  "tipClearText": "Text löschen",
+  "collapseLayer": "Ausblenden",
+  "expandLayer": "Erweitern"
 });

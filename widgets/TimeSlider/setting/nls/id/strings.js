@@ -27,6 +27,7 @@ define({
   "timeSpan": "Jangka waktu",
   "startTime": "Waktu Mulai",
   "endTime": "Waktu Selesai",
+  "unit": "Unit",
   "timeDisplay": "Tampilan waktu",
   "displayDataIn": "Tampilkan data dalam",
   "interval": "Interval",

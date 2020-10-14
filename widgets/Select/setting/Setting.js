@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2015 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -47,6 +47,12 @@ define([
     postCreate: function() {
       this.inherited(arguments);
 
+      this.enableByDefaultCheckBox = new CheckBox({
+        label: this.nls.enableByDefault,
+        checked: this.config && this.config.enableByDefault !== false,
+        onChange: lang.hitch(this, this._onEnableByDefaultChange)
+      }, this.enableByDefaultCheckBoxDiv);
+
       this.allowExportCheckBox = new CheckBox({
         label: this.nls.allowExport,
         checked: this.config && this.config.allowExport,
@@ -85,6 +91,10 @@ define([
       this.allowExport = checked;
     },
 
+    _onEnableByDefaultChange: function(checked) {
+      this.enableByDefault = checked;
+    },
+
     _onIncludeRuntimeLayersChange: function(checked) {
       this.includeRuntimeLayers = checked;
     },
@@ -103,6 +113,9 @@ define([
         this.whollyMode.set('checked', true);
         this._onSelectWhollyMode();
       }
+
+      this.enableByDefault = this.config.enableByDefault !== false;
+      this.enableByDefaultCheckBox.setValue(this.enableByDefault);
 
       this.allowExport = this.config.allowExport;
       this.allowExportCheckBox.setValue(this.allowExport);
@@ -149,6 +162,7 @@ define([
       return {
         selectionColor: this.selectionColor,
         selectionMode: this.selectionMode,
+        enableByDefault: this.enableByDefault,
         allowExport: this.allowExport,
         includeRuntimeLayers: this.includeRuntimeLayers,
         geometryTypes: this._getSelectedDrawingTools(),

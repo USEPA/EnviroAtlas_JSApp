@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -116,7 +116,7 @@ define(['dojo/Evented',
         //2 calender
         this.operatorSelector = new Select({
           options: this._operatorOptions,
-          "class": "calendar-inputs calendar-operator"
+          "class": "calendar-operator"
         }, this.operatorContainer);
         this.unit = new Select({
           options: utils.intervalUnitOptions,

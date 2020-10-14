@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "Bară de scară"
+  "_widgetLabel": "Bară de scară",
+  "scale": "Scară"
 });

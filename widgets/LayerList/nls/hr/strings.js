@@ -28,5 +28,11 @@ define({
   "keyword": "Ključna riječ",
   "basemapLayers": "Slojevi kartografske podloge",
   "typeAKeywork": "Upišite ključnu riječ",
-  "layers": "Slojevi"
+  "layers": "Slojevi",
+  "tipLayerSearch": "Pretraži slojeve",
+  "tipLayerListOperation": "Operacije popisa slojeva",
+  "tipLayerOperation": "Izbornici slojeva",
+  "tipClearText": "Izbriši tekst",
+  "collapseLayer": "Sažmi",
+  "expandLayer": "Proširi"
 });

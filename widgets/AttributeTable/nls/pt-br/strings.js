@@ -15,6 +15,8 @@ define({
   "selectAll": "Selecionar registros em todas as páginas",
   "selectPage": "Selecionar registros na página atual",
   "clearSelection": "Limpar seleção",
+  "selectionHandleLabel": "Manipulador de seleção",
+  "selectionHandleDescription": "Pressione ENTER ou BARRA DE ESPAÇO para destacar aS feições no mapa",
   "filter": "Filtro",
   "setFilterTip": "Configure o filtro corretamente.",
   "noFilterTip": "Sem expressões de filtro definidas, esta tarefa de consulta listará todas as feições na fonte de dados especificada.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Nenhuma tabela disponível para exibir.",
   "checkConfigutationToSelectLayers": "Vá até a página de configurações do widget para selecionar camadas.",
-  "checkLayerListToSelectLayers": "A Tabela de Atributo é sincronizada com as camadas visíveis no mapa, você pode utilizar o widget como Lista de Camada para ativar/desativar as camadas."
+  "checkLayerListToSelectLayers": "A Tabela de Atributo é sincronizada com as camadas visíveis no mapa, você pode utilizar o widget como Lista de Camada para ativar/desativar as camadas.",
+  "rowHeaderColumnTitle": "Linha ${layerName}, suspensas, pressione Enter para selecionar as linhas suspensas"
 });

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ define([
     'dojo/i18n!dojo/cldr/nls/number',
     'dojox/encoding/base64',
     'esri/lang',
+    'moment/moment',
     'esri/arcgis/utils',
     'esri/dijit/PopupTemplate',
     'esri/SpatialReference',
@@ -84,7 +85,7 @@ define([
     'widgets/Demo/help/help_HucNavigation2',
     'widgets/Demo/help/help_Raindrop1',
     'widgets/Demo/help/help_Raindrop2', 
-    'widgets/Demo/help/help_AttributeTable1',
+	'widgets/Demo/help/help_AttributeTable1',
     'widgets/Demo/help/help_AttributeTable2',
     'widgets/Demo/help/help_SelectByTopic1',
     'widgets/Demo/help/help_SelectByTopic2',
@@ -98,11 +99,12 @@ define([
     'widgets/Demo/help/help_Print2',
     'widgets/Demo/help/help_LayerList1',
     'widgets/Demo/help/help_LayerList2',	
-    'widgets/Demo/help/help_EndPage'
+    'widgets/Demo/help/help_EndPage',    
+    'libs/caja-html-sanitizer-minified'
   ],
 
 function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on, json, cookie,
-  dojoNumber, dateLocale, nlsBundle, base64, esriLang, arcgisUtils, PopupTemplate, SpatialReference,
+  dojoNumber, dateLocale, nlsBundle, base64, esriLang, moment, arcgisUtils, PopupTemplate, SpatialReference,
   Extent, geometryEngine, Multipoint, Polyline, Polygon, webMercatorUtils, GeometryService, ProjectParameters,
   FeatureSet, PictureMarkerSymbol, esriUrlUtils, esriRequest, EsriQuery, QueryTask, graphicsUtils, IdentityManager,
   OAuthInfo, portalUrlUtils, sharedUtils, accessibleUtils, zoomToUtils, TooltipDialog, popup, registry, dom, help_Welcome, help_Elevation1, help_Elevation2, help_FeaturedCollections1, help_FeaturedCollections2, help_Demographic1, help_Demographic2, help_EnviroAtlasDataSearch1, help_EnviroAtlasDataSearch2, help_TimesSeries1, help_TimesSeries2, help_AddData1, help_AddData2, help_SelectCommunity1, help_SelectCommunity2, help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_HucNavigation1, help_HucNavigation2, help_Raindrop1, help_Raindrop2,
@@ -398,6 +400,21 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     });
   };
 
+  mo.setWABLogoDefaultAlt = function (contentDom) {
+    if (!contentDom) {
+      return;
+    }
+
+    var contentImgs = query('img', contentDom);
+    var oldWabLogoIds = ["img_1412759111499", "img_1545621838463", "img_1560482577021"];//old logo, 7.1, 7.2
+    for (var i = 0, len = contentImgs.length; i < len; i++) {
+      var img = contentImgs[i];
+      if ((oldWabLogoIds.indexOf(html.getAttr(img, "id")) > -1) && !html.getAttr(img, "alt")) {
+        html.setAttr(img, "alt", "ArcGIS Web AppBuilder.png");//keep img's alt in English
+      }
+    }
+  };
+
   var testImageDom = null;
   mo.getImagesSize = function(imageUrl){
     var def = new Deferred();
@@ -483,10 +500,24 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
         position.paddingLeft = position.paddingRight;
         delete position.paddingRight;
       }
+
+      if(typeof position.marginLeft !== 'undefined' &&
+        typeof position.marginRight !== 'undefined'){
+        temp = position.marginLeft;
+        position.marginLeft = position.marginRight;
+        position.marginRight = temp;
+      }else if(typeof position.marginLeft !== 'undefined'){
+        position.marginRight = position.marginLeft;
+        delete position.marginLeft;
+      }else if(typeof position.marginRight !== 'undefined'){
+        position.marginLeft = position.marginRight;
+        delete position.marginRight;
+      }
     }
 
     var ps = ['left', 'top', 'right', 'bottom', 'width', 'height',
-      'padding', 'paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom'];
+      'padding', 'paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom',
+      'margin', 'marginLeft', 'marginRight', 'marginTop', 'marginBottom'];
     for (var i = 0; i < ps.length; i++) {
       var p = ps[i];
       if (typeof position[p] === 'number') {
@@ -494,7 +525,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
       } else if (typeof position[p] !== 'undefined') {
         style[p] = position[p];
       }else{
-        if(p.substr(0, 7) === 'padding'){
+        if(p.substr(0, 7) === 'padding' || p.substr(0, 7) === 'margin'){
           style[p] = 0;
         }else{
           style[p] = 'auto';
@@ -1280,7 +1311,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
   mo.isValidDate = function(date){
     if(date){ //null, '', undefined
       try {
-        var d = new Date(date);
+        var d = mo.getDateByDateTimeStr(date); //new Date(date), IE doesn't work if date has time format
         return !isNaN(d.getTime()); // d.toString() === 'Invalid Date'
       }catch (err) {
         console.error(err);
@@ -1638,25 +1669,19 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
           return r;
         });
       }else if(isDateField){
-        values = array.map(values, lang.hitch(this, function(v) {
+        valueLabels = array.map(values, lang.hitch(this, function(v) {
+          var value = v, label = v;
           if(mo.isValidDate(v)){
-            //convert it to num when server returns a purely numeric string
-            // var numExp = new RegExp("^[0-9]*$");
-            // if(typeof v === 'string' && numExp.test(v)){
-            //   v = parseInt(v, 10);
-            // }
-            // var r = mo.localizeDateByFieldInfo(v, fieldPopupInfo);
-            //display locate time to user
-            var dFormat = fieldPopupInfo ? fieldPopupInfo.format.dateFormat : '';
-            var newV = dFormat.indexOf('Time') < 0? v: mo.getTime(new Date(v));
-            var r = mo.localizeDateByFieldInfo(new Date(newV), fieldPopupInfo);
-            return r;
-            // return v;
-          }else{
-            return v;
-            // return null;
+            value = mo.getDateTimeStrByFieldInfo(v, fieldPopupInfo);//local date in standard date format
+            // var newV = mo.getTime(new Date(v));//local date
+            label = mo.localizeDateByFieldInfo(v, fieldPopupInfo); //local date in esri date format
           }
+          return {
+            value: value,
+            label: label
+          };
         }));
+        return valueLabels;
       }
       //coded values
       var domainValLabels = mo.getCodedValueListForCodedValueOrSubTypes(layerDefinition, fieldName);//[{value,label}]
@@ -1681,11 +1706,12 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
             }else{
               label = mo.localizeNumber(value);
             }
-            // }else if(isDateField){
-            //   var dFormat = fieldPopupInfo ? fieldPopupInfo.format.dateFormat : '';
-            //   var newV = dFormat.indexOf('Time') < 0? value: mo.getTime(new Date(value));
-            //   label = mo.localizeDateByFieldInfo(new Date(newV), fieldPopupInfo);
-          }else{
+          }
+          else if(isDateField){
+            //display in local format
+            label = mo.localizeDateByFieldInfo(new Date(value), fieldPopupInfo);
+          }
+          else{
             label = value;
           }
         }
@@ -2025,7 +2051,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
   *fractional (Boolean, optional):
   *If false, show no decimal places, overriding places and pattern settings.
   */
-  mo.localizeNumber = function(num, options){
+  mo._localizeNumber = function(num, options){
     var decimalStr = num.toString().split('.')[1] || "",
           decimalLen = decimalStr.length;
     var _pattern = "";
@@ -2038,9 +2064,9 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     }else {
       _pattern = "#,###,###,##0";
     }
-
+    var locale = (options && options.locale) || config.locale;
     var _options = {
-      locale: config.locale,
+      locale: locale,
       pattern: _pattern
     };
     lang.mixin(_options, options || {});
@@ -2052,6 +2078,30 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
       console.error(err);
       return num.toLocaleString();
     }
+  };
+
+  mo.localizeNumber = function(number, options) {
+    if (!mo.isNumberOrNumberString(number)) {
+      return number;
+    }
+
+    number = Number(number);
+
+    var isNegative = false;
+    if (number < 0) {
+      isNegative = true;
+      number = Math.abs(number);
+    }
+
+    number = mo._localizeNumber(number, options);
+
+    //Under RTL, the browser will automatically flip the minus sign to the opposite position. 
+    //In order to keep the minus sign always on the left, we need to flip it to the right
+    if (isNegative) {
+      number = window.isRTL ? number + '-' : '-' + number;
+    }
+
+    return number;
   };
 
   /*
@@ -2182,6 +2232,120 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     }
 
     return fd;
+  };
+
+  mo.getDatePatternsByFormat = function(dFormat){
+    return PopupTemplate.prototype._dateFormatsJson[dFormat];
+  };
+
+  //show local dateTime format by fieldIndo configured
+  mo.localizeDateTimeByFieldInfo = function(d, fieldInfo, enableTime, timeAccuracy) {
+    var timePattern = {
+      'h': 'h',
+      'm': 'h:mm',
+      's': 'h:mm:ss'
+    };
+    var timePattern24 = {
+      'h': 'H',
+      'm': 'H:mm',
+      's': 'H:mm:ss'
+    };
+
+    var getDateFormatter = function(dFormat, timeAccuracy, addTimeSuffix){
+      var _datePattern = mo.getDatePatternsByFormat(dFormat).datePattern;
+      var _timePattern = timePattern[timeAccuracy];
+      //add AM/PM when format is Time&12 or only hour.
+      _timePattern = (addTimeSuffix || timeAccuracy === 'h') ?
+       (timePattern[timeAccuracy] + ' a') : timePattern24[timeAccuracy];
+      var dateFormatter = "(datePattern: '" + _datePattern + "', timePattern: '" + _timePattern +
+        "', selector: 'date and time')";
+      return dateFormatter;
+    };
+
+    var dateFormat, dateFormatter;
+    var fd = null;
+    try {
+      var data = {
+        date: d instanceof Date ? d.getTime() : d
+      };
+
+      if(lang.exists('format.dateFormat', fieldInfo)){
+        var dFormat = fieldInfo.format.dateFormat;
+        if(!enableTime){
+          dateFormat = dFormat.split('ShortTime')[0].split('LongTime')[0];//exclude time
+        }else if(dFormat.indexOf('Time') > 0){
+          dateFormatter = getDateFormatter(dFormat, timeAccuracy, dFormat.indexOf('24') < 0);
+
+        }else{//no time configured
+          dateFormatter = getDateFormatter(dFormat, timeAccuracy);
+        }
+      }else{
+        if(enableTime){
+          dateFormatter = getDateFormatter('longMonthDayYear', timeAccuracy);
+        }else{
+          dateFormat = 'longMonthDayYear';
+        }
+      }
+
+      dateFormatter = dateFormatter ? dateFormatter : PopupTemplate.prototype._dateFormats[dateFormat];
+
+      var substOptions = {
+        dateFormat: {
+          properties: ['date'],
+          formatter: 'DateFormat' + dateFormatter
+        }
+      };
+      fd = esriLang.substitute(data, '${date}', substOptions);
+    }catch (err) {
+      console.error(err);
+      fd = d;
+    }
+
+    return fd;
+  };
+
+  //get valide date time string to save in config
+  mo.getDateTimeStr = function(d, showTime) {
+    format = showTime ? 'YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD';
+    var date = moment(d).format(format);
+    return date;
+  };
+
+  //get a date from date time string(format needs to be valid)
+  mo.getDateByDateTimeStr = function(d){
+    return moment(d).toDate();//can't use new Date() for some date formats
+  };
+
+  //get date from date time string & date format
+  //update to display date in the correct 'precision' when changing the configuration of date precision
+  mo.getDateByDateTimeStrAndFormat = function(d, fieldInfo){
+    var date = mo.getDateByDateTimeStr(d);
+    if(lang.exists('format.dateFormat', fieldInfo)){
+      var dFormat = fieldInfo.format.dateFormat;
+      if(dFormat.indexOf('ShortTime') >= 0){
+        date.setSeconds(0);
+      }else if(dFormat.indexOf('Time') < 0){//day
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
+      }
+    }
+    return date;
+  };
+
+  // get valide date time string in correct format configured to save in config. (date unique list)
+  mo.getDateTimeStrByFieldInfo = function(d, fieldInfo) {
+    var format = 'YYYY-MM-DD';
+    if(lang.exists('format.dateFormat', fieldInfo)){
+      var dFormat = fieldInfo.format.dateFormat;
+      if(dFormat.indexOf('LongTime') >= 0){
+        format = format + ' HH:mm:ss';
+      }else if(dFormat.indexOf('ShortTime') >= 0){
+        format = format + ' HH:mm';
+      }
+    }
+    var date = moment(d).format(format);
+    return date;
   };
 
   mo.fieldFormatter = {
@@ -3219,6 +3383,9 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
 
   mo.sanitizeHTML = function(snippet){
     /* global html_sanitize */
+    if (!snippet) {
+      return snippet;
+    }
 
     //https://code.google.com/p/google-caja/wiki/JsHtmlSanitizer
     return html_sanitize(snippet, function(url){
@@ -4071,6 +4238,9 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
   //layerField: https://developers.arcgis.com/web-map-specification/objects/field/
   //popupField: https://developers.arcgis.com/web-map-specification/objects/fieldInfo/
   mo.completePopupFieldFromLayerField = function(layerFields, popupFields){
+    if(!popupFields){ //for#15639 api-bug, pop-up exists but no fieldInfos.
+      return layerFields;
+    }
     for(var layerKey in layerFields){
       var layerFieldName = layerFields[layerKey].name;
       var isExist = false;
@@ -4155,133 +4325,10 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
   };
 
   mo.detectUserAgent = function() {
-    var os = {}, browser = {},
-      ua = navigator.userAgent, platform = navigator.platform,
-      webkit = ua.match(/Web[kK]it[\/]{0,1}([\d.]+)/),
-      android = ua.match(/(Android);?[\s\/]+([\d.]+)?/),
-      osx = !!ua.match(/\(Macintosh\; Intel /),
-      ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
-      ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/),
-      iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
-      webos = ua.match(/(webOS|hpwOS)[\s\/]([\d.]+)/),
-      win = /Win\d{2}|Windows/.test(platform),
-      wp = ua.match(/Windows Phone ([\d.]+)/),
-      touchpad = webos && ua.match(/TouchPad/),
-      kindle = ua.match(/Kindle\/([\d.]+)/),
-      silk = ua.match(/Silk\/([\d._]+)/),
-      blackberry = ua.match(/(BlackBerry).*Version\/([\d.]+)/),
-      bb10 = ua.match(/(BB10).*Version\/([\d.]+)/),
-      rimtabletos = ua.match(/(RIM\sTablet\sOS)\s([\d.]+)/),
-      playbook = ua.match(/PlayBook/),
-      chrome = ua.match(/Chrome\/([\d.]+)/) || ua.match(/CriOS\/([\d.]+)/),
-      firefox = ua.match(/Firefox\/([\d.]+)/),
-      firefoxos = ua.match(/\((?:Mobile|Tablet); rv:([\d.]+)\).*Firefox\/[\d.]+/),
-      ie = ua.match(/MSIE\s([\d.]+)/) || ua.match(/Trident\/[\d](?=[^\?]+).*rv:([0-9.].)/),
-      webview = !chrome && ua.match(/(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/),
-      safari = webview || ua.match(/Version\/([\d.]+)([^S](Safari)|[^M]*(Mobile)[^S]*(Safari))/);
-
-    browser.webkit = !!webkit;
-    if (browser.webkit) {
-      browser.version = webkit[1];
-    }
-
-    if (android) {
-      os.android = true;
-      os.version = android[2];
-    }
-    if (iphone && !ipod) {
-      os.ios = os.iphone = true;
-      os.version = iphone[2].replace(/_/g, '.');
-    }
-    if (ipad) {
-      os.ios = os.ipad = true;
-      os.version = ipad[2].replace(/_/g, '.');
-    }
-    if (ipod) {
-      os.ios = os.ipod = true;
-      os.version = ipod[3] ? ipod[3].replace(/_/g, '.') : null;
-    }
-    if (wp) {
-      os.wp = true;
-      os.version = wp[1];
-    }
-    if (webos) {
-      os.webos = true;
-      os.version = webos[2];
-    }
-    if (touchpad) {
-      os.touchpad = true;
-    }
-    if (blackberry) {
-      os.blackberry = true;
-      os.version = blackberry[2];
-    }
-    if (bb10) {
-      os.bb10 = true;
-      os.version = bb10[2];
-    }
-    if (rimtabletos) {
-      os.rimtabletos = true;
-      os.version = rimtabletos[2];
-    }
-    if (playbook) {
-      browser.playbook = true;
-    }
-    if (kindle) {
-      os.kindle = true;
-      os.version = kindle[1];
-    }
-    if (silk) {
-      browser.silk = true;
-      browser.version = silk[1];
-    }
-    if (!silk && os.android && ua.match(/Kindle Fire/)) {
-      browser.silk = true;
-    }
-    if (chrome) {
-      browser.chrome = true;
-      browser.version = chrome[1];
-    }
-    if (firefox) {
-      browser.firefox = true;
-      browser.version = firefox[1];
-    }
-    if (firefoxos) {
-      os.firefoxos = true;
-      os.version = firefoxos[1];
-    }
-    if (ie) {
-      browser.ie = true;
-      browser.version = ie[1];
-    }
-    if (safari && (osx || os.ios || win)) {
-      browser.safari = true;
-      if (!os.ios) {
-        browser.version = safari[1];
-      }
-    }
-    if (webview) {
-      browser.webview = true;
-    }
-
-    os.tablet = !!(ipad || playbook || (android && !ua.match(/Mobile/)) ||
-    (firefox && ua.match(/Tablet/)) || (ie && !ua.match(/Phone/) && ua.match(/Touch/)));
-    os.phone = !!(!os.tablet && !os.ipod && (android || iphone || webos || blackberry || bb10 ||
-    (chrome && ua.match(/Android/)) || (chrome && ua.match(/CriOS\/([\d.]+)/)) ||
-    (firefox && ua.match(/Mobile/)) || (ie && ua.match(/Touch/))));
-
-    return {
-      os: os,
-      browser: browser
-    };
+    return window.userAgent;
   };
   mo.isMobileUa = function() {
-    var uaInfo = mo.detectUserAgent();
-    if (true === uaInfo.os.phone || true === uaInfo.os.tablet) {
-      return true;
-    } else {
-      return false;
-    }
+    return window.isMobileUa;
   };
 
   mo.inMobileSize = function(){
@@ -4945,7 +4992,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
       /^-?([1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0)$/.test(value);
   };
 
-  //0.1234 --> 12.34% or %12.34(locale=ar or tr)
+  //https://devtopia.esri.com/WebGIS/arcgis-webappbuilder/issues/13559#issuecomment-2117722
   mo.convertNumberToPercentage = function(number, /*optional*/ decimalDigits, digitSeparator) {
     if (!mo.isNumberOrNumberString(number)) {
       return number;
@@ -4966,7 +5013,6 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
 
     var locale = config.locale;
     var percentLeft = locale === 'ar' || locale === 'tr';
-    var isRTL = locale === 'ar' || locale === 'he';
     number = Number(number);
     var isNegative = false;
     if (number < 0) {
@@ -4982,8 +5028,10 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
       number = '%' + number;
     }
 
+    //Under RTL, the browser will automatically flip the minus sign to the opposite position. 
+    //In order to keep the minus sign always on the left, we need to flip it to the right
     if (isNegative) {
-      number = isRTL ? number + '-' : '-' + number;
+      number = window.isRTL ? number + '-' : '-' + number;
     }
 
     return number;
@@ -5083,6 +5131,19 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     return temp;
   };
 
+  mo.getSubstituteString = function(value, string){
+    return esriLang.substitute({value: value}, string);
+  };
+
+  mo.getUUID = function() {
+    function S4() {
+      /*jslint bitwise: true*/
+      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+      /*jslint bitwise: false*/
+    }
+    return (S4() + S4() + "_" + S4() + "_" + S4() + "_" + S4() + "_" + S4() + S4() + S4());
+  };
+
   mo.checkEssentialAppsLicense = function(appId, portal, isInBuilder) {
     var portalUrl = portalUrlUtils.getStandardPortalUrl(window.portalUrl);
     var sharingUrl = portalUrlUtils.getSharingUrl(portalUrl);
@@ -5100,14 +5161,78 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     } else {
       return portal.getItemById(appId).then(function(appItem) {
         if(appItem.access === "public") {
-          return;
+          return {};
         } else {
           return IdentityManager.checkAppAccess(sharingUrl, oauthappid);
         }
       });
     }
   };
-      mo.startTour = function(){
+
+  mo.getStyleColorInTheme = function(styleName) {
+    var def = new Deferred();
+    var appConfig, url;
+    if (window && window.isBuilder) {
+      url = "./stemapp/themes/";
+      appConfig = window.appConfig;//for builder
+    } else {
+      url = "./themes/";
+      appConfig = window.getAppConfig();//for app
+    }
+
+    if (appConfig && appConfig.theme.customStyles && appConfig.theme.customStyles.mainBackgroundColor) {
+      def.resolve(appConfig.theme.customStyles.mainBackgroundColor);
+      return def.promise;
+    }
+    var t = appConfig.theme.name;
+    var s = appConfig.theme.styles[0];//current theme
+    if (styleName) {
+      s = styleName;//specific styleName
+    }
+    url = url + t + "/manifest.json";
+    esriRequest({
+      url: url,
+      handleAs: 'json'
+    }).then(lang.hitch(this, function (data) {
+      if (data && data.styles) {
+        var styles = data.styles;
+        for (var i = 0; i < styles.length; i++) {
+          var st = styles[i];
+          if (st.name === s) {
+            def.resolve(st.styleColor);
+          }
+        }
+      }
+    }), lang.hitch(this, function(err) {
+      console.error(err);
+      def.reject(null);
+    }));
+    return def.promise;
+  };
+
+  //for 8.1 ,#16917
+  // nodes : {link, logo, icon}
+  mo.themesHeaderLogoA11y = function (appConfig, tabIndex, nodes) {
+    if (appConfig.logoLink) {
+      html.setAttr(nodes.link, 'href', appConfig.logoLink);
+      html.setAttr(nodes.link, 'tabIndex', tabIndex);
+      html.setAttr(nodes.link, 'target', '_blank');
+      html.setAttr(nodes.logo, 'alt', appConfig.logoLink);
+      html.setStyle(nodes.icon, 'cursor', 'pointer');
+    } else {
+      html.setAttr(nodes.link, 'href', 'javascript:void(0)');
+      html.setAttr(nodes.link, 'tabIndex', -1);
+      html.setAttr(nodes.link, 'target', '');
+      html.removeAttr(nodes.logo, 'alt');
+      html.setAttr(nodes.logo, 'role', 'presentation');
+      html.setStyle(nodes.icon, 'cursor', 'default');
+    }
+
+    if (appConfig.logoAlt) {
+      html.setAttr(nodes.logo, 'alt', appConfig.logoAlt);
+    }
+  };
+        mo.startTour = function(){
           tourDialogOnScreenWidget = document.getElementById("tourDialog2");
           if (tourDialogOnScreenWidget==null){
               tourDialogOnScreenWidget = new TooltipDialog({

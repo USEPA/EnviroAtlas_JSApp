@@ -7,5 +7,6 @@ define({
   "turnonAll": "Alle lagen selecteerbaar maken",
   "turnoffAll": "Alle lagen niet selecteerbaar maken",
   "toggleSelect": "Selecteerbaarheid voor alle lagen omdraaien",
-  "singleSelect": "Dit de enige selecteerbare laag maken"
+  "singleSelect": "Dit de enige selecteerbare laag maken",
+  "enableByDefault": "De selecteer-tool standaard inschakelen"
 });

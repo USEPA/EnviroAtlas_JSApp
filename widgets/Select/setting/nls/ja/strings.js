@@ -5,5 +5,6 @@ define({
   "whollyWithin": "完全に含まれる",
   "allowExport": "選択フィーチャのエクスポートを許可",
   "layerToSelect": "選択可能なレイヤーを選択",
-  "includeRuntimeLayers": "ランタイムで生成されたレイヤーを選択可能にします。"
+  "includeRuntimeLayers": "ランタイムで生成されたレイヤーの選択を許可",
+  "enableByDefault": "デフォルトで選択ボタンを有効化"
 });

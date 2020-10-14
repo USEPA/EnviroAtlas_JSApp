@@ -1,28 +1,32 @@
 <div>
 	<div class="results-header" data-dojo-attach-point="resultsHeader" style="margin-bottom:15px;">
-		<div class="chart-title jimu-float-leading" data-dojo-attach-point="chartTitle"></div>
+		<div tabindex="0" class="chart-title jimu-float-leading" data-dojo-attach-point="chartTitle"></div>
 		<div class="paging-section jimu-float-leading">
-			<ul data-dojo-attach-point="pagingUl" data-dojo-attach-event="onclick:_onPagingUlClicked"></ul>
+			<ul tabindex="0" data-dojo-attach-point="pagingUl" data-dojo-attach-event="onclick:_onPagingUlClicked, onkeydown:_onPagingUlKeydown"></ul>
 		</div>
-		<div class="zoomin jimu-float-trailing" data-dojo-attach-point="zoominIcon"></div>
-		<div class="settings jimu-float-trailing" data-dojo-attach-point="settingsIcon"></div>
+		<div class="jimu-float-trailing">
+			<div role="button" tabindex="0" class="settings jimu-float-leading" data-dojo-attach-point="settingsIcon"></div>
+			<div role="button" tabindex="0" class="zoomin jimu-float-trailing" data-dojo-attach-point="zoominIcon"></div>
+		</div>
 	</div>
 	<div data-dojo-attach-point="chartSection" class="chart-section">
-		<table cellpadding="0" cellspacing="0" style="width:100%;table-layout:fixed;">
+		<table cellpadding="0" cellspacing="0" style="width:100%;height:100%;table-layout:fixed;">
 			<tbody>
 				<tr>
 					<td class="arrow-td">
-						<div class="chart-section-item left-arrow arrow" data-dojo-attach-point="leftArrow" data-dojo-attach-event="onclick:_onLeftArrowClicked"></div>
+						<div tabindex="0" role="button" aria-label="${nls.previous}" class="chart-section-item left-arrow arrow" data-dojo-attach-point="leftArrow" data-dojo-attach-event="onclick:_onLeftArrowClicked, onkeydown:_onLeftArrowKeydown"></div>
 					</td>
 					<td class="content-td">
-						<div class="chart-section-item chart-container" data-dojo-attach-point="chartContainer" dir="ltr"
-						style="direction:ltr;overflow:hidden;"></div>
+						<div class="chart-section-item chart-container" data-dojo-attach-point="chartContainer">
+							<div class="chart-real-container" data-dojo-attach-point="chartRealContainer"></div>
+							<div tabindex="0" class="description-container" data-dojo-attach-point="descriptionContainer">/div>
+						</div>
 						<div class="fiald-render-info" data-dojo-attach-point="faildRenderInfo">
 							${nls.fieldDisplayChartTip}
 						</div>
 					</td>
 					<td class="arrow-td">
-						<div class="chart-section-item right-arrow arrow" data-dojo-attach-point="rightArrow" data-dojo-attach-event="onclick:_onRightArrowClicked"></div>
+						<div tabindex="0" role="button" aria-label="${nls.next}" class="chart-section-item right-arrow arrow" data-dojo-attach-point="rightArrow" data-dojo-attach-event="onclick:_onRightArrowClicked, onkeydown:_onRightArrowKeydown"></div>
 					</td>
 				</tr>
 			</tbody>

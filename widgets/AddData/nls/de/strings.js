@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Maximalwert von {count} Features zulässig",
     "layerNamePattern": "{filename} – {name}",
     "generalIssue": "Es ist ein Fehler aufgetreten.",
-    "kmlProjectionMismatch": "Der Raumbezug der Karte und der des KML-Layers stimmen nicht überein, und die Konvertierung kann auf dem Client nicht durchgeführt werden."
+    "kmlProjectionMismatch": "Der Raumbezug der Karte und der des KML-Layers stimmen nicht überein, und die Konvertierung kann auf dem Client nicht durchgeführt werden.",
+    "featureLocationsCouldNotBeFound": "Features konnten nicht verortet werden: unbekannte oder ungültige Positionsfelder. Die Datei wird als Tabelle hinzugefügt."
   },
   "layerList": {
     "caption": "Layer",

@@ -28,5 +28,11 @@ define({
   "keyword": "Kulcsszó",
   "basemapLayers": "Alaptérképrétegek",
   "typeAKeywork": "Írja be valamelyik kulcsszót",
-  "layers": "Rétegek"
+  "layers": "Rétegek",
+  "tipLayerSearch": "Rétegek keresése",
+  "tipLayerListOperation": "Réteglista-műveletek",
+  "tipLayerOperation": "Rétegmenük",
+  "tipClearText": "Szöveg törlése",
+  "collapseLayer": "Összecsukás",
+  "expandLayer": "Kibontás"
 });

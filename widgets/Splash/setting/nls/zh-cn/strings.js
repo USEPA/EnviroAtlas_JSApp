@@ -22,7 +22,6 @@ define({
   "imageFill": "影像填充",
   "chooseFile": "选择文件",
   "noFileChosen": "未选择文件",
-  "transparency": "透明度",
   "sizeFill": "填充",
   "sizeFit": "适应",
   "sizeStretch": "拉伸以填充",

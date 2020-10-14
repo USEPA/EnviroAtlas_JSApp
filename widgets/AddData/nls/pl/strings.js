@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Maksymalna dozwolona liczba obiektów: {count}",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "Wystąpił problem.",
-    "kmlProjectionMismatch": "Odniesienie przestrzenne mapy i warstwa KML nie są zgodne i konwersja nie może być przeprowadzona po stronie klienta."
+    "kmlProjectionMismatch": "Odniesienie przestrzenne mapy i warstwa KML nie są zgodne i konwersja nie może być przeprowadzona po stronie klienta.",
+    "featureLocationsCouldNotBeFound": "Nie można było zlokalizować obiektów: nieznane lub nieprawidłowe pola lokalizacji. Ten plik zostanie dodany jako tabela."
   },
   "layerList": {
     "caption": "Warstwy",

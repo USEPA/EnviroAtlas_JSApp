@@ -5,5 +5,10 @@ define({
   "timeExtent": "${FROMTIME} do ${ENDTIME}",
   "layers": "Vrstvy: ",
   "speedLabel": "Rychlost přehrávání",
-  "liveData": "Živá data"
+  "liveData": "Živá data",
+  "previous": "předchozí interval",
+  "next": "další interval",
+  "play": "přehrát",
+  "pause": "pozastavit",
+  "speed": "rychlost"
 });

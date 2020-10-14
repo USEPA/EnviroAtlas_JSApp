@@ -15,6 +15,8 @@ define({
   "selectAll": "Datensätze auf allen Seiten auswählen",
   "selectPage": "Datensätze auf aktueller Seite auswählen",
   "clearSelection": "Auswahl aufheben",
+  "selectionHandleLabel": "Ziehpunkt",
+  "selectionHandleDescription": "EINGABETASTE oder LEERTASTE drücken, um Feature(s) auf der Karte hervorzuheben",
   "filter": "Filter",
   "setFilterTip": "Legen Sie die Filter ordnungsgemäß fest.",
   "noFilterTip": "Dieser Abfrage-Task listet alle Features in der angegebenen Datenquelle ohne definierten Filterausdruck auf.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Es sind keine Tabellen für die Anzeige verfügbar.",
   "checkConfigutationToSelectLayers": "Wechseln Sie zur Einstellungsseite, um Layer auszuwählen.",
-  "checkLayerListToSelectLayers": "Die Attributtabelle wurde mit den sichtbaren Layern in der Karte synchronisiert. Mit Widgets wie \"Layer-Liste\" können Sie Layer aktivieren oder deaktivieren."
+  "checkLayerListToSelectLayers": "Die Attributtabelle wurde mit den sichtbaren Layern in der Karte synchronisiert. Mit Widgets wie \"Layer-Liste\" können Sie Layer aktivieren oder deaktivieren.",
+  "rowHeaderColumnTitle": "Mauszeiger über ${layerName}-Zeile: Eingabetaste drücken, um die Zeilen auszuwählen, auf die mit der Maus gezeigt wird"
 });

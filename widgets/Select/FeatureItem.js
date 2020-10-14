@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -61,7 +61,7 @@ template, jimuUtils, symbolUtils, PopupMenu, PanToAction, ShowPopupAction) {
         title = this.graphic.attributes[this.displayField] ||
           this.graphic.attributes[this.objectIdField];
       }
-      this.nameNode.innerHTML = title;
+      this.nameNode.innerHTML = jimuUtils.sanitizeHTML(title);
       this.nameNode.title = title;
 
       this.own(on(this.actionBtn, 'click', lang.hitch(this, this._showActions)));

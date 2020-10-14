@@ -28,7 +28,7 @@ define({
   "lncludeLegend": "Inkluder tegnforklaring",
   "printQualityOptions": "Utskriftskvalitet",
   "dpi": "DPI",
-  "mapOnlyOptions": "MAP_ONLY størrelse",
+  "mapOnlyOptions": "KUN_KART størrelse",
   "width": "Bredde (px)",
   "height": "Høyde (px)",
   "print": "Skriv ut",

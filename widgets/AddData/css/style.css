@@ -51,6 +51,11 @@
   background-color: #fff;
   padding-bottom: 0;
   position: relative;
+  display: flex;
+}
+.jimu-widget-add-data .search-pane .search-scope-options {
+  flex: 1;
+  overflow: hidden;
 }
 .jimu-widget-add-data .search-pane .search-bar.search-scope-bar .search-sort-options {
   margin-top: 5px;
@@ -773,6 +778,16 @@
   color: #196fa6;
   font-weight: bold;
 }
+.jimu-widget-add-data.width-small .scope-placeholder {
+  display: flex;
+}
+.jimu-widget-add-data.width-small .scope-placeholder > span:first-child {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: calc(100% - 16px);
+  flex: 1;
+}
 .jimu-widget-add-data.width-medium .scope-placeholder:focus,
 .jimu-widget-add-data.width-small .scope-placeholder:focus {
   text-decoration: none;
@@ -883,8 +898,18 @@
   border-bottom-color: #e0e0e0;
 }
 .add-data-widget-popup .search-type-option {
-  display: block;
-  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+.add-data-widget-popup .search-type-option + .search-type-option {
+  margin-top: 10px;
+}
+.add-data-widget-popup .search-type-option .jimu-checkbox {
+  margin-right: 5px;
+}
+.jimu-rtl .add-data-widget-popup .search-type-option .jimu-checkbox {
+  margin-right: auto;
+  margin-left: 5px;
 }
 .add-data-widget-popup .search-type-option,
 .add-data-widget-popup .search-type-option input {

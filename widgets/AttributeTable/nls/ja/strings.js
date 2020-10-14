@@ -15,6 +15,8 @@ define({
   "selectAll": "すべてのページのレコードを選択",
   "selectPage": "現在のページのレコードを選択",
   "clearSelection": "選択の解除",
+  "selectionHandleLabel": "選択ハンドル",
+  "selectionHandleDescription": "Enter キーまたは Space キーを使用してマップ上のフィーチャをハイライト表示",
   "filter": "フィルター",
   "setFilterTip": "フィルターを正しく設定してください。",
   "noFilterTip": "フィルターの条件式が定義されていない場合、このクエリ タスクは、指定したデータ ソース内のすべてのフィーチャをリストします。",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "表示できるテーブルはありません。",
   "checkConfigutationToSelectLayers": "ウィジェット設定ページに移動して、レイヤーを選択してください。",
-  "checkLayerListToSelectLayers": "属性テーブルはマップ内の表示レイヤーと同期しています。レイヤー リストなどのウィジェットを使用して、レイヤーのオン/オフを切り替えることができます。"
+  "checkLayerListToSelectLayers": "属性テーブルはマップ内の表示レイヤーと同期しています。レイヤー リストなどのウィジェットを使用して、レイヤーのオン/オフを切り替えることができます。",
+  "rowHeaderColumnTitle": "行 ${layerName} にポインタを置き、Enter キーを押してポインタを置いた行を選択します。"
 });

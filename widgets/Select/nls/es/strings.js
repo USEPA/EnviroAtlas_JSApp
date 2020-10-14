@@ -7,5 +7,6 @@ define({
   "turnonAll": "Hacer que todas las capas sean seleccionables",
   "turnoffAll": "Hacer que ninguna capa sea seleccionable",
   "toggleSelect": "Alternar la capacidad de selección de todas las capas",
-  "singleSelect": "Convertir esta capa en la única seleccionable"
+  "singleSelect": "Convertir esta capa en la única seleccionable",
+  "enableByDefault": "Habilitar la herramienta Seleccionar de forma predeterminada"
 });

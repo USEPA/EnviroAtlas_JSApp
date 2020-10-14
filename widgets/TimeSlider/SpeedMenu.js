@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,11 +25,12 @@ define(['dojo/_base/declare',
     'dojo/text!./SpeedMenu.html',
     'dojo/on',
     'dojo/query',
-    'jimu/utils'
+    'jimu/utils',
+    "./a11y/SpeedMenu"
   ],
   function (declare, lang, html, array,
     Evented, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template,
-    on, query, jimuUtils) {
+    on, query, jimuUtils, a11y) {
     // box of speed-menu
 
     var clazz = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
@@ -63,9 +64,14 @@ define(['dojo/_base/declare',
       },
 
       _initSpeedMenu: function(){
+        this.a11y_init();
+        this.a11y_initEvents();
+
         Object.keys(this._speedList).forEach(lang.hitch(this, function (key) {
           var dom = this[key];
-          dom.innerText = jimuUtils.localizeNumber(this._speedList[key]) + "x";
+          var str = jimuUtils.localizeNumber(this._speedList[key]) + "x";
+          dom.innerText = str;
+          this.a11y_setAriaLabel(dom.parentElement || dom.parentNode, str);
         }));
 
         this.own(on(this.domNode, 'click', lang.hitch(this, this._closeSpeedMenu)));
@@ -94,7 +100,7 @@ define(['dojo/_base/declare',
           if (check) {
             html.removeClass(check, 'hide');
           }
-          this.speedLabelNode.innerHTML = optionItem.innerText;
+          this.speedLabelNode.innerHTML = jimuUtils.sanitizeHTML(optionItem.innerText);
 
           this._speed = rateStr;
           this.emit("selected", rateStr);
@@ -167,6 +173,8 @@ define(['dojo/_base/declare',
       _showSpeedMenu: function() {
         html.removeClass(this.speedMenu, "hide");
         this.emit("open");
+
+        this.a11y_focusOnSelectedItem();
       },
 
       _closeSpeedMenu: function() {
@@ -175,5 +183,7 @@ define(['dojo/_base/declare',
       }
 
     });
+
+    clazz.extend(a11y);//for a11y
     return clazz;
   });

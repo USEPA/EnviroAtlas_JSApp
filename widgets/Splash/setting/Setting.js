@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,12 +23,13 @@ define([
     'dojo/cookie',
     'dojo/sniff',
     'dojo/query',
-    './ColorPickerEditor',
+    'jimu/dijit/ColorTransparencyPicker',
     './BackgroundSelector',
     './SizeSelector',
     './AlignSelector',
     'dijit/_WidgetsInTemplateMixin',
     'dijit/Editor',
+    'jimu/dijit/EditorXssFilter',
     'jimu/utils',
     'jimu/BaseWidgetSetting',
     "jimu/dijit/CheckBox",
@@ -54,9 +55,9 @@ define([
     'jimu/dijit/EditorBackgroundColor'
   ],
   function(declare, lang, html, on, aspect, cookie, has, query,
-           ColorPickerEditor, BackgroundSelector, SizeSelector, AlignSelector,
-           _WidgetsInTemplateMixin,
-           Editor, utils, BaseWidgetSetting, CheckBox, TabContainer, LoadingShelter, Deferred) {
+           ColorTransparencyPicker, BackgroundSelector, SizeSelector, AlignSelector,
+           _WidgetsInTemplateMixin, Editor, EditorXssFilter,
+           utils, BaseWidgetSetting, CheckBox, TabContainer, LoadingShelter, Deferred) {
     return declare([BaseWidgetSetting, _WidgetsInTemplateMixin], {
       baseClass: 'jimu-widget-splash-setting',
       _defaultSize: {mode: "wh", wh: {w: 600, h: 264}},
@@ -66,6 +67,7 @@ define([
 
       postMixInProperties: function() {
         this.nls = lang.mixin(this.nls, window.jimuNls.common);
+        this.editorXssFilter = EditorXssFilter.getInstance();
       },
       postCreate: function() {
         //LoadingShelter
@@ -128,10 +130,10 @@ define([
         this.alignSelector = new AlignSelector({nls: this.nls}, this.alignSelector);
         this.alignSelector.startup();
 
-        this.buttonColorPicker = new ColorPickerEditor({nls: this.nls}, this.buttonColorPickerEditor);
+        this.buttonColorPicker = new ColorTransparencyPicker({}, this.buttonColorPickerEditor);
         this.buttonColorPicker.startup();
 
-        this.confirmColorPicker = new ColorPickerEditor({nls: this.nls}, this.confirmColorPickerEditor);
+        this.confirmColorPicker = new ColorTransparencyPicker({}, this.confirmColorPickerEditor);
         this.confirmColorPicker.startup();
       },
       initOptionsTab: function() {
@@ -225,7 +227,8 @@ define([
         this.config = config;
 
         this._setWidthForOldVersion().then(lang.hitch(this, function() {
-          this.editor.set('value', config.splash.splashContent || this.nls.defaultContent);
+          //var content = utils.setWABLogoAlt(config);
+          this.editor.set('value', this.editorXssFilter.sanitize(config.splash.splashContent || this.nls.defaultContent));
           this.set('requireConfirm', config.splash.requireConfirm);
           this.showOption.setValue(config.splash.showOption);
           this.confirmOption.setValue(config.splash.confirmEverytime);

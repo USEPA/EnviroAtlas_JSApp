@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Lubatud on maksimaalselt {count} objekti",
     "layerNamePattern": "{filename} – {name}",
     "generalIssue": "Ilmnes probleem.",
-    "kmlProjectionMismatch": "Kaardi ja KML-kihi koordinaatsüsteemid ei kattu ja teisendamine pole klientrakenduses võimalik."
+    "kmlProjectionMismatch": "Kaardi ja KML-kihi koordinaatsüsteemid ei kattu ja teisendamine pole klientrakenduses võimalik.",
+    "featureLocationsCouldNotBeFound": "Omadusi ei leitud: tundmatud või sobimatud asukohaväljad. Fail lisatakse tabelina."
   },
   "layerList": {
     "caption": "Kihid",

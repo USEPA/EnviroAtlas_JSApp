@@ -1,5 +1,5 @@
 define({
-  "sourceSetting": "Quelleinstellungen durchsuchen",
+  "sourceSetting": "Einstellungen der Suchquellen",
   "instruction": "Fügen Sie Geokodierungsservices oder Feature-Layer als Suchquellen hinzu, und konfigurieren Sie sie. Anhand dieser angegebenen Quellen wird bestimmt, welche Elemente im Suchfeld durchsucht werden können.",
   "add": "Suchquelle hinzufügen",
   "addGeocoder": "Geocoder hinzufügen",
@@ -14,6 +14,7 @@ define({
   "generalSetting": "Allgemeine Einstellungen",
   "allPlaceholder": "Platzhaltertext für die Suche in allen Quellen: ",
   "showInfoWindowOnSelect": "Pop-up für das gefundene Feature oder die gefundene Position anzeigen",
+  "showInfoWindowOnSelect2": "Pop-up anzeigen, wenn das Feature oder die Position gefunden wird.",
   "searchInCurrentMapExtent": "Nur in der aktuellen Kartenausdehnung suchen",
   "zoomScale": "Zoom-Maßstab",
   "locatorUrl": "Geocoder-URL",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "Alias",
   "ok": "OK",
   "cancel": "Abbrechen",
-  "invalidUrlTip": "Die URL ${URL} ist ungültig oder es kann nicht darauf zugegriffen werden."
+  "invalidUrlTip": "Die URL ${URL} ist ungültig oder es kann nicht darauf zugegriffen werden.",
+  "locateResults": "Ergebnisse für 'Suchen'",
+  "panTo": "Schwenken auf",
+  "zoomToScale": "Auf Maßstab zoomen"
 });

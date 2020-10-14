@@ -1,11 +1,249 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/lang dojo/_base/array dojo/Deferred dojo/when dojo/promise/all jimu/portalUtils esri/lang esri/request".split(" "),function(e,g,n,p,h,q,k,r){return{map:null,layerInfosObj:null,appConfig:null,_esriLocatorRegExp:/geocode(.){0,3}\.arcgis.com\/arcgis\/rest\/services\/World\/GeocodeServer/g,setMap:function(a){this.map=a},setLayerInfosObj:function(a){this.layerInfosObj=a},setAppConfig:function(a){this.appConfig=a},getConfigInfo:function(a){if(a&&a.sources&&0<a.sources.length){var b=null;
-return this.searchLayer(this.map)&&a.upgradeFromGeocoder?(b=this.map.itemInfo.itemData.applicationProperties.viewing.search,b=g.map(b.layers,e.hitch(this,function(a,b){b.hintText=a;return this._getQueryTypeGeocoder(b)},b.hintText)),h(b).then(e.hitch(this,function(c){a.sources=[].concat(c).concat(a.sources);return a}))):a}return p(this._getSoucesFromPortalAndWebmap()).then(e.hitch(this,function(a){return{allPlaceholder:"",showInfoWindowOnSelect:!0,sources:a}}))},_getSoucesFromPortalAndWebmap:function(){var a=
-[],b=null;this.searchLayer(this.map)&&(b=this.map.itemInfo.itemData.applicationProperties.viewing.search,g.forEach(b.layers,e.hitch(this,function(b,l){l.hintText=b;a.push(this._getQueryTypeGeocoder(l))},b.hintText)));return q.getPortalSelfInfo(this.appConfig.portalUrl).then(e.hitch(this,function(b){if((b=b.helperServices&&b.helperServices.geocode)&&0<b.length)for(var c=0,f=b.length;c<f;c++){var m=b[c];m&&a.push(this._processSingleLine(m))}return h(a).then(e.hitch(this,function(a){for(var b=[],c=0;c<
-a.length;c++){var d=a[c];d&&(d&&"query"===d.type||(d={name:d.name||this._getGeocodeName(d.url),url:d.url,singleLineFieldName:d.singleLineFieldName,placeholder:d.placeholder||window.jimuNls.common.findAddressOrPlace||d.name||this._getGeocodeName(d.url),maxResults:6,searchInCurrentMapExtent:!1,type:"locator"},d.enableLocalSearch=this._isEsriLocator(d.url),d.localSearchMinScale=3E5,d.localSearchDistance=5E4),b.push(d))}return b}))}))},_getQueryTypeGeocoder:function(a){var b=this.map.getLayer(a.id),c=
-null,e=null,f=null,f=k.isDefined(a.subLayer)?a.id+"_"+a.subLayer:a.id,c=this.layerInfosObj.traversal(function(a){return a.id===f?(e=a,!0):!1});return b&&c&&e?(c=k.isDefined(a.subLayer)?e.url||b.url+"/"+a.subLayer:e.url||b.url,{name:e.title,layerId:f,url:c,placeholder:a.hintText||window.jimuNls.common.findAddressOrPlace,searchFields:[a.field.name],displayField:a.field.name,exactMatch:a.field.exactMatch||!1,maxResults:6,searchInCurrentMapExtent:!1,type:"query"}):null},_isEsriLocator:function(a){this._esriLocatorRegExp.lastIndex=
-0;return this._esriLocatorRegExp.test(a)},_processSingleLine:function(a){if(a.singleLineFieldName)return a;if(this._isEsriLocator(a.url))return a.singleLineFieldName="SingleLine",a;var b=new n;r({url:a.url,content:{f:"json"},handleAs:"json",callbackParamName:"callback"}).then(e.hitch(this,function(c){c.singleLineAddressField&&c.singleLineAddressField.name?(a.singleLineFieldName=c.singleLineAddressField.name,b.resolve(a)):(console.warn(a.url+"has no singleLineFieldName"),b.resolve(null))}),e.hitch(this,
-function(a){console.error(a);b.resolve(null)}));return b.promise},_getGeocodeName:function(a){if("string"!==typeof a)return"geocoder";a=a.split("/");return a[a.length-2]||"geocoder"},getGeocoderName:function(a){return this._getGeocodeName(a)},hasAppSearchInfo:function(a){return a.itemInfo&&a.itemInfo.itemData&&a.itemInfo.itemData.applicationProperties&&a.itemInfo.itemData.applicationProperties.viewing&&a.itemInfo.itemData.applicationProperties.viewing.search},searchLayer:function(a){if(!this.hasAppSearchInfo(a))return!1;
-a=a.itemInfo.itemData.applicationProperties.viewing.search;return a.enabled&&0!==a.layers.length?!0:!1}}});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'dojo/Deferred',
+  'dojo/when',
+  'dojo/promise/all',
+  'jimu/portalUtils',
+  'esri/lang',
+  'esri/request'
+], function(lang, array, Deferred, when, all, portalUtils, esriLang, esriRequest) {
+  var mo = {
+    map: null,
+    layerInfosObj: null,
+    appConfig: null,
+    _esriLocatorRegExp: /geocode(.){0,3}\.arcgis.com\/arcgis\/rest\/services\/World\/GeocodeServer/g
+  };
+
+  mo.setMap = function(map) {
+    this.map = map;
+  };
+
+  mo.setLayerInfosObj = function(lobj) {
+    this.layerInfosObj = lobj;
+  };
+
+  mo.setAppConfig = function(apc) {
+    this.appConfig = apc;
+  };
+
+  mo.getConfigInfo = function(config) {
+    if (config && config.sources && config.sources.length > 0) {
+      var searchInfo = null;
+      if (this.searchLayer(this.map) && config.upgradeFromGeocoder) {
+        // back compatibility for config which come from geocoders
+        searchInfo = this.map.itemInfo.itemData.applicationProperties.viewing.search;
+        var defs = array.map(searchInfo.layers, lang.hitch(this, function(hintText, _layer) {
+          _layer.hintText = hintText;
+          return this._getQueryTypeGeocoder(_layer);
+        }, searchInfo.hintText));
+        return all(defs).then(lang.hitch(this, function(results) {
+          config.sources = [].concat(results).concat(config.sources);
+          return config;
+        }));
+      } else {
+        return config;
+      }
+    } else {
+      return when(this._getSoucesFromPortalAndWebmap())
+        .then(lang.hitch(this, function(sources) {
+          return {
+            "allPlaceholder": "",
+            "showInfoWindowOnSelect": true,
+            "sources": sources
+          };
+        }));
+    }
+  };
+
+  mo._getSoucesFromPortalAndWebmap = function() {
+    var defs = [];
+    var searchInfo = null;
+    if (this.searchLayer(this.map)) {
+      searchInfo = this.map.itemInfo.itemData.applicationProperties.viewing.search;
+      array.forEach(searchInfo.layers, lang.hitch(this, function(hintText, _layer) {
+        _layer.hintText = hintText;
+        defs.push(this._getQueryTypeGeocoder(_layer));
+      }, searchInfo.hintText));
+    } // else do nothing
+
+    return portalUtils.getPortalSelfInfo(this.appConfig.portalUrl)
+      .then(lang.hitch(this, function(response) {
+        var geocoders = response.helperServices && response.helperServices.geocode;
+
+        if (geocoders && geocoders.length > 0) {
+          for (var i = 0, len = geocoders.length; i < len; i++) {
+            var geocoder = geocoders[i];
+            if (geocoder) {
+              defs.push(this._processSingleLine(geocoder));
+            }
+          }
+        }
+
+        return all(defs).then(lang.hitch(this, function(results) {
+          var validSources = [];
+          for (var i = 0; i < results.length; i++) {
+            var geocode = results[i];
+            if (!geocode) {
+              continue;
+            } else if (geocode && geocode.type === 'query') {
+              validSources.push(geocode);
+            } else {
+              var json = {
+                name: geocode.name || this._getGeocodeName(geocode.url),
+                url: geocode.url,
+                singleLineFieldName: geocode.singleLineFieldName,
+                placeholder: geocode.placeholder || window.jimuNls.common.findAddressOrPlace ||
+                  geocode.name || this._getGeocodeName(geocode.url),
+                maxResults: 6,
+                searchInCurrentMapExtent: false,
+                type: "locator"
+              };
+              json.enableLocalSearch = this._isEsriLocator(json.url);
+              json.localSearchMinScale = 300000;
+              json.localSearchDistance = 50000;
+
+              validSources.push(json);
+            }
+          }
+
+          return validSources;
+        }));
+      }));
+  };
+
+  mo._getQueryTypeGeocoder = function(item) {
+    var layer = this.map.getLayer(item.id);
+    var url = null;
+    var _layerInfo = null;
+    var _layerId = null;
+
+    if (esriLang.isDefined(item.subLayer)) {
+      _layerId = item.id + "_" + item.subLayer;
+    } else {
+      _layerId = item.id;
+    }
+
+    var isInMap = this.layerInfosObj.traversal(function(layerInfo) {
+      if (layerInfo.id === _layerId) {
+        _layerInfo = layerInfo;
+        return true;
+      }
+
+      return false;
+    });
+
+    if (layer && isInMap && _layerInfo) {
+      if (esriLang.isDefined(item.subLayer)) {
+        url = _layerInfo.url || (layer.url + "/" + item.subLayer);
+      } else {
+        url = _layerInfo.url || layer.url;
+      }
+
+      return {
+        name: _layerInfo.title,
+        layerId: _layerId,
+        url: url,
+        placeholder: item.hintText || window.jimuNls.common.findAddressOrPlace,
+        searchFields: [item.field.name],
+        displayField: item.field.name,
+        exactMatch: item.field.exactMatch || false,
+        maxResults: 6,
+        searchInCurrentMapExtent: false,
+        type: "query"
+      };
+    } else {
+      return null;
+    }
+  };
+
+  mo._isEsriLocator = function(url) {
+    this._esriLocatorRegExp.lastIndex = 0;
+    return this._esriLocatorRegExp.test(url);
+  };
+
+  mo._processSingleLine = function(geocode) {
+    // this._esriLocatorRegExp.lastIndex = 0;
+    if (geocode.singleLineFieldName) {
+      return geocode;
+    } else if (this._isEsriLocator(geocode.url)) {
+      geocode.singleLineFieldName = 'SingleLine';
+      return geocode;
+    } else {
+      var def = new Deferred();
+      esriRequest({
+        url: geocode.url,
+        content: {
+          f: "json"
+        },
+        handleAs: "json",
+        callbackParamName: "callback"
+      }).then(lang.hitch(this, function(response) {
+        if (response.singleLineAddressField && response.singleLineAddressField.name) {
+          geocode.singleLineFieldName = response.singleLineAddressField.name;
+          def.resolve(geocode);
+        } else {
+          console.warn(geocode.url + "has no singleLineFieldName");
+          def.resolve(null);
+        }
+      }), lang.hitch(this, function(err) {
+        console.error(err);
+        def.resolve(null);
+      }));
+
+      return def.promise;
+    }
+  };
+
+  mo._getGeocodeName = function(geocodeUrl) {
+    if (typeof geocodeUrl !== "string") {
+      return "geocoder";
+    }
+    var strs = geocodeUrl.split('/');
+    return strs[strs.length - 2] || "geocoder";
+  };
+
+  mo.getGeocoderName = function(url) {
+    return this._getGeocodeName(url);
+  };
+
+  mo.hasAppSearchInfo = function(map) {
+    return map.itemInfo && map.itemInfo.itemData &&
+      map.itemInfo.itemData.applicationProperties &&
+      map.itemInfo.itemData.applicationProperties.viewing &&
+      map.itemInfo.itemData.applicationProperties.viewing.search;
+  };
+
+  mo.searchLayer = function(map) {
+    if (!this.hasAppSearchInfo(map)) {
+      return false;
+    }
+    var search = map.itemInfo.itemData.applicationProperties.viewing.search;
+    if (!search.enabled) {
+      return false;
+    }
+    if (search.layers.length === 0) {
+      return false;
+    }
+
+    return true;
+  };
+
+  return mo;
+});

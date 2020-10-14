@@ -28,5 +28,11 @@ define({
   "keyword": "Atslēgvārdi",
   "basemapLayers": "Pamatkartes slāņi",
   "typeAKeywork": "Rakstīt atslēgvārdu",
-  "layers": "Slāņi"
+  "layers": "Slāņi",
+  "tipLayerSearch": "Meklēt slāņus",
+  "tipLayerListOperation": "Darbības ar slāņu sarakstu",
+  "tipLayerOperation": "Slāņa izvēlnes",
+  "tipClearText": "Notīrīt tekstu",
+  "collapseLayer": "Sakļaut",
+  "expandLayer": "Izvērst"
 });

@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Sunt permise maximum {count} obiecte spaţiale",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "A apărut o problemă.",
-    "kmlProjectionMismatch": "Referinţa spaţială a hărții și stratului tematic KML nu corespund, iar conversia nu poate fi realizată pe client."
+    "kmlProjectionMismatch": "Referinţa spaţială a hărții și stratului tematic KML nu corespund, iar conversia nu poate fi realizată pe client.",
+    "featureLocationsCouldNotBeFound": "Unele obiecte spațiale nu au putut fi localizate: câmpuri de localizare necunoscute sau nevalide. Fișierul va fi adăugat sub formă de tabel."
   },
   "layerList": {
     "caption": "Straturi tematice",

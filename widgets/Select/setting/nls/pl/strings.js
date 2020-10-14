@@ -5,5 +5,6 @@ define({
   "whollyWithin": "Całkowicie w obrębie",
   "allowExport": "Zezwalaj na eksport wybranych obiektów",
   "layerToSelect": "Wybierz warstwy dostępne do zaznaczania",
-  "includeRuntimeLayers": "Pozwala wybierać warstwy utworzone w czasie wykonania"
+  "includeRuntimeLayers": "Pozwalaj wybierać warstwy utworzone w czasie wykonania",
+  "enableByDefault": "Włącz domyślnie przycisk wyboru"
 });

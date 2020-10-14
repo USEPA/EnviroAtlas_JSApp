@@ -28,5 +28,11 @@ define({
   "keyword": "Parola chiave",
   "basemapLayers": "Layer del basemap",
   "typeAKeywork": "Digitare una parola chiave",
-  "layers": "Livelli"
+  "layers": "Livelli",
+  "tipLayerSearch": "Cerca layer",
+  "tipLayerListOperation": "Operazioni elenco layer",
+  "tipLayerOperation": "Menu layer",
+  "tipClearText": "Eliminare testo",
+  "collapseLayer": "Comprimi",
+  "expandLayer": "Espandi"
 });

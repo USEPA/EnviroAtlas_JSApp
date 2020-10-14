@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Um máximo de {count} feições são permitidas",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "Ocorreu um problema.",
-    "kmlProjectionMismatch": "A referência espacial da camada de KML e de mapa não corresponde e a conversão não pode ser feita no cliente."
+    "kmlProjectionMismatch": "A referência espacial da camada de KML e de mapa não corresponde e a conversão não pode ser feita no cliente.",
+    "featureLocationsCouldNotBeFound": "Não foi possível localizar as feições: campos de localização desconhecidos ou inválidos. O arquivo será adicionado como uma tabela."
   },
   "layerList": {
     "caption": "Camadas",

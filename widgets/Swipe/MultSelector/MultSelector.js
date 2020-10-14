@@ -1,11 +1,253 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:widgets/Swipe/MultSelector/MultSelector.html":'\x3cdiv class\x3d"mult-selector"\x3e\r\n\t\x3cdiv data-dojo-type\x3d"dojox/form/CheckedMultiSelect" multiple\x3d"true" dropDown\x3d"true"\r\n\t\tdata-dojo-attach-point\x3d"selector"\x3e\x3c/div\x3e\r\n\x3c/div\x3e'}});
-define("dojo/Evented dojo/_base/declare dojo/_base/lang dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/on dojo/query dojo/_base/html dojo/text!./MultSelector.html jimu/dijit/CheckBox dijit/form/Select dojox/form/CheckedMultiSelect dijit/form/ValidationTextBox xstyle/css!dojox/form/resources/CheckedMultiSelect.css".split(" "),function(m,n,e,p,q,r,k,l,b,t){return n([p,q,r,m],{templateString:t,_LAST_VALUEL:"",postCreate:function(){this.inherited(arguments)},startup:function(){this.own(k(this.selector,
-"click",e.hitch(this,function(a){"INPUT"===a.target.nodeName&&this.selector.dropDownButton.toggleDropDown();a=l(".dijitReset.dijitMenuItemLabel",this.selector.dropDown.domNode);for(var c=0,g=a.length;c<g;c++){var d=a[c];b.attr(d,"title",d.innerText)}})));this.own(k(this.selector,"change",e.hitch(this,function(a){this._updateMultSelectorLabel(this._getOptionsLabelsByValues(a));this._LAST_VALUEL.toString()!==a.toString()&&(this.selector.dropDownButton.toggleDropDown(),this.selector.dropDownButton.toggleDropDown(),
-this.emit("change",a),this._LAST_VALUEL=a)})));this.inherited(arguments)},initOptions:function(a,c){this.disable();this._initMultSelectorLabel();var g=null;c&&(g=this.selector.getOptions());this.selector.removeOption(this.selector.getOptions());for(var d=[],b=0,h=a.length;b<h;b++){var f=a[b];this.selector.addOption(f);this._hasOptionMultSelected(f,c?g:a)&&d.push(f.value)}this.selector.set("value",d);this._updateMultSelectorLabel(this._getOptionsLabelsByValues(d));this.enable()},setOptions:function(a){this.selector.set("options",
-a)},getOptions:function(){return this.selector.get("options")},reset:function(){this.selector.set("options",[{value:"",label:""}]);this.selector.reset()},setValue:function(a){this.setConfig(a)},setConfig:function(a){this._setMultSelectorEmpty();this.selector.set("value",a)},getConfig:function(){return this.selector.getValue()},disable:function(){this.selector.set("disabled",!0);this._DISABLED=!0},enable:function(){this.selector.set("disabled",!1);this._DISABLED=!1},_initMultSelectorLabel:function(){this.selector.labelDiv&&
-(b.empty(this.selector.labelDiv),b.destroy(this.selector.labelDiv),this.selector.labelDiv=null);var a=l(".dijitButtonText",this.selector.dropDownButton.buttonNode)[0];b.addClass(a,"hide");this.selector.labelDiv=b.create("div",{"class":"dijitReset dijitInline dijitButtonText multselector-label-container"},a,"after");b.addClass(this.selector.labelDiv,"label-max-height");b.addClass(this.selector.dropDownMenu.domNode,"mult-selector-dropdown-max-height");this._updateMultSelectorLabel([this.nls.defaultLayerHolder])},
-_setMultSelectorEmpty:function(){this.selector.set("value",[]);this._updateMultSelectorLabel([this.nls.defaultLayerHolder])},_updateMultSelectorLabel:function(a){b.empty(this.selector.labelDiv);a&&0!==a.length||this._setMultSelectorEmpty();for(var c=0,g=a.length;c<g;c++)b.create("div",{"class":"dijitReset dijitButtonText multselector-label",innerHTML:a[c]},this.selector.labelDiv)},_getOptionsLabelsByValues:function(a){for(var c=this.getOptions(),b=[],d=0,u=c.length;d<u;d++)for(var h=c[d],f=0,e=a.length;f<
-e;f++)h.value===a[f]&&b.push(h.label);return b},_hasOptionMultSelected:function(a,b){for(var c=0,d=b.length;c<d;c++){var e=b[c];if(e.value===a.value&&!0===e.selected)return!0}return!1}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define(['dojo/Evented',
+  'dojo/_base/declare',
+  'dojo/_base/lang',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  "dijit/_WidgetsInTemplateMixin",
+  'dojo/on',
+  "jimu/utils",
+  'dojo/_base/html',
+  "./a11y/MultSelector",
+  "dojo/text!./MultSelector.html",
+  "jimu/dijit/CheckBox",
+  "dijit/form/Select",
+  "dojox/form/CheckedMultiSelect",
+  "dijit/form/ValidationTextBox",
+  "xstyle/css!dojox/form/resources/CheckedMultiSelect.css"
+],
+  function (Evented, declare, lang,
+    _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
+    on, jimuUtils, html, a11y,
+    template) {
+    var clazz = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+      templateString: template,
+      /*
+        config = {
+          layerMode
+          layer
+          defaultLayers
+          layerState
+        }
+      */
+      _LAST_VALUEL: "",//esc the Aysc "change" event
+
+      postCreate: function () {
+        this.inherited(arguments);
+      },
+
+      startup: function () {
+        this.inherited(arguments);
+
+        this.a11y_initEvents();
+
+        this.own(on(this.selector, 'change', lang.hitch(this, function (evt) {
+          this._updateMultSelectorLabel(this._getOptionsLabelsByValues(evt));
+
+          if (this._LAST_VALUEL.toString() !== evt.toString()) {
+            //re-position the dropDownMeun
+            this.selector.dropDownButton.toggleDropDown();
+            this.selector.dropDownButton.toggleDropDown();
+            if (this.selector.dropDownButton.dropDown.lastFocusedChild &&
+              this.selector.dropDownButton.dropDown.lastFocusedChild.domNode) {
+              this.selector.dropDownButton.dropDown.lastFocusedChild.domNode.focus();//keep focus node
+            }
+
+            this.emit("change", evt);//because the change event is Asyc, so can't disable
+
+            this._LAST_VALUEL = evt;
+          }
+        })));
+      },
+
+      // initOptionsbyLayers: function (layers) {
+      //   this._initMultSelectorLabel();
+
+      //   var oldOptions = this.selector.getOptions();
+      //   this.selector.removeOption(this.selector.getOptions());
+
+      //   var selectedValue = [];
+      //   for (var i = 0, len = layers.length; i < len; i++) {
+      //     var option = layers[i];
+
+      //     this.selector.addOption(option);
+
+      //     if (this._hasOptionMultSelected(option, oldOptions)) {
+      //       selectedValue.push(option.value);
+      //     }
+      //   }
+
+      //   this.selector.set("value", selectedValue);//keep selected
+      //   this._updateMultSelectorLabel(selectedValue);
+      // },
+
+      initOptions: function (options, isKeepSelected) {
+        this.disable();
+        this._initMultSelectorLabel();
+
+        var oldOptions = null;
+        if (isKeepSelected) {
+          oldOptions = this.selector.getOptions();
+        }
+
+        this.selector.removeOption(this.selector.getOptions());
+
+        var selectedValue = [];
+        for (var i = 0, len = options.length; i < len; i++) {
+          var option = options[i];
+
+          this.selector.addOption(option);
+
+          if (this._hasOptionMultSelected(option, (isKeepSelected ? oldOptions : options))) {
+            selectedValue.push(option.value);//keep selected
+          }
+        }
+
+        this.selector.set("value", selectedValue);
+        this._updateMultSelectorLabel(this._getOptionsLabelsByValues(selectedValue));
+
+        this.enable();
+      },
+
+      setOptions: function (options) {
+        this.selector.set('options', options);
+      },
+      getOptions: function () {
+        return this.selector.get('options');
+      },
+      reset: function () {
+        this.selector.set("options", [{ value: "", label: "" }]);
+        this.selector.reset();
+      },
+
+      setValue: function (value) {
+        this.setConfig(value);
+      },
+      setConfig: function (config) {
+        this._setMultSelectorEmpty();
+        this.selector.set("value", config);
+      },
+
+      getConfig: function () {
+        return this.selector.getValue();
+      },
+
+      disable: function () {
+        this.selector.set('disabled', true);
+        this._DISABLED = true;
+      },
+      enable: function () {
+        this.selector.set('disabled', false);
+        this._DISABLED = false;
+      },
+
+      //Asyc, so init in initOption
+      _initMultSelectorLabel: function () {
+        if (this.selector.labelDiv) {
+          html.empty(this.selector.labelDiv);
+          html.destroy(this.selector.labelDiv);
+          this.selector.labelDiv = null;
+        }
+
+        this.a11y_initSelectorLabel();
+
+        this.selector.labelDiv = html.create('div', {
+          "class": "dijitReset dijitInline dijitButtonText multselector-label-container",
+          "tabindex": "-1"
+        }, this.selector.dropDownButton._buttonNode, "first");
+
+        //ui max-height
+        html.addClass(this.selector.labelDiv, "label-max-height");
+        html.addClass(this.selector.dropDownMenu.domNode, "mult-selector-dropdown-max-height");
+
+        this._updateMultSelectorLabel([this.nls.defaultLayerHolder]);
+      },
+      _setMultSelectorEmpty: function () {
+        this.selector.set("value", []);
+        this._updateMultSelectorLabel([this.nls.defaultLayerHolder]);
+      },
+      _updateMultSelectorLabel: function (array) {
+        html.empty(this.selector.labelDiv);
+
+        if (!array || 0 === array.length) {
+          this._setMultSelectorEmpty();
+        }
+
+        for (var i = 0, len = array.length; i < len; i++) {
+          var item = array[i];
+
+          html.create('div', {
+            "class": "dijitReset dijitButtonText multselector-label",
+            innerHTML: jimuUtils.sanitizeHTML(item)
+          }, this.selector.labelDiv);
+        }
+      },
+      _getOptionsLabelsByValues: function (values) {
+        var options = this.getOptions();
+        var labels = [];
+
+        for (var i = 0, len = options.length; i < len; i++) {
+          var option = options[i];
+
+          for (var j = 0, lenJ = values.length; j < lenJ; j++) {
+            var value = values[j];
+
+            if (option.value === value) {
+              labels.push(option.label);
+            }
+          }
+        }
+
+        return labels;
+      },
+      // _resetDefaultLayersOptions: function (layers) {
+      //   //can't defaultLayers.set('options', layers); so hack
+      //   var oldOptions = this.selector.getOptions();
+
+      //   this.selector.removeOption(this.selector.getOptions())
+
+      //   var selectedValue = [];
+      //   for (var i = 0, len = layers.length; i < len; i++) {
+      //     var option = layers[i];
+
+      //     this.selector.addOption(option);
+
+      //     if (this._hasOptionMultSelected(option, oldOptions)) {
+      //       selectedValue.push(option.value);
+      //     }
+      //   }
+
+      //   this.selector.set("value", selectedValue);//keep selected
+      //   this._updateMultSelectorLabel(selectedValue);
+      // },
+      _hasOptionMultSelected: function (option, options) {
+        for (var i = 0, len = options.length; i < len; i++) {
+          var item = options[i];
+
+          if (item.value === option.value && true === item.selected) {
+            return true;
+          }
+        }
+
+        return false;
+      }
+    });
+
+    clazz.extend(a11y);//for a11y
+    return clazz;
+  });

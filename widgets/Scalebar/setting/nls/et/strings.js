@@ -5,5 +5,9 @@ define({
   "english": "inglise",
   "metric": "meetermõõdustik",
   "ruler": "joonlaud",
-  "line": "joon"
+  "line": "joon",
+  "number": "arv",
+  "spinnerLabel": "Ümarda skaala arv arvuks: ",
+  "decimalPlace": "kümnendkoht",
+  "separator": "Kuva tuhandike eraldajad"
 });

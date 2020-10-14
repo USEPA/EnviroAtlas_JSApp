@@ -28,5 +28,11 @@ define({
   "keyword": "Raktažodis",
   "basemapLayers": "Pagrindo žemėlapio sluoksniai",
   "typeAKeywork": "Įveskite raktažodį",
-  "layers": "Sluoksniai"
+  "layers": "Sluoksniai",
+  "tipLayerSearch": "Ieškoti sluoksnių",
+  "tipLayerListOperation": "Sluoksnių sąrašo operacijos",
+  "tipLayerOperation": "Sluoksnio meniu",
+  "tipClearText": "Valyti tekstą",
+  "collapseLayer": "Suskleisti",
+  "expandLayer": "Išskleisti"
 });

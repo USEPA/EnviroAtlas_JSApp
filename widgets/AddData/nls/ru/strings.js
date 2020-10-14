@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Допустимо использовать не более {count} объектов",
     "layerNamePattern": "{filename} – {name}",
     "generalIssue": "Имеется проблема.",
-    "kmlProjectionMismatch": "Пространственная привязка карты и слоя KML не совпадают, конвертация на клиенте не может быть выполнена."
+    "kmlProjectionMismatch": "Пространственная привязка карты и слоя KML не совпадают, конвертация на клиенте не может быть выполнена.",
+    "featureLocationsCouldNotBeFound": "Объекты не найдены: неизвестные или некорректные поля местоположения. Файл будет добавлен как таблица."
   },
   "layerList": {
     "caption": "Слои",

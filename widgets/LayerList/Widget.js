@@ -38,7 +38,7 @@ define([
       baseClass: 'jimu-widget-layerList',
       name: 'layerList',
       layerFilter: null,
-      _denyLayerInfosReorderResponseOneTime: null,
+      _denyLayerInfosOpacityResponseOneTime: null,
       _denyLayerInfosIsVisibleChangedResponseOneTime: null,
       //layerListView: Object{}
       //  A module is responsible for show layers list
@@ -64,7 +64,7 @@ define([
         var openLegendDiv = document.getElementById("openLegendDiv");
 
         NlsStrings.value = this.nls;
-        this._denyLayerInfosReorderResponseOneTime = false;
+        this._denyLayerInfosOpacityResponseOneTime = false;
         this._denyLayerInfosIsVisibleChangedResponseOneTime = false;
         // summary:
         //    this function will be called when widget is started.
@@ -98,6 +98,9 @@ define([
 
       _createLayerFilter: function() {
         this.layerFilter = new LayerFilter({layerListWidget: this}).placeAt(this.layerFilterNode);
+        html.setAttr(this.layerFilter.searchButton, 'tabindex', 0);
+        html.setAttr(this.layerFilter.searchButton, 'aria-label', this.nls.layers + ' ' + window.jimuNls.common.search);
+        html.addClass(this.layerFilter.searchButton, 'firstFocusNode');
       },
 
 	  _onOpenLegendBtnClick: function() {
@@ -348,12 +351,14 @@ define([
       },
 
       _onLayerInfosReorder: function() {
-        if(this._denyLayerInfosReorderResponseOneTime) {
-          // denies one time
-          this._denyLayerInfosReorderResponseOneTime = false;
-        } else {
-          this._refresh();
-        }
+        //if(this._denyLayerInfosReorderResponseOneTime) {
+        //  // denies one time
+        //  this._denyLayerInfosReorderResponseOneTime = false;
+        //} else {
+        //  this._refresh();
+        //}
+        this.layerFilter.cancelFilter();
+        this.layerListView.refresh();
       },
 
       _onLayerInfosRendererChanged: function(changedLayerInfos) {
@@ -372,6 +377,13 @@ define([
           var contentDomNode = query("[layercontenttrnodeid='" + layerInfo.id + "']", this.domNode)[0];
           query(".legends-div.jimu-legends-div-flag img", contentDomNode).style("opacity", opacity);
         }, this);
+
+        /*if(this._denyLayerInfosOpacityResponseOneTime) {
+          // denies one time
+          this._denyLayerInfosOpacityResponseOneTime = false;
+        } else {
+          this.layerListView._hideCurrentPopupMenu();
+        }*/
       },
 
       _onLayerInfosScaleRangeChanged: function(changedLayerInfos) {

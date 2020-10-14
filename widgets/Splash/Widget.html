@@ -2,14 +2,14 @@
     <div class="overlay" data-dojo-attach-point="overlayNode"/>
     <div class="envelope buried" data-dojo-attach-point="envelopeNode">
         <div class="splash-container splash-bg" data-dojo-attach-point="splashContainerBackground"/>
-        <div class="splash-container" data-dojo-attach-point="splashContainerNode">
+        <div class="splash-container" style="background-color: rgba(72, 85, 102, .8);"  data-dojo-attach-point="splashContainerNode">
             <div data-dojo-attach-point="tabMain">
                 <div class="splash-container" data-dojo-attach-point="welcomeTab">
                     <div style='width:100%; height:45px'>
                         <img class='logo jimu-float-leading jimu-leading-margin1' data-dojo-attach-point='logoNode' src='images/logo_white.png' style='cursor: default; height: 20px; margin-top: 7px;'>
                         <div class='closebtn' data-dojo-attach-point='exploreNode' data-dojo-attach-event='onclick:onOkClick'>&times;</div>
                     </div>
-                    <div class="custom-content" data-dojo-attach-point="customContentNode"></div>
+                    <div class="custom-content" tabindex="0" role="document" data-dojo-attach-point="customContentNode"></div>
 
                     <div class="custom-content btndiv">
 

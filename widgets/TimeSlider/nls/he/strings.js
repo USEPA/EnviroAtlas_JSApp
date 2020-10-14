@@ -5,5 +5,10 @@ define({
   "timeExtent": "${FROMTIME} עד ${ENDTIME}",
   "layers": "שכבות: ",
   "speedLabel": "מהירות הצגה",
-  "liveData": "נתונים חיים"
+  "liveData": "נתונים חיים",
+  "previous": "המרווח הקודם",
+  "next": "המרווח הבא",
+  "play": "הצגה",
+  "pause": "השהיה",
+  "speed": "מהירות"
 });

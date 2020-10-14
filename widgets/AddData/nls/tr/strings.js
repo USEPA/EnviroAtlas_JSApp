@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Maksimum {count} detaya izin verilir",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "Bir sorun vardı.",
-    "kmlProjectionMismatch": "Harita ve KML katmanının mekansal referansı eşleşmiyor ve istemci üzerinde dönüşüm yapılamıyor."
+    "kmlProjectionMismatch": "Harita ve KML katmanının mekansal referansı eşleşmiyor ve istemci üzerinde dönüşüm yapılamıyor.",
+    "featureLocationsCouldNotBeFound": "Detaylar bulunamadı: bilinmeyen veya geçersiz konum alanları. Dosya, bir tablo olarak eklenecek."
   },
   "layerList": {
     "caption": "Katmanlar",

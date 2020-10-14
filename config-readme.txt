@@ -138,7 +138,7 @@
         dataSchema: {
           geometryType: "",
 
-          // Field[]: http://jscore.esri.com/javascript/3/jsapi/field-amd.html
+          // Field[]: https://developers.arcgis.com/javascript/3/jsapi/field-amd.html
           // includes the selected fields only
           fields: [],
 
@@ -159,7 +159,7 @@
           //array of StatisticDefinition: https://developers.arcgis.com/javascript/3/jsapi/statisticdefinition-amd.html
           statistics: [],
 
-          // Field[]: http://jscore.esri.com/javascript/3/jsapi/field-amd.html
+          // Field[]: https://developers.arcgis.com/javascript/3/jsapi/field-amd.html
           // includes the used fields only
           fields: [],
 

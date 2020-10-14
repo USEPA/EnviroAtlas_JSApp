@@ -28,5 +28,11 @@ define({
   "keyword": "Słowo kluczowe",
   "basemapLayers": "Warstwy mapy bazowej",
   "typeAKeywork": "Wpisz słowo kluczowe",
-  "layers": "Warstwy"
+  "layers": "Warstwy",
+  "tipLayerSearch": "Warstwy wyszukiwania",
+  "tipLayerListOperation": "Operacje listy warstw",
+  "tipLayerOperation": "Menu warstw",
+  "tipClearText": "Wyczyść tekst",
+  "collapseLayer": "Zwiń",
+  "expandLayer": "Poszerz"
 });

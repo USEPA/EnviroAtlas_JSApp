@@ -28,5 +28,11 @@ define({
   "keyword": "Từ khóa",
   "basemapLayers": "Các lớp bản đồ nền",
   "typeAKeywork": "Nhập từ khóa",
-  "layers": "Lớp"
+  "layers": "Lớp",
+  "tipLayerSearch": "Tìm kiếm lớp",
+  "tipLayerListOperation": "Các hoạt động với danh sách dữ liệu",
+  "tipLayerOperation": "Menu lớp dữ liệu",
+  "tipClearText": "Xóa văn bản",
+  "collapseLayer": "Thu gọn",
+  "expandLayer": "Mở rộng"
 });

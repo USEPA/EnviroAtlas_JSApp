@@ -7,5 +7,6 @@ define({
   "turnonAll": "Alle Layer als auswählbar festlegen",
   "turnoffAll": "Alle Layer als nicht auswählbar festlegen",
   "toggleSelect": "Auswählbarkeit für alle Layer umschalten",
-  "singleSelect": "Als einzigen auswählbaren Layer festlegen"
+  "singleSelect": "Als einzigen auswählbaren Layer festlegen",
+  "enableByDefault": "Das Werkzeug \"Auswählen\" standardmäßig aktivieren"
 });

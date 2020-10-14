@@ -22,7 +22,6 @@ define({
   "imageFill": "Görüntü dolgusu",
   "chooseFile": "Dosya seç",
   "noFileChosen": "Seçili dosya yok",
-  "transparency": "Şeffaflık",
   "sizeFill": "Dolgu",
   "sizeFit": "Uydur",
   "sizeStretch": "Doldurmak için uzat",

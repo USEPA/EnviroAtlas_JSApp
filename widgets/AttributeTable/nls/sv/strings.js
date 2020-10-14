@@ -15,6 +15,8 @@ define({
   "selectAll": "Välj poster på alla sidor",
   "selectPage": "Välj poster på aktuell sida",
   "clearSelection": "Rensa markering",
+  "selectionHandleLabel": "Markeringshandtag",
+  "selectionHandleDescription": "Tryck på ENTER eller BLANKSTEG för att markera geoobjekten på kartan",
   "filter": "Filter",
   "setFilterTip": "Ange filtren korrekt.",
   "noFilterTip": "Om inga filteruttryck definierats visar denna frågeuppgift en lista med alla geoobjekt i den angivna datakällan.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Inga tabeller finns att visa.",
   "checkConfigutationToSelectLayers": "Gå till widgetens inställningssida för att välja lager.",
-  "checkLayerListToSelectLayers": "Attributtabellen synkroniseras med synliga lager i kartan. Du kan använda en widget som exempelvis Lagerlista för att växla lager av/på."
+  "checkLayerListToSelectLayers": "Attributtabellen synkroniseras med synliga lager i kartan. Du kan använda en widget som exempelvis Lagerlista för att växla lager av/på.",
+  "rowHeaderColumnTitle": "Rad ${layerName}, hovrad, tryck på retur för att välja de hovrade raderna"
 });

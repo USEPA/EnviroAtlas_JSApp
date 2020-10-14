@@ -5,5 +5,10 @@ define({
   "timeExtent": "${FROMTIME} do ${ENDTIME}",
   "layers": "Slojevi: ",
   "speedLabel": "Brzina reprodukcije",
-  "liveData": "Podaci uživo"
+  "liveData": "Podaci uživo",
+  "previous": "prethodni interval",
+  "next": "sljedeći interval",
+  "play": "igra",
+  "pause": "pauzirano",
+  "speed": "brzina"
 });

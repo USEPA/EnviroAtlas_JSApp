@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "É permitido o máximo de {count} elementos",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "Ocorreu um problema.",
-    "kmlProjectionMismatch": "A referência espacial do mapa e a camada KML não correspondem, e a conversão não pode ser efetuada no cliente."
+    "kmlProjectionMismatch": "A referência espacial do mapa e a camada KML não correspondem, e a conversão não pode ser efetuada no cliente.",
+    "featureLocationsCouldNotBeFound": "Não foi possível localizar os elementos: campos de localização desconhecidos ou inválidos. O ficheiro será adicionado como uma tabela."
   },
   "layerList": {
     "caption": "Camadas",

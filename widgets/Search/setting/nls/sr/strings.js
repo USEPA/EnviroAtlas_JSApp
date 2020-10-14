@@ -14,13 +14,14 @@ define({
   "generalSetting": "Opšte postavke",
   "allPlaceholder": "Tekst čuvara mesta za pretragu svega: ",
   "showInfoWindowOnSelect": "Prikaži iskačući prozor za pronađeni geoobjekat ili lokaciju",
+  "showInfoWindowOnSelect2": "Prikaži iskačući prozor kada se pronađe geoobjekat ili lokacija.",
   "searchInCurrentMapExtent": "Pretraži samo u trenutnom obuhvatu mape",
   "zoomScale": "Skala zumiranja",
   "locatorUrl": "URL adresa geokodera",
   "locatorName": "Ime geokodera",
   "locatorExample": "Primer",
   "locatorWarning": "Ova verzija servisa geokôdiranja nije podržana. Vidžet podržava samo servis geokôdiranja 10.1 i novije.",
-  "locatorTips": "Predlozi nisu dostupni jer servis geokôdiranja ne podržava predloženu mogućnost.",
+  "locatorTips": "Predlozi nisu dostupni jer servis geokodiranja ne podržava predloženu mogućnost.",
   "layerSource": "Izvor sloja",
   "searchLayerTips": "Predlozi nisu dostupni jer servis geoobjekata ne podržava mogućnost paginacije.",
   "placeholder": "Tekst čuvara mesta",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "Alias",
   "ok": "U redu",
   "cancel": "Otkaži",
-  "invalidUrlTip": "URL adresa ${URL} nije validna ili nije dostupna."
+  "invalidUrlTip": "URL adresa ${URL} nije validna ili nije dostupna.",
+  "locateResults": "Lociraj rezultate",
+  "panTo": "Pomeri do",
+  "zoomToScale": "Zumiraj na razmeru"
 });

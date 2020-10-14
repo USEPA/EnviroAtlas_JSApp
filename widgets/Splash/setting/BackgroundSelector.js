@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ define([
     "dojo/_base/lang",
     'dojo/on',
     'dojo/_base/html',
-    './ColorPickerEditor',
+    'jimu/dijit/ColorTransparencyPicker',
     'jimu/dijit/ImageChooser',
     'dijit/_WidgetBase',
     'dijit/_TemplatedMixin',
@@ -28,7 +28,7 @@ define([
     'jimu/dijit/RadioBtn'
   ],
   function(declare, lang, on, html,
-           ColorPickerEditor, ImageChooser,
+           ColorTransparencyPicker, ImageChooser,
            _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template) {
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
       templateString: template,
@@ -39,7 +39,7 @@ define([
       _imageMaxSize: (1024),//1M
 
       postCreate: function() {
-        this.backgroundColorPicker = new ColorPickerEditor({nls: this.nls}, this.backgroundColorPickerEditor);
+        this.backgroundColorPicker = new ColorTransparencyPicker({},this.backgroundColorPickerEditor);
         this.backgroundColorPicker.startup();
 
         this.imageChooser = new ImageChooser({

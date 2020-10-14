@@ -17,8 +17,8 @@ define({
   "empty": "tom",
   "removePopup": "Deaktiver popup",
   "enablePopup": "Aktiver popup",
-  "turnAllLayersOff": "Aktiver alle lag",
-  "turnAllLayersOn": "Deaktiver alle lag",
+  "turnAllLayersOff": "Deaktiver alle lag",
+  "turnAllLayersOn": "Aktiver alle lag",
   "expandAllLayers": "Vis alle lag",
   "collapseAlllayers": "Skjul alle lag",
   "turnAllLabelsOff": "Deaktiver alle etiketter",
@@ -28,5 +28,11 @@ define({
   "keyword": "Nøkkelord",
   "basemapLayers": "Bakgrunnskartlag",
   "typeAKeywork": "Skriv inn et nøkkelord",
-  "layers": "Lag"
+  "layers": "Lag",
+  "tipLayerSearch": "Søkelag",
+  "tipLayerListOperation": "Laglisteoperasjoner",
+  "tipLayerOperation": "Lagmenyer",
+  "tipClearText": "Fjern tekst",
+  "collapseLayer": "Skjul",
+  "expandLayer": "Utvid"
 });

@@ -5,5 +5,10 @@ define({
   "timeExtent": "${FROMTIME} kuni ${ENDTIME}",
   "layers": "Kihid: ",
   "speedLabel": "Esituse kiirus",
-  "liveData": "Reaalajas andmed"
+  "liveData": "Reaalajas andmed",
+  "previous": "eelmine intervall",
+  "next": "järgmine intervall",
+  "play": "mängi",
+  "pause": "peata",
+  "speed": "kiirus"
 });

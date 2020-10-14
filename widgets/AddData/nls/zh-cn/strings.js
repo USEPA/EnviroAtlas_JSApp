@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "允许最多 {count} 个要素",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "发生问题。",
-    "kmlProjectionMismatch": "地图和 KML 图层的空间参考不匹配，并且无法在客户端上完成转换。"
+    "kmlProjectionMismatch": "地图和 KML 图层的空间参考不匹配，并且无法在客户端上完成转换。",
+    "featureLocationsCouldNotBeFound": "无法定位要素：位置字段未知或无效。 该文件将添加为表格。"
   },
   "layerList": {
     "caption": "图层",

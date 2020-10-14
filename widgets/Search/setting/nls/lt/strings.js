@@ -14,6 +14,7 @@ define({
   "generalSetting": "Bendrieji parametrai",
   "allPlaceholder": "Vietos rezervavimo tekstas visų elementų paieškai: ",
   "showInfoWindowOnSelect": "Rodyti kontekstinį langą, skirtą rastam elementui arba vietai",
+  "showInfoWindowOnSelect2": "Rodyti iškylantį langą, kai randamas elementas arba vieta.",
   "searchInCurrentMapExtent": "Ieškoti tik esamo žemėlapio aprėptyje",
   "zoomScale": "Mastelis",
   "locatorUrl": "Geokoderio URL",
@@ -23,7 +24,7 @@ define({
   "locatorTips": "Pasiūlymų nėra, nes geokodavimo paslauga nepalaiko pasiūlymų galimybės.",
   "layerSource": "Sluoksnio šaltinis",
   "searchLayerTips": "Pasiūlymų nėra, nes elementų paslauga nepalaiko puslapių numeravimo galimybės.",
-  "placeholder": "Vartotojui rodomas tekstas",
+  "placeholder": "Naudotojui rodomas tekstas",
   "searchFields": "Paieškos laukai",
   "displayField": "Rodyti lauką",
   "exactMatch": "Tikslus atitikmuo",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "Pseudonimas",
   "ok": "Gerai",
   "cancel": "Atšaukti",
-  "invalidUrlTip": "URL ${URL} yra neteisingas arba nepasiekiamas."
+  "invalidUrlTip": "URL ${URL} yra neteisingas arba nepasiekiamas.",
+  "locateResults": "Rasti rezultatus",
+  "panTo": "Pereiti į",
+  "zoomToScale": "Priartinti prie mastelio"
 });

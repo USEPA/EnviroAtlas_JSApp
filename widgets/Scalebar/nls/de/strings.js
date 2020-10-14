@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "Maßstabsleiste"
+  "_widgetLabel": "Maßstabsleiste",
+  "scale": "Maßstab"
 });

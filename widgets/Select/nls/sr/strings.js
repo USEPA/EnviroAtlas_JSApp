@@ -7,5 +7,6 @@ define({
   "turnonAll": "Omogućite svim slojevima da mogu da se selektuju",
   "turnoffAll": "Onemogućite svim slojevima da mogu da se selektuju",
   "toggleSelect": "Uključite/isključite mogućnost selektovanja za sve slojeve",
-  "singleSelect": "Učinite ovaj sloj jedinim koji može da se selektuje"
+  "singleSelect": "Učinite ovaj sloj jedinim koji može da se selektuje",
+  "enableByDefault": "Podrazumevano omogući alatku za biranje"
 });

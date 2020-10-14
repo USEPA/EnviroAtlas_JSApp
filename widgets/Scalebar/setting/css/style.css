@@ -4,6 +4,14 @@
   font-size: 14px;
   color: #596679;
 }
+
+.jimu-widget-scalebar-setting .hide{
+  display: none !important;
+}
+
+.jimu-widget-scalebar-setting .setting-group{
+  margin: 10px 20px;
+}
 /*.jimu-widget-scalebar-setting .dijitArrowButtonContainer{
   width: 17px;
 }
@@ -76,8 +84,18 @@
   background: url(images/Ruler.png) center no-repeat;
 }
 
-.jimu-widget-scalebar-setting .settings-section > tbody > tr > .second{
-  /*width:200px;*/
+.jimu-widget-scalebar-setting .style-preview.number-label-container{
+  padding: 0;
+}
+.jimu-widget-scalebar-setting .style-preview .number-label{
+  font-weight: bold;
+}
+/*.jimu-widget-scalebar-setting .settings-section > tbody > tr > .second{
+  width:200px;
+}*/
+.jimu-widget-scalebar-setting .display-number,
+.jimu-widget-scalebar-setting .separator{
+  margin-top: 10px;
 }
 /*
 .jimu-widget-scalebar-setting .input-table > tbody > tr > .third{

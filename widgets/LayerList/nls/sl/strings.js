@@ -28,5 +28,11 @@ define({
   "keyword": "Ključna beseda",
   "basemapLayers": "Sloji temeljne karte",
   "typeAKeywork": "Vnesi ključno besedo",
-  "layers": "Sloji"
+  "layers": "Sloji",
+  "tipLayerSearch": "Iskanje slojev",
+  "tipLayerListOperation": "Postopki seznama slojev",
+  "tipLayerOperation": "Meniji sloja",
+  "tipClearText": "Izbriši besedilo",
+  "collapseLayer": "Strni",
+  "expandLayer": "Razširi"
 });

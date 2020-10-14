@@ -28,5 +28,11 @@ define({
   "keyword": "Klíčové slovo",
   "basemapLayers": "Vrstvy podkladové mapy",
   "typeAKeywork": "Zadejte klíčové slovo",
-  "layers": "Vrstvy"
+  "layers": "Vrstvy",
+  "tipLayerSearch": "Vyhledat vrstvy",
+  "tipLayerListOperation": "Operace seznamu vrstev",
+  "tipLayerOperation": "Nabídky vrstev",
+  "tipClearText": "Vymazat text",
+  "collapseLayer": "Sbalit",
+  "expandLayer": "Rozbalit"
 });

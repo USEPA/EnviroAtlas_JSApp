@@ -5,5 +5,10 @@ define({
   "timeExtent": "${FROMTIME} إلى ${ENDTIME}",
   "layers": "الطبقات: ",
   "speedLabel": "سرعة التشغيل",
-  "liveData": "البيانات الحية"
+  "liveData": "البيانات الحية",
+  "previous": "الفاصل الزمني السابق",
+  "next": "الفاصل الزمني التالي",
+  "play": "تشغيل",
+  "pause": "إيقاف مؤقت",
+  "speed": "السرعة"
 });

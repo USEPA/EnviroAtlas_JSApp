@@ -15,6 +15,8 @@ define({
   "selectAll": "Markér poster på alle sider",
   "selectPage": "Markér poster på den aktuelle side",
   "clearSelection": "Clear selection",
+  "selectionHandleLabel": "Valghåndtag",
+  "selectionHandleDescription": "Tryk på ENTER eller MELLEMRUM for at fremhæve objektet/objekterne på kortet",
   "filter": "Filtrér",
   "setFilterTip": "Angiv filteret korrekt.",
   "noFilterTip": "Hvis der ikke defineres nogen filterudtryk, viser denne forespørgsel alle objekter i den angivne datakilde.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Der er ingen tabeller at vise.",
   "checkConfigutationToSelectLayers": "Gå til siden for widget-indstillinger for at vælge lag.",
-  "checkLayerListToSelectLayers": "Attribut-tabellen er synkroniseret med de synlige lag i kortet. Du kan bruge widgets som Lagliste til at vise/skjule lag."
+  "checkLayerListToSelectLayers": "Attribut-tabellen er synkroniseret med de synlige lag i kortet. Du kan bruge widgets som Lagliste til at vise/skjule lag.",
+  "rowHeaderColumnTitle": "Række ${layerName}, hold musen over, tryk på Enter for at vælge de rækker, du holder musen over."
 });

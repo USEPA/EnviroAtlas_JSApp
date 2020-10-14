@@ -28,5 +28,11 @@ define({
   "keyword": "키워드",
   "basemapLayers": "베이스맵 레이어",
   "typeAKeywork": "키워드 입력",
-  "layers": "레이어"
+  "layers": "레이어",
+  "tipLayerSearch": "레이어 검색",
+  "tipLayerListOperation": "레이어 목록 작업",
+  "tipLayerOperation": "레이어 메뉴",
+  "tipClearText": "텍스트 지우기",
+  "collapseLayer": "축소",
+  "expandLayer": "확장"
 });

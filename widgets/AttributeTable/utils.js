@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,11 +27,12 @@ define(['dojo/_base/lang',
   './table/FeatureLayerQueryStore',
   "jimu/ArcadeUtils",
   'jimu/utils',
-  'esri/graphic'
+  'esri/graphic',
+  'dojo/i18n!./nls/strings'
 ], function(
   lang, array, LayerInfos, Deferred, all,
   exports, Observable, Cache, Memory, esriLang,
-  FeatureLayerQueryStore, ArcadeUtils, utils, Graphic
+  FeatureLayerQueryStore, ArcadeUtils, utils, Graphic, nls
 ) {
   exports.readLayerInfosObj = function(map) {
     return LayerInfos.getInstance(map, map.itemInfo);
@@ -90,14 +91,20 @@ define(['dojo/_base/lang',
   //pInfos: PopupInfo
   exports.generateColumnsFromFields = function(gridColumns, layerInfo, fields, typeIdField, types,
     supportsOrder, supportsStatistics, layerObject) {
-    function getFormatInfo(fieldName) {
+    function getFormatInfo(field) {
+      var fieldName = field.name;
       if (pInfos && esriLang.isDefined(pInfos.fieldInfos)) {
         for (var i = 0, len = pInfos.fieldInfos.length; i < len; i++) {
           var f = pInfos.fieldInfos[i];
-          if (f.fieldName === fieldName) {
+          if (f.fieldName === fieldName && f.format) {
             return f.format;
           }
         }
+      }
+      // use default format from Portal instead:
+      var defaultFormatInfo = utils.getDefaultPortalFieldInfo(field);
+      if(defaultFormatInfo && defaultFormatInfo.format) {
+        return defaultFormatInfo.format;
       }
 
       return null;
@@ -116,7 +123,8 @@ define(['dojo/_base/lang',
       }
     }
 
-    var pInfos = layerInfo.getPopupInfo();
+    var pInfos = layerInfo.getPopupInfo() || 
+    layerInfo.getPopupInfoFromLayerObject &&layerInfo.getPopupInfoFromLayerObject();
 
     var columns = {};
     columns.selectionHandle = {
@@ -124,11 +132,15 @@ define(['dojo/_base/lang',
       className: "selection-handle-column",
       hidden: false,
       unhidable: true, // if true the field never display in toogle column menu
-      filed: "selection-handle-column",
+      field: null,
       sortable: false, // prevent default behavior of dgrid
       _cache: { // control the menu item when click the column of dgrid
         sortable: false,
         statistics: false
+      },
+      renderCell: function(object, value, node) {
+        node.setAttribute('role', 'button');
+        node.setAttribute('title', nls.selectionHandleLabel);
       }
 
       // get: function(){}, get value for cell
@@ -165,18 +177,26 @@ define(['dojo/_base/lang',
         columns[techFieldName].formatter = lang.hitch(exports, exports.urlFormatter);
       } else if (isDate) {
         columns[techFieldName].formatter = lang.hitch(
-          exports, exports.dateFormatter, getFormatInfo(_field.name));
+          exports, exports.dateFormatter, getFormatInfo(_field));
       } else if (isNumber) {
         columns[techFieldName].formatter = lang.hitch(
-          exports, exports.numberFormatter, getFormatInfo(_field.name));
+          exports, exports.numberFormatter, getFormatInfo(_field));
       }
 
       // obj is feature.attributes in the store.
       if (isDomain) {
-        // coded value
-        columns[techFieldName].get = lang.hitch(exports, function(layerObject, field, obj) {
-          return this.getCodeValue(layerObject, field.name, obj);
-        }, layerObject, _field);
+        var domainType = _field.domain && _field.domain.type;
+        if(domainType === 'range') {
+          // range
+          columns[techFieldName].get = lang.hitch(exports, function(layerObject, field, obj) {
+            return this.getRangeDomainValue(field.name, obj);
+          }, layerObject, _field);
+        } else {
+          // coded value
+          columns[techFieldName].get = lang.hitch(exports, function(layerObject, field, obj) {
+            return this.getCodeValue(layerObject, field.name, obj);
+          }, layerObject, _field);
+        }
       } else if(isTypeIdField) {
         columns[techFieldName].get = lang.hitch(exports, function(field, types, obj) {
           return this.getTypeName(obj[field.name], types);
@@ -230,6 +250,14 @@ define(['dojo/_base/lang',
     var result = utils.getDisplayValueForCodedValueOrSubtype(layerObject, fieldName, attributes);
     if (result && result.isCodedValueOrSubtype) {
       return result.displayValue || '';
+    }
+    return '';
+  };
+
+  exports.getRangeDomainValue = function(fieldName, attributes) {
+    var result = attributes[fieldName];
+    if (result) {
+      return result;
     }
     return '';
   };
@@ -443,12 +471,14 @@ define(['dojo/_base/lang',
 
   // get attributes with expression values
   exports.arcade.getAttributes = function(attributes, expressionInfos, layerDefinition) {
-    var graphic = new Graphic(null, null, attributes);
+    var graphic = new Graphic(attributes.geometry, null, attributes);
     return ArcadeUtils.customExpr.getAttributesFromCustomArcadeExpr(
       expressionInfos, graphic, layerDefinition) || attributes;
   };
 
   exports.arcade.appendArcadeExpressionsToFields = function(ofields, layerInfo) {
+    if(!ofields) return;
+    
     var arcadeExpressions = exports.arcade.getExpressionInfosFromLayerInfo(layerInfo);
     if(arcadeExpressions.length > 0) {
       var prefix = 'expression/';
@@ -477,6 +507,26 @@ define(['dojo/_base/lang',
 
   exports.arcade.isArcadeExpressionField = function(field) {
     return field && typeof field.name === 'string' && field.name.indexOf('expression/') === 0;
+  };
+
+  exports.arcade.parseArcadeExpressions = function(expressionInfos) {
+    return ArcadeUtils.InfoTemplate._parseArcadeExpressions(expressionInfos);
+  };
+
+  // get the sort by fields
+  exports.getSortbyFields = function(grid, layer) {
+    var sortFields = grid && grid.get('sort') || [],
+        layerOID = layer && layer.objectIdField;
+    if(sortFields.length > 0) {
+      sortFields = array.map(sortFields, function(field) {
+        return field.attribute + ' ' + (field.descending ? 'DESC' : 'ASC');
+      });
+    } else {
+      if(layerOID) {
+        sortFields.push(layerOID  + ' ASC');
+      }
+    }
+    return sortFields;
   };
 
   function clipValidFields(sFields, rFields) {

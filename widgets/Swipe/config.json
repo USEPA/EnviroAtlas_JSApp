@@ -6,5 +6,6 @@
 	"handleColor": "",
 	"layerMode": "",
 	"defaultLayers": [],
-	"invertPlacement": false
+	"invertPlacement": false,
+	"isHidePanel": false
 }

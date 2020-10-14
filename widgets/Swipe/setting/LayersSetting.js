@@ -1,14 +1,320 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:widgets/Swipe/setting/LayersSetting.html":'\x3cdiv class\x3d"default-layer-setting"\x3e\r\n\t\x3cdiv class\x3d"layer-section swipe-mode"\x3e\r\n\t\t\x3cspan class\x3d"layer-text sub-title"\x3e${nls.swipeMode}\x3c/span\x3e\r\n\t\t\x3cdiv class\x3d"swipe-radio"\x3e\r\n\t\t\t\x3cinput data-dojo-attach-point\x3d"singleLayerRaido" data-dojo-type\x3d"dijit/form/RadioButton" type\x3d"radio" class\x3d"jimu-radio-btn blue-radio"\r\n\t\t\t name\x3d"modeRaido" id\x3d"singleLayerRaido" /\x3e\r\n\t\t\t\x3clabel data-dojo-attach-point\x3d"singleLayerRaidoLabel" for\x3d"singleLayerRaido"\x3e${nls.singleLayer}\x3c/label\x3e\r\n\t\t\x3c/div\x3e\r\n\t\t\x3cdiv class\x3d"swipe-radio"\x3e\r\n\t\t\t\x3cinput data-dojo-attach-point\x3d"multipleLayerRaido" data-dojo-type\x3d"dijit/form/RadioButton" type\x3d"radio" class\x3d"jimu-radio-btn blue-radio"\r\n\t\t\t name\x3d"modeRaido" id\x3d"multipleLayerRaido" /\x3e\r\n\t\t\t\x3clabel data-dojo-attach-point\x3d"multipleLayerRaidoLabel" for\x3d"multipleLayerRaido"\x3e${nls.MultipleLayers}\x3c/label\x3e\r\n\t\t\x3c/div\x3e\r\n\t\x3c/div\x3e\r\n\r\n\t\x3cdiv class\x3d"layer-section"\x3e\r\n\t\t\x3cspan class\x3d"layer-text"\x3e${nls.layersAvailable}\x3c/span\x3e\r\n\t\t\x3cspan class\x3d"jimu-icon jimu-icon-error hide" data-dojo-attach-point\x3d"layersChooserError"\x3e\x3c/span\x3e\r\n\t\t\x3cdiv class\x3d"layers-chooser" data-dojo-attach-point\x3d"layersChooser"\x3e\x3c/div\x3e\r\n\t\x3c/div\x3e\r\n\t\x3cdiv class\x3d"layer-section"\x3e\r\n\t\t\x3cspan class\x3d"layer-text" data-dojo-attach-point\x3d"layerTextNode"\x3e${nls.layerText}\x3c/span\x3e\r\n\t\t\x3cdiv class\x3d"select-container default-layers-selector"\x3e\r\n\t\t\t\x3cdiv data-dojo-attach-point\x3d"swipeLayersContainer"\x3e\r\n\t\t\t\t\x3cdiv data-dojo-type\x3d"dijit/form/Select" data-dojo-attach-point\x3d"swipeLayers"\x3e\x3c/div\x3e\r\n\t\t\t\x3c/div\x3e\r\n\t\t\r\n\t\t\t\x3cdiv data-dojo-attach-point\x3d"defaultLayersContainer" class\x3d"hide"\x3e\r\n\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"defaultLayersSelectorContainer"\x3e\x3c/div\x3e\r\n\t\t\t\x3c/div\x3e\r\n\t\t\x3c/div\x3e\r\n\r\n\t\t\x3clabel class\x3d"layer-hint"\x3e${nls.layerHint}\x3c/label\x3e\r\n\t\x3c/div\x3e\r\n\x3c/div\x3e'}});
-define("dojo/Evented dojo/_base/declare dojo/_base/lang dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/on dojo/_base/array dojo/_base/html jimu/LayerInfos/LayerInfos jimu/dijit/LayerChooserFromMapLite dojo/Deferred ../MultSelector/MultSelector dojo/text!./LayersSetting.html jimu/dijit/LoadingShelter jimu/dijit/CheckBox dijit/form/Select dojox/form/CheckedMultiSelect dijit/form/ValidationTextBox".split(" "),function(m,n,b,p,q,r,k,h,g,l,t,u,v,w,x){return n([p,q,r,m],{templateString:w,
-postCreate:function(){this.shelter=new x({hidden:!0});this.defaultLayersSelector=new v({nls:this.nls},this.defaultLayersSelectorContainer);this.defaultLayersSelector.startup();this.shelter.show();this._getLayerInfoObj(this.map).then(b.hitch(this,function(){this._setDefaultLayerByState(this.config.layerState)}),function(a){console.log(a)}).always(b.hitch(this,function(){this.shelter.hide()}));this.own(k(this.singleLayerRaido,"change",b.hitch(this,function(){this.singleLayerRaido.checked&&(g.addClass(this.defaultLayersContainer,
-"hide"),g.removeClass(this.swipeLayersContainer,"hide"),this.emit("change",{mode:"single"}))})));this.own(k(this.multipleLayerRaido,"change",b.hitch(this,function(){this.multipleLayerRaido.checked&&(g.removeClass(this.defaultLayersContainer,"hide"),g.addClass(this.swipeLayersContainer,"hide"),this.emit("change",{mode:"mult"}))})));this.inherited(arguments)},startup:function(){this.inherited(arguments)},setConfig:function(a){this.config=a;"mult"===this.config.layerMode?this.multipleLayerRaido.setChecked(!0):
-this.singleLayerRaido.setChecked(!0);this._layerChooserFromMap||(this._layerChooserFromMap=new t({showTables:!1,onlyShowWebMapLayers:!0,customFilter:b.hitch(this,function(a){var c=new u,d=l.getInstanceSync().getLayerInfoArrayOfWebmap();h.some(d,function(c){if(c.id===a.id)return!0},this)?a.isRootLayer()?c.resolve(!0):this.map.getLayer(a.id)?c.resolve(!0):c.resolve(!1):c.resolve(!1);return c}),layerState:this.config.layerState}),this._layerChooserFromMap.placeAt(this.layersChooser),this._layerChooserFromMap.startup(),
-h.forEach(this._layerInfosObj.getLayerInfoArray(),function(a){a&&a.layerObject&&a.layerObject.declaredClass&&("esri.layers.ArcGISDynamicMapServiceLayer"===a.layerObject.declaredClass||"esri.layers.ArcGISTiledMapServiceLayer"===a.layerObject.declaredClass||"esri.layers.FeatureCollection"===a.layerObject.declaredClass)&&(a=this._layerChooserFromMap.getLayerAssociateDomNodesById(a.id))&&g.addClass(a.collapseIcon,"transparent")},this),this.own(k(this._layerChooserFromMap,"tree-click",b.hitch(this,function(){var a=
-this._layerChooserFromMap.getState();this._setDefaultLayerByState(a);this._isLayersChooserStateEmpty()&&(this.swipeLayers.set("options",[{value:"",label:""}]),this.swipeLayers.reset(),this.defaultLayersSelector.reset())}))));a=this._getOptionsFromState(this.config.layerState);this._isSelectedLayerInOptions(a)&&this.swipeLayers.set("value",this.config.layer);this.config.defaultLayers||(this.config.defaultLayers=[]);this.defaultLayersSelector.setConfig(this.config.defaultLayers)},getConfig:function(a){a.layerMode=
-this.multipleLayerRaido.checked?"mult":"single";a.layer=this.swipeLayers.get("value");a.defaultLayers=this.defaultLayersSelector.getConfig();a.layerState=this._layerChooserFromMap.getState();return this.config},setLayerInfoText:function(a){this.layerTextNode.innerHTML=a},_getLayerInfoObj:function(a){return l.getInstance(a,a.itemInfo).then(b.hitch(this,function(a){this._layerInfosObj=a;a=this._layerInfosObj.getLayerInfoArray();a=h.filter(a,b.hitch(this,function(a){if(!this._isNewAddedLayer(a))return!0}));
-a=h.map(a,function(a){return{label:a.title,value:a.id}});this.swipeLayers.set("options",a);this.defaultLayersSelector.setOptions(a)}))},_isSelectedLayerInOptions:function(a){for(var c=this.config.layer||this.swipeLayers.getValue(),f=0,d=a.length;f<d;f++)if(a[f].value===c)return!0;return!1},_setDefaultLayerByState:function(a){"undefined"===typeof a||null===a?this.defaultLayersSelector.initOptions(this.swipeLayers.getOptions(),!0):(a=this._getOptionsFromState(a,!0),this.swipeLayers.set("options",b.clone(a)),
-this._isSelectedLayerInOptions(a)&&0!==a.length?this.swipeLayers.setValue(this.config.layer||this.swipeLayers.getValue()):this.swipeLayers.reset(),this.defaultLayersSelector.initOptions(a,!0))},_getOptionsFromState:function(a,c){var f=[];if(!a)return f;for(var d in a)if(a.hasOwnProperty(d)){var b=a[d];if(!0===b.selected){var e=this._layerInfosObj.getLayerInfoById(d);e&&!this._isNewAddedLayer(e)&&(e=e.title)&&(e={value:d,label:e},c&&b.selected&&(e.selected=!0),f.push(e))}}return f},_isNewAddedLayer:function(a){for(var c=
-this._layerInfosObj.getLayerInfoArrayOfWebmap(),b=0,d=c.length;b<d;b++)if(c[b].id===a.id)return!1;return!0},_isLayersChooserStateEmpty:function(){return 0===this._getOptionsFromState(this._layerChooserFromMap.getState()).length?!0:!1}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define(['dojo/Evented',
+  'dojo/_base/declare',
+  'dojo/_base/lang',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  "dijit/_WidgetsInTemplateMixin",
+  'dojo/on',
+  'dojo/_base/array',
+  'dojo/_base/html',
+  'jimu/LayerInfos/LayerInfos',
+  "jimu/dijit/LayerChooserFromMapLite",
+  'dojo/Deferred',
+  "../MultSelector/MultSelector",
+  "dojo/text!./LayersSetting.html",
+  'jimu/dijit/LoadingShelter',
+  "jimu/utils",
+  "jimu/dijit/CheckBox",
+  "dijit/form/Select",
+  "dojox/form/CheckedMultiSelect",
+  "dijit/form/ValidationTextBox"
+],
+  function (Evented, declare, lang,
+    _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
+    on, array, html, LayerInfos, LayerChooserFromMapLite, Deferred, MultSelector,
+    template, LoadingShelter, jimuUtils) {
+    var clazz = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+      templateString: template,
+      /*
+        config = {
+          layerMode
+          layer
+          defaultLayers
+          layerState
+        }
+      */
+      postCreate: function () {
+        this.shelter = new LoadingShelter({
+          hidden: true
+        });
+
+        //this._initMultSelectorEvent();
+        this.defaultLayersSelector = new MultSelector({
+          nls: this.nls
+        }, this.defaultLayersSelectorContainer);
+        this.defaultLayersSelector.startup();
+
+        //update swipeLayers
+        this.shelter.show();
+        this._getLayerInfoObj(this.map).then(lang.hitch(this, function () {
+          this._setDefaultLayerByState(this.config.layerState);
+        }), function (err) {
+          console.log(err);
+        }).always(lang.hitch(this, function () {
+          this.shelter.hide();
+        }));
+
+        this.own(on(this.singleLayerRaido, 'change', lang.hitch(this, function () {
+          if (this.singleLayerRaido.checked) {
+            html.addClass(this.defaultLayersContainer, "hide");
+            html.removeClass(this.swipeLayersContainer, "hide");
+            this.emit("change", { mode: "single" });
+          }
+        })));
+        this.own(on(this.multipleLayerRaido, 'change', lang.hitch(this, function () {
+          if (this.multipleLayerRaido.checked) {
+            html.removeClass(this.defaultLayersContainer, "hide");
+            html.addClass(this.swipeLayersContainer, "hide");
+            this.emit("change", { mode: "mult" });
+          }
+        })));
+
+        this.inherited(arguments);
+      },
+
+      startup: function () {
+        this.inherited(arguments);
+      },
+
+      setConfig: function (config) {
+        this.config = config;
+        //swipe mode
+        if (this.config.layerMode === "mult") {
+          this.multipleLayerRaido.setChecked(true);
+        } else {
+          this.singleLayerRaido.setChecked(true);
+        }
+
+        //layers to swipe(no set method so create it in setConfig)
+        if (!this._layerChooserFromMap) {
+          //filter for LayerChooserFromMap
+          var filter = function (layerInfo) {
+            var def = new Deferred();
+
+            var webmapLayerInfoArray = LayerInfos.getInstanceSync().getLayerInfoArrayOfWebmap();
+            var isWebmapLayerInfo = array.some(webmapLayerInfoArray, function (webmapLayerInfo) {
+              if (webmapLayerInfo.id === layerInfo.id) {
+                return true;
+              }
+            }, this);
+
+            if (!isWebmapLayerInfo) {
+              def.resolve(false);
+            } else if (layerInfo.isRootLayer()) {
+              def.resolve(true);
+            } else {
+              var layerInTheMap = this.map.getLayer(layerInfo.id);
+              if (layerInTheMap) {
+                def.resolve(true);
+              } else {
+                def.resolve(false);
+              }
+            }
+            return def;
+          };
+
+          this._layerChooserFromMap = new LayerChooserFromMapLite({
+            showTables: false,
+            onlyShowWebMapLayers: true,//hide layers that runtime added
+            customFilter: lang.hitch(this, filter),
+            layerState: this.config.layerState
+          });
+          this._layerChooserFromMap.placeAt(this.layersChooser);
+          this._layerChooserFromMap.startup();
+
+          //hide collapseIcon of MapServiceLayer
+          array.forEach(this._layerInfosObj.getLayerInfoArray(), function (layerInfo) {
+            if (layerInfo && layerInfo.layerObject && layerInfo.layerObject.declaredClass &&
+              (layerInfo.layerObject.declaredClass === "esri.layers.ArcGISDynamicMapServiceLayer" ||
+                layerInfo.layerObject.declaredClass === "esri.layers.ArcGISTiledMapServiceLayer" ||
+                layerInfo.layerObject.declaredClass === "esri.layers.FeatureCollection")) {
+              var domNodes = this._layerChooserFromMap.getLayerAssociateDomNodesById(layerInfo.id);
+              if (domNodes) {
+                var collapseIcon = domNodes.collapseIcon;
+                html.addClass(collapseIcon, "transparent");
+              }
+            }
+          }, this);
+
+          this.own(on(this._layerChooserFromMap, 'tree-click', lang.hitch(this, function () {
+            var layerOptions = this._layerChooserFromMap.getState();
+            this._setDefaultLayerByState(layerOptions);
+
+            if (this._isLayersChooserStateEmpty()) {//set error info, when no selected
+              this.swipeLayers.set('options', [{ value: "", label: "" }]);
+              this.swipeLayers.reset();
+
+              //this.defaultLayers.setOptions([{ value: "", label: "" }]);
+              this.defaultLayersSelector.reset();
+            }
+          })));
+        }
+
+        //default layerlayer
+        var st = this._getOptionsFromState(this.config.layerState);
+        if (this._isSelectedLayerInOptions(st)) {
+          this.swipeLayers.set('value', this.config.layer);//select one
+        } else {
+          //do nothing
+        }
+
+        // this.own(on(this.defaultLayers, 'change', lang.hitch(this, function () {
+        if (!this.config.defaultLayers) {
+          this.config.defaultLayers = [];
+        }
+        this.defaultLayersSelector.setConfig(this.config.defaultLayers);
+      },
+      getConfig: function (settingConfig) {
+        if (this.multipleLayerRaido.checked) {
+          settingConfig.layerMode = "mult";
+        } else {
+          settingConfig.layerMode = "single";
+        }
+
+        settingConfig.layer = this.swipeLayers.get('value');
+        settingConfig.defaultLayers = this.defaultLayersSelector.getConfig();
+        settingConfig.layerState = this._layerChooserFromMap.getState();
+        //settingConfig.
+
+        return this.config;
+      },
+
+      setLayerInfoText: function (text) {
+        this.layerTextNode.innerHTML = jimuUtils.sanitizeHTML(text);
+      },
+
+      //0. init
+      _getLayerInfoObj: function (map) {
+        return LayerInfos.getInstance(map, map.itemInfo)
+          .then(lang.hitch(this, function (layerInfosObj) {
+            this._layerInfosObj = layerInfosObj;
+
+            var infos = this._layerInfosObj.getLayerInfoArray();
+            var data = array.filter(infos, lang.hitch(this, function (info) {
+              if (!this._isNewAddedLayer(info)) {
+                return true;
+              }
+            }));
+            var options = array.map(data, function (info) {
+              return {
+                label: info.title,
+                value: info.id
+              };
+            });
+
+            this.swipeLayers.set('options', options);//set all layers in options, when init
+
+            this.defaultLayersSelector.setOptions(options);
+            //this._initMultSelectorLabel();
+          }));
+      },
+
+      //2.layer chooser
+      _isSelectedLayerInOptions: function (layers) {
+        var layerId = this.config.layer || this.swipeLayers.getValue();//""==this.config.layer, when new widget
+        for (var i = 0, len = layers.length; i < len; i++) {
+          var item = layers[i];
+          if (item.value === layerId) {
+            return true;
+          }
+        }
+        return false;
+      },
+      //3.default layer
+      _setDefaultLayerByState: function (state) {
+        if ("undefined" === typeof state || null === state) {
+          this.defaultLayersSelector.initOptions(this.swipeLayers.getOptions(), true);
+          return;
+        }
+
+        //single
+        var layers = this._getOptionsFromState(state, true);
+
+        this.swipeLayers.set('options', lang.clone(layers));
+        if (!this._isSelectedLayerInOptions(layers) || //change selected option
+          0 === layers.length) { //no layers choose
+          this.swipeLayers.reset();//reset all options
+        } else {
+          this.swipeLayers.setValue(this.config.layer || this.swipeLayers.getValue());//just change other options
+        }
+
+        //mult
+        //this._resetDefaultLayersOptions(layers);
+        this.defaultLayersSelector.initOptions(layers, true);
+      },
+
+
+      _getOptionsFromState: function (layerOptions, isGetSelected) {
+        var layers = [];
+        if (!layerOptions) {
+          return layers;
+        }
+
+        for (var key in layerOptions) {
+          if (layerOptions.hasOwnProperty(key)) {
+            var layer = layerOptions[key];
+            if (true === layer.selected) {
+              var layerInfo = this._layerInfosObj.getLayerInfoById(key);
+              if (layerInfo && !this._isNewAddedLayer(layerInfo)) {
+                var title = layerInfo.title;
+                if (title) {
+                  var obj = { value: key, label: title };
+                  if (isGetSelected && layer.selected) {
+                    obj.selected = true;
+                  }
+
+                  layers.push(obj);
+                }
+              }
+            }
+          }
+        }
+
+        return layers;
+      },
+      _isNewAddedLayer: function (layerInfo) {
+        var webmapLayerInfoArray = this._layerInfosObj.getLayerInfoArrayOfWebmap();
+        for (var i = 0, len = webmapLayerInfoArray.length; i < len; i++) {
+          var webmapLayerInfo = webmapLayerInfoArray[i];
+          if (webmapLayerInfo.id === layerInfo.id) {
+            return false;
+          }
+        }
+
+        return true;
+      },
+      _isLayersChooserStateEmpty: function () {
+        var layers = this._getOptionsFromState(this._layerChooserFromMap.getState());
+        if (0 === layers.length) {
+          return true;
+        }
+
+        return false;
+      }/*,
+    _setError: function(){
+      //html.removeClass(this.layersChooserError,"hide");
+      html.addClass(this.layersChooser, "error");
+    },
+    _cleanError: function(){
+      //html.addClass(this.layersChooserError,"hide");
+      html.removeClass(this.layersChooser, "error");
+    }*/
+    });
+    return clazz;
+  });

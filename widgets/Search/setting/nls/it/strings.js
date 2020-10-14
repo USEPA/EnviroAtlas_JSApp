@@ -14,6 +14,7 @@ define({
   "generalSetting": "Impostazioni generali",
   "allPlaceholder": "Testo segnaposto per la ricerca in tutti: ",
   "showInfoWindowOnSelect": "Mostra popup per la feature o la posizione trovata",
+  "showInfoWindowOnSelect2": "Mostra il popup quando viene trovata la feature o la posizione.",
   "searchInCurrentMapExtent": "Esegui la ricerca nell'estensione mappa corrente",
   "zoomScale": "Scala zoom",
   "locatorUrl": "URL geocodificatore",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "Alias",
   "ok": "OK",
   "cancel": "Annulla",
-  "invalidUrlTip": "URL ${URL} non valido o non accessibile."
+  "invalidUrlTip": "URL ${URL} non valido o non accessibile.",
+  "locateResults": "Trova risultati",
+  "panTo": "Effettua Zoom A",
+  "zoomToScale": "Zoom scala"
 });

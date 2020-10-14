@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "Grafické měřítko"
+  "_widgetLabel": "Grafické měřítko",
+  "scale": "Měřítko"
 });

@@ -6,9 +6,9 @@
     </select>
     <div data-dojo-attach-point="attributeValueContainer" class="attribute-value-container">
       <div data-dojo-attach-point="valueProviderContainer" class="value-provider-container"></div>
-      <div data-dojo-attach-point="valueTypeSetNode" title="${nls.setInputType}" class="value-type-set jimu-icon jimu-icon-setting" data-dojo-attach-event="click:_onValueTypeSetClick"></div>
+      <div role="button" tabindex="0" data-dojo-attach-point="valueTypeSetNode" title="${nls.setInputType}" class="value-type-set jimu-icon jimu-icon-setting"></div>
     </div>
-    <div class="jimu-icon jimu-icon-delete" data-dojo-attach-point="btnDelete" data-dojo-attach-event="click:_destroySelf"></div>
+    <div role="button" tabindex="0" aria-label="'${nls.deleteText}'" class="jimu-icon jimu-icon-delete" data-dojo-attach-point="btnDelete"></div>
   </div>
 
   <div class="askvalues">
@@ -33,6 +33,58 @@
           </td>
           <td class="second-td">
             <div data-dojo-attach-point="hintTB" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="trim:true" style="width:257px;" class="dijit-form-ValidationTextBox" ></div>
+          </td>
+        </tr>
+        <tr data-dojo-attach-point="relativeDatesTr" class="relative-start-date-tr">
+          <td class="first-td">
+            <div data-dojo-attach-point="startDateOptions">${nls.dateOptions}</div>
+          </td>
+          <td class="second-td">
+            <div class="showItems">
+              <div class="opers" data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="custom_start_date" data-dojo-props='title:"${nls.custom}"'></div>
+              <span>${nls.custom}</span>
+            </div>
+
+            <div class="showItems">
+              <div class="opers" data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="today_start_date" data-dojo-props='title:"${nls.today}"'></div>
+              <span>${nls.today}</span>
+            </div>
+
+            <div class="showItems">
+              <div class="opers" data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="yesterday_start_date" data-dojo-props='title:"${nls.yesterday}"'></div>
+              <span>${nls.yesterday}</span>
+            </div>
+
+            <div class="showItems">
+              <div class="opers" data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="tomorrow_start_date" data-dojo-props='title:"${nls.tomorrow}"'></div>
+              <span>${nls.tomorrow}</span>
+            </div>
+          </td>
+        </tr>
+        <tr data-dojo-attach-point="relativeDatesTr" class="relative-end-date-tr">
+          <td class="first-td">
+            <div data-dojo-attach-point="endDateOptions">${nls.endDateOptions}</div>
+          </td>
+          <td class="second-td">
+            <div class="showItems">
+              <div class="opers" data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="custom_end_date" data-dojo-props='title:"${nls.custom}"'></div>
+              <span>${nls.custom}</span>
+            </div>
+
+            <div class="showItems">
+              <div class="opers" data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="today_end_date" data-dojo-props='title:"${nls.today}"'></div>
+              <span>${nls.today}</span>
+            </div>
+
+            <div class="showItems">
+              <div class="opers" data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="yesterday_end_date" data-dojo-props='title:"${nls.yesterday}"'></div>
+              <span>${nls.yesterday}</span>
+            </div>
+
+            <div class="showItems">
+              <div class="opers" data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="tomorrow_end_date" data-dojo-props='title:"${nls.tomorrow}"'></div>
+              <span>${nls.tomorrow}</span>
+            </div>
           </td>
         </tr>
         <tr data-dojo-attach-point="cascadeTr" class="cascade-tr">

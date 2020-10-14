@@ -1,46 +1,72 @@
 <div style="width:100%;height:100%;">
-    <table class="settings-section">
-      <tbody>
-        <tr>
-          <td>${nls.unit}</td>
-          <td class="second">
-            <div>
-              <div class="unit-item" data-dojo-attach-point="englishNode">
-                <div data-dojo-type="jimu/dijit/RadioBtn" data-dojo-props="group:'sclebarUnit'"></div>
-                <label class="jimu-leading-margin025">${nls.english}</label>
-              </div>
-              <div class="unit-item" data-dojo-attach-point="metricNode">
-                <div data-dojo-type="jimu/dijit/RadioBtn" data-dojo-props="group:'sclebarUnit'"></div>
-                <label class="jimu-leading-margin025">${nls.metric}</label>
-              </div>
-              <div class="unit-item" data-dojo-attach-point="dualNode">
-                <div data-dojo-type="jimu/dijit/RadioBtn" data-dojo-props="group:'sclebarUnit'"></div>
-                <label class="jimu-leading-margin025">${nls.dual}</label>
+  <table class="settings-section">
+    <tbody>
+      <tr>
+        <td>${nls.style}</td>
+        <td class="second">
+          <fieldset id="line-type" class="setting-group">
+            <div class="style-item" data-dojo-attach-point="lineNode">
+              <input class="jimu-float-leading" data-dojo-type="dijit/form/RadioButton" name="line-item"
+                data-dojo-attach-point="line" />
+              <div class="style-preview jimu-float-trailing">
+                <div class="line-icon"></div>
+                <label>${nls.line}</label>
               </div>
             </div>
-          </td>
-        </tr>
-        <tr>
-          <td>${nls.style}</td>
-          <td class="second">
-            <div>
-              <div class="style-item" data-dojo-attach-point="lineNode">
-                <div class="jimu-float-leading" data-dojo-type="jimu/dijit/RadioBtn" data-dojo-props="group:'sclebarStyle'"></div>
-                <div class="style-preview jimu-float-trailing">
-                  <div class="line-icon"></div>
-                  <label>${nls.line}</label>
-                </div>
-              </div>
-              <div class="style-item" data-dojo-attach-point="rulerNode">
-                <div class="jimu-float-leading" data-dojo-type="jimu/dijit/RadioBtn" data-dojo-props="group:'sclebarStyle'"></div>
-                <div class="style-preview jimu-float-trailing">
-                  <div class="ruler-icon"></div>
-                  <label>${nls.ruler}</label>
-                </div>
+            <div class="style-item" data-dojo-attach-point="rulerNode">
+              <input class="jimu-float-leading" data-dojo-type="dijit/form/RadioButton" name="line-item"
+                data-dojo-attach-point="ruler" />
+              <div class="style-preview jimu-float-trailing">
+                <div class="ruler-icon"></div>
+                <label>${nls.ruler}</label>
               </div>
             </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+
+            <div class="style-item" data-dojo-attach-point="numberNode">
+              <input class="jimu-float-leading" data-dojo-type="dijit/form/RadioButton" name="line-item"
+                data-dojo-attach-point="number" />
+              <div class="style-preview jimu-float-trailing number-label-container">
+                <div class="number-label" data-dojo-attach-point="numberLabel"></div>
+                <label>${nls.number}</label>
+              </div>
+            </div>
+          </fieldset>
+        </td>
+      </tr>
+
+      <tr data-dojo-attach-point="roundNumber" class="hide">
+        <td colspan="2">
+          <div data-dojo-attach-point="displayNumber" class="display-number">
+            <span class="spinner-label ops-label">${nls.spinnerLabel}</span>
+            <input type="text" data-dojo-type="dijit/form/NumberSpinner" value="0" data-dojo-attach-point="spinner"
+              data-dojo-props="constraints: {min:0,max:20}">
+            <span class="demical-place">${nls.decimalPlace}</span>
+            <div class="separator">
+              <div class="check" data-dojo-attach-point="separator"></div>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr data-dojo-attach-point="unitConfig" class="hide">
+        <td>${nls.unit}</td>
+        <td class="second">
+          <fieldset id="unit-type" class="setting-group">
+            <div class="unit-item" data-dojo-attach-point="englishNode">
+              <input data-dojo-type="dijit/form/RadioButton" name="unit-item" id="english" data-dojo-attach-point="english" />
+              <label for="english" class="jimu-leading-margin025">${nls.english}</label>
+            </div>
+            <div class="unit-item" data-dojo-attach-point="metricNode">
+              <input data-dojo-type="dijit/form/RadioButton" name="unit-item" id="metric" data-dojo-attach-point="metric" />
+              <label for="metric" class="jimu-leading-margin025">${nls.metric}</label>
+            </div>
+            <div class="unit-item" data-dojo-attach-point="dualNode">
+              <input data-dojo-type="dijit/form/RadioButton" name="unit-item" id="dual" data-dojo-attach-point="dual" />
+              <label for="dual" class="jimu-leading-margin025">${nls.dual}</label>
+            </div>
+            <fieldset>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

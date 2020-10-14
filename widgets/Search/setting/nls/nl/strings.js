@@ -14,6 +14,7 @@ define({
   "generalSetting": "Algemene instellingen",
   "allPlaceholder": "Plaatshoudertekst om alles te zoeken: ",
   "showInfoWindowOnSelect": "Pop-up weergeven voor gevonden object of locatie",
+  "showInfoWindowOnSelect2": "Toon pop-up als het object of de locatie gevonden is.",
   "searchInCurrentMapExtent": "Alleen zoeken in huidige kaartextent",
   "zoomScale": "Schaal voor voor in-/uitzoomen",
   "locatorUrl": "Geocoder-URL",
@@ -22,7 +23,7 @@ define({
   "locatorWarning": "Deze versie van geocodeerservice wordt niet ondersteund. De widget ondersteunt geocodeerservice 10.1 en hoger.",
   "locatorTips": "Suggesties zijn niet beschikbaar omdat de geocodeerservice geen suggesties ondersteunt.",
   "layerSource": "Laagbron",
-  "searchLayerTips": "Suggesties zijn niet beschikbaar omdat de feautureservice geen pagination ondersteunt.",
+  "searchLayerTips": "Suggesties zijn niet beschikbaar omdat de feautureservice geen paginering ondersteunt.",
   "placeholder": "Tekst van tijdelijke aanduiding",
   "searchFields": "Zoekvelden",
   "displayField": "Weergaveveld",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "Alias",
   "ok": "OK",
   "cancel": "Annuleren",
-  "invalidUrlTip": "De URL ${URL} is ongeldig of ontoegankelijk."
+  "invalidUrlTip": "De URL ${URL} is ongeldig of ontoegankelijk.",
+  "locateResults": "Resultaten vinden",
+  "panTo": "Pannen naar",
+  "zoomToScale": "Zoomen naar schaal"
 });

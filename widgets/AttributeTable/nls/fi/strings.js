@@ -15,6 +15,8 @@ define({
   "selectAll": "Valitse tietueita kaikilta sivuilta",
   "selectPage": "Valitse tietueita nykyiseltä sivulta",
   "clearSelection": "Tyhjennä valinnat",
+  "selectionHandleLabel": "Valintakahva",
+  "selectionHandleDescription": "Korosta kohteet kartalla painamalla ENTER- tai välilyöntinäppäintä",
   "filter": "Suodata",
   "setFilterTip": "Määritä suodattimet oikein.",
   "noFilterTip": "Jos suodatinlausekkeita ei määritetä, kyselytehtävä luetteloi kaikki määritetyn tietolähteen kohteet.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Näytettäviä taulukoita ei ole.",
   "checkConfigutationToSelectLayers": "Valitse karttatasot siirtymällä pienoisohjelman asetussivulle.",
-  "checkLayerListToSelectLayers": "Ominaisuustietotaulu on synkronoitu kartan näkyvien karttatasojen kanssa. Voit vaihtaa karttatasojen näkyvyyttä pienoisohjelman, kuten karttatasojen luettelon, avulla."
+  "checkLayerListToSelectLayers": "Ominaisuustietotaulu on synkronoitu kartan näkyvien karttatasojen kanssa. Voit vaihtaa karttatasojen näkyvyyttä pienoisohjelman, kuten karttatasojen luettelon, avulla.",
+  "rowHeaderColumnTitle": "Rivi ${layerName}, osoitettu hiirellä, valitse osoitetut rivit painamalla Enter-näppäintä"
 });

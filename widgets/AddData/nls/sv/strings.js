@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Högst {count} geoobjekt tillåts",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "Det uppstod ett problem.",
-    "kmlProjectionMismatch": "Den spatiala referensen av kartan och KML-lagret matchar inte och konvertering kan inte utföras på klienten."
+    "kmlProjectionMismatch": "Den spatiala referensen av kartan och KML-lagret matchar inte och konvertering kan inte utföras på klienten.",
+    "featureLocationsCouldNotBeFound": "Det gick inte att hitta geoobjekt: okända eller ogiltiga platsfält. Filen läggs till som en tabell."
   },
   "layerList": {
     "caption": "Lager",

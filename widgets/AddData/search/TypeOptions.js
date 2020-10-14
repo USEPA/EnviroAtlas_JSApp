@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -64,6 +64,9 @@ define(["dojo/_base/declare",
         this.own(on(this.wmsToggle,'change',lang.hitch(this,function(){
           this.search();
         })));
+        this.own(on(this.wfsToggle,'change',lang.hitch(this,function(){
+          this.search();
+        })));
       },
 
       getOptionWidgets: function() {
@@ -73,7 +76,8 @@ define(["dojo/_base/declare",
           this.imageServiceToggle,
           this.vectorTileServiceToggle,
           this.kmlToggle,
-          this.wmsToggle
+          this.wmsToggle,
+          this.wfsToggle
         ];
       },
 

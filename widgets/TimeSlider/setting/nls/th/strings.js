@@ -27,6 +27,7 @@ define({
   "timeSpan": "ทามสเปน",
   "startTime": "เวลาเริ่มต้น",
   "endTime": "เวลาสิ้นสุด",
+  "unit": "หน่วย",
   "timeDisplay": "แสดงเวลา",
   "displayDataIn": "แสดงผลข้อมูลใน",
   "interval": "ระหว่าง",

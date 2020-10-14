@@ -28,5 +28,11 @@ define({
   "keyword": "Ключевое слово",
   "basemapLayers": "Слои базовой карты",
   "typeAKeywork": "Введите ключевое слово",
-  "layers": "Слои"
+  "layers": "Слои",
+  "tipLayerSearch": "Поиск слоев",
+  "tipLayerListOperation": "Операции Список слоев",
+  "tipLayerOperation": "Меню слоя",
+  "tipClearText": "Очистить текст",
+  "collapseLayer": "Свернуть",
+  "expandLayer": "Развернуть"
 });

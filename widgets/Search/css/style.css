@@ -79,6 +79,10 @@
 	top: 33px;
 }
 
+.jimu-widget-search .arcgisSearch .searchMenu.suggestionsMenu.show{
+  display: block !important;
+}
+
 .jimu-widget-search .arcgisSearch .searchMenu li.active{
 	background-color: #d9dde0;
 	color: #686868;

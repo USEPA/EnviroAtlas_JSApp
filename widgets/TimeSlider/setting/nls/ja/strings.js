@@ -27,6 +27,7 @@ define({
   "timeSpan": "期間",
   "startTime": "開始時間",
   "endTime": "終了時間",
+  "unit": "単位",
   "timeDisplay": "時間表示",
   "displayDataIn": "時間の表示",
   "interval": "間隔",

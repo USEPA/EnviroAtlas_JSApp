@@ -1,6 +1,6 @@
 define({
   "showLayerLabels": "Zobrazit názvy vrstev",
-  "autoPlay": "Spouštět přehrávání posuvníků automaticky",
+  "autoPlay": "Spouštět posuvník automaticky",
   "loopPlay": "Nepřetržitá časová smyčka",
   "dateAndTimeFormat": "Formát data a času",
   "mapDefault": "Výchozí nastavení mapy",
@@ -27,6 +27,7 @@ define({
   "timeSpan": "Časový úsek",
   "startTime": "Čas začátku",
   "endTime": "Koncový čas",
+  "unit": "Jednotky",
   "timeDisplay": "Zobrazení času",
   "displayDataIn": "Zobrazit data v",
   "interval": "Interval",

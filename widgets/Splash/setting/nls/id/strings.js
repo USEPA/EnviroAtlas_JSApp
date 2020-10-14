@@ -22,7 +22,6 @@ define({
   "imageFill": "Isian gambar",
   "chooseFile": "Pilih file",
   "noFileChosen": "Tidak ada file dipilih",
-  "transparency": "Transparansi",
   "sizeFill": "Isi",
   "sizeFit": "Sesuai",
   "sizeStretch": "Bentangkan untuk mengisi (Stretch to fill)",

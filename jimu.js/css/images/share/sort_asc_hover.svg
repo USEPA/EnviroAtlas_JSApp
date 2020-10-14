@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>sort_down_light_hover</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icons" transform="translate(-214.000000, -239.000000)" fill="#000000" fill-rule="nonzero">
+            <g id="sort_down_light_hover" transform="translate(222.000000, 247.000000) rotate(-270.000000) translate(-222.000000, -247.000000) translate(214.000000, 239.000000)">
+                <rect id="Rectangle" opacity="0" x="-5.68434189e-14" y="0" width="16" height="16"></rect>
+                <path d="M-1.59161573e-12,12.25 L-1.59161573e-12,13.75 C-1.59161573e-12,13.8875 0.1125,14 0.25,14 L12,14 L12,16 L16,13 L12,10 L12,12 L0.25,12 C0.1125,12 -1.59161573e-12,12.1125 -1.59161573e-12,12.25 Z M0.5,1.9095836e-13 L2.5,1.9095836e-13 L2.5,8 L0.5,8 L0.5,1.9095836e-13 Z M6.5,1.89626093e-13 L8.5,1.89626093e-13 L8.5,8 L6.5,8 L6.5,1.89626093e-13 Z M12.5,1.89182003e-13 L14.5,1.89182003e-13 L14.5,8 L12.5,8 L12.5,1.89182003e-13 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

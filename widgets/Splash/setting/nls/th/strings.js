@@ -22,7 +22,6 @@ define({
   "imageFill": "เติมภาพ",
   "chooseFile": "เลือกไฟล์",
   "noFileChosen": "ไม่มีไฟล์ที่ถูกเลือก",
-  "transparency": "โปร่งแสง",
   "sizeFill": "กรอก",
   "sizeFit": "พอดี",
   "sizeStretch": "ยืดเพื่อเติม",

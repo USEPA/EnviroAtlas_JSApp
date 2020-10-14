@@ -5,5 +5,6 @@ define({
   "whollyWithin": "Potpuno unutar",
   "allowExport": "Omogući izvoz odabranih geoobjekata",
   "layerToSelect": "Odaberite koji su slojevi dostupni za odabir",
-  "includeRuntimeLayers": "Imajte mogućnost odabrati slojeve generirane tijekom vremena rada"
+  "includeRuntimeLayers": "Omogući odabir slojeva generiranih tijekom vremena rada",
+  "enableByDefault": "Omogući gumb za odabir prema zadanim postavkama"
 });

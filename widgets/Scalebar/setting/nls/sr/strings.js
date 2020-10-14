@@ -5,5 +5,9 @@ define({
   "english": "srpski",
   "metric": "metrički",
   "ruler": "lenjir",
-  "line": "linija"
+  "line": "linija",
+  "number": "broj",
+  "spinnerLabel": "Zaokruži razmeru na: ",
+  "decimalPlace": "decimalno mesto",
+  "separator": "Prikaži separator hiljada"
 });

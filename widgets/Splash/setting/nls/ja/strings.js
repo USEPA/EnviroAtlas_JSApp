@@ -22,7 +22,6 @@ define({
   "imageFill": "画像塗りつぶし",
   "chooseFile": "ファイルの選択",
   "noFileChosen": "ファイルが選択されていません",
-  "transparency": "透過表示",
   "sizeFill": "塗りつぶし",
   "sizeFit": "調整",
   "sizeStretch": "引き伸ばして塗りつぶし",

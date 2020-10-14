@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Es permet un màxim de {count} entitats",
     "layerNamePattern": "{filename}: {name}",
     "generalIssue": "Hi ha hagut un problema.",
-    "kmlProjectionMismatch": "La referència espacial del mapa i la capa KML no coincideixen. No es pot fer la conversió al client."
+    "kmlProjectionMismatch": "La referència espacial del mapa i la capa KML no coincideixen. No es pot fer la conversió al client.",
+    "featureLocationsCouldNotBeFound": "No s'han pogut localitzar les entitats: els camps d'ubicació són desconeguts o no són vàlids. El fitxer s'afegirà com a taula."
   },
   "layerList": {
     "caption": "Capes",

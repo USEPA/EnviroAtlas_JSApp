@@ -15,6 +15,8 @@ define({
   "selectAll": "选择所有页面中的记录",
   "selectPage": "选择当前页面中的记录",
   "clearSelection": "清除选择",
+  "selectionHandleLabel": "选择控点",
+  "selectionHandleDescription": "在地图上按 Enter 键或空格键以突出显示要素。",
   "filter": "过滤器",
   "setFilterTip": "请正确设置过滤器。",
   "noFilterTip": "在未定义过滤器表达式的情况下，此查询任务会列出指定数据源中的所有要素。",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "无可显示的表格。",
   "checkConfigutationToSelectLayers": "请转到微件设置页面选择图层。",
-  "checkLayerListToSelectLayers": "属性表与地图中的可见图层同步，您可以使用图层列表等微件打开/关闭图层。"
+  "checkLayerListToSelectLayers": "属性表与地图中的可见图层同步，您可以使用图层列表等微件打开/关闭图层。",
+  "rowHeaderColumnTitle": "行 ${layerName} 已悬停，请按 Enter 键选择悬停的行"
 });

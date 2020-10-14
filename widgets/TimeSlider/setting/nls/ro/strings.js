@@ -27,6 +27,7 @@ define({
   "timeSpan": "Interval de timp",
   "startTime": "Oră începere",
   "endTime": "Oră încheiere",
+  "unit": "Unitate",
   "timeDisplay": "Afișare timp",
   "displayDataIn": "Afișare dată în",
   "interval": "Interval",

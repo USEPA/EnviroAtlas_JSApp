@@ -15,6 +15,8 @@ define({
   "selectAll": "Pasirinkti įrašus visuose puslapiuose",
   "selectPage": "Pasirinkti įrašus dabartiniame puslapyje",
   "clearSelection": "Valyti išranką",
+  "selectionHandleLabel": "Pasirinkimų tvarkymas",
+  "selectionHandleDescription": "Norėdami išryškinti žemėlapio elementą (elementus), nuspauskite ENTER arba SPACE",
   "filter": "Filtruoti",
   "setFilterTip": "Nustatykite filtrus tinkamai.",
   "noFilterTip": "Nenustačius filtro išraiškų, ši užklausos užduotis nurodys visus nurodyto duomenų šaltinio elementus.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Nėra rodyti skirtų lentelių.",
   "checkConfigutationToSelectLayers": "Eikite į valdiklio parametrų puslapį ir pasirinktie sluoksnius.",
-  "checkLayerListToSelectLayers": "Atributų lentelė sinchronizuojama su matomais žemėlapio sluoksniais. Sluoksniams įjungti / išjungti galite naudoti valdiklį, pvz., Sluoksnių sąrašas."
+  "checkLayerListToSelectLayers": "Atributų lentelė sinchronizuojama su matomais žemėlapio sluoksniais. Sluoksniams įjungti / išjungti galite naudoti valdiklį, pvz., Sluoksnių sąrašas.",
+  "rowHeaderColumnTitle": "Norėdami pasirinkti eilutę, laikydami pelę virš eilutės ${layerName}, paspauskite Enter"
 });

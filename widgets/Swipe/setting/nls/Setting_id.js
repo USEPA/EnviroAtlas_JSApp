@@ -1,6 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define({"widgets/Swipe/setting/nls/strings":{styleText:"Pilih gaya untuk alat geser",vertical:"Bilah vertikal",horizontal:"Bilah horizontal",scope:"Teropong",placement:"Arah",showLeftSide:"Tampilkan layer yang digeser pada sisi kiri",showRigthSide:"Tampilkan layer yang digeser pada sisi kanan",showUpSide:"Tampilkan layer yang digeser pada sisi atas",showDownSide:"Tampilkan layer yang digeser pada sisi bawah",barColor:"Warna bilah",swipeMode:"Mode geser",singleLayer:"Layer tunggal",MultipleLayers:"Layar Ganda",
-allowToSwipe:"Izinkan menggeser",layer:"Layer",swipeByDefault:"Geser secara default",defaultLayerMustBeVisible:"layer default harus terlihat",noDefaultLayer:"Harap atur layer untuk menggeser secara default",defaultLayerHolder:"Klik untuk memilih",selectLayers:"Pilih layer",layerText:"Pilih layer yang ingin Anda geser secara default",spyglassText:"Pilih layer agar muncul dalam teropong secara default.",layerHint:"Catatan: Jika layer tertutup oleh layer di atasnya, menggeser tidak akan memiliki efek.",
-isZoom:"Zoom ke layer geser",isZooms:"Perbesar untuk menggeser layer",layersAvailable:"Pilih layer yang ingin digeser",_localized:{}}});

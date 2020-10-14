@@ -28,5 +28,11 @@ define({
   "keyword": "Cuvânt cheie",
   "basemapLayers": "Straturi tematice de hartă fundal",
   "typeAKeywork": "Introduceți un cuvânt cheie",
-  "layers": "Straturi tematice"
+  "layers": "Straturi tematice",
+  "tipLayerSearch": "Căutare straturi tematice",
+  "tipLayerListOperation": "Operații listă de straturi tematice",
+  "tipLayerOperation": "Meniuri de straturi tematice",
+  "tipClearText": "Ștergere text",
+  "collapseLayer": "Restrângere",
+  "expandLayer": "Extindere"
 });

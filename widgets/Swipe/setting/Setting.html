@@ -1,27 +1,40 @@
-<div style="width:100%;height:100%;">
+<div style="width:100%;height:300px;">
   <div class="style-section">
     <span class="style-text">${nls.styleText}</span>
     <div class="style-items">
       <div class="style-item jimu-float-leading jimu-leading-margin2" data-dojo-attach-point="verticalNode">
         <div class="style-vertical style-item-image"></div>
-        <div data-dojo-type="jimu/dijit/RadioBtn" data-dojo-props="group:'swipe'"></div>
-        <label>${nls.vertical}</label>
+        <input data-dojo-type="dijit/form/RadioButton" id="vertical-radio" data-dojo-attach-point="vertical"/>
+        <label for="vertical-radio">${nls.vertical}</label>
       </div>
       <div class="style-item jimu-float-leading jimu-leading-margin2" data-dojo-attach-point="horizontalNode">
         <div class="style-horizontal style-item-image"></div>
-        <div data-dojo-type="jimu/dijit/RadioBtn" data-dojo-props="group:'swipe'"></div>
-        <label>${nls.horizontal}</label>
+        <input data-dojo-type="dijit/form/RadioButton" id="horizontal-radio" data-dojo-attach-point="horizontal"/>
+        <label for="horizontal-radio">${nls.horizontal}</label>
       </div>
       <div class="style-item jimu-float-leading jimu-leading-margin2" data-dojo-attach-point="scopeNode">
         <div class="style-scope style-item-image"></div>
-        <div data-dojo-type="jimu/dijit/RadioBtn" data-dojo-props="group:'swipe'"></div>
-        <label>${nls.scope}</label>
+        <input data-dojo-type="dijit/form/RadioButton" id="scope-radio" data-dojo-attach-point="scope"/>
+        <label for="scope-radio">${nls.scope}</label>
       </div>
     </div>
+
+    <div class="layer-section" data-dojo-attach-point="placementContainer"></div>
+
+    <div class="layer-section" data-dojo-attach-point="handlerColorPicker">
+      <span class="layer-text sub-title">${nls.barColor}</span>
+      <div class="handler-color-picker" data-dojo-attach-point="colorPicker" data-dojo-type="jimu/dijit/ColorPickerButton"></div>
+    </div>
+  </div>
+
+  <div class="layer-section">
+    <div data-dojo-attach-point="layersSettingContainer"></div>
+  </div>
+
+  <div class="layer-section" data-dojo-attach-point="isZoomNodeContainer">
+    <div class="layer-text zoom-node" data-dojo-attach-point="isZoomNode"></div>
   </div>
   <div class="layer-section">
-    <span class="layer-text" data-dojo-attach-point="layerTextNode">${nls.layerText}</span>
-    <div data-dojo-type="dijit/form/Select" style="width:100%;" data-dojo-attach-point="swipeLayers"></div>
-    <label class="layer-hint">${nls.layerHint}</label>
+    <div class="layer-text zoom-node" data-dojo-attach-point="isHidePanelNode"></div>
   </div>
 </div>

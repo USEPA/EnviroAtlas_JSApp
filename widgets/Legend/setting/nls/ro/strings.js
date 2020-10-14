@@ -9,5 +9,5 @@ define({
   "showBasemapLegends": "Afișare legende hărți fundal",
   "honorTheWebMapSetting": "Respectați setarea hărții web",
   "reset": "Resetare",
-  "resetTip": "Resetare la setare iniţială a hărţii web"
+  "resetTip": "Resetare la setare inițială a hărții web"
 });

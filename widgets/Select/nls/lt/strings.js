@@ -7,5 +7,6 @@ define({
   "turnonAll": "Visus sluoksnius padaryti pažymimais",
   "turnoffAll": "Visus sluoksnius padaryti nepažymimais",
   "toggleSelect": "Perjungti galimybę pažymėti visus sluoksnius",
-  "singleSelect": "Šį padaryti vieninteliu pažymimu sluoksniu"
+  "singleSelect": "Šį padaryti vieninteliu pažymimu sluoksniu",
+  "enableByDefault": "Įjungti pasirinktą įrankį pagal numatytuosius nustatymus"
 });

@@ -14,6 +14,7 @@ define({
   "generalSetting": "Setări generale",
   "allPlaceholder": "Text substituent pentru căutarea tuturor: ",
   "showInfoWindowOnSelect": "Afişaţi fereastra pop-up pentru obiectul spaţial sau locul găsit",
+  "showInfoWindowOnSelect2": "Afișare pop-up când se găsește caracteristica sau amplasarea.",
   "searchInCurrentMapExtent": "Căutaţi doar în extinderea de hartă curentă",
   "zoomScale": "Scară de transfocare",
   "locatorUrl": "URL geocodificator",
@@ -22,7 +23,7 @@ define({
   "locatorWarning": "Această versiune de serviciu de geocodificare nu este acceptată. Widgetul acceptă serviciul de geocodificare versiunea 10.1 sau ulterioară.",
   "locatorTips": "Sugestiile nu sunt disponibile, deoarece serviciul de geocodificare nu acceptă capacitatea de sugestie.",
   "layerSource": "Sursă straturi tematice",
-  "searchLayerTips": "Sugestiile nu sunt disponibile, deoarece serviciul de obiecte spaţiale nu acceptă capacitatea de paginare.",
+  "searchLayerTips": "Sugestiile nu sunt disponibile, deoarece serviciul de obiecte spațiale nu acceptă capacitatea de paginare.",
   "placeholder": "Text substituent",
   "searchFields": "Câmpuri de căutare",
   "displayField": "Câmp de afişare",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "Pseudonim",
   "ok": "OK",
   "cancel": "Anulare",
-  "invalidUrlTip": "Adresa URL ${URL} este nevalidă sau inaccesibilă."
+  "invalidUrlTip": "Adresa URL ${URL} este nevalidă sau inaccesibilă.",
+  "locateResults": "Localizare rezultate",
+  "panTo": "Panoramare la",
+  "zoomToScale": "Zoom la scară"
 });

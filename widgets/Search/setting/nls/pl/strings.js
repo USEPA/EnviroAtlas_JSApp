@@ -14,6 +14,7 @@ define({
   "generalSetting": "Ustawienia ogólne",
   "allPlaceholder": "Tekst zastępczy dla wyszukiwania wszystkich: ",
   "showInfoWindowOnSelect": "Wyświetl odrębne okno ze znalezionym elementem: obiektem lub miejscem",
+  "showInfoWindowOnSelect2": "Wyświetla okno podręczne po znalezieniu obiektu lub lokalizacji.",
   "searchInCurrentMapExtent": "Wyszukaj tylko w bieżącym zasięgu mapy",
   "zoomScale": "Skala powiększenia",
   "locatorUrl": "Adres URL geokodera",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "Alias",
   "ok": "OK",
   "cancel": "Anuluj",
-  "invalidUrlTip": "Adres URL ${URL} jest nieprawidłowy lub nieosiągalny."
+  "invalidUrlTip": "Adres URL ${URL} jest nieprawidłowy lub nieosiągalny.",
+  "locateResults": "Wyniki lokalizacji",
+  "panTo": "Przesuń do",
+  "zoomToScale": "Powiększ do skali"
 });

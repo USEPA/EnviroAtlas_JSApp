@@ -6,6 +6,6 @@ define({
   "labelContinue": "Continuar",
   "errorString": "* Você precisa concordar com a licença para continuar.",
   "notShowAgain": "Não mostrar esta tela de abertura novamente.",
-  "ok": "OK",
+  "ok": "Ok",
   "cancel": "Cancelar"
 });

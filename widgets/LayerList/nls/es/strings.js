@@ -28,5 +28,11 @@ define({
   "keyword": "Palabra clave",
   "basemapLayers": "Capas de mapa base",
   "typeAKeywork": "Escriba una palabra clave",
-  "layers": "Capas"
+  "layers": "Capas",
+  "tipLayerSearch": "Buscar capas",
+  "tipLayerListOperation": "Operaciones de Lista de capas",
+  "tipLayerOperation": "Menús de capas",
+  "tipClearText": "Borrar texto",
+  "collapseLayer": "Contraer",
+  "expandLayer": "Expandir"
 });

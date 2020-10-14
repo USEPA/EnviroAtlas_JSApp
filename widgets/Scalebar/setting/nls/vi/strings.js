@@ -5,5 +5,9 @@ define({
   "english": "tiếng anh",
   "metric": "hệ mét",
   "ruler": "thước",
-  "line": "đường"
+  "line": "đường",
+  "number": "số",
+  "spinnerLabel": "Làm tròn số đến: ",
+  "decimalPlace": "chữ số thập phân",
+  "separator": "Hiển thị dấu phân tách hàng nghìn"
 });

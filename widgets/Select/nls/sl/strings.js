@@ -7,5 +7,6 @@ define({
   "turnonAll": "Omogoči izbiranje vseh slojev.",
   "turnoffAll": "Onemogoči izbiranje vseh slojev.",
   "toggleSelect": "Preklopi izbirnost za vse sloje",
-  "singleSelect": "Omogoči izbiranje samo tega sloja."
+  "singleSelect": "Omogoči izbiranje samo tega sloja.",
+  "enableByDefault": "Privzeto omogočite orodje za izbiro."
 });

@@ -7,5 +7,6 @@ define({
   "turnonAll": "將所有圖層設為可選擇",
   "turnoffAll": "將所有圖層設為無法選擇",
   "toggleSelect": "切換所有圖層的選擇能力",
-  "singleSelect": "將其作為唯一可選擇的圖層"
+  "singleSelect": "將其作為唯一可選擇的圖層",
+  "enableByDefault": "預設會啟用選擇工具"
 });

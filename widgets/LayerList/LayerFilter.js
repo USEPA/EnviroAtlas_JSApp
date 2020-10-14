@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,9 +21,14 @@ define([
   'dijit/_TemplatedMixin',
   'dojo/text!./LayerFilter.html',
   'dojo/dom',
+  'dojo/on',
+  'dojo/keys',
   'dojo/dom-class',
+  'dijit/focus',
+  'jimu/utils',
   'jimu/dijit/Search'
-], function(_WidgetBase, declare, lang, _TemplatedMixin, template, dom, domClass, Search) {
+], function(_WidgetBase, declare, lang, _TemplatedMixin, template, dom, on, keys,
+domClass, focusUtil, jimuUtils, Search) {
 
   return declare([_WidgetBase, _TemplatedMixin], {
     templateString: template,
@@ -51,6 +56,22 @@ define([
         searchWhenInput: true
       }).placeAt(this.searchInputNode);
       dom.setSelectable(this.cancelButton, false);
+
+      this.own(on(this.searchButton,
+        'keydown',
+        lang.hitch(this, '_onSearchButtonKey')));
+
+      this.own(on(this.layerFilterInput.inputSearch,
+        'keydown',
+        lang.hitch(this, '_onLayerFilterInputKey')));
+
+      this.own(on(this.clearInputButton,
+        'keydown',
+        lang.hitch(this, '_onClearInputButtonKey')));
+
+      this.own(on(this.cancelButton,
+        'keydown',
+        lang.hitch(this, '_onCancelButtonKey')));
     },
 
     _updateLayerInfoStatus: function(filterText) {
@@ -101,6 +122,15 @@ define([
       domClass.remove(this.searchButton, 'invalid');
       domClass.add(this.searchInputNode, 'invalid');
       domClass.add(this.cancelButton, 'invalid');
+      focusUtil.focus(this.searchButton);
+    },
+
+    hideFilter: function() {
+      // keep isValid is ture
+      domClass.remove(this.searchButton, 'invalid');
+      domClass.add(this.searchInputNode, 'invalid');
+      domClass.add(this.cancelButton, 'invalid');
+      focusUtil.focus(this.searchButton);
     },
 
     _onFilter: function(text) {
@@ -133,7 +163,84 @@ define([
         this._updateLayerInfoStatus("");
         this.layerListWidget._refresh();
       }
-    }
+    },
 
+    _onSearchButtonKey: function(e) {
+      if(e.keyCode === keys.ENTER) {
+        this._onSearchBtnClick();
+      }
+    },
+
+    _onLayerFilterInputKey: function(e) {
+      if(e.keyCode === keys.TAB && e.shiftKey) {
+        e.stopPropagation();
+        e.preventDefault();
+        this._enableNavMode(e);
+      } else if(e.keyCode === keys.TAB && !e.shiftKey) {
+        e.stopPropagation();
+        e.preventDefault();
+        this._enableNavMode(e);
+        if(domClass.contains(this.clearInputButton, 'disable')) {
+          focusUtil.focus(this.cancelButton);
+        } else {
+          focusUtil.focus(this.clearInputButton);
+        }
+      } else if(e.keyCode === keys.ESCAPE) {
+        e.stopPropagation();
+        e.preventDefault();
+        //this._onCancelBtnClick();
+        this.hideFilter();
+      }
+    },
+
+    _onClearInputButtonKey: function(e) {
+      if(e.keyCode === keys.TAB && e.shiftKey) {
+        e.stopPropagation();
+        e.preventDefault();
+        this._enableNavMode(e);
+        focusUtil.focus(this.layerFilterInput.inputSearch);
+      } else if(e.keyCode === keys.TAB && !e.shiftKey) {
+        e.stopPropagation();
+        e.preventDefault();
+        focusUtil.focus(this.cancelButton);
+      } else if(e.keyCode === keys.ENTER) {
+        e.stopPropagation();
+        e.preventDefault();
+        this._onClearInputButton();
+      } else if(e.keyCode === keys.ESCAPE) {
+        e.stopPropagation();
+        e.preventDefault();
+        //this._onCancelBtnClick();
+        this.hideFilter();
+      }
+    },
+
+    _onCancelButtonKey: function(e) {
+      if(e.keyCode === keys.TAB && e.shiftKey) {
+        e.stopPropagation();
+        e.preventDefault();
+        this._enableNavMode(e);
+        focusUtil.focus(this.layerFilterInput.inputSearch);
+      } else if(e.keyCode === keys.TAB && !e.shiftKey) {
+        e.stopPropagation();
+        e.preventDefault();
+        this._enableNavMode(e);
+      } else if(e.keyCode === keys.ENTER) {
+        e.stopPropagation();
+        e.preventDefault();
+        this._onCancelBtnClick();
+      } else if(e.keyCode === keys.ESCAPE) {
+        e.stopPropagation();
+        e.preventDefault();
+        //this._onCancelBtnClick();
+        this.hideFilter();
+      }
+    },
+
+    _enableNavMode:function(evt) {
+      if(evt.keyCode === keys.TAB && !jimuUtils.isInNavMode()){
+        domClass.add(document.body, 'jimu-nav-mode');
+      }
+    }
   });
 });

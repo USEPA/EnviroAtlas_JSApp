@@ -15,6 +15,8 @@ define({
   "selectAll": "Selektuj zapise na svim stranicama",
   "selectPage": "Selektuj zapise na trenutnoj stranici",
   "clearSelection": "Izbriši izbor",
+  "selectionHandleLabel": "Regulator izbora",
+  "selectionHandleDescription": "Pritisnite taster ENTER ili SPACE da biste istakli geoobjekat/geoobjekte na mapi",
   "filter": "Filter",
   "setFilterTip": "Pravilno postavite filtere.",
   "noFilterTip": "Bez definisanih izraza filtera, ovaj zadatak upita će izlistati sve geoobjekte u određenom izvoru podataka.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Nema raspoloživih tabela za prikaz.",
   "checkConfigutationToSelectLayers": "Idite na stranicu za postavke vidžeta kako biste izabrali slojeve.",
-  "checkLayerListToSelectLayers": "Tabela atributa se sinhronizuje sa vidljivim slojevima na mapi, možete da koristite vidžet poput Liste slojeva za uključivanje/isključivanje slojeva."
+  "checkLayerListToSelectLayers": "Tabela atributa se sinhronizuje sa vidljivim slojevima na mapi, možete da koristite vidžet poput Liste slojeva za uključivanje/isključivanje slojeva.",
+  "rowHeaderColumnTitle": "Red ${layerName}, iznad kojeg je zadržan pokazivač miša, pritisnite taster Enter da selektujete redove iznad kojih je zadržan pokazivač miša"
 });

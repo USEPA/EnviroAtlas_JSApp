@@ -1,1 +1,1 @@
-Web App Viewer build date: Tue Dec 18 11:54:13 PST 2018
+Web App Viewer build date: Wed Jul 08 11:38:34 PDT 2020

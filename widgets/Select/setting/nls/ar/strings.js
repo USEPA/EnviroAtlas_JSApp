@@ -5,5 +5,6 @@ define({
   "whollyWithin": "كُليًا ضمن",
   "allowExport": "السماح بتصدير المعالم المحددة",
   "layerToSelect": "اختر الطبقات المتاح تحديدها",
-  "includeRuntimeLayers": "تمكَّن من تحديد الطبقات المنشأة في وقت التشغيل"
+  "includeRuntimeLayers": "السماح بتحديد الطبقات الناتجة في وقت التشغيل",
+  "enableByDefault": "تمكين زر التحديد افتراضيًا"
 });

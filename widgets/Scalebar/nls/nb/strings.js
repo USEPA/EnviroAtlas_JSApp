@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "målestokklinjal"
+  "_widgetLabel": "målestokklinjal",
+  "scale": "Målestokk"
 });

@@ -5,5 +5,9 @@ define({
   "english": "anglaises",
   "metric": "métriques",
   "ruler": "règle",
-  "line": "ligne"
+  "line": "ligne",
+  "number": "nombre",
+  "spinnerLabel": "Arrondir l’échelle à : ",
+  "decimalPlace": "décimale",
+  "separator": "Afficher les séparateurs de milliers"
 });

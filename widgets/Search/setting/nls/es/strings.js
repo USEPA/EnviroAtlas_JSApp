@@ -14,6 +14,7 @@ define({
   "generalSetting": "Configuración general",
   "allPlaceholder": "Texto del marcador de posición para buscar en todo: ",
   "showInfoWindowOnSelect": "Mostrar ventana emergente de la entidad o la ubicación encontrada",
+  "showInfoWindowOnSelect2": "Mostrar ventana emergente cuando se encuentre la entidad o ubicación.",
   "searchInCurrentMapExtent": "Buscar solo en la extensión de mapa actual",
   "zoomScale": "Escala de zoom",
   "locatorUrl": "Dirección URL del geocodificador",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "Alias",
   "ok": "Aceptar",
   "cancel": "Cancelar",
-  "invalidUrlTip": "No se puede acceder a la dirección URL ${URL} o bien no es válida."
+  "invalidUrlTip": "No se puede acceder a la dirección URL ${URL} o bien no es válida.",
+  "locateResults": "Localizar resultados",
+  "panTo": "Desplazar a",
+  "zoomToScale": "Zoom a escala"
 });

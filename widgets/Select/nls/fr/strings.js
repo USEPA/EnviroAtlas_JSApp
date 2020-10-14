@@ -7,5 +7,6 @@ define({
   "turnonAll": "Rendre toutes les couches sélectionnables",
   "turnoffAll": "Rendre toutes les couches non sélectionnables",
   "toggleSelect": "Basculement sélectif pour toutes les couches",
-  "singleSelect": "Définir comme unique couche sélectionnable"
+  "singleSelect": "Définir comme unique couche sélectionnable",
+  "enableByDefault": "Activer l’outil de sélection par défaut"
 });

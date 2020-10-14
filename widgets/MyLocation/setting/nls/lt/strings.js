@@ -3,5 +3,7 @@ define({
   "highlightLocation": "Išryškinti vietą",
   "useTracking": "Žiūrėti vietos pakeitimus",
   "warning": "Klaidinga įvestis",
-  "zoomScale": "Mastelis"
+  "zoomScale": "Mastelis",
+  "useCompass": "Rodyti kompaso padėtį",
+  "useAccCircle": "Rodyti padėties tikslumą"
 });

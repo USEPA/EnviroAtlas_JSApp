@@ -1,7 +1,7 @@
 {
   "serviceURL": "",
   "defaultTitle": "ArcGIS Web Map",
-  "defaultAuthor": "Web AppBuilder for ArcGIS",
+  "defaultAuthor": "ArcGIS Web AppBuilder",
   "defaultCopyright": "",
   "defaultFormat": "PDF",
   "defaultLayout": "Letter ANSI A Landscape"

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -60,8 +60,6 @@ define(["dojo/_base/declare",
         domClass.add(btn, "disabled");
 
         if (this.canRemove) {
-          var index = window.onlineDataAlreadyAdded.indexOf(self.item.id);
-		  window.onlineDataAlreadyAdded.splice(index, 1);
           var map = this.resultsPane.getMap();
           util.setNodeText(self.messageNode, i18n.search.item.messages.removing);
           var lyrs = util.findLayersAdded(map, this.item.id).layers;
@@ -75,10 +73,6 @@ define(["dojo/_base/declare",
           domClass.remove(btn, "disabled");
 
         } else {
-          var index = window.onlineDataAlreadyAdded.indexOf(self.item.id);
-          if (index<0) {
-        		window.onlineDataAlreadyAdded.push(self.item.id);
-          }
           util.setNodeText(self.messageNode, i18n.search.item.messages.adding);
           var loader = new LayerLoader();
           loader.addItem(this.item, this.resultsPane.getMap()).then(function(result) {
@@ -98,21 +92,10 @@ define(["dojo/_base/declare",
             util.setNodeText(self.messageNode, i18n.search.item.messages.addFailed);
             domClass.remove(btn, "disabled");
             if (error && typeof error.message === "string" && error.message.length > 0) {
-                // TODO show this message
-                //console.warn("msg",error.message);
-                //util.setNodeText(self.messageNode,error.message);
-                console.log('');
-		        var item = self.item;
-		        var baseUrl = util.checkMixedContent(item.portalUrl);
-		        var url = baseUrl + "/home/item.html?id=" + encodeURIComponent(item.id);
-                if (!(url in window.faildedOutsideLayerDictionary)){
-			  		window.faildedOutsideLayerDictionary[url] = url;
-			    }	
-                var indexTobeRemoved = window.onlineDataAlreadyAdded.indexOf(self.item.id);
-		  		window.onlineDataAlreadyAdded.splice(indexTobeRemoved, 1);
-				selfAddData.publishData({
-		        	message: "openFailedLayer"
-		    	}); 			    
+              // TODO show this message
+              //console.warn("msg",error.message);
+              //util.setNodeText(self.messageNode,error.message);
+              console.log('');
             }
           });
         }

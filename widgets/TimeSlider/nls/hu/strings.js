@@ -5,5 +5,10 @@ define({
   "timeExtent": "${FROMTIME} – ${ENDTIME}",
   "layers": "Rétegek: ",
   "speedLabel": "Lejátszási sebesség",
-  "liveData": "Valósidejű adatok"
+  "liveData": "Valósidejű adatok",
+  "previous": "előző időköz",
+  "next": "következő osztásköz",
+  "play": "lejátszás",
+  "pause": "szünet",
+  "speed": "sebesség"
 });

@@ -5,5 +5,6 @@ define({
   "whollyWithin": "全部位於",
   "allowExport": "允許匯出所選圖徵",
   "layerToSelect": "選擇要將哪些圖層設為可選擇",
-  "includeRuntimeLayers": "務必選擇執行階段上產生的圖層"
+  "includeRuntimeLayers": "允許選擇執行階段上產生的圖層",
+  "enableByDefault": "預設會啟用選擇按鈕"
 });

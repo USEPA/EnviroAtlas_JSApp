@@ -22,7 +22,6 @@ define({
   "imageFill": "Kuvatäyttö",
   "chooseFile": "Valitse tiedosto",
   "noFileChosen": "Yhtään tiedostoa ei ole valittu",
-  "transparency": "Läpinäkyvyys",
   "sizeFill": "Täytä",
   "sizeFit": "Sovita",
   "sizeStretch": "Täytä venyttämällä",

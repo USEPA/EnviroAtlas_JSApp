@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "Schaalbalk"
+  "_widgetLabel": "Schaalbalk",
+  "scale": "Schaal"
 });

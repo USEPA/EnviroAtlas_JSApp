@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Een maximum van {count} objecten is toegestaan",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "Er is een probleem opgetreden.",
-    "kmlProjectionMismatch": "De ruimtelijke referentie van de kaart en de KML-laag stemmen niet overeen, en de conversie kan niet worden uitgevoerd op de client."
+    "kmlProjectionMismatch": "De ruimtelijke referentie van de kaart en de KML-laag stemmen niet overeen, en de conversie kan niet worden uitgevoerd op de client.",
+    "featureLocationsCouldNotBeFound": "Objecten niet gevonden: onbekende of ongeldige locatievelden. Het bestand wordt toegevoegd als een tabel."
   },
   "layerList": {
     "caption": "Kaartlagen",

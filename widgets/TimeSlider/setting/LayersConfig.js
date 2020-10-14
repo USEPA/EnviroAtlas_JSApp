@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -93,11 +93,11 @@ define(['dojo/Evented',
         }, container);
         var layerNameDom = html.create('div', {
           "class": "layer-name",
-          "innerHTML": layerName || ""
+          "innerHTML": jimuUtils.sanitizeHTML(layerName || "")
         }, row);
         var timeInfoDom = html.create('div', {
           "class": "time-info",
-          "innerHTML": timeInfo || ""
+          "innerHTML": jimuUtils.sanitizeHTML(timeInfo || "")
         }, row);
 
         return {
@@ -122,7 +122,7 @@ define(['dojo/Evented',
           var endTimeLabel = jimuUtils.localizeDate(layerInfo.layerObject.timeInfo.timeExtent.endTime);
 
           var timeStr = startTimeLabel + "   " + this.nls.timeTo + "   " + endTimeLabel;
-          html.setAttr(row.timeInfoDom, "innerHTML", timeStr);
+          html.setAttr(row.timeInfoDom, "innerHTML", jimuUtils.sanitizeHTML(timeStr));
           checkBox.timeExtent = layerInfo.layerObject.timeInfo.timeExtent;
         }
 

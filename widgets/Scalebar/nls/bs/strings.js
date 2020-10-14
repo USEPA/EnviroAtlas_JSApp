@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "Grafičko mjerilo"
+  "_widgetLabel": "Grafičko mjerilo",
+  "scale": "Mjerilo"
 });

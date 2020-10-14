@@ -7,7 +7,7 @@ define({
   "layerSelectorTitle": "Pilih layer mana yang akan menampilkan legenda: ",
   "showLegendsForLayers": "Perlihatkan legenda untuk layer:",
   "showBasemapLegends": "Tampilkan legenda peta dasar",
-  "honorTheWebMapSetting": "Ikuti pengaturan web map",
+  "honorTheWebMapSetting": "Ikuti pengaturan peta web",
   "reset": "Atur ulang",
-  "resetTip": "Atur ulang ke pengaturan asli web map"
+  "resetTip": "Atur ulang ke pengaturan asli peta web"
 });

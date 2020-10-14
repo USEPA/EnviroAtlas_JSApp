@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Dovoljenih je maksimalno {count} geoobjektov",
     "layerNamePattern": "{filename} – {name}",
     "generalIssue": "Prišlo je do težave.",
-    "kmlProjectionMismatch": "Koordinatni sistem karte in sloja KML se ne ujemata in konverzije ni mogoče opraviti na odjemalcu."
+    "kmlProjectionMismatch": "Koordinatni sistem karte in sloja KML se ne ujemata in konverzije ni mogoče opraviti na odjemalcu.",
+    "featureLocationsCouldNotBeFound": "Goobjektov ni bilo mogoče locirati: neznana ali neveljavna polja lokacije. Datoteka bo dodana kot tabela."
   },
   "layerList": {
     "caption": "Sloji",

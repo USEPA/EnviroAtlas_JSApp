@@ -1,6 +1,6 @@
 ﻿<div class="jimu-corner-all">
-  <div class="zoom zoom-in" data-dojo-attach-point="btnZoomIn"
-   data-dojo-attach-event="onclick:_onBtnZoomInClicked">+</div>
-  <div class="zoom zoom-out" data-dojo-attach-point="btnZoomOut"
-   data-dojo-attach-event="onclick:_onBtnZoomOutClicked">–</div>
+  <div class="zoom zoom-in firstFocusNode" role="button" data-dojo-attach-point="btnZoomIn" title="${jimuCommonNls.zoomIn}" aria-label="${jimuCommonNls.zoomIn}"
+  data-dojo-attach-event="onclick:_onBtnZoomInClicked, onkeydown:_onBtnZoomInKeyDown" tabindex="0">+</div>
+  <div class="zoom zoom-out lastFocusNode" role="button" data-dojo-attach-point="btnZoomOut" title="${jimuCommonNls.zoomOut}" aria-label="${jimuCommonNls.zoomOut}"
+   data-dojo-attach-event="onclick:_onBtnZoomOutClicked, onkeydown:_onBtnZoomOutKeyDown" tabindex="0">–</div>
 </div>

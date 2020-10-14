@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -391,13 +391,7 @@ define(["dojo/_base/declare",
             id: id
           });
         } else if (type === "WFS") {
-          layer = new WFSLayer({
-            id: id,
-            url: url,
-            infoTemplate: new InfoTemplate()
-          });
-          this._waitThenAdd(dfd, map, type, loader, layer);
-          console.warn("WFSLayer", layer);
+          util.loadWFSByUrl(dfd,map,loader,url,id,true);
         } else if (type === "KML") {
           layer = new KMLLayer(url, {
             id: id

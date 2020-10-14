@@ -15,6 +15,8 @@ define({
   "selectAll": "Vali kõigi lehtede kirjed",
   "selectPage": "Vali praeguse lehe kirjed",
   "clearSelection": "Puhasta valik",
+  "selectionHandleLabel": "Valikupide",
+  "selectionHandleDescription": "Vajutage ENTER või TÜHIK, et tõsta objekti/objekte kaardil esile",
   "filter": "Filter",
   "setFilterTip": "Määrake filtrid õigesti.",
   "noFilterTip": "Määratlemata filtriavaldiseta loendab see päringuülesanne kõik määratud andmeallika funktsioonid.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Puuduvad tabelid, mida kuvada.",
   "checkConfigutationToSelectLayers": "Kihtide valimiseks minge vidina seadete lehele.",
-  "checkLayerListToSelectLayers": "Atribuuditabel sünkroniseeritakse kaardil nähtavate kihtidega. Kihtide sisse- või väljalülitamiseks saate kasutada näiteks kihiloendi vidinat."
+  "checkLayerListToSelectLayers": "Atribuuditabel sünkroniseeritakse kaardil nähtavate kihtidega. Kihtide sisse- või väljalülitamiseks saate kasutada näiteks kihiloendi vidinat.",
+  "rowHeaderColumnTitle": "Rida ${layerName}, hõljutatud, hõljutatud ridade valimiseks vajutage sisestusklahvi Enter"
 });

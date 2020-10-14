@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Maksimal {count} fitur diizinkan",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "Ada masalah.",
-    "kmlProjectionMismatch": "Referensi spasial peta dan layer KML tidak cocok, dan konversi tidak dapat dilakukan pada klien."
+    "kmlProjectionMismatch": "Referensi spasial peta dan layer KML tidak cocok, dan konversi tidak dapat dilakukan pada klien.",
+    "featureLocationsCouldNotBeFound": "Fitur tidak dapat ditemukan lokasinya: kolom lokasi tidak diketahui atau tidak valid. File akan ditambahkan sebagai tabel."
   },
   "layerList": {
     "caption": "Layer",

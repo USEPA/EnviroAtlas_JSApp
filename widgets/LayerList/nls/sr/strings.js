@@ -28,5 +28,11 @@ define({
   "keyword": "Ključna reč",
   "basemapLayers": "Slojevi pozadinske mape",
   "typeAKeywork": "Unesite ključnu reč",
-  "layers": "Slojevi"
+  "layers": "Slojevi",
+  "tipLayerSearch": "Pretraži slojeve",
+  "tipLayerListOperation": "Lista operacija sa slojevima",
+  "tipLayerOperation": "Meniji sloja",
+  "tipClearText": "Obriši tekst",
+  "collapseLayer": "Skupi",
+  "expandLayer": "Proširi"
 });

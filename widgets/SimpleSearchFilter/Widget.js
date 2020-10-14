@@ -1,4 +1,4 @@
-﻿///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 // Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
@@ -1598,8 +1598,8 @@ define([
             //};
             popupsTemplate[1] = null;
             var communityLocationLayer = new ArcGISDynamicMapServiceLayer(communityBoundaryLayer);
-            communityLocationLayer._titleForLegend = "EnviroAtlas Community Boundaries";
-            communityLocationLayer.title = "EnviroAtlas Community Boundaries";
+            communityLocationLayer._titleForLegend = window.communityLayerTitle;
+            communityLocationLayer.title = window.communityLayerTitle;
             communityLocationLayer.noservicename = true;
             communityLocationLayer.setInfoTemplates(popupsTemplate);
 
@@ -2043,8 +2043,8 @@ define([
                                     };
         
                                     popupsTemplate[1] = null;
-                                    evt.layer._titleForLegend = "EnviroAtlas Community Boundaries";
-                                    evt.layer.title = "EnviroAtlas Community Boundaries";
+                                    evt.layer._titleForLegend = window.communityLayerTitle;
+                                    evt.layer.title = window.communityLayerTitle;
                                     evt.layer.noservicename = true;
                                     evt.layer.setInfoTemplates(popupsTemplate);       
                                     

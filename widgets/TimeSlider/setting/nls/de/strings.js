@@ -27,6 +27,7 @@ define({
   "timeSpan": "Zeitraum",
   "startTime": "Startzeit",
   "endTime": "Endzeit",
+  "unit": "Einheit",
   "timeDisplay": "Zeitanzeige",
   "displayDataIn": "Daten anzeigen in",
   "interval": "Intervall",

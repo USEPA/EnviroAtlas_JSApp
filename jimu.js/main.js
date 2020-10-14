@@ -108,6 +108,7 @@ define([
     window.addedLayerIndex = 0;
     window.uploadedFeatLayerIdPrefix = "uploaded_";
     window.timeSeriesLayerId = "ScenarioDataLayer";//This is for Time Series Layer from sidebar controller
+    window.communityLayerTitle = "EnviroAtlas Community Boundaries";
     window.timeSeriesMetadata = {};
     window.timeSeriesMetadata['PET'] =  "T001";
     window.timeSeriesMetadata['TempMin'] =  "T002";
@@ -454,6 +455,7 @@ define([
     on(window, 'mousedown', function(evt) {
       if(jimuUtils.isInNavMode()){
         html.removeClass(document.body, 'jimu-nav-mode');
+        window.isMoveFocusWhenInit = false;
       }
       if (!mouse.isMiddle(evt)) {
         return;
@@ -508,10 +510,10 @@ define([
     }, jimuConfig);
 
 
-    window.wabVersion = '2.11';
-    // window.productVersion = 'Online 6.4';
-    window.productVersion = 'Web AppBuilder for ArcGIS (Developer Edition) 2.11';
-    // window.productVersion = 'Portal for ArcGIS 10.7';
+    window.wabVersion = '2.17';
+    // window.productVersion = 'Online 8.2';
+    window.productVersion = 'ArcGIS Web AppBuilder (Developer Edition) 2.17';
+    // window.productVersion = 'Portal for ArcGIS 10.8.1';
 
     function initApp() {
       var urlParams, configManager, layoutManager;
@@ -593,18 +595,19 @@ define([
         return;
       }
 
-      html.setStyle(jimuConfig.loadingId, 'display', 'none');
       html.setStyle(jimuConfig.mainPageId, 'display', 'block');
     }
     //ie css
     var ieVersion = jimuUtils.has('ie');
-    if(ieVersion > 9){
-      html.addClass(document.body, 'ie-nav-mode');
-    }else{
-      html.addClass(document.body, 'ie-low-nav-mode');
-    }
-    if(ieVersion > 10){
-      html.addClass(document.body, 'ie-gte-10');
+    if(ieVersion){
+      if(ieVersion > 9){
+        html.addClass(document.body, 'ie-nav-mode');
+      }else{
+        html.addClass(document.body, 'ie-low-nav-mode');
+      }
+      if(ieVersion > 10){
+        html.addClass(document.body, 'ie-gte-10');
+      }
     }
     mo.initApp = initApp;
     return mo;

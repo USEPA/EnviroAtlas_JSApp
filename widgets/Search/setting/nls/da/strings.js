@@ -14,6 +14,7 @@ define({
   "generalSetting": "Generelle indstillinger",
   "allPlaceholder": "Pladsholdertekst for søgning efter alle: ",
   "showInfoWindowOnSelect": "Vis pop-up for det fundne objekt eller den fundne position",
+  "showInfoWindowOnSelect2": "Vis pop-up, når objektet eller positionen er fundet.",
   "searchInCurrentMapExtent": "Søg kun inden for den aktuelle kortudstrækning",
   "zoomScale": "Zoom-skala",
   "locatorUrl": "Geokodnings-URL",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "Alias",
   "ok": "OK",
   "cancel": "Annullér",
-  "invalidUrlTip": "URL’en ${URL} er ugyldig eller utilgængelig."
+  "invalidUrlTip": "URL’en ${URL} er ugyldig eller utilgængelig.",
+  "locateResults": "Find resultater",
+  "panTo": "Panorér til",
+  "zoomToScale": "Zoom til skala"
 });

@@ -15,6 +15,8 @@ define({
   "selectAll": "Seleccionar registros en todas las páginas",
   "selectPage": "Seleccionar registros en la página actual",
   "clearSelection": "Borrar selección",
+  "selectionHandleLabel": "Manipulador de selección",
+  "selectionHandleDescription": "Pulse INTRO o ESPACIO para resaltar la(s) entidad(es) en el mapa",
   "filter": "Filtro",
   "setFilterTip": "Defina los filtros correctamente.",
   "noFilterTip": "Sin expresiones de filtro definidas, esta tarea de consulta mostrará todas las entidades de la fuente de datos especificada.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "No hay tablas disponibles para mostrarlas.",
   "checkConfigutationToSelectLayers": "Vaya a la página de ajustes de widget para seleccionar las capas.",
-  "checkLayerListToSelectLayers": "La tabla de atributos está sincronizada con capas visibles en el mapa; puede usar un widget, por ejemplo, Lista de capas, para activar/desactivar las capas."
+  "checkLayerListToSelectLayers": "La tabla de atributos está sincronizada con capas visibles en el mapa; puede usar un widget, por ejemplo, Lista de capas, para activar/desactivar las capas.",
+  "rowHeaderColumnTitle": "Fila ${layerName}, cursor desplazado, pulsar Intro para seleccionar las filas con el cursor desplazado sobre ellas"
 });

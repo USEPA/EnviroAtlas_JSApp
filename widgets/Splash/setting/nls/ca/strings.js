@@ -22,7 +22,6 @@ define({
   "imageFill": "Emplenament d'imatge",
   "chooseFile": "Trieu un fitxer",
   "noFileChosen": "No s'ha seleccionat cap fitxer",
-  "transparency": "Transparència",
   "sizeFill": "Emplenament",
   "sizeFit": "Ajust",
   "sizeStretch": "Estira fins emplenar",

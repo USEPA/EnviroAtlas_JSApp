@@ -7,5 +7,6 @@ define({
   "turnonAll": "Ustaw wszystkie warstwy jako możliwe do zaznaczenia",
   "turnoffAll": "Ustaw wszystkie warstwy jako niemożliwe do zaznaczenia",
   "toggleSelect": "Przełącz możliwość zaznaczania dla wszystkich warstw",
-  "singleSelect": "Ustaw tę warstwę jako jedyną możliwą do zaznaczenia"
+  "singleSelect": "Ustaw tę warstwę jako jedyną możliwą do zaznaczenia",
+  "enableByDefault": "Włącz domyślnie narzędzie wyboru"
 });

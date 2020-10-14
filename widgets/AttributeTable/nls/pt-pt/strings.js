@@ -15,6 +15,8 @@ define({
   "selectAll": "Selecionar registos em todas as páginas",
   "selectPage": "Selecionar registos na página atual",
   "clearSelection": "Limpar seleção",
+  "selectionHandleLabel": "Alça de seleção",
+  "selectionHandleDescription": "Prima ENTER ou ESPAÇO para realçar o(s) elemento(s) no mapa",
   "filter": "Filtro",
   "setFilterTip": "Por favor, defina os filtros corretamente.",
   "noFilterTip": "Sem expressões de filtro definidas, esta tarefa de consulta irá listar todos os elementos na fonte de dados especificada.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Sem tabelas disponíveis para exibir.",
   "checkConfigutationToSelectLayers": "Por favor, vá à página de definições do widget para selecionar camadas.",
-  "checkLayerListToSelectLayers": "A Tabela de Atributos encontra-se sincronizada com camadas visíveis no mapa,  pode utilizar um widget, tal como Layer List para alternar camadas entre ligado/desligado."
+  "checkLayerListToSelectLayers": "A Tabela de Atributos encontra-se sincronizada com camadas visíveis no mapa,  pode utilizar um widget, tal como Layer List para alternar camadas entre ligado/desligado.",
+  "rowHeaderColumnTitle": "Linha ${layerName}, com o cursor sobreposto, pressionar Enter para selecionar linhas com o cursor sobreposto"
 });

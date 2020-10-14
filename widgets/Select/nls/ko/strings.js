@@ -7,5 +7,6 @@ define({
   "turnonAll": "모든 레이어를 선택할 수 있도록 설정",
   "turnoffAll": "모든 레이어를 선택할 수 없도록 설정",
   "toggleSelect": "모든 레이어에 대한 선택 가능 여부 전환",
-  "singleSelect": "선택할 수 있는 유일한 레이어로 설정"
+  "singleSelect": "선택할 수 있는 유일한 레이어로 설정",
+  "enableByDefault": "기본 설정에 따라 선택 도구 활성화"
 });
