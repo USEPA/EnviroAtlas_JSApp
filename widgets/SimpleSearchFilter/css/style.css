@@ -239,10 +239,6 @@ input.cmn-toggle-round-flat-grayedout:checked + label:after {
     display:inline;
 }
 
-/*Reduce the padding */
-#widgets_SimpleSearchFilter_Widget_37_panel .jimu-widget-frame .jimu-container{
-    padding: 0px;
-}
 /*style the (+) and (-) */
 .jimu-widget-simplesearchfilter.hide, .jimu-widget-simplesearchfilter.show {
 	width: 20px;
