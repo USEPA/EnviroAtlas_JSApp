@@ -434,7 +434,13 @@ define([
           'denyType': 'hidden'
         });
       }
-
+      if ((this._layerInfo.title == (window.NavHuc8LayerTitle)) || (this._layerInfo.title == (window.NavHuc12LayerTitle))) {
+        dynamicDeniedItems.push({
+          'key': 'changeSymbology',
+          'denyType': 'hidden'
+        });
+      }
+      
       // deny setVisibilityRange
       if(this._layerInfo.originOperLayer.featureCollection) {
         dynamicDeniedItems.push({

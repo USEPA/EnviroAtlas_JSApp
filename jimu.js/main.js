@@ -130,6 +130,9 @@ define([
     window.chkSelectableLayer = "ck";
     window.layerTitlePrefix = "layerTitle_";
     window.idCommuBoundaryPoint = "Boundary_Point";
+    window.NavHuc8LayerTitle = "Navigated HUC8 Subbasin";
+    window.NavHuc12LayerTitle = "Navigated HUC12 Subwatershed";
+    
     window.PanelId = "";
     window.timeSeriesDisclaim = false;
     

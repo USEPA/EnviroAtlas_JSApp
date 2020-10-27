@@ -3715,16 +3715,27 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 			"type" : "Feature Layer",
 			"description" : "",
 			"definitionExpression" : "",
-			"name": "Navigated HUC12 Subwatershed",
+			"name": window.NavHuc12LayerTitle,
 			"geometryType": "esriGeometryPolygon",
 			"objectIdField": "ObjectID",
 			"drawingInfo": {
 				"renderer": {
-					"type": "simple",
-					"label": "HUC12",
-					"description" : "Subwatershed",
-					"symbol": this.huc12_symbol()
-				}
+			    "type": "classBreaks",
+			    "field": "ObjectID",
+			    "minValue": 1,
+			    "classBreakInfos": [
+			      {
+			        "symbol": this.huc12_symbol(),
+			        "label": "HUC12",
+			        "classMaxValue": 2
+			      },
+			            {
+			        "symbol": this.huc12_headwater_symbol(),
+			        "label": "HUC12 HEADWATER",
+			        "classMaxValue": 3
+			      }
+			    ]
+			  }
 			},
 			"fields": [
 				{
@@ -3756,7 +3767,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 			"type" : "Feature Layer",
 			"description" : "",
 			"definitionExpression" : "",
-			"name": "Navigated HUC8 Subbasin",
+			"name": window.NavHuc8LayerTitle,
 			"geometryType": "esriGeometryPolygon",
 			"objectIdField": "ObjectID",
 			"drawingInfo": {
@@ -4502,7 +4513,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 			var sfs = new esri.symbol.SimpleFillSymbol({
 				  "type": "esriSFS",
 				  "style": "esriSFSSolid",
-				  "color": [0,255,0,40]
+				  "color": [255,0,0,100] //originally, it was [0,255,0,40]
 				});
 			var sls = new esri.symbol.SimpleLineSymbol(
 					esri.symbol.SimpleLineSymbol.STYLE_DASHDOT, 
@@ -4517,7 +4528,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         var sfs = new esri.symbol.SimpleFillSymbol({
               "type": "esriSFS",
               "style": "esriSFSSolid",
-              "color": [105, 170, 170, 100]
+              "color": [255, 0, 170, 100] // originally, it was [105, 170, 170, 100]
             });
         var sls = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_DASHDOT, new dojo.Color([0,0,0, 50]), 1);
 
