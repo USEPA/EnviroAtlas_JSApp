@@ -3447,6 +3447,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 	//
 	upstreamNavigationSucceeded: function(data) 
 	{
+		this.divNavigationMessages.innerHTML = '';
 		this.hu12_headwater_list = [];
 
 		var that = this;
@@ -4726,11 +4727,13 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 		//jab
 		else if (this.currentFeatures.length > 1)
 		{
-			html.empty(this.divResultMessage);
+			/*html.empty(this.divResultMessage);
 			html.empty(this.clickAgainMessage);
 			var msg_text = "<label style=\"font-size: 18px;\">" + "Click on only one of the " + this.currentFeatures.length + " highlighted Subwatersheds to navigate." + "</label>";
 			html.place(html.toDom(msg_text), this.clickAgainMessage);
-			html.setStyle(this.clickAgainMessage, 'display', '');
+			html.setStyle(this.clickAgainMessage, 'display', '');*/
+			
+			this.divNavigationMessages.innerHTML = "Click on only one of the " + this.currentFeatures.length + " highlighted Subwatersheds to navigate.";
 		}
 		else 
 		{
