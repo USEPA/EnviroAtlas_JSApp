@@ -434,7 +434,7 @@ define([
       },   
       _onRemoveLayersClick: function() {
       	var that = this;
-      	
+      	this.map.graphics.clear();
       	var currentLayer = null;
       	var graphicsLayerIDs = [];
       	//remove HucLayer Result

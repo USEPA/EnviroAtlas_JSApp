@@ -808,6 +808,9 @@ define([
 		lyr = this._layerInfo.map.getLayer(layerId);
 		if(lyr){  		
         	this._layerInfo.map.removeLayer(lyr);
+        	if(lyr.name == window.NavHuc12LayerTitle){ 
+        		this._layerInfo.map.graphics.clear();
+        	}
         	uncheckRelatedCheckbox(layerId.replace(window.layerIdPrefix, ""));
         	if (window.demographicLayerSetting[layerId] != undefined) {
         		window.demographicLayerSetting[layerId] = null;

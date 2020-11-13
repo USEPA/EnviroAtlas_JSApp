@@ -947,7 +947,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         this._removeAllResultLayers();
         this._clearRelateLayers();
         
-        this.map.graphics.clear();
+        //this.map.graphics.clear();
         document.getElementById("butInitClickEventForPopup").click();
       },
 
