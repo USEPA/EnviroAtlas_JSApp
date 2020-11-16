@@ -63,6 +63,7 @@ define(["dojo/_base/declare",
         var self = this,  args = arguments;
         this._getUser().then(function(user) {
           //console.warn("AddData.user=",user);
+    //console.warn("AddData.user=",user);
           self._checkConfig();
           self._initTabs();
           return self._initContext(user);
