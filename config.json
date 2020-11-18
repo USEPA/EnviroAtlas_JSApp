@@ -253,8 +253,8 @@
                 "position": {
                     "left": 445,
                     "top": 5,
-                    "width": 360,
-                    "height": 420,
+                    "width": 400,
+                    "height": 460,
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
@@ -882,8 +882,8 @@
                     "position": {
                         "left": 695,
                         "top": -40,
-                        "width": 360,
-                        "height": 420,
+                        "width": 400,
+                        "height": 460,
                         "relativeTo": "map"
                     },
                     "placeholderIndex": 1,

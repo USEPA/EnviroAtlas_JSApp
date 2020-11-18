@@ -307,7 +307,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 
             var existingMessageText = this.divNavigationMessages.innerHTML;
 
-            var messageText = 'Click the map to navigate '
+            var messageText = 'This tool is a beta version and still in development.<br>Click the map to navigate '
                 + direction.toLowerCase() + ' on the<br>Watershed Boundary Dataset Subwatersheds (HUC-12)';
 
             var messageText2 =	'Click on only one of the highlighted HUC-12 subwatersheds to navigate '
@@ -390,7 +390,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         this.own(on(this.divRecomputeAggregate, "click", lang.hitch(this, this.recomputeAggregate)));
 
         var direction = 'upstream';
-        var messageText = 'Click the map to navigate '
+        var messageText = 'This tool is a beta version and still in development.<br>Click the map to navigate '
 			+ direction.toLowerCase() + ' on the<br>Watershed Boundary Dataset Subwatersheds (HUC-12)';
 
         this.divNavigationMessages.innerHTML = messageText;
