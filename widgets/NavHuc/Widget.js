@@ -350,7 +350,10 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 
                 var r = confirm("Do you want to navigate " + direction.toLowerCase() + " from subwatershed " + huc_code_input.value + "'?");
                 if (r == true){
-                    this.executeHUCSearch(huc_code_input.value);
+                    //this.executeHUCSearch(huc_code_input.value);
+                    if (this.huc12_feature_selected != null) {
+                    	this.navigate_upstream(this.huc12_feature_selected);
+                    }
                 }
             }
 
