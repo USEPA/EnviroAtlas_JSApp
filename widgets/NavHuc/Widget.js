@@ -4095,7 +4095,8 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         //dojo.style(dom.byId("gridAttributeResults"), 'display', '');
 
         this.results_json.huc12 = huc_json;
-        if (this.featHUC12.length == 1)
+
+        if (this.featHUC12 == null || this.featHUC12.length == 1)
         {
             this.results_json.huc12.push('GETTING GIS RESULTS <img src=/wbdmap/images/hourglass.gif />');
             if (data.hu_data.terminal_bool == true){
