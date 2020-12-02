@@ -146,7 +146,7 @@ define(["dojo/_base/declare",
         var context = this.searchPane.searchContext;
         var username = context.username;
         var orgId = "cJ9YHowT8TU7DUyn" //context.orgId;
-        var considerOrg = false;// original value of WAB 2.17 is true;
+        var considerOrg = true;// original value of WAB 2.17 is true;
 	
 
         // Issue #14908
