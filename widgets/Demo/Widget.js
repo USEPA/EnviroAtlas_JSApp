@@ -114,7 +114,14 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
         _displayMoreInformation : function() {       	
         	
 		    var parthArray = window.location.pathname.split("/");		    
-        	window.open(window.location.protocol + '//' + window.location.host + "/" + parthArray[0] + "/help.html"+ "#"+ window.widgetNameInDemo);
+		    var parth1= "";
+		    if (parthArray[0] == "") {
+		    	parth1 = parthArray[1];		    	
+		    }
+		    else {
+		    	parth1 = parthArray[0];	
+		    }
+        	window.open(window.location.protocol + '//' + window.location.host + "/" + parth1 + "/help.html"+ "#"+ window.widgetNameInDemo);
     		return false;
 
         },
