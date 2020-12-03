@@ -111,23 +111,12 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
 
         },
         
-        _displayMoreInformation : function() {
+        _displayMoreInformation : function() {       	
+        	
+		    var parthArray = window.location.pathname.split("/");		    
+        	window.open(window.location.protocol + '//' + window.location.host + "/" + parthArray[0] + "/help.html"+ "#"+ window.widgetNameInDemo);
+    		return false;
 
-    		elemHelpContents2 = document.getElementsByClassName("helpContent2");
-            elemHelpContent2 = elemHelpContents2.item(0);
-        	if (window.displayMoreInfor=="true"){    		
-                if (elemHelpContent2 != null)
-                {
-                    elemHelpContent2.style.display = '';
-                    window.displayMoreInfor = "false";
-                }          
-        	} else {
-                if (elemHelpContent2 != null)
-                {
-                    elemHelpContent2.style.display = 'None';
-                    window.displayMoreInfor = "true";
-                }             		
-        	}
         },
 
         _nextStop : function(stop) {
@@ -188,7 +177,9 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
             } else if (stop < numberStops - 1) {
                 var bSidebarWidget = false;
                 nodeToHelp = window.helpTour[stop].node;
-
+				var widgetName = window.helpTour[stop].widgetName;
+				window.widgetNameInDemo = widgetName;
+				
                 //helperClass = window.formatters[window.helpTour[stop].helpFile];
                 //helpContent = new helperClass();
                 helperClass1 = window.formatters[window.helpTour[stop].helpFile+"1"];
@@ -258,7 +249,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
 
 		    	//insert More infomation button
                 newlink = document.createElement('button');
-                newlink.setAttribute('onclick', "selfDemo._displayMoreInformation(" + ")");
+                newlink.setAttribute('onclick', "selfDemo._displayMoreInformation(" + ")"+";return false");
                 newlink.innerHTML = 'More information';
                 newlink.setAttribute('title', 'More information');
                 newlink.setAttribute('class', 'topicHeader');

@@ -171,31 +171,9 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
   }
 
   function displayMoreInformation() {
-
-	elemHelpContents2 = document.getElementsByClassName("helpContent2");
-    
-	if (window.displayMoreInfor=="true"){    
-		
-		for (ii = 0; ii< elemHelpContents2.length; ii++) {	
-			elemHelpContent2 = elemHelpContents2.item(ii);	
-	        if (elemHelpContent2 != null)
-	        {
-	            elemHelpContent2.style.display = '';
-	            window.displayMoreInfor = "false";
-	        }      
-        }    
-	} else {
-		
-        for (ii = 0; ii< elemHelpContents2.length; ii++) {	
-        
-        	elemHelpContent2 = elemHelpContents2.item(ii);	
-	        if (elemHelpContent2 != null)
-	        {
-	            elemHelpContent2.style.display = 'None';
-	            window.displayMoreInfor = "true";
-	        }             	
-        }	
-	}
+		    var parthArray = window.location.pathname.split("/");		    
+        	window.open(window.location.protocol + '//' + window.location.host + "/" + parthArray[0] + "/help.html"+ "#"+ window.widgetNameInDemo);
+    		return false;
   }
   //if no beforeId, append to head tag, or insert before the id
   function loadStyleLink(id, href, beforeId) {
@@ -5264,6 +5242,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
                 if (widgetName!=null){
                     if (window.PanelId.toUpperCase().indexOf(widgetName.toUpperCase()) >= 0) {
                         stop = i;
+                        window.widgetNameInDemo = widgetName;
                     }               
                 }            
             }  
