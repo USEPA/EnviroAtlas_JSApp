@@ -5289,14 +5289,8 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
 			  newlink.setAttribute('class', 'topicHeader');
 			  newlink.setAttribute('style', 'width:100%;background-color: #9aadbb; margin-top:20px');
 			  newlink.setAttribute('id', 'helpContent2TriggerButton');
-			  //newlink.setAttribute('onclick', "var parthArray = window.location.pathname.split('/'); var parth1= ''; if (parthArray[0] == '') {	parth1 = parthArray[1];} else {parth1 = parthArray[0];  }     	window.open(window.location.protocol + '//' + window.location.host + '/' + parth1 + '/help.html'+ '#'+ window.widgetNameInDemo);return false;");
-			  var clickAction = "var parthArray = window.location.pathname.split('/'); " +
-			  "var parth1= ''; if (parthArray[0] == '') " +
-			  "{	parth1 = parthArray[1];}" + 
-			  "else {parth1 = parthArray[0];}" +     	
-			  "window.open(window.location.protocol + '//' + window.location.host + '/' + parth1 + '/help.html'+ '#'+ window.widgetNameInDemo);" +
-			  "return false;";
-			  
+
+			  var clickAction = "window.open(window.location.href + '/help.html'+ '#'+ window.widgetNameInDemo);return false;";			  
 			  newlink.setAttribute('onclick', clickAction);
     		
     		
