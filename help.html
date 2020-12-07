@@ -27,7 +27,9 @@
                         $('#' + value["widgetName"] + 'Body').load("widgets/Demo/help/templates/" + value["helpFile"] + "2.html");
                     }
                 });
-                location.hash = window.location.hash;
+                setTimeout(function () {
+                	location.hash = window.location.hash;
+                }, 1000);
             });
         });
     </script>
