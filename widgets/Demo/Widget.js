@@ -112,7 +112,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
         },
         
         _displayMoreInformation : function() {     
-        	window.open(window.location.href + "/help.html"+ "#"+ window.widgetNameInDemo);
+        	window.open(window.location.href + "help.html"+ "#"+ window.widgetNameInDemo);
     		return false;
         },
 
