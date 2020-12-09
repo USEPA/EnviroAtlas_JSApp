@@ -38,6 +38,7 @@ define(["dojo/_base/declare",
         if (this._started) {
           return;
         }
+        selfAddDataScopeOptions = this;
         this.inherited(arguments);
         this.initOptions();
         //console.warn("ScopeOptions.startup",this.searchPane.portal);

@@ -159,6 +159,10 @@ define([
     window.demographicLayerSetting = {};
     window.onlineDataTobeAdded = [];
     window.onlineDataAlreadyAdded = [];
+    window.onlineDataScopeDic = {};
+    window.onlineDataScopeDic["EPA GeoPlatform"] = "MyOrganization";
+    window.onlineDataScopeDic["Federal GeoPlatform"] = "Curated";
+    window.onlineDataScopeDic["ArcGIS Online"] = "ArcGISOnline";
     window.uploadedFileColl = [];
     
     window.formatters = {};
