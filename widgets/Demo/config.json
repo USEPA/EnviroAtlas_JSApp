@@ -193,7 +193,7 @@
 		{
 			"widgetName": "DynamicSymbology",
 			"helpFile": "help_DynamicSymbology",
-			"node": "widgets_DynamicSymbology_28",
+			"node": "dijit__WidgetBase_21",
 			"content": [],
 			"orient": [
 				"below",
@@ -201,14 +201,14 @@
 				"above",
 				"above-alt"
 			],
-			"highlight": "widgets_DynamicSymbology_28",
+			"highlight": "dijit__WidgetBase_21",
 			"title": "Dynamic Symbology Tool",
 			"displayOrder": 13
 		},
 		{
 			"widgetName": "LayerList",
 			"helpFile": "help_LayerList",
-			"node": "widgets_LayerList_Widget_17",
+			"node": "dijit__WidgetBase_21",
 			"content": [],
 			"orient": [
 				"below",
@@ -216,14 +216,14 @@
 				"above",
 				"above-alt"
 			],
-			"highlight": "widgets_LayerList_Widget_17",
+			"highlight": "dijit__WidgetBase_21",
 			"title": "Layer List Widget",
 			"displayOrder": 14
 		},
 		{
 			"widgetName": "AttributeTable",
 			"helpFile": "help_AttributeTable",
-			"node": "widgets_AttributeTable_Widget_30",
+			"node": "openAttributeTable",
 			"content": [],
 			"orient": [
 				"below",
@@ -231,14 +231,14 @@
 				"above",
 				"above-alt"
 			],
-			"highlight": "widgets_AttributeTable_Widget_30",
+			"highlight": "openAttributeTable",
 			"title": "Attribute Table",
 			"displayOrder": 15
 		},
 		{
 			"widgetName": "eDraw",
 			"helpFile": "help_DrawMeasure",
-			"node": "widgets_DrawMeasure_Widget_36",
+			"node": "dijit__WidgetBase_2",
 			"content": [],
 			"orient": [
 				"below",
@@ -246,14 +246,14 @@
 				"above",
 				"above-alt"
 			],
-			"highlight": "widgets_DrawMeasure_Widget_36",
+			"highlight": "dijit__WidgetBase_2",
 			"title": "Draw and Measure Tool",
 			"displayOrder": 16
 		},
 		{
 			"widgetName": "Print",
 			"helpFile": "help_Print",
-			"node": "widgets_config_Print_27",
+			"node": "dijit__WidgetBase_2",
 			"content": [],
 			"orient": [
 				"below",
@@ -261,14 +261,14 @@
 				"above",
 				"above-alt"
 			],
-			"highlight": "widgets_config_Print_27",
+			"highlight": "dijit__WidgetBase_2",
 			"title": "Print",
 			"displayOrder": 17
 		},
 		{
 			"widgetName": "eBookmark",
 			"helpFile": "help_EnhancedBookmarks",
-			"node": "widgets_eBookmark_Widget_18",
+			"node": "dijit__WidgetBase_2",
 			"content": [],
 			"orient": [
 				"below",
@@ -276,7 +276,7 @@
 				"above",
 				"above-alt"
 			],
-			"highlight": "widgets_eBookmark_Widget_18",
+			"highlight": "dijit__WidgetBase_2",
 			"title": "Bookmark Tool",
 			"displayOrder": 18
 		},

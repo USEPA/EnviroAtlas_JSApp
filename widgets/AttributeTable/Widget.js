@@ -216,6 +216,7 @@ define([
           html.removeClass(this.switchBtn, 'open');
           html.addClass(this.switchBtn, 'close');
           html.setAttr(this.switchBtn, 'title', this.nls.openTableTip);
+          html.setAttr(this.switchBtn, 'id', "openAttributeTable");
           html.setAttr(this.switchBtn, 'aria-label', this.nls.openTableTip);
         }
       },
