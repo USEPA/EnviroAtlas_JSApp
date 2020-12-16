@@ -471,6 +471,9 @@ define([
 				if ((currentLayer.id).indexOf(window.uploadedFeatLayerIdPrefix) > -1) {
 					AlladdedLayerIDs.push(this.map.layerIds[j]);
 				} 
+				if ((currentLayer.id).indexOf(window.createdFromSelectPrefix) > -1) {
+					AlladdedLayerIDs.push(this.map.layerIds[j]);
+				} 				
 				if ((currentLayer.id).indexOf(window.layerIdTiledPrefix) > -1) {
 					var EAID = currentLayer.id.replace(window.layerIdTiledPrefix, "" );
 					var indexID = window.featureLyrNumber.indexOf(EAID);

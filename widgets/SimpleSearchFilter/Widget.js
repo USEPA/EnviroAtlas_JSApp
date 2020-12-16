@@ -626,7 +626,7 @@ define([
 		}
    };
 		var chkIdDictionary = {};
-		var nationalTopicList = [];
+		//var nationalTopicList = [];
 		var communityTopicList = [];
 		var loadJSON = function(callback){   
 	
@@ -1463,7 +1463,7 @@ define([
 	    	var bCurrentTopicDisabled = true;
 	    	
 	    	
-			if((chkNationalScale.checked) && (nationalTopicList.indexOf(key) >= 0)) {
+			if((chkNationalScale.checked) && (window.nationalTopicList.indexOf(key) >= 0)) {
 				bCurrentTopicDisabled = false;
 			}
 			if((chkCommunityScale.checked) && (communityTopicList.indexOf(key) >= 0)) {
@@ -2655,6 +2655,17 @@ define([
 	                    else {
 	                    	eaMetadata = "";
 	                    }
+	                    var bNavHucStatsDefined = false;
+	                    if(layer.hasOwnProperty(window.NavHucStats)){
+	                    	window.hashEAIDToNavHucStats[layer.eaID] = layer[window.NavHucStats];
+	                    	if (layer[window.NavHucStats].length > 0) {
+	                    		bNavHucStatsDefined = true;
+	                    	}
+	                    }
+	                    if(layer.hasOwnProperty(window.NavHucStatsUnit)){
+	                    	window.hashEAIDToNavHucStatsUnit[layer.eaID] = layer[window.NavHucStatsUnit];
+	                    }
+	                    	                    
 	                    if(layer.hasOwnProperty('url')&&(layer.url!=null)){
 	                    	eaURL1 = layer.url.toString();
 	                    	
@@ -2696,8 +2707,12 @@ define([
 	                    if(layer.hasOwnProperty('eaScale')){
 	                    	eaScale = layer.eaScale.toString();
 	                    	if (eaScale == "NATIONAL") {
-	                    		if (nationalTopicList.indexOf(eaTopic) < 0) {
-	                    			nationalTopicList.push(eaTopic);
+	                    		if (window.nationalTopicList.indexOf(eaTopic) < 0) {
+	                    			window.nationalTopicList.push(eaTopic);
+	                    			if ((bNavHucStatsDefined == true) && (window.nationalFeatureTopicList.indexOf(eaTopic)) < 0) {
+	                    				window.nationalFeatureTopicList.push(eaTopic);
+	                    			}
+	                    			
 	                    		}	                    		
 	                    	}
 	                    	if (eaScale == "COMMUNITY") {

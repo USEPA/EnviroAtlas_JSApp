@@ -36,6 +36,7 @@ define([
 	'esri/layers/RangeDomain',
 	'esri/tasks/BufferParameters',
 	'esri/tasks/GeometryService',
+	"esri/tasks/StatisticDefinition",
 	'esri/config',
 	'esri/graphic',
 	'esri/graphicsUtils',
@@ -110,7 +111,7 @@ function (
 	Message, jimuUtils, urlUtils, Query, QueryTask,
 	RelationshipQuery, CodedValueDomain, Domain, 
 	GraphicsLayer, FeatureLayer, FeatureType, 
-	Field, RangeDomain, BufferParameters, GeometryService,
+	Field, RangeDomain, BufferParameters, GeometryService,StatisticDefinition,
 	esriConfig, Graphic, graphicsUtils, Point, 
 	SimpleMarkerSymbol, PictureMarkerSymbol, Polyline, SimpleLineSymbol, Polygon, Multipoint, 
 	Extent,
@@ -226,6 +227,9 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 	featHUC8: null,
 
     hu12_headwater_list: [],
+    hu12_for_recompute:[],	
+    huc12_feature_selected: null,
+    
 
 
     //END new
@@ -234,6 +238,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 	
 	postCreate: function () 
 	{
+
 		this.inherited(arguments);
 		
 		this.list = new List({}, this.listDiv);
@@ -266,8 +271,6 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 		this._initResultFormatString();
 		this._initDrawBox();
 		this._initTabContainer();
-		this._initBufferUnits();
-		this._initSpatialRelationships();
 		this._initLayerSelect();
 		this._initProgressBar();
 		this._initCheckForSupportedWidgets();
@@ -354,6 +357,8 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
                     if (this.huc12_feature_selected != null) {
                     	this.navigate_upstream(this.huc12_feature_selected);
                     }
+                    
+                    
                 }
             }
 
@@ -972,7 +977,6 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         if (this.tempResultLayer) {
           this.tempResultLayer.show();
         }
-
       },
 
       _resetDrawBox: function () {
@@ -1138,41 +1142,6 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         this.paramsDijit.setFocusOnFirstParam();
       },
 
-      _initBufferUnits: function () {
-        // if(this.config.bufferDefaults.maxBufferValue){
-        //   this.txtBufferValue.constraints.max = this.config.bufferDefaults.maxBufferValue;
-        //   this.txtBufferValueSpat.constraints.max = this.config.bufferDefaults.maxBufferValue;
-        // }
-        //
-        // var options = [];
-        // var len = this.config.bufferDefaults.bufferUnits.bufferUnit.length;
-        // for (var i = 0; i < len; i++) {
-        //   var option = {
-        //     value: this.config.bufferDefaults.bufferUnits.bufferUnit[i].name,
-        //     label: this.config.bufferDefaults.bufferUnits.bufferUnit[i].label
-        //   };
-        //   options.push(option);
-        //   if (i === 0) {
-        //     options[i].selected = true;
-        //   }
-        // }
-        // this.bufferUnits.addOption(options);
-        // this.bufferUnitsSpat.addOption(options);
-      },
-
-      _initSpatialRelationships: function () {
-        // var len = this.config.spatialrelationships.spatialrelationship.length;
-        // for (var i = 0; i < len; i++) {
-        //   var iClass = this._getSpatialIconClass(this.config.spatialrelationships.spatialrelationship[i].name);
-        //   var spatButton = html.create('div', {
-        //     'class': 'spatial-item',
-        //     'data-spatialtype': this.config.spatialrelationships.spatialrelationship[i].name,
-        //     'title': this.config.spatialrelationships.spatialrelationship[i].label
-        //   }, this.spatialItems);
-        //   html.addClass(spatButton, iClass);
-        //   this.own(on(spatButton, 'click', lang.hitch(this, this._spatButtonOnClick)));
-        // }
-      },
 
       _spatButtonOnClick: function (event) {
         event.stopPropagation();
@@ -1271,75 +1240,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         } else {
           this.disabledTabs = [];
         }
-        // this.limitMapExtentCbx.setValue(this.config.limitsearch2mapextentchecked || false);
-        // this.eLocateEnabled = this.config.graphicalsearchoptions.enableeLocateselect || false;
-        // this.txtBufferValue.set('value', this.config.bufferDefaults.bufferDefaultValue || 2);
-        // this.txtBufferValueSpat.set('value', this.config.bufferDefaults.bufferDefaultValue || 2);
-        // this.bufferWKID = this.config.bufferDefaults.bufferWKID;
-        // this.autozoomtoresults = this.config.autozoomtoresults || false;
-        // this.mouseovergraphics = this.config.mouseovergraphics || false;
-        // var initView = this.config.initialView || "text";
-        // this.pointSearchTolerance = this.config.graphicalsearchoptions.toleranceforpointgraphicalselection || 6;
-        // this.cbxAddTolerance.setValue(this.config.graphicalsearchoptions.addpointtolerancechecked || false);
-        // this.cbxMultiGraphic.setValue(this.config.graphicalsearchoptions.multipartgraphicsearchchecked || false);
-        // this.cbxBufferGraphic.setValue(false);
-        // if (this.config.graphicalsearchoptions.showmultigraphicsgraphicaloption) {
-        //   html.setStyle(this.multiGraDiv, 'display', '');
-        // } else {
-        //   html.setStyle(this.multiGraDiv, 'display', 'none');
-        // }
-        // if (this.config.graphicalsearchoptions.showaddtolerancegraphicaloption) {
-        //   html.setStyle(this.addToleranceDiv, 'display', '');
-        // } else {
-        //   html.setStyle(this.addToleranceDiv, 'display', 'none');
-        // }
-        // if (this.config.graphicalsearchoptions.showaddsqltextgraphicaloption) {
-        //   html.setStyle(this.addSqlTextDiv, 'display', '');
-        // } else {
-        //   html.setStyle(this.addSqlTextDiv, 'display', 'none');
-        // }
-        // if (this.config.graphicalsearchoptions.showbuffergraphicaloption) {
-        //   html.setStyle(this.bufferGraDiv, 'display', '');
-        // } else {
-        //   html.setStyle(this.bufferGraDiv, 'display', 'none');
-        // }
-        // this.cbxBufferGraphic.setValue(this.config.graphicalsearchoptions.buffercheckedbydefaultgraphicaloption);
-        //
-        // this.cbxMultiGraphic.onChange = lang.hitch(this, this._onCbxMultiGraphicClicked);
-        //
-        // array.map(this.disabledTabs, lang.hitch(this, function (dTab) {
-        //   if (dTab === 'graphic') {
-        //     this.shapeTab = false;
-        //   }
-        //   if (dTab === 'text') {
-        //     this.attribTab = false;
-        //   }
-        //   if (dTab === 'spatial') {
-        //     this.spatTab = false;
-        //   }
-        //   if (dTab === 'result') {
-        //     this.rsltsTab = false;
-        //   }
-        // }));
 
-        //determine if this layer has any expressions
-        // if(this.config.layers[0].expressions.expression.length > 0){
-        //   this.cbxAddTextQuery.setStatus(true);
-        // }else{
-        //   this.cbxAddTextQuery.setStatus(false);
-        // }
-        //
-        // if (this.cbxMultiGraphic.getValue()) {
-        //   html.setStyle(this.btnGraSearch, 'display', 'inline-block');
-        // } else {
-        //   html.setStyle(this.btnGraSearch, 'display', 'none');
-        // }
-        // var len = this.config.layers.length;
-        // if (initView === "text" && this.attribTab) {
-        //   this.selTab = this.nls.selectByAttribute;
-        // } else if (initView === "graphical" && this.shapeTab) {
-        //   this.selTab = this.nls.selectFeatures;
-        // }
         if(this.autoactivatedtool){
           this.drawBox.activate(this.autoactivatedtool.toUpperCase());
         }
@@ -1372,6 +1273,30 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         this.tabContainer.startup();
 
         this.own(on(this.tabContainer, "tabChanged", lang.hitch(this, function (title) {
+        	
+        //populate the category dropdown list
+            var that = this;
+
+            var attribute_select = that.divCategorySelect;
+
+            //TODO: do this in a dojo/dijit way, instead of straight javascript
+            attribute_select.options.length = 0;
+            var o = document.createElement("option");
+            o.value = 'NONE';
+            o.text = '--- Select ----';
+            attribute_select.appendChild(o);
+
+            for (var i = 0; i < window.nationalFeatureTopicList.length; i++) {
+                var o = document.createElement("option");
+
+                o.value = window.nationalFeatureTopicList[i];
+
+                o.text = window.nationalFeatureTopicList[i];
+
+                attribute_select.appendChild(o);
+            }
+		  //end of populating the category dropdown list     
+		     	
           if (title !== this.nls.results) {
             this.selTab = title;
           }
@@ -2312,32 +2237,11 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
           }
         })));
         this.own(on(this.drawBox, 'DrawEnd', lang.hitch(this, function (graphic) {
-          //if (!this.cbxMultiGraphic.getValue()) {
-          //   if (graphic.geometry.type === "point" && this.cbxAddTolerance.getValue()) {
               var ext = this.pointToExtent(graphic.geometry, this.pointSearchTolerance);
               this.search(ext, this.graphicLayerIndex);
-            // } else {
-            //   if (this.cbxBufferGraphic.getValue()) {
-            //     this._bufferGeometries([graphic.geometry], new SpatialReference({
-            //       wkid: this.bufferWKID
-            //     }), [parseFloat(this.txtBufferValue.get('value'))], this.bufferUnits.get('value'), true);
-            //   } else {
-            //     this.search(graphic.geometry, this.graphicLayerIndex);
-            //   }
-            // }
-          //} else {
-          //  this.garr.push(graphic);
-          //}
+
         })));
-        // this.own(on(this.btnClear2, "click", lang.hitch(this, this.clear, true)));
-        // this.own(on(this.btnClear3, "click", lang.hitch(this, this.clear, true)));
-        // this.own(on(this.btnClear4, "click", lang.hitch(this, this.clearFields, true)));
-        // this.own(on(this.btnClearBuffer2, "click", lang.hitch(this, this.clearbuffer)));
-        // this.own(on(this.btnClearBuffer3, "click", lang.hitch(this, this.clearbuffer)));
-        // html.setStyle(this.btnClearBuffer2, 'display', 'none');
-        // html.setStyle(this.btnClearBuffer3, 'display', 'none');
-        // html.setStyle(this.btnClear2, 'display', 'none');
-        // html.setStyle(this.btnClear3, 'display', 'none');
+
       },
 
       exportURL: function () {
@@ -2588,14 +2492,10 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
       },
 
       onAddSelection: function(){
-//        html.replaceClass(this.gSelectType.iconNode, 'addSelIcon', 'newSelIcon');
-//        html.replaceClass(this.gSelectType.iconNode, 'addSelIcon', 'removeSelIcon');
         this.gSelectTypeVal = 'add';
       },
 
       onRemoveSelection: function(){
-//        html.replaceClass(this.gSelectType.iconNode, 'removeSelIcon', 'newSelIcon');
-//        html.replaceClass(this.gSelectType.iconNode, 'removeSelIcon', 'addSelIcon');
         this.gSelectTypeVal = 'rem';
       },
 
@@ -2678,24 +2578,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
           this.map_click_point = geometry.getExtent().getCenter();
           this.add_click_point_graphic(this.map_click_point);
           //jab-end
-          queryParams.spatialRelationship = spatialRelationship || Query.SPATIAL_REL_INTERSECTS;
-          
-          // if (this.cbxAddTextQuery.getValue()) {
-          //   var gwhere = this.buildWhereClause(layerIndex, this.expressIndex, theValue);
-          //   queryParams.where = this.lastWhere = gwhere;
-          //   if(!gwhere){
-          //     console.info('No SQL expression found');
-          //   }else{
-          //     console.info(gwhere);
-          //   }
-          // }
-          // if (layerConfig.definitionexpression) {
-          //   queryParams.where = layerConfig.definitionexpression;
-          //   if (this.lastWhere) {
-          //     queryParams.where += ' AND ' + this.lastWhere;
-          //   }
-          //   console.info('SQL Where with layers definition expression: ', queryParams.where);
-          // }
+          queryParams.spatialRelationship = spatialRelationship || Query.SPATIAL_REL_INTERSECTS;         
         } 
         else 
         {
@@ -2723,9 +2606,6 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         }
 
 
-        // if (this.rsltsTab) {
-        //   this.tabContainer.selectTab(this.nls.results);
-        // }
         html.setStyle(this.progressBar.domNode, 'display', 'block');
         // this.progressBar.domNode.innerHTML = "Searching ...";
         html.setStyle(this.divOptions, 'display', 'none');
@@ -2876,15 +2756,8 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         this.gSelectTypeVal = 'new';
         this.aSelectTypeVal = 'new';
         this.sumResultArr = [];
-//        html.replaceClass(this.gSelectType.iconNode, 'newSelIcon', 'removeSelIcon');
-//        html.replaceClass(this.gSelectType.iconNode, 'newSelIcon', 'addSelIcon');
-//        html.replaceClass(this.aSelectType.iconNode, 'newSelIcon', 'removeSelIcon');
-//        html.replaceClass(this.aSelectType.iconNode, 'newSelIcon', 'addSelIcon');
-        if (closeAtt) {
-          // if (this.list.items.length > 0 && this.isSelTabVisible()) {
-          //   this.tabContainer.selectTab(this.selTab);
-          // }
-        }
+
+
         this.list.clear();
         
         html.empty(this.divResultMessage);
@@ -3125,8 +2998,6 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 
       _clearLayers: function () {
         this._removeAllResultLayers();
-        // html.setStyle(this.btnClear2, 'display', 'none');
-        // html.setStyle(this.btnClear3, 'display', 'none');
       },
 
       _clearRelateLayers: function () {
@@ -3423,11 +3294,6 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 				{
 					console.log('matched id==' + id.slice(0, 12 - i) + ' for target_huc_id==' + target_huc_id);
 				
-//					// fix this issue here # buggy_huc12 101600102004  the bug is in the HUC coverage, not the routing tables.
-//					if (id == 101600112004)
-//					{
-//						id = 101600102004;
-//					}
 					returned_ids.push(id);
 					if (returned_ids.length == max_count_nu)
 					{
@@ -3496,10 +3362,12 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
             return;
         }
         var hu12_list = data.navigation_data.results.hu12_data.hu12_list;
+        this.hu12_for_recompute = [];
         huc12_ids_len = hu12_list.length;
 
         if (huc12_ids_len > 0)
         {
+
             html.setStyle(this.progressBar.domNode, 'display', '');
             this.progressBar.domNode.innerText = "done " + this.navigator_url + " search. Found " + huc12_ids_len.toString() + " h12s. Starting ArcGIS Query";
 
@@ -3520,6 +3388,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
             array.forEach(hu12_list, function(hu12_tuple)
             {
                 huc12_id = hu12_tuple[huc_code_index_nu];
+                that.hu12_for_recompute.push(huc12_id);
 
                 if (headwater_index_nu > -1
                     && hu12_tuple[headwater_index_nu] == true
@@ -3529,11 +3398,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
                 }
 
                 var huc8_id = huc12_id.substring(0, 8);
-                // don't add the HUC8 that contains the user clicked HUC12
-                // if (huc8_id == data.hu_data.huc_code.substring(0, 8))
-                // {
-                // 	return;
-                // }
+
                 if (huc8_ids.indexOf(huc8_id) === -1)
                 {
                     huc8_ids.push(huc8_id)
@@ -3660,30 +3525,6 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         this.divNavigationMessages.innerHTML = '';
         dom.byId("NavigateErrorMessage").innerHTML = '';
     },
-		//end new
-		// if (data.us_huc12_ids.value.length > 0)
-		// {
-		// 	// the rest service returns a list of the HUC12s called 'huc12_ids' (using NHD terminology)
-		// 	//var huc12_ids = data.huc12_ids;
-		//
-		// 	huc12_ids_len = data.us_huc12_ids.value.length;
-		//
-		// 	// get a list of the HUC8s for HUC12s that were found - these will be shown on the map
-		// 	var huc8_ids = [];
-		// 	array.forEach(data.us_huc12_ids.value, function(huc12_id)
-		// 	{
-		// 		var huc8_id = huc12_id.substring(0, 8);
-		// 		// don't add the HUC8 that contains the user clicked HUC12
-		// 		if (huc8_id == data.huc8.value)
-		// 		{
-		// 			return;
-		// 		}
-		// 		if (huc8_ids.indexOf(huc8_id) === -1)
-		// 		{
-		// 			huc8_ids.push(huc8_id)
-		// 		}
-		// 	});
-		// 	data['upstream_huc8_count_nu']['value'] = huc8_ids.length;
 
 
 	numberWithCommas(x) {
@@ -3917,25 +3758,10 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 		dojo.style(dom.byId("gridAttributeResults"), 'display', 'none');
 
 		this.results_json = {};
-		//dojo.destroy("grid");
-		// create an extent from the mapPoint that was clicked
-		// this is used to return features within 2 pixel of the click point
-
-		//NProgress.start();
-
-		// map_click_point = e.mapPoint;
-		// var pxWidth = app.map.extent.getWidth() / app.map.width;
-		// var padding = 1 * pxWidth;
-		// map_click_pointGeom = new Extent({
-		// 	"xmin" : map_click_point.x - padding, "ymin" : map_click_point.y - padding,
-		// 	"xmax" : map_click_point.x + padding, "ymax" : map_click_point.y + padding,
-		// 	"spatialReference" : map_click_point.spatialReference
-		// });
-		//
+		
 		// add_click_point_graphic(map_click_point);
 		dojo.style(dom.byId("gridHUC12"), 'display', 'none');
 
-		// dom.byId("NavigationMessages").innerHTML = 'Searching HUC12s using HUC_CODE ' + huc_code;
 
 		// use the 'map_click_pointGeom' for the initial query
 		if (huc_code.length == 8)
@@ -3947,7 +3773,6 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 		{
 			this.qHUC12.where = this.huc12_field_nm + "  LIKE '" + huc_code + "%'";
 		}
-		//this.qHUC12.where = huc12_field_nm + "  = '" + huc_code + "'";
 
 		this.qHUC8.where = this.huc8_field_nm + "  = '" + huc_code.substr(0, 8) + "'";
 
@@ -3987,7 +3812,8 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
             var hu12_index_nu = data.navigation_data.results.hu12_data.fields.huc_code;
             var hu12_list = data.navigation_data.results.hu12_data.hu12_list;
         }
-
+		
+		this.hu12_for_recompute = [];
         huc12_ids_len = hu12_list.length;
         if (huc12_ids_len > 0)
         {
@@ -3998,6 +3824,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
             array.forEach(hu12_list, function(hu12_tuple)
             {
                 var hu12_id = hu12_tuple[hu12_index_nu];
+                that.hu12_for_recompute.push(hu12_id);
 
                 var huc8_id = hu12_id.substring(0, 8);
                 // don't add the HUC8 that contains the user clicked HUC12
@@ -4656,9 +4483,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 		} else{
 			currentLayer.setRenderer(this._setCurentLayerRenderer('config'));
 		}
-		// if (this.rsltsTab) {
-		// 	this.tabContainer.selectTab(this.nls.results);
-		// }
+
 		html.setStyle(this.progressBar.domNode, 'display', 'none');
 		html.setStyle(this.divOptions, 'display', 'block');
 		
@@ -4716,10 +4541,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 			this.list.clear();
 			this.gSelectTypeVal = 'new';
 			this.aSelectTypeVal = 'new';
-//			html.replaceClass(this.gSelectType.iconNode, 'newSelIcon', 'removeSelIcon');
-//			html.replaceClass(this.gSelectType.iconNode, 'newSelIcon', 'addSelIcon');
-//			html.replaceClass(this.aSelectType.iconNode, 'newSelIcon', 'removeSelIcon');
-//			html.replaceClass(this.aSelectType.iconNode, 'newSelIcon', 'addSelIcon');
+
 			html.setStyle(this.divOptions, 'display', 'none');
 			
 			//jab
@@ -5030,6 +4852,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
                 this.divNavigationHUCode.value = atts["HUC_12"];
 
 				console.time("Navigate HUC12");
+				this.huc12_feature_selected = results;
 				this.navigate_upstream(results);
 				console.timeEnd("Navigate HUC12");
 
@@ -5736,62 +5559,43 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
      */
         updateIndicator(category_name)
         {
-            var that = this;
-            if (category_name !== null)
-            {
-                var request = esriRequest({
-                  url: this.navigator_url + '/api/wbdattributes/',
-                  content: {
-                    'category_name': category_name
-                  },
-                  handleAs: "json"
-                });
-                //NProgress.start();
-                request.then(
-                        function(data)   { that.categorySucceeded(data) },
-                        function(reason) { that.categoryFailed }
-                );
-
-            }
-        },
-        categorySucceeded(data)
-        {
-            var that = this;
-
-            var attribute_select = that.divAttributeSelect;
-
+            var attribute_select = this.divAttributeSelect;
             //TODO: do this in a dojo/dijit way, instead of straight javascript
             attribute_select.options.length = 0;
             var o = document.createElement("option");
             o.value = 'NONE';
             o.text = '--- Select ----';
             attribute_select.appendChild(o);
+            for (var eaID in window.hashTopic) {
+            	if ((window.hashTopic[eaID] == category_name) && (window.hashScale[eaID] == 'NATIONAL')){
+            		var numStatistic = 0;
+            		var bAverageStatic = false;
+            		if (window.hashEAIDToNavHucStats[eaID]!= undefined) {
+            			layerStatistic = window.hashEAIDToNavHucStats[eaID];
+            			numStatistic = layerStatistic.length;
+            			if (window.hashEAIDToNavHucStats[eaID].indexOf(window.NavHucTermForAverage) != -1) {
+        					bAverageStatic = true;
+            			}
+            		}
+            		
+            		if (window.hashEAIDToTitle[eaID]!= undefined) {
+            			if ((numStatistic == 0) || (window.hashEAIDToNavHucStats[eaID].indexOf('sum') != -1)){//if no statistic info is defined, we will choose sum as default
+	            			var o = document.createElement("option");
+			                o.value = window.hashEAIDToTitle[eaID] + " [sum]";
+			                o.text = window.hashEAIDToTitle[eaID] + " [sum]";		
+			                attribute_select.appendChild(o);            				
+            			}
+            			if (bAverageStatic == true) {
+	            			var o = document.createElement("option");
+			                o.value = window.hashEAIDToTitle[eaID] + " [average]";
+			                o.text = window.hashEAIDToTitle[eaID] + " [average]";		
+			                attribute_select.appendChild(o);   
+            			}
+            		 
+            		}
 
-            for (var i = 0; i < data.data.length; i++) {
-                var o = document.createElement("option");
-
-                o.value = data.data[i].field_nm;
-
-                o.text = data.data[i].label_tx + " [" + data.data[i].statistic_cd + "]";
-
-                attribute_select.appendChild(o);
+            	}
             }
-            // enable Recompute Aggregate
-            var recompute_button = this.divRecomputeAggregate;
-            recompute_button.disabled = true;
-            //NProgress.done();
-        },
-        categoryFailed(data)
-        {
-            var attribute_select = this.divAttributeSelect;
-
-            alert('Error:' + data);
-            //NProgress.done();
-            attribute_select.options.length = 0;
-            var o = document.createElement("option");
-            o.value = 'NONE';
-            o.text = '--- Select ----';
-            attribute_select.appendChild(o);
 
             // enable Recompute Aggregate
             var recompute_button = this.divRecomputeAggregate;
@@ -5799,64 +5603,110 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
         },
         recomputeAggregate() {
             var that = this;
+            selfHucNav = this;
             // /wbd/huc/170401040901/upstream/?format=json&attribute_only&navigation_direction=Upstream&attribute_field_nm=FRUITYIELD
             var huc_code_input = this.divNavigationHUCode;
 
-            var category = this.divCategorySelect;
-            var category_name = category.options[category.selectedIndex].value;
+			var titleWhole = this.divAttributeSelect.value;
+			
+			var bAverageForStatistic;
+			var titleLayer;
 
-            var attribute = this.divAttributeSelect;
-            var attribute_name = attribute.options[attribute.selectedIndex].value;
-            var attribute_text = attribute.options[attribute.selectedIndex].text;
+			termAverageInTopic = " [" + window.NavHucTermForAverage + "]";
+			if (titleWhole.slice((-1)*termAverageInTopic.length) == termAverageInTopic) {
+				bAverageForStatistic = true;
+				titleLayer = titleWhole.substring(0, titleWhole.length-termAverageInTopic.length)
+			} else {
+				bAverageForStatistic = false;
+				titleLayer = titleWhole.substring(0, titleWhole.length-" [sum]".length)
+			}
+            for (var eaID in window.hashEAIDToTitle) {
+            	
+            	if ((window.hashEAIDToTitle[eaID] == titleLayer) && (window.hashScale[eaID] == 'NATIONAL')){
+					
+            		url = window.hashURL[eaID];
+        		    var statisticLyr = new FeatureLayer(url, {
+				      outFields: window.hashAttribute[eaID]
+				    });
+				    var sqlExpression = window.hashAttribute[eaID];
+				    var avgStatDef = new StatisticDefinition();
+				    if (bAverageForStatistic == true) {
+				    	avgStatDef.statisticType = "avg";
+				    } else {
+				    	avgStatDef.statisticType = "sum";
+				    }
+				    
+				    avgStatDef.onStatisticField = sqlExpression;
+				    avgStatDef.outStatisticFieldName = "hucNavValue";
 
-            if (huc_code_input.value.length == 12 && attribute_name.length > 0) {
-
+				    var queryParams = new Query();
+				    queryParams.where = "HUC_12 in (";
+				    for (i=0; i < that.hu12_for_recompute.length - 1; i++) {
+				    	queryParams.where = queryParams.where + "'" + that.hu12_for_recompute[i] + "',"; 
+				    }
+				    queryParams.where = queryParams.where + "'" + that.hu12_for_recompute[that.hu12_for_recompute.length - 1] + "')";
+				    //queryParams.where = "HUC_12 in ('031800020404', '031800020401')";  // Return all block groups within one mile of the point
+				    queryParams.outFields = [window.hashAttribute[eaID]];
+				    queryParams.outStatistics = [avgStatDef];
+				    
+				    statisticLyr.queryFeatures(queryParams, this.getStats, this.errback);
+				    
+            	}
             }
-            var request = esriRequest({
-              url: this.navigator_url + '/wbd/huc/' + huc_code_input.value + '/upstream/',
-              content: {
-                'navigation_direction': 'Upstream',
-                'attribute_field_nm': attribute_name,
-                'attribute': attribute_name,
-                'attribute_only': true,
-                'format': 'json'
+        },
+        getStats(results){
 
-              },
-              handleAs: "json"
-            });
-            results_data2 = [];
-            results_data2.push({'key': 'Indicator Category', 'value': category_name});
-            results_data2.push({'key': 'Indicator Name', 'value': attribute_text});
-            results_data2.push({'key': 'Units', 'value': 'Fetching ...'});
-            results_data2.push({'key': 'Statistic', 'value': 'Fetching ...'});
-            results_data2.push({'key': 'Aggregated Value', 'value': 'Fetching ...'});
+			var titleWhole = selfHucNav.divAttributeSelect.value;
+			
+			var bAverageForStatistic;
+			var titleLayer;
+			var navHucStatsUnit;
+			var navHucStatsMethod;
 
-            // if (data.attribute_results['us_count_nu'] > 0)
-            // {
-            // 	results_data2.push({'key': 'Upstream HUC Value', 'value': data.attribute_results['us_value'] + ' ' + data.attribute_results['units']});
-            // }
+			termAverageInTopic = " [" + window.NavHucTermForAverage + "]";
+			if (titleWhole.slice((-1)*termAverageInTopic.length) == termAverageInTopic) {
+				navHucStatsMethod = "average";
+				titleLayer = titleWhole.substring(0, titleWhole.length-termAverageInTopic.length)
+
+			} else {
+				navHucStatsMethod = "sum";
+				titleLayer = titleWhole.substring(0, titleWhole.length - " [sum]".length)
+			}
+			
+			for (var eaID in window.hashEAIDToTitle) {			
+				if ((window.hashEAIDToTitle[eaID] == titleLayer) && (window.hashScale[eaID] == 'NATIONAL')) {			
+					navHucStatsUnit = window.hashEAIDToNavHucStatsUnit[eaID];
+				}
+			}
+			        	
+        	var stats = results.features[0].attributes;
+        	
+        	results_data2 = [];
+        	results_data2.push({'key': 'Indicator Category', 'value': selfHucNav.divCategorySelect.value});
+            results_data2.push({'key': 'Indicator Name', 'value': titleLayer});
+            results_data2.push({'key': 'Units', 'value': navHucStatsUnit});
+            results_data2.push({'key': 'Statistic', 'value': navHucStatsMethod});
+            //results_data2.push({'key': 'Aggregated Value', 'value': stats.hucNavValue.toString()});
+            results_data2.push({'key': 'Aggregated Value', 'value': stats.hucNavValue.toFixed(2)});
+            
+
                 // create an object store
             var objectStore2 = new Memory({
                 data: results_data2
             });
             results2Store2 = new dojo.data.ObjectStore({objectStore: objectStore2});
-            this.gridAttributeResults.store = results2Store2;
+            selfHucNav.gridAttributeResults.store = results2Store2;
 
-            // show grid
-            this.gridAttributeResults.render();
+            selfHucNav.gridAttributeResults.render();
             dojo.style(dom.byId("gridAttributeResults"), 'display', '');
             dijit.byId('gridAttributeResults').resize();
 
-            //NProgress.start();
-            // showLoading();
-            //TODO progressBar
-            t0 = performance.now();
-            //request.then(this.recomputeSucceeded, this.recomputeFailed);
-            request.then(
-                    function(data)   { that.recomputeSucceeded(data) },
-                    function(reason) { that.recomputeFailed }
-            );
+
         },
+        errback(err){
+	      console.log("Couldn't retrieve statistics. ", err);
+	    },
+
         recomputeSucceeded(data)
         {
             var t1 = performance.now();
@@ -5898,10 +5748,10 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
                 data: results_data2
             });
             results2Store2 = new dojo.data.ObjectStore({objectStore: objectStore2});
-            this.gridAttributeResults.store = results2Store2;
+            selfHucNav.gridAttributeResults.store = results2Store2;
 
             // show grid
-            this.gridAttributeResults.render();
+            selfHucNav.gridAttributeResults.render();
             dojo.style(dom.byId("gridAttributeResults"), 'display', '');
             dijit.byId('gridAttributeResults').resize();
             //NProgress.done();
