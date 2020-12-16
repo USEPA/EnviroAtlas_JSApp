@@ -135,6 +135,9 @@ define([
     window.idCommuBoundaryPoint = "Boundary_Point";
     window.NavHuc8LayerTitle = "Navigated HUC8 Subbasin";
     window.NavHuc12LayerTitle = "Navigated HUC12 Subwatershed";
+    window.NavHucStats = "hucNavStats";
+    window.NavHucStatsUnit = "hucNavStatsUnits";
+    window.NavHucTermForAverage = "average";
     window.widgetNameInDemo = "";
     
     window.PanelId = "";
@@ -282,6 +285,8 @@ define([
     window.topicDicBNF["Hydrologic Features"] = "HF";
     window.topicDicBNF["Political Boundaries"] = "PB";
 
+	window.nationalTopicList = [];
+	window.nationalFeatureTopicList = [];
     
     window.strAllCommunity = "AllCommunity";	
     window.communityDic = {};
