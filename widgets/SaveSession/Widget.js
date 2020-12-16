@@ -1188,7 +1188,7 @@ define(['dojo/_base/declare',
                 //        new Color([0, 112, 0]), 1), new Color([0, 0, 136, 0.25]));
                 
                 // set the graphics from the layer
-                if (graphicLayer.id.indexOf(window.uploadedFeatLayerIdPrefix)>-1){
+                if ((graphicLayer.id.indexOf(window.uploadedFeatLayerIdPrefix)>-1)||(graphicLayer.id.indexOf(window.createdFromSelectPrefix)>-1)){
 	                array.forEach(graphicLayer.graphics, function (g) {
 	                	//g.setSymbol(symbol);	
 	                    settings.graphics.push(g.toJson());
@@ -1225,7 +1225,7 @@ define(['dojo/_base/declare',
                 };
 
                 array.forEach(settings, function (settingsForLayer, i) {
-                    if(settingsForLayer.id.indexOf(window.uploadedFeatLayerIdPrefix)>-1){  	
+                    if((settingsForLayer.id.indexOf(window.uploadedFeatLayerIdPrefix)>-1)||(settingsForLayer.id.indexOf(window.createdFromSelectPrefix)>-1)){  	
                     	//create the layer
                     	createdFields = [];
                     	fieldsArray = window.hashFieldsAddedFeatureLayer[settingsForLayer.id].split(";");
@@ -1295,14 +1295,14 @@ define(['dojo/_base/declare',
 					        var jsonfl = new esri.layers.FeatureLayer(featureCollection, {
 					          mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
 					          'id': settingsForLayer.id,
-					          'title': settingsForLayer.id.replace(window.uploadedFeatLayerIdPrefix, "")
+					          'title': settingsForLayer.id.replace(window.uploadedFeatLayerIdPrefix, "").replace(window.createdFromSelectPrefix, "")
 					        });
 				        } else {
 				        	var infoTemplate = new InfoTemplate(window.hashInfoTemplate[settingsForLayer.id]);
 					        var jsonfl = new esri.layers.FeatureLayer(featureCollection, {
 					          mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
 					          'id': settingsForLayer.id,
-					          'title': settingsForLayer.id.replace(window.uploadedFeatLayerIdPrefix, ""),
+					          'title': settingsForLayer.id.replace(window.uploadedFeatLayerIdPrefix, "").replace(window.createdFromSelectPrefix, ""),
 					          infoTemplate: infoTemplate,					          
 					        });				        	
 				        }

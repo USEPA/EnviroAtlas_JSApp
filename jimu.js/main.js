@@ -107,6 +107,7 @@ define([
     window.timeSliderPause = false;
     window.addedLayerIndex = 0;
     window.uploadedFeatLayerIdPrefix = "uploaded_";
+    window.createdFromSelectPrefix = "createdFromSelect_";
     window.timeSeriesLayerId = "ScenarioDataLayer";//This is for Time Series Layer from sidebar controller
     window.communityLayerTitle = "EnviroAtlas Community Boundaries";
     window.timeSeriesMetadata = {};
