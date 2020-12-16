@@ -12,6 +12,8 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
     'widgets/Demo/help/help_TimesSeries2',
     'widgets/Demo/help/help_AddData1',
     'widgets/Demo/help/help_AddData2',
+    'widgets/Demo/help/help_Select1',
+    'widgets/Demo/help/help_Select2',
     'widgets/Demo/help/help_SelectCommunity1',
     'widgets/Demo/help/help_SelectCommunity2',
     'widgets/Demo/help/help_DrawerMapping1',
@@ -38,7 +40,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
     'widgets/Demo/help/help_LayerList2',
     'widgets/Demo/help/help_EndPage',   
  'dojo/on', 'dojo/dom', 'dojo/topic'], function(declare, BaseWidget, PanelManager, TooltipDialog, Button, popup, AccordionContainer, ContentPane, lang, help_Welcome, help_Elevation1, help_Elevation2, help_FeaturedCollections1, help_FeaturedCollections2, help_Demographic1, help_Demographic2, help_EnviroAtlasDataSearch1, help_EnviroAtlasDataSearch2, help_TimesSeries1, help_TimesSeries2, help_AddData1, help_AddData2,
-    help_SelectCommunity1, help_SelectCommunity2, help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_HucNavigation1, help_HucNavigation2, help_Raindrop1, help_Raindrop2, help_AttributeTable1, help_AttributeTable2, help_SelectByTopic1, help_SelectByTopic2, help_DrawMeasure1, help_DrawMeasure2, help_EnhancedBookmarks1, help_EnhancedBookmarks2, help_DynamicSymbology1, help_DynamicSymbology2, help_Print1, help_Print2, help_LayerList1, help_LayerList2, help_EndPage, on, dom, topic) {
+    help_Select1, help_Select2, help_SelectCommunity1, help_SelectCommunity2, help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_HucNavigation1, help_HucNavigation2, help_Raindrop1, help_Raindrop2, help_AttributeTable1, help_AttributeTable2, help_SelectByTopic1, help_SelectByTopic2, help_DrawMeasure1, help_DrawMeasure2, help_EnhancedBookmarks1, help_EnhancedBookmarks2, help_DynamicSymbology1, help_DynamicSymbology2, help_Print1, help_Print2, help_LayerList1, help_LayerList2, help_EndPage, on, dom, topic) {
     //To create a widget, you need to derive from BaseWidget.
     return declare([BaseWidget], {
         // DemoWidget code goes here
