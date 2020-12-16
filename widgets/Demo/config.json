@@ -56,6 +56,19 @@
 			"displayOrder": 3
 		},
 		{
+			"widgetName": "SelectByTopic",
+			"node2": "widgets_FilterForSelect_Widget",
+			"node": "themes_TabTheme_widgets_SidebarController_Widget_20",
+			"helpFile": "help_SelectByTopic",
+			"content": [],
+			"orient": [
+				"after"
+			],
+			"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20",
+			"title": "Filter",
+			"displayOrder": 4
+		},
+		{
 			"widgetName": "TimesSeries",
 			"node2": "ClimateDisclaimer",
 			"node": "themes_TabTheme_widgets_SidebarController_Widget_20",
@@ -66,7 +79,7 @@
 			],
 			"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20",
 			"title": "Time Series Data",
-			"displayOrder": 4
+			"displayOrder": 5
 		},
 		{
 			"widgetName": "AddData",
@@ -79,7 +92,7 @@
 			],
 			"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20",
 			"title": "Add Data",
-			"displayOrder": 5
+			"displayOrder": 6
 		},
 		{
 			"widgetName": "SelectCommunity",
@@ -94,7 +107,7 @@
 			],
 			"highlight": "widgets_CommunityDisplay_Widget_36",
 			"title": "Select Community",
-			"displayOrder": 6
+			"displayOrder": 7
 		},
 		{
 			"widgetName": "DrawerMapping",
@@ -109,7 +122,7 @@
 			],
 			"highlight": "dijit__WidgetBase_2",
 			"title": "Mapping Tools",
-			"displayOrder": 7
+			"displayOrder": 8
 		},
 		{
 			"widgetName": "ECAT",
@@ -124,7 +137,7 @@
 			],
 			"highlight": "dijit__WidgetBase_9",
 			"title": "EnviroAtlas Change Analysis Tool (ECAT)",
-			"displayOrder": 8
+			"displayOrder": 9
 		},
 		{
 			"widgetName": "HucNavigation",
@@ -139,7 +152,7 @@
 			],
 			"highlight": "dijit__WidgetBase_10",
 			"title": "HUC Navigation Tool",
-			"displayOrder": 9
+			"displayOrder": 10
 		},
 		{
 			"widgetName": "Raindrop",
@@ -154,7 +167,7 @@
 			],
 			"highlight": "dijit__WidgetBase_11",
 			"title": "Raindrop Tool",
-			"displayOrder": 10
+			"displayOrder": 11
 		},
 		{
 			"widgetName": "Elevation",
@@ -173,11 +186,11 @@
 			],
 			"highlight": "dijit__WidgetBase_12",
 			"title": "Elevation Profile Tool",
-			"displayOrder": 11
+			"displayOrder": 12
 		},
 		{
 			"widgetName": "Select",
-			"helpFile": "help_SelectByTopic",
+			"helpFile": "help_Select",
 			"node": "dijit__WidgetBase_14",
 			"content": [],
 			"orient": [
@@ -188,7 +201,7 @@
 			],
 			"highlight": "dijit__WidgetBase_14",
 			"title": "Select Data Tool",
-			"displayOrder": 12
+			"displayOrder": 13
 		},
 		{
 			"widgetName": "DynamicSymbology",
@@ -203,7 +216,7 @@
 			],
 			"highlight": "dijit__WidgetBase_21",
 			"title": "Dynamic Symbology Tool",
-			"displayOrder": 13
+			"displayOrder": 14
 		},
 		{
 			"widgetName": "LayerList",
@@ -218,7 +231,7 @@
 			],
 			"highlight": "dijit__WidgetBase_21",
 			"title": "Layer List Widget",
-			"displayOrder": 14
+			"displayOrder": 15
 		},
 		{
 			"widgetName": "AttributeTable",
@@ -233,7 +246,7 @@
 			],
 			"highlight": "openAttributeTable",
 			"title": "Attribute Table",
-			"displayOrder": 15
+			"displayOrder": 16
 		},
 		{
 			"widgetName": "eDraw",
@@ -248,7 +261,7 @@
 			],
 			"highlight": "dijit__WidgetBase_2",
 			"title": "Draw and Measure Tool",
-			"displayOrder": 16
+			"displayOrder": 17
 		},
 		{
 			"widgetName": "Print",
@@ -263,7 +276,7 @@
 			],
 			"highlight": "dijit__WidgetBase_2",
 			"title": "Print",
-			"displayOrder": 17
+			"displayOrder": 18
 		},
 		{
 			"widgetName": "eBookmark",
@@ -278,7 +291,7 @@
 			],
 			"highlight": "dijit__WidgetBase_2",
 			"title": "Bookmark Tool",
-			"displayOrder": 18
+			"displayOrder": 19
 		},
 		{
 			"node": "dijit__WidgetBase_14",
