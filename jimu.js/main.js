@@ -351,6 +351,9 @@ define([
     window.hashVisibleLayersForDynamic = {};
     window.hashTitleToEAID = {};
     window.hashEAIDToTitle = {};
+    window.hashEAIDToNavHucStats = {};
+    window.hashEAIDToNavHucStatsUnit = {};
+    
     window.hashGeometryTypeAddedFeatLyr = {};
     window.hashInfoTemplate = {};
 	window.hashRenderer = {};
