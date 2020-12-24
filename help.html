@@ -23,13 +23,14 @@
                         $('#helpContent').append('<div id="' + value["widgetName"] + 'Card" class="card bg-light mb-3">');
                         $('#' + value["widgetName"] + 'Card').append('<div id="' + value["widgetName"] + '" class="card-header"></div>');
                         $('#' + value["widgetName"] + 'Card').append('<div id="' + value["widgetName"] + 'Body" class="card-body"></div>');
-                        $('#' + value["widgetName"]).load("widgets/Demo/help/templates/" + value["helpFile"] + "1.html");
+                        $('#' + value["widgetName"]).load("widgets/Demo/help/templates/" + value["helpFile"] + "1.html",function(){
+							if (window.location.hash == '#' + value["widgetName"]) {
+								$(document).scrollTop( $('#' + value["widgetName"]).offset().top ); 
+							}
+						});
                         $('#' + value["widgetName"] + 'Body').load("widgets/Demo/help/templates/" + value["helpFile"] + "2.html");
                     }
                 });
-                setTimeout(function () {
-                	location.hash = window.location.hash;
-                }, 1000);
             });
         });
     </script>
