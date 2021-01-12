@@ -207,6 +207,11 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                         $('#widgets_AddData_30').click();
                         bSidebarWidget = true;
                         break;
+                    case "help_SelectByTopic":
+                        $('#widgets_SimpleSearchFilter_Widget_37').click();
+                        $('#widgets_SimpleSearchFilter_Widget_37_min').click();
+                        bSidebarWidget = true;
+                        break;                       
                     default:
                         $('#widgets_SimpleSearchFilter_Widget_37').click();
                         $('#widgets_SimpleSearchFilter_Widget_37_min').click();

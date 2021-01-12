@@ -57,7 +57,6 @@
 		},
 		{
 			"widgetName": "SelectByTopic",
-			"node2": "widgets_FilterForSelect_Widget",
 			"node": "themes_TabTheme_widgets_SidebarController_Widget_20",
 			"helpFile": "help_SelectByTopic",
 			"content": [],

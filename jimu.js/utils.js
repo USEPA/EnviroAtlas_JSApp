@@ -5237,7 +5237,8 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
             for (i=0; i<numberStops; i++) {
                 var widgetName = window.helpTour[i].widgetName;
                 if (widgetName!=null){
-                    if (window.PanelId.toUpperCase().indexOf(widgetName.toUpperCase()) >= 0) {
+                    //if (window.PanelId.toUpperCase().indexOf(widgetName.toUpperCase()) >= 0) {
+                    if (window.PanelId.toUpperCase() == widgetName.toUpperCase()) {
                         stop = i;
                         window.widgetNameInDemo = widgetName;
                     }               

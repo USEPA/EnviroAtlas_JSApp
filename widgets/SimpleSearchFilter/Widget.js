@@ -2218,6 +2218,32 @@ define([
                 _updateSelectableLayer();
             });                      
 
+			// add help info button
+	        var newCheckboxCell  = newRow.insertCell(2);
+            
+            var checkbox = document.createElement('input');
+            checkbox.style.marginTop = "2px";
+            checkbox.type = "button";
+            checkbox.className = "help-btn";
+
+            //checkbox.name = chkboxId;
+
+            //checkbox.id = chkboxId;
+            //checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+            newCheckboxCell.appendChild(checkbox); 
+        
+
+            
+            checkbox.addEventListener('click', function() {
+                /*evt.stopPropagation();
+		        if (evt.type === "touchstart") {
+		          evt.preventDefault();
+		        }*/
+		        
+		        window.PanelId = "SelectByTopic";    
+		
+		        utils.startTour();
+            });            			
        
     },	
     displayResizeButton: function() {

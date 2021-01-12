@@ -182,6 +182,7 @@ define([
     window.formatters['help_EnviroAtlasDataSearch1'] =  help_EnviroAtlasDataSearch1; 
     window.formatters['help_TimesSeries1'] =  help_TimesSeries1; 
     window.formatters['help_AddData1'] =  help_AddData1; 
+    window.formatters['help_Select1'] = help_Select1;
     window.formatters['help_SelectCommunity1'] = help_SelectCommunity1;    
     window.formatters['help_DrawerMapping1'] = help_DrawerMapping1;
     window.formatters['help_ECAT1'] =  help_ECAT1;  
@@ -200,6 +201,7 @@ define([
     window.formatters['help_EnviroAtlasDataSearch2'] =  help_EnviroAtlasDataSearch2; 
     window.formatters['help_TimesSeries2'] =  help_TimesSeries2; 
     window.formatters['help_AddData2'] =  help_AddData2; 
+    window.formatters['help_Select2'] = help_Select2;
     window.formatters['help_SelectCommunity2'] = help_SelectCommunity2;    
     window.formatters['help_DrawerMapping2'] = help_DrawerMapping2;
     window.formatters['help_ECAT2'] =  help_ECAT2;  
