@@ -404,6 +404,9 @@ define([
       if (ioArgs.content && ioArgs.content.printFlag) { // printTask
         ioArgs.timeout = 300000;
       }
+      if (ioArgs.url.indexOf("ejscreen.epa.gov") !== -1) { 
+      	ioArgs.timeout = 59000;//100  is to test whether we can display error message when Ejsceen service is slow
+      }
 
       //use https protocol
       if (parentHttps) {
