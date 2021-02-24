@@ -237,29 +237,8 @@ define(['dojo/_base/declare',
                     var chkToBeClicked =  null;
                         
                     var i = 0;                     //  set your counter to 1
-                    var maximumCount = 10;
-                    
-                    function lookForChkBoxLoop () {           //  create a loop function
-                       setTimeout(function () {  
-                            i++; 
-                            chkBoxes = document.getElementsByClassName("jimu-icon-checkbox");
-                            chkToBeClicked = chkBoxes.item(2);
-                            if (chkToBeClicked==null) {
-                                if (i < maximumCount) { // if not reach maximumCount and still not find the checkbox, call the loop function
-                                    lookForChkBoxLoop(); 
-                                }                                  
-                            } else {
-                                chkToBeClicked.click();
-                                setTimeout(lang.hitch(this, function() {
-                                        chkToBeClicked.click();
-                                }), 300);
-                            }
-                       }, 200)
-
-                    }
-                    if (evt.layer.visibleLayers!=null) {
-                        lookForChkBoxLoop();  
-                    }                                    
+                    var maximumCount = 10;                    
+                                 
                     if (arrlayerId.length > 0) {
                         setTimeout(lang.hitch(this, function() {
                             addAddItemToMapOperational(layersReversed, arrlayerId.pop(), response);
