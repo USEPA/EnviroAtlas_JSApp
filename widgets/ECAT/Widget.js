@@ -14,6 +14,7 @@ define(['dojo/_base/declare',
         "esri/tasks/IdentifyTask",
         "esri/tasks/IdentifyParameters",
         "esri/InfoTemplate",
+        'jimu/PanelManager',
         'dijit/form/HorizontalSlider',
 		"dojo/on",
 		"dojo/dom-style",
@@ -29,6 +30,7 @@ function(declare,
 		IdentifyTask,
 		IdentifyParameters,
 		InfoTemplate,
+		PanelManager,
 		HorizontalSlider,
 		on,
 		domStyle,
@@ -39,6 +41,7 @@ function(declare,
 
     var map;
     var server = "https://enviroatlas2.epa.gov/";
+    var gpURL = server + "arcgis/rest/services/ECAT/RasterCalculate_fromAverage/GPServer/RasterAverage_from5Year";
     
     var gpComputeClimateChange = null;
     var layerID = "ClimateChange";
@@ -98,7 +101,7 @@ function(declare,
 			esri.hide(dom.byId("loadingWrap2"));
 			return;
 		}
-		var gpURL = server + "arcgis/rest/services/ECAT/RasterCalculate_fromAverage/GPServer/RasterAverage_from5Year";		
+		//var gpURL = server + "arcgis/rest/services/ECAT/RasterCalculate_fromAverage/GPServer/RasterAverage_from5Year";		
 		gpComputeClimateChange = new Geoprocessor(gpURL);			    	
         gpComputeClimateChange.setOutSpatialReference(map.spatialReference);
         gpComputeClimateChange.setProcessSpatialReference(map.spatialReference);
@@ -182,9 +185,17 @@ function(declare,
 	// Event handler for onError event
 	var onTaskFailure= function(error) {
 	  // Report error 
-	  document.getElementById("ECATgpFail").style.display = '';
-	  esri.hide(dom.byId("loadingWrap2"));
-	  console.log(" geoprocessing service error:"+ error); 
+	  
+      	window.failedDemoHucTimeseEcatRain["ECAT URL: " + gpURL] = error;
+
+    	var widgetName = 'DisplayLayerAddFailure';
+        var widgets = selfSimpleSearchFilter.appConfig.getConfigElementsByName(widgetName);
+        var pm = PanelManager.getInstance();
+        pm.showPanel(widgets[0]);
+        
+	    document.getElementById("ECATgpFail").style.display = '';
+	    esri.hide(dom.byId("loadingWrap2"));
+	    console.log(" geoprocessing service error:"+ error); 
 	};
   //To create a widget, you need to derive from BaseWidget.
   return declare([BaseWidget], {

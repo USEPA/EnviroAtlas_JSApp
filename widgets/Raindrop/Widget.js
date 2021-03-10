@@ -3,6 +3,7 @@ define(['dojo/_base/declare',
       'dojo/on',
       'dojo/_base/lang',
       'jimu/utils',
+      'jimu/PanelManager',
         'esri/request',
         'dojo/_base/json',
         'esri/graphic',
@@ -24,7 +25,7 @@ define(['dojo/_base/declare',
     "dojo/dom-class",
     "dojo/dom-attr",
     "dojo/parser"],
-function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, SimpleLineSymbol, SimpleMarkerSymbol, Color, Polyline, Extent, TabContainer, HorizontalSlider, Draw, ColorPicker, Color, ColorPalette, TooltipDialog, DropDownButton, popup, dom, domClass, domAttr) {
+function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJson, Graphic, SimpleLineSymbol, SimpleMarkerSymbol, Color, Polyline, Extent, TabContainer, HorizontalSlider, Draw, ColorPicker, Color, ColorPalette, TooltipDialog, DropDownButton, popup, dom, domClass, domAttr) {
 
   var curMap;
   var onMapClick;
@@ -274,6 +275,14 @@ function(declare, BaseWidget, on, lang, utils, esriRequest, dojoJson, Graphic, S
             mainTab.selectTab("Results");
 
           }, function(error) {
+          	
+	      	window.failedDemoHucTimeseEcatRain["Raindrop tool URL: " + layerUrl] = error.message;
+	
+	    	var widgetName = 'DisplayLayerAddFailure';
+	        var widgets = selfSimpleSearchFilter.appConfig.getConfigElementsByName(widgetName);
+	        var pm = PanelManager.getInstance();
+	        pm.showPanel(widgets[0]);
+                  	
             console.log("Error: ", error.message);
           });
 

@@ -341,6 +341,7 @@ define([
     window.communityMetadataDic = {};
     window.faildedEALayerDictionary = {};
     window.faildedOutsideLayerDictionary = {};
+    window.failedDemoHucTimeseEcatRain = {};
     window.successLayerDictionary = {};
     window.communityExtentDic = {};
     window.hashAttribute = {};
@@ -405,9 +406,21 @@ define([
         ioArgs.timeout = 300000;
       }
       if (ioArgs.url.indexOf("ejscreen.epa.gov") !== -1) { 
-      	ioArgs.timeout = 59000;//100  is to test whether we can display error message when Ejsceen service is slow
+      	ioArgs.timeout = 59000;//100  is to test whether we can display error message when Ejsceen service is slow;  59000 is default
       }
-
+      
+      if (ioArgs.url.indexOf("enviroatlas.epa.gov/arcgis/rest/services/Other/HydrologicUnits") !== -1) { //This is to test timeout of Huc Navigation
+      	ioArgs.timeout = 59000;
+      }
+      if (ioArgs.url.indexOf("enviroatlas2.epa.gov/arcgis/rest/services/FutureScenarios") !== -1) { //This is to test timeout of time series; currently it is not working
+      	ioArgs.timeout = 59000;
+      }
+      if (ioArgs.url.indexOf("enviroatlas2.epa.gov/arcgis/rest/services/ECAT") !== -1) { //This is to test timeout of ECAT
+      	ioArgs.timeout = 59000;
+      } 
+      if (ioArgs.url.indexOf("ofmpub.epa.gov/waters10/PointIndexing.Service") !== -1) { //This is to test timeout of Raindrop tool
+      	ioArgs.timeout = 59000;
+      }            
       //use https protocol
       if (parentHttps) {
         ioArgs.url = ioArgs.url.replace(patt, '//');

@@ -254,6 +254,16 @@ define([
 
     };
     var makeSliderAndLegend = function(evt) {
+    	if ((evt.layers[0].error != undefined) && (evt.layers[0].error != "")) {
+    		window.failedDemoHucTimeseEcatRain["Time Series URL: " + futureScenariosAGSbaseURL] = evt.layers[0].error;
+
+        	var widgetName = 'DisplayLayerAddFailure';
+	        var widgets = selfSimpleSearchFilter.appConfig.getConfigElementsByName(widgetName);
+	        var pm = PanelManager.getInstance();
+	        pm.showPanel(widgets[0]);
+	        return;
+    	}
+    	//evt.layers[0].error  //"Error: Service FutureScenarios2/RCP26SpringPrecip/ImageServer not found "
         if (dojo.byId("frameOrSlide").innerHTML == 'frame') {
             return '';
         }
@@ -539,6 +549,7 @@ define([
         });
 
     };
+
     var removeFrameFromMap = function () {
 
         if (map.getLayer(window.timeSeriesLayerId)) {

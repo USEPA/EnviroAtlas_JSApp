@@ -229,7 +229,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
     hu12_headwater_list: [],
     hu12_for_recompute:[],	
     huc12_feature_selected: null,
-    
+    errorURL: null,
 
 
     //END new
@@ -1428,6 +1428,10 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
                   spatialOptions.splice(spatialOptions.indexOf(this.config.layers[j].spatialsearchlayer), 1);
                 }
                 this.serviceFailureNames.push(this.config.layers[j].name);
+                if ((this.config.layers[j].url) != null){
+                	this.errorURL = this.config.layers[j].url;//It is recorded for possible error url 
+                }
+                
                 this.resultLayers.push({});
               }
             }));
@@ -1520,6 +1524,8 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
                   }else{
                     html.style(this.textsearchlabel, 'display', 'none');
                   }
+
+                  
                   this.paramsDijit.build(valuesObj, this.resultLayers[aIndex], this.config.layers[aIndex].url,
                                        this.config.layers[aIndex].definitionexpression);
                   on.once(this.paramsDijit, 'param-ready', lang.hitch(this, function () {
@@ -1539,11 +1545,19 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
             }
 
             if(this.serviceFailureNames.length > 0){
-              console.info("service failed", this.serviceFailureNames);
-              new Message({
-                titleLabel: this.nls.mapServiceFailureTitle,
-                message: this.nls.mapServicefailureMsg + this.serviceFailureNames.join(", ") + this.nls.mapServicefailureMsg2
-              });
+              	console.info("service failed", this.serviceFailureNames);
+	        	window.failedDemoHucTimeseEcatRain["Huc Navigation URL: " + this.errorURL] = this.serviceFailureNames + " is not valid";
+	        	//window.failedDemoHucTimeseEcatRain["Huc Navigation URL: " + this.config.layers[aIndex].url] = this.serviceFailureNames;
+	
+	        	var widgetName = 'DisplayLayerAddFailure';
+		        var widgets = selfSimpleSearchFilter.appConfig.getConfigElementsByName(widgetName);
+		        var pm = PanelManager.getInstance();
+		        pm.showPanel(widgets[0]);		              
+		        
+	            /*$new Message({
+	                titleLabel: this.nls.mapServiceFailureTitle,
+	                message: this.nls.mapServicefailureMsg + this.serviceFailureNames.join(", ") + this.nls.mapServicefailureMsg2
+	            });*/
             }
           }), lang.hitch(this, function (err) {
             this.shelter.hide();
@@ -3010,10 +3024,17 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
     	this.clear();
       
         html.setStyle(this.progressBar.domNode, 'display', 'none');
-        //html.setStyle(this.divOptions, 'display', 'block');
-        new Message({
+
+    	window.failedDemoHucTimeseEcatRain["Huc Navigation error "] = error.message;
+
+    	var widgetName = 'DisplayLayerAddFailure';
+        var widgets = selfSimpleSearchFilter.appConfig.getConfigElementsByName(widgetName);
+        var pm = PanelManager.getInstance();
+        pm.showPanel(widgets[0]);	
+
+        /*new Message({
           message: this.nls.searchError
-        });
+        });*/
         console.debug(error);
       },
 
@@ -3483,7 +3504,8 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 
             console.time("ArcGIS Query");
 			promises.then(
-					function(data) { that.handleUpstreamNavigationQueryResults(data) }
+					function(data) { that.handleUpstreamNavigationQueryResults(data) },
+					function(error) { that.errorHandleUpstreamNavigationQueryResults(error) }
 				);
 
             t0 = performance.now();
@@ -3503,7 +3525,8 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 
             console.time("ArcGIS Query");
 			promises.then(
-					function(data) { that.handleUpstreamNavigationQueryResults(data) }
+					function(data) { that.handleUpstreamNavigationQueryResults(data) },
+					function(error) { that.errorHandleUpstreamNavigationQueryResults(error) }
 				);
 
             console.log("running single HUC12 Upstream queries");
@@ -3745,7 +3768,15 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 		
 		console.timeEnd("ArcGIS Display Results");
 	},
+	errorHandleUpstreamNavigationQueryResults: function(error) {
+        	window.failedDemoHucTimeseEcatRain["Huc Navigation URL: " + that.huc12_mapserver] = e;
 
+        	var widgetName = 'DisplayLayerAddFailure';
+	        var widgets = selfSimpleSearchFilter.appConfig.getConfigElementsByName(widgetName);
+	        var pm = PanelManager.getInstance();
+	        pm.showPanel(widgets[0]);		
+
+	},
     //
     // Search using a HU12 code
     //
@@ -3786,7 +3817,8 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 		// promises.then(handleQueryResults);
         var that = this;
         promises.then(
-                function(data) { that.handleUpstreamNavigationQueryResults(data) }
+                function(data) { that.handleUpstreamNavigationQueryResults(data) },
+				function(error) { that.errorHandleUpstreamNavigationQueryResults(error) }
             );
 
 
@@ -3891,8 +3923,10 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
             console.time("ArcGIS Query");
 
             // promises.then(this.handleUpstreamNavigationQueryResults);
+
 			promises.then(
-					function(data) { that.handleUpstreamNavigationQueryResults(data) }
+					function(data) { that.handleUpstreamNavigationQueryResults(data) },
+					function(error) { that.errorHandleUpstreamNavigationQueryResults(error) }
 				);
             console.log("running " + deferred_queries.length + " HUC12 Downstream GIS queries");
         }
