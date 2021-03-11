@@ -1,103 +1,310 @@
- {
-	"configText":"abcdefg",
-	"tour":[{
-		"node":"dijit__WidgetBase_14",
-		"helpFile": "help_Welcome",
-		"content": ["<h1>Welcome to EnviroAtlas!</h1>",
-					"<p>This brief tour will walk you through some of the ",
-					"key functions and options for displaying and analyzing maps.<br><br></p>"],
-		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": false
-	},
-	{
-		"widgetName": "FeaturedCollections",
-		"node":"themes_TabTheme_widgets_SidebarController_Widget_20",
-		"helpFile": "help_FeaturedCollections",
-		"content": [],
-		"orient": ["after"],
-		"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20"
-	},
-    {
-		"widgetName": "EnviroAtlasData",
-		"node":"themes_TabTheme_widgets_SidebarController_Widget_20",
-		"helpFile": "help_EnviroAtlasDataSearch",
-		"content": [],
-		"orient": ["after"],
-		"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20"
-	}, {
-	    "widgetName": "Demographic",
-		"node":"themes_TabTheme_widgets_SidebarController_Widget_20",
-		"helpFile": "help_Demographic",
-		"content": [],
-		"orient": ["after"],
-		"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20"
-	},
-	{
-	    "widgetName": "TimesSeries",
-		"node2":"ClimateDisclaimer",
-		"node":"themes_TabTheme_widgets_SidebarController_Widget_20",
-		"helpFile": "help_TimesSeries",
-		"content": [],
-		"orient": ["after"],
-		"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20"
-	},
-	{
-	    "widgetName": "AddData",
-		"node2":"widgets_AddData_30",
-		"node":"themes_TabTheme_widgets_SidebarController_Widget_20",
-		"helpFile": "help_AddData",
-		"content": [],
-		"orient": ["after"],
-		"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20"
-	},{
-		"widgetName": "SelectCommunity",
-		"helpFile": "help_SelectCommunity",
-		"node":"widgets_CommunityDisplay_Widget_36",
-		"content": [],
-		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": "widgets_CommunityDisplay_Widget_36"
-	},{
-		"widgetName": "DrawerMapping",
-		"helpFile": "help_DrawerMapping",
-		"node":"dijit__WidgetBase_2",
-		"content": [],
-		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": "dijit__WidgetBase_2"
-	},{
-		"widgetName": "ECAT",
-		"helpFile": "help_ECAT",
-		"node":"dijit__WidgetBase_9",
-		"content": [],
-		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": "dijit__WidgetBase_9"
-	},{
-	  	"widgetName": "HucNavigation",
-	  	"helpFile": "help_HucNavigation",
-		"node":"dijit__WidgetBase_10",
-		"content": [],
-		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": "dijit__WidgetBase_10"
-	}, {
-		"widgetName": "Raindrop",
-		"helpFile": "help_Raindrop",
-		"node":"dijit__WidgetBase_11",
-		"content": [],
-		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": "dijit__WidgetBase_11"
-	}, {
-		"widgetName": "Elevation",
-		"helpFile": "help_Elevation",
-		"node":"dijit__WidgetBase_12",
-		"content": ["<h1>Elevation Profile</h1>",
-					"<p>Draw a line between two points and see the elevation profile.</p>",
-					"<div><img style='width:330px' src='widgets/Demo/images/elev_img.jpg'></div>"],
-		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": "dijit__WidgetBase_12"
-	}, {
-		"node":"dijit__WidgetBase_14",
-		"helpFile": "help_EndPage",
-		"content": [],
-		"orient": ["below","below-alt", "above", "above-alt"],
-		"highlight": false
-	}]
+{
+	"configText": "abcdefg",
+	"tour": [
+		{
+			"node": "dijit__WidgetBase_14",
+			"helpFile": "help_Welcome",
+			"content": [
+				"<h1>Welcome to EnviroAtlas!</h1>",
+				"<p>This brief tour will walk you through some of the ",
+				"key functions and options for displaying and analyzing maps.<br><br></p>"
+			],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": false,
+			"title": "Help Welcome",
+			"displayOrder": 0
+		},
+		{
+			"widgetName": "FeaturedCollections",
+			"node": "themes_TabTheme_widgets_SidebarController_Widget_20",
+			"helpFile": "help_FeaturedCollections",
+			"content": [],
+			"orient": [
+				"after"
+			],
+			"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20",
+			"title": "Featured Collections",
+			"displayOrder": 1
+		},
+		{
+			"widgetName": "EnviroAtlasData",
+			"node": "themes_TabTheme_widgets_SidebarController_Widget_20",
+			"helpFile": "help_EnviroAtlasDataSearch",
+			"content": [],
+			"orient": [
+				"after"
+			],
+			"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20",
+			"title": "EnviroAtlas Data Search",
+			"displayOrder": 2
+		},
+		{
+			"widgetName": "Demographic",
+			"node": "themes_TabTheme_widgets_SidebarController_Widget_20",
+			"helpFile": "help_Demographic",
+			"content": [],
+			"orient": [
+				"after"
+			],
+			"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20",
+			"title": "Demographic Data",
+			"displayOrder": 3
+		},
+		{
+			"widgetName": "SelectByTopic",
+			"node": "themes_TabTheme_widgets_SidebarController_Widget_20",
+			"helpFile": "help_SelectByTopic",
+			"content": [],
+			"orient": [
+				"after"
+			],
+			"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20",
+			"title": "Filter",
+			"displayOrder": 4
+		},
+		{
+			"widgetName": "TimesSeries",
+			"node2": "ClimateDisclaimer",
+			"node": "themes_TabTheme_widgets_SidebarController_Widget_20",
+			"helpFile": "help_TimesSeries",
+			"content": [],
+			"orient": [
+				"after"
+			],
+			"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20",
+			"title": "Time Series Data",
+			"displayOrder": 5
+		},
+		{
+			"widgetName": "AddData",
+			"node2": "widgets_AddData_30",
+			"node": "themes_TabTheme_widgets_SidebarController_Widget_20",
+			"helpFile": "help_AddData",
+			"content": [],
+			"orient": [
+				"after"
+			],
+			"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20",
+			"title": "Add Data",
+			"displayOrder": 6
+		},
+		{
+			"widgetName": "SelectCommunity",
+			"helpFile": "help_SelectCommunity",
+			"node": "widgets_CommunityDisplay_Widget_36",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": "widgets_CommunityDisplay_Widget_36",
+			"title": "Select Community",
+			"displayOrder": 7
+		},
+		{
+			"widgetName": "DrawerMapping",
+			"helpFile": "help_DrawerMapping",
+			"node": "dijit__WidgetBase_2",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": "dijit__WidgetBase_2",
+			"title": "Mapping Tools",
+			"displayOrder": 8
+		},
+		{
+			"widgetName": "ECAT",
+			"helpFile": "help_ECAT",
+			"node": "dijit__WidgetBase_9",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": "dijit__WidgetBase_9",
+			"title": "EnviroAtlas Change Analysis Tool (ECAT)",
+			"displayOrder": 9
+		},
+		{
+			"widgetName": "HucNavigation",
+			"helpFile": "help_HucNavigation",
+			"node": "dijit__WidgetBase_10",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": "dijit__WidgetBase_10",
+			"title": "HUC Navigation Tool",
+			"displayOrder": 10
+		},
+		{
+			"widgetName": "Raindrop",
+			"helpFile": "help_Raindrop",
+			"node": "dijit__WidgetBase_11",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": "dijit__WidgetBase_11",
+			"title": "Raindrop Tool",
+			"displayOrder": 11
+		},
+		{
+			"widgetName": "Elevation",
+			"helpFile": "help_Elevation",
+			"node": "dijit__WidgetBase_12",
+			"content": [
+				"<h1>Elevation Profile</h1>",
+				"<p>Draw a line between two points and see the elevation profile.</p>",
+				"<div><img style='width:330px' src='widgets/Demo/images/elev_img.jpg'></div>"
+			],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": "dijit__WidgetBase_12",
+			"title": "Elevation Profile Tool",
+			"displayOrder": 12
+		},
+		{
+			"widgetName": "Select",
+			"helpFile": "help_Select",
+			"node": "dijit__WidgetBase_14",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": "dijit__WidgetBase_14",
+			"title": "Select Data Tool",
+			"displayOrder": 13
+		},
+		{
+			"widgetName": "DynamicSymbology",
+			"helpFile": "help_DynamicSymbology",
+			"node": "dijit__WidgetBase_21",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": "dijit__WidgetBase_21",
+			"title": "Dynamic Symbology Tool",
+			"displayOrder": 14
+		},
+		{
+			"widgetName": "LayerList",
+			"helpFile": "help_LayerList",
+			"node": "dijit__WidgetBase_21",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": "dijit__WidgetBase_21",
+			"title": "Layer List Widget",
+			"displayOrder": 15
+		},
+		{
+			"widgetName": "AttributeTable",
+			"helpFile": "help_AttributeTable",
+			"node": "openAttributeTable",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": "openAttributeTable",
+			"title": "Attribute Table",
+			"displayOrder": 16
+		},
+		{
+			"widgetName": "eDraw",
+			"helpFile": "help_DrawMeasure",
+			"node": "dijit__WidgetBase_2",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": "dijit__WidgetBase_2",
+			"title": "Draw and Measure Tool",
+			"displayOrder": 17
+		},
+		{
+			"widgetName": "Print",
+			"helpFile": "help_Print",
+			"node": "dijit__WidgetBase_2",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": "dijit__WidgetBase_2",
+			"title": "Print",
+			"displayOrder": 18
+		},
+		{
+			"widgetName": "eBookmark",
+			"helpFile": "help_EnhancedBookmarks",
+			"node": "dijit__WidgetBase_2",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": "dijit__WidgetBase_2",
+			"title": "Bookmark Tool",
+			"displayOrder": 19
+		},
+		{
+			"node": "dijit__WidgetBase_14",
+			"helpFile": "help_EndPage",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": false,
+			"title": "End Page",
+			"displayOrder": 0
+		}
+	]
 }

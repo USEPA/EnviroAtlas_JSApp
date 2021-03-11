@@ -7,5 +7,6 @@ define({
   "turnonAll": "Jadikan semua layer dapat dipilih",
   "turnoffAll": "Jadikan semua layer tidak dapat dipilih",
   "toggleSelect": "Hidupkan/matikan keterpilihan untuk semua layer",
-  "singleSelect": "Jadikan layer ini satu-satunya yang dapat dipilih"
+  "singleSelect": "Jadikan layer ini satu-satunya yang dapat dipilih",
+  "enableByDefault": "Aktifkan pilih alat secara default"
 });

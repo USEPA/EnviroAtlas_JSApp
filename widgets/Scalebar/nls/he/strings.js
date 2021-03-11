@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "סרגל קנה מידה"
+  "_widgetLabel": "סרגל קנה מידה",
+  "scale": "קנה מידה"
 });

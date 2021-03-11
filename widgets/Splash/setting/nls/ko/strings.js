@@ -22,7 +22,6 @@ define({
   "imageFill": "이미지 채우기",
   "chooseFile": "파일 선택",
   "noFileChosen": "선택한 파일 없음",
-  "transparency": "투명도",
   "sizeFill": "채우기",
   "sizeFit": "맞춤",
   "sizeStretch": "채우기로 스트레치",

@@ -55,6 +55,26 @@
 .jimu-widget-layerList .layer-row{
   height: 40px;
 }
+.jimu-nav-mode .jimu-widget-layerList .layer-row:focus{
+  outline: none !important;
+}
+
+.jimu-nav-mode .jimu-widget-layerList .layer-row:focus .col1{
+  border-left: 2px solid #24b5cc;
+  border-top: 2px solid #24b5cc;
+  border-bottom: 2px solid #24b5cc;
+}
+
+.jimu-nav-mode .jimu-widget-layerList .layer-row:focus .col2{
+  border-top: 2px solid #24b5cc;
+  border-bottom: 2px solid #24b5cc;
+}
+
+.jimu-nav-mode .jimu-widget-layerList .layer-row:focus .col3{
+  border-right: 2px solid #24b5cc;
+  border-top: 2px solid #24b5cc;
+  border-bottom: 2px solid #24b5cc;
+}
 
 .jimu-widget-layerList .layer-row:hover{
   background-color: #e3ecf2;
@@ -98,12 +118,10 @@
 .jimu-widget-layerList .layer-sub-node .col15{
   width: 0px;
 }
-
 .jimu-widget-layerList .col2{
   width: auto;
   word-break: break-word;
   cursor: pointer;
-  
   position: relative;
   top: 2px;
 }
@@ -124,11 +142,11 @@
 }
 
 .jimu-widget-layerList .showLegend-div{
-  width: 13px;
-  height: 13px;
+  width: 12px;
+  height: 12px;
   cursor: pointer;
   margin-left: 3px;
-  margin-top: 3px;
+  margin-top: 2px;
   background-image: url("../images/v_right.png");
   background-repeat: no-repeat;
   background-position: center;
@@ -144,7 +162,7 @@
   background-image: url("../images/v.png");
 }
 
-.jimu-widget-layerList .showLegend-div.hidden{
+.jimu-widget-layerList .showLegend-div.hidden-showLegend-div{
   background-image: none;
   cursor: auto;
 }
@@ -236,7 +254,6 @@
   /*color: #686868;*/
   font-size: 12px;
   top: 2px;
-  
 }
 
 .jimu-widget-layerList .div-content.grayed-title{
@@ -606,6 +623,13 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin: 2px 2px 2px 2px;
+}
+
+.jimu-widget-layerList .jimu-dropmenu .menu-item:focus{
+  text-decoration: initial;
+  background-color: #f3f3f3;
+  /*outLine: 2px solid #24B5CC;*/
 }
 .menu-item-description{
   position: relative;
@@ -637,6 +661,7 @@
 .jimu-widget-layerList .jimu-dropmenu .menu-item a{
   position: absolute;
   padding: 0 12px;
+
   width: 100%;
   left: 0;
 }
@@ -678,6 +703,7 @@
   right: auto;
   left: 11px;
 }
+
 
 .jimu-widget-layerList .layer-list-operations .jimu-icon-btn{
   background-image: url("../images/operation_normal.svg"); 
@@ -736,7 +762,7 @@
   padding: 0 7px;
   font-size: 12px;
   padding: 0 20px;
-
+  margin: 2px 2px 2px 2px;
 }
 
 .jimu-widget-layerList .layer-list-operations .drop-menu .menu-item:hover{
@@ -862,6 +888,10 @@
   right: auto;
 }
 
+.jimu-widget-layerList .layer-filter .search-button:focus{
+  /*outline: 2px solid #24B5CC !important;*/
+}
+
 .jimu-widget-layerList .layer-filter .search-button:hover{
   background-image: url("../images/search_hover.svg");
 }
@@ -912,6 +942,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 0 2px 0 2px;
+}
+
+.jimu-widget-layerList .layer-filter .cancel-button:hover{
+  border: 1px solid #000;
+  font-family: "Avenir Medium";
 }
 
 .jimu-rtl .jimu-widget-layerList .layer-filter .cancel-button{

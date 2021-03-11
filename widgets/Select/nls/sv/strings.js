@@ -7,5 +7,6 @@ define({
   "turnonAll": "Gör alla lager valbara",
   "turnoffAll": "Gör alla lager icke valbara",
   "toggleSelect": "Växla valbarhet för alla lager",
-  "singleSelect": "Gör det här lagret till det enda valbara"
+  "singleSelect": "Gör det här lagret till det enda valbara",
+  "enableByDefault": "Aktivera markeringsverktyget som standard"
 });

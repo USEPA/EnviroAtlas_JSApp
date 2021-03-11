@@ -15,6 +15,8 @@ define({
   "selectAll": "Izberite zapise na vseh straneh",
   "selectPage": "Izberite zapise na trenutni strani",
   "clearSelection": "Počisti izbiro",
+  "selectionHandleLabel": "Ročica za izbiro",
+  "selectionHandleDescription": "Pritisnite ENTER ali PRESLEDNICO, da na karti osvetlite geoobjekt(e).",
   "filter": "Filter",
   "setFilterTip": "Pravilno nastavite filtre.",
   "noFilterTip": "Če izrazi filtra niso določeni, bo ta naloga poizvedbe prikazala vse geoobjekte v navedenih virih podatkov.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Ni na voljo nobenih tabel za prikaz.",
   "checkConfigutationToSelectLayers": "Pojdite na stran z nastavitvami pripomočka, da izberete sloje.",
-  "checkLayerListToSelectLayers": "Atributna tabela je sinhronizirana z vidnimi sloji na karti, lahko uporabite pripomoček, kot je Seznam slojev, da preklopite vklop/izklop slojev."
+  "checkLayerListToSelectLayers": "Atributna tabela je sinhronizirana z vidnimi sloji na karti, lahko uporabite pripomoček, kot je Seznam slojev, da preklopite vklop/izklop slojev.",
+  "rowHeaderColumnTitle": "Vrstica ${layerName}, lebdeča, pritisnite Enter, da izberete lebdeče vrstice"
 });

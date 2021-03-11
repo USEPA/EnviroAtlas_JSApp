@@ -28,5 +28,11 @@ define({
   "keyword": "كلمة أساسية",
   "basemapLayers": "طبقات خريطة الأساس",
   "typeAKeywork": "اكتب كلمة أساسية",
-  "layers": "الطبقات"
+  "layers": "الطبقات",
+  "tipLayerSearch": "البحث عن الطبقات",
+  "tipLayerListOperation": "عمليات قائمة الطبقة",
+  "tipLayerOperation": "قائمة الطبقة",
+  "tipClearText": "مسح النص",
+  "collapseLayer": "طي",
+  "expandLayer": "توسيع"
 });

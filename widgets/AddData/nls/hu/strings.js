@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Legfeljebb {count} vektoros elem megengedett",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "Probléma fordult elő.",
-    "kmlProjectionMismatch": "A térkép és a KML-réteg koordináta-rendszere nem egyezik, és nem lehet végrehajtani a konverziót a kliensen."
+    "kmlProjectionMismatch": "A térkép és a KML-réteg koordináta-rendszere nem egyezik, és nem lehet végrehajtani a konverziót a kliensen.",
+    "featureLocationsCouldNotBeFound": "A funkciók nem találhatók: ismeretlen vagy érvénytelen hely mezők. A fájl táblázatként lesz hozzáadva."
   },
   "layerList": {
     "caption": "Rétegek",

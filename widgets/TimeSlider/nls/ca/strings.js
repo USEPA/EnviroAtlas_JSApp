@@ -5,5 +5,10 @@ define({
   "timeExtent": "De ${FROMTIME} a ${ENDTIME}",
   "layers": "Capes: ",
   "speedLabel": "Velocitat de reproducció",
-  "liveData": "Dades en directe"
+  "liveData": "Dades en directe",
+  "previous": "interval anterior",
+  "next": "interval següent",
+  "play": "reprodueix",
+  "pause": "atura temporalment",
+  "speed": "velocitat"
 });

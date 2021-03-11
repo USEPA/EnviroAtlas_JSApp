@@ -5,5 +5,9 @@ define({
   "english": "İngilizce",
   "metric": "metrik",
   "ruler": "cetvel",
-  "line": "çizgi"
+  "line": "çizgi",
+  "number": "sayı",
+  "spinnerLabel": "Ölçek sayısını buna yuvarla: ",
+  "decimalPlace": "ondalık basamak",
+  "separator": "Binlik basamak ayırıcıyı göster"
 });

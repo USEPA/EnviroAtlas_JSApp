@@ -5,5 +5,6 @@ define({
   "whollyWithin": "Visiškai patenka į",
   "allowExport": "Leisti eksportuoti pasirinktus elementus",
   "layerToSelect": "Pasirinkite, kuriuos sluoksnius galima pažymėti",
-  "includeRuntimeLayers": "Galima pažymėti sluoksnius, sugeneruotus vykdymo metu"
+  "includeRuntimeLayers": "Leisti pažymėti sluoksnius, sugeneruotus vykdymo metu",
+  "enableByDefault": "Įjungti pasirinktą mygtuką pagal numatytuosius nustatymus"
 });

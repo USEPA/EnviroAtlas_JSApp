@@ -1,0 +1,5 @@
+// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
+// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
+//>>built
+define(["dojo/_base/lang","dojo/on","dojo/_base/html","dojo/keys"],function(c,d,e,b){return{a11y_init:function(){this.own(d(this.domNode,"keydown",c.hitch(this,function(a){e.hasClass(a.target,"close-btn")||a.keyCode!==b.ESCAPE||(a.stopPropagation(),this.closeNode.focus())})))},_onTitleLabelKeyDown:function(a){a.shiftKey&&a.keyCode===b.TAB&&a.preventDefault()},_onMaxBtnKeyDown:function(a){a.keyCode!==b.ENTER&&a.keyCode!==b.SPACE||this._onMaxBtnClicked(a)},_onFoldableBtnKeyDown:function(a){a.keyCode===
+b.ENTER||a.keyCode===b.SPACE?this._onFoldableBtnClicked(a):a.keyCode===b.TAB&&a.shiftKey&&a.preventDefault()},_onCloseBtnKey:function(a){a.keyCode===b.ENTER||a.keyCode===b.SPACE?this._onCloseBtnClicked(a):a.keyCode===b.TAB&&a.shiftKey&&(window.appInfo.isRunInMobile||a.preventDefault())}}});

@@ -3,8 +3,8 @@
     <tbody>
       <tr>
         <td class="first">
-          <div class="cb" data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="highlightLocation"></div>
-          <div class="cb-label">${nls.highlightLocation}</div>
+          <div class="cb" data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="highlightLocation"
+            data-dojo-props='label:"${nls.highlightLocation}"'></div>
         </td>
         <!--<td class="second"></td>-->
         <td class="third">
@@ -13,8 +13,28 @@
       </tr>
       <tr>
         <td class="first">
-          <div class="cb" data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="useTracking"></div>
-          <div class="cb-label">${nls.useTracking}</div>
+          <div class="cb" data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="useTracking"
+            data-dojo-props='label:"${nls.useTracking}"'></div>
+        </td>
+        <!--<td class="second"></td>-->
+        <td class="third">
+          <div class="help-icon"></div>
+        </td>
+      </tr>
+      <tr class="compass-setting">
+        <td class="first">
+          <div class="cb" data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="useCompass"
+            data-dojo-props='label:"${nls.useCompass}"'></div>
+        </td>
+        <!--<td class="second"></td>-->
+        <td class="third">
+          <div class="help-icon"></div>
+        </td>
+      </tr>
+      <tr class="compass-setting">
+        <td class="first">
+          <div class="cb" data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="useAccCircle"
+            data-dojo-props='label:"${nls.useAccCircle}"'></div>
         </td>
         <!--<td class="second"></td>-->
         <td class="third">

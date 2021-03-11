@@ -30,6 +30,7 @@ define(['dojo/_base/declare',
         'dojo/json',
         'dojo/Deferred',
         'dojo/promise/all',
+        'dojo/dom-class',
         'esri/geometry/Extent',
         'esri/graphic',
         'esri/layers/GraphicsLayer',
@@ -69,6 +70,7 @@ define(['dojo/_base/declare',
         JSON,
         Deferred,
         all,
+        domClass,
         Extent,
         Graphic,
         GraphicsLayer,
@@ -266,10 +268,16 @@ define(['dojo/_base/declare',
               	var widgets = this.appConfig.getConfigElementsByName("AddData");
 		        var pm = PanelManager.getInstance();		
 		        pm.showPanel(widgets[0]);
+		        
 		        panelID = "widgets_AddData_30_panel";
 		        pm.closePanel(panelID);//close the panel
+		        setTimeout(function () { 
 
-   				document.getElementById(simpleSearchFilterId).click();
+			        //selfAddDataScopeOptions.optionClicked();
+
+	
+	   				document.getElementById(simpleSearchFilterId).click();
+   				}, 1800)
  	
             },
             onReceiveData: function (name, widgetId, data, historyData) {
@@ -534,16 +542,60 @@ define(['dojo/_base/declare',
                 //showLayerListWidget();
                 var session = e.item;
                 sessionLoaded = session;
+                this.loadSession(session);
                 console.log('SaveSession :: onLoadSessionClicked :: session  = ', session);
                 
+                ii = 0;
+                function AddDataLoop () {           //  create a loop function
+                   setTimeout(function () {    
+						itemCardItem = session.onlineDataItems[ii];
+						itemCardItem_split = itemCardItem.split(":::");	
+						
+						for (var key in window.onlineDataScopeDic) {
+							if (itemCardItem_split[2] == window.onlineDataScopeDic[key]) {
+								selfAddDataScopeOptions.scopePlaceholderText.innerHTML = key;
+							}
+						}						
+						//set the active node for ScopeOptions in AddData widget
+				        array.forEach(selfAddDataScopeOptions.btnGroup.children, function(node) {
+		    				if (node.getAttribute("data-option-name") == itemCardItem_split[2]) {
+		    					domClass.add(node, "active");
+		    				} else {
+		    					domClass.remove(node, "active");
+		    				}				           
+				        });				        		
+				        selfAddDataScopeOptions.hideDropdown();								
+						// end of setting active node for ScopeOptions
+						
+						//input the search box in AddData widget
+						selfSearchInAddData.searchTextBox.value = itemCardItem_split[1];				
+						
+								
+						setTimeout(function () {
+							selfSearchInAddData.searchButton.click();
+		                	//selfAddDataScopeOptions.search(); 
+	                	}, 80)
+	                	setTimeout(function () {
+							//selfSearchInAddData.searchButton.click();
+		                	selfAddDataScopeOptions.search(); 
+	                	}, 200)
+                        ii++;                                            //  increment the counter
+                        if (ii < session.onlineDataItems.length) {            
+                            AddDataLoop();             //  ..  again which will trigger another 
+                        }  
+                                           //  ..  setTimeout()
+                   }, 1500)
+                }
+                
+                AddDataLoop();		
+
+
                 var layerListWidget = WidgetManager.getInstance().getWidgetById("widgets_LayerList_Widget_17");
                 if (layerListWidget) {
                     layerListWidget._onRemoveLayersClick();
                 }
-
                     //document.getElementById("butRemoveAllLayers").click();
-
-                    this.loadSession(session);
+                    
             },
 
             /**
@@ -1136,7 +1188,7 @@ define(['dojo/_base/declare',
                 //        new Color([0, 112, 0]), 1), new Color([0, 0, 136, 0.25]));
                 
                 // set the graphics from the layer
-                if (graphicLayer.id.indexOf(window.uploadedFeatLayerIdPrefix)>-1){
+                if ((graphicLayer.id.indexOf(window.uploadedFeatLayerIdPrefix)>-1)||(graphicLayer.id.indexOf(window.createdFromSelectPrefix)>-1)){
 	                array.forEach(graphicLayer.graphics, function (g) {
 	                	//g.setSymbol(symbol);	
 	                    settings.graphics.push(g.toJson());
@@ -1173,7 +1225,7 @@ define(['dojo/_base/declare',
                 };
 
                 array.forEach(settings, function (settingsForLayer, i) {
-                    if(settingsForLayer.id.indexOf(window.uploadedFeatLayerIdPrefix)>-1){  	
+                    if((settingsForLayer.id.indexOf(window.uploadedFeatLayerIdPrefix)>-1)||(settingsForLayer.id.indexOf(window.createdFromSelectPrefix)>-1)){  	
                     	//create the layer
                     	createdFields = [];
                     	fieldsArray = window.hashFieldsAddedFeatureLayer[settingsForLayer.id].split(";");
@@ -1243,14 +1295,14 @@ define(['dojo/_base/declare',
 					        var jsonfl = new esri.layers.FeatureLayer(featureCollection, {
 					          mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
 					          'id': settingsForLayer.id,
-					          'title': settingsForLayer.id.replace(window.uploadedFeatLayerIdPrefix, "")
+					          'title': settingsForLayer.id.replace(window.uploadedFeatLayerIdPrefix, "").replace(window.createdFromSelectPrefix, "")
 					        });
 				        } else {
 				        	var infoTemplate = new InfoTemplate(window.hashInfoTemplate[settingsForLayer.id]);
 					        var jsonfl = new esri.layers.FeatureLayer(featureCollection, {
 					          mode: esri.layers.FeatureLayer.MODE_SNAPSHOT,
 					          'id': settingsForLayer.id,
-					          'title': settingsForLayer.id.replace(window.uploadedFeatLayerIdPrefix, ""),
+					          'title': settingsForLayer.id.replace(window.uploadedFeatLayerIdPrefix, "").replace(window.createdFromSelectPrefix, ""),
 					          infoTemplate: infoTemplate,					          
 					        });				        	
 				        }

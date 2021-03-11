@@ -27,6 +27,7 @@ define({
   "timeSpan": "Vremenski opseg",
   "startTime": "Vreme početka",
   "endTime": "Vreme završetka",
+  "unit": "Jedinica",
   "timeDisplay": "Prikaz vremena",
   "displayDataIn": "Prikaži podatke u",
   "interval": "Interval",

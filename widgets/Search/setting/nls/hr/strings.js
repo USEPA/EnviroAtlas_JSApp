@@ -14,6 +14,7 @@ define({
   "generalSetting": "Opće postavke",
   "allPlaceholder": "Mjesto za unos teksta za pretraživanje svega: ",
   "showInfoWindowOnSelect": "Prikaži skočni prozor za pronađeni geoobjekt ili lokaciju",
+  "showInfoWindowOnSelect2": "Prikazivanje skočnog prozora kada se pronađe geoobjekt ili lokacija.",
   "searchInCurrentMapExtent": "Pretraži samo trenutačni obuhvat karte",
   "zoomScale": "Mjerilo uvećanja",
   "locatorUrl": "URL geokodera",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "Alias",
   "ok": "U redu",
   "cancel": "Odustani",
-  "invalidUrlTip": "URL ${URL} nije valjan ili dostupan."
+  "invalidUrlTip": "URL ${URL} nije valjan ili dostupan.",
+  "locateResults": "Pronađi rezultate",
+  "panTo": "Kreći se do",
+  "zoomToScale": "Povećajte prikaz na mjerilo"
 });

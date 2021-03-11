@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,13 +33,14 @@ define(['dojo/_base/declare',
     'jimu/utils',
     './TimeProcesser',
     './LayerProcesser',
-    './utils'
+    './utils',
+    "./a11y/Widget"
     //"dojo/throttle"
   ],
   function(declare, lang, html, array, baseFx, WidgetManager, Move,
     on, query, Deferred, domGeometry,
     LayerInfos, BaseWidget, TimeExtent, TimeSlider,
-    SpeedMenu, jimuUtils,TimeProcesser,LayerProcesser, utils/*, throttle*/) {
+    SpeedMenu, jimuUtils,TimeProcesser,LayerProcesser, utils, a11y/*, throttle*/) {
 
     var clazz = declare([BaseWidget], {
       baseClass: 'jimu-widget-timeslider',
@@ -111,6 +112,8 @@ define(['dojo/_base/declare',
         } else {
           html.addClass(this.liveIcon, 'hide');
         }
+
+        this.a11y_initEvents();
       },
 
       //overwrite for dijit in header-controller
@@ -151,6 +154,8 @@ define(['dojo/_base/declare',
           this._adaptResponsive();
 
           this._setPlayBtnStyleTimer();
+
+          this.a11y_open();
         }));
       },
       _closeOthersTimeSlider: function () {
@@ -187,6 +192,7 @@ define(['dojo/_base/declare',
       },
       //on close btn click
       _closeHanlder: function(){
+        this.a11y_shownBy508 = false;
         WidgetManager.getInstance().closeWidget(this);
       },
       _showNoTimeLayer: function () {
@@ -237,6 +243,8 @@ define(['dojo/_base/declare',
             }),
             duration: 500
           }).play();
+
+          this.a11y_init();
         }));
       },
 
@@ -629,7 +637,7 @@ define(['dojo/_base/declare',
           var label = this.nls.layers;
           var names = this.layerProcesser._getVisibleTemporalLayerNames();
           label = label + names.join(',');
-          this.layerLabelsNode.innerHTML = label;
+          this.layerLabelsNode.innerHTML = jimuUtils.sanitizeHTML(label);
           html.setAttr(this.layerLabelsNode, 'title', label);
         } else {
           html.setStyle(this.layerLabelsNode, 'display', 'none');
@@ -640,7 +648,7 @@ define(['dojo/_base/declare',
         //TODO Humanize duration text
         var label = this.timeProcesser._getTimeFormatLabel(timeExtent);
         //console.log("===>"+label);
-        this.timeExtentLabelNode.innerHTML = label;
+        this.timeExtentLabelNode.innerHTML = jimuUtils.sanitizeHTML(label);
         html.setAttr(this.timeExtentLabelNode, 'title', label);
       },
 
@@ -770,8 +778,10 @@ define(['dojo/_base/declare',
         this._playBtnStyleTimer = setInterval(lang.hitch(this, function () {
           if (this.timeSlider && this.timeSlider.playing) {
             html.addClass(this.playBtn, "pause");
+            html.setAttr(this.playBtn, "aria-label", this.nls.pause);
           } else {
             html.removeClass(this.playBtn, "pause");
+            html.setAttr(this.playBtn, "aria-label", this.nls.play);
           }
         }), 200);
       },
@@ -818,8 +828,10 @@ define(['dojo/_base/declare',
       _setMiniModeTimer: function () {
         var time = utils.isRunInMobile() ? 5000 : 2000;
         this._miniModeTimer = setTimeout(lang.hitch(this, function () {
-          html.addClass(this.domNode, 'mini-mode');
-          this._adaptResponsive();
+          if (false === this.a11y_shownBy508) {
+            html.addClass(this.domNode, 'mini-mode');
+            this._adaptResponsive();
+          }
         }), time);
       },
 
@@ -917,5 +929,7 @@ define(['dojo/_base/declare',
         this.speedMenuCloseHanlder = null;
       }
     });
+
+    clazz.extend(a11y);//for a11y
     return clazz;
   });

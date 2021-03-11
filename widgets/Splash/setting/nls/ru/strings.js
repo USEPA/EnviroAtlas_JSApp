@@ -22,7 +22,6 @@ define({
   "imageFill": "Заполнение изображением",
   "chooseFile": "Выберите файл",
   "noFileChosen": "Файл не выбран",
-  "transparency": "Прозрачность",
   "sizeFill": "Заполнить",
   "sizeFit": "Вписать",
   "sizeStretch": "Растянуть для заполнения",

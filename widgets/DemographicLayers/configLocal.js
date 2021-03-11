@@ -3,7 +3,7 @@ define(
     function() {
      var _config = {"demogJSON": {
        
-        "ejdemog": { "title": "2013-2017 ACS", "tiptext": "2012-2016 ACS", "dynamic": false, "type": "agsdemog", "layerurl": "https://ejscreen.epa.gov/ArcGIS/rest/services/", "service": "ejscreen/census2017acs", "lookupindex": 4,
+        "ejdemog": { "title": "2013-2017 ACS", "tiptext": "2013-2017 ACS", "dynamic": false, "type": "agsdemog", "layerurl": "https://ejscreen.epa.gov/ArcGIS/rest/services/", "service": "ejscreen/census2017acs", "lookupindex": 4,
             "description": "2013-2017 ACS demographics are a set of variables derived based on a subset of 2013-2017 American Community Survey data.",
             "process": false,"transparency": "0.5", "identify": "yes", "filter": "yes","defaultCategory": "Population","defaultfield":"POP_DEN",
             "baselayers": {

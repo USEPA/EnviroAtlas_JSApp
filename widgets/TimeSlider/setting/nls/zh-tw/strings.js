@@ -27,6 +27,7 @@ define({
   "timeSpan": "時間跨度",
   "startTime": "開始時間",
   "endTime": "結束時間",
+  "unit": "單位",
   "timeDisplay": "時間顯示",
   "displayDataIn": "資料顯示方式",
   "interval": "間隔",

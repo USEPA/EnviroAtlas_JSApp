@@ -28,5 +28,11 @@ define({
   "keyword": "Märksõna",
   "basemapLayers": "Aluskaardi kihid",
   "typeAKeywork": "Sisestage märksõna",
-  "layers": "Kihid"
+  "layers": "Kihid",
+  "tipLayerSearch": "Otsi kihte",
+  "tipLayerListOperation": "Kihtide nimekirja toimingud",
+  "tipLayerOperation": "Kihi menüüd",
+  "tipClearText": "Kustuta tekst",
+  "collapseLayer": "Ahenda",
+  "expandLayer": "Laienda"
 });

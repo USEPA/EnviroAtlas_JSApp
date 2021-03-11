@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>sort_up_light_default</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icons" transform="translate(-257.000000, -178.000000)" fill-rule="nonzero">
+            <g id="sort_up_light_default" transform="translate(265.000000, 186.000000) rotate(-270.000000) translate(-265.000000, -186.000000) translate(257.000000, 178.000000)">
+                <rect id="Rectangle" fill="#000000" opacity="0" x="-5.68434189e-14" y="0" width="16" height="16"></rect>
+                <path d="M16,12.25 L16,13.75 C16,13.8875 15.8875,14 15.75,14 L4,14 L4,16 L-1.59161573e-12,13 L4,10 L4,12 L15.75,12 C15.8875,12 16,12.1125 16,12.25 Z M0.5,1.9095836e-13 L2.5,1.9095836e-13 L2.5,8 L0.5,8 L0.5,1.9095836e-13 Z M6.5,1.89626093e-13 L8.5,1.89626093e-13 L8.5,8 L6.5,8 L6.5,1.89626093e-13 Z M12.5,1.89182003e-13 L14.5,1.89182003e-13 L14.5,8 L12.5,8 L12.5,1.89182003e-13 Z" id="Shape" fill="#666666"></path>
+            </g>
+        </g>
+    </g>
+</svg>

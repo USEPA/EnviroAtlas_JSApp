@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -263,10 +263,13 @@ define(["dojo/_base/declare",
           window.uploadedFileColl.push(featureLayer.id);
           loader._setFeatureLayerInfoTemplate(featureLayer,null,null);
           if (featureLayer.fullExtent) {
-            if (!fullExtent) {
-              fullExtent = featureLayer.fullExtent;
-            } else {
-              fullExtent = fullExtent.union(featureLayer.fullExtent);
+            var extentCenter = featureLayer.fullExtent.getCenter();
+            if(extentCenter.x && extentCenter.y) {
+              if (!fullExtent) {
+                fullExtent = featureLayer.fullExtent;
+              } else {
+                fullExtent = fullExtent.union(featureLayer.fullExtent);
+              }
             }
           }
           layers.push(featureLayer);
@@ -366,7 +369,14 @@ define(["dojo/_base/declare",
         var fileName = fileInfo.fileName;
         var self = this, formData = new FormData();
         formData.append("file",fileInfo.file);
-        self._analyze(job,formData).then(function(){
+        self._analyze(job,formData).then(function(response){
+          if(response && response.publishParameters && response.publishParameters.locationType && 
+            response.publishParameters.locationType === "unknown") {
+            new Message({
+              titleLabel: i18n._widgetLabel,
+              message: i18n.addFromFile.featureLocationsCouldNotBeFound
+            });
+          }
           return self._generateFeatures(job,formData);
         }).then(function(response){
           //console.warn("Generated",response);

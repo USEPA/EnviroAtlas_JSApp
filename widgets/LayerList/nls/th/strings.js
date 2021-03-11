@@ -28,5 +28,11 @@ define({
   "keyword": "คำสำคัญ",
   "basemapLayers": "ชั้นข้อมูลแผนที่ฐาน",
   "typeAKeywork": "พิมพ์คำสำคัญ",
-  "layers": "ชั้นข้อมูล"
+  "layers": "ชั้นข้อมูล",
+  "tipLayerSearch": "ค้นหาชั้นข้อมูล",
+  "tipLayerListOperation": "การดำเนินการรายการชั้นข้อมูล",
+  "tipLayerOperation": "เมนูชั้นข้อมูล",
+  "tipClearText": "ลบข้อความ",
+  "collapseLayer": "ย่อลง",
+  "expandLayer": "ขยาย"
 });

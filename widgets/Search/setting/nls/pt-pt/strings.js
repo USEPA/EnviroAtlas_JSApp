@@ -14,6 +14,7 @@ define({
   "generalSetting": "Configurações gerais",
   "allPlaceholder": "Texto de placeholder para pesquisar todos: ",
   "showInfoWindowOnSelect": "Exibir janela pop-up para o elemento ou local encontrado.",
+  "showInfoWindowOnSelect2": "Exibir janela pop-up quando o elemento ou local é encontrado.",
   "searchInCurrentMapExtent": "Procurar apenas na extensão de mapa actual.",
   "zoomScale": "Escala de zoom",
   "locatorUrl": "Geocoder URL",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "Nome Alternativo",
   "ok": "OK",
   "cancel": "Cancelar",
-  "invalidUrlTip": "O URL ${URL} é inválido ou inacessível."
+  "invalidUrlTip": "O URL ${URL} é inválido ou inacessível.",
+  "locateResults": "Localizar resultados",
+  "panTo": "Mover para",
+  "zoomToScale": "Efetuar zoom para a escala"
 });

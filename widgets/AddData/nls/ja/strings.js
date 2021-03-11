@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "最大 {count} フィーチャが許可されています",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "問題が発生しました。",
-    "kmlProjectionMismatch": "マップの空間参照と KML レイヤーが一致しないため、クライアント上で変換を実行できません。"
+    "kmlProjectionMismatch": "マップの空間参照と KML レイヤーが一致しないため、クライアント上で変換を実行できません。",
+    "featureLocationsCouldNotBeFound": "フィーチャが見つかりません: 不明か無効なロケーション フィールド。 ファイルがテーブルに追加されます。"
   },
   "layerList": {
     "caption": "レイヤー",

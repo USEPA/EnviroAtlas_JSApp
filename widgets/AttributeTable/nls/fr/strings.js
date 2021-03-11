@@ -15,6 +15,8 @@ define({
   "selectAll": "Sélectionner les enregistrements de toutes les pages",
   "selectPage": "Sélectionner les enregistrements de la page en cours",
   "clearSelection": "Vider la sélection",
+  "selectionHandleLabel": "Poignée de sélection",
+  "selectionHandleDescription": "Appuyez sur ENTRÉE ou sur la BARRE D’ESPACE pour mettre en surbrillance les entités sur la carte",
   "filter": "Filtrer",
   "setFilterTip": "Définissez les filtres correctement.",
   "noFilterTip": "Sans expressions de filtre définies, cette tâche de requête répertorie toutes les entités dans la source de données spécifiée.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Aucune table à afficher.",
   "checkConfigutationToSelectLayers": "Accédez à la page des paramètres des widgets pour sélectionner des couches.",
-  "checkLayerListToSelectLayers": "Le widget Table attributaire est synchronisé avec les couches visibles sur la carte. Vous pouvez utiliser un widget tel que Liste des couches pour activer/désactiver des couches."
+  "checkLayerListToSelectLayers": "Le widget Table attributaire est synchronisé avec les couches visibles sur la carte. Vous pouvez utiliser un widget tel que Liste des couches pour activer/désactiver des couches.",
+  "rowHeaderColumnTitle": "Ligne ${layerName}, survolée, appuyez sur la touche Entrée pour sélectionner les lignes survolées"
 });

@@ -27,6 +27,7 @@ define({
   "timeSpan": "Laikotarpis",
   "startTime": "Pradžios laikas",
   "endTime": "Pabaigos laikas",
+  "unit": "Vienetai",
   "timeDisplay": "Laiko rodymas",
   "displayDataIn": "Rodyti duomenis",
   "interval": "Intervalas",

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,8 +24,10 @@ define([
   "dgrid/extensions/ColumnHider",
   "dgrid/extensions/ColumnResizer",
   "dgrid/extensions/ColumnReorder",
+  'dgrid/Keyboard',
   "dijit/Menu",
   "dijit/MenuItem",
+  "dijit/PopupMenuItem",
   'dijit/Toolbar',
   'dijit/form/Button',
   'dijit/DropDownMenu',
@@ -70,7 +72,10 @@ define([
   'jimu/utils',
   '../utils',
   'dojo/query',
-  'dojo/string'
+  'dojo/string',
+  'dojo/topic',
+	'dojo/keys',
+	'dojo/has'
 ], function(
   declare,
   html,
@@ -82,8 +87,10 @@ define([
   ColumnHider,
   ColumnResizer,
   ColumnReorder,
+  Keyboard,
   Menu,
   MenuItem,
+  PopupMenuItem,
   Toolbar,
   Button,
   DropDownMenu,
@@ -128,7 +135,10 @@ define([
   jimuUtils,
   tableUtils,
   query,
-  string
+  string,
+  topic,
+  keys,
+  has
 ) {
   var blinker = function (id, times){
 	    var color=document.getElementById(id).style.backgroundColor;
@@ -151,6 +161,7 @@ define([
     //fullfilled: get the data
     _requestStatus: 'initial', // initial, processing, canceled, fulfilled
 
+    parent: null,
     map: null,
     matchingMap: false,
     layerInfo: null,
@@ -202,8 +213,16 @@ define([
     //zoom-to
     //refresh
 
+    // CONSTS:
+    GRID_FAR_OFF_REMOVAL: {
+      DEFAULT: 2000,
+      RESELECTION: Infinity,
+      INFINITY: Infinity
+    },
+    
     constructor: function(options) {
       options = options || {};
+      this.set('parent', options.parent || null);
       this.set('map', options.map || null);
       this.set('matchingMap', !!options.matchingMap);
       this.set('layerInfo', options.layerInfo || null);
@@ -212,6 +231,7 @@ define([
 
       this.set('relatedOriginalInfo', options.relatedOriginalInfo || null);
       this.set('relationship', options.relationship || null);
+      this.set('prevRelationship', null);
 
       // syncSelection if true scroll record to view after click feature in map
       this.set('syncSelection', !!options.syncSelection || true);
@@ -239,6 +259,10 @@ define([
       }
 
       this.own(on(window, 'resize', lang.hitch(this, this._resize)));
+
+      if (this.layerInfo) {	
+        this.own(on(this.layerInfo, 'filterChanged', lang.hitch(this, this._handleFilterChange)));	
+      }
     },
 
     startup: function() {
@@ -273,9 +297,9 @@ define([
 
     showRefreshing: function(isshow) {
       if (isshow) {
-        this.loading.show();
+        this._toggleLoading(true);
       } else {
-        this.loading.hide();
+        this._toggleLoading(false);
       }
     },
 
@@ -312,11 +336,50 @@ define([
       });
       menus.addChild(this.showSelectedRecordsMenuItem);
 
-      this.showRelatedRecordsMenuItem = new MenuItem({
+      // related records:
+      var relationships = this.layerInfo && 
+        this.layerInfo.layerObject && 
+        this.layerInfo.layerObject.relationships;
+
+      // create related table submenu:
+
+      var subMenu = new Menu();
+
+      this.showRelatedRecordsMenuItem = new PopupMenuItem({
         label: this.nls.showRelatedRecords,
         iconClass: "esriAttributeTableSelectAllImage",
-        onClick: lang.hitch(this, this.onShowRelatedRecordsClick)
+        popup: subMenu
       });
+
+      if(relationships && relationships.length > 0) {
+        // get all relationship info
+        var relationshipInfos = array.map(relationships, lang.hitch(this, function(r) {
+          return this.parent && this.parent.getRelationShipInfo(r);
+        }));
+    
+        array.forEach(relationships, lang.hitch(this, function(r) {
+          var relationshipInfo = this.parent && this.parent.getRelationShipInfo(r);
+          var duplicateTableCount = 0;
+          
+          if(relationshipInfo) {
+            array.some(relationshipInfos, function(rInfo) {
+              if(rInfo && rInfo.name === relationshipInfo.name) {
+                duplicateTableCount++;
+              }
+              if(duplicateTableCount > 1) {
+                return false;
+              }
+            });
+            subMenu.addChild(new MenuItem({
+              label: relationshipInfo.name + ( 
+                duplicateTableCount > 1 ? r && '<br><span style="opacity: 0.4">&lpar;' + r.name + '&rpar;</span>' : '' 
+              ),
+              onClick: lang.hitch(this, this.onShowRelatedRecordsClick, r)
+            }));
+          }
+        }));
+      }
+
       menus.addChild(this.showRelatedRecordsMenuItem);
 
       this.filterMenuItem = new MenuItem({
@@ -414,6 +477,14 @@ define([
       this.own(
         on(this, 'data-loaded,row-click,clear-selection', lang.hitch(this, 'changeToolbarStatus'))
       );
+      
+      // add a11y support to the toolbar
+      if(this.parent) {
+        topic.publish(this.parent.id + '_toolbar_created', {
+          toolbar: this.toolbar,
+          context: this
+        });
+      }
     },
 
     //queryByStoreObjectIds: [objectId]
@@ -426,7 +497,7 @@ define([
       // }
 
       this._requestStatus = 'processing';
-      this.loading.show();
+      this._toggleLoading();
       if (!queryByStoreObjectIds || !queryByStoreObjectIds.length) {
         this._relatedQuery = false;
         this._relatedQueryIds = [];
@@ -457,7 +528,7 @@ define([
               console.error(err);
             }
             this.changeToolbarStatus();
-            this.loading.hide();
+            this._toggleLoading(false);
           }));
         } else {
           this._doQuery(extent, queryByStoreObjectIds);
@@ -465,7 +536,7 @@ define([
       }), lang.hitch(this, function(err) {
         console.error(err);
         this.changeToolbarStatus();
-        this.loading.hide();
+        this._toggleLoading(false);
       }));
     },
 
@@ -474,19 +545,21 @@ define([
       var layer = params && params.layer;
       var selectedIds = params && params.selectedIds; // original feautrelayer ids
       if (params && params.relationship) {
+        this.set('prevRelationship', this.relationship);
         this.set('relationship', params.relationship);
       }
       if (params && params.relatedOriginalInfo) {
         this.set('relatedOriginalInfo', params.relatedOriginalInfo);
       }
-      var ship = this.relationship;
+      var ship = this.relationship, prevShip = this.prevRelationship;
 
       //this._relatedQueryIds is previous selectedIds
       //selectedIds is new ids
       if (layer && ship && selectedIds && selectedIds.length > 0 &&
-        !jimuUtils.isEqual(this._relatedQueryIds, selectedIds) &&
+        (!jimuUtils.isEqual(this._relatedQueryIds, selectedIds) ||
+        !jimuUtils.isEqual(ship, prevShip)) &&
         lang.getObject('relatedOriginalInfo.layerObject.url', false, this)) {
-        this.loading.show();
+        this._toggleLoading(true);
         this._requestStatus = 'processing';
         this._relatedQuery = true;
 
@@ -506,10 +579,11 @@ define([
           var ofs = [];
           var response = this.layer;//point to related layer
           array.forEach(response.fields, function(f) {
-            if (!esriLang.isDefined(f.show) || f.show === true ||
+            if ((!esriLang.isDefined(f.show) || f.show === true ||
               (f.type === 'esriFieldTypeOID' ||
                 (esriLang.isDefined(response.objectIdField) &&
-                  f.name === response.objectIdField))) {
+                  f.name === response.objectIdField))) && 
+              !tableUtils.arcade.isArcadeExpressionField(f)) {
               ofs.push(f.name);
             }
           });
@@ -566,7 +640,7 @@ define([
             this._relatedQueryIds = selectedIds;
             this.emit('data-loaded');
 
-            this.loading.hide();
+            this._toggleLoading(false);
           }), lang.hitch(this, function(err) {
             if (err && err.message !== 'Request canceled') {
               console.error(err);
@@ -576,16 +650,16 @@ define([
             this._removeTable();
             html.place(this.tipNode, this.domNode);
             html.place(this.loading.domNode, this.domNode);
-            this.loading.hide();
+            this._toggleLoading(false);
             this.changeToolbarStatus();
           }));
         }), lang.hitch(this, function(err) {
           console.error(err);
-          this.loading.hide();
+          this._toggleLoading(false);
           this.changeToolbarStatus();
         }));
       } else {
-        this.loading.hide();
+        this._toggleLoading(false);
       }
     },
 
@@ -642,12 +716,13 @@ define([
       // this.showSelected = !this.showSelected;
     },
 
-    onShowRelatedRecordsClick: function() {
+    onShowRelatedRecordsClick: function(relationship) {
       var selectedRows = this.getSelectedRows();
       if(selectedRows.length > 0) {
         this.emit('show-related-records', {
           layerInfoId: this.layerInfo.id,
-          objectIds: selectedRows
+          objectIds: selectedRows,
+          relationshipObj: relationship
         }); 
       } else {
         this._getFeatureIds(
@@ -657,7 +732,8 @@ define([
           console.log(objectIds);
           this.emit('show-related-records', {
             layerInfoId: this.layerInfo.id,
-            objectIds: objectIds
+            objectIds: objectIds,
+            relationshipObj: relationship
           }); 
         }));
       }
@@ -676,6 +752,7 @@ define([
           definition.fields = fFields;
 
           var filter = new Filter({
+            widgetId: this.widgetId,
             noFilterTip: this.nls.noFilterTip,
             style: "width:100%;",
             featureLayerId: this.layerInfo.id,
@@ -780,8 +857,20 @@ define([
           label: this.nls.ok,
           onClick: lang.hitch(this, function() {
             var check = message._check;
-            this.exportToCSV(null, typeof check !== 'undefined' && !check.checked ? richTextFields : null);
-            popup.close();
+            if(popup.domNode) {
+              popup.domNode.className += ' is-loading';
+              var loading = new LoadingIndicator();
+              loading.placeAt(popup.domNode);
+            }
+            this.exportToCSV(
+              null, 
+              typeof check !== 'undefined' && !check.checked ? richTextFields : null)
+              .then(function() {
+                popup.close();
+              }, function(err) {
+                console.error('Error exporting CSV for Attribute Table');
+                popup.close();
+              });
           })
         }, {
           label: this.nls.cancel
@@ -836,9 +925,9 @@ define([
       if(!richTextFields || richTextFields.hasOwnProperty("length") && !richTextFields.length) return "";
 
       var _EXAMPLE = {
-        preview: '<font color="#31aacd">Web AppBuilder</font> for <u>ArcGIS</u>',
-        withHTMLTags: '&ltfont color=\"#31aacd\"&gtWeb AppBuilder&lt/font&gt for &ltu&gtArcGIS&lt/u&gt',
-        withoutHTMLTags: 'Web AppBuilder for ArcGIS'
+        preview: '<u>ArcGIS</u> <font color="#31aacd">Web AppBuilder</font>',
+        withHTMLTags: '&ltu&gtArcGIS&lt/u&gt &ltfont color=\"#31aacd\"&gtWeb AppBuilder&lt/font&gt',
+        withoutHTMLTags: 'ArcGIS Web AppBuilder'
       };
       var messageWrapper = document.createElement('div');
       var messageHTML = '', richTextFieldsHTML = '';
@@ -893,6 +982,7 @@ define([
 
     onSelectionClear: function() {
       this.clearSelection(false, true);
+      this._setFarOffRemoval(this.GRID_FAR_OFF_REMOVAL.DEFAULT); // set to default
     },
 
     changeToolbarStatus: function() {
@@ -1126,12 +1216,14 @@ define([
     },
     exportToCSV: function(fileName) {
       if (!this.layerInfo || !this.layer || !this.tableCreated) {
-        return;
+        var def = new Deferred();
+        def.reject();
+        return def;
       }
       var _outFields = null;
       var pk = this.layer.objectIdField;
       // var types = this.layer.types;
-      this.getSelectedRowsData().then(lang.hitch(
+      return this.getSelectedRowsData().then(lang.hitch(
           this,
           function(datas) {
             // seleted data process.
@@ -1141,6 +1233,7 @@ define([
               this.map.extent.spatialReference);
 
             var hasArcadeExpressionFields = this._hasArcadeExpressionFields();
+            var orderByFields = tableUtils.getSortbyFields(this.grid, this.layer);
 
             // if the output layer's spatial reference is the same as map's, which means
             // a spatial reference conversion to make output data (X, Y fileds) consistent with
@@ -1148,7 +1241,9 @@ define([
             // if they are different, then it needs to send a query request to
             // server side (handle by "_getExportDataFromServer" method in jimu/CSVUtils.js)
             // to get the data with correct spatial reference
-            if(isSameProjection) {
+            // or the layer is a layer without a url that cannot be queried from the server side, e.g.: graphics layer then
+            // try to get the data from the client side
+            if(isSameProjection || !this.layer.url) {
               var rows = array.map(
                 this._getTableSelectedIds(),
                 lang.hitch(this, function(id) {
@@ -1170,7 +1265,14 @@ define([
               _exportData = _selectedData;
 
               if(_selectedData.length === 0 &&  this.grid.store instanceof Memory){
-                _exportData = lang.clone(this.grid.store.data);
+                var _queryOptions = {};
+                if(orderByFields && orderByFields instanceof Array) {
+                  _queryOptions.sort = array.map(orderByFields, function(field) {
+                    var optionArray = field.split(/\ +/);
+                    return {attribute: optionArray[0], descending: optionArray[1] === 'DESC'};
+                  });
+                }
+                _exportData = lang.clone(this.grid.store.query({}, _queryOptions));
               }
 
               if(_exportData.length){
@@ -1204,6 +1306,20 @@ define([
                 expressionInfos: this.layerInfo.getPopupInfo().expressionInfos,
                 layerDefinition: jimuUtils.getFeatureLayerDefinition(this.layer)
               };
+            }
+            // get "order by" fields
+            options.orderByFields = orderByFields;
+            // add additional options if cannot query by ids
+            if(!options.objectIds || 
+                options.objectIds instanceof Array && options.objectIds.length === 0) {
+              // if "filter by map extent" is on:
+              if(this.matchingMap && (this.layerInfo && !this.layerInfo.isTable)) {
+                options.geometry = this._currentExtent;
+              }
+              // query offset start from index 0
+              options.start = 0;
+              // query count defaults to the maximum record count or 1000
+              options.num = this.layer.maxRecordCount || 1000;
             }
             return CSVUtils.exportCSVFromFeatureLayer(
               fileName || this.configedInfo.name,
@@ -1286,6 +1402,7 @@ define([
         this.map = null;
         this.nls = null;
         this.relationship = null;
+        this.prevRelationship = null;
         if (this._currentDef && !this._currentDef.isFulfilled()) {
           this._currentDef.cancel({
             canceledBySelf: true
@@ -1460,7 +1577,7 @@ define([
         var oid = this.layer.objectIdField;
         this.grid.store.query(function(object) {
           exportIds.push(object[oid]);
-        })
+        });
       } // if nothing is selected, get ids from current dgrid's store object
       return exportIds;
     },
@@ -1575,7 +1692,7 @@ define([
               console.error(err);
             }
             this.changeToolbarStatus();
-            this.loading.hide();
+            this._toggleLoading(false);
           }));
         }
       } else {
@@ -1678,7 +1795,7 @@ define([
           console.error(err);
           console.log("Could not get feature count.");
         }
-        this.loading.hide();
+        this._toggleLoading(false);
         def.reject(err);
       }));
 
@@ -1697,6 +1814,8 @@ define([
       }
       var oFields = this._getOutFieldsFromLayerInfos(pk);
       var hasArcadeExpressionFields = this._hasArcadeExpressionFields();
+      var hasArcadeExpressionWithGeometry = hasArcadeExpressionFields && 
+                                            this._hasArcadeExpressionWithGeometry();
       if (oFields.length > 0 && !hasArcadeExpressionFields) {
         var oNames = [];
         array.forEach(oFields, function(field) {
@@ -1712,7 +1831,8 @@ define([
       }
       query.outSpatialReference = lang.clone(this.map.spatialReference);
 
-      query.returnGeometry = this.layer.geometryType === 'esriGeometryPoint';
+      query.returnGeometry = this.layer.geometryType === 'esriGeometryPoint' || 
+                             hasArcadeExpressionWithGeometry;
       if (pk) {
         query.orderByFields = [pk + ' ASC'];
       }
@@ -1731,7 +1851,7 @@ define([
           console.error(err);
         }
         this.changeToolbarStatus();
-        this.loading.hide();
+        this._toggleLoading(false);
       }));
     },
 
@@ -1962,12 +2082,24 @@ define([
         this.grid.refresh();
       } else {
         var json = {};
+        var gridLoadingIndicator = new LoadingIndicator();
+        html.setStyle(
+          gridLoadingIndicator.domNode,
+          "max-width",  "100vw"
+        );
         json.columns = columns;
         json.store = store;
         json.keepScrollPosition = true;
-        json.pagingDelay = 1000;//like search delay
+        json.farOffRemoval = this.GRID_FAR_OFF_REMOVAL.DEFAULT;
+        // a better handling for lazy loading data when scrolling on Chrome.
+        // original issue from dgrid: https://github.com/SitePen/dgrid/issues/1351 
+        if(!has('chrome')) {
+          json.pagingDelay = 1000;//like search delay
+        }
         json.allowTextSelection = this.allowTextSelection;
         json.deselectOnRefresh = false;
+        json.loadingMessage = gridLoadingIndicator.domNode &&
+        gridLoadingIndicator.domNode.outerHTML;
 
         if (!this.layer.objectIdField) {
           json.minRowsPerPage = this.layer.maxRecordCount || 1000;
@@ -1975,10 +2107,18 @@ define([
           json.selectionMode = 'none';
         }
 
-        var demands = [OnDemandGrid, Selection, ColumnHider, ColumnResizer, ColumnReorder];
+        var demands = [OnDemandGrid, Selection, ColumnHider, ColumnResizer, ColumnReorder, Keyboard];
         this.grid = new(declare(demands))(json, html.create("div"));
         html.place(this.grid.domNode, this.domNode);
         this.grid.startup();
+
+        // //
+        // html.create('p', {
+        //  id: 'gridSelectionHandleDescription',
+        //  innerHTML: this.parent.nls.selectionHandleDescription
+        // }, this.parent.domNode);
+
+        // this.grid.hiderToggleNode
 
         if (this.tipNode) {
           html.destroy(this.tipNode);
@@ -1997,6 +2137,25 @@ define([
         this.own(on(this.ownerDocument, 'keyup', lang.hitch(this, function() {
           if (this.allowTextSelection && this.grid && !this.grid.allowTextSelection) {
             this.grid._setAllowTextSelection(true);
+          }
+        })));
+        this.own(on(this.ownerDocument, 'keydown', lang.hitch(this, function(evt) {
+          if(this.tableCreated && 
+            (evt.keyCode === keys.SHIFT || 
+            (has('mac') ? evt.keyCode === keys.META : evt.keyCode === keys.CTRL) && 
+            this.isSelectionMode())) {
+            this._setFarOffRemoval(this.GRID_FAR_OFF_REMOVAL.INFINITY);
+            on.once(this.ownerDocument, 'keyup', lang.hitch(this, function(evt) {
+              if(this.tableCreated && 
+                (evt.keyCode === keys.SHIFT || 
+                (has('mac') ? evt.keyCode === keys.META : evt.keyCode === keys.CTRL))) {
+                if(this.isSelectionMode()) {
+                  this._setFarOffRemoval(this.GRID_FAR_OFF_REMOVAL.RESELECTION);
+                } else {
+                  this._setFarOffRemoval(this.GRID_FAR_OFF_REMOVAL.DEFAULT);
+                }
+              }
+            }));
           }
         })));
 
@@ -2018,31 +2177,52 @@ define([
           ));
 
           //select rows
-          this.own(on(
-            this.grid,
-            ".selection-handle-column:click",
-            lang.hitch(this, this._onSelectionHandleClick)
-          ));
-
-          //dblclick to select one row and show popup on the feature, but not put into selection
-          this.own(on(
-            this.grid,
-            ".dgrid-row:dblclick",
-            lang.hitch(this, this._onDblclickRow)
-          ));
-
-          //dgrid sort
-          this.own(on(this.grid, 'dgrid-sort', lang.hitch(this, function(evt) {
-            this.emit('sort', evt);
-          })));
-
+          this.own(
+            on(
+              this.grid,
+              ".selection-handle-column:click",
+              lang.hitch(this, this._onSelectionHandleClick)
+            ),on(
+              this.grid,
+              ".selection-handle-column:keydown",
+              lang.hitch(this, function(e) {
+                if(e.keyCode === keys.ENTER ||
+                   e.keyCode === keys.SPACE) {
+                  this._onSelectionHandleClick();
+                }
+              })
+            )
+          );
+          
+          // attach event handlers
+          this.own(
+            //dblclick to select one row and show popup on the feature, but not put into selection
+            on(
+              this.grid,
+              ".dgrid-row:dblclick",
+              lang.hitch(this, this._onDblclickRow)
+            ),
+            //dgrid sort
+            on(this.grid, 'dgrid-sort', lang.hitch(this, function(evt) {
+              this.emit('sort', evt);
+            })),
+            // add a11y support to the table (grid)
+            on(this.grid, 'dgrid-refresh-complete', lang.hitch(this, function(evt) {
+              if(this.parent) {
+                topic.publish(this.parent.id + '_table_created', {
+                  grid: evt.grid,
+                  context: this
+                });
+              }
+            }))
+          );
           var inMap = this.map.getLayer(this.layer.id);
           if (this.syncSelection && inMap) {
             this.own(on(inMap, 'click', lang.hitch(this, this._onFeaturelayerClick)));
           }
         }
       }
-
+      
       // apply sort option if no one has been applied
       if(!this.grid.get('sort')[0]) {
         if(this.configedInfo && this.configedInfo.sortField) {
@@ -2075,7 +2255,9 @@ define([
         html.empty(this.footer);
       } else {
         this.footer = html.create('div', {
-          'class': 'jimu-widget-attributetable-feature-table-footer'
+          'id': this.parent.id + '_' + this.id + '_footer',
+          'class': this.parent.baseClass + '-feature-table-footer',
+          tabindex: '-1'
         }, this.domNode);
       }
       var _footer = this.footer;
@@ -2098,7 +2280,7 @@ define([
       this._requestStatus = 'fulfilled';
       this.tableCreated = true;
       html.place(this.loading.domNode, this.grid.domNode);
-      this.loading.hide();
+      this._toggleLoading(false);
     },
 
     getSelectedRowsData: function() {
@@ -2250,7 +2432,7 @@ define([
               def = this.map.centerAndZoom(gExtent, (1 / Math.pow(2, factor)) * 2);
             }
           } else {
-            def = this.map.setExtent(gExtent.expand(1.1));
+            def = this.map.setExtent(gExtent.expand(2));
           }
 
           return def.then((function() {
@@ -2829,6 +3011,10 @@ define([
 
       this.setSelectedNumber();
 
+      if(this.getSelectedRows().length === 1) {
+        this._setFarOffRemoval(this.GRID_FAR_OFF_REMOVAL.RESELECTION);
+      }
+
       this.emit('row-click', {
         table: this,
         selectedIds: ids
@@ -3010,7 +3196,7 @@ define([
         }]
       });
 
-      this.loading.hide();
+      this._toggleLoading(false);
     },
 
     _hasArcadeExpressionFields: function() {
@@ -3019,6 +3205,70 @@ define([
         array.some(this.configedInfo.layer.fields, function(field) {
           return tableUtils.arcade.isArcadeExpressionField(field);
         });
+    },
+
+    _hasArcadeExpressionWithGeometry: function() {
+      var expressionInfos = this.layerInfo.getPopupInfo() && 
+        this.layerInfo.getPopupInfo().expressionInfos;
+      var parsedExpressions = tableUtils.arcade.parseArcadeExpressions(expressionInfos);
+      if(parsedExpressions) {
+        return array.some(Object.keys(parsedExpressions), function(expr) {
+          return parsedExpressions[expr].usesGeometry;
+        });
+      }
+      return false;
+    },
+
+    _toggleLoading: function(show) {
+      if(show === undefined) {
+        var isHidden = this.loading.hidden;
+        if(isHidden) {
+          this.loading.show();
+        } else {
+          this.loading.hide();
+        }
+      } else {
+        if(show) {
+          this.loading.show();
+        } else {
+          this.loading.hide();
+        }
+      }
+    },
+
+    _setFarOffRemoval: function(number) {
+      if(this.tableCreated && !isNaN(number)) {
+        this.grid.set('farOffRemoval', number);
+      }
+    },
+    
+    // same logic taken from "jimu.js/dijit/_FeatureSetChooserCore.js"	
+    _handleFilterChange: function() {	
+      var selectedFeatures = this.layer.getSelectedFeatures();	
+      var objectIdField = this.layer.objectIdField;	
+      if (selectedFeatures && selectedFeatures.length > 0) {
+        var selectionIds = array.map(selectedFeatures, function(feature) {	
+          return feature.attributes[objectIdField];	
+        });	
+        var queryParams = new Query();	
+        queryParams.where = objectIdField + ' in (' + selectionIds.join(',') + ') AND ' + 	
+        this.layerInfo.getFilter();	
+        var queryTask = new QueryTask(this.layer.url);	
+        queryTask.executeForIds(queryParams).then(lang.hitch(this, function(filterIds){	
+          array.forEach(selectedFeatures, function(feature) {	
+            if (filterIds && filterIds.indexOf(feature.attributes[objectIdField]) >= 0) {	
+              feature.show();	
+            } else {	
+              feature.hide();	
+            }	
+          });	
+          if (this.selectionManager._isLayerNeedDisplayLayer(this.layer)) {	
+            this.selectionManager._updateDisplayLayer(this.layer, selectedFeatures, FeatureLayer.SELECTION_NEW);	
+          }	
+        }), lang.hitch(this, function(err){	
+          console.error(err);	
+        }));	
+      }
     }
   });
 });

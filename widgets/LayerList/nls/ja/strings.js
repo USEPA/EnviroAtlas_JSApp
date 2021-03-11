@@ -28,5 +28,11 @@ define({
   "keyword": "キーワード",
   "basemapLayers": "ベースマップ レイヤー",
   "typeAKeywork": "キーワードの入力",
-  "layers": "レイヤー"
+  "layers": "レイヤー",
+  "tipLayerSearch": "検索レイヤー",
+  "tipLayerListOperation": "レイヤー リスト操作",
+  "tipLayerOperation": "レイヤー メニュー",
+  "tipClearText": "テキストの消去",
+  "collapseLayer": "折りたたむ",
+  "expandLayer": "展開"
 });

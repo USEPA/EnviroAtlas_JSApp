@@ -28,5 +28,11 @@ define({
   "keyword": "關鍵字",
   "basemapLayers": "底圖圖層",
   "typeAKeywork": "輸入關鍵字",
-  "layers": "圖層"
+  "layers": "圖層",
+  "tipLayerSearch": "搜尋圖層",
+  "tipLayerListOperation": "圖層清單操作",
+  "tipLayerOperation": "圖層功能表",
+  "tipClearText": "清除文字",
+  "collapseLayer": "摺疊",
+  "expandLayer": "展開"
 });

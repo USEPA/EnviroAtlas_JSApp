@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -787,7 +787,7 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
 
       if(newSharedTheme.useLogo && !oldSharedTheme.useLogo){
         if(this.portalSelf.portalProperties && this.portalSelf.portalProperties.sharedTheme){
-          if(this.portalSelf.portalProperties.sharedTheme.logo.small){
+          if(this.portalSelf.portalProperties.sharedTheme.logo && this.portalSelf.portalProperties.sharedTheme.logo.small){
             this.appConfig.logo = this.portalSelf.portalProperties.sharedTheme.logo.small;
           }else{
             this.appConfig.logo = 'images/app-logo.png';

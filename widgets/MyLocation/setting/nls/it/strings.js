@@ -3,5 +3,7 @@ define({
   "highlightLocation": "Evidenzia posizione",
   "useTracking": "Ricerca modifiche posizione",
   "warning": "Input errato",
-  "zoomScale": "Scala zoom"
+  "zoomScale": "Scala zoom",
+  "useCompass": "Mostrare orientamento bussola",
+  "useAccCircle": "Mostrare precisione di posizione"
 });

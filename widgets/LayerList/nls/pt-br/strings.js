@@ -28,5 +28,11 @@ define({
   "keyword": "Palavra-Chave",
   "basemapLayers": "Camadas de mapa base",
   "typeAKeywork": "Digite uma palavra-chave",
-  "layers": "Camadas"
+  "layers": "Camadas",
+  "tipLayerSearch": "Pesquisar camadas",
+  "tipLayerListOperation": "Operações da lista de camadas",
+  "tipLayerOperation": "Menus da camada",
+  "tipClearText": "Limpar texto",
+  "collapseLayer": "Recolher",
+  "expandLayer": "Expandir"
 });

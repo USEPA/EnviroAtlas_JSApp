@@ -27,6 +27,7 @@ define({
   "timeSpan": "Časovni razpon",
   "startTime": "Začetni čas",
   "endTime": "Končni čas",
+  "unit": "Enota",
   "timeDisplay": "Prikaz časa",
   "displayDataIn": "Prikaži podatke v",
   "interval": "Interval",

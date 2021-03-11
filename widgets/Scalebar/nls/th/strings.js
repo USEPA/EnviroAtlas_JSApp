@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "แถบสเกล"
+  "_widgetLabel": "แถบสเกล",
+  "scale": "มาตราส่วน"
 });

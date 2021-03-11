@@ -37,6 +37,7 @@ define(["dojo/_base/declare",
     "esri/layers/MosaicRule",
     "esri/layers/RasterFunction",
     "esri/layers/VectorTileLayer",
+    "esri/layers/WFSLayer",
     "esri/layers/WMSLayer",
     "esri/layers/WMSLayerInfo",
     "esri/dijit/PopupTemplate",
@@ -51,7 +52,7 @@ define(["dojo/_base/declare",
   function(declare, lang, array, all, html, Deferred, djJson, i18n, util, esriLang, esriRequest, agsUtils,
     ArcGISDynamicMapServiceLayer, ArcGISImageServiceLayer, ArcGISTiledMapServiceLayer,
     DynamicLayerInfo, FeatureLayer, ImageParameters, ImageServiceParameters, KMLLayer,
-    LayerDrawingOptions, MosaicRule, RasterFunction, VectorTileLayer, WMSLayer, WMSLayerInfo, PopupTemplate, 
+    LayerDrawingOptions, MosaicRule, RasterFunction, VectorTileLayer, WFSLayer, WMSLayer, WMSLayerInfo, PopupTemplate, 
     InfoTemplate, jsonRendererUtils, Extent, SpatialReference, jimuUtils, WidgetManager, PanelManager) {
     var widgetJsonTimeSlider = {
         id: 'widgets_TimeSlider_Widget_32',
@@ -87,6 +88,8 @@ define(["dojo/_base/declare",
           return this._addMapService();
         } else if (item.type === "Vector Tile Service") {
           return this._addVectorTileService();
+        } else if (item.type === "WFS") {
+          return this._addWFS();
         } else if (item.type === "WMS") {
           return this._addWMS();
         } else {
@@ -249,6 +252,25 @@ define(["dojo/_base/declare",
           self._addLayer(layer);
           dfd.resolve(layer);
         }).otherwise(function(error) {
+          dfd.reject(error);
+        });
+        return dfd;
+      },
+
+      _addWFS: function() {
+        var self = this,
+          dfd = new Deferred();
+        self._readItemJsonData().then(function(result) {
+          var itemData = result || {};
+          return self._newWFSLayer(itemData);
+        }).then(function(layer) {
+          if (layer) {
+            layer.title = self.item.title;
+          }
+          self._addLayer(layer);
+          dfd.resolve(layer);
+        }).otherwise(function(error) {
+          console.log("Error adding WFS",error)
           dfd.reject(error);
         });
         return dfd;
@@ -862,6 +884,82 @@ define(["dojo/_base/declare",
           );
         } else {
           dfd.resolve(null);
+        }
+        return dfd;
+      },
+
+      _newWFSLayer: function(itemData) {
+        var dfd = new Deferred();
+        try {
+          var wfsJSON;
+          var id = this._generateLayerId();
+          if (itemData && itemData.wfsInfo && itemData.layerDefinition) {
+            wfsJSON = {
+              id: id,
+              mode: itemData.mode,
+              showLabels: true,
+              title: itemData.title,
+              url: this._checkMixedContent(itemData.url),
+              // visible: itemData.visibility,
+              customParameters: itemData.wfsInfo.customParameters,
+              maxFeatures: itemData.wfsInfo.maxFeatures,
+              name: itemData.wfsInfo.name,
+              swapXY: itemData.wfsInfo.swapXY,
+              version: itemData.wfsInfo.version,
+              geometryType: itemData.layerDefinition.geometryType,
+              labelingInfo: itemData.layerDefinition.drawingInfo.labelingInfo,
+              //wkid: itemData.layerDefinition.spatialReference.wkid
+            };
+          } else {
+            var serviceUrl = this.serviceUrl;
+            if (serviceUrl) {
+              util.loadWFSByUrl(dfd,map,this,serviceUrl,id,false);
+            } else {
+              dfd.reject(new Error("Error adding WFS, no URL"));
+            }
+            return dfd;
+          }
+
+          var layer = new WFSLayer();
+          var h1 = layer.on("error", function(layerError) {
+            if (h1) h1.remove();
+            var error = layerError.error;
+            dfd.reject(error);
+          });
+          layer.fromJson(wfsJSON, function() {
+            try {
+              if (h1) h1.remove();
+              if (itemData && itemData.wfsInfo && itemData.layerDefinition) {
+                if (esriLang.isDefined(itemData.opacity)) {
+                  layer.setOpacity(itemData.opacity);
+                }
+                if (esriLang.isDefined(itemData.visibility)) {
+                  layer.setVisibility(itemData.visibility);
+                }
+                if (itemData.minScale || itemData.maxScale) {
+                  layer.setScaleRange(itemData.minScale, itemData.maxScale);
+                }
+                var drawingInfo = itemData.layerDefinition.drawingInfo;
+                if (drawingInfo && drawingInfo.renderer) {
+                  layer.renderer = jsonRendererUtils.fromJson(
+                    drawingInfo.renderer,
+                    {geometryType: wfsJSON.geometryType}
+                  );
+                }
+                var ignorePopups = false;
+                if (!ignorePopups && itemData.popupInfo) {
+                  layer.setInfoTemplate(new PopupTemplate(itemData.popupInfo));
+                }
+              }
+              dfd.resolve(layer);
+            } catch(ex2) {
+              console.error("Error adding WFS",ex2);
+              dfd.reject(ex);
+            }
+          });
+        } catch(ex) {
+          console.error("Error adding WFS",ex);
+          dfd.reject(ex);
         }
         return dfd;
       },

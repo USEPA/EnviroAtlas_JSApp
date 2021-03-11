@@ -27,6 +27,7 @@ define({
   "timeSpan": "Időtartam",
   "startTime": "Kezdési idő",
   "endTime": "Befejezési idő",
+  "unit": "Mértékegység",
   "timeDisplay": "Időkijelzés",
   "displayDataIn": "Adatok megjelenítése ebben:",
   "interval": "Időköz",

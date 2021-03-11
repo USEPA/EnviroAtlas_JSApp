@@ -27,6 +27,7 @@ define({
   "timeSpan": "الزمني",
   "startTime": "وقت البدء",
   "endTime": "وقت الانتهاء",
+  "unit": "وحدة",
   "timeDisplay": "الوقت",
   "displayDataIn": "عرض البيانات في",
   "interval": "فاصل",

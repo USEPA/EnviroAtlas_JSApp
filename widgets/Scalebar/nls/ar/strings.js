@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "شريط المقياس"
+  "_widgetLabel": "شريط المقياس",
+  "scale": "مقياس"
 });

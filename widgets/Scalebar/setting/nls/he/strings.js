@@ -5,5 +5,9 @@ define({
   "english": "אנגלי",
   "metric": "מטרי",
   "ruler": "סרגל",
-  "line": "קו"
+  "line": "קו",
+  "number": "מספר",
+  "spinnerLabel": "עיגול של מספר קנה מידה ל: ",
+  "decimalPlace": "מיקום עשרוני",
+  "separator": "הצג מפרידי אלפים"
 });

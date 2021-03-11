@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ define(['dojo/_base/declare',
   'jimu/LayerInfos/LayerInfos',
   'jimu/SelectionManager',
   'jimu/dijit/FeatureActionPopupMenu',
+  'jimu/utils',
   './layerUtil',
   './SelectableLayerItem',
   './FeatureItem',
@@ -41,7 +42,7 @@ define(['dojo/_base/declare',
 ],
 function(declare, lang, html, array, on, all, _WidgetsInTemplateMixin, SimpleMarkerSymbol,
 SimpleLineSymbol, SimpleFillSymbol, SymbolJsonUtils, Color, BaseWidget, WidgetManager, ViewStack,
-FeatureSetChooserForMultipleLayers, LayerInfos, SelectionManager, PopupMenu, layerUtil,
+FeatureSetChooserForMultipleLayers, LayerInfos, SelectionManager, PopupMenu, jimuUtils, layerUtil,
 SelectableLayerItem, FeatureItem, connect) {
   return declare([BaseWidget, _WidgetsInTemplateMixin], {
     baseClass: 'jimu-widget-select',
@@ -162,7 +163,7 @@ SelectableLayerItem, FeatureItem, connect) {
 
     onActive: function(){
       this._setSelectionSymbol();
-      if (!this.selectDijit.isActive()) {
+      if (this.config.enableByDefault !== false && !this.selectDijit.isActive()) {
         this.selectDijit.activate();
       }
     },
@@ -171,6 +172,7 @@ SelectableLayerItem, FeatureItem, connect) {
       WidgetManager.getInstance().activateWidget(this);
       connect.disconnect(window.mapClickListenerForPopup);
     },
+
     onClose: function() {
       
 
@@ -209,6 +211,11 @@ SelectableLayerItem, FeatureItem, connect) {
     },
 
     _initLayers: function(layerInfoArray) {
+      var oldItemsChecked = {};
+      array.forEach(this.layerItems, lang.hitch(this, function(item) {
+        oldItemsChecked[item.layerInfo.id] = item.isChecked();
+      }));
+
       this.layerObjectArray = [];
       this.layerItems = [];
       this.selectionSymbols = {};
@@ -225,7 +232,7 @@ SelectableLayerItem, FeatureItem, connect) {
 
             var item = new SelectableLayerItem({
               layerInfo: layerInfo,
-              checked: visible,
+              checked: visible && oldItemsChecked[layerInfo.id] !== false,
               layerVisible: visible,
               folderUrl: this.folderUrl,
               allowExport: this.config ? this.config.allowExport : false,
@@ -350,7 +357,7 @@ SelectableLayerItem, FeatureItem, connect) {
     _switchToDetails: function(layerItem) {
       html.empty(this.featureContent);
       this.viewStack.switchView(1);
-      this.selectedLayerName.innerHTML = layerItem.layerName;
+      this.selectedLayerName.innerHTML = jimuUtils.sanitizeHTML(layerItem.layerName);
       this.selectedLayerName.title = layerItem.layerName;
 
       layerItem.layerInfo.getLayerObject().then(lang.hitch(this, function(layerObject) {

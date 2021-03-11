@@ -15,6 +15,8 @@ define({
   "selectAll": "모든 페이지의 레코드 선택",
   "selectPage": "현재 페이지의 레코드 선택",
   "clearSelection": "선택 해제",
+  "selectionHandleLabel": "선택 핸들",
+  "selectionHandleDescription": "ENTER 또는 SPACE 키를 눌러 맵에서 피처 강조",
   "filter": "필터",
   "setFilterTip": "필터를 올바르게 설정하세요.",
   "noFilterTip": "필터 식이 정의되지 않으면 이 쿼리 작업은 지정된 데이터 원본의 모든 피처를 나열합니다.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "표시할 테이블이 없습니다.",
   "checkConfigutationToSelectLayers": "위젯 설정 페이지로 이동하여 레이어를 선택하세요.",
-  "checkLayerListToSelectLayers": "속성 테이블이 맵에 표시된 레이어와 동기화됩니다. 레이어 목록 등 위젯을 사용하여 레이어를 켜거나 끌 수 있습니다."
+  "checkLayerListToSelectLayers": "속성 테이블이 맵에 표시된 레이어와 동기화됩니다. 레이어 목록 등 위젯을 사용하여 레이어를 켜거나 끌 수 있습니다.",
+  "rowHeaderColumnTitle": "${layerName} 열, 가리킴, Enter 키를 눌러 가리킨 열을 선택합니다."
 });

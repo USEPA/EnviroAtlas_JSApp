@@ -1,10 +1,11 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright � 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-////    http://www.apache.org/licenses/LICENSE-2.0
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,51 +18,55 @@ define(['dojo/_base/declare',
     'dojo/_base/lang',
     'dojo/_base/html',
     'dojo/on',
-    'dojo/keys',
     'dojo/dnd/move',
     'dijit/_TemplatedMixin',
     'jimu/BaseWidgetPanel',
     'jimu/utils',
     'dojox/layout/ResizeHandle',
+    "./a11y/OnScreenWidgetPanel",
     'dojo/touch'
   ],
   function(
-    declare, lang, html, on, keys, Move,   
-    _TemplatedMixin, BaseWidgetPanel, utils, ResizeHandle
+    declare, lang, html, on, Move,
+    _TemplatedMixin, BaseWidgetPanel, utils, ResizeHandle, a11y
   ) {
       var numberStops = null;
       
 
     /* global jimuConfig */
-    return declare([BaseWidgetPanel, _TemplatedMixin], {
+    var clazz = declare([BaseWidgetPanel, _TemplatedMixin], {
       baseClass: 'jimu-panel jimu-on-screen-widget-panel jimu-main-background',
       _positionInfoBox: null,
       _originalBox: null,
       widgetIcon: null,
       _resizeOnOpen: true,
-      
 
-      templateString: '<div data-dojo-attach-point="boxNode">' +
-        '<div class="jimu-panel-title jimu-main-background" data-dojo-attach-point="titleNode">' +
-        '<div class="title-label jimu-vcenter-text jimu-float-leading jimu-leading-padding1"' +
-        'data-dojo-attach-point="titleLabelNode">${label}</div>' +
-        '<div class="btns-container">' +
-        '<div tabindex="0" class="foldable-btn jimu-vcenter" ' +
-        'data-dojo-attach-point="foldableNode"' +
-        'data-dojo-attach-event="onclick:_onFoldableBtnClicked,onkeydown:_onFoldableBtnKeyDown"></div>' +
-        '<div tabindex="0" class="max-btn jimu-vcenter" ' +
-        'data-dojo-attach-point="maxNode"' +
-        'data-dojo-attach-event="onclick:_onMaxBtnClicked,onkeydown:_onMaxBtnKeyDown"></div>' +
-        
+      templateString:
+        '<div data-dojo-attach-point="boxNode">' +
+          '<div class="jimu-panel-title jimu-main-background" data-dojo-attach-point="titleNode">' +
+          '<h2 class="title-label jimu-vcenter-text jimu-float-leading jimu-leading-padding1"' +
+          'data-dojo-attach-point="titleLabelNode" tabindex="-1" ' +
+          'data-dojo-attach-event="onkeydown:_onTitleLabelKeyDown">${label}</h2>' +
+          '<div class="btns-container">' +
+            '<div tabindex="0" class="foldable-btn jimu-vcenter" aria-label="${headerNls.foldWindow}" role="button"' +
+              'data-dojo-attach-point="foldableNode"' +
+              'data-dojo-attach-event="onclick:_onFoldableBtnClicked,onkeydown:_onFoldableBtnKeyDown"></div>' +
+            '<div tabindex="0" class="max-btn jimu-vcenter" aria-label="${headerNls.maxWindow}" role="button"' +
+              'data-dojo-attach-point="maxNode"' +
+              'data-dojo-attach-event="onclick:_onMaxBtnClicked,onkeydown:_onMaxBtnKeyDown"></div>' +
         '<div tabindex="0" class="help-btn jimu-vcenter" ' +
         'data-dojo-attach-point="helpNode"' +
         'data-dojo-attach-event="onclick:_onHelpBtnClicked,press:_onHelpBtnClicked,onkeydown:_onHelpBtnClicked"></div>' +         
-        '<div tabindex="0" class="close-btn jimu-vcenter" ' +
-        'data-dojo-attach-point="closeNode"' +
-        'data-dojo-attach-event="onclick:_onCloseBtnClicked,press:_onCloseBtnClicked,onkeydown:_onCloseBtnKey"></div>' +
-        '</div></div>' +
-        '<div class="jimu-panel-content" data-dojo-attach-point="containerNode"></div>' +
+            '<div tabindex="0" class="close-btn jimu-vcenter" aria-label="${headerNls.closeWindow}" role="button"' +
+              'data-dojo-attach-point="closeNode"' +
+              'data-dojo-attach-event="onclick:_onCloseBtnClicked,onkeydown:_onCloseBtnKey"></div>' +
+          '</div></div>' +
+          '<div class="jimu-panel-content" data-dojo-attach-point="containerNode"></div>' +
         '</div>',
+
+      postMixInProperties:function(){
+        this.headerNls = window.jimuNls.panelHeader;
+      },
 
       postCreate: function() {
         this._originalBox = {
@@ -90,21 +95,14 @@ define(['dojo/_base/declare',
             if (helpExist == false){            
                 this.helpNode.parentNode.removeChild(this.helpNode);     
             }
-
         this.inherited(arguments);
-        html.setAttr(this.domNode, 'role', 'application');
 
         this._normalizePositionObj(this.position);
         this._makeOriginalBox();
         this.makePositionInfoBox();
         this.makeMoveable(this._positionInfoBox.w, this._positionInfoBox.w * 0.25);
 
-        this.own(on(this.domNode, 'keydown', lang.hitch(this, function(evt){
-          if(!html.hasClass(evt.target, 'close-btn') && evt.keyCode === keys.ESCAPE){
-            evt.stopPropagation(); //stop triggering panel's esc-event for dashboard theme
-            this.closeNode.focus();
-          }
-        })));
+        this.a11y_init();
       },
 
       _onMaxBtnClicked: function(evt) {
@@ -112,18 +110,20 @@ define(['dojo/_base/declare',
         var posInfo = this._getPositionInfo();
         if (posInfo.isRunInMobile) {
           if (this.windowState === 'maximized') {
+            html.setAttr(this.maxNode, 'aria-label', this.headerNls.maxWindow);
             this.panelManager.normalizePanel(this);
           } else {
+            html.setAttr(this.maxNode, 'aria-label', this.headerNls.restoreWindow);
             this.panelManager.maximizePanel(this);
+            //set foldable btn's styles
+            html.removeClass(this.foldableNode, 'fold-up');
+            html.addClass(this.foldableNode, 'fold-down');
+            html.setAttr(this.foldableNode, 'aria-label', this.headerNls.foldWindow);
           }
           this._setMobilePosition();
         }
-      },
 
-      _onMaxBtnKeyDown: function(evt){
-        if(evt.keyCode === keys.ENTER){
-          this._onMaxBtnClicked(evt);
-        }
+        this.panelManager.activatePanel(this);
       },
 
       _onFoldableBtnClicked: function(evt) {
@@ -135,24 +135,19 @@ define(['dojo/_base/declare',
           if (this.windowState === 'minimized') {
             html.removeClass(this.foldableNode, 'fold-up');
             html.addClass(this.foldableNode, 'fold-down');
+            html.setAttr(this.foldableNode, 'aria-label', this.headerNls.foldWindow);
             this.panelManager.normalizePanel(this);
           } else {
             html.removeClass(this.foldableNode, 'fold-down');
             html.addClass(this.foldableNode, 'fold-up');
+            html.setAttr(this.foldableNode, 'aria-label', this.headerNls.unfoldWindow);
             this.panelManager.minimizePanel(this);
           }
+          //set max btn's label
+          html.setAttr(this.maxNode, 'aria-label', this.headerNls.maxWindow);
           this._setMobilePosition();
         }
       },
-
-      _onFoldableBtnKeyDown: function(evt){
-        if(evt.keyCode === keys.ENTER){
-          this._onFoldableBtnClicked(evt);
-        }else if(evt.keyCode === keys.TAB && evt.shiftKey){
-          evt.preventDefault();
-        }
-      },
-
       _onHelpBtnClicked: function(evt) {
         
 
@@ -168,30 +163,11 @@ define(['dojo/_base/declare',
         utils.startTour();
       },
       _onCloseBtnClicked: function(evt) {
-
-        this.panelManager.closePanel(this);
+        //avoid to touchEvent pass through the closeBtn
+        evt.preventDefault();
         evt.stopPropagation();
 
-        //avoid to touchEvent pass through the closeBtn
-        if (evt.type === "touchstart") {
-          evt.preventDefault();
-        }
-        
-      },
-
-      _onCloseBtnKey: function(evt){
-        if(evt.keyCode === keys.ENTER){
-          this.panelManager.closePanel(this);
-        }else if(evt.keyCode === keys.TAB && evt.shiftKey){
-          //btns don't have fold and max btns
-          if(!window.appInfo.isRunInMobile){
-            evt.preventDefault();
-          }
-        }
-        //prevent user uses tab-key to widget's first focusable node.
-        // else if(evt.keyCode === keys.TAB){
-        //   evt.preventDefault();
-        // }
+        this.panelManager.closePanel(this);
       },
 
       _normalizePositionObj: function(position) {
@@ -291,9 +267,11 @@ define(['dojo/_base/declare',
         if (this.windowState === 'normal') {
           html.removeClass(this.foldableNode, 'fold-up');
           html.addClass(this.foldableNode, 'fold-down');
+          html.setAttr(this.foldableNode, 'aria-label', this.headerNls.foldWindow);
         } else {
           html.removeClass(this.foldableNode, 'fold-down');
           html.addClass(this.foldableNode, 'fold-up');
+          html.setAttr(this.foldableNode, 'aria-label', this.headerNls.unfoldWindow);
         }
       },
 
@@ -470,4 +448,7 @@ define(['dojo/_base/declare',
         this.makePositionInfoBox();
       }
     });
+
+    clazz.extend(a11y);//for a11y
+    return clazz;
   });

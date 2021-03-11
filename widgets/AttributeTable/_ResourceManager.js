@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,17 +23,19 @@ define([
   'jimu/portalUrlUtils',
   './table/_FeatureTable',
   // './_RelationshipTable',
+  'jimu/utils',
   './utils',
   'jimu/LayerInfos/LayerInfos'
   ], function(declare, lang, array, Deferred, all,
     esriLang, portalUrlUtils,
-    _FeatureTable,/* _RelationshipTable,*/ attrUtils, LayerInfos) {
+    _FeatureTable,/* _RelationshipTable,*/ jimuUtils, attrUtils, LayerInfos) {
     return declare(null, {
       _activeLayerInfoId: null,
       _activeRelationshipKey: null,
       nls: null,
       config: null,
       map: null,
+      parent: null,
 
       //FeatureTable
       _delayedLayerInfos: [],
@@ -48,8 +50,10 @@ define([
       relationshipInfoMapping: {},
 
       constructor: function(params) {
+        this.widgetId = params && params.widgetId;
         this.map = params && params.map;
         this.nls = params && params.nls;
+        this.parent = params && params.parent;
 
         this._delayedLayerInfos = [];
         this._layerInfosFromMap = [];
@@ -78,7 +82,7 @@ define([
           this._processDelayedLayerInfos();
 
           if (updateConfig) {
-            if (this.config.layerInfos.length === 0 || this.config.syncWithLayers) {
+            if (this.config.layerInfos.length === 0) {
               // if no config only display visible layers
               var configLayerInfos = attrUtils.getConfigInfosFromLayerInfos(layerInfos);
               this.config.layerInfos = array.filter(configLayerInfos, function(layer) {
@@ -90,9 +94,16 @@ define([
                 lang.delegate(this.config.layerInfos),
                 lang.hitch(this, function(layerInfo) {
                   var mLayerInfo = this._getLayerInfoById(layerInfo.id);
-                  return layerInfo.show && mLayerInfo &&
-                  (layerInfo.name = mLayerInfo.name || mLayerInfo.title);
-                }));
+                  var isVisible = this.config.syncWithLayers ? 
+                    mLayerInfo.isVisible() : 
+                    layerInfo.show;
+                  if(isVisible && mLayerInfo) {
+                    layerInfo.name = mLayerInfo.name || mLayerInfo.title;
+                    layerInfo.show = isVisible;
+                  }
+                  return isVisible && mLayerInfo;
+                })
+              );
             }
           }
           def.resolve();
@@ -207,13 +218,15 @@ define([
               );
 
               var table = new _FeatureTable({
+                widgetId: this.widgetId,
                 map: this.map,
                 matchingMap: enabledMatchingMap,
                 hideExportButton: hideExportButton,
                 allowTextSelection: allowTextSelection,
                 layerInfo: activeLayerInfo,
                 configedInfo: configInfo,
-                nls: this.nls
+                nls: this.nls,
+                parent: this.parent
               });
               this.featureTableSet[tabId] = table;
               def.resolve({
@@ -251,8 +264,11 @@ define([
           .then(lang.hitch(this, function(tableResult) {
             if (tableResult && tableResult.table) {
               var table = tableResult.table;
+              if(!jimuUtils.isEqual(table.relationship, currentShip)) { // reset related query if relationship is different
+                table.set('prevRelationship', table.relationship);
+                table.set('relationship', currentShip);
+              }
               table.set('relatedOriginalInfo', originalInfo);
-              table.set('relationship', currentShip);
             }
             def.resolve(tableResult);
           }), lang.hitch(function() {
@@ -307,7 +323,7 @@ define([
       getRelationShipInfo: function(relationship) {
         var relInfo;
         if(relationship) {
-          for(relKey in this.relationshipInfoMapping) {
+          for(var relKey in this.relationshipInfoMapping) {
             if(relationship._relKey === relKey) {
               relInfo = this.relationshipInfoMapping[relKey];
             }
@@ -474,7 +490,7 @@ define([
         if(!(relationship && ('_relKey' in relationship))) {
           return;
         }
-        for(relKey in this.relationshipInfoMapping) {
+        for(var relKey in this.relationshipInfoMapping) {
           if(relationship._relKey === relKey) {
             delete this.relationshipInfoMapping[relKey];
           }

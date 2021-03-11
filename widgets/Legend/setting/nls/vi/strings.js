@@ -9,5 +9,5 @@ define({
   "showBasemapLegends": "Hiện chú giải cho bản đồ nền",
   "honorTheWebMapSetting": "Tôn trọng cài đặt của bản đồ web",
   "reset": "Thiết lập lại",
-  "resetTip": "Đặt lại về cài đặt gốc của bản đồ web"
+  "resetTip": "Thiết lập lại về cài đặt gốc của bản đồ web"
 });

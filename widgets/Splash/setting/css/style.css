@@ -90,60 +90,6 @@
 	padding-bottom: 30px;
 }
 
-/*.colorPickerEditor*/
-.jimu-widget-splash-setting .tabs .colorPickerEditor {
-	/*display: inline-block;
-	width: 25px;
-	height: 25px;*/
-}
-.jimu-widget-splash-setting .tabs .colorPickerEditor .jimu-color-picker{
-	display: inline-block;
-	width: 30px;
-	height: 30px;
-}
-.jimu-widget-splash-setting .tabs .colorPickerEditor .dijitSpinner.dijitNumberTextBox.dijitValidationTextBox{
-	width:66px;
-	height:30px;
-}
-
-.jimu-widget-splash-setting .dijitSliderImageHandleH{
-  top: -7px;
-}
-.jimu-widget-splash-setting .dijitSliderImageHandle.dijitSliderImageHandleH{
-  background-image: url("../../images/sliderball.png");
-  background-position: 0 0;
-}
-.jimu-widget-splash-setting .tabs .dijitSliderThumbHover{
-  background-image: url("../../images/sliderball_hover.png");
-  background-position: 0 0;
-}
-/*left*/
-.jimu-widget-splash-setting .dijitSlider .dijitSliderProgressBarH,
-.jimu-widget-splash-setting .dijitSlider .dijitSliderLeftBumper{
-  border-color: #24b5cc;
-  background-color: #24b5cc;
-  background-image: -webkit-linear-gradient(top, #24b5cc 0px, #24b5cc 1px, rgba(255, 255, 255, 0) 2px);
-  background-image: -o-linear-gradient(top, #24b5cc 0px, #24b5cc 1px, rgba(255, 255, 255, 0) 2px);
-  background-image: linear-gradient(top, #24b5cc 0px, #24b5cc 1px, rgba(255, 255, 255, 0) 2px);
-}
-.jimu-widget-splash-setting .dijitSlider .dijitSliderRemainingBarH,
-.jimu-widget-splash-setting .dijitSlider .dijitSliderRightBumper{
-  border-color: #d7d7d7;
-  background-color: #d7d7d7;
-}
-
-
-.jimu-widget-splash-setting .tabs .colorPickerEditor .trans{
-	font-family: "Avenir Light";
-	font-size: 12px;
-  padding: 0 10px 0 20px;
-  letter-spacing: 0.33px;
-}
-
-.jimu-widget-splash-setting .tabs .sliderbar {
-	width: 80px;
-}
-
 
 /* 1 content */
 .jimu-widget-splash-setting .content-tab{

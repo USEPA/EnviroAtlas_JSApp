@@ -7,5 +7,6 @@ define({
   "turnonAll": "すべてのレイヤーを選択可能にする",
   "turnoffAll": "すべてのレイヤーを選択不可能にする",
   "toggleSelect": "すべてのレイヤーの選択機能を切り替える",
-  "singleSelect": "このレイヤーのみ選択可能にする"
+  "singleSelect": "このレイヤーのみ選択可能にする",
+  "enableByDefault": "デフォルトで選択ツールを有効化"
 });

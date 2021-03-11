@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Maksimum {count} geoobjekter tillates",
     "layerNamePattern": "{filename} – {name}",
     "generalIssue": "Det oppsto et problem.",
-    "kmlProjectionMismatch": "Den romlige referansen for kartet og KML-laget samsvarer ikke, og konverteringen kan ikke utføres på klienten."
+    "kmlProjectionMismatch": "Den romlige referansen for kartet og KML-laget samsvarer ikke, og konverteringen kan ikke utføres på klienten.",
+    "featureLocationsCouldNotBeFound": "Finner ikke geoobjekter: ukjente eller ugyldige lokasjonsfelt. Filen legges til som en tabell."
   },
   "layerList": {
     "caption": "Lag",

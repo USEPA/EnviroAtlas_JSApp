@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,17 +40,21 @@ define([
       if (!featureSet || !layer) {
         return;
       }
+      var widgetManager = WidgetManager.getInstance();
       var layerInfos = LayerInfos.getInstanceSync();
       var layerInfo = layerInfos.getLayerOrTableInfoById(layer.id);
       featureSet.displayFieldName = layer.objectIdField;
 
-      WidgetManager.getInstance().triggerWidgetOpen(this.widgetId)
+      widgetManager.triggerWidgetOpen(this.widgetId)
       .then(function(attrWidget) {
-        attrWidget.onReceiveData(null, null, {
-          target: "AttributeTable",
-          layerInfo: layerInfo,
-          featureSet: featureSet
-        });
+        if(attrWidget) {
+          widgetManager.activateWidget(attrWidget);
+          attrWidget.onReceiveData(null, null, {
+            target: "AttributeTable",
+            layerInfo: layerInfo,
+            featureSet: featureSet
+          });
+        }
       });
     }
   });

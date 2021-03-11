@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright Â© Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +22,8 @@ define([
   var clazz = declare(BaseFeatureAction, {
     name: 'ExportToCSV',
     iconClass: 'icon-export',
-    isFeatureSupported: function(featureSet){
+
+    isFeatureSupported: function(featureSet){
       return featureSet.features.length > 0;
     },
 

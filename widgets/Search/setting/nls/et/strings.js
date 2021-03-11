@@ -14,6 +14,7 @@ define({
   "generalSetting": "Üldseaded",
   "allPlaceholder": "Kohatäite tekst kõigi otsimiseks: ",
   "showInfoWindowOnSelect": "Kuva leitud objekti või asukoha hüpikaken",
+  "showInfoWindowOnSelect2": "Kuva objekti või asukoha leidmisel hüpikaken.",
   "searchInCurrentMapExtent": "Otsi ainult praegusest kaardiulatusest",
   "zoomScale": "Suumiskaala",
   "locatorUrl": "Geokodeerija URL",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "Alias",
   "ok": "OK",
   "cancel": "Tühista",
-  "invalidUrlTip": "URL ${URL} ei sobi või pole kättesaadav."
+  "invalidUrlTip": "URL ${URL} ei sobi või pole kättesaadav.",
+  "locateResults": "Otsi tulemused üles",
+  "panTo": "Liiguta",
+  "zoomToScale": "Suumi mõõtkavale"
 });

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -38,6 +38,7 @@ define(["dojo/_base/declare",
         if (this._started) {
           return;
         }
+        selfAddDataScopeOptions = this;
         this.inherited(arguments);
         this.initOptions();
         //console.warn("ScopeOptions.startup",this.searchPane.portal);
@@ -56,7 +57,7 @@ define(["dojo/_base/declare",
         this.curatedFilter = options.Curated.filter;
         var activeNode = null;
         options.MyOrganization.allow = true; //Override function in widget.js to disable this.
-        
+
         var initOption = function(name, node) {
           var opt = options[name];
           if (opt && opt.allow) {
@@ -146,11 +147,13 @@ define(["dojo/_base/declare",
         var context = this.searchPane.searchContext;
         var username = context.username;
         var orgId = "cJ9YHowT8TU7DUyn" //context.orgId;
-        var considerOrg = true;
-        /*if (context.portal && context.portal.isPortal) {
-          considerOrg = false;
-        }*/
-        
+        var considerOrg = true;// original value of WAB 2.17 is true;
+	
+
+        // Issue #14908
+        // if (context.portal && context.portal.isPortal) {
+        //   considerOrg = false;
+        // }
 
         if (scope === "MyContent") {
           if (typeof username === "string" && username.length > 0) {

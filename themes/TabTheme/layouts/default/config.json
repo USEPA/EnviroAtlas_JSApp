@@ -9,7 +9,7 @@
         "height": 44,
         "relativeTo": "browser"
       },
-      "version": "2.11"
+      "version": "2.17"
     }, {
       "uri": "themes/TabTheme/widgets/Footer/Widget",
       "position": {
@@ -19,7 +19,7 @@
         "height": 24,
         "relativeTo": "browser"
       },
-      "version": "2.11"
+      "version": "2.17"
     }, {
       "uri": "themes/TabTheme/widgets/SidebarController/Widget",
       "position": {
@@ -28,35 +28,35 @@
         "bottom": 24,
         "relativeTo": "browser"
       },
-      "version": "2.11"
+      "version": "2.17"
     }, {
       "uri": "widgets/HomeButton/Widget",
       "position": {
         "left": 7,
         "top": 75
       },
-      "version": "2.11"
+      "version": "2.17"
     }, {
       "uri": "widgets/Scalebar/Widget",
       "position": {
         "left": 10,
         "bottom": 25
       },
-      "version": "2.11"
+      "version": "2.17"
     }, {
       "uri": "widgets/Search/Widget",
       "position": {
         "left": 45,
         "top": 5
       },
-      "version": "2.11"
+      "version": "2.17"
     }, {
       "uri": "widgets/Coordinate/Widget",
       "position": {
         "left": 10,
         "bottom": 5
       },
-      "version": "2.11"
+      "version": "2.17"
     }, {
       "position": {
         "left": 45,
@@ -84,7 +84,7 @@
         "right": 0,
         "bottom": 0
       },
-      "version": "2.11"
+      "version": "2.17"
     }, {
       "uri": "widgets/MyLocation/Widget",
       "inPanel": false,
@@ -92,21 +92,21 @@
         "left": 7,
         "top": 115
       },
-      "version": "2.11"
+      "version": "2.17"
     }, {
       "uri": "widgets/AttributeTable/Widget",
       "position": {
         "bottom": 24,
         "relativeTo": "browser"
       },
-      "version": "2.11"
+      "version": "2.17"
     }, {
       "uri": "widgets/Splash/Widget",
       "visible": false,
       "position": {
         "relativeTo": "browser"
       },
-      "version": "2.11"
+      "version": "2.17"
     }, {
       "uri": "widgets/ZoomSlider/Widget",
       "visible": true,
@@ -114,7 +114,7 @@
         "top": 5,
         "left": 7
       },
-      "version": "2.11"
+      "version": "2.17"
     }, {
       "uri": "widgets/ExtentNavigate/Widget",
       "visible": false,
@@ -122,7 +122,7 @@
         "top": 155,
         "left": 7
       },
-      "version": "2.11"
+      "version": "2.17"
     }, {
       "uri": "widgets/FullScreen/Widget",
       "visible": false,
@@ -130,7 +130,7 @@
         "right": 8,
         "top": 8
       },
-      "version": "2.11"
+      "version": "2.17"
     }]
   },
 

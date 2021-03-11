@@ -3,7 +3,8 @@ define({
   "selectionMode": "Modo de seleção interativo",
   "partiallyWithin": "Parcialmente dentro",
   "whollyWithin": "Completamente dentro",
-  "allowExport": "Permitir exportar feições selecionadas",
+  "allowExport": "Permitir exportação de feições selecionadas",
   "layerToSelect": "Escolha quais camadas estão disponíveis para selecionar",
-  "includeRuntimeLayers": "Seja capaz de selecionar camadas geradas no tempo de execução"
+  "includeRuntimeLayers": "Permitir seleção de camadas geradas no tempo de execução",
+  "enableByDefault": "Habilitar o botão de seleção por padrão"
 });

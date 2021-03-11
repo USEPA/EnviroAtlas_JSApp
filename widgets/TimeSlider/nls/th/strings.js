@@ -5,5 +5,10 @@ define({
   "timeExtent": "${FROMTIME} ไปยัง ${ENDTIME}",
   "layers": "ชั้นข้อมูล: ",
   "speedLabel": "ความเร็วในการเล่นย้อน",
-  "liveData": "ข้อมูลสด (Live data)"
+  "liveData": "ข้อมูลสด (Live data)",
+  "previous": "ช่วงก่อนหน้า",
+  "next": "ช่วงถัดไป",
+  "play": "เล่น",
+  "pause": "หยุดชั่วคราว",
+  "speed": "ความเร็ว"
 });

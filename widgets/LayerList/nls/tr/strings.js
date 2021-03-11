@@ -28,5 +28,11 @@ define({
   "keyword": "Anahtar Kelime",
   "basemapLayers": "Altlık haritası katmanları",
   "typeAKeywork": "Bir anahtar kelime yazın",
-  "layers": "Katmanlar"
+  "layers": "Katmanlar",
+  "tipLayerSearch": "Katmanları ara",
+  "tipLayerListOperation": "Katman listesi işlemleri",
+  "tipLayerOperation": "Katman menüleri",
+  "tipClearText": "Metni temizle",
+  "collapseLayer": "Daralt",
+  "expandLayer": "Genişletme"
 });

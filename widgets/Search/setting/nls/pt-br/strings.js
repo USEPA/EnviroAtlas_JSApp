@@ -14,6 +14,7 @@ define({
   "generalSetting": "Configurações gerais",
   "allPlaceholder": "Texto de local reservado para pesquisar todos: ",
   "showInfoWindowOnSelect": "Mostrar pop-up do local ou feição localizada",
+  "showInfoWindowOnSelect2": "Mostrar pop-up quando a feição ou localização for encontrada.",
   "searchInCurrentMapExtent": "Somente pesquisar na extensão de mapa atual",
   "zoomScale": "Escala de zoom",
   "locatorUrl": "URL do Geocodificador",
@@ -40,7 +41,10 @@ define({
   "fieldSearchable": "pesquisável",
   "fieldName": "Nome",
   "fieldAlias": "Nome Alternativo",
-  "ok": "OK",
+  "ok": "Ok",
   "cancel": "Cancelar",
-  "invalidUrlTip": "A URL ${URL} é inválida ou inacessível."
+  "invalidUrlTip": "A URL ${URL} é inválida ou inacessível.",
+  "locateResults": "Localizar resultados",
+  "panTo": "Mover para",
+  "zoomToScale": "Zoom na escala"
 });

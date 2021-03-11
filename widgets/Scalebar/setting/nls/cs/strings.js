@@ -1,9 +1,13 @@
 define({
-  "unit": "Jednotka",
+  "unit": "Jednotky",
   "style": "Styl",
   "dual": "dvojí",
   "english": "anglické",
   "metric": "metrické",
   "ruler": "pravítko",
-  "line": "linie"
+  "line": "linie",
+  "number": "číslo",
+  "spinnerLabel": "Zaokrouhlit měřítkové číslo na: ",
+  "decimalPlace": "desetinné místo",
+  "separator": "Zobrazit oddělovače tisíců"
 });

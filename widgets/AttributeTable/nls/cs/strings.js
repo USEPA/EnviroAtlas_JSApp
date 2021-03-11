@@ -4,7 +4,7 @@ define({
   "_featureAction_ViewInTable": "Zobrazit v atributové tabulce",
   "ok": "OK",
   "cancel": "Storno",
-  "unsupportQueryWarning": "Vrstva musí podporovat operace dané založené na dotazu, aby bylo možné ji zobrazovat ve widgetu Atributová tabulka. Ujistěte se, že je ve službě aktivní možnost dotazování.",
+  "unsupportQueryWarning": "Vrstva musí podporovat operace založené na dotazu, aby bylo možné ji zobrazovat ve widgetu Atributová tabulka. Ujistěte se, že je ve službě aktivní možnost dotazování.",
   "exportMessage": "Přejete si exportovat data do CSV souboru ?",
   "exportFiles": "Exportovat do CSV",
   "exportSelected": "Exportovat vybrané do CSV",
@@ -14,7 +14,9 @@ define({
   "highlight": "Zvýraznit grafiku",
   "selectAll": "Vybrat záznamy na všech stránkách",
   "selectPage": "Vybrat záznamy na aktuální stránce",
-  "clearSelection": "Vymazat výběr",
+  "clearSelection": "Zrušit výběr",
+  "selectionHandleLabel": "Manipulátor výběru",
+  "selectionHandleDescription": "Stiskněte klávesu ENTER nebo SPACE pro zvýraznění prvku (prvků) na mapě.",
   "filter": "Filtr",
   "setFilterTip": "Nastavte filtr správně.",
   "noFilterTip": "Pokud nedefinujete výrazy filtru, tato dotazovací úloha zobrazí všechny prvky v zadaném zdroji dat.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Žádné tabulky nejsou dostupné k zobrazení.",
   "checkConfigutationToSelectLayers": "Přejděte na stránku nastavení widgetu a vyberte vrstvy.",
-  "checkLayerListToSelectLayers": "Atributová tabulka je synchronizována pomocí viditelných vrstev v mapě, můžete využít widget jako Seznam vrstev a zapnout/vypnout vrstvy."
+  "checkLayerListToSelectLayers": "Atributová tabulka je synchronizována pomocí viditelných vrstev v mapě, můžete využít widget jako Seznam vrstev a zapnout/vypnout vrstvy.",
+  "rowHeaderColumnTitle": "Řádek ${layerName}, přejet myší, stisknutím klávesy Enter vyberte řádky, nad kterými bylo přejeto myší"
 });

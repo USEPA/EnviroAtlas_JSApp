@@ -28,5 +28,11 @@ define({
   "keyword": "Avainsana",
   "basemapLayers": "Peruskarttatasot",
   "typeAKeywork": "Kirjoita avainsana",
-  "layers": "Karttatasot"
+  "layers": "Karttatasot",
+  "tipLayerSearch": "Hae karttatasoista",
+  "tipLayerListOperation": "Karttatasoluettelon toiminnot",
+  "tipLayerOperation": "Karttatasovalikot",
+  "tipClearText": "Tyhjennä teksti",
+  "collapseLayer": "Kutista",
+  "expandLayer": "Laajenna"
 });

@@ -14,6 +14,7 @@ define({
   "generalSetting": "Obecná nastavení",
   "allPlaceholder": "Zástupný text pro vyhledávání všech výsledků: ",
   "showInfoWindowOnSelect": "Zobrazit vyskakovací okno pro nalezený prvek nebo umístění",
+  "showInfoWindowOnSelect2": "Zobrazit vyskakovací okno v případě nalezení prvku či umístění.",
   "searchInCurrentMapExtent": "Vyhledávat pouze v aktuálním rozsahu mapy",
   "zoomScale": "Měřítko přiblížení",
   "locatorUrl": "URL geokodéru",
@@ -22,7 +23,7 @@ define({
   "locatorWarning": "Tato verze geokódovací služby není podporována. Tento widget podporuje geokódovací službu verze 10.1 a novější.",
   "locatorTips": "Návrhy nejsou k dispozici, protože služba geokódování nepodporuje funkcionalitu návrhů.",
   "layerSource": "Zdroj vrstvy",
-  "searchLayerTips": "Návrhy nejsou k dispozici, protože služba Feature Service nepodporuje funkcionalitu stránkování.",
+  "searchLayerTips": "Návrhy nejsou k dispozici, protože Feature služba nepodporuje funkcionalitu stránkování.",
   "placeholder": "Zástupný text",
   "searchFields": "Prohledávaná pole",
   "displayField": "Zobrazované pole",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "Alternativní jméno",
   "ok": "OK",
   "cancel": "Storno",
-  "invalidUrlTip": "Adresa URL ${URL} je neplatná nebo nepřístupná."
+  "invalidUrlTip": "Adresa URL ${URL} je neplatná nebo nepřístupná.",
+  "locateResults": "Najít výsledky",
+  "panTo": "Posunout k",
+  "zoomToScale": "Přiblížit na měřítko"
 });

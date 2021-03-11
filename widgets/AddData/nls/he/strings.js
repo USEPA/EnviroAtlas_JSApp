@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "מספר מרבי של {count} ישויות מותר",
     "layerNamePattern": "{filename} -‏ {name}",
     "generalIssue": "אירעה בעיה.",
-    "kmlProjectionMismatch": "הייחוס המרחבי של המפה ושכבת KML לא תואמים, ולא ניתן לבצע את ההמרה בהתקן הלקוח."
+    "kmlProjectionMismatch": "הייחוס המרחבי של המפה ושכבת KML לא תואמים, ולא ניתן לבצע את ההמרה בהתקן הלקוח.",
+    "featureLocationsCouldNotBeFound": "לא ניתן לאתר את הישויות: שדות מיקום לא מוכרות או לא חוקיות. הקובץ יתווסף כטבלה."
   },
   "layerList": {
     "caption": "שכבות",

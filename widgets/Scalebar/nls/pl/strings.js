@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "Podziałka liniowa"
+  "_widgetLabel": "Podziałka liniowa",
+  "scale": "Skala"
 });

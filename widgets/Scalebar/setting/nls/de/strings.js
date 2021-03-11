@@ -1,9 +1,13 @@
 define({
   "unit": "Einheit",
   "style": "Style",
-  "dual": "dual",
+  "dual": "Dual",
   "english": "Englisch",
   "metric": "Metrisch",
   "ruler": "Lineal",
-  "line": "Linie"
+  "line": "Linie",
+  "number": "Zahl",
+  "spinnerLabel": "Maßstabsangabe runden auf: ",
+  "decimalPlace": "Dezimalstelle",
+  "separator": "Tausendertrennzeichen anzeigen"
 });

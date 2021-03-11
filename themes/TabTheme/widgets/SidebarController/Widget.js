@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,11 +29,13 @@ define([
     'jimu/BaseWidget',
     'jimu/PoolControllerMixin',
     'jimu/utils',
+    "../../a11y/SidebarController/Widget",
+    'dojo/keys',
     'dojo/NodeList-manipulate',
     'dojo/NodeList-fx'
   ],
   function(declare, lang, array, html, topic, aspect, query, on, mouse, fx, domGeometry,
-    BaseWidget, PoolControllerMixin, utils) {
+    BaseWidget, PoolControllerMixin, utils, a11y, keys) {
     var clazz = declare([BaseWidget, PoolControllerMixin], {
 
       baseClass: 'jimu-widget-sidebar-controller jimu-main-background',
@@ -74,6 +76,8 @@ define([
           this.widgetManager.maximizeWidget(this);
           this.setOpenedIds([openAtStartId]);
         }
+
+        this.a11y_init();
       },
 
       getOpenedIds: function() {
@@ -95,10 +99,14 @@ define([
 
       onMinimize: function() {
         this._resizeToMin();
+        html.removeClass(this.domNode.parentNode, 'sideBarDisplay');
+        html.addClass(this.domNode.parentNode, 'sideBarHidden');
       },
 
       onMaximize: function() {
         this._resizeToMax();
+        html.removeClass(this.domNode.parentNode, 'sideBarHidden');
+        html.addClass(this.domNode.parentNode, 'sideBarDisplay');
       },
 
       getWidth: function(){
@@ -215,13 +223,17 @@ define([
       onSelect: function(evt) {
         var node = evt.currentTarget,
           index = parseInt(query(node).attr('i')[0], 10);
-        this.selectTab(index);
+        this.selectTab(index, this.a11y_getEventOps(evt));
       },
 
-      selectTab: function(index) {
+      selectTab: function(index, ops) {
         var color;
 
         if (this.tabs[index].selected && this.tabs[index].flag !== 'more') {
+          if(ops.a11y_byKeyEvent){
+            utils.focusFirstFocusNode(this.tabs[index].panels[0].domNode);
+          }
+
           return;
         }
         if (this.tabs[this.getSelectedIndex()] === undefined ||
@@ -260,7 +272,11 @@ define([
         }, this);
 
         if (this.tabs[index].flag === 'more') {
-          this.showMoreTabContent(this.tabs[index]);
+          var idx;
+          if(ops && ops.focusIdx) {
+            idx = ops.focusIdx;
+          }
+          this.showMoreTabContent(this.tabs[index], idx);
         } else {
           query('.content-node', this.domNode).style({
             display: 'none'
@@ -453,8 +469,24 @@ define([
                 this.widgetManager.getWidgetMarginBox(widget));
             widget.setPosition(position);
             this.widgetManager.openWidget(widget);
+
+            var iconNode = this.a11y_getIconNodeById(g.id);
+            var id = g.id;
+            var hanlder = aspect.after(widget, 'onClose', lang.hitch(this, function () {
+              hanlder.remove();//clean evt
+
+              if(iconNode && tab.flag !== "more"){
+                this.a11y_switchNodeToClose(id);
+                iconNode.focus();
+              } else {
+                this._hideOffPanelWidgets();
+                this.widgetManager.maximizeWidget(this);
+                this.selectTab(4, {focusIdx: id});
+              }
+            }));
           }));
         }else{
+          var isGroup = !!g.widgets;
           this.panelManager.showPanel(g).then(lang.hitch(this, function(panel) {
             var tabPane = panel;
             query(panel.domNode).style(utils.getPositionStyle({
@@ -474,6 +506,32 @@ define([
               tab.panels.push(panel);
             }
             tab.panel = panel;
+
+            if (isGroup) {
+              panel.firstTitleNode.focus();//focus on group panel
+            } else {
+              var widget = this.widgetManager.getWidgetById(panel.config.id);
+              if (widget && widget.domNode) {
+                setTimeout(lang.hitch(this, function () {
+                  utils.focusFirstFocusNode(widget.domNode);//focus on widget that opened
+                }), 50);
+              }
+            }
+
+            var iconNode = this.a11y_getIconNodeById(g.id);
+            this.own(on(panel.domNode, 'keydown', lang.hitch(this, function(evt){
+              if(evt.keyCode === keys.ESCAPE){
+                evt.stopPropagation();
+                evt.preventDefault();
+
+                if(iconNode && tab.flag !== "more"){
+                  iconNode.focus();
+                } else {
+                  var focusId = g.id;
+                  this.showMoreTabContent(this.tabs[4], focusId);
+                }
+              }
+            })));
           }));
         }
       },
@@ -492,15 +550,20 @@ define([
         return position;
       },
 
-      showMoreTabContent: function(tab) {
+      showMoreTabContent: function(tab, focusIdx) {
         var groups = tab.config.groups,
           anim;
         var animP1 = null;
         var animP2 = null;
         query(this.otherGroupNode).empty();
-        this._createOtherGroupPaneTitle();
-        array.forEach(groups, function(group) {
-          this._createMoreGroupNode(group);
+        this._createOtherGroupPaneTitle(focusIdx);
+        array.forEach(groups, function(group, idx) {
+          var ops = {};
+          if(idx === (groups.length - 1)){
+            ops.isLastNode = true;
+          }
+
+          this._createMoreGroupNode(group, ops);
         }, this);
 
         if (!window.isRTL) {
@@ -532,11 +595,15 @@ define([
             duration: this.animTime
           })
         ]);
+        this.own(aspect.after(anim, 'onEnd', lang.hitch(this, this.a11y_focusToItemInMoreTab, focusIdx)));
         anim.play();
+
         this.moreTabOpened = true;
+
+        this.a11y_ignoreDoResizeNode();
       },
 
-      _createOtherGroupPaneTitle: function() {
+      _createOtherGroupPaneTitle: function(focusIdx) {
         var node = html.create('div', {
             'class': 'other-group-pane-title'
           }, this.otherGroupNode),
@@ -549,21 +616,28 @@ define([
           innerHTML: this.nls.otherPanels
         }, node);
         closeNode = html.create('div', {
-          'class': 'close'
+          'class': 'close',
+          'tabindex': this.tabIndex
         }, node);
-        this.own(on(closeNode, 'click', lang.hitch(this, function() {
-          this._hideOtherGroupPane();
-          if (this.lastSelectedIndex !== -1) {
-            this.selectTab(this.lastSelectedIndex);
-          }
-        })));
+        this.a11y_moreTabCloseAriaLabel(closeNode);
+
+        this.a11y_moreTab_close = closeNode;
+        if(!focusIdx){
+          this.a11y_moreTab_close.focus();//focus to 1st node
+        }
+        //a11y
+        this.a11y_moreTabCloseEvent(closeNode);
+        this.a11y_moreTabEscapeEvent(node);
+
         return node;
       },
 
-      _createMoreGroupNode: function(group) {
+      _createMoreGroupNode: function(group, ops) {
         var node = html.create('div', {
             'class': 'other-group',
-            'data-widget-id': group.id
+            'data-widget-id': group.id,
+            'tabindex': this.tabIndex,
+            "aria-label": utils.stripHTML(group.label)
           }, this.otherGroupNode),
           arrowNode;
         html.create('img', {
@@ -582,7 +656,17 @@ define([
           },
           src: this.folderUrl + imgUrl
         }, node);
-        this.own(on(node, 'click', lang.hitch(this, this._onOtherGroupClick, group)));
+
+        //a11y
+        this.a11y_addTooltip(node, group.label);
+        if (ops && ops.isLastNode) {
+          this.a11y_moreTab_last = node;
+          this.a11y_moreTabLastNodeTabEvent();
+        }
+        //this.own(on(node, 'click', lang.hitch(this, this._onOtherGroupClick, group)));
+        this.a11y_nodeSelect(node, lang.hitch(this, this._onOtherGroupClick, group));
+        this.a11y_moreTabInonEscEvent(node);//esc
+
         this.own(on(node, 'mousedown', lang.hitch(this, function() {
           query(node).addClass('jimu-state-active');
         })));
@@ -627,6 +711,9 @@ define([
             properties: animP2
           })
         ]).play();
+
+        this.a11y_useDoResizeNode();
+        this.a11y_cleanTabIndex_otherGroupPane();
 
         this.moreTabOpened = false;
         var lastTab = this.tabs[this.getSelectedIndex()];
@@ -722,14 +809,17 @@ define([
         var title = config.label,
           iconUrl = config.icon,
           node = html.create('div', {
-            title: title,
+            'role': 'button',
+            'title': title,
             'class': 'title-node jimu-float-leading',// jimu-leading-margin15',
             'settingid': config.id,
-            'id': config.id,
+	    'id': config.id,
+            "aria-label": utils.stripHTML(config.label),
             i: this.tabs.length,
             style: {
               width: nodeWidth + 'px'
-            }
+            },
+            tabindex: this.tabIndex
           }, this.titleListNode),
 
           /*indicator = html.create('div', {
@@ -740,18 +830,15 @@ define([
             src: iconUrl
           }, node),
 
-          /*textNode = html.create('div', {
-            innerHTML: title,
-            'class': 'panel_titles'
-            
-          }, node),*/
-
           minNode = html.create('div', {
             title: title,
             'class': 'title-node',
+            'role': 'button',
             'settingid': config.id,
-            'id': config.id + '_min',
-            i: this.tabs.length
+	    'id': config.id + '_min',
+            "aria-label": utils.stripHTML(config.label),
+            i: this.tabs.length,
+            tabindex: this.tabIndex
           }, this.minStateNode),
 
           minIndicatorNode = html.create('div', {
@@ -769,11 +856,17 @@ define([
           html.addClass(minImgNode, 'jimu-flipx');
         }
 
-        this.own(on(node, 'click', lang.hitch(this, this.onSelect)));
+        this.a11y_addTooltip(node, config.label);
+        //this.own(on(node, a11yclick, lang.hitch(this, this.onSelect)));
+        this.a11y_nodeSelect(node, lang.hitch(this, this.onSelect));
+        this.a11y_nodeEscEvent(node);
         /*this.own(on(node, mouse.enter, lang.hitch(this, this._onMouseEnter)));
         this.own(on(node, mouse.leave, lang.hitch(this, this._onMouseLeave)));*/
 
-        this.own(on(minNode, 'click', lang.hitch(this, this._onMinIconClick, minNode)));
+        this.a11y_addTooltip(minNode, config.label);
+        //this.own(on(minNode, a11yclick, lang.hitch(this, this._onMinIconClick, minNode)));
+        this.a11y_nodeSelect(minNode, lang.hitch(this, this._onMinIconClick, minNode));
+        this.a11y_nodeEscEvent(minNode);
         /*this.own(on(minNode, mouse.enter, lang.hitch(this, this._onMouseEnter)));
         this.own(on(minNode, mouse.leave, lang.hitch(this, this._onMouseLeave)));*/
         return node;
@@ -870,6 +963,7 @@ define([
         } else {
           query('div', this.doResizeNode).removeClass('left-arrow').addClass('right-arrow');
         }
+        this.a11y_resizeNodeAriaLabel("e");
 
         this._resizeMinTitleNode();
 
@@ -878,8 +972,6 @@ define([
         });
 
         this.stateNode = this.minStateNode;
-        //TODO: A better way to handle this is by using the topic.subscribe function following example in Header\Widget.js
-        //this.own(topic.subscribe('changeMapPosition', lang.hitch(this, this._onMapResize)));
         var helpWidget = dojo.byId("themes_TabTheme_widgets_SidebarController_Widget_20_dropdown");
         if (helpWidget){
           helpWidget.style.setProperty("left","0px");
@@ -896,6 +988,7 @@ define([
         } else {
           query('div', this.doResizeNode).removeClass('right-arrow').addClass('left-arrow');
         }
+        this.a11y_resizeNodeAriaLabel("c");
         this._resizePanels();
 
         topic.publish('changeMapPosition', {
@@ -907,12 +1000,13 @@ define([
         }
 
         this.stateNode = this.maxStateNode;
-        //TODO: A better way to handle this is by using the topic.subscribe function.
         var helpWidget = dojo.byId("themes_TabTheme_widgets_SidebarController_Widget_20_dropdown");
         if (helpWidget){
           helpWidget.style.setProperty("left","365px");
         }
       }
     });
+
+    clazz.extend(a11y);//for a11y
     return clazz;
   });

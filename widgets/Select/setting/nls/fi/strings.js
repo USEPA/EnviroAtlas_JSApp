@@ -3,7 +3,8 @@ define({
   "selectionMode": "Vuorovaikutteinen valintatila",
   "partiallyWithin": "Sisältyy osittain",
   "whollyWithin": "Sisältyy kokonaan",
-  "allowExport": "Salli vienti valittuihin kohteisiin",
+  "allowExport": "Salli valittujen kohteiden vienti",
   "layerToSelect": "Valitse valittavissa olevat karttatasot",
-  "includeRuntimeLayers": "Voit valita suorituksen aikana luotavat karttatasot"
+  "includeRuntimeLayers": "Salli suorituksen aikana luotujen karttatasojen valinta",
+  "enableByDefault": "Ota valittu painike käyttöön oletusarvoisesti"
 });

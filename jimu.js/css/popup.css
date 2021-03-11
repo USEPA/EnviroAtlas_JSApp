@@ -39,9 +39,10 @@
 }
 
 .esriMobilePopupInfoView .esriMobileInfoViewItem .popup-menu-button{
-  margin-top: 10px;
-  background-position: left;
+  margin-top: 20px;
+  background-position: top left;
   float: left;
+  height: 30px;
 }
 
 .jimu-rtl .esriPopup .actionList .popup-menu-button {
@@ -139,12 +140,22 @@
   background-image: url("./images/details_normal.svg");
   background-repeat: no-repeat;
   background-position: right 5px center;
-  height: 25px;
+  min-height: 25px;
   line-height: 25px;
   padding-right: 20px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.esriPopup .related-records-popup-projector .content-box .item div, .esriMobileInfoView.esriMobilePopupInfoView .content-box .item div{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.esriPopup .related-records-popup-projector .content-box .item .relationshipName, .esriMobileInfoView.esriMobilePopupInfoView .content-box .item .relationshipName{
+  opacity: 0.5;
 }
 
 .jimu-rtl .esriPopup .related-records-popup-projector .content-box .item, .jimu-rtl .esriMobileInfoView.esriMobilePopupInfoView .content-box .item{

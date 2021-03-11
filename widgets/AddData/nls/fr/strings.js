@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Un maximum de {count} entités est autorisé",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "Un problème s’est produit.",
-    "kmlProjectionMismatch": "La référence spatiale de la carte et la couche KML ne concordent pas et la conversion ne peut pas s’effectuer sur le client."
+    "kmlProjectionMismatch": "La référence spatiale de la carte et la couche KML ne concordent pas et la conversion ne peut pas s’effectuer sur le client.",
+    "featureLocationsCouldNotBeFound": "Impossible de localiser les entités : champs de localisation inconnus ou non valides. Le fichier sera ajouté sous la forme d’une table."
   },
   "layerList": {
     "caption": "Couches",

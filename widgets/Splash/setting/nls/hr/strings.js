@@ -22,7 +22,6 @@ define({
   "imageFill": "Ispuna slike",
   "chooseFile": "Izaberi datoteku",
   "noFileChosen": "Nije izabrana datoteka",
-  "transparency": "Prozirnost",
   "sizeFill": "Ispuna",
   "sizeFit": "Prilagodi",
   "sizeStretch": "Rastegni za ispunu",

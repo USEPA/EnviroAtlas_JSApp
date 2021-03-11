@@ -1,3 +1,19 @@
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
 define([
   'dojo/_base/declare',
   'dijit/_WidgetBase',
@@ -132,7 +148,7 @@ define([
         if (srUtils.isValidWkid(this.map.spatialReference.wkid)) {
           this.wkidInput.set('value', this.map.spatialReference.wkid);
           wkidLabel = srUtils.getSRLabel(this.map.spatialReference.wkid);
-          this.wkidLabel.innerHTML = wkidLabel;
+          this.wkidLabel.innerHTML = utils.sanitizeHTML(wkidLabel);
           this.wkidLabel.title = wkidLabel;
         } else {
           this.wkidInput.set('value', '');
@@ -141,7 +157,7 @@ define([
         }
         this.wkidInput.set('invalidMessage', this.nls.invalidWkid);
         this.wkidInput.validator = function(value) {
-          return srUtils.isValidWkid(+value);
+          return !value || value.trim() === '' || srUtils.isValidWkid(+value);
         };
       }));
 
@@ -233,7 +249,7 @@ define([
       var wkidLabel;
       if (srUtils.isValidWkid(+newValue)) {
         wkidLabel = srUtils.getSRLabel(+newValue);
-        this.wkidLabel.innerHTML = wkidLabel;
+        this.wkidLabel.innerHTML = utils.sanitizeHTML(wkidLabel);
         this.wkidLabel.title = wkidLabel;
       } else {
         this.wkidLabel.innerHTML = '';
@@ -332,7 +348,6 @@ define([
             });
           }
         }
-
       }, this);
       return opLayers;
     },
@@ -536,6 +551,11 @@ define([
       }
     },
 
+    closeSettings: function() {
+      popup.close(this.settingsDialog);
+      this._showSettings = false;
+    },
+
     showSettings: function(event) {
       event.preventDefault();
       event.stopPropagation();
@@ -595,11 +615,19 @@ define([
         layoutItems.sort(function(a, b) {
           return (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0);
         });
-        this.layoutDijit.addOption(layoutItems);
-        if (this.defaultLayout) {
+        if (layoutItems.length > 0) {
+          this.layoutDijit.addOption(layoutItems);
+          if (this.defaultLayout) {
+            this.layoutDijit.set('value', this.defaultLayout);
+          } else {
+            this.layoutDijit.set('value', Layout_Template[0].defaultValue);
+          }
+        } else if (this.defaultLayout) {
+          this.layoutDijit.addOption([{
+            label: this.defaultLayout,
+            value: this.defaultLayout
+          }]);
           this.layoutDijit.set('value', this.defaultLayout);
-        } else {
-          this.layoutDijit.set('value', Layout_Template[0].defaultValue);
         }
 
         var Format = array.filter(data.parameters, function(param) {
@@ -618,11 +646,19 @@ define([
         formatItems.sort(function(a, b) {
           return (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0);
         });
-        this.formatDijit.addOption(formatItems);
-        if (this.defaultFormat) {
+        if (formatItems.length > 0) {
+          this.formatDijit.addOption(formatItems);
+          if (this.defaultFormat) {
+            this.formatDijit.set('value', this.defaultFormat);
+          } else {
+            this.formatDijit.set('value', Format[0].defaultValue);
+          }
+        } else if (this.defaultFormat) {
+          this.formatDijit.addOption([{
+            label: this.defaultFormat,
+            value: this.defaultFormat
+          }]);
           this.formatDijit.set('value', this.defaultFormat);
-        } else {
-          this.formatDijit.set('value', Format[0].defaultValue);
         }
       }
     },
@@ -664,6 +700,9 @@ define([
         template.format = form.format;
         template.layout = form.layout;
         template.preserveScale = (form.preserveScale === 'true' || form.preserveScale === 'force');
+        if (form.preserveScale === 'force') {
+          template.outScale = this.preserve.forcedScale > 0 ? this.preserve.forcedScale : this.map.getScale();
+        }
         template.forceFeatureAttributes = form.forceFeatureAttributes && form.forceFeatureAttributes[0];
         template.label = form.title;
         template.exportOptions = mapOnlyForm;
@@ -680,11 +719,11 @@ define([
         this.printparams.extraParameters = { // come from source code of jsapi
           printFlag: true
         };
+        // reset outSpatialReference
+        this.printparams.outSpatialReference = undefined;
         var outWkid = +this.wkidInput.get('value');
-        if (srUtils.isValidWkid(outWkid)) {
+        if (srUtils.isValidWkid(outWkid) && outWkid !== this.map.spatialReference.wkid) {
           this.printparams.outSpatialReference = new SpatialReference(outWkid);
-        } else {
-          this.printparams.outSpatialReference = this.map.spatialReference;
         }
         var fileHandel = this.printTask.execute(this.printparams);
 
@@ -692,7 +731,7 @@ define([
           count: this.count.toString(),
           icon: (form.format === "PDF") ? this.pdfIcon : this.imageIcon,
           docName: form.title,
-          title: form.format + ', ' + form.layout,
+          title: form.title + ', ' + form.format + ', ' + form.layout,
           fileHandle: fileHandel,
           nls: this.nls
         }).placeAt(this.printResultsNode, 'last');
@@ -723,7 +762,6 @@ define([
       } else {
         return (hasLegend && enabledLegend) ? null : [];
       }
-
     },
 
     clearResults: function() {

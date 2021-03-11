@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "Skalas_josla"
+  "_widgetLabel": "Skalas josla",
+  "scale": "Mērogs"
 });

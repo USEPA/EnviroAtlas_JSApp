@@ -232,7 +232,7 @@
 
 /* css for add-with-icon */
 .add-with-icon{
-  color: #24B5CC;
+  color: #067EAA;
 }
 
 /* css for jimu-table */
@@ -409,6 +409,10 @@
   content: '\e90c';
 }
 
+.jimu-draw-box .arrow-icon:before{
+  content: '\e913';
+}
+
 .jimu-draw-box .line-icon:before{
   content: '\e90b';
 }
@@ -460,6 +464,287 @@
 
 .jimu-draw-box.enabled .drawings-clear:hover{
   background-color: #B60016;
+}
+
+/**********calendar styles***************/
+.dijitCalendarPopup {
+  position: absolute;
+  margin: 1px 0 0 0;
+  padding: 0;
+}
+.dijitCalendarPopup .dijitCalendar {
+  background: #fff;
+  text-align: center;
+  border: none;
+}
+.dijitCalendarPopup .dijitCalendarHover,
+.dijitCalendarPopup .dijitCalendar:hover,
+.dijitCalendarPopup .dijitCalendarActive {
+  background-color: #fff;
+  border: none;
+}
+
+/*month dropdown*/
+.dijitCalendarPopup .dijitCalendar .dijitDropDownButton .dijitButtonNode {
+  background-color: transparent;
+  background-image: none;
+  padding: 0;
+  padding-top: 3px;
+  border: none;
+}
+.dijitCalendarPopup .dijitCalendar .dijitDropDownButtonHover .dijitButtonNode,
+.dijitCalendarPopup .dijitCalendar .dijitDropDownButton:hover .dijitButtonNode {
+  background-color: transparent;
+  border: inherit;
+}
+.dijitCalendarPopup .dijitCalendarMonthContainer .dijitButtonText {
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  padding-right: 10px;
+  padding-left: 0;
+}
+.dijitPopup .dijitCalendarMonthMenu .dijitCalendarMonthLabel {
+  padding: 7px 0;
+  border: none;
+  font-size: 13px;
+}
+.dijitPopup .dijitCalendarMonthMenu .dijitCalendarMonthLabelHover,
+.dijitPopup .dijitCalendarMonthMenu .dijitCalendarMonthLabelActive {
+  border: none;
+  background-color: #eee;
+  background-image: none;
+  filter: none;
+}
+.dijitCalendarPopup .dijitCalendarMonthContainer .dijitButtonText .dijitCalendarMonthLabel{
+  font-size: 14px;
+}
+
+/*month prev-next*/
+.dijitCalendarPopup .dijitCalendarArrow {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 24px;
+  cursor: pointer;
+}
+.dijitCalendarPopup .dijitCalendarArrow > img {
+  display: none;/*disable current img mode*/
+}
+.dijitCalendarPopup .dijitCalendarDecrementArrow {
+  float: left;
+  background: url(images/arrow_left_dark.svg) no-repeat center center transparent;
+}
+.dijitCalendarPopup .dijitCalendarIncrementArrow {
+  background: url(images/arrow_right_dark.svg) no-repeat center center transparent;
+}
+.jimu-rtl .dijitCalendarPopup .dijitCalendarDecrementArrow {
+  float: right;
+  background: url(images/arrow_right_dark.svg) no-repeat center center transparent;
+}
+.jimu-rtl .dijitCalendarPopup .dijitCalendarIncrementArrow {
+  background: url(images/arrow_left_dark.svg) no-repeat center center transparent;
+}
+.dijitCalendarPopup .dijitCalendarDecrementArrow.dijitCalendarArrowHover,
+.dijitCalendarPopup .dijitCalendarIncrementArrow.dijitCalendarArrowHover {
+  background-color: #eee;
+}
+.dijitCalendarPopup .dijitDropDownButton .dijitArrowButtonInner {
+  background: url(images/arrow_down_dark.svg) no-repeat center center transparent;
+}
+
+/*days*/
+.dijitCalendarPopup .dijitCalendar table{
+  width: 100%;
+  margin-top: 7px;
+}
+.dijitCalendarPopup .dijitCalendar table .dijitCalendarDayLabelTemplate{
+  border-bottom: 1px solid #eee;
+}
+.dijitCalendarPopup .dijitCalendarDateTemplate,
+.dijitCalendarPopup .dijitCalendarPreviousMonth,
+.dijitCalendarPopup .dijitCalendarNextMonth {
+  background-color: #fff;
+  background-image: none;
+  border: none;
+  font-size: 12px;
+  line-height: 20px;
+}
+.dijitCalendarPopup .dijitCalendarDateTemplate .dijitCalendarDateLabel{
+  color: #333;
+  -webkit-transition-duration: 0s;
+  -moz-transition-duration: 0s;
+  transition-duration: 0s;
+}
+.dijitCalendarPopup .dijitCalendarPreviousMonth .dijitCalendarDateLabel,
+.dijitCalendarPopup .dijitCalendarNextMonth .dijitCalendarDateLabel{
+  color: #999;
+  /* border: none; */
+  border: 1px solid #fff;
+}
+
+.dijitCalendarPopup .dijitCalendarEnabledDate.dijitCalendarPreviousMonth:hover .dijitCalendarDateLabel,
+.dijitCalendarPopup .dijitCalendarEnabledDate.dijitCalendarNextMonth:hover .dijitCalendarDateLabel {
+  background-color: #eee;
+  color: #999;
+}
+.dijitCalendarPopup .dijitCalendarHoveredDate .dijitCalendarDateLabel,
+.dijitCalendarPopup .dijitCalendarEnabledDate:hover .dijitCalendarDateLabel {
+  background-color: #eee;
+  border: 1px solid #fff;
+  color: inherit;
+  -webkit-transition-duration: 0s;
+  -moz-transition-duration: 0s;
+  transition-duration: 0s;
+}
+.dijitCalendarPopup .dijitCalendarSelectedDate .dijitCalendarDateLabel,
+.dijitCalendarPopup .dijitCalendarSelectedDate.dijitCalendarHoveredDate .dijitCalendarDateLabel {
+  color: #fff;
+  background-color: #666;
+  border-color: #fff;
+}
+
+
+/*year prev-next*/
+.dijitCalendarYearContainer .dijitCalendarYearLabel{
+  padding: 3px 0;
+  margin: 0 10px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+.dijitCalendarYearContainer .dijitCalendarSelectedYear{
+  color:#000;
+  font-weight: bold;
+  font-size: 16px;
+  /* width: 50%; */
+  width: calc(50% - 18px);
+}
+.dijitCalendarYearContainer .dijitCalendarNextYear,
+.dijitCalendarYearContainer .dijitCalendarPreviousYear {
+  font-size: 14px;
+  color: #666;
+  padding: 4px 6px 4px 6px;
+}
+.dijitCalendarYearContainer .dijitCalendarNextYearHover,
+.dijitCalendarYearContainer .dijitCalendarNextYear:hover,
+.dijitCalendarYearContainer .dijitCalendarPreviousYearHover,
+.dijitCalendarYearContainer .dijitCalendarPreviousYear:hover {
+  color: #000;
+  border: none;
+  background-color: #eee;
+  padding: 4px 6px 4px 6px;
+}
+
+
+/*time picker*/
+.jimu-dateTimeBox {
+  height: 100%;
+  background: #fff;
+}
+.jimu-dateTimeBox .jimu-calendar {
+  width: 100%;
+  border: none;
+  border-radius: inherit;
+}
+.jimu-dateTimeBox .timeTextContainer {
+  margin: 3px 10px 2px 10px;
+}
+.jimu-dateTimeBox .timeTextContainer .timeGroup .timeLabel,
+.jimu-dateTimeBox .timeTextContainer .timeGroup .dijitTextBox{
+  width: calc(33.3% - 4px);
+  padding: 0 2px;
+}
+.jimu-dateTimeBox .timeTextContainer .timeGroup .timeLabel{
+  font-size: 13px;
+  display: inline-block;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.jimu-dateTimeBox .timeTextContainer .dijitTextBox{
+  background-color: #fff;
+  height: 30px;
+}
+.jimu-dateTimeBox .timeTextContainer.timeTextContainerRuntime .dijitTextBox{
+  width: 100%;
+  margin: auto 3px;
+  padding-left: 32px;
+}
+.jimu-dateTimeBox .timeTextContainer .dijitTextBox .dijitInputField{
+  padding: 1px 8px;
+}
+.jimu-dateTimeBox .timeTextContainer .dijitTextBox .dijitInputInner{
+  font-size: 13px;
+}
+.jimu-dateTimeBox .timeTextContainer .timeTextIcon{
+  position: absolute;
+  left: 25px;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  background-image: url(images/schedule.svg);
+  background-repeat: no-repeat;
+}
+.jimu-dateTimeBox .timeTextContainer .jimu-toggle-button{
+  margin: 5px;
+}
+
+.dijitTimePickerPopup .dijitTimePicker{
+  background-color: #fff;
+}
+.dijitTimePickerPopup .dijitTimePickerItem{
+  color: #000;
+  line-height: 18px;
+  border-top: solid 1px #fff;
+  border-bottom: solid 1px #fff;
+  background-image: none;
+}
+.dijitTimePickerPopup .dijitTimePickerTick {
+  background-color: #fff;
+  font-size: 11px;
+}
+.dijitTimePickerPopup .dijitTimePickerMarker {
+  background-color: #eee;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.dijitTimePickerPopup .dijitTimePickerMarkerSelected,
+.dijitTimePickerPopup .dijitTimePickerTickSelected {
+  font-size: 1em;
+}
+
+.dijitTimePickerPopup .dijitTimePickerTickHover,
+.dijitTimePickerPopup .dijitTimePickerMarkerHover {
+  background-color: #999;
+}
+.dijitTimePickerPopup .dijitTimePickerMarkerSelected,
+.dijitTimePickerPopup .dijitTimePickerTickSelected {
+  color: #fff;
+  background-color: #666;
+}
+.dijitTimePickerPopup .dijitTimePickerMarkerSelected.dijitTimePickerMarkerHover,
+.dijitTimePickerPopup .dijitTimePickerTickSelected.dijitTimePickerTickHover {
+  background-color: #666;
+}
+
+.jimu-popup.jimu-popup-date-time-picker .content{
+  overflow-y: hidden;
+}
+.jimu-popup.jimu-popup-date-time-picker .button-container{
+  width: calc(100% - 20px);
+  padding: 15px 0;
+  margin: 0 10px;
+}
+.jimu-popup.jimu-popup-date-time-picker .button-container .jimu-popup-action-btn{
+  width: 49%;
+  margin: 0 1%;
+  background: #666 !important;
+}
+.jimu-popup.jimu-popup-date-time-picker .button-container .jimu-btn-vacation{
+  margin-right: 0;
+  color: #000;
+  background: #fff !important;
+  border: 1px solid #999 !important;
 }
 .i-button {
   margin-left: 3px;

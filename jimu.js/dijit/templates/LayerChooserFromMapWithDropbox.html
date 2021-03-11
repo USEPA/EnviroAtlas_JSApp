@@ -1,6 +1,7 @@
 <div>
-<table data-dojo-attach-point="dropDownBtn" data-dojo-attach-event="onclick: _onDropDownClick,onkeydown: _onDropDownKeydown"
-  tabindex="0" title="${nls.selectLayer}">
+<table role="listbox" aria-haspopup="true" data-dojo-attach-point="dropDownBtn" data-dojo-attach-event="onclick: _onDropDownClick,onkeydown: _onDropDownKeydown"
+  tabindex="0" title="${nls.customSelectLayer}" aria-label="${nls.customSelectLayer}">
+    <caption class="screen-readers-only-no-position">${nls.customSelectLayer}</caption>
     <colgroup>
       <col width="10px"></col>
       <col width="auto"></col>

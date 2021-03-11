@@ -203,7 +203,7 @@
 	height: 50px;
 }
 .timeslider-widget-setting-popup .layers-table-container .layer-name {
-  justify-content: center;
+  /*justify-content: center;*/
 	margin-top: 10px;
 }
 .timeslider-widget-setting-popup .layers-table-container .time-info {
@@ -236,19 +236,28 @@
 }
 
 .timeslider-widget-setting-popup .time-config-container .time-tips{
-	margin: 5px 0;
+	margin: 5px;
 }
 .timeslider-widget-setting-popup .time-config-container .calendar-inputs{
-	min-width: 100px;
-	max-width: 200px;
 	margin: 0 5px;
 }
 .timeslider-widget-setting-popup .time-config-container .calendar-inputs.time-inputs{
 	min-width: 140px;
 }
-
+.timeslider-widget-setting-popup .time-config-container .calendar-inputs .dijitButtonContents{
+	min-width: 120px;
+	max-width: 170px;
+	overflow: hidden;
+}
 .timeslider-widget-setting-popup .time-config-container .calendar-operator{
 	font-size: 14px;
+	width: 60px;
+}
+.timeslider-widget-setting-popup .time-config-container .time-unit{
+	display: inline-block;
+	max-width: 150px;
+	overflow: hidden;
+	vertical-align: middle;
 }
 /*.timeslider-widget-setting-popup .time-config-container .time-selector {
 	padding-right: 10px;
@@ -261,6 +270,9 @@
 	align-items: center;
 	margin-top: 10px;
 }
+.timeslider-widget-setting-popup .time-config-container .display-all{
+	margin: 0 5px;
+}
 /*
 .timeslider-widget-setting-popup .time-config-container .mode-selector{
 	width:35px;
@@ -271,9 +283,8 @@
 .timeslider-widget-setting-popup .time-config-container .time-text{
 	width:100px;
 }
-
 .timeslider-widget-setting-popup .time-config-container .calender-operator{
-	width:120px;
+	width:100px;
 }
 .timeslider-widget-setting-popup .time-config-container .calender-number{
 	width:85px;

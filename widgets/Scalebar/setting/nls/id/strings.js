@@ -5,5 +5,9 @@ define({
   "english": "inggris",
   "metric": "metrik",
   "ruler": "aturan",
-  "line": "garis"
+  "line": "garis",
+  "number": "nomor",
+  "spinnerLabel": "Bulatkan angka skala menjadi: ",
+  "decimalPlace": "tempat desimal",
+  "separator": "Tampilkan pemisah ribuan"
 });

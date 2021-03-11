@@ -5,5 +5,6 @@ define({
   "whollyWithin": "לחלוטין בתוך",
   "allowExport": "אפשר ייצוא של ישויות נבחרות",
   "layerToSelect": "בחר אילו שכבות יהיו מזינות לבחירה",
-  "includeRuntimeLayers": "קבל אפשרות לבחור שכבות שנוצרו בזמן הריצה"
+  "includeRuntimeLayers": "אפשר לבחור שכבות שנוצרו בזמן הריצה",
+  "enableByDefault": "הפעל את לחצן הבחירה כברירת מחדל"
 });

@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Højst {count} objekter er tilladt",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "Der opstod et problem.",
-    "kmlProjectionMismatch": "Den spatiale reference for kortet og KML-laget passer ikke sammen, og konverteringen kan ikke udføres for klienten."
+    "kmlProjectionMismatch": "Den spatiale reference for kortet og KML-laget passer ikke sammen, og konverteringen kan ikke udføres for klienten.",
+    "featureLocationsCouldNotBeFound": "Objekter kunne ikke lokaliseres: ukendte eller ugyldige lokaliseringsfelter. Filen tilføjes som en tabel."
   },
   "layerList": {
     "caption": "Lag",

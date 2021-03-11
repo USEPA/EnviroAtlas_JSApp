@@ -61,7 +61,7 @@
             <div class="source-tips" title="${nls.locatorTips}" data-dojo-attach-point="tipsNode">
               ${nls.locatorTips}
             </div>
-            <div data-dojo-attach-point="maxSuggestions" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:1,places:0},style:{width:'100%'},value:6"></div>
+            <div data-dojo-attach-point="maxSuggestions" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:0,places:0},style:{width:'100%'},value:6"></div>
           </td>
         </tr>
         <tr>
@@ -118,8 +118,9 @@
           </td>
           <td class="second">
             <div class="jimu-float-leading" style="width:100%;">
-              <div class="jimu-float-leading" data-dojo-attach-point="localSearchDistance" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:1},style:{width:'75%'},value:50000"></div>
-              <span class="jimu-float-trailing" style="line-height:30px;">${nls.meters}</span>
+              <div class="jimu-float-leading" data-dojo-attach-point="localSearchDistance" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:1},style:{width:'60%', 'margin-right':'10px'},value:50000"></div>
+              <div class="jimu-float-trailing" data-dojo-attach-point="radiusUnit" data-dojo-type="dijit/form/Select" data-dojo-props='style:{width:"100px", height:"30px", float:"left"}'></div>
+              <!--span class="jimu-float-trailing" style="line-height:30px;">${nls.meters}</span-->
             </div>
             <span class="example" data-dojo-attach-point="radiusHintNode" title="${nls.radiusHint}">${nls.radiusHint}</span>
           </td>

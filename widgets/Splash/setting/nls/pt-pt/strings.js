@@ -22,7 +22,6 @@ define({
   "imageFill": "Preenchimento de imagem",
   "chooseFile": "Escolher ficheiro",
   "noFileChosen": "Nenhum ficheiro escolhido",
-  "transparency": "Transparência",
   "sizeFill": "Preenchimento",
   "sizeFit": "Adaptar",
   "sizeStretch": "Esticar para preencher",

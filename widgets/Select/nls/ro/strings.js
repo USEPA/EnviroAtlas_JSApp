@@ -7,5 +7,6 @@ define({
   "turnonAll": "Faceţi toate straturile tematice selectabile",
   "turnoffAll": "Faceţi toate straturile tematice neselectabile",
   "toggleSelect": "Comutați selectabilitatea pentru toate straturile tematice",
-  "singleSelect": "Faceţi ca acest strat tematic să fie singurul selectabil"
+  "singleSelect": "Faceţi ca acest strat tematic să fie singurul selectabil",
+  "enableByDefault": "Activați instrumentul selectat implicit"
 });

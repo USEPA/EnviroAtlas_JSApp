@@ -28,5 +28,11 @@ define({
   "keyword": "Nyckelord",
   "basemapLayers": "Baskartlager",
   "typeAKeywork": "Ange ett nyckelord",
-  "layers": "Lager"
+  "layers": "Lager",
+  "tipLayerSearch": "Sök lager",
+  "tipLayerListOperation": "Lagerlisteåtgärder",
+  "tipLayerOperation": "Lagermenyer",
+  "tipClearText": "Rensa text",
+  "collapseLayer": "Dölj",
+  "expandLayer": "Expandera"
 });

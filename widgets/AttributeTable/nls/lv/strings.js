@@ -11,10 +11,12 @@ define({
   "exportAll": "Eksportēt visu CSV failā",
   "options": "Opcijas",
   "zoomto": "Pietuvināt",
-  "highlight": "Izcelt grafiku",
+  "highlight": "Grafiku izcelšana",
   "selectAll": "Atlasīt ierakstus visās lapās",
   "selectPage": "Atlasīt ierakstus pašreizējā lapā",
   "clearSelection": "Notīrīt izvēli",
+  "selectionHandleLabel": "Atlases turis",
+  "selectionHandleDescription": "Nospiediet taustiņu ENTER vai SPACE, lai izceltu elementu(-us) kartē",
   "filter": "Filtrs",
   "setFilterTip": "Lūdzu, pareizi iestatiet filtrus.",
   "noFilterTip": "Bez definētām filtru izteiksmēm šajā vaicājuma uzdevumā būs norādīti visi elementi norādītajā datu avotā.",
@@ -28,7 +30,7 @@ define({
   "refresh": "Atjaunot",
   "features": "elementi",
   "records": "ieraksti",
-  "selected": "izraudzīts",
+  "selected": "izvēlēts",
   "transparent": "Caurspīdīgs režīms",
   "indicate": "Atrast atlasi",
   "columns": "Rādīt/paslēpt kolonnas",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Neviena tabula nav pieejama rādīšanai.",
   "checkConfigutationToSelectLayers": "Lūdzu, atveriet logrīku iestatījumu lapu, lai atlasītu slāņus.",
-  "checkLayerListToSelectLayers": "Atribūtu tabula ir sinhronizēta ar redzamajiem slāņiem kartē; lai ieslēgtu/izslēgtu slāņus, varat izmantot tādu logrīku kā slāņu sarakstu."
+  "checkLayerListToSelectLayers": "Atribūtu tabula ir sinhronizēta ar redzamajiem slāņiem kartē; lai ieslēgtu/izslēgtu slāņus, varat izmantot tādu logrīku kā slāņu sarakstu.",
+  "rowHeaderColumnTitle": "Rinda ${layerName}, norādītā; nospiediet Enter, lai atlasītu norādītās rindas"
 });

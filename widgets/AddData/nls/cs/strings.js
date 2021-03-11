@@ -37,7 +37,7 @@ define({
     "typeOptions": {
       "prompt": "Typ",
       "mapService": "Mapová služba",
-      "featureService": "Feature Service",
+      "featureService": "Feature služba",
       "imageService": "Image služba",
       "vectorTileService": "Vektorová dlaždicová služba",
       "kml": "KML",
@@ -85,7 +85,7 @@ define({
       },
       "types": {
         "Map Service": "Mapová služba",
-        "Feature Service": "Feature Service",
+        "Feature Service": "Feature služba",
         "Image Service": "Image služba",
         "Vector Tile Service": "Vektorová dlaždicová služba",
         "WMS": "WMS",
@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Je povoleno maximálně {count} prvků.",
     "layerNamePattern": "{filename} – {name}",
     "generalIssue": "Vyskytl se problém.",
-    "kmlProjectionMismatch": "Souřadnicový systém mapy a vrstvy KML se neshodují a konverzi nelze u klienta provést."
+    "kmlProjectionMismatch": "Souřadnicový systém mapy a vrstvy KML se neshodují a konverzi nelze u klienta provést.",
+    "featureLocationsCouldNotBeFound": "Nezdařilo se najít umístění prvků: neznámá nebo neplatná pole umístění. Tento soubor bude přidán jako tabulka."
   },
   "layerList": {
     "caption": "Vrstvy",

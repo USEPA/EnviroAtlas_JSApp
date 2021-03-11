@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,13 +22,14 @@ define([
   'dojo/dom-construct',
   'dojo/on',
   'dojo/query',
+  'jimu/utils',
   'jimu/dijit/CheckBox',
   'dijit/_TemplatedMixin',
   'dojo/text!./LayerSelector.html',
   'dojo/dom-class',
   'dojo/dom-style'
 ], function(_WidgetBase, declare, lang, array, domConstruct, on, query,
-  CheckBox, _TemplatedMixin, template,
+  jimuUtils, CheckBox, _TemplatedMixin, template,
   domClass, domStyle) {
 
   return declare([_WidgetBase, _TemplatedMixin], {
@@ -162,7 +163,7 @@ define([
       */
       var layerTitleDivIdClass = 'layer-title-div-' + layerInfo.id;
       divLabel = domConstruct.create('div', {
-        'innerHTML': layerInfo.title,
+        'innerHTML': jimuUtils.sanitizeHTML(layerInfo.title),
         'class':layerTitleDivIdClass + ' div-content jimu-float-leading '
       }, layerTitleTdNode);
 

@@ -1,0 +1,67 @@
+<div class="baselayer-config">
+  <table class="baselayer-table" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="label-column" nowrap="nowrap">
+          <label for="baseLayerType">${nls.baseLayerType}</label>
+        </td>
+        <td class="input-column">
+          <select data-dojo-attach-point="baseLayerType" data-dojo-type="dijit/form/Select" id="baseLayerType">
+            <option value="${TYPE.BASE_MAP}">${nls.BaseMap}</option>
+
+            <option value="${TYPE.ARCGIS_TILED_MAP}">${nls.tiledMapService}</option>
+            <option value="${TYPE.ARCGIS_DYNAMIC_MAP_SERVICE}">${nls.dynamicMapService}</option>
+            <option value="${TYPE.ARCGIS_IMAGE_SERVICE}">${nls.imageService}</option>
+
+            <option value="${TYPE.OSM}">${nls.OSM}</option>
+            <!--<option id="WebTiled" value="WebTiled">${nls.WebTiled}</option>-->
+            <option data-dojo-attach-point="bingAerialOption" value="${TYPE.BING_AERIAL}">${nls.bingAerial}</option>
+            <option data-dojo-attach-point="bingHybridOption" value="${TYPE.BING_HYBRID}">${nls.bingHybrid}</option>
+            <option data-dojo-attach-point="bingRoadOption" value="${TYPE.BING_ROAD}">${nls.bingRoad}</option>
+          </select>
+        </td>
+        <td class="input-column" width="100%">
+          <div data-dojo-attach-point="baseLayerContainer" class="hide">
+            <input class="jimu-input" type="text" value="" placeholder="${nls.layerPlaceholder}" data-dojo-attach-point="tiledMapServiceUrlInput"
+              required="true" data-dojo-type="jimu/dijit/URLInput" style="width:100%;padding:0"/>
+
+            <input class="jimu-input" type="text" value="" placeholder="${nls.layerPlaceholder}" data-dojo-attach-point="dynamicMapServiceUrlInput"
+              required="true" data-dojo-type="jimu/dijit/URLInput" style="width:100%;padding:0"/>
+
+            <input class="jimu-input" type="text" value="" placeholder="${nls.layerPlaceholder}" data-dojo-attach-point="imageServiceUrlInput"
+              required="true" data-dojo-type="jimu/dijit/URLInput" style="width:100%;padding:0"/>
+          </div>
+        </td>
+      </tr>
+      <!--
+      <tr data-dojo-attach-point="tileLayerContainer" class="hide">
+        <td class="label-column"></td>
+        <td class="input-column"></td>
+        <td class="input-column">
+          <label for="tileLayerUrl">${nls.tileLayerUrl}</label>
+          <input class="jimu-input" type="text" value="" data-dojo-attach-point="tileLayerUrl" id="tileLayerUrl" />
+          <label for="tile">${nls.tile}</label>
+          <input class="jimu-input" type="text" value="" data-dojo-attach-point="tile" id="tile" />
+          <label for="credits">${nls.credits}</label>
+          <input class="jimu-input" type="text" value="" data-dojo-attach-point="credits" id="credits" />
+          <div data-dojo-attach-point="subdomainContainer" class="hide">
+            <label for="subdomain">${nls.subdomain}</label>
+            <input class="jimu-input" type="text" value="" data-dojo-attach-point="subdomain" id="subdomain" />
+          </div>
+          <label for="extent">${nls.extent}</label>
+          <input class="jimu-input" type="text" value="" data-dojo-attach-point="extent" id="extent" />
+          <label for="tileInfo">${nls.tileInfo}</label>
+          <input class="jimu-input" type="text" value="" data-dojo-attach-point="tileInfo" id="tileInfo" />
+        </td>
+      </tr>
+      -->
+      <tr>
+        <td class="label-column"></td>
+        <td class="input-column"></td>
+        <td class="input-column">
+          <div data-dojo-attach-point="errorNode" class="error-node"></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

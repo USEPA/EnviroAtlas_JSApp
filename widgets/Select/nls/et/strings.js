@@ -7,5 +7,6 @@ define({
   "turnonAll": "Muuda kõik kihid valitavaks",
   "turnoffAll": "Muuda kõik kihid mittevalitavaks",
   "toggleSelect": "Vaheta kõikide kihtide valitavuse seadistust",
-  "singleSelect": "Muuda see ainukeseks valitavaks kihiks"
+  "singleSelect": "Muuda see ainukeseks valitavaks kihiks",
+  "enableByDefault": "Luba valitud töövahend vaikimisi"
 });

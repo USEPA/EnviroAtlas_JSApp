@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -49,6 +49,7 @@ define(["dojo/_base/declare",
         }
         this.inherited(arguments);
         this.render();
+        selfAddDataItemCard = this;
       },
 
       addClicked: function() {
@@ -60,7 +61,7 @@ define(["dojo/_base/declare",
         domClass.add(btn, "disabled");
 
         if (this.canRemove) {
-          var index = window.onlineDataAlreadyAdded.indexOf(self.item.id);
+          var index = window.onlineDataAlreadyAdded.indexOf(self.item.id + ":::" + self.item.title + ":::" + window.onlineDataScopeDic[selfAddDataScopeOptions.scopePlaceholderText.innerHTML]);
 		  window.onlineDataAlreadyAdded.splice(index, 1);
           var map = this.resultsPane.getMap();
           util.setNodeText(self.messageNode, i18n.search.item.messages.removing);
@@ -75,9 +76,9 @@ define(["dojo/_base/declare",
           domClass.remove(btn, "disabled");
 
         } else {
-          var index = window.onlineDataAlreadyAdded.indexOf(self.item.id);
+          var index = window.onlineDataAlreadyAdded.indexOf(self.item.id + ":::" + self.item.title + ":::" + window.onlineDataScopeDic[selfAddDataScopeOptions.scopePlaceholderText.innerHTML]);
           if (index<0) {
-        		window.onlineDataAlreadyAdded.push(self.item.id);
+        		window.onlineDataAlreadyAdded.push(self.item.id + ":::" + self.item.title + ":::" + window.onlineDataScopeDic[selfAddDataScopeOptions.scopePlaceholderText.innerHTML]);
           }
           util.setNodeText(self.messageNode, i18n.search.item.messages.adding);
           var loader = new LayerLoader();
@@ -95,7 +96,10 @@ define(["dojo/_base/declare",
           }).otherwise(function(error) {
             console.warn("Add layer failed.");
             console.warn(error);
-            util.setNodeText(self.messageNode, i18n.search.item.messages.addFailed);
+            if (self.messageNode!=undefined){
+            	util.setNodeText(self.messageNode, i18n.search.item.messages.addFailed);
+            }
+            
             domClass.remove(btn, "disabled");
             if (error && typeof error.message === "string" && error.message.length > 0) {
                 // TODO show this message
@@ -108,7 +112,7 @@ define(["dojo/_base/declare",
                 if (!(url in window.faildedOutsideLayerDictionary)){
 			  		window.faildedOutsideLayerDictionary[url] = url;
 			    }	
-                var indexTobeRemoved = window.onlineDataAlreadyAdded.indexOf(self.item.id);
+                var indexTobeRemoved = window.onlineDataAlreadyAdded.indexOf(self.item.id + ":::" + self.item.title + ":::" + window.onlineDataScopeDic[selfAddDataScopeOptions.scopePlaceholderText.innerHTML]);
 		  		window.onlineDataAlreadyAdded.splice(indexTobeRemoved, 1);
 				selfAddData.publishData({
 		        	message: "openFailedLayer"

@@ -1,11 +1,12 @@
-<div>
+<div data-a11y-label-by="tab_header_label tab_header_title tab_header_subtitle">
   <a data-dojo-attach-point="logoLinkNode" target="_blank">
     <img class="logo jimu-float-leading jimu-leading-margin1" data-dojo-attach-point="logoNode">
   </a>
   <div class="titles jimu-float-leading jimu-leading-margin1" data-dojo-attach-point="titlesNode">
-    <div class="jimu-title jimu-float-leading" data-dojo-attach-point="titleNode"></div>
+    <div class="screen-readers-only" data-a11y-label-id="tab_header_label">${label}</div>
+    <h1 class="jimu-title jimu-float-leading" data-dojo-attach-point="titleNode" data-a11y-label-id="tab_header_title"></h1>
     <div class="subtitle">Interactive Map</div>
-    <div class="jimu-subtitle jimu-float-leading jimu-leading-margin2" data-dojo-attach-point="subtitleNode"></div>
+    <h2 class="jimu-subtitle jimu-float-leading jimu-leading-margin2" data-dojo-attach-point="subtitleNode" data-a11y-label-id="tab_header_subtitle"></h2>
   </div>
   <div class="links jimu-float-trailing jimu-trailing-margin25" data-dojo-attach-point="linksNode">
     <span class="dynamic-section" data-dojo-attach-point="dynamicLinksNode"></span>

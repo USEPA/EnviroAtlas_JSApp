@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "จำนวนสูงสุด {count} ชิ้น ที่ยอมให้ใช้ได้",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "เกิดปัญหาขึ้น",
-    "kmlProjectionMismatch": "การอ้างอิงเชิงพื้นที่ของชั้นข้อมูลแผนที่และ KML ไม่ตรงกันและการแปลงไม่สามารถทำได้บนไคลเอ็นต์"
+    "kmlProjectionMismatch": "การอ้างอิงเชิงพื้นที่ของชั้นข้อมูลแผนที่และ KML ไม่ตรงกันและการแปลงไม่สามารถทำได้บนไคลเอ็นต์",
+    "featureLocationsCouldNotBeFound": "ไม่พบตำแหน่งฟีเจอร์: ฟิลด์ตำแหน่งที่ไม่ทราบหรือใช้ไม่ได้ ไฟล์จะถูกเพิ่มในรูปแบบตาราง"
   },
   "layerList": {
     "caption": "เลเยอร์",

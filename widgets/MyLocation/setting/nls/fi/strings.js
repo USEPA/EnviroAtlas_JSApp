@@ -3,5 +3,7 @@ define({
   "highlightLocation": "Korosta sijainti",
   "useTracking": "Tarkkaile sijaintimuutoksia",
   "warning": "Virheellinen lähtöaineisto",
-  "zoomScale": "Tarkennustaso"
+  "zoomScale": "Tarkennustaso",
+  "useCompass": "Näytä kompassin suunta",
+  "useAccCircle": "Näytä paikannustarkkuus"
 });

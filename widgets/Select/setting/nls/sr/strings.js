@@ -3,7 +3,8 @@ define({
   "selectionMode": "Interaktivni režim izbora",
   "partiallyWithin": "Delimično unutar",
   "whollyWithin": "Potpuno unutar",
-  "allowExport": "Dozvoli izvoz izabranih geoobjekata",
+  "allowExport": "Dozvoli izvoz selektovanih geoobjekata",
   "layerToSelect": "Odaberite slojeve koji su dostupni za selektovanje",
-  "includeRuntimeLayers": "Mogućnost selektovanja slojeva generisanih u vreme izvršavanja"
+  "includeRuntimeLayers": "Dozvoli selektovanje slojeva generisanih u vreme izvršavanja",
+  "enableByDefault": "Podrazumevano omogući dugme za biranje"
 });

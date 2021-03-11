@@ -74,14 +74,14 @@
         "bottom": 24,
         "relativeTo": "browser"
       },
-      "version": "2.11"
+      "version": "2.17"
     }, {
       "uri": "widgets/Splash/Widget",
       "visible": false,
       "position": {
         "relativeTo": "browser"
       },
-      "version": "2.11"
+      "version": "2.17"
     }, {
       "uri": "widgets/ZoomSlider/Widget",
       "visible": true,
@@ -89,7 +89,7 @@
         "top": 5,
         "left": 7
       },
-      "version": "2.11"
+      "version": "2.17"
     }, {
       "uri": "widgets/ExtentNavigate/Widget",
       "visible": false,
@@ -97,7 +97,7 @@
         "top": 195,
         "left": 7
       },
-      "version": "2.11"
+      "version": "2.17"
     }, {
       "uri": "widgets/FullScreen/Widget",
       "visible": false,
@@ -105,7 +105,7 @@
         "top": 155,
         "left": 7
       },
-      "version": "2.11"
+      "version": "2.17"
     }]
   },
   "mobileLayout": {

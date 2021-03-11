@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "Bilah skala"
+  "_widgetLabel": "Bilah skala",
+  "scale": "Skala"
 });

@@ -100,7 +100,7 @@ def main(_argv):
                 if cellValue == 'x':
                     cellValue = True
                 layerJSON[elem] = cellValue
-        arrayList = [("eaTags",","),("eaBCSDD",";"),("SubLayerNames", ","), ("SubLayerIds", ";"), ("drawSelectLayer", ";")]
+        arrayList = [("eaTags",","),("eaBCSDD",";"),("SubLayerNames", ","), ("SubLayerIds", ";"), ("areaGeog",","), ("hucNavStats",","), ("hucNavStatsUnits",",")]
         for elem,separator in arrayList:
              if inputWorksheet[key[elem]+rowID].value:
                 fullString = inputWorksheet[key[elem]+rowID].value

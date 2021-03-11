@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>sort_down_light_default</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icons" transform="translate(-214.000000, -178.000000)" fill-rule="nonzero">
+            <g id="sort_down_light_default" transform="translate(222.000000, 186.000000) rotate(-270.000000) translate(-222.000000, -186.000000) translate(214.000000, 178.000000)">
+                <rect id="Rectangle" fill="#000000" opacity="0" x="-5.68434189e-14" y="0" width="16" height="16"></rect>
+                <path d="M12,10 L16,13 L12,16 L12,14 L0.25,14 C0.1125,14 -1.49213975e-13,13.8875 -1.49213975e-13,13.75 L-1.49213975e-13,13.75 L-1.49213975e-13,12.25 C-1.49213975e-13,12.1125 0.1125,12 0.25,12 L0.25,12 L12,12 L12,10 Z M2.5,3.55271368e-15 L2.5,8 L0.5,8 L0.5,3.55271368e-15 L2.5,3.55271368e-15 Z M8.5,3.10862447e-15 L8.5,8 L6.5,8 L6.5,3.10862447e-15 L8.5,3.10862447e-15 Z M14.5,3.10862447e-15 L14.5,8 L12.5,8 L12.5,3.10862447e-15 L14.5,3.10862447e-15 Z" id="Combined-Shape" fill="#666666"></path>
+            </g>
+        </g>
+    </g>
+</svg>

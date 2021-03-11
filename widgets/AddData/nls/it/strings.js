@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "È consentito un massimo di {count} feature",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "Si è verificato un problema.",
-    "kmlProjectionMismatch": "Il riferimento spaziale della mappa e del layer KML non corrispondono e la conversione non può essere eseguita sul client."
+    "kmlProjectionMismatch": "Il riferimento spaziale della mappa e del layer KML non corrispondono e la conversione non può essere eseguita sul client.",
+    "featureLocationsCouldNotBeFound": "Impossibile localizzare le feature: campi di posizione sconosciuti o non validi. Il file verrà aggiunto sotto forma di tabella."
   },
   "layerList": {
     "caption": "Livelli",

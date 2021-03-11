@@ -22,7 +22,6 @@ define({
   "imageFill": "Užpildymas atvaizdu",
   "chooseFile": "Pasirinkite failą",
   "noFileChosen": "Nepasirinktas joks failas",
-  "transparency": "Permatomumas",
   "sizeFill": "Užpildyti",
   "sizeFit": "Talpinti",
   "sizeStretch": "Ištempti iki užpildymo dydžio",

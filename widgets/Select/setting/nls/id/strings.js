@@ -3,7 +3,8 @@ define({
   "selectionMode": "Mode pilihan interaktif",
   "partiallyWithin": "Sebagian di dalam",
   "whollyWithin": "Seluruhnya di dalam",
-  "allowExport": "Izinkan untuk mengekspor fitur terpilih",
+  "allowExport": "Izinkan mengekspor fitur pilihan",
   "layerToSelect": "Pilih layer mana yang tersedia untuk dipilih",
-  "includeRuntimeLayers": "Mampu memilih layer yang dibuat saat runtime"
+  "includeRuntimeLayers": "Izinkan memilih layer yang dibuat saat runtime",
+  "enableByDefault": "Aktifkan pilih tombol secara default"
 });

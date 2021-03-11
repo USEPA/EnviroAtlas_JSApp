@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,7 +28,6 @@ define([
     "esri/lang",
     'dojo/_base/lang',
     "dojo/on",
-    'dojo/keys',
     'dojo/touch',
     'dojo/topic',
     'dojo/aspect',
@@ -38,7 +37,8 @@ define([
     'jimu/FilterManager',
     './_ResourceManager',
     // './_TableFunctionController',
-    './utils'
+    './utils',
+    './a11y/WidgetMixin'
   ],
   function(
     declare,
@@ -55,7 +55,6 @@ define([
     esriLang,
     lang,
     on,
-    keys,
     touch,
     topic,
     aspect,
@@ -64,8 +63,9 @@ define([
     LoadingIndicator,
     FilterManager,
     _ResourceManager,
-    attrUtils) {
-    var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
+    attrUtils,
+    A11yWidgetMixin) {
+    var clazz = declare([BaseWidget, _WidgetsInTemplateMixin, A11yWidgetMixin], {
       /* global apiUrl */
       name: 'AttributeTable',
       baseClass: 'jimu-widget-attributetable',
@@ -91,7 +91,6 @@ define([
 
       postCreate: function() {
         this.inherited(arguments);
-        html.setAttr(this.domNode, 'aria-label', this.nls._widgetLabel);
 
         utils.loadStyleLink("dgrid", apiUrl + "dgrid/css/dgrid.css");
         this._loadInfoDef = null;
@@ -129,8 +128,10 @@ define([
         this._createUtilitiesUI();
 
         this._resourceManager = new _ResourceManager({
+          widgetId: this.id,
           map: this.map,
-          nls: this.nls
+          nls: this.nls,
+          parent: this
         });
         this._resourceManager.setConfig(this.config);
 
@@ -151,30 +152,6 @@ define([
             'layerInfosFilterChanged',
             lang.hitch(this, this.onLayerInfosFilterChanged)));
         }));
-
-        // this.closeBtn = html.create('div', {
-        //   'class': 'esriAttributeTableCloseImage close-button'
-        // }, this.domNode);
-        // this.own(on(this.closeBtn, 'click', lang.hitch(this, '_onCloseBtnClicked')));
-
-        this.own(on(this.domNode, 'keydown', lang.hitch(this, function (evt) {
-          if(html.hasClass(evt.target, this.baseClass) && evt.keyCode === keys.ENTER) {
-            this.focusToDisplay = false;
-          }
-        })));
-
-        this.focusToDisplay = true;
-        this.own(on(this.domNode, 'focus', lang.hitch(this, function () {
-          if(utils.isInNavMode() && this.focusToDisplay &&
-            html.getStyle(this.domNode, 'height') < 10) {
-            this._switchTable(); //show widget temporarily
-          }
-        })));
-        this.own(on(this.domNode, 'blur', lang.hitch(this, function () {
-          if(utils.isInNavMode() && this.focusToDisplay) {
-            this._switchTable(); //hide widget
-          }
-        })));
       },
 
       _createUtilitiesUI: function() {
@@ -208,23 +185,19 @@ define([
         if (!this._isOnlyTable()) {
           this.switchBtn = html.create("div", {
             className: "jimu-widget-attributetable-switch",
-            tabindex: '0'
+            tabindex: '0',
+            role: 'button'
           }, this.domNode);
-          utils.initFirstFocusNode(this.domNode, this.switchBtn);
           // html.addClass(this.switchBtn, "jimu-widget-attributetable-switch");
           // html.place(this.switchBtn, this.domNode);
           // this.highlightLine = html.create("div", {
           //   className: "jimu-widget-attributetable-highlight-line"
           // }, this.domNode);
 
-          this.own(on(this.switchBtn, 'click', lang.hitch(this, this._switchTable)));
-
-          this.own(on(this.switchBtn, 'keydown', lang.hitch(this, function (evt) {
-            if(evt.keyCode === keys.ENTER) {
-              this._switchTable();
-              //back to focus and display widgetDom temperly when set it closed.
-              this.focusToDisplay = this.showing ? false : true;
-            }
+          this.own(on(this.switchBtn, 'click', lang.hitch(this, function() {
+            this._switchTable();
+            this.hasBeenActivated = this.showing;
+            this.focusToDisplay = !this.showing;
           })));
         }
       },
@@ -234,6 +207,7 @@ define([
           html.removeClass(this.switchBtn, 'close');
           html.addClass(this.switchBtn, 'open');
           html.setAttr(this.switchBtn, 'title', this.nls.closeTableTip);
+          html.setAttr(this.switchBtn, 'aria-label', this.nls.closeTableTip);
         }
       },
 
@@ -242,6 +216,8 @@ define([
           html.removeClass(this.switchBtn, 'open');
           html.addClass(this.switchBtn, 'close');
           html.setAttr(this.switchBtn, 'title', this.nls.openTableTip);
+          html.setAttr(this.switchBtn, 'id', "openAttributeTable");
+          html.setAttr(this.switchBtn, 'aria-label', this.nls.openTableTip);
         }
       },
 
@@ -263,7 +239,7 @@ define([
             this.loading = new LoadingIndicator();
           }
           this.loading.placeAt(this.domNode);
-          this.loading.show();
+          this._toggleLoading(true);
 
           this._resourceManager.updateLayerInfoResources(true)
           .then(lang.hitch(this, function() {
@@ -363,7 +339,7 @@ define([
         }
 
         // check if the tabs are configured to synchronize with
-        // layer visibilities: 
+        // layer visibilities:
         if(this.config.syncWithLayers) {
           array.forEach(changedLayerInfos, lang.hitch(this, function(changedLayerInfo) {
             // check if is leaf layer
@@ -494,12 +470,14 @@ define([
       onOpen: function() {
         if (!this.showing && this._isOnlyTable()) {
           this._openTable();
+          this.hasBeenActivated = true;
         }
       },
 
       onClose: function() {
         if (this.showing) {
           this._closeTable();
+          this.hasBeenActivated = false;
         }
       },
 
@@ -703,6 +681,8 @@ define([
             this._activeLayerInfoId = infoId;
             this._startQueryOnRelationTab(infoId, relKey, selectIds, originalInfoId);
           }
+
+          // html.setAttr(this.tabContainer.selectedChildWidget.domNode, 'tabindex', '0');
         }
       },
 
@@ -711,11 +691,7 @@ define([
           return;
         }
 
-        if (refresh) {
-          this.loading.show();
-        } else {
-          this.loading.hide();
-        }
+        this._toggleLoading(refresh);
       },
 
       _onDragStart: function(evt) {
@@ -760,10 +736,16 @@ define([
       },
 
       setInitialPosition: function() {
-        // Attribute Table decide position by itself.
+        // Attribute Table decide position by itself if there is no configuration in theme.
+        var left = html.getStyle(this.domNode, 'left');
+        var right = html.getStyle(this.domNode, 'right');
+        if(!left){
+          html.setStyle(this.domNode, "left", "0px");
+        }
+        if(!right){
+          html.setStyle(this.domNode, "right", "0px");
+        }
         html.setStyle(this.domNode, "top", "auto");
-        html.setStyle(this.domNode, "left", "0px");
-        html.setStyle(this.domNode, "right", "0px");
         html.setStyle(this.domNode, "position", "absolute");
 
         if (!this._isOnlyTable()) {
@@ -782,7 +764,9 @@ define([
             'show-related-records', function(evt) {
               var layerInfoId = evt.layerInfoId;
               var selectedIds = evt.objectIds;
-              that._showRelatedRecords(layerInfoId, selectedIds);
+              var relationShip = evt.relationshipObj;
+              // that._showRelatedRecords(layerInfoId, selectedIds);
+              that._showRelatedRecordsByRelationship(layerInfoId, selectedIds, relationShip);
             })
           );
           that._activeTableHandles.push(on(that._activeTable,
@@ -872,7 +856,7 @@ define([
           style: "width: 100%;"
         }, tabDiv);
         html.setStyle(this.tabContainer.domNode, 'height', (this.normalHeight) + 'px');
-
+        
         //if(has("mozilla")){
         //  this.tabContainer.tablist.containerNode.style.width = "50000px";
         //}
@@ -881,6 +865,7 @@ define([
 
         var configInfos = this._resourceManager.getConfigInfos();
         var len = configInfos.length;
+        
         for (var j = 0; j < len; j++) {
           var configInfo = configInfos[j];
           if (configInfo.show) {
@@ -898,7 +883,6 @@ define([
           }
         }
 
-
         if (len > 0) {
           // tabListWrapperHeight + tolerance
           this.noGridHeight = this._getGridTopSectionHeight() + 5;
@@ -909,6 +893,11 @@ define([
         utils.setVerticalCenter(this.tabContainer.domNode);
         this.tabChanged();
         this.own(aspect.after(this.tabContainer, "selectChild", lang.hitch(this, this.tabChanged)));
+
+        // apply extra work to make widget accessible:
+        if(this.applyA11y) {
+          this.applyA11y();
+        }
       },
 
       getLayerInfoLabel: function(layerInfo) {
@@ -939,17 +928,31 @@ define([
       },
 
 
-      _showRelatedRecords: function(infoId, objIds) {
+      // _showRelatedRecords: function(infoId, objIds) {
+      //   var activeTable = this._activeTable;
+      //   if (activeTable) {
+      //     var layerInfo = activeTable.layerInfo;
+      //     if (layerInfo && layerInfo.id === infoId && layerInfo.layerObject) {
+      //       var _layer = layerInfo.layerObject;
+      //       var ships = _layer.relationships;
+      //       // var objIds = activeTable.getSelectedRows();
+
+      //       for (var i = 0, len = ships.length; i < len; i++) {
+      //         this.addNewRelationTab(objIds, ships[i], layerInfo.id, true, true);
+      //       }
+      //     }
+      //   }
+      // },
+
+      _showRelatedRecordsByRelationship: function(infoId, objIds, relationship) {
         var activeTable = this._activeTable;
         if (activeTable) {
           var layerInfo = activeTable.layerInfo;
           if (layerInfo && layerInfo.id === infoId && layerInfo.layerObject) {
             var _layer = layerInfo.layerObject;
             var ships = _layer.relationships;
-            // var objIds = activeTable.getSelectedRows();
-
-            for (var i = 0, len = ships.length; i < len; i++) {
-              this.addNewRelationTab(objIds, ships[i], layerInfo.id, true, true);
+            if(array.some(ships, function(s) { return utils.isEqual(s, relationship); })) {
+              this.addNewRelationTab(objIds, relationship, layerInfo.id, true, true);
             }
           }
         }
@@ -992,6 +995,7 @@ define([
         }
         if(isActive) {
           this.tabContainer.selectChild(page); // goto tabChanged
+          this.__focusOnActiveTab();
         }
         if(this.layerTabPages.length === 1) {
           this._toggleNoTableMessage(false);
@@ -1091,17 +1095,17 @@ define([
             layerObject.id = params.layer.id;
             if (layerObject.loaded) {
               this.addNewLayerTab(
-                layerInfo.id, 
-                params.featureSet, 
+                layerInfo.id,
+                params.featureSet,
                 !!params.closeable,
                 !!params.isActive,
                 params.index);
             } else {
               this.own(on(layerObject, "load",
-                lang.hitch(this, 
-                  this.addNewLayerTab, 
-                  layerInfo.id, 
-                  params.featureSet, 
+                lang.hitch(this,
+                  this.addNewLayerTab,
+                  layerInfo.id,
+                  params.featureSet,
                   !!params.closeable,
                   !!params.isActive,
                   params.index)));
@@ -1110,10 +1114,10 @@ define([
             layer = new FeatureLayer(params.url);
             this.own(
               on(layer, "load",
-                lang.hitch(this, 
-                  this.addNewLayerTab, 
-                  layerInfo.id, 
-                  params.featureSet, 
+                lang.hitch(this,
+                  this.addNewLayerTab,
+                  layerInfo.id,
+                  params.featureSet,
                   !!params.closeable,
                   !!params.isActive,
                   params.index))
@@ -1219,13 +1223,17 @@ define([
         }
       },
 
+      getRelationShipInfo: function(relationship) {
+        return this._resourceManager && this._resourceManager.getRelationShipInfo(relationship);
+      },
+
       _toggleNoTableMessage: function(show) {
         if(!this.NoTableMessageDiv) {
           var srcRef = this.AttributeTableDiv || this.domNode;
           var messageText = this.nls.noTablesAvailable + '<br/><br/>' +
-          (this.config.syncWithLayers ? 
+          (this.config.syncWithLayers ?
           this.nls.checkLayerListToSelectLayers : this.nls.checkConfigutationToSelectLayers);
-          
+
           this.NoTableMessageDiv = html.create('div', {
             innerHTML: messageText,
             className: 'jimu-widget-attributetable-notable hidden'
@@ -1233,6 +1241,28 @@ define([
           html.place(this.NoTableMessageDiv, srcRef);
         }
         html[show ? 'removeClass':'addClass'](this.NoTableMessageDiv, 'hidden');
+      },
+
+      _toggleLoading: function(show) {
+        if(show === undefined) {
+          var isHidden = this.loading.hidden;
+          if(isHidden) {
+            this.loading.show();
+          } else {
+            this.loading.hide();
+          }
+        } else {
+          if(show) {
+            this.loading.show();
+          } else {
+            this.loading.hide();
+          }
+        }
+      },
+
+      isLoading: function() {
+        return this.loading && !this.loading.hidden || // widget is loading
+               this._activeTable && this._activeTable.loading && !this._activeTable.loading.hidden; // table is loading
       }
     });
 

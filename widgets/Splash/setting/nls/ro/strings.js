@@ -22,7 +22,6 @@ define({
   "imageFill": "Umplere cu imagine",
   "chooseFile": "Alegere fişier",
   "noFileChosen": "Niciun fişier selectat",
-  "transparency": "Transparenţă",
   "sizeFill": "Umplere",
   "sizeFit": "Potrivire",
   "sizeStretch": "Întindere pentru umplere",

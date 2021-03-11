@@ -14,6 +14,7 @@ define({
   "generalSetting": "การคั้งค่าทั่วไป",
   "allPlaceholder": "ใส่ข้อความสำหรับการค้นหาทั้งหมด ",
   "showInfoWindowOnSelect": "แสดงป๊อปอัพสำหรับคุณลักษณะ หรือสถานที่",
+  "showInfoWindowOnSelect2": "แสดงป๊อปอัปเมื่อพบฟีเจอร์หรือตำแหน่งที่ตั้ง",
   "searchInCurrentMapExtent": "ค้นหาเฉพาะในขอบเขตแผนที่ปัจจุบัน",
   "zoomScale": "การย่อ / ขยาย มาตราส่วน",
   "locatorUrl": "URL เครื่องระบุตำแหน่ง",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "ชื่อย่อ",
   "ok": "ตกลง",
   "cancel": "ยกเลิก",
-  "invalidUrlTip": "URL ${URL} ไม่ถูกต้อง หรือไม่สามารถเข้าถึงได้"
+  "invalidUrlTip": "URL ${URL} ไม่ถูกต้อง หรือไม่สามารถเข้าถึงได้",
+  "locateResults": "ค้นหาผลลัพธ์",
+  "panTo": "เลื่อนไปที่",
+  "zoomToScale": "ซูมไปยังสเกล"
 });

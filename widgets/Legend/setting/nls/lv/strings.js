@@ -1,7 +1,7 @@
 define({
   "left": "Līdzināt pa kreisi",
   "right": "Līdzināt pa labi",
-  "arrangement": "Vienošanās",
+  "arrangement": "Izvietojums",
   "autoUpdate": "Automātiska atjaunināšana",
   "respectCurrentMapScale": "Saglabāt pašreizējo kartes mērogu",
   "layerSelectorTitle": "Izvēlieties, kuros slāņos rādīt apzīmējumus: ",

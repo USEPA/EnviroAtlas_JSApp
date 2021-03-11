@@ -7,5 +7,6 @@ define({
   "turnonAll": "Az összes rétegen lehessen kijelölni",
   "turnoffAll": "Egyetlen rétegen se lehessen kijelölni",
   "toggleSelect": "Kiválaszthatóság átváltása az összes réteghez",
-  "singleSelect": "Ez legyen az egyetlen réteg, amelyen kijelölés végrehajtható"
+  "singleSelect": "Ez legyen az egyetlen réteg, amelyen kijelölés végrehajtható",
+  "enableByDefault": "Kijelölőeszköz engedélyezése alapértelmezés szerint"
 });

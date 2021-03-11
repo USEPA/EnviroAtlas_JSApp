@@ -28,5 +28,11 @@ define({
   "keyword": "关键字",
   "basemapLayers": "底图图层",
   "typeAKeywork": "键入关键字",
-  "layers": "图层"
+  "layers": "图层",
+  "tipLayerSearch": "搜索图层",
+  "tipLayerListOperation": "图层列表操作",
+  "tipLayerOperation": "图层菜单",
+  "tipClearText": "清除文本",
+  "collapseLayer": "折叠",
+  "expandLayer": "展开"
 });

@@ -5,5 +5,6 @@ define({
   "whollyWithin": "Zcela uvnitř",
   "allowExport": "Povolit exportování vybraných prvků",
   "layerToSelect": "Vyberte, které vrstvy budou k dispozici pro výběr",
-  "includeRuntimeLayers": "Umožnit výběr vrstev generovaných při běhu"
+  "includeRuntimeLayers": "Povolit výběr vrstev generovaných při běhu",
+  "enableByDefault": "Povolit tlačítko výběru ve výchozím nastavení"
 });

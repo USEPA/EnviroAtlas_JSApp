@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "Mittakaava"
+  "_widgetLabel": "Mittakaava",
+  "scale": "Mittakaava"
 });

@@ -1,0 +1,25 @@
+<div data-dojo-attach-point="dateTimeBox" class="jimu-dateTimeBox">
+	<div data-dojo-attach-point="calendarDiv"></div>
+	<div data-dojo-attach-point="timeTextContainerRuntime" class="timeTextContainer timeTextContainerRuntime">
+		<div class="timeTextIcon"></div>
+		<div data-dojo-attach-point="timeTextBoxDiv"></div>
+	</div>
+	<div data-dojo-attach-point="timeTextContainerSetting" class="timeTextContainer" style="display:none;">
+		<div class="timeCheckbox" data-dojo-type="jimu/dijit/CheckBox" data-dojo-attach-point="timeCheckbox" data-dojo-props="checked:true, label:'${timeNls.showTime}'"></div>
+		<div data-dojo-attach-point="timeTableContainer" style="display:none;">
+			<div class="timeGroup">
+				<div class="timeLabel jimu-ellipsis" title="${timeUnit.hour}">${timeUnit.hour}</div>
+				<div class="timeLabel jimu-ellipsis" title="${timeUnit.minute}">${timeUnit.minute}</div>
+				<div class="timeLabel jimu-ellipsis" title="${timeUnit.second}">${timeUnit.second}</div>
+			</div>
+			<div class="timeGroup">
+				<div data-dojo-attach-point="hourSelect" data-dojo-type="dijit/form/TimeTextBox"
+					data-dojo-props="constraints:{timePattern:'HH', clickableIncrement: 'T01:00:00', visibleIncrement: 'T01:00:00'}"></div>
+				<div data-dojo-attach-point="minuteSelect" data-dojo-type="dijit/form/TimeTextBox"
+					data-dojo-props="constraints:{timePattern:'mm', clickableIncrement: 'T00:05:00', visibleIncrement: 'T00:05:00',pickerMin: 'T01:00:00',pickerMax: 'T01:59:00'}"></div>
+				<div data-dojo-attach-point="secondSelect" data-dojo-type="dijit/form/TimeTextBox"
+					data-dojo-props="constraints:{timePattern:'ss', clickableIncrement: 'T00:00:05', visibleIncrement: 'T00:00:05',pickerMin: 'T01:00:00',pickerMax: 'T01:00:59'}"></div>
+			</div>
+		</div>
+	</div>
+</div>

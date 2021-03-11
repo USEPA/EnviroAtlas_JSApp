@@ -3,5 +3,7 @@ define({
   "highlightLocation": "突顯位置",
   "useTracking": "檢視位置更改",
   "warning": "輸入不正確",
-  "zoomScale": "縮放比例"
+  "zoomScale": "縮放比例",
+  "useCompass": "顯示羅盤方向",
+  "useAccCircle": "顯示位置精確度"
 });

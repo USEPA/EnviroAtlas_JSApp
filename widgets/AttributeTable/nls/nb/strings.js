@@ -4,7 +4,7 @@ define({
   "_featureAction_ViewInTable": "Vis i attributtabell",
   "ok": "OK",
   "cancel": "Avbryt",
-  "unsupportQueryWarning": "Laget må støtte spørringsoperasjoner for å kunne vises i attributtabell-widget. Sørg for at spørringsfunksjonen i tjenesten er slått på.",
+  "unsupportQueryWarning": "Laget må støtte spørringsoperasjoner for å kunne vises i attributtabell-miniprogrammet. Sørg for at spørringsfunksjonen i tjenesten er slått på.",
   "exportMessage": "Eksportere data til CSV-fil?",
   "exportFiles": "Eksporter til CSV",
   "exportSelected": "Eksporter utvalg til CSV",
@@ -15,6 +15,8 @@ define({
   "selectAll": "Velg poster på alle sider",
   "selectPage": "Velg poster på gjeldende side",
   "clearSelection": "Tøm utvalg",
+  "selectionHandleLabel": "Markeringshåndtak",
+  "selectionHandleDescription": "Trykk på Enter eller mellomromstasten for å merke geoobjekt(er) i kartet",
   "filter": "Filter",
   "setFilterTip": "Angi filtre på riktig måte.",
   "noFilterTip": "Uten definerte filteruttrykk viser denne spørringoppgaven alle geoobjekter i den angitte datakilden.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Ingen tabeller tilgjengelig for visning.",
   "checkConfigutationToSelectLayers": "Gå til siden for miniprograminnstillinger for å velge lag.",
-  "checkLayerListToSelectLayers": "Attributtabellen er synkronisert med synlige lag i kartet; du kan bruke et miniprogram som Lagliste for å aktivere/deaktivere lag."
+  "checkLayerListToSelectLayers": "Attributtabellen er synkronisert med synlige lag i kartet; du kan bruke et miniprogram som Lagliste for å aktivere/deaktivere lag.",
+  "rowHeaderColumnTitle": "Rad ${layerName}, hovered, trykk på Enter for å velge hover-radene"
 });

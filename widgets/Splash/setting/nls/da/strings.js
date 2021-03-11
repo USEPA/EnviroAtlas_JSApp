@@ -22,7 +22,6 @@ define({
   "imageFill": "Billedfyld",
   "chooseFile": "Vælg fil",
   "noFileChosen": "Der er ikke valgt nogen fil",
-  "transparency": "Transparency",
   "sizeFill": "Fyld",
   "sizeFit": "Tilpas",
   "sizeStretch": "Stræk og udfyld",

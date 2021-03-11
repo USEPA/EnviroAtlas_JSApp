@@ -14,6 +14,7 @@ define({
   "generalSetting": "Thiết lập tổng quan",
   "allPlaceholder": "Văn bản giữ chỗ để tìm kiếm tất cả: ",
   "showInfoWindowOnSelect": "Hiển thị cửa sổ pop-up cho vị trí hoặc đối tượng được tìm thấy",
+  "showInfoWindowOnSelect2": "Hiển thị pop-up khi tìm thấy đối tượng hoặc vị trí",
   "searchInCurrentMapExtent": "Chỉ tìm kiếm trong kích thước bản đồ hiện tại",
   "zoomScale": "Tỷ lệ thu phóng",
   "locatorUrl": "URL Bộ mã địa lý",
@@ -22,7 +23,7 @@ define({
   "locatorWarning": "Phiên bản dịch vụ mã hóa địa lý này không được hỗ trợ. Tiện ích này hỗ trợ dịch vụ mã hóa địa lý 10.1 trở lên.",
   "locatorTips": "Các gợi ý không khả dụng do dịch vụ mã hóa địa lý không hỗ trợ khả năng gợi ý.",
   "layerSource": "Nguồn lớp",
-  "searchLayerTips": "Các gợi ý không khả dụng do dịch vụ mã hóa địa lý không hỗ trợ khả năng phân trang.",
+  "searchLayerTips": "Các gợi ý không khả dụng do dịch vụ đối tượng không hỗ trợ khả năng phân trang.",
   "placeholder": "Văn bản trình giữ chỗ",
   "searchFields": "Tìm kiếm trường",
   "displayField": "Hiển thị trường",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "Bí danh",
   "ok": "OK",
   "cancel": "Hủy",
-  "invalidUrlTip": "URL ${URL} không hợp lệ hoặc không thể truy cập được."
+  "invalidUrlTip": "URL ${URL} không hợp lệ hoặc không thể truy cập được.",
+  "locateResults": "Định vị kết quả",
+  "panTo": "Quay để",
+  "zoomToScale": "Phóng to đến tỷ lệ"
 });

@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "Barre d’échelle"
+  "_widgetLabel": "Barre d’échelle",
+  "scale": "Echelle"
 });

@@ -1,7 +1,9 @@
 define({
-  "timeout": "Časový limit vypršel",
+  "timeout": "Časový limit",
   "highlightLocation": "Zvýraznit polohu",
-  "useTracking": "Sledovat změny umístění",
+  "useTracking": "Sledovat změny polohy",
   "warning": "Nesprávný vstup",
-  "zoomScale": "Měřítko přiblížení"
+  "zoomScale": "Měřítko přiblížení",
+  "useCompass": "Zobrazit orientaci kompasu",
+  "useAccCircle": "Zobrazit přesnost umístění"
 });

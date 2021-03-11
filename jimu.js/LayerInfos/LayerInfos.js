@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,9 +23,10 @@ define([
   'dojo/topic',
   'dojo/Evented',
   'dojo/promise/all',
-  './LayerInfoFactory'
+  './LayerInfoFactory',
+  'libs/crc'
 ], function(declare, array, lang, Deferred, on, topic,
-  Evented, all, LayerInfoFactory) {
+  Evented, all, LayerInfoFactory, crc) {
   var clazz = declare([Evented], {
     declaredClass: "jimu.LayerInfos",
     map: null,
@@ -40,6 +41,7 @@ define([
     _unreachableLayersTitleOfWebmap: null,
     _objectId: null,
     _layerInfoFactory: null,
+    _previousLayerOrder: null,
 
     constructor: function(map, webmapItemData) {
       this._objectId = Math.random();
@@ -49,6 +51,7 @@ define([
       this._tables = webmapItemData.tables;
       this._layerInfoFactory = new LayerInfoFactory(map, this);
       this.map = map;
+      this._previousLayerOrder = [].concat(this.map.layerIds, this.map.graphicsLayerIds);
       this._initLayerInfos();
       this._initBasemapLayerInfos();
       this._initTablesInfos();
@@ -135,7 +138,6 @@ define([
       			}
       		}
       	}
-      	
         // supports to set isTemporaryLayer when layerObject already added to map.
         if(lang.getObject("_wabProperties.isTemporaryLayer", false, layerInfo.layerObject)) {
           layerInfo._flag._isTemporaryLayerInfo = true;
@@ -400,7 +402,7 @@ define([
       var index = this._getTopLayerInfoIndexById(layerInfo.id), l;
       if (index - steps >= 0) {
         l = this._finalLayerInfos[index - steps].obtainLayerIndexesInMap().length;
-        this._finalLayerInfos[index].moveLayerByIndex(this._finalLayerInfos[index - steps]
+        this._finalLayerInfos[index].moveRightOfIndex(this._finalLayerInfos[index - steps]
           .obtainLayerIndexesInMap()[l - 1].index);
         beChangedLayerInfo = this._finalLayerInfos[index - steps];
         //this.update();
@@ -411,7 +413,7 @@ define([
         this._markFirstOrLastNode();
         topic.publish('layerInfos/layerReorder');
         */
-        topic.publish('layerInfos/layerReorder', index, steps, 'moveup');
+        //topic.publish('layerInfos/layerReorder', index, steps, 'moveup');
       }
       return beChangedLayerInfo;
     },
@@ -444,7 +446,7 @@ define([
       steps = steps ? steps : 1;
       var index = this._getTopLayerInfoIndexById(layerInfo.id);
       if (index + steps <= (this._finalLayerInfos.length - 1)) {
-        this._finalLayerInfos[index].moveLayerByIndex(this._finalLayerInfos[index + steps]
+        this._finalLayerInfos[index].moveLeftOfIndex(this._finalLayerInfos[index + steps]
           .obtainLayerIndexesInMap()[0].index);
         beChangedLayerInfo = this._finalLayerInfos[index + steps];
         //this.update();
@@ -455,7 +457,7 @@ define([
         this._markFirstOrLastNode();
         topic.publish('layerInfos/layerReorder');
         */
-        topic.publish('layerInfos/layerReorder', index, steps, 'movedown');
+        //topic.publish('layerInfos/layerReorder', index, steps, 'movedown');
       }
       return beChangedLayerInfo;
     },
@@ -510,6 +512,145 @@ define([
       }, this);
     },
 
+    _getEncodedLayerIdsOfCurrentMap: function() {
+      if(this._encodedLayerIds) {
+        return this._encodedLayerIds;
+      } else {
+        this._encodedLayerIds = {
+          encodedToLayerIds: {},
+          layerIdsToEncoded: {}
+        };
+        this.traversal(lang.hitch(this, function(layerInfo) {
+          var encodedLayerId = this._encodeLayerId(layerInfo.id);
+          this._encodedLayerIds.encodedToLayerIds[encodedLayerId] = layerInfo.id;
+          this._encodedLayerIds.layerIdsToEncoded[layerInfo.id] = encodedLayerId;
+        }));
+      }
+      return this._encodedLayerIds;
+    },
+
+    _getShowOrHideLayerIdsBySimpleState: function(simpleState) {
+      var showLayerIds = [];
+      var hideLayerIds = [];
+      var result = {
+        showLayerIds: null,
+        hideLayerIds: null
+      };
+      var encodedLayerIds = this._getEncodedLayerIdsOfCurrentMap().encodedToLayerIds;
+      if(simpleState && simpleState.showLayersEncoded && encodedLayerIds) {
+        array.forEach(simpleState.showLayersEncoded, function(encodedLayerId) {
+          var layerId = encodedLayerIds[encodedLayerId];
+          if(layerId) {
+            showLayerIds.push(layerId);
+          }
+        });
+        result.showLayerIds = showLayerIds;
+      } else if (simpleState && simpleState.showLayers) {
+        result.showLayerIds = simpleState.showLayers;
+      } else if (simpleState && simpleState.hideLayersEncoded && encodedLayerIds) {
+        array.forEach(simpleState.hideLayersEncoded, function(encodedLayerId) {
+          var layerId = encodedLayerIds[encodedLayerId];
+          if(layerId) {
+            hideLayerIds.push(layerId);
+          }
+        });
+        result.hideLayerIds = hideLayerIds;
+      } else if (simpleState && simpleState.hideLayers) {
+        result.hideLayerIds = simpleState.hideLayers;
+      }
+      return result;
+    },
+
+    // simplificationState = {
+    //   showLayers: [],            // layerId or layerTitle, alternative with other show/hide layers
+    //   showLayersEncoded: [],     // alternative with other show/hide layers
+    //   hideLayers: [],            // alternative with other show/hide layers
+    //   hideLayersEncoded: [],     // alternative with other show/hide layers
+    //   enablePopupLayers: [],
+    //   visibilityScaleRange: {layerId: scaleRange}
+    // }
+    setSimplificationState: function(simplificationState) {
+      var state = {layerOptions: {}};
+      var showOrHideLayerIdsObj = this._getShowOrHideLayerIdsBySimpleState(simplificationState);
+      this.traversal(lang.hitch(this, function(layerInfo) {
+        state.layerOptions[layerInfo.id] = {};
+        // restore layers visibility.
+        var showOrHideLayerIds;
+        var isShowLayerIds;
+        var layerId = null;
+        if(showOrHideLayerIdsObj.showLayerIds) {
+          showOrHideLayerIds = showOrHideLayerIdsObj.showLayerIds;
+          isShowLayerIds = true;
+        } else {
+          showOrHideLayerIds = showOrHideLayerIdsObj.hideLayerIds;
+          isShowLayerIds = false;
+        }
+
+        array.some(showOrHideLayerIds, function(layerIdOrTitle) {
+          if(layerInfo.id === layerIdOrTitle) {
+            layerId = layerInfo.id;
+            return true;
+          } else if(layerInfo.title.trim &&
+                    layerIdOrTitle.trim &&
+                    layerInfo.title.trim() === layerIdOrTitle.trim()) { // remove the end blank
+            layerId = layerInfo.id;
+            return false;
+          }
+        });
+        if(isShowLayerIds) {
+          if(layerId !== null) {
+            state.layerOptions[layerInfo.id].visible = true;
+          } else {
+            state.layerOptions[layerInfo.id].visible = false;
+          }
+        } else {
+          if(layerId === null) {
+            state.layerOptions[layerInfo.id].visible = true;
+          } else {
+            state.layerOptions[layerInfo.id].visible = false;
+          }
+        }
+      }));
+
+      this.restoreState(state);
+    },
+
+    // simplificationState = {
+    //   showLayers: [], // layerId or layerTitle
+    //   showLayersEncoded: [],
+    //   hideLayers: [],
+    //   hideLayersEncoded: [],
+    //   enablePopupLayers: [],
+    //   visibilityScaleRange: {layerId: scaleRange}
+    // }
+    getSimplificationState: function() {
+      var simplificationState = {
+        showLayers: [],
+        showLayersEncoded: [],
+        hideLayers: [],
+        hideLayersEncoded: []
+      };
+      this.traversal(lang.hitch(this, function(layerInfo) {
+        if(layerInfo.isVisible()) {
+          simplificationState.showLayers.push(layerInfo.id);
+          simplificationState.showLayersEncoded.push(this._encodeLayerId(layerInfo.id));
+        } else {
+          simplificationState.hideLayers.push(layerInfo.id);
+          simplificationState.hideLayersEncoded.push(this._encodeLayerId(layerInfo.id));
+        }
+      }));
+
+      return simplificationState;
+    },
+
+    _encodeLayerId: function(layerId) {
+      var crc24 = crc.crc24;
+      var sum = crc24(layerId);
+      sum = parseInt(sum, 16);
+      sum = sum.toString(36);
+      return sum;
+    },
+
     getUnreachableLayersTitle: function() {
       return this._unreachableLayersTitleOfWebmap;
     },
@@ -537,7 +678,9 @@ define([
         } catch (err) {
           console.warn(err.message);
           layerInfo = null;
-          this._unreachableLayersTitleOfWebmap.push(operLayer.title);
+          if(err.message.indexOf("declaredClass") >= 0) {
+            this._unreachableLayersTitleOfWebmap.push(operLayer.title);
+          }
         }
         if (layerInfo) {
           layerInfos.push(layerInfo);
@@ -732,7 +875,7 @@ define([
               newLayerInfo._flag._isTemporaryLayerInfo = true;
             }
             if ((newLayer.id.indexOf(window.layerIdTiledPrefix)) == -1){
-                specifiedLayerInfos.push(newLayerInfo);
+            specifiedLayerInfos.push(newLayerInfo);
             }
           }
         }
@@ -749,8 +892,12 @@ define([
                 tableDifination.id = newLayerInfo.id + '_' + tableDifination.id;
                 //tableDifination.title = this._getLayerTitle(tableDifination);
                 if (tableDifination.url.indexOf("ejscreen")<0) {
-	                tableDifination.title = this._getLayerTitle(tableDifination);
-	                tableDifinations.push(tableDifination);                	
+                tableDifination.title = this._getLayerTitle(tableDifination);
+                // var newTalbeInfo = this._addTable([tableDifination], this._tableInfos);
+                // if (newTalbeInfo) {
+                //   newTableInfos.push(newTalbeInfo);
+                // }
+                tableDifinations.push(tableDifination);
                 }
                 //tableDifinations.push(tableDifination);
               }, this);
@@ -839,7 +986,7 @@ define([
 
     _findTopLayerInfoById: function(id) {
       var i, layerInfo = null;
-      var layerInfos = this._finalLayerInfos.concat(this._tableInfos); //******
+      var layerInfos = [].concat(this._finalLayerInfos || [], this._tableInfos || []); //******
       for (i = 0; i < layerInfos.length; i++) {
         if (layerInfos[i].id === id) {
           layerInfo = layerInfos[i];
@@ -933,11 +1080,11 @@ define([
       handleAdd = on(this.map, "layer-add-result", lang.hitch(this, this._onLayersChange, clazz.ADDED));
       handleRemove = on(this.map, "layer-remove", lang.hitch(this, this._onLayersChange, clazz.REMOVED));
 
-      //this.own(on(this.map, "layers-add-result", lang.hitch(this, this._onLayersChange)));
-      //handleRemoves = on(this.map, "layers-removed", lang.hitch(this, this._onLayersChange));
 
-      handleReorder = topic.subscribe('layerInfos/layerReorder',
-        lang.hitch(this, this._onLayerReorder));
+      handleReorder = on(this.map, "layer-reorder", lang.hitch(this, this._onLayerReorder));
+
+      //handleReorder = topic.subscribe('layerInfos/layerReorder',
+      //  lang.hitch(this, this._onLayerReorder));
 
       handleIsShowInMapChanged = topic.subscribe('layerInfos/layerInfo/isShowInMapChanged',
         lang.hitch(this, this._onShowInMapChanged));
@@ -1074,10 +1221,24 @@ define([
       this._emitEventForEveryLayerInfo('filterChanged', changedLayerInfos, parameterObj);
     },
 
-    _onLayerReorder: function(beMovedLayerInfoIndex, steps,  moveUpOrDown) {
-      // doesn't call update(), manual reorder layerInfosArrar.
-      var beMovedLayerInfo = this._reorderLayerInfosArray(beMovedLayerInfoIndex, steps, moveUpOrDown);
-      this._emitEvent('layerInfosReorder', beMovedLayerInfo, clazz.REORDERED, beMovedLayerInfo);
+    _onLayerReorder: function(/*beMovedLayerInfoIndex, steps,  moveUpOrDown*/) {
+      //// doesn't call update(), manual reorder layerInfosArrar.
+      //var beMovedLayerInfo = this._reorderLayerInfosArray(beMovedLayerInfoIndex, steps, moveUpOrDown);
+      //this._emitEvent('layerInfosReorder', beMovedLayerInfo, clazz.REORDERED, beMovedLayerInfo);
+
+      var currentLayerOrder = [].concat(this.map.layerIds, this.map.graphicsLayerIds);
+      var isOrderChanged = array.some(currentLayerOrder, lang.hitch(this, function(layerId, index) {
+        if(layerId === this._previousLayerOrder[index]) {
+          return false;
+        } else {
+          return true;
+        }
+      }));
+      if((currentLayerOrder.length === this._previousLayerOrder.length) && isOrderChanged) {
+        this.update();
+        this._emitEvent('layerInfosReorder', null, clazz.REORDERED);
+      }
+      this._previousLayerOrder = currentLayerOrder;
     },
 
     _onRendererChanged: function(changedLayerInfos) {

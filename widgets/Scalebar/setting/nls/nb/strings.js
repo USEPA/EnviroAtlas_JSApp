@@ -5,5 +5,9 @@ define({
   "english": "engelsk",
   "metric": "metric",
   "ruler": "linjal",
-  "line": "linje"
+  "line": "linje",
+  "number": "tall",
+  "spinnerLabel": "Rund av målestokktall til: ",
+  "decimalPlace": "desimal",
+  "separator": "Vis tusenskilletegn"
 });

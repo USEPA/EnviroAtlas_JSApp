@@ -15,6 +15,8 @@ define({
   "selectAll": "Rekordok kijelölése az összes oldalon",
   "selectPage": "Rekordok kijelölése az aktuális oldalon",
   "clearSelection": "Kijelölés megszüntetése",
+  "selectionHandleLabel": "Kiválasztó fogópont",
+  "selectionHandleDescription": "Nyomja meg az ENTER vagy a SPACE billentyűt a térképen szereplő vektoros elemek kiemeléséhez",
   "filter": "Szűrő",
   "setFilterTip": "Állítsa be megfelelően a szűrőket.",
   "noFilterTip": "A szűrési kifejezések meghatározása nélkül ez a lekérdezési feladat a megadott adatforrás összes vektoros elemét felsorolja.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Nincs megjeleníthető táblázat.",
   "checkConfigutationToSelectLayers": "Ha réteget szeretne kiválasztani, keresse fel a widget beállításainak oldalát.",
-  "checkLayerListToSelectLayers": "Az Attribútum táblát a rendszer szinkronizálja a térkép látható rétegeivel; Ön például a Réteg lista widget segítségével kapcsolhatja be/ki a rétegeket."
+  "checkLayerListToSelectLayers": "Az Attribútum táblát a rendszer szinkronizálja a térkép látható rétegeivel; Ön például a Réteg lista widget segítségével kapcsolhatja be/ki a rétegeket.",
+  "rowHeaderColumnTitle": "A(z) ${layerName} sor felett áll. A sor kiválasztásához nyomja meg az Entert"
 });

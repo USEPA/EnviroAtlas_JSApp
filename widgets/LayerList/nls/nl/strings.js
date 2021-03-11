@@ -28,5 +28,11 @@ define({
   "keyword": "Trefwoord",
   "basemapLayers": "Basiskaart-lagen",
   "typeAKeywork": "Voer een trefwoord in",
-  "layers": "Lagen"
+  "layers": "Lagen",
+  "tipLayerSearch": "Lagen zoeken",
+  "tipLayerListOperation": "Operaties lagenlijst",
+  "tipLayerOperation": "Lagenmenu's",
+  "tipClearText": "Tekst wissen",
+  "collapseLayer": "Inklappen",
+  "expandLayer": "Uitklappen"
 });

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 ///////////////////////////////////////////////////////////////////////////
-define(["dojo/_base/declare", 
+define(["dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/on",
     "dojo/aspect",
@@ -63,6 +63,7 @@ define(["dojo/_base/declare",
         var self = this,  args = arguments;
         this._getUser().then(function(user) {
           //console.warn("AddData.user=",user);
+    //console.warn("AddData.user=",user);
           self._checkConfig();
           self._initTabs();
           return self._initContext(user);
@@ -186,6 +187,12 @@ define(["dojo/_base/declare",
         var portal = portalUtils.getPortal(this.appConfig.portalUrl);
         this.isPortal = portal.isPortal;
         searchContext.portal = portal;
+
+        // Issue #14908
+        if (portal.isPortal) {
+          searchContext.orgId = portal.id;
+        }
+
         if (user) {
           if (typeof user.orgId === "string" && user.orgId.length > 0) {
             searchContext.orgId = user.orgId;

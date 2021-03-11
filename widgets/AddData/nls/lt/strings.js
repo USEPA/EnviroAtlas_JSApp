@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Leidžiama daugiausiai tiek elementų: {count}",
     "layerNamePattern": "{filename} – {name}",
     "generalIssue": "Įvyko klaida.",
-    "kmlProjectionMismatch": "Žemėlapio ir KML sluoksnio koordinatės nesutampa, todėl negalima konvertuoti."
+    "kmlProjectionMismatch": "Žemėlapio ir KML sluoksnio koordinatės nesutampa, todėl negalima konvertuoti.",
+    "featureLocationsCouldNotBeFound": "Elemenetų rasti nepavyko: vietos laukai nežinomi arba netinkami. Failas bus įtrauktas kaip lentelė."
   },
   "layerList": {
     "caption": "Sluoksniai",

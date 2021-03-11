@@ -28,5 +28,11 @@ define({
   "keyword": "Nøgleord",
   "basemapLayers": "Baggrundskortlag",
   "typeAKeywork": "Skriv et nøgleord",
-  "layers": "Lag"
+  "layers": "Lag",
+  "tipLayerSearch": "Søg i lag",
+  "tipLayerListOperation": "Laglistehandlinger",
+  "tipLayerOperation": "Lagmenuer",
+  "tipClearText": "Ryd tekst",
+  "collapseLayer": "Skjul",
+  "expandLayer": "Vis"
 });

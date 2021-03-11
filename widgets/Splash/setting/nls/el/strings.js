@@ -22,7 +22,6 @@ define({
   "imageFill": "Γέμισμα εικόνας",
   "chooseFile": "Επιλογή αρχείου",
   "noFileChosen": "Δεν έχει επιλεγεί αρχείο",
-  "transparency": "Διαφάνεια",
   "sizeFill": "Γέμισμα",
   "sizeFit": "Προσαρμογή",
   "sizeStretch": "Παραμόρφωση για γέμισμα",

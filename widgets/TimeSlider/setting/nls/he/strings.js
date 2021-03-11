@@ -27,6 +27,7 @@ define({
   "timeSpan": "מרווח זמן",
   "startTime": "זמן התחלה",
   "endTime": "זמן סיום",
+  "unit": "יחידה",
   "timeDisplay": "תצוגת זמן",
   "displayDataIn": "הצג נתונים במרווחים של",
   "interval": "מרווח",

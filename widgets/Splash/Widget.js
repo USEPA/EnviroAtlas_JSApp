@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,12 +29,13 @@ define(['dojo/_base/declare',
     'esri/lang',
     'jimu/dijit/LoadingShelter',
     'dojo/Deferred',
-    "jimu/dijit/TabContainer",
+    'jimu/dijit/EditorXssFilter',
+    'jimu/dijit/TabContainer',
     'jimu/WidgetManager',
     'jimu/PanelManager'
   ],
   function(declare, lang, html, on, keys, query, cookie, _WidgetsInTemplateMixin, BaseWidget, topic,
-           CheckBox, utils, esriLang, LoadingShelter, Deferred, TabContainer, WidgetManager, PanelManager) {
+           CheckBox, utils, esriLang, LoadingShelter, Deferred, EditorXssFilter, TabContainer, WidgetManager, PanelManager) {
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
       baseClass: 'jimu-widget-splash',
       _hasContent: null,
@@ -43,6 +44,7 @@ define(['dojo/_base/declare',
 
       postCreate: function() {
         this.inherited(arguments);
+        this.isFirstFoucs = true;
         html.setAttr(this.domNode, 'aria-label', this.nls._widgetLabel);
 
         //LoadingShelter
@@ -51,6 +53,9 @@ define(['dojo/_base/declare',
         });
         this.shelter.placeAt(this.domNode);
         this.shelter.startup();
+
+        //xss filter
+        this.config.splash.splashContent = EditorXssFilter.getInstance().sanitize(this.config.splash.splashContent);
 
         this._hasContent = this.config.splash && this.config.splash.splashContent;
         this._requireConfirm = this.config.splash && this.config.splash.requireConfirm;
@@ -146,7 +151,10 @@ define(['dojo/_base/declare',
 
         this.own(on(this.domNode, 'keydown', lang.hitch(this, function(evt){
           if(html.hasClass(evt.target, this.baseClass) && evt.keyCode === keys.ESCAPE){
-            this.close();
+            if(!this._requireConfirm){
+              this.close();
+              utils.focusOnFirstSkipLink();
+            }
           }
         })));
 
@@ -163,11 +171,46 @@ define(['dojo/_base/declare',
         })));
 
         var focusableNodes = utils.getFocusNodesInDom(this.domNode);
-        for(var i = 0; i < focusableNodes.length; i ++){
-          html.setAttr(focusableNodes[i], 'tabindex', 0);
-        }
         utils.initFirstFocusNode(this.domNode, focusableNodes[0]);
         utils.initLastFocusNode(this.domNode, this.okNode);
+
+        this._onlyFocus = true;
+        this.own(on(this.customContentNode, 'focus', lang.hitch(this, function(){
+          if(this._onlyFocus){
+            this._onlyFocus = false;
+          }else{
+            this.customContentNode.scrollTop = 0;
+            html.setStyle(this.customContentNode, 'display', 'none');
+            // blur current node's focus state. It only works when it's between up and down settings.
+            // this.domNode.focus(); //This causes the page to flicker.
+            this.customContentNode.blur();
+            html.setStyle(this.customContentNode, 'display', 'block');
+            setTimeout(lang.hitch(this, function(){
+              this._onlyFocus = true;
+              this.customContentNode.focus();
+            }), 30);
+          }
+        })));
+
+        utils.setWABLogoDefaultAlt(this.customContentNode);
+
+        //focus on first-node when focusing on the container of splash widget at first time.
+        this.own(on(this.splashDesktop, 'focus', lang.hitch(this, function(){
+          if(this.isFirstFoucs){
+            this.isFirstFoucs = false;
+            setTimeout(function(){
+              focusableNodes[0].focus();
+            }, 0);
+          }
+        })));
+      },
+
+      _setOkNodeAriaLabel: function(){
+        var okNodeAriaLabel = this.okNode.innerHTML;
+        if(this._requireConfirm && !this.confirmCheck.getValue()){
+          okNodeAriaLabel = okNodeAriaLabel + ' ' + window.jimuNls.common.disabled;
+        }
+        html.attr(this.okNode, "aria-label", okNodeAriaLabel);
       },
 
       _setConfig: function() {
@@ -189,6 +232,8 @@ define(['dojo/_base/declare',
           }
           this.okNode.innerHTML = this.config.splash.button.text || this.nls.ok;
           html.attr(this.okNode, "title", this.config.splash.button.text || this.nls.ok);
+          this._setOkNodeAriaLabel();
+
           var background = this.config.splash.background;
           if (typeof background !== "undefined") {
             //image
@@ -319,9 +364,6 @@ define(['dojo/_base/declare',
         var contentMarginButtom = this._getNodeStylePx(this.customContentNode, "margin-bottom"),//between content & confirm text
           footerBottom = this._getNodeStylePx(this.footerNode, "bottom"),//between footer & splashBottom
           contentSpace = containerContent.h - (footerBox.h + footerBottom);
-          //console.log("customContentScrollheight:"+customContentScrollheight+"; contentSpace:"+contentSpace);
-		  //console.log("contentSpace:"+contentSpace+"; contentMarginButtom:"+contentMarginButtom);
-		  //console.log("window.appInfo.isRunInMobile:" + window.appInfo.isRunInMobile);
 
         var isNeedLimitCustomContentHeight = (customContentScrollheight >= contentSpace);
         if (true === isNeedLimitCustomContentHeight || window.appInfo.isRunInMobile) {
@@ -391,6 +433,7 @@ define(['dojo/_base/declare',
             html.addClass(this.okNode, 'disable-btn');
             html.removeClass(this.okNode, 'enable-btn');
           }
+          this._setOkNodeAriaLabel();
         }
       },
 
@@ -427,9 +470,13 @@ define(['dojo/_base/declare',
         }
       },
       onOkKeydown: function(evt){
-        if(evt.keyCode === keys.ENTER){
+        if(evt.keyCode === keys.ENTER || evt.keyCode === keys.SPACE){
           this.onOkClick();
-          utils.trapToNextFocusContainer(this.domNode, true);
+          if(!this._requireConfirm || (this._requireConfirm && this.confirmCheck.getValue())){
+            utils.focusOnFirstSkipLink();
+          }else{
+            evt.preventDefault();
+          }
         }
       },
       onBackClick: function(){
@@ -459,7 +506,7 @@ define(['dojo/_base/declare',
             }
         }
         this.close();
-      },     
+      },   
       close: function() {
         this._isClosed = true;
         this._eventHide();

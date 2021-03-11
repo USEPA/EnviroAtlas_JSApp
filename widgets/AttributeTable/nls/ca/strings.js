@@ -15,6 +15,8 @@ define({
   "selectAll": "Seleccioneu els registres de totes les pàgines",
   "selectPage": "Seleccioneu els registres de la pàgina actual",
   "clearSelection": "Esborra la selecció",
+  "selectionHandleLabel": "Control de selecció",
+  "selectionHandleDescription": "Premeu RETORN o ESPAI per ressaltar les entitats al mapa",
   "filter": "Filtre",
   "setFilterTip": "Definiu els filtres correctament.",
   "noFilterTip": "Sense expressions de filtre definides, aquesta tasca de consulta mostrarà totes les entitats de l'origen de dades especificat.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "No hi ha taules disponibles per mostrar.",
   "checkConfigutationToSelectLayers": "Aneu a la pàgina de configuració de widgets per seleccionar capes.",
-  "checkLayerListToSelectLayers": "La taula d'atributs està sincronitzada amb les capes visibles del mapa. Podeu utilitzar un widget, com ara Llista de capes, per activar o desactivar capes."
+  "checkLayerListToSelectLayers": "La taula d'atributs està sincronitzada amb les capes visibles del mapa. Podeu utilitzar un widget, com ara Llista de capes, per activar o desactivar capes.",
+  "rowHeaderColumnTitle": "Fila ${layerName}, cursor passat pel damunt, premeu Intro per seleccionar les files en passar-hi el cursor pel damunt."
 });

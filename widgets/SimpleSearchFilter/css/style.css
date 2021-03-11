@@ -239,10 +239,6 @@ input.cmn-toggle-round-flat-grayedout:checked + label:after {
     display:inline;
 }
 
-/*Reduce the padding */
-#widgets_SimpleSearchFilter_Widget_37_panel .jimu-widget-frame .jimu-container{
-    padding: 0px;
-}
 /*style the (+) and (-) */
 .jimu-widget-simplesearchfilter.hide, .jimu-widget-simplesearchfilter.show {
 	width: 20px;
@@ -418,4 +414,11 @@ a.esIcons {
 }
 .demoLink{
     color: #ffff99;
+}
+.help-btn{
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  margin: 0 !important;
+  background: url(../images/i_icon.png) no-repeat center center;
 }

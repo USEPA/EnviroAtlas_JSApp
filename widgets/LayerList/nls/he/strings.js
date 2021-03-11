@@ -28,5 +28,11 @@ define({
   "keyword": "מילת מפתח",
   "basemapLayers": "שכבות מפת בסיס",
   "typeAKeywork": "הקלד מילת מפתח",
-  "layers": "שכבות"
+  "layers": "שכבות",
+  "tipLayerSearch": "חיפוש שכבות",
+  "tipLayerListOperation": "פעולות על רשימת שכבות",
+  "tipLayerOperation": "תפריטי שכבות",
+  "tipClearText": "נקה טקסט",
+  "collapseLayer": "צמצם",
+  "expandLayer": "הרחב"
 });

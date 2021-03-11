@@ -54,6 +54,8 @@ define([
     'widgets/Demo/help/help_TimesSeries2',
     'widgets/Demo/help/help_AddData1',
     'widgets/Demo/help/help_AddData2',
+    'widgets/Demo/help/help_Select1',
+    'widgets/Demo/help/help_Select2',
     'widgets/Demo/help/help_SelectCommunity1',
     'widgets/Demo/help/help_SelectCommunity2',
     'widgets/Demo/help/help_DrawerMapping1',
@@ -63,7 +65,21 @@ define([
     'widgets/Demo/help/help_HucNavigation1',
     'widgets/Demo/help/help_HucNavigation2',
     'widgets/Demo/help/help_Raindrop1',
-    'widgets/Demo/help/help_Raindrop2',   
+    'widgets/Demo/help/help_Raindrop2',  
+    'widgets/Demo/help/help_AttributeTable1',
+    'widgets/Demo/help/help_AttributeTable2',
+    'widgets/Demo/help/help_SelectByTopic1',
+    'widgets/Demo/help/help_SelectByTopic2',
+    'widgets/Demo/help/help_DrawMeasure1',
+    'widgets/Demo/help/help_DrawMeasure2',
+    'widgets/Demo/help/help_EnhancedBookmarks1',
+    'widgets/Demo/help/help_EnhancedBookmarks2',
+    'widgets/Demo/help/help_DynamicSymbology1',
+    'widgets/Demo/help/help_DynamicSymbology2',
+    'widgets/Demo/help/help_Print1',
+    'widgets/Demo/help/help_Print2',
+    'widgets/Demo/help/help_LayerList1',
+    'widgets/Demo/help/help_LayerList2',	      
     'widgets/Demo/help/help_EndPage',      
     'require',
     'dojo/i18n',
@@ -74,7 +90,7 @@ define([
   function(ConfigManager, LayoutManager, DataManager, WidgetManager, FeatureActionManager, SelectionManager,
     DataSourceManager, FilterManager, html, lang, array, on, keys, mouse,
     topic, cookie, Deferred, all, ioquery, esriConfig, esriRequest, urlUitls, IdentityManager,
-    portalUrlUtils, jimuUtils, help_Welcome, help_Elevation1,help_Elevation2, help_FeaturedCollections1, help_FeaturedCollections2, help_Demographic1, help_Demographic2, help_EnviroAtlasDataSearch1, help_EnviroAtlasDataSearch2, help_TimesSeries1, help_TimesSeries2, help_AddData1, help_AddData2, help_SelectCommunity1, help_SelectCommunity2, help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_HucNavigation1, help_HucNavigation2, help_Raindrop1, help_Raindrop2, help_EndPage, require, i18n, mainBundle, esriMain, dojoReady) {
+    portalUrlUtils, jimuUtils, help_Welcome, help_Elevation1,help_Elevation2, help_FeaturedCollections1, help_FeaturedCollections2, help_Demographic1, help_Demographic2, help_EnviroAtlasDataSearch1, help_EnviroAtlasDataSearch2, help_TimesSeries1, help_TimesSeries2, help_AddData1, help_AddData2, help_Select1, help_Select2, help_SelectCommunity1, help_SelectCommunity2, help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_HucNavigation1, help_HucNavigation2, help_Raindrop1, help_Raindrop2, help_AttributeTable1, help_AttributeTable2, help_SelectByTopic1, help_SelectByTopic2, help_DrawMeasure1, help_DrawMeasure2, help_EnhancedBookmarks1, help_EnhancedBookmarks2, help_DynamicSymbology1, help_DynamicSymbology2, help_Print1, help_Print2, help_LayerList1, help_LayerList2, help_EndPage, require, i18n, mainBundle, esriMain, dojoReady) {
     /* global jimuConfig:true */
     var mo = {}, appConfig;
 
@@ -93,7 +109,9 @@ define([
     window.timeSliderPause = false;
     window.addedLayerIndex = 0;
     window.uploadedFeatLayerIdPrefix = "uploaded_";
+    window.createdFromSelectPrefix = "createdFromSelect_";
     window.timeSeriesLayerId = "ScenarioDataLayer";//This is for Time Series Layer from sidebar controller
+    window.communityLayerTitle = "EnviroAtlas Community Boundaries";
     window.timeSeriesMetadata = {};
     window.timeSeriesMetadata['PET'] =  "T001";
     window.timeSeriesMetadata['TempMin'] =  "T002";
@@ -117,6 +135,10 @@ define([
     window.idCommuBoundaryPoint = "Boundary_Point";
     window.NavHuc8LayerTitle = "Navigated HUC8 Subbasin";
     window.NavHuc12LayerTitle = "Navigated HUC12 Subwatershed";
+    window.NavHucStats = "hucNavStats";
+    window.NavHucStatsUnit = "hucNavStatsUnits";
+    window.NavHucTermForAverage = "average";
+    window.widgetNameInDemo = "";
     
     window.PanelId = "";
     window.timeSeriesDisclaim = false;
@@ -143,6 +165,10 @@ define([
     window.demographicLayerSetting = {};
     window.onlineDataTobeAdded = [];
     window.onlineDataAlreadyAdded = [];
+    window.onlineDataScopeDic = {};
+    window.onlineDataScopeDic["EPA GeoPlatform"] = "MyOrganization";
+    window.onlineDataScopeDic["Federal GeoPlatform"] = "Curated";
+    window.onlineDataScopeDic["ArcGIS Online"] = "ArcGISOnline";
     window.uploadedFileColl = [];
     
     window.formatters = {};
@@ -156,22 +182,38 @@ define([
     window.formatters['help_EnviroAtlasDataSearch1'] =  help_EnviroAtlasDataSearch1; 
     window.formatters['help_TimesSeries1'] =  help_TimesSeries1; 
     window.formatters['help_AddData1'] =  help_AddData1; 
+    window.formatters['help_Select1'] = help_Select1;
     window.formatters['help_SelectCommunity1'] = help_SelectCommunity1;    
     window.formatters['help_DrawerMapping1'] = help_DrawerMapping1;
     window.formatters['help_ECAT1'] =  help_ECAT1;  
     window.formatters['help_HucNavigation1'] = help_HucNavigation1;
     window.formatters['help_Raindrop1'] = help_Raindrop1;
-       
+    window.formatters['help_AttributeTable1'] = help_AttributeTable1;
+    window.formatters['help_SelectByTopic1'] = help_SelectByTopic1;
+    window.formatters['help_DrawMeasure1'] = help_DrawMeasure1;
+    window.formatters['help_EnhancedBookmarks1'] = help_EnhancedBookmarks1;
+    window.formatters['help_DynamicSymbology1'] = help_DynamicSymbology1;					
+    window.formatters['help_Print1'] = help_Print1;
+    window.formatters['help_LayerList1'] = help_LayerList1;
+	
     window.formatters['help_Elevation2'] = help_Elevation2;  
     window.formatters['help_Demographic2'] = help_Demographic2;
     window.formatters['help_EnviroAtlasDataSearch2'] =  help_EnviroAtlasDataSearch2; 
     window.formatters['help_TimesSeries2'] =  help_TimesSeries2; 
     window.formatters['help_AddData2'] =  help_AddData2; 
+    window.formatters['help_Select2'] = help_Select2;
     window.formatters['help_SelectCommunity2'] = help_SelectCommunity2;    
     window.formatters['help_DrawerMapping2'] = help_DrawerMapping2;
     window.formatters['help_ECAT2'] =  help_ECAT2;  
     window.formatters['help_HucNavigation2'] = help_HucNavigation2;
     window.formatters['help_Raindrop2'] = help_Raindrop2; 
+    window.formatters['help_AttributeTable2'] = help_AttributeTable2;
+    window.formatters['help_SelectByTopic2'] = help_SelectByTopic2;
+    window.formatters['help_DrawMeasure2'] = help_DrawMeasure2;
+    window.formatters['help_EnhancedBookmarks2'] = help_EnhancedBookmarks2;
+    window.formatters['help_DynamicSymbology2'] = help_DynamicSymbology2;					
+    window.formatters['help_Print2'] = help_Print2;
+    window.formatters['help_LayerList2'] = help_LayerList2;
     
     window.categoryDic = {};
     window.categoryDic["Clean Air"] = "cair";
@@ -209,6 +251,9 @@ define([
     
     window.topicDicESB["Pollutant Reduction: Air"] = "PRA"; //This is newly added Mar 2017    
     window.topicDicESB["Pollutant Reduction: Water"] = "PRW"; //This is newly added Mar 2017      
+     
+    
+        
     
     window.topicDicESB["Protected Lands"] = "PL";
     window.topicDicESB["Species: At-Risk and Priority"] = "SARaP";
@@ -242,6 +287,8 @@ define([
     window.topicDicBNF["Hydrologic Features"] = "HF";
     window.topicDicBNF["Political Boundaries"] = "PB";
 
+	window.nationalTopicList = [];
+	window.nationalFeatureTopicList = [];
     
     window.strAllCommunity = "AllCommunity";	
     window.communityDic = {};
@@ -306,6 +353,9 @@ define([
     window.hashVisibleLayersForDynamic = {};
     window.hashTitleToEAID = {};
     window.hashEAIDToTitle = {};
+    window.hashEAIDToNavHucStats = {};
+    window.hashEAIDToNavHucStatsUnit = {};
+    
     window.hashGeometryTypeAddedFeatLyr = {};
     window.hashInfoTemplate = {};
 	window.hashRenderer = {};
@@ -353,6 +403,9 @@ define([
     esriRequest.setRequestPreCallback(function(ioArgs) {
       if (ioArgs.content && ioArgs.content.printFlag) { // printTask
         ioArgs.timeout = 300000;
+      }
+      if (ioArgs.url.indexOf("ejscreen.epa.gov") !== -1) { 
+      	ioArgs.timeout = 59000;//100  is to test whether we can display error message when Ejsceen service is slow
       }
 
       //use https protocol
@@ -426,6 +479,7 @@ define([
     on(window, 'mousedown', function(evt) {
       if(jimuUtils.isInNavMode()){
         html.removeClass(document.body, 'jimu-nav-mode');
+        window.isMoveFocusWhenInit = false;
       }
       if (!mouse.isMiddle(evt)) {
         return;
@@ -480,10 +534,10 @@ define([
     }, jimuConfig);
 
 
-    window.wabVersion = '2.11';
-    // window.productVersion = 'Online 6.4';
-    window.productVersion = 'Web AppBuilder for ArcGIS (Developer Edition) 2.11';
-    // window.productVersion = 'Portal for ArcGIS 10.7';
+    window.wabVersion = '2.17';
+    // window.productVersion = 'Online 8.2';
+    window.productVersion = 'ArcGIS Web AppBuilder (Developer Edition) 2.17';
+    // window.productVersion = 'Portal for ArcGIS 10.8.1';
 
     function initApp() {
       var urlParams, configManager, layoutManager;
@@ -565,18 +619,19 @@ define([
         return;
       }
 
-      html.setStyle(jimuConfig.loadingId, 'display', 'none');
       html.setStyle(jimuConfig.mainPageId, 'display', 'block');
     }
     //ie css
     var ieVersion = jimuUtils.has('ie');
-    if(ieVersion > 9){
-      html.addClass(document.body, 'ie-nav-mode');
-    }else{
-      html.addClass(document.body, 'ie-low-nav-mode');
-    }
-    if(ieVersion > 10){
-      html.addClass(document.body, 'ie-gte-10');
+    if(ieVersion){
+      if(ieVersion > 9){
+        html.addClass(document.body, 'ie-nav-mode');
+      }else{
+        html.addClass(document.body, 'ie-low-nav-mode');
+      }
+      if(ieVersion > 10){
+        html.addClass(document.body, 'ie-gte-10');
+      }
     }
     mo.initApp = initApp;
     return mo;

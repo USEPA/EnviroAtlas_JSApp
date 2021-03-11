@@ -7,5 +7,6 @@ define({
   "turnonAll": "Padarīt visus slāņus atlasāmus",
   "turnoffAll": "Padarīt visus slāņus neatlasāmus",
   "toggleSelect": "Pārslēgt visu slāņu atlasāmību",
-  "singleSelect": "Padarīt šo par vienīgo atlasāmo slāni"
+  "singleSelect": "Padarīt šo par vienīgo atlasāmo slāni",
+  "enableByDefault": "Iespējot izvēlēto rīku pēc noklusējuma"
 });

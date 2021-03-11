@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Dozvoljeno je najviše {count} geoobjekata",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "Došlo je do problema.",
-    "kmlProjectionMismatch": "Prostorna referenca mape i KML sloj se ne podudaraju, a konverziju nije moguće obaviti na klijentu."
+    "kmlProjectionMismatch": "Prostorna referenca mape i KML sloj se ne podudaraju, a konverziju nije moguće obaviti na klijentu.",
+    "featureLocationsCouldNotBeFound": "Nije moguće pronaći komponente: nepoznata ili pogrešna polja za lokaciju. Datoteka će biti dodata kao tabela."
   },
   "layerList": {
     "caption": "Slojevi",

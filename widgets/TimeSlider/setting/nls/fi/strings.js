@@ -27,6 +27,7 @@ define({
   "timeSpan": "Aikaväli",
   "startTime": "Aloitusaika",
   "endTime": "Lopetusaika",
+  "unit": "Yksikkö",
   "timeDisplay": "Aikanäyttö",
   "displayDataIn": "Näytä aineisto",
   "interval": "Väli",

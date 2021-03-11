@@ -5,5 +5,9 @@ define({
   "english": "englanti",
   "metric": "metrinen",
   "ruler": "viivain",
-  "line": "viiva"
+  "line": "viiva",
+  "number": "numero",
+  "spinnerLabel": "Pyöristä mittakaavan numero arvoksi: ",
+  "decimalPlace": "desimaali",
+  "separator": "Näytä tuhaterottimet"
 });

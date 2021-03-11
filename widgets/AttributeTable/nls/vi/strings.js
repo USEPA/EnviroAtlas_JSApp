@@ -15,6 +15,8 @@ define({
   "selectAll": "Chọn bản ghi trong tất cả các trang",
   "selectPage": "Chọn bản ghi trong trang hiện tại",
   "clearSelection": "Xóa lựa chọn",
+  "selectionHandleLabel": "Lựa chọn xử lý",
+  "selectionHandleDescription": "Nhấn ENTER hoặc PHÍM CÁCH để làm nổi bật (các) đối tượng trên bản đồ",
   "filter": "Bộ lọc",
   "setFilterTip": "Vui lòng thiết lập bộ lọc chính xác.",
   "noFilterTip": "Nếu biểu thức bộ lọc không được xác định, tác vụ truy vấn này sẽ liệt kê tất cả các đối tượng trong nguồn dữ liệu đã chỉ định.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Không có bảng nào để hiển thị.",
   "checkConfigutationToSelectLayers": "Vui lòng truy cập trang cài đặt tiện ích để chọn lớp.",
-  "checkLayerListToSelectLayers": "Bảng Thuộc tính được đồng bộ hóa với lớp có thể hiển thị trong bản đồ, bạn có thể sử dụng tiện ích như Danh sách lớp để bật/tắt các lớp."
+  "checkLayerListToSelectLayers": "Bảng Thuộc tính được đồng bộ hóa với lớp có thể hiển thị trong bản đồ, bạn có thể sử dụng tiện ích như Danh sách lớp để bật/tắt các lớp.",
+  "rowHeaderColumnTitle": "Hàng ${layerName}, đã di chuột, nhấn Enter để chọn các hàng đã di chuột"
 });

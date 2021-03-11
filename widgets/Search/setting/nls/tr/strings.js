@@ -14,6 +14,7 @@ define({
   "generalSetting": "Genel ayarlar",
   "allPlaceholder": "Tümünü aramak için yer tutucu metin: ",
   "showInfoWindowOnSelect": "Bulunan detay veya konum için açılır pencere göster",
+  "showInfoWindowOnSelect2": "Detay veya konum bulunduğunda açılır pencereyi göster.",
   "searchInCurrentMapExtent": "Yalnızca geçerli harita yayılımını ara",
   "zoomScale": "Yakınlaştırma ölçeği",
   "locatorUrl": "Coğrafi Kodlayıcı URL'si",
@@ -22,7 +23,7 @@ define({
   "locatorWarning": "Coğrafi kodlama servisinin bu sürümü desteklenmiyor. Araç, 10.1 veya üstü sürümdeki coğrafi kodlama servisini destekliyor.",
   "locatorTips": "Coğrafi kodlama hizmeti öneri özelliğini desteklemediğinden öneriler kullanılamıyor.",
   "layerSource": "Katman kaynağı",
-  "searchLayerTips": "Detay hizmeti sayfalama özelliğini desteklemediğinden öneriler kullanılamıyor.",
+  "searchLayerTips": "Detay servisi sayfa oluşturma özelliğini desteklemediğinden öneriler kullanılamıyor.",
   "placeholder": "Yer tutucu metni",
   "searchFields": "Arama alanları",
   "displayField": "Alan görüntüle",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "Takma Ad",
   "ok": "Tamam",
   "cancel": "İptal",
-  "invalidUrlTip": "${URL} URL'si geçersiz veya erişilemez durumda."
+  "invalidUrlTip": "${URL} URL'si geçersiz veya erişilemez durumda.",
+  "locateResults": "Sonuçları bul",
+  "panTo": "Kaydır",
+  "zoomToScale": "Ölçek büyüt"
 });

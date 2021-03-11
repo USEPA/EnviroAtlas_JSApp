@@ -5,5 +5,10 @@ define({
   "timeExtent": "De la ${FROMTIME} până la ${ENDTIME}",
   "layers": "Straturi tematice: ",
   "speedLabel": "Viteză de redare",
-  "liveData": "Date în timp real"
+  "liveData": "Date în timp real",
+  "previous": "intervalul anterior",
+  "next": "intervalul următor",
+  "play": "redare",
+  "pause": "pauză",
+  "speed": "viteză"
 });

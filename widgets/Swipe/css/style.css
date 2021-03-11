@@ -1,7 +1,19 @@
+@import url("../MultSelector/css/style.css");
+
 .jimu-widget-swipe {
   border-radius: 5px;
+  transition: all 0.6s;
   max-width: 350px;
 }
+.jimu-widget-swipe.hide,
+.jimu-widget-swipe .hide{
+  display: none;
+}
+
+.jimu-widget-swipe.transparent{
+  opacity: 0.5;
+}
+
 .jimu-widget-swipe .swipe-icon{
   width: 30px;
   height: 100%;
@@ -23,12 +35,13 @@
 }
 .jimu-widget-swipe .swipe-layer-menu{
   /*position: absolute;*/
-  min-width: 320px;
+  width: 315px;
   font-size: 14px;
-  color: #686868;
   padding: 14px;
-  background: #fff;
   z-index: 50;
+  color: #686868;
+  background: #fff;
+  min-width: 320px;
 }
 .jimu-rtl .jimu-widget-swipe .swipe-layer-menu{
   right: 32px;
@@ -40,11 +53,43 @@
   padding-bottom: 10px;
   width: 100%;
 }
+.jimu-widget-swipe .swipe-layer-menu .show-detail-icon{
+  width: 12px;
+  height: 16px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("images/up.svg");
+}
+.jimu-widget-swipe .swipe-layer-menu .show-detail-icon:hover{
+  background-image: url("images/up_hover.svg");
+}
+.jimu-widget-swipe .swipe-layer-menu .show-detail-icon.fold{
+  background-image: url("images/down.svg");
+}
+.jimu-widget-swipe .swipe-layer-menu .show-detail-icon.fold:hover{
+  background-image: url("images/down_hover.svg");
+}
 
 .claro .jimu-widget-swipe .swipe-layer-menu .dijitSelect {
   color: #7989a0;
+  background-color:transparent !important;
+  table-layout: fixed;
   border-color: #d2dade;
 }
+
+.claro .jimu-widget-swipe .swipe-layer-menu .dijitSelect .dijitInputField {
+  padding: 1px 10px;
+  overflow: hidden;
+  width: 100%;
+}
+.claro .jimu-widget-swipe .swipe-layer-menu .dijitSelect .dijitInputField .dijitSelectLabel.dijitValidationTextBoxLabel{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: initial;
+  width: 100%;
+}
+
 .claro .jimu-widget-swipe .swipe-layer-menu .dijitSelectHover,
 .claro .jimu-widget-swipe .swipe-layer-menu .dijitSelectFocused {
   border-color: #759dc0;
@@ -61,4 +106,78 @@
   border-style: none;
   border-width: 0;
   background: #fafafc !important;
+  width: 16px !important;
+}
+
+.jimu-widget-swipe .titles{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.jimu-widget-swipe .selectors{
+  padding-top: 10px;
+}
+
+.jimu-widget-swipe .mult-layers-container{
+  border: 1px solid #b5bcc7;
+  width: 287px;
+}
+
+/* selector popup */
+.jimu-widget-swipe-popup{
+  width: 287px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  table-layout: fixed;
+}
+
+.jimu-widget-swipe-popup::-webkit-scrollbar-thumb{
+  -webkit-border-radius:4px;
+  border-radius:4px;
+  background:#666;
+}
+.jimu-widget-swipe-popup::-webkit-scrollbar{
+  background:#000;
+} 
+
+.jimu-widget-swipe-popup.dijitMenu .dijitMenuItemSelected{
+  border: none;
+  background-image: none;
+  background: transparent;
+}
+
+.jimu-widget-swipe-popup.dijitMenu .dijitMenuItemSelected td {
+  color: #FFF;
+  background-color: transparent;
+  background-image: none;
+}
+
+.jimu-widget-swipe-popup.dijitMenu .dijitReset {
+  color: #FFF;
+  width: 100%;
+  background-color: transparent;
+}
+
+.jimu-widget-swipe-popup.dijitMenu.dojoxCheckedMultiSelectMenu,
+.jimu-widget-swipe-popup.dijitMenuTable.dijitSelectMenu {
+  background: #2A2A2A;
+  height: 100%;
+  height: calc(100% + 4px);
+  overflow: hidden auto !important;
+  padding: 2px;
+}
+
+.jimu-widget-swipe-popup.dijitMenu .dijitMenuItem td{
+  border-width: 0;
+  border: none;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  table-layout: fixed;
+  padding: 4px;
+}
+.jimu-widget-swipe-popup.dijitMenu .dijitMenuItemHover td{
+  background: #4A4A4A;
+  color: #FFF;
 }

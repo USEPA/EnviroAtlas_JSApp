@@ -7,5 +7,6 @@ define({
   "turnonAll": "Tornar todas as camadas selecionáveis",
   "turnoffAll": "Tornar todas as camadas não selecionáveis",
   "toggleSelect": "Alternar seleção para todas as camadas",
-  "singleSelect": "Tornar esta a única camada selecionável"
+  "singleSelect": "Tornar esta a única camada selecionável",
+  "enableByDefault": "Habilitar a ferramenta de seleção por padrão"
 });

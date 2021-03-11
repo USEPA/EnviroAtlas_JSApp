@@ -22,7 +22,6 @@ define({
   "imageFill": "Képkitöltés",
   "chooseFile": "Válasszon fájlt",
   "noFileChosen": "Nincs kiválasztva fájl",
-  "transparency": "Átlátszóság",
   "sizeFill": "Kitöltés",
   "sizeFit": "Igazítás",
   "sizeStretch": "Méretre nyújtás",

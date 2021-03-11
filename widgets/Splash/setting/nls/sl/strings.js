@@ -22,7 +22,6 @@ define({
   "imageFill": "Polnilo slike",
   "chooseFile": "Izberite datoteko",
   "noFileChosen": "Datoteka ni izbrana",
-  "transparency": "Prosojnost",
   "sizeFill": "Polnilo",
   "sizeFit": "Prilagodi",
   "sizeStretch": "Raztegni do polnitve",

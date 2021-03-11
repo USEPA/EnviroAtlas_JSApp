@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// Copyright © 2014 - 2018 Esri. All Rights Reserved.
+// Copyright © Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -148,15 +148,22 @@ define([
             var param = data.parameters[i];
             if (param.name === "Format" || param.name === "Layout_Template") {
               var values = data.parameters[i].choiceList;
-              var n = values.length;
+              var defaultValue = data.parameters[i].defaultValue;
               var json = [];
-              for (var m = 0; m < n; m++) {
+              if (values) {
+                var n = values.length;
+                for (var m = 0; m < n; m++) {
+                  json.push({
+                    name: values[m],
+                    id: values[m]
+                  });
+                }
+              } else {
                 json.push({
-                  name: values[m],
-                  id: values[m]
+                  name: defaultValue,
+                  id: defaultValue
                 });
               }
-              var defaultValue = data.parameters[i].defaultValue;
 
               if (param.name === "Format") {
                 this.memoryFormat.data = json;
@@ -206,7 +213,7 @@ define([
         if (config.defaultAuthor) {
           this.defaultAuthor.set('value', utils.stripHTML(config.defaultAuthor));
         } else {
-          this.defaultTitle.set('value', "Web AppBuilder for ArcGIS");
+          this.defaultTitle.set('value', "ArcGIS Web AppBuilder");
         }
 
         if (config.defaultCopyright) {

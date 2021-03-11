@@ -27,6 +27,7 @@ define({
   "timeSpan": "Quãng thời gian",
   "startTime": "Thời gian Bắt đầu",
   "endTime": "Thời gian Kết thúc",
+  "unit": "Đơn vị",
   "timeDisplay": "Hiển thị thời gian",
   "displayDataIn": "Hiển thị dữ liệu trong",
   "interval": "Khoảng",

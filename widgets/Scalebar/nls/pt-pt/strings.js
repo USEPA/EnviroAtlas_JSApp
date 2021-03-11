@@ -1,3 +1,4 @@
 define({
-  "_widgetLabel": "Barra de Escala"
+  "_widgetLabel": "Barra de Escala",
+  "scale": "Escala"
 });

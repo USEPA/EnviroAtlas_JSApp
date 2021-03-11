@@ -372,7 +372,7 @@
   margin-right: 3px;
 }
 
-.hidden {
+.widget-esearch .hidden {
   display: none;
 }
 
@@ -532,7 +532,7 @@
   margin-top: 5px;
 }
 
-.search-btn {
+.widget-esearch .search-btn {
   cursor: pointer;
   min-width: 70px;
   display: inline-block;
@@ -550,334 +550,49 @@
 
 
 /*Handle custom themes*/
-.search-btn {
+.widget-esearch .search-btn {
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 1);
 }
 
-.search-btn:hover {
+.widget-esearch .search-btn:hover {
   background-color: rgb(0, 0, 0);
   -ms-filter: "Alpha(opacity=70)";
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.JewelryBoxTheme.default .jimu-on-screen-widget-panel > .jimu-panel-title,
-.JewelryBoxTheme.default .search-btn,
-.JewelryBoxTheme.default .jimu-draw-box .draw-item.jimu-state-active,
-.FoldableTheme jimu-draw-box .draw-item.jimu-state-active,
-.FoldableTheme .search-btn,
-.FoldableTheme .esriPopup .titlePane,
-.JewelryBoxTheme.default .esriPopup .titlePane {
-  background-color: rgb(89, 102, 121);
-  background-color: rgba(89, 102, 121, 1);
-}
-
-.JewelryBoxTheme.default .search-btn:hover,
-.FoldableTheme .search-btn:hover,
-.JewelryBoxTheme.default .jimu-draw-box .draw-item:hover,
-.FoldableTheme .jimu-draw-box .draw-item:hover {
-  background-color: rgb(89, 102, 121);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(89, 102, 121, 0.7);
-}
-
-.TabTheme .search-btn,
+.widget-esearch .TabTheme .search-btn,
 .TabTheme .jimu-draw-box .draw-item.jimu-state-active,
 .TabTheme .esriPopup .titlePane {
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 1);
 }
 
-.TabTheme .search-btn:hover,
+.widget-esearch .TabTheme .search-btn:hover,
 .TabTheme .jimu-draw-box .draw-item:hover {
   background-color: rgb(0, 0, 0);
   -ms-filter: "Alpha(opacity=70)";
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.BoxTheme.default .search-btn,
-.BoxTheme.default .jimu-draw-box .draw-item.jimu-state-active,
-.BoxTheme.default .esriPopup .titlePane {
-  background-color: rgb(100, 100, 100);
-  background-color: rgba(100, 100, 100, 1);
-}
 
-.BoxTheme.default .search-btn:hover,
-.BoxTheme.default .jimu-draw-box .draw-item:hover {
-  background-color: rgb(100, 100, 100);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(100, 100, 100, 0.7);
-}
-
-.BillboardTheme.blue .search-btn,
-.BillboardTheme.default .search-btn,
-.BillboardTheme.green .search-btn,
-.BillboardTheme.orange .search-btn,
-.BillboardTheme.pink .search-btn,
-.BillboardTheme.purple .search-btn,
-.BillboardTheme.red .search-btn,
-.BillboardTheme.turquoise .search-btn,
-.BillboardTheme.blue .jimu-draw-box .draw-item.jimu-state-active,
-.BillboardTheme.default .jimu-draw-box .draw-item.jimu-state-active,
-.BillboardTheme.green .jimu-draw-box .draw-item.jimu-state-active,
-.BillboardTheme.orange .jimu-draw-box .draw-item.jimu-state-active,
-.BillboardTheme.pink .jimu-draw-box .draw-item.jimu-state-active,
-.BillboardTheme.purple .jimu-draw-box .draw-item.jimu-state-active,
-.BillboardTheme.red .jimu-draw-box .draw-item.jimu-state-active,
-.BillboardTheme.turquoise .jimu-draw-box .draw-item.jimu-state-active {
-  background-color: rgb(217, 221, 224);
-  color: #86909C;
-}
-
-.BillboardTheme.blue .search-btn:hover,
-.BillboardTheme.default .search-btn:hover,
-.BillboardTheme.green .search-btn:hover,
-.BillboardTheme.orange .search-btn:hover,
-.BillboardTheme.pink .search-btn:hover,
-.BillboardTheme.purple .search-btn:hover,
-.BillboardTheme.red .search-btn:hover,
-.BillboardTheme.turquoise .search-btn:hover,
-.BillboardTheme.blue .jimu-draw-box .draw-item:hover,
-.BillboardTheme.default .jimu-draw-box .draw-item:hover,
-.BillboardTheme.green .jimu-draw-box .draw-item:hover,
-.BillboardTheme.orange .jimu-draw-box .draw-item:hover,
-.BillboardTheme.pink .jimu-draw-box .draw-item:hover,
-.BillboardTheme.purple .jimu-draw-box .draw-item:hover,
-.BillboardTheme.red .jimu-draw-box .draw-item:hover,
-.BillboardTheme.turquoise .jimu-draw-box .draw-item:hover {
-  background-color: rgb(0, 0, 0);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(0, 0, 0, 0.5);
-  color: #fff;
-}
-
-.BillboardTheme.blue .esriPopup .titlePane,
-.DartTheme.blue .esriPopup .titlePane {
-  background-color: #2f70e4;
-}
-
-.BillboardTheme.default .esriPopup .titlePane {
-  background-color: #2e3641;
-}
-
-.DartTheme.default .esriPopup .titlePane {
-  background-color: #646464;
-}
-
-.BillboardTheme.green .esriPopup .titlePane {
-  background-color: #6db8ac;
-}
-
-.DartTheme.green .esriPopup .titlePane {
-  background-color: #80ab00;
-}
-
-.BillboardTheme.orange .esriPopup .titlePane {
-  background-color: #edbd35;
-}
-
-.DartTheme.orange .esriPopup .titlePane {
-  background-color: #ff9b00;
-}
-
-.BillboardTheme.pink .esriPopup .titlePane {
-  background-color: #fe6960;
-}
-
-.DartTheme.pink .esriPopup .titlePane {
-  background-color: #ed008c;
-}
-
-.BillboardTheme.purple .esriPopup .titlePane {
-  background-color: #856d9c;
-}
-
-.DartTheme.purple .esriPopup .titlePane {
-  background-color: #886197;
-}
-
-.BillboardTheme.red .esriPopup .titlePane {
-  background-color: #e83428;
-}
-
-.DartTheme.red .esriPopup .titlePane {
-  background-color: #cf0000;
-}
-
-.BillboardTheme.turquoise .esriPopup .titlePane {
-  background-color: #2d95a0;
-}
-
-.DartTheme.turquoise .esriPopup .titlePane {
-  background-color: #2faacd;
-}
-
-.FoldableTheme.default .jimu-on-screen-widget-panel > .jimu-panel-title,
-.FoldableTheme.default .search-btn,
-.FoldableTheme.default .jimu-draw-box .draw-item.jimu-state-active,
-.FoldableTheme.default .esriPopup .titlePane {
-  background-color: rgb(89, 102, 121);
-  background-color: rgba(89, 102, 121, 1);
-}
-
-.FoldableTheme.default .search-btn:hover,
-.FoldableTheme.default .jimu-draw-box .draw-item:hover {
-  background-color: rgb(89, 102, 121);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(89, 102, 121, 0.7);
-}
-
-.JewelryBoxTheme.black .jimu-on-screen-widget-panel > .jimu-panel-title,
-.FoldableTheme.black .jimu-on-screen-widget-panel > .jimu-panel-title,
-.TabTheme.default .jimu-on-screen-widget-panel > .jimu-panel-title,
-.FoldableTheme.black .search-btn,
+.widget-esearch .TabTheme.default .jimu-on-screen-widget-panel > .jimu-panel-title,
 .TabTheme.default .search-btn,
-.JewelryBoxTheme.black .search-btn,
-.PlateauTheme.black .search-btn,
-.FoldableTheme.black .jimu-draw-box .draw-item.jimu-state-active,
 .TabTheme.default .jimu-draw-box .draw-item.jimu-state-active,
-.JewelryBoxTheme.black .jimu-draw-box .draw-item.jimu-state-active,
-.PlateauTheme.black .jimu-draw-box .draw-item.jimu-state-active,
-.FoldableTheme.black .esriPopup .titlePane,
-.JewelryBoxTheme.black .esriPopup .titlePane,
-.TabTheme.default .esriPopup .titlePane,
-.PlateauTheme.black .esriPopup .titlePane {
+.TabTheme.default .esriPopup .titlePane {
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 1);
 }
 
-.FoldableTheme.black .search-btn:hover,
+.widget-esearch
 .TabTheme.default .search-btn:hover,
-.JewelryBoxTheme.black .search-btn:hover,
-.PlateauTheme.black .search-btn:hover,
-.FoldableTheme.black .jimu-draw-box .draw-item:hover,
-.TabTheme.default .jimu-draw-box .draw-item:hover,
-.JewelryBoxTheme.black .jimu-draw-box .draw-item:hover,
-.PlateauTheme.black .jimu-draw-box .draw-item:hover {
+.TabTheme.default .jimu-draw-box .draw-item:hover{
   background-color: rgb(0, 0, 0);
   -ms-filter: "Alpha(opacity=70)";
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.PlateauTheme.default .search-btn,
-.PlateauTheme.default .jimu-draw-box .draw-item.jimu-state-active,
-.PlateauTheme.default .esriPopup .titlePane {
-  background-color: rgb(70, 70, 70);
-  background-color: rgba(70, 70, 70, 1);
-}
-
-.PlateauTheme.default .jimu-draw-box .draw-item:hover,
-.PlateauTheme.default .search-btn:hover{
-  background-color: rgb(70, 70, 70);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(70, 70, 70, 0.7);
-}
-
-.PlateauTheme.medium-grey .search-btn,
-.PlateauTheme.medium-grey .jimu-draw-box .draw-item.jimu-state-active,
-.PlateauTheme.medium-grey .esriPopup .titlePane {
-  background-color: rgb(110, 110, 110);
-  background-color: rgba(110, 110, 110, 1);
-}
-
-.PlateauTheme.medium-grey .jimu-draw-box .draw-item:hover,
-.PlateauTheme.medium-grey .search-btn:hover {
-  background-color: rgb(110, 110, 110);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(110, 110, 110, 0.7);
-}
-
-.PlateauTheme.dark-blue .search-btn,
-.PlateauTheme.dark-blue .jimu-draw-box .draw-item.jimu-state-active,
-.PlateauTheme.dark-blue .esriPopup .titlePane {
-  background-color: rgb(0, 69, 117);
-  background-color: rgba(0, 69, 117, 1);
-}
-
-.PlateauTheme.dark-blue .jimu-draw-box .draw-item:hover,
-.PlateauTheme.dark-blue .search-btn:hover {
-  background-color: rgb(0, 69, 117);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(0, 69, 117, 0.7);
-}
-
-.PlateauTheme.esri-blue .search-btn,
-.PlateauTheme.esri-blue .jimu-draw-box .draw-item.jimu-state-active,
-.PlateauTheme.esri-blue .esriPopup .titlePane {
-  background-color: rgb(0, 122, 194);
-  background-color: rgba(0, 122, 194, 1);
-}
-
-.PlateauTheme.esri-blue .jimu-draw-box .draw-item:hover,
-.PlateauTheme.esri-blue .search-btn:hover {
-  background-color: rgb(0, 122, 194);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(0, 122, 194, 0.7);
-}
-
-.PlateauTheme.esri-green .search-btn,
-.PlateauTheme.esri-green .jimu-draw-box .draw-item.jimu-state-active,
-.PlateauTheme.esri-green .esriPopup .titlePane {
-  background-color: rgb(53, 172, 70);
-  background-color: rgba(53, 172, 70, 1);
-}
-
-.PlateauTheme.esri-green .jimu-draw-box .draw-item:hover,
-.PlateauTheme.esri-green .search-btn:hover {
-  background-color: rgb(53, 172, 70);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(53, 172, 70, 0.7);
-}
-
-.PlateauTheme.dark-green .search-btn,
-.PlateauTheme.dark-green .jimu-draw-box .draw-item.jimu-state-active,
-.PlateauTheme.dark-green .esriPopup .titlePane {
-  background-color: rgb(42, 116, 51);
-  background-color: rgba(42, 116, 51, 1);
-}
-
-.PlateauTheme.dark-green .jimu-draw-box .draw-item:hover,
-.PlateauTheme.dark-green .search-btn:hover {
-  background-color: rgb(42, 116, 51);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(42, 116, 51, 0.7);
-}
-
-.PlateauTheme.orange .search-btn,
-.PlateauTheme.orange .jimu-draw-box .draw-item.jimu-state-active,
-.PlateauTheme.orange .esriPopup .titlePane {
-  background-color: rgb(218 ,77, 30);
-  background-color: rgba(218 ,77, 30, 1);
-}
-
-.PlateauTheme.orange .jimu-draw-box .draw-item:hover,
-.PlateauTheme.orange .search-btn:hover {
-  background-color: rgb(218 ,77, 30);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(218 ,77, 30, 0.7);
-}
-
-.JewelryBoxTheme.cyan .jimu-on-screen-widget-panel > .jimu-panel-title,
-.FoldableTheme.cyan .jimu-on-screen-widget-panel > .jimu-panel-title,
-.FoldableTheme.cyan .search-btn,
-.JewelryBoxTheme.cyan .search-btn,
-.FoldableTheme.cyan .jimu-draw-box .draw-item.jimu-state-active,
-.JewelryBoxTheme.cyan .jimu-draw-box .draw-item.jimu-state-active,
-.JewelryBoxTheme.cyan .esriPopup .titlePane,
-.FoldableTheme.cyan .esriPopup .titlePane {
-  background-color: rgb(38, 112, 48);
-  background-color: rgba(38, 112, 48, 1);
-}
-
-.FoldableTheme.cyan .search-btn:hover,
-.JewelryBoxTheme.cyan .search-btn:hover,
-.FoldableTheme.cyan .jimu-draw-box .draw-item:hover,
-.JewelryBoxTheme.cyan .jimu-draw-box .draw-item:hover {
-  background-color: rga(38, 112, 48);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(38, 112, 48, 0.7);
-}
-
+.widget-esearch
 .TabTheme.cyan .jimu-on-screen-widget-panel > .jimu-panel-title,
 .TabTheme.cyan .search-btn,
 .TabTheme.cyan .jimu-draw-box .draw-item.jimu-state-active,
@@ -886,6 +601,7 @@
   background-color: rgba(42, 170, 138, 1);
 }
 
+.widget-esearch
 .TabTheme.cyan .search-btn:hover,
 .TabTheme.cyan .jimu-draw-box .draw-item:hover {
   background-color: rga(42, 170, 138);
@@ -893,6 +609,7 @@
   background-color: rgba(42, 170, 138, 0.7);
 }
 
+.widget-esearch
 .TabTheme.green .jimu-on-screen-widget-panel > .jimu-panel-title,
 .TabTheme.green .search-btn,
 .TabTheme.green .jimu-draw-box .draw-item.jimu-state-active,
@@ -908,69 +625,7 @@
   background-color: rgba(5, 171, 8, 0.7);
 }
 
-.BoxTheme.green .search-btn,
-.BoxTheme.green .jimu-draw-box .draw-item.jimu-state-active,
-.BoxTheme.green .esriPopup .titlePane {
-  background-color: rgb(128, 171, 0);
-  background-color: rgba(128, 171, 0, 1);
-}
-
-.BoxTheme.green .search-btn:hover,
-.BoxTheme.green .jimu-draw-box .draw-item:hover {
-  background-color: rgb(128, 171, 0);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(128, 171, 0, 0.7);
-}
-
-.BoxTheme.orange .search-btn,
-.BoxTheme.orange .jimu-draw-box .draw-item.jimu-state-active,
-.BoxTheme.orange .esriPopup .titlePane {
-  background-color: rgb(255, 155, 0);
-  background-color: rgba(255, 155, 0, 1);
-}
-
-.BoxTheme.orange .search-btn:hover,
-.BoxTheme.orange .jimu-draw-box .draw-item:hover {
-  background-color: rgb(255, 155, 0);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(255, 155, 0, 0.7);
-}
-
-.JewelryBoxTheme.green .jimu-on-screen-widget-panel > .jimu-panel-title,
-.FoldableTheme.green .jimu-on-screen-widget-panel > .jimu-panel-title,
-.FoldableTheme.green .search-btn,
-.JewelryBoxTheme.green .search-btn,
-.FoldableTheme.green .jimu-draw-box .draw-item.jimu-state-active,
-.JewelryBoxTheme.green .jimu-draw-box .draw-item.jimu-state-active,
-.JewelryBoxTheme.green .esriPopup .titlePane,
-.FoldableTheme.green .esriPopup .titlePane {
-  background-color: rgb(42, 170, 138);
-  background-color: rgba(42, 170, 138, 1);
-}
-
-.FoldableTheme.green .search-btn:hover,
-.JewelryBoxTheme.green .search-btn:hover,
-.FoldableTheme.green .jimu-draw-box .draw-item:hover,
-.JewelryBoxTheme.green .jimu-draw-box .draw-item:hover {
-  background-color: rgb(42, 170, 138);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(42, 170, 138, 0.7);
-}
-
-.BoxTheme.turquoise .search-btn,
-.BoxTheme.turquoise .jimu-draw-box .draw-item.jimu-state-active,
-.BoxTheme.turquoise .esriPopup .titlePane {
-  background-color: rgb(47, 170, 205);
-  background-color: rgba(47, 170, 205, 1);
-}
-
-.BoxTheme.turquoise .search-btn:hover,
-.BoxTheme.turquoise .jimu-draw-box .draw-item:hover {
-  background-color: rgb(47, 170, 205);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(47, 170, 205, 0.7);
-}
-
+.widget-esearch
 .TabTheme.simpleblue .jimu-on-screen-widget-panel > .jimu-panel-title,
 .TabTheme.simpleblue .search-btn,
 .TabTheme.simpleblue .jimu-draw-box .draw-item.jimu-state-active,
@@ -979,6 +634,7 @@
   background-color: rgba(52, 152, 219, 1);
 }
 
+.widget-esearch
 .TabTheme.simpleblue .search-btn:hover,
 .TabTheme.simpleblue .jimu-draw-box .draw-item:hover {
   background-color: rgb(52, 152, 219);
@@ -986,238 +642,132 @@
   background-color: rgba(52, 152, 219, 0.7);
 }
 
-.JewelryBoxTheme.red .jimu-on-screen-widget-panel > .jimu-panel-title,
-.FoldableTheme.red .jimu-on-screen-widget-panel > .jimu-panel-title,
+.widget-esearch
 .TabTheme.red .jimu-on-screen-widget-panel > .jimu-panel-title,
-.FoldableTheme.red .search-btn,
 .TabTheme.red .search-btn,
-.JewelryBoxTheme.red .search-btn,
-.FoldableTheme.red .jimu-draw-box .draw-item.jimu-state-active,
 .TabTheme.red .jimu-draw-box .draw-item.jimu-state-active,
-.JewelryBoxTheme.red .jimu-draw-box .draw-item.jimu-state-active,
-.JewelryBoxTheme.red .esriPopup .titlePane,
-.FoldableTheme.red .esriPopup .titlePane,
 .TabTheme.red .esriPopup .titlePane {
   background-color: rgb(201, 46, 73);
   background-color: rgba(201, 46, 73, 1);
 }
 
-.FoldableTheme.red .search-btn:hover,
-.TabTheme.red .search-btn:hover,
-.JewelryBoxTheme.red .search-btn:hover,
-.FoldableTheme.red .jimu-draw-box .draw-item:hover,
-.TabTheme.red .jimu-draw-box .draw-item:hover,
-.JewelryBoxTheme.red .jimu-draw-box .draw-item:hover {
+.widget-esearch
+.TabTheme.red .jimu-draw-box .draw-item:hover{
   background-color: rgb(201, 46, 73);
   -ms-filter: "Alpha(opacity=70)";
   background-color: rgba(201, 46, 73, 0.7);
 }
 
-.BoxTheme.red .search-btn,
-.BoxTheme.red .jimu-draw-box .draw-item.jimu-state-active,
-.BoxTheme.red .esriPopup .titlePane {
-  background-color: rgb(207, 0, 0);
-  background-color: rgba(207, 0, 0, 1);
-}
-
-.BoxTheme.red .search-btn:hover,
-.BoxTheme.red .jimu-draw-box .draw-item:hover {
-  background-color: rgb(207, 0, 0);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(207, 0, 0, 0.7);
-}
-
-.BoxTheme.pink .search-btn,
-.BoxTheme.pink .jimu-draw-box .draw-item.jimu-state-active,
-.BoxTheme.pink .esriPopup .titlePane {
-  background-color: rgb(237, 0, 140);
-  background-color: rgba(237, 0, 140, 1);
-}
-
-.BoxTheme.pink .search-btn:hover,
-.BoxTheme.pink .jimu-draw-box .draw-item:hover {
-  background-color: rgb(237, 0, 140);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(237, 0, 140, 0.7);
-}
-
-.JewelryBoxTheme.yellow .jimu-on-screen-widget-panel > .jimu-panel-title,
-.FoldableTheme.yellow .jimu-on-screen-widget-panel > .jimu-panel-title,
+.widget-esearch
 .TabTheme.yellow .jimu-on-screen-widget-panel > .jimu-panel-title,
-.FoldableTheme.yellow .search-btn,
 .TabTheme.yellow .search-btn,
-.JewelryBoxTheme.yellow .search-btn,
-.FoldableTheme.yellow .jimu-draw-box .draw-item.jimu-state-active,
 .TabTheme.yellow .jimu-draw-box .draw-item.jimu-state-active,
-.JewelryBoxTheme.yellow .jimu-draw-box .draw-item.jimu-state-active,
-.JewelryBoxTheme.yellow .esriPopup .titlePane,
-.FoldableTheme.yellow .esriPopup .titlePane,
 .TabTheme.yellow .esriPopup .titlePane {
   background-color: rgb(208, 125, 14);
   background-color: rgba(208, 125, 14, 1);
 }
 
-.FoldableTheme.yellow .search-btn:hover,
+.widget-esearch
 .TabTheme.yellow .search-btn:hover,
-.JewelryBoxTheme.yellow .search-btn:hover,
-.FoldableTheme.yellow .jimu-draw-box .draw-item:hover,
-.TabTheme.yellow .jimu-draw-box .draw-item:hover,
-.JewelryBoxTheme.yellow .jimu-draw-box .draw-item:hover {
+.TabTheme.yellow .jimu-draw-box .draw-item:hover{
   background-color: rgb(208, 125, 14);
   -ms-filter: "Alpha(opacity=70)";
   background-color: rgba(208, 125, 14, 0.7);
 }
 
-.JewelryBoxTheme.blue .jimu-on-screen-widget-panel > .jimu-panel-title,
-.FoldableTheme.blue .jimu-on-screen-widget-panel > .jimu-panel-title,
+.widget-esearch
 .TabTheme.blue .jimu-on-screen-widget-panel > .jimu-panel-title,
-.FoldableTheme.blue .search-btn,
 .TabTheme.blue .search-btn,
-.JewelryBoxTheme.blue .search-btn,
-.FoldableTheme.blue .jimu-draw-box .draw-item.jimu-state-active,
 .TabTheme.blue .jimu-draw-box .draw-item.jimu-state-active,
-.JewelryBoxTheme.blue .jimu-draw-box .draw-item.jimu-state-active,
-.JewelryBoxTheme.blue .esriPopup .titlePane,
-.FoldableTheme.blue .esriPopup .titlePane,
 .TabTheme.blue .esriPopup .titlePane {
   background-color: rgb(0, 95, 162);
   background-color: rgba(0, 95, 162, 1);
 }
 
-.FoldableTheme.blue .search-btn:hover,
+.widget-esearch
 .TabTheme.blue .search-btn:hover,
-.JewelryBoxTheme.blue .search-btn:hover,
-.FoldableTheme.blue .jimu-draw-box .draw-item:hover,
-.TabTheme.blue .jimu-draw-box .draw-item:hover,
-.JewelryBoxTheme.blue .jimu-draw-box .draw-item:hover {
+.TabTheme.blue .jimu-draw-box .draw-item:hover{
   background-color: rgb(0, 95, 162);
   -ms-filter: "Alpha(opacity=70)";
   background-color: rgba(0, 95, 162, 0.7);
 }
 
-.BoxTheme.blue .search-btn,
-.BoxTheme.blue .jimu-draw-box .draw-item.jimu-state-active,
-.BoxTheme.blue .esriPopup .titlePane {
-  background-color: rgb(45, 112, 228);
-  background-color: rgba(45, 112, 228, 1);
-}
-
-.BoxTheme.blue .search-btn:hover,
-.BoxTheme.blue .jimu-draw-box .draw-item:hover {
-  background-color: rgb(45, 112, 228);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(45, 112, 228, 0.7);
-}
-
-.JewelryBoxTheme.purple .jimu-on-screen-widget-panel > .jimu-panel-title,
-.FoldableTheme.purple .jimu-on-screen-widget-panel > .jimu-panel-title,
+.widget-esearch
 .TabTheme.purple .jimu-on-screen-widget-panel > .jimu-panel-title,
-.FoldableTheme.purple .search-btn,
 .TabTheme.purple .search-btn,
-.JewelryBoxTheme.purple .search-btn,
-.FoldableTheme.purple .jimu-draw-box .draw-item.jimu-state-active,
 .TabTheme.purple .jimu-draw-box .draw-item.jimu-state-active,
-.JewelryBoxTheme.purple .jimu-draw-box .draw-item.jimu-state-active,
-.JewelryBoxTheme.purple .esriPopup .titlePane,
-.FoldableTheme.purple .esriPopup .titlePane,
 .TabTheme.purple .esriPopup .titlePane {
   background-color: rgb(171, 109, 174);
   background-color: rgba(171, 109, 174, 1);
 }
 
-.FoldableTheme.purple .search-btn:hover,
+.widget-esearch
 .TabTheme.purple .search-btn:hover,
-.JewelryBoxTheme.purple .search-btn:hover,
-.FoldableTheme.purple .jimu-draw-box .draw-item:hover,
-.TabTheme.purple .jimu-draw-box .draw-item:hover,
-.JewelryBoxTheme.purple .jimu-draw-box .draw-item:hover {
+.TabTheme.purple .jimu-draw-box .draw-item:hover {
   background-color: rgb(171, 109, 174);
   -ms-filter: "Alpha(opacity=70)";
   background-color: rgba(171, 109, 174, 0.7);
 }
 
-.BoxTheme.purple .search-btn,
-.BoxTheme.purple .jimu-draw-box .draw-item.jimu-state-active,
-.BoxTheme.purple .esriPopup .titlePane {
-  background-color: rgb(136, 97, 151);
-  background-color: rgba(136, 97, 151, 1);
-}
-
-.BoxTheme.purple .search-btn:hover,
-.BoxTheme.purple .jimu-draw-box .draw-item:hover {
-  background-color: rgb(136, 97, 151);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(136, 97, 151, 0.7);
-}
-
-.LaunchpadTheme.style2 .search-btn,
-.LaunchpadTheme.default .search-btn,
-.LaunchpadTheme.style2 .jimu-draw-box .draw-item.jimu-state-active,
-.LaunchpadTheme.default .jimu-draw-box .draw-item.jimu-state-active,
-.LaunchpadTheme.style2 .esriPopup .titlePane,
-.LaunchpadTheme.default .esriPopup .titlePane {
-  background-color: rgb(51, 51, 51);
-  background-color: rgba(51, 51, 51, 1);
-}
-
-.LaunchpadTheme.style2 .search-btn:hover,
-.LaunchpadTheme.default .search-btn:hover,
-.LaunchpadTheme.style2 .jimu-draw-box .draw-item:hover,
-.LaunchpadTheme.default .jimu-draw-box .draw-item:hover {
-  background-color: rgb(51, 51, 51);
-  -ms-filter: "Alpha(opacity=70)";
-  background-color: rgba(51, 51, 51, 0.7);
-}
-
+.widget-esearch
 .jimu-draw-box .point-icon.jimu-state-active:before,
 .PlateauTheme .jimu-draw-box .point-icon:hover {
   color: white;
 }
 
+.widget-esearch
 .jimu-draw-box .line-icon.jimu-state-active:before,
 .PlateauTheme .jimu-draw-box .line-icon:hover {
   color: white;
 }
 
+.widget-esearch
 .jimu-draw-box .polyline-icon.jimu-state-active:before,
 .PlateauTheme .jimu-draw-box .polyline-icon:hover {
   color: white;
 }
 
+.widget-esearch
 .jimu-draw-box .freehand-polyline-icon.jimu-state-active:before,
 .PlateauTheme .jimu-draw-box .freehand-polyline-icon:hover {
   color: white;
 }
 
+.widget-esearch
 .jimu-draw-box .triangle-icon.jimu-state-active:before,
 .PlateauTheme .jimu-draw-box .triangle-icon:hover {
   color: white;
 }
 
+.widget-esearch
 .jimu-draw-box .extent-icon.jimu-state-active:before,
 .PlateauTheme .jimu-draw-box .extent-icon:hover {
   color: white;
 }
 
+.widget-esearch
 .jimu-draw-box .circle-icon.jimu-state-active:before,
 .PlateauTheme .jimu-draw-box .circle-icon:hover {
   color: white;
 }
 
+.widget-esearch
 .jimu-draw-box .ellipse-icon.jimu-state-active:before,
 .PlateauTheme .jimu-draw-box .ellipse-icon:hover {
   color: white;
 }
 
+.widget-esearch
 .jimu-draw-box .polygon-icon.jimu-state-active:before,
 .PlateauTheme .jimu-draw-box .polygon-icon:hover {
   color: white;
 }
-
+.widget-esearch
 .jimu-draw-box .freehand-polygon-icon.jimu-state-active:before,
 .PlateauTheme .jimu-draw-box .freehand-polygon-icon:hover {
   color: white;
 }
+
 #widgets_HUC12Nav_panel {
   height:509px!important;
 }
@@ -1230,7 +780,7 @@
     margin-right: 15px;
 }
 
-.jimu-tab>.control>.tab {
+.widget-esearch .jimu-tab>.control>.tab {
 
     font-size: 12px;
 
@@ -1238,15 +788,15 @@
     padding-right: 5px;
 
 }
-.btn, .btn-primary, .btn:hover {
+.widget-esearch .btn, .btn-primary, .btn:hover {
     color: #626250;
 }
-.btn-info {
+.widget-esearch .btn-info {
     color: #fff;
     background-color: #5bc0de;
     border-color: #46b8da;
 }
-.btn {
+.widget-esearch .btn {
     display: inline-block;
     /*padding: 6px 12px;*/
     margin-bottom: 0;
@@ -1267,34 +817,27 @@
     border: 1px solid transparent;
     border-radius: 4px;
 }
-[role="button"] {
+.widget-esearch [role="button"] {
     cursor: pointer;
 }
-.btn-primary {
+.widget-esearch .btn-primary {
     background-color: #66c5e4;
     border-color: #66c5e4;
 }
-a {
+.widget-esearch a {
     color: #337ab7;
     text-decoration: none;
 }
-a {
+.widget-esearch a {
     background-color: transparent;
 }
 
-
-
-
-.LaunchpadTheme .jimu-draw-box .draw-item:hover {
-  color: #fff;
-}
-
-div.dijitArrowButton {
+.widget-esearch div.dijitArrowButton {
   float: right;
   height: 100%;
 }
 
-.dijitValidationTextBoxError input.dijitValidationInner,
+.widget-esearch .dijitValidationTextBoxError input.dijitValidationInner,
 .dijitSelect input,
 .dijitTextBox input.dijitArrowButtonInner {
   text-indent: -2em !important;
@@ -1303,15 +846,15 @@ div.dijitArrowButton {
   height: 100% !important;
 }
 
-.jimu-draw-box .draw-item:hover {
-  background-color: unset;
+.widget-esearch .jimu-draw-box .draw-item:hover {
+	/*background-color: unset;*/
 }
 
-.jimu-draw-box .draw-item.selected {
+.widget-esearch .jimu-draw-box .draw-item.selected {
   background-color: #C0C0C0;
 }
 
-.jimu-checkbox .label {
+.widget-esearch .jimu-checkbox .label {
   font-size: 12px;
   margin: auto 5px;
   cursor: default;
@@ -1319,106 +862,46 @@ div.dijitArrowButton {
 }
 
 
-/*Fixes for DartTheme list colors*/
-.DartTheme .widget-esearch {
-  width: 98%;
-}
-
-.DartTheme .search-list-item.alt {
-  background-color: #646464;
-}
-
-.DartTheme .search-list-item.selected {
-  background-color: #959595;
-}
-
-.DartTheme .search-list-item.selected.alt {
-  background-color: #d9dde0;
-}
-
-.DartTheme .search-list-item:hover {
-  background-color: #555555;
-}
-
-.DartTheme .search-list-item.alt:hover {
-  background-color: #555555;
-}
-
-.DartTheme .search-list-item.selected:hover {
-  background-color: #555555;
-}
-
-.DartTheme .search-list-item.selected.alt:hover {
-  background-color: #555555;
-}
-
-
-/*Fixes for Launchpad theme*/
-
-.LaunchpadTheme .widget-esearch-single-parameter .dijit-form-FilteringSelect > div.dijitArrowButton.dijitDownArrowButton {
-  width: 30px;
-  height: 100%;
-}
-
-.LaunchpadTheme .widget-esearch-single-parameter .dijit-form-FilteringSelect {
-  display: none;
-  width: 100%;
-  height: 32px;
-}
-
-.LaunchpadTheme .jimu-draw-box .draw-item {
-  cursor: default;
-}
-
-
 /*Fixes for Tab container text overflow in the DartTheme*/
-.widget-esearch.jimu-widget > .jimu-tab > .control > .tab.jimu-vcenter-text {
+.widget-esearch .jimu-widget > .jimu-tab > .control > .tab.jimu-vcenter-text {
   overflow-x: hidden;
   line-height: 28px !important;
 }
 
-.jimu-draw-box .elocate-icon {
+.widget-esearch .jimu-draw-box .elocate-icon {
   background-image: url(images/draw_elocate1.png);
 }
 
-.jimu-draw-box .elocate-icon.jimu-state-active {
+.widget-esearch .jimu-draw-box .elocate-icon.jimu-state-active {
   background-image: url(images/draw_elocate.png);
 }
 
-.LaunchpadTheme .jimu-draw-box .elocate-icon {
-  background-image: url(images/draw_elocate_lp1.png);
-}
-
-.LaunchpadTheme .jimu-draw-box .elocate-icon:hover {
-  background-image: url(images/draw_elocate_lp.png);
-}
-
-.newSelIcon {
+.widget-esearch .newSelIcon {
   background-image: url('images/selection_new.png');
   width: 16px;
   height: 16px;
   background-repeat: no-repeat;
 }
 
-.addSelIcon {
+.widget-esearch .addSelIcon {
   background-image: url('images/selection_add.png');
   width: 16px;
   height: 16px;
   background-repeat: no-repeat;
 }
 
-.removeSelIcon {
+.widget-esearch .removeSelIcon {
   background-image: url('images/selection_remove.png');
   width: 16px;
   height: 16px;
   background-repeat: no-repeat;
 }
 
-.selectionmenu {
+.widget-esearch .selectionmenu {
   margin: 10px 0 0;
 }
 
-.selectionmenu > .dijitReset.dijitInline.dijitButtonNode {
+.widget-esearch .selectionmenu > .dijitReset.dijitInline.dijitButtonNode {
   background-image: unset;
   border-radius: unset;
   background-color: #EFEFF0;
@@ -1445,7 +928,7 @@ div.dijitArrowButton {
   width: 80%;
 }
 
-.LaunchpadTheme .selectionmenu > .dijitReset.dijitInline.dijitButtonNode {
+.widget-esearch .LaunchpadTheme .selectionmenu > .dijitReset.dijitInline.dijitButtonNode {
   background-image: unset;
   border-radius: unset;
   background-color: unset;
@@ -1454,7 +937,7 @@ div.dijitArrowButton {
   box-shadow: unset;
 }
 
-.DartTheme .selectionmenu > .dijitReset.dijitInline.dijitButtonNode {
+.widget-esearch .DartTheme .selectionmenu > .dijitReset.dijitInline.dijitButtonNode {
   background-image: unset;
   border-radius: 2px;
   background-color: rgba(0, 0, 0, 0.25);
@@ -1463,16 +946,16 @@ div.dijitArrowButton {
   box-shadow: unset;
 }
 
-.claro .DartTheme .dijitDateTextBox .dijitArrowButton::before {
+.widget-esearch .claro .DartTheme .dijitDateTextBox .dijitArrowButton::before {
   content: none !important;
 }
 
-.claro .DartTheme .dijitSelect .dijitArrowButtonInner,
+.widget-esearch .claro .DartTheme .dijitSelect .dijitArrowButtonInner,
 .claro .DartTheme .dijitComboBox .dijitArrowButtonInner {
   display: none
 }
 
-.search-list-item .removediv:before {
+.widget-esearch .search-list-item .removediv:before {
   content: '';
   display: inline-block;
   height: 100%;
@@ -1481,12 +964,12 @@ div.dijitArrowButton {
   /* Adjusts for spacing */
 }
 
-.search-list-item .removediv svg {
+.widget-esearch .search-list-item .removediv svg {
   display: inline-block;
   vertical-align: middle;
 }
 
-.search-list-item .removediv {
+.widget-esearch .search-list-item .removediv {
   text-align: center;
   position: absolute;
   height: 100%;
@@ -1494,7 +977,7 @@ div.dijitArrowButton {
   right: 0;
 }
 
-.search-list-item .removedivImg {
+.widget-esearch .search-list-item .removedivImg {
   display: inline-block;
   vertical-align: middle;
   background-image: url("images/i_remove_info.png");
@@ -1515,52 +998,52 @@ div.dijitArrowButton {
   left: -8px;
 }
 
-.popup-menu .popup-menu-item .label {
+.widget-esearch .popup-menu .popup-menu-item .label {
   display: block;
 }
-html, body {
+.widget-esearch html, body {
 	height: 100%;
 	width: 100%;
 	margin: 0;
 	padding: 0;
 }
-pre img {
+.widget-esearch pre img {
 	width: 50px;
 	height: 50px;
 }
 
-h3 {
+.widget-esearch h3 {
 	margin: 0 0 5px 0;
 	border-bottom: 1px solid #444;
 }
 
-#map {
+.widget-esearch #map {
 	margin: 0;
 	padding: 0;
 }
 
-.dojoxFloatingPaneCanvas {
+.widget-esearch .dojoxFloatingPaneCanvas {
     width: 383px !important;
 }
 
-.dojoxGridScrollbox {
+.widget-esearch .dojoxGridScrollbox {
     overflow-x: hidden;
 }
 
-.dijitTitlePane {
+.widget-esearch .dijitTitlePane {
     width: 383px;
 }
 
-.label {
+.widget-esearch .label {
 	display: inline-block;
 	width: 140px;
 }
 
-.grid {
+.widget-esearch .grid {
 	width: 100%;
 	height: 200px;
 }
-.results {
+.widget-esearch .results {
 	/*width: 100%;*/
 	/*height: 200px;*/
 }
@@ -1570,7 +1053,7 @@ h3 {
 /*  margin-right: 5px;*/
 /*}*/
 
-.tundra .dijitTab .tabLabel {
+.widget-esearch .tundra .dijitTab .tabLabel {
 
     font-size: smaller;
     min-height: 20px;
@@ -1598,7 +1081,7 @@ h3 {
 	border-radius: 5px;
 }
 
-.dijitTitleNode {
+.widget-esearch .dijitTitleNode {
     width: 100%;
     height: 28px;
     margin-bottom: 2px;
@@ -1609,7 +1092,7 @@ h3 {
     /*border-top-left-radius: 4px;*/
     /*border-top-right-radius: 4px;*/
 }
-.dojoxFloatingPaneTitle {
+.widget-esearch .dojoxFloatingPaneTitle {
     background: #cccccc;
     background: #fafafa repeat-x bottom left;
     border: 1px solid #bfbfbf;
@@ -1618,10 +1101,10 @@ h3 {
     white-space: nowrap;
     padding: 0!important;
 }
-.dojoxFloatingPaneContent {
+.widget-esearch .dojoxFloatingPaneContent {
     overflow: hidden;
 }
-#widgetInner {
+.widget-esearch #widgetInner {
     /*width: 100%;*/
     /*height: 100%;*/
     margin-top: 3px;
@@ -1630,7 +1113,7 @@ h3 {
     /*border-color: rgb(204, 204, 204);*/
 }
 
-#grids {
+.widget-esearch #grids {
 	overflow-y: scroll;
 	/*height: 350px;*/
 	width: 350px;
@@ -1638,94 +1121,51 @@ h3 {
     font-size: 11px;
 }
 
-#navActive{
+.widget-esearch #navActive{
     display: inline-block;
     float: left;
     padding-right: 15px;
     padding-left: 3px;
 }
 
-#navDirection {
+.widget-esearch #navDirection {
     font-size: 12px;
 }
-#titlePane {
+.widget-esearch #titlePane {
     width: 240px;
 }
-#results_download_pane  {
+.widget-esearch #results_download_pane  {
     font-size: 11px;
 }
 
-#results_download_pane .btn {
+.widget-esearch #results_download_pane .btn {
     padding: 2px;
     font-size: 12px;
 }
 
-#divNavigationMessages {
+.widget-esearch #divNavigationMessages {
     padding: 5px;
     font-size: 18px;
 }
 
-#gridAttributeResults .dojoxGridCell {
+.widget-esearch #gridAttributeResults .dojoxGridCell {
     padding-top: 1px;
     padding-bottom: 1px;
 }
-#gridNavResults  {
+.widget-esearch #gridNavResults  {
     margin-top: 4px;
 }
-#gridNavResults .dojoxGridCell {
+.widget-esearch #gridNavResults .dojoxGridCell {
     padding-top: 1px;
     padding-bottom: 1px;
 }
 
-/*.claro .dijitTitlePaneTitle {*/
-/*    background: #fff;*/
-/*    font-weight: 600;*/
-/*    border: none;*/
-/*    border-bottom: solid 1px #29201A;*/
-/*    border-top: solid 1px #29201A;*/
-/*}*/
-
-/*.claro .dijitTitlePaneTitleHover {*/
-/*    background: #eee;*/
-/*}*/
-
-/*.claro .dijitTitlePaneTitleActive {*/
-/*    background: #808775;*/
-/*}*/
-
-/*.claro .dijitTitlePaneContentOuter {*/
-/*    border-right: none;*/
-/*    border-bottom: none;*/
-/*    border-left: none;*/
-/*}*/
-
-/*.dojoxFloatingPaneTitle {*/
-/*    color: white;*/
-/*    background-color: #1b365d;*/
-/*    font-family: Arial, Helvetica, sans-serif;*/
-/*    font-size: 12pt;*/
-/*    font-weight: bold;*/
-/*    overflow: hidden;*/
-/*}*/
-
-/*.dojoxFloatingPaneTitle, .reportTitlePane {*/
-/*    color: white;*/
-/*    background-color: #76a2c5;*/
-/*    font-family: Arial, Helvetica, sans-serif;*/
-/*    font-size: 12pt;*/
-/*    font-weight: bold;*/
-/*    overflow: hidden;*/
-/*}*/
-#recomputeAggregate {
+.widget-esearch #recomputeAggregate {
     padding: 2px 2px;
     display: inline-block;
     float: right;
     margin-top: -10px;
     margin-bottom: 8px;
     margin-right: 15px;
-}
-
-.dijitContentPane {
-  overflow: hidden !important;
 }
 

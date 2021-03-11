@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "최대 {count}개 피처가 허용됨",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "문제가 발생했습니다.",
-    "kmlProjectionMismatch": "맵과 KML 레이어의 공간 참조가 일치하지 않으며 클라이언트에서 변환을 수행할 수 없습니다."
+    "kmlProjectionMismatch": "맵과 KML 레이어의 공간 참조가 일치하지 않으며 클라이언트에서 변환을 수행할 수 없습니다.",
+    "featureLocationsCouldNotBeFound": "피처를 찾을 수 없음: 알 수 없거나 유효하지 않은 위치 필드입니다. 이 파일이 테이블로 추가됩니다."
   },
   "layerList": {
     "caption": "레이어",

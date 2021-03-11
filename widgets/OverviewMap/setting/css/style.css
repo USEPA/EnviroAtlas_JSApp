@@ -6,6 +6,10 @@
   color: #596679;
 }
 
+.jimu-widget-overviewmap-setting .hide{
+  display: none !important;
+}
+
 .jimu-widget-overviewmap-setting .corner-section .overview-items{
   margin-top: 15px;
   margin-bottom: 30px;
@@ -62,4 +66,35 @@
 }
 .jimu-widget-overviewmap-setting .overview-item .overview-bottom-right{
   background: url(images/bottomright.png);
+}
+
+/***********   baselayer-config   ***************/
+.jimu-widget-overviewmap-setting .baselayer-config{
+  margin-top: 30px;
+}
+
+.jimu-widget-overviewmap-setting .validating{
+  /*background-color: blanchedalmond;*/
+}
+.jimu-widget-overviewmap-setting .error{
+  /*background-color: #F00;*/
+}
+
+.jimu-widget-overviewmap-setting .baselayer-table{
+
+}
+.jimu-widget-overviewmap-setting .baselayer-table #baseLayerType,
+.jimu-widget-overviewmap-setting .baselayer-table #VEStyle{
+  min-width: 220px;
+}
+.jimu-widget-overviewmap-setting .baselayer-table #baseLayerUrl{
+  min-width: 500px;
+}
+.jimu-widget-overviewmap-setting .baselayer-table .input-column{
+  padding: 5px 10px;
+}
+
+.jimu-widget-overviewmap-setting .error-node{
+  font-size: 12px;
+  color: #F00;
 }

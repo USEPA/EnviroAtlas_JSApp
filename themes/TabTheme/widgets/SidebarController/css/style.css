@@ -1,5 +1,6 @@
 .jimu-widget-sidebar-controller{
   overflow: hidden;
+  outline-offset: -3px !important;
 }
 .jimu-widget-sidebar-controller .title-list{
   position: relative;
@@ -388,5 +389,15 @@
     margin-right: 45px;
     margin-top: 5px;
     float:right;
+}
+/* a11y */
+.jimu-widget-sidebar-controller .title-node,
+.jimu-widget-sidebar-controller .right-arrow,
+.jimu-widget-sidebar-controller .left-arrow,
+.jimu-widget-sidebar-controller .other-group-pane .close,
+.jimu-widget-sidebar-controller .other-group-pane .other-group,
+.jimu-widget-sidebar-controller .tab-widget-frame .title,
+.jimu-widget-sidebar-controller .jimu-panel-content{
+  outline-offset: -2px !important;
 }
 .

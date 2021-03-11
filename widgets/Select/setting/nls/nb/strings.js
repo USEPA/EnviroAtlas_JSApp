@@ -5,5 +5,6 @@ define({
   "whollyWithin": "Helt innenfor",
   "allowExport": "Tillat eksport av valgte geoobjekter",
   "layerToSelect": "Velg hvilke lag som kan velges",
-  "includeRuntimeLayers": "Mulig å velge lag generert i kjøretid"
+  "includeRuntimeLayers": "Tillat valg av lag generert i kjøretid",
+  "enableByDefault": "Aktiver velgeknappen som standard"
 });

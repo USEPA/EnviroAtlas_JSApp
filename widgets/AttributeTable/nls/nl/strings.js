@@ -15,6 +15,8 @@ define({
   "selectAll": "Records op alle pagina´s selecteren",
   "selectPage": "Records op huidige pagina selecteren",
   "clearSelection": "Selectie opheffen",
+  "selectionHandleLabel": "Selectiehandle",
+  "selectionHandleDescription": "Druk op ENTER of SPATIE om het object/de objecten op de kaart te markeren",
   "filter": "Filter",
   "setFilterTip": "Stel filters correct in.",
   "noFilterTip": "Zonder filterexpressie zal deze querytaak alle functies in de opgegeven gegevensbron weergeven.",
@@ -60,5 +62,6 @@ define({
   },
   "noTablesAvailable": "Geen tabellen beschikbaar om weer te geven.",
   "checkConfigutationToSelectLayers": "Ga naar de widgetinstellingenpagina voor het selecteren van lagen.",
-  "checkLayerListToSelectLayers": "Attribuuttabel is gesynchroniseerd met de zichtbare lagen in de tabel. U kunt widgets gebruiken als Lagenlijst om te schakelen tussen het aan- en uitzetten van lagen."
+  "checkLayerListToSelectLayers": "Attribuuttabel is gesynchroniseerd met de zichtbare lagen in de tabel. U kunt widgets gebruiken als Lagenlijst om te schakelen tussen het aan- en uitzetten van lagen.",
+  "rowHeaderColumnTitle": "Rij ${layerName}, zweefde, druk op Enter om de zwevende rijen te selecteren"
 });

@@ -255,8 +255,8 @@ createCategory: function (key) {
         //get features in order by cat and label
         query.orderByFields = ["CATEGORY", "DESCRIPTION"];
 
-        var operation = queryTask.execute(query);
-        operation.addCallbacks(function (featset) {
+        var operation = queryTask.execute(query, queryTaskProcessing, queryTaskError);
+        function queryTaskProcessing(featset){
             if (featset.features.length > 0) {
                 var fetcount = featset.features.length;
                 var catJson = {};
@@ -335,11 +335,14 @@ createCategory: function (key) {
                 //wobj.setDefaultListIndex(dgObj.defaultCategoryIndex); 
 
             }
-            wobj.addBtn.disabled = false;
+            wobj.addBtn.disabled = false;        	
+        	
+        }
+        
+        function queryTaskError(e){
+        	alert(e);
+        }
 
-        }, function (error) {
-            console.log(error);
-        });
     }
 },
 setDefaultListIndex: function (defaultIndex) {
@@ -724,7 +727,11 @@ _genRender: function (renderobj) {
                 "opacity": opcvalue,
                 "visible": layervisible
             });
-            
+
+		dmlayer.on('error', function(evt) {
+		      alert("We cannot connect to the service, error message: " + evt.error.message);
+		});            
+		
         window.demographicLayerSetting[layeridstr]={};
         //It is very important to save the infor in following order. They will be used to load value in saveSession widget in the desired order
         window.demographicLayerSetting[layeridstr]["serviceNode"] = selfDemographic.serviceNode.value; 			//It is Source such as: 2012-2016 ACS
@@ -889,6 +896,9 @@ _mapRender: function(renderobj) {
             "visible": layervisible
         });
 
+	dmlayer.on('error', function(evt) {
+	      alert("We cannot connect to the service, error message: " + evt.error.message);
+	});
     this.map.addLayer(dmlayer);
     dmlayer.on("update-start",lang.hitch(this,this.showloading,layeridstr));
     dmlayer.on("update-end",lang.hitch(this,this.hideloading,layeridstr));

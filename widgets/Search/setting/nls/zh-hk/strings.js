@@ -14,6 +14,7 @@ define({
   "generalSetting": "一般設定",
   "allPlaceholder": "用於全部搜尋的占位符文字: ",
   "showInfoWindowOnSelect": "顯示發現的圖徵或位置的快顯視窗",
+  "showInfoWindowOnSelect2": "發現圖徵或位置時顯示快顯視窗",
   "searchInCurrentMapExtent": "僅在目前的地圖範圍中搜尋",
   "zoomScale": "縮放比例",
   "locatorUrl": "地理編碼器 URL",
@@ -42,5 +43,8 @@ define({
   "fieldAlias": "別名",
   "ok": "確定",
   "cancel": "取消",
-  "invalidUrlTip": "URL ${URL} 無效或不可存取。"
+  "invalidUrlTip": "URL ${URL} 無效或不可存取。",
+  "locateResults": "定位結果",
+  "panTo": "平移至",
+  "zoomToScale": "依比例縮放"
 });

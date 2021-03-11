@@ -28,5 +28,11 @@ define({
   "keyword": "Mot-clé",
   "basemapLayers": "Couches de fond de carte",
   "typeAKeywork": "Saisir un mot-clé",
-  "layers": "Couches"
+  "layers": "Couches",
+  "tipLayerSearch": "Rechercher dans les couches",
+  "tipLayerListOperation": "Opérations de la liste des couches",
+  "tipLayerOperation": "Menus des couches",
+  "tipClearText": "Effacer le texte",
+  "collapseLayer": "Réduire",
+  "expandLayer": "Développer"
 });

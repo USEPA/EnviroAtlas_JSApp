@@ -626,7 +626,7 @@ define([
 		}
    };
 		var chkIdDictionary = {};
-		var nationalTopicList = [];
+		//var nationalTopicList = [];
 		var communityTopicList = [];
 		var loadJSON = function(callback){   
 	
@@ -1463,7 +1463,7 @@ define([
 	    	var bCurrentTopicDisabled = true;
 	    	
 	    	
-			if((chkNationalScale.checked) && (nationalTopicList.indexOf(key) >= 0)) {
+			if((chkNationalScale.checked) && (window.nationalTopicList.indexOf(key) >= 0)) {
 				bCurrentTopicDisabled = false;
 			}
 			if((chkCommunityScale.checked) && (communityTopicList.indexOf(key) >= 0)) {
@@ -1598,8 +1598,8 @@ define([
             //};
             popupsTemplate[1] = null;
             var communityLocationLayer = new ArcGISDynamicMapServiceLayer(communityBoundaryLayer);
-            communityLocationLayer._titleForLegend = "EnviroAtlas Community Boundaries";
-            communityLocationLayer.title = "EnviroAtlas Community Boundaries";
+            communityLocationLayer._titleForLegend = window.communityLayerTitle;
+            communityLocationLayer.title = window.communityLayerTitle;
             communityLocationLayer.noservicename = true;
             communityLocationLayer.setInfoTemplates(popupsTemplate);
 
@@ -2043,8 +2043,8 @@ define([
                                     };
         
                                     popupsTemplate[1] = null;
-                                    evt.layer._titleForLegend = "EnviroAtlas Community Boundaries";
-                                    evt.layer.title = "EnviroAtlas Community Boundaries";
+                                    evt.layer._titleForLegend = window.communityLayerTitle;
+                                    evt.layer.title = window.communityLayerTitle;
                                     evt.layer.noservicename = true;
                                     evt.layer.setInfoTemplates(popupsTemplate);       
                                     
@@ -2218,6 +2218,32 @@ define([
                 _updateSelectableLayer();
             });                      
 
+			// add help info button
+	        var newCheckboxCell  = newRow.insertCell(2);
+            
+            var checkbox = document.createElement('input');
+            checkbox.style.marginTop = "2px";
+            checkbox.type = "button";
+            checkbox.className = "help-btn";
+
+            //checkbox.name = chkboxId;
+
+            //checkbox.id = chkboxId;
+            //checkbox.className ="cmn-toggle cmn-toggle-round-flat";
+            newCheckboxCell.appendChild(checkbox); 
+        
+
+            
+            checkbox.addEventListener('click', function() {
+                /*evt.stopPropagation();
+		        if (evt.type === "touchstart") {
+		          evt.preventDefault();
+		        }*/
+		        
+		        window.PanelId = "SelectByTopic";    
+		
+		        utils.startTour();
+            });            			
        
     },	
     displayResizeButton: function() {
@@ -2655,6 +2681,17 @@ define([
 	                    else {
 	                    	eaMetadata = "";
 	                    }
+	                    var bNavHucStatsDefined = false;
+	                    if(layer.hasOwnProperty(window.NavHucStats)){
+	                    	window.hashEAIDToNavHucStats[layer.eaID] = layer[window.NavHucStats];
+	                    	if (layer[window.NavHucStats].length > 0) {
+	                    		bNavHucStatsDefined = true;
+	                    	}
+	                    }
+	                    if(layer.hasOwnProperty(window.NavHucStatsUnit)){
+	                    	window.hashEAIDToNavHucStatsUnit[layer.eaID] = layer[window.NavHucStatsUnit];
+	                    }
+	                    	                    
 	                    if(layer.hasOwnProperty('url')&&(layer.url!=null)){
 	                    	eaURL1 = layer.url.toString();
 	                    	
@@ -2696,8 +2733,12 @@ define([
 	                    if(layer.hasOwnProperty('eaScale')){
 	                    	eaScale = layer.eaScale.toString();
 	                    	if (eaScale == "NATIONAL") {
-	                    		if (nationalTopicList.indexOf(eaTopic) < 0) {
-	                    			nationalTopicList.push(eaTopic);
+	                    		if (window.nationalTopicList.indexOf(eaTopic) < 0) {
+	                    			window.nationalTopicList.push(eaTopic);
+	                    			if ((bNavHucStatsDefined == true) && (window.nationalFeatureTopicList.indexOf(eaTopic)) < 0) {
+	                    				window.nationalFeatureTopicList.push(eaTopic);
+	                    			}
+	                    			
 	                    		}	                    		
 	                    	}
 	                    	if (eaScale == "COMMUNITY") {

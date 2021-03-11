@@ -7,5 +7,6 @@ define({
   "turnonAll": "Tüm katmanları seçilebilir yap",
   "turnoffAll": "Tüm katmanları seçilemez yap",
   "toggleSelect": "Tüm katmanlar için seçilebilirliği değiştir",
-  "singleSelect": "Bunu seçilebilir tek katman yap"
+  "singleSelect": "Bunu seçilebilir tek katman yap",
+  "enableByDefault": "Seçim aracını varsayılan olarak etkinleştir"
 });

@@ -3,5 +3,7 @@ define({
   "highlightLocation": "Soroti Lokasi",
   "useTracking": "Perhatikan perubahan lokasi",
   "warning": "Input salah",
-  "zoomScale": "Skala zoom"
+  "zoomScale": "Skala zoom",
+  "useCompass": "Tampilkan orientasi kompas",
+  "useAccCircle": "Tampilkan akurasi lokasi"
 });

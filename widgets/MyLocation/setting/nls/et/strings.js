@@ -3,5 +3,7 @@ define({
   "highlightLocation": "Tõsta asukoht esile",
   "useTracking": "Jälgi asukohamuutusi",
   "warning": "Vale sisend",
-  "zoomScale": "Suumiskaala"
+  "zoomScale": "Suumiskaala",
+  "useCompass": "Näita kompassi suunda",
+  "useAccCircle": "Näita asukohatäpsust"
 });

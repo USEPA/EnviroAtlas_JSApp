@@ -1,7 +1,13 @@
 define({
   "_widgetLabel": "Võrdlus",
-  "swipeText": " Valige rullimise kaudu võrreldav kiht.",
+  "swipeText": "Rullitav kiht",
   "spyglassText": "Valige pikksilmas kuvatav kiht.",
   "disableTips": "Klõpsake võrdleva rullimistööriista keelamiseks.",
-  "enableTips": "Klõpsake võrdleva rullimistööriista lubamiseks."
+  "enableTips": "Klõpsake võrdleva rullimistööriista lubamiseks.",
+  "defaultLayerHolder": "Klõpsake valimiseks",
+  "selectLayers": "Vali kihid",
+  "miniTips": "Seadke rullitav kiht",
+  "nItemsSelected": "Kiht (kihid) valitud",
+  "showList": "Kuva kihtide loend",
+  "hideList": "Peida kihtide loend"
 });

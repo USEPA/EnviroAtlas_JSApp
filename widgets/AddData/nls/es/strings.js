@@ -127,7 +127,8 @@ define({
     "maxFeaturesAllowedPattern": "Se permite un máximo de {count} entidades",
     "layerNamePattern": "{filename} - {name}",
     "generalIssue": "Se ha producido un problema.",
-    "kmlProjectionMismatch": "La referencia espacial del mapa y la capa KML no coinciden y no es posible hacer la conversión en el cliente."
+    "kmlProjectionMismatch": "La referencia espacial del mapa y la capa KML no coinciden y no es posible hacer la conversión en el cliente.",
+    "featureLocationsCouldNotBeFound": "No se pudieron localizar las funciones: los campos de ubicación son desconocidos o no son válidos. El archivo se añadirá como tabla."
   },
   "layerList": {
     "caption": "Capas",
