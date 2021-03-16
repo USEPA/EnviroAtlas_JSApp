@@ -263,7 +263,7 @@ createCategory: function (key) {
                 var layerJson = {};
                 var tableJson = {};
                 for (var m = 0; m < fetcount; m++) {
-                    if (key == "acs2012") {
+                    if (key == "acs2013") {
                         var cat = dojo.trim(featset.features[m].attributes["CATEGORY"]);
                         var colname = dojo.trim(featset.features[m].attributes["FIELD_ID"]);
                         var tablename = dojo.trim(featset.features[m].attributes["TABLE_NAME"]);
@@ -328,7 +328,7 @@ createCategory: function (key) {
                 }
 
                 _config.demogJSON[key].category = catJson;
-                if (key == "acs2012") _config.demogJSON[key].tables = tableJson;
+                if (key == "acs2013") _config.demogJSON[key].tables = tableJson;
                 _config.demogJSON[key].dynamiclayers = layerJson;
                 dgObj.process = true;
                 wobj.createCatList(key);
@@ -734,7 +734,7 @@ _genRender: function (renderobj) {
 		
         window.demographicLayerSetting[layeridstr]={};
         //It is very important to save the infor in following order. They will be used to load value in saveSession widget in the desired order
-        window.demographicLayerSetting[layeridstr]["serviceNode"] = selfDemographic.serviceNode.value; 			//It is Source such as: 2012-2016 ACS
+        window.demographicLayerSetting[layeridstr]["serviceNode"] = selfDemographic.serviceNode.value; 			//It is Source such as: 2013-2017 ACS
         window.demographicLayerSetting[layeridstr]["demogTypeNode"] = selfDemographic.demogTypeNode.value;       //It is Category such as "EDUCATION"
         window.demographicLayerSetting[layeridstr]["demogListNode"] = selfDemographic.demogListNode.value;       //It is variable such as: 10th Grade    
         //radio button
