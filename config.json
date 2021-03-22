@@ -131,7 +131,7 @@
                 "config": "widgets/SelectCommunity/config.json"
             }, {
                 "position": {
-                    "left": 295,
+                    "left": 325,
                     "top": 5,
                     "width": 230,
                     "height": 230,
@@ -221,7 +221,7 @@
                 "config": "widgets/Drawer/config.json"
             }, {
                 "position": {
-                    "left": 345,
+                    "left": 375,
                     "top": 5,
                     "width": 425,
                     "height": 480,
@@ -236,7 +236,7 @@
                 "config": "widgets/ECAT/config.json"
             }, {
                 "position": {
-                    "left": 395,
+                    "left": 425,
                     "top": 5,
                     "width": 360,
                     "height": 420,
@@ -251,7 +251,7 @@
                 "config": "widgets/CompareMyArea/config.json"
             }, {
                 "position": {
-                    "left": 445,
+                    "left": 475,
                     "top": 5,
                     "width": 400,
                     "height": 460,
@@ -264,7 +264,7 @@
                 "closeable": true
             }, {
                 "position": {
-                    "left": 495,
+                    "left": 525,
                     "top": 5,
                     "width": 440,
                     "height": 410,
@@ -279,7 +279,7 @@
                 "config": "widgets/Raindrop/config.json"
             }, {
                 "position": {
-                    "left": 545,
+                    "left": 575,
                     "top": 5,
                     "width": 380,
                     "height": 410,
@@ -294,7 +294,7 @@
                 "config": "widgets/ElevationProfile/config.json"
             }, {
                 "position": {
-                    "left": 595,
+                    "left": 625,
                     "top": 5,
                     "width": 380,
                     "height": 410,
@@ -313,7 +313,7 @@
                 "uri": "widgets/Select/Widget",
                 "config": "configs/Select/config_Select.json",
                 "position": {
-                    "left": 645,
+                    "left": 675,
                     "top": 5,
                     "width": 380,
                     "height": 410,
@@ -683,7 +683,7 @@
                     "id": "themes_TabTheme_widgets_SidebarController_Widget_20",
                     "name": "SidebarController",
                     "label": "Sidebar Controller"
-                }, {					
+                }, {
                     "uri": "widgets/Scalebar/Widget",
                     "position": {
                         "left": 10,
@@ -960,6 +960,20 @@
                     },
                     "id": "widgets_Select_Widget_39"
                 }, {
+                    "position": {
+                        "left": 565,
+                        "top": -40,
+                        "width": 370,
+                        "height": 270,
+                        "relativeTo": "map"
+                    },
+                    "placeholderIndex": 1,
+                    "id": "DemographicLayers_ori_28",
+                    "name": "DemographicLayers_ori",
+                    "label": "DemographicLayers_ori",
+                    "version": "0.1",
+                    "uri": "widgets/DemographicLayers_ori/Widget"
+				}, {
                     "position": {
                         "right": 5,
                         "top": -40,
