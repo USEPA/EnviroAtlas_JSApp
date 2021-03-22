@@ -205,7 +205,7 @@
 		{
 			"widgetName": "DynamicSymbology",
 			"helpFile": "help_DynamicSymbology",
-			"node": "dijit__WidgetBase_21",
+			"node": "dijit__WidgetBase_20",
 			"content": [],
 			"orient": [
 				"below",
@@ -213,14 +213,14 @@
 				"above",
 				"above-alt"
 			],
-			"highlight": "dijit__WidgetBase_21",
+			"highlight": "dijit__WidgetBase_20",
 			"title": "Dynamic Symbology Tool",
 			"displayOrder": 14
 		},
 		{
 			"widgetName": "LayerList",
 			"helpFile": "help_LayerList",
-			"node": "dijit__WidgetBase_21",
+			"node": "dijit__WidgetBase_20",
 			"content": [],
 			"orient": [
 				"below",
@@ -228,7 +228,7 @@
 				"above",
 				"above-alt"
 			],
-			"highlight": "dijit__WidgetBase_21",
+			"highlight": "dijit__WidgetBase_20",
 			"title": "Layer List Widget",
 			"displayOrder": 15
 		},

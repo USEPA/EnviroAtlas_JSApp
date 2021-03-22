@@ -549,6 +549,7 @@ define([
         });
 
     };
+
     var removeFrameFromMap = function () {
 
         if (map.getLayer(window.timeSeriesLayerId)) {
