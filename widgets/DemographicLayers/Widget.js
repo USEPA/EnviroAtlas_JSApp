@@ -22,6 +22,7 @@ define(['dojo/_base/declare',
 "esri/dijit/PopupTemplate",
 "esri/InfoTemplate",
 'esri/layers/ImageParameters',
+'jimu/PanelManager',
 'dijit/form/HorizontalSlider',
 
 "./configLocal",
@@ -50,6 +51,7 @@ function(declare,
   PopupTemplate,
   InfoTemplate,
   ImageParameters,
+  PanelManager,
   HorizontalSlider,
   _config,
   ColorPicker) {
@@ -340,8 +342,14 @@ createCategory: function (key) {
         }
         
         function queryTaskError(e){
-        	alert(e);
-        }
+        	
+        	window.failedDemoHucTimeseEcatRain["Demographic URL: " + lookuptableurl] = e;
+
+        	var widgetName = 'DisplayLayerAddFailure';
+	        var widgets = selfSimpleSearchFilter.appConfig.getConfigElementsByName(widgetName);
+	        var pm = PanelManager.getInstance();
+	        pm.showPanel(widgets[0]);
+	    }
 
     }
 },

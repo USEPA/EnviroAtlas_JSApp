@@ -49,21 +49,28 @@ define([
 	var self;
 	var failedEAID;
    	var failedOutsideLayers;
+   	var failedDemoHucLayers;
     var updateFailedListOfLayers = function(){	
     	var comment = document.getElementById("failedLayersComment");
 		failedEAID = "";
 		failedOutsideLayers = "";    	
-    	if ((Object.keys(window.faildedEALayerDictionary).length == 0)&&(Object.keys(window.faildedOutsideLayerDictionary).length == 0)) {  
+		failedDemoHucLayers = "";
+    	if ((Object.keys(window.faildedEALayerDictionary).length == 0)&&(Object.keys(window.faildedOutsideLayerDictionary).length == 0) && (Object.keys(window.failedDemoHucTimeseEcatRain).length == 0)) {  
     		comment.innerHTML = "Data that fails to load will appear here and be documented."; 
     		var hr = document.getElementById('hrFailedEnviroAtlasLayers');
 			hr.style.display = 'none';	 
     		var hrEmail = document.getElementById('hrFailedLayersSendEmail');
 			hrEmail.style.display = 'none';	
-					 
+    		hr = document.getElementById('hrFailedDemoHucTimeseEcatRain');
+			hr.style.display = 'none';		
+								 
     		hr = document.getElementById('hrFailedOutsideLayers');
 			hr.style.display = 'none';			
     		var butEmail = document.getElementById('eMailOption');
-			butEmail.style.display = 'none';					 		
+			butEmail.style.display = 'none';		
+			
+	
+							 		
     	} else{
     		comment.innerHTML = "The following web service(s) failed to load at this time and may be unavailable for this session.";
     	}
@@ -100,7 +107,8 @@ define([
 			hr.style.display = '';		
     		var commentFaileOursideLayer = document.getElementById("failedOutsideLayersComment");
     		commentFaileOursideLayer.innerHTML = "Click below to notify the EnviroAtlas administrators of issues with the following web services hosted outside of the EnviroAtlas hosting environment:";
-
+    		var butEmail = document.getElementById('eMailOption');
+			butEmail.style.display = '';
 		    var tableOfRelationship = document.getElementById("failedOutLayers");
 		    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0]; 
 	        while (tableRef.firstChild) {
@@ -116,6 +124,38 @@ define([
 				failedOutsideLayers = failedOutsideLayers + key + ",,,";					  
 			}  		
 			failedOutsideLayers = failedOutsideLayers.substring(0, failedOutsideLayers.length -3);
+		}
+		if (Object.keys(window.failedDemoHucTimeseEcatRain).length > 0) {
+            enableSendButton();
+			var hr = document.getElementById('hrDemoHucTimeseEcatRain');
+			hr.style.display = '';		
+    		var commentFaileOursideLayer = document.getElementById("failedDemoHucTimeseEcatRainComment");
+    		commentFaileOursideLayer.innerHTML = "Click below to notify the EnviroAtlas administrators of issues with the following web services:";
+    		var butEmail = document.getElementById('eMailOption');
+			butEmail.style.display = '';
+		    var tableOfRelationship = document.getElementById("failedDemoHucTimeseEcatRainLayers");
+		    var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0]; 
+	        while (tableRef.firstChild) {
+	            tableRef.removeChild(tableRef.firstChild);
+	        }	    	
+			for (var key in window.failedDemoHucTimeseEcatRain) {	
+				var newRow   = tableRef.insertRow(tableRef.rows.length);
+	           	var newTitleCell  = newRow.insertCell(0);
+	        
+				var newTitle  = document.createElement('div');
+		        newTitle.innerHTML = key;
+				newTitleCell.appendChild(newTitle); 	
+
+				var newRow   = tableRef.insertRow(tableRef.rows.length);
+	           	var newTitleCell  = newRow.insertCell(0);
+	           					
+				var newTitle  = document.createElement('div');
+		        newTitle.innerHTML = failedDemoHucTimeseEcatRain[key];
+				newTitleCell.appendChild(newTitle); 	
+										  
+				failedDemoHucLayers = failedDemoHucLayers + key + ",,," + failedDemoHucTimeseEcatRain[key] + ",,,";					  
+			}  		
+			failedDemoHucLayers = failedDemoHucLayers.substring(0, failedDemoHucLayers.length -3);
 		}
 	};
 
@@ -139,16 +179,18 @@ define([
 
 			  try{
 				var xhr = new XMLHttpRequest();
-				//xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/SendEmailOfFailedLayers.py?failedEALayers=" + failedEAID + "&failedOutsideLayers=" + failedOutsideLayers, true);
+				//xhr.open('GET', "https://enviroatlas.epa.gov/SendEmailOfFailedLayers.py?failedEALayers=" + failedEAID + "&failedOutsideLayers=" + failedOutsideLayers, true);
 				if ((failedEAID.length > 0) && (failedOutsideLayers.length > 0)) {
-					xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/SendEmailOfFailed_EA_OutsideLayers.py?failedEALayers=" + failedEAID + "&failedOutsideLayers=" + failedOutsideLayers, true);
+					xhr.open('GET', "https://enviroatlas.epa.gov/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedEALayers=" + failedEAID + "&failedOutsideLayers=" + failedOutsideLayers, true);
 				}
 				else if (failedEAID.length > 0) {
-					xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/SendEmailOfFailed_EA_OutsideLayers.py?failedEALayers=" + failedEAID, true);
+					xhr.open('GET', "https://enviroatlas.epa.gov/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedEALayers=" + failedEAID, true);
 				} 
 				else if (failedOutsideLayers.length > 0) {
-					xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/SendEmailOfFailed_EA_OutsideLayers.py?failedOutsideLayers=" + failedOutsideLayers, true);
-				} 				
+					xhr.open('GET', "https://enviroatlas.epa.gov/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedOutsideLayers=" + failedOutsideLayers, true);
+				} else if ( failedDemoHucLayers.length > 0 ) {
+					xhr.open('GET', "https://enviroatlas.epa.gov/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedDemoHucTimeseEcatRain=" + failedDemoHucLayers, true);
+				}				
 				xhr.send();
                 disableSendButton();
 			  }
