@@ -30,13 +30,11 @@ for key in fs.keys():
 print("failedEaIDArray:" + str(len(failedEaIDArray))+ "\n")
 if (len(failedEaIDArray)>0):
     AllFailedEaIDArray = [int(i) for i in failedEaIDArray]    
-    htmlForEmail = "This is the list of failed layers in EnviroAtlas from LEB: <br />"
+    htmlForEmail = "This is the list of failed layers in EnviroAtlas sent from LEB: <br />"
 else:
     htmlForEmail = ""
 print("AllFailedEaIDArray:" + str(len(AllFailedEaIDArray))+ "\n")
-DataInLocalLayerWidget = r"D:\Public\Data\CodeRepository\EnviroAtlas_WAB\widgets\LocalLayer\config.json"
-DataInBoundaryWidget = r"D:\Public\Data\CodeRepository\EnviroAtlas_WAB\widgets\BoundaryLayer\config.json"
-DataInPBSWidget = r"D:\Public\Data\CodeRepository\EnviroAtlas_WAB\widgets\PeopleAndBuildSpaces\config.json"
+DataInLocalLayerWidget = r"D:\Public\Data\CodeRepository\EnviroAtlas_WAB\widgets\SimpleSearchFilter\config_layer.json"
 EmailAddress = "Rosenbaum.Barbara@epa.gov"
 recipients = ['Rosenbaum.Barbara@epa.gov', 'Ji.Baohong@epa.gov', 'Hultgren.Torrin@epa.gov']
 #EmailAddress = "Ji.Baohong@epa.gov"
@@ -66,16 +64,15 @@ def writeDemoHucLintoHTML(failedOutsideURLArray, html):
     return html
 
 htmlForEmail = writeURLintoHTML(AllFailedEaIDArray, DataInLocalLayerWidget, htmlForEmail)
-htmlForEmail = writeURLintoHTML(AllFailedEaIDArray, DataInBoundaryWidget, htmlForEmail)
-htmlForEmail = writeURLintoHTML(AllFailedEaIDArray, DataInPBSWidget, htmlForEmail)
+
 if (len(AllFailedOutsideURLArray)>0):
-    htmlForEmail = " <br />" + htmlForEmail + " <br />" + "This is the list of failed layers outside EnviroAtlas: <br />"
+    htmlForEmail = " <br />" + htmlForEmail + " <br />" + "This is the list of failed layers outside EnviroAtlas sent from LEB: <br />"
     htmlForEmail = writeOutsideURLintoHTML(AllFailedOutsideURLArray, htmlForEmail)
 
 
 if (len(failedDemoHucArray)>0):
     print("\nfailedDemoHucArray is not empty:" + "\n")
-    htmlForEmail = " <br />" + htmlForEmail + " <br />" + "This is the failed layer: <br />"
+    htmlForEmail = " <br />" + htmlForEmail + " <br />" + "This is the failed layer sent from LEB: <br />"
     htmlForEmail = htmlForEmail + failedDemoHucArray[0] + "<br />"
     print("\nfailedDemoHucArray is not empty:" + failedDemoHucArray[0]+"\n")
     htmlForEmail = htmlForEmail + " <br />" + "error message is:" + " <br />"

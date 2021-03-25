@@ -34,9 +34,8 @@ if (len(failedEaIDArray)>0):
 else:
     htmlForEmail = ""
 print("AllFailedEaIDArray:" + str(len(AllFailedEaIDArray))+ "\n")
-DataInLocalLayerWidget = r"D:\Public\Data\EnviroAtlas_Public\WebProduction\interactivemap\widgets\LocalLayer\config.json"
-DataInBoundaryWidget = r"D:\Public\Data\EnviroAtlas_Public\WebProduction\interactivemap\widgets\BoundaryLayer\config.json"
-DataInPBSWidget = r"D:\Public\Data\EnviroAtlas_Public\WebProduction\interactivemap\widgets\PeopleAndBuildSpaces\config.json"
+DataInLocalLayerWidget = r"D:\Public\Data\EnviroAtlas_Public\WebProduction\interactivemap\widgets\SimpleSearchFilter\config_layer.json"
+
 EmailAddress = "Rosenbaum.Barbara@epa.gov"
 recipients = ['Rosenbaum.Barbara@epa.gov', 'Ji.Baohong@epa.gov', 'Hultgren.Torrin@epa.gov']
 #EmailAddress = "Ji.Baohong@epa.gov"
@@ -66,8 +65,6 @@ def writeDemoHucLintoHTML(failedOutsideURLArray, html):
     return html
 
 htmlForEmail = writeURLintoHTML(AllFailedEaIDArray, DataInLocalLayerWidget, htmlForEmail)
-htmlForEmail = writeURLintoHTML(AllFailedEaIDArray, DataInBoundaryWidget, htmlForEmail)
-htmlForEmail = writeURLintoHTML(AllFailedEaIDArray, DataInPBSWidget, htmlForEmail)
 if (len(AllFailedOutsideURLArray)>0):
     htmlForEmail = " <br />" + htmlForEmail + " <br />" + "This is the list of failed layers outside EnviroAtlas: <br />"
     htmlForEmail = writeOutsideURLintoHTML(AllFailedOutsideURLArray, htmlForEmail)
