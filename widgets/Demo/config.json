@@ -44,6 +44,18 @@
 			"displayOrder": 2
 		},
 		{
+			"widgetName": "SelectByTopic",
+			"node": "butFilterInSimpleSearch",
+			"helpFile": "help_SelectByTopic",
+			"content": [],
+			"orient": [
+				"after"
+			],
+			"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20",
+			"title": "Filter",
+			"displayOrder": 4
+		},		
+		{
 			"widgetName": "Demographic",
 			"node": "themes_TabTheme_widgets_SidebarController_Widget_20",
 			"helpFile": "help_Demographic",
@@ -54,18 +66,6 @@
 			"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20",
 			"title": "Demographic Data",
 			"displayOrder": 3
-		},
-		{
-			"widgetName": "SelectByTopic",
-			"node": "themes_TabTheme_widgets_SidebarController_Widget_20",
-			"helpFile": "help_SelectByTopic",
-			"content": [],
-			"orient": [
-				"after"
-			],
-			"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20",
-			"title": "Filter",
-			"displayOrder": 4
 		},
 		{
 			"widgetName": "TimesSeries",

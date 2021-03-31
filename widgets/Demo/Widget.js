@@ -131,7 +131,11 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
             if (helpTour[stop].highlight) {
                 $('#' + helpTour[stop].highlight).css('z-index', '998');
             }
-
+            if (helpTour[stop].widgetName == "SelectByTopic") {
+                $('#butFilterInSimpleSearch').css('background-color', '#f6e0c4');//  c4daeb
+            } else {
+            	$('#butFilterInSimpleSearch').css('background-color', '#eaf2f8'); 
+            }
             if (stop == 0) {
                 
                 var bSidebarWidget = false;
@@ -387,6 +391,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 $('#' + helpTour[i].highlight).css('z-index', '');
             }
             stop = 0;
+            $('#butFilterInSimpleSearch').css('background-color', '#eaf2f8');
             console.log("End the Guided Tour");
         },
 
@@ -399,6 +404,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
         },
 
         onClose : function() {
+        	$('#butFilterInSimpleSearch').css('background-color', '#eaf2f8');//998
             console.log('onClose');
         },
 
