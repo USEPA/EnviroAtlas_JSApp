@@ -24,9 +24,11 @@
                         $('#' + value["widgetName"] + 'Card').append('<div id="' + value["widgetName"] + '" class="card-header"></div>');
                         $('#' + value["widgetName"] + 'Card').append('<div id="' + value["widgetName"] + 'Body" class="card-body"></div>');
                         $('#' + value["widgetName"]).load("widgets/Demo/help/templates/" + value["helpFile"] + "1.html",function(){
-							if (window.location.hash == '#' + value["widgetName"]) {
-								$(document).scrollTop( $('#' + value["widgetName"]).offset().top ); 
-							}
+                        	setTimeout(function () { 
+								if (window.location.hash == '#' + value["widgetName"]) {
+									$(document).scrollTop( $('#' + value["widgetName"]).offset().top ); 
+								}
+							}, 2000)
 						});
                         $('#' + value["widgetName"] + 'Body').load("widgets/Demo/help/templates/" + value["helpFile"] + "2.html");
                     }
