@@ -20,10 +20,11 @@ define(["dojo/_base/declare",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
-    "dojo/text!./templates/help_HucNavigation1.html"
+    "jimu/utils",
+    "dojo/text!./templates/help_CompareMyArea1.html"
   ],
   function(declare, array, locale, domClass, _WidgetBase, _TemplatedMixin,
-    _WidgetsInTemplateMixin, template) {
+    _WidgetsInTemplateMixin, jimuUtils, template) {
 
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
@@ -40,7 +41,9 @@ define(["dojo/_base/declare",
       },
 
       startup: function() {
+
         if (this._started) {
+        
           return;
         }
         this.inherited(arguments);

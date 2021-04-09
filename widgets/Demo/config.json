@@ -134,13 +134,28 @@
 				"above",
 				"above-alt"
 			],
-			"highlight": "dijit__WidgetBase_9",
+			"highlight": "dijit__WidgetBase_8",
 			"title": "EnviroAtlas Change Analysis Tool (ECAT)",
 			"displayOrder": 9
 		},
 		{
-			"widgetName": "HucNavigation",
-			"helpFile": "help_HucNavigation",
+			"widgetName": "CompareMyArea",
+			"helpFile": "help_CompareMyArea",
+			"node": "dijit__WidgetBase_9",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": "dijit__WidgetBase_9",
+			"title": "Compare My Area Tool",
+			"displayOrder": 20
+		},
+		{
+			"widgetName": "NavHuc",
+			"helpFile": "help_NavHuc",
 			"node": "dijit__WidgetBase_10",
 			"content": [],
 			"orient": [
@@ -188,6 +203,21 @@
 			"displayOrder": 12
 		},
 		{
+			"widgetName": "SaveSession",
+			"helpFile": "help_SaveSession",
+			"node": "dijit__WidgetBase_13",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": "dijit__WidgetBase_13",
+			"title": "Save Session Tool",
+			"displayOrder": 21
+		},
+		{
 			"widgetName": "Select",
 			"helpFile": "help_Select",
 			"node": "dijit__WidgetBase_14",
@@ -201,21 +231,6 @@
 			"highlight": "dijit__WidgetBase_14",
 			"title": "Select Data Tool",
 			"displayOrder": 13
-		},
-		{
-			"widgetName": "DynamicSymbology",
-			"helpFile": "help_DynamicSymbology",
-			"node": "dijit__WidgetBase_21",
-			"content": [],
-			"orient": [
-				"below",
-				"below-alt",
-				"above",
-				"above-alt"
-			],
-			"highlight": "dijit__WidgetBase_21",
-			"title": "Dynamic Symbology Tool",
-			"displayOrder": 14
 		},
 		{
 			"widgetName": "LayerList",
@@ -233,9 +248,9 @@
 			"displayOrder": 15
 		},
 		{
-			"widgetName": "AttributeTable",
-			"helpFile": "help_AttributeTable",
-			"node": "openAttributeTable",
+			"widgetName": "DynamicSymbology",
+			"helpFile": "help_DynamicSymbology",
+			"node": "dijit__WidgetBase_21",
 			"content": [],
 			"orient": [
 				"below",
@@ -243,12 +258,25 @@
 				"above",
 				"above-alt"
 			],
-			"highlight": "openAttributeTable",
+			"highlight": "dijit__WidgetBase_21",
+			"title": "Dynamic Symbology Tool",
+			"displayOrder": 14
+		},
+		{
+			"widgetName": "AttributeTable",
+			"helpFile": "help_AttributeTable",
+			"node": "widgets_AttributeTable_Widget_30",
+			"content": [],
+			"orient": [
+				"above",
+				"above-alt"
+			],
+			"highlight": "widgets_AttributeTable_Widget_30",
 			"title": "Attribute Table",
 			"displayOrder": 16
 		},
 		{
-			"widgetName": "eDraw",
+			"widgetName": "DrawMeasure",
 			"helpFile": "help_DrawMeasure",
 			"node": "dijit__WidgetBase_2",
 			"content": [],
@@ -293,7 +321,7 @@
 			"displayOrder": 19
 		},
 		{
-			"node": "dijit__WidgetBase_14",
+			"node": "linksNode",
 			"helpFile": "help_EndPage",
 			"content": [],
 			"orient": [
@@ -302,7 +330,7 @@
 				"above",
 				"above-alt"
 			],
-			"highlight": false,
+			"highlight": "themes_TabTheme_widgets_Header_Widget_18",
 			"title": "End Page",
 			"displayOrder": 0
 		}
