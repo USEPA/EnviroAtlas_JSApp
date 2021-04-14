@@ -1214,7 +1214,7 @@ define([
        this.startQuery(this.layersIndex, this.config.layerInfos[this.layersIndex].extent);
        //this.refresh();
     },
-    exportToCSV: function(fileName) {
+    exportToCSV: function(fileName, richTextFieldsToClear) {
       if (!this.layerInfo || !this.layer || !this.tableCreated) {
         var def = new Deferred();
         def.reject();

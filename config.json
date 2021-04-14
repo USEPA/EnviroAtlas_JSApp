@@ -168,7 +168,7 @@
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
-                "id": "widgets_config_Print_27",
+                "id": "widgets_Print_27",
                 "name": "Print",
                 "label": "Print",
                 "version": "2.11",
@@ -228,7 +228,7 @@
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,
-                "id": "widgets_EcatTools_35",
+                "id": "widgets_Ecat_35",
                 "name": "ECAT",
                 "label": "EnviroAtlas Change Analysis Tool (ECAT)",
                 "version": "1.3",
@@ -821,7 +821,7 @@
                         "relativeTo": "map"
                     },
                     "placeholderIndex": 1,
-                    "id": "widgets_config_Print_27",
+                    "id": "widgets_Print_27",
                     "name": "Print",
                     "label": "Print",
                     "version": "2.11",
@@ -881,7 +881,7 @@
                         "relativeTo": "map"
                     },
                     "placeholderIndex": 1,
-                    "id": "widgets_EcatTools_35",
+                    "id": "widgets_Ecat_35",
                     "name": "ECAT",
                     "label": "EnviroAtlas Change Analysis Tool (ECAT)",
                     "version": "1.3",

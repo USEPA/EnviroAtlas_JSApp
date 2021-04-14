@@ -5249,10 +5249,22 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
                 var widgetName = window.helpTour[i].widgetName;
                 if (widgetName!=null){
                 	panelID = window.PanelId.toUpperCase();
-                	if (((panelID.indexOf("_PANEL") >= 0)&&(panelID.indexOf(widgetName.toUpperCase()) >= 0)) || (panelID == widgetName.toUpperCase())){
-                        stop = i;
-                        window.widgetNameInDemo = widgetName;
-                    }               
+
+                	console.log(panelID);
+
+                    if (panelID.indexOf("_PANEL") >= 0) {
+                    	var arrayPanelID = panelID.split('_');
+      					if (arrayPanelID[1] == widgetName.toUpperCase()) {
+	                        stop = i;
+	                        window.widgetNameInDemo = widgetName;      						
+      					}
+                    } 
+                    else {
+                    	if (panelID.indexOf(widgetName.toUpperCase()) >= 0){
+	                        stop = i;
+	                        window.widgetNameInDemo = widgetName;                       		
+                    	}
+                    }
                 }            
             }  
             this._nextStop(stop);           
