@@ -1937,8 +1937,7 @@ define([
                             } else {
                                 lLayer = new FeatureLayer(layer.url, lOptions);
                             }
-                            lLayer.minScale = 1155581.108577;
-                            //LayerInfos.getInstanceSync()._tables.push(lLayer);
+
                         }
 
                         if (bNeedToBeAdded) {
@@ -1962,7 +1961,10 @@ define([
                                 else{
                                     lOptions.id = window.layerIdTiledPrefix + layer.eaID.toString();
                                     var tileLayerForFeature = new ArcGISTiledMapServiceLayer(layer.tileURL, lOptions);
-                                    tileLayerForFeature.setMaxScale(2000000);
+                                    //tileLayerForFeature.setMaxScale(2000000);
+                                    if(layer.hasOwnProperty('tilecacheLevelNat')){
+                                    	tileLayerForFeature.setMaxScale(Math.ceil(window.scaleLevelDic[layer.cacheLevelNat]));
+                                    }
                                     /*tileLayerForFeature.on('load', function(evt) {
 			                                setTimeout(function () {
 			                                    evt.layer.setMaxScale(2000000);     
@@ -2028,7 +2030,8 @@ define([
                         lLayer.on('load', function(evt) {
                             evt.layer.name = lOptions.id;
                             currentEAID = evt.layer.id.replace(window.layerIdPrefix, "");
-                            
+                            evt.layer.setMinScale(Math.ceil(window.scaleLevelDic[window.hashIDtoCacheLevelNat[currentEAID]]));
+                            //console.log("on load lOptions.minScale: " +Math.ceil(window.scaleLevelDic[window.hashIDtoCacheLevelNat[currentEAID]]));
                             if (evt.layer.id == window.layerIdPrefix + communityBoundaryLayerID) {
                                 setTimeout(function () {
                                     var popupsTemplate = {};
@@ -2699,6 +2702,9 @@ define([
 	                    		eaURL = eaURL1 + "/" + layer.eaLyrNum.toString();
 	                    		window.hashURL[layer.eaID.toString()] = eaURL; 
 	                    		window.hashEAIDToTitle[layer.eaID] = layer.name;
+	                    		if(layer.hasOwnProperty('cacheLevelNat')){
+	                    			window.hashIDtoCacheLevelNat[layer.eaID] = layer.cacheLevelNat;	                    			
+	                    		}	                    		
 	                    		if(layer.hasOwnProperty('tileLink') && layer.tileLink.toString() == "yes"){
 	                    			window.hashURLtoTile[eaURL] = layer.tileURL.toString();
 	                    			

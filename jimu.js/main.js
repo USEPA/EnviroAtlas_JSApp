@@ -384,7 +384,31 @@ define([
 	window.hashIDtoCacheLevelNat = {};
 	window.hashFeaturedCollectionToEAID = {};
 	window.allLayersTurnedOn = {};
-	
+	window.scaleLevelDic = {};
+	window.scaleLevelDic[0]=591657527.591555;
+	window.scaleLevelDic[1]=295828763.795777;	
+	window.scaleLevelDic[2]=147914381.897889;
+	window.scaleLevelDic[3]=73957190.948944;
+	window.scaleLevelDic[4]=36978595.474472;
+	window.scaleLevelDic[5]=18489297.737236;
+	window.scaleLevelDic[6]=9244648.868618;
+	window.scaleLevelDic[7]=4622324.434309;
+	window.scaleLevelDic[8]=2311162.217155;
+	window.scaleLevelDic[9]=1155581.108577;
+	window.scaleLevelDic[10]=577790.554289;
+	window.scaleLevelDic[11]=288895.277144;
+	window.scaleLevelDic[12]=144447.638572;
+	window.scaleLevelDic[13]=72223.819286;
+	window.scaleLevelDic[14]=36111.909643;
+	window.scaleLevelDic[15]=18055.954822;
+	window.scaleLevelDic[16]=9027.977411;
+	window.scaleLevelDic[17]=4513.988705;
+	window.scaleLevelDic[18]=2256.994353;
+	window.scaleLevelDic[19]=1128.497176;
+	window.scaleLevelDic[20]=564.248588;
+	window.scaleLevelDic[21]=282.124294;
+	window.scaleLevelDic[22]=141.062147;
+	window.scaleLevelDic[23]=70.5310735;	
                 
     //patch for JS API 3.10
     var hasMethod = typeof cookie.getAll === 'function';
