@@ -1,46 +1,115 @@
 <div>
   <div data-dojo-attach-point="tabMain">
     <div class="${baseClass} profile-tab-node" data-dojo-attach-point="tabNode1">
-      <div>
+      <div class="input-step">
+        <div style="margin-top: 15px">
+          <p>First, select a national indicator to summarize:</p>
+        </div>
+        <div class="indicator-select-wrapper">
+          <select id="gridded-map-indicator-input" name="indicator-input">
+            <option disabled selected value="">Select one...</option>
+            <option value="population-floodplains">Population within floodplains</option>
+            <option value="population-roads">Population within specified distance to roads</option>
+            <option value="padus">Protected Lands (PADUS)</option>
+            <option value="population-padus">Population within specified distance to PADUS</option>
+            <option value="nlcd">National Land Cover Dataset</option>
+            <option value="impervious-floodplains">Impervious land cover in floodplain</option>
+            <option value="nlcd-change">National Land Cover change analysis</option>
+          </select>
+          <button id="gridded-map-clear-indicator-button"></button>
+        </div>
+        <div id="gridded-map-indicator-roads" style="display: none">
+          <div class="point-buffer">
+            <label id="indicator-distance-from-label" for="gridded-map-distance-from-buffer"></label>
+            <input type="number" id="gridded-map-distance-from" name="distance-from-value" min="30" value="30" step="30">
+          </div>
+        </div>
+        <div id="gridded-map-indicator-details" style="display: none">
+          <div class="point-controls">
+            <div>
+              <input type="radio" id="gridded-map-distance-from-mile" name="distance-from" value="miles">
+              <label for="gridded-map-distance-from-mile">Miles</label>
+            </div>
+            <div>
+              <input type="radio" id="gridded-map-distance-from-kilometer" name="distance-from" value="kilometers" checked>
+              <label for="gridded-map-distance-from-kilometer">Kilometers</label>
+            </div>
+          </div>
+          <div class="point-buffer">
+            <label id="indicator-distance-from-label" for="gridded-map-distance-from-buffer"></label>
+            <input type="number" id="gridded-map-distance-from" name="distance-from-value" min="0.5" value="0.5">
+          </div>
+        </div>
+        <div id="gridded-map-date-selector" style="display: none">
+          <div class="gridded-map-date-wrapper">
+            <label for="date-1">Time point 1:</label>
+            <select id="gridded-map-date-1" name="date-1">
+            </select>
+          </div>
+          <div class="gridded-map-date-wrapper">
+            <label for="date-2">Time point 2:</label>
+            <select id="gridded-map-date-2" name="date-2">
+            </select>
+          </div>
+        </div>
+        <div id="gridded-map-nlcd-selector" style="display: none">
+          <div class="gridded-map-date-wrapper">
+            <label for="date-1">NLCD Layer Year:</label>
+            <select id="gridded-map-nlcd" name="date-1">
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="layers-used-wrapper">
+        <p>EnviroAtlas Layers Used in Analysis:</p>
+        <ul id="layers-used"></ul>
+      </div>
+      <div class="input-step">
         <div>
-          <p>To begin, first please select a unit area and click within the map on a focus location:</p>
+          <p>Next, select a unit area and click within the map on a focus location:</p>
         </div>
         <div class="unit-select-wrapper">
           <select id="gridded-map-unit-input" name="unit-input">
             <option disabled selected value="">Select one...</option>
-            <option value="area">Draw an area</option>
-            <option value="district">Congressional District</option>
-            <option value="huc">HUC-12</option>
             <option value="county">County</option>
-            <!-- <option value="state">State</option> -->
-            <option value="point">Specific Point</option>
+            <option value="state">State</option>
+            <option value="district">Congressional District</option>
+            <option value="huc-8">HUC-8</option>
+            <option value="huc-12">HUC-12</option>
+            <option value="point">Draw a point</option>
+            <option value="line">Draw a line</option>
+            <option value="area">Draw an area</option>
+            <option value="file">Use your own shapefile</option>
           </select>
           <button id="gridded-map-clear-button"></button>
+          <div id="gridded-map-shape-file-wrapper" style="display: none">
+            <form enctype="multipart/form-data" method="post" id="gridded-map-upload-form">
+              <input id="gridded-map-shape-file-upload" type="file" name="file" />
+            </form>
+            <p id="gridded-map-shape-file-error"></p>
+          </div>
+          <button id="gridded-map-clear-unit-button"></button>
         </div>
         <div id="gridded-map-unit-details"  style="display: none">
           <div class="point-controls">
             <div>
               <input type="radio" id="gridded-map-mile" name="metric" value="miles">
-              <label for="gridded-map-mile">Mile</label>
+              <label for="gridded-map-mile">Miles</label>
             </div>
             <div>
               <input type="radio" id="gridded-map-kilometer" name="metric" value="kilometers" checked>
-              <label for="gridded-map-kilometer">Kilometer</label>
+              <label for="gridded-map-kilometer">Kilometers</label>
             </div>
           </div>
           <div class="point-buffer">
             <label for="gridded-map-buffer">Buffer distance:</label>
-            <input type="number" id="gridded-map-buffer" name="buffer" min="0.5" value="0.5">
+            <input type="number" id="gridded-map-buffer" name="buffer" min="0.0" value="0.5">
+          </div>
+          <div id="exlude-area-wrapper" style="display: none">
+            <label for="gridded-map-buffer">Exlude Inner Feature:</label>
+            <input type="checkbox" id="gridded-map-exlude-inner-feature">
           </div>
         </div>
-      </div>
-      <div>
-        <div style="margin-top: 15px">
-          <p>Then, select a national indicator to summarize.</p>
-        </div>
-        <select id="gridded-map-indicator-input" name="indicator-input">
-          <option selected value="nlcd">National Land Cover Dataset (2012)</option>
-        </select>
       </div>
       <p id="gridded-map-selection-name"></p>
       <div class="calculate-button-wrapper">
@@ -48,7 +117,7 @@
       </div>
       <p id="gridded-map-error"></p>
     </div>
-    <div class="${baseClass} profile-tab-node" data-dojo-attach-point="tabNode2">
+    <div id="gridded-map-results" class="${baseClass} profile-tab-node" data-dojo-attach-point="tabNode2">
       <div id="gridded-map-input-table-wrapper" class="table-wrapper">
       </div>
       <div id="gridded-map-output-table-wrapper" class="table-wrapper">
