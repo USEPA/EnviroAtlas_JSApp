@@ -127,8 +127,8 @@ startup: function () {
                             style: 'width: 300px'
                         });
 
-        infotext = "<h2 style='margin-top:0px'>2013-2017 ACS</h2>";
-        infotext += "<p>Variables derived from a subset of 2013-2017 American Community Survey data.</p>"
+        infotext = "<h2 style='margin-top:0px'>2014-2018 ACS</h2>";
+        infotext += "<p>Variables derived from a subset of 2014-2018 American Community Survey data.</p>"
         infotext += "<hr style='margin-top:10px'>";
         infotext += "<h2 style='margin-top:0px'>2010 Census</h2>";
         infotext += "<p>Variables derived from a subset of 2010 Census data.</p>";

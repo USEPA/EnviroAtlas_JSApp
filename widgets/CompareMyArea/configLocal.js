@@ -2,13 +2,13 @@ define(
 [],
 function() {
 
-    var natamapservice = "https://leb.epa.gov/arcgis/rest/services/Other/CMA_Air_Toxics/MapServer"; 
+    var natamapservice = "https://enviroatlas.epa.gov/arcgis/rest/services/Other/CMA_Air_Toxics/MapServer"; 
     //var natamapservice = "https://gis8.saic.com/arcgis/rest/services/NATA/NATA/MapServer";    //error for tract 
-    var watershedmapservice = "https://leb.epa.gov/arcgis/rest/services/Other/CMA_Landscape/MapServer";
+    var watershedmapservice = "https://enviroatlas.epa.gov/arcgis/rest/services/Other/CMA_Landscape/MapServer";
     //var watershedmapservice = "https://gis8.saic.com/arcgis/rest/services/NATA/watershed/MapServer";//error for watershed
-    var demogmapservice = "https://geopub.epa.gov/arcgis/rest/services/ejscreen/census2016acs/MapServer";
+    var demogmapservice = "https://geopub.epa.gov/arcgis/rest/services/ejscreen/census2018acs/MapServer";
     //var printservice = //"https://gis8.saic.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
-    var printservice = "https://leb.epa.gov/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
+    var printservice = "https://map23.epa.gov/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
     //var printservice = //"https://enviroatlas.epa.gov/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
 var _config = {
     "nata":{
@@ -174,7 +174,7 @@ var _config = {
         },
         'demog':{
             'description':'Demographic Indicators',
-            'note': 'These demographic data were sourced by <a href="https://www.epa.gov/ejscreen/download-ejscreen-data" target="_blank">U.S. EPA</a> from the <a href="https://www.census.gov/programs-surveys/acs/data/summary-file.2016.html" target="_blank">U.S. Census Bureau</a> and are available by census tract, county, and state.',
+            'note': 'These demographic data were sourced by <a href="https://www.epa.gov/ejscreen/download-ejscreen-data" target="_blank">U.S. EPA</a> from the <a href="https://www.census.gov/programs-surveys/acs/data/summary-file.2018.html" target="_blank">U.S. Census Bureau</a> and are available by census tract, county, and state.',
             'isNATA': false,
             'hasscinote': false,
             'xtitle': '',
