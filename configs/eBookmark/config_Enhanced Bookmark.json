@@ -49,10 +49,10 @@
         {
           "name": "Birmingham, AL",
           "extent": {
-            "xmax": -9590000,
-            "xmin": -9732410,
-            "ymax": 4008840,
-            "ymin": 3886000,
+            "xmax": -9624377,
+            "xmin": -9694155,
+            "ymax": 4004399,
+            "ymin": 3900555,
             "spatialReference": {
               "wkid": 102100
             }
@@ -73,10 +73,10 @@
         {
           "name": "Chicago, IL",
           "extent": {
-            "xmax": -9600000,
-            "xmin": -9900000,
-            "ymax": 5255000,
-            "ymin": 5005000,
+            "xmax": -9627607,
+            "xmin": -9874861,
+            "ymax": 5235565,
+            "ymin": 5036294,
             "spatialReference": {
               "wkid": 102100
             }
@@ -133,10 +133,10 @@
         {
           "name": "Green Bay, WI",
           "extent": {
-            "xmax": -9758457.0097,
-            "xmin":-9829925.6312,
-            "ymax": 5558807.6432,
-            "ymin": 5530143.7576,
+            "xmax": -9779757.8867,
+            "xmin":-9836401.8867,
+            "ymax": 5567086.0820,
+            "ymin": 5518563.0820,
             "spatialReference": {
               "wkid": 102100
             }
@@ -145,10 +145,10 @@
         {
           "name": "Los Angeles, CA",
           "extent": {
-            "xmax": -13055000,
-            "xmin":-13281000,
-            "ymax": 4165000,
-            "ymin": 3920000,
+            "xmax": -13096335,
+            "xmin":-13240918,
+            "ymax": 4139895,
+            "ymin": 3928279,
             "spatialReference": {
               "wkid": 102100
             }
@@ -331,10 +331,10 @@
         {
           "name": "Sonoma County, CA",
           "extent": {
-            "xmax": -13576122.000,
-            "xmin": -13799318.000,
-            "ymax": 4724445.000,
-            "ymin": 4521735.000,
+            "xmax": -13619657.000,
+            "xmin": -13752086.000,
+            "ymax": 4700626.000,
+            "ymin": 4589780.000,
             "spatialReference": {
               "wkid": 102100
             }
