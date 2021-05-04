@@ -62,8 +62,12 @@ define([
     'widgets/Demo/help/help_DrawerMapping2',
     'widgets/Demo/help/help_ECAT1',
     'widgets/Demo/help/help_ECAT2',
-    'widgets/Demo/help/help_HucNavigation1',
-    'widgets/Demo/help/help_HucNavigation2',
+    'widgets/Demo/help/help_CompareMyArea1',
+    'widgets/Demo/help/help_CompareMyArea2',    
+    'widgets/Demo/help/help_SaveSession1',
+    'widgets/Demo/help/help_SaveSession2',      
+    'widgets/Demo/help/help_NavHuc1',
+    'widgets/Demo/help/help_NavHuc2',
     'widgets/Demo/help/help_Raindrop1',
     'widgets/Demo/help/help_Raindrop2',  
     'widgets/Demo/help/help_AttributeTable1',
@@ -90,7 +94,14 @@ define([
   function(ConfigManager, LayoutManager, DataManager, WidgetManager, FeatureActionManager, SelectionManager,
     DataSourceManager, FilterManager, html, lang, array, on, keys, mouse,
     topic, cookie, Deferred, all, ioquery, esriConfig, esriRequest, urlUitls, IdentityManager,
-    portalUrlUtils, jimuUtils, help_Welcome, help_Elevation1,help_Elevation2, help_FeaturedCollections1, help_FeaturedCollections2, help_Demographic1, help_Demographic2, help_EnviroAtlasDataSearch1, help_EnviroAtlasDataSearch2, help_TimesSeries1, help_TimesSeries2, help_AddData1, help_AddData2, help_Select1, help_Select2, help_SelectCommunity1, help_SelectCommunity2, help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_HucNavigation1, help_HucNavigation2, help_Raindrop1, help_Raindrop2, help_AttributeTable1, help_AttributeTable2, help_SelectByTopic1, help_SelectByTopic2, help_DrawMeasure1, help_DrawMeasure2, help_EnhancedBookmarks1, help_EnhancedBookmarks2, help_DynamicSymbology1, help_DynamicSymbology2, help_Print1, help_Print2, help_LayerList1, help_LayerList2, help_EndPage, require, i18n, mainBundle, esriMain, dojoReady) {
+    portalUrlUtils, jimuUtils, help_Welcome, help_Elevation1,help_Elevation2, help_FeaturedCollections1, help_FeaturedCollections2, 
+    help_Demographic1, help_Demographic2, help_EnviroAtlasDataSearch1, help_EnviroAtlasDataSearch2, help_TimesSeries1, help_TimesSeries2, 
+    help_AddData1, help_AddData2, help_Select1, help_Select2, help_SelectCommunity1, help_SelectCommunity2, 
+    help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_CompareMyArea1, help_CompareMyArea2,
+    help_SaveSession1, help_SaveSession2, help_NavHuc1, help_NavHuc2, help_Raindrop1, help_Raindrop2, 
+    help_AttributeTable1, help_AttributeTable2, help_SelectByTopic1, help_SelectByTopic2, help_DrawMeasure1, help_DrawMeasure2, 
+    help_EnhancedBookmarks1, help_EnhancedBookmarks2, help_DynamicSymbology1, help_DynamicSymbology2, help_Print1, help_Print2, 
+    help_LayerList1, help_LayerList2, help_EndPage, require, i18n, mainBundle, esriMain, dojoReady) {
     /* global jimuConfig:true */
     var mo = {}, appConfig;
 
@@ -186,7 +197,10 @@ define([
     window.formatters['help_SelectCommunity1'] = help_SelectCommunity1;    
     window.formatters['help_DrawerMapping1'] = help_DrawerMapping1;
     window.formatters['help_ECAT1'] =  help_ECAT1;  
-    window.formatters['help_HucNavigation1'] = help_HucNavigation1;
+    window.formatters['help_CompareMyArea1'] =  help_CompareMyArea1; 
+    window.formatters['help_SaveSession1'] =  help_SaveSession1; 
+    
+    window.formatters['help_NavHuc1'] = help_NavHuc1;
     window.formatters['help_Raindrop1'] = help_Raindrop1;
     window.formatters['help_AttributeTable1'] = help_AttributeTable1;
     window.formatters['help_SelectByTopic1'] = help_SelectByTopic1;
@@ -204,8 +218,11 @@ define([
     window.formatters['help_Select2'] = help_Select2;
     window.formatters['help_SelectCommunity2'] = help_SelectCommunity2;    
     window.formatters['help_DrawerMapping2'] = help_DrawerMapping2;
-    window.formatters['help_ECAT2'] =  help_ECAT2;  
-    window.formatters['help_HucNavigation2'] = help_HucNavigation2;
+    window.formatters['help_ECAT2'] =  help_ECAT2;
+    window.formatters['help_CompareMyArea2'] =  help_CompareMyArea2;
+    window.formatters['help_SaveSession2'] =  help_SaveSession2;
+      
+    window.formatters['help_NavHuc2'] = help_NavHuc2;
     window.formatters['help_Raindrop2'] = help_Raindrop2; 
     window.formatters['help_AttributeTable2'] = help_AttributeTable2;
     window.formatters['help_SelectByTopic2'] = help_SelectByTopic2;
@@ -214,6 +231,7 @@ define([
     window.formatters['help_DynamicSymbology2'] = help_DynamicSymbology2;					
     window.formatters['help_Print2'] = help_Print2;
     window.formatters['help_LayerList2'] = help_LayerList2;
+    window.formatters['help_EndPage'] = help_EndPage;
     
     window.categoryDic = {};
     window.categoryDic["Clean Air"] = "cair";
@@ -366,7 +384,31 @@ define([
 	window.hashIDtoCacheLevelNat = {};
 	window.hashFeaturedCollectionToEAID = {};
 	window.allLayersTurnedOn = {};
-	
+	window.scaleLevelDic = {};
+	window.scaleLevelDic[0]=591657527.591555;
+	window.scaleLevelDic[1]=295828763.795777;	
+	window.scaleLevelDic[2]=147914381.897889;
+	window.scaleLevelDic[3]=73957190.948944;
+	window.scaleLevelDic[4]=36978595.474472;
+	window.scaleLevelDic[5]=18489297.737236;
+	window.scaleLevelDic[6]=9244648.868618;
+	window.scaleLevelDic[7]=4622324.434309;
+	window.scaleLevelDic[8]=2311162.217155;
+	window.scaleLevelDic[9]=1155581.108577;
+	window.scaleLevelDic[10]=577790.554289;
+	window.scaleLevelDic[11]=288895.277144;
+	window.scaleLevelDic[12]=144447.638572;
+	window.scaleLevelDic[13]=72223.819286;
+	window.scaleLevelDic[14]=36111.909643;
+	window.scaleLevelDic[15]=18055.954822;
+	window.scaleLevelDic[16]=9027.977411;
+	window.scaleLevelDic[17]=4513.988705;
+	window.scaleLevelDic[18]=2256.994353;
+	window.scaleLevelDic[19]=1128.497176;
+	window.scaleLevelDic[20]=564.248588;
+	window.scaleLevelDic[21]=282.124294;
+	window.scaleLevelDic[22]=141.062147;
+	window.scaleLevelDic[23]=70.5310735;	
                 
     //patch for JS API 3.10
     var hasMethod = typeof cookie.getAll === 'function';

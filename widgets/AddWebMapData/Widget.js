@@ -709,7 +709,16 @@ define(['dojo/_base/declare',
 	            }
            } else {//Its url matches the EnviroAtlas layer          	
 	
-   	            window.featureLyrNumber.push(eaIDinSearchFilter);                              
+   	            window.featureLyrNumber.push(eaIDinSearchFilter); 
+   	            // add corresponding tile            
+            	lOptions = {};
+            	lOptions.visible = l.visibility;
+            	lOptions.opacity = l.opacity;
+                lOptions.id = window.layerIdTiledPrefix + eaIDinSearchFilter;
+                
+
+                this.map.addLayer(new ArcGISTiledMapServiceLayer(tileURL, lOptions));  
+                             
            }
            
             if (esriLang.isDefined(l.showLabels)) {
@@ -751,18 +760,7 @@ define(['dojo/_base/declare',
                         tempLayer.setOpacity(1 - (layerDefinition.drawingInfo.transparency / 100));
                     }
                 }
-                else {
 
-
-                	if (tileURL!="") {
-
-	                	lOptions = {};
-                        lOptions.id = window.layerIdTiledPrefix + eaIDinSearchFilter;
-
-                        this.map.addLayer(new ArcGISTiledMapServiceLayer(tileURL, lOptions));
-                    }
-                	
-                }
                 if (esriLang.isDefined(layerDefinition.minScale)) {
                     tempLayer.setMinScale(layerDefinition.minScale);
                 }
