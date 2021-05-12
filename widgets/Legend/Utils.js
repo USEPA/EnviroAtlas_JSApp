@@ -38,7 +38,7 @@ define([
       var hideLayers = [];
       if(isShowLegend(topLayerInfo, config)) {
         // temporary code.
-        if(topLayerInfo.layerObject &&
+        /*if(topLayerInfo.layerObject &&
            (topLayerInfo.layerObject.declaredClass === 'esri.layers.ArcGISDynamicMapServiceLayer' ||
             topLayerInfo.layerObject.declaredClass === 'esri.layers.ArcGISTiledMapServiceLayer')) {
           // topLayerInfo.traversal(function(layerInfo) {
@@ -62,7 +62,7 @@ define([
               hideLayers.push(jsapiLayerInfo.id);
             }
           });
-        }
+        }*/
         // add to layerInfosparam
         if(topLayerInfo.isMapNotesLayerInfo()) {
           array.forEach(topLayerInfo.getSubLayers(), function(mapNotesSubLayerInfo) {
