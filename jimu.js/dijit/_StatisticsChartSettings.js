@@ -1,17 +1,360 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/_StatisticsChartSettings.html":'\x3cdiv tabIndex\x3d"0"\x3e\r\n\t\x3cdiv data-dojo-attach-point\x3d"divAxisX" class\x3d"setting-item"\x3e\x3c/div\x3e\r\n\t\x3cdiv data-dojo-attach-point\x3d"divAxisY" class\x3d"setting-item"\x3e\x3c/div\x3e\r\n\t\x3cdiv data-dojo-attach-point\x3d"divLegend" class\x3d"setting-item"\x3e\x3c/div\x3e\r\n\t\x3cdiv data-dojo-attach-point\x3d"divPieLabel" class\x3d"setting-item"\x3e\x3c/div\x3e\r\n\t\x3cdiv\x3e\r\n\t\t\x3cdiv tabindex\x3d"0" aria-label\x3d"${nls.color}" class\x3d"color-tip"\x3e${nls.color}\x3c/div\x3e\r\n\t\t\x3cdiv data-dojo-attach-point\x3d"singleColorSection" class\x3d"single-color-section"\x3e\r\n\t\t\t\x3cdiv data-dojo-attach-point\x3d"colorDiv" class\x3d"single-color-div"\x3e\x3c/div\x3e\r\n\t\t\t\x3cdiv data-dojo-attach-point\x3d"paletteContainer" class\x3d"palette-container"\x3e\x3c/div\x3e\r\n\t\t\x3c/div\x3e\r\n\t\t\x3cdiv data-dojo-attach-point\x3d"multiColorSection" class\x3d"multi-color-section"\x3e\r\n\t\t\t\x3cdiv class\x3d"colorful-section"\x3e\r\n\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"colorfulContainer"\x3e\x3c/div\x3e\r\n\t\t\t\x3c/div\x3e\r\n\t\t\t\x3cdiv class\x3d"monochromatic-section"\x3e\r\n\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"monochromaticContainer"\x3e\x3c/div\x3e\r\n\t\t\t\x3c/div\x3e\r\n\t\t\x3c/div\x3e\r\n\t\x3c/div\x3e\r\n\t\x3cdiv class\x3d"shelter" data-dojo-attach-point\x3d"shelter"\x3e\x3c/div\x3e\r\n\x3c/div\x3e'}});
-define("dojo/_base/declare dojo/_base/lang dojo/_base/array dojo/_base/html dojo/_base/query dojo/_base/Color dojo/on dojo/Evented dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/text!./templates/_StatisticsChartSettings.html dijit/ColorPalette jimu/dijit/CheckBox".split(" "),function(q,c,l,b,n,g,d,r,t,u,v,w,x,e){return q([t,u,v,r],{baseClass:"jimu-dijit-statistics-chart-settings",templateString:w,colors:{c1:"#5d9cd3 #eb7b3a #a5a5a5 #febf29 #4673c2 #72ad4c".split(" "),c2:"#5d9cd3 #a5a5a5 #4673c2 #285f8f #636363 #274577".split(" "),
-c3:"#eb7b3a #febf29 #72ad4c #9c4618 #987214 44682e".split(" "),c4:"#72ad4c #4673c2 #febf29 #44682e #274577 #987214".split(" "),g1:["#43729b","#c4d5ea"],g2:["#ac5928","#f5ccbf"],g3:["#787878","#d8d8d8"],g4:["#bb8b1b","#fee1be"],g5:["#30538d","#c0c9e3"],g6:["#517e36","#c9dbc2"],g7:["#c4d5ea","#43729b"],g8:["#f5ccbf","#ac5928"],g9:["#d8d8d8","#787878"],g10:["#fee1be","#bb8b1b"],g11:["#c0c9e3","#30538d"],g12:["#c9dbc2","#517e36"]},palette:null,defaultSingleColor:"#5d9cd3",multiColorValue:"c1",imagesUrl:window.require.toUrl("jimu/css/images/chart/"),
-isInWidget:!1,type:"",singleColor:!1,config:null,postMixInProperties:function(){this.nls=window.jimuNls.statisticsChart},postCreate:function(){this.inherited(arguments);this._initSelf();this.isInWidget&&this._bindEvents();this.own(d(this.multiColorSection,"click",c.hitch(this,function(a){a=a.target||a.srcElement;if(b.hasClass(a,"multi-color")&&!b.hasClass(a,"selected")){var c=this.multiColorValue;this._selectMultiColorDiv(a);c!==a.colorValue&&this.isInWidget&&this._configChange()}})))},_initSelf:function(){this.config=
-c.clone(this.config);this.cbxAxisX=new e({label:this.nls.horizontalAxis});this.cbxAxisX.placeAt(this.divAxisX);this.cbxAxisY=new e({label:this.nls.verticalAxis});this.cbxAxisY.placeAt(this.divAxisY);this.cbxLegend=new e({label:this.nls.legend});this.cbxLegend.placeAt(this.divLegend);this.cbxPieLabel=new e({label:this.nls.dataLabels});this.cbxPieLabel.placeAt(this.divPieLabel);this._setSingleColorForColorDiv(this.defaultSingleColor);this.palette=new x({palette:"7x10",cellClass:"cursor:pointer",style:{width:"220px"},
-onChange:c.hitch(this,function(a){var b=this._getSingleColorFromColorDiv();this._setSingleColorForColorDiv(a);this.isInWidget&&b!==a&&this._configChange()})});this.palette.placeAt(this.paletteContainer);this.palette.startup();l.forEach(["c1","c2","c3","c4"],c.hitch(this,function(a){b.create("div",{"class":"multi-color colorful "+a,tabindex:"0"},this.colorfulContainer).colorValue=a}));l.forEach("g1 g2 g3 g4 g5 g6 g7 g8 g9 g10 g11 g12".split(" "),c.hitch(this,function(a){b.create("div",{"class":"multi-color monochromatic "+
-a,tabindex:"0"},this.monochromaticContainer).colorValue=a}));this._setMultiColorValue("c1");"pie"===this.type?(this.singleColor=!1,b.setStyle(this.divAxisX,"display","none"),b.setStyle(this.divAxisY,"display","none")):b.setStyle(this.divPieLabel,"display","none");this.reset();this.config&&this.setConfig(this.config)},_updateLegendDisplayByMode:function(a){if("pie"===this.type)this._showLegendCbx=!0,b.setStyle(this.divLegend,"display","");else if("column"===this.type||"bar"===this.type||"line"===this.type)if("count"===
-a||"field"===a)b.setStyle(this.divLegend,"display","none"),this._showLegendCbx=!1;else if("feature"===a||"category"===a)this._showLegendCbx=!0,b.setStyle(this.divLegend,"display","")},_bindEvents:function(){this.own(d(this.cbxLegend,"change",c.hitch(this,this._configChange)));"pie"===this.type?this.own(d(this.cbxPieLabel,"change",c.hitch(this,this._configChange))):(this.own(d(this.cbxAxisX,"change",c.hitch(this,this._configChange))),this.own(d(this.cbxAxisY,"change",c.hitch(this,this._configChange))))},
-setConfig:function(a){this.reset();this.cbxAxisX.setValue(!1===a.showHorizontalAxis?!1:!0);this.cbxAxisY.setValue(!1===a.showVerticalAxis?!1:!0);this.cbxPieLabel.setValue(!1===a.showDataLabel?!1:!0);this.cbxLegend.setValue(!1===a.showLegend?!1:!0);a=c.clone(a.colors||[]);(this.singleColor=1===a.length&&"pie"!==this.type)?this.showSingleColor(a[0]):this.showMultiColor(a)},getConfig:function(){var a={colors:[]};"pie"===this.type?(a.colors=this.colors[this._getMultiColorValue()],2===a.colors.length&&
-(a.colors=this._createHexColors(a.colors[0],a.colors[1],6)),a.showDataLabel=this.cbxPieLabel.checked):(a.showHorizontalAxis=this.cbxAxisX.checked,a.showVerticalAxis=this.cbxAxisY.checked,a.colors=this.singleColor?[this._getSingleColorFromColorDiv()]:this.colors[this._getMultiColorValue()]);this._showLegendCbx&&(a.showLegend=this.cbxLegend.checked);return a},_setSingleColorForColorDiv:function(a){b.setStyle(this.colorDiv,"backgroundColor",a);this.colorDiv.bgHex=a},_getSingleColorFromColorDiv:function(){return this.colorDiv.bgHex},
-_setMultiColorValue:function(a){(a=n("."+a,this.multiColorSection))&&0<a.length&&this._selectMultiColorDiv(a[0])},_selectMultiColorDiv:function(a){n(".multi-color",this.multiColorSection).removeClass("selected");b.addClass(a,"selected");this.multiColorValue=a.colorValue},_getMultiColorValue:function(){return this.multiColorValue},reset:function(){"pie"===this.type?this.cbxPieLabel.setValue(!0):(this.cbxAxisX.setValue(!0),this.cbxAxisY.setValue(!0));this.singleColor?this.showSingleColor():this.showMultiColor()},
-showSingleColor:function(a){"pie"===this.type?this.singleColor=!1:(this.singleColor=!0,b.setStyle(this.singleColorSection,"display","block"),b.setStyle(this.multiColorSection,"display","none"),a&&this._setSingleColorForColorDiv(a))},showMultiColor:function(a){this.singleColor=!1;b.setStyle(this.singleColorSection,"display","none");b.setStyle(this.multiColorSection,"display","block");if(a&&0<a.length){var m=null,p=!1,f;for(f in this.colors)if(m=this.colors[f],p=!1,m.length===a.length&&(p=l.every(m,
-c.hitch(this,function(b,c){b=new g(b);c=new g(a[c]);return b.toHex().toLowerCase()===c.toHex().toLowerCase()})))){this._setMultiColorValue(f);break}}},showShelter:function(){b.setStyle(this.shelter,"display","block")},hideShelter:function(){b.setStyle(this.shelter,"display","none")},_configChange:function(){var a=this.getConfig();this.emit("change",a)},_createHexColors:function(a,b,c){var f=[];a=g.fromHex(a);var d=g.fromHex(b);b=(d.r-a.r)/(c-1);for(var e=(d.g-a.g)/(c-1),d=(d.b-a.b)/(c-1),h=null,k=
-0;k<c;k++)h=new g,h.r=Math.floor(a.r+b*k),h.g=Math.floor(a.g+e*k),h.b=Math.floor(a.b+d*k),f.push(h.toHex());return f}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+    'dojo/_base/declare',
+    'dojo/_base/lang',
+    'dojo/_base/array',
+    'dojo/_base/html',
+    'dojo/_base/query',
+    'dojo/_base/Color',
+    'dojo/on',
+    'dojo/Evented',
+    'dijit/_WidgetBase',
+    'dijit/_TemplatedMixin',
+    'dijit/_WidgetsInTemplateMixin',
+    'dojo/text!./templates/_StatisticsChartSettings.html',
+    'dijit/ColorPalette',
+    "jimu/dijit/CheckBox"
+  ],
+  function(declare, lang, array, html, query, Color, on, Evented, _WidgetBase, _TemplatedMixin,
+    _WidgetsInTemplateMixin, template, ColorPalette, CheckBox) {
+
+    return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+      baseClass: 'jimu-dijit-statistics-chart-settings',
+      templateString: template,
+      colors:{
+        c1:['#5d9cd3', '#eb7b3a', '#a5a5a5', '#febf29', '#4673c2', '#72ad4c'],
+        c2:['#5d9cd3', '#a5a5a5', '#4673c2', '#285f8f', '#636363', '#274577'],
+        c3:['#eb7b3a', '#febf29', '#72ad4c', '#9c4618', '#987214', '44682e'],
+        c4:['#72ad4c', '#4673c2', '#febf29', '#44682e', '#274577', '#987214'],
+        g1:['#43729b', '#c4d5ea'],
+        g2:['#ac5928', '#f5ccbf'],
+        g3:['#787878', '#d8d8d8'],
+        g4:['#bb8b1b', '#fee1be'],
+        g5:['#30538d', '#c0c9e3'],
+        g6:['#517e36', '#c9dbc2'],
+        g7:['#c4d5ea', '#43729b'],
+        g8:['#f5ccbf', '#ac5928'],
+        g9:['#d8d8d8', '#787878'],
+        g10:['#fee1be', '#bb8b1b'],
+        g11:['#c0c9e3', '#30538d'],
+        g12:['#c9dbc2', '#517e36']
+      },
+      palette: null,
+      defaultSingleColor: '#5d9cd3',
+      multiColorValue: 'c1',
+      imagesUrl: window.require.toUrl("jimu/css/images/chart/"),
+
+      //options:
+      isInWidget: false,
+      type: '',//'bar','column','line','pie'
+      singleColor: false,
+      //{colors,showHorizontalAxis,showVerticalAxis,showDataLabel}
+      config: null,//Object in Widget, null in setting page
+
+      postMixInProperties:function(){
+        this.nls = window.jimuNls.statisticsChart;
+      },
+
+      postCreate: function(){
+        this.inherited(arguments);
+        this._initSelf();
+        //only bind events in Widget and bind events at last of postCreate
+        if(this.isInWidget){
+          this._bindEvents();
+        }
+
+        this.own(on(this.multiColorSection, 'click', lang.hitch(this, function(event) {
+          var target = event.target || event.srcElement;
+          if (html.hasClass(target, 'multi-color') && !html.hasClass(target, 'selected')) {
+            var originalMultiColor = this.multiColorValue;
+            this._selectMultiColorDiv(target);
+            var newMultiColor = target.colorValue;
+            if(originalMultiColor !== newMultiColor){
+              if(this.isInWidget){
+                this._configChange();
+              }
+            }
+          }
+        })));
+      },
+
+      _initSelf: function(){
+        this.config = lang.clone(this.config);
+
+        this.cbxAxisX = new CheckBox({
+          label: this.nls.horizontalAxis
+        });
+        this.cbxAxisX.placeAt(this.divAxisX);
+
+        this.cbxAxisY = new CheckBox({
+          label: this.nls.verticalAxis
+        });
+        this.cbxAxisY.placeAt(this.divAxisY);
+
+        this.cbxLegend = new CheckBox({
+          label: this.nls.legend
+        });
+        this.cbxLegend.placeAt(this.divLegend);
+
+        this.cbxPieLabel = new CheckBox({
+          label: this.nls.dataLabels
+        });
+        this.cbxPieLabel.placeAt(this.divPieLabel);
+
+        //init single color section
+        this._setSingleColorForColorDiv(this.defaultSingleColor);
+        this.palette = new ColorPalette({
+          palette: "7x10",
+          cellClass: "cursor:pointer",
+          style: {width: '220px'},
+          onChange: lang.hitch(this, function(newValue){
+            var oldValue = this._getSingleColorFromColorDiv();
+            this._setSingleColorForColorDiv(newValue);
+            if(this.isInWidget){
+              if(oldValue !== newValue){
+                this._configChange();
+              }
+            }
+          })
+        });
+        this.palette.placeAt(this.paletteContainer);
+        this.palette.startup();
+
+        //init multi color section
+        var colorfulValues = ['c1', 'c2', 'c3', 'c4'];
+        array.forEach(colorfulValues, lang.hitch(this, function(colorValue){
+          var dom = html.create('div', {
+            'class': 'multi-color colorful ' + colorValue,
+            'tabindex': '0'
+          }, this.colorfulContainer);
+          dom.colorValue = colorValue;
+        }));
+        var monochromaticValues = ['g1', 'g2', 'g3', 'g4', 'g5', 'g6', 'g7', 'g8', 'g9', 'g10', 'g11', 'g12'];
+        array.forEach(monochromaticValues, lang.hitch(this, function(colorValue){
+          var dom = html.create('div', {
+            'class': 'multi-color monochromatic ' + colorValue,
+            'tabindex': '0'
+          }, this.monochromaticContainer);
+          dom.colorValue = colorValue;
+        }));
+        this._setMultiColorValue('c1');
+
+        if(this.type === 'pie'){
+          this.singleColor = false;
+          html.setStyle(this.divAxisX, 'display', 'none');
+          html.setStyle(this.divAxisY, 'display', 'none');
+        }else{
+          html.setStyle(this.divPieLabel, 'display', 'none');
+        }
+
+        this.reset();
+
+        if(this.config){
+          //Setting page does not pass config parameter. Widget does.
+          this.setConfig(this.config);
+        }
+      },
+
+      _updateLegendDisplayByMode: function(mode) {
+        if (this.type === 'pie') {
+          this._showLegendCbx = true;
+          html.setStyle(this.divLegend, 'display', '');
+        } else if (this.type === 'column' || this.type === 'bar' || this.type === 'line') {
+          if (mode === 'count' || mode === 'field') {
+            html.setStyle(this.divLegend, 'display', 'none');
+            this._showLegendCbx = false;
+          } else if (mode === 'feature' || mode === 'category') {
+            this._showLegendCbx = true;
+            html.setStyle(this.divLegend, 'display', '');
+          }
+        }
+      },
+
+      _bindEvents: function(){
+        this.own(on(this.cbxLegend, 'change', lang.hitch(this, this._configChange)));
+        if(this.type === 'pie'){
+          this.own(on(this.cbxPieLabel, 'change', lang.hitch(this, this._configChange)));
+        }
+        else{
+          this.own(on(this.cbxAxisX, 'change', lang.hitch(this, this._configChange)));
+          this.own(on(this.cbxAxisY, 'change', lang.hitch(this, this._configChange)));
+        }
+      },
+
+      setConfig: function(config){
+        //reset singleColor by config
+        this.reset();
+        this.cbxAxisX.setValue(config.showHorizontalAxis === false ? false : true);
+        this.cbxAxisY.setValue(config.showVerticalAxis === false ? false : true);
+        this.cbxPieLabel.setValue(config.showDataLabel === false ? false : true);
+        this.cbxLegend.setValue(config.showLegend === false ? false : true);
+        var colors = lang.clone(config.colors || []);
+        this.singleColor = colors.length === 1 && this.type !== 'pie';
+
+        if(this.singleColor){
+          this.showSingleColor(colors[0]);
+        } else{
+          this.showMultiColor(colors);
+        }
+      },
+
+      getConfig: function(){
+        var config = {
+          colors: []
+        };
+
+        if(this.type === 'pie'){
+          config.colors = this.colors[this._getMultiColorValue()];
+          if(config.colors.length === 2){
+            config.colors = this._createHexColors(config.colors[0], config.colors[1], 6);
+          }
+          config.showDataLabel = this.cbxPieLabel.checked;
+        }else{
+          config.showHorizontalAxis = this.cbxAxisX.checked;
+          config.showVerticalAxis = this.cbxAxisY.checked;
+          if(this.singleColor){
+            config.colors = [this._getSingleColorFromColorDiv()];
+          }else{
+            config.colors = this.colors[this._getMultiColorValue()];
+          }
+        }
+
+        if (this._showLegendCbx) {
+          config.showLegend = this.cbxLegend.checked;
+        }
+
+        return config;
+      },
+
+      _setSingleColorForColorDiv: function(hex){
+        html.setStyle(this.colorDiv, 'backgroundColor', hex);
+        this.colorDiv.bgHex = hex;
+      },
+
+      _getSingleColorFromColorDiv: function(){
+        return this.colorDiv.bgHex;
+      },
+
+      _setMultiColorValue: function(colorValue){
+        var selector = '.' + colorValue;
+        var divs = query(selector, this.multiColorSection);
+        if(divs && divs.length > 0){
+          var multiColorDiv = divs[0];
+          this._selectMultiColorDiv(multiColorDiv);
+        }
+      },
+
+      _selectMultiColorDiv: function(multiColorDiv){
+        query('.multi-color', this.multiColorSection).removeClass('selected');
+        html.addClass(multiColorDiv, 'selected');
+        this.multiColorValue = multiColorDiv.colorValue;
+      },
+
+      _getMultiColorValue: function(){
+        return this.multiColorValue;
+      },
+
+      reset: function(){
+        if(this.type === 'pie'){
+          this.cbxPieLabel.setValue(true);
+        }
+        else{
+          this.cbxAxisX.setValue(true);
+          this.cbxAxisY.setValue(true);
+        }
+
+        if(this.singleColor){
+          this.showSingleColor();
+        }
+        else{
+          this.showMultiColor();
+        }
+      },
+
+      showSingleColor: function(/*optional*/ strColor){
+        if(this.type === 'pie'){
+          this.singleColor = false;
+          return;
+        }
+        this.singleColor = true;
+        html.setStyle(this.singleColorSection, 'display', 'block');
+        html.setStyle(this.multiColorSection, 'display', 'none');
+        if(strColor){
+          this._setSingleColorForColorDiv(strColor);
+        }
+      },
+
+      showMultiColor: function(/*optional*/ colors){
+        /*jshint -W083 */
+        this.singleColor = false;
+        html.setStyle(this.singleColorSection, 'display', 'none');
+        html.setStyle(this.multiColorSection, 'display', 'block');
+
+        if(colors && colors.length > 0){
+          var colorValues = null;
+          var isSame = false;
+          for(var colorName in this.colors){
+            colorValues = this.colors[colorName];
+            isSame = false;
+            if(colorValues.length === colors.length){
+              isSame = array.every(colorValues, lang.hitch(this, function(colorValue, i){
+                var c1 = new Color(colorValue);
+                var c2 = new Color(colors[i]);
+                return c1.toHex().toLowerCase() === c2.toHex().toLowerCase();
+              }));
+              if(isSame){
+                this._setMultiColorValue(colorName);
+                break;
+              }
+            }
+          }
+        }
+      },
+
+      showShelter: function(){
+        html.setStyle(this.shelter, 'display', 'block');
+      },
+
+      hideShelter: function(){
+        html.setStyle(this.shelter, 'display', 'none');
+      },
+
+      _configChange: function(){
+        var newConfig = this.getConfig();
+        this.emit('change', newConfig);
+      },
+
+      _createHexColors: function(fromHex, toHex, count){
+        var hexColors = [];
+        var color1 = Color.fromHex(fromHex);
+        var color2 = Color.fromHex(toHex);
+        var deltaRed = (color2.r - color1.r) / (count - 1);
+        var deltaGreen = (color2.g - color1.g) / (count - 1);
+        var deltaBlue = (color2.b - color1.b) / (count - 1);
+        var c = null;
+        for(var i = 0; i < count; i++){
+          c = new Color();
+          c.r = Math.floor(color1.r + deltaRed * i);
+          c.g = Math.floor(color1.g + deltaGreen * i);
+          c.b = Math.floor(color1.b + deltaBlue * i);
+          hexColors.push(c.toHex());
+        }
+        return hexColors;
+      }
+    });
+  });

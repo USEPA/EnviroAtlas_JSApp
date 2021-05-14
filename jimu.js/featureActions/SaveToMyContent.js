@@ -1,9 +1,194 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dojo/_base/lang dojo/_base/array dojo/json dojo/Deferred esri/graphicsUtils esri/IdentityManager jimu/portalUtils jimu/portalUrlUtils jimu/Role jimu/dijit/Message ../BaseFeatureAction jimu/dijit/Popup jimu/dijit/AddItemForm".split(" "),function(l,d,m,n,p,q,g,r,t,u,k,v,w,x){return l(v,{name:"SaveToMyContent",iconClass:"icon-save",isFeatureSupported:function(b){return 0>=b.features.length||!b.features[0].geometry?!1:!0},onExecute:function(b,a){this.checkPrivilege().then(d.hitch(this,
-function(c){if(c)var e=new x({appConfig:this.appConfig}),h=new w({content:e,titleLabel:window.jimuNls.featureActions.SaveToMyContent,width:525,height:220,buttons:[{label:window.jimuNls.common.ok,onClick:d.hitch(this,function(){e.showBusy();h.disableButton(0);e.validate().then(d.hitch(this,function(c){c.valid?this._addItem(b,a,e):(e.hideBusy(),h.enableButton(0))}))})},{label:window.jimuNls.common.cancel,classNames:["jimu-btn-vacation"],onClick:d.hitch(this,function(){h.close()})}]});else new k({message:window.jimuNls.noEditPrivileges})}))},
-checkPrivilege:function(){var b=t.getStandardPortalUrl(this.appConfig.portalUrl),a=r.getPortal(b);if(a){if(a.haveSignIn())return this._hasPrivilege(a);g.useSignInPage=!1;return a.signIn().then(d.hitch(this,function(){g.useSignInPage=!0;return this._hasPrivilege(a)}),d.hitch(this,function(){g.useSignInPage=!0}))}b=new p;b.resolve(!1);return b},_hasPrivilege:function(b){return b.loadSelfInfo().then(d.hitch(this,function(a){if(a&&a.user){var b=new u({id:a.user.roleId?a.user.roleId:a.user.role,role:a.user.role});
-a.user.privileges&&b.setPrivileges(a.user.privileges);return b.canCreateItem()&&b.canPublishFeatures()}return!1}),function(){return!1})},_addItem:function(b,a,c){var e=c.getName(),h=c.getFolderId(),g=c.popup;a=a||{};var f={name:a.name||a.id,type:a.type||"Feature Layer",displayField:a.displayField,description:a.description,copyrightText:a.copyright,geometryType:a.geometryType||b.geometryType,fields:a.fields||b.fields,objectIdField:a.objectIdField};b.features[0].geometry&&(a=q.graphicsExtent(b.features),
-f.initialExtent=a,f.fullExtent=a,f.extent=a);!f.objectIdField&&f.fields&&m.some(f.fields,function(a){if("esriFieldTypeOID"===a.type)return f.objectIdField=a.name,!0});b={layers:[{layerDefinition:f,featureSet:b.toJson()}]};c.addItem({name:e,title:e,type:"Feature Collection",typeKeywords:"WAB_created",text:n.stringify(b)},h).then(d.hitch(this,function(a){!0===a.success?g.close():(c.hideBusy(),g.enableButton(0),new k({message:a.error?a.error.message:""}))}),function(a){c.hideBusy();g.enableButton(0);
-new k({message:a.message})})}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'dojo/json',
+  'dojo/Deferred',
+  'esri/graphicsUtils',
+  'esri/IdentityManager',
+  'jimu/portalUtils',
+  'jimu/portalUrlUtils',
+  'jimu/Role',
+  'jimu/dijit/Message',
+  '../BaseFeatureAction',
+  'jimu/dijit/Popup',
+  'jimu/dijit/AddItemForm'
+], function(declare, lang, array, JSON, Deferred, graphicsUtils, IdentityManager,
+  portalUtils, portalUrlUtils, Role, Message, BaseFeatureAction, Popup, ItemContent){
+  var clazz = declare(BaseFeatureAction, {
+    name: 'SaveToMyContent',
+    iconClass: 'icon-save',
+
+    isFeatureSupported: function(featureSet){
+      if (featureSet.features.length <= 0 || !featureSet.features[0].geometry) {
+        return false;
+      }
+      return true;
+    },
+
+    onExecute: function(featureSet, layer){
+      this.checkPrivilege().then(lang.hitch(this, function(hasPrivilege) {
+        if (hasPrivilege) {
+          var itemContent = new ItemContent({
+            appConfig: this.appConfig
+          });
+
+          var popup = new Popup({
+            content: itemContent,
+            titleLabel: window.jimuNls.featureActions.SaveToMyContent,
+            width: 525,
+            height: 220,
+            buttons: [{
+              label: window.jimuNls.common.ok,
+              onClick: lang.hitch(this, function() {
+                itemContent.showBusy();
+                popup.disableButton(0);
+                itemContent.validate().then(lang.hitch(this, function(res) {
+                  if (res.valid) {
+                    this._addItem(featureSet, layer, itemContent);
+                  } else {
+                    itemContent.hideBusy();
+                    popup.enableButton(0);
+                  }
+                }));
+              })
+            }, {
+              label: window.jimuNls.common.cancel,
+              classNames: ['jimu-btn-vacation'],
+              onClick: lang.hitch(this, function() {
+                popup.close();
+              })
+            }]
+          });
+        } else {
+          new Message({
+            message: window.jimuNls.noEditPrivileges
+          });
+        }
+      }));
+    },
+
+    checkPrivilege: function () {
+      var portalUrl = portalUrlUtils.getStandardPortalUrl(this.appConfig.portalUrl);
+      var portal = portalUtils.getPortal(portalUrl);
+
+      if(!portal) {
+        var def = new Deferred();
+        def.resolve(false);
+        return def;
+      } else if (!portal.haveSignIn()) {
+        IdentityManager.useSignInPage = false;
+        return portal.signIn().then(lang.hitch(this, function(){
+          IdentityManager.useSignInPage = true;
+          return this._hasPrivilege(portal);
+        }), lang.hitch(this, function() {
+          IdentityManager.useSignInPage = true;
+        }));
+      } else {
+        return this._hasPrivilege(portal);
+      }
+    },
+
+    _hasPrivilege: function(portal){
+      return portal.loadSelfInfo().then(lang.hitch(this, function(res){
+        if(res && res.user) {
+          var userRole = new Role({
+            id: (res.user.roleId) ? res.user.roleId : res.user.role,
+            role: res.user.role
+          });
+          if(res.user.privileges) {
+            userRole.setPrivileges(res.user.privileges);
+          }
+          // Check whether user can create item of type feature collection
+          return userRole.canCreateItem() && userRole.canPublishFeatures();
+        }else{
+          return false;
+        }
+      }), function() {
+        return false;
+      });
+    },
+
+    _addItem: function(featureSet, layer, itemContent) {
+      var itemName = itemContent.getName(),
+        folderId = itemContent.getFolderId(),
+        popup = itemContent.popup;
+      var extent;
+      layer = layer || {};
+
+      var layerDefinition = {
+        name: layer.name || layer.id,
+        type: layer.type || 'Feature Layer',
+        displayField: layer.displayField,
+        description: layer.description,
+        copyrightText: layer.copyright,
+        geometryType: layer.geometryType || featureSet.geometryType,
+        fields: layer.fields || featureSet.fields,
+        objectIdField: layer.objectIdField
+      };
+      if (featureSet.features[0].geometry) {
+        extent = graphicsUtils.graphicsExtent(featureSet.features);
+        layerDefinition.initialExtent = extent;
+        layerDefinition.fullExtent = extent;
+        layerDefinition.extent = extent;
+      }
+      if(!layerDefinition.objectIdField && layerDefinition.fields) {
+        array.some(layerDefinition.fields, function(field) {
+          if (field.type === 'esriFieldTypeOID') {
+            layerDefinition.objectIdField = field.name;
+            return true;
+          }
+        });
+      }
+      var featureCollection = {
+        layers: [{
+          layerDefinition: layerDefinition,
+          featureSet: featureSet.toJson()
+        }]
+      };
+
+      itemContent.addItem({
+        name: itemName,
+        title: itemName,
+        type: 'Feature Collection',
+        typeKeywords: "WAB_created",
+        text: JSON.stringify(featureCollection)
+      }, folderId).then(lang.hitch(this, function(res) {
+        if(res.success === true) {
+          popup.close();
+          // return itemid = res.id
+          // TODO popup a tip
+        } else {
+          itemContent.hideBusy();
+          popup.enableButton(0);
+          new Message({
+            message: res.error ? res.error.message : ''
+          });
+        }
+      }), function (err) {
+        itemContent.hideBusy();
+        popup.enableButton(0);
+        new Message({
+          message: err.message
+        });
+      });
+    }
+  });
+  return clazz;
+});

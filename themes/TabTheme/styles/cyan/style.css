@@ -1,0 +1,35 @@
+.jimu-main-background{
+  background-color: #2aaa8a;
+}
+.jimu-on-screen-widget-panel>.jimu-panel-title{
+  color: white;
+  background-color: #2aaa8a;
+}
+.popup-links {
+background-color: #2aaa8a;
+}
+.popup-links .link-section {
+  background-color: #2aaa8a;
+}
+.jimu-widget-sidebar-controller .max-pane,
+.jimu-widget-sidebar-controller .tab-resizer,
+.jimu-widget-sidebar-controller .min-pane,
+.jimu-widget-sidebar-controller .other-group-pane{
+  border-style: none;
+}
+.esriPopup .titlePane {
+  background-color: #2aaa8a;
+}
+.jimu-widget-sidebar-controller .other-group-title{
+  color: #ffffff;
+}
+.jimu-widget-sidebar-controller .other-group:hover{
+  background-color: #39b999;
+}
+.tab-widget-frame .title-label {
+  color: #2aaa8a;
+}
+.jimu-widget-sidebar-controller .content-title,
+.jimu-widget-sidebar-controller .other-group-pane-title .text{
+  color: #ffffff;
+}

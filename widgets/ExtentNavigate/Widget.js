@@ -1,20 +1,128 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"esri/toolbars/navigation":function(){define("dojo/_base/declare dojo/_base/lang dojo/_base/connect dojo/_base/Color dojo/has ../kernel ./_toolbar ../undoManager ../OperationBase ../geometry/Extent ../geometry/Rect ../symbols/SimpleLineSymbol ../symbols/SimpleFillSymbol ../graphic".split(" "),function(g,f,c,b,k,l,h,m,n,u,p,q,r,v){var e=g(h,{declaredClass:"esri.toolbars.Navigation",_eventMap:{"extent-history-change":!0},constructor:function(a){this.zoomSymbol=new r(r.STYLE_SOLID,new q(q.STYLE_SOLID,
-new b([255,0,0]),2),new b([0,0,0,.25]));c.connect(a,"onUnload",this,"_cleanUp");this.map=a;this._undoManager=new m({maxOperations:-1});this._normalizeRect=f.hitch(this,this._normalizeRect);this._onMouseDownHandler=f.hitch(this,this._onMouseDownHandler);this._onMouseUpHandler=f.hitch(this,this._onMouseUpHandler);this._onMouseDragHandler=f.hitch(this,this._onMouseDragHandler);this._swipeCheck=k("esri-pointer");this._onExtentChangeHandler_connect=c.connect(a,"onExtentChange",this,"_extentChangeHandler");
-this._onMapLoad_connect=c.connect(a,"onLoad",this,"_mapLoadHandler");a.loaded&&a.extent&&(this._currentExtent=a.extent)},_mapLoadHandler:function(){this._currentExtent=this.map.extent},_navType:null,_start:null,_graphic:null,_prevExtent:!1,_currentExtent:null,_preExtent:null,_cleanUp:function(a){c.disconnect(this._onExtentChangeHandler_connect);c.disconnect(this._onMapLoad_connect)},activate:function(a){var d=this.map;this._graphic||(this._deactivateMapTools(!0,!1,!1,!0),this._graphic=new v(null,
-this.zoomSymbol));switch(a){case e.ZOOM_IN:case e.ZOOM_OUT:this._deactivate();this._swipeCheck?(this._onMouseDownHandler_connect=c.connect(d,"onSwipeStart",this,"_onMouseDownHandler"),this._onMouseDragHandler_connect=c.connect(d,"onSwipeMove",this,"_onMouseDragHandler"),this._onMouseUpHandler_connect=c.connect(d,"onSwipeEnd",this,"_onMouseUpHandler")):(this._onMouseDownHandler_connect=c.connect(d,"onMouseDown",this,"_onMouseDownHandler"),this._onMouseDragHandler_connect=c.connect(d,"onMouseDrag",
-this,"_onMouseDragHandler"),this._onMouseUpHandler_connect=c.connect(d,"onMouseUp",this,"_onMouseUpHandler"));this._navType=a;break;case e.PAN:this._deactivate(),d.enablePan(),this._navType=a}},_extentChangeHandler:function(a){this._prevExtent||this._nextExtent?this._currentExtent=a:(this._preExtent=this._currentExtent,this._currentExtent=a,this._preExtent&&this._currentExtent&&(a=new e.MapExtent({map:this.map,preExtent:this._preExtent,currentExtent:this._currentExtent}),this._undoManager.add(a)));
-this._prevExtent=this._nextExtent=!1;this.onExtentHistoryChange()},_deactivate:function(){var a=this._navType;if(a===e.PAN)this.map.disablePan();else if(a===e.ZOOM_IN||a===e.ZOOM_OUT)c.disconnect(this._onMouseDownHandler_connect),c.disconnect(this._onMouseDragHandler_connect),c.disconnect(this._onMouseUpHandler_connect)},_normalizeRect:function(a,d,b){var t=a.x;a=a.y;var c=d.x;d=d.y;return{x:Math.min(t,c),y:Math.max(a,d),width:Math.abs(t-c),height:Math.abs(a-d),spatialReference:b}},_onMouseDownHandler:function(a){this._start=
-a.mapPoint},_onMouseDragHandler:function(a){var d=this._graphic,b=this.map.graphics;b.remove(d,!0);d.setGeometry(new p(this._normalizeRect(this._start,a.mapPoint,this.map.spatialReference)));b.add(d,!0)},_onMouseUpHandler:function(a){var b=this.map,c=this._normalizeRect(this._start,a.mapPoint,b.spatialReference);b.graphics.remove(this._graphic,!0);if(0!==c.width||0!==c.height)if(this._navType===e.ZOOM_IN)b.setExtent((new p(c)).getExtent());else{a=b.toScreen(c);var c=b.toScreen({x:c.x+c.width,y:c.y,
-spatialReference:b.spatialReference}),f=b.extent.getWidth();a=(f*b.width/Math.abs(c.x-a.x)-f)/2;c=b.extent;b.setExtent(new u(c.xmin-a,c.ymin-a,c.xmax+a,c.ymax+a,c.spatialReference))}},deactivate:function(){this._deactivate();this._graphic&&this.map.graphics.remove(this._graphic,!0);this._navType=this._start=this._graphic=null;this._activateMapTools(!0,!1,!1,!0)},setZoomSymbol:function(a){this.zoomSymbol=a},isFirstExtent:function(){return!this._undoManager.canUndo},isLastExtent:function(){return!this._undoManager.canRedo},
-zoomToFullExtent:function(){var a=this.map;a.setExtent(a.getLayer(a.layerIds[0]).initialExtent)},zoomToPrevExtent:function(){this._undoManager.canUndo&&(this._prevExtent=!0,this._undoManager.undo())},zoomToNextExtent:function(){this._undoManager.canRedo&&(this._nextExtent=!0,this._undoManager.redo())},onExtentHistoryChange:function(){}});f.mixin(e,{ZOOM_IN:"zoomin",ZOOM_OUT:"zoomout",PAN:"pan"});e.MapExtent=g(n,{declaredClass:"esri.toolbars.MapExtent",label:"extent changes",constructor:function(a){this.map=
-a.map;this.preExtent=a.preExtent;this.currentExtent=a.currentExtent},performRedo:function(){this.map.setExtent(this.currentExtent)},performUndo:function(){this.map.setExtent(this.preExtent)}});k("extend-esri")&&(f.setObject("toolbars.Navigation",e,l),f.setObject("toolbars.MapExtent",e.MapExtent,l));return e})},"widgets/ExtentNavigate/_build-generate_module":function(){define(["dojo/text!./Widget.html","dojo/text!./css/style.css","dojo/i18n!./nls/strings"],function(){})},"url:widgets/ExtentNavigate/Widget.html":'\x3cdiv class\x3d"jimu-corner-all"\x3e\r\n\x3cdiv class\x3d"operation previous firstFocusNode" data-dojo-attach-point\x3d"btnPrevious" data-dojo-attach-event\x3d"onclick:_onBtnPreviousClicked, onkeydown:_onBtnPreviousKeyDown"\r\n  role\x3d"button" title\x3d"${nls.previousExtent}" aria-label\x3d"${nls.previousExtent}" tabindex\x3d"0"\x3e\x3c/div\x3e\r\n\x3cdiv class\x3d"operation next lastFocusNode" data-dojo-attach-point\x3d"btnNext" data-dojo-attach-event\x3d"onclick:_onBtnNextClicked, onkeydown:_onBtnNextKeyDown"\r\n  role\x3d"button" title\x3d"${nls.nextExtent}" aria-label\x3d"${nls.nextExtent}" tabindex\x3d"0"\x3e\x3c/div\x3e\r\n\x3c/div\x3e',
-"url:widgets/ExtentNavigate/css/style.css":'.jimu-widget-extent-navigate{background-color: #555; border: 1px solid #999; cursor: pointer; font-size: 24px; line-height: 25px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; color: #fff; text-align: center;}.jimu-widget-extent-navigate .operation{width: 30px; height: 30px; font-size: 16px; line-height: 30px; background-color: #555;}.jimu-widget-extent-navigate .operation:hover{background-color: #333;}.jimu-widget-extent-navigate .operation.jimu-state-disabled{color: rgba(255,255,255,0.3);}.jimu-widget-extent-navigate .operation.jimu-state-disabled:hover{background-color: #555;}.jimu-widget-extent-navigate .previous::before{font-family: wab_2d; content: "\\ea2f";}.jimu-widget-extent-navigate .next::before{font-family: wab_2d; content: "\\ea27";}.jimu-widget-extent-navigate.vertical .previous{border-bottom: 1px solid #57585A;}.jimu-widget-extent-navigate.horizontal .previous{border-right: 1px solid #57585A;}',
-"*now":function(g){g(['dojo/i18n!*preload*widgets/ExtentNavigate/nls/Widget*["ar","bs","ca","cs","da","de","en","el","es","et","fi","fr","he","hr","hu","id","it","ja","ko","lt","lv","nb","nl","pl","pt-br","pt-pt","ro","ru","sl","sr","sv","th","tr","zh-cn","uk","vi","zh-hk","zh-tw","ROOT"]'])},"*noref":1}});
-define("dojo/on dojo/_base/declare dojo/_base/lang dojo/_base/html jimu/utils dijit/Tooltip dojo/keys jimu/BaseWidget esri/toolbars/navigation".split(" "),function(g,f,c,b,k,l,h,m,n){return f([m],{name:"ExtentNavigate",navToolbar:null,baseClass:"jimu-widget-extent-navigate",_disabledClass:"jimu-state-disabled",_verticalClass:"vertical",_horizontalClass:"horizontal",_floatClass:"jimu-float-leading",_cornerTop:"jimu-corner-top",_cornerBottom:"jimu-corner-bottom",_cornerLeading:"jimu-corner-leading",
-_cornerTrailing:"jimu-corner-trailing",moveTopOnActive:!1,postCreate:function(){this.inherited(arguments);this.navToolbar=new n(this.map);this.own(g(this.navToolbar,"extent-history-change",c.hitch(this,this._onExtentHistoryChange)));this.btnPrevious.title=this.nls.previousExtent;this.btnNext.title=this.nls.nextExtent;this._onExtentHistoryChange();k.addTooltipByDomNode(l,this.btnPrevious,this.nls.previousExtent);k.addTooltipByDomNode(l,this.btnNext,this.nls.nextExtent)},_onExtentHistoryChange:function(){this.navToolbar.isFirstExtent()?
-b.addClass(this.btnPrevious,this._disabledClass):b.removeClass(this.btnPrevious,this._disabledClass);this.navToolbar.isLastExtent()?b.addClass(this.btnNext,this._disabledClass):b.removeClass(this.btnNext,this._disabledClass)},_onBtnPreviousClicked:function(){this.navToolbar.zoomToPrevExtent()},_onBtnPreviousKeyDown:function(b){b.keyCode!==h.ENTER&&b.keyCode!==h.SPACE||this._onBtnPreviousClicked()},_onBtnNextClicked:function(){this.navToolbar.zoomToNextExtent()},_onBtnNextKeyDown:function(b){b.keyCode!==
-h.ENTER&&b.keyCode!==h.SPACE||this._onBtnNextClicked()},setPosition:function(b){this.inherited(arguments);"number"===typeof b.height&&30>=b.height?this.setOrientation(!1):this.setOrientation(!0)},setOrientation:function(c){b.removeClass(this.domNode,this._horizontalClass);b.removeClass(this.domNode,this._verticalClass);b.removeClass(this.btnPrevious,this._floatClass);b.removeClass(this.btnPrevious,this._cornerTop);b.removeClass(this.btnPrevious,this._cornerLeading);b.removeClass(this.btnNext,this._floatClass);
-b.removeClass(this.btnNext,this._cornerBottom);b.removeClass(this.btnNext,this._cornerTrailing);c?(b.addClass(this.domNode,this._verticalClass),b.addClass(this.btnPrevious,this._cornerTop),b.addClass(this.btnNext,this._cornerBottom)):(b.addClass(this.domNode,this._horizontalClass),b.addClass(this.btnPrevious,this._floatClass),b.addClass(this.btnNext,this._floatClass),b.addClass(this.btnPrevious,this._cornerLeading),b.addClass(this.btnNext,this._cornerTrailing))}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+    'dojo/on',
+    'dojo/_base/declare',
+    'dojo/_base/lang',
+    'dojo/_base/html',
+    'jimu/utils',
+    'dijit/Tooltip',
+    'dojo/keys',
+    'jimu/BaseWidget',
+    'esri/toolbars/navigation'
+  ],
+  function(on, declare, lang, html, jimuUtils, Tooltip, keys, BaseWidget, Navigation) {
+    var clazz = declare([BaseWidget], {
+      name: 'ExtentNavigate',
+      navToolbar: null,
+
+      baseClass: 'jimu-widget-extent-navigate',
+      _disabledClass: 'jimu-state-disabled',
+      _verticalClass: 'vertical',
+      _horizontalClass: 'horizontal',
+      _floatClass: 'jimu-float-leading',
+      _cornerTop: 'jimu-corner-top',
+      _cornerBottom: 'jimu-corner-bottom',
+      _cornerLeading: 'jimu-corner-leading',
+      _cornerTrailing: 'jimu-corner-trailing',
+
+      moveTopOnActive: false,
+
+      postCreate: function(){
+        this.inherited(arguments);
+        this.navToolbar = new Navigation(this.map);
+        this.own(on(this.navToolbar, 'extent-history-change', lang.hitch(this, this._onExtentHistoryChange)));
+        this.btnPrevious.title = this.nls.previousExtent;
+        this.btnNext.title = this.nls.nextExtent;
+        this._onExtentHistoryChange();
+
+        //add tooltip for navigation btns
+        jimuUtils.addTooltipByDomNode(Tooltip, this.btnPrevious, this.nls.previousExtent);
+        jimuUtils.addTooltipByDomNode(Tooltip, this.btnNext, this.nls.nextExtent);
+      },
+
+      _onExtentHistoryChange: function(){
+        if(this.navToolbar.isFirstExtent()){
+          html.addClass(this.btnPrevious, this._disabledClass);
+        }else{
+          html.removeClass(this.btnPrevious, this._disabledClass);
+        }
+
+        if(this.navToolbar.isLastExtent()){
+          html.addClass(this.btnNext, this._disabledClass);
+        }else{
+          html.removeClass(this.btnNext, this._disabledClass);
+        }
+      },
+
+      _onBtnPreviousClicked: function(){
+        this.navToolbar.zoomToPrevExtent();
+      },
+
+      _onBtnPreviousKeyDown: function(evt){
+        if(evt.keyCode === keys.ENTER || evt.keyCode === keys.SPACE){
+          this._onBtnPreviousClicked();
+        }
+      },
+
+      _onBtnNextClicked: function(){
+        this.navToolbar.zoomToNextExtent();
+      },
+
+      _onBtnNextKeyDown: function(evt){
+        if(evt.keyCode === keys.ENTER || evt.keyCode === keys.SPACE){
+          this._onBtnNextClicked();
+        }
+      },
+
+      setPosition: function(position){
+        this.inherited(arguments);
+        if(typeof position.height === 'number' && position.height <= 30){
+          this.setOrientation(false);
+        }else{
+          this.setOrientation(true);
+        }
+      },
+
+      setOrientation: function(isVertical){
+        html.removeClass(this.domNode, this._horizontalClass);
+        html.removeClass(this.domNode, this._verticalClass);
+
+        html.removeClass(this.btnPrevious, this._floatClass);
+        html.removeClass(this.btnPrevious, this._cornerTop);
+        html.removeClass(this.btnPrevious, this._cornerLeading);
+
+        html.removeClass(this.btnNext, this._floatClass);
+        html.removeClass(this.btnNext, this._cornerBottom);
+        html.removeClass(this.btnNext, this._cornerTrailing);
+
+        if(isVertical){
+          html.addClass(this.domNode, this._verticalClass);
+          html.addClass(this.btnPrevious, this._cornerTop);
+          html.addClass(this.btnNext, this._cornerBottom);
+        }else{
+          html.addClass(this.domNode, this._horizontalClass);
+          html.addClass(this.btnPrevious, this._floatClass);
+          html.addClass(this.btnNext, this._floatClass);
+          html.addClass(this.btnPrevious, this._cornerLeading);
+          html.addClass(this.btnNext, this._cornerTrailing);
+        }
+      }
+
+    });
+    return clazz;
+  });

@@ -1,27 +1,641 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/_filter/PredefinedValuePopup.html":'\x3cdiv\x3e\r\n   \x3c!--\r\n    \x3cselect data-dojo-attach-point\x3d"valProviderSelect" class\x3d"dijit-form-Select multiple-Select"  data-dojo-attach-event\x3d"onclick:_showPopup"\x3e\r\n    \x3c/select\x3e\r\n    --\x3e\r\n    \x3c!-- \x3cdiv class\x3d"subTitle"\x3e${CommonNls.layer}: \x3cspan data-dojo-attach-point\x3d"layerName"\x3e\x3c/span\x3e\x3c/div\x3e --\x3e\r\n    \x3cdiv class\x3d"jimu-filter-popup-btn jimu-not-selectable"\x3e\r\n      \x3c!-- \x3cdiv data-dojo-attach-point\x3d"listSelectStore" style\x3d"height:1px;visibility:hidden;overflow:hidden;"\x3e\x3c/div\x3e --\x3e\r\n\r\n      \x3c!-- for list select popup --\x3e\r\n      \x3c!-- \x3cdiv class\x3d"add-label-btn" data-dojo-attach-event\x3d"click:_showPopup"\x3e --\x3e\r\n      \x3c!-- for eidtTable --\x3e\r\n      \x3cdiv class\x3d"add-label-btn" data-dojo-attach-event\x3d"click:_createTarget"\x3e\r\n        \x3cdiv class\x3d"icon"\x3e\x3c/div\x3e\r\n        \x3cdiv class\x3d"tip"\x3e${CommonNls.add}\x3c/div\x3e\r\n      \x3c/div\x3e\r\n      \x3c!--\r\n      \x3cdiv class\x3d"add-btn" data-dojo-attach-event\x3d"click:_showPopup"\x3e\r\n        \x3cdiv class\x3d"tip"\x3eopenLayer-temp\x3c/div\x3e\r\n      \x3c/div\x3e\r\n\r\n      \x3cdiv class\x3d"add-btn add-btn-right" data-dojo-attach-event\x3d"click:_createTarget"\x3e\r\n        \x3cdiv class\x3d"tip"\x3e${CommonNls.add}\x3c/div\x3e\r\n      \x3c/div\x3e\r\n       --\x3e\r\n    \x3c/div\x3e\r\n    \x3cdiv data-dojo-attach-point\x3d"tableContent"\x3e\x3c/div\x3e\r\n    \x3cdiv class\x3d"displayTypes" data-dojo-attach-point\x3d"displayTypes" data-dojo-attach-event\x3d"click:_changeDisplayType"\x3e\r\n      \x3cdiv class\x3d"title jimu-ellipsis"\x3e${Nls.displayAs}\x3c/div\x3e\r\n      \x3cspan class\x3d"option dropdownOption"\x3e\r\n        \x3cdiv class\x3d"radio"\x3e\x3c/div\x3e\r\n        \x3cdiv class\x3d"label jimu-ellipsis"\x3e${Nls.aDrowdownList}\x3c/div\x3e\r\n      \x3c/span\x3e\r\n      \x3cspan class\x3d"option expandedOption"\x3e\r\n      \x3cdiv class\x3d"radio"\x3e\x3c/div\x3e\r\n      \x3cdiv class\x3d"label jimu-ellipsis"\x3e${Nls.aExpandedList}\x3c/div\x3e\r\n      \x3c/span\x3e\r\n    \x3c/div\x3e\r\n    \x3c!--\r\n    \x3cdiv class\x3d"jimu-multiple-set-container"\x3e\r\n      \x3cdiv data-dojo-attach-point\x3d"" class\x3d"items-list-content items-list-header"  \x3e\r\n        \x3cdiv class\x3d"item"\x3e\r\n          \x3cdiv class\x3d"label jimu-ellipsis"\x3e${CommonNls.name}\x3c/div\x3e\r\n          \x3cdiv class\x3d"label jimu-ellipsis"\x3e${CommonNls.label}\x3c/div\x3e\r\n          \x3cdiv class\x3d"label checkboxHeader jimu-ellipsis" title\x3d"set default?"\x3e${CommonNls.defaults}\x3c/div\x3e\r\n          \x3cdiv class\x3d"label lableR jimu-ellipsis"\x3e${CommonNls.actions}\x3c/div\x3e\r\n        \x3c/div\x3e\r\n      \x3c/div\x3e\r\n      \x3cdiv data-dojo-attach-point\x3d"listContent" class\x3d"items-list-content" data-dojo-attach-event\x3d"click:_onListContentClicked"\x3e\r\n      \x3c/div\x3e\r\n    \x3c/div\x3e\r\n    --\x3e\r\n\r\n    \x3cdiv class\x3d"value-type-popup" data-dojo-attach-point\x3d"valuesPopupNode" style\x3d"display:none;"\x3e\r\n      \x3c!-- \x3cdiv data-dojo-attach-point\x3d"mutiValuesSelect" multiple\x3d"true" data-dojo-type\x3d"dojox/form/CheckedMultiSelect" data-dojo-props\x3d\'searchAttr:"label",required:false,intermediateChanges:true\' style\x3d"width:100%;" \x3e\x3c/div\x3e --\x3e\r\n      \x3cdiv data-dojo-attach-point\x3d"pageControlContainer"\x3eLoad more data\x3c/div\x3e\r\n\r\n    \x3c/div\x3e\r\n\r\n    \x3c!-- \x3ca data-dojo-attach-event\x3d"onclick:_setSelectType" class\x3d"popupOper" style\x3d"display:none;"\x3etype\x3c/a\x3e --\x3e\r\n  \x3c/div\x3e'}});
-define("dojo/_base/lang dojo/Deferred dojo/_base/html dojo/_base/array dojo/_base/declare dojo/Evented dojo/query ./ValueProvider ./EditTable ./AdvancedListValueSelect dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/text!./PredefinedValuePopup.html dojo/store/Memory jimu/utils jimu/dijit/Popup jimu/dijit/_filter/pageControlForQuery dojox/form/CheckedMultiSelect".split(" "),function(c,l,d,m,n,p,f,q,r,h,t,u,v,w,g,k,x,y){return n([q,t,u,p],{templateString:v,codedValues:null,staticValues:null,
-showNullValues:!1,cbxPopup:null,pageSize:1E3,pageIndex:1,selectUI:null,postMixInProperties:function(){this.inherited(arguments);this.CommonNls=window.jimuNls.common;this.Nls=window.jimuNls.filterBuilder;this.emptyStr=window.apiNls.widgets.FeatureTable.empty},postCreate:function(){this.inherited(arguments);this.selectUI=this.selectUI?this.selectUI:"dropdown";d.addClass(this.domNode,"jimu-filter-mutcheck-list-value-provider");this.controlType="unique";"MULTIPLE_PREDEFINED_VALUE_PROVIDER"===this.providerType&&
-(this.controlType="multiple");this.isNumberField=g.isNumberField(this.fieldInfo.type);this.editTable||(this.editTable=new r({tableType:this.controlType,dataList:[],codedValues:this.codedValues,emptyStr:this.emptyStr,customValue:this.Nls.addValuePlaceHolder,customLabel:this.Nls.addLabelPlaceHolder,isNumberField:this.isNumberField}),this.editTable.placeAt(this.tableContent),this.editTable.on("editTable_openListSelectByName",c.hitch(this,this._showListSelectByTable)),this.editTable.on("editTable_itemChanged",
-c.hitch(this,this._editTableItemChanged)),this.editTable.on("editTable_getValLabelsArrayForNumber",c.hitch(this,this._getValLabelsArrayForNumber)));this.supportPaing=!0;this.pageControlForQuery||(this.pageControlForQuery=new x({pageSize:this.pageSize,pageIndex:1,layerUrl:this.url,fieldInfo:this.fieldInfo,queryWhere:"1\x3d1",layerDefinition:this.layerDefinition,fieldPopupInfo:this.fieldPopupInfo,isNumberField:this.isNumberField}));this.listSelect||(this.listSelect=new h({emptyStr:this.emptyStr,runtime:this.runtime,
-pageSize:this.pageSize,selectType:"unique",controlType:"predefined",dataList:[],selectedDataList:[],isNumberField:this.isNumberField}),this.listSelect.on("advancedListValueSelect_itemChecked",c.hitch(this,this._createTarget)),this.listSelect.on("advancedListValueSelect_itemUnChecked",c.hitch(this,this._destoryTarget)),this.listSelect.on("advancedListValueSelect_addNextPage",c.hitch(this,this._addNextPage)),this.listSelect.on("advancedListValueSelect_searchKey",c.hitch(this,this._searchKey)),this.listSelect.on("advancedListValueSelect_searchKeyLocal",
-c.hitch(this,this._searchKeyLocal)),this.listSelect.on("advancedListValueSelect_itemCheckedForPredefined",c.hitch(this,this._createTargetForPredefined)));this.mutiValuesSelect||(this.mutiValuesSelect=new y({multiple:!0,required:!1,intermediateChanges:!0,style:{width:"100%"}}));this._multipleSelectProviderEventHandler=c.hitch(this,this._multipleSelectProviderEvent);document.addEventListener("click",this._multipleSelectProviderEventHandler);var a=new w({idProperty:"id",data:[]});this.listSelect.set("store",
-a)},_multipleSelectProviderEvent:function(a){var b=a.target||a.srcElement,c=d.isDescendant(b,this.editTable.searchBtn);this.editTable&&this.cbxPopup&&this.cbxPopup.domNode?(c?"block"===d.getStyle(this.cbxPopup.domNode,"display")?d.setStyle(this.cbxPopup.domNode,"display","none"):d.setStyle(this.cbxPopup.domNode,"display","block"):d.isDescendant(b,this.cbxPopup.domNode)||this._createTargetForPredefined(),a.stopPropagation()):this._isInSelectPopup(b)||this.runtime?a.stopPropagation():d.setStyle(this.valuesPopupNode,
-"display","none")},_initAdvancedListValueSelect:function(){this.pageControlForQuery.pageIndex=1;this.pageControlForQuery.isKeyQueryLoader=!1;this.listSelect=new h({emptyStr:this.emptyStr,runtime:this.runtime,pageSize:this.pageSize,isCacheFinish:this.pageControlForQuery._isUniqueValueCacheFinish,selectType:"unique",controlType:"predefined",dataList:[],selectedDataList:[],isNumberField:this.isNumberField});this.listSelect.on("advancedListValueSelect_itemChecked",c.hitch(this,this._createTarget));this.listSelect.on("advancedListValueSelect_itemUnChecked",
-c.hitch(this,this._destoryTarget));this.listSelect.on("advancedListValueSelect_addNextPage",c.hitch(this,this._addNextPage));this.listSelect.on("advancedListValueSelect_searchKey",c.hitch(this,this._searchKey));this.listSelect.on("advancedListValueSelect_searchKeyLocal",c.hitch(this,this._searchKeyLocal));this.listSelect.on("advancedListValueSelect_itemCheckedForPredefined",c.hitch(this,this._createTargetForPredefined))},_isInSelectPopup:function(a){for(var b="dijitCheckBoxInput dojoxMultiSelectItemLabel dojoxMultiSelectItemBox dojoxMultiSelectItem dojoxCheckedMultiSelectWrapper dojoxCheckedMultiSelect value-type-popup popupOper pageItem".split(" "),
-c=!1,e=0;e<=b.length;e++)if(d.hasClass(a,b[e])){c=!0;break}return c},_createTarget:function(){this.editTable._createTarget("","","","",!0);this._editTableItemChanged()},_createTargetForPredefined:function(a,b){this.editTable._setNewLabel(a,b);this.cbxPopup.close();this._editTableItemChanged()},_destoryTarget:function(a){this.editTable._destroyTarget(a);this._editTableItemChanged()},_editTableItemChanged:function(){if(!this.runtime){var a=this.getValueObject();this._setApplyState(a.value.length)}},
-_setApplyState:function(a){this.emit("predefinedValuePopup_setApplyBtnState",a)},_cbxWidth:245,_cbxHeight:340,isPopupLoading:!1,_showListSelectByTable:function(a){if(!this.isPopupLoading){this._initAdvancedListValueSelect();this.valueList=[a];this.getCheckedList(this.valueList);a=d.position(this.editTable.searchBtn);var b=a.x-226,z=a.y+30;window.isRTL&&(b=a.x);this.cbxPopup=new k({width:this._cbxWidth,height:this._cbxHeight,content:this.listSelect.domNode,enableMoveable:!1,hasTitle:!1,hasOverlay:!1,
-contentHasNoMargin:!0,moveToCenter:!1,customPosition:{left:b,top:z},useFocusLogic:!1,buttons:[]});this.cbxPopup.setDomNodeStyls({"border-radius":0,border:"1px solid #999"});this.cbxPopup.on("popupHasInitedSuccessfully",c.hitch(this,function(){var a=d.position(this.editTable.searchBtn),b=a.x-226,c=a.y+30;window.isRTL&&(b=a.x);this.cbxPopup.setCustomPosition(b,c)}));this.listSelect.valueInput&&this.listSelect.valueInput.focus();this._showLoadingIcon();this.isPopupLoading=!0;this._valueLabels().then(c.hitch(this,
-function(a){this.isPopupLoading=!1;this._hideLoadingIcon();if(!0!==a){var b=!1;this.valueList&&0!==this.valueList.length&&(b=!0);this.listSelect.setCBXData(a,b)}}))}},_valueLabels:function(){var a=new l;this.listSelect.codedValues=!1;this.listSelect.disPlayLabel="label";if(this.staticValues)return this._setValueForStaticValues(this.staticValues),a.resolve(!0),a;if(this.codedValues)if(this.filterCodedValue)this.listSelect.codedValues=!0;else return this._setValueForStaticValues(this.codedValues),a.resolve(!0),
-a;this.pageControlForQuery.queryByPage(!0).then(c.hitch(this,function(b){a.resolve(b)}),c.hitch(this,function(b){console.log(b);this._hideLoadingIcon();a.reject(b)}));return a},_setValueForStaticValues:function(a){this.listSelect.codedValues=!0;a&&(this.pageControlForQuery._codedvalueCache=a,a=0<a.length?a:[],this.listSelect.setCBXData(a,!0,!0))},_changeDisplayType:function(a){a=a.target||a.srcElement;a=d.hasClass(a,"option")?a:g.getAncestorDom(a,function(a){return d.hasClass(a,"option")},2);d.hasClass(a,
-"checked")||(d.addClass(a,"checked"),a=f("."+this.selectUI+"Option ",this.displayTypes)[0],d.removeClass(a,"checked"),this.selectUI="expanded"===this.selectUI?"dropdown":"expanded")},_setDisplayTypeStyle:function(){var a=f(".title",this.displayTypes)[0],b=f(".label",this.displayTypes),a=(d.getStyle(this.displayTypes,"width")-d.getStyle(a,"width")-80)/2,c=d.getStyle(b[0],"width"),c=c<a?c:a,e=d.getStyle(b[1],"width"),e=e<a?e:a;d.setStyle(b[0],"width",c+"px");d.setStyle(b[1],"width",e+"px")},_addNextPage:function(){this.listSelect&&
-(this._showLoadingIcon(),this.pageControlForQuery.queryByPage(this.listSelect.ifFristPage).then(c.hitch(this,function(a){this.listSelect.isCacheFinish=this.pageControlForQuery._isUniqueValueCacheFinish;this.listSelect.setCBXData(a,!0);this._hideLoadingIcon()}),c.hitch(this,function(a){console.log(a);this._hideLoadingIcon()})))},_searchKey:function(a){this.listSelect&&(this._showLoadingIcon(),this.pageControlForQuery._searchKey(a).then(c.hitch(this,function(a){this.listSelect.setCBXContentBySearch(a);
-this._hideLoadingIcon()}),c.hitch(this,function(a){console.log(a);this._hideLoadingIcon()})))},_searchKeyLocal:function(a){this.listSelect&&(this._showLoadingIcon(),a=this.pageControlForQuery._searchKeyLocal(a),this.listSelect.setCBXContentBySearch(a),this._hideLoadingIcon())},_handlerPageValues:function(){},getCheckedList:function(a){this.listSelect.checkedList=[];this.isNumberField?m.forEach(a,c.hitch(this,function(a){this.listSelect.checkedList.push(parseFloat(a))})):this.listSelect.checkedList=
-a},_showPopup:function(){var a=this.getValueObject().valueList;this.valueList=null===a?void 0:a;this.getCheckedList(this.valueList);this.cbxPopup?(this.listSelect.checkCBXItems(!1),this.cbxPopup.show()):(this.cbxPopup=new k({width:355,height:596,content:this.listSelect.domNode,titleLabel:this.layerDefinition.name+"("+this.fieldName+")",isResize:!1,useFocusLogic:!1,onClose:c.hitch(this,function(){this.cbxPopup.hide();return!1}),buttons:[]}),this._showLoadingIcon(),this.pageControlForQuery.queryByPage().then(c.hitch(this,
-function(a){this._hideLoadingIcon();var b=!1;this.valueList&&0!==this.valueList.length&&(b=!0);this.listSelect.setCBXData(a,b)})))},getDijits:function(){return[this.mutiValuesSelect]},setValueObject:function(a){a.value=a.value?a.value:[];var b=f("."+(a.selectUI?a.selectUI:this.selectUI)+"Option ",this.displayTypes)[0];d.addClass(b,"checked");b=null;if(this.isNumberField){for(var b=[],c=0;c<a.value.length;c++)b.push(a.value[c].value);b=this._getValLabelsArrayForNumber(!1,b)}this.editTable.emptyLabel=
-a.emptyLabel;this.editTable.enableEmpty=a.enableEmpty;this.editTable.setListValues(a.value,b)},_getValLabelsArrayForNumber:function(a,b){b=g._getValues(this.layerDefinition,this.fieldPopupInfo,this.fieldName,b);a&&(this.editTable.currentValLabel=b[0].label);return b},tryGetValueObject:function(){return this.isValidValue()?this.getValueObject():this.isEmptyValue()?{isValid:!0,selectUI:this.selectUI,type:this.partObj.valueObj.type,value:[],valueList:[]}:null},getValueObject:function(){if(this.isValidValue()){var a=
-this.editTable.getListValues(),b={isValid:!0,selectUI:this.selectUI,type:this.partObj.valueObj.type,value:a.list,valueList:a.valueList};"unique"===this.controlType&&(b.emptyLabel=a.emptyLabel,b.enableEmpty=a.enableEmpty);return b}return null},setRequired:function(a){this.mutiValuesSelect.set("required",a)},queryByPage:function(){var a=this.pageControlForQuery.queryByPage(this.listSelect.ifFristPage);a.then(c.hitch(this,function(b){a.resolve(b)}),c.hitch(this,function(b){console.log(b);a.reject(b)}))},
-_showLoadingIcon:function(){this.listSelect&&this.listSelect.listContainer&&d.addClass(this.listSelect.listContainer,"jimu-circle-loading")},_hideLoadingIcon:function(){this.listSelect&&this.listSelect.listContainer&&d.removeClass(this.listSelect.listContainer,"jimu-circle-loading")},destroy:function(){this._multipleSelectProviderEventHandler&&document.removeEventListener("click",this._multipleSelectProviderEventHandler);this.inherited(arguments)},destroyProvider:function(){this.editTable&&this.editTable.destroy();
-this.listSelect&&this.listSelect.destroy();this.listSelect=null;this.destroy();d.destroy(this.domNode)}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+    'dojo/_base/lang',
+    'dojo/Deferred',
+    'dojo/_base/html',
+    'dojo/_base/array',
+    'dojo/_base/declare',
+    'dojo/Evented',
+    // 'dojo/on',
+    'dojo/query',
+    './ValueProvider',
+    './EditTable',
+    './AdvancedListValueSelect',
+    'dijit/_TemplatedMixin',
+    'dijit/_WidgetsInTemplateMixin',
+    'dojo/text!./PredefinedValuePopup.html',
+    'dojo/store/Memory',
+    'jimu/utils',
+    'jimu/dijit/Popup',
+    'jimu/dijit/_filter/pageControlForQuery',
+    'dojox/form/CheckedMultiSelect'
+  ],
+    function(lang, Deferred, html, array, declare, Evented, query, ValueProvider,
+      EditTable, AdvancedListValueSelect, _TemplatedMixin,
+      _WidgetsInTemplateMixin,template, Memory, jimuUtils, Popup, pageControlForQuery, CheckedMultiSelect) {
+
+    return declare([ValueProvider, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+        templateString: template,
+        codedValues: null,//[{value,label}] for coded values and sub types
+        staticValues: null,//[{value,label}]
+        showNullValues: false,//show null values
+        cbxPopup: null,
+
+        pageSize: 1000, //page size
+        pageIndex:1,  //current page
+
+        //optional
+        selectUI: null, //dropdown, expanded
+
+        postMixInProperties:function(){
+          this.inherited(arguments);
+          this.CommonNls = window.jimuNls.common;
+          this.Nls = window.jimuNls.filterBuilder;
+          this.emptyStr = window.apiNls.widgets.FeatureTable.empty;
+        },
+
+        postCreate: function(){
+          this.inherited(arguments);
+          this.selectUI = this.selectUI ? this.selectUI : 'dropdown';
+          html.addClass(this.domNode, 'jimu-filter-mutcheck-list-value-provider');
+          // this.layerName.innerText = this.layerDefinition.name;
+
+          this.controlType = 'unique';  //unique, multiple
+          if(this.providerType === 'MULTIPLE_PREDEFINED_VALUE_PROVIDER'){
+            this.controlType = 'multiple';
+          }
+          this.isNumberField = jimuUtils.isNumberField(this.fieldInfo.type);
+          if(!this.editTable){
+            this.editTable = new EditTable({
+              tableType: this.controlType,
+              dataList: [],
+              codedValues: this.codedValues,
+              emptyStr: this.emptyStr,
+              customValue: this.Nls.addValuePlaceHolder,
+              customLabel: this.Nls.addLabelPlaceHolder,
+              isNumberField: this.isNumberField
+            });
+            this.editTable.placeAt(this.tableContent);
+            this.editTable.on("editTable_openListSelectByName", lang.hitch(this, this._showListSelectByTable));
+            this.editTable.on("editTable_itemChanged", lang.hitch(this, this._editTableItemChanged));
+            this.editTable.on("editTable_getValLabelsArrayForNumber",
+              lang.hitch(this, this._getValLabelsArrayForNumber));
+          }
+
+          this.supportPaing = true;
+
+          if(!this.pageControlForQuery){
+            this.pageControlForQuery = new pageControlForQuery({
+              pageSize: this.pageSize,
+              pageIndex: 1,
+              layerUrl: this.url,
+              // layerInfo: this.layerInfo,
+              fieldInfo: this.fieldInfo,
+              queryWhere: '1=1',
+              layerDefinition: this.layerDefinition,
+              fieldPopupInfo: this.fieldPopupInfo,
+              // spatialReference: this.layerInfo.map.spatialReference,
+              isNumberField: this.isNumberField
+            });
+          }
+
+          if(!this.listSelect){
+            // this._initAdvancedListValueSelect();
+            this.listSelect = new AdvancedListValueSelect({
+              emptyStr: this.emptyStr,
+              runtime: this.runtime,
+              pageSize: this.pageSize,
+              // selectType: 'multiple',// when it's in header
+              selectType: 'unique',//when it's for single item
+              controlType: 'predefined',
+              dataList:[],
+              selectedDataList:[],
+              isNumberField: this.isNumberField
+            });
+            // this.listSelect.placeAt(this.listSelectStore);
+            // this.own(topic.subscribe("AdvancedListValueSelect/itemChecked", lang.hitch(this, this._createTarget)));
+
+            this.listSelect.on("advancedListValueSelect_itemChecked", lang.hitch(this, this._createTarget));
+            this.listSelect.on("advancedListValueSelect_itemUnChecked", lang.hitch(this, this._destoryTarget));
+            this.listSelect.on("advancedListValueSelect_addNextPage", lang.hitch(this, this._addNextPage));
+            this.listSelect.on("advancedListValueSelect_searchKey", lang.hitch(this, this._searchKey));
+            this.listSelect.on("advancedListValueSelect_searchKeyLocal", lang.hitch(this, this._searchKeyLocal));
+
+            this.listSelect.on("advancedListValueSelect_itemCheckedForPredefined",
+              lang.hitch(this, this._createTargetForPredefined));
+          }
+
+          if(!this.mutiValuesSelect){
+            this.mutiValuesSelect = new CheckedMultiSelect({
+              multiple: true,
+              required: false,
+              intermediateChanges: true, //Fires onChange for each value change or only on demand
+              style: {'width':'100%'}
+            });
+          }
+
+          //event
+          this._multipleSelectProviderEventHandler = lang.hitch(this, this._multipleSelectProviderEvent);
+          document.addEventListener('click', this._multipleSelectProviderEventHandler);
+          /*
+          this.own(on(document, 'click', lang.hitch(this, function(evt){
+            var target = event.target || event.srcElement;
+            if((this.editTable && target !== this.editTable.searchTarget) &&
+              (this.cbxPopup && this.cbxPopup.domNode && !html.isDescendant(target, this.cbxPopup.domNode))){
+              this._createTargetForPredefined();
+              evt.stopPropagation();
+              return;
+            }
+            if(this.editTable && target === this.editTable.searchTarget &&
+              (this.cbxPopup && this.cbxPopup.domNode)){ //click search
+              if(html.getStyle(this.cbxPopup.domNode, 'display') === 'block'){
+                html.setStyle(this.cbxPopup.domNode, 'display', 'none');
+              }else{
+                html.setStyle(this.cbxPopup.domNode, 'display', 'block');
+              }
+              return;
+            }
+
+            var isIn = this._isInSelectPopup(target);
+            if(isIn || this.runtime){ //always displaying on runtime page
+              evt.stopPropagation();
+              return;
+            }else{
+              html.setStyle(this.valuesPopupNode, 'display', 'none');
+            }
+          })));
+          */
+          // this.own(on(this.valuesPopupNode, 'click', lang.hitch(this, function(evt){
+          //   evt.stopPropagation();
+          // })));
+
+          //[{id,value,label}]
+          var store = new Memory({idProperty:'id', data: []});
+          this.listSelect.set('store', store);
+        },
+
+        _multipleSelectProviderEvent: function(event){
+          var target = event.target || event.srcElement;
+          var isSearchBtn = html.isDescendant(target, this.editTable.searchBtn);
+          if(this.editTable && this.cbxPopup && this.cbxPopup.domNode){
+            if(isSearchBtn){ //click search btn
+              if(html.getStyle(this.cbxPopup.domNode, 'display') === 'block'){
+                html.setStyle(this.cbxPopup.domNode, 'display', 'none');
+              }else{
+                html.setStyle(this.cbxPopup.domNode, 'display', 'block');
+              }
+            }else if(!html.isDescendant(target, this.cbxPopup.domNode)){ //other space
+              this._createTargetForPredefined();
+            }
+            event.stopPropagation();
+            return;
+          }
+
+          var isIn = this._isInSelectPopup(target);
+          if(isIn || this.runtime){ //always displaying on runtime page
+            event.stopPropagation();
+            return;
+          }else{
+            html.setStyle(this.valuesPopupNode, 'display', 'none');
+          }
+        },
+
+        _initAdvancedListValueSelect: function(){
+          this.pageControlForQuery.pageIndex = 1;
+          this.pageControlForQuery.isKeyQueryLoader = false;
+
+          this.listSelect = new AdvancedListValueSelect({
+            emptyStr: this.emptyStr,
+            runtime: this.runtime,
+            pageSize: this.pageSize,
+            isCacheFinish: this.pageControlForQuery._isUniqueValueCacheFinish,
+            // selectType: 'multiple',// when it's in header
+            selectType: 'unique',//when it's for single item
+            controlType: 'predefined',
+            dataList:[],
+            selectedDataList:[],
+            isNumberField: this.isNumberField
+          });
+          // this.listSelect.placeAt(this.listSelectStore);
+          // this.own(topic.subscribe("AdvancedListValueSelect/itemChecked", lang.hitch(this, this._createTarget)));
+
+          this.listSelect.on("advancedListValueSelect_itemChecked", lang.hitch(this, this._createTarget));
+          this.listSelect.on("advancedListValueSelect_itemUnChecked", lang.hitch(this, this._destoryTarget));
+          this.listSelect.on("advancedListValueSelect_addNextPage", lang.hitch(this, this._addNextPage));
+          this.listSelect.on("advancedListValueSelect_searchKey", lang.hitch(this, this._searchKey));
+          this.listSelect.on("advancedListValueSelect_searchKeyLocal", lang.hitch(this, this._searchKeyLocal));
+
+          this.listSelect.on("advancedListValueSelect_itemCheckedForPredefined",
+            lang.hitch(this, this._createTargetForPredefined));
+        },
+
+        _isInSelectPopup:function(target){
+          var classList = ['dijitCheckBoxInput', 'dojoxMultiSelectItemLabel', 'dojoxMultiSelectItemBox',
+            'dojoxMultiSelectItem', 'dojoxCheckedMultiSelectWrapper', 'dojoxCheckedMultiSelect',
+            'value-type-popup', 'popupOper', 'pageItem'];
+          var isIn = false;
+          for(var key = 0;key <= classList.length; key ++ ){
+            if(html.hasClass(target, classList[key])){
+              isIn = true;
+              break;
+            }
+          }
+          return isIn;
+        },
+
+        //for list select popup
+        // _createTarget: function(name){
+        //   this.editTable._createTarget(name);
+        // },
+
+        //for editTable
+        _createTarget: function(){
+          this.editTable._createTarget('', '', '', '', true);
+          this._editTableItemChanged();
+        },
+
+        _createTargetForPredefined: function(value, name){
+          this.editTable._setNewLabel(value, name);
+          this.cbxPopup.close();
+          this._editTableItemChanged();
+        },
+
+        _destoryTarget:function(name){
+          this.editTable._destroyTarget(name);
+          this._editTableItemChanged();
+        },
+
+        _editTableItemChanged: function(){
+          if(!this.runtime){
+            var valueObj = this.getValueObject();
+            this._setApplyState(valueObj.value.length);
+          }
+        },
+
+        _setApplyState: function(state){
+          this.emit("predefinedValuePopup_setApplyBtnState", state);
+        },
+
+        _cbxWidth: 245,
+        _cbxHeight: 340,
+        isPopupLoading: false,
+        _showListSelectByTable: function(name){
+          if(this.isPopupLoading){
+            return;
+          }
+          this._initAdvancedListValueSelect();//init select & pagecontrol
+          this.valueList = [name];
+          this.getCheckedList(this.valueList);
+
+          var rPosition = html.position(this.editTable.searchBtn);
+          var popupPosition = {
+            left: rPosition.x - 226,
+            top: rPosition.y + 30
+          };
+          if(window.isRTL){
+            popupPosition.left = rPosition.x;
+          }
+
+          this.cbxPopup = new Popup({
+            width: this._cbxWidth,
+            height: this._cbxHeight,
+            content: this.listSelect.domNode,
+            enableMoveable: false,
+            hasTitle: false,
+            hasOverlay: false,
+            contentHasNoMargin: true,
+            moveToCenter: false,
+            customPosition: {left: popupPosition.left, top: popupPosition.top},
+            useFocusLogic: false,
+            buttons: []
+          });
+          //update popup UI for this dijit
+          this.cbxPopup.setDomNodeStyls({'border-radius': 0, 'border': '1px solid #999'});
+          this.cbxPopup.on("popupHasInitedSuccessfully", lang.hitch(this, function(){
+            var rPosition = html.position(this.editTable.searchBtn);
+            var popupPosition = {
+              left: rPosition.x - 226,
+              top: rPosition.y + 30
+            };
+            if(window.isRTL){
+              popupPosition.left = rPosition.x;
+            }
+            this.cbxPopup.setCustomPosition(popupPosition.left, popupPosition.top);
+          }));
+          if(this.listSelect.valueInput){
+            this.listSelect.valueInput.focus();
+          }
+
+          this._showLoadingIcon();
+          this.isPopupLoading = true;
+          this._valueLabels().then(lang.hitch(this, function(valueLabels) {
+            this.isPopupLoading = false;
+            this._hideLoadingIcon();
+            if(valueLabels === true){
+            }else{
+              var ifCheck = false;
+              if(this.valueList && this.valueList.length !== 0){
+                ifCheck = true;
+              }
+              this.listSelect.setCBXData(valueLabels,ifCheck);
+            }
+          }));
+        },
+
+        _valueLabels: function(){
+          var def = new Deferred();
+          this.listSelect.codedValues = false;
+          this.listSelect.disPlayLabel = 'label';
+          if(this.staticValues){
+            this._setValueForStaticValues(this.staticValues);
+            def.resolve(true);
+            return def;
+          } else if(this.codedValues){
+            if(this.filterCodedValue){
+              this.listSelect.codedValues = true;
+            }else{
+              this._setValueForStaticValues(this.codedValues);
+              def.resolve(true);
+              return def;
+            }
+          }
+          this.pageControlForQuery.queryByPage(true).then(lang.hitch(this, function(valueLabels){ //for multiple
+            def.resolve(valueLabels);
+          }), lang.hitch(this, function(err){
+            console.log(err);
+            this._hideLoadingIcon();
+            def.reject(err);
+          }));
+          return def;
+        },
+
+        _setValueForStaticValues: function(valueLabels){
+          this.listSelect.codedValues = true;
+          if(valueLabels){
+            this.pageControlForQuery._codedvalueCache = valueLabels;
+            valueLabels = valueLabels.length > 0 ? valueLabels : [];
+            // this.listSelect.disPlayLabel = 'label';
+            this.listSelect.setCBXData(valueLabels, true, true);
+          }
+        },
+
+        //types: dropdown, expanded
+        _changeDisplayType: function(evt){
+          var target = evt.target || evt.srcElement;
+          var option;
+          if(html.hasClass(target, 'option')){
+            option = target;
+          }else{
+            option = jimuUtils.getAncestorDom(target, function(dom){
+              return html.hasClass(dom, 'option');
+            }, 2);
+          }
+          if(!html.hasClass(option, 'checked')){
+            html.addClass(option, 'checked');
+            var otherOption = query('.' + this.selectUI + 'Option ', this.displayTypes)[0];
+            html.removeClass(otherOption, 'checked');
+            // this.selectUI = html.hasClass(option, 'dropdownOption') ? 'dropdown' : 'expanded';
+            this.selectUI = this.selectUI === 'expanded' ? 'dropdown' : 'expanded';
+          }
+        },
+
+        _setDisplayTypeStyle: function(){
+          var titleDom = query('.title', this.displayTypes)[0];
+          var labelDoms = query('.label', this.displayTypes);
+          var w = (html.getStyle(this.displayTypes, 'width') - html.getStyle(titleDom, 'width') - 2 * 40) / 2;
+          var leftLabelW = html.getStyle(labelDoms[0], 'width');
+          leftLabelW = leftLabelW < w ? leftLabelW : w;
+          var rightLabelW = html.getStyle(labelDoms[1], 'width');
+          rightLabelW = rightLabelW < w ? rightLabelW : w;
+          html.setStyle(labelDoms[0], 'width', leftLabelW + 'px');
+          html.setStyle(labelDoms[1], 'width', rightLabelW + 'px');
+        },
+
+        _addNextPage: function(){
+          if(!this.listSelect){
+            return;
+          }
+          this._showLoadingIcon();
+          var def = this.pageControlForQuery.queryByPage(this.listSelect.ifFristPage);
+          def.then(lang.hitch(this, function(valueLabels){
+            this.listSelect.isCacheFinish = this.pageControlForQuery._isUniqueValueCacheFinish;
+            this.listSelect.setCBXData(valueLabels, true);
+            this._hideLoadingIcon();
+          }), lang.hitch(this, function(err){
+            console.log(err);
+            this._hideLoadingIcon();
+          }));
+        },
+
+        //this.allFeatures = [];
+        _searchKey: function(name){
+          if(!this.listSelect){
+            return;
+          }
+          this._showLoadingIcon();
+          this.pageControlForQuery._searchKey(name).then(lang.hitch(this, function(result) {
+            this.listSelect.setCBXContentBySearch(result);
+            this._hideLoadingIcon();
+          }), lang.hitch(this, function(err){
+            console.log(err);
+            this._hideLoadingIcon();
+          }));
+        },
+
+        _searchKeyLocal: function(name){
+          if(!this.listSelect){
+            return;
+          }
+          this._showLoadingIcon();
+          var result = this.pageControlForQuery._searchKeyLocal(name);
+          this.listSelect.setCBXContentBySearch(result);
+          this._hideLoadingIcon();
+        },
+
+        _handlerPageValues: function(){
+
+        },
+
+        getCheckedList: function(valueList){
+          this.listSelect.checkedList = [];
+          if(this.isNumberField){
+            array.forEach(valueList, lang.hitch(this, function(item) {
+              this.listSelect.checkedList.push(parseFloat(item));
+            }));
+          }else{
+            this.listSelect.checkedList = valueList;
+          }
+        },
+
+        _showPopup:function(){
+          // this._showLoadingIcon();
+          //refresh values
+          var valueList = this.getValueObject().valueList;
+          this.valueList = valueList === null ? undefined : valueList;
+          // this.listSelect.checkedList = this.valueList;
+          // if(this.listSelect.vallueInput === undefined){
+          //   this.cbxPopup = null;
+          // }
+          this.getCheckedList(this.valueList);
+          if(this.cbxPopup){
+            // this.getCheckedList(this.valueList);
+            this.listSelect.checkCBXItems(false);
+            // this.listSelect.setCBXData(valueLabels,true);
+            this.cbxPopup.show();
+            // this._hideLoadingIcon();
+            return;
+          }
+          var popupName = this.layerDefinition.name + '(' + this.fieldName + ')';
+          this.cbxPopup = new Popup({
+            width: 355,
+            height: 596,
+            content: this.listSelect.domNode, //need a dom, not html string
+            titleLabel: popupName,
+            isResize: false,
+            useFocusLogic: false,
+            // onClose: function(){return false},
+            onClose: lang.hitch(this, function () {
+              //save dom
+              // this.cbxPopup.content = null;
+              // html.place(this.listSelect.domNode, this.listSelectStore);
+              //continue
+              this.cbxPopup.hide();
+              return false;
+            }),
+            buttons: []
+          });
+
+          this._showLoadingIcon();
+          this.pageControlForQuery.queryByPage().then(lang.hitch(this, function(valueLabels) {
+            this._hideLoadingIcon();
+
+            var ifCheck = false;
+            if(this.valueList && this.valueList.length !== 0){
+              ifCheck = true;
+            }
+            // var cbxData = this.listSelect.setCBXData(valueLabels,ifCheck);
+            this.listSelect.setCBXData(valueLabels,ifCheck);
+          }));
+        },
+
+        getDijits: function(){
+          return [this.mutiValuesSelect];
+        },
+
+        setValueObject: function(valueObj){//, isFromConfig
+          valueObj.value = valueObj.value? valueObj.value: [];
+
+          var selectUI = valueObj.selectUI ? valueObj.selectUI : this.selectUI;
+          var typeOption = query('.' + selectUI + 'Option ', this.displayTypes)[0];
+          html.addClass(typeOption, 'checked');
+
+          var newValueLabels = null;//get values' format datas on the first colum in table
+          if(this.isNumberField){
+            var valsArray = [];
+            for(var key = 0; key < valueObj.value.length; key ++){
+              valsArray.push(valueObj.value[key].value);
+            }
+            newValueLabels = this._getValLabelsArrayForNumber(false, valsArray);
+          }
+          this.editTable.emptyLabel = valueObj.emptyLabel;
+          this.editTable.enableEmpty = valueObj.enableEmpty;
+          this.editTable.setListValues(valueObj.value, newValueLabels);
+        },
+
+        _getValLabelsArrayForNumber: function(isTrigger, valsArray){
+          var valueLabels = jimuUtils._getValues(this.layerDefinition, this.fieldPopupInfo, this.fieldName, valsArray);
+          if(isTrigger){
+            this.editTable.currentValLabel = valueLabels[0].label;
+          }
+          return valueLabels;
+        },
+
+        tryGetValueObject: function(){
+          if(this.isValidValue()){
+            return this.getValueObject();
+          }else if(this.isEmptyValue()){
+            return {
+              "isValid": true,
+              "selectUI": this.selectUI,
+              "type": this.partObj.valueObj.type,
+              "value": [],
+              "valueList": []
+            };
+          }
+          return null;
+        },
+
+        getValueObject: function(){
+          if(this.isValidValue()){
+            var valsObj = this.editTable.getListValues();
+            var result = {
+              "isValid": true,
+              "selectUI": this.selectUI,
+              "type": this.partObj.valueObj.type,
+              "value": valsObj.list, //valueObj list
+              "valueList": valsObj.valueList //value list
+            };
+            if(this.controlType === 'unique'){
+              result.emptyLabel = valsObj.emptyLabel;
+              result.enableEmpty = valsObj.enableEmpty;
+            }
+            return result;
+          }
+          return null;
+        },
+
+        setRequired: function(required){
+          this.mutiValuesSelect.set("required", required);
+        },
+
+        queryByPage: function(){
+          var def = this.pageControlForQuery.queryByPage(this.listSelect.ifFristPage);
+          def.then(lang.hitch(this, function(features){
+            def.resolve(features);
+          }), lang.hitch(this, function(err){
+            console.log(err);
+            def.reject(err);
+          }));
+        },
+
+        _showLoadingIcon: function(){
+          if(this.listSelect && this.listSelect.listContainer){
+            html.addClass(this.listSelect.listContainer, 'jimu-circle-loading');
+          }
+        },
+
+        _hideLoadingIcon: function(){
+          if(this.listSelect && this.listSelect.listContainer){
+            html.removeClass(this.listSelect.listContainer, 'jimu-circle-loading');
+          }
+        },
+
+        destroy: function() {
+          if(this._multipleSelectProviderEventHandler){
+            document.removeEventListener('click', this._multipleSelectProviderEventHandler);
+          }
+          this.inherited(arguments);
+        },
+
+        destroyProvider:function(){
+          if(this.editTable){
+            this.editTable.destroy();
+          }
+          // this.editTable = null;
+          if(this.listSelect){
+            this.listSelect.destroy();
+          }
+          this.listSelect = null;
+
+          this.destroy();
+          html.destroy(this.domNode);
+
+          // this.inherited(arguments);
+        }
+      });
+  });

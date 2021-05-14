@@ -1,48 +1,1246 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/_SingleFilter.html":'\x3cdiv\x3e\r\n  \x3cdiv class\x3d"settings-container"\x3e\r\n    \x3cdiv data-dojo-attach-point\x3d"fieldsSelect" data-dojo-type\x3d"dijit/form/FilteringSelect" data-dojo-props\x3d\'searchAttr:"displayName",required:true,intermediateChanges:true\' class\x3d"fields-select dijit-form-FilteringSelect"\x3e\x3c/div\x3e\r\n    \x3cselect data-dojo-attach-point\x3d"operatorsSelect" data-dojo-type\x3d"dijit/form/Select" class\x3d"operator-select dijit-form-Select restrict-select-width"\x3e\r\n      \x3coption value\x3d"none"\x3e${nls.none}\x3c/option\x3e\r\n    \x3c/select\x3e\r\n    \x3cdiv data-dojo-attach-point\x3d"attributeValueContainer" class\x3d"attribute-value-container"\x3e\r\n      \x3cdiv data-dojo-attach-point\x3d"valueProviderContainer" class\x3d"value-provider-container"\x3e\x3c/div\x3e\r\n      \x3cdiv role\x3d"button" tabindex\x3d"0" data-dojo-attach-point\x3d"valueTypeSetNode" title\x3d"${nls.setInputType}" class\x3d"value-type-set jimu-icon jimu-icon-setting"\x3e\x3c/div\x3e\r\n    \x3c/div\x3e\r\n    \x3cdiv role\x3d"button" tabindex\x3d"0" aria-label\x3d"\'${nls.deleteText}\'" class\x3d"jimu-icon jimu-icon-delete" data-dojo-attach-point\x3d"btnDelete"\x3e\x3c/div\x3e\r\n  \x3c/div\x3e\r\n\r\n  \x3cdiv class\x3d"askvalues"\x3e\r\n    \x3cdiv data-dojo-type\x3d"jimu/dijit/CheckBox" data-dojo-attach-point\x3d"cbxAskValues" label\x3d"${nls.askForValues}" class\x3d"jimu-trailing-margin6"\x3e\x3c/div\x3e\r\n    \x3cdiv data-dojo-type\x3d"jimu/dijit/CheckBox" data-dojo-attach-point\x3d"cbxCaseSensitive" label\x3d"${nls.caseSensitive}" style\x3d"display:none;"\x3e\x3c/div\x3e\r\n  \x3c/div\x3e\r\n\r\n  \x3cdiv data-dojo-attach-point\x3d"promptSection" class\x3d"prompt"\x3e\r\n    \x3ctable data-dojo-attach-point\x3d"promptTable" cellpadding\x3d"0" cellspacing\x3d"0" class\x3d"prompt-table" style\x3d"width:100%;"\x3e\r\n      \x3ctbody\x3e\r\n        \x3ctr\x3e\r\n          \x3ctd class\x3d"first-td"\x3e\r\n            \x3cspan\x3e${nls.prompt}\x3c/span\x3e\r\n          \x3c/td\x3e\r\n          \x3ctd class\x3d"second-td"\x3e\r\n            \x3cdiv data-dojo-attach-point\x3d"promptTB" data-dojo-type\x3d"dijit/form/ValidationTextBox" data-dojo-props\x3d"required:true,trim:true" style\x3d"width:257px;" class\x3d"dijit-form-ValidationTextBox" \x3e\x3c/div\x3e\r\n          \x3c/td\x3e\r\n        \x3c/tr\x3e\r\n        \x3ctr\x3e\r\n          \x3ctd class\x3d"first-td"\x3e\r\n            \x3cspan\x3e${nls.hint}\x3c/span\x3e\r\n          \x3c/td\x3e\r\n          \x3ctd class\x3d"second-td"\x3e\r\n            \x3cdiv data-dojo-attach-point\x3d"hintTB" data-dojo-type\x3d"dijit/form/ValidationTextBox" data-dojo-props\x3d"trim:true" style\x3d"width:257px;" class\x3d"dijit-form-ValidationTextBox" \x3e\x3c/div\x3e\r\n          \x3c/td\x3e\r\n        \x3c/tr\x3e\r\n        \x3ctr data-dojo-attach-point\x3d"relativeDatesTr" class\x3d"relative-start-date-tr"\x3e\r\n          \x3ctd class\x3d"first-td"\x3e\r\n            \x3cdiv data-dojo-attach-point\x3d"startDateOptions"\x3e${nls.dateOptions}\x3c/div\x3e\r\n          \x3c/td\x3e\r\n          \x3ctd class\x3d"second-td"\x3e\r\n            \x3cdiv class\x3d"showItems"\x3e\r\n              \x3cdiv class\x3d"opers" data-dojo-type\x3d"jimu/dijit/CheckBox" data-dojo-attach-point\x3d"custom_start_date" data-dojo-props\x3d\'title:"${nls.custom}"\'\x3e\x3c/div\x3e\r\n              \x3cspan\x3e${nls.custom}\x3c/span\x3e\r\n            \x3c/div\x3e\r\n\r\n            \x3cdiv class\x3d"showItems"\x3e\r\n              \x3cdiv class\x3d"opers" data-dojo-type\x3d"jimu/dijit/CheckBox" data-dojo-attach-point\x3d"today_start_date" data-dojo-props\x3d\'title:"${nls.today}"\'\x3e\x3c/div\x3e\r\n              \x3cspan\x3e${nls.today}\x3c/span\x3e\r\n            \x3c/div\x3e\r\n\r\n            \x3cdiv class\x3d"showItems"\x3e\r\n              \x3cdiv class\x3d"opers" data-dojo-type\x3d"jimu/dijit/CheckBox" data-dojo-attach-point\x3d"yesterday_start_date" data-dojo-props\x3d\'title:"${nls.yesterday}"\'\x3e\x3c/div\x3e\r\n              \x3cspan\x3e${nls.yesterday}\x3c/span\x3e\r\n            \x3c/div\x3e\r\n\r\n            \x3cdiv class\x3d"showItems"\x3e\r\n              \x3cdiv class\x3d"opers" data-dojo-type\x3d"jimu/dijit/CheckBox" data-dojo-attach-point\x3d"tomorrow_start_date" data-dojo-props\x3d\'title:"${nls.tomorrow}"\'\x3e\x3c/div\x3e\r\n              \x3cspan\x3e${nls.tomorrow}\x3c/span\x3e\r\n            \x3c/div\x3e\r\n          \x3c/td\x3e\r\n        \x3c/tr\x3e\r\n        \x3ctr data-dojo-attach-point\x3d"relativeDatesTr" class\x3d"relative-end-date-tr"\x3e\r\n          \x3ctd class\x3d"first-td"\x3e\r\n            \x3cdiv data-dojo-attach-point\x3d"endDateOptions"\x3e${nls.endDateOptions}\x3c/div\x3e\r\n          \x3c/td\x3e\r\n          \x3ctd class\x3d"second-td"\x3e\r\n            \x3cdiv class\x3d"showItems"\x3e\r\n              \x3cdiv class\x3d"opers" data-dojo-type\x3d"jimu/dijit/CheckBox" data-dojo-attach-point\x3d"custom_end_date" data-dojo-props\x3d\'title:"${nls.custom}"\'\x3e\x3c/div\x3e\r\n              \x3cspan\x3e${nls.custom}\x3c/span\x3e\r\n            \x3c/div\x3e\r\n\r\n            \x3cdiv class\x3d"showItems"\x3e\r\n              \x3cdiv class\x3d"opers" data-dojo-type\x3d"jimu/dijit/CheckBox" data-dojo-attach-point\x3d"today_end_date" data-dojo-props\x3d\'title:"${nls.today}"\'\x3e\x3c/div\x3e\r\n              \x3cspan\x3e${nls.today}\x3c/span\x3e\r\n            \x3c/div\x3e\r\n\r\n            \x3cdiv class\x3d"showItems"\x3e\r\n              \x3cdiv class\x3d"opers" data-dojo-type\x3d"jimu/dijit/CheckBox" data-dojo-attach-point\x3d"yesterday_end_date" data-dojo-props\x3d\'title:"${nls.yesterday}"\'\x3e\x3c/div\x3e\r\n              \x3cspan\x3e${nls.yesterday}\x3c/span\x3e\r\n            \x3c/div\x3e\r\n\r\n            \x3cdiv class\x3d"showItems"\x3e\r\n              \x3cdiv class\x3d"opers" data-dojo-type\x3d"jimu/dijit/CheckBox" data-dojo-attach-point\x3d"tomorrow_end_date" data-dojo-props\x3d\'title:"${nls.tomorrow}"\'\x3e\x3c/div\x3e\r\n              \x3cspan\x3e${nls.tomorrow}\x3c/span\x3e\r\n            \x3c/div\x3e\r\n          \x3c/td\x3e\r\n        \x3c/tr\x3e\r\n        \x3ctr data-dojo-attach-point\x3d"cascadeTr" class\x3d"cascade-tr"\x3e\r\n          \x3ctd class\x3d"first-td"\x3e\r\n            \x3cdiv style\x3d"margin-bottom:5px;"\x3e${nls.listValues}:\x3c/div\x3e\r\n          \x3c/td\x3e\r\n          \x3ctd class\x3d"second-td"\x3e\r\n            \x3cselect data-dojo-type\x3d"dijit/form/Select" data-dojo-attach-point\x3d"cascadeSelect" class\x3d"cascade-select restrict-select-width" style\x3d"width:100%;"\x3e\r\n              \x3coption value\x3d"none"\x3e${nls.noneCascadeFilterTip}\x3c/option\x3e\r\n              \x3coption value\x3d"previous"\x3e${nls.previousCascadeFilterTip}\x3c/option\x3e\r\n              \x3coption value\x3d"all"\x3e${nls.allCascadeFilterTip}\x3c/option\x3e\r\n            \x3c/select\x3e\r\n          \x3c/td\x3e\r\n        \x3c/tr\x3e\r\n      \x3c/tbody\x3e\r\n    \x3c/table\x3e\r\n  \x3c/div\x3e\r\n\x3c/div\x3e'}});
-define("dojo/Evented dojo/_base/declare dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/text!./templates/_SingleFilter.html dojo/_base/lang dojo/_base/html dojo/_base/array dojo/on dojo/keys dijit/a11yclick dijit/focus dojo/query dojo/store/Memory jimu/utils jimu/filterUtils dijit/Tooltip dojo/mouse jimu/dijit/_filter/ValueProviderFactory dijit/popup jimu/dijit/CheckBox dijit/form/Select dijit/form/FilteringSelect dijit/form/ValidationTextBox".split(" "),function(w,x,u,
-y,z,A,e,d,m,f,h,v,p,k,B,l,n,t,C,q,r){return x([u,y,z,w],{templateString:A,baseClass:"jimu-single-filter",declaredClass:"jimu.dijit._SingleFilter",nls:null,url:null,layerInfo:null,popupFieldsInfo:[],stringFieldType:"",dateFieldType:"",numberFieldTypes:[],supportFieldTypes:[],part:null,OPERATORS:null,enableAskForValues:!1,isHosted:!1,valueProviderFactory:null,valueProvider:null,dateOptionsObj:{status:!1},allDates:[n.VIRTUAL_DATE_CUSTOM,n.VIRTUAL_DATE_TODAY,n.VIRTUAL_DATE_YESTERDAY,n.VIRTUAL_DATE_TOMORROW],
-runtime:!1,widgetId:"",postMixInProperties:function(){this.supportFieldTypes=[];this.supportFieldTypes.push(this.stringFieldType);this.supportFieldTypes.push(this.dateFieldType);this.supportFieldTypes=this.supportFieldTypes.concat(this.numberFieldTypes);this.nls=window.jimuNls.filterBuilder;this.nls.deleteText=window.jimuNls.common.deleteText},postCreate:function(){this.inherited(arguments);this._initSelf();this.own(f(this.valueTypeSetNode,v,e.hitch(this,this._onValueTypeSetClick)));this.own(f(this.btnDelete,
-v,e.hitch(this,function(){this._destroySelf()})));this.own(f(document,"click",e.hitch(this,function(a){a=a.target;d.isDescendant(a,this.valueTypePopupNode)&&!d.hasClass(a,"value-type-popup-icon")||this._closeEsriPopup()})));this.customDijit&&this.own(f(window,"resize",e.hitch(this,function(){this._closeEsriPopup()})))},toJson:function(){var a={fieldObj:"",operator:"",valueObj:"",interactiveObj:"",caseSensitive:!1},b=this._getFieldObjByUI();if(!b)return null;a.fieldObj=b;b=this._getOperatorByUI();
-if(!b)return null;a.operator=b;a.caseSensitive=this.cbxCaseSensitive.getStatus()&&this.cbxCaseSensitive.getValue();var b=this._getValueTypeByUI(),c=this._isUseAskForValues();if(c){if(!this.promptTB.validate())return this._showValidationErrorTip(this.promptTB),null;a.interactiveObj={prompt:l.sanitizeHTML(this.promptTB.get("value")),hint:l.sanitizeHTML(this.hintTB.get("value")),cascade:"none"};this.dateOptionsObj.status&&(1===this.dateOptionsObj.num?a.interactiveObj.virtualDates=this._getRelativeDatesByUI("start"):
-(a.interactiveObj.virtualDates1=this._getRelativeDatesByUI("start"),a.interactiveObj.virtualDates2=this._getRelativeDatesByUI("end")));if("unique"===b||"multiple"===b)a.interactiveObj.cascade=this.cascadeSelect.get("value")}a.valueObj={isValid:!0,type:""};c=c?this.valueProvider.tryGetValueObject():this.valueProvider.getValueObject();if(!c)return null;c.type=b;a.valueObj=c;return a},_getRelativeDatesByUI:function(a){var b=[];m.forEach(this.allDates,function(c){this[c+"_"+a+"_date"].checked&&b.push(c)},
-this);return b},_removeRelativeDateChangeEvents:function(){m.forEach(this.allDates,function(a){var b=this[a+"_start_date"];b.changeEvent&&b.changeEvent.remove();2===this.dateOptionsObj.num&&(a=this[a+"_end_date"],a.changeEvent&&a.changeEvent.remove())},this)},_getFieldObjByUI:function(){var a=this._getSelectedFilteringItem(this.fieldsSelect);if(!a)return null;var b="";0!==this.popupFieldsInfo.length&&(b=l.getDateFieldFormatByFieldName(this.popupFieldsInfo,a.name));return{name:a.name,label:a.name,
-dateFormat:b,shortType:a.shortType,type:a.type}},_getOperatorByUI:function(){var a=this.operatorsSelect.get("value");"none"===a&&(a=null);return a},showDelteIcon:function(){d.setStyle(this.btnDelete,"display","inline-block")},hideDeleteIcon:function(){d.setStyle(this.btnDelete,"display","none")},_showCaseSensitive:function(){d.setStyle(this.cbxCaseSensitive.domNode,"display","inline-block")},_hideCaseSensitive:function(){d.setStyle(this.cbxCaseSensitive.domNode,"display","none")},_showAndEnableCaseSensitive:function(){this.cbxCaseSensitive.setStatus(!0);
-this._showCaseSensitive()},_hideAndDisableCaseSensitive:function(){this.cbxCaseSensitive.setStatus(!1);this._hideCaseSensitive()},_initSelf:function(){this.isHosted&&(this.cbxCaseSensitive.setValue(!1),this.cbxCaseSensitive.setStatus(!1),this.cbxCaseSensitive.domNode.title=this.nls.notSupportCaseSensitiveTip);this.own(f(this.fieldsSelect,"MouseEnter",e.hitch(this,this._updateFieldsSelectTitle)));this.own(f(this.operatorsSelect,"MouseEnter",e.hitch(this,this._updateOperatorsSelectTitle)));this.enableAskForValues?
-(d.setStyle(this.cbxAskValues.domNode,"display","inline-block"),d.setStyle(this.promptSection,"display","block"),this.own(f(this.cbxAskValues,"status-change",e.hitch(this,this._onCbxAskValuesStatusChanged))),this.cbxAskValues.onChange=e.hitch(this,this._onCbxAskValuesClicked)):(d.setStyle(this.cbxAskValues.domNode,"display","none"),d.setStyle(this.promptSection,"display","none"));var a=this.layerInfo.fields;a&&0<a.length&&(a=m.filter(a,e.hitch(this,function(a){return 0<=this.supportFieldTypes.indexOf(a.type)})),
-0<a.length&&(this._initValueTypeUI(),this._enableAllValueTypeOptions(),this._initFieldsSelect(a),this.part?this._showPart(this.part):this._resetByFieldAndOperator(),setTimeout(e.hitch(this,function(){this._bindFieldsSelectChangeAndOperatorChangeEvents()}),10)))},_bindFieldsSelectChangeAndOperatorChangeEvents:function(){this._removeFieldsSelectChangeAndOperatorChangeEvents();this.fieldsSelect&&(this._handle1=f(this.fieldsSelect,"change",e.hitch(this,this._onFieldsSelectChange)));this.operatorsSelect&&
-(this._handle2=f(this.operatorsSelect,"change",e.hitch(this,this._onOperatorsSelectChange)))},_removeFieldsSelectChangeAndOperatorChangeEvents:function(){this._handle1&&this._handle1.remove();this._handle2&&this._handle2.remove();this._handle2=this._handle1=null},_isServiceSupportDistinctValues:function(a,b){if(this._isStreamServer(a))return!1;a=b.currentVersion?b:b.toJson().layerDefinition;return 10.1<=parseFloat(a.currentVersion)},_isStreamServer:function(a){a=(a||"").replace(/\/*$/g,"");return/\/StreamServer$/gi.test(a)},
-_updateFieldsSelectTitle:function(){this.fieldsSelect.domNode.title="";var a=this._getSelectedFilteringItem(this.fieldsSelect);a&&(this.fieldsSelect.domNode.title=a.displayName||a.alias||a.name)},_updateOperatorsSelectTitle:function(){this.operatorsSelect.domNode.title="";var a=this.operatorsSelect.get("value");a&&(a=this.operatorsSelect.getOptions(a),this.operatorsSelect.domNode.title=a.label,d.setAttr(this.operatorsSelect.domNode,"aria-label",a.label))},_showValidationErrorTip:function(a){try{!a.validate()&&
-a.domNode&&a.focusNode&&(a.focusNode.focus(),a.focusNode.blur())}catch(b){console.error(b)}},_getSelectedFilteringItem:function(a){if(a.validate()){var b=a.get("item");if(b)return b}this._showValidationErrorTip(a);return null},_getShortTypeByFieldType:function(a){return a===this.stringFieldType?"string":a===this.dateFieldType?"date":0<=this.numberFieldTypes.indexOf(a)?"number":null},_initFieldsSelect:function(a){a=m.map(a,e.hitch(this,function(a,b){var c=e.mixin({},a);c.id=b;c.shortType=this._getShortTypeByFieldType(a.type);
-c.alias||(c.alias=c.name);a="";"string"===c.shortType?a=this.nls.string:"number"===c.shortType?a=this.nls.number:"date"===c.shortType&&(a=this.nls.date);c.displayName=c.alias+" ("+a+")";return c}));if(0<a.length){var b=new B({data:a});this.fieldsSelect.set("store",b);this.fieldsSelect.set("value",a[0].id)}setTimeout(e.hitch(this,function(){this.fieldsSelect&&this.fieldsSelect.focusNode&&this.fieldsSelect.focusNode.focus()}),2);this._updateOperatorsByFieldsSelect()},_showPart:function(a){if((this.part=
-a)&&this.part.fieldObj&&this.part.operator&&this.part.valueObj){this._removeFieldsSelectChangeAndOperatorChangeEvents();var b=this.part.fieldObj.name;a=this.part.operator;this.part.caseSensitive=!!this.part.caseSensitive;b=this.fieldsSelect.store.query({name:b});0!==b.length&&(b=b[0])&&(this.fieldsSelect.set("value",b.id),this._updateOperatorsByFieldsSelect(),this.operatorsSelect.set("value",a),this._resetByFieldAndOperator(this.part),a=this.part.interactiveObj)&&(this.cbxAskValues.check(),this._updatePrompt(),
-this.promptTB.set("value",a.prompt||""),this.hintTB.set("value",a.hint||""),"unique"===this.part.valueObj.type||"multiple"===this.part.valueObj.type?this.cascadeSelect.set("value",a.cascade):this.cascadeSelect.set("value","none"))}},_onFieldsSelectChange:function(){this._updateOperatorsByFieldsSelect();this._resetByFieldAndOperator()},_updateOperatorsByFieldsSelect:function(){this._updateFieldsSelectTitle();this.operatorsSelect.removeOption(this.operatorsSelect.getOptions());this.operatorsSelect.addOption({value:"none",
-label:this.nls.none});var a=this._getSelectedFilteringItem(this.fieldsSelect);a&&(this.operatorsSelect.shortType=a.shortType,a=q.getOperatorsByShortType(a.shortType,this.isHosted),this.operatorsSelect.removeOption(this.operatorsSelect.getOptions()),m.forEach(a,e.hitch(this,function(a){this.operatorsSelect.addOption({value:a,label:this.nls[a]})})))},_onOperatorsSelectChange:function(){this._resetByFieldAndOperator()},_updateValueTypeClass:function(){d.removeClass(this.domNode,"value-type");d.removeClass(this.domNode,
-"field-type");d.removeClass(this.domNode,"unique-type");d.removeClass(this.domNode,"support-cascade");var a=this._getValueTypeByUI();"value"===a?(d.addClass(this.domNode,"value-type"),this.cascadeSelect.set("value","none")):"field"===a?(d.addClass(this.domNode,"field-type"),this.cascadeSelect.set("value","none")):(d.addClass(this.domNode,"unique-type"),this.cascadeSelect.set("value","previous"),a=!0,a=this._getSelectedFilteringItem(this.fieldsSelect),a=l.getCodedValuesOrTypesCount(a,this.layerInfo),
-(a=0<a?l.isCodedValuesSupportFilter(this.layerInfo,a):!0)?(this.cascadeSelect.set("value","previous"),d.addClass(this.domNode,"support-cascade")):this.cascadeSelect.set("value","none"))},_enableValueTypeSelectOption:function(a,b){a=k("li[data-type\x3d"+a+"]",this.valueTypePopupNode)[0];b?(d.removeClass(a,"disabled"),d.setAttr(a,"aria-disabled","false")):(d.addClass(a,"disabled"),d.setAttr(a,"aria-disabled","true"))},_setVisibleValueTypeSelectOption:function(a,b){a=k("li[data-type\x3d"+a+"]",this.valueTypePopupNode)[0];
-b?d.setStyle(a,"display","block"):d.setStyle(a,"display","none")},_calcValueTypePosition:function(a){var b,c;a=d.position(a.target);b=d.position(document.body).w;c=d.position(document.body).h;var g=d.getStyle(this.valueTypePopupNode,"width"),e=d.getStyle(this.valueTypePopupNode,"height");c=c-a.y-16-10>=e?a.y+16+10:a.y-e-10;b=b-a.x>=g?a.x:a.x+16-g;window.isRTL&&(b=a.x+16>=g?a.x+16-g:a.x);return{left:b,top:c}},_onValueTypeSetClick:function(a){r.open({popup:this.customDijit,around:a.target});var b=this._calcValueTypePosition(a);
-r.open({x:b.left,y:b.top,popup:this.customDijit});a.stopPropagation();l.isInNavMode()&&p.focus(this.valueTypePopupDelBtn)},_onValueTypeClick:function(a){var b=d.getAttr(a.currentTarget,"data-type");d.hasClass(a.currentTarget,"disabled")?a.stopPropagation():(k("li",this.valueTypePopupNode).forEach(function(a){d.removeClass(a,"selected")}),d.addClass(a.currentTarget,"selected"),this._resetByFieldAndOperator(null,b),this._closeEsriPopup())},_enableValueTypeOption:function(a){this._enableValueTypeSelectOption("value",
-a)},_enableFieldTypeOption:function(a){this._enableValueTypeSelectOption("field",a)},_enableUniqueTypeOption:function(a){this._enableValueTypeSelectOption("unique",a)},_enableUniquePredefinedTypeOption:function(a){this.runtime?this._setVisibleValueTypeSelectOption("uniquePredefined",!1):this._enableValueTypeSelectOption("uniquePredefined",a)},_enableValuesTypeOption:function(a){this._enableValueTypeSelectOption("values",a)},_enableMultipleTypeOption:function(a){this._enableValueTypeSelectOption("multiple",
-a)},_enableMultiplePredefinedTypeOption:function(a){this.runtime?this._setVisibleValueTypeSelectOption("multiplePredefined",!1):this._enableValueTypeSelectOption("multiplePredefined",a)},_enableAllValueTypeOptions:function(){this._enableValueTypeOption(!0);this._enableFieldTypeOption(!0);this._enableUniqueTypeOption(!0);this._enableUniquePredefinedTypeOption(!0);this._enableMultipleTypeOption(!0);this._enableMultiplePredefinedTypeOption(!0)},_disableAllValueTypeOptions:function(){this._enableValueTypeOption(!1);
-this._enableFieldTypeOption(!1);this._enableUniqueTypeOption(!1);this._enableUniquePredefinedTypeOption(!1);this._enableMultipleTypeOption(!1);this._enableMultiplePredefinedTypeOption(!1)},_resetByFieldAndOperator:function(a,b){this._updateOperatorsSelectTitle();this.valueProvider&&this.valueProvider.destroy();this._hideCaseSensitive();this._disableAllValueTypeOptions();a||(a={fieldObj:"",operator:"",valueObj:"",interactiveObj:"",caseSensitive:!1},a.fieldObj=this._getFieldObjByUI(),a.operator=this._getOperatorByUI());
-a.widgetId=this.widgetId;var c=[],g=null;a.fieldObj&&a.operator&&(c=this.valueProviderFactory.getSupportedValueTypes(a.fieldObj.name,a.operator),a.valueObj?g=a.valueObj.type:(g=b&&0<=c.indexOf(b)?b:c[0],a.valueObj={type:g}),0<=c.indexOf("value")&&this._enableValueTypeOption(!0),0<=c.indexOf("field")&&this._enableFieldTypeOption(!0),0<=c.indexOf("unique")&&this._enableUniqueTypeOption(!0),0<=c.indexOf("values")&&this._enableValuesTypeOption(!0),0<=c.indexOf("uniquePredefined")&&this._enableUniquePredefinedTypeOption(!0),
-0<=c.indexOf("multiple")&&this._enableMultipleTypeOption(!0),0<=c.indexOf("multiplePredefined")&&this._enableMultiplePredefinedTypeOption(!0),"value"===g?(this._enableValueTypeOption(!0),this.dateOptionsObj.status=!1,d.removeClass(this.domNode,"support-relative-start-date"),d.removeClass(this.domNode,"support-relative-end-date"),this._initDateOptionsUI(a)):"field"===g?this._enableFieldTypeOption(!0):"unique"===g?this._enableUniqueTypeOption(!0):"values"===g?this._enableValuesTypeOption(!0):"uniquePredefined"===
-g?this._enableUniquePredefinedTypeOption(!0):"multiple"===g?this._enableMultipleTypeOption(!0):"multiplePredefined"===g&&this._enableMultiplePredefinedTypeOption(!0),this._updateValueTypeUI(g));0<c.length?(this.valueProvider=this.valueProviderFactory.getValueProvider(a,this.runtime),this.valueProvider.placeAt(this.valueProviderContainer),this.valueProvider.setValueObject(a.valueObj),this.own(f(this.valueProvider,"change",e.hitch(this,function(a,b){a&&this.dateOptionsObj.status&&this[a+"_"+b+"_date"].setValue(!0);
-this.emit("change")}))),this.valueProvider.bindChangeEvents(),this.valueProvider.isBlankValueProvider()?(d.addClass(this.valueProvider.domNode,"hidden"),d.addClass(this.attributeValueContainer,"hidden")):d.removeClass(this.attributeValueContainer,"hidden"),(b=q.getOperatorInfo(a.operator))&&g&&(b[g]&&b[g].supportCaseSensitive&&this._showCaseSensitive(),a&&this.cbxCaseSensitive.setValue(a.caseSensitive))):d.addClass(this.attributeValueContainer,"hidden");this._updateWhenValueRadioChanged();this.emit("change")},
-_initDateOptionsUI:function(a){a.fieldObj.type===this.dateFieldType&&(this.dateOptionsObj=q.isSupportVirtualDates(a.operator),this.dateOptionsObj.status&&(1===this.dateOptionsObj.num?(this._initDateOptions(a.interactiveObj.virtualDates,"start"),this.startDateOptions.innerHTML=this.nls.dateOptions):(this._initDateOptions(a.interactiveObj.virtualDates1,"start"),this._initDateOptions(a.interactiveObj.virtualDates2,"end"),d.addClass(this.domNode,"support-relative-end-date"),this.startDateOptions.innerHTML=
-this.nls.startDateOptions),d.addClass(this.domNode,"support-relative-start-date")))},_initDateOptions:function(a,b){a||(a=this.allDates);m.forEach(this.allDates,function(c){var d=this[c+"_"+b+"_date"];d.changeEvent&&d.changeEvent.remove();d.setValue(0<=a.indexOf(c));d.changeEvent=f(d,"change",e.hitch(this,this._onShowTooltipCBXsChange,d,c,b))},this)},_onShowTooltipCBXsChange:function(a,b,c){if(a&&!1===a.checked){var d="";if(this._isCurrentDateOptIsSelected(b,c))d=this.nls.notUncheckedCurrent;else if(this._isDateOptionsAllHide(c))d=
-this.nls.atLeastOne;else return;a.check();t.hide();t.show(d,a.domNode);this.own(f.once(a.domNode,C.leave,e.hitch(this,function(){t.hide(a.domNode)})))}},_isDateOptionsAllHide:function(a){var b=!0;m.some(this.allDates,function(c){if(!0===this[c+"_"+a+"_date"].checked)return b=!1,!0},this);return b},_isCurrentDateOptIsSelected:function(a,b){var c=this.valueProvider.getValueObject();if(c)if("start"===b)if(1===this.dateOptionsObj.num){if(!c.virtualDate&&a===n.VIRTUAL_DATE_CUSTOM||c.virtualDate===a)return!0}else{if(!c.virtualDate1&&
-a===n.VIRTUAL_DATE_CUSTOM||c.virtualDate1===a)return!0}else if(!c.virtualDate2&&a===n.VIRTUAL_DATE_CUSTOM||c.virtualDate2===a)return!0;return!1},_updateWhenValueRadioChanged:function(){this._updatePrompt(!1,!0);this._updateValueTypeClass()},_onCbxAskValuesClicked:function(){this._updateRequiredProperty();this._updatePrompt(!0)},_onCbxAskValuesStatusChanged:function(){this._updateRequiredProperty()},_isUseAskForValues:function(){var a=this._getValueTypeByUI();return"uniquePredefined"===a||"multiplePredefined"===
-a?!0:this.cbxAskValues.status&&this.cbxAskValues.checked},_isValueRequired:function(){return!this._isUseAskForValues()},_updateRequiredProperty:function(){var a=this._isValueRequired();this.valueProvider.setRequired(a)},_getValueTypeByUI:function(){var a=k("li.selected",this.valueTypePopupNode)[0];return a?d.getAttr(a,"data-type"):null},_closeEsriPopup:function(){this.customDijit&&r.close(this.customDijit)},_destroyEsriPopup:function(){this.customDijit&&(this.customDijit.destroy(),r.close(this.customDijit))},
-_initValueTypeUI:function(){if(!this.valueTypePopupNode){this.valueTypePopupNode=document.createElement("DIV");d.addClass(this.valueTypePopupNode,"value-type-popup");this.valueTypePopupNode.innerHTML='\x3cdiv class\x3d"value-type-popup-header"\x3e\x3cspan class\x3d"value-type-popup-title jimu-ellipsis" title\x3d"'+this.nls.setInputType+'"\x3e'+this.nls.setInputType+'\x3c/span\x3e\x3cspan role\x3d"button" tabindex\x3d"0" aria-label\x3d"'+this.nls.deleteText+'" class\x3d"value-type-popup-icon jimu-icon jimu-icon-delete"\x3e\x3c/span\x3e\x3c/div\x3e\x3cul role\x3d"listbox" tabindex\x3d"0"\x3e\x3cli role\x3d"option" tabindex\x3d"-1" data-type\x3d"value" title\x3d"'+
-this.nls.value+'"\x3e\x3cspan\x3e'+this.nls.value+'\x3c/span\x3e\x3cspan\x3e\x3c/span\x3e\x3c/li\x3e\x3cli role\x3d"option" tabindex\x3d"-1" data-type\x3d"field" title\x3d"'+this.nls.field+'"\x3e\x3cspan\x3e'+this.nls.field+'\x3c/span\x3e\x3cspan\x3e\x3c/span\x3e\x3c/li\x3e\x3cli role\x3d"option" tabindex\x3d"-1" data-type\x3d"unique" title\x3d"'+this.nls.unique+'"\x3e\x3cspan\x3e'+this.nls.unique+'\x3c/span\x3e\x3cspan\x3e\x3c/span\x3e\x3c/li\x3e\x3cli role\x3d"option" tabindex\x3d"-1" data-type\x3d"uniquePredefined" title\x3d"'+
-this.nls.uniquePredefined+'"\x3e\x3cspan\x3e'+this.nls.uniquePredefined+'\x3c/span\x3e\x3cspan\x3e\x3c/span\x3e\x3c/li\x3e\x3cli role\x3d"option" tabindex\x3d"-1" data-type\x3d"multiple" title\x3d"'+this.nls.multiple+'"\x3e\x3cspan\x3e'+this.nls.multiple+'\x3c/span\x3e\x3cspan\x3e\x3c/span\x3e\x3c/li\x3e\x3cli role\x3d"option" tabindex\x3d"-1" data-type\x3d"multiplePredefined" title\x3d"'+this.nls.multiplePredefined+'"\x3e\x3cspan\x3e'+this.nls.multiplePredefined+"\x3c/span\x3e\x3cspan\x3e\x3c/span\x3e\x3c/li\x3e\x3c/ul\x3e";
-this.customDijit=new u({baseClass:"jimu-filter-valueType",domNode:this.valueTypePopupNode});this.valueTypePopupDelBtn=k(".value-type-popup-icon",this.valueTypePopupNode)[0];this.own(f(this.valueTypePopupDelBtn,"click",e.hitch(this,function(a){this._closeEsriPopup();a.stopPropagation()})));this.own(f(this.valueTypePopupDelBtn,"keydown",e.hitch(this,function(a){a.keyCode===h.ENTER||a.keyCode===h.SPACE||a.keyCode===h.ESCAPE?(a.stopPropagation(),this._closeEsriPopup(),l.isInNavMode()&&p.focus(this.valueTypeSetNode)):
-a.shiftKey||a.keyCode!==h.TAB||this.valueTypeList.focus()})));this.valueTypeList=k("ul",this.valueTypePopupNode)[0];var a=k("li",this.valueTypePopupNode);this.own(f(this.valueTypeList,"focus",e.hitch(this,function(){this.selectedValueType=k("li.selected",this.valueTypePopupNode)[0];this.selectedValueType.focus()})));this.own(f(this.valueTypeList,"keydown",e.hitch(this,function(b){if(b.keyCode===h.TAB)b.shiftKey?(b.preventDefault(),this.valueTypePopupDelBtn.focus()):(b.preventDefault(),this._closeEsriPopup(),
-l.isInNavMode()&&p.focus(this.valueTypeSetNode));else{var c,e=!1;if(b.keyCode===h.DOWN_ARROW)for(c=this.selectedValueType,b=0;b<a.length-1;b++)if(e){if("none"!==d.getStyle(a[b],"display")){c=a[b];break}}else a[b]===this.selectedValueType&&(e=!0);else if(b.keyCode===h.UP_ARROW)for(c=this.selectedValueType,b=a.length-1;0<=b;b--)if(e){if("none"!==d.getStyle(a[b],"display")){c=a[b];break}}else a[b]===this.selectedValueType&&(e=!0);else if(b.keyCode===h.HOME)c=a[0];else if(b.keyCode===h.END)for(b=a.length-
-1;0<=b;b--)if("none"!==d.getStyle(a[b],"display")){c=a[b];break}c&&(this.selectedValueType=c,c.focus())}})));this.own(f(a,"click",e.hitch(this,function(a){this._onValueTypeClick(a)})));this.own(f(a,"keydown",e.hitch(this,function(a){a.keyCode===h.ENTER&&(this._onValueTypeClick(a),d.hasClass(a.target,"disabled")||this.valueTypeSetNode.focus())})));this.own(f(this.valueTypePopupNode,"keydown",e.hitch(this,function(a){a.keyCode===h.ESCAPE&&(a.stopPropagation(),p.focus(this.valueTypePopupDelBtn))})))}},
-_updateValueTypeUI:function(a){k("li",this.valueTypePopupNode).forEach(function(a){d.removeClass(a,"selected")});if(a=k("li[data-type\x3d"+a+"]",this.valueTypePopupNode)[0])return d.addClass(a,"selected")},_updatePrompt:function(a,b){this.promptTB.set("value","");this.hintTB.set("value","");this.cbxAskValues.setStatus(!0);!a&&b&&this.cbxAskValues.uncheck(!0);d.setStyle(this.promptTable,"display","table");b=this.operatorsSelect.get("value");var c=this.nls[b],e=!1,f=this._getValueTypeByUI(),h=q.getOperatorInfo(b);
-h&&f&&(h=h[f])&&h.supportAskForValue&&(e=!0);e||(this.cbxAskValues.uncheck(!0),this.cbxAskValues.setStatus(!1));h=this.cbxAskValues.getValue();(f=0<=["uniquePredefined","multiplePredefined"].indexOf(f)?!0:!1)?this.cbxAskValues.check(!0):a?h?this.cbxAskValues.check(!0):this.cbxAskValues.uncheck(!0):e?this.cbxAskValues.status||this.cbxAskValues.check(!0):this.cbxAskValues.uncheck(!0);this.cbxAskValues.status&&this.cbxAskValues.checked?(d.setStyle(this.promptTable,"display","table"),(a=this._getSelectedFilteringItem(this.fieldsSelect))&&
-"none"!==b&&this.promptTB.set("value",(a.alias||a.name)+" "+c)):d.setStyle(this.promptTable,"display","none");f?(this.cbxAskValues.setStatus(!1),this.cascadeSelect.setDisabled(!0)):this.cascadeSelect.setDisabled(!1)},_destroySelf:function(){this.destroy()},destroy:function(){this._removeFieldsSelectChangeAndOperatorChangeEvents();this.dateOptionsObj.status&&this._removeRelativeDateChangeEvents();this._destroyEsriPopup();this.inherited(arguments)}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/Evented',
+  'dojo/_base/declare',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dijit/_WidgetsInTemplateMixin',
+  'dojo/text!./templates/_SingleFilter.html',
+  'dojo/_base/lang',
+  'dojo/_base/html',
+  'dojo/_base/array',
+  'dojo/on',
+  'dojo/keys',
+  "dijit/a11yclick",
+  'dijit/focus',
+  'dojo/query',
+  'dojo/store/Memory',
+  'jimu/utils',
+  'jimu/filterUtils',
+  "dijit/Tooltip",
+  "dojo/mouse",
+  'jimu/dijit/_filter/ValueProviderFactory',
+  'dijit/popup',
+  'jimu/dijit/CheckBox',
+  'dijit/form/Select',
+  'dijit/form/FilteringSelect',
+  'dijit/form/ValidationTextBox'
+],
+function(Evented, declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, lang,
+  html, array, on, keys, a11yclick, focusUtil, query, Memory,
+  jimuUtils, filterUtils, Tooltip, mouse, ValueProviderFactory, esriPopup) {
+
+  return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+    templateString:template,
+    baseClass: 'jimu-single-filter',
+    declaredClass: 'jimu.dijit._SingleFilter',
+    nls: null,
+    url: null,
+    layerInfo: null,
+    popupFieldsInfo:[],
+    stringFieldType: '',
+    dateFieldType: '',
+    numberFieldTypes: [],
+    supportFieldTypes: [],
+    part: null,
+    OPERATORS: null,
+    enableAskForValues: false,
+    isHosted: false,
+    valueProviderFactory: null,
+    valueProvider: null,
+    dateOptionsObj: {status: false}, //if display date options
+    allDates: [filterUtils.VIRTUAL_DATE_CUSTOM, filterUtils.VIRTUAL_DATE_TODAY,
+      filterUtils.VIRTUAL_DATE_YESTERDAY, filterUtils.VIRTUAL_DATE_TOMORROW],
+
+
+    //optional, false: setting data logic, true: runtime data logic #12627
+    runtime: false,
+    widgetId: '',
+
+    //public methods:
+    //toJson: UI->partsObj
+    //
+
+    //events:
+    //change
+
+    postMixInProperties:function(){
+      this.supportFieldTypes = [];
+      this.supportFieldTypes.push(this.stringFieldType);
+      this.supportFieldTypes.push(this.dateFieldType);
+      this.supportFieldTypes = this.supportFieldTypes.concat(this.numberFieldTypes);
+      this.nls = window.jimuNls.filterBuilder;
+      this.nls.deleteText = window.jimuNls.common.deleteText;
+    },
+
+    postCreate:function(){
+      this.inherited(arguments);
+      this._initSelf();
+      this.own(on(this.valueTypeSetNode, a11yclick, lang.hitch(this, this._onValueTypeSetClick)));
+      this.own(on(this.btnDelete, a11yclick, lang.hitch(this, function(){
+        this._destroySelf();
+      })));
+      this.own(on(document, 'click', lang.hitch(this, function(evt){ // NO need a11yclick
+        var target = evt.target;
+        if(html.isDescendant(target, this.valueTypePopupNode) && !html.hasClass(target, 'value-type-popup-icon')){
+          return;
+        }
+        this._closeEsriPopup();
+      })));
+      //close valueTypePopup when resizing
+      if(this.customDijit){
+        this.own(on(window, 'resize', lang.hitch(this, function() {
+          this._closeEsriPopup();
+        })));
+      }
+    },
+
+    toJson:function(){
+      var part = {
+        fieldObj:'',
+        operator:'',
+        valueObj:'',
+        interactiveObj:'',
+        caseSensitive: false
+      };
+
+      //fieldObj
+      var fieldObj = this._getFieldObjByUI();
+      if(!fieldObj){
+        return null;
+      }
+      part.fieldObj = fieldObj;
+
+      //operator
+      var operator = this._getOperatorByUI();
+      if(!operator){
+        return null;
+      }
+      part.operator = operator;
+
+      //caseSensitive
+      part.caseSensitive = this.cbxCaseSensitive.getStatus() && this.cbxCaseSensitive.getValue();
+
+      var valueType = this._getValueTypeByUI();
+      //interactiveObj
+      var isUseAskForvalues = this._isUseAskForValues();
+      if(isUseAskForvalues){
+        //prompt is required and hint is optional
+        if(!this.promptTB.validate()){
+          this._showValidationErrorTip(this.promptTB);
+          return null;
+        }
+        part.interactiveObj = {
+          prompt: jimuUtils.sanitizeHTML(this.promptTB.get('value')),
+          hint: jimuUtils.sanitizeHTML(this.hintTB.get('value')),
+          cascade: "none"
+        };
+
+        //add relative dates
+        if(this.dateOptionsObj.status){
+          if(this.dateOptionsObj.num === 1){
+            part.interactiveObj.virtualDates = this._getRelativeDatesByUI('start');
+          }else{ //2
+            part.interactiveObj.virtualDates1 = this._getRelativeDatesByUI('start');
+            part.interactiveObj.virtualDates2 = this._getRelativeDatesByUI('end');
+          }
+        }
+
+        // if(this.uniqueRadio && this.uniqueRadio.checked){
+        if(valueType === "unique" || valueType === "multiple"){
+          part.interactiveObj.cascade = this.cascadeSelect.get("value");
+        }
+      }
+
+      //valueObj
+      part.valueObj = {
+        isValid:true,
+        type: ''
+      };
+      // var valueObj;
+      //multiple and unique(new) need interactiveObj to valid config
+      //it works when no selected & askForValues is true
+      // if(valueType === 'multiple' || valueType === 'unique'){
+      //   valueObj = isUseAskForvalues ? this.valueProvider.tryGetValueObject(part) :
+      //   this.valueProvider.getValueObject(part);
+      // }else{
+      //tryGetValueObject() let empty value pass
+      var valueObj = isUseAskForvalues ? this.valueProvider.tryGetValueObject() : this.valueProvider.getValueObject();
+      // }
+      if(!valueObj){
+        return null;
+      }
+      valueObj.type = valueType;
+      part.valueObj = valueObj;
+
+      return part;
+    },
+
+    _getRelativeDatesByUI: function(type){
+      var dates = [];
+      array.forEach(this.allDates,function(date){
+        var cbx = this[date + '_' + type + '_date'];
+        if(cbx.checked){
+          dates.push(date);
+        }
+      }, this);
+      return dates;
+    },
+
+    //remove virtual date events
+    _removeRelativeDateChangeEvents: function(){
+      array.forEach(this.allDates,function(date){
+        var cbx = this[date + '_start_date'];
+        if(cbx.changeEvent){
+          cbx.changeEvent.remove();
+        }
+        if(this.dateOptionsObj.num === 2){
+          var cbx2 = this[date + '_end_date'];
+          if(cbx2.changeEvent){
+            cbx2.changeEvent.remove();
+          }
+        }
+      }, this);
+    },
+
+    _getFieldObjByUI: function(){
+      var fieldInfo = this._getSelectedFilteringItem(this.fieldsSelect);
+      if(!fieldInfo){
+        return null;
+      }
+      var fieldDateFormat = '';
+      if(this.popupFieldsInfo.length !== 0){
+        fieldDateFormat = jimuUtils.getDateFieldFormatByFieldName(this.popupFieldsInfo, fieldInfo.name);
+      }
+
+      return {
+        name:fieldInfo.name,
+        label:fieldInfo.name,
+        dateFormat:fieldDateFormat,
+        shortType:fieldInfo.shortType,
+        type:fieldInfo.type
+      };
+    },
+
+    _getOperatorByUI: function(){
+      var operator = this.operatorsSelect.get('value');
+      if(operator === 'none'){
+        operator = null;
+      }
+      return operator;
+    },
+
+    showDelteIcon:function(){
+      html.setStyle(this.btnDelete, 'display', 'inline-block');
+    },
+
+    hideDeleteIcon:function(){
+      html.setStyle(this.btnDelete, 'display', 'none');
+    },
+
+    _showCaseSensitive: function(){
+      html.setStyle(this.cbxCaseSensitive.domNode, 'display', 'inline-block');
+    },
+
+    _hideCaseSensitive: function(){
+      html.setStyle(this.cbxCaseSensitive.domNode, 'display', 'none');
+    },
+
+    _showAndEnableCaseSensitive: function(){
+      this.cbxCaseSensitive.setStatus(true);
+      this._showCaseSensitive();
+    },
+
+    _hideAndDisableCaseSensitive: function(){
+      this.cbxCaseSensitive.setStatus(false);
+      this._hideCaseSensitive();
+    },
+
+    _initSelf:function(){
+      //it throws error when parameter is layerObjt(not layerDef) and call its toJson() to get layerDef
+      //this.layerInfo = lang.mixin({}, this.layerInfo);
+
+      //case sensitive
+      if(this.isHosted){
+        this.cbxCaseSensitive.setValue(false);
+        this.cbxCaseSensitive.setStatus(false);
+        this.cbxCaseSensitive.domNode.title = this.nls.notSupportCaseSensitiveTip;
+      }
+
+      //update title for dijits when mouse enter
+      this.own(on(this.fieldsSelect, 'MouseEnter', lang.hitch(this, this._updateFieldsSelectTitle)));
+      this.own(on(this.operatorsSelect, 'MouseEnter', lang.hitch(this, this._updateOperatorsSelectTitle)));
+
+      //ask for value
+      if(this.enableAskForValues){
+        html.setStyle(this.cbxAskValues.domNode, 'display', 'inline-block');
+        html.setStyle(this.promptSection, 'display', 'block');
+        this.own(on(this.cbxAskValues, 'status-change', lang.hitch(this, this._onCbxAskValuesStatusChanged)));
+        this.cbxAskValues.onChange = lang.hitch(this, this._onCbxAskValuesClicked);
+      }else{
+        html.setStyle(this.cbxAskValues.domNode, 'display', 'none');
+        html.setStyle(this.promptSection, 'display', 'none');
+      }
+
+      //field select
+      var fields = this.layerInfo.fields;
+      if (fields && fields.length > 0) {
+        fields = array.filter(fields, lang.hitch(this, function(fieldInfo) {
+          return this.supportFieldTypes.indexOf(fieldInfo.type) >= 0;
+        }));
+
+        if(fields.length > 0){
+          this._initValueTypeUI();
+          this._enableAllValueTypeOptions();
+
+          this._initFieldsSelect(fields);
+
+          if(this.part){
+            this._showPart(this.part);
+          }else{
+            this._resetByFieldAndOperator();
+          }
+
+          setTimeout(lang.hitch(this, function(){
+            //must setTimeout to bind events
+            this._bindFieldsSelectChangeAndOperatorChangeEvents();
+          }), 10);
+        }
+      }
+    },
+
+    _bindFieldsSelectChangeAndOperatorChangeEvents: function(){
+      this._removeFieldsSelectChangeAndOperatorChangeEvents();
+      if(this.fieldsSelect){
+        this._handle1 = on(this.fieldsSelect, 'change', lang.hitch(this, this._onFieldsSelectChange));
+      }
+      if(this.operatorsSelect){
+        this._handle2 = on(this.operatorsSelect, 'change', lang.hitch(this, this._onOperatorsSelectChange));
+      }
+    },
+
+    _removeFieldsSelectChangeAndOperatorChangeEvents: function(){
+      if(this._handle1){
+        this._handle1.remove();
+      }
+      if(this._handle2){
+        this._handle2.remove();
+      }
+      this._handle1 = null;
+      this._handle2 = null;
+    },
+
+    //Compatible with layerObject
+    _isServiceSupportDistinctValues: function(url, layerDefinition){
+      //StreamServer doesn't provide API interface to get unique values
+      if(this._isStreamServer(url)){
+        return false;
+      }
+      // if(this._isImageServer(url)){
+      // return layerDefinition.advancedQueryCapabilities && layerDefinition.advancedQueryCapabilities.supportsDistinct;
+      // }
+      //MapServer or FeatureServer
+      var _layerDef = layerDefinition.currentVersion ? layerDefinition :
+        layerDefinition.toJson().layerDefinition;
+      var version = parseFloat(_layerDef.currentVersion);
+      return version >= 10.1;
+    },
+
+    _isStreamServer: function(url){
+      url = url || "";
+      url = url.replace(/\/*$/g, '');
+      var reg = /\/StreamServer$/gi;
+      return reg.test(url);
+    },
+
+    _updateFieldsSelectTitle: function(){
+      this.fieldsSelect.domNode.title = "";
+      var fieldInfo = this._getSelectedFilteringItem(this.fieldsSelect);
+      if(fieldInfo){
+        this.fieldsSelect.domNode.title = fieldInfo.displayName || fieldInfo.alias || fieldInfo.name;
+      }
+    },
+
+    _updateOperatorsSelectTitle: function(){
+      this.operatorsSelect.domNode.title = "";
+      var value = this.operatorsSelect.get('value');
+      if(value){
+        var option = this.operatorsSelect.getOptions(value);
+        this.operatorsSelect.domNode.title = option.label;
+        html.setAttr(this.operatorsSelect.domNode, 'aria-label', option.label);
+      }
+    },
+
+    _showValidationErrorTip:function(_dijit){
+      try{
+        if(!_dijit.validate() && _dijit.domNode){
+          if(_dijit.focusNode){
+            //sometimes throw exception here in IE8
+            _dijit.focusNode.focus();
+            _dijit.focusNode.blur();
+          }
+        }
+      }catch(e){
+        console.error(e);
+      }
+    },
+
+    _getSelectedFilteringItem: function(_select){
+      if(_select.validate()){
+        var item = _select.get('item');
+        if(item){
+          return item;
+        }
+        else{
+          this._showValidationErrorTip(_select);
+        }
+      }
+      else{
+        this._showValidationErrorTip(_select);
+      }
+      return null;
+    },
+
+    _getShortTypeByFieldType: function(fieldType){
+      if(fieldType === this.stringFieldType){
+        return 'string';
+      }
+      else if(fieldType === this.dateFieldType){
+        return 'date';
+      }
+      else if(this.numberFieldTypes.indexOf(fieldType) >= 0){
+        return 'number';
+      }
+      return null;
+    },
+
+    _initFieldsSelect: function(fieldInfos){
+      var data = array.map(fieldInfos, lang.hitch(this, function(fieldInfo, index){
+        var item = lang.mixin({}, fieldInfo);
+        item.id = index;
+        item.shortType = this._getShortTypeByFieldType(fieldInfo.type);
+        if(!item.alias){
+          item.alias = item.name;
+        }
+        var a = '';
+        if(item.shortType === 'string'){
+          a = this.nls.string;
+        }
+        else if(item.shortType === 'number'){
+          a = this.nls.number;
+        }
+        else if(item.shortType === 'date'){
+          a = this.nls.date;
+        }
+        item.displayName = item.alias + " (" + a + ")";
+        return item;
+      }));
+
+      if(data.length > 0){
+        var store = new Memory({data:data});
+        this.fieldsSelect.set('store', store);
+        this.fieldsSelect.set('value', data[0].id);
+      }
+
+      //focus on fieldSelect
+      setTimeout(lang.hitch(this, function(){
+        if(this.fieldsSelect && this.fieldsSelect.focusNode){
+          this.fieldsSelect.focusNode.focus();
+        }
+      }),2);
+
+      // this.fieldsSelect.focusNode.focus();
+      // this.fieldsSelect.focusNode.blur();
+      this._updateOperatorsByFieldsSelect();
+    },
+
+    //part -> UI
+    _showPart: function(_part){
+      this.part = _part;
+      var validPart = this.part && this.part.fieldObj && this.part.operator && this.part.valueObj;
+      if(!validPart){
+        return;
+      }
+
+      this._removeFieldsSelectChangeAndOperatorChangeEvents();
+
+      var fieldName = this.part.fieldObj.name;
+      var operator = this.part.operator;
+      //var valueObj = this.part.valueObj;
+      this.part.caseSensitive = !!this.part.caseSensitive;
+      var fieldItems = this.fieldsSelect.store.query({
+        name: fieldName
+      });
+      if (fieldItems.length === 0) {
+        return;
+      }
+      var fieldItem = fieldItems[0];
+      if (!fieldItem) {
+        return;
+      }
+      this.fieldsSelect.set('value', fieldItem.id);
+
+      this._updateOperatorsByFieldsSelect();
+
+      this.operatorsSelect.set('value', operator);
+
+      this._resetByFieldAndOperator(this.part);
+
+      var interactiveObj = this.part.interactiveObj;
+      if (interactiveObj) {
+        this.cbxAskValues.check();
+        this._updatePrompt();
+        this.promptTB.set('value', interactiveObj.prompt || '');
+        this.hintTB.set('value', interactiveObj.hint || '');
+        if (this.part.valueObj.type === 'unique' || this.part.valueObj.type === 'multiple') {
+          this.cascadeSelect.set("value", interactiveObj.cascade);
+        } else {
+          this.cascadeSelect.set("value", "none");
+        }
+      }
+    },
+
+    _onFieldsSelectChange:function(){
+      this._updateOperatorsByFieldsSelect();
+      this._resetByFieldAndOperator();
+    },
+
+    _updateOperatorsByFieldsSelect: function(){
+      this._updateFieldsSelectTitle();
+      this.operatorsSelect.removeOption(this.operatorsSelect.getOptions());
+      this.operatorsSelect.addOption({value:'none', label:this.nls.none});
+      var fieldInfo = this._getSelectedFilteringItem(this.fieldsSelect);
+      if (fieldInfo) {
+        this.operatorsSelect.shortType = fieldInfo.shortType;
+        var operators = ValueProviderFactory.getOperatorsByShortType(fieldInfo.shortType, this.isHosted);
+        this.operatorsSelect.removeOption(this.operatorsSelect.getOptions());
+        array.forEach(operators, lang.hitch(this, function(operator) {
+          var label = this.nls[operator];
+          this.operatorsSelect.addOption({value: operator, label: label});
+        }));
+      }
+    },
+
+    _onOperatorsSelectChange:function(){
+      this._resetByFieldAndOperator();
+    },
+
+    _updateValueTypeClass: function(){
+      html.removeClass(this.domNode, 'value-type');
+      html.removeClass(this.domNode, 'field-type');
+      html.removeClass(this.domNode, 'unique-type');
+      // html.removeClass(this.domNode, 'multiple-type');
+      html.removeClass(this.domNode, 'support-cascade');
+
+      var valueType = this._getValueTypeByUI();
+
+      if(valueType === 'value'){
+        html.addClass(this.domNode, 'value-type');
+        this.cascadeSelect.set("value", "none");
+      }else if(valueType === 'field'){
+        html.addClass(this.domNode, 'field-type');
+        this.cascadeSelect.set("value", "none");
+      }else{
+        html.addClass(this.domNode, 'unique-type');
+        this.cascadeSelect.set("value", "previous");
+
+        var supportCascade = true;
+
+        var fieldInfo = this._getSelectedFilteringItem(this.fieldsSelect);
+        var codedValeusOrTypesCount = jimuUtils.getCodedValuesOrTypesCount(fieldInfo, this.layerInfo);
+
+        if(codedValeusOrTypesCount > 0){
+          //codedValeusOrTypesCount > 0 means the field is coded value field or typeIdField
+          supportCascade = jimuUtils.isCodedValuesSupportFilter(this.layerInfo, codedValeusOrTypesCount);
+        }else{
+          supportCascade = true;
+        }
+
+        if(supportCascade){
+          this.cascadeSelect.set("value", "previous");
+          html.addClass(this.domNode, 'support-cascade');
+        }else{
+          this.cascadeSelect.set("value", "none");
+        }
+      }
+    },
+
+    _enableValueTypeSelectOption: function(valueType, enabled){
+      var node = query('li[data-type=' + valueType + ']', this.valueTypePopupNode)[0];
+      if(enabled){
+        html.removeClass(node, 'disabled');
+        html.setAttr(node, 'aria-disabled', 'false');
+      }else{
+        html.addClass(node, 'disabled');
+        html.setAttr(node, 'aria-disabled', 'true');
+      }
+    },
+
+    _setVisibleValueTypeSelectOption: function(valueType, isDisplay){
+      var node = query('li[data-type=' + valueType + ']', this.valueTypePopupNode)[0];
+      if(isDisplay){
+        html.setStyle(node, 'display', 'block');
+      }else{
+        html.setStyle(node, 'display', 'none');
+      }
+    },
+
+    _calcValueTypePosition: function(evt){
+      var left, top;
+      var iconW = 16, iconH = 16, iconMargin = 10;
+      var evtPosition = html.position(evt.target);
+
+      var bodyW = html.position(document.body).w;
+      var bodyH = html.position(document.body).h;
+      var popupW = html.getStyle(this.valueTypePopupNode, 'width');
+      var popupH = html.getStyle(this.valueTypePopupNode, 'height');
+
+      if(bodyH - evtPosition.y - iconH - iconMargin >= popupH){// below icon(default)
+        top = evtPosition.y + iconH + iconMargin;
+      }else{// above icon
+        top = evtPosition.y - popupH - iconMargin;
+      }
+
+      if(bodyW - evtPosition.x >= popupW){// after icon(default)
+        left = evtPosition.x;
+      }else{// before icon
+        left = evtPosition.x + iconW - popupW;
+      }
+
+      if(window.isRTL){
+        if(evtPosition.x + iconW >= popupW){// before icon(default)
+          left = evtPosition.x + iconW - popupW;
+        }else{// after icon
+          left = evtPosition.x;
+        }
+      }
+      return {left: left, top: top};
+    },
+
+    _onValueTypeSetClick: function(evt){
+      esriPopup.open({
+        // parent: this.getParent(),
+        popup: this.customDijit,
+        around: evt.target //around has a higher priority than x,y
+        //orient: [ "above","below", "before","after", "above-centered",...]
+      });
+
+      //for adding custom margin
+      var LT = this._calcValueTypePosition(evt);
+      esriPopup.open({
+        x: LT.left,
+        y: LT.top,
+        popup: this.customDijit
+      });
+      evt.stopPropagation();
+      if(jimuUtils.isInNavMode()){
+        focusUtil.focus(this.valueTypePopupDelBtn);
+      }
+    },
+
+    _onValueTypeClick: function(evt){
+      var type = html.getAttr(evt.currentTarget, 'data-type');
+      if(html.hasClass(evt.currentTarget, 'disabled')){
+        evt.stopPropagation();
+        return;
+      }
+      query('li', this.valueTypePopupNode).forEach(function(node){
+        html.removeClass(node, 'selected');
+      });
+
+      html.addClass(evt.currentTarget, 'selected');
+
+      this._resetByFieldAndOperator(null, type);
+      this._closeEsriPopup();
+    },
+
+    _enableValueTypeOption: function(enabled){
+      this._enableValueTypeSelectOption("value", enabled);
+    },
+
+    _enableFieldTypeOption: function(enabled){
+      this._enableValueTypeSelectOption("field", enabled);
+    },
+
+    _enableUniqueTypeOption: function(enabled){
+      this._enableValueTypeSelectOption("unique", enabled);
+    },
+
+    _enableUniquePredefinedTypeOption: function(enabled){
+      if(this.runtime){
+        this._setVisibleValueTypeSelectOption("uniquePredefined", false);
+      }else{
+        this._enableValueTypeSelectOption("uniquePredefined", enabled);
+      }
+    },
+
+    _enableValuesTypeOption: function(enabled){
+      this._enableValueTypeSelectOption("values", enabled);
+    },
+
+    _enableMultipleTypeOption: function(enabled){
+      this._enableValueTypeSelectOption("multiple", enabled);
+    },
+
+    _enableMultiplePredefinedTypeOption: function(enabled){
+      if(this.runtime){
+        this._setVisibleValueTypeSelectOption("multiplePredefined", false);
+      }else{
+        this._enableValueTypeSelectOption("multiplePredefined", enabled);
+      }
+    },
+
+    _enableAllValueTypeOptions:function(){
+      this._enableValueTypeOption(true);
+      this._enableFieldTypeOption(true);
+      this._enableUniqueTypeOption(true);
+      this._enableUniquePredefinedTypeOption(true);
+      this._enableMultipleTypeOption(true);
+      // this._enableValuesTypeOption(true); //hide this
+      this._enableMultiplePredefinedTypeOption(true);
+    },
+
+    _disableAllValueTypeOptions:function(){
+      this._enableValueTypeOption(false);
+      this._enableFieldTypeOption(false);
+      this._enableUniqueTypeOption(false);
+      this._enableUniquePredefinedTypeOption(false);
+      this._enableMultipleTypeOption(false);
+      // this._enableValuesTypeOption(false);  //hide this
+      this._enableMultiplePredefinedTypeOption(false);
+    },
+
+    _resetByFieldAndOperator: function(/*optional*/ partObj, /*optional*/ _valueType){
+      this._updateOperatorsSelectTitle();
+
+      if(this.valueProvider){
+        this.valueProvider.destroy();
+      }
+      this._hideCaseSensitive();
+      this._disableAllValueTypeOptions();
+
+      if(!partObj){
+        //if partObj is not undefined, it means this function is invoked in postCreate
+        partObj = {
+          fieldObj:'',
+          operator:'',
+          valueObj:'',
+          interactiveObj:'',
+          caseSensitive: false
+        };
+
+        //fieldObj
+        partObj.fieldObj = this._getFieldObjByUI();//maybe null
+
+        //operator
+        partObj.operator = this._getOperatorByUI();//maybe null
+      }
+      partObj.widgetId = this.widgetId;
+
+      var valueTypes = [];
+      var valueType = null;
+
+      if (partObj.fieldObj && partObj.operator) {
+        valueTypes = this.valueProviderFactory.getSupportedValueTypes(partObj.fieldObj.name, partObj.operator);
+
+        if(partObj.valueObj){
+          valueType = partObj.valueObj.type;
+        } else{
+          if(_valueType && valueTypes.indexOf(_valueType) >= 0){
+            valueType = _valueType;
+          }else{
+            valueType = valueTypes[0];
+          }
+          partObj.valueObj = {
+            type: valueType
+          };
+        }
+
+        // this._enableTypeOptionsBySoupport(valueTypes);
+        if (valueTypes.indexOf('value') >= 0) {
+          this._enableValueTypeOption(true);
+        }
+        if (valueTypes.indexOf('field') >= 0) {
+          this._enableFieldTypeOption(true);
+        }
+        if (valueTypes.indexOf('unique') >= 0) {
+          this._enableUniqueTypeOption(true);
+        }
+        if (valueTypes.indexOf('values') >= 0) {
+          this._enableValuesTypeOption(true);
+        }
+        //unique & multiple predefined only appears on the setting page
+        if (valueTypes.indexOf('uniquePredefined') >= 0) {
+          this._enableUniquePredefinedTypeOption(true);
+        }
+        if (valueTypes.indexOf('multiple') >= 0) {
+          this._enableMultipleTypeOption(true);
+        }
+        if (valueTypes.indexOf('multiplePredefined') >= 0) {
+          this._enableMultiplePredefinedTypeOption(true);
+        }
+
+        if(valueType === 'value'){
+          this._enableValueTypeOption(true);
+
+          this.dateOptionsObj.status = false;
+          html.removeClass(this.domNode, 'support-relative-start-date');
+          html.removeClass(this.domNode, 'support-relative-end-date');
+          this._initDateOptionsUI(partObj); //show date options
+
+        }else if(valueType === 'field'){
+          this._enableFieldTypeOption(true);
+        }else if(valueType === 'unique'){
+          this._enableUniqueTypeOption(true);
+        }else if (valueType === 'values') {
+          this._enableValuesTypeOption(true);
+        }else if (valueType === 'uniquePredefined') {
+          this._enableUniquePredefinedTypeOption(true);
+        }else if (valueType === 'multiple') {
+          this._enableMultipleTypeOption(true);
+        }else if (valueType === 'multiplePredefined') {
+          this._enableMultiplePredefinedTypeOption(true);
+        }
+
+        this._updateValueTypeUI(valueType);
+      }
+
+      if (valueTypes.length > 0) {
+        this.valueProvider = this.valueProviderFactory.getValueProvider(partObj, this.runtime);
+        this.valueProvider.placeAt(this.valueProviderContainer);
+        this.valueProvider.setValueObject(partObj.valueObj);
+        this.own(on(this.valueProvider, 'change', lang.hitch(this, function(data, type){
+          if(data && this.dateOptionsObj.status){
+            this[data + '_' + type + '_date'].setValue(true); //update current options by value provider.
+          }
+          this.emit('change');
+        })));
+        this.valueProvider.bindChangeEvents();
+
+        if(this.valueProvider.isBlankValueProvider()){
+          html.addClass(this.valueProvider.domNode, 'hidden');
+          html.addClass(this.attributeValueContainer, 'hidden');
+        } else{
+          html.removeClass(this.attributeValueContainer, 'hidden');
+        }
+
+        var operatorInfo = ValueProviderFactory.getOperatorInfo(partObj.operator);
+        if (operatorInfo && valueType) {
+          if(operatorInfo[valueType] && operatorInfo[valueType].supportCaseSensitive){
+            this._showCaseSensitive();
+          }
+          if (partObj) {
+            this.cbxCaseSensitive.setValue(partObj.caseSensitive);
+          }
+        }
+      } else {
+        html.addClass(this.attributeValueContainer, 'hidden');
+      }
+
+      this._updateWhenValueRadioChanged();
+
+      this.emit('change');
+    },
+
+    // allValueTypes:['value', 'field', 'unique', 'multiple', 'values', 'uniquePredefined', 'multipleDynmic', 'multiplePredefined'],
+    // _enableTypeOptionsBySoupport:function(valueTypes){
+    //   var types = allValueTypes;
+    //   array.forEach(types,function(type){
+    //     if (valueTypes.indexOf(type) >= 0) {
+    //       this._enableValueTypeOption(true);
+    //     }
+    //   });
+    // },
+
+    //show relative date options if it supports
+    _initDateOptionsUI: function(partObj){
+      if(partObj.fieldObj.type === this.dateFieldType){
+        this.dateOptionsObj = ValueProviderFactory.isSupportVirtualDates(partObj.operator);
+        if(this.dateOptionsObj.status){
+          //one date
+          if(this.dateOptionsObj.num === 1){
+            this._initDateOptions(partObj.interactiveObj.virtualDates, 'start');
+            //use date string
+            this.startDateOptions.innerHTML = this.nls.dateOptions;
+          }
+          else { //two dates
+            this._initDateOptions(partObj.interactiveObj.virtualDates1, 'start');
+            this._initDateOptions(partObj.interactiveObj.virtualDates2, 'end');
+            html.addClass(this.domNode, 'support-relative-end-date');
+            //use start string
+            this.startDateOptions.innerHTML = this.nls.startDateOptions;
+          }
+          html.addClass(this.domNode, 'support-relative-start-date');
+        }
+      }
+    },
+
+    _initDateOptions: function(dates, type){
+      if(!dates){
+        dates = this.allDates;
+      }
+      array.forEach(this.allDates,function(date){
+        var cbx = this[date + '_' + type + '_date'];
+        if(cbx.changeEvent){
+          cbx.changeEvent.remove();//remove previous event
+        }
+        cbx.setValue(dates.indexOf(date) >= 0);
+        cbx.changeEvent = on(cbx, 'change', lang.hitch(this, this._onShowTooltipCBXsChange, cbx, date, type));
+      }, this);
+    },
+
+    _onShowTooltipCBXsChange: function(obj, date, type){
+      if (obj && false === obj.checked) {
+        var tips = '';
+        if(this._isCurrentDateOptIsSelected(date, type)){
+          tips = this.nls.notUncheckedCurrent;
+        }else if(this._isDateOptionsAllHide(type)){
+          tips = this.nls.atLeastOne;
+        }else{
+          return;
+        }
+        obj.check();
+        Tooltip.hide();
+        Tooltip.show(tips, obj.domNode);
+        this.own(on.once(obj.domNode, mouse.leave,
+          lang.hitch(this, function() {
+            Tooltip.hide(obj.domNode);
+          }))
+        );
+      }
+    },
+
+    _isDateOptionsAllHide: function(type) {
+      var isAllHide = true;
+      array.some(this.allDates, function(date){
+        var item = this[date + '_' + type + '_date'];
+        if (true === item.checked) {
+          isAllHide = false;
+          return true;
+        }
+      }, this);
+      return isAllHide;
+    },
+
+    //check if current date is selected by valueProvider
+    _isCurrentDateOptIsSelected: function(date, type){
+      var valueObj = this.valueProvider.getValueObject();
+      //For one date situation, valueObj is null when selecting empty option or (custom & no specific date)
+      //For two dates situation, valueObj is null when any of dates is null(follow rules above).
+      if(valueObj){
+        if(type === 'start'){//for start date
+          if(this.dateOptionsObj.num === 1){
+            if((!valueObj.virtualDate && date === filterUtils.VIRTUAL_DATE_CUSTOM) || valueObj.virtualDate === date){
+              return true;
+            }
+          }else{//2
+            if((!valueObj.virtualDate1 && date === filterUtils.VIRTUAL_DATE_CUSTOM) || valueObj.virtualDate1 === date){
+              return true;
+            }
+          }
+        }else{//for end date
+          if((!valueObj.virtualDate2 && date === filterUtils.VIRTUAL_DATE_CUSTOM) || valueObj.virtualDate2 === date){
+            return true;
+          }
+        }
+      }
+      return false;
+    },
+
+    _updateWhenValueRadioChanged: function(){
+      this._updatePrompt(false, true);
+      this._updateValueTypeClass();
+    },
+
+    _onCbxAskValuesClicked:function(){
+      this._updateRequiredProperty();
+      this._updatePrompt(true);
+    },
+
+    _onCbxAskValuesStatusChanged: function(){
+      this._updateRequiredProperty();
+    },
+
+    _isUseAskForValues: function(){
+      var valueType = this._getValueTypeByUI();
+      if(valueType === 'uniquePredefined' || valueType === 'multiplePredefined'){
+        return true;
+      }else{
+        return this.cbxAskValues.status && this.cbxAskValues.checked;
+      }
+    },
+
+    _isValueRequired: function(){
+      var isUseAskForvalues = this._isUseAskForValues();
+      var isRequired = !isUseAskForvalues;
+      return isRequired;
+    },
+
+    _updateRequiredProperty: function(){
+      var isRequired = this._isValueRequired();
+      this.valueProvider.setRequired(isRequired);
+    },
+
+    _getValueTypeByUI: function(){
+      var node = query('li.selected', this.valueTypePopupNode)[0];
+      if(node){
+        return html.getAttr(node, 'data-type');
+      }else{
+        return null;
+      }
+    },
+
+    _closeEsriPopup: function(){
+      if(this.customDijit){
+        esriPopup.close(this.customDijit);
+      }
+    },
+
+    _destroyEsriPopup: function(){
+      if(this.customDijit){
+        this.customDijit.destroy();
+        esriPopup.close(this.customDijit);
+      }
+    },
+
+    //init UI
+    _initValueTypeUI: function(){
+      if(!this.valueTypePopupNode){
+        this.valueTypePopupNode = document.createElement("DIV");
+        html.addClass(this.valueTypePopupNode, "value-type-popup");
+
+        this.valueTypePopupNode.innerHTML = '<div class="value-type-popup-header">' +
+        '<span class="value-type-popup-title jimu-ellipsis" title="' + this.nls.setInputType + '">' +
+        this.nls.setInputType + '</span>' +
+        '<span role="button" tabindex="0" aria-label="' + this.nls.deleteText + '" class="value-type-popup-icon jimu-icon jimu-icon-delete"></span></div>' +
+        '<ul role="listbox" tabindex="0"><li role="option" tabindex="-1" data-type="value" title="' + this.nls.value + '"><span>' + this.nls.value + '</span><span></span></li>' +
+        // <!-- <li data-type="values" title="' + this.nls.values + '"><span>' + this.nls.values + '</span><span></span></li> -->
+        '<li role="option" tabindex="-1" data-type="field" title="' + this.nls.field + '"><span>' + this.nls.field + '</span><span></span></li>' +
+        '<li role="option" tabindex="-1" data-type="unique" title="' + this.nls.unique + '"><span>' + this.nls.unique + '</span><span></span></li>' +
+        '<li role="option" tabindex="-1" data-type="uniquePredefined" title="' + this.nls.uniquePredefined + '"><span>' + this.nls.uniquePredefined + '</span><span></span></li>' +
+        '<li role="option" tabindex="-1" data-type="multiple" title="' + this.nls.multiple + '"><span>' + this.nls.multiple + '</span><span></span></li>' +
+        '<li role="option" tabindex="-1" data-type="multiplePredefined" title="' + this.nls.multiplePredefined + '"><span>' + this.nls.multiplePredefined + '</span><span></span></li>' +
+        '</ul>';
+
+        this.customDijit =  new _WidgetBase({
+          baseClass: 'jimu-filter-valueType',//jimu-filter-Popup
+          domNode: this.valueTypePopupNode
+        });
+
+        //close btn
+        this.valueTypePopupDelBtn = query('.value-type-popup-icon', this.valueTypePopupNode)[0];
+        // this.own(on(this.valueTypePopupDelBtn, a11yclick, lang.hitch(this, function(evt){
+        //   this._closeEsriPopup();
+        //   if(jimuUtils.isInNavMode()){
+        //     focusUtil.focus(this.valueTypeSetNode);
+        //   }
+        //   evt.stopPropagation();
+        // })));
+        this.own(on(this.valueTypePopupDelBtn, 'click', lang.hitch(this, function(evt){
+          this._closeEsriPopup();
+          evt.stopPropagation();
+        })));
+        this.own(on(this.valueTypePopupDelBtn, 'keydown', lang.hitch(this, function(evt){
+          if(evt.keyCode === keys.ENTER || evt.keyCode === keys.SPACE || evt.keyCode === keys.ESCAPE){
+            evt.stopPropagation();
+            this._closeEsriPopup();
+            if(jimuUtils.isInNavMode()){
+              focusUtil.focus(this.valueTypeSetNode);
+            }
+          }else if(!evt.shiftKey && evt.keyCode === keys.TAB){//default ?
+            this.valueTypeList.focus();
+          }
+        })));
+
+        //ul,li
+        this.valueTypeList = query('ul', this.valueTypePopupNode)[0];
+        var liDoms = query('li', this.valueTypePopupNode);
+        this.own(on(this.valueTypeList, 'focus', lang.hitch(this, function(){
+          this.selectedValueType = query('li.selected', this.valueTypePopupNode)[0];
+          this.selectedValueType.focus();
+        })));
+        this.own(on(this.valueTypeList, 'keydown', lang.hitch(this, function(evt){
+          if(evt.keyCode === keys.TAB){
+            if(!evt.shiftKey){
+              evt.preventDefault();
+              this._closeEsriPopup();
+              if(jimuUtils.isInNavMode()){
+                focusUtil.focus(this.valueTypeSetNode);
+              }
+            }else{// if(evt.shiftKey) by default ?
+              evt.preventDefault();
+              this.valueTypePopupDelBtn.focus();
+            }
+          }else{
+            var key, nextNode;
+            var findCurrent = false;
+            if(evt.keyCode === keys.DOWN_ARROW){ //get next valid type
+              nextNode = this.selectedValueType;
+              for(key = 0; key < liDoms.length - 1; key ++){
+                if(findCurrent){
+                  if(html.getStyle(liDoms[key], 'display') !== 'none'){
+                    nextNode = liDoms[key];
+                    break;
+                  }
+                }else if(liDoms[key] === this.selectedValueType){
+                  findCurrent = true;
+                }
+              }
+            }else if(evt.keyCode === keys.UP_ARROW){ //get previous valid type
+              nextNode = this.selectedValueType;
+              for(key = liDoms.length - 1; key >= 0; key --){
+                if(findCurrent){
+                  if(html.getStyle(liDoms[key], 'display') !== 'none'){
+                    nextNode = liDoms[key];
+                    break;
+                  }
+                }else if(liDoms[key] === this.selectedValueType){
+                  findCurrent = true;
+                }
+              }
+            }else if(evt.keyCode === keys.HOME){
+              nextNode = liDoms[0];
+            }else if(evt.keyCode === keys.END){
+              for(key = liDoms.length - 1; key >= 0; key --){
+                if(html.getStyle(liDoms[key], 'display') !== 'none'){
+                  nextNode = liDoms[key];
+                  break;
+                }
+              }
+            }
+            if(nextNode){
+              this.selectedValueType = nextNode;
+              nextNode.focus();
+            }
+          }
+        })));
+
+        this.own(on(liDoms, 'click', lang.hitch(this, function(evt){
+          this._onValueTypeClick(evt);
+        })));
+        this.own(on(liDoms, 'keydown', lang.hitch(this, function(evt){
+          if(evt.keyCode === keys.ENTER){
+            this._onValueTypeClick(evt);
+            if(!html.hasClass(evt.target, 'disabled')){
+              this.valueTypeSetNode.focus();
+            }
+          }
+        })));
+
+        //popup node
+        this.own(on(this.valueTypePopupNode, 'keydown', lang.hitch(this, function(evt){
+          if(evt.keyCode === keys.ESCAPE){
+            evt.stopPropagation();
+            focusUtil.focus(this.valueTypePopupDelBtn);
+          }
+        })));
+      }
+    },
+
+    _updateValueTypeUI: function(type){
+      query('li', this.valueTypePopupNode).forEach(function(node){
+        html.removeClass(node, 'selected');
+      });
+
+      var node = query('li[data-type=' + type + ']', this.valueTypePopupNode)[0];
+      if(node){
+        return html.addClass(node, 'selected');
+      }
+    },
+
+    _updatePrompt: function(ifClick, ifTypeChange){ //call three times when setting's initing
+      this.promptTB.set('value', '');
+      this.hintTB.set('value', '');
+      this.cbxAskValues.setStatus(true);
+      if(!ifClick && ifTypeChange){
+        this.cbxAskValues.uncheck(true);//check works after setting status true
+      }
+      html.setStyle(this.promptTable, 'display', 'table');
+
+      var operator = this.operatorsSelect.get('value');
+      var label = this.nls[operator];
+      var supportAskForValue = false;
+      var valueType = this._getValueTypeByUI();
+      var operatorInfo = ValueProviderFactory.getOperatorInfo(operator);
+      if(operatorInfo && valueType){
+        var valueTypeInfo = operatorInfo[valueType];
+        if(valueTypeInfo && valueTypeInfo.supportAskForValue){
+          supportAskForValue = true;
+        }
+      }
+      if(!supportAskForValue){
+        this.cbxAskValues.uncheck(true);
+        this.cbxAskValues.setStatus(false);
+      }
+
+      var cbxValue = this.cbxAskValues.getValue();
+      var predefinedTypes = ['uniquePredefined', 'multiplePredefined'];
+      var ifPredefined = predefinedTypes.indexOf(valueType) >= 0 ? true: false;
+      if(ifPredefined){
+        this.cbxAskValues.check(true);
+      }
+      else if(ifClick){
+        if(cbxValue){
+          this.cbxAskValues.check(true);
+        }else{
+          this.cbxAskValues.uncheck(true);
+        }
+      }else if(supportAskForValue){
+        if(!this.cbxAskValues.status){
+          this.cbxAskValues.check(true);
+        }
+      }else{
+        this.cbxAskValues.uncheck(true);
+      }
+
+      if(this.cbxAskValues.status && this.cbxAskValues.checked){
+        html.setStyle(this.promptTable, 'display', 'table');
+        var fieldInfo = this._getSelectedFilteringItem(this.fieldsSelect);
+        if(fieldInfo){
+          if(operator !== 'none'){
+            var alias = fieldInfo.alias || fieldInfo.name;
+            var prompt = alias + ' ' + label;
+            this.promptTB.set('value', prompt);
+          }
+        }
+      }else{
+        html.setStyle(this.promptTable, 'display', 'none');
+      }
+
+      if(ifPredefined){
+        this.cbxAskValues.setStatus(false);
+        this.cascadeSelect.setDisabled(true);//disable select for predefined filter.
+      }else{
+        this.cascadeSelect.setDisabled(false);//enable it for unique/multiple list
+      }
+    },
+
+    _destroySelf:function(){
+      this.destroy();
+    },
+
+    destroy: function(){
+      this._removeFieldsSelectChangeAndOperatorChangeEvents();
+      if(this.dateOptionsObj.status){
+        this._removeRelativeDateChangeEvents();
+      }
+      this._destroyEsriPopup();
+      this.inherited(arguments);
+    }
+  });
+});

@@ -1,13 +1,382 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/lang dojo/_base/array dojo/Deferred esri/config esri/graphic esri/graphicsUtils esri/geometry/Extent esri/geometry/Point esri/SpatialReference esri/geometry/webMercatorUtils esri/tasks/ProjectParameters".split(" "),function(m,q,n,p,u,v,w,x,r,t,y){var d={zoomToFeatureSet:function(a,b,c){var f=b.features&&0<b.features.length&&b.features[0].getLayer&&b.features[0].getLayer(),f=f?f.id:null;b=d.graphicsExtent(b.features,c);return d.zoomToExtent(a,b,f)},zoomToExtent:function(a,b,c){var f;
-if(!a||!d.isValidExtent(b))return f=new n,f.reject(),f;c?(f=new n,require(["jimu/LayerStructure"],function(g){(g=g.getInstance().getNodeById(c))?g.zoomTo(b).then(function(){f.resolve()},function(){f.reject()}):d.projectToMapSpatialReference(a,b).then(function(c){b.isSinglePoint&&(c=d.convertSinglePointExtent(a,c));a.setExtent(c,!0);f.resolve()},function(){f.reject()})})):f=d.projectToMapSpatialReference(a,b).then(function(c){b.isSinglePoint&&(c=d.convertSinglePointExtent(a,c));return a.setExtent(c,
-!0)});return f},isValidExtent:function(a){return a&&d.isTrueOrZero(a.xmin)&&d.isTrueOrZero(a.ymin)&&d.isTrueOrZero(a.xmax)&&d.isTrueOrZero(a.ymax)}};d.isVaildExtent=d.isValidExtent;d.isTrueOrZero=function(a){return 0===a?!0:!!a};d.convertSinglePointExtent=function(a,b){var c=a.getScale();if(c=d.getMedianScale(a,c,0))b=d.adjustHeightToAspectRatio(a,b),b=d.getExtentForScale(b,a.width,c);return b};d.graphicsExtent=function(a,b){var c=null;try{if(a&&1===a.length&&a[0].geometry&&"esri.geometry.Multipoint"===
-a[0].geometry.declaredClass&&1===a[0].geometry.points.length){var f=a[0].geometry.points[0],d=new x(f[0],f[1],a[0].geometry.spatialReference);a=[new u(d)]}if(a&&1===a.length&&a[0].geometry&&"esri.geometry.Point"===a[0].geometry.declaredClass){var e=a[0].geometry,c=new w(e.x-1E-4,e.y-1E-4,e.x+1E-4,e.y+1E-4,e.spatialReference);c.isSinglePoint=!0}else a&&0<a.length&&(c=v.graphicsExtent(a))&&"number"===typeof b&&0<b&&(c=c.expand(b))}catch(h){console.error(h)}return c};d.projectToMapSpatialReference=function(a,
-b){return d.projectToSpatialReference(b,a.spatialReference)};d.projectToSpatialReference=function(a,b){var c=new n,d=a;if(b&&a)if(b.equals(a.spatialReference))c.resolve(d);else if(b.isWebMercator()&&a.spatialReference.equals(new r(4326)))d=t.geographicToWebMercator(a),d.isSinglePoint=a.isSinglePoint,c.resolve(d);else if(b.equals(new r(4326))&&a.spatialReference.isWebMercator())d=t.webMercatorToGeographic(a),d.isSinglePoint=a.isSinglePoint,c.resolve(d);else{var g=p&&p.defaults&&p.defaults.geometryService;
-if(g&&"esri.tasks.GeometryService"===g.declaredClass){var e=new y;e.geometries=[a];e.outSR=b;g.project(e).then(function(b){(d=b&&0<b.length&&b[0])?(d.isSinglePoint=a.isSinglePoint,c.resolve(d)):c.reject()},function(){})}else c.reject()}else c.reject();return c};d.getMapLods=function(a){var b=null;a._params&&a._params.lods&&(b=q.map(a._params.lods,m.hitch(this,function(a){return a.toJson()})));return b};d.getMedianScale=function(a,b,c){return d.getTargetScale(a,2,b,c)};d.getTargetScale=function(a,
-b,c,f){a=d.getMapLods(a);var g=1;if(a){var e=[],h=[];q.forEach(a,function(a){0<c&&a.scale>c||(a.scale<f?h.push(a.scale):e.push(a.scale))});e.reverse();1<=e.length?(g=h.length?h.length/a.length:1,b=Math.floor((e.length-1)/(b/g)),b=e[b]):b=null}else b=0===c?null:(c-f)/b;return b};d.getScaleForNextTileLevel=function(a,b,c){if(a=d.getMapLods(a)){if(c){for(c=0;c<a.length;c++)if(a[c].scale<b)return a[c].scale-1;return a[a.length-1].scale-1}for(c=a.length-1;0<=c;c--)if(a[c].scale>b)return a[c].scale+1;return a[0].scale+
-1}return c?b-1:b+1};d.adjustExtentToAspectRatio=function(a,b){a=a.width/a.height;var c=b.getWidth()/b.getHeight();c>a?(a=b.getWidth()/a/2,m.mixin(b,{ymin:b.getCenter().y-a,ymax:b.getCenter().y+a})):c<a&&(a=b.getHeight()*a/2,m.mixin(b,{xmin:b.getCenter().x-a,xmax:b.getCenter().x+a}));return b};d.adjustHeightToAspectRatio=function(a,b){a=b.getWidth()*(a.height/a.width)/5;m.mixin(b,{ymin:b.getCenter().y-a,ymax:b.getCenter().y+a});return b};d.getExtentForScale=function(a,b,c){var d=20015077/180,g=esri.config.defaults,
-e=esri.WKIDUnitConversion,h,k,l=a.spatialReference;l&&(h=l.wkid,k=l.wkt);l=null;h?l=e.values[e[h]]:k&&-1!==k.search(/^PROJCS/i)&&(e=/UNIT\[([^\]]+)\]\]$/i.exec(k))&&e[1]&&(l=parseFloat(e[1].split(",")[1]));return a.expand(c*b/(39.37*(l||d)*g.screenDPI)/a.getWidth())};d.getScaleForExtent=function(a,b){var c=20015077/180,d=esri.config.defaults,g=esri.WKIDUnitConversion,e,h,k=a.spatialReference;k&&(e=k.wkid,h=k.wkt);k=null;e?k=g.values[g[e]]:h&&-1!==h.search(/^PROJCS/i)&&(g=/UNIT\[([^\]]+)\]\]$/i.exec(h))&&
-g[1]&&(k=parseFloat(g[1].split(",")[1]));return a.getWidth()/b*(k||c)*39.37*d.screenDPI};return d});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+define([
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'dojo/Deferred',
+  'esri/config',
+  'esri/graphic',
+  'esri/graphicsUtils',
+  'esri/geometry/Extent',
+  'esri/geometry/Point',
+  'esri/SpatialReference',
+  'esri/geometry/webMercatorUtils',
+  'esri/tasks/ProjectParameters'
+], function(lang, array, Deferred, esriConfig, Graphic, graphicsUtils, Extent, Point, SpatialReference,
+webMercatorUtils, ProjectParameters) {
+
+  var mo = {};
+
+  mo.zoomToFeatureSet = function(map, featureSet, /*optional*/extentFactor) {
+    var layer = featureSet.features &&
+                featureSet.features.length > 0 &&
+                featureSet.features[0].getLayer &&
+                featureSet.features[0].getLayer();
+    var layerId = layer ? layer.id : null;
+    var extent = mo.graphicsExtent(featureSet.features, extentFactor);
+
+    return mo.zoomToExtent(map, extent, layerId);
+  };
+
+  mo.zoomToExtent = function(map, extent, /*optional*/layerId) {
+    var def;
+    if(!map || !mo.isValidExtent(extent)) {
+      def = new Deferred();
+      def.reject();
+      return def;
+    }
+    if(layerId) {
+      def = new Deferred();
+      require(['jimu/LayerStructure'], function(LayerStructure) {
+        var layerStructure = LayerStructure.getInstance();
+        var layerNode = layerStructure.getNodeById(layerId);
+        if(layerNode) {
+          layerNode.zoomTo(extent).then(function() {
+            def.resolve();
+          }, function() {
+            def.reject();
+          });
+        } else {
+          mo.projectToMapSpatialReference(map, extent).then(function(extentResult) {
+            if(extent.isSinglePoint) {
+              extentResult = mo.convertSinglePointExtent(map, extentResult);
+            }
+            map.setExtent(extentResult, true);
+            def.resolve();
+          }, function() {
+            def.reject();
+          });
+        }
+      });
+    } else {
+      def = mo.projectToMapSpatialReference(map, extent).then(function(extentResult) {
+        if(extent.isSinglePoint) {
+          extentResult = mo.convertSinglePointExtent(map, extentResult);
+        }
+        return map.setExtent(extentResult, true);
+      });
+    }
+    return def;
+  };
+
+  mo.isValidExtent = function(extent){
+    return extent && mo.isTrueOrZero(extent.xmin) &&
+      mo.isTrueOrZero(extent.ymin) &&
+      mo.isTrueOrZero(extent.xmax) &&
+      mo.isTrueOrZero(extent.ymax);
+  };
+
+  // Incorrect function name, keep it here for back compatibility.
+  mo.isVaildExtent = mo.isValidExtent;
+
+  mo.isTrueOrZero = function(e) {
+    if (e === 0) {
+      return true;
+    }
+    return !!e;
+  };
+
+  mo.convertSinglePointExtent = function(map, extent) {
+    var mapScale = map.getScale();
+    var targetScale = mo.getMedianScale(map, mapScale, 0);
+    if(targetScale) {
+      extent = mo.adjustHeightToAspectRatio(map, extent);
+      extent = mo.getExtentForScale(extent, map.width, targetScale);
+    }
+    return extent;
+  };
+
+  mo.graphicsExtent = function(graphicsParam, /* optional */ factor){
+    var ext = null;
+    try {
+      var graphics = graphicsParam;
+      if(graphics &&
+         graphics.length === 1 &&
+         graphics[0].geometry &&
+         graphics[0].geometry.declaredClass === "esri.geometry.Multipoint" &&
+         graphics[0].geometry.points.length === 1) {
+
+        var mPoint = graphics[0].geometry.points[0];
+        var point = new Point(mPoint[0], mPoint[1], graphics[0].geometry.spatialReference);
+        graphics = [new Graphic(point)];
+      }
+
+      if(graphics && graphics.length === 1 &&
+        graphics[0].geometry &&
+        graphics[0].geometry.declaredClass === "esri.geometry.Point") {
+        var geometry = graphics[0].geometry;
+        ext = new Extent(geometry.x - 0.0001,
+                         geometry.y - 0.0001,
+                         geometry.x + 0.0001,
+                         geometry.y + 0.0001,
+                         geometry.spatialReference);
+        ext.isSinglePoint = true;
+      } else if(graphics && graphics.length > 0){
+        ext = graphicsUtils.graphicsExtent(graphics);
+        if (ext) {
+          if(typeof factor === "number" && factor > 0){
+            ext = ext.expand(factor);
+          }
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return ext;
+  };
+
+
+  mo.projectToMapSpatialReference = function(map, extent) {
+    return mo.projectToSpatialReference(extent, map.spatialReference);
+  };
+
+  mo.projectToSpatialReference = function(geometry, spatialReference) {
+    var def = new Deferred();
+    var resultGeometry = geometry;
+    if(!spatialReference || !geometry) {
+      def.reject();
+    } else if(spatialReference.equals(geometry.spatialReference)) {
+      def.resolve(resultGeometry);
+    } else if (spatialReference.isWebMercator() &&
+          geometry.spatialReference.equals(new SpatialReference(4326))) {
+      resultGeometry = webMercatorUtils.geographicToWebMercator(geometry);
+      resultGeometry.isSinglePoint = geometry.isSinglePoint;
+      def.resolve(resultGeometry);
+    } else if (spatialReference.equals(new SpatialReference(4326)) &&
+        geometry.spatialReference.isWebMercator()) {
+      resultGeometry = webMercatorUtils.webMercatorToGeographic(geometry);
+      resultGeometry.isSinglePoint = geometry.isSinglePoint;
+      def.resolve(resultGeometry);
+    } else {
+      var geometryService = esriConfig && esriConfig.defaults && esriConfig.defaults.geometryService;
+      if(geometryService && geometryService.declaredClass === "esri.tasks.GeometryService") {
+        var params = new ProjectParameters();
+        params.geometries = [geometry];
+        params.outSR = spatialReference;
+        geometryService.project(params).then(function(geometries) {
+          resultGeometry = geometries && geometries.length > 0 && geometries[0];
+          if(resultGeometry) {
+            resultGeometry.isSinglePoint = geometry.isSinglePoint;
+            def.resolve(resultGeometry);
+          } else {
+            def.reject();
+          }
+        }, function() {
+        });
+      } else {
+        def.reject();
+      }
+    }
+    return def;
+  };
+
+  mo.getMapLods = function(map){
+    //lod:{level,resolution,scale}
+    var lods = null;
+    if(map._params && map._params.lods){
+      lods = array.map(map._params.lods, lang.hitch(this, function(lod){
+        return lod.toJson();
+      }));
+    }
+    return lods;
+  };
+
+  /*
+  mo.getMedianScale = function(map, minScale, maxScale) {
+    var mapLods = mo.getMapLods(map);
+    var medianScale;
+    if(mapLods) {
+      var visibleScales = [];
+      array.forEach(mapLods, function(mapLod) {
+        if ((minScale > 0 && mapLod.scale > minScale) || (mapLod.scale < maxScale)) {
+          return;
+        } else {
+          visibleScales.push(mapLod.scale);
+        }
+      });
+      var medianIndex;
+      if(visibleScales.length >= 1) {
+        medianIndex = Math.floor(visibleScales.length / 2);
+        medianScale = visibleScales[medianIndex];
+      } else {
+        medianScale = null;
+      }
+    } else {
+      if(minScale === 0) {
+        medianScale = null;
+      } else {
+        medianScale = (minScale - maxScale) / 2;
+      }
+    }
+    return medianScale;
+  };
+  */
+
+  mo.getMedianScale = function(map, minScale, maxScale) {
+    return mo.getTargetScale(map, 2, minScale, maxScale);
+  };
+
+  mo.getTargetScale = function(map, factor, minScale, maxScale) {
+    var mapLods = mo.getMapLods(map);
+    var targetScale;
+    var migrationParam = 1;
+    if(mapLods) {
+      var visibleScales = [];
+      var lessThanMaxScales = [];
+      array.forEach(mapLods, function(mapLod) {
+        if (minScale > 0 && mapLod.scale > minScale) {
+          return;
+        } else if (mapLod.scale < maxScale) {
+          lessThanMaxScales.push(mapLod.scale);
+          return;
+        } else {
+          visibleScales.push(mapLod.scale);
+        }
+      });
+      visibleScales.reverse();
+      var targetIndex;
+      if(visibleScales.length >= 1) {
+        migrationParam = lessThanMaxScales.length ? lessThanMaxScales.length / mapLods.length : 1;
+        targetIndex = Math.floor( (visibleScales.length - 1) / (factor / migrationParam));
+        targetScale = visibleScales[targetIndex];
+      } else {
+        targetScale = null;
+      }
+    } else {
+      if(minScale === 0) {
+        targetScale = null;
+      } else {
+        targetScale = (minScale - maxScale) / factor;
+      }
+    }
+    return targetScale;
+  };
+
+
+  mo.getScaleForNextTileLevel = function(map, scale, zoomIn) {
+    var i;
+    var mapLods = mo.getMapLods(map);
+    if (mapLods) {
+      if (zoomIn) {
+        for (i = 0; i < mapLods.length; i++) {
+          if (mapLods[i].scale < scale) {
+            return mapLods[i].scale - 1;
+          }
+        }
+        return mapLods[mapLods.length - 1].scale - 1;
+      } else {
+        for (i = mapLods.length - 1; i >= 0; i--) {
+          if (mapLods[i].scale > scale) {
+            return mapLods[i].scale + 1;
+          }
+        }
+        return mapLods[0].scale + 1;
+      }
+    } else {
+      if (zoomIn) {
+        return scale - 1;
+      } else {
+        return scale + 1;
+      }
+    }
+    return scale;
+  };
+
+  mo.adjustExtentToAspectRatio = function(map, extent) {
+    var mapRatio = map.width / map.height;
+    var extentRatio = extent.getWidth() / extent.getHeight();
+
+    if(extentRatio > mapRatio) {
+      var yBuf = extent.getWidth() / mapRatio / 2;
+      lang.mixin(extent,{ymin : extent.getCenter().y - yBuf, ymax : extent.getCenter().y + yBuf});
+    } else if(extentRatio < mapRatio){
+      var xBuf = extent.getHeight() * mapRatio / 2;
+      lang.mixin(extent,{xmin : extent.getCenter().x - xBuf, xmax : extent.getCenter().x + xBuf});
+    }
+
+    return extent;
+  };
+
+  mo.adjustHeightToAspectRatio = function(map, extent) {
+    // adjust the height of the extent so it won't mess up our scale calculations that we do with the width
+    // make it a little smaller to be sure
+    var buf = (extent.getWidth() * (map.height / map.width)) / 5;
+    lang.mixin(extent,{ymin : extent.getCenter().y - buf, ymax : extent.getCenter().y + buf});
+    return extent;
+  };
+
+  mo.getExtentForScale = function(extent, mapWidth, scale) {
+    var inchesPerMeter = 39.37,
+        decDegToMeters = 20015077.0 / 180.0,
+        ecd = esri.config.defaults, lookup = esri.WKIDUnitConversion; // jshint ignore:line
+
+    var wkid, wkt, sr = extent.spatialReference;
+    if (sr) {
+      wkid = sr.wkid;
+      wkt = sr.wkt;
+    }
+
+    var unitValue = null;
+    if (wkid) {
+      unitValue = lookup.values[lookup[wkid]];
+    } else if (wkt && (wkt.search(/^PROJCS/i) !== -1)) {
+      var result = /UNIT\[([^\]]+)\]\]$/i.exec(wkt);
+      if (result && result[1]) {
+        unitValue = parseFloat(result[1].split(",")[1]);
+      }
+    }
+    var newExtent = extent.expand(((scale * mapWidth) /
+                    ((unitValue || decDegToMeters) * inchesPerMeter * ecd.screenDPI)) /
+                    extent.getWidth());
+    return newExtent;
+  };
+
+  mo.getScaleForExtent = function(extent, mapWidth) {
+    var inchesPerMeter = 39.37,
+        decDegToMeters = 20015077.0 / 180.0,
+        ecd = esri.config.defaults, // jshint ignore:line
+        lookup = esri.WKIDUnitConversion; // jshint ignore:line
+
+    var wkid, wkt, sr = extent.spatialReference;
+    if (sr) {
+      wkid = sr.wkid;
+      wkt = sr.wkt;
+    }
+
+    var unitValue = null;
+    if (wkid) {
+      unitValue = lookup.values[lookup[wkid]];
+    } else if (wkt && (wkt.search(/^PROJCS/i) !== -1)) {
+      var result = /UNIT\[([^\]]+)\]\]$/i.exec(wkt);
+      if (result && result[1]) {
+        unitValue = parseFloat(result[1].split(",")[1]);
+      }
+    }
+    return (extent.getWidth() / mapWidth) * (unitValue || decDegToMeters) * inchesPerMeter * ecd.screenDPI;
+  };
+
+  return mo;
+});

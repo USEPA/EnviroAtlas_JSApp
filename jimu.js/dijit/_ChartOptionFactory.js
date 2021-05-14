@@ -1,7 +1,114 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define(["dojo/_base/declare"],function(d){return d([],{constructor:function(a){this.chart=a.chart;this.gauge=a.gauge;this.chartUtils=a.chartUtils},produceOption:function(a){if(a&&a.type){var b=a.type,c={},c=this.setCommonOption(c,a);this.chartUtils.isAxisChart(a)?c=this.setAxisChartOption(c,a):"pie"===b?c=this.setPieChartOption(c,a):"funnel"===b?c=this.setFunnelChartOption(c,a):"radar"===b?c=this.setRadarChartOption(c,a):a.shape&&(c=this.setGaugeChartOption(c,a));return c=this.chartUtils.settingAdvanceOption(c,
-a)}},setPieChartOption:function(a,b){a=this.chartUtils.settingPieSeries(a,b);a=this.chartUtils._settingSeriesDataLabel(a,b);a=this.chartUtils.pieChartAvoidLegendLabelOverLap(a,b);return a=this.chartUtils.avoidAdjoiningColorSameForPie(a,b)},setGaugeChartOption:function(a,b){return a=this.gauge.produceOption(a,b)},setFunnelChartOption:function(a,b){return a=this.chartUtils.settingFunnelSeries(a,b)},setRadarChartOption:function(a,b){a=this.chartUtils.settingRadar(a,b);return a=this.chartUtils.settingRadarSeries(a,
-b)},setAxisChartOption:function(a,b){a=this.chartUtils.settingDefaultGrid(a,b);a=this.chartUtils.settingAxisChartAxis(a,b);a=this.chartUtils.settingAxisSeries(a,b);a=this.chartUtils.settingMarks(a,b);a=this.chartUtils._settingSeriesDataLabel(a,b);a=this.chartUtils.splitAxisStackColumn(a,b);a=this.chartUtils.settingStack(a,b);a=this.chartUtils.settingArea(a,b);return a=this.chartUtils.settingScale(a,b)},setCommonOption:function(a,b){this.chart._theme||(this.chart._theme={});a=this.chartUtils.settingRenderOption(a,
-b);a=this.chartUtils.settingBackgroundColor(a,b);a=this.chartUtils.settingColor(a,b);a=this.chartUtils.settingToolTip(a,b);return a=this.chartUtils.settingLegend(a,b)}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+define([
+  'dojo/_base/declare'
+], function(declare) {
+  return declare([], {
+
+    constructor: function(option) {
+      this.chart = option.chart;
+      this.gauge = option.gauge;
+      this.chartUtils = option.chartUtils;
+    },
+
+    produceOption: function(config) {
+      if (!config || !config.type) {
+        return;
+      }
+      var type = config.type;
+      var option = {};
+
+      option = this.setCommonOption(option, config);
+
+      if (this.chartUtils.isAxisChart(config)) {
+        option = this.setAxisChartOption(option, config);
+      } else if (type === 'pie') {
+        option = this.setPieChartOption(option, config);
+      } else if (type === 'funnel') {
+        option = this.setFunnelChartOption(option, config);
+      } else if (type === 'radar') {
+        option = this.setRadarChartOption(option, config);
+      } else if (config.shape) {
+        option = this.setGaugeChartOption(option, config);
+      }
+      //advance option
+      option = this.chartUtils.settingAdvanceOption(option, config);
+      return option;
+    },
+
+    setPieChartOption: function(option, config) {
+      option = this.chartUtils.settingPieSeries(option, config);
+      option = this.chartUtils._settingSeriesDataLabel(option, config);
+      //avoid pie overlap legend and label
+      option = this.chartUtils.pieChartAvoidLegendLabelOverLap(option, config);
+      //avoid adjoining pie part the same color
+      option = this.chartUtils.avoidAdjoiningColorSameForPie(option, config);
+      return option;
+    },
+
+    setGaugeChartOption: function(option, config) {
+      option = this.gauge.produceOption(option, config);
+      return option;
+    },
+
+    setFunnelChartOption: function(option, config) {
+      option = this.chartUtils.settingFunnelSeries(option, config);
+      return option;
+    },
+
+    setRadarChartOption: function(option, config) {
+      option = this.chartUtils.settingRadar(option, config);
+      option = this.chartUtils.settingRadarSeries(option, config);
+      return option;
+    },
+
+    setAxisChartOption: function(option, config) {
+      option = this.chartUtils.settingDefaultGrid(option, config);
+      option = this.chartUtils.settingAxisChartAxis(option, config);
+
+      option = this.chartUtils.settingAxisSeries(option, config);
+      option = this.chartUtils.settingMarks(option, config);
+      option = this.chartUtils._settingSeriesDataLabel(option, config);
+
+      option = this.chartUtils.splitAxisStackColumn(option, config);
+      option = this.chartUtils.settingStack(option, config);
+      //line area
+      option = this.chartUtils.settingArea(option, config);
+      //scale
+      option = this.chartUtils.settingScale(option, config);
+      return option;
+    },
+
+    setCommonOption: function(option, config) {
+
+      if (!this.chart._theme) {
+        this.chart._theme = {};
+      }
+      //render option
+      option = this.chartUtils.settingRenderOption(option, config);
+      //background color
+      option = this.chartUtils.settingBackgroundColor(option, config);
+      //display color
+      option = this.chartUtils.settingColor(option, config);
+      //tooltip
+      option = this.chartUtils.settingToolTip(option, config);
+      //legend
+      option = this.chartUtils.settingLegend(option, config);
+      return option;
+    }
+
+  });
+});

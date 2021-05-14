@@ -1,8 +1,167 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dojo/_base/lang dojo/_base/array dojo/_base/html dojo/on dojo/keys dojo/Evented dijit/_WidgetBase dijit/_TemplatedMixin ./ViewStack ../utils".split(" "),function(k,e,g,c,f,d,l,m,n,p,h){return k([m,n,l],{baseClass:"jimu-tab",declaredClass:"jimu.dijit.TabContainer",templateString:'\x3cdiv\x3e\x3cdiv class\x3d"control" data-dojo-attach-point\x3d"controlNode"\x3e\x3c/div\x3e\x3cdiv class\x3d"jimu-container" data-dojo-attach-point\x3d"containerNode"\x3e\x3c/div\x3e\x3c/div\x3e',
-postCreate:function(){this.inherited(arguments);if(0!==this.tabs.length){this.controlNodes=[];this.viewStack=new p(null,this.containerNode);this.own(f(this.containerNode,"keydown",e.hitch(this,function(a){a.keyCode===d.ESCAPE&&(a.stopPropagation(),this._currentCtrlNode.focus())})));var b=1/this.tabs.length*100;this.isNested&&c.addClass(this.domNode,"nested");g.forEach(this.tabs,function(a){this._createTab(a,b)},this);this.own(f(this.controlNode,"keydown",e.hitch(this,function(a){var b=a.target,c;
-a.keyCode===d.RIGHT_ARROW?c=b.nextElementSibling?b.nextElementSibling:this.controlNodes[0]:a.keyCode===d.LEFT_ARROW?c=b.previousElementSibling?b.previousElementSibling:this.controlNodes[this.controlNodes.length-1]:a.keyCode===d.HOME?c=this.controlNodes[0]:a.keyCode===d.END&&(c=this.controlNodes[this.controlNodes.length-1]);c&&(b=c,c.focus())})))}},startup:function(){this.selected?this.selectTab(this.selected):0<this.tabs.length&&this.selectTab(this.tabs[0].title);h.setVerticalCenter(this.domNode)},
-_createTab:function(b,a){a=c.create("div",{innerHTML:h.sanitizeHTML(b.title),"class":"tab jimu-vcenter-text",style:{width:this.isNested?"auto":a+"%"},label:b.title},this.controlNode);this.viewStack.viewType=b.content.domNode?"dijit":"dom";b.content.label=b.title;this.viewStack.addView(b.content);this.own(f(a,"click",e.hitch(this,function(a){this.onSelect(b.title,a)})));this.own(f(a,"keydown",e.hitch(this,function(a){if(a.keyCode===d.ENTER||a.keyCode===d.SPACE)this.onSelect(b.title,a)})));a.label=
-b.title;this.controlNodes.push(a)},onSelect:function(b,a){c.hasClass(a.target,"jimu-state-selected")||this.selectTab(b,a)},selectTab:function(b){this._selectControl(b);this.viewStack.switchView(b);this.emit("tabChanged",b)},_selectControl:function(b){g.forEach(this.controlNodes,function(a){c.removeClass(a,"jimu-state-selected");c.setAttr(a,"tabindex","-1");a.label===b&&(this._currentCtrlNode=a,c.addClass(a,"jimu-state-selected"),c.setAttr(a,"tabindex","0"))},this)}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define(['dojo/_base/declare',
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'dojo/_base/html',
+  'dojo/on',
+  'dojo/keys',
+  'dojo/Evented',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  './ViewStack',
+  '../utils'
+],
+function(declare, lang, array, html, on, keys, Evented, _WidgetBase, _TemplatedMixin,
+  ViewStack, utils){
+  return declare([_WidgetBase, _TemplatedMixin, Evented], {
+    // summary:
+    //    a tab dijit
+    // description:
+    //    constructor options:
+    /*======
+      {
+        tabs: [{
+          title: String
+          content: DomNode|dijit
+        }],
+        selected: String
+        // summary:
+        //    the default selected tab title
+      }
+    =====*/
+
+    'baseClass': 'jimu-tab',
+    declaredClass: 'jimu.dijit.TabContainer',
+
+    templateString: '<div>' +
+      '<div class="control" data-dojo-attach-point="controlNode"></div>' +
+      '<div class="jimu-container" data-dojo-attach-point="containerNode"></div>' +
+      '</div>',
+
+    postCreate: function(){
+      this.inherited(arguments);
+      if(this.tabs.length === 0){
+        return;
+      }
+      this.controlNodes = [];
+      this.viewStack = new ViewStack(null, this.containerNode);
+      this.own(on(this.containerNode, 'keydown', lang.hitch(this, function(evt){
+        if(evt.keyCode === keys.ESCAPE){
+          evt.stopPropagation();
+          this._currentCtrlNode.focus();
+        }
+      })));
+
+      var width = 1 / this.tabs.length * 100;
+      if(this.isNested){
+        html.addClass(this.domNode, 'nested');
+      }
+      array.forEach(this.tabs, function(tabConfig){
+        this._createTab(tabConfig, width);
+      }, this);
+
+      this.own(on(this.controlNode, 'keydown', lang.hitch(this, function(evt){
+        var currentMenuItem = evt.target;
+        var nextItem;
+        if(evt.keyCode === keys.RIGHT_ARROW){
+          nextItem = currentMenuItem.nextElementSibling ?
+            currentMenuItem.nextElementSibling : this.controlNodes[0];
+        }else if(evt.keyCode === keys.LEFT_ARROW){
+          nextItem = currentMenuItem.previousElementSibling ?
+            currentMenuItem.previousElementSibling : this.controlNodes[this.controlNodes.length - 1];
+        }else if(evt.keyCode === keys.HOME){
+          nextItem = this.controlNodes[0];
+        }else if(evt.keyCode === keys.END){
+          nextItem = this.controlNodes[this.controlNodes.length - 1];
+        }
+        if(nextItem){
+          currentMenuItem = nextItem;
+          nextItem.focus();
+        }
+      })));
+    },
+
+    startup: function() {
+      // this.inherited(arguments);
+      if(this.selected){
+        this.selectTab(this.selected);
+      }else if(this.tabs.length > 0){
+        this.selectTab(this.tabs[0].title);
+      }
+      utils.setVerticalCenter(this.domNode);
+    },
+
+    _createTab: function(tabConfig, width){
+      var ctrlNode;
+      ctrlNode = html.create('div', {
+        innerHTML: utils.sanitizeHTML(tabConfig.title),
+        'class': 'tab jimu-vcenter-text',
+        style: {
+          width: this.isNested? 'auto': width + '%'
+        },
+        label: tabConfig.title
+      }, this.controlNode);
+      if(tabConfig.content.domNode){
+        this.viewStack.viewType = 'dijit';
+      }else{
+        this.viewStack.viewType = 'dom';
+      }
+      tabConfig.content.label = tabConfig.title;
+      this.viewStack.addView(tabConfig.content);
+
+      this.own(on(ctrlNode, 'click', lang.hitch(this, function(evt){
+        this.onSelect(tabConfig.title, evt);
+      })));
+      this.own(on(ctrlNode, 'keydown', lang.hitch(this, function(evt){
+        if(evt.keyCode === keys.ENTER || evt.keyCode === keys.SPACE){
+          this.onSelect(tabConfig.title, evt);
+        }
+      })));
+
+      ctrlNode.label = tabConfig.title;
+      this.controlNodes.push(ctrlNode);
+    },
+
+    onSelect: function(title, evt){
+      var ctrNode = evt.target;
+      if(html.hasClass(ctrNode, 'jimu-state-selected')){
+        return;
+      }
+      this.selectTab(title, evt);
+    },
+
+    selectTab: function(title){
+      this._selectControl(title);
+      this.viewStack.switchView(title);
+      this.emit('tabChanged', title);
+    },
+
+    _selectControl: function(title){
+      array.forEach(this.controlNodes, function(ctrlNode) {
+        html.removeClass(ctrlNode, 'jimu-state-selected');
+        html.setAttr(ctrlNode, 'tabindex', '-1');
+        if(ctrlNode.label === title){
+          this._currentCtrlNode = ctrlNode;
+          html.addClass(ctrlNode, 'jimu-state-selected');
+          html.setAttr(ctrlNode, 'tabindex', '0');
+        }
+      }, this);
+    }
+
+  });
+});

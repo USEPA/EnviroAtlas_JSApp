@@ -1,24 +1,521 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dojo/_base/lang dojo/_base/html dijit/_WidgetBase dojo/topic dojo/on dojo/query dojo/Deferred dojo/promise/all dojo/debounce require ./MapManager ./utils".split(" "),function(q,d,c,r,e,n,t,m,p,u,f,v,h){var k=null,l;l=q([r],{constructor:function(a,b){this.own(e.subscribe("appConfigLoaded",d.hitch(this,this._onAppConfigLoaded)));this.own(e.subscribe("appConfigChanged",d.hitch(this,this._onAppConfigChanged)));this.own(e.subscribe("mapLoaded",d.hitch(this,this._onMapLoaded)));
-this.own(e.subscribe("mapChanged",d.hitch(this,this._onMapChanged)));this.own(e.subscribe("beforeMapDestory",d.hitch(this,this._onBeforeMapDestory)));this.own(e.subscribe("preloadModulesLoaded",d.hitch(this,this._onPreloadModulesLoaded)));this.own(e.subscribe("openWidget",d.hitch(this,this._onOpenWidgetRequest)));this.own(e.subscribe("builder/actionTriggered",d.hitch(this,this._onActionTriggered)));h.isMobileUa()||this.own(n(window,"resize",u(d.hitch(this,this.resize),200)));this.id=b;this.preloadModulesLoadDef=
-new m},postCreate:function(){this.containerNode=this.domNode},map:null,mapId:"map",mapDiv:null,hlDiv:null,layoutManager:null,animTime:500,resize:function(){this.layoutManager&&this.layoutManager.resize()},_onAppConfigLoaded:function(a){this.appConfig=d.clone(a);this.preloadModulesLoadDef.then(d.hitch(this,function(){this._loadLayoutManager(this.appConfig).then(d.hitch(this,function(a){this.layoutManager=a;this.layoutManager.onEnter(this.appConfig,this.mapId).then(d.hitch(this,function(){this.mapDiv=
-this.layoutManager.getMapDiv();this._loadingAnim();this._loadMap(this.mapId);this.appConfig.theme&&this._loadTheme(this.appConfig.theme)}))}))}))},_loadLayoutManager:function(a){a=a.layoutDefinition?a.layoutDefinition.manager:"jimu/layoutManagers/AbsolutePositionLayoutManager";var b=new m;f([a],d.hitch(this,function(a){a=a.getInstance();this.map&&a.setMap(this.map);b.resolve(a)}));return b},_loadingAnim:function(){window.isXT&&"config"===this.appConfig.mode||(c.addClass(jimuConfig.loadingId,"loading-fadeOut"),
-this.own(n(document.getElementById(jimuConfig.loadingId),"animationend",d.hitch(this,function(){c.setStyle(jimuConfig.loadingId,"display","none")}))))},_loadMap:function(a){this.mapManager=v.getInstance({appConfig:this.appConfig,urlParams:this.urlParams},a);this.mapManager.showMap();this._lazyLoadResources()},_lazyLoadResources:function(){jimuConfig.lazyLoadCss&&f(jimuConfig.lazyLoadCss);f(["dynamic-modules/commonResources"])},_onMapLoaded:function(a){this.map=a;this.layoutManager.setMap(a);this.layoutManager.loadAndLayout(this.appConfig)},
-_onPreloadModulesLoaded:function(){this.preloadModulesLoadDef.resolve()},_loadTheme:function(a){var b=new m;f(["themes/"+a.name+"/main"],d.hitch(this,function(){p([this._loadThemeCommonStyle(a),this._loadThemeCurrentStyle(a)]).then(d.hitch(this,function(){this._addCustomStyle(a);this.layoutManager.onThemeLoad();b.resolve()}))}));return b},_loadThemeCommonStyle:function(a){c.addClass(this.domNode,a.name);return h.loadStyleLink(this._getThemeCommonStyleId(a),"themes/"+a.name+"/common.css")},_loadThemeCurrentStyle:function(a){c.addClass(this.domNode,
-a.styles[0]);return h.loadStyleLink(this._getThemeCurrentStyleId(a),"themes/"+a.name+"/styles/"+a.styles[0]+"/style.css")},_addCustomStyle:function(a){var b=d.getObject("customStyles",!1,a);if(b){var g=".jimu-main-background{background-color: ${mainBackgroundColor} !important;}";(a=this._getFixedThemeStyles(a))&&(g+=a);g=d.replace(g,b,/\$\{([^\}]+)\}/g);b=c.create("style",{type:"text/css"});try{b.appendChild(document.createTextNode(g))}catch(w){b.styleSheet.cssText=g}b.setAttribute("source","custom");
-document.head.appendChild(b)}},_getFixedThemeStyles:function(a){var b=".esriPopup .titlePane {background-color: ${mainBackgroundColor} !important;}";if(a.customStyles.mainBackgroundColor&&h.isLightColor(a.customStyles.mainBackgroundColor))var d=f.toUrl("jimu")+"/css/images/api_popup_light.png",b=b+(".esriPopup .titleButton {background: url("+d+") no-repeat}")+".esriPopup .titlePane {color: black}";"PlateauTheme"===a.name?b+=".jimu-widget-header-controller .jimu-title, .jimu-widget-header-controller .jimu-subtitle{color: ${mainBackgroundColor} !important;}.jimu-widget-header-controller .links .jimu-link{color: ${mainBackgroundColor} !important;}.jimu-widget-homebutton .HomeButton .home, .jimu-widget-mylocation, .jimu-widget-mylocation .place-holder, .jimu-widget-zoomslider.vertical .zoom-in, .jimu-widget-zoomslider.vertical .zoom-out, .jimu-widget-extent-navigate.vertical .operation{background-color: ${mainBackgroundColor} !important;}.jimu-preload-widget-icon-panel \x3e .jimu-panel-title, .jimu-foldable-panel \x3e .jimu-panel-title, .jimu-title-panel \x3e .title{color: ${mainBackgroundColor} !important;}.jimu-panel{border-color: ${mainBackgroundColor} !important;}.jimu-widget-header-controller{border-bottom-color: ${mainBackgroundColor} !important;}.jimu-tab\x3e.control\x3e.tab{color: ${mainBackgroundColor} !important; border-color: ${mainBackgroundColor} !important}":
-"BillboardTheme"===a.name?b+=".jimu-widget-homebutton .HomeButton .home, .jimu-widget-mylocation .place-holder, .jimu-widget-zoomslider.vertical .zoom-in, .jimu-widget-zoomslider.vertical .zoom-out, .jimu-widget-extent-navigate .operation, .jimu-widget-fullScreen .fullScreen, .jimu-widget-mylocation .place-holder.nohttps:hover, .jimu-widget-extent-navigate .operation.jimu-state-disabled:hover{background-color: ${mainBackgroundColor} !important; opacity: 0.8;}.jimu-widget-onscreen-icon{background-color: ${mainBackgroundColor} !important; opacity: 0.8;}.jimu-widget-homebutton .HomeButton .home:hover, .jimu-widget-mylocation .place-holder:not(.nohttps):hover, .jimu-widget-zoomslider.vertical .zoom-in:hover, .jimu-widget-zoomslider.vertical .zoom-out:hover, .jimu-widget-extent-navigate .operation:not(.jimu-state-disabled):hover, .jimu-widget-fullScreen .fullScreen:hover, .jimu-widget-onscreen-icon:hover, .jimu-widget-onscreen-icon.jimu-state-selected{opacity: 1;}":
-"BoxTheme"===a.name?b+=".jimu-widget-homebutton .HomeButton .home, .jimu-widget-mylocation .place-holder, .jimu-widget-zoomslider.vertical .zoom-in, .jimu-widget-zoomslider.vertical .zoom-out, .jimu-widget-extent-navigate .operation, .jimu-widget-fullScreen .fullScreen{background-color: ${mainBackgroundColor} !important; opacity: 0.8;}.jimu-main-background.jimu-widget-zoomslider{background-color: transparent !important}.jimu-widget-homebutton .HomeButton .home:hover, .jimu-widget-mylocation .place-holder:not(.nohttps):hover, .jimu-widget-zoomslider.vertical .zoom-in:hover, .jimu-widget-zoomslider.vertical .zoom-out:hover, .jimu-widget-zoomslider .zoom:hover, .jimu-widget-extent-navigate .operation:not(.jimu-state-disabled):hover, .jimu-widget-fullScreen .fullScreen:hover{background-color: ${mainBackgroundColor} !important; opacity: 1;}":
-"TabTheme"===a.name?b+=".tab-widget-frame .title-label{color: ${mainBackgroundColor} !important;}":"DashboardTheme"===a.name?b+=".jimu-widget-dnd-header{background-color: ${mainBackgroundColor} !important;}":"DartTheme"===a.name?b+=".jimu-widget-fullScreen .fullScreen{background-color: ${mainBackgroundColor} !important;}.dart-controller-extent-navigate .jimu-widget-extent-navigate .operation.jimu-state-disabled,.dart-controller-extent-navigate .jimu-widget-extent-navigate .operation.jimu-state-disabled:hover{color: ${mainBackgroundColor} !important; opacity: 0.6;}.dart-controller-extent-navigate .jimu-widget-extent-navigate .operation,.dart-controller-extent-navigate .jimu-widget-extent-navigate .operation:hover{color: ${mainBackgroundColor} !important; opacity: 1;}":
-"PocketTheme"===a.name&&(b+=".jimu-main-background, .jimu-widget-homebutton, .jimu-widget-mylocation, .jimu-widget-onscreen-icon, .jimu-widget-onscreen-icon.jimu-state-selected, .jimu-widget-zoomslider .zoom, .jimu-widget-homebutton .HomeButton .home, .jimu-widget-mylocation .place-holder, .jimu-widget-extent-navigate .operation, .jimu-widget-fullScreen .fullScreen, .esriPopup .titlePane, .esriPopupMobile .titlePane, .esriPopup .pointer.top{background-color: ${mainBackgroundColor} !important;}.esriMobileNavigationBar{background-color: ${mainBackgroundColor} !important; background-image: none !important;}");
-return b},_onAppConfigChanged:function(a,b,c){a=d.clone(a);switch(b){case "themeChange":this._onThemeChange(a);break;case "styleChange":this._onStyleChange(a);break;case "layoutChange":this._onLayoutChange(a);break;case "widgetChange":this._onWidgetChange(a,c);break;case "groupChange":this._onGroupChange(a,c);break;case "widgetPoolChange":this._onWidgetPoolChange(a,c);break;case "resetConfig":this._onResetConfig(a);break;case "loadingPageChange":this._onLoadingPageChange(a,c);break;case "layoutDefinitionChange":this._onLayoutDefinitionChange(a,
-c);break;case "onScreenGroupsChange":this._onOnScreenGroupsChange(a,c);break;case "onScreenOrderChange":this._onOnScreenOrderChange(a,c)}this.appConfig=a},_onMapChanged:function(a){this.map=a;this.layoutManager.setMap(a);this.layoutManager.loadAndLayout(this.appConfig)},_onBeforeMapDestory:function(){this.layoutManager.destroyOnScreenWidgetsAndGroups()},_onThemeChange:function(a){this.layoutManager.destroyOnScreenWidgetsAndGroups();this._removeThemeCommonStyle(this.appConfig.theme);this._removeThemeCurrentStyle(this.appConfig.theme);
-this._removeCustomStyle();p([this._loadLayoutManager(a),this._loadTheme(a.theme)]).then(d.hitch(this,function(b){var c=b[0];this.layoutManager.name!==c.name?(this.layoutManager.onLeave(),c.onEnter(a,this.mapId).then(d.hitch(this,function(){this.layoutManager=c;this.layoutManager.loadAndLayout(a)}))):this.layoutManager.loadAndLayout(a)}))},_onResetConfig:function(a){var b=this.appConfig;e.publish("appConfigChanged",a,"mapChange",a);this.appConfig=b;this._loadLayoutManager(a).then(d.hitch(this,function(a){this.layoutManager=
-a;this._removeThemeCommonStyle(this.appConfig.theme);this._removeThemeCurrentStyle(this.appConfig.theme);this._removeCustomStyle();this._loadTheme(this.appConfig.theme)}))},_onLoadingPageChange:function(a,b){"backgroundColor"in b?c.setStyle(jimuConfig.loadingId,"background-color",a.loadingPage.backgroundColor):"backgroundImage"in b?(a=a.loadingPage.backgroundImage,a.visible&&a.uri?(c.setStyle(jimuConfig.loadingImageId,"background-image","url('"+a.uri+"')"),c.setStyle(jimuConfig.loadingImageId,"width",
-a.width+"px"),c.setStyle(jimuConfig.loadingImageId,"height",a.height+"px")):(c.setStyle(jimuConfig.loadingImageId,"background-image","url('')"),c.setStyle(jimuConfig.loadingImageId,"width","0px"),c.setStyle(jimuConfig.loadingImageId,"height","0px"))):"loadingGif"in b&&(a=a.loadingPage.loadingGif,a.visible&&a.uri?(c.setStyle(jimuConfig.loadingGifId,"background-image","url('"+a.uri+"')"),c.setStyle(jimuConfig.loadingGifId,"width",a.width+"px"),c.setStyle(jimuConfig.loadingGifId,"height",a.height+"px")):
-(c.setStyle(jimuConfig.loadingGifId,"background-image","url('')"),c.setStyle(jimuConfig.loadingGifId,"width","0px"),c.setStyle(jimuConfig.loadingGifId,"height","0px")))},_onStyleChange:function(a){this._removeThemeCurrentStyle(this.appConfig.theme);this._loadThemeCurrentStyle(a.theme);this._removeCustomStyle();this._addCustomStyle(a.theme)},_onLayoutChange:function(a){this.layoutManager.onLayoutChange(a)},_onWidgetChange:function(a,b){this.layoutManager.onWidgetChange(a,b)},_onGroupChange:function(a,
-b){this.layoutManager.onGroupChange(a,b)},_onWidgetPoolChange:function(a,b){this.layoutManager.onWidgetPoolChange(a,b)},_onActionTriggered:function(a){this.layoutManager.onActionTriggered(a)},_onLayoutDefinitionChange:function(a,b){this.layoutManager.onLayoutDefinitionChange(a,b)},_onOnScreenGroupsChange:function(a,b){this.layoutManager.onOnScreenGroupsChange(a,b)},_onOnScreenOrderChange:function(a,b){this.layoutManager.onOnScreenOrderChange(a,b)},_removeThemeCommonStyle:function(a){c.removeClass(this.domNode,
-a.name);c.destroy(this._getThemeCommonStyleId(a))},_removeThemeCurrentStyle:function(a){c.removeClass(this.domNode,a.styles[0]);c.destroy(this._getThemeCurrentStyleId(a))},_removeCustomStyle:function(){t('style[source\x3d"custom"]',document.head).forEach(function(a){c.destroy(a)})},_getThemeCommonStyleId:function(a){return"theme_"+a.name+"_style_common"},_getThemeCurrentStyleId:function(a){return"theme_"+a.name+"_style_"+a.styles[0]},_onOpenWidgetRequest:function(a){this.layoutManager.openWidget(a)}});
-l.getInstance=function(a,b){null===k&&(k=new l(a,b),window._layoutManager=k);return k};return l});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  'dojo/_base/lang',
+  'dojo/_base/html',
+  'dijit/_WidgetBase',
+  'dojo/topic',
+  'dojo/on',
+  'dojo/query',
+  'dojo/Deferred',
+  'dojo/promise/all',
+  'dojo/debounce',
+  'require',
+  './MapManager',
+  './utils'
+],
+
+function(declare, lang, html, _WidgetBase, topic, on, query,
+  Deferred, all, debounce, require, MapManager, utils) {
+  /* global jimuConfig:true */
+  var instance = null, clazz;
+
+  /**
+   * This is the general layout manager, and it will deleget the layout manage responsibility to other manager
+   *   depends on the config.
+   * What this class does is:
+   *   * load and manage theme change
+   *   * load and manage map change
+   *   * delegate layout manage to other manager
+   * @param  {[type]} options [description]
+   * @param  {[type]} domId)  {                       this.widgetManager [description]
+   * @return {[type]}         [description]
+   */
+  clazz = declare([_WidgetBase], {
+    constructor: function(options, domId) {
+      /*jshint unused: false*/
+
+      this.own(topic.subscribe("appConfigLoaded", lang.hitch(this, this._onAppConfigLoaded)));
+      this.own(topic.subscribe("appConfigChanged", lang.hitch(this, this._onAppConfigChanged)));
+
+      this.own(topic.subscribe("mapLoaded", lang.hitch(this, this._onMapLoaded)));
+      this.own(topic.subscribe("mapChanged", lang.hitch(this, this._onMapChanged)));
+      this.own(topic.subscribe("beforeMapDestory", lang.hitch(this, this._onBeforeMapDestory)));
+
+      this.own(topic.subscribe("preloadModulesLoaded", lang.hitch(this, this._onPreloadModulesLoaded)));
+
+      //If a widget want to open another widget, please publish this message with widgetId as a
+      //parameter
+      this.own(topic.subscribe("openWidget", lang.hitch(this, this._onOpenWidgetRequest)));
+
+      this.own(topic.subscribe("builder/actionTriggered", lang.hitch(this, this._onActionTriggered)));
+
+      //avoid mobileKeyboard resize
+      if (!utils.isMobileUa()) {
+        this.own(on(window, 'resize', debounce(lang.hitch(this, this.resize), 200)));
+      }
+
+      this.id = domId;
+
+      this.preloadModulesLoadDef = new Deferred();
+    },
+
+    postCreate: function(){
+      this.containerNode = this.domNode;
+    },
+
+    map: null,
+    mapId: 'map',
+    mapDiv: null,
+    hlDiv: null,
+    layoutManager: null,
+
+    animTime: 500,
+
+    resize: function() {
+      if(this.layoutManager){
+        this.layoutManager.resize();
+      }
+    },
+
+    _onAppConfigLoaded: function(config){
+      this.appConfig = lang.clone(config);
+
+      this.preloadModulesLoadDef.then(lang.hitch(this, function(){
+        this._loadLayoutManager(this.appConfig).then(lang.hitch(this, function(layoutManager){
+          this.layoutManager = layoutManager;
+
+          this.layoutManager.onEnter(this.appConfig, this.mapId)
+          .then(lang.hitch(this, function(){
+            this.mapDiv = this.layoutManager.getMapDiv();
+
+            this._loadingAnim();
+            this._loadMap(this.mapId);
+
+            if(this.appConfig.theme){
+              this._loadTheme(this.appConfig.theme);
+            }
+          }));
+        }));
+      }));
+    },
+
+    _loadLayoutManager: function(appConfig){
+      var managerName;
+      if(appConfig.layoutDefinition){
+        managerName = appConfig.layoutDefinition.manager;
+      }else{
+        managerName = 'jimu/layoutManagers/AbsolutePositionLayoutManager';
+      }
+
+      var def = new Deferred();
+      require([managerName], lang.hitch(this, function(ManagerClass){
+        var instance = ManagerClass.getInstance();
+        if (this.map) {
+          instance.setMap(this.map);
+        }
+        def.resolve(instance);
+      }));
+      return def;
+    },
+
+    _loadingAnim: function (){
+      if(!(window.isXT && "config" === this.appConfig.mode)) {
+        html.addClass(jimuConfig.loadingId, "loading-fadeOut");
+        this.own(on(document.getElementById(jimuConfig.loadingId), 'animationend', lang.hitch(this, function() {
+          html.setStyle(jimuConfig.loadingId, 'display', 'none');
+        })));
+      }
+    },
+    _loadMap: function(mapId) {
+      this.mapManager = MapManager.getInstance({
+        appConfig: this.appConfig,
+        urlParams: this.urlParams
+      }, mapId);
+      this.mapManager.showMap();
+
+      this._lazyLoadResources();
+    },
+
+    _lazyLoadResources: function (){
+      if (jimuConfig.lazyLoadCss) {
+        require(jimuConfig.lazyLoadCss);
+      }
+      require(['dynamic-modules/commonResources']);
+    },
+
+    _onMapLoaded: function(map) {
+      this.map = map;
+      this.layoutManager.setMap(map);
+      this.layoutManager.loadAndLayout(this.appConfig);
+    },
+
+    _onPreloadModulesLoaded: function(){
+      this.preloadModulesLoadDef.resolve();
+    },
+
+    _loadTheme: function(theme) {
+      var def = new Deferred();
+      require(['themes/' + theme.name + '/main'], lang.hitch(this, function(){
+        all([this._loadThemeCommonStyle(theme), this._loadThemeCurrentStyle(theme)])
+        .then(lang.hitch(this, function() {
+          this._addCustomStyle(theme);
+          this.layoutManager.onThemeLoad();
+          def.resolve();
+        }));
+      }));
+      return def;
+    },
+
+    _loadThemeCommonStyle: function(theme) {
+      // append theme name for better selector definition
+      html.addClass(this.domNode, theme.name);
+
+      return utils.loadStyleLink(this._getThemeCommonStyleId(theme), 'themes/' + theme.name + '/common.css');
+    },
+
+    _loadThemeCurrentStyle: function(theme) {
+      // append theme style name for better selector definitions
+      html.addClass(this.domNode, theme.styles[0]);
+
+      return utils.loadStyleLink(this._getThemeCurrentStyleId(theme),
+        'themes/' + theme.name + '/styles/' + theme.styles[0] + '/style.css');
+    },
+
+    _addCustomStyle: function(theme) {
+      var customStyles = lang.getObject('customStyles', false, theme);
+      if(!customStyles){
+        return;
+      }
+      var cssText = ".jimu-main-background{background-color: ${mainBackgroundColor} !important;}";
+      var themeCssText = this._getFixedThemeStyles(theme);
+      if(themeCssText){
+        cssText += themeCssText;
+      }
+      cssText = lang.replace(cssText, customStyles, /\$\{([^\}]+)\}/g);
+
+      var style = html.create('style', {
+        type: 'text/css'
+      });
+      try {
+        style.appendChild(document.createTextNode(cssText));
+      } catch(err) {
+        style.styleSheet.cssText = cssText;
+      }
+      style.setAttribute('source', 'custom');
+
+      document.head.appendChild(style);
+    },
+
+    /**
+     * This is a temp fix because the custom color can override one color only.
+     * @param  {Object} theme
+     * @return {String} The CSS string
+     */
+    _getFixedThemeStyles: function(theme){
+      //fix popup
+      var cssText = '.esriPopup .titlePane {background-color: ${mainBackgroundColor} !important;}';
+      if(theme.customStyles.mainBackgroundColor && utils.isLightColor(theme.customStyles.mainBackgroundColor)){
+        var imageUrl = require.toUrl('jimu') + '/css/images/api_popup_light.png';
+        cssText += '.esriPopup .titleButton {background: url(' + imageUrl + ') no-repeat}';
+        cssText += '.esriPopup .titlePane {color: black}';
+      }
+      if(theme.name === 'PlateauTheme'){
+        cssText += '.jimu-widget-header-controller .jimu-title, .jimu-widget-header-controller .jimu-subtitle' +
+          '{color: ${mainBackgroundColor} !important;}';
+        cssText += '.jimu-widget-header-controller .links .jimu-link' +
+          '{color: ${mainBackgroundColor} !important;}';
+        cssText += '.jimu-widget-homebutton .HomeButton .home, .jimu-widget-mylocation,' +
+          ' .jimu-widget-mylocation .place-holder, .jimu-widget-zoomslider.vertical .zoom-in,' +
+          ' .jimu-widget-zoomslider.vertical .zoom-out, .jimu-widget-extent-navigate.vertical .operation' +
+          '{background-color: ${mainBackgroundColor} !important;}';
+        cssText += '.jimu-preload-widget-icon-panel > .jimu-panel-title,' +
+          ' .jimu-foldable-panel > .jimu-panel-title, .jimu-title-panel > .title' +
+          '{color: ${mainBackgroundColor} !important;}';
+        cssText += '.jimu-panel{border-color: ${mainBackgroundColor} !important;}';
+        cssText += '.jimu-widget-header-controller' +
+          '{border-bottom-color: ${mainBackgroundColor} !important;}';
+        cssText += '.jimu-tab>.control>.tab' +
+          '{color: ${mainBackgroundColor} !important; border-color: ${mainBackgroundColor} !important}';
+      }else if(theme.name === 'BillboardTheme'){
+        cssText += '.jimu-widget-homebutton .HomeButton .home,' +
+          ' .jimu-widget-mylocation .place-holder, .jimu-widget-zoomslider.vertical .zoom-in,' +
+          ' .jimu-widget-zoomslider.vertical .zoom-out, .jimu-widget-extent-navigate .operation,' +
+          ' .jimu-widget-fullScreen .fullScreen,' +
+          ' .jimu-widget-mylocation .place-holder.nohttps:hover,' +
+          ' .jimu-widget-extent-navigate .operation.jimu-state-disabled:hover' +
+          '{background-color: ${mainBackgroundColor} !important; opacity: 0.8;}';
+        cssText += '.jimu-widget-onscreen-icon' +
+          '{background-color: ${mainBackgroundColor} !important; opacity: 0.8;}';
+        cssText += '.jimu-widget-homebutton .HomeButton .home:hover,' +
+          ' .jimu-widget-mylocation .place-holder:not(.nohttps):hover,' +
+          ' .jimu-widget-zoomslider.vertical .zoom-in:hover,' +
+          ' .jimu-widget-zoomslider.vertical .zoom-out:hover,' +
+          ' .jimu-widget-extent-navigate .operation:not(.jimu-state-disabled):hover,' +
+          ' .jimu-widget-fullScreen .fullScreen:hover,' +
+          ' .jimu-widget-onscreen-icon:hover,' +
+          ' .jimu-widget-onscreen-icon.jimu-state-selected' +
+          '{opacity: 1;}';
+      }else if(theme.name === 'BoxTheme'){
+        cssText += '.jimu-widget-homebutton .HomeButton .home,' +
+          ' .jimu-widget-mylocation .place-holder, .jimu-widget-zoomslider.vertical .zoom-in,' +
+          ' .jimu-widget-zoomslider.vertical .zoom-out,' +
+          ' .jimu-widget-extent-navigate .operation,' +
+          ' .jimu-widget-fullScreen .fullScreen' +
+          '{background-color: ${mainBackgroundColor} !important; opacity: 0.8;}';
+        cssText += '.jimu-main-background.jimu-widget-zoomslider{background-color: transparent !important}';
+        cssText += '.jimu-widget-homebutton .HomeButton .home:hover,' +
+          ' .jimu-widget-mylocation .place-holder:not(.nohttps):hover,' +
+          ' .jimu-widget-zoomslider.vertical .zoom-in:hover,' +
+          ' .jimu-widget-zoomslider.vertical .zoom-out:hover,' +
+          ' .jimu-widget-zoomslider .zoom:hover,' +
+          ' .jimu-widget-extent-navigate .operation:not(.jimu-state-disabled):hover,' +
+          ' .jimu-widget-fullScreen .fullScreen:hover' +
+          '{background-color: ${mainBackgroundColor} !important; opacity: 1;}';
+      }else if(theme.name === 'TabTheme'){
+        cssText += '.tab-widget-frame .title-label{color: ${mainBackgroundColor} !important;}';
+      }else if(theme.name === 'DashboardTheme'){
+        cssText += '.jimu-widget-dnd-header{background-color: ${mainBackgroundColor} !important;}';
+      }else if(theme.name === 'DartTheme'){
+        cssText += '.jimu-widget-fullScreen .fullScreen{background-color: ${mainBackgroundColor} !important;}';
+        cssText += '.dart-controller-extent-navigate .jimu-widget-extent-navigate .operation.jimu-state-disabled,' +
+          '.dart-controller-extent-navigate .jimu-widget-extent-navigate .operation.jimu-state-disabled:hover' +
+          '{color: ${mainBackgroundColor} !important; opacity: 0.6;}';
+        cssText += '.dart-controller-extent-navigate .jimu-widget-extent-navigate .operation,' +
+          '.dart-controller-extent-navigate .jimu-widget-extent-navigate .operation:hover' +
+          '{color: ${mainBackgroundColor} !important; opacity: 1;}';
+      }else if (theme.name === 'PocketTheme'){
+        cssText += '.jimu-main-background, .jimu-widget-homebutton,' +
+          ' .jimu-widget-mylocation, .jimu-widget-onscreen-icon,' +
+          ' .jimu-widget-onscreen-icon.jimu-state-selected,' +
+          ' .jimu-widget-zoomslider .zoom, .jimu-widget-homebutton .HomeButton .home,' +
+          ' .jimu-widget-mylocation .place-holder, .jimu-widget-extent-navigate .operation,' +
+          ' .jimu-widget-fullScreen .fullScreen,' +
+          ' .esriPopup .titlePane, .esriPopupMobile .titlePane, .esriPopup .pointer.top' +
+          '{background-color: ${mainBackgroundColor} !important;}';
+        cssText += '.esriMobileNavigationBar' +
+          '{background-color: ${mainBackgroundColor} !important; background-image: none !important;}';
+      }
+      return cssText;
+    },
+
+    ////////////////////////// handle events for builder
+    _onAppConfigChanged: function(appConfig, reason, changeData){
+      appConfig = lang.clone(appConfig);
+      //deal with these reasons only
+      switch(reason){
+        case 'themeChange':
+          this._onThemeChange(appConfig);
+          break;
+        case 'styleChange':
+          this._onStyleChange(appConfig);
+          break;
+        case 'layoutChange':
+          this._onLayoutChange(appConfig);
+          break;
+        case 'widgetChange':
+          this._onWidgetChange(appConfig, changeData);
+          break;
+        case 'groupChange':
+          this._onGroupChange(appConfig, changeData);
+          break;
+        case 'widgetPoolChange':
+          this._onWidgetPoolChange(appConfig, changeData);
+          break;
+        case 'resetConfig':
+          this._onResetConfig(appConfig);
+          break;
+        case 'loadingPageChange':
+          this._onLoadingPageChange(appConfig, changeData);
+          break;
+        case 'layoutDefinitionChange':
+          this._onLayoutDefinitionChange(appConfig, changeData);
+          break;
+        case 'onScreenGroupsChange':
+          this._onOnScreenGroupsChange(appConfig, changeData);
+          break;
+        case 'onScreenOrderChange':
+          this._onOnScreenOrderChange(appConfig, changeData);
+          break;
+      }
+      this.appConfig = appConfig;
+    },
+
+    _onMapChanged: function(map){
+      this.map = map;
+      this.layoutManager.setMap(map);
+      this.layoutManager.loadAndLayout(this.appConfig);
+    },
+
+    _onBeforeMapDestory: function(){
+      //when map changed, use destroy and then create to simplify the widget development
+      //destroy widgets before map, because the widget may use map in thire destory method
+
+      this.layoutManager.destroyOnScreenWidgetsAndGroups();
+    },
+
+    _onThemeChange: function(appConfig){
+      this.layoutManager.destroyOnScreenWidgetsAndGroups();
+
+      this._removeThemeCommonStyle(this.appConfig.theme);
+      this._removeThemeCurrentStyle(this.appConfig.theme);
+      this._removeCustomStyle();
+
+      all([this._loadLayoutManager(appConfig), this._loadTheme(appConfig.theme)])
+      .then(lang.hitch(this, function(results){
+        var layoutManager = results[0];
+        if(this.layoutManager.name !== layoutManager.name){
+          this.layoutManager.onLeave();
+          layoutManager.onEnter(appConfig, this.mapId)
+          .then(lang.hitch(this, function(){
+            this.layoutManager = layoutManager;
+            this.layoutManager.loadAndLayout(appConfig);
+          }));
+        } else {
+          this.layoutManager.loadAndLayout(appConfig);
+        }
+      }));
+    },
+
+    _onResetConfig: function(appConfig){
+      var oldAC = this.appConfig;
+      topic.publish('appConfigChanged', appConfig, 'mapChange', appConfig);//this line will change this.appConfig
+      this.appConfig = oldAC;
+
+      this._loadLayoutManager(appConfig).then(lang.hitch(this, function(layoutManager){
+        this.layoutManager = layoutManager;
+
+        this._removeThemeCommonStyle(this.appConfig.theme);
+        this._removeThemeCurrentStyle(this.appConfig.theme);
+        this._removeCustomStyle();
+        this._loadTheme(this.appConfig.theme);
+      }));
+    },
+
+    _onLoadingPageChange: function(appConfig, changeData){
+      if('backgroundColor' in changeData){
+        html.setStyle(jimuConfig.loadingId, 'background-color',
+            appConfig.loadingPage.backgroundColor);
+      }else if('backgroundImage' in changeData){
+        var bgImage = appConfig.loadingPage.backgroundImage;
+        if(bgImage.visible && bgImage.uri){
+          html.setStyle(jimuConfig.loadingImageId, 'background-image',
+            'url(\'' + bgImage.uri + '\')');
+          html.setStyle(jimuConfig.loadingImageId, 'width', bgImage.width + 'px');
+          html.setStyle(jimuConfig.loadingImageId, 'height', bgImage.height + 'px');
+        }else{
+          html.setStyle(jimuConfig.loadingImageId, 'background-image',
+            'url(\'\')');
+          html.setStyle(jimuConfig.loadingImageId, 'width', '0px');
+          html.setStyle(jimuConfig.loadingImageId, 'height', '0px');
+        }
+      }else if('loadingGif' in changeData){
+        var gifImage = appConfig.loadingPage.loadingGif;
+        if(gifImage.visible && gifImage.uri){
+          html.setStyle(jimuConfig.loadingGifId, 'background-image',
+              'url(\'' + gifImage.uri + '\')');
+          html.setStyle(jimuConfig.loadingGifId, 'width', gifImage.width + 'px');
+          html.setStyle(jimuConfig.loadingGifId, 'height', gifImage.height + 'px');
+        }else{
+          html.setStyle(jimuConfig.loadingGifId, 'background-image',
+              'url(\'\')');
+          html.setStyle(jimuConfig.loadingGifId, 'width', '0px');
+          html.setStyle(jimuConfig.loadingGifId, 'height', '0px');
+        }
+      }
+    },
+
+    _onStyleChange: function(appConfig){
+      var currentTheme = this.appConfig.theme;
+      this._removeThemeCurrentStyle(currentTheme);
+      this._loadThemeCurrentStyle(appConfig.theme);
+      this._removeCustomStyle();
+      this._addCustomStyle(appConfig.theme);
+    },
+
+    _onLayoutChange: function(appConfig){
+      //layout manager is not allowed changed between layout
+      this.layoutManager.onLayoutChange(appConfig);
+    },
+
+    _onWidgetChange: function(appConfig, widgetJson){
+      this.layoutManager.onWidgetChange(appConfig, widgetJson);
+    },
+
+    _onGroupChange: function(appConfig, groupJson){
+      this.layoutManager.onGroupChange(appConfig, groupJson);
+    },
+
+    _onWidgetPoolChange: function(appConfig, changeData){
+      this.layoutManager.onWidgetPoolChange(appConfig, changeData);
+    },
+
+    _onActionTriggered: function(actionInfo){
+      this.layoutManager.onActionTriggered(actionInfo);
+    },
+
+    _onLayoutDefinitionChange: function(appConfig, layoutDefinition){
+      this.layoutManager.onLayoutDefinitionChange(appConfig, layoutDefinition);
+    },
+
+    _onOnScreenGroupsChange: function(appConfig, groups){
+      this.layoutManager.onOnScreenGroupsChange(appConfig, groups);
+    },
+
+    _onOnScreenOrderChange: function(appConfig, onscreenWidgets) {
+      this.layoutManager.onOnScreenOrderChange(appConfig, onscreenWidgets);
+    },
+
+    _removeThemeCommonStyle: function(theme){
+      html.removeClass(this.domNode, theme.name);
+      html.destroy(this._getThemeCommonStyleId(theme));
+    },
+
+    _removeThemeCurrentStyle: function(theme){
+      html.removeClass(this.domNode, theme.styles[0]);
+      html.destroy(this._getThemeCurrentStyleId(theme));
+    },
+
+    _removeCustomStyle: function() {
+      query('style[source="custom"]', document.head).forEach(function(s) {
+        html.destroy(s);
+      });
+    },
+
+    _getThemeCommonStyleId: function(theme){
+      return 'theme_' + theme.name + '_style_common';
+    },
+
+    _getThemeCurrentStyleId: function(theme){
+      return 'theme_' + theme.name + '_style_' + theme.styles[0];
+    },
+
+    _onOpenWidgetRequest: function(widgetId){
+      this.layoutManager.openWidget(widgetId);
+    }
+  });
+
+  clazz.getInstance = function(options, domId) {
+    if (instance === null) {
+      instance = new clazz(options, domId);
+      window._layoutManager = instance;
+    }
+    return instance;
+  };
+  return clazz;
+});

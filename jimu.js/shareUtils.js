@@ -1,23 +1,624 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/lang esri/request dojo/promise/all jimu/shared/basePortalUrlUtils dojo/Deferred esri/lang jimu/portalUtils jimu/Role jimu/utils esri/urlUtils".split(" "),function(e,k,t,l,g,p,q,u,h,n){var m={getBaseHrefUrl:function(a){var b="HTML3D"===window.appInfo.appType?"webappviewer3d":"webappviewer",d="";window.isXT?d=window.location.protocol+"//"+window.location.host+window.appInfo.appPath:(d=h.urlToObject(window.location.href).query||{},d=d.appid?a+"apps/"+b+"/index.html?appid\x3d"+d.appid:
-d.id?a+"apps/"+b+"/index.html?id\x3d"+d.id:h.getAppHref());return d},addQueryParamToUrl:function(a,b,d,c){a=n.urlToObject(a);a.query||(a.query={});a.query[b]=d;b=a.path;for(var f in a.query)d=a.query[f],!0===c&&(d=encodeURIComponent(d)),b=b===a.path?b+"?"+f+"\x3d"+d:b+"\x26"+f+"\x3d"+d;return b},getQueryParamFromUrl:function(a,b){a=n.urlToObject(a);a.query||(a.query={});return a.query[b]},removeQueryParamFromUrl:function(a,b,d){a=n.urlToObject(a);a.query&&delete a.query[b];b=a.path;for(var c in a.query){var f=
-a.query[c];!0===d&&(f=encodeURIComponent(f));b=b===a.path?b+"?"+c+"\x3d"+f:b+"\x26"+c+"\x3d"+f}return b},getShareUrlContent:function(a){return"\x3cdiv class\x3d'marker-feature-action-popup'\x3e\x3cdiv class\x3d'item'\x3e\x3cspan class\x3d'sub-title jimu-float-leading'\x3e"+window.jimuNls.common.url+"\x3c/span\x3e\x3cinput type\x3d'text' class\x3d'jimu-float-leading' readonly\x3d'readonly' value\x3d"+a+"\x3e\x3c/input\x3e\x3c/div\x3e\x3c/div\x3e"},getShareUrl:function(a,b,d){var c=m.getBaseHrefUrl(window.portalUrl),
-f="",r,e,g,h,k;b&&(b.longitude&&b.latitude?(r=b.longitude,e=b.latitude,f=b.longitude+","+b.latitude+","):b.x&&b.y&&b.spatialReference&&b.spatialReference.wkid&&(g=b.x,h=b.y,k=b.spatialReference.wkid,f=b.x+","+b.y+","+b.spatialReference.wkid));c=m.addQueryParamToUrl(c,"marker",f,!0);c=m.addQueryParamToUrl(c+",,,","markertemplate",encodeURIComponent(JSON.stringify({title:b.title,x:g,y:h,wkid:k,longitude:r,latitude:e,isIncludeShareUrl:d})));b=a.getLevel();return c="number"===typeof b&&-1!==b?m.addQueryParamToUrl(c,
-"level",a.getLevel(),!0):m.addQueryParamToUrl(c,"scale",a.getScale(),!0)},getXyContent:function(a){var b="\x3cdiv class\x3d'marker-feature-action-popup'\x3e";a.longitude&&a.latitude?b+="\x3cdiv class\x3d'item clearFix'\x3e\x3cspan class\x3d'sub-title'\x3e"+window.jimuNls.common.longitude+"\x3c/span\x3e\x3cspan class\x3d'val'\x3e"+h.localizeNumber(parseFloat(a.longitude).toFixed(4))+"\x3c/span\x3e\x3c/div\x3e\x3cdiv class\x3d'item clearFix'\x3e\x3cspan class\x3d'sub-title'\x3e"+window.jimuNls.common.latitude+
-"\x3c/span\x3e\x3cspan class\x3d'val'\x3e"+h.localizeNumber(parseFloat(a.latitude).toFixed(4))+"\x3c/span\x3e\x3c/div\x3e":a.x&&a.y&&(b+="\x3cdiv class\x3d'item clearFix'\x3e\x3cspan class\x3d'sub-title'\x3ex\x3c/span\x3e\x3cspan class\x3d'val'\x3e"+h.localizeNumber(parseFloat(a.x).toFixed(4))+"\x3c/span\x3e\x3c/div\x3e\x3cdiv class\x3d'item'\x3e\x3cspan class\x3d'sub-title'\x3ey\x3c/span\x3e\x3cspan class\x3d'val'\x3e"+h.localizeNumber(parseFloat(a.y).toFixed(4))+"\x3c/span\x3e\x3c/div\x3e");return b+
-"\x3c/div\x3e"},_isUserOwnTheApp:function(a){return a&&a.username&&a.username===window.appInfo.appOwner?!0:!1},getItemByUserAndItemId:function(a,b,d,c){var f=new g;c=l.getStandardPortalUrl(c);c=c+"/sharing/rest/content/users/"+(b?b.username?b.username:b.email:d.email);if(p.isDefined(a.folderId)&&"/"!==a.folderId||p.isDefined(a.ownerFolder)&&"/"!==a.ownerFolder)c+="/"+(a.folderId||a.ownerFolder);c+="/items/"+a.id;k({url:c,handleAs:"json",content:{f:"json"},callbackParamName:"callback"}).then(e.hitch(this,
-function(a){f.resolve(a)}),e.hitch(this,function(a){console.error(a);f.reject(a)}));return f},_getProfile:function(a,b){var d=new g;a=l.getUserUrl(b,a.owner);k({url:a,handleAs:"json",content:{f:"json"},callbackParamName:"callback"}).then(e.hitch(this,function(a){d.resolve(a)}),e.hitch(this,function(a){console.error(a);d.reject(a)}));return d},_unshareItemById:function(a,b,d){var c=new g;d=l.getStandardPortalUrl(d);d+="/sharing/rest/content/items/"+b+"/unshare";b={f:"json"};b=e.mixin(b,a);k({url:d,
-handleAs:"json",content:b,callbackParamName:"callback"},{usePost:!0}).then(e.hitch(this,function(a){c.resolve(a)}),e.hitch(this,function(a){console.error(a);c.reject(a)}));return c},canSharePublic:function(a){return!a.selfUrl||!0!==a.canSharePublic&&!1!==a.canSharePublic?!0:a.canSharePublic},unshareItemsByUser:function(a,b,d){var c=new g;d=l.getStandardPortalUrl(d);d+="/sharing/rest/content/users/"+a+"/unshareItems";a={f:"json"};a=e.mixin(a,b);k({url:d,handleAs:"json",content:a,callbackParamName:"callback"},
-{usePost:!0}).then(e.hitch(this,function(a){c.resolve(a)}),e.hitch(this,function(a){console.error(a);c.reject(a)}));return c},unshareItems:function(a,b,d){var c=new g;d=l.getStandardPortalUrl(d);d+="/sharing/rest/content/users/"+(b.owner||a.email)+"/unshareItems";a={f:"json"};a=e.mixin(a,b);k({url:d,handleAs:"json",content:a,callbackParamName:"callback"},{usePost:!0}).then(e.hitch(this,function(a){c.resolve(a)}),e.hitch(this,function(a){console.error(a);c.reject(a)}));return c},shareItemsByUser:function(a,
-b,d){var c=new g;d=l.getStandardPortalUrl(d);d+="/sharing/rest/content/users/"+a+"/shareItems";a={f:"json"};a=e.mixin(a,b);k({url:d,handleAs:"json",content:a,callbackParamName:"callback"},{usePost:!0}).then(e.hitch(this,function(a){c.resolve(a)}),e.hitch(this,function(a){console.error(a);c.reject(a)}));return c},shareItems:function(a,b,d){var c=new g;d=l.getStandardPortalUrl(d);d+="/sharing/rest/content/users/"+(b.owner||a.email)+"/shareItems";a={f:"json"};a=e.mixin(a,b);k({url:d,handleAs:"json",
-content:a,callbackParamName:"callback"},{usePost:!0}).then(e.hitch(this,function(a){c.resolve(a)}),e.hitch(this,function(a){console.error(a);c.reject(a)}));return c},getItemsGroups:function(a,b){var d=new g;b=l.getStandardPortalUrl(b);b+="/sharing/rest/content/items/"+a.id+"/groups";k({url:b,handleAs:"json",content:{f:"json"},callbackParamName:"callback"},{usePost:!0}).then(e.hitch(this,function(a){d.resolve(a)}),e.hitch(this,function(a){console.error(a);d.reject(a)}));return d},isSharedToPublic:function(a){return window.isXT?
-!1:null===a?!0:"undefined"!==typeof a&&"undefined"!==typeof a.item&&"undefined"!==typeof a.item.access&&"public"===a.item.access?!0:!1},isShowSocialMediaLinks:function(a){return window.isXT?!0:null===a?!0:"undefined"!==typeof a&&"undefined"!==typeof a.item&&"undefined"!==typeof a.item.access&&"private"===a.item.access?!1:!0},getItemShareInfo:function(a){var b=new g,d="";if(window.isXT)return b.resolve(null);d=h.urlToObject(h.getAppHref()).query||{};d=d.id||d.appid;if("undefined"===typeof d||""===
-d)return b.resolve(null);q.getPortal(a).getItemById(d).then(e.hitch(this,function(a){var d={};d.item=a;d.item&&"undefined"===typeof d.item.sharing&&d.item.access&&(d.item.sharing={access:d.item.access});b.resolve(d)}),e.hitch(this,function(a){console.log(a);b.resolve(null)}));return b},getShareInfo:function(a){var b=q.getPortal(a),d=new g,c="";if(window.isXT)return d.resolve(null);c=h.urlToObject(h.getAppHref()).query||{};c=c.id||c.appid;if("undefined"===typeof c||""===c)return d.resolve(null);t({getUser:b.getUser(),
-loadSelfInfo:b.loadSelfInfo(),getItem:b.getItemById(c)}).then(e.hitch(this,function(b){var c={};c.item=b.getItem;c.item&&c.item.ownerFolder&&c.item.ownerFolder.length&&"/"!==c.item.ownerFolder&&(c.item.folderId=c.item.ownerFolder);"undefined"===typeof c.item.sharing&&c.item.access&&(c.item.sharing={access:c.item.access});c.user=b.getUser;m._setUserRole(b.loadSelfInfo,c);c.currentUser=c.user;c.isAdmin=!1;c.userRole&&(c.userRole.isAdmin()||c.userRole.isCustom()&&c.userRole.canUpdateOrgItems())?(c.isAdmin=
-!0,c.item.owner!==c.currentUser.name?m._getProfile(c.item,a).then(e.hitch(this,function(a){c.itemUser=a;c.itemUser.orgId!==c.currentUser.orgId&&(c.isAdmin=!1);d.resolve(c)})):(c.itemUser=c.currentUser,d.resolve(c))):(c.currentUser&&(c.itemUser=c.currentUser),d.resolve(c))}),e.hitch(this,function(a){console.log(a);d.resolve(null)}));return d},_setUserRole:function(a,b){b.userPortalUrl=a.urlKey?a.urlKey+"."+a.customBaseUrl:this.portalUrl;!a||a.code||a.message||(b.organization=a);if(a&&a.user)b.userRole=
-new u({id:a.user.roleId?a.user.roleId:a.user.role,role:a.user.role}),b._isCustomRole=b.userRole.isCustom(),b._roleCanShareToGroup=b._isCustomRole&&b.userRole.canShareItemToGroup(),b._roleCanShareToOrg=b._isCustomRole&&b.userRole.canShareItemToOrg(),b._roleCanSharePublic=b._isCustomRole&&b.userRole.canShareItemToPublic(),b._roleCanShare=b._roleCanShareToGroup||b._roleCanShareToOrg||b._roleCanShareToPublic,b._roleCanUpdateItems=b._isCustomRole&&b.userRole.canUpdateOrgItems(),b._roleCanShareOthersItemsToGroup=
-b._isCustomRole&&b.userRole.canShareOthersItemsToGroup(),b._roleCanShareOthersItemsToOrg=b._isCustomRole&&b.userRole.canShareOthersItemsToOrg(),b._roleCanShareOthersItemsToPublic=b._isCustomRole&&b.userRole.canShareOthersItemsToPublic(),b._roleCanShareOthersItems=b._isCustomRole&&(b.userRole.canShareOthersItemsToGroup()||b.userRole.canShareOthersItemsToOrg()||b._roleCanShareOthersItemsToPublic),b._orgUserCanSharePublicOrOverride=b.organization&&(!0===b.organization.canSharePublic&&(!b._isCustomRole||
-b._roleCanSharePublic||b._roleCanShareOthersItemsToPublic)||b.userRole.isAdmin());else return!1},getItemById:function(a,b){var d=new g;b=l.getStandardPortalUrl(b);b+="/sharing/rest/content/items/"+a.id;k({url:b,handleAs:"json",content:{f:"json"},callbackParamName:"callback"}).then(e.hitch(this,function(a){d.resolve(a)}),e.hitch(this,function(a){console.error(a);d.reject(a)}));return d},disableWebMapPopup:function(a){a&&a.setInfoWindowOnClick&&a.setInfoWindowOnClick(!1)},enableWebMapPopup:function(a){a&&
-a.setInfoWindowOnClick&&a.setInfoWindowOnClick(!0)}};return m});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+    'dojo/_base/lang',
+    'esri/request',
+    "dojo/promise/all",
+    "jimu/shared/basePortalUrlUtils",
+    'dojo/Deferred',
+    'esri/lang',
+    'jimu/portalUtils',
+    'jimu/Role',
+    "jimu/utils",
+    'esri/urlUtils'
+  ],
+  function(lang, esriRequest, all,basePortalUrlUtils, Deferred,
+    esriLang, portalUtils, Role, jimuUtils, esriUrlUtils) {
+    var su = {};
+
+    su.getBaseHrefUrl = function(portalUrl) {
+      var webappviewer = window.appInfo.appType === "HTML3D" ? "webappviewer3d" : "webappviewer";
+      var href = "";
+      if (window.isXT) {
+        href = window.location.protocol + "//" + window.location.host + window.appInfo.appPath;
+      } else {
+        var urlParams = jimuUtils.urlToObject(window.location.href).query || {};
+        if (urlParams.appid) {
+          //appid for apps that be created by templates
+          href = portalUrl + 'apps/' + webappviewer + '/index.html?appid=' + urlParams.appid;
+        } else if (urlParams.id) {
+          //portal or onLine apps
+          href = portalUrl + 'apps/' + webappviewer + '/index.html?id=' + urlParams.id;
+        } else {
+          //published app: without id in url
+          href = jimuUtils.getAppHref();
+        }
+      }
+      return href;
+    };
+    //jimuUtil's method can't encodeURIComponent(or will decodeURIComponent)
+    su.addQueryParamToUrl = function(url, paramName, paramValue, isEncode) {
+      var urlObject = esriUrlUtils.urlToObject(url);
+      if (!urlObject.query) {
+        urlObject.query = {};
+      }
+      urlObject.query[paramName] = paramValue;
+      var ret = urlObject.path;
+      for (var q in urlObject.query) {
+        var val = urlObject.query[q];
+        if (true === isEncode) {
+          val = encodeURIComponent(val);
+        }
+
+        if (ret === urlObject.path) {
+          ret = ret + '?' + q + '=' + val;
+        } else {
+          ret = ret + '&' + q + '=' + val;
+        }
+      }
+      return ret;
+    };
+
+    su.getQueryParamFromUrl = function(url, paramName){
+      var urlObject = esriUrlUtils.urlToObject(url);
+      if (!urlObject.query) {
+        urlObject.query = {};
+      }
+      var val = urlObject.query[paramName];
+      return val;
+    };
+
+    su.removeQueryParamFromUrl = function(url, paramName, isEncode) {
+      var urlObject = esriUrlUtils.urlToObject(url);
+      if (urlObject.query) {
+        delete urlObject.query[paramName];
+      }
+      var ret = urlObject.path;
+      for (var q in urlObject.query) {
+        var val = urlObject.query[q];
+        if (true === isEncode) {
+          val = encodeURIComponent(val);
+        }
+
+        if (ret === urlObject.path) {
+          ret = ret + '?' + q + '=' + val;
+        } else {
+          ret = ret + '&' + q + '=' + val;
+        }
+      }
+      return ret;
+    };
+
+    su.getShareUrlContent = function (url) {
+      var content = "<div class='marker-feature-action-popup'>" +
+        "<div class='item'>" +
+        "<span class='sub-title jimu-float-leading'>" + window.jimuNls.common.url + "</span>" +
+        "<input type='text' class='jimu-float-leading' readonly='readonly' value=" + url + "></input>" +
+        "</div>" +
+        "</div>";
+      return content;
+    };
+
+    su.getShareUrl = function (map, geometry, isIncludeShareUrl) {
+      var baseUrl = su.getBaseHrefUrl(window.portalUrl);
+      var markerUrl = "";
+
+      var longitude, latitude, x, y, wkid;
+      if (geometry) {
+        if (geometry.longitude && geometry.latitude) {
+          longitude = geometry.longitude;
+          latitude = geometry.latitude;
+          markerUrl = geometry.longitude + "," + geometry.latitude + ",";
+        } else if (geometry.x && geometry.y && geometry.spatialReference && geometry.spatialReference.wkid) {
+          x = geometry.x;
+          y = geometry.y;
+          wkid = geometry.spatialReference.wkid;
+          markerUrl = geometry.x + "," + geometry.y + "," + geometry.spatialReference.wkid;
+        }
+      }
+
+      var resultUrl = su.addQueryParamToUrl(baseUrl, "marker", markerUrl, true);
+      resultUrl += ",";
+      //resultUrl += encodeURIComponent("");//content
+      resultUrl += ",";
+      //resultUrl += encodeURIComponent(window.location.protocol + "//" + window.location.host+require.toUrl('jimu') + '/images/marker_featureaction.png',10,20);//symbolURL
+      resultUrl += ",";
+      //resultUrl += encodeURIComponent("");//title
+      resultUrl = su.addQueryParamToUrl(resultUrl, "markertemplate", encodeURIComponent(JSON.stringify({
+        title: geometry.title,
+        x: x,
+        y: y,
+        wkid: wkid,
+        longitude: longitude,
+        latitude: latitude,
+        isIncludeShareUrl: isIncludeShareUrl
+      })));
+      var level = map.getLevel();
+      if (typeof level === "number" && level !== -1) {
+        resultUrl = su.addQueryParamToUrl(resultUrl, "level", map.getLevel(), true);
+      } else {
+        //use scale if no level
+        resultUrl = su.addQueryParamToUrl(resultUrl, "scale", map.getScale(), true);
+      }
+      return resultUrl;
+    };
+
+    su.getXyContent = function (geometry) {
+      var decimal = 4;
+      var content = "<div class='marker-feature-action-popup'>";
+      // if(geometry.fieldName && geometry.title){
+      //   content += "<div class='title'>" + geometry.title + "</div><div class='hzLine'></div>";
+      // }
+      if (geometry.longitude && geometry.latitude) {
+        content +=
+          "<div class='item clearFix'>" +
+          "<span class='sub-title'>" + window.jimuNls.common.longitude + "</span>" +
+          "<span class='val'>" + jimuUtils.localizeNumber(parseFloat(geometry.longitude).toFixed(decimal)) + "</span>" +
+          "</div>" +
+          "<div class='item clearFix'>" +
+          "<span class='sub-title'>" + window.jimuNls.common.latitude + "</span>" +
+          "<span class='val'>" + jimuUtils.localizeNumber(parseFloat(geometry.latitude).toFixed(decimal)) + "</span>" +
+          "</div>";
+      } else if (geometry.x && geometry.y) {
+        content += "<div class='item clearFix'>" +
+          "<span class='sub-title'>x</span>" +
+          "<span class='val'>" + jimuUtils.localizeNumber(parseFloat(geometry.x).toFixed(decimal)) + "</span>" +
+          "</div>" +
+          "<div class='item'>" +
+          "<span class='sub-title'>y</span>" +
+          "<span class='val'>" + jimuUtils.localizeNumber(parseFloat(geometry.y).toFixed(decimal)) + "</span>" +
+          "</div>";
+      }
+      content += "</div>";
+      return content;
+    };
+
+    su._isUserOwnTheApp = function(userObj) {
+      if (userObj && userObj.username && userObj.username === window.appInfo.appOwner) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    su.getItemByUserAndItemId = function(item, itemUser, user, portalUrl) {
+      var def = new Deferred();
+      var url = basePortalUrlUtils.getStandardPortalUrl(portalUrl);
+      url += '/sharing/rest/content/users/';
+      //basePortalUrlUtils.getUserContentUrl(_portalUrl, _user, _folderId);
+      url += (itemUser ?
+        (itemUser.username ? itemUser.username : itemUser.email) : user.email);
+      if ((esriLang.isDefined(item.folderId) && item.folderId !== '/') ||
+        (esriLang.isDefined(item.ownerFolder) && item.ownerFolder !== '/')) {
+        url += '/' + (item.folderId || item.ownerFolder);
+      }
+      url += '/items/' + item.id;
+      var content = {
+        f: 'json'
+      };
+      esriRequest({
+        url: url,
+        handleAs: 'json',
+        content: content,
+        callbackParamName: 'callback'
+      }).then(lang.hitch(this, function(groupsResponse) {
+        def.resolve(groupsResponse);
+      }), lang.hitch(this, function(err) {
+        console.error(err);
+        def.reject(err);
+      }));
+      return def;
+    };
+
+    su._getProfile = function(item, portalUrl) {
+      var def = new Deferred();
+      var url = basePortalUrlUtils.getUserUrl(portalUrl, item.owner);
+      var content = {
+        f: 'json'
+      };
+      esriRequest({
+        url: url,
+        handleAs: 'json',
+        content: content,
+        callbackParamName: 'callback'
+      }).then(lang.hitch(this, function(groupsResponse) {
+        def.resolve(groupsResponse);
+      }), lang.hitch(this, function(err) {
+        console.error(err);
+        def.reject(err);
+      }));
+      return def;
+    };
+    su._unshareItemById = function(args, itemId, portalUrl/*, itemFolderId*/) {
+      var def = new Deferred();
+      //var userStr = (this.itemUser ? (this.itemUser.username ? this.itemUser.username : this.itemUser.email) : this.user.email);
+      //var contentItems = basePortalUrlUtils.getUserItemsUrl(this.portalUrl, userStr, itemFolderId);
+      var url = basePortalUrlUtils.getStandardPortalUrl(portalUrl);
+      url += '/sharing/rest/content/items/' + itemId + "/unshare";
+      var content = {
+        f: 'json'
+      };
+      content = lang.mixin(content, args);
+      esriRequest({
+        url: url,
+        handleAs: 'json',
+        content: content,
+        callbackParamName: 'callback'
+      }, {
+        usePost: true
+      }).then(lang.hitch(this, function(res) {
+        def.resolve(res);
+      }), lang.hitch(this, function(err) {
+        console.error(err);
+        def.reject(err);
+      }));
+      return def;
+    };
+    su.canSharePublic = function(portalObj) {
+      // always returns true if called before /self is retrieved or if canSharePublic is not defined in esriGeowConfig.self
+      return (portalObj.selfUrl &&
+      (portalObj.canSharePublic === true || portalObj.canSharePublic === false)) ? portalObj.canSharePublic : true;
+    };
+    su.unshareItemsByUser = function(username, request, portalUrl) {
+      //var url = esriGeowConfig.restBaseUrl + 'content/users/' + username + '/unshareItems';
+      //this.util.postJson(request, url, handler, errorHandler);
+      var def = new Deferred();
+      //var userStr = (this.itemUser ? (this.itemUser.username ? this.itemUser.username : this.itemUser.email) : this.user.email);
+      //var contentItems = basePortalUrlUtils.getUserItemsUrl(this.portalUrl, userStr, itemFolderId);
+      var url = basePortalUrlUtils.getStandardPortalUrl(portalUrl);
+      url += '/sharing/rest/content/users/' + username + '/unshareItems';
+      var content = {
+        f: 'json'
+      };
+      content = lang.mixin(content, request);
+      esriRequest({
+        url: url,
+        handleAs: 'json',
+        content: content,
+        callbackParamName: 'callback'
+      }, {
+        usePost: true
+      }).then(lang.hitch(this, function(res) {
+        def.resolve(res);
+      }), lang.hitch(this, function(err) {
+        console.error(err);
+        def.reject(err);
+      }));
+      return def;
+    };
+    su.unshareItems = function(itemUser, request, portalUrl) {
+      //var user = this.util.getUser();
+      //if (user == null) return;
+      var def = new Deferred();
+      var url = basePortalUrlUtils.getStandardPortalUrl(portalUrl);
+      url += '/sharing/rest/content/users/' + (request.owner || itemUser.email) + '/unshareItems';
+      var content = {
+        f: 'json'
+      };
+      content = lang.mixin(content, request);
+      esriRequest({
+        url: url,
+        handleAs: 'json',
+        content: content,
+        callbackParamName: 'callback'
+      }, {
+        usePost: true
+      }).then(lang.hitch(this, function(res) {
+        def.resolve(res);
+      }), lang.hitch(this, function(err) {
+        console.error(err);
+        def.reject(err);
+      }));
+      return def;
+    };
+    su.shareItemsByUser = function(username, request, portalUrl) {
+      var def = new Deferred();
+      var url = basePortalUrlUtils.getStandardPortalUrl(portalUrl);
+      url += '/sharing/rest/content/users/' + username + '/shareItems';
+      var content = {
+        f: 'json'
+      };
+      content = lang.mixin(content, request);
+      esriRequest({
+        url: url,
+        handleAs: 'json',
+        content: content,
+        callbackParamName: 'callback'
+      }, {
+        usePost: true
+      }).then(lang.hitch(this, function(res) {
+        def.resolve(res);
+      }), lang.hitch(this, function(err) {
+        console.error(err);
+        def.reject(err);
+      }));
+      return def;
+    };
+    su.shareItems = function(itemUser, request, portalUrl) {
+      //var user = this.util.getUser();
+      //if (user == null) return;
+      var def = new Deferred();
+      var url = basePortalUrlUtils.getStandardPortalUrl(portalUrl);
+      url += '/sharing/rest/content/users/' + (request.owner || itemUser.email) + '/shareItems';
+      var content = {
+        f: 'json'
+      };
+      content = lang.mixin(content, request);
+      esriRequest({
+        url: url,
+        handleAs: 'json',
+        content: content,
+        callbackParamName: 'callback'
+      }, {
+        usePost: true
+      }).then(lang.hitch(this, function(res) {
+        def.resolve(res);
+      }), lang.hitch(this, function(err) {
+        console.error(err);
+        def.reject(err);
+      }));
+      return def;
+    };
+
+    su.getItemsGroups = function(item, portalUrl) {
+      var def = new Deferred();
+      var url = basePortalUrlUtils.getStandardPortalUrl(portalUrl);
+      url += '/sharing/rest/content/items/' + item.id + '/groups';
+      var content = {
+        f: 'json'
+      };
+      //content = lang.mixin(content, request);
+      esriRequest({
+        url: url,
+        handleAs: 'json',
+        content: content,
+        callbackParamName: 'callback'
+      }, {
+        usePost: true
+      }).then(lang.hitch(this, function(res) {
+        def.resolve(res);
+      }), lang.hitch(this, function(err) {
+        console.error(err);
+        def.reject(err);
+      }));
+      return def;
+    };
+    /////////////////////////////////////////////////////////
+    su.isSharedToPublic = function(shareInfo) {
+      if (window.isXT) {
+        return false;
+      }
+
+      if (shareInfo === null) {
+        return true;//deployed
+      } else if (typeof shareInfo !== "undefined" && typeof shareInfo.item !== "undefined" &&
+        typeof shareInfo.item.access !== "undefined" && shareInfo.item.access === "public") {
+        return true;
+      } else {
+        // default publicFlag is false
+        return false;
+      }
+    };
+    su.isShowSocialMediaLinks = function(shareInfo) {
+      if (window.isXT) {
+        return true;
+      }
+
+      if (shareInfo === null) {
+        return true;//deployed apps
+      } else if (typeof shareInfo !== "undefined" && typeof shareInfo.item !== "undefined" &&
+        typeof shareInfo.item.access !== "undefined" && shareInfo.item.access === "private") {
+        return false;
+      } else {
+        return true;
+      }
+    };
+
+    su.getItemShareInfo = function(portalUrl) {
+      var def = new Deferred();
+
+      var appId = "";
+      if (window.isXT) {
+        return def.resolve(null);
+      } else {
+        var urlParams = jimuUtils.urlToObject(jimuUtils.getAppHref()).query || {};
+        appId = urlParams.id || urlParams.appid;
+      }
+      if (typeof appId === "undefined" || appId === "") {
+        return def.resolve(null);//deployed apps
+      }
+
+      var portal = portalUtils.getPortal(portalUrl);
+      portal.getItemById(appId).then(lang.hitch(this, function(result) {
+        var shareInfo = {};
+        shareInfo.item = result;
+        if (shareInfo.item && typeof shareInfo.item.sharing === "undefined" && shareInfo.item.access) {
+          shareInfo.item.sharing = {
+            access: shareInfo.item.access
+          };
+        }
+
+        def.resolve(shareInfo);
+      }), lang.hitch(this, function(err) {
+        //can't get shareInfo, maybe credential is null.
+        console.log(err);
+        def.resolve(null);
+      }));
+      return def;
+    };
+
+    //TODO should be deprecated. _setUserRole:canShareOthersItemsToGroup()
+    su.getShareInfo = function(portalUrl) {
+      var portal = portalUtils.getPortal(portalUrl);
+
+      var def = new Deferred();
+      var appId = "";
+      if (window.isXT) {
+        return def.resolve(null);
+      } else {
+        var urlParams = jimuUtils.urlToObject(jimuUtils.getAppHref()).query || {};
+        appId = urlParams.id || urlParams.appid;
+      }
+
+      if (typeof appId === "undefined" || appId === "") {
+        return def.resolve(null);//deployed
+      }
+
+      all({
+        getUser: portal.getUser(),
+        loadSelfInfo: portal.loadSelfInfo(),
+        getItem: portal.getItemById(appId)
+      }).then(lang.hitch(this, function(results) {
+        var shareInfo = {};
+
+        shareInfo.item = results.getItem;
+        if (shareInfo.item && shareInfo.item.ownerFolder &&
+          shareInfo.item.ownerFolder.length && shareInfo.item.ownerFolder !== '/') {
+          shareInfo.item.folderId = shareInfo.item.ownerFolder;
+        }
+        if (typeof shareInfo.item.sharing === "undefined" && shareInfo.item.access) {
+          shareInfo.item.sharing = {
+            access: shareInfo.item.access
+          };
+        }
+        //oneItem.sharing = result.sharing;
+
+        shareInfo.user = results.getUser;
+        su._setUserRole(results.loadSelfInfo, shareInfo);
+
+        shareInfo.currentUser = shareInfo.user;
+        // admin?
+        shareInfo.isAdmin = false;
+        //if (this.currentUser && this.currentUser.accountId && this.currentUser.role && this.currentUser.role === "account_admin") {
+        if (shareInfo.userRole && (shareInfo.userRole.isAdmin() ||
+          (shareInfo.userRole.isCustom() && shareInfo.userRole.canUpdateOrgItems()))) {
+          // in regards to sharing admin role and custom role with updateOrgItems is the same
+          shareInfo.isAdmin = true;
+          if (shareInfo.item.owner !== shareInfo.currentUser.name) {
+            su._getProfile(shareInfo.item, portalUrl).then(lang.hitch(this, function(result) {
+              shareInfo.itemUser = result;
+              if (shareInfo.itemUser.orgId !== shareInfo.currentUser.orgId/*accountId*/) {
+                // user is not the admin of the web map owner
+                shareInfo.isAdmin = false;
+              }
+
+              def.resolve(shareInfo);
+            }));
+          } else {
+            shareInfo.itemUser = shareInfo.currentUser;
+            def.resolve(shareInfo);
+          }
+
+        } else if (shareInfo.currentUser) {
+          shareInfo.itemUser = shareInfo.currentUser;
+          def.resolve(shareInfo);
+        } else {
+          // user is not logged in
+          def.resolve(shareInfo);
+        }
+      }), lang.hitch(this, function(err) {
+        //can't get shareInfo, maybe credential is null.
+        console.log(err);
+        def.resolve(null);
+      }));
+      return def;
+    };
+
+    su._setUserRole = function(res, shareInfo) {
+      if (res.urlKey) {
+        shareInfo.userPortalUrl = res.urlKey + '.' + res.customBaseUrl;
+      } else {
+        shareInfo.userPortalUrl = this.portalUrl;
+      }
+
+      if (res && !res.code && !res.message) {
+        shareInfo.organization = res;//"portals/self?" += "&token="
+      }
+
+      if (res && res.user) {
+        shareInfo.userRole = new Role({
+          id: (res.user.roleId) ? res.user.roleId : res.user.role,
+          role: res.user.role
+        });
+
+        shareInfo._isCustomRole = shareInfo.userRole.isCustom();
+        shareInfo._roleCanShareToGroup = shareInfo._isCustomRole && shareInfo.userRole.canShareItemToGroup();
+        shareInfo._roleCanShareToOrg = shareInfo._isCustomRole && shareInfo.userRole.canShareItemToOrg();
+        shareInfo._roleCanSharePublic = shareInfo._isCustomRole && shareInfo.userRole.canShareItemToPublic();
+        shareInfo._roleCanShare = (shareInfo._roleCanShareToGroup ||
+        shareInfo._roleCanShareToOrg || shareInfo._roleCanShareToPublic);
+        shareInfo._roleCanUpdateItems = shareInfo._isCustomRole && shareInfo.userRole.canUpdateOrgItems();
+        //TODO NO canShareOthersItemsToGroup
+        shareInfo._roleCanShareOthersItemsToGroup = shareInfo._isCustomRole &&
+          shareInfo.userRole.canShareOthersItemsToGroup();
+        shareInfo._roleCanShareOthersItemsToOrg = shareInfo._isCustomRole &&
+          shareInfo.userRole.canShareOthersItemsToOrg();
+        shareInfo._roleCanShareOthersItemsToPublic = shareInfo._isCustomRole &&
+          shareInfo.userRole.canShareOthersItemsToPublic();
+
+        shareInfo._roleCanShareOthersItems = shareInfo._isCustomRole && (
+            shareInfo.userRole.canShareOthersItemsToGroup() ||
+            shareInfo.userRole.canShareOthersItemsToOrg() ||
+            shareInfo._roleCanShareOthersItemsToPublic
+          );
+
+        //An org user can share public if one set of the
+        shareInfo._orgUserCanSharePublicOrOverride = (shareInfo.organization && (
+          (shareInfo.organization.canSharePublic === true &&
+          (!shareInfo._isCustomRole || shareInfo._roleCanSharePublic || shareInfo._roleCanShareOthersItemsToPublic)) ||
+          (shareInfo.userRole.isAdmin())
+        ));
+
+      } else {
+        return false;
+      }
+    };
+    su.getItemById = function(item, portalUrl) {
+      //http://www.arcgis.com/sharing/rest/content/items/
+      var def = new Deferred();
+      var url = basePortalUrlUtils.getStandardPortalUrl(portalUrl);
+      url += '/sharing/rest/content/items/' + item.id;
+      //basePortalUrlUtils.getUserContentUrl(_portalUrl, _user, _folderId);
+      var content = {
+        f: 'json'
+      };
+      esriRequest({
+        url: url,
+        handleAs: 'json',
+        content: content,
+        callbackParamName: 'callback'
+      }).then(lang.hitch(this, function(groupsResponse) {
+        def.resolve(groupsResponse);
+      }), lang.hitch(this, function(err) {
+        console.error(err);
+        def.reject(err);
+      }));
+      return def;
+    };
+
+    su.disableWebMapPopup = function (map) {
+      if (map && map.setInfoWindowOnClick) {
+        map.setInfoWindowOnClick(false);
+      }
+    };
+    su.enableWebMapPopup = function (map) {
+      if (map && map.setInfoWindowOnClick) {
+        map.setInfoWindowOnClick(true);
+      }
+    };
+    return su;
+  });

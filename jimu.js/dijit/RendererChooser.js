@@ -1,47 +1,1112 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/RendererChooser.html":'\x3cdiv\x3e\r\n\t\x3ctable\x3e\r\n\t\t\x3ctbody\x3e\r\n\t\t\t\x3ctr\x3e\r\n\t\t\t\t\x3ctd class\x3d"leading-td"\x3e\r\n\t\t\t\t\t\x3cdiv class\x3d"setting-section" style\x3d"display:inline-block;width:263px;"\x3e\r\n\t\t\t\t\t\t\x3ctable class\x3d"renderer-setting-table" cellpadding\x3d"0" cellspacing\x3d"0"\x3e\r\n\t\t\t\t\t\t\t\x3ccolgroup\x3e\r\n\t\t\t\t\t\t\t\t\x3ccol width\x3d"auto"\x3e\x3c/col\x3e\r\n\t\t\t\t\t\t\t\t\x3ccol width\x3d"180px"\x3e\x3c/col\x3e\r\n\t\t\t\t\t\t    \x3c/colgroup\x3e\r\n\t\t\t\t\t\t\t\x3ctbody\x3e\r\n\t\t\t\t\t\t\t\t\x3ctr data-dojo-attach-point\x3d"rendererSelectTr"\x3e\r\n\t\t\t\t\t\t\t\t\t\x3ctd class\x3d"first-td"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cspan\x3e${nls.use}:\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cselect data-dojo-attach-point\x3d"rendererSelect" class\x3d"render-select" data-dojo-type\x3d"dijit/form/Select" style\x3d"width:100%;height:30px;"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3coption value\x3d"simple" selected\x3dtrue\x3e${nls.singleSymbol}\x3c/option\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3coption value\x3d"unique"\x3e${nls.uniqueSymbol}\x3c/option\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3coption value\x3d"color"\x3e${nls.color}\x3c/option\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3coption value\x3d"size"\x3e${nls.size}\x3c/option\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3c/select\x3e\r\n\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\t\t\t\t\x3ctr data-dojo-attach-point\x3d"fieldSelectTr" style\x3d"display:none;"\x3e\r\n\t\t\t\t\t\t\t\t\t\x3ctd class\x3d"first-td"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cspan\x3e${nls.toShow}:\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\t\x3ctd class\x3d"field-combobox-td"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"fieldComboBox" data-dojo-type\x3d"dijit/form/ComboBox" class\x3d"dijit-form-CombBox" style\x3d"width:100%;"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\t\t\t\t\x3ctr data-dojo-attach-point\x3d"colorBlockTr" style\x3d"display:none;"\x3e\r\n\t\t\t\t\t\t\t\t\t\x3ctd class\x3d"first-td"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cspan\x3e${nls.colors}:\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"uniqueColorSelect" data-dojo-type\x3d"dijit/form/Select" style\x3d"width:100%;height:30px;"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d\'color1\'\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg  style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/c1.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d\'color2\'\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg  style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/c2.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d\'color3\'\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg  style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/c3.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d\'color4\'\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg  style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/c4.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d\'color5\'\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg  style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/c5.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d\'color6\'\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg  style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/c6.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\t\t\t\t\x3ctr data-dojo-attach-point\x3d"domainTr" style\x3d"display:none;"\x3e\r\n\t\t\t\t\t\t\t\t\t\x3ctd class\x3d"first-td"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cspan\x3e${nls.domain}:\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"minDomain" type\x3d"text" data-dojo-type\x3d"dijit/form/NumberTextBox" required\x3d"true" value\x3d"0"\r\n\t\t\t\t\t\t\t\t\t\t style\x3d"width:60px;" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cspan\x3e  \u2014  \x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"maxDomain" type\x3d"text" data-dojo-type\x3d"dijit/form/NumberTextBox" required\x3d"true" value\x3d"0"\r\n\t\t\t\t\t\t\t\t\t\t style\x3d"width:60px;" /\x3e\r\n\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\t\t\t\t\x3ctr data-dojo-attach-point\x3d"classCountTr" style\x3d"display:none;"\x3e\r\n\t\t\t\t\t\t\t\t\t\x3ctd class\x3d"first-td"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cspan\x3e${nls.classes}:\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"classCount" data-dojo-type\x3d"dijit/form/NumberSpinner" style\x3d"display:inline-block;width:100px;"\r\n\t\t\t\t\t\t\t\t\t\tdata-dojo-props\x3d\'value:5,smallDelta:1,constraints:{min:2,max:20},intermediateChanges:true\' /\x3e\r\n\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\t\t\t\t\x3ctr data-dojo-attach-point\x3d"colorBarTr" style\x3d"display:none;"\x3e\r\n\t\t\t\t\t\t\t\t\t\x3ctd class\x3d"first-td"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cspan\x3e${nls.colors}:\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"classBreaksColorSelect" data-dojo-type\x3d"dijit/form/Select" style\x3d"width:100%;height:30px;"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color1"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb1.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color2"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb2.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color3"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb3.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color4"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb4.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color5"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb5.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color6"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb6.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color7"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb7.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color8"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb8.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color9"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb9.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color10"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb10.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color11"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb11.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color12"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb12.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color13"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb13.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color14"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb14.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color15"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb15.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color16"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb16.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color17"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb17.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color18"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb18.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color19"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb19.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color20"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb20.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color21"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb21.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color22"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb22.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color23"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb23.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color24"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb24.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color25"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb25.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color26"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb26.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-value\x3d"color27"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cimg style\x3d"width:140px;height:20px;vertical-align: middle;margin-top: 1px;margin-bottom:1px;" src\x3d"${_jimuUrl}/css/images/symbol/cb27.png" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\t\t\t\t\x3ctr data-dojo-attach-point\x3d"symbolSizeDomainTr" style\x3d"display:none;"\x3e\r\n\t\t\t\t\t\t\t\t\t\x3ctd class\x3d"first-td"\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cspan\x3e${nls.symbolSize}:\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"minSymbolSize" type\x3d"text" data-dojo-type\x3d"dijit/form/NumberTextBox" required\x3d"true" value\x3d"5" data-dojo-props\x3d"constraints:{min:1,max:50,places:0}" style\x3d"width:60px;" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cspan\x3e  \u2014  \x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"maxSymbolSize" type\x3d"text" data-dojo-type\x3d"dijit/form/NumberTextBox" required\x3d"true" value\x3d"30" data-dojo-props\x3d"constraints:{min:1,max:50,places:0}"  style\x3d"width:60px;" /\x3e\r\n\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\t\t\t\x3c/tbody\x3e\r\n\t\t\t\t\t\t\x3c/table\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"uniqueSetting" style\x3d"display:none;"\x3e\r\n\t\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"uniqueValueDiv" class\x3d"unique-value-div"\x3e\r\n\t\t\t\t\t\t\t\t\x3ctable class\x3d"unique-symbol-table" style\x3d"width:100%;"\x3e\r\n\t\t\t\t\t\t\t\t\t\x3ctbody data-dojo-attach-point\x3d"uniqueSysTbody"\x3e\r\n\t\t\t\t\t\t\t\t\t\x3c/tbody\x3e\r\n\t\t\t\t\t\t\t\t\x3c/table\x3e\r\n\t\t\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\t\t\t\x3cdiv\x3e\r\n\t\t\t\t\t\t\t\t\x3cdiv style\x3d"padding-top:20px; margin-bottom:5px;"\x3e${nls.addValue}:\x3c/div\x3e\r\n\t\t\t\t\t\t\t\t\x3cdiv\x3e\r\n\t\t\t\t\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"uniqueEditValue" type\x3d"text" /\x3e\r\n\t\t\t\t\t\t\t\t\t\x3cspan data-dojo-attach-point\x3d"btnAddUniqueValue" class\x3d"jimu-icon jimu-icon-add"\r\n\t\t\t\t\t\t\t\t\t style\x3d\'cursor:pointer;position:relative;top:3px;\'\x3e\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\t\t\x3cdiv class\x3d"class-breaks-div" data-dojo-attach-point\x3d"classBreaksSetting" style\x3d"display:none;"\x3e\r\n\t\t\t\t\t\t\t\x3ctable class\x3d"class-breaks-table" style\x3d"width:100%;"\x3e\r\n\t\t\t\t\t\t\t\t\x3ctbody data-dojo-attach-point\x3d"classBreaksTbody"\x3e\r\n\t\t\t\t\t\t\t\t\x3c/tbody\x3e\r\n\t\t\t\t\t\t\t\x3c/table\x3e\r\n\t\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3ctd class\x3d"trailing-td"\x3e\r\n\t\t\t\t\t\x3cdiv class\x3d"symbol-section" style\x3d"display:inline-block;"\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"defaultSymSection"\x3e\r\n\t\t\t\t\t\t\t\x3cdiv\x3e${nls.defaultSymbol}\x3c/div\x3e\r\n\t\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"defaultSymbolChooser" data-dojo-type\x3d"jimu/dijit/SymbolChooser"\x3e\x3c/div\x3e\r\n\t\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"selectedSymSection" style\x3d"display:none;"\x3e\r\n\t\t\t\t\t\t\t\x3cdiv\x3e${nls.selectedSymbol}\x3c/div\x3e\r\n\t\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"uniqueSelectedSymInfoSet" style\x3d"display:none;"\x3e\r\n\t\t\t\t\t\t\t\t\x3ctable style\x3d"width:100%;"\x3e\r\n\t\t\t\t\t\t\t\t\t\x3ctbody\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cspan\x3e${nls.value}:\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"uniqueSelectedValue" type\x3d"text" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cspan\x3e${nls.label}:\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"uniqueSelectedLabel" type\x3d"text" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\t\t\t\t\t\x3c/tbody\x3e\r\n\t\t\t\t\t\t\t\t\x3c/table\x3e\r\n\t\t\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"classBreaksSelectedInfoSet" style\x3d"display:none;"\x3e\r\n\t\t\t\t\t\t\t\t\x3ctable style\x3d"width:100%;margin-top:10px;"\x3e\r\n\t\t\t\t\t\t\t\t\t\x3ctbody\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cspan\x3e${nls.range}:\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"selectedFrom" type\x3d"text" data-dojo-type\x3d"dijit/form/NumberTextBox" required\x3d"true" value\x3d"0" style\x3d"width:60px;" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cspan\x3e  \u2014  \x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"selectedTo" type\x3d"text" data-dojo-type\x3d"dijit/form/NumberTextBox" required\x3d"true" value\x3d"0"  style\x3d"width:60px;" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cspan\x3e${nls.label}:\x3c/span\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"classBreakSelectedLabel" type\x3d"text" /\x3e\r\n\t\t\t\t\t\t\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\t\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\t\t\t\t\t\x3c/tbody\x3e\r\n\t\t\t\t\t\t\t\t\x3c/table\x3e\r\n\t\t\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"selectedSymbolChooser" data-dojo-type\x3d"jimu/dijit/SymbolChooser"\x3e\x3c/div\x3e\r\n\t\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\x3c/td\x3e\r\n\t\t\t\x3c/tr\x3e\r\n\t\t\x3c/tbody\x3e\r\n\t\x3c/table\x3e\r\n\x3c/div\x3e'}});
-define("dojo/_base/declare dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/text!./templates/RendererChooser.html dojo/_base/lang dojo/_base/html dojo/_base/array dojo/on dojo/query dojox/gfx dojo/_base/Color jimu/symbolUtils jimu/rendererUtils esri/renderers/SimpleRenderer esri/renderers/UniqueValueRenderer esri/renderers/ClassBreaksRenderer esri/symbols/jsonUtils esri/symbols/SimpleMarkerSymbol jimu/dijit/CheckBox jimu/dijit/Message dijit/form/Select dijit/form/ComboBox dijit/form/NumberSpinner dijit/form/NumberTextBox jimu/dijit/SymbolChooser".split(" "),
-function(y,z,A,B,C,h,c,m,k,g,v,t,p,u,D,E,F,q,w,G,x){return y([z,A,B],{templateString:C,baseClass:"jimu-renderer-chooser",declaredClass:"jimu.dijit.RendererChooser",renderer:null,type:null,nls:null,fields:null,_uniqueColors:{color1:"#fce138 #fff799 #fcd27e #f1983c #a553b7 #b1a9d0 #6ecffc #4c81cd #fc6f84 #fc3e5a #69f488 #48885c".split(" "),color2:"#102432 #144d59 #ffc754 #ea9010 #a54e1d #661510 #d8341a #b31515 #4a0932 #8c213f #18382e #2c6954".split(" "),color3:"#be9626 #607100 #00734c #704489 #01acca #024e76 #f09100 #ea311f #c6004b #7570b3 #666666 #333333".split(" "),
-color4:"#fffa00 #f5cb11 #9fd40c #46e29c #32b8a6 #7ff2fa #ad00f2 #c461ea #eb7200 #e8a784 #bf2e2e #6c7000".split(" "),color5:"#191921 #11495c #78b1c2 #454f4b #8f8f82 #99dbbc #87b051 #f7ec88 #ebdcc1 #dbb658 #c43541 #75351e".split(" "),color6:"#332424 #751555 #d47013 #d68989 #211173 #82aad6 #7bfaeb #6ec9a8 #6b6408 #e9da40 #ccc54a #1fc235".split(" ")},_classBreaksColors:{color1:["#eaf0fd","#03519e"],color2:["#ebf9e7","#046e2e"],color3:["#f5f5f5","#2a2a2a"],color4:["#ffeddd","#a83a00"],color5:["#f2eef6",
-"#582890"],color6:["#ffe3d7","#a71713"],color7:["#ecf7fb","#006d2a"],color8:["#edf8fa","#83067e"],color9:["#eef9e8","#0167af"],color10:["#fff1d7","#b80201"],color11:["#f0eef6","#015b90"],color12:["#f5eff7","#006dfa"],color13:["#f1eef7","#9c0042"],color14:["#ffebe2","#7d0078"],color15:["#ffffc9","#016a35"],color16:["#ffffcb","#253197"],color17:["#fffed1","#9e3601"],color18:["#ffffad","#c20120"],color19:["#a9620d","#038772"],color20:["#d3168c","#46ae1b"],color21:["#7c2d96","#048936"],color22:["#eb6300",
-"#603b9b"],color23:["#cc0117","#0471b2"],color24:["#ce0118","#424242"],color25:["#db1a10","#287cba"],color26:["#da1baf","#03983e"],color27:["#db1a10","#2483bb"]},_selectedUniqueValueTr:null,_selectedClassBreakTr:null,_isDrawing:!1,_showOthersSymbol:!0,_jimuUrl:window.location.protocol+"//"+window.location.host+require.toUrl("jimu"),postMixInProperties:function(){this.fields||(this.fields=[]);this.nls=h.mixin({},window.jimuNls.common,window.jimuNls.rendererChooser);this.inherited(arguments)},postCreate:function(){this.inherited(arguments);
-this._initFields();this.own(k(this.rendererSelect,"change",h.hitch(this,this._onRendererSelectChange)));this.own(k(this.defaultSymbolChooser,"change",h.hitch(this,this._onDefaultSymbolChange)));this.own(k(this.selectedSymbolChooser,"change",h.hitch(this,this._onSelectedSymbolChange)));this._bindUniqueSettingEvents();this._bindClassBreaksEvents();this.renderer?(this._showOthersSymbol=!!this.renderer._showOthersSymbol,this.showByRenderer(this.renderer)):this.type&&this.showByType(this.type);this._onRendererSelectChange()},
-getRenderer:function(){var a=null,b=this.rendererSelect.get("value");if("simple"===b)a=this._getSimpleRenderer();else if("unique"===b)a=this._getUniqueValueRenderer();else if("color"===b||"size"===b)a=this._getClassBreaksRenderer();return a},reset:function(){this.type=this.renderer=null;c.setStyle(this.domNode,"display","none")},showByRenderer:function(a){this.reset();c.setStyle(this.domNode,"display","block");this.renderer=a;this.type=null;this._setDefaultSymbol(this.renderer&&(this.renderer.defaultSymbol||
-this.renderer.symbol));this._updateRendererSelect();u.isSimpleRenderer(this.renderer)?this.rendererSelect.set("value","simple"):u.isUniqueValueRenderer(this.renderer)?this._showUniqueValueRenderer(this.renderer):u.isClassBreaksRenderer(this.renderer)?this._showClassBreaksRenderer(this.renderer):this.showByType(this.type);(a=this.defaultSymbolChooser.getSymbol())&&this._onDefaultSymbolChange(a)},showByType:function(a){this.reset();this.type=this.renderer=null;if("marker"===a||"line"===a||"fill"===
-a)c.setStyle(this.domNode,"display","block"),this.type=a,this.defaultSymbolChooser.showByType(a),this._updateRendererSelect(),(a=this.defaultSymbolChooser.getSymbol())&&this._onDefaultSymbolChange(a)},_setDefaultSymbol:function(a){this.type=null;a&&(p.isSimpleMarkerSymbol(a)||p.isPictureMarkerSymbol(a)?this.type="marker":p.isSimpleLineSymbol(a)?this.type="line":p.isSimpleFillSymbol(a)&&(this.type="fill"),this.type&&this.defaultSymbolChooser.showBySymbol(a))},_getDefaultSymbolTr:function(){var a=this.rendererSelect.get("value"),
-b;if("unique"===a)b=this.uniqueSysTbody;else if("color"===a||"size"===a)b=this.classBreaksTbody;if(!b)return null;a=g(".default-symbol-tr",b);return 0===a.length?null:a[0]},_onDefaultSymbolChange:function(a){var b=this._getDefaultSymbolTr();b&&(b.symbol=a,b=g(".symbol-div",b)[0],this._drawSymbolPreview(b,a))},_setDefaultSymbolStatus:function(a){var b=this._getDefaultSymbolTr();b&&b.checkbox.getStatus()!==a&&(a||(this._showOthersSymbol=!0,b.checkbox.setValue(!0)),b.checkbox.setStatus(a))},_updateRendererSelect:function(){var a=
-this.rendererSelect.getOptions("size");"marker"===this.type?a||this.rendererSelect.addOption({value:"size",label:"Size"}):("line"===this.type||"fill"===this.type)&&a&&this.rendererSelect.removeOption(a)},_initFields:function(){if(this.fields&&0<this.fields.length){var a="";m.forEach(this.fields,h.hitch(this,function(b){b&&"string"===typeof b&&(a||(a=b),this._addField(b))}));a&&!this.fieldComboBox.get("displayedValue")&&this.fieldComboBox.set("displayedValue",a)}},_addField:function(a){this.fieldComboBox.get("store").add({name:a})},
-_onRendererSelectChange:function(){var a=this.rendererSelect.get("value");this._showDefaultSymbol();"simple"===a?(c.setStyle(this.fieldSelectTr,"display","none"),c.setStyle(this.colorBlockTr,"display","none"),c.setStyle(this.colorBarTr,"display","none"),c.setStyle(this.domainTr,"display","none"),c.setStyle(this.classCountTr,"display","none"),c.setStyle(this.uniqueSetting,"display","none"),c.setStyle(this.classBreaksSetting,"display","none"),c.setStyle(this.symbolSizeDomainTr,"display","none")):"unique"===
-a?(c.setStyle(this.fieldSelectTr,"display","table-row"),c.setStyle(this.colorBlockTr,"display","table-row"),c.setStyle(this.colorBarTr,"display","none"),c.setStyle(this.domainTr,"display","none"),c.setStyle(this.classCountTr,"display","none"),c.setStyle(this.uniqueSetting,"display","block"),c.setStyle(this.classBreaksSetting,"display","none"),c.setStyle(this.symbolSizeDomainTr,"display","none"),this._updateUniqueValueDivVisibility()):"color"===a?(c.setStyle(this.fieldSelectTr,"display","table-row"),
-c.setStyle(this.colorBlockTr,"display","none"),c.setStyle(this.classCountTr,"display","table-row"),c.setStyle(this.domainTr,"display","table-row"),c.setStyle(this.colorBarTr,"display","table-row"),c.setStyle(this.uniqueSetting,"display","none"),c.setStyle(this.symbolSizeDomainTr,"display","none"),this._updateClassBreaksSettingVisibility()):"size"===a&&(c.setStyle(this.fieldSelectTr,"display","table-row"),c.setStyle(this.colorBlockTr,"display","none"),c.setStyle(this.colorBarTr,"display","none"),c.setStyle(this.domainTr,
-"display","table-row"),c.setStyle(this.classCountTr,"display","table-row"),c.setStyle(this.uniqueSetting,"display","none"),c.setStyle(this.symbolSizeDomainTr,"display","table-row"),this._updateClassBreaksSettingVisibility())},_showDefaultSymbol:function(){c.setStyle(this.defaultSymSection,"display","block");c.setStyle(this.selectedSymSection,"display","none")},_showSelectedSymbol:function(a){c.setStyle(this.defaultSymSection,"display","none");c.setStyle(this.selectedSymSection,"display","block");
-var b=this.rendererSelect.get("value");if("simple"===b)c.setStyle(this.uniqueSelectedSymInfoSet,"display","none"),c.setStyle(this.classBreaksSelectedInfoSet,"display","none");else if("unique"===b)c.setStyle(this.uniqueSelectedSymInfoSet,"display","block"),c.setStyle(this.classBreaksSelectedInfoSet,"display","none");else if("color"===b||"size"===b)c.setStyle(this.uniqueSelectedSymInfoSet,"display","none"),c.setStyle(this.classBreaksSelectedInfoSet,"display","block");this.selectedSymbolChooser.showBySymbol(a)},
-_onSelectedSymbolChange:function(a){var b=this.rendererSelect.get("value");"unique"===b?this._onUniqueSelectedSymbolChange(a):"color"===b?this._onClassBreakSelectedSymbolChange(a):"size"===b&&this._onClassBreakSelectedSymbolChange(a)},_cloneSymbol:function(a){if(!a)return null;a=a.toJson();return q.fromJson(a)},_drawSymbolPreview:function(a,b){var d=this._cloneSymbol(b);c.empty(a);b=80;var e=30;if("simplemarkersymbol"===d.type)e=b=Math.min(d.size+12,125);else if("picturemarkersymbol"===d.type){if(!d.url||
-"http://"===d.url||-1===d.url.indexOf("http://")&&-1===d.url.indexOf("https://")&&-1===d.url.indexOf("data:"))return;e=b=Math.min(Math.max(d.width,d.height),125)}else if("simplelinesymbol"===d.type||"cartographiclinesymbol"===d.type)b=190,e=20;60<b&&(b=60);a=v.createSurface(a,b,e);if("vml"===v.renderer){var f=a.getEventSource();c.setStyle(f,"position","relative");c.setStyle(f.parentNode,"position","relative")}var f=null,f=q.getShapeDescriptors(d),g;try{g=a.createShape(f.defaultShape).setFill(f.fill).setStroke(f.stroke)}catch(r){a.clear();
-a.destroy();return}var d=a.getDimensions(),d={dx:d.width/2,dy:d.height/2},l=g.getBoundingBox(),f=l.width,l=l.height;if(f>b||l>e)b=((b<e?b:e)-5)/(f>l?f:l),h.mixin(d,{xx:b,yy:b});g.applyTransform(d);return a},_getSimpleRenderer:function(){var a=this.defaultSymbolChooser.getSymbol();return new D(a)},_bindUniqueSettingEvents:function(){this.own(k(this.btnAddUniqueValue,"click",h.hitch(this,this._onAddUniqueValue)));this.own(k(this.uniqueSelectedValue,"change",h.hitch(this,this._onUniqueSelectedValueChange)));
-this.own(k(this.uniqueSelectedLabel,"change",h.hitch(this,this._onUniqueSelectedLabelChange)));this.own(k(this.uniqueColorSelect,"change",h.hitch(this,this._onUniqueColorSelectChange)))},_showUniqueValueRenderer:function(a){this.rendererSelect.set("value","unique");this.fieldComboBox.set("displayedValue",a.attributeField);a._colorType&&this.uniqueColorSelect.set("value",a._colorType);c.empty(this.uniqueSysTbody);m.forEach(a.infos,h.hitch(this,function(a){this._addUniqueValueTr(a.symbol,a.value,a.label||
-a.value)}));this._addDefaultValueTr(this.uniqueSysTbody)},_getUniqueValueRenderer:function(){var a=this.defaultSymbolChooser.getSymbol(),b=this.fieldComboBox.get("value"),d=new E(a,b),a=g(".unique-symbol-tr",this.uniqueSysTbody);m.forEach(a,h.hitch(this,function(a){d.addValue({value:a.value,symbol:a.symbol,label:a.label,description:a.label})}));d._colorType=this.uniqueColorSelect.get("value");d._showOthersSymbol=this._showOthersSymbol;return d},_onUniqueColorSelectChange:function(){var a=this._getSelectedUniqueColors(),
-b=g(".unique-symbol-tr",this.uniqueSysTbody);m.forEach(b,h.hitch(this,function(b,e){b.symbol&&!p.isPictureMarkerSymbol(b.symbol)&&(b.symbol.setColor(a[e%a.length]),e=g(".symbol-div",b)[0],this._drawSymbolPreview(e,b.symbol),this._selectedUniqueValueTr===b&&this._showSelectedSymbol(b.symbol))}))},_onUniqueSelectedValueChange:function(){var a=this._selectedUniqueValueTr,b=this.uniqueSelectedValue.value;if(a&&b!==a.value){var d=g(".unique-symbol-tr",this.uniqueSysTbody);if(m.some(d,function(a){return a.value===
-b})){var e=new x({message:this.nls.duplicatedValue.replace("${value}",b),buttons:[{label:this.nls.ok,onClick:function(){e.close()}}]});this.uniqueSelectedValue.value=a.value}else a.value=this.uniqueSelectedValue.value}},_onUniqueSelectedLabelChange:function(){var a=this._selectedUniqueValueTr;a&&(a.label=this.uniqueSelectedLabel.value,g(".label-div",a)[0].innerHTML=a.label)},_onUniqueSelectedSymbolChange:function(a){var b=this._selectedUniqueValueTr;b&&(b.symbol=a,(b=g(".symbol-div",b)[0])&&this._drawSymbolPreview(b,
-a))},_onAddUniqueValue:function(){var a=h.trim(this.uniqueEditValue.value);if(a){var b=g(".unique-symbol-tr",this.uniqueSysTbody);if(m.some(b,function(b){return b.value===a}))var d=new x({message:this.nls.duplicatedValue.replace("${value}",a),buttons:[{label:this.nls.ok,onClick:function(){d.close()}}]});else{var e=this._getSelectedUniqueColors(),b=this._getUniqueSymbol(e[b.length%e.length]);this._addUniqueValueTr(b,a,a);this._setDefaultSymbolStatus(!0)}}this.uniqueEditValue.value=""},_addUniqueValueTr:function(a,
-b,d){b=h.trim(b);var e=c.toDom('\x3ctr class\x3d"unique-symbol-tr"\x3e\x3ctd class\x3d"symbol-td"\x3e\x3cdiv class\x3d"symbol-div"\x3e\x3c/div\x3e\x3c/td\x3e\x3ctd class\x3d"edit-td"\x3e\x3cdiv wrap class\x3d"label-div"\x3e\x3c/div\x3e\x3c/td\x3e\x3ctd class\x3d"delete-td"\x3e\x3cdiv class\x3d"delete-div jimu-icon jimu-icon-delete"\x3e\x3c/div\x3e\x3c/td\x3e\x3c/tr\x3e'),f=g(".default-symbol-tr",this.uniqueSysTbody);0<f.length?c.place(e,f[0],"before"):c.place(e,this.uniqueSysTbody);this._updateUniqueSymTableStyle();
-var f=g(".symbol-div",e)[0],n=g(".label-div",e)[0],l=g(".delete-div",e)[0];n.innerHTML=d;this.own(k(e,"click",h.hitch(this,function(){this._selectUniqueValueTr(e)})));this.own(k(l,"click",h.hitch(this,function(a){a.stopPropagation();this._selectedUniqueValueTr===e&&(this._selectedUniqueValueTr=null);c.destroy(e);this._updateUniqueSymTableStyle();this._updateUniqueValueDivVisibility()})));this._drawSymbolPreview(f,a);e.symbol=a;e.value=b;e.label=d;this._selectUniqueValueTr(e);c.setStyle(this.uniqueValueDiv,
-"display","block")},_selectUniqueValueTr:function(a){g("tr",this.uniqueSysTbody).removeClass("selected");c.addClass(a,"selected");this._selectedUniqueValueTr=a;this.uniqueSelectedValue.value=a.value;this.uniqueSelectedLabel.value=a.label;this._showSelectedSymbol(a.symbol)},_updateUniqueSymTableStyle:function(){},_getSelectedUniqueColors:function(){var a=this.uniqueColorSelect.get("value");return m.map(this._uniqueColors[a],h.hitch(this,function(a){return new t(a)}))},_getUniqueSymbol:function(a){var b=
-null;if("marker"===this.type)b=new w({style:"esriSMSCircle",color:[0,0,128,128],name:"Circle",outline:{color:[191,151,39,255],width:1},type:"esriSMS",size:18}),b.setColor(a);else if("line"===this.type||"fill"===this.type)b=this.defaultSymbolChooser.getSymbol(),b=q.fromJson(b.toJson()),b.setColor(a);return b},_updateUniqueValueDivVisibility:function(){var a=g("tr",this.uniqueSysTbody);0===a.length?(this._addDefaultValueTr(this.uniqueSysTbody),this._setDefaultSymbolStatus(!1)):1===a.length&&c.hasClass(a[0],
-"default-symbol-tr")&&this._setDefaultSymbolStatus(!1);a.removeClass("selected");g(".default-symbol-tr",this.uniqueSysTbody).addClass("selected");c.setStyle(this.uniqueValueDiv,"display","block")},_bindClassBreaksEvents:function(){this.own(k(this.minDomain,"change",h.hitch(this,this._updateClassBreaksTable)));this.own(k(this.maxDomain,"change",h.hitch(this,this._updateClassBreaksTable)));this.own(k(this.classCount,"change",h.hitch(this,this._updateClassBreaksTable)));this.own(k(this.selectedFrom,
-"change",h.hitch(this,this._onSelectedRangeChange)));this.own(k(this.selectedTo,"change",h.hitch(this,this._onSelectedRangeChange)));this.own(k(this.classBreakSelectedLabel,"change",h.hitch(this,this._onClassBreakSelectedLabelChange)));this.own(k(this.classBreaksColorSelect,"change",h.hitch(this,this._updateClassBreaksTable)));this.own(k(this.minSymbolSize,"change",h.hitch(this,this._updateClassBreaksTable)));this.own(k(this.maxSymbolSize,"change",h.hitch(this,this._updateClassBreaksTable)))},_showClassBreaksRenderer:function(a){this._isDrawing=
-!0;this.rendererSelect.set("value","color");a._colorType&&this.classBreaksColorSelect.set("value",a._colorType);var b=Infinity,d=-Infinity;this.fieldComboBox.set("displayedValue",a.attributeField);this.classCount.set("value",a.infos.length);c.empty(this.classBreaksTbody);m.forEach(a.infos,h.hitch(this,function(a){var e=a.minValue,c=a.maxValue;this._addClassBreaksTr(a.symbol,e,c,a.label?a.label:a.minValue+" \u2014\u2014 "+a.maxValue);b=Math.min(b,e);d=Math.max(d,c)}));this.minDomain.set("value",b);
-this.maxDomain.set("value",d);this._addDefaultValueTr(this.classBreaksTbody);if("marker"===this.type){var e=Infinity,f=-Infinity;m.forEach(a.infos,h.hitch(this,function(a){a=a.symbol;a=p.isPictureMarkerSymbol(a)?a.width:a.size;e=Math.min(a,e);f=Math.max(a,f)}));this.minSymbolSize.set("value",e);this.maxSymbolSize.set("value",f);this.minSymSize!==this.maxSymSize&&this.rendererSelect.set("value","size")}var g=this;setTimeout(function(){g._isDrawing=!1},1E3)},_getClassBreaksRenderer:function(){var a=
-this.defaultSymbolChooser.getSymbol(),b=this.fieldComboBox.get("value"),d=new F(a,b),a=g(".class-breaks-tr",this.classBreaksTbody);m.forEach(a,h.hitch(this,function(a){d.addBreak({minValue:a.from,maxValue:a.to,symbol:a.symbol,label:a.label})}));d._colorType=this.classBreaksColorSelect.get("value");d._showOthersSymbol=this._showOthersSymbol;return d},_onClassBreakSelectedSymbolChange:function(a){var b=this._selectedClassBreakTr;b&&(b.symbol=a,b=g(".symbol-div",b)[0],this._drawSymbolPreview(b,a))},
-_onSelectedRangeChange:function(){var a=parseFloat(this.selectedFrom.get("value")),b=parseFloat(this.selectedTo.get("value"));if(a>b){var d=a,a=b,b=d;this.selectedFrom.set("value",a);this.selectedTo.set("value",b)}!(d=this._selectedClassBreakTr)||d.from===a&&d.to===b||(d.from=a,d.to=b,a=a+" \u2014 "+b,d.label=a,this.classBreakSelectedLabel.value=a,g(".label-div",d)[0].innerHTML=a)},_onClassBreakSelectedLabelChange:function(){var a=this._selectedClassBreakTr;if(a){var b=this.classBreakSelectedLabel.value;
-a.label=b;g(".label-div",a)[0].innerHTML=b}},_updateClassBreaksTable:function(){if(!this._isDrawing){c.setStyle(this.classBreaksSetting,"display","none");c.empty(this.classBreaksTbody);var a=parseFloat(this.minDomain.get("value")),b=parseFloat(this.maxDomain.get("value"));if(a>b){var d=a,a=b,b=d;this.minDomain.set("value",a);this.maxDomain.set("value",b)}else if(a===b)return;var e=parseFloat(this.minSymbolSize.get("value")),f=parseFloat(this.maxSymbolSize.get("value"));e>f&&(d=e,e=f,f=d,this.minSymbolSize.set("value",
-e),this.maxSymbolSize.set("value",f));var d=parseInt(this.classCount.get("value"),10),g=(b-a)/d,b=[],l;for(l=0;l<=d;l++){var h=a+g*l,h=parseFloat(h.toFixed(4));b.push(h)}l=this.rendererSelect.get("value");a=[];"color"===l?a=this._createColorClassBreaksSymbols(d):"size"===l&&(a=this._createSizeClassBreaksSymbols(d,e,f));for(l=0;l<d;l++)e=b[l],f=b[l+1],this._addClassBreaksTr(a[l],e,f,e+" \u2014 "+f);this._addDefaultValueTr(this.classBreaksTbody);this._updateClassBreaksSettingVisibility()}},_selectClassBreaksTr:function(a){g("tr",
-this.classBreaksTbody).removeClass("selected");c.addClass(a,"selected");this._selectedClassBreakTr=a;var b=a.symbol,d=parseFloat(a.from),e=parseFloat(a.to);a=a.label;this.selectedFrom.set("value",d);this.selectedTo.set("value",e);this.classBreakSelectedLabel.value=a;this._showSelectedSymbol(b)},_addClassBreaksTr:function(a,b,d,e){var f=c.toDom('\x3ctr class\x3d"class-breaks-tr"\x3e\x3ctd class\x3d"symbol-td"\x3e\x3cdiv class\x3d"symbol-div"\x3e\x3c/div\x3e\x3c/td\x3e\x3ctd class\x3d"label-td"\x3e\x3cdiv wrap class\x3d"label-div"\x3e\x3c/div\x3e\x3c/td\x3e\x3ctd class\x3d"delete-td"\x3e\x3cdiv class\x3d"delete-div jimu-icon jimu-icon-delete"\x3e\x3c/div\x3e\x3c/td\x3e\x3c/tr\x3e'),
-n=g(".default-symbol-tr",this.classBreaksTbody);0<n.length?c.place(f,n[0],"before"):c.place(f,this.classBreaksTbody);f.symbol=a;f.from=b;f.to=d;f.label=e;b=g(".symbol-div",f)[0];d=g(".label-div",f)[0];n=g(".delete-div",f)[0];this._drawSymbolPreview(b,a);d.innerHTML=e;this.own(k(f,"click",h.hitch(this,function(){this._selectClassBreaksTr(f)})));this.own(k(n,"click",h.hitch(this,function(a){a.stopPropagation();this._selectClassBreaksTr===f&&(this._selectClassBreaksTr=null);c.destroy(f);this._updateClassBreaksSettingVisibility()})));
-this._updateClassBreaksTableStyle();this._showDefaultSymbol();c.setStyle(this.classBreaksSetting,"display","block")},_addDefaultValueTr:function(a){if(!(0<g(".default-symbol-tr",a).length)){var b=this.defaultSymbolChooser.getSymbol(),d=this.nls.defaultSymbol,e=c.toDom('\x3ctr class\x3d"default-symbol-tr"\x3e\x3ctd class\x3d"symbol-td"\x3e\x3cdiv class\x3d"symbol-div"\x3e\x3c/div\x3e\x3c/td\x3e\x3ctd class\x3d"label-td"\x3e\x3cdiv wrap class\x3d"label-div"\x3e\x3c/div\x3e\x3c/td\x3e\x3ctd class\x3d"check-td"\x3e\x3cdiv class\x3d"check-div"\x3e\x3c/div\x3e\x3c/td\x3e\x3c/tr\x3e');
-c.place(e,a);var f=g(".symbol-div",e)[0],n=g(".label-div",e)[0],l=g(".check-div",e)[0];c.setAttr(l,"title",this.nls.othersSymbolTip);var r=new G({checked:this._showOthersSymbol});r.placeAt(l);r.startup();n.innerHTML=this.nls.othersSymbol;this.own(k(e,"click",h.hitch(this,function(){g("tr",a).removeClass("selected");c.addClass(e,"selected");this._showDefaultSymbol()})));this.own(k(r,"change",h.hitch(this,function(a){this._showOthersSymbol=a})));this._drawSymbolPreview(f,b);e.symbol=b;e.label=d;e.checkbox=
-r;c.setStyle(this.uniqueValueDiv,"display","block")}},_updateClassBreaksTableStyle:function(){},_updateClassBreaksSettingVisibility:function(){var a=g("tr",this.classBreaksTbody);0===a.length?(this._addDefaultValueTr(this.classBreaksTbody),this._setDefaultSymbolStatus(!1)):1===a.length&&c.hasClass(a[0],"default-symbol-tr")&&this._setDefaultSymbolStatus(!1);a.removeClass("selected");g(".default-symbol-tr",this.classBreaksTbody).addClass("selected");c.setStyle(this.classBreaksSetting,"display","block")},
-_createColorClassBreaksSymbols:function(a){for(var b=[],d=this._createClassBreaksColors(a),c=0;c<a;c++){var f=d[c],g=null;if("marker"===this.type)g=new w({style:"esriSMSCircle",color:[0,0,128,128],name:"Circle",outline:{color:[191,151,39,255],width:1},type:"esriSMS",size:18}),g.setColor(f);else if("line"===this.type||"fill"===this.type)g=this.defaultSymbolChooser.getSymbol(),g=q.fromJson(g.toJson()),g.setColor(f);b.push(g)}return b},_createClassBreaksColors:function(a){for(var b=[],d=this.classBreaksColorSelect.get("value"),
-c=this._classBreaksColors[d],d=new t(c[0]),f=new t(c[1]),c=Math.floor((f.r-d.r)/a),g=Math.floor((f.g-d.g)/a),f=Math.floor((f.b-d.b)/a),h=0;h<a;h++){var k=new t([d.r+c*h,d.g+g*h,d.b+f*h,255]);b.push(k)}return b},_createSizeClassBreaksSymbols:function(a,b,c){var d=this.defaultSymbolChooser.getSymbol(),f=[];c=(c-b)/(a-1);for(var g=0;g<a;g++){var h=Math.round(b+c*g),k=d.toJson(),k=q.fromJson(k);p.isPictureMarkerSymbol(k)?(k.setWidth(h),k.setHeight(h)):k.setSize(h);f.push(k)}return f}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dijit/_WidgetsInTemplateMixin',
+  'dojo/text!./templates/RendererChooser.html',
+  'dojo/_base/lang',
+  'dojo/_base/html',
+  'dojo/_base/array',
+  'dojo/on',
+  'dojo/query',
+  'dojox/gfx',
+  'dojo/_base/Color',
+  'jimu/symbolUtils',
+  'jimu/rendererUtils',
+  'esri/renderers/SimpleRenderer',
+  'esri/renderers/UniqueValueRenderer',
+  'esri/renderers/ClassBreaksRenderer',
+  'esri/symbols/jsonUtils',
+  'esri/symbols/SimpleMarkerSymbol',
+  'jimu/dijit/CheckBox',
+  'jimu/dijit/Message',
+  'dijit/form/Select',
+  'dijit/form/ComboBox',
+  'dijit/form/NumberSpinner',
+  'dijit/form/NumberTextBox',
+  'jimu/dijit/SymbolChooser'
+],
+function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
+  template, lang, html, array, on, query, gfx, Color,
+  symbolUtils, rendererUtils, SimpleRenderer, UniqueValueRenderer,
+  ClassBreaksRenderer, jsonUtils, SimpleMarkerSymbol, CheckBox, Message) {
+
+  return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
+    templateString: template,
+    baseClass: 'jimu-renderer-chooser',
+    declaredClass: 'jimu.dijit.RendererChooser',
+    renderer: null,
+    type: null,//available values:marker,line,fill
+    nls: null,
+    fields: null,
+
+    //public methods:
+    //getRenderer
+    //showByRenderer
+    //showByType
+    //reset
+
+    _uniqueColors:{
+      color1:['#fce138', '#fff799', '#fcd27e', '#f1983c',
+              '#a553b7', '#b1a9d0', '#6ecffc', '#4c81cd',
+              '#fc6f84', '#fc3e5a', '#69f488', '#48885c'],
+      color2:['#102432', '#144d59', '#ffc754', '#ea9010',
+              '#a54e1d', '#661510', '#d8341a', '#b31515',
+              '#4a0932', '#8c213f', '#18382e', '#2c6954'],
+      color3:['#be9626', '#607100', '#00734c', '#704489',
+              '#01acca', '#024e76', '#f09100', '#ea311f',
+              '#c6004b', '#7570b3', '#666666', '#333333'],
+      color4:['#fffa00', '#f5cb11', '#9fd40c', '#46e29c',
+              '#32b8a6', '#7ff2fa', '#ad00f2', '#c461ea',
+              '#eb7200', '#e8a784', '#bf2e2e', '#6c7000'],
+      color5:['#191921', '#11495c', '#78b1c2', '#454f4b',
+              '#8f8f82', '#99dbbc', '#87b051', '#f7ec88',
+              '#ebdcc1', '#dbb658', '#c43541', '#75351e'],
+      color6:['#332424', '#751555', '#d47013', '#d68989',
+              '#211173', '#82aad6', '#7bfaeb', '#6ec9a8',
+              '#6b6408', '#e9da40', '#ccc54a', '#1fc235']
+    },
+    _classBreaksColors:{
+      color1: ['#eaf0fd', '#03519e'],
+      color2: ['#ebf9e7', '#046e2e'],
+      color3: ['#f5f5f5', '#2a2a2a'],
+      color4: ['#ffeddd', '#a83a00'],
+      color5: ['#f2eef6', '#582890'],
+      color6: ['#ffe3d7', '#a71713'],
+      color7: ['#ecf7fb', '#006d2a'],
+      color8: ['#edf8fa', '#83067e'],
+      color9: ['#eef9e8', '#0167af'],
+      color10: ['#fff1d7', '#b80201'],
+      color11: ['#f0eef6', '#015b90'],
+      color12: ['#f5eff7', '#006dfa'],
+      color13: ['#f1eef7', '#9c0042'],
+      color14: ['#ffebe2', '#7d0078'],
+      color15: ['#ffffc9', '#016a35'],
+      color16: ['#ffffcb', '#253197'],
+      color17: ['#fffed1', '#9e3601'],
+      color18: ['#ffffad', '#c20120'],
+      color19: ['#a9620d', '#038772'],
+      color20: ['#d3168c', '#46ae1b'],
+      color21: ['#7c2d96', '#048936'],
+      color22: ['#eb6300', '#603b9b'],
+      color23: ['#cc0117', '#0471b2'],
+      color24: ['#ce0118', '#424242'],
+      color25: ['#db1a10', '#287cba'],
+      color26: ['#da1baf', '#03983e'],
+      color27: ['#db1a10', '#2483bb']
+    },
+    _selectedUniqueValueTr:null,
+    _selectedClassBreakTr:null,
+    _isDrawing:false,
+    _showOthersSymbol: true,
+    _jimuUrl:window.location.protocol + "//" + window.location.host + require.toUrl("jimu"),
+
+    postMixInProperties:function(){
+      if(!this.fields){
+        this.fields = [];
+      }
+      this.nls = lang.mixin({}, window.jimuNls.common, window.jimuNls.rendererChooser);
+      this.inherited(arguments);
+    },
+
+    postCreate:function(){
+      this.inherited(arguments);
+      this._initFields();
+      this.own(on(this.rendererSelect, 'change', lang.hitch(this, this._onRendererSelectChange)));
+      this.own(on(this.defaultSymbolChooser, 'change', lang.hitch(this, this._onDefaultSymbolChange)));
+      this.own(on(this.selectedSymbolChooser, 'change', lang.hitch(this, this._onSelectedSymbolChange)));
+      this._bindUniqueSettingEvents();
+      this._bindClassBreaksEvents();
+      if(this.renderer){
+        this._showOthersSymbol = Boolean(this.renderer._showOthersSymbol);
+        this.showByRenderer(this.renderer);
+      }
+      else if(this.type){
+        this.showByType(this.type);
+      }
+      this._onRendererSelectChange();
+    },
+
+    getRenderer:function(){
+      var renderer = null;
+      var value = this.rendererSelect.get('value');
+      if(value === 'simple'){
+        renderer = this._getSimpleRenderer();
+      }
+      else if(value === 'unique'){
+        renderer = this._getUniqueValueRenderer();
+      }
+      else if(value === 'color' || value === 'size'){
+        renderer = this._getClassBreaksRenderer();
+      }
+      return renderer;
+    },
+
+    reset: function(){
+      this.renderer = null;
+      this.type = null;
+      html.setStyle(this.domNode, 'display', 'none');
+    },
+
+    showByRenderer:function(renderer){
+      this.reset();
+      html.setStyle(this.domNode, 'display', 'block');
+      this.renderer = renderer;
+      this.type = null;
+      var defaultSymbol = this.renderer && (this.renderer.defaultSymbol || this.renderer.symbol);
+      this._setDefaultSymbol(defaultSymbol);
+      this._updateRendererSelect();
+
+      if(rendererUtils.isSimpleRenderer(this.renderer)){
+        this.rendererSelect.set('value', 'simple');
+      }
+      else if(rendererUtils.isUniqueValueRenderer(this.renderer)){
+        this._showUniqueValueRenderer(this.renderer);
+      }
+      else if(rendererUtils.isClassBreaksRenderer(this.renderer)){
+        this._showClassBreaksRenderer(this.renderer);
+      }
+      else{
+        this.showByType(this.type);
+      }
+
+      var defaultSym = this.defaultSymbolChooser.getSymbol();
+      if(defaultSym){
+        this._onDefaultSymbolChange(defaultSym);
+      }
+    },
+
+    showByType:function(type){
+      this.reset();
+      this.renderer = null;
+      this.type = null;
+      if(type !== 'marker' && type !== 'line' && type !== 'fill'){
+        return;
+      }
+      html.setStyle(this.domNode, 'display', 'block');
+      this.type = type;
+      this.defaultSymbolChooser.showByType(type);
+      this._updateRendererSelect();
+
+      var defaultSym = this.defaultSymbolChooser.getSymbol();
+      if(defaultSym){
+        this._onDefaultSymbolChange(defaultSym);
+      }
+    },
+
+    _setDefaultSymbol:function(defaultSymbol){
+      this.type = null;
+
+      if(!defaultSymbol){
+        return;
+      }
+
+      if(symbolUtils.isSimpleMarkerSymbol(defaultSymbol) ||
+         symbolUtils.isPictureMarkerSymbol(defaultSymbol)){
+        this.type = 'marker';
+      }
+      else if(symbolUtils.isSimpleLineSymbol(defaultSymbol)){
+        this.type = 'line';
+      }
+      else if(symbolUtils.isSimpleFillSymbol(defaultSymbol)){
+        this.type = 'fill';
+      }
+
+      if(this.type){
+        this.defaultSymbolChooser.showBySymbol(defaultSymbol);
+      }
+    },
+
+    _getDefaultSymbolTr: function() {
+      var value = this.rendererSelect.get('value');
+      var targetNode;
+      if (value === 'unique') {
+        targetNode = this.uniqueSysTbody;
+      } else if (value === 'color' || value === 'size') {
+        targetNode = this.classBreaksTbody;
+      }
+      if (!targetNode) {
+        return null;
+      }
+      var symbolTrs = query('.default-symbol-tr', targetNode);
+      if (symbolTrs.length === 0) {
+        return null;
+      }
+      return symbolTrs[0];
+    },
+
+    _onDefaultSymbolChange: function(newSymbol){
+      var tr = this._getDefaultSymbolTr();
+      if(tr){
+        tr.symbol = newSymbol;
+        var symbolDiv = query('.symbol-div', tr)[0];
+        this._drawSymbolPreview(symbolDiv, newSymbol);
+      }
+    },
+
+    _setDefaultSymbolStatus: function(status) {
+      var tr = this._getDefaultSymbolTr();
+      if(tr){
+        if (tr.checkbox.getStatus() !== status) {
+          if (status) {
+            tr.checkbox.setStatus(status);
+          } else {
+            this._showOthersSymbol = true;
+            tr.checkbox.setValue(true);
+            tr.checkbox.setStatus(status);
+          }
+        }
+      }
+    },
+
+    _updateRendererSelect:function(){
+      var sizeOption = this.rendererSelect.getOptions('size');
+      if(this.type === 'marker'){
+        if(!sizeOption){
+          this.rendererSelect.addOption({
+            value:'size',
+            label:'Size'
+          });
+        }
+      }
+      else if(this.type === 'line' || this.type === 'fill'){
+        if(sizeOption){
+          this.rendererSelect.removeOption(sizeOption);
+        }
+      }
+    },
+
+    _initFields:function(){
+      if(this.fields && this.fields.length > 0){
+        var first = '';
+        array.forEach(this.fields, lang.hitch(this, function(field){
+          if(field && typeof field === 'string'){
+            if(!first){
+              first = field;
+            }
+            this._addField(field);
+          }
+        }));
+        if(first && !this.fieldComboBox.get('displayedValue')){
+          this.fieldComboBox.set('displayedValue', first);
+        }
+      }
+    },
+
+    _addField:function(field){
+      this.fieldComboBox.get('store').add({name:field});
+    },
+
+    _onRendererSelectChange:function(){
+      var value = this.rendererSelect.get('value');
+      this._showDefaultSymbol();
+      if(value === 'simple'){
+        html.setStyle(this.fieldSelectTr, 'display', 'none');
+        html.setStyle(this.colorBlockTr, 'display', 'none');
+        html.setStyle(this.colorBarTr, 'display', 'none');
+        html.setStyle(this.domainTr, 'display', 'none');
+        html.setStyle(this.classCountTr, 'display', 'none');
+        html.setStyle(this.uniqueSetting, 'display', 'none');
+        html.setStyle(this.classBreaksSetting, 'display', 'none');
+        html.setStyle(this.symbolSizeDomainTr, 'display', 'none');
+      }
+      else if(value === 'unique'){
+        html.setStyle(this.fieldSelectTr, 'display', 'table-row');
+        html.setStyle(this.colorBlockTr, 'display', 'table-row');
+        html.setStyle(this.colorBarTr, 'display', 'none');
+        html.setStyle(this.domainTr, 'display', 'none');
+        html.setStyle(this.classCountTr, 'display', 'none');
+        html.setStyle(this.uniqueSetting, 'display', 'block');
+        html.setStyle(this.classBreaksSetting, 'display', 'none');
+        html.setStyle(this.symbolSizeDomainTr, 'display', 'none');
+        this._updateUniqueValueDivVisibility();
+      }
+      else if(value === 'color'){
+        html.setStyle(this.fieldSelectTr, 'display', 'table-row');
+        html.setStyle(this.colorBlockTr, 'display', 'none');
+        html.setStyle(this.classCountTr, 'display', 'table-row');
+        html.setStyle(this.domainTr, 'display', 'table-row');
+        html.setStyle(this.colorBarTr, 'display', 'table-row');
+        html.setStyle(this.uniqueSetting, 'display', 'none');
+        html.setStyle(this.symbolSizeDomainTr, 'display', 'none');
+        this._updateClassBreaksSettingVisibility();
+      }
+      else if(value === 'size'){
+        html.setStyle(this.fieldSelectTr, 'display', 'table-row');
+        html.setStyle(this.colorBlockTr, 'display', 'none');
+        html.setStyle(this.colorBarTr, 'display', 'none');
+        html.setStyle(this.domainTr, 'display', 'table-row');
+        html.setStyle(this.classCountTr, 'display', 'table-row');
+        html.setStyle(this.uniqueSetting, 'display', 'none');
+        html.setStyle(this.symbolSizeDomainTr, 'display', 'table-row');
+        this._updateClassBreaksSettingVisibility();
+      }
+    },
+
+    _showDefaultSymbol:function(){
+      html.setStyle(this.defaultSymSection, 'display', 'block');
+      html.setStyle(this.selectedSymSection, 'display', 'none');
+    },
+
+    _showSelectedSymbol:function(symbol){
+      html.setStyle(this.defaultSymSection, 'display', 'none');
+      html.setStyle(this.selectedSymSection, 'display', 'block');
+      var value = this.rendererSelect.get('value');
+      if(value === 'simple'){
+        html.setStyle(this.uniqueSelectedSymInfoSet, 'display', 'none');
+        html.setStyle(this.classBreaksSelectedInfoSet, 'display', 'none');
+      }
+      else if(value === 'unique'){
+        html.setStyle(this.uniqueSelectedSymInfoSet, 'display', 'block');
+        html.setStyle(this.classBreaksSelectedInfoSet, 'display', 'none');
+      }
+      else if(value === 'color' || value === 'size'){
+        html.setStyle(this.uniqueSelectedSymInfoSet, 'display', 'none');
+        html.setStyle(this.classBreaksSelectedInfoSet, 'display', 'block');
+      }
+      this.selectedSymbolChooser.showBySymbol(symbol);
+    },
+
+    _onSelectedSymbolChange:function(newSymbol){
+      var value = this.rendererSelect.get('value');
+      if(value === 'unique'){
+        this._onUniqueSelectedSymbolChange(newSymbol);
+      }
+      else if(value === 'color'){
+        this._onClassBreakSelectedSymbolChange(newSymbol);
+      }
+      else if(value === 'size'){
+        this._onClassBreakSelectedSymbolChange(newSymbol);
+      }
+    },
+
+    _cloneSymbol:function(symbol){
+      if(!symbol){
+        return null;
+      }
+      var jsonSym = symbol.toJson();
+      var clone = jsonUtils.fromJson(jsonSym);
+      return clone;
+    },
+
+    _drawSymbolPreview:function(previewNode, sym){
+      var node = previewNode;
+      var symbol = this._cloneSymbol(sym);
+
+      html.empty(node);
+
+      var sWidth = 80;
+      var sHeight = 30;
+      if (symbol.type === "simplemarkersymbol") {
+        // extra padding for the outline width
+        sWidth = Math.min(symbol.size + 12, 125);
+        sHeight = sWidth;
+      } else if (symbol.type === "picturemarkersymbol") {
+        if (!symbol.url || symbol.url === "http://" ||
+            (symbol.url.indexOf("http://") === -1 &&
+             symbol.url.indexOf("https://") === -1 &&
+             symbol.url.indexOf("data:") === -1)) {
+          // bad URL
+          return;
+        }
+        sWidth = Math.min(Math.max(symbol.width, symbol.height), 125);
+        sHeight = sWidth;
+      } else if (symbol.type === "simplelinesymbol" || symbol.type === "cartographiclinesymbol") {
+        sWidth = 190;
+        sHeight = 20;
+      }
+
+      if(sWidth > 60){
+        sWidth = 60;
+      }
+
+      var surface = gfx.createSurface(node, sWidth, sHeight);
+      if (gfx.renderer === "vml") {
+        // Fixes an issue in IE where the shape is partially drawn and
+        // positioned to the right of the table cell
+        var source = surface.getEventSource();
+        html.setStyle(source, "position", "relative");
+        html.setStyle(source.parentNode, "position", "relative");
+      }
+      var shapeDesc = null;
+
+      // if(symbolUtils.isSimpleLineSymbol(symbol) || symbolUtils.isCartographicLineSymbol(symbol)){
+      //   shapeDesc = this._getLineShapeDesc(symbol);
+      // }
+      // else{
+      shapeDesc = jsonUtils.getShapeDescriptors(symbol);
+      // }
+
+      var gfxShape;
+      try {
+        gfxShape = surface.createShape(shapeDesc.defaultShape)
+                   .setFill(shapeDesc.fill).setStroke(shapeDesc.stroke);
+      } catch (e) {
+        surface.clear();
+        surface.destroy();
+        return;
+      }
+
+      var dim = surface.getDimensions();
+      var transform = {
+        dx: dim.width / 2,
+        dy: dim.height / 2
+      };
+
+      var bbox = gfxShape.getBoundingBox(),
+        width = bbox.width,
+        height = bbox.height;
+      if (width > sWidth || height > sHeight) {
+        var actualSize = width > height ? width : height;
+        var refSize = sWidth < sHeight ? sWidth : sHeight;
+        var scaleBy = (refSize - 5) / actualSize;
+        lang.mixin(transform, {
+          xx: scaleBy,
+          yy: scaleBy
+        });
+      }
+
+      gfxShape.applyTransform(transform);
+      return surface;
+    },
+
+    /* simple renderer */
+    _getSimpleRenderer:function(){
+      var symbol = this.defaultSymbolChooser.getSymbol();
+      var renderer = new SimpleRenderer(symbol);
+      return renderer;
+    },
+
+    /* unique symbols */
+    _bindUniqueSettingEvents:function(){
+      this.own(on(this.btnAddUniqueValue, 'click', lang.hitch(this, this._onAddUniqueValue)));
+      this.own(
+        on(this.uniqueSelectedValue, 'change', lang.hitch(this, this._onUniqueSelectedValueChange))
+      );
+      this.own(
+        on(this.uniqueSelectedLabel, 'change', lang.hitch(this, this._onUniqueSelectedLabelChange))
+      );
+      this.own(
+        on(this.uniqueColorSelect, 'change', lang.hitch(this, this._onUniqueColorSelectChange))
+      );
+    },
+
+    _showUniqueValueRenderer:function(renderer){
+      this.rendererSelect.set('value', 'unique');
+      this.fieldComboBox.set('displayedValue', renderer.attributeField);
+      if (renderer._colorType) {
+        this.uniqueColorSelect.set('value', renderer._colorType);
+      }
+      html.empty(this.uniqueSysTbody);
+      array.forEach(renderer.infos, lang.hitch(this, function(info){
+        this._addUniqueValueTr(info.symbol, info.value, info.label || info.value);
+      }));
+      this._addDefaultValueTr(this.uniqueSysTbody);
+    },
+
+    _getUniqueValueRenderer:function(){
+      var defaultSym = this.defaultSymbolChooser.getSymbol();
+      var field = this.fieldComboBox.get('value');
+      var renderer = new UniqueValueRenderer(defaultSym, field);
+      var trs = query('.unique-symbol-tr', this.uniqueSysTbody);
+      array.forEach(trs, lang.hitch(this, function(tr){
+        renderer.addValue({
+          value: tr.value,
+          symbol: tr.symbol,
+          label: tr.label,
+          description: tr.label
+        });
+      }));
+      renderer._colorType = this.uniqueColorSelect.get('value');
+      renderer._showOthersSymbol = this._showOthersSymbol;
+      return renderer;
+    },
+
+    _onUniqueColorSelectChange:function(){
+      var colors = this._getSelectedUniqueColors();
+      var trs = query('.unique-symbol-tr', this.uniqueSysTbody);
+      array.forEach(trs, lang.hitch(this, function(tr, index){
+        if(tr.symbol){
+          if(!(symbolUtils.isPictureMarkerSymbol(tr.symbol))){
+            var idx = index % colors.length;
+            var color = colors[idx];
+            tr.symbol.setColor(color);
+            var symbolDiv = query('.symbol-div', tr)[0];
+            this._drawSymbolPreview(symbolDiv, tr.symbol);
+            if(this._selectedUniqueValueTr === tr){
+              this._showSelectedSymbol(tr.symbol);
+            }
+          }
+        }
+      }));
+    },
+
+    _onUniqueSelectedValueChange:function(){
+      var tr = this._selectedUniqueValueTr;
+      var newValue = this.uniqueSelectedValue.value;
+      if(tr && newValue !== tr.value){
+        var trs = query('.unique-symbol-tr', this.uniqueSysTbody);
+        var exists = array.some(trs, function(trElem) {
+          return trElem.value === newValue;
+        });
+        if (exists) {
+          var msg = this.nls.duplicatedValue;
+          var popup = new Message({
+            message: msg.replace("${value}", newValue),
+            buttons: [{
+              label: this.nls.ok,
+              onClick: function() {
+                popup.close();
+              }
+            }]
+          });
+          this.uniqueSelectedValue.value = tr.value;
+          return;
+        }
+        tr.value = this.uniqueSelectedValue.value;
+      }
+    },
+
+    _onUniqueSelectedLabelChange:function(){
+      var tr = this._selectedUniqueValueTr;
+      if(tr){
+        tr.label = this.uniqueSelectedLabel.value;
+        var labelDiv = query('.label-div', tr)[0];
+        labelDiv.innerHTML = tr.label;
+      }
+    },
+
+    _onUniqueSelectedSymbolChange:function(newSymbol){
+      var tr = this._selectedUniqueValueTr;
+      if(!tr){
+        return;
+      }
+      tr.symbol = newSymbol;
+      var symbolDiv = query('.symbol-div', tr)[0];
+      if(!symbolDiv){
+        return;
+      }
+      this._drawSymbolPreview(symbolDiv, newSymbol);
+    },
+
+    _onAddUniqueValue:function(){
+      var uniqueValue = lang.trim(this.uniqueEditValue.value);
+      if (uniqueValue) {
+        var trs = query('.unique-symbol-tr', this.uniqueSysTbody);
+        var exists = array.some(trs, function(trElem) {
+          return trElem.value === uniqueValue;
+        });
+        if (exists) {
+          var msg = this.nls.duplicatedValue;
+          var popup = new Message({
+            message: msg.replace("${value}", uniqueValue),
+            buttons: [{
+              label: this.nls.ok,
+              onClick: function() {
+                popup.close();
+              }
+            }]
+          });
+        } else {
+          var colors = this._getSelectedUniqueColors();
+          var colorIndex = trs.length % colors.length;
+          var color = colors[colorIndex];
+          var symbol = this._getUniqueSymbol(color);
+          this._addUniqueValueTr(symbol, uniqueValue, uniqueValue);
+          this._setDefaultSymbolStatus(true);
+        }
+      }
+      this.uniqueEditValue.value = '';
+    },
+
+    _addUniqueValueTr:function(symbol, value, label){
+      value = lang.trim(value);
+      var s = '';
+      s = '<tr class="unique-symbol-tr">' +
+          '<td class="symbol-td">' +
+            '<div class="symbol-div"></div>' +
+          '</td>' +
+          '<td class="edit-td">' +
+            '<div wrap class="label-div"></div>' +
+          '</td>' +
+          '<td class="delete-td">' +
+            '<div class="delete-div jimu-icon jimu-icon-delete"></div>' +
+          '</td>' +
+        '</tr>';
+      var trDom = html.toDom(s);
+      var defaultSymbolTr = query('.default-symbol-tr', this.uniqueSysTbody);
+      if (defaultSymbolTr.length > 0) {
+        html.place(trDom, defaultSymbolTr[0], 'before');
+      } else {
+        html.place(trDom, this.uniqueSysTbody);
+      }
+      this._updateUniqueSymTableStyle();
+      var symbolDiv = query('.symbol-div', trDom)[0];
+      var labelDiv = query('.label-div', trDom)[0];
+      var deleteDiv = query('.delete-div', trDom)[0];
+      labelDiv.innerHTML = label;
+      this.own(on(trDom, 'click', lang.hitch(this, function(){
+        this._selectUniqueValueTr(trDom);
+      })));
+      this.own(on(deleteDiv, 'click', lang.hitch(this, function(event){
+        event.stopPropagation();
+        if(this._selectedUniqueValueTr === trDom){
+          this._selectedUniqueValueTr = null;
+        }
+        html.destroy(trDom);
+        this._updateUniqueSymTableStyle();
+        this._updateUniqueValueDivVisibility();
+      })));
+      this._drawSymbolPreview(symbolDiv, symbol);
+      trDom.symbol = symbol;
+      trDom.value = value;
+      trDom.label = label;
+      this._selectUniqueValueTr(trDom);
+      html.setStyle(this.uniqueValueDiv, 'display', 'block');
+    },
+
+    _selectUniqueValueTr:function(tr){
+      query('tr', this.uniqueSysTbody).removeClass('selected');
+      html.addClass(tr, 'selected');
+      this._selectedUniqueValueTr = tr;
+      this.uniqueSelectedValue.value = tr.value;
+      this.uniqueSelectedLabel.value = tr.label;
+      this._showSelectedSymbol(tr.symbol);
+    },
+
+    _updateUniqueSymTableStyle:function(){
+    },
+
+    _getSelectedUniqueColors:function(){
+      var value = this.uniqueColorSelect.get('value');
+      var strColors = this._uniqueColors[value];
+      var colors = array.map(strColors, lang.hitch(this, function(str){
+        return new Color(str);
+      }));
+      return colors;
+    },
+
+    _getUniqueSymbol:function(color){
+      var symbol = null;
+      if(this.type === 'marker'){
+        var args = {
+          "style": "esriSMSCircle",
+          "color": [0, 0, 128, 128],
+          "name": "Circle",
+          "outline": {
+            "color": [191, 151, 39, 255],
+            "width": 1
+          },
+          "type": "esriSMS",
+          "size": 18
+        };
+        symbol = new SimpleMarkerSymbol(args);
+        symbol.setColor(color);
+      }
+      else if(this.type === 'line' || this.type === 'fill'){
+        var sym = this.defaultSymbolChooser.getSymbol();
+        symbol = jsonUtils.fromJson(sym.toJson());
+        symbol.setColor(color);
+      }
+
+      return symbol;
+    },
+
+    _updateUniqueValueDivVisibility:function(){
+      var trs = query('tr', this.uniqueSysTbody);
+      if (trs.length === 0) {
+        this._addDefaultValueTr(this.uniqueSysTbody);
+        this._setDefaultSymbolStatus(false);
+      } else if (trs.length === 1 && html.hasClass(trs[0], 'default-symbol-tr')) {
+        this._setDefaultSymbolStatus(false);
+      }
+      trs.removeClass('selected');
+      query('.default-symbol-tr', this.uniqueSysTbody).addClass('selected');
+      html.setStyle(this.uniqueValueDiv, 'display', 'block');
+    },
+
+    /* class breaks renderer */
+    _bindClassBreaksEvents:function(){
+      this.own(on(this.minDomain, 'change', lang.hitch(this, this._updateClassBreaksTable)));
+      this.own(on(this.maxDomain, 'change', lang.hitch(this, this._updateClassBreaksTable)));
+      this.own(on(this.classCount, 'change', lang.hitch(this, this._updateClassBreaksTable)));
+      this.own(on(this.selectedFrom, 'change', lang.hitch(this, this._onSelectedRangeChange)));
+      this.own(on(this.selectedTo, 'change', lang.hitch(this, this._onSelectedRangeChange)));
+      this.own(on(this.classBreakSelectedLabel, 'change', lang.hitch(this, this._onClassBreakSelectedLabelChange)));
+
+      //color
+      this.own(on(this.classBreaksColorSelect, 'change', lang.hitch(this, this._updateClassBreaksTable)));
+
+      //size
+      this.own(on(this.minSymbolSize, 'change', lang.hitch(this, this._updateClassBreaksTable)));
+      this.own(on(this.maxSymbolSize, 'change', lang.hitch(this, this._updateClassBreaksTable)));
+    },
+
+    _showClassBreaksRenderer:function(renderer){
+      this._isDrawing = true;
+      this.rendererSelect.set('value', 'color');
+      if (renderer._colorType) {
+        this.classBreaksColorSelect.set('value', renderer._colorType);
+      }
+      var min = Infinity, max = -Infinity;
+      this.fieldComboBox.set('displayedValue', renderer.attributeField);
+      this.classCount.set('value', renderer.infos.length);
+      html.empty(this.classBreaksTbody);
+      array.forEach(renderer.infos, lang.hitch(this, function(info){
+        var minValue = info.minValue;
+        var maxValue = info.maxValue;
+        var symbol = info.symbol;
+        var label = info.label ? info.label : info.minValue + ' —— ' + info.maxValue;
+        this._addClassBreaksTr(symbol, minValue, maxValue, label);
+        min = Math.min(min, minValue);
+        max = Math.max(max, maxValue);
+      }));
+      this.minDomain.set('value', min);
+      this.maxDomain.set('value', max);
+      this._addDefaultValueTr(this.classBreaksTbody);
+
+      if(this.type === 'marker'){
+        var minSymSize = Infinity, maxSymSize = -Infinity;
+        array.forEach(renderer.infos, lang.hitch(this, function(info){
+          var symbol = info.symbol;
+          var symbolSize = symbolUtils.isPictureMarkerSymbol(symbol) ? symbol.width : symbol.size;
+          minSymSize = Math.min(symbolSize, minSymSize);
+          maxSymSize = Math.max(symbolSize, maxSymSize);
+        }));
+        this.minSymbolSize.set('value', minSymSize);
+        this.maxSymbolSize.set('value', maxSymSize);
+        if(this.minSymSize !== this.maxSymSize){
+          this.rendererSelect.set('value', 'size');
+        }
+      }
+      var that = this;
+      setTimeout(function(){
+        that._isDrawing = false;
+      }, 1000);
+    },
+
+    _getClassBreaksRenderer:function(){
+      var defaultSym = this.defaultSymbolChooser.getSymbol();
+      var field = this.fieldComboBox.get('value');
+      var renderer = new ClassBreaksRenderer(defaultSym, field);
+      var trs = query('.class-breaks-tr', this.classBreaksTbody);
+      array.forEach(trs, lang.hitch(this, function(tr){
+        renderer.addBreak({
+          minValue: tr.from,
+          maxValue: tr.to,
+          symbol: tr.symbol,
+          label: tr.label
+        });
+      }));
+
+      renderer._colorType = this.classBreaksColorSelect.get('value');
+      renderer._showOthersSymbol = this._showOthersSymbol;
+      return renderer;
+    },
+
+    _onClassBreakSelectedSymbolChange:function(newSymbol){
+      var tr = this._selectedClassBreakTr;
+      if(tr){
+        tr.symbol = newSymbol;
+        var symbolDiv = query('.symbol-div', tr)[0];
+        this._drawSymbolPreview(symbolDiv, newSymbol);
+      }
+    },
+
+    _onSelectedRangeChange:function(){
+      var from = parseFloat(this.selectedFrom.get('value'));
+      var to = parseFloat(this.selectedTo.get('value'));
+      if(from > to){
+        var temp = from;
+        from = to;
+        to = temp;
+        this.selectedFrom.set('value', from);
+        this.selectedTo.set('value', to);
+      }
+      var tr = this._selectedClassBreakTr;
+      if(tr && (tr.from !== from || tr.to !== to)){ // update label only when range changed
+        tr.from = from;
+        tr.to = to;
+        var label = from + " — " + to;
+        tr.label = label;
+        this.classBreakSelectedLabel.value = label;
+        var labelDiv = query('.label-div', tr)[0];
+        labelDiv.innerHTML = label;
+      }
+    },
+
+    _onClassBreakSelectedLabelChange:function(){
+      var tr = this._selectedClassBreakTr;
+      if(tr){
+        var label = this.classBreakSelectedLabel.value;
+        tr.label = label;
+        var labelDiv = query('.label-div', tr)[0];
+        labelDiv.innerHTML = label;
+      }
+    },
+
+    _updateClassBreaksTable:function(){
+      if(this._isDrawing){
+        return;
+      }
+      html.setStyle(this.classBreaksSetting, 'display', 'none');
+      html.empty(this.classBreaksTbody);
+      var min = parseFloat(this.minDomain.get('value'));
+      var max = parseFloat(this.maxDomain.get('value'));
+      if(min > max){
+        var temp = min;
+        min = max;
+        max = temp;
+        this.minDomain.set('value', min);
+        this.maxDomain.set('value', max);
+      }
+      else if(min === max){
+        return;
+      }
+      var minSymSize = parseFloat(this.minSymbolSize.get('value'));
+      var maxSymSize = parseFloat(this.maxSymbolSize.get('value'));
+      if(minSymSize > maxSymSize){
+        var temp2 = minSymSize;
+        minSymSize = maxSymSize;
+        maxSymSize = temp2;
+        this.minSymbolSize.set('value', minSymSize);
+        this.maxSymbolSize.set('value', maxSymSize);
+      }
+      var count = parseInt(this.classCount.get('value'), 10);
+      var interval = (max - min) / count;
+      var nums = [];//length=count+1
+      var i;
+      for(i = 0; i <= count; i++){
+        var num = min + interval * i;
+        num = parseFloat(num.toFixed(4));
+        nums.push(num);
+      }
+      var rendererType = this.rendererSelect.get('value');
+      var symbols = [];//length = count
+      if(rendererType === 'color'){
+        symbols = this._createColorClassBreaksSymbols(count);
+      }
+      else if(rendererType === 'size'){
+        symbols = this._createSizeClassBreaksSymbols(count, minSymSize, maxSymSize);
+      }
+      //create count tr
+      for(i = 0; i < count; i++){
+        var from = nums[i];
+        var to = nums[i + 1];
+        var label = from + " — " + to;
+        this._addClassBreaksTr(symbols[i], from, to, label);
+      }
+      this._addDefaultValueTr(this.classBreaksTbody);
+      this._updateClassBreaksSettingVisibility();
+    },
+
+    _selectClassBreaksTr:function(tr){
+      var trs = query('tr', this.classBreaksTbody);
+      trs.removeClass('selected');
+      html.addClass(tr, 'selected');
+      this._selectedClassBreakTr = tr;
+      var symbol = tr.symbol;
+      var from = parseFloat(tr.from);
+      var to = parseFloat(tr.to);
+      var label = tr.label;
+      this.selectedFrom.set('value', from);
+      this.selectedTo.set('value', to);
+      this.classBreakSelectedLabel.value = label;
+      this._showSelectedSymbol(symbol);
+    },
+
+    _addClassBreaksTr:function(symbol, from, to, label){
+      var s = '';
+      s = '<tr class="class-breaks-tr">' +
+          '<td class="symbol-td">' +
+            '<div class="symbol-div"></div>' +
+          '</td>' +
+          '<td class="label-td">' +
+            '<div wrap class="label-div"></div>' +
+          '</td>' +
+          '<td class="delete-td">' +
+            '<div class="delete-div jimu-icon jimu-icon-delete"></div>' +
+          '</td>' +
+        '</tr>';
+      var tr = html.toDom(s);
+      var defaultSymbolTr = query('.default-symbol-tr', this.classBreaksTbody);
+      if (defaultSymbolTr.length > 0) {
+        html.place(tr, defaultSymbolTr[0], 'before');
+      } else {
+        html.place(tr, this.classBreaksTbody);
+      }
+      tr.symbol = symbol;
+      tr.from = from;
+      tr.to = to;
+      tr.label = label;
+      var symbolDiv = query('.symbol-div', tr)[0];
+      var labelDiv = query('.label-div', tr)[0];
+      var deleteDiv = query('.delete-div', tr)[0];
+      this._drawSymbolPreview(symbolDiv, symbol);
+      labelDiv.innerHTML = label;
+      this.own(on(tr, 'click', lang.hitch(this, function(){
+        this._selectClassBreaksTr(tr);
+      })));
+      this.own(on(deleteDiv, 'click', lang.hitch(this, function(event){
+        event.stopPropagation();
+        if(this._selectClassBreaksTr === tr){
+          this._selectClassBreaksTr = null;
+        }
+        html.destroy(tr);
+        this._updateClassBreaksSettingVisibility();
+      })));
+      this._updateClassBreaksTableStyle();
+      this._showDefaultSymbol();
+      html.setStyle(this.classBreaksSetting, 'display', 'block');
+    },
+
+    _addDefaultValueTr:function(targetNode){
+      var node = query('.default-symbol-tr', targetNode);
+      if (node.length > 0) {
+        return;
+      }
+      var s = '', symbol = this.defaultSymbolChooser.getSymbol(), label = this.nls.defaultSymbol;
+      s = '<tr class="default-symbol-tr">' +
+          '<td class="symbol-td">' +
+            '<div class="symbol-div"></div>' +
+          '</td>' +
+          '<td class="label-td">' +
+            '<div wrap class="label-div"></div>' +
+          '</td>' +
+          '<td class="check-td">' +
+            '<div class="check-div"></div>' +
+          '</td>' +
+        '</tr>';
+      var trDom = html.toDom(s);
+      html.place(trDom, targetNode);
+      var symbolDiv = query('.symbol-div', trDom)[0];
+      var labelDiv = query('.label-div', trDom)[0];
+      var checkDiv = query('.check-div', trDom)[0];
+      html.setAttr(checkDiv, 'title', this.nls.othersSymbolTip);
+      var checkbox = new CheckBox({
+        checked: this._showOthersSymbol
+      });
+      checkbox.placeAt(checkDiv);
+      checkbox.startup();
+      labelDiv.innerHTML = this.nls.othersSymbol;
+      this.own(on(trDom, 'click', lang.hitch(this, function(){
+        var trs = query('tr', targetNode);
+        trs.removeClass('selected');
+        html.addClass(trDom, 'selected');
+        this._showDefaultSymbol();
+      })));
+      this.own(on(checkbox, 'change', lang.hitch(this, function(checked){
+        this._showOthersSymbol = checked;
+      })));
+      this._drawSymbolPreview(symbolDiv, symbol);
+      trDom.symbol = symbol;
+      trDom.label = label;
+      trDom.checkbox = checkbox;
+      html.setStyle(this.uniqueValueDiv, 'display', 'block');
+    },
+
+    _updateClassBreaksTableStyle:function(){},
+
+    _updateClassBreaksSettingVisibility:function(){
+      var trs = query('tr', this.classBreaksTbody);
+      if (trs.length === 0) {
+        this._addDefaultValueTr(this.classBreaksTbody);
+        this._setDefaultSymbolStatus(false);
+      } else if (trs.length === 1 && html.hasClass(trs[0], 'default-symbol-tr')) {
+        this._setDefaultSymbolStatus(false);
+      }
+      trs.removeClass('selected');
+      query('.default-symbol-tr', this.classBreaksTbody).addClass('selected');
+      html.setStyle(this.classBreaksSetting, 'display', 'block');
+    },
+
+    //color
+    _createColorClassBreaksSymbols:function(count){
+      var symbols = [];
+      var colors = this._createClassBreaksColors(count);
+      for(var i = 0; i < count; i++){
+        var color = colors[i];
+        var sym = null;
+        if(this.type === 'marker'){
+          var args = {
+            "style": "esriSMSCircle",
+            "color": [0, 0, 128, 128],
+            "name": "Circle",
+            "outline": {
+              "color": [191, 151, 39, 255],
+              "width": 1
+            },
+            "type": "esriSMS",
+            "size": 18
+          };
+          sym = new SimpleMarkerSymbol(args);
+          sym.setColor(color);
+        }
+        else if(this.type === 'line' || this.type === 'fill'){
+          var a = this.defaultSymbolChooser.getSymbol();
+          sym = jsonUtils.fromJson(a.toJson());
+          sym.setColor(color);
+        }
+        symbols.push(sym);
+      }
+      return symbols;
+    },
+
+    _createClassBreaksColors:function(count){
+      var colors = [];
+      var value = this.classBreaksColorSelect.get('value');
+      var c = this._classBreaksColors[value];
+      var c1 = new Color(c[0]);
+      var c2 = new Color(c[1]);
+      var deltaR = Math.floor((c2.r - c1.r) / count);
+      var deltaG = Math.floor((c2.g - c1.g) / count);
+      var deltaB = Math.floor((c2.b - c1.b) / count);
+      for(var i = 0; i < count; i++){
+        var r = c1.r + deltaR * i;
+        var g = c1.g + deltaG * i;
+        var b = c1.b + deltaB * i;
+        var color = new Color([r, g, b, 255]);
+        colors.push(color);
+      }
+      return colors;
+    },
+
+    //size
+    _createSizeClassBreaksSymbols:function(count, minSymSize, maxSymSize){
+      var defaultSym = this.defaultSymbolChooser.getSymbol();
+      var symbols = [];
+      var interval = (maxSymSize - minSymSize) / (count - 1);
+      for(var i = 0; i < count; i++){
+        var size = Math.round(minSymSize + interval * i);
+        var jsonSym = defaultSym.toJson();
+        var sym = jsonUtils.fromJson(jsonSym);
+
+        if(symbolUtils.isPictureMarkerSymbol(sym)){
+          sym.setWidth(size);
+          sym.setHeight(size);
+        }
+        else{
+          sym.setSize(size);
+        }
+        symbols.push(sym);
+      }
+      return symbols;
+    }
+  });
+});

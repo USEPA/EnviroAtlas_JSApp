@@ -1,7 +1,146 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/_CropImage.html":'\x3cdiv class\x3d"jimu-crop-image"\x3e\r\n\t\x3cimg class\x3d"loading-image" data-dojo-attach-point\x3d"loadingImg" src\x3d""\x3e\r\n\r\n\t\x3cimg class\x3d"base-image hide-status" data-dojo-attach-point\x3d"baseImage" width\x3d"100%" height\x3d"100%" style\x3d"display:none;width:100%;height:100%"\x3e\r\n\x3c/div\x3e\r\n'}});
-define("dojo/_base/declare dojo/_base/html dojo/_base/lang dojo/on dijit/_WidgetBase dijit/_TemplatedMixin dojo/text!./templates/_CropImage.html jimu/dijit/Message libs/cropperjs/cropperjs xstyle/css!libs/cropperjs/cropper.css dojo/NodeList-dom".split(" "),function(c,a,b,d,e,f,g,h,k){return c([e,f],{templateString:g,imageSrc:null,type:null,goldenWidth:4,goldenHeight:3,_haveShowReadErrMsg:!1,postCreate:function(){this.type||(this.type="image/jpeg");this.setImageSrc(this.imageSrc);this.loadingImg.src=
-require.toUrl("jimu")+"/images/loading.gif";this._checkImgError();this.own(d(this.baseImage,"load",b.hitch(this,function(){a.setStyle(this.loadingImg,"display","none");this._initCropper()})))},_initCropper:function(){this.cropper&&this.cropper.destroy&&this.cropper.destroy();this.cropper=new k(this.baseImage,{aspectRatio:this.goldenWidth/this.goldenHeight,preview:".img-preview"})},setImageSrc:function(l){a.setAttr(this.baseImage,"src",l)},getData:function(){try{var a=this.cropper.getCroppedCanvas();
-this.cropper.getCroppedCanvas();return a.toDataURL(this.type||"image/jpeg")}catch(m){return this._readError(),null}},destroy:function(){this.cropper&&this.cropper.destroy&&this.cropper.destroy();this.inherited(arguments)},_checkImgError:function(){setTimeout(b.hitch(this,function(){"none"!==a.getStyle(this.loadingImg,"display")&&this._readError()}),5E3)},_readError:function(){this._haveShowReadErrMsg||(new h({message:this.nls.readError}),this._haveShowReadErrMsg=!0)}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  //'dojo/Evented',
+  'dojo/_base/declare',
+  'dojo/_base/html',
+  'dojo/_base/lang',
+  'dojo/on',
+  //'dojo/query',
+  //'jimu/utils',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dojo/text!./templates/_CropImage.html',
+  'jimu/dijit/Message',
+  'libs/cropperjs/cropperjs',
+  'xstyle/css!libs/cropperjs/cropper.css',
+  'dojo/NodeList-dom'
+],
+  function (/*Evented, */declare, html, lang, on,/*query,  utils,*/
+    _widgetBase, _TemplatedMixin, template, Message, Cropper) {
+    //var Cropper = window.Cropper;
+    return declare([_widgetBase, _TemplatedMixin], {
+      templateString: template,
+
+      imageSrc: null,
+      type: null,
+      goldenWidth: 4,
+      goldenHeight: 3,
+
+      _haveShowReadErrMsg: false,
+
+      postCreate: function () {
+        if (!this.type) {
+          this.type = 'image/jpeg';
+        }
+        this.setImageSrc(this.imageSrc);
+
+        this.loadingImg.src = require.toUrl('jimu') + '/images/loading.gif';
+        this._checkImgError();//show error msg, if can't load img after 5's
+
+        this.own(on(this.baseImage, 'load', lang.hitch(this, function () {
+          html.setStyle(this.loadingImg, 'display', 'none');
+          this._initCropper();
+        })));
+      },
+
+      _initCropper: function () {
+        // Restart
+        if (this.cropper && this.cropper.destroy) {
+          this.cropper.destroy();
+        }
+        var options = {
+          aspectRatio: this.goldenWidth / this.goldenHeight,
+          preview: '.img-preview'
+          // ready: lang.hitch(this, function (e) {
+          //   console.log(e.type);
+          // }),
+          // cropstart: lang.hitch(this, function (e) {
+          //   console.log(e.type, e.detail.action);
+          //   //this.saveBookMarkersBySortable();
+          //   //this.emit("sort", this.bookmarks);
+          // }),
+          // cropmove: function (e) {
+          //   console.log(e.type, e.detail.action);
+          // },
+          // cropend: lang.hitch(this, function (e) {
+          //   console.log(e.type, e.detail.action);
+          //   //var data = this.getData();
+          //   //this.emit("crop", data);
+          // }),
+          // crop: function (e) {
+          //   var data = e.detail;
+          //   console.log(e.type);
+          //   // dataX.value = Math.round(data.x);
+          //   // dataY.value = Math.round(data.y);
+          //   // dataHeight.value = Math.round(data.height);
+          //   // dataWidth.value = Math.round(data.width);
+          //   // dataRotate.value = typeof data.rotate !== 'undefined' ? data.rotate : '';
+          //   // dataScaleX.value = typeof data.scaleX !== 'undefined' ? data.scaleX : '';
+          //   // dataScaleY.value = typeof data.scaleY !== 'undefined' ? data.scaleY : '';
+          // },
+          // zoom: function (e) {
+          //   console.log(e.type, e.detail.ratio);
+          // }
+        };
+        this.cropper = new Cropper(this.baseImage, options);
+      },
+
+      setImageSrc: function (src) {
+        html.setAttr(this.baseImage, 'src', src);
+      },
+
+      getData: function () {
+        try {
+          var imgData = this.cropper.getCroppedCanvas();
+          this.cropper.getCroppedCanvas();
+          var uploadedImageType = this.type || 'image/jpeg';
+          var data = imgData.toDataURL(uploadedImageType);
+          return data;
+        } catch (e) {
+          this._readError();
+          return null;
+        }
+      },
+
+      destroy: function () {
+        if (this.cropper && this.cropper.destroy) {
+          this.cropper.destroy();
+        }
+
+        this.inherited(arguments);
+      },
+
+      _checkImgError: function () {
+        setTimeout(lang.hitch(this, function () {
+          var isStillLoading = (html.getStyle(this.loadingImg, "display") !== "none");
+          if (isStillLoading) {
+            this._readError();
+          }
+        }), 5000);
+      },
+      _readError: function () {
+        if (!this._haveShowReadErrMsg) {
+          new Message({
+            message: this.nls.readError
+          });
+
+          this._haveShowReadErrMsg = true;
+        }
+      }
+    });
+  });

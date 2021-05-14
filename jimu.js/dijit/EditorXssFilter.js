@@ -1,12 +1,319 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dojo/_base/array dijit/_WidgetBase dojo/_base/lang dojo/Evented libs/arcgis-html-sanitizer/arcgis-html-sanitizer".split(" "),function(k,e,l,d,m,n){var f=null,g=k([l,m],{baseClass:"jimu-editor-xss-filter",declaredClass:"jimu.dijit.EditorXssFilter",sanitizer:null,xss:null,whiteList:{},graphicsWhiteList:{},postCreate:function(){this.whiteList=this._getWhiteList();this.sanitizer=new n({whiteList:this.whiteList,safeAttrValue:d.hitch(this,function(a,b,c,h){return"style"===b?this.xss.friendlyAttrValue(c).replace(/\"/g,
-"'"):"img"===a&&"src"===b?this.xss.escapeAttrValue(c):this.xss.safeAttrValue(a,b,c,h)}),onTag:d.hitch(this,function(a,b,c){if(c.isWhite&&this._isInWhiteList(a,this.graphicsWhiteList))return b}),onIgnoreTagAttr:d.hitch(this,function(a,b,c,h){if("data-"===b.substr(0,5))return b+'\x3d"'+this.xss.escapeAttrValue(c)+'"'}),onIgnoreTag:d.hitch(this,function(a,b,c){if("o:"===a.substr(0,2)||"!--[if"===a||"!--[endif]--"===a)return b})},!0);this.xss=this.sanitizer.xss},sanitize:function(a){return this.sanitizer.sanitize(a)},
-_getWhiteList:function(){var a="title height width class style font-family id align text-align".split(" "),b={div:a,h1:a,h2:a,h3:a,h4:a,h5:a,h6:a,span:a,p:a,s:a,strong:a,em:a,u:a,ol:a,ul:a,li:a,a:["href","target"].concat(a),img:["src","alt","border"].concat(a),blockquote:a,font:["face","size","color"].concat(a),pre:a,code:a,b:a,i:a,wbr:a,video:"autoplay controls loop muted poster preload".split(" ").concat(a),audio:["autoplay","controls","loop","muted","preload"].concat(a),source:["media","src","type"].concat(a),
-table:["cellpadding","cellspacing","border"].concat(a),tbody:[].concat(a),tr:["valign"].concat(a),td:["valign","colspan","rowspan","nowrap"].concat(a),th:["valign","colspan","rowspan","nowrap"].concat(a),hr:a,html:a,title:a,link:["rel","href"],style:["type"].concat(a),body:a};this.graphicsWhiteList={animate:[],animateMotion:[],animateTransform:[],circle:[],clipPath:[],"color-profile":[],defs:[],desc:[],discard:[],ellipse:[],feBlend:[],feColorMatrix:[],feComponentTransfer:[],feComposite:[],feConvolveMatrix:[],
-feDiffuseLighting:[],feDisplacementMap:[],feDistantLight:[],feDropShadow:[],feFlood:[],feFuncA:[],feFuncB:[],feFuncG:[],feFuncR:[],feGaussianBlur:[],feImage:[],feMerge:[],feMergeNode:[],feMorphology:[],feOffset:[],fePointLight:[],feSpecularLighting:[],feSpotLight:[],feTile:[],feTurbulence:[],filter:[],foreignObject:[],g:[],hatch:[],hatchpath:[],line:[],linearGradient:[],marker:[],mask:[],mesh:[],meshgradient:[],meshpatch:[],meshrow:[],metadata:[],mpath:[],path:[],pattern:[],polygon:[],polyline:[],
-radialGradient:[],rect:[],set:[],solidcolor:[],stop:[],svg:[],switch:[],symbol:[],text:[],textPath:[],title:[],tspan:[],use:[],view:[],object:[],canvas:a};return this._extendObjectOfArrays([b,{a:["target","href","title"],abbr:["title"],address:[],area:["shape","coords","href","alt"],article:[],aside:[],audio:["autoplay","controls","loop","preload","src"],b:[],bdi:["dir"],bdo:["dir"],big:[],blockquote:["cite"],br:[],caption:[],center:[],cite:[],code:[],col:["align","valign","span","width"],colgroup:["align",
-"valign","span","width"],dd:[],del:["datetime"],details:["open"],div:[],dl:[],dt:[],em:[],font:["color","size","face"],footer:[],h1:[],h2:[],h3:[],h4:[],h5:[],h6:[],header:[],hr:[],i:[],img:["src","alt","title","width","height"],ins:["datetime"],li:[],mark:[],nav:[],ol:[],p:[],pre:[],s:[],section:[],small:[],span:[],sub:[],sup:[],strong:[],table:["width","border","align","valign"],tbody:["align","valign"],td:["width","rowspan","colspan","align","valign"],tfoot:["align","valign"],th:["width","rowspan",
-"colspan","align","valign"],thead:["align","valign"],tr:["rowspan","align","valign"],tt:[],u:[],ul:[],video:"autoplay controls loop preload src height width".split(" ")},this.graphicsWhiteList])},_extendObjectOfArrays:function(a){var b={};e.forEach(a,function(a){var c=Object.keys(a);e.forEach(c,function(c){Array.isArray(a[c])&&Array.isArray(b[c])?b[c]=b[c].concat(a[c]):b[c]=a[c]},this)},this);return b},_isInWhiteList:function(a,b){b=Object.keys(b);var c=!1;e.forEach(b,function(b){a===b&&(c=!0)},this);
-return c}});g.getInstance=function(){null===f&&(f=new g);return f};return g});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  "dojo/_base/array",
+  'dijit/_WidgetBase',
+  'dojo/_base/lang',
+  'dojo/Evented',
+  "libs/arcgis-html-sanitizer/arcgis-html-sanitizer",
+],
+  function (declare, array, _WidgetBase, lang, Evented, Sanitizer) {
+    /* usage:
+      1.import: 'jimu/dijit/EditorXssFilter',
+      2.safeContent = EditorXssFilter.getInstance().sanitize(xssContent);
+    */
+    var singleton = null;
+    var clazz = declare([_WidgetBase, Evented], {
+      baseClass: 'jimu-editor-xss-filter',
+      declaredClass: 'jimu.dijit.EditorXssFilter',
+      //refs
+      sanitizer: null,
+      xss: null,
+      //filter: null,
+      //rules
+      whiteList: {},
+      graphicsWhiteList: {},
+
+      postCreate: function () {
+        this.whiteList = this._getWhiteList();
+        this.sanitizer = new Sanitizer({
+          whiteList: this.whiteList,
+          safeAttrValue: lang.hitch(this, function (tag, name, value, cssFilter) {
+            if (name === 'style') {
+              var quots = this.xss.friendlyAttrValue(value);
+              return quots.replace(/\"/g, "'");//replace " to ', for the inline style
+            } else if (tag === 'img' && name === 'src') {
+              return this.xss.escapeAttrValue(value);//keep string for base64
+            }
+            return this.xss.safeAttrValue(tag, name, value, cssFilter);
+          }),
+          // onTagAttr: lang.hitch(this, function(tag, name, value, isWhiteAttr) {
+          //   // if (tag === "b" && name === "style" &&
+          //   //   ((value.indexOf("color:") > -1) && value.indexOf("-color") == -1)) {
+          //   //   return value.replace(/\bcolor\b/g, "");//dojo editor delete the <b style="color"
+          //   // }
+          //   if (tag === "style") {
+          //     return value.replace(/\"/g, "'");
+          //   }
+          // }),
+          onTag: lang.hitch(this, function (tag, html, options) {
+            if (options.isWhite && this._isInWhiteList(tag, this.graphicsWhiteList)) { //for svg, canvas
+              return html;
+            }
+          }),
+          onIgnoreTagAttr: lang.hitch(this, function (tag, name, value, isWhiteAttr) { // Allow attributes of whitelist tags 
+            if (name.substr(0, 5) === "data-") {
+              return name + '="' + this.xss.escapeAttrValue(value) + '"';
+            }
+          }),
+          onIgnoreTag: lang.hitch(this, function (tag, html, options) {
+            if (tag.substr(0, 2) === "o:") { //MS word, means "Office namespace", e.g. <o:p>
+              return html;
+            }
+
+            if (tag === "!--[if") { // e.g. <!--[if !supportLists]-->, <!--[if gte mso
+              return html; //<!--[if 
+            } else if (tag === "!--[endif]--") {
+              return html; //<!--[endif]-->
+            }
+          })
+        }, true);
+        this.xss = this.sanitizer.xss; //keep codes-scope for dojo
+        //this.filter = this.sanitizer;
+      },
+
+      sanitize: function (str) {
+        return this.sanitizer.sanitize(str);
+      },
+
+      _getWhiteList: function () {
+        var htmlTagWhiteList = {
+          a: ["target", "href", "title"],
+          abbr: ["title"],
+          address: [],
+          area: ["shape", "coords", "href", "alt"],
+          article: [],
+          aside: [],
+          audio: ["autoplay", "controls", "loop", "preload", "src"],
+          b: [],
+          bdi: ["dir"],
+          bdo: ["dir"],
+          big: [],
+          blockquote: ["cite"],
+          br: [],
+          caption: [],
+          center: [],
+          cite: [],
+          code: [],
+          col: ["align", "valign", "span", "width"],
+          colgroup: ["align", "valign", "span", "width"],
+          dd: [],
+          del: ["datetime"],
+          details: ["open"],
+          div: [],
+          dl: [],
+          dt: [],
+          em: [],
+          font: ["color", "size", "face"],
+          footer: [],
+          h1: [],
+          h2: [],
+          h3: [],
+          h4: [],
+          h5: [],
+          h6: [],
+          header: [],
+          hr: [],
+          i: [],
+          img: ["src", "alt", "title", "width", "height"],
+          ins: ["datetime"],
+          li: [],
+          mark: [],
+          nav: [],
+          ol: [],
+          p: [],
+          pre: [],
+          s: [],
+          section: [],
+          small: [],
+          span: [],
+          sub: [],
+          sup: [],
+          strong: [],
+          table: ["width", "border", "align", "valign"],
+          tbody: ["align", "valign"],
+          td: ["width", "rowspan", "colspan", "align", "valign"],
+          tfoot: ["align", "valign"],
+          th: ["width", "rowspan", "colspan", "align", "valign"],
+          thead: ["align", "valign"],
+          tr: ["rowspan", "align", "valign"],
+          tt: [],
+          u: [],
+          ul: [],
+          video: ["autoplay", "controls", "loop", "preload", "src", "height", "width"]
+        };
+
+        var baseAttrs = ['title', 'height', 'width', 'class', 'style', 'font-family', 'id', 'align', 'text-align'];
+        var editorWhiteList = {
+          div: baseAttrs,
+          h1: baseAttrs,
+          h2: baseAttrs,
+          h3: baseAttrs,
+          h4: baseAttrs,
+          h5: baseAttrs,
+          h6: baseAttrs,
+          span: baseAttrs,
+          p: baseAttrs,
+          s: baseAttrs,
+          strong: baseAttrs,
+          em: baseAttrs,
+          u: baseAttrs,
+          ol: baseAttrs,
+          ul: baseAttrs,
+          li: baseAttrs,
+          a: ['href', 'target'].concat(baseAttrs),
+          img: ['src', 'alt', 'border'].concat(baseAttrs),//for chosseImage
+          blockquote: baseAttrs,//for 'indent', 'outdent'
+          font: ['face', 'size', 'color'].concat(baseAttrs),//for FontChoice
+          pre: baseAttrs,// formatBlock
+          code: baseAttrs,
+          b: baseAttrs,
+          i: baseAttrs,
+          wbr: baseAttrs,
+          video: ["autoplay", "controls", "loop", "muted", "poster", "preload"].concat(baseAttrs),
+          audio: ["autoplay", "controls", "loop", "muted", "preload"].concat(baseAttrs),
+          source: ["media", "src", "type"].concat(baseAttrs),
+          table: ["cellpadding", "cellspacing", "border"].concat(baseAttrs), // tables
+          tbody: [].concat(baseAttrs),
+          tr: ["valign"].concat(baseAttrs),
+          td: ["valign", "colspan", "rowspan", "nowrap"].concat(baseAttrs),
+          th: ["valign", "colspan", "rowspan", "nowrap"].concat(baseAttrs),
+          hr: baseAttrs,
+          html: baseAttrs, //copy from *.html
+          title: baseAttrs,
+          link: ["rel", "href"],
+          style: ["type"].concat(baseAttrs),
+          body: baseAttrs
+        };
+
+        this.graphicsWhiteList = { //skip all those graphics attrs in .onTag()
+          animate: [],
+          animateMotion: [],
+          animateTransform: [],
+          circle: [],
+          clipPath: [],
+          "color-profile": [],
+          defs: [],
+          desc: [],
+          discard: [],
+          ellipse: [],
+          feBlend: [],
+          feColorMatrix: [],
+          feComponentTransfer: [],
+          feComposite: [],
+          feConvolveMatrix: [],
+          feDiffuseLighting: [],
+          feDisplacementMap: [],
+          feDistantLight: [],
+          feDropShadow: [],
+          feFlood: [],
+          feFuncA: [],
+          feFuncB: [],
+          feFuncG: [],
+          feFuncR: [],
+          feGaussianBlur: [],
+          feImage: [],
+          feMerge: [],
+          feMergeNode: [],
+          feMorphology: [],
+          feOffset: [],
+          fePointLight: [],
+          feSpecularLighting: [],
+          feSpotLight: [],
+          feTile: [],
+          feTurbulence: [],
+          filter: [],
+          foreignObject: [],
+          g: [],
+          hatch: [],
+          hatchpath: [],
+          line: [],
+          linearGradient: [],
+          marker: [],
+          mask: [],
+          mesh: [],
+          meshgradient: [],
+          meshpatch: [],
+          meshrow: [],
+          metadata: [],
+          mpath: [],
+          path: [],
+          pattern: [],
+          polygon: [],
+          polyline: [],
+          radialGradient: [],
+          rect: [],
+          //script: [],
+          set: [],
+          solidcolor: [],
+          stop: [],
+          //style: [],
+          svg: [],
+          switch: [],
+          symbol: [],
+          text: [],
+          textPath: [],
+          title: [],
+          tspan: [],
+          use: [],
+          view: [],
+          object: [],
+          canvas: baseAttrs
+        };
+
+        return this._extendObjectOfArrays([editorWhiteList, htmlTagWhiteList, this.graphicsWhiteList]);
+      },
+      //_extendObjectOfArrays[arcgisWhiteList, whiteList || {}]
+      _extendObjectOfArrays: function (arry) {
+        var sumList = {};
+        array.forEach(arry, function (inputList) {
+          var items = Object.keys(inputList)
+          array.forEach(items, function (item) {
+            if (Array.isArray(inputList[item]) && Array.isArray(sumList[item])) {
+              sumList[item] = sumList[item].concat(inputList[item]);
+            } else {
+              sumList[item] = inputList[item];
+            }
+          }, this);
+        }, this);
+
+        return sumList;
+      },
+      _isInWhiteList: function (tar, whiteList) {
+        var items = Object.keys(whiteList);
+        var isIn = false;
+        array.forEach(items, function (item) {
+          if (tar === item) {
+            isIn = true;
+            return;
+          }
+        }, this);
+
+        return isIn;
+      }
+    });
+
+
+    clazz.getInstance = function () {
+      if (null === singleton) {
+        singleton = new clazz();
+      }
+      return singleton;
+    };
+    return clazz;
+  });

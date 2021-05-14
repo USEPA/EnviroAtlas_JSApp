@@ -1,11 +1,261 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/_filter/PredefinedValueProvider.html":'\x3cdiv\x3e\r\n    \x3c!-- \x3cdiv data-dojo-attach-point\x3d"valueproviderStore" style\x3d"height:1px;visibility:hidden;overflow:hidden;"\x3e\x3c/div\x3e --\x3e\r\n    \x3cdiv class\x3d"jimu-filter-popup-btn jimu-not-selectable"\x3e\r\n      \x3cdiv class\x3d"predefined-btn"  data-dojo-attach-point\x3d\'indexBtn\'\x3e\r\n        \x3cdiv class\x3d"tip jimu-ellipsis" title\x3d"predefined" data-dojo-attach-point\x3d\'indexBtnTips\'\x3epredefined\x3c/div\x3e\r\n      \x3c/div\x3e\r\n    \x3c/div\x3e\r\n    \x3cdiv data-dojo-attach-point\x3d\'valueProviderPopupNode\'\x3e\x3c/div\x3e\r\n\x3c/div\x3e'}});
-define("dojo/_base/html dojo/_base/declare dojo/text!./PredefinedValueProvider.html dojo/_base/lang dojo/on jimu/dijit/Popup ./PredefinedValuePopup ./ValueProvider".split(" "),function(c,d,e,b,f,g,h,k){return d([k],{templateString:e,nls:null,url:"",layerDefinition:null,partObj:null,fieldInfo:null,codedValues:null,staticValues:null,layerInfo:null,popupInfo:null,operatorInfo:null,filterCodedValueIfPossible:!1,runtime:!1,providerType:null,valueProvider:null,postCreate:function(){this.inherited(arguments);
-this.jimuNls=window.jimuNls;c.addClass(this.domNode,"jimu-filter-indexBtn-value-provider");c.addClass(this.valueProviderPopupNode,"value-type-popup");c.setStyle(this.valueProviderPopupNode,"display","none");var a="";"UNIQUE_PREDEFINED_VALUE_PROVIDER"===this.providerType?a=this.nls.predefinedUniqueTips:"MULTIPLE_PREDEFINED_VALUE_PROVIDER"===this.providerType&&(a=this.nls.predefinedMultipleTips);this.indexBtnTips.title=a;this.indexBtnTips.innerText=a+" ...";this._initProvider();this._bindEvent()},_initProvider:function(){var a=
-{preDefinedTips:this.indexBtnTips,nls:this.nls,url:this.url,layerDefinition:this.layerDefinition,partObj:this.partObj,fieldInfo:this.fieldInfo,codedValues:this.codedValues,staticValues:this.staticValues,layerInfo:this.layerInfo,popupInfo:this.popupInfo,operatorInfo:this.operatorInfo,filterCodedValueIfPossible:this.filterCodedValueIfPossible,runtime:this.runtime,selectUI:this.selectUI,providerType:this.providerType};if("UNIQUE_PREDEFINED_VALUE_PROVIDER"===this.providerType||"MULTIPLE_PREDEFINED_VALUE_PROVIDER"===
-this.providerType)this.valueProvider=new h(a);this.valueProvider.on("predefinedValuePopup_setApplyBtnState",b.hitch(this,function(a){this.popup&&(a?this.popup.enableButton(0):this.popup.disableButton(0))}))},_bindEvent:function(){this.own(f(this.indexBtn,"click",b.hitch(this,function(){this.valueProvider&&this.destroyProvider();this._initProvider();this.setValueObject(this.valueObjEnd,this.valueObjEnd.type);this.popup=new g({width:800,height:600,content:this.valueProvider,titleLabel:this.indexBtnTips.title,
-useFocusLogic:!1,onClose:b.hitch(this,function(){this.getValueObject(!1);this._closeCBXPopup();this.destroyProvider()}),buttons:[{label:this.nls.apply,disable:!0,onClick:b.hitch(this,function(){this.getValueObject(!0)?this.popup.close():alert("please configurate some items")})},{label:this.jimuNls.common.cancel,classNames:["jimu-btn-vacation"],onClick:b.hitch(this,function(){this.popup.close()})}]});c.addClass(this.popup.domNode,"widget-at-filter-popup");setTimeout(b.hitch(this,function(){this.valueProvider._setApplyState(this.getValueObject(!0));
-this.valueProvider._setDisplayTypeStyle()}),100)})))},_closeCBXPopup:function(){this.valueProvider.cbxPopup&&this.valueProvider.cbxPopup.domNode&&(this.valueProvider.cbxPopup.onClose=b.hitch(this,function(){return!0}),this.valueProvider.cbxPopup.close())},_saveData:function(){this.valueProvider.saveData()},reset:function(){},getDijits:function(){return[]},getStatus:function(){return 1},setValueObject:function(a){a&&(this.valueObjEnd=a);this.valueProvider.setValueObject(a,!0)},valueObj:null,getValueObject:function(a){if(a)return this.valueObjEnd=
-a=this.valueProvider.getValueObject(),a.value.length;delete this.valueObjEnd.valueList;return 0===this.valueObjEnd.value.length?0:this.valueObjEnd},destroyProvider:function(){this.valueProvider&&this.valueProvider.destroyProvider();this.valueProvider=null}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/html',
+  'dojo/_base/declare',
+  'dojo/text!./PredefinedValueProvider.html',
+  'dojo/_base/lang',
+  'dojo/on',
+  'jimu/dijit/Popup',
+  // 'jimu/dijit/PopupSimple',
+  './PredefinedValuePopup',
+  './ValueProvider'
+],
+  function(html, declare,
+    template, lang, on, Popup, PredefinedValuePopup, ValueProvider) {
+
+    return declare([ValueProvider], {
+
+      templateString: template,
+      nls: null,
+      url: '',
+      layerDefinition: null,
+      partObj: null,
+      fieldInfo: null,
+      codedValues: null,
+      staticValues: null,
+      layerInfo: null,
+      popupInfo: null,
+      operatorInfo: null,
+      filterCodedValueIfPossible: false,
+      runtime: false,
+      providerType: null, //required
+      valueProvider:null,
+
+      postCreate: function(){
+        this.inherited(arguments);
+        this.jimuNls = window.jimuNls;
+        html.addClass(this.domNode, 'jimu-filter-indexBtn-value-provider');
+        html.addClass(this.valueProviderPopupNode, 'value-type-popup');
+        html.setStyle(this.valueProviderPopupNode, 'display', 'none');
+
+        var tips = '';
+        if(this.providerType === 'UNIQUE_PREDEFINED_VALUE_PROVIDER'){
+          tips = this.nls.predefinedUniqueTips;
+        }else if(this.providerType === 'MULTIPLE_PREDEFINED_VALUE_PROVIDER'){
+          tips = this.nls.predefinedMultipleTips;
+        }
+        this.indexBtnTips.title = tips;
+        this.indexBtnTips.innerText = tips + ' ...';
+
+        this._initProvider();
+        this._bindEvent();
+      },
+
+      _initProvider:function(){
+        var args = {
+          preDefinedTips: this.indexBtnTips,
+          nls: this.nls,
+          url: this.url,
+          layerDefinition: this.layerDefinition,
+          partObj: this.partObj,
+          fieldInfo: this.fieldInfo,
+          codedValues: this.codedValues,
+          staticValues: this.staticValues,
+          layerInfo: this.layerInfo,
+          popupInfo: this.popupInfo,
+          operatorInfo: this.operatorInfo,
+          filterCodedValueIfPossible: this.filterCodedValueIfPossible,
+          runtime: this.runtime,
+          selectUI: this.selectUI,
+          providerType: this.providerType
+        };
+
+        if(this.providerType === 'UNIQUE_PREDEFINED_VALUE_PROVIDER' ||
+          this.providerType === 'MULTIPLE_PREDEFINED_VALUE_PROVIDER'){
+          this.valueProvider = new PredefinedValuePopup(args);
+        }else{
+        }
+
+        //set applyBtn's state of popup.
+        this.valueProvider.on("predefinedValuePopup_setApplyBtnState", lang.hitch(this, function(state){
+          if(this.popup){
+            if(state){
+              this.popup.enableButton(0);
+            }else{
+              this.popup.disableButton(0);
+            }
+          }
+        }));
+      },
+
+      _bindEvent: function(){
+        // this.own(on(document, 'click', lang.hitch(this, function(){
+        //   html.setStyle(this.valueProviderPopupNode, 'display', 'none');
+        // })));
+
+        //hover
+        /*
+        this.own(on(this.indexBtn, 'mouseenter', lang.hitch(this, function(){
+          var vals = lang.clone(this.valueObjEnd.value);
+          if(vals.length === 0){
+            return;
+          }
+          var content = '', cList = '', suffix = '';
+          if(vals.length > 5){
+            suffix = '<div class="checkedItem">......</div>';
+            vals = vals.splice(0,5);
+          }
+          for(var key in vals){
+            cList += '<div class="checkedItem">' + vals[key].alias + '---' + vals[key].isChecked + '</div>';
+          }
+          content = cList + suffix;
+          var btnWidth = html.getStyle(this.indexBtn, 'width');
+          var height = 25 * vals.length;
+          this.listPopup = new PopupSimple({
+            width: btnWidth,
+            height: height,
+            content:  content,
+            positionDom: this.indexBtn //for setting position
+          });
+        })));
+        this.own(on(this.indexBtn, 'mouseleave', lang.hitch(this, function(){
+          if(this.listPopup){
+            this.listPopup.close();
+          }
+        })));
+        */
+
+        this.own(on(this.indexBtn, 'click', lang.hitch(this, function(){
+          if(this.valueProvider){
+            this.destroyProvider();
+          }
+          this._initProvider();
+          this.setValueObject(this.valueObjEnd, this.valueObjEnd.type);
+
+          this.popup = new Popup({
+            width: 800,
+            height: 600,
+            content:  this.valueProvider,
+            titleLabel: this.indexBtnTips.title,
+            useFocusLogic: false,
+            onClose: lang.hitch(this, function () {
+              //save popup content to a hidden dom, so we don't need init provider every time.
+              //this.popup.content = null;
+              //html.place(this.valueProvider.domNode, this.valueproviderStore);
+              this.getValueObject(false);
+              this._closeCBXPopup(); //need close it when listSelectPopup in header
+              this.destroyProvider();
+              // this.valueProvider.destroy();
+            }),
+            buttons: [{
+              label: this.nls.apply, //this.nls.common.save,
+              disable: true,
+              onClick: lang.hitch(this, function () {
+                // console.log('need to save configuration data');
+                // this._saveData();
+                var ifHasItems = this.getValueObject(true); //need to get valueObj
+                if(ifHasItems){
+                  this.popup.close();
+                }else{
+                  alert('please configurate some items');
+                }
+              })
+            }, {
+              label: this.jimuNls.common.cancel,
+              classNames: ['jimu-btn-vacation'],
+              onClick: lang.hitch(this, function () {
+                this.popup.close();
+              })
+            }]
+          });
+          html.addClass(this.popup.domNode, 'widget-at-filter-popup');
+          //trigger it at the first time
+          setTimeout(lang.hitch(this, function() {
+            this.valueProvider._setApplyState(this.getValueObject(true));
+            this.valueProvider._setDisplayTypeStyle();
+          }), 100);
+        })));
+      },
+
+      _closeCBXPopup: function(){
+        if( this.valueProvider.cbxPopup && this.valueProvider.cbxPopup.domNode){
+          //overwrite popup.onClose() for destroying it
+          this.valueProvider.cbxPopup.onClose = lang.hitch(this, function () {
+            return true;
+          });
+          this.valueProvider.cbxPopup.close();
+        }
+      },
+
+      _saveData: function(){
+        this.valueProvider.saveData();
+      },
+
+      reset: function(){
+      },
+
+      getDijits: function(){
+        return [];
+      },
+
+      getStatus: function(){
+        return 1;
+      },
+
+      // _setIndexBtnState: function(valueObj){
+      //   if(valueObj.value && valueObj.value.length > 0){
+      //     html.addClass(this.indexBtn, 'active');
+      //   }else{
+      //     html.removeClass(this.indexBtn, 'active');
+      //   }
+      // },
+
+      setValueObject: function(valueObj){
+        if(valueObj){
+          this.valueObjEnd = valueObj;
+          // this._setIndexBtnState(valueObj);
+        }
+        this.valueProvider.setValueObject(valueObj,true);
+      },
+
+      valueObj: null,
+      getValueObject: function(ifGet){
+        if(ifGet){
+          var valueObj = this.valueProvider.getValueObject();
+          this.valueObjEnd = valueObj;
+          // this._setIndexBtnState(valueObj);
+
+          return valueObj.value.length;
+        }else{
+          delete this.valueObjEnd.valueList;
+          if(this.valueObjEnd.value.length === 0){//no items in editTable
+            return 0;
+          }
+          return this.valueObjEnd;
+        }
+      },
+
+      destroyProvider: function(){
+        if(this.valueProvider){
+          // html.destroy(this.valueProvider.domNode);
+          this.valueProvider.destroyProvider();
+        }
+        this.valueProvider = null;
+      }
+    });
+  });

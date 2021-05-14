@@ -1,14 +1,250 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/dateTimePicker.html":'\x3cdiv data-dojo-attach-point\x3d"dateTimeBox" class\x3d"jimu-dateTimeBox"\x3e\r\n\t\x3cdiv data-dojo-attach-point\x3d"calendarDiv"\x3e\x3c/div\x3e\r\n\t\x3cdiv data-dojo-attach-point\x3d"timeTextContainerRuntime" class\x3d"timeTextContainer timeTextContainerRuntime"\x3e\r\n\t\t\x3cdiv class\x3d"timeTextIcon"\x3e\x3c/div\x3e\r\n\t\t\x3cdiv data-dojo-attach-point\x3d"timeTextBoxDiv"\x3e\x3c/div\x3e\r\n\t\x3c/div\x3e\r\n\t\x3cdiv data-dojo-attach-point\x3d"timeTextContainerSetting" class\x3d"timeTextContainer" style\x3d"display:none;"\x3e\r\n\t\t\x3cdiv class\x3d"timeCheckbox" data-dojo-type\x3d"jimu/dijit/CheckBox" data-dojo-attach-point\x3d"timeCheckbox" data-dojo-props\x3d"checked:true, label:\'${timeNls.showTime}\'"\x3e\x3c/div\x3e\r\n\t\t\x3cdiv data-dojo-attach-point\x3d"timeTableContainer" style\x3d"display:none;"\x3e\r\n\t\t\t\x3cdiv class\x3d"timeGroup"\x3e\r\n\t\t\t\t\x3cdiv class\x3d"timeLabel jimu-ellipsis" title\x3d"${timeUnit.hour}"\x3e${timeUnit.hour}\x3c/div\x3e\r\n\t\t\t\t\x3cdiv class\x3d"timeLabel jimu-ellipsis" title\x3d"${timeUnit.minute}"\x3e${timeUnit.minute}\x3c/div\x3e\r\n\t\t\t\t\x3cdiv class\x3d"timeLabel jimu-ellipsis" title\x3d"${timeUnit.second}"\x3e${timeUnit.second}\x3c/div\x3e\r\n\t\t\t\x3c/div\x3e\r\n\t\t\t\x3cdiv class\x3d"timeGroup"\x3e\r\n\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"hourSelect" data-dojo-type\x3d"dijit/form/TimeTextBox"\r\n\t\t\t\t\tdata-dojo-props\x3d"constraints:{timePattern:\'HH\', clickableIncrement: \'T01:00:00\', visibleIncrement: \'T01:00:00\'}"\x3e\x3c/div\x3e\r\n\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"minuteSelect" data-dojo-type\x3d"dijit/form/TimeTextBox"\r\n\t\t\t\t\tdata-dojo-props\x3d"constraints:{timePattern:\'mm\', clickableIncrement: \'T00:05:00\', visibleIncrement: \'T00:05:00\',pickerMin: \'T01:00:00\',pickerMax: \'T01:59:00\'}"\x3e\x3c/div\x3e\r\n\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"secondSelect" data-dojo-type\x3d"dijit/form/TimeTextBox"\r\n\t\t\t\t\tdata-dojo-props\x3d"constraints:{timePattern:\'ss\', clickableIncrement: \'T00:00:05\', visibleIncrement: \'T00:00:05\',pickerMin: \'T01:00:00\',pickerMax: \'T01:00:59\'}"\x3e\x3c/div\x3e\r\n\t\t\t\x3c/div\x3e\r\n\t\t\x3c/div\x3e\r\n\t\x3c/div\x3e\r\n\x3c/div\x3e'}});
-define("dojo/_base/declare dojo/_base/html dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/_base/lang jimu/utils dijit/Calendar dijit/form/TimeTextBox dojo/text!./templates/dateTimePicker.html dojo/on dojo/Evented jimu/dijit/CheckBox".split(" "),function(f,b,g,h,k,d,l,m,n,p,e,q){return f([g,h,k,q],{baseClass:"jimu-datetimepicker",declaredClass:"jimu.datetimepicker",templateString:p,value:null,fieldInfo:null,enableTime:!1,timeAccuracy:"",runtime:!1,postMixInProperties:function(){this.timeNls=
-window.apiNls.widgets.imageFilter.imageFilterSettings;this.timeUnit=window.jimuNls.timeUnit},postCreate:function(){this._initSelf()},_initSelf:function(){this.calendar=new m({value:this.value,"class":"jimu-calendar"},this.calendarDiv);this.own(e(this.calendar,"change",d.hitch(this,function(){this._valueChange();this.runtime&&!this.enableTime&&this.emit("close")})));this.calendar.startup();if(this.runtime)if(b.setStyle(this.timeTextContainerSetting,"display","none"),this.enableTime){b.setStyle(this.timeTextContainerRuntime,
-"display","block");var a={constraints:{timePattern:"s"===this.timeAccuracy?"HH:mm:ss":"m"===this.timeAccuracy?"HH:mm":"HH",clickableIncrement:"T00:30:00",visibleIncrement:"T01:00:00",visibleRange:"T01:00:00"}};"h"===this.timeAccuracy&&(a.constraints.clickableIncrement="T01:00:00");this.timeTextBox=new n(a,this.timeTextBoxDiv);this.own(e(this.timeTextBox,"change",d.hitch(this,function(){this.enableTime=""===this.timeTextBox.displayedValue?!1:!0;this._valueChange()})));this.timeTextBox.startup();this.timeTextBox.set("value",
-this.value)}else b.setStyle(this.timeTextContainerRuntime,"display","none");else b.setStyle(this.timeTextContainerRuntime,"display","none"),b.setStyle(this.timeTextContainerSetting,"display","block"),this._initTimePickers();this._enableTime=this.enableTime;this.emit("created",this.getValueObj())},_initTimePickers:function(){this.timeCheckbox.setValue(this.enableTime);this.enableTime&&(b.setStyle(this.timeTableContainer,"display","block"),this.value&&this._setTimeBox_HMS(this.value));this.own(e(this.timeCheckbox,
-"change",d.hitch(this,function(){this._changeTimeCheckStatus();this._valueChange();this.emit("timeStatusChanged")})));this.own(e(this.hourSelect,"change",d.hitch(this,function(){this._valueChange()})));this.own(e(this.minuteSelect,"change",d.hitch(this,function(){this._valueChange()})));this.own(e(this.secondSelect,"change",d.hitch(this,function(){this._valueChange()})))},_changeTimeCheckStatus:function(){(this._enableTime=this.timeCheckbox.checked)?b.setStyle(this.timeTableContainer,"display","block"):
-b.setStyle(this.timeTableContainer,"display","none")},_valueChange:function(){this.emit("timeChange",this.getValueObj())},isValid:function(){if(null===this.calendar.value)return!1;if(this.runtime){if(this._enableTime&&!this.timeTextBox.isValid())return!1}else if(this.timeCheckbox.checked){if(!this.hourSelect.isValid()||!this.minuteSelect.isValid()||!this.secondSelect.isValid()||""===this.hourSelect.displayedValue||""!==this.hourSelect.displayedValue&&""!==this.secondSelect.displayedValue&&""===this.minuteSelect.displayedValue)return!1}else this.hourSelect.isValid()||
-this.hourSelect.set("value",null),this.minuteSelect.isValid()||this.minuteSelect.set("value",null),this.secondSelect.isValid()||this.secondSelect.set("value",null);return!0},getValueObj:function(){if(!this.isValid())return!1;var a=new Date(this.calendar.value.toDateString());if(this.runtime){if(this.enableTime){var c=this.timeTextBox.get("value");c&&(a.setHours(c.getHours()),a.setMinutes(c.getMinutes()),a.setSeconds(c.getSeconds()))}}else if(this.enableTime=this._enableTime){var c=this.hourSelect.get("value"),
-b=this.minuteSelect.get("value"),d=this.secondSelect.get("value");this.timeAccuracy=d?"s":b?"m":"h";a.setHours(c?c.getHours():null);a.setMinutes(b?b.getMinutes():null);a.setSeconds(d?d.getSeconds():null)}else this.timeAccuracy="";c=l.localizeDateTimeByFieldInfo(a,this.fieldInfo,this.enableTime,this.timeAccuracy);this.value=a;return{date:a,value:c,enableTime:this.enableTime,timeAccuracy:this.timeAccuracy}},validate:function(){this.set("DisplayedValue",this.calendar.value?1:0);return!0},reset:function(){var a=
-this.calendar.get("value");a&&this.value&&this.value.toDateString()===a.toDateString()||this.calendar.set("value",this.value);this.timeCheckbox.setValue(this.enableTime);this.runtime?this.enableTime&&this.timeTextBox.set("value",this.value):this._setTimeBox_HMS(this.enableTime?this.value:null)},_setTimeBox_HMS:function(a){var c=null,b=null,d=null;"h"===this.timeAccuracy?c=a:"m"===this.timeAccuracy?c=b=a:"s"===this.timeAccuracy&&(c=b=d=a);this.hourSelect.set("value",c);this.minuteSelect.set("value",
-b);this.secondSelect.set("value",d)}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  'dojo/_base/html',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dijit/_WidgetsInTemplateMixin',
+  'dojo/_base/lang',
+  'jimu/utils',
+  'dijit/Calendar',
+  'dijit/form/TimeTextBox',
+  'dojo/text!./templates/dateTimePicker.html',
+  'dojo/on',
+  'dojo/Evented',
+  'jimu/dijit/CheckBox'
+],
+function (declare, html, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, lang, jimuUtils,
+  Calendar, TimeTextBox, template, on, Evented) {
+  var clazz = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+    baseClass: 'jimu-datetimepicker',
+    declaredClass: 'jimu.datetimepicker',
+    templateString: template,
+
+    value: null, //date format
+    fieldInfo: null,
+    enableTime: false,
+    timeAccuracy: '', //'', h, m, s
+    runtime: false, //related to if only displaying calendar
+
+    postMixInProperties:function(){
+      this.timeNls = window.apiNls.widgets.imageFilter.imageFilterSettings;
+      this.timeUnit = window.jimuNls.timeUnit;
+    },
+
+    postCreate: function () {
+      this._initSelf();
+    },
+
+    _initSelf: function(){
+      this.calendar = new Calendar({
+        value: this.value,
+        "class": "jimu-calendar"
+      }, this.calendarDiv);
+      this.own(on(this.calendar, 'change', lang.hitch(this, function(){
+        this._valueChange();
+        if(this.runtime && !this.enableTime){
+          this.emit('close');
+        }
+      })));
+      this.calendar.startup();
+
+      if(this.runtime){
+        html.setStyle(this.timeTextContainerSetting, 'display', 'none');
+        if(this.enableTime){//show hms-time picker
+          html.setStyle(this.timeTextContainerRuntime, 'display', 'block');
+          var timePattern = this.timeAccuracy === 's' ? 'HH:mm:ss' : (this.timeAccuracy === 'm' ? 'HH:mm' : 'HH');
+          var timeOptions = {
+            constraints:{
+              timePattern: timePattern,
+              clickableIncrement: 'T00:30:00',
+              visibleIncrement: 'T01:00:00',
+              visibleRange: 'T01:00:00'
+            }
+          };
+          if(this.timeAccuracy === 'h'){
+            timeOptions.constraints.clickableIncrement = 'T01:00:00';
+          }
+          this.timeTextBox = new TimeTextBox(timeOptions, this.timeTextBoxDiv);
+          this.own(on(this.timeTextBox, 'change', lang.hitch(this, function(){
+            if(this.timeTextBox.displayedValue === ''){
+              this.enableTime = false;
+            }else{
+              this.enableTime = true;
+            }
+            this._valueChange();
+          })));
+          this.timeTextBox.startup();
+
+          this.timeTextBox.set('value', this.value);
+        }else{
+          html.setStyle(this.timeTextContainerRuntime, 'display', 'none');
+        }
+      }else{
+        html.setStyle(this.timeTextContainerRuntime, 'display', 'none');
+        html.setStyle(this.timeTextContainerSetting, 'display', 'block');
+        this._initTimePickers();
+      }
+
+      this._enableTime = this.enableTime; //as temporary status
+
+      this.emit('created', this.getValueObj());
+    },
+
+    _initTimePickers: function(){
+      this.timeCheckbox.setValue(this.enableTime);
+      if(this.enableTime){
+        html.setStyle(this.timeTableContainer, 'display', 'block');
+        if(this.value){ //set default values
+          this._setTimeBox_HMS(this.value);
+        }
+      }
+      this.own(on(this.timeCheckbox, 'change', lang.hitch(this, function(){
+        this._changeTimeCheckStatus();
+        this._valueChange();
+        this.emit('timeStatusChanged');
+      })));
+
+      this.own(on(this.hourSelect, 'change', lang.hitch(this, function(){
+        this._valueChange();
+      })));
+      this.own(on(this.minuteSelect, 'change', lang.hitch(this, function(){
+        this._valueChange();
+      })));
+      this.own(on(this.secondSelect, 'change', lang.hitch(this, function(){
+        this._valueChange();
+      })));
+    },
+
+    _changeTimeCheckStatus: function(){
+      this._enableTime = this.timeCheckbox.checked;
+      if(this._enableTime){
+        html.setStyle(this.timeTableContainer, 'display', 'block');
+      }else{
+        html.setStyle(this.timeTableContainer, 'display', 'none');
+      }
+    },
+
+    _valueChange: function(){
+      this.emit('timeChange', this.getValueObj());
+    },
+
+    isValid: function(){
+      if(this.calendar.value === null){
+        return false;
+      }
+
+      if(this.runtime){
+        if(this._enableTime && !this.timeTextBox.isValid()){
+          return false;
+        }
+      }else if(this.timeCheckbox.checked){ //setting
+        if(!this.hourSelect.isValid() || !this.minuteSelect.isValid() || !this.secondSelect.isValid()){
+          return false; //has valid value
+        }else if(this.hourSelect.displayedValue === '' ||
+          (this.hourSelect.displayedValue !== '' && this.secondSelect.displayedValue !== '' &&
+           this.minuteSelect.displayedValue === '')){
+          return false;
+        }
+      }else{ //empty value if it's invalid when uncheck timeCheckBox.
+        if(!this.hourSelect.isValid()){
+          this.hourSelect.set('value', null);
+        }
+        if(!this.minuteSelect.isValid()){
+          this.minuteSelect.set('value', null);
+        }
+        if(!this.secondSelect.isValid()){
+          this.secondSelect.set('value', null);
+        }
+      }
+      return true;
+    },
+
+    getValueObj: function(){
+      if(!this.isValid()){
+        return false;
+      }
+      var dateTime = new Date(this.calendar.value.toDateString());
+      if(this.runtime){
+        if(this.enableTime){
+          var hms = this.timeTextBox.get('value');
+          if(hms){
+            dateTime.setHours(hms.getHours());
+            dateTime.setMinutes(hms.getMinutes());
+            dateTime.setSeconds(hms.getSeconds());
+          }
+        }
+      }else{
+        this.enableTime = this._enableTime;
+        if(this.enableTime){
+          var hour = this.hourSelect.get('value');
+          var minute = this.minuteSelect.get('value');
+          var second = this.secondSelect.get('value');
+          this.timeAccuracy = second ? 's' : (minute ? 'm' : 'h');
+          dateTime.setHours(hour ? hour.getHours() : null);
+          dateTime.setMinutes(minute ? minute.getMinutes(): null);
+          dateTime.setSeconds(second ? second.getSeconds() : null);
+        }else{
+          this.timeAccuracy = '';
+        }
+      }
+      var dateString = jimuUtils.localizeDateTimeByFieldInfo(dateTime, this.fieldInfo,
+        this.enableTime, this.timeAccuracy);
+      this.value = dateTime; //update current date
+      return {date: dateTime, value: dateString, enableTime: this.enableTime, timeAccuracy: this.timeAccuracy};
+    },
+
+    validate: function(){
+      var val = this.calendar.value ? 1 : 0;
+      this.set("DisplayedValue", val);
+      return true;
+    },
+
+    reset: function () {
+      var calendarVal = this.calendar.get('value');
+      if(!(calendarVal && this.value && this.value.toDateString() === calendarVal.toDateString())){
+        this.calendar.set('value', this.value);
+      }
+      this.timeCheckbox.setValue(this.enableTime);
+      if(this.runtime){
+        if(this.enableTime){
+          this.timeTextBox.set('value', this.value);
+        }
+      }else{
+        var timeVal = this.enableTime ? this.value : null;
+        this._setTimeBox_HMS(timeVal);
+      }
+    },
+
+    _setTimeBox_HMS: function(timeVal){
+      var hVal = null, mVal = null, sVal = null;
+      if(this.timeAccuracy === 'h'){
+        hVal = timeVal;
+      }else if(this.timeAccuracy === 'm'){
+        hVal = mVal = timeVal;
+      }else if(this.timeAccuracy === 's'){
+        hVal = mVal = sVal = timeVal;
+      }
+      this.hourSelect.set('value', hVal);
+      this.minuteSelect.set('value', mVal);
+      this.secondSelect.set('value', sVal);
+    }
+  });
+
+  return clazz;
+});

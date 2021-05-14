@@ -1,12 +1,275 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dojo/_base/Deferred dojo/_base/lang dojo/_base/array dojo/topic dojo/on esri/layers/FeatureLayer esri/layers/GraphicsLayer esri/geometry/geometryEngine esri/graphic esri/Color esri/symbols/SimpleMarkerSymbol esri/symbols/SimpleLineSymbol esri/symbols/SimpleFillSymbol".split(" "),function(w,r,f,g,k,x,h,y,n,l,p,t,u,v){var m=null,q=w(null,{constructor:function(){window.isBuilder?(k.subscribe("app/mapLoaded",f.hitch(this,this._onMapLoaded)),k.subscribe("app/mapChanged",f.hitch(this,
-this._onMapChanged))):(k.subscribe("mapLoaded",f.hitch(this,this._onMapLoaded)),k.subscribe("mapChanged",f.hitch(this,this._onMapChanged)))},_displayLayers:{},previousMapScale:null,setSelectionSymbol:function(a){var b=a.geometryType,e=new t(t.STYLE_CIRCLE,16,null,p.fromArray([0,255,255])),c=new u(u.STYLE_SOLID,p.fromArray([0,255,255]),2),d=new v(v.STYLE_SOLID,c,p.fromArray([0,255,255,.3]));"esriGeometryPoint"===b?a.setSelectionSymbol(e):"esriGeometryPolyline"===b?a.setSelectionSymbol(c):"esriGeometryPolygon"===
-b&&a.setSelectionSymbol(d)},updateSelectionByFeatures:function(a,b,e){0<b.length&&(b=g.map(b,f.hitch(this,function(b){var c=null,c=0<=a.graphics.indexOf(b)?new l(b.toJson()):b;c.wabIsTemp=!0;return c})));a.getSelectionSymbol()||this.setSelectionSymbol(a);var c=new r;a._selectHandler({features:b},e,null,null,c);this._isLayerNeedDisplayLayer(a)&&(this._displayLayers[a.id]||(this._displayLayers[a.id]=this._createDisplayLayer(a)),this._updateDisplayLayer(a,b,e));return c},getDisplayLayer:function(a){return this._displayLayers[a]},
-setSelection:function(a,b){return this.updateSelectionByFeatures(a,b,h.SELECTION_NEW)},addFeaturesToSelection:function(a,b){return this.updateSelectionByFeatures(a,b,h.SELECTION_ADD)},removeFeaturesFromSelection:function(a,b){return this.updateSelectionByFeatures(a,b,h.SELECTION_SUBTRACT)},clearSelection:function(a){var b=new r;this.clearDisplayLayer(a);a.clearSelection();b.resolve();return b},clearDisplayLayer:function(a){(a=this._displayLayers[a.id])&&a.clear()},getClientFeaturesByGeometry:function(a,
-b,e){return g.filter(a.graphics,f.hitch(this,function(a){return e?n.contains(b,a.geometry):n.intersects(b,a.geometry)}))},getUnionGeometryBySelectedFeatures:function(a){var b=null;a=a.getSelectedFeatures();0<a.length&&(b=g.map(a,f.hitch(this,function(a){return a.geometry})),b=n.union(b));return b},_createDisplayLayer:function(a){var b=new y,e=a.objectIdField;b.fields=a.fields;b.id="displayLayer_of_"+a.id;this.map.addLayer(b);if(!this.map.spatialReference.equals(a.spatialReference)||a.hasWebGLSurface()){var c=
-a.getSelectionSymbol();x(a,"update-end",f.hitch(this,function(){var d=Math.round(this.map.getScale());if(this.previousMapScale!==d&&b.graphics&&0<b.graphics.length){this.previousMapScale=d;var z=g.map(b.graphics,function(a){return a.attributes[e]}),d=g.filter(a.graphics,function(a){return 0<=z.indexOf(a.attributes[e])});b.clear();g.forEach(d,f.hitch(this,function(a){a=new l(a.toJson());a.setSymbol(c);b.add(a)}))}}))}return b},_updateDisplayLayer:function(a,b,e){var c=this._displayLayers[a.id],d=a.getSelectionSymbol();
-a.hasWebGLSurface()?this._updateDisplayLayerWebGL(a,c,d,b,e):(b=a.getSelectedFeatures(),this.clearDisplayLayer(a),g.forEach(b,f.hitch(this,function(a){a.visible&&(a.setSymbol(null),a=new l(a.toJson()),a.setSymbol(d),c.add(a))})))},_updateDisplayLayerWebGL:function(a,b,e,c,d){d===h.SELECTION_NEW&&(a._selectedFeaturesWebGL={});d===h.SELECTION_NEW||d===h.SELECTION_ADD?g.forEach(c,f.hitch(this,function(b){b.visible&&(a._selectedFeaturesWebGL[b.attributes[a.objectIdField]]=b)})):d===h.SELECTION_SUBTRACT&&
-g.forEach(c,f.hitch(this,function(b){b=b.attributes[a.objectIdField];b in a._selectedFeaturesWebGL&&delete a._selectedFeaturesWebGL[b]}));this.clearDisplayLayer(a);for(var k in a._selectedFeaturesWebGL)c=new l(a._selectedFeaturesWebGL[k].toJson()),c.setSymbol(e),b.add(c)},_isLayerNeedDisplayLayer:function(a){return a.hasWebGLSurface()||!a.getMap()},_onMapLoaded:function(a){this.map=a},_onMapChanged:function(a){this.map=a}});q.getInstance=function(){m||(m=new q,window._selectionManager=m);return m};
-return q});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+    'dojo/_base/declare',
+    'dojo/_base/Deferred',
+    'dojo/_base/lang',
+    'dojo/_base/array',
+    'dojo/topic',
+    'dojo/on',
+    'esri/layers/FeatureLayer',
+    'esri/layers/GraphicsLayer',
+    'esri/geometry/geometryEngine',
+    'esri/graphic',
+    'esri/Color',
+    'esri/symbols/SimpleMarkerSymbol',
+    'esri/symbols/SimpleLineSymbol',
+    'esri/symbols/SimpleFillSymbol'
+  ],
+  function(declare, Deferred, lang, array, topic, on, FeatureLayer, GraphicsLayer, geometryEngine,
+    Graphic, Color, SimpleMarkerSymbol, SimpleLineSymbol, SimpleFillSymbol) {
+    var instance = null;
+
+    var clazz = declare(null, {
+
+      constructor: function(){
+        if(window.isBuilder){
+          topic.subscribe("app/mapLoaded", lang.hitch(this, this._onMapLoaded));
+          topic.subscribe("app/mapChanged", lang.hitch(this, this._onMapChanged));
+        }else{
+          topic.subscribe("mapLoaded", lang.hitch(this, this._onMapLoaded));
+          topic.subscribe("mapChanged", lang.hitch(this, this._onMapChanged));
+        }
+      },
+
+      /**
+       * The display layers(GraphicsLayer) for layer in mapService. The display layer is used for show highlight.
+       * For feature layer in map, we don't need display layer because the feature layer will show the highlight.
+       * @type {Object}
+       */
+      _displayLayers: {},
+
+      previousMapScale: null,
+
+      setSelectionSymbol: function(layer){
+        var type = layer.geometryType;
+        var markerCircleStyle = SimpleMarkerSymbol.STYLE_CIRCLE;
+        var pointSymbol = new SimpleMarkerSymbol(markerCircleStyle, 16, null, Color.fromArray([0, 255, 255]));
+
+        var lineSolidStyle = SimpleLineSymbol.STYLE_SOLID;
+        var lineSymbol = new SimpleLineSymbol(lineSolidStyle, Color.fromArray([0, 255, 255]), 2);
+
+        var fillSolidStyle = SimpleFillSymbol.STYLE_SOLID;
+        var fillSymbol = new SimpleFillSymbol(fillSolidStyle, lineSymbol, Color.fromArray([0, 255, 255, 0.3]));
+
+        if (type === 'esriGeometryPoint') {
+          layer.setSelectionSymbol(pointSymbol);
+        } else if (type === 'esriGeometryPolyline') {
+          layer.setSelectionSymbol(lineSymbol);
+        } else if (type === 'esriGeometryPolygon') {
+          layer.setSelectionSymbol(fillSymbol);
+        }
+      },
+
+      //features must have objectIdField attribute, such as OBJECTID
+      updateSelectionByFeatures: function(layer, features, selectionMethod){
+        if(features.length > 0){
+          features = array.map(features, lang.hitch(this, function(feature){
+            var value = null;
+            if(layer.graphics.indexOf(feature) >= 0){
+              value = new Graphic(feature.toJson());
+            }else{
+              value = feature;
+            }
+            value.wabIsTemp = true;
+            return value;
+          }));
+        }
+
+        //selectionMethod default value is SELECTION_NEW
+        //def must be a dojo/_base/Deferred object, because it has callback method and API will call this method
+        if(!layer.getSelectionSymbol()){
+          this.setSelectionSymbol(layer);
+        }
+        var def = new Deferred();
+        //def.then(function() {}, function() {});
+        var response = {
+          features: features
+        };
+        layer._selectHandler(response, selectionMethod, null, null, def);
+        if(this._isLayerNeedDisplayLayer(layer)){
+          if(!this._displayLayers[layer.id]){
+            this._displayLayers[layer.id] = this._createDisplayLayer(layer);
+          }
+          this._updateDisplayLayer(layer, features, selectionMethod);
+        }
+        return def;
+      },
+
+      //private method
+      getDisplayLayer: function(featureLayerId){
+        return this._displayLayers[featureLayerId];
+      },
+
+      setSelection: function(layer, features){
+        return this.updateSelectionByFeatures(layer, features, FeatureLayer.SELECTION_NEW);
+      },
+
+      addFeaturesToSelection: function(layer, features){
+        return this.updateSelectionByFeatures(layer, features, FeatureLayer.SELECTION_ADD);
+      },
+
+      removeFeaturesFromSelection: function(layer, features){
+        return this.updateSelectionByFeatures(layer, features, FeatureLayer.SELECTION_SUBTRACT);
+      },
+
+      clearSelection: function(featureLayer){
+        var def = new Deferred();
+        this.clearDisplayLayer(featureLayer);
+        featureLayer.clearSelection();
+        def.resolve();
+        return def;
+      },
+
+      clearDisplayLayer: function(featureLayer){
+        var displayLayer = this._displayLayers[featureLayer.id];
+        if(displayLayer){
+          displayLayer.clear();
+        }
+      },
+
+      getClientFeaturesByGeometry: function(layer, geometry, fullyWithinGeometry){
+        var features = array.filter(layer.graphics, lang.hitch(this, function(g) {
+          if(fullyWithinGeometry){
+            return geometryEngine.contains(geometry, g.geometry);
+          }else{
+            return geometryEngine.intersects(geometry, g.geometry);
+          }
+        }));
+        return features;
+      },
+
+      getUnionGeometryBySelectedFeatures: function(layer){
+        var unionGeometry = null;
+        var features = layer.getSelectedFeatures();
+        if (features.length > 0) {
+          var geometries = array.map(features, lang.hitch(this, function(feature) {
+            return feature.geometry;
+          }));
+          unionGeometry = geometryEngine.union(geometries);
+        }
+        return unionGeometry;
+      },
+
+      _createDisplayLayer: function(featureLayer){
+        var displayLayer = new GraphicsLayer();
+        var idField = featureLayer.objectIdField;
+        displayLayer.fields = featureLayer.fields;
+        displayLayer.id = "displayLayer_of_" + featureLayer.id;
+        this.map.addLayer(displayLayer);
+        if (!this.map.spatialReference.equals(featureLayer.spatialReference) || featureLayer.hasWebGLSurface()) {
+          var selectionSymbol = featureLayer.getSelectionSymbol();
+          // feature layer need to project dynamically, update geometry of that feature
+          on(featureLayer, 'update-end', lang.hitch(this, function() {
+            var scale = Math.round(this.map.getScale());
+            if (this.previousMapScale !== scale && displayLayer.graphics && displayLayer.graphics.length > 0) {
+              this.previousMapScale = scale;
+              var selectedIds = array.map(displayLayer.graphics, function(graphic) {
+                return graphic.attributes[idField];
+              });
+              var selectedFeatures = array.filter(featureLayer.graphics, function(graphic) {
+                return selectedIds.indexOf(graphic.attributes[idField]) >= 0;
+              });
+              displayLayer.clear();
+              array.forEach(selectedFeatures, lang.hitch(this, function(feature){
+                var graphic = new Graphic(feature.toJson());
+                graphic.setSymbol(selectionSymbol);
+                displayLayer.add(graphic);
+              }));
+            }
+          }));
+        }
+        return displayLayer;
+      },
+
+      _updateDisplayLayer: function(featureLayer, features, selectionMethod){
+        var displayLayer = this._displayLayers[featureLayer.id];
+        var selectionSymbol = featureLayer.getSelectionSymbol();
+        //for featureLayer & webGL
+        if(featureLayer.hasWebGLSurface()){
+          this._updateDisplayLayerWebGL(featureLayer, displayLayer, selectionSymbol, features, selectionMethod);
+          return;
+        }
+        //for map services
+        var selectFeatures = featureLayer.getSelectedFeatures();
+        this.clearDisplayLayer(featureLayer);
+        array.forEach(selectFeatures, lang.hitch(this, function(feature){
+          if (feature.visible) {
+            feature.setSymbol(null);
+            var graphic = new Graphic(feature.toJson());
+            graphic.setSymbol(selectionSymbol);
+            displayLayer.add(graphic);
+          }
+        }));
+      },
+
+      //for featureLayer & webGL
+      _updateDisplayLayerWebGL: function(featureLayer, displayLayer, selectionSymbol, features, selectionMethod){
+        if(selectionMethod === FeatureLayer.SELECTION_NEW){
+          featureLayer._selectedFeaturesWebGL = {};
+        }
+
+        if(selectionMethod === FeatureLayer.SELECTION_NEW || selectionMethod === FeatureLayer.SELECTION_ADD){
+          array.forEach(features, lang.hitch(this, function(feature){
+            if (feature.visible) {
+              var idField = featureLayer.objectIdField;
+              var featureIdVal = feature.attributes[idField];
+              featureLayer._selectedFeaturesWebGL[featureIdVal] = feature;
+            }
+          }));
+        }else if(selectionMethod === FeatureLayer.SELECTION_SUBTRACT){
+          array.forEach(features, lang.hitch(this, function(feature){
+            var idField = featureLayer.objectIdField;
+            var featureIdVal = feature.attributes[idField];
+            if(featureIdVal in featureLayer._selectedFeaturesWebGL){
+              delete featureLayer._selectedFeaturesWebGL[featureIdVal];
+            }
+          }));
+        }
+
+        this.clearDisplayLayer(featureLayer);
+        for(var key in featureLayer._selectedFeaturesWebGL){
+          var feature = featureLayer._selectedFeaturesWebGL[key];
+          var graphic = new Graphic(feature.toJson());
+          graphic.setSymbol(selectionSymbol);
+          displayLayer.add(graphic);
+        }
+      },
+
+      _isLayerNeedDisplayLayer: function(featureLayer){
+        return featureLayer.hasWebGLSurface() || !featureLayer.getMap();
+      },
+
+      _onMapLoaded: function(map){
+        this.map = map;
+      },
+
+      _onMapChanged: function(map){
+        this.map = map;
+      }
+    });
+
+    clazz.getInstance = function(){
+      if(!instance){
+        instance = new clazz();
+        window._selectionManager = instance;
+      }
+      return instance;
+    };
+
+    return clazz;
+  });

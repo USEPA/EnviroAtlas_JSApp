@@ -1,11 +1,293 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dojo/_base/lang dojo/_base/array dijit/_WidgetBase dojo/dom-geometry dojo/dom-class dojo/Evented dojo/debounce".split(" "),function(m,c,g,n,p,l,q,r){return m([n,q],{baseClass:"jimu-dijit-gridlayout",declaredClass:"jimu.dijit.GridLayout",container:null,layoutDefinition:null,components:null,editable:!1,_layout:null,_coordinates:null,_isCreatingLayout:null,postCreate:function(){this.inherited(arguments);this._isCreatingLayout=!1;this._createLayout(this.layoutDefinition)},restoreLayout:function(a){a=
-a||this.layoutDefinition;this._createLayout(a)},destroy:function(){g.forEach(this.components,function(a){a.dijit.destroy()});this._layout.destroy();this.inherited(arguments)},getLayoutDefinition:function(){return this._layout.toConfig().content},resize:function(){var a=p.getMarginBox(this.container);this._layout.updateSize(a.w,a.h)},getComponentSize:function(a){return(a=this._layout.root.contentItems[0].getItemsById(a))&&0<a.length?(a=a[0].container,{w:a.width,h:a.height}):{w:0,h:0}},getSize:function(){return{w:this._layout.width,
-h:this._layout.height}},setVisible:function(a,f){var b=this._layout.root.contentItems[0].getItemsById(a);b&&0<b.length&&!1===f?this._hideComponent(b[0]):b&&0!==b.length||!0!==f||this._showComponent(a)},highlightItem:function(a){(a=this._layout.root.contentItems[0].getItemsById(a))&&0<a.length&&a[0].highlight()},unhighlightItem:function(a){(a=this._layout.root.contentItems[0].getItemsById(a))&&0<a.length&&a[0].unhighlight()},_createLayout:function(a){if(!this._isCreatingLayout){this._coordinates={};
-this._isCreatingLayout=!0;var f={settings:{hasHeaders:!1,resizeEnabled:this.editable,reorderEnabled:this.editable,selectionEnabled:this.editable,highlightEnabled:this.editable},dimensions:{borderWidth:1,dragProxyWidth:0,dragProxyHeight:0},content:a},b=this._layout;require(["libs/goldenlayout/goldenlayout"],c.hitch(this,function(a){this._layout=new a(f,this.container);this._layout.registerComponent("jimu grid",c.hitch(this,function(a,b){var d;a.parent.config.id=b.id;g.some(this.components,function(e){if(e.id===
-b.id)return d=e.dijit,a.getElement().html(e.dijit.domNode),!0},this);a.on("resize",r(c.hitch(this,function(){0<a.width&&0<a.height&&d&&"function"===typeof d.resize&&d.resize(a.width,a.height)}),200));a.on("select",c.hitch(this,function(){this.editable&&a.parent.select();this.emit("mask-click",a.parent.config.id)}))}));this._layout.on("initialised",c.hitch(this,function(){this._resetCoordinate();this.emit("initialised");this._isCreatingLayout=!1;b&&b.destroy()}));this._layout.on("stateChanged",c.hitch(this,
-function(){this._resetCoordinate()}));this._layout.init();this.editable||l.add(this._layout.root.childElementContainer[0],"viewonly");l.add(this._layout.root.childElementContainer[0],"jimu-dijit-gridlayout");setTimeout(c.hitch(this,this.resize),100)}))}},_hideComponent:function(a){a.parent&&a.parent.removeChild(a,!0)},_showComponent:function(a){var f,b,d,c,e,h,k;g.some(this.components,function(b){if(b.id===a)return f=b,!0},this);f&&(c={id:a,type:"component",componentName:"jimu grid",componentState:{id:a}},
-b=this._coordinates[a],e=this._layout.root,b?(b[0].type!==e.contentItems[0].type&&(h=e.contentItems[0],e.replaceChild(h,{type:b[0].type,content:[]}),e.contentItems[0].addChild(h)),d=e,g.forEach(b,function(a){k=a.index<=d.contentItems.length?a.index:d.contentItems.length;"component"===a.type?d.addChild(c,k):("stack"!==a.type&&d.contentItems[a.index].type===a.type||d.addChild({type:a.type,content:[]},k),d=d.contentItems[k])},this)):("stack"===e.contentItems[0].type&&(h=e.contentItems[0],e.replaceChild(h,
-{type:"column",content:[]}),e.contentItems[0].addChild(h)),e.contentItems[0].addChild(c)))},_resetCoordinate:function(){var a=this._layout.root.getItemsByType("component"),c=function(a,d){var b=a.parent;b&&(g.some(b.contentItems,function(b,c){if(b===a)return d.push({type:b.type,index:c}),!0}),c(b,d))};g.forEach(a,function(a){var b=[];c(a,b);this._coordinates[a.config.id]=b.reverse()},this)}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define(['dojo/_base/declare',
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'dijit/_WidgetBase',
+  'dojo/dom-geometry',
+  'dojo/dom-class',
+  'dojo/Evented',
+  'dojo/debounce'
+],
+function(declare, lang, array, _WidgetBase, domGeometry, domClass, Evented, debounce) {
+  var COMPONENT_NAME = 'jimu grid';
+  /**
+   * The structure of the this layout has one limitation:
+   * A stack only contains one component.
+   */
+  return declare([_WidgetBase, Evented], {
+    'baseClass': 'jimu-dijit-gridlayout',
+    declaredClass: 'jimu.dijit.GridLayout',
+
+    container: null, // the container domNode of golden layout
+    layoutDefinition: null, // configuration of golden layout
+    components: null, // array of {id: string, dijit: dijit instance}
+    editable: false,
+
+    _layout: null, // instance of goldenLayout
+    _coordinates: null, // an object whose key is component id and value is component coordinate.
+    _isCreatingLayout: null,
+
+    postCreate: function(){
+      this.inherited(arguments);
+      this._isCreatingLayout = false;
+      this._createLayout(this.layoutDefinition);
+    },
+
+    restoreLayout: function(layoutDefinition) {
+      layoutDefinition = layoutDefinition || this.layoutDefinition;
+      this._createLayout(layoutDefinition);
+    },
+
+    destroy: function() {
+      array.forEach(this.components, function(component) {
+        component.dijit.destroy();
+      });
+      this._layout.destroy();
+      this.inherited(arguments);
+    },
+
+    getLayoutDefinition: function() {
+      var currentConfig = this._layout.toConfig();
+      return currentConfig.content;
+    },
+
+    resize: function() {
+      var box = domGeometry.getMarginBox(this.container);
+      this._layout.updateSize(box.w, box.h);
+    },
+
+    getComponentSize: function(componentId) {
+      var rootElem = this._layout.root.contentItems[0];
+      var contentItem = rootElem.getItemsById(componentId), container;
+      if (contentItem && contentItem.length > 0) {
+        container = contentItem[0].container;
+        return {
+          w: container.width,
+          h: container.height
+        };
+      }
+      return {
+        w: 0,
+        h: 0
+      };
+    },
+
+    getSize: function() {
+      return {
+        w: this._layout.width,
+        h: this._layout.height
+      };
+    },
+
+    /**
+     *
+     */
+    setVisible: function(componentId, visible) {
+      var rootElem = this._layout.root.contentItems[0];
+      var contentItem = rootElem.getItemsById(componentId);
+      if (contentItem && contentItem.length > 0 && visible === false) {
+        this._hideComponent(contentItem[0]);
+      } else if ((!contentItem || contentItem.length === 0) && visible === true) {
+        this._showComponent(componentId);
+      }
+    },
+
+    highlightItem: function(componentId) {
+      var rootElem = this._layout.root.contentItems[0];
+      var contentItem = rootElem.getItemsById(componentId);
+      if (contentItem && contentItem.length > 0) {
+        contentItem[0].highlight();
+      }
+    },
+
+    unhighlightItem: function(componentId) {
+      var rootElem = this._layout.root.contentItems[0];
+      var contentItem = rootElem.getItemsById(componentId);
+      if (contentItem && contentItem.length > 0) {
+        contentItem[0].unhighlight();
+      }
+    },
+
+    _createLayout: function(layoutDefinition) {
+      if (this._isCreatingLayout) {
+        return;
+      }
+      this._coordinates = {};
+      this._isCreatingLayout = true;
+      var config = {
+        settings: {
+          hasHeaders: false,
+          resizeEnabled: this.editable,
+          reorderEnabled: this.editable,
+          selectionEnabled: this.editable,
+          highlightEnabled: this.editable
+        },
+        dimensions: {
+          borderWidth: 1,
+          dragProxyWidth: 0,
+          dragProxyHeight: 0
+        },
+        content: layoutDefinition
+      };
+      var oldLayout = this._layout;
+
+      require(['libs/goldenlayout/goldenlayout'], lang.hitch(this, function(GoldenLayout){
+        this._layout = new GoldenLayout(config, this.container);
+        this._layout.registerComponent(COMPONENT_NAME, lang.hitch(this, function(container, componentState){
+          var targetDijit;
+          container.parent.config.id = componentState.id;
+          array.some(this.components, function(item) {
+            if (item.id === componentState.id) {
+              targetDijit = item.dijit;
+              container.getElement().html(item.dijit.domNode);
+              return true;
+            }
+          }, this);
+          container.on('resize', debounce(lang.hitch(this, function() {
+            if (container.width > 0 && container.height > 0 && targetDijit &&
+              typeof targetDijit.resize === 'function') {
+              targetDijit.resize(container.width, container.height);
+            }
+          }), 200));
+          container.on('select', lang.hitch(this, function() {
+            if(this.editable) {
+              container.parent.select();
+            }
+            this.emit('mask-click', container.parent.config.id);
+          }));
+        }));
+        this._layout.on( 'initialised', lang.hitch(this, function(){
+          this._resetCoordinate();
+          this.emit("initialised");
+          this._isCreatingLayout = false;
+          if (oldLayout) {
+            oldLayout.destroy();
+          }
+        }));
+        this._layout.on('stateChanged', lang.hitch(this, function(){
+          this._resetCoordinate();
+        }));
+        this._layout.init();
+
+        if (!this.editable) {
+          domClass.add(this._layout.root.childElementContainer[0], 'viewonly');
+        }
+        domClass.add(this._layout.root.childElementContainer[0], 'jimu-dijit-gridlayout');
+        setTimeout(lang.hitch(this, this.resize), 100);
+      }));
+    },
+
+    _hideComponent: function(contentItem) {
+      if (contentItem.parent) {
+        // remove component but won't destroy it
+        contentItem.parent.removeChild(contentItem, true);
+      }
+    },
+
+    _showComponent: function(componentId) {
+      var component, coordinates, currentNode, config, rootItem, rootContentItem, actualIndex;
+      array.some(this.components, function(item) {
+        if (item.id === componentId) {
+          component = item;
+          return true;
+        }
+      }, this);
+
+      if (component) {
+        config = {
+          id: componentId,
+          type: 'component',
+          componentName: COMPONENT_NAME,
+          componentState: {
+            id: componentId
+          }
+        };
+        coordinates = this._coordinates[componentId];
+        rootItem = this._layout.root;
+        if (coordinates) {
+          // rootItem.type may be stack is there is only one component
+          if (coordinates[0].type !== rootItem.contentItems[0].type) {
+            rootContentItem = rootItem.contentItems[0];
+            rootItem.replaceChild(rootContentItem, {
+              type: coordinates[0].type,
+              content: []
+            });
+            rootItem.contentItems[0].addChild(rootContentItem);
+          }
+
+          currentNode = rootItem;
+          array.forEach(coordinates, function(pos) {
+            actualIndex = pos.index <= currentNode.contentItems.length ?
+              pos.index : currentNode.contentItems.length;
+            if (pos.type === 'component') {
+              currentNode.addChild(config, actualIndex);
+            } else { //stack, column or row
+              if (pos.type === 'stack' ||
+                currentNode.contentItems[pos.index].type !== pos.type) {
+                currentNode.addChild({
+                  type: pos.type,
+                  content: []
+                }, actualIndex);
+              }
+              currentNode = currentNode.contentItems[actualIndex];
+            }
+          }, this);
+        } else {
+          if (rootItem.contentItems[0].type === 'stack') {
+            rootContentItem = rootItem.contentItems[0];
+            rootItem.replaceChild(rootContentItem, {
+              type: 'column',
+              content: []
+            });
+            rootItem.contentItems[0].addChild(rootContentItem);
+          }
+          rootItem.contentItems[0].addChild(config);
+        }
+      }
+    },
+
+    /**
+     * Calculate the coordinate of each component
+     */
+    _resetCoordinate: function() {
+      var components = this._layout.root.getItemsByType('component');
+      var next = function(item, coordinates) {
+        var parent = item.parent;
+        if (!parent) {
+          return;
+        }
+        // get the index of the item in the contentItems array of its parent
+        array.some(parent.contentItems, function(sibliingItem, index) {
+          if (sibliingItem === item) {
+            coordinates.push({
+              type: sibliingItem.type,
+              index: index
+            });
+            return true;
+          }
+        });
+        next(parent, coordinates);
+      };
+      array.forEach(components, function(component) {
+        var coordinates = [];
+        next(component, coordinates);
+        this._coordinates[component.config.id] = coordinates.reverse();
+      }, this);
+    }
+  });
+});

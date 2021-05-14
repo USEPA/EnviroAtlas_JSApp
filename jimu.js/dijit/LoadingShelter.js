@@ -1,6 +1,73 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/LoadingShelter.html":'\x3cdiv\x3e\r\n  \x3cdiv class\x3d"loading-container"\x3e\r\n      \x3cdiv data-dojo-attach-point\x3d"loadingNode" class\x3d"img-div"\x3e\r\n      \x3c/div\x3e\r\n      \x3cp data-dojo-attach-point\x3d"textNode"\x3e\x3c/p\x3e\r\n  \x3c/div\x3e\r\n\x3c/div\x3e'}});
-define(["dojo/_base/declare","dijit/_WidgetBase","dijit/_TemplatedMixin","dojo/text!./templates/LoadingShelter.html","dojo/_base/html"],function(c,d,e,f,a){return c([d,e],{baseClass:"jimu-loading-shelter jimu-agol-loading",declaredClass:"jimu.dijit.LoadingShelter",templateString:f,loadingText:null,hidden:!1,showLoading:!0,postMixInProperties:function(){this.nls=window.jimuNls.loadingShelter},postCreate:function(){this.inherited(arguments);this.hidden&&a.setStyle(this.domNode,"display","none");a.setStyle(this.domNode,
-{width:"100%",height:"100%"});this.showLoading||a.setStyle(this.loadingNode,"display","none");"string"===typeof this.loadingText&&(this.textNode.innerHTML=this.loadingText)},show:function(b){this.domNode&&this.hidden&&("string"===typeof b&&(this.textNode.innerHTML=b),a.setStyle(this.domNode,"display","block"),this.hidden=!1)},hide:function(){this.domNode&&!this.hidden&&(a.setStyle(this.domNode,"display","none"),this.hidden=!0)}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define(['dojo/_base/declare',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dojo/text!./templates/LoadingShelter.html',
+  'dojo/_base/html'
+],
+function(declare, _WidgetBase, _TemplatedMixin, template, html) {
+  return declare([_WidgetBase, _TemplatedMixin], {
+    'baseClass': 'jimu-loading-shelter jimu-agol-loading',
+    declaredClass: 'jimu.dijit.LoadingShelter',
+    templateString: template,
+    loadingText:null,
+    hidden:false,
+    showLoading: true,
+
+    postMixInProperties:function(){
+      this.nls = window.jimuNls.loadingShelter;
+    },
+
+    postCreate: function(){
+      this.inherited(arguments);
+      if(this.hidden){
+        html.setStyle(this.domNode, 'display', 'none');
+      }
+      html.setStyle(this.domNode, {width: '100%', height: '100%'});
+      if(!this.showLoading){
+        html.setStyle(this.loadingNode, 'display', 'none');
+      }
+      if(typeof this.loadingText === 'string'){
+        this.textNode.innerHTML = this.loadingText;
+      }
+    },
+
+    show:function(loadingText){
+      if(!this.domNode){
+        return;
+      }
+      if (this.hidden){
+        if(typeof loadingText === 'string'){
+          this.textNode.innerHTML = loadingText;
+        }
+        html.setStyle(this.domNode, 'display', 'block');
+        this.hidden = false;
+      }
+    },
+
+    hide:function(){
+      if(!this.domNode){
+        return;
+      }
+      if (!this.hidden){
+        html.setStyle(this.domNode, 'display', 'none');
+        this.hidden = true;
+      }
+    }
+  });
+});

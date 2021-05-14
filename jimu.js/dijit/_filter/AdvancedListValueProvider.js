@@ -1,44 +1,1053 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/_filter/AdvancedListValueProvider.html":'\x3cdiv\x3e\r\n   \x3cdiv role\x3d"button" aria-haspopup\x3d"true" class\x3d"checkBtn" tabindex\x3d"0" data-dojo-attach-point\x3d"checkedBtn" style\x3d"display:none;" data-dojo-attach-event\x3d"click:_checkedBtnEvent"\x3e\r\n       \x3cspan class\x3d"screen-readers-only" data-dojo-attach-point\x3d"promptLabel"\x3e\x3c/span\x3e\r\n       \x3cdiv data-dojo-attach-point\x3d"checkedNumDiv" class\x3d"checkedNumDiv"\x3e\x3cspan class\x3d"checkedNum" data-dojo-attach-point\x3d"checkedNum"\x3e\x3c/span\x3e${CommonNls.selected}\x3c/div\x3e\r\n       \x3cdiv data-dojo-attach-point\x3d"checkedNameDiv" class\x3d"checkedNum checkedNameDiv jimu-ellipsis-Blanks"\x3e\x3c/div\x3e\r\n       \x3cdiv class\x3d"jimu-icon jimu-icon-down-arrow-8 checkBtnDownIcon"\x3e\x3c/div\x3e\r\n   \x3c/div\x3e\r\n   \x3cdiv data-dojo-attach-point\x3d"listContent"\x3e\x3c/div\x3e\r\n   \x3cdiv class\x3d"value-multiple-popup" data-dojo-attach-point\x3d"listContentPopup"\x3e\r\n        \x3cdiv data-dojo-attach-point\x3d"listContent"\x3e\x3c/div\x3e\r\n   \x3c/div\x3e\r\n\x3c/div\x3e'}});
-define("dojo/Deferred dojo/_base/lang dojo/on dojo/keys dojo/Evented dojo/_base/html dojo/_base/array dojo/_base/declare dojo/query ./ValueProvider ./AdvancedListValueSelect dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/text!./AdvancedListValueProvider.html jimu/utils jimu/dijit/_filter/pageControlForQuery jimu/dijit/Popup".split(" "),function(l,e,m,n,p,d,h,q,k,r,t,u,v,w,g,x,y){return q([r,u,v,p],{templateString:w,codedValues:null,staticValues:null,showNullValues:!1,cbxPopup:null,pageSize:1E3,
-pageIndex:1,emptyStr:"",postMixInProperties:function(){this.inherited(arguments);this.CommonNls=window.jimuNls.common;this.emptyStr=window.apiNls.widgets.FeatureTable.empty},postCreate:function(){this.inherited(arguments);this.noDataTips='\x3cdiv class\x3d"error-tip-section" style\x3d"display: block;"\x3e\x3cspan class\x3d"jimu-icon jimu-icon-error"\x3e\x3c/span\x3e\x3cspan class\x3d"jimu-state-error-text"\x3e'+this.nls.noFilterValueTip+"\x3c/span\x3e\x3c/div\x3e";d.addClass(this.domNode,"jimu-filter-mutcheck-list-value-provider");
-"ADVANCED_LIST_VALUE_PROVIDER"===this.providerType?(this.controlType="multipleDynamic",this.checkedNumDiv.style.display="block"):"LIST_VALUE_PROVIDER"===this.providerType?(this.controlType="uniqueDynamic",this.checkedNameDiv.style.display="block"):(this.runtime&&"dropdown"===this.selectUI&&("UNIQUE_PREDEFINED_VALUE_PROVIDER"===this.providerType?this.checkedNameDiv.style.display="block":this.checkedNumDiv.style.display="block"),this.controlType="MULTIPLE_PREDEFINED_VALUE_PROVIDER"===this.providerType?
-"multiplePredefined":"uniquePredefined");this.selectType="MULTIPLE_PREDEFINED_VALUE_PROVIDER"===this.providerType?"multiple":"UNIQUE_PREDEFINED_VALUE_PROVIDER"===this.providerType?"unique":"LIST_VALUE_PROVIDER"===this.providerType?"unique":"multiple";this.disPlayLabel="value";!this.runtime||"multiplePredefined"!==this.controlType&&"uniquePredefined"!==this.controlType||(this.disPlayLabel="alias");!this.runtime||"multipleDynamic"!==this.controlType&&"uniqueDynamic"!==this.controlType||(this.isLoadDataAdvanced=
-!0);this.runtime&&"esriFieldTypeDate"===this.fieldInfo.type&&this.partObj.fieldObj&&(this.fieldPopupInfo={format:{dateFormat:this.partObj.fieldObj.dateFormat}});this.isNumberField=g.isNumberField(this.fieldInfo.type);this.pageControlForQuery||(this.pageControlForQuery=new x({pageSize:this.pageSize,pageIndex:1,layerUrl:this.url,fieldInfo:this.fieldInfo,queryWhere:"1\x3d1",layerDefinition:this.layerDefinition,fieldPopupInfo:this.fieldPopupInfo,isNumberField:this.isNumberField}),this.pageControlForQuery.on("query_getNewExpr",
-e.hitch(this,this._resetPageControlNewExpr)));this.listSelect||(this._resetPromptLabel(!1),this.listSelectDataList=this.partObj&&this.partObj.valueObj&&this.partObj.valueObj.value?this.partObj.valueObj.value:[],this.listSelect=new t({label:this.promptLabel.innerHTML,emptyStr:this.emptyStr,runtime:this.runtime,pageSize:this.pageSize,selectUI:this.selectUI,controlType:this.controlType,selectType:this.selectType,dataList:this.listSelectDataList,selectedDataList:[],isNumberField:this.isNumberField}),
-e.isArray(this.listSelectDataList)?this.getCheckedList(this.listSelectDataList):(this.listSelect.checkedList=[this.listSelectDataList],this.listSelect._updateCheckedLabelListFromCheckedList()),this.listSelect.on("advancedListValueSelect_itemChecked",e.hitch(this,this._createTarget)),this.listSelect.on("advancedListValueSelect_itemUnChecked",e.hitch(this,this._destoryTarget)),this.listSelect.on("advancedListValueSelect_addNextPage",e.hitch(this,this._addNextPage)),this.listSelect.on("advancedListValueSelect_searchKey",
-e.hitch(this,this._searchKey)),this.listSelect.on("advancedListValueSelect_searchKeyLocal",e.hitch(this,this._searchKeyLocal)),this.listSelect.on("advancedListValueSelect_itemsConfirmed",e.hitch(this,function(){this.cbxPopup&&this.cbxPopup.domNode&&("block"===d.getStyle(this.cbxPopup.domNode,"display")&&(this._resetListSelectState(this),this.cbxPopup.hide()),this.checkedBtn.focus())})),this.own(m(this.checkedBtn,"keydown",e.hitch(this,function(a){d.hasClass(a.target||a.srcElement,"checkBtn")&&a.keyCode===
-n.ENTER&&this._checkedBtnEvent()}))),this.staticValues||"function"!==typeof this._checkedBtnEvent||(!this.codedValues||this.codedValues&&this.filterCodedValue)&&this.layerInfo&&this.layerInfo.getLayerObject().then(e.hitch(this,function(a){a.on("edits-complete",e.hitch(this,function(){this.layerDataChanged=!0}))})));"dropdown"===this.selectUI?(d.setStyle(this.checkedBtn,"display","block"),this._multipleSelectProviderEventHandler=e.hitch(this,this._multipleSelectProviderEvent),document.addEventListener("click",
-this._multipleSelectProviderEventHandler,{capture:!0})):this.listSelect.placeAt(this.listContent)},_resetPromptLabel:function(a){a=a?this.nls.noFilterValueTip+" ":"";"undefined"!==typeof this.promptLabel&&(this.promptLabel.innerHTML=g.sanitizeHTML(this.partObj.interactiveObj.prompt+" "+this.partObj.interactiveObj.hint+a))},filterExpr:null,_resetPageControlNewExpr:function(){var a=this.getDropdownFilterExpr(this.partObj.widgetId);return this.filterExpr!==a?(this.pageControlForQuery.reset(),this.filterExpr=
-this.pageControlForQuery.cascadeFilterExprs=a,!0):!1},_multipleSelectProviderEvent:function(a){a=a.target||a.srcElement;if(this.cbxPopup&&this.cbxPopup.domNode){if(d.isDescendant(a,this.cbxPopup.domNode)||d.isDescendant(a,this.checkedBtn))return;"block"===d.getStyle(this.cbxPopup.domNode,"display")&&(this._resetListSelectState(this),this.cbxPopup.hide())}else!d.isDescendant(a,this.checkedBtn)&&this.isPopupLoading&&(this.isLoadDataAdvanced=!0);this.msgDiv&&d.setStyle(this.msgDiv,"display","none")},
-_checkedBtnEvent:function(){this._showPopup()},_onBeforeDropDownMouseDown:function(){this._tryUpdatingUniqueValues(void 0,!0);return arguments},_isRestSelectList:!1,_resetListSelectState:function(a){"block"===d.getStyle(a.listSelect.searchKeyInput,"display")&&("multipleDynamic"===this.controlType&&this.listSelect.showAllList(),a.listSelect.listContainer.scrollTop=0,a.listSelect.queryState=!0,a.listSelect.valueInput.set("value",""),this._isRestSelectList=!0)},_createTarget:function(a){this._checkedChanged(1,
-a);this.cbxPopup&&("uniqueDynamic"===this.controlType||"uniquePredefined"===this.controlType)&&this.cbxPopup.domNode&&(this._resetListSelectState(this),this.cbxPopup.close())},_destoryTarget:function(a){this._checkedChanged(-1,a)},_checkedChanged:function(a,b){if("multipleDynamic"===this.controlType||"multiplePredefined"===this.controlType&&this.runtime&&"dropdown"===this.selectUI)b&&(a=parseInt(this.checkedNum.innerText,10)+a,this.checkedNum.innerText=0<a?a:0);else if("uniqueDynamic"===this.controlType||
-"uniquePredefined"===this.controlType&&this.runtime&&"dropdown"===this.selectUI)"uniqueDynamic"===this.controlType&&(b===this.emptyStr?d.addClass(this.checkedNameDiv,"checkedEmptyNameDiv"):d.removeClass(this.checkedNameDiv,"checkedEmptyNameDiv")),a=b?b:this._getCheckedNameDivText(),this._setCheckedNameDivText(a);this.listSelect.set("displayedValue","12345678");this.emit("change")},_clearCheckedTxt:function(){this.runtime&&"dropdown"===this.selectUI&&("multipleDynamic"===this.controlType||"multiplePredefined"===
-this.controlType?this.checkedNum.textContent?this.checkedNum.textContent=0:this.checkedNum.innerText=0:"uniqueDynamic"!==this.controlType&&"uniquePredefined"!==this.controlType||this._setCheckedNameDivText(""),this.valueList=[],this.listSelect.checkedList=[],this.listSelect.checkedLabelList=[],this.listSelect.valueInput.set("value",""),"multipleDynamic"===this.controlType&&this.listSelect.showAllList());this.listSelect.set("displayedValue","12345678");this.emit("change")},_layerDataChangedCallback:function(){this.layerDataChanged&&
-(this.pageControlForQuery.reset(),this.listSelect.ifFristPage=!0,this.layerDataChanged=!1)},_addNextPage:function(){this.listSelect&&(this._showLoadingIcon(),this._layerDataChangedCallback(),this.pageControlForQuery.queryByPage(this.listSelect.ifFristPage).then(e.hitch(this,function(a){this.listSelect.isCacheFinish=this.pageControlForQuery._isUniqueValueCacheFinish;this.listSelect.ifFristPage&&this._checkIfNoData(a)||(this.listSelect.setCBXData(a,!0,this.listSelect.ifFristPage),this._hideLoadingIcon())}),
-e.hitch(this,function(a){console.log(a);this.listSelect.queryState=!1;this._hideLoadingIcon()})))},_searchKey:function(a){this.listSelect&&(this._showLoadingIcon(),this._layerDataChangedCallback(),this.pageControlForQuery._searchKey(a).then(e.hitch(this,function(a){this.listSelect.setCBXContentBySearch(a);this._resetPopupStyles(!a.length);this._hideLoadingIcon()}),e.hitch(this,function(a){console.log(a);this._hideLoadingIcon()})))},_searchKeyLocal:function(a,b){if(this.listSelect){"uniqueDynamic"===
-this.controlType&&this._isRestSelectList&&(this.listSelect.keyQueryMode=!1,this._isRestSelectList=this.listSelect.cacheQueryMode=!1);this._showLoadingIcon();var c=this.pageControlForQuery._searchKeyLocal(a);""===a&&0===c.length?(this.layerDataChanged=!0,this._layerDataChangedCallback(),this._addNextPage()):this.listSelect.setCBXContentBySearch(c,b);this._resetPopupStyles(!0);this._hideLoadingIcon()}},queryByPage:function(){var a=this.pageControlForQuery.queryByPage(this.listSelect.ifFristPage);a.then(e.hitch(this,
-function(b){a.resolve(b)}),e.hitch(this,function(b){console.log(b);a.reject(b)}))},getCheckedList:function(a){this.listSelect.checkedList=[];this.listSelect.checkedLabelList=[];h.forEach(a,e.hitch(this,function(a){var b;e.isObject(a)?a.isChecked&&(b=a.value):b=a;if(b||0===b)b=this.isNumberField?parseFloat(b):b,this.listSelect.checkedList.push(b)}))},getCheckedStrsList:function(a){var b=[];h.forEach(a,e.hitch(this,function(a){var c;e.isObject(a)?a.isChecked&&(c=a[this.disPlayLabel]):c=a;(c||0===c)&&
-b.push(c)}));return b},showContent:function(a){var b=new l;this.getCheckedList(this.valueList);this.listSelect.codedValues=!1;this.listSelect.disPlayLabel="value";var c;if("multiplePredefined"===this.controlType||"uniquePredefined"===this.controlType)return this.runtime&&(this.listSelect.disPlayLabel="alias"),c=this._checkIfNoData(this.valueList),c||(this.listSelect.setCBXData(this.valueList,!0,a),this.listSelect._updateCheckedLabelListFromCheckedList()),this._hideLoadingIcon(),b.resolve(c),b;if(this.staticValues)return c=
-this._setValueForStaticValues(this.staticValues),b.resolve(c),b;if(this.codedValues)if(this.filterCodedValue)this.listSelect.codedValues=!0;else return c=this._setValueForStaticValues(this.codedValues),b.resolve(c),b;this._showLoadingIcon();if("multipleDynamic"===this.controlType||"uniqueDynamic"===this.controlType)this._layerDataChangedCallback(),this.pageControlForQuery.queryByPage(a).then(e.hitch(this,function(d){this.listSelect.isCacheFinish=this.pageControlForQuery._isUniqueValueCacheFinish;
-d=this._handleCodedValue(d);(c=this._checkIfNoData(d))||this.listSelect.setCBXData(d,!0,a);this._hideLoadingIcon();b.resolve(c)}),e.hitch(this,function(a){console.log(a);this._hideLoadingIcon();b.reject(a)}));return b},_handleCodedValue:function(a){this.listSelect.disPlayLabel="label";if(!this.codedValues)return this.listSelect._updateCheckedLabelListFromCheckedList(),a;this.pageControlForQuery._codedvalueCache=a;"uniqueDynamic"===this.controlType&&this._setCheckedName(this.listSelect.checkedList?
-this.listSelect.checkedList[0]:"",a);this.listSelect._updateCheckedLabelList(this.codedValues);return a},_showDropdown:function(a){var b=d.position(a.target),c;c=this.isInFilterSet?this.domNode.parentNode.parentNode.parentNode:this.domNode.parentNode;var e=d.position(c);if("none"!==d.getStyle(this.listContentPopup,"display"))d.setStyle(this.listContentPopup,"display","none");else{h.forEach(k(".value-type-popup",c),function(a){d.setStyle(a,"display","none")},this);d.place(this.listContentPopup,c);
-var f;f=d.hasClass(k(".desktop-add-section",c.parentNode)[0],"hidden")?-5:30;f=b.y-e.y-c.parentNode.scrollTop+f;f+170>c.parentNode.scrollHeight&&(f=c.parentNode.scrollHeight-170-40);window.isRTL?b=b.x-e.x+20:(b=b.x-e.x-100-90,b+150>c.clientWidth&&(b=c.clientWidth-150));d.setStyle(this.listContentPopup,{display:"block",left:b+"px",top:f+"px"});a.stopPropagation()}},_calculatePopup:function(){var a=d.position(this.domNode.parentNode),b=d.position(document.body).h,c=a.y+30;b-c<this._cbxHeight&&(c=a.y-
-this._cbxHeight);return{left:a.x,top:c}},_cbxWidth:210,_cbxHeight:362,popupIsNoData:!1,isPopupLoading:!1,isLoadDataAdvanced:!1,_showPopup:function(){if(!this.isPopupLoading)if(this.cbxPopup&&this.cbxPopup.domNode&&"block"===d.getStyle(this.cbxPopup.domNode,"display"))this._resetListSelectState(this),this.cbxPopup.hide();else{var a=this._resetPageControlNewExpr();a&&this.cbxPopup&&(this.cbxPopup.close(),this._clearCheckedTxt());if(a||this.cbxPopup){var b=this._calculatePopup();this._cbxWidth=d.getStyle(this.checkedBtn,
-"width");if(!a&&this.cbxPopup&&this.cbxPopup.domNode&&!this.layerDataChanged)this.popupIsNoData?this._checkIfNoData([]):(this.cbxPopup.show(),this._resetPopupStyles(),this.listSelect.valueInput&&"block"===d.getStyle(this.listSelect.searchKeyInput,"display")?this.listSelect.valueInput.focus():this.listSelect.listContent.focus(),this.listSelect.queryState=!1);else{this.isPopupLoading=!0;this.isLoadDataAdvanced||this._showDataQueryingIcon();var c=this.showContent(!0);c.then(e.hitch(this,function(a){this.isPopupLoading=
-!1;this._hideDataQueryingIcon();(this.popupIsNoData=a)?this._clearCheckedTxt():(this.cbxPopup=new y({width:this._cbxWidth,height:this._cbxHeight,content:this.listSelect.domNode,enableMoveable:!1,hasTitle:!1,hasOverlay:!1,contentHasNoMargin:!0,moveToCenter:!1,customPosition:{left:b.left,top:b.top},hiddenAfterInit:this.isLoadDataAdvanced,useFocusLogic:!1,onClose:e.hitch(this,function(){this.cbxPopup.hide();return!1}),buttons:[]}),this.cbxPopup.setDomNodeStyls({"border-radius":0,border:"1px solid #999"}),
-this.cbxPopup.on("popupHasInitedSuccessfully",e.hitch(this,function(a){this._resetPopupStyles(!1,!0);a||(this.listSelect.valueInput&&"block"===d.getStyle(this.listSelect.searchKeyInput,"display")?this.listSelect.valueInput.focus():this.listSelect.listContent.focus())})));this.isLoadDataAdvanced&&(this.isLoadDataAdvanced=!1)}),e.hitch(this,function(a){this.isPopupLoading=!1;console.log(a);c.reject(a)}))}}else d.setStyle(this.msgDiv,"display","block")}},_itemContainerH:300,_resetPopupStyles:function(a,
-b){var c=this._itemContainerH,e=d.getStyle(this.listSelect.listContent,"height");0===e&&this.cbxPopup&&this.cbxPopup.domNode&&"none"===d.getStyle(this.cbxPopup.domNode,"display")&&(e=this.popupInitHeight);b&&(this.popupInitHeight=e);!a||this.listSelect.codedValues||this.pageControlForQuery._isUniqueValueCacheFinish||(e+=25);this.pageControlForQuery._isUniqueValueCacheFinish&&"block"===d.getStyle(this.listSelect.noDataTips,"display")&&(e+=30);c=e<c?e:c;d.setStyle(this.listSelect.listContainer,"height",
-c+"px");d.setStyle(this.listSelect.selectedContainer,"height",c+30+"px");"multipleDynamic"===this.controlType?c=c+30+30:"uniqueDynamic"===this.controlType&&(c+=30);this._cbxHeight=c+10;a=this._calculatePopup();this._cbxWidth=d.getStyle(this.checkedBtn,"width");this.cbxPopup.setCustomPosition(a.left,a.top,this._cbxWidth,this._cbxHeight);this._resetItemWidth()},_resetItemWidth:function(){var a=this._cbxWidth-20;"uniqueDynamic"===this.controlType||this.runtime&&"uniquePredefined"===this.controlType&&
-"dropdown"===this.selectUI||!this.runtime&&("multiplePredefined"===this.controlType||"uniquePredefined"===this.controlType)||(a=!this.runtime||"dropdown"===this.selectUI||"uniquePredefined"!==this.controlType&&"multiplePredefined"!==this.controlType?a-30:a-15);window.isRTL&&(a-=3);this.listSelect._itemLabelW=a;k(".item .label",this.listSelect.listContent).style({"max-width":a+"px"})},_setValueForStaticValues:function(a){this.listSelect.codedValues=!0;this.listSelect._updateCheckedLabelList(this.codedValues);
-if(a){this.pageControlForQuery._codedvalueCache=a;var b=this._checkIfNoData(a);b||(this.listSelect.disPlayLabel="label",this.listSelect.setCBXData(a,!0,!0));return b}return!1},_checkIfNoData:function(a){if(this.runtime&&"dropdown"===this.selectUI){if(a&&0<a.length)return this._resetPromptLabel(!1),!1;this.msgDiv?d.setStyle(this.msgDiv,"display","block"):(this.msgDiv=document.createElement("div"),d.addClass(this.msgDiv,"jimu-filter-list-value-provider-tip-container"),this.msgDiv.innerHTML=this.noDataTips,
-this.checkedBtn.parentNode.appendChild(this.msgDiv));this._resetPromptLabel(!0);return!0}this._resetPromptLabel(!1);return!1},getDijits:function(){return[this.listSelect]},_setCheckedName:function(a,b){var c=a;if(b=b?b:this.codedValues){for(var e=!1,f=0;f<b.length;f++){var g=b[f];if(g.value===a){c=g.label;e=!0;break}}e||(c=this.emptyStr,this.valueList=[],this.listSelect&&(this.listSelect.checkedList=[],this.listSelect.checkedLabelList=[]))}else void 0===a?(c=this.emptyStr,d.addClass(this.checkedNameDiv,
-"checkedEmptyNameDiv")):d.removeClass(this.checkedNameDiv,"checkedEmptyNameDiv");this._setCheckedNameDivText(c)},setValueObject:function(a){a.value=a.value||0===a.value?a.value:[];this.valueList=a.value;this.enableEmpty=a.enableEmpty;this.listSelect.enableEmpty=a.enableEmpty;if("multipleDynamic"===this.controlType)this.checkedNum.innerText=this.valueList.length,this.isLoadDataAdvanced&&this._checkedBtnEvent();else if("uniqueDynamic"===this.controlType){a=this.valueList;e.isArray(a)&&0===a.length&&
-(a=void 0);this._setCheckedName(a);this.valueList=[this.valueList];if(a&&"esriFieldTypeDate"===this.fieldInfo.type){var b=g.getDateByDateTimeStrAndFormat(a,this.fieldPopupInfo);a=g.getDateTimeStrByFieldInfo(b,this.fieldPopupInfo);b=g.localizeDateByFieldInfo(b,this.fieldPopupInfo);this._setCheckedName(b);this.valueList=[a]}this.isLoadDataAdvanced&&this._checkedBtnEvent()}else this.emptyStr=a.emptyLabel?a.emptyLabel:this.emptyStr,this.listSelect.emptyStr=this.emptyStr,this.runtime&&"dropdown"===this.selectUI&&
-(b=[],"value"===this.disPlayLabel?(this.getCheckedList(this.valueList),b=this.listSelect.checkedList):b=this.getCheckedStrsList(this.valueList),"uniquePredefined"===this.controlType?0<this.listSelect.checkedList.length?this._setCheckedNameDivText(b[0]):this._setCheckedNameDivText(a.enableEmpty?this.emptyStr:""):this.checkedNum.innerText=b.length),this.showContent(!0),setTimeout(e.hitch(this,function(){this._cbxWidth=d.getStyle(this.listSelect.listContent,"width");this._resetItemWidth()}),50)},_getCheckedNameDivText:function(){return this.checkedNameDiv.textContent||
-this.checkedNameDiv.innerText||""},_setCheckedNameDivText:function(a){this.isNumberField&&"number"===typeof a&&(a=g._getValues(this.layerDefinition,this.fieldPopupInfo,this.fieldName,[a])[0].label);this.checkedNameDiv.textContent?this.checkedNameDiv.textContent=a:this.checkedNameDiv.innerText=a},tryGetValueObject:function(){if(this.isValidValue())return this.getValueObject();if(this.isEmptyValue()){var a=null,a="multipleDynamic"===this.controlType||"multiplePredefined"===this.controlType?[]:"string"===
-this.shortType?"":null;return{isValid:!0,type:this.partObj.valueObj.type,value:a}}return null},getValueObject:function(){if(this.isValidValue()){var a;a="multipleDynamic"===this.controlType||"uniqueDynamic"===this.controlType?this.listSelect.getListCheckedValues():this.listSelect.getListValues();"uniqueDynamic"===this.controlType&&(a=e.isArray(a)?a[0]:a);return{isValid:!0,type:this.partObj.valueObj.type,value:a}}return null},setRequired:function(a){this.listSelect.set("required",a)},_showDataQueryingIcon:function(){this._validatingNode||
-(this._validatingNode=d.create("div",{"class":"jimu-circle-loading"},this.checkedBtn));d.setStyle(this._validatingNode,"display","block")},_hideDataQueryingIcon:function(){this._validatingNode&&d.setStyle(this._validatingNode,"display","none")},_showLoadingIcon:function(){this.listSelect&&this.listSelect.listContainer&&d.addClass(this.listSelect.listContainer,"jimu-circle-loading")},_hideLoadingIcon:function(){this.listSelect&&this.listSelect.listContainer&&d.removeClass(this.listSelect.listContainer,
-"jimu-circle-loading")},destroy:function(){this._multipleSelectProviderEventHandler&&document.removeEventListener("click",this._multipleSelectProviderEventHandler,{capture:!0});this.cbxPopup&&this.cbxPopup.domNode&&(this.cbxPopup.onClose=e.hitch(this,function(){return!0}),this.cbxPopup.close());this.inherited(arguments)},destroyProvider:function(){this.listSelect&&this.listSelect.destroy();this.listSelect=null}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+    'dojo/Deferred',
+    'dojo/_base/lang',
+    'dojo/on',
+    'dojo/keys',
+    'dojo/Evented',
+    'dojo/_base/html',
+    'dojo/_base/array',
+    'dojo/_base/declare',
+    'dojo/query',
+    './ValueProvider',
+    './AdvancedListValueSelect',
+    'dijit/_TemplatedMixin',
+    'dijit/_WidgetsInTemplateMixin',
+    'dojo/text!./AdvancedListValueProvider.html',
+    'jimu/utils',
+    'jimu/dijit/_filter/pageControlForQuery',
+    'jimu/dijit/Popup'
+  ],
+  function(Deferred, lang, on, keys, Evented, html, array, declare, query, ValueProvider,
+    AdvancedListValueSelect, _TemplatedMixin,_WidgetsInTemplateMixin,template, jimuUtils,
+    pageControlForQuery, Popup) {
+
+    return declare([ValueProvider, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+        templateString: template,
+        codedValues: null,//[{value,label}] for coded values and sub types
+        staticValues: null,//[{value,label}]
+        showNullValues: false,//show null values
+        cbxPopup: null,
+
+        pageSize: 1000, //page size
+        pageIndex:1,  //current page
+
+        emptyStr: '',
+
+        postMixInProperties:function(){
+          this.inherited(arguments);
+          this.CommonNls = window.jimuNls.common;
+          this.emptyStr = window.apiNls.widgets.FeatureTable.empty;
+        },
+
+        postCreate: function(){
+          this.inherited(arguments);
+          this.noDataTips = '<div class="error-tip-section" style="display: block;">' +
+                            '<span class="jimu-icon jimu-icon-error"></span>' +
+                            '<span class="jimu-state-error-text">' + this.nls.noFilterValueTip + '</span></div>';
+
+          html.addClass(this.domNode, 'jimu-filter-mutcheck-list-value-provider');
+
+          if(this.providerType === 'ADVANCED_LIST_VALUE_PROVIDER'){ //setting&multiple
+            this.controlType = 'multipleDynamic';
+            this.checkedNumDiv.style.display = 'block';
+          }else if(this.providerType === 'LIST_VALUE_PROVIDER'){ //setting&multiple
+            this.controlType = 'uniqueDynamic';
+            this.checkedNameDiv.style.display = 'block';
+          }else{
+            if(this.runtime && this.selectUI === 'dropdown'){
+              if(this.providerType === 'UNIQUE_PREDEFINED_VALUE_PROVIDER'){
+                this.checkedNameDiv.style.display = 'block';
+              }else{
+                this.checkedNumDiv.style.display = 'block';
+              }
+            }
+            if(this.providerType === 'MULTIPLE_PREDEFINED_VALUE_PROVIDER'){
+              this.controlType = 'multiplePredefined';
+            }else{
+              this.controlType = 'uniquePredefined';
+            }
+          }
+
+          if(this.providerType === 'MULTIPLE_PREDEFINED_VALUE_PROVIDER'){//runtime&multiple predefined
+            this.selectType = 'multiple';
+          }else if(this.providerType === 'UNIQUE_PREDEFINED_VALUE_PROVIDER'){//runtime&unique predefined
+            this.selectType = 'unique';
+          }else if(this.providerType === 'LIST_VALUE_PROVIDER'){
+            this.selectType = 'unique';
+          }else{
+            this.selectType = 'multiple';
+          }
+
+          this.disPlayLabel = 'value';
+          if(this.runtime && (this.controlType === 'multiplePredefined' || this.controlType === 'uniquePredefined')){
+            this.disPlayLabel = 'alias';
+          }
+
+          if(this.runtime && (this.controlType === 'multipleDynamic' || this.controlType === 'uniqueDynamic')){
+            this.isLoadDataAdvanced = true;
+          }
+
+          //keep the date format which was saved in setting page, not the lasteast date format by mapviewer.
+          if(this.runtime && this.fieldInfo.type === 'esriFieldTypeDate' && this.partObj.fieldObj){
+            this.fieldPopupInfo = {format: {dateFormat: this.partObj.fieldObj.dateFormat}};
+          }
+
+          //for valuetype = field
+          this.isNumberField = jimuUtils.isNumberField(this.fieldInfo.type);
+          if(!this.pageControlForQuery){
+            this.pageControlForQuery = new pageControlForQuery({
+              pageSize: this.pageSize,
+              pageIndex: 1,
+              layerUrl: this.url,
+              fieldInfo: this.fieldInfo,
+              queryWhere: '1=1',
+              layerDefinition: this.layerDefinition,
+              fieldPopupInfo: this.fieldPopupInfo,
+              // spatialReference: this.layerInfo.map.spatialReference,
+              isNumberField: this.isNumberField
+            });
+            this.pageControlForQuery.on("query_getNewExpr", lang.hitch(this, this._resetPageControlNewExpr));
+          }
+          if(!this.listSelect){
+            this._resetPromptLabel(false);
+
+            this.listSelectDataList = (this.partObj && this.partObj.valueObj && this.partObj.valueObj.value) ?
+              this.partObj.valueObj.value : [];
+            this.listSelect = new AdvancedListValueSelect({
+              label: this.promptLabel.innerHTML, //for aria-label in expanded list
+              emptyStr: this.emptyStr,
+              runtime: this.runtime,
+              pageSize: this.pageSize,
+              selectUI: this.selectUI,
+              controlType: this.controlType,
+              selectType: this.selectType,
+              dataList: this.listSelectDataList,
+              selectedDataList:[],
+              isNumberField: this.isNumberField
+            });
+            //for init checkedList data, it's necessary to display and hold data on page if no open popup again.
+            if(lang.isArray(this.listSelectDataList)){
+              this.getCheckedList(this.listSelectDataList);
+            }else{
+              this.listSelect.checkedList = [this.listSelectDataList];
+              this.listSelect._updateCheckedLabelListFromCheckedList();
+            }
+
+            this.listSelect.on("advancedListValueSelect_itemChecked", lang.hitch(this, this._createTarget));
+            this.listSelect.on("advancedListValueSelect_itemUnChecked", lang.hitch(this, this._destoryTarget));
+            this.listSelect.on("advancedListValueSelect_addNextPage", lang.hitch(this, this._addNextPage));
+            this.listSelect.on("advancedListValueSelect_searchKey", lang.hitch(this, this._searchKey));
+            this.listSelect.on("advancedListValueSelect_searchKeyLocal", lang.hitch(this, this._searchKeyLocal));
+
+            this.listSelect.on("advancedListValueSelect_itemsConfirmed", lang.hitch(this, function(){
+              if(this.cbxPopup && this.cbxPopup.domNode){
+                if(html.getStyle(this.cbxPopup.domNode, 'display') === 'block'){
+                  this._resetListSelectState(this);
+                  this.cbxPopup.hide();
+                }
+                this.checkedBtn.focus();
+              }
+            }));
+
+            this.own(on(this.checkedBtn, 'keydown', lang.hitch(this, function(evt){
+              var target = evt.target || evt.srcElement;
+              if(html.hasClass(target, 'checkBtn') && evt.keyCode === keys.ENTER){
+                this._checkedBtnEvent();
+              }
+            })));
+
+
+            if(!this.staticValues && typeof this._checkedBtnEvent === 'function'){
+              if(!this.codedValues || (this.codedValues && this.filterCodedValue)){
+                // to be continued ...
+                if(this.layerInfo){ //it always exsits because it's required from valueProviderFactory constructor
+                  //it will tragger after the  add/remove/update events happen
+                  this.layerInfo.getLayerObject().then(lang.hitch(this, function(layerObject){
+                    layerObject.on("edits-complete", lang.hitch(this, function() {
+                      this.layerDataChanged = true;
+                    }));
+                  }));
+                }
+              }
+            }
+          }
+          //show dijit in popup
+          // if(!this.runtime || (this.runtime && this.type === 'dropdown')){
+          if(this.selectUI === 'dropdown'){
+            html.setStyle(this.checkedBtn, 'display', 'block');
+            this._multipleSelectProviderEventHandler = lang.hitch(this, this._multipleSelectProviderEvent);
+            document.addEventListener('click', this._multipleSelectProviderEventHandler , {capture: true});
+          }else{ //show dijit in dropdown
+            this.listSelect.placeAt(this.listContent);
+          }
+        },
+
+        _resetPromptLabel: function(isNoData){
+          var noDataLabel = isNoData ? this.nls.noFilterValueTip + ' ' : '';
+          if(typeof(this.promptLabel) !== "undefined") {
+            this.promptLabel.innerHTML = jimuUtils.sanitizeHTML(this.partObj.interactiveObj.prompt + ' ' +
+            this.partObj.interactiveObj.hint + noDataLabel);
+          }
+        },
+
+        filterExpr: null,
+        _resetPageControlNewExpr: function(){
+          // var newExpr = this.getDropdownFilterExpr();
+          var newExpr = this.getDropdownFilterExpr(this.partObj.widgetId);
+          if(this.filterExpr !== newExpr){
+            // console.log('newExpr:' + newExpr);
+            this.pageControlForQuery.reset();
+            this.pageControlForQuery.cascadeFilterExprs = newExpr;
+            this.filterExpr = newExpr;
+            return true;
+          }
+          return false;
+        },
+
+        _multipleSelectProviderEvent: function(event){
+          var target = event.target || event.srcElement;
+          if(this.cbxPopup && this.cbxPopup.domNode){
+            if(html.isDescendant(target, this.cbxPopup.domNode)){
+              return;
+            }
+            if(html.isDescendant(target, this.checkedBtn)){
+              return;
+            }
+            if(html.getStyle(this.cbxPopup.domNode, 'display') === 'block'){
+              this._resetListSelectState(this);
+              this.cbxPopup.hide();
+            }
+          }
+          //init select: hide result popup after it's loading data
+          //once other dijit or space is clicked.#13346
+          else{
+            if(!html.isDescendant(target, this.checkedBtn)){
+              if(this.isPopupLoading){
+                this.isLoadDataAdvanced = true;
+              }
+            }
+          }
+          if(this.msgDiv){
+            html.setStyle(this.msgDiv, "display", "none");
+          }
+        },
+
+        _checkedBtnEvent: function(){//evt
+          this._showPopup(); //in popup
+          // this._showDropdown(evt); //in dropdown
+        },
+
+        _onBeforeDropDownMouseDown: function(){
+          this._tryUpdatingUniqueValues(undefined, true);
+          return arguments;
+        },
+
+        _isRestSelectList: false,
+        _resetListSelectState: function(_this){
+          if(html.getStyle(_this.listSelect.searchKeyInput, 'display') === 'block'){
+            if(this.controlType === 'multipleDynamic'){
+              this.listSelect.showAllList();
+            }
+            _this.listSelect.listContainer.scrollTop = 0;
+            _this.listSelect.queryState = true;
+            _this.listSelect.valueInput.set('value', '');
+            this._isRestSelectList = true;
+            // _this.listSelect.emit("advancedListValueSelect_searchKeyLocal", '', true);//init list
+          }
+        },
+
+        _createTarget: function(name){//name
+          this._checkedChanged(1, name);
+          if(this.cbxPopup && (this.controlType === 'uniqueDynamic' || this.controlType === 'uniquePredefined')){
+            if(this.cbxPopup.domNode){
+              this._resetListSelectState(this);
+              this.cbxPopup.close();
+            }
+          }
+        },
+
+        _destoryTarget:function(name){
+          this._checkedChanged(-1, name);
+        },
+
+        _checkedChanged: function(num, name){
+          if(this.controlType === 'multipleDynamic' ||
+            (this.controlType === 'multiplePredefined' && this.runtime && this.selectUI === 'dropdown')){
+            if(name){
+              num = parseInt(this.checkedNum.innerText, 10) + num;
+              num = num > 0 ? num : 0; //prevent negative number when it doesn't exist at runtime
+              this.checkedNum.innerText = num;
+            }
+          }else if(this.controlType === 'uniqueDynamic' ||
+            (this.controlType === 'uniquePredefined' && this.runtime && this.selectUI === 'dropdown')){
+            if(this.controlType === 'uniqueDynamic'){
+              if(name === this.emptyStr){
+                html.addClass(this.checkedNameDiv, 'checkedEmptyNameDiv');
+              }else{
+                html.removeClass(this.checkedNameDiv, 'checkedEmptyNameDiv');
+              }
+            }
+            var newName = name ? name : this._getCheckedNameDivText();
+            this._setCheckedNameDivText(newName);
+          }
+          this.listSelect.set("displayedValue", '12345678');
+          this.emit('change');
+        },
+
+        _clearCheckedTxt: function(){
+          if(this.runtime && this.selectUI === 'dropdown'){
+            if(this.controlType === 'multipleDynamic' || this.controlType === 'multiplePredefined'){
+              // this._setCheckedNameDivText(0);
+              if(this.checkedNum.textContent){
+                this.checkedNum.textContent = 0;
+              }else{
+                this.checkedNum.innerText = 0;
+              }
+            }else if(this.controlType === 'uniqueDynamic' || this.controlType === 'uniquePredefined'){
+              this._setCheckedNameDivText('');
+            }
+            this.valueList = []; //empty current config
+            this.listSelect.checkedList = [];
+            this.listSelect.checkedLabelList = [];
+            this.listSelect.valueInput.set('value','');
+            if(this.controlType === 'multipleDynamic'){
+              this.listSelect.showAllList();
+            }
+          }
+          this.listSelect.set("displayedValue", '12345678');
+          this.emit('change');
+        },
+
+        _layerDataChangedCallback: function(){
+          if(this.layerDataChanged){
+            this.pageControlForQuery.reset();
+            this.listSelect.ifFristPage = true;
+            this.layerDataChanged = false;
+          }
+        },
+
+        _addNextPage: function(){
+          if(!this.listSelect){
+            return;
+          }
+          this._showLoadingIcon();
+          this._layerDataChangedCallback();
+          var def = this.pageControlForQuery.queryByPage(this.listSelect.ifFristPage);
+          def.then(lang.hitch(this, function(valueLabels){
+            this.listSelect.isCacheFinish = this.pageControlForQuery._isUniqueValueCacheFinish;
+            if(this.listSelect.ifFristPage){
+              var isNoData = this._checkIfNoData(valueLabels);
+              if(isNoData){
+                return;
+              }
+            }
+            this.listSelect.setCBXData(valueLabels, true, this.listSelect.ifFristPage);
+            this._hideLoadingIcon();
+          }), lang.hitch(this, function(err){
+            console.log(err);
+            this.listSelect.queryState = false;
+            this._hideLoadingIcon();
+          }));
+        },
+
+        _searchKey: function(name){
+          if(!this.listSelect){
+            return;
+          }
+          this._showLoadingIcon();
+          this._layerDataChangedCallback();
+          this.pageControlForQuery._searchKey(name).then(lang.hitch(this, function(result) {
+            this.listSelect.setCBXContentBySearch(result);
+            this._resetPopupStyles(!result.length);
+            this._hideLoadingIcon();
+          }), lang.hitch(this, function(err){
+            console.log(err);
+            this._hideLoadingIcon();
+          }));
+        },
+
+        _searchKeyLocal: function(name, isResetPopup){
+          if(!this.listSelect){
+            return;
+          }
+          if(this.controlType === 'uniqueDynamic' && this._isRestSelectList){//for showing empty item
+            this.listSelect.keyQueryMode = false;
+            this.listSelect.cacheQueryMode = false;
+            this._isRestSelectList = false;
+          }
+          this._showLoadingIcon();
+          var result = this.pageControlForQuery._searchKeyLocal(name);
+          //cache maybe is cleaned because of layerDataChanged
+          //so query the data of first page again
+          if(name === '' && result.length === 0){
+            this.layerDataChanged = true; //for init pageControl parameters
+            this._layerDataChangedCallback();
+            this._addNextPage();
+          }else{
+            // result = result.slice(0,this.pageSize); //only show data from first page
+            this.listSelect.setCBXContentBySearch(result, isResetPopup);
+          }
+          this._resetPopupStyles(true);
+          this._hideLoadingIcon();
+        },
+
+        queryByPage: function(){
+          var def = this.pageControlForQuery.queryByPage(this.listSelect.ifFristPage);
+          def.then(lang.hitch(this, function(features){
+            def.resolve(features);
+          }), lang.hitch(this, function(err){
+            console.log(err);
+            def.reject(err);
+          }));
+        },
+
+        getCheckedList: function(valueList){
+          this.listSelect.checkedList = [];
+          this.listSelect.checkedLabelList = [];
+          if(this.controlType === 'uniquePredefined' && this.selectUI !== 'dropdown' && this.enableEmpty){
+            // this.listSelect.checkedList.push(val);
+          }
+          array.forEach(valueList, lang.hitch(this, function(item) {
+            var val;
+            if(lang.isObject(item)){//predefined or runtime&dropdown
+              if(item.isChecked){
+                val = item.value;
+              }
+            }else{//dynamic
+              val = item;
+            }
+            if(val || val === 0){//number could be 0
+              val = this.isNumberField ? parseFloat(val): val;
+              this.listSelect.checkedList.push(val);
+            }
+          }));
+        },
+
+        //for runtime & predefined
+        getCheckedStrsList: function(valueList){
+          var checkedStrsList = [];
+          array.forEach(valueList, lang.hitch(this, function(item) {
+            var val;
+            if(lang.isObject(item)){
+              if(item.isChecked){
+                val = item[this.disPlayLabel];
+              }
+            }else{//dynamic
+              val = item;
+            }
+            if(val || val === 0){
+              checkedStrsList.push(val);
+            }
+          }));
+          return checkedStrsList;
+        },
+
+
+        showContent:function(ifInit){
+          var def = new Deferred();
+          // this.listSelect.checkedList = [];
+          this.getCheckedList(this.valueList);
+          this.listSelect.codedValues = false;
+          this.listSelect.disPlayLabel = 'value';
+          var isNoData;
+          if(this.controlType === 'multiplePredefined' || this.controlType === 'uniquePredefined'){
+            if(this.runtime){
+              this.listSelect.disPlayLabel = 'alias';
+            }
+            // this.getCheckedList(this.valueList);
+            //valueList is a vals Obj
+            isNoData = this._checkIfNoData(this.valueList);
+            if(!isNoData){
+              this.listSelect.setCBXData(this.valueList,true,ifInit);
+              this.listSelect._updateCheckedLabelListFromCheckedList();
+            }
+            this._hideLoadingIcon();
+            def.resolve(isNoData);
+            return def;
+          }
+          if(this.staticValues){
+            // this._setValueForStaticValues(this.listSelect.checkedList, this.staticValues);
+            isNoData = this._setValueForStaticValues(this.staticValues);
+            def.resolve(isNoData);
+            return def;
+          } else if(this.codedValues){
+            if(this.filterCodedValue){
+              this.listSelect.codedValues = true;
+            }else{
+              isNoData = this._setValueForStaticValues(this.codedValues);
+              def.resolve(isNoData);
+              return def;
+            }
+          } else{
+          }
+
+          this._showLoadingIcon();
+          if(this.controlType === 'multipleDynamic' || this.controlType === 'uniqueDynamic'){
+            this._layerDataChangedCallback();
+            this.pageControlForQuery.queryByPage(ifInit).then(lang.hitch(this, function(valueLabels){ //for multiple
+              this.listSelect.isCacheFinish = this.pageControlForQuery._isUniqueValueCacheFinish;
+              // if(this.codedValues){
+              valueLabels = this._handleCodedValue(valueLabels);
+              // valueLabels = this.pageControlForQuery._handleCodedValue(valueLabels);
+              // }
+              // this.getCheckedList(this.valueList);
+              //valueList is a vals array---todo
+              isNoData = this._checkIfNoData(valueLabels);
+              if(!isNoData){
+                this.listSelect.setCBXData(valueLabels, true, ifInit);
+              }
+              this._hideLoadingIcon();
+              def.resolve(isNoData);
+            }), lang.hitch(this, function(err){
+              console.log(err);
+              this._hideLoadingIcon();
+              def.reject(err);
+            }));
+          }else{ //unique-predefined & multiple-predefined
+          }
+          return def;
+        },
+
+        _handleCodedValue: function(valueLabels){
+          this.listSelect.disPlayLabel = 'label';
+          if(!this.codedValues){
+            this.listSelect._updateCheckedLabelListFromCheckedList();
+            return valueLabels;
+          }
+          //update codedvalue cache
+          this.pageControlForQuery._codedvalueCache = valueLabels;
+          if(this.controlType === 'uniqueDynamic'){
+            var value = this.listSelect.checkedList ? this.listSelect.checkedList[0] : '';
+            this._setCheckedName(value, valueLabels);
+          }
+          this.listSelect._updateCheckedLabelList(this.codedValues);
+          return valueLabels;
+        },
+
+        //Deprecated, because popup z-index is too low
+        _showDropdown: function(evt){
+          var position = html.position(evt.target);
+          var rNode;
+          if(this.isInFilterSet){
+            rNode = this.domNode.parentNode.parentNode.parentNode;
+          }else{
+            rNode = this.domNode.parentNode;
+          }
+          var rPosition = html.position(rNode);
+
+          if(html.getStyle(this.listContentPopup, 'display') !== 'none'){
+            html.setStyle(this.listContentPopup, 'display', 'none');
+            return;
+          }
+          array.forEach(query('.value-type-popup', rNode), function(node){
+            html.setStyle(node, 'display', 'none');
+          }, this);
+          html.place(this.listContentPopup, rNode);
+
+          var topMargin;
+          if(html.hasClass(query('.desktop-add-section', rNode.parentNode)[0], 'hidden')){
+            topMargin = 55 - 60;
+          }else{
+            topMargin = 90 - 60;
+          }
+          var top = position.y - rPosition.y - rNode.parentNode.scrollTop + topMargin;
+          if(top + 170 > rNode.parentNode.scrollHeight){
+            top = rNode.parentNode.scrollHeight - 170 - 40;
+          }
+
+          var left;
+          if(window.isRTL){
+            left = position.x - rPosition.x + 20;
+          }else{
+            left = position.x - rPosition.x - 100 - 90;
+            if(left + 150 > rNode.clientWidth){
+              left = rNode.clientWidth - 150;
+            }
+          }
+          html.setStyle(this.listContentPopup, {
+            display: 'block',
+            left: left + 'px',
+            top: top + 'px'
+          });
+          evt.stopPropagation();
+        },
+
+        _calculatePopup: function(){
+          var rNode = this.domNode.parentNode;
+          var rPosition = html.position(rNode);
+
+          var bodyH = html.position(document.body).h;
+          var popupTop = rPosition.y + 30; //default show popup under the button
+          if(bodyH - popupTop < this._cbxHeight){
+            popupTop = rPosition.y - this._cbxHeight;
+          }
+          return {
+            left: rPosition.x,
+            top: popupTop
+          };
+        },
+
+        _cbxWidth: 210,
+        _cbxHeight: 362,
+        popupIsNoData: false,
+        isPopupLoading: false,
+        isLoadDataAdvanced: false,
+        _showPopup:function(){//evt
+          if(this.isPopupLoading){//prevent secondary clicks
+            return;
+          }
+          if(this.cbxPopup && this.cbxPopup.domNode &&
+            html.getStyle(this.cbxPopup.domNode, 'display') === 'block'){
+            this._resetListSelectState(this);
+            this.cbxPopup.hide();
+            return;
+          }
+          //check new expr
+          var isNewExpr = this._resetPageControlNewExpr();
+          if(isNewExpr && this.cbxPopup){
+            this.cbxPopup.close();
+            this._clearCheckedTxt();
+          }
+
+          //not query again if no data is already known
+          if(!isNewExpr && !this.cbxPopup){
+            html.setStyle(this.msgDiv, "display", "block"); //show no data label
+            return;
+          }
+
+          var popupPosition = this._calculatePopup();
+
+          //calc popup width by btn(for resize of view)
+          var btnW = html.getStyle(this.checkedBtn, 'width');
+          // if(this.controlType === 'multipleDynamic' || this.controlType === 'multiplePredefined'){
+          //   btnW = btnW + 8;
+          // }
+          this._cbxWidth = btnW;
+
+          if(!isNewExpr && this.cbxPopup && this.cbxPopup.domNode && !this.layerDataChanged){
+            if(!this.popupIsNoData){
+              this.cbxPopup.show();
+              this._resetPopupStyles();
+              if(this.listSelect.valueInput &&
+                html.getStyle(this.listSelect.searchKeyInput, 'display') === 'block'){
+                this.listSelect.valueInput.focus();
+              }else{
+                this.listSelect.listContent.focus();
+              }
+              this.listSelect.queryState = false;
+            }else{
+              this._checkIfNoData([]);
+            }
+          }else{
+            this.isPopupLoading = true;
+            if(!this.isLoadDataAdvanced){//hide spinning icon if loadDataAdvanced at runtime
+              this._showDataQueryingIcon();
+            }
+            var def = this.showContent(true); //get data,need pages
+            def.then(lang.hitch(this, function(isNoData){
+              this.isPopupLoading = false;
+              this._hideDataQueryingIcon();
+              this.popupIsNoData = isNoData;
+              if(!isNoData){
+                // var popupName = this.layerDefinition.name + '(' + this.fieldName + ')';
+                var hiddenAfterInit = this.isLoadDataAdvanced;
+                var popupW = this._cbxWidth;
+                this.cbxPopup = new Popup({
+                  width: popupW,
+                  height: this._cbxHeight,
+                  content: this.listSelect.domNode, //need a dom, not html string
+
+                  enableMoveable: false,
+                  hasTitle: false,
+                  hasOverlay: false,
+                  contentHasNoMargin: true,
+                  moveToCenter: false,
+                  customPosition: {left: popupPosition.left, top: popupPosition.top},
+                  hiddenAfterInit: hiddenAfterInit,
+                  useFocusLogic: false,
+                  onClose: lang.hitch(this, function () {
+                    this.cbxPopup.hide();
+                    return false;
+                  }),
+                  buttons: []
+                });
+                //update popup UI for this dijit
+                this.cbxPopup.setDomNodeStyls({'border-radius': 0, 'border': '1px solid #999'});
+
+                this.cbxPopup.on("popupHasInitedSuccessfully", lang.hitch(this, function(ifWindowResize){
+                  this._resetPopupStyles(false, true);
+                  if(ifWindowResize){//when window resizes
+                    return;
+                  }
+                  if(this.listSelect.valueInput &&
+                    html.getStyle(this.listSelect.searchKeyInput, 'display') === 'block'){
+                    this.listSelect.valueInput.focus();
+                  }else{
+                    this.listSelect.listContent.focus();
+                  }
+                }));
+              }else{
+                this._clearCheckedTxt();
+              }
+              if(this.isLoadDataAdvanced){
+                this.isLoadDataAdvanced = false;
+              }
+            }), lang.hitch(this, function(err){
+              this.isPopupLoading = false;
+              console.log(err);
+              def.reject(err);
+            }));
+          }
+          // if(evt){
+          //   evt.stopPropagation();
+          // }
+        },
+
+        //set popup styles by item list
+        _itemContainerH: 300,
+        _resetPopupStyles: function(isSearch, isInit){
+          var _cbxHeight = this._itemContainerH;
+          var _itemH = html.getStyle(this.listSelect.listContent,'height');
+
+          if(_itemH === 0 && this.cbxPopup && this.cbxPopup.domNode &&
+            html.getStyle(this.cbxPopup.domNode, 'display') === 'none'){
+            _itemH = this.popupInitHeight;
+          }
+
+          var itemsH = _itemH;
+          if(isInit){
+            this.popupInitHeight = itemsH;
+          }
+
+          //show loadMore btn
+          if(isSearch && !this.listSelect.codedValues && !this.pageControlForQuery._isUniqueValueCacheFinish){
+            itemsH = itemsH + 25;
+          }
+
+          if(this.pageControlForQuery._isUniqueValueCacheFinish &&
+            html.getStyle(this.listSelect.noDataTips, 'display') === 'block'){
+            itemsH = itemsH + 30;
+          }
+          _cbxHeight = itemsH < _cbxHeight ? itemsH : _cbxHeight;
+
+          html.setStyle(this.listSelect.listContainer, 'height', _cbxHeight + 'px');
+          html.setStyle(this.listSelect.selectedContainer, 'height', _cbxHeight + 30 + 'px');
+
+          if(this.controlType === "multipleDynamic"){
+            _cbxHeight = _cbxHeight + 30 + 30;
+          }else if(this.controlType === "uniqueDynamic"){
+            _cbxHeight = _cbxHeight + 30;
+          }
+          // else if(this.selectUI === 'dropdown'){//predefined
+          //   _cbxHeight = _cbxHeight + 10;
+          // }
+          this._cbxHeight = _cbxHeight + 10;
+          // html.setStyle(this.cbxPopup.domNode, 'height', this._cbxHeight + 'px');
+
+          //calc popup width by btn's position and size (for resize of view)
+          var popupPosition = this._calculatePopup();
+          this._cbxWidth = html.getStyle(this.checkedBtn, 'width');
+          this.cbxPopup.setCustomPosition(popupPosition.left, popupPosition.top, this._cbxWidth, this._cbxHeight);
+
+          this._resetItemWidth();
+        },
+
+        //reset item text width
+        _resetItemWidth: function(){
+          var _itemLabelW = this._cbxWidth - 20;
+          if(this.controlType === "uniqueDynamic" ||
+            (this.runtime && this.controlType === 'uniquePredefined' && this.selectUI === 'dropdown') ||
+            (!this.runtime && (this.controlType === "multiplePredefined" || this.controlType === "uniquePredefined"))){
+            _itemLabelW = _itemLabelW;
+          }else if(this.runtime && this.selectUI !== 'dropdown' &&
+            (this.controlType === 'uniquePredefined' || this.controlType === 'multiplePredefined')){
+            _itemLabelW = _itemLabelW - 15;
+          }else{
+            _itemLabelW = _itemLabelW - 30; //delete input's width
+          }
+          if(window.isRTL){
+            _itemLabelW = _itemLabelW - 3;
+          }
+          this.listSelect._itemLabelW = _itemLabelW;
+          var items = query('.item .label', this.listSelect.listContent);
+          items.style({
+            'max-width': _itemLabelW + 'px'
+          });
+        },
+
+        _setValueForStaticValues: function(valueLabels){
+          this.listSelect.codedValues = true;
+          this.listSelect._updateCheckedLabelList(this.codedValues);
+          if(valueLabels){
+            this.pageControlForQuery._codedvalueCache = valueLabels;
+            var isNoData = this._checkIfNoData(valueLabels);
+            if(!isNoData){
+              this.listSelect.disPlayLabel = 'label';
+              this.listSelect.setCBXData(valueLabels, true, true);
+            }
+            return isNoData;
+          }
+          return false;
+        },
+
+        _checkIfNoData: function(dataList){
+          if(this.runtime && this.selectUI === 'dropdown'){
+            if(dataList && dataList.length > 0){
+              this._resetPromptLabel(false);
+              return false;
+            }
+            // var valObj = this.getValueObject();
+            // if(valObj && ((lang.isArray(valObj.value) && valObj.length > 0) ||
+            //   (valObj.value && valObj.value !== 0) ||
+            //    valObj.value === 0
+            // )){
+            //   return false;
+            // }
+            else{
+              if(!this.msgDiv){
+                this.msgDiv = document.createElement('div');
+                html.addClass(this.msgDiv, "jimu-filter-list-value-provider-tip-container");
+                this.msgDiv.innerHTML = this.noDataTips;
+                this.checkedBtn.parentNode.appendChild(this.msgDiv);
+              }else{
+                html.setStyle(this.msgDiv, "display", "block");
+              }
+              this._resetPromptLabel(true);
+              return true;
+            }
+          }else{
+            this._resetPromptLabel(false);
+            return false;
+          }
+        },
+
+        getDijits: function(){
+          return [this.listSelect];
+        },
+
+        //for displaying codedvalue's description
+        _setCheckedName: function(value, codedValues){
+          var newValue = value;
+          codedValues = codedValues ? codedValues : this.codedValues;
+          if(codedValues){
+            var isExist = false;
+            for(var key = 0; key < codedValues.length; key ++){
+              var item = codedValues[key];
+              if(item.value === value){
+                newValue = item.label;
+                isExist = true;
+                break;
+              }
+            }
+            if(!isExist){
+              // newValue = '';
+              // newValue = this.isNumberField ? null : '';
+              newValue = this.emptyStr;
+              this.valueList = [];
+              if(this.listSelect){
+                this.listSelect.checkedList = [];
+                this.listSelect.checkedLabelList = [];
+              }
+            }
+          }else{
+            if(value === undefined){
+              newValue = this.emptyStr;
+              html.addClass(this.checkedNameDiv, 'checkedEmptyNameDiv');
+            }else{
+              html.removeClass(this.checkedNameDiv, 'checkedEmptyNameDiv');
+            }
+          }
+          this._setCheckedNameDivText(newValue);
+        },
+
+        setValueObject: function(valueObj){
+          valueObj.value = (valueObj.value || valueObj.value === 0)? valueObj.value: [];
+          this.valueList = valueObj.value;
+          this.enableEmpty = valueObj.enableEmpty;
+          this.listSelect.enableEmpty = valueObj.enableEmpty;
+
+          if(this.controlType === 'multipleDynamic'){
+            this.checkedNum.innerText = this.valueList.length;
+            if(this.isLoadDataAdvanced){
+              this._checkedBtnEvent();
+            }
+          }else if(this.controlType === 'uniqueDynamic'){
+            // this._setCheckedNameDivText(this.valueList);
+            var uniqueVal = this.valueList;
+            if(lang.isArray(uniqueVal) && uniqueVal.length === 0){
+              uniqueVal = undefined;
+            }
+            this._setCheckedName(uniqueVal);
+            this.valueList = [this.valueList];
+
+            //overwrite date format as mapviewer configured.
+            if(uniqueVal && this.fieldInfo.type === 'esriFieldTypeDate'){
+              //get current date with correct precision from date configured
+              var currentDate = jimuUtils.getDateByDateTimeStrAndFormat(uniqueVal, this.fieldPopupInfo);
+              //get current date in correct format for config
+              var currentDateStr = jimuUtils.getDateTimeStrByFieldInfo(currentDate, this.fieldPopupInfo);
+              //get current date in correct format for displaying
+              var newValue = jimuUtils.localizeDateByFieldInfo(currentDate, this.fieldPopupInfo);//current format
+              this._setCheckedName(newValue);
+              this.valueList = [currentDateStr];
+            }
+            if(this.isLoadDataAdvanced){
+              this._checkedBtnEvent();
+            }
+          }else{
+            this.emptyStr = valueObj.emptyLabel ? valueObj.emptyLabel : this.emptyStr;
+            this.listSelect.emptyStr = this.emptyStr;
+            if(this.runtime && this.selectUI === 'dropdown'){
+              var checkedStrsList = [];
+              if(this.disPlayLabel === 'value'){
+                this.getCheckedList(this.valueList);
+                checkedStrsList = this.listSelect.checkedList;
+              }else{
+                checkedStrsList = this.getCheckedStrsList(this.valueList);//init
+              }
+              if(this.controlType === 'uniquePredefined'){
+                if(this.listSelect.checkedList.length > 0){
+                  this._setCheckedNameDivText(checkedStrsList[0]);
+                  // this._setCheckedName(checkedStrsList[0]);
+                }else{
+                  var emptyStr = valueObj.enableEmpty ? this.emptyStr : '';
+                  this._setCheckedNameDivText(emptyStr);
+                }
+              }else{
+                this.checkedNum.innerText = checkedStrsList.length;
+              }
+            }
+            this.showContent(true);
+            setTimeout(lang.hitch(this, function(){
+              this._cbxWidth = html.getStyle(this.listSelect.listContent, 'width');
+              this._resetItemWidth();
+            }), 50);
+          }
+        },
+
+        _getCheckedNameDivText: function(){
+          return this.checkedNameDiv.textContent || this.checkedNameDiv.innerText || '';
+        },
+
+        _setCheckedNameDivText: function(newValue){
+          if(this.isNumberField && typeof newValue === 'number'){
+            var valueLabel = jimuUtils._getValues(this.layerDefinition, this.fieldPopupInfo,
+              this.fieldName, [newValue]);
+            newValue = valueLabel[0].label;
+          }
+          if(this.checkedNameDiv.textContent){
+            this.checkedNameDiv.textContent = newValue;
+          }else{
+            this.checkedNameDiv.innerText = newValue;
+          }
+        },
+
+        tryGetValueObject: function(){
+          if(this.isValidValue()){
+            return this.getValueObject();
+          }else if(this.isEmptyValue()){
+            var value = null;
+            if(this.controlType === 'multipleDynamic' || this.controlType === 'multiplePredefined'){//multiple types
+              value = [];
+            }else if(this.shortType === 'string'){
+              value = '';
+            }else{
+              value = null;
+            }
+            return {
+              "isValid": true,
+              "type": this.partObj.valueObj.type,
+              "value": value
+            };
+          }
+          return null;
+        },
+
+        getValueObject: function(){
+          if(this.isValidValue()){//no value and no askForValue
+            var values;
+            if(this.controlType === 'multipleDynamic' || this.controlType === 'uniqueDynamic'){
+              values = this.listSelect.getListCheckedValues(); //valsArray
+            }else{
+              values = this.listSelect.getListValues(); //valsObj
+            }
+            if(this.controlType === 'uniqueDynamic'){
+              values = lang.isArray(values) ? values[0] : values;
+            }
+            return {
+              "isValid": true,
+              "type": this.partObj.valueObj.type,
+              "value": values
+            };
+          }
+          return null;
+        },
+
+        setRequired: function(required){
+          this.listSelect.set("required", required);
+        },
+
+        _showDataQueryingIcon: function(){
+          if(!this._validatingNode){
+            this._validatingNode = html.create('div', {
+              'class': 'jimu-circle-loading'
+            }, this.checkedBtn);
+          }
+          html.setStyle(this._validatingNode, 'display', 'block');
+        },
+
+        _hideDataQueryingIcon: function(){
+          if(this._validatingNode){
+            html.setStyle(this._validatingNode, 'display', 'none');
+          }
+        },
+
+        _showLoadingIcon: function(){
+          if(this.listSelect && this.listSelect.listContainer){
+            html.addClass(this.listSelect.listContainer, 'jimu-circle-loading');
+          }
+        },
+
+        _hideLoadingIcon: function(){
+          if(this.listSelect && this.listSelect.listContainer){
+            html.removeClass(this.listSelect.listContainer, 'jimu-circle-loading');
+          }
+        },
+
+        destroy: function() {
+          if(this._multipleSelectProviderEventHandler){
+            document.removeEventListener('click', this._multipleSelectProviderEventHandler, {capture: true});
+          }
+          if(this.cbxPopup && this.cbxPopup.domNode){
+            this.cbxPopup.onClose = lang.hitch(this, function () {
+              return true;
+            });
+            this.cbxPopup.close();
+          }
+          this.inherited(arguments);
+        },
+
+        destroyProvider: function(){
+          if(this.listSelect){
+            this.listSelect.destroy();
+          }
+          this.listSelect = null;
+        }
+      });
+  });
