@@ -1,17 +1,403 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dojo/_base/lang dojo/_base/connect dojo/has esri/kernel esri/toolbars/draw esri/graphic esri/geometry/Polyline esri/geometry/Polygon esri/geometry/Multipoint esri/geometry/Rect".split(" "),function(v,t,u,n,w,x,r,y,p,z,A){var q=v([x],{baseClass:"jimu-draw",declaredClass:"jimu.dijit.Draw",_onMouseDragHandler:function(d){if(this._graphic||this._points.length)if(n("esri-touch")&&!this._points.length)d.preventDefault();else{this._dragged=!0;var b;this.map.snappingManager&&(b=
-this.map.snappingManager._snappingPoint);var h=this._points[0],f=b||d.mapPoint,k=this.map,m=k.spatialReference;b=this._graphic;var e=q,g=k.toScreen(h),c=k.toScreen(f),a=[],a=c.x-g.x,c=c.y-g.y,l=Math.sqrt(a*a+c*c);switch(this._geometryType){case e.CIRCLE:this._hideTooltip();b.geometry=p.createCircle({center:g,r:l,numberOfPoints:60,map:k});b.setGeometry(b.geometry);break;case e.ELLIPSE:this._hideTooltip();b.geometry=p.createEllipse({center:g,longAxis:a,shortAxis:c,numberOfPoints:60,map:k});b.setGeometry(b.geometry);
-break;case e.TRIANGLE:this._hideTooltip();a=[[0,-l],[.8660254037844386*l,.5*l],[-.8660254037844386*l,.5*l],[0,-l]];b.geometry=this._toPolygon(a,g.x,g.y);b.setGeometry(b.geometry);break;case e.ARROW:this._hideTooltip();h=c/l;k=a/l;f=.25*k*l;m=.25*l/(c/a);l*=.25*h;e=this.fillSymbol?this.fillSymbol.arrowWidth:12;a=[[a,c],[a-f*(1+e/m),c+e*k-l],[a-f*(1+e/2/m),c+e/2*k-l],[-e/2*h,e/2*k],[e/2*h,-e/2*k],[a-f*(1-e/2/m),c-e/2*k-l],[a-f*(1-e/m),c-e*k-l],[a,c]];b.geometry=this._toPolygon(a,g.x,g.y);b.setGeometry(b.geometry);
-break;case e.LEFT_ARROW:this._hideTooltip();a=0>=a?[[a,0],[.75*a,c],[.75*a,.5*c],[0,.5*c],[0,-.5*c],[.75*a,-.5*c],[.75*a,-c],[a,0]]:[[0,0],[.25*a,c],[.25*a,.5*c],[a,.5*c],[a,-.5*c],[.25*a,-.5*c],[.25*a,-c],[0,0]];b.geometry=this._toPolygon(a,g.x,g.y);b.setGeometry(b.geometry);break;case e.RIGHT_ARROW:this._hideTooltip();a=0<=a?[[a,0],[.75*a,c],[.75*a,.5*c],[0,.5*c],[0,-.5*c],[.75*a,-.5*c],[.75*a,-c],[a,0]]:[[0,0],[.25*a,c],[.25*a,.5*c],[a,.5*c],[a,-.5*c],[.25*a,-.5*c],[.25*a,-c],[0,0]];b.geometry=
-this._toPolygon(a,g.x,g.y);b.setGeometry(b.geometry);break;case e.UP_ARROW:this._hideTooltip();a=0>=c?[[0,c],[-a,.75*c],[-.5*a,.75*c],[-.5*a,0],[.5*a,0],[.5*a,.75*c],[a,.75*c],[0,c]]:[[0,0],[-a,.25*c],[-.5*a,.25*c],[-.5*a,c],[.5*a,c],[.5*a,.25*c],[a,.25*c],[0,0]];b.geometry=this._toPolygon(a,g.x,g.y);b.setGeometry(b.geometry);break;case e.DOWN_ARROW:this._hideTooltip();a=0<=c?[[0,c],[-a,.75*c],[-.5*a,.75*c],[-.5*a,0],[.5*a,0],[.5*a,.75*c],[a,.75*c],[0,c]]:[[0,0],[-a,.25*c],[-.5*a,.25*c],[-.5*a,c],
-[.5*a,c],[.5*a,.25*c],[a,.25*c],[0,0]];b.geometry=this._toPolygon(a,g.x,g.y);b.setGeometry(b.geometry);break;case e.RECTANGLE:this._hideTooltip();a=[[0,0],[a,0],[a,c],[0,c],[0,0]];b.geometry=this._toPolygon(a,g.x,g.y);b.setGeometry(b.geometry);break;case e.LINE:b.setGeometry(t.mixin(b.geometry,{paths:[[[h.x,h.y],[f.x,f.y]]]}));break;case e.EXTENT:b&&k.graphics.remove(b,!0);b=new A(this._normalizeRect(h,f,m));b._originOnly=!0;this._graphic=k.graphics.add(new r(b,this.fillSymbol),!0);k.snappingManager&&
-k.snappingManager._setGraphic(this._graphic);break;case e.FREEHAND_POLYLINE:this._hideTooltip();if(!1===this._canDrawFreehandPoint(d)){n("esri-touch")&&d.preventDefault();return}this._points.push(d.mapPoint.offset(0,0));b.geometry._insertPoints([f.offset(0,0)],0);b.setGeometry(b.geometry);break;case e.FREEHAND_POLYGON:this._hideTooltip();if(!1===this._canDrawFreehandPoint(d)){n("esri-touch")&&d.preventDefault();return}this._points.push(d.mapPoint.offset(0,0));b.geometry._insertPoints([f.offset(0,
-0)],0);b.setGeometry(b.geometry)}n("esri-touch")&&d.preventDefault()}},_onClickHandler:function(d){var b;this.map.snappingManager&&(b=this.map.snappingManager._snappingPoint);var h=b||d.mapPoint;d=this.map;b=d.toScreen(h);var f=q;this._points.push(h.offset(0,0));switch(this._geometryType){case f.POINT:this.onDrawStart();this._drawEnd(h.offset(0,0));this._setTooltipMessage(0);break;case f.POLYLINE:1===this._points.length?(b=new y(d.spatialReference),b.addPath(this._points),this._graphic=d.graphics.add(new r(b,
-this.lineSymbol),!0),d.snappingManager&&d.snappingManager._setGraphic(this._graphic),this._onMouseMoveHandler_connect=u.connect(d,"onMouseMove",this._onMouseMoveHandler),this.onDrawStart()):(this._graphic.geometry._insertPoints([h.offset(0,0)],0),this._graphic.setGeometry(this._graphic.geometry).setSymbol(this.lineSymbol));break;case f.POLYGON:1===this._points.length?(b=new p(d.spatialReference),b.addRing(this._points),this._graphic=d.graphics.add(new r(b,this.fillSymbol),!0),d.snappingManager&&d.snappingManager._setGraphic(this._graphic),
-this._onMouseMoveHandler_connect=u.connect(d,"onMouseMove",this._onMouseMoveHandler),this.onDrawStart()):(this._graphic.geometry._insertPoints([h.offset(0,0)],0),this._graphic.setGeometry(this._graphic.geometry).setSymbol(this.fillSymbol));break;case f.MULTI_POINT:b=this._points;1===b.length?(h=new z(d.spatialReference),h.addPoint(b[b.length-1]),this._graphic=d.graphics.add(new r(h,this.markerSymbol),!0),d.snappingManager&&d.snappingManager._setGraphic(this._graphic),this.onDrawStart()):(this._graphic.geometry.addPoint(b[b.length-
-1]),this._graphic.setGeometry(this._graphic.geometry).setSymbol(this.markerSymbol));break;case f.ARROW:d=this.fillSymbol?this.fillSymbol.arrowWidth:12;this._addShape([[0,0],[-d,d],[-d,d/2],[-96,d/2],[-96,-d/2],[-d,-d/2],[-d,-d],[0,0]],b.x,b.y);break;case f.LEFT_ARROW:this._addShape([[0,0],[24,24],[24,12],[96,12],[96,-12],[24,-12],[24,-24],[0,0]],b.x,b.y);break;case f.RIGHT_ARROW:this._addShape([[0,0],[-24,24],[-24,12],[-96,12],[-96,-12],[-24,-12],[-24,-24],[0,0]],b.x,b.y);break;case f.UP_ARROW:this._addShape([[0,
-0],[-24,24],[-12,24],[-12,96],[12,96],[12,24],[24,24],[0,0]],b.x,b.y);break;case f.DOWN_ARROW:this._addShape([[0,0],[-24,-24],[-12,-24],[-12,-96],[12,-96],[12,-24],[24,-24],[0,0]],b.x,b.y);break;case f.TRIANGLE:this._addShape([[0,-48],[41.56921938165306,24],[-41.56921938165306,24],[0,-48]],b.x,b.y);break;case f.RECTANGLE:this._addShape([[0,-96],[96,-96],[96,0],[0,0],[0,-96]],b.x-48,b.y+48);break;case f.CIRCLE:this._clear();this.onDrawStart();this._drawEnd(p.createCircle({center:b,r:48,numberOfPoints:60,
-map:d}));break;case f.ELLIPSE:this._clear(),this.onDrawStart(),this._drawEnd(p.createEllipse({center:b,longAxis:48,shortAxis:24,numberOfPoints:60,map:d}))}this._setTooltipMessage(this._points.length)}});t.mixin(q,{POINT:"point",MULTI_POINT:"multipoint",LINE:"line",EXTENT:"extent",POLYLINE:"polyline",POLYGON:"polygon",FREEHAND_POLYLINE:"freehandpolyline",FREEHAND_POLYGON:"freehandpolygon",ARROW:"arrow",LEFT_ARROW:"leftarrow",RIGHT_ARROW:"rightarrow",UP_ARROW:"uparrow",DOWN_ARROW:"downarrow",TRIANGLE:"triangle",
-CIRCLE:"circle",ELLIPSE:"ellipse",RECTANGLE:"rectangle"});n("extend-esri")&&t.setObject("toolbars.Draw",q,w);return q});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  "dojo/_base/lang",
+  "dojo/_base/connect",
+  "dojo/has",
+  "esri/kernel",
+  'esri/toolbars/draw',
+  "esri/graphic",
+  "esri/geometry/Polyline",
+  "esri/geometry/Polygon",
+  "esri/geometry/Multipoint",
+  "esri/geometry/Rect"
+],
+function(declare, lang, connect, has, esriNS, Draw, Graphic, Polyline, Polygon, Multipoint, Rect) {
+  var DRAW = declare([Draw], {
+    baseClass: 'jimu-draw',
+    declaredClass: 'jimu.dijit.Draw',
+
+    //copy this function from esri/toolbars/draw, only overwrite arrow part.
+    _onMouseDragHandler: function(evt) {
+
+      // Pressing escape while drawing causing errors for certain draw tools
+      // -- Issue #1381
+      if(!this._graphic && !this._points.length){
+        return;
+      }
+
+      // BlackBerry legacy issue (not changing for 3x)
+      if (has("esri-touch") && !this._points.length) {
+        // BlackBerry Torch certainly needs this
+        // to prevent page from panning
+        evt.preventDefault();
+        return;
+      }
+
+      this._dragged = true;
+      var snappingPoint;
+      if (this.map.snappingManager) {
+        snappingPoint = this.map.snappingManager._snappingPoint;
+      }
+      var start = this._points[0],
+          end = snappingPoint || evt.mapPoint,
+          map = this.map,
+          spatialReference = map.spatialReference,
+          _graphic = this._graphic,
+          Draw = DRAW,
+          startScreenPoint = map.toScreen(start),
+          endScreenPoint = map.toScreen(end),
+          pts = [],
+          a = endScreenPoint.x - startScreenPoint.x,
+          b = endScreenPoint.y - startScreenPoint.y,
+          numPts = 60,
+          d = Math.sqrt(a*a + b*b);
+
+      switch (this._geometryType) {
+        case Draw.CIRCLE:
+          this._hideTooltip();
+          _graphic.geometry = Polygon.createCircle({
+                                center: startScreenPoint,
+                                r: d,
+                                numberOfPoints: numPts,
+                                map: map
+                              });
+          _graphic.setGeometry(_graphic.geometry);
+          break;
+        case Draw.ELLIPSE:
+          this._hideTooltip();
+          _graphic.geometry = Polygon.createEllipse({
+                                center: startScreenPoint,
+                                longAxis: a,
+                                shortAxis: b,
+                                numberOfPoints: numPts,
+                                map: map
+                              });
+          _graphic.setGeometry(_graphic.geometry);
+          break;
+        case Draw.TRIANGLE:
+          this._hideTooltip();
+          pts = [[0,-d],[0.8660254037844386*d,0.5*d],[-0.8660254037844386*d,0.5*d],[0,-d]];
+          _graphic.geometry = this._toPolygon(pts, startScreenPoint.x, startScreenPoint.y);
+          _graphic.setGeometry(_graphic.geometry);
+          break;
+        case Draw.ARROW:
+          this._hideTooltip();
+          var sina = b/d, cosa = a/d, tana = b/a;
+          var f = cosa * 0.25 * d, e = 0.25*d/tana, g = sina*0.25*d;
+
+          // pts = [[a,b],[a-f*(1+24/e),b+24*cosa-g],[a-f*(1+12/e),b+12*cosa-g],[-12*sina,12*cosa],[12*sina,-12*cosa],[a-f*(1-12/e),b-12*cosa-g],[a-f*(1-24/e),b-24*cosa-g],[a,b]];
+          var _aWidth = this.fillSymbol ? this.fillSymbol.arrowWidth : 12;
+          pts = [[a,b],[a-f*(1+_aWidth/e),b+_aWidth*cosa-g],[a-f*(1+_aWidth/2/e),b+_aWidth/2*cosa-g],[-_aWidth/2*sina,_aWidth/2*cosa],[_aWidth/2*sina,-_aWidth/2*cosa],[a-f*(1-_aWidth/2/e),b-_aWidth/2*cosa-g],[a-f*(1-_aWidth/e),b-_aWidth*cosa-g],[a,b]];
+
+          _graphic.geometry = this._toPolygon(pts, startScreenPoint.x, startScreenPoint.y);
+          _graphic.setGeometry(_graphic.geometry);
+          break;
+        case Draw.LEFT_ARROW:
+          this._hideTooltip();
+          if (a <= 0) {
+            pts = [[a,0],[0.75*a,b],[0.75*a,0.5*b],[0,0.5*b],[0,-0.5*b],[0.75*a,-0.5*b],[0.75*a,-b],[a,0]];
+          }
+          else {
+            pts = [[0,0],[0.25*a,b],[0.25*a,0.5*b],[a,0.5*b],[a,-0.5*b],[0.25*a,-0.5*b],[0.25*a,-b],[0,0]];
+          }
+          _graphic.geometry = this._toPolygon(pts, startScreenPoint.x, startScreenPoint.y);
+          _graphic.setGeometry(_graphic.geometry);
+          break;
+        case Draw.RIGHT_ARROW:
+          this._hideTooltip();
+          if (a >= 0) {
+            pts = [[a,0],[0.75*a,b],[0.75*a,0.5*b],[0,0.5*b],[0,-0.5*b],[0.75*a,-0.5*b],[0.75*a,-b],[a,0]];
+          }
+          else {
+            pts = [[0,0],[0.25*a,b],[0.25*a,0.5*b],[a,0.5*b],[a,-0.5*b],[0.25*a,-0.5*b],[0.25*a,-b],[0,0]];
+          }
+          _graphic.geometry = this._toPolygon(pts, startScreenPoint.x, startScreenPoint.y);
+          _graphic.setGeometry(_graphic.geometry);
+          break;
+        case Draw.UP_ARROW:
+          this._hideTooltip();
+          if (b <= 0) {
+            pts = [[0,b],[-a,0.75*b],[-0.5*a,0.75*b],[-0.5*a,0],[0.5*a,0],[0.5*a,0.75*b],[a,0.75*b],[0,b]];
+          }
+          else {
+            pts = [[0,0],[-a,0.25*b],[-0.5*a,0.25*b],[-0.5*a,b],[0.5*a,b],[0.5*a,0.25*b],[a,0.25*b],[0,0]];
+          }
+          _graphic.geometry = this._toPolygon(pts, startScreenPoint.x, startScreenPoint.y);
+          _graphic.setGeometry(_graphic.geometry);
+          break;
+        case Draw.DOWN_ARROW:
+          this._hideTooltip();
+          if (b >= 0) {
+            pts = [[0,b],[-a,0.75*b],[-0.5*a,0.75*b],[-0.5*a,0],[0.5*a,0],[0.5*a,0.75*b],[a,0.75*b],[0,b]];
+          }
+          else {
+            pts = [[0,0],[-a,0.25*b],[-0.5*a,0.25*b],[-0.5*a,b],[0.5*a,b],[0.5*a,0.25*b],[a,0.25*b],[0,0]];
+          }
+          _graphic.geometry = this._toPolygon(pts, startScreenPoint.x, startScreenPoint.y);
+          _graphic.setGeometry(_graphic.geometry);
+          break;
+        case Draw.RECTANGLE:
+          this._hideTooltip();
+          pts = [[0,0],[a,0],[a,b],[0,b], [0,0]];
+          _graphic.geometry = this._toPolygon(pts, startScreenPoint.x, startScreenPoint.y);
+          _graphic.setGeometry(_graphic.geometry);
+          break;
+        case Draw.LINE:
+          _graphic.setGeometry(lang.mixin(_graphic.geometry, { paths:[[[start.x, start.y], [end.x, end.y]]] }));
+          break;
+        case Draw.EXTENT:
+          if (_graphic) {
+            map.graphics.remove(_graphic, true);
+          }
+          var rect = new Rect(this._normalizeRect(start, end, spatialReference));
+          // TODO
+          // We can remove this once graphics layer is able to duplicate
+          // rects/extens when wrapping (we may have to render them as polygons).
+          rect._originOnly = true;
+          this._graphic = map.graphics.add(new Graphic(rect, this.fillSymbol), true);
+          if (map.snappingManager) {
+            map.snappingManager._setGraphic(this._graphic);
+          }
+          // _graphic.setGeometry(dojo.mixin(_graphic.geometry, this._normalizeRect(start, end, spatialReference)));
+          break;
+        case Draw.FREEHAND_POLYLINE:
+          this._hideTooltip();
+          if (this._canDrawFreehandPoint(evt) === false){
+              if (has("esri-touch")) {
+                // BlackBerry Torch certainly needs this
+                // to prevent page from panning
+                evt.preventDefault();
+              }
+              return;
+          }
+
+          this._points.push(evt.mapPoint.offset(0, 0));
+          _graphic.geometry._insertPoints([end.offset(0, 0)], 0);
+          _graphic.setGeometry(_graphic.geometry);
+          break;
+        case Draw.FREEHAND_POLYGON:
+          this._hideTooltip();
+          if (this._canDrawFreehandPoint(evt) === false){
+              if (has("esri-touch")) {
+                // BlackBerry Torch certainly needs this
+                // to prevent page from panning
+                evt.preventDefault();
+              }
+              return;
+          }
+
+          this._points.push(evt.mapPoint.offset(0, 0));
+          _graphic.geometry._insertPoints([end.offset(0, 0)], 0);
+          _graphic.setGeometry(_graphic.geometry);
+          break;
+      }
+
+      if (has("esri-touch")) {
+        // Prevent iOS from panning the web page
+        evt.preventDefault();
+      }
+    },
+
+    //copy this function from esri/toolbars/draw, only overwrite arrow part.
+    _onClickHandler: function(evt) {
+      var snappingPoint;
+      if (this.map.snappingManager) {
+        snappingPoint = this.map.snappingManager._snappingPoint;
+      }
+      var start = snappingPoint || evt.mapPoint,
+          map = this.map,
+          screenPoint = map.toScreen(start),
+          Draw = DRAW,
+          polygon;
+
+      this._points.push(start.offset(0, 0));
+
+      switch (this._geometryType) {
+        case Draw.POINT:
+          this.onDrawStart();
+          this._drawEnd(start.offset(0, 0));
+          this._setTooltipMessage(0);
+          break;
+
+        case Draw.POLYLINE:
+          if (this._points.length === 1) {
+            var polyline = new Polyline(map.spatialReference);
+            polyline.addPath(this._points);
+            this._graphic = map.graphics.add(new Graphic(polyline, this.lineSymbol), true);
+            if (map.snappingManager) {
+              map.snappingManager._setGraphic(this._graphic);
+            }
+
+            this._onMouseMoveHandler_connect = connect.connect(map, "onMouseMove", this._onMouseMoveHandler);
+            this.onDrawStart();
+          }
+          else {
+            this._graphic.geometry._insertPoints([start.offset(0, 0)], 0);
+            this._graphic.setGeometry(this._graphic.geometry).setSymbol(this.lineSymbol);
+          }
+          break;
+
+        case Draw.POLYGON:
+          if (this._points.length === 1) {
+            polygon = new Polygon(map.spatialReference);
+            polygon.addRing(this._points);
+            this._graphic = map.graphics.add(new Graphic(polygon, this.fillSymbol), true);
+            if (map.snappingManager) {
+              map.snappingManager._setGraphic(this._graphic);
+            }
+
+            this._onMouseMoveHandler_connect = connect.connect(map, "onMouseMove", this._onMouseMoveHandler);
+            this.onDrawStart();
+          }
+          else {
+            this._graphic.geometry._insertPoints([start.offset(0, 0)], 0);
+            this._graphic.setGeometry(this._graphic.geometry).setSymbol(this.fillSymbol);
+          }
+          break;
+
+        case Draw.MULTI_POINT:
+          var tps = this._points;
+          if (tps.length === 1) {
+            var multiPoint = new Multipoint(map.spatialReference);
+            multiPoint.addPoint(tps[tps.length - 1]);
+            this._graphic = map.graphics.add(new Graphic(multiPoint, this.markerSymbol), true);
+            if (map.snappingManager) {
+              map.snappingManager._setGraphic(this._graphic);
+            }
+            this.onDrawStart();
+          }
+          else {
+            this._graphic.geometry.addPoint(tps[tps.length - 1]);
+            this._graphic.setGeometry(this._graphic.geometry).setSymbol(this.markerSymbol);
+          }
+          break;
+
+        case Draw.ARROW:
+           var _aWidth = this.fillSymbol ? this.fillSymbol.arrowWidth : 12;
+           this._addShape(
+             //[[0,0],[-24,24],[-24,12],[-96,12],[-96,-12],[-24,-12],[-24,-24],[0,0]],
+             [[0,0],[-_aWidth,_aWidth],[-_aWidth,_aWidth/2],[-96,_aWidth/2],[-96,-_aWidth/2],[-_aWidth,-_aWidth/2],[-_aWidth,-_aWidth],[0,0]],
+             screenPoint.x,
+             screenPoint.y
+           );
+           break;
+
+        case Draw.LEFT_ARROW:
+          this._addShape(
+             [[0,0],[24,24],[24,12],[96,12],[96,-12],[24,-12],[24,-24],[0,0]],
+             screenPoint.x,
+             screenPoint.y
+           );
+           break;
+
+        case Draw.RIGHT_ARROW:
+           this._addShape(
+             [[0,0],[-24,24],[-24,12],[-96,12],[-96,-12],[-24,-12],[-24,-24],[0,0]],
+             screenPoint.x,
+             screenPoint.y
+           );
+           break;
+
+        case Draw.UP_ARROW:
+           this._addShape(
+             [[0,0],[-24,24],[-12,24],[-12,96],[12,96],[12,24],[24,24],[0,0]],
+             screenPoint.x,
+             screenPoint.y
+           );
+           break;
+
+        case Draw.DOWN_ARROW:
+           this._addShape(
+             [[0,0],[-24,-24],[-12,-24],[-12,-96],[12,-96],[12,-24],[24,-24],[0,0]],
+             screenPoint.x,
+             screenPoint.y
+           );
+           break;
+
+        case Draw.TRIANGLE:
+           this._addShape(
+             [[0,-48],[41.56921938165306,24],[-41.56921938165306,24],[0,-48]],
+             screenPoint.x,
+             screenPoint.y
+           );
+           break;
+
+        case Draw.RECTANGLE:
+           this._addShape(
+             [[0,-96],[96,-96],[96,0],[0,0], [0,-96]],
+             screenPoint.x - 48,
+             screenPoint.y + 48
+           );
+           break;
+
+        case Draw.CIRCLE:
+           this._clear();
+           this.onDrawStart();
+           this._drawEnd(Polygon.createCircle({
+             center: screenPoint,
+             r: 48,
+             numberOfPoints: 60,
+             map: map
+           }));
+           break;
+
+        case Draw.ELLIPSE:
+           this._clear();
+           this.onDrawStart();
+           this._drawEnd(Polygon.createEllipse({
+             center: screenPoint,
+             longAxis: 48,
+             shortAxis: 24,
+             numberOfPoints: 60,
+             map: map
+           }));
+           break;
+      }
+
+      this._setTooltipMessage(this._points.length);
+    }
+
+  });
+
+  lang.mixin(DRAW, {
+    POINT: "point",
+    MULTI_POINT: "multipoint",
+    LINE: "line",
+    EXTENT: "extent",
+    POLYLINE: "polyline",
+    POLYGON:"polygon",
+    FREEHAND_POLYLINE:"freehandpolyline",
+    FREEHAND_POLYGON:"freehandpolygon",
+    ARROW:"arrow",
+    LEFT_ARROW:"leftarrow",
+    RIGHT_ARROW:"rightarrow",
+    UP_ARROW:"uparrow",
+    DOWN_ARROW:"downarrow",
+    TRIANGLE:"triangle",
+    CIRCLE:"circle",
+    ELLIPSE:"ellipse",
+    RECTANGLE:"rectangle"
+  });
+
+  if (has("extend-esri")) {
+    lang.setObject("toolbars.Draw", DRAW, esriNS);
+  }
+
+  return DRAW;
+});

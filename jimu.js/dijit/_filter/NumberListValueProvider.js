@@ -1,7 +1,114 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/_filter/NumberListValueProvider.html":'\x3cdiv\x3e\r\n    \x3ctable data-dojo-attach-point\x3d"numberListTable" style\x3d"width:100%;border-collapse:collapse;"\r\n        cellpadding\x3d"0" cellspacing\x3d"0"\x3e\r\n        \x3ctbody\x3e\r\n            \x3ctr\x3e\r\n                \x3ctd style\x3d"width:50%;"\x3e\r\n                    \x3cinput data-dojo-attach-point\x3d"_dijit1" data-dojo-type\x3d"dijit/form/NumberTextBox"\r\n                        data-dojo-props\x3d\'"required":false,constraints:{min:0,pattern:"#####0.##########"}\'\r\n                        style\x3d"width:100%;" /\x3e\r\n                \x3c/td\x3e\r\n                \x3ctd\x3e\r\n                    \x3cselect data-dojo-attach-point\x3d"rangeSelect" data-dojo-type\x3d"dijit/form/Select"\r\n                        style\x3d"width:100%;" class\x3d"operator-select dijit-form-Select restrict-select-width"\x3e\r\n                        \x3coption value\x3d"none"\x3e${nls.none}\x3c/option\x3e\r\n                    \x3c/select\x3e\r\n                \x3c/td\x3e\r\n            \x3c/tr\x3e\r\n        \x3c/tbody\x3e\r\n    \x3c/table\x3e\r\n\x3c/div\x3e'}});
-define("dojo/_base/lang dojo/_base/html dojo/_base/array dojo/_base/declare ./ValueProvider dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/text!./NumberListValueProvider.html dijit/form/NumberTextBox dijit/form/Select".split(" "),function(b,c,d,e,f,g,h,k){return e([f,g,h],{templateString:k,postCreate:function(){this.inherited(arguments);c.addClass(this.domNode,"jimu-number-list-filter-value-provider");this.rangeSelect.removeOption(this.rangeSelect.getOptions());d.forEach("dateOperatorMinutes dateOperatorHours dateOperatorDays dateOperatorWeeks dateOperatorMonths dateOperatorYears".split(" "),
-b.hitch(this,function(a){this.rangeSelect.addOption({value:a,label:this.nls[a]})}));this.rangeSelect.set("value","dateOperatorDays")},getDijits:function(){return[this._dijit1,this.rangeSelect]},setValueObject:function(a){this.isDefined(a.value)&&this._dijit1.set("value",a.value);this.isDefined(a.range)&&this.rangeSelect.set("value",a.range)},getValueObject:function(){return this.isValidValue()?{isValid:!0,type:this.partObj.valueObj.type,value:parseFloat(this._dijit1.get("value")),range:this._getRangeByUI()}:
-null},_getRangeByUI:function(){var a=this.rangeSelect.get("value");"none"===a&&(a=null);return a},tryGetValueObject:function(){if(this.isValidValue())return this.getValueObject();if(this.isEmptyValue()){var a={isValid:!0,type:this.partObj.valueObj.type,value:parseFloat(this._dijit1.get("value")),range:this._getRangeByUI()};isNaN(a.value)&&(a.value=null);return a}return null},setRequired:function(a){this._dijit1.set("required",a);this.rangeSelect.set("required",a)}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/lang',
+  'dojo/_base/html',
+  'dojo/_base/array',
+  'dojo/_base/declare',
+  './ValueProvider',
+  'dijit/_TemplatedMixin',
+  'dijit/_WidgetsInTemplateMixin',
+  'dojo/text!./NumberListValueProvider.html',
+  'dijit/form/NumberTextBox',
+  'dijit/form/Select'
+],
+  function(lang, html, array, declare, ValueProvider, _TemplatedMixin, _WidgetsInTemplateMixin, template) {
+
+    return declare([ValueProvider, _TemplatedMixin, _WidgetsInTemplateMixin], {
+
+      templateString: template,
+
+      postCreate: function(){
+        this.inherited(arguments);
+        html.addClass(this.domNode, 'jimu-number-list-filter-value-provider');
+
+        var ranges = [
+          "dateOperatorMinutes",
+          "dateOperatorHours",
+          "dateOperatorDays",
+          "dateOperatorWeeks",
+          "dateOperatorMonths",
+          "dateOperatorYears"
+        ];
+
+        this.rangeSelect.removeOption(this.rangeSelect.getOptions());
+        array.forEach(ranges, lang.hitch(this, function(range) {
+          var label = this.nls[range];
+          this.rangeSelect.addOption({value: range, label: label});
+        }));
+        this.rangeSelect.set('value', 'dateOperatorDays');
+      },
+
+      getDijits: function(){
+        return [this._dijit1, this.rangeSelect];
+      },
+
+      setValueObject: function(valueObj){
+        if(this.isDefined(valueObj.value)){
+          this._dijit1.set('value', valueObj.value);
+        }
+        if(this.isDefined(valueObj.range)){
+          this.rangeSelect.set('value', valueObj.range);
+        }
+      },
+
+      getValueObject: function(){
+        if(this.isValidValue()){
+          return {
+            "isValid": true,
+            "type": this.partObj.valueObj.type,
+            "value": parseFloat(this._dijit1.get('value')),
+            "range": this._getRangeByUI()
+          };
+        }
+        return null;
+      },
+
+      _getRangeByUI: function(){
+        var range = this.rangeSelect.get('value');
+        if(range === 'none'){
+          range = null;
+        }
+        return range;
+      },
+
+      tryGetValueObject: function(){
+        if(this.isValidValue()){
+          return this.getValueObject();
+        }else if(this.isEmptyValue()){
+          var result = {
+            "isValid": true,
+            "type": this.partObj.valueObj.type,
+            "value": parseFloat(this._dijit1.get('value')),
+            "range": this._getRangeByUI()
+          };
+          if(isNaN(result.value)){
+            result.value = null;
+          }
+          return result;
+        }
+        return null;
+      },
+
+      setRequired: function(required){
+        this._dijit1.set("required", required);
+        this.rangeSelect.set("required", required);
+      }
+
+    });
+  }
+);

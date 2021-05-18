@@ -1,8 +1,201 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dojo/_base/lang dojo/dom-style dojo/on dojo/dom-attr dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin jimu/dijit/formSelect jimu/dijit/CheckBox".split(" "),function(h,c,g,d,e,k,l,m){return h([k,l,m],{baseClass:"jimu-coordinate-control",templateString:'\x3cdiv\x3e\x3cspan class\x3d"formatText"\x3e${nls.editCoordinateDialogTitle}\x3c/span\x3e\x3cdiv class\x3d"controlContainer"\x3e\x3cselect tabindex\x3d"0" class\x3d"selectFormat" data-dojo-attach-point\x3d"frmtSelect" aria-label\x3d"${nls.editCoordinateDialogTitle}" data-dojo-type\x3d"jimu/dijit/formSelect"\x3e\x3c/select\x3e\x3cinput tabindex\x3d"0" type\x3d"text" data-dojo-attach-point\x3d"frmtVal" class\x3d"formatInput"\x3e\x3c/input\x3e\x3cdiv class\x3d"settingsContainer" data-dojo-attach-point\x3d"prefixContainer"\x3e\x3cdiv class\x3d"formatText" data-dojo-attach-point\x3d"addSignChkBox" label\x3d"${nls.posNegPrefixLabel}" data-dojo-type\x3d"jimu/dijit/CheckBox"/\x3e\x3c/div\x3e\x3c/div\x3e\x3cdiv class\x3d"btnContainer"\x3e\x3cdiv tabindex\x3d"0" role\x3d"button" aria-label\x3d"${nls.applyButtonLabel}" data-dojo-attach-point\x3d"applyButton" class\x3d"jimu-btn"\x3e${nls.applyButtonLabel}\x3c/div\x3e\x3cdiv data-dojo-attach-point\x3d"cancelButton" tabindex\x3d"0" role\x3d"button" aria-label\x3d"${nls.cancelButtonLabel}" class\x3d"jimu-btn formatCoordCancelButton"\x3e${nls.cancelButtonLabel}\x3c/div\x3e\x3c/div\x3e\x3c/div\x3e\x3c/div\x3e',
-isCanceled:!1,formats:{},setCt:function(a){this.ct=a;this.frmtSelect.set("value",this.ct)},postCreate:function(){this.formats={DD:{defaultFormat:"YN XE",customFormat:null,useCustom:!1},DDM:{defaultFormat:"A\u00b0 B'N X\u00b0 Y'E",customFormat:null,useCustom:!1},DMS:{defaultFormat:"A\u00b0 B' C\"N X\u00b0 Y' Z\"E",customFormat:null,useCustom:!1},GARS:{defaultFormat:"XYQK",customFormat:null,useCustom:!1},GEOREF:{defaultFormat:"ABCDXY",customFormat:null,useCustom:!1},MGRS:{defaultFormat:"ZSXY",customFormat:null,
-useCustom:!1},USNG:{defaultFormat:"ZSXY",customFormat:null,useCustom:!1},UTM:{defaultFormat:"ZB X Y",customFormat:null,useCustom:!1},UTM_H:{defaultFormat:"ZH X Y",customFormat:null,useCustom:!1}};var a=[],b,f;for(f in this.formats)b={value:f,label:this.nls.notations[f]},a.push(b);this.frmtSelect.addOption(a);e.set(this.frmtVal,"value",this.formats[this.ct].defaultFormat);this.own(d(this.frmtSelect,"change",c.hitch(this,this.frmtSelectValueDidChange)));this.own(d(this.frmtVal,"change",c.hitch(this,
-this.formatValDidChange)));this.own(d(this.cancelButton,"click",c.hitch(this,function(){this.isCanceled=!0})));this.own(d(this.applyButton,"click",c.hitch(this,function(){this.isCanceled=!1})));this.displayPrefixContainer()},formatValDidChange:function(){var a=e.get(this.frmtVal,"value"),b=this.frmtSelect.get("value");this.formats[b].customFormat=a;this.formats[b].useCustom=!0},frmtSelectValueDidChange:function(a){var b=this.formats[a].useCustom?this.formats[a].customFormat:this.formats[a].defaultFormat;
-this.ct=a;e.set(this.frmtVal,"value",b);this.displayPrefixContainer()},displayPrefixContainer:function(){switch(this.ct){case "DD":case "DDM":case "DMS":g.set(this.prefixContainer,{display:""});break;default:g.set(this.prefixContainer,{display:"none"})}}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+/*global define*/
+define([
+  'dojo/_base/declare',
+  'dojo/_base/lang',
+  'dojo/dom-style',
+  'dojo/on',
+  'dojo/dom-attr',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dijit/_WidgetsInTemplateMixin',
+  'jimu/dijit/formSelect',
+  'jimu/dijit/CheckBox'
+], function (
+  dojoDeclare,
+  dojoLang,
+  dojoDomStyle,
+  dojoOn,
+  dojoDomAttr,
+  dijitWidgetBase,
+  dijitTemplatedMixin,
+  dijitWidgetsInTemplate
+) {
+  'use strict';
+  return dojoDeclare([dijitWidgetBase, dijitTemplatedMixin, dijitWidgetsInTemplate], {
+    baseClass: 'jimu-coordinate-control',
+    templateString: '<div>' +
+      '<span class="formatText">${nls.editCoordinateDialogTitle}</span>' +
+      '<div class="controlContainer">' +
+      '<select tabindex="0" class="selectFormat" data-dojo-attach-point="frmtSelect" ' +
+      'aria-label="${nls.editCoordinateDialogTitle}" data-dojo-type="jimu/dijit/formSelect"></select>' +
+      '<input tabindex="0" type="text" data-dojo-attach-point="frmtVal" class="formatInput"></input>' +
+      '<div class="settingsContainer" data-dojo-attach-point="prefixContainer">' +
+      '<div class="formatText" data-dojo-attach-point="addSignChkBox" label="${nls.posNegPrefixLabel}" ' +
+      'data-dojo-type="jimu/dijit/CheckBox"/></div></div><div class="btnContainer">' +
+      '<div tabindex="0" role="button" aria-label="${nls.applyButtonLabel}" data-dojo-attach-point="applyButton" ' +
+      'class="jimu-btn">${nls.applyButtonLabel}</div>' +
+      '<div data-dojo-attach-point="cancelButton" tabindex="0" role="button" aria-label="${nls.cancelButtonLabel}" ' +
+      'class="jimu-btn formatCoordCancelButton">${nls.cancelButtonLabel}</div></div></div></div>',
+    isCanceled: false,
+    formats: {},
+
+    setCt: function (v) {
+      this.ct = v;
+      this.frmtSelect.set('value', this.ct);
+    },
+
+    /**
+     *
+     **/
+    postCreate: function () {
+      this.formats = {
+        DD: {
+          defaultFormat: 'YN XE',
+          customFormat: null,
+          useCustom: false
+        },
+        DDM: {
+          defaultFormat: 'A° B\'N X° Y\'E',
+          customFormat: null,
+          useCustom: false
+        },
+        DMS: {
+          defaultFormat: 'A° B\' C\"N X° Y\' Z\"E',
+          customFormat: null,
+          useCustom: false
+        },
+        GARS: {
+          defaultFormat: 'XYQK',
+          customFormat: null,
+          useCustom: false
+        },
+        GEOREF: {
+          defaultFormat: 'ABCDXY',
+          customFormat: null,
+          useCustom: false
+        },
+        MGRS: {
+          defaultFormat: 'ZSXY',
+          customFormat: null,
+          useCustom: false
+        },
+        USNG: {
+          defaultFormat: 'ZSXY',
+          customFormat: null,
+          useCustom: false
+        },
+        UTM: {
+          defaultFormat: 'ZB X Y',
+          customFormat: null,
+          useCustom: false
+        },
+        UTM_H: {
+          defaultFormat: 'ZH X Y',
+          customFormat: null,
+          useCustom: false
+        }
+      };
+
+      var options = [],
+        option;
+      //Add options for selected dropdown
+      for (var notation in this.formats) {
+        option = {
+          value: notation,
+          label: this.nls.notations[notation]
+        };
+        options.push(option);
+      }
+      this.frmtSelect.addOption(options);
+
+      dojoDomAttr.set(this.frmtVal, 'value', this.formats[this.ct].defaultFormat);
+
+      this.own(
+        dojoOn(this.frmtSelect, 'change',
+          dojoLang.hitch(this, this.frmtSelectValueDidChange)
+        ));
+
+      this.own(dojoOn(
+        this.frmtVal,
+        'change',
+        dojoLang.hitch(this, this.formatValDidChange)
+      ));
+
+      this.own(
+        dojoOn(this.cancelButton,
+          'click',
+          dojoLang.hitch(this, function () {
+            this.isCanceled = true;
+          })
+        ));
+
+      this.own(
+        dojoOn(this.applyButton,
+          'click',
+          dojoLang.hitch(this, function () {
+            this.isCanceled = false;
+          })
+        ));
+
+      this.displayPrefixContainer();
+    },
+
+    /**
+     *
+     **/
+    formatValDidChange: function () {
+      var newvalue = dojoDomAttr.get(this.frmtVal, 'value');
+      var crdType = this.frmtSelect.get('value');
+      this.formats[crdType].customFormat = newvalue;
+      this.formats[crdType].useCustom = true;
+    },
+
+    /**
+     *
+     **/
+    frmtSelectValueDidChange: function (evt) {
+      var selval = this.formats[evt].useCustom ? this.formats[evt].customFormat :
+        this.formats[evt].defaultFormat;
+      this.ct = evt;
+      dojoDomAttr.set(this.frmtVal, 'value', selval);
+      this.displayPrefixContainer();
+    },
+
+    /**
+     *
+     **/
+    displayPrefixContainer: function () {
+      switch (this.ct) {
+        case 'DD':
+        case 'DDM':
+        case 'DMS':
+          dojoDomStyle.set(this.prefixContainer, {
+            display: ''
+          });
+          break;
+        default:
+          dojoDomStyle.set(this.prefixContainer, {
+            display: 'none'
+          });
+          break;
+      }
+    }
+
+  });
+});

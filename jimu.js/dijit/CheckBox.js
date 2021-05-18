@@ -1,9 +1,178 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dijit/_WidgetBase dojo/_base/lang dojo/_base/html dojo/dom-class dojo/Evented ./a11y/CheckBox".split(" "),function(c,f,d,b,e,g,h){c=c([f,g],{baseClass:"jimu-checkbox",declaredClass:"jimu.dijit.CheckBox",checked:!1,disabled:!1,status:!0,label:"",title:"",postCreate:function(){this.checkNode=b.create("div",{"class":"checkbox jimu-float-leading jimu-icon jimu-icon-checkbox"},this.domNode);this.labelNode=b.create("div",{"class":"label jimu-float-leading",innerHTML:this.label||
-""},this.domNode);this.checked&&(b.addClass(this.checkNode,"checked"),b.addClass(this.checkNode,"jimu-icon-checked"));this.status=this._getStatusByDisabled(this.disabled);this.status||(b.addClass(this.domNode,"jimu-state-disabled"),b.addClass(this.checkNode,"jimu-state-disabled"));this.a11y_setDisabled(!this.status);this.own(this.watch("disabled",d.hitch(this,function(){this.setStatus(this._getStatusByDisabled(this.disabled))})));this._udpateLabelClass();this.a11y_init()},setLabel:function(a){this.label=
-a;this.labelNode.innerHTML=this.label;this.labelNode.title=this.label;this.a11y_updateAriaLabel(a);this._udpateLabelClass()},_udpateLabelClass:function(){this.labelNode&&(this.labelNode.innerHTML?b.removeClass(this.labelNode,"not-visible"):b.addClass(this.labelNode,"not-visible"))},setValue:function(a){this.status&&(!0===a?this.check():this.uncheck())},getValue:function(){return this.checked},setStatus:function(a){a=!!a;var c=this.status!==a;(this.status=a)?(e.remove(this.domNode,"jimu-state-disabled"),
-b.removeClass(this.checkNode,"jimu-state-disabled")):(e.add(this.domNode,"jimu-state-disabled"),b.addClass(this.checkNode,"jimu-state-disabled"));this.a11y_setDisabled(!this.status);c&&this.emit("status-change",a)},getStatus:function(){return this.status},check:function(a){if(this.status&&(this.checked=!0,this.a11y_changeAriaCheckedAttr(),b.addClass(this.checkNode,"checked jimu-icon-checked"),b.removeClass(this.checkNode,"checked jimu-icon-checkbox"),!a))this.onStateChange()},uncheck:function(a){if(this.status&&
-(this.checked=!1,this.a11y_changeAriaCheckedAttr(),b.removeClass(this.checkNode,"checked"),b.removeClass(this.checkNode,"jimu-icon-checked"),b.addClass(this.checkNode,"jimu-icon-checkbox"),!a))this.onStateChange()},onStateChange:function(){if(this.onChange&&d.isFunction(this.onChange))this.onChange(this.checked);this.emit("change",this.checked)},focus:function(){this.checkNode&&this.checkNode.focus&&this.checkNode.focus()},_getStatusByDisabled:function(a){return!0===a||"true"===a||"disabled"===a?
-!1:!0}});c.extend(h);return c});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  'dijit/_WidgetBase',
+  'dojo/_base/lang',
+  'dojo/_base/html',
+  'dojo/dom-class',
+  //'dojo/on',
+  'dojo/Evented',
+  "./a11y/CheckBox"
+],
+function (declare, _WidgetBase, lang, html, domClass, /*on, */Evented, a11y) {
+  var clazz = declare([_WidgetBase, Evented], {
+    baseClass: 'jimu-checkbox',
+    declaredClass: 'jimu.dijit.CheckBox',
+
+    checked: false,
+    disabled: false, //checkBoxDijit.set("disabled", "true"/"disabled" or "false")
+    status: true, //isEnable
+    label: "",
+    title: "", //it's used for screen reader when no label'
+
+    postCreate: function () {
+      this.checkNode = html.create('div', {
+        'class': 'checkbox jimu-float-leading jimu-icon jimu-icon-checkbox'
+      }, this.domNode);
+      this.labelNode = html.create('div', {
+        'class': 'label jimu-float-leading',
+        innerHTML: this.label || ""
+      }, this.domNode);
+      if (this.checked) {
+        html.addClass(this.checkNode, 'checked');
+        html.addClass(this.checkNode, 'jimu-icon-checked');
+      }
+
+      this.status = this._getStatusByDisabled(this.disabled);//for back compatibility
+      if (!this.status) {
+        html.addClass(this.domNode, 'jimu-state-disabled');
+        html.addClass(this.checkNode, 'jimu-state-disabled');
+      }
+      this.a11y_setDisabled(!this.status);
+
+      this.own(this.watch("disabled", lang.hitch(this, function () {
+        this.setStatus(this._getStatusByDisabled(this.disabled));
+      })));
+
+      this._udpateLabelClass();
+
+      this.a11y_init();
+    },
+
+    setLabel: function (label) {
+      this.label = label;
+      this.labelNode.innerHTML = this.label;
+      this.labelNode.title = this.label;
+      this.a11y_updateAriaLabel(label);
+
+      this._udpateLabelClass();
+    },
+
+    _udpateLabelClass: function () {
+      if (this.labelNode) {
+        if (this.labelNode.innerHTML) {
+          html.removeClass(this.labelNode, 'not-visible');
+        } else {
+          html.addClass(this.labelNode, 'not-visible');
+        }
+      }
+    },
+
+    setValue: function (value) {
+      if (!this.status) {
+        return;
+      }
+      if (value === true) {
+        this.check();
+      } else {
+        this.uncheck();
+      }
+    },
+
+    getValue: function () {
+      return this.checked;
+    },
+
+    setStatus: function (newStatus) {
+      newStatus = !!newStatus;
+
+      var isStatusChanged = (this.status !== newStatus);
+      this.status = newStatus;
+
+      if (this.status) {
+        domClass.remove(this.domNode, 'jimu-state-disabled');
+        html.removeClass(this.checkNode, 'jimu-state-disabled');
+      } else {
+        domClass.add(this.domNode, 'jimu-state-disabled');
+        html.addClass(this.checkNode, 'jimu-state-disabled');
+      }
+
+      this.a11y_setDisabled(!this.status);
+
+      if (isStatusChanged) {
+        this.emit('status-change', newStatus);
+      }
+    },
+
+    getStatus: function () {
+      return this.status;
+    },
+
+    check: function (notEvent) {
+      if (!this.status) {
+        return;
+      }
+      this.checked = true;
+      this.a11y_changeAriaCheckedAttr();
+      html.addClass(this.checkNode, 'checked jimu-icon-checked');
+      html.removeClass(this.checkNode, 'checked jimu-icon-checkbox');
+      if (!notEvent) {
+        this.onStateChange();
+      }
+    },
+
+    uncheck: function (notEvent) {
+      if (!this.status) {
+        return;
+      }
+      this.checked = false;
+      this.a11y_changeAriaCheckedAttr();
+      html.removeClass(this.checkNode, 'checked');
+      html.removeClass(this.checkNode, 'jimu-icon-checked');
+      html.addClass(this.checkNode, 'jimu-icon-checkbox');
+
+      if (!notEvent) {
+        this.onStateChange();
+      }
+    },
+
+    onStateChange: function () {
+      if (this.onChange && lang.isFunction(this.onChange)) {
+        this.onChange(this.checked);
+      }
+      this.emit('change', this.checked);
+    },
+
+    focus: function () {
+      if (this.checkNode && this.checkNode.focus) {
+        this.checkNode.focus();
+      }
+    },
+
+    _getStatusByDisabled: function (disable) {
+      if (true === disable || "true" === disable || "disabled" === disable) {
+        return false;
+      }
+
+      return true;
+    }
+  });
+
+  clazz.extend(a11y);//for a11y
+  return clazz;
+});

@@ -1,11 +1,242 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/PopupConfig.html":'\x3cdiv style\x3d"width:560px;"\x3e\r\n\t\x3ctable class\x3d"popup-config-layout" style\x3d"width:100%;table-layout:fixed;"\x3e\r\n\t\t\x3ccolgroup\x3e\r\n\t\t\t\x3ccol width\x3d"auto"\x3e\x3c/col\x3e\r\n\t\t\t\x3ccol width\x3d"370px"\x3e\x3c/col\x3e\r\n\t\t\t\x3ccol width\x3d"70px"\x3e\x3c/col\x3e\r\n\t\t\x3c/colgroup\x3e\r\n\t\t\x3ctbody\x3e\r\n\t\t\t\x3ctr data-dojo-attach-point\x3d"titleTR"\x3e\r\n\t\t\t\t\x3ctd nowrap\x3e\r\n\t\t\t\t\t\x3cspan\x3e${nls.title}\x3c/span\x3e\r\n\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"titleTextBox" data-dojo-type\x3d"dijit/form/TextBox" style\x3d"width:100%;" /\x3e\r\n\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"btnAdd" data-dojo-type\x3d"dijit/form/DropDownButton"\x3e\r\n\t\t\t\t\t\t\x3cspan\x3e${nls.add}\x3c/span\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-type\x3d"dijit/TooltipDialog"\x3e\r\n\t\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"menu" data-dojo-type\x3d"dijit/Menu"\x3e\x3c/div\x3e\r\n\t\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\x3c/td\x3e\r\n\t\t\t\x3c/tr\x3e\r\n\t\t\t\x3ctr data-dojo-attach-point\x3d"fieldsTR"\x3e\r\n\t\t\t\t\x3ctd nowrap\x3e\r\n\t\t\t\t\t\x3cspan\x3e${nls.fields}\x3c/span\x3e\r\n\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3ctd colspan\x3d"2" data-dojo-attach-point\x3d"fieldsTableTd"\x3e\r\n\t\t\t\t\x3c/td\x3e\r\n\t\t\t\x3c/tr\x3e\r\n\t\t\x3c/tbody\x3e\r\n\t\x3c/table\x3e\r\n\x3c/div\x3e\r\n'}});
-define("dojo/_base/declare dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/text!./templates/PopupConfig.html dojo/_base/lang dojo/_base/html dojo/_base/array dojo/Evented esri/request dijit/MenuItem jimu/dijit/SimpleTable dijit/form/TextBox dijit/form/DropDownButton dijit/TooltipDialog dijit/Menu".split(" "),function(g,h,k,l,m,b,d,e,n,p,f,q){return g([h,k,l,n],{_def:null,declaredClass:"jimu.dijit.PopupConfig",baseClass:"jimu-dijit-popup-config",templateString:m,url:null,
-title:null,fields:null,config:null,showTitle:!0,postMixInProperties:function(){this.nls=window.jimuNls.popupConfig},postCreate:function(){this.inherited(arguments);this._initFieldsTable();this.clear();this.showTitle?(d.setStyle(this.titleTR,"display",""),this.title&&this.titleTextBox.set("value",this.title)):d.setStyle(this.titleTR,"display","none");this.fields?this.setFields(this.fields):this.url&&this.setUrl(this.url)},getConfig:function(){var a={title:b.trim(this.titleTextBox.get("value")),fields:[]},
-c=this.fieldsTable.getRows();e.forEach(c,b.hitch(this,function(c){var b=this.fieldsTable.getRowData(c);b.visibility&&a.fields.push({name:b.name,alias:b.alias,type:c.fieldType})}));return a},setUrl:function(a){if("string"===typeof a)return this.url=a=b.trim(a),this.clear(),this._requestLayerInfo(a)},setFields:function(a){a instanceof Array&&this._setFields(a)},clear:function(){this.fieldsTable.clear();this._resetMenu();this._addEmptyMenuItem()},_initFieldsTable:function(){d.empty(this.fieldsTableTd);
-var a=[{name:"visibility",title:this.nls.visibility,type:"checkbox",onChange:b.hitch(this,this._onFieldVisibleChange)},{name:"name",title:this.nls.name,type:"text",editable:!1},{name:"alias",title:this.nls.alias,type:"text",editable:!0},{name:"actions",title:this.nls.actions,type:"actions",actions:["up","down"]}];this.fieldsTable=new q({fields:a});this.fieldsTable.placeAt(this.fieldsTableTd)},_onFieldVisibleChange:function(){var a=this.fieldsTable.getRows();e.every(a,function(a){return!1===this.fieldsTable.getRowData(a).visibility},
-this)?this.emit("noVisibleField"):this.emit("hasVisibleField")},_resetMenu:function(){var a=this.menu.getChildren();e.forEach(a,b.hitch(this,function(a){this.menu.removeChild(a)}))},_addEmptyMenuItem:function(){var a=new f({label:this.nls.noField,onClick:b.hitch(this,function(){var a=this.menu.getParent();d.setStyle(a.domNode.parentNode,"display","none")})});this.menu.addChild(a)},_setFields:function(a){this._resetMenu();this.fields=e.filter(a,function(a){return"esriFieldTypeGeometry"!==a.type});
-0<this.fields.length?e.forEach(this.fields,b.hitch(this,function(a){this._addMenuItem(a);this._addRow(a)})):this._addEmptyMenuItem()},_requestLayerInfo:function(a){this._def&&this._def.cancel();this._def=p({url:a,content:{f:"json"},handleAs:"json",callbackParamName:"callback"});this._def.then(b.hitch(this,function(a){a&&a.fields&&this._setFields(a.fields)}),b.hitch(this,function(a){console.error("request layer info failed",a)}));return this._def},_addMenuItem:function(a){var c=new f({label:a.name+
-" {"+a.name+"}",onClick:b.hitch(this,function(){var b=this.titleTextBox.get("value")+"${"+a.name+"}";this.titleTextBox.set("value",b);b=this.menu.getParent();d.setStyle(b.domNode.parentNode,"display","none")})});this.menu.addChild(c)},_addRow:function(a){var b=this.fieldsTable.addRow({visibility:!1!==a.visible,name:a.name,alias:a.alias||a.name});b.success&&(b.tr.fieldType=a.type)}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define(['dojo/_base/declare',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dijit/_WidgetsInTemplateMixin',
+  'dojo/text!./templates/PopupConfig.html',
+  'dojo/_base/lang',
+  'dojo/_base/html',
+  'dojo/_base/array',
+  'dojo/Evented',
+  'esri/request',
+  'dijit/MenuItem',
+  'jimu/dijit/SimpleTable',
+  'dijit/form/TextBox',
+  'dijit/form/DropDownButton',
+  'dijit/TooltipDialog',
+  'dijit/Menu'
+],
+function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
+  template, lang, html, array, Evented, esriRequest, MenuItem, SimpleTable) {
+  return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+    _def:null,
+    declaredClass: 'jimu.dijit.PopupConfig',
+    baseClass:'jimu-dijit-popup-config',
+    templateString:template,
+    url:null,
+    title:null,
+    fields:null,//array,{name,alias,type,/*optional*/ visible}
+    config:null,
+    showTitle:true,
+
+    postMixInProperties:function(){
+      this.nls = window.jimuNls.popupConfig;
+    },
+
+    postCreate:function(){
+      this.inherited(arguments);
+      this._initFieldsTable();
+      this.clear();
+      if(this.showTitle){
+        html.setStyle(this.titleTR, 'display', '');
+        if(this.title){
+          this.titleTextBox.set('value', this.title);
+        }
+      }else{
+        html.setStyle(this.titleTR, 'display', 'none');
+      }
+
+      if(this.fields){
+        this.setFields(this.fields);
+      }
+      else if(this.url){
+        this.setUrl(this.url);
+      }
+    },
+
+    getConfig:function(){
+      var config = {
+        title:lang.trim(this.titleTextBox.get('value')),
+        fields:[]
+      };
+      var trs = this.fieldsTable.getRows();
+      array.forEach(trs, lang.hitch(this, function(tr){
+        var rowData = this.fieldsTable.getRowData(tr);
+        if (rowData.visibility) {
+          config.fields.push({
+            name: rowData.name,
+            alias: rowData.alias,
+            type: tr.fieldType
+          });
+        }
+      }));
+      return config;
+    },
+
+    setUrl:function(url){
+      if(typeof url === 'string'){
+        url = lang.trim(url);
+      }
+      else{
+        return;
+      }
+      this.url = url;
+      this.clear();
+      var def = this._requestLayerInfo(url);
+      return def;
+    },
+
+    setFields:function(fields){
+      if(fields instanceof Array){
+        this._setFields(fields);
+      }
+    },
+
+    clear:function(){
+      this.fieldsTable.clear();
+      this._resetMenu();
+      this._addEmptyMenuItem();
+    },
+
+    _initFieldsTable: function(){
+      html.empty(this.fieldsTableTd);
+      var fields = [{
+          name: "visibility",
+          title: this.nls.visibility,
+          type: "checkbox",
+          onChange: lang.hitch(this, this._onFieldVisibleChange)
+        }, {
+          name: "name",
+          title: this.nls.name,
+          type: "text",
+          editable: false
+        }, {
+          name: "alias",
+          title: this.nls.alias,
+          type: "text",
+          editable: true
+        }, {
+          name: "actions",
+          title: this.nls.actions,
+          type: "actions",
+          actions: ["up", "down"]
+        }];
+      this.fieldsTable = new SimpleTable({
+        fields: fields
+      });
+      this.fieldsTable.placeAt(this.fieldsTableTd);
+    },
+
+    /**
+     * If all fields in the fieldsTable are invisible, make the Enable popup checkbox unchecked.
+     */
+    _onFieldVisibleChange: function() {
+      var rows = this.fieldsTable.getRows();
+      var flag = array.every(rows, function(row) {
+        var rowData = this.fieldsTable.getRowData(row);
+        return rowData.visibility === false;
+      }, this);
+      if(flag) {
+        this.emit('noVisibleField');
+      } else {
+        this.emit('hasVisibleField');
+      }
+    },
+
+    _resetMenu:function(){
+      var menuItems = this.menu.getChildren();
+      array.forEach(menuItems, lang.hitch(this, function(menuItem){
+        this.menu.removeChild(menuItem);
+      }));
+    },
+
+    _addEmptyMenuItem:function(){
+      var menuItem = new MenuItem({
+        label:this.nls.noField,
+        onClick:lang.hitch(this, function(){
+          var dialog = this.menu.getParent();
+          html.setStyle(dialog.domNode.parentNode, 'display', 'none');
+        })
+      });
+      this.menu.addChild(menuItem);
+    },
+
+    _setFields:function(fields){
+      this._resetMenu();
+      this.fields = array.filter(fields, function(item) {
+        return item.type !== 'esriFieldTypeGeometry';
+      });
+      if (this.fields.length > 0) {
+        array.forEach(this.fields, lang.hitch(this, function(fieldInfo) {
+          this._addMenuItem(fieldInfo);
+          this._addRow(fieldInfo);
+        }));
+      } else {
+        this._addEmptyMenuItem();
+      }
+    },
+
+    _requestLayerInfo:function(url){
+      if(this._def){
+        this._def.cancel();
+      }
+      this._def = esriRequest({
+        url:url,
+        content:{f:"json"},
+        handleAs:"json",
+        callbackParamName:"callback"
+      });
+      this._def.then(lang.hitch(this, function(response){
+        if(response && response.fields){
+          this._setFields(response.fields);
+        }
+      }), lang.hitch(this, function(error){
+        console.error("request layer info failed", error);
+      }));
+      return this._def;
+    },
+
+    _addMenuItem:function(fieldInfo){
+      var label = fieldInfo.name + " {" + fieldInfo.name + "}";
+      var menuItem = new MenuItem({
+        label:label,
+        onClick:lang.hitch(this, function(){
+          var a = this.titleTextBox.get('value');
+          var b = a + "${" + fieldInfo.name + "}";
+          this.titleTextBox.set('value', b);
+          var dialog = this.menu.getParent();
+          html.setStyle(dialog.domNode.parentNode, 'display', 'none');
+        })
+      });
+      this.menu.addChild(menuItem);
+    },
+
+    _addRow:function(fieldInfo){
+      var rowData = {
+        visibility:fieldInfo.visible !== false,
+        name:fieldInfo.name,
+        alias:fieldInfo.alias || fieldInfo.name
+      };
+      var result = this.fieldsTable.addRow(rowData);
+      if(result.success){
+        result.tr.fieldType = fieldInfo.type;
+      }
+    }
+
+  });
+});

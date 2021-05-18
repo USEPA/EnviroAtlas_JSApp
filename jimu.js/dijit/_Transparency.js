@@ -1,7 +1,97 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/_Transparency.html":'\x3cdiv\x3e\r\n  \x3cdiv data-dojo-attach-point\x3d"opacitySlider" data-dojo-type\x3d"dijit/form/HorizontalSlider" showbuttons\x3d"true" value\x3d"0" minimum\x3d"0" maximum\x3d"100" discretevalues\x3d"101" intermediatechanges\x3d"true" style\x3d"width:100%;" data-dojo-attach-event\x3d"change: _onAlphaChanged"\x3e\r\n    \x3cdiv data-dojo-type\x3d"dijit/form/HorizontalRuleLabels" container\x3d"topDecoration" labels\x3d"${nls.opaque},${nls.transparent}" style\x3d"height: 1.5em; font-size: 0.8em; color: #666"\x3e\r\n    \x3c/div\x3e\r\n    \x3cdiv data-dojo-type\x3d"dijit/form/HorizontalRule" container\x3d"bottomDecoration" count\x3d"5" style\x3d"height: 5px;"\x3e\r\n    \x3c/div\x3e\r\n    \x3col data-dojo-type\x3d"dijit/form/HorizontalRuleLabels" container\x3d"bottomDecoration" style\x3d"height: 1em; font-size: 0.75em; color: darkblue;"\x3e\r\n      \x3cli\x3e${_nls0}\x3c/li\x3e\r\n      \x3cli\x3e${_nls50}\x3c/li\x3e\r\n      \x3cli\x3e${_nls100}\x3c/li\x3e\r\n    \x3c/ol\x3e\r\n  \x3c/div\x3e\r\n\x3c/div\x3e'}});
-define("dojo/_base/declare dojo/_base/config dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/Evented dojo/text!./templates/_Transparency.html dojo/_base/lang dojo/_base/html dojo/on dijit/form/HorizontalSlider dijit/form/HorizontalRuleLabels dijit/form/HorizontalRule ./a11y/_Transparency".split(" "),function(b,c,d,e,f,g,h,l,m,n,p,q,r,k){b=b([d,e,f,g],{baseClass:"jimu-transparency",declaredClass:"jimu.dijit.Transparency",templateString:h,nls:null,_nls0:"0%",_nls50:"50%",
-_nls100:"100%",alpha:1,postMixInProperties:function(){this.nls=window.jimuNls.transparency;var a=c.locale||"",a=a.toLowerCase();"ar"===a?(this._nls0="\u066a0",this._nls50="\u066a50",this._nls100="\u066a100"):"tr"===a&&(this._nls0="%0",this._nls50="%50",this._nls100="%100")},postCreate:function(){this.inherited(arguments);"number"===typeof this.alpha&&this.setAlpha(this.alpha);this.a11y_initAriaAttrs()},setAlpha:function(a){this.opacitySlider.set("value",Math.round(100-100*a))},getAlpha:function(){return Math.round(100-
-this.opacitySlider.get("value"))/100},_onAlphaChanged:function(){var a=this.getAlpha();this.emit("change",a)}});b.extend(k);return b});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+    'dojo/_base/declare',
+    'dojo/_base/config',
+    'dijit/_WidgetBase',
+    'dijit/_TemplatedMixin',
+    'dijit/_WidgetsInTemplateMixin',
+    'dojo/Evented',
+    'dojo/text!./templates/_Transparency.html',
+    'dojo/_base/lang',
+    'dojo/_base/html',
+    'dojo/on',
+    'dijit/form/HorizontalSlider',
+    'dijit/form/HorizontalRuleLabels',
+    'dijit/form/HorizontalRule',
+    "./a11y/_Transparency"
+  ],
+  function(declare, dojoConfig, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
+    Evented, template, lang, html, on, HorizontalSlider, HorizontalRuleLabels,
+    HorizontalRule, a11y) {/* jshint unused: false */
+    var clazz = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+      baseClass: 'jimu-transparency',
+      declaredClass: 'jimu.dijit.Transparency',
+      templateString: template,
+      nls: null,
+      _nls0: '0%',
+      _nls50: '50%',
+      _nls100: '100%',
+
+      //options:
+      alpha: 1.0,
+
+      //public methods:
+      //setAlpha
+      //getAlpha
+
+      //events：
+      //change
+
+      postMixInProperties: function() {
+        this.nls = window.jimuNls.transparency;
+        var locale = dojoConfig.locale || "";
+        locale = locale.toLowerCase();
+        if(locale === 'ar'){
+          this._nls0 = '٪0';
+          this._nls50 = '٪50';
+          this._nls100 = '٪100';
+        }else if(locale === 'tr'){
+          this._nls0 = '%0';
+          this._nls50 = '%50';
+          this._nls100 = '%100';
+        }
+      },
+
+      postCreate: function(){
+        this.inherited(arguments);
+        if(typeof this.alpha === 'number'){
+          this.setAlpha(this.alpha);
+        }
+        //pass the aria-XXX to focusNode.
+        this.a11y_initAriaAttrs();
+      },
+
+      setAlpha: function(alpha){
+        var value = Math.round(100 - alpha * 100);
+        this.opacitySlider.set('value', value);
+      },
+
+      getAlpha: function(){
+        var alpha = Math.round(100 - this.opacitySlider.get('value')) / 100;
+        return alpha;
+      },
+
+      _onAlphaChanged: function(){
+        var alpha = this.getAlpha();
+        this.emit('change', alpha);
+      }
+
+    });
+    clazz.extend(a11y);//for a11y
+    return clazz;
+  });

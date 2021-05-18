@@ -1,32 +1,963 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dojo/_base/lang dojo/_base/array dojo/_base/html dojo/on dojo/has dojo/query dojo/Deferred dojo/promise/all dijit/_WidgetBase dijit/_TemplatedMixin esri/undoManager esri/OperationBase esri/tasks/RelationshipQuery esri/dijit/Popup esri/dijit/PopupMobile esri/graphicsUtils esri/dijit/PopupTemplate jimu/utils jimu/ConfigManager jimu/dijit/DropdownMenu jimu/LayerInfos/LayerInfos".split(" "),function(n,f,l,d,p,r,e,t,u,v,w,x,y,H,q,z,A,B,C,D,E,F){var h=n([v,w],{baseClass:"related-records-popup-projector",
-templateString:"\x3cdiv\x3e\x3cdiv class\x3d'operation-box' data-dojo-attach-point\x3d'operationBox' style\x3d'display: none'\x3e\x3cdiv class\x3d'previos-btn feature-action' data-dojo-attach-point\x3d'previouBtn'data-dojo-attach-event\x3d'click:_onPreviouBtnClick'\x3e\x3c/div\x3e\x3cdiv class\x3d'operation-title' data-dojo-attach-point\x3d'operationTitle'\x3eabc\x3c/div\x3e\x3cdiv class\x3d'add-new-btn' data-dojo-attach-point\x3d'addNewBtn'\x3e\x3c/div\x3e\x3c/div\x3e\x3cdiv class\x3d'content-box' data-dojo-attach-point\x3d'contentBox'\x3e\x3c/div\x3e\x3c/div\x3e",
-popup:null,popupManager:null,undoManager:null,originalFeature:null,originalJimuLayerInfo:null,_temporaryData:null,postCreate:function(){this.undoManager=new x;this.layerInfosObj=F.getInstanceSync();var a=f.getObject("_wabProperties.referToFeatureLayerId",!1,this.originalFeature)||this.originalFeature.getLayer().id;this.originalJimuLayerInfo=this.layerInfosObj.getLayerInfoById(a);this._temporaryData={eventHandles:[],dijits:[]};window.isRTL?d.addClass(this.previouBtn,"icon-arrow-forward"):d.addClass(this.previouBtn,
-"icon-arrow-back");a=this._createOperation({feature:this.originalFeature,oriJimuLayerInfo:this.originalJimuLayerInfo});this.showRelatedTables(a);this.popupUIController="esri.dijit.Popup"===this.popup.declaredClass?new h.PopupUIController(this):new h.PopupMobileUIController(this);this.popupUIController.addDomNode(this.domNode)},destroy:function(){this._clearPage();this.undoManager.destroy();this.popupUIController.destroy();this.inherited(arguments)},_getRelatedTableInfoArray:function(a){a=a.data.oriJimuLayerInfo;
-var b=new t;a.getRelatedTableInfoArray().then(f.hitch(this,function(a){b.resolve(a)}));return b},_getRelatedRecordsByRelatedQuery:function(a){return a.oriJimuLayerInfo.getRelatedRecords(a.feature,a.destJimuLayerInfo,a.relationshipIndex)},_ignoreCaseToGetFieldObject:function(a,b){var c=null;b&&a&&a.fields&&l.some(a.fields,function(a){if(a.name.toLowerCase()===b.toLowerCase())return c=a,!0});return c},getLocaleDateTime:function(a){return C.localizeDate(new Date(a),{fullYear:!0,formatLength:"medium"})},
-_getDisplayTitleOfRelatedRecord:function(a,b,c){var d=a.getInfoTemplate();return(a="popupTitle"===c&&d?"function"===typeof d.title?d.title(b):d.title:this._getDisplayTitleFromPopup(a,b,c))?a:" "},_getDisplayTitleFromPopup:function(a,b,c){(a=this._getPopupTemplateWithOnlyDisplayField(a,c))?(b.setInfoTemplate(a),c=this.popupUIController.getDisplayTitle(b),b.setInfoTemplate(null)):c=b.attributes[c];return c},_getPopupTemplateWithOnlyDisplayField:function(a,b){a=a.getPopupInfo()||a._getDefaultPopupInfo(a.layerObject);
-var c={title:"",fieldInfos:[],description:"",showAttachments:!1,mediaInfos:[]};try{a&&a.fieldInfos&&b&&l.some(a.fieldInfos,function(a){return a.fieldName.toLowerCase()===b.toLowerCase()?(a=f.clone(a),a.visible=!0,c.fieldInfos.push(a),!0):!1},this)}catch(G){console.error(G)}return new B(c)},_canShowRelatedData:function(a){var b=!0;(a=a.getPopupInfo())&&a.relatedRecordsInfo&&(b=!1!==a.relatedRecordsInfo.showRelatedRecords);return b},setPopupContent:function(a){this._clearPage();a.data.destJimuLayerInfo?
-a.data.relatedFeature||this.showRelatedRecords(a):this.showFeature(a);this.undoManager.peekUndo()?this.popupUIController.changeRefDomNode():this.popupUIController.revertRefDomNode()},showFeature:function(a){var b=a.data,c=b.oriJimuLayerInfo.layerObject,d=f.getObject("_wabProperties.originalLayerName",!1,c)||b.oriJimuLayerInfo.title,c=f.getObject("_wabProperties.popupInfo.displayFieldOfRelatedRecordList",!1,c),k=this._getDisplayTitleOfRelatedRecord(b.oriJimuLayerInfo,b.feature,c);"popupTitle"!==c&&
-(k=d+": "+k);this._setOperationTitle(k);f.setObject("_wabProperties.popupInfo.operationDataForListRelatedRecords",null,b.oriJimuLayerInfo.layerObject);b.oriJimuLayerInfo.loadInfoTemplate().then(f.hitch(this,function(c){b.oriJimuLayerInfo.layerObject.infoTemplate||a.data.feature.setInfoTemplate(c);this.popupUIController.setFeature(a.data.feature);b.oriJimuLayerInfo.layerObject.infoTemplate||a.data.feature.setInfoTemplate(null)}));this.showRelatedTables(a);this.popupManager.initPopupMenu([a.data.feature]);
-this.popupUIController.updateZoomToBtn([a.data.feature])},showRelatedRecords:function(a){var b=a.data,c=f.getObject("_wabProperties.originalLayerName",!1,b.destJimuLayerInfo.layerObject)||b.destJimuLayerInfo.title;this._setOperationTitle(c);this._clearPage();f.setObject("_wabProperties.popupInfo.operationDataForListRelatedRecords",b,b.destJimuLayerInfo.layerObject);f.setObject("_wabProperties.popupInfo.originalFeature",this.originalFeature,b.destJimuLayerInfo.layerObject);f.setObject("_wabProperties.popupInfo.layerForActionWithEmptyFeatures",
-b.destJimuLayerInfo.layerObject,this.popup);this._getRelatedRecordsByRelatedQuery(b).then(f.hitch(this,function(c){0<c.length?this._setTitle(window.jimuNls.popup.relatedRecords):this._setTitle(window.jimuNls.popup.noRelatedRecotds,"font-normal");var k=this._showFieldSelector(b.destJimuLayerInfo);l.forEach(c,function(c,e){c._layer=b.destJimuLayerInfo.layerObject;var g=this._getDisplayTitleOfRelatedRecord(b.destJimuLayerInfo,c,k);e=d.create("div",{"class":"item record-item "+(0===e%2?"oddLine":"evenLine"),
-innerHTML:g},this.contentBox);e.relatedRecord=c;e=p(e,"click",f.hitch(this,function(){this._addOperation(a);var d=this._createOperation({feature:c,oriJimuLayerInfo:b.destJimuLayerInfo,relationshipIndex:b.relationshipIndex});this.setPopupContent(d)}));this._temporaryData.eventHandles.push(e)},this);this.popupManager.initPopupMenu(c);this.popupUIController.updateZoomToBtn(c)}));this.popupUIController.setContent(this.domNode)},showRelatedTables:function(a){this._canShowRelatedData(a.data.oriJimuLayerInfo)&&
-this._getRelatedTableInfoArray(a).then(f.hitch(this,function(b){0<b.length&&this._setTitle(window.jimuNls.popup.relatedTables);var c={};l.forEach(b,function(a){void 0===c[a.id]?c[a.id]=0:c[a.id]++},this);var e={};l.forEach(b,function(b,g){void 0===e[b.id]?e[b.id]=0:e[b.id]++;var k='\x3cdiv title\x3d"'+b.title+'"\x3e'+b.title+"\x3c/div\x3e",l=d.create("div",{"class":"item table-item "+(0===g%2?"oddLine":"evenLine"),innerHTML:k},this.contentBox),m=e[b.id];if(0<c[b.id]){g=a.data.oriJimuLayerInfo.getLayerObject();
-var h=b.getLayerObject();u({oriLayerObject:g,relatedLayerObject:h}).then(f.hitch(this,function(b){b=a.data.oriJimuLayerInfo.getOriRelationshipByDestLayer(b.oriLayerObject,b.relatedLayerObject,m);b=b.name||b.id;l.innerHTML=k+('\x3cdiv class\x3d"relationshipName" title\x3d"'+b+'"\x3e('+b+")\x3c/div\x3e")}))}g=p(l,"click",f.hitch(this,function(){b.getLayerObject().then(f.hitch(this,function(){this._addOperation(a);var c=this._createOperation({feature:a.data.feature,oriJimuLayerInfo:a.data.oriJimuLayerInfo,
-destJimuLayerInfo:b,relationshipIndex:m});this.setPopupContent(c)}))}));this._temporaryData.eventHandles.push(g)},this)}))},_createOperation:function(a){return new h.Operation({feature:a.feature||null,oriJimuLayerInfo:a.oriJimuLayerInfo||null,destJimuLayerInfo:a.destJimuLayerInfo||null,relatedFeature:a.relatedFeature||null,relationshipIndex:a.relationshipIndex||0},this)},_addOperation:function(a){this.undoManager.add(a)},_onPreviouBtnClick:function(){this.undoManager.undo()},_clearPage:function(){d.empty(this.contentBox);
-l.forEach(this._temporaryData.eventHandles,function(a){a&&a.remove&&a.remove()},this);this._temporaryData.eventHandles=[];l.forEach(this._temporaryData.dijits,function(a){a&&a.destroy&&a.destroy()},this);this._temporaryData.dijits=[]},_setTitle:function(a,b){a&&d.create("div",{"class":"title-box "+(b?b:""),innerHTML:a},this.contentBox)},_setOperationTitle:function(a){d.setAttr(this.operationTitle,"innerHTML",a);d.setAttr(this.operationTitle,"title",a)},_showFieldSelector:function(a){var b="objecid",
-c=e(".title-box",this.contentBox)[0],d=a.layerObject,k=[];if(!c||!a)return b;var g=a.getPopupInfo();g&&g.title&&k.push({label:window.jimuNls.popup.saveAsPopupTitle,value:"popupTitle"});var h=[];g&&g.fieldInfos?l.forEach(g.fieldInfos,function(a){var b={};a.visible&&(b.name=a.fieldName,b.alias=a.label,h.push(b))}):h=d.fields;l.forEach(h,function(a){"globalid"!==a.name.toLowerCase()&&"shape"!==a.name.toLowerCase()&&k.push({label:a.alias||a.name,value:a.name})});c=(new E({items:k})).placeAt(c);c.domNode.title=
-window.jimuNls.popup.chooseFieldTip;var n=f.getObject("_wabProperties.popupInfo.displayFieldOfRelatedRecordList",!1,d),m=this._ignoreCaseToGetFieldObject(a.layerObject,a.layerObject.displayField||a.layerObject.objectIdField),q=D.getInstance().getAppConfig();n?b=n:"2.3"===q.configWabVersion&&m&&m.name?b=m.name:g&&g.title?b="popupTitle":m&&m.name?b=m.name:0<k.length&&(b=k[0].value);b&&(c.setHighlightValue(b),f.setObject("_wabProperties.popupInfo.displayFieldOfRelatedRecordList",b,d));this._temporaryData.dijits.push(c);
-a=p(c,"click-item",f.hitch(this,function(a,b){e(".item.record-item",this.contentBox).forEach(f.hitch(this,function(c){f.setObject("_wabProperties.popupInfo.displayFieldOfRelatedRecordList",b,d);var e=this._getDisplayTitleOfRelatedRecord(a,c.relatedRecord,b);c.innerHTML=e}))},a));this._temporaryData.eventHandles.push(a);return b}});h.Operation=n([y],{constructor:function(a,b){this.data=a;this.relatedRecordsPopupProjector=b},performUndo:function(){this.relatedRecordsPopupProjector.setPopupContent(this)}});
-h.PopupUIController=n([],{constructor:function(a){this.rrPopupProjector=a;this.popup=a.popup;this.initTempPopup();this._initTempPopupForDisplayTitle();this._initZoomToBtn();this._setScrollable()},initTempPopup:function(){this._tempPopup=new q({},d.create("div"))},_initTempPopupForDisplayTitle:function(){this._tempPopupForDisplayTitle=new q({},d.create("div"));this._tempPopupForDisplayTitle.show()},destroy:function(){this._tempPopup.destroy();this._tempPopupForDisplayTitle.destroy();this._zoomToBtnClickHandle&&
-this._zoomToBtnClickHandle.remove&&this._zoomToBtnClickHandle.remove();this._zoomToBtnANode&&d.destroy(this._zoomToBtnANode);this.toucemoveScrollHandle&&this.toucemoveScrollHandle.remove&&this.toucemoveScrollHandle.remove()},addDomNode:function(a){setTimeout(f.hitch(this,function(){var b=this._getRefDomNode();b&&d.place(a,b,"after")}),1)},setFeature:function(a){this._tempPopup.setFeatures([a]);if(a=e(".esriViewPopup",this._tempPopup.domNode)[0])this.setContent(a),d.place(this.rrPopupProjector.domNode,
-a,"after"),this._unsetScrollable()},setContent:function(a){var b=e(".related-records-popup-projector").parent()[0];b&&b.removeChild(this.rrPopupProjector.domNode);this.popup.setContent(a);this._unsetScrollable()},_setScrollable:function(){var a=e(".contentPane",this.popup.domNode)[0];r("esri-touch")&&a&&(this.toucemoveScrollHandle=p(a,"touchmove",f.hitch(this,function(b){b.preventDefault();e(".esriViewPopup",this.popup.domNode)[0]&&(b=a.firstChild,b instanceof Text&&(b=a.childNodes[1]),this.rrPopupProjector.domNode&&
-d.setStyle(this.rrPopupProjector.contentBox,{"-webkit-transition-property":"-webkit-transform","-webkit-transform":"translate("+b._currentX+"px, "+b._currentY+"px)"}))})))},_unsetScrollable:function(){d.setStyle(this.rrPopupProjector.contentBox,{"-webkit-transition-property":"none","-webkit-transform":"none"});d.setStyle(this.rrPopupProjector.domNode,{"-webkit-transition-property":"none","-webkit-transform":"none"})},getDisplayTitle:function(a){this._tempPopupForDisplayTitle.setFeatures([a]);return(a=
-e("td.attrValue",this._tempPopupForDisplayTitle.domNode)[0])&&a.innerHTML},_getRefDomNode:function(){return this._getViewPopupDomNode()},_getViewPopupDomNode:function(){return e(".esriViewPopup",this.popup.domNode)[0]},_setPopupTitleInBody:function(){this.rrPopupProjector.undoManager.peekUndo()?this._tempPopup.set("titleInBody",!1):this._tempPopup.set("titleInBody",!0)},_initZoomToBtn:function(){var a=e(".actionList",this.popup.domNode)[0];this._oldZoomToBtnANdoe=e(".action",a)[0];this._zoomToBtnANode=
-d.create("a",{"class":"action",style:"display: none",href:"javascript:void(0)"},a);this._zoomToBtn=d.create("span",{innerHTML:window.jimuNls.common.zoomTo},this._zoomToBtnANode);this._showOldZoomToBtn()},_hideZoomToBtn:function(){this._zoomToBtnANode&&d.setStyle(this._zoomToBtnANode,"display","none")},_showZoomToBtn:function(){this._zoomToBtnANode&&d.setStyle(this._zoomToBtnANode,"display","inline-block")},_hideOldZoomToBtn:function(){this._oldZoomToBtnANdoe&&d.setStyle(this._oldZoomToBtnANdoe,"display",
-"none")},_showOldZoomToBtn:function(){this._oldZoomToBtnANdoe&&d.setStyle(this._oldZoomToBtnANdoe,"display","inline-block")},updateZoomToBtn:function(a){this._hideOldZoomToBtn();!a||1>a.length||!a[0].geometry?this._hideZoomToBtn():(this._showZoomToBtn(),this._zoomToBtnClickHandle&&this._zoomToBtnClickHandle.remove&&this._zoomToBtnClickHandle.remove(),this._zoomToBtnClickHandle=p(this._zoomToBtn,"click",f.hitch(this,function(){var b=null;try{b=A.graphicsExtent(a)}catch(c){console.error(c)}b&&(this.rrPopupProjector.popupManager.mapManager.map.setExtent(b),
-this.popup.hide())})))},changeRefDomNode:function(){d.setStyle(this.rrPopupProjector.operationBox,"display","block");d.addClass(this.rrPopupProjector.domNode,"second-page-mode");var a=this._getViewPopupDomNode();a&&d.addClass(a,"second-page-mode")},revertRefDomNode:function(){d.setStyle(this.rrPopupProjector.operationBox,"display","none");d.removeClass(this.rrPopupProjector.domNode,"second-page-mode");this._hideZoomToBtn();this._showOldZoomToBtn()}});h.PopupMobileUIController=n([h.PopupUIController],
-{initTempPopup:function(){this._tempPopup=new z({},d.create("div"))},setFeature:function(a){this._tempPopup.setFeatures([a]);a=e(".esriMobileInfoView.esriMobilePopupInfoView",this._tempPopup.domNode)[0];if(a=e(".esriViewPopup",a)[0])this.setContent(a),d.place(this.rrPopupProjector.domNode,a,"after")},updateZoomToBtn:function(){},_initZoomToBtn:function(){},_getRefDomNode:function(){return e(".esriMobilePopupInfoView .esriMobileInfoViewItem")[1]},_getViewPopupDomNode:function(){var a=e(".esriMobileInfoView.esriMobilePopupInfoView")[0];
-return e(".esriViewPopup",a)[0]}});return h});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+define([
+  'dojo/_base/declare',
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'dojo/_base/html',
+  'dojo/on',
+  "dojo/has",
+  'dojo/query',
+  'dojo/Deferred',
+  'dojo/promise/all',
+  "dijit/_WidgetBase",
+  "dijit/_TemplatedMixin",
+  'esri/undoManager',
+  'esri/OperationBase',
+  'esri/tasks/RelationshipQuery',
+  'esri/dijit/Popup',
+  'esri/dijit/PopupMobile',
+  'esri/graphicsUtils',
+  'esri/dijit/PopupTemplate',
+  'jimu/utils',
+  'jimu/ConfigManager',
+  'jimu/dijit/DropdownMenu',
+  'jimu/LayerInfos/LayerInfos'
+  ], function(declare, lang, array, html, on, has, query, Deferred, all, _WidgetBase, _TemplatedMixin,
+  UndoManager, OperationBase, RelationshipQuery, Popup, PopupMobile, graphicsUtils, PopupTemplate,
+  jimuUtils, ConfigManager, DropdownMenu, jimuLayerInfos) {
+    /*jshint unused: false*/
+    var clazz = declare([_WidgetBase, _TemplatedMixin], {
+      baseClass: "related-records-popup-projector",
+      templateString: "<div>" +
+                      "<div class='operation-box' data-dojo-attach-point='operationBox' style='display: none'>" +
+                        "<div class='previos-btn feature-action' data-dojo-attach-point='previouBtn'" +
+                            "data-dojo-attach-event='click:_onPreviouBtnClick'>" +
+                        "</div>" +
+                        "<div class='operation-title' data-dojo-attach-point='operationTitle'>abc</div>" +
+                        "<div class='add-new-btn' data-dojo-attach-point='addNewBtn'></div>" +
+                      "</div>" +
+                      "<div class='content-box' data-dojo-attach-point='contentBox'></div>" +
+                    "</div>",
+      popup: null,
+      popupManager: null,
+      undoManager: null,
+      originalFeature: null,
+      originalJimuLayerInfo: null,
+      _temporaryData: null,
+
+      postCreate: function() {
+        this.undoManager = new UndoManager();
+        this.layerInfosObj = jimuLayerInfos.getInstanceSync();
+        /* jscs:disable */
+        var originalFeatureLayerId =  lang.getObject("_wabProperties.referToFeatureLayerId", false, this.originalFeature) ||
+                                      this.originalFeature.getLayer().id;
+        this.originalJimuLayerInfo = this.layerInfosObj.getLayerInfoById(originalFeatureLayerId);
+        this._temporaryData = {
+          eventHandles: [],
+          dijits: []
+        };
+
+        /*
+        if(this.popup.declaredClass === "esri.dijit.Popup") {
+          this._tempPopup = new Popup({}, html.create('div'));
+        } else {
+          this._tempPopup = new PopupMobile({}, html.create('div'));
+        }
+        */
+
+        if(window.isRTL) {
+          html.addClass(this.previouBtn, 'icon-arrow-forward');
+        } else {
+          html.addClass(this.previouBtn, 'icon-arrow-back');
+        }
+
+        // create first operation
+        var operation = this._createOperation({
+          feature: this.originalFeature,
+          oriJimuLayerInfo: this.originalJimuLayerInfo
+        });
+
+        // show related tables
+        this.showRelatedTables(operation);
+
+        if(this.popup.declaredClass === "esri.dijit.Popup") {
+          this.popupUIController = new clazz.PopupUIController(this);
+        } else {
+          this.popupUIController = new clazz.PopupMobileUIController(this);
+        }
+        // place domNode.
+        this.popupUIController.addDomNode(this.domNode);
+
+        /*
+        setTimeout(lang.hitch(this, function() {
+          html.place(this.domNode, this._getRefDomNode(), "after");
+        }), 1);
+        */
+      },
+
+      destroy: function() {
+        this._clearPage();
+        this.undoManager.destroy();
+        this.popupUIController.destroy();
+        //this._tempPopup.destroy();
+        this.inherited(arguments);
+      },
+
+      /***************************
+       * Methods for prepare data
+       **************************/
+      _getRelatedTableInfoArray: function(operation) {
+        var oriJimuLayerInfo = operation.data.oriJimuLayerInfo;
+        var def = new Deferred();
+        //var relatedTableInfoArray = [];
+        oriJimuLayerInfo.getRelatedTableInfoArray()
+        .then(lang.hitch(this, function(layerInfoArray) {
+          /*
+          array.forEach(layerInfoArray, function(layerInfo) {
+            if(this._findTableInfoFromTableInfosParam(layerInfo)) {
+              relatedTableInfoArray.push(layerInfo);
+            }
+          }, this);
+          def.resolve(relatedTableInfoArray);
+          */
+          def.resolve(layerInfoArray);
+        }));
+        return def;
+      },
+
+      //_getOriRelationshipByDestLayer: function(operationData) {
+      //  var queryRelationship = null;
+      //  // compatible with arcgis service 10.0.
+      //  array.some(operationData.oriJimuLayerInfo.layerObject.relationships, function(relationship) {
+      //    if (relationship.relatedTableId === operationData.destJimuLayerInfo.layerObject.layerId) {/[>***********
+      //      queryRelationship = relationship;
+      //      return true;
+      //    }
+      //  }, this);
+      //  return queryRelationship;
+      //},
+
+      _getRelatedRecordsByRelatedQuery: function(operationData) {
+        return operationData.oriJimuLayerInfo.getRelatedRecords(operationData.feature,
+                                                                operationData.destJimuLayerInfo,
+                                                                operationData.relationshipIndex);
+      },
+
+      /*
+      _getRelatedRecordsByRelatedQuery: function(operationData) {
+        var def = new Deferred();
+        var relatedQuery = new RelationshipQuery();
+        var queryRelationship = this._getOriRelationshipByDestLayer(operationData);
+        // todo...
+        relatedQuery.outFields = ["*"];
+        relatedQuery.returnGeometry = true;
+        relatedQuery.outSpatialReference = this.popupManager.mapManager.map.spatialReference;
+        relatedQuery.relationshipId = queryRelationship.id;
+        var objectId =
+          operationData.feature.attributes[operationData.oriJimuLayerInfo.layerObject.objectIdField];
+        relatedQuery.objectIds = [objectId];
+        relatedQuery.definitionExpression = operationData.destJimuLayerInfo.getFilter();
+
+        operationData.oriJimuLayerInfo.layerObject.queryRelatedFeatures(
+          relatedQuery,
+          lang.hitch(this, function(relatedRecords) {
+            var features = relatedRecords[objectId] && relatedRecords[objectId].features;
+            if(features) {
+              def.resolve(features);
+            } else {
+              def.resolve([]);
+            }
+          }), lang.hitch(this, function() {
+            def.resolve([]);
+          })
+        );
+
+        return def;
+      },
+      */
+
+      _ignoreCaseToGetFieldObject: function(layerObject, fieldKey) {
+        var result = null;
+        if(fieldKey && layerObject && layerObject.fields) {
+          array.some(layerObject.fields, function(field) {
+            if(field.name.toLowerCase() === fieldKey.toLowerCase()) {
+              result = field;
+              return true;
+            }
+          });
+        }
+        return result;
+      },
+
+      getLocaleDateTime: function(dateString) {
+        var dateObj = new Date(dateString);
+        return jimuUtils.localizeDate(dateObj, {
+          fullYear: true,
+          //selector: 'date',
+          formatLength: 'medium'
+        });
+      },
+
+      // _getDisplayTitleOfRelatedRecord: function(relatedLayerInfo, relatedRecord, displayFieldName) {
+      //   var displayTitle;
+      //   var displayFieldObject =
+      //       this._ignoreCaseToGetFieldObject(relatedLayerInfo.layerObject, displayFieldName);
+
+      //   var popupInfoTemplate = relatedLayerInfo.getInfoTemplate();
+      //   if(displayFieldName === "popupTitle" && popupInfoTemplate) {
+      //     if(typeof popupInfoTemplate.title === "function") {
+      //       displayTitle = popupInfoTemplate.title(relatedRecord);
+      //     } else {
+      //       displayTitle = popupInfoTemplate.title;
+      //     }
+      //   } else {
+      //     displayTitle = displayFieldObject && relatedRecord.attributes[displayFieldName];
+      //   }
+
+      //   if(displayTitle) {
+      //     if(displayFieldObject &&
+      //        displayFieldObject.type &&
+      //        displayFieldObject.type === "esriFieldTypeDate") {
+      //       displayTitle = this.getLocaleDateTime(displayTitle);
+      //     }
+      //   } else {
+      //     displayTitle = "";
+      //   }
+
+      //   return displayTitle;
+      // },
+
+      _getDisplayTitleOfRelatedRecord: function(relatedLayerInfo, relatedRecord, displayFieldName) {
+        var displayTitle;
+
+        var popupInfoTemplate = relatedLayerInfo.getInfoTemplate();
+        if(displayFieldName === "popupTitle" && popupInfoTemplate) {
+          if(typeof popupInfoTemplate.title === "function") {
+            displayTitle = popupInfoTemplate.title(relatedRecord);
+          } else {
+            displayTitle = popupInfoTemplate.title;
+          }
+        } else {
+          displayTitle = this._getDisplayTitleFromPopup(relatedLayerInfo, relatedRecord, displayFieldName);
+        }
+
+        return displayTitle ? displayTitle : " ";
+      },
+
+      _getDisplayTitleFromPopup: function(relatedLayerInfo, relatedRecord, displayFieldName) {
+        var displayTitle;
+        var popupTemplate = this._getPopupTemplateWithOnlyDisplayField(relatedLayerInfo, displayFieldName);
+        if(popupTemplate) {
+          //temporary set infoTemplate to relatedRecord.
+          relatedRecord.setInfoTemplate(popupTemplate);
+          displayTitle = this.popupUIController.getDisplayTitle(relatedRecord);
+          // clear infoTemplate for relatedRecord;
+          relatedRecord.setInfoTemplate(null);
+        } else {
+          displayTitle = relatedRecord.attributes[displayFieldName];
+        }
+        return displayTitle;
+      },
+
+      _getPopupTemplateWithOnlyDisplayField: function(relatedLayerInfo, displayFieldName) {
+        //var popupInfo = relatedLayerInfo._getCustomPopupInfo(relatedLayerInfo.layerObject, [displayFieldName]);
+        var popupInfo = relatedLayerInfo.getPopupInfo() || relatedLayerInfo._getDefaultPopupInfo(relatedLayerInfo.layerObject); //this._getDefaultPopupInfo(relatedLayerInfo.layerObject);
+
+        var newPopupInfo = {
+          title: '',
+          fieldInfos:[],
+          description: '',
+          showAttachments: false,
+          mediaInfos: []
+        };
+
+        try {
+          if(popupInfo && popupInfo.fieldInfos && displayFieldName) {
+            array.some(popupInfo.fieldInfos, function(fieldInfo){
+              if(fieldInfo.fieldName.toLowerCase() === displayFieldName.toLowerCase()) {
+                var newFieldInfo = lang.clone(fieldInfo);
+                newFieldInfo.visible = true;
+                newPopupInfo.fieldInfos.push(newFieldInfo);
+                return true;
+              } else {
+                return false;
+              }
+            }, this);
+          }
+        } catch (e) {
+          console.error(e);
+        }
+
+        var popupTemplate = new PopupTemplate(newPopupInfo);
+
+
+        return popupTemplate;
+      },
+
+      _canShowRelatedData: function(oriJimuLayerInfo) {
+        var result = true;
+        var popupInfo = oriJimuLayerInfo.getPopupInfo();
+        if(popupInfo &&
+           popupInfo.relatedRecordsInfo) {
+          result = popupInfo.relatedRecordsInfo.showRelatedRecords !== false;
+        }
+        return result;
+      },
+
+      /*************************
+       * Methods for operation
+       *************************/
+      setPopupContent: function(operation) {
+        this._clearPage();
+        if(!operation.data.destJimuLayerInfo) {
+          // show related table;
+          this.showFeature(operation);
+        } else if (!operation.data.relatedFeature) {
+          // show related records;
+          this.showRelatedRecords(operation);
+        }
+
+        if(this.undoManager.peekUndo()) {
+          this.popupUIController.changeRefDomNode();
+        } else {
+          this.popupUIController.revertRefDomNode();
+        }
+      },
+
+      showFeature: function(operation) {
+        var operationData = operation.data;
+        /*
+        var relatedLayerName = operationData.oriJimuLayerInfo.layerObject._name ?
+                               operationData.oriJimuLayerInfo.layerObject._name :
+                               operationData.oriJimuLayerInfo.layerObject.name;
+        */
+        var destLayerObject = operationData.oriJimuLayerInfo.layerObject;
+        var relatedLayerName =
+          lang.getObject('_wabProperties.originalLayerName', false, destLayerObject) ||
+          operationData.oriJimuLayerInfo.title;
+
+
+        var relatedsListDisplayFieldName =
+          lang.getObject("_wabProperties.popupInfo.displayFieldOfRelatedRecordList", false, destLayerObject);
+        var operationTitle = this._getDisplayTitleOfRelatedRecord(operationData.oriJimuLayerInfo,
+                                                                  operationData.feature,
+                                                                  relatedsListDisplayFieldName);
+        if(relatedsListDisplayFieldName !== "popupTitle") {
+          operationTitle = relatedLayerName + ": " + operationTitle;
+        }
+
+        // set operation title
+        this._setOperationTitle(operationTitle);
+        // add popupInfo to _wabProperties
+        lang.setObject('_wabProperties.popupInfo.operationDataForListRelatedRecords',
+                       null,
+                       operationData.oriJimuLayerInfo.layerObject);
+        // temporary set infoTemplate to feature.
+        operationData.oriJimuLayerInfo.loadInfoTemplate()
+        .then(lang.hitch(this, function(popupTemplate) {
+          if(!operationData.oriJimuLayerInfo.layerObject.infoTemplate) {
+            operation.data.feature.setInfoTemplate(popupTemplate);
+          }
+          this.popupUIController.setFeature(operation.data.feature);
+          if(!operationData.oriJimuLayerInfo.layerObject.infoTemplate) {
+            operation.data.feature.setInfoTemplate(null);
+          }
+        }));
+
+        this.showRelatedTables(operation);
+        this.popupManager.initPopupMenu([operation.data.feature]);
+        this.popupUIController.updateZoomToBtn([operation.data.feature]);
+      },
+
+      showRelatedRecords: function(operation) {
+        var operationData = operation.data;
+        /*
+        var relatedLayerName = operationData.destJimuLayerInfo.layerObject._name ?
+                               operationData.destJimuLayerInfo.layerObject._name :
+                               operationData.destJimuLayerInfo.layerObject.name;
+        */
+        var destLayerObject = operationData.destJimuLayerInfo.layerObject;
+        var relatedLayerName =
+          lang.getObject('_wabProperties.originalLayerName', false, destLayerObject) ||
+          operationData.destJimuLayerInfo.title;
+        // set operation title
+        this._setOperationTitle(relatedLayerName);
+        this._clearPage();
+        //this.loading.show();
+
+        // add popupInfo to _wabProperties
+        // opertionData = {
+        //   feature: feature,
+        //   oriJimuLayerInfo: oriJimuLayerInfo,
+        //   destJimuLayerInfo: destJimuLayerInfo
+        // }
+        lang.setObject('_wabProperties.popupInfo.operationDataForListRelatedRecords',
+                       operationData,
+                       operationData.destJimuLayerInfo.layerObject);
+        lang.setObject('_wabProperties.popupInfo.originalFeature',
+                        this.originalFeature,
+                        operationData.destJimuLayerInfo.layerObject);
+        lang.setObject('_wabProperties.popupInfo.layerForActionWithEmptyFeatures',
+                        operationData.destJimuLayerInfo.layerObject,
+                        this.popup);
+
+
+        this._getRelatedRecordsByRelatedQuery(operationData)
+        .then(lang.hitch(this, function(relatedRecords) {
+          // show title
+          if(relatedRecords.length > 0) {
+            this._setTitle(window.jimuNls.popup.relatedRecords);
+          } else {
+            this._setTitle(window.jimuNls.popup.noRelatedRecotds, 'font-normal');
+          }
+
+          var displayFieldName = this._showFieldSelector(operationData.destJimuLayerInfo);
+          // show related records
+          array.forEach(relatedRecords, function(relatedRecord, index) {
+
+            // Working around for bug of queryRelatedFeatures.
+            relatedRecord._layer = operationData.destJimuLayerInfo.layerObject;
+
+            // displayTitle
+            var displayTitle = this._getDisplayTitleOfRelatedRecord(operationData.destJimuLayerInfo,
+                                                                    relatedRecord,
+                                                                    displayFieldName);
+            var backgroundClass = (index % 2 === 0) ? 'oddLine' : 'evenLine';
+
+            var recordItem = html.create('div', {
+              'class': 'item record-item ' + backgroundClass,
+              'innerHTML': displayTitle
+            }, this.contentBox);
+            recordItem.relatedRecord = relatedRecord;
+
+            var handle = on(recordItem, 'click', lang.hitch(this, function() {
+              this._addOperation(operation);
+              var newOperation = this._createOperation({
+                //feature: operation.data.originalFeature,
+                //oriJimuLayerInfo: operation.data.originalJimuLayerInfo,
+                feature: relatedRecord,
+                oriJimuLayerInfo: operationData.destJimuLayerInfo,
+                relationshipIndex: operationData.relationshipIndex
+              });
+              this.setPopupContent(newOperation);
+            }));
+            this._temporaryData.eventHandles.push(handle);
+          }, this);
+          this.popupManager.initPopupMenu(relatedRecords);
+          this.popupUIController.updateZoomToBtn(relatedRecords);
+          //this.loading.hide();
+        }));
+        this.popupUIController.setContent(this.domNode);
+
+      },
+
+      showRelatedTables: function(operation) {
+        if(!this._canShowRelatedData(operation.data.oriJimuLayerInfo)) {
+          return;
+        }
+
+        this._getRelatedTableInfoArray(operation)
+        .then(lang.hitch(this, function(layerInfoArray) {
+          if(layerInfoArray.length > 0) {
+            this._setTitle(window.jimuNls.popup.relatedTables);
+          }
+
+          var relationshipCount = {};
+          array.forEach(layerInfoArray, function(relatedLayerInfo) {
+            if(relationshipCount[relatedLayerInfo.id] === undefined) {
+              relationshipCount[relatedLayerInfo.id] = 0;
+            } else {
+              relationshipCount[relatedLayerInfo.id]++;
+            }
+          }, this);
+
+          var relationshipIndexs = {};
+          array.forEach(layerInfoArray, function(relatedLayerInfo, index) {
+            if(relationshipIndexs[relatedLayerInfo.id] === undefined) {
+              relationshipIndexs[relatedLayerInfo.id] = 0;
+            } else {
+              relationshipIndexs[relatedLayerInfo.id]++;
+            }
+            var backgroundClass = (index % 2 === 0) ? 'oddLine' : 'evenLine';
+            var titleDivStr = '<div title="' + (relatedLayerInfo.title) + '">' + relatedLayerInfo.title + '</div>';
+            var tableItem = html.create('div', {
+              'class': 'item table-item ' + backgroundClass,
+              innerHTML: titleDivStr
+            }, this.contentBox);
+
+            var relationshipIndex = relationshipIndexs[relatedLayerInfo.id];
+            if(relationshipCount[relatedLayerInfo.id] > 0) {
+              var oriLayerObjectDef = operation.data.oriJimuLayerInfo.getLayerObject();
+              var relatedLayerObjectDef =  relatedLayerInfo.getLayerObject();
+              all({
+                oriLayerObject: oriLayerObjectDef,
+                relatedLayerObject: relatedLayerObjectDef
+              }).then(lang.hitch(this, function(result) {
+                var relationship = operation.data.oriJimuLayerInfo.
+                                   getOriRelationshipByDestLayer(result.oriLayerObject,
+                                                                  result.relatedLayerObject,
+                                                                  relationshipIndex);
+                var relationshipName = (relationship.name || relationship.id);
+                var relationshipNameDivStr = '<div class="relationshipName" title="' +
+                                                relationshipName + '">(' +  relationshipName + ')</div>';
+                tableItem.innerHTML = titleDivStr + relationshipNameDivStr;
+              }));
+            }
+
+            var handle = on(tableItem, 'click', lang.hitch(this, function() {
+              relatedLayerInfo.getLayerObject().then(lang.hitch(this, function() {
+                this._addOperation(operation);
+                var newOperation = this._createOperation({
+                  feature: operation.data.feature,
+                  oriJimuLayerInfo: operation.data.oriJimuLayerInfo,
+                  destJimuLayerInfo: relatedLayerInfo,
+                  relationshipIndex: relationshipIndex
+                });
+                this.setPopupContent(newOperation);
+              }));
+            }));
+            this._temporaryData.eventHandles.push(handle);
+
+          }, this);
+        }));
+      },
+
+      _createOperation: function(operationData) {
+        var newOperationData = {
+          feature: operationData.feature || null,
+          oriJimuLayerInfo: operationData.oriJimuLayerInfo || null,
+          destJimuLayerInfo: operationData.destJimuLayerInfo || null,
+          relatedFeature: operationData.relatedFeature || null,
+          relationshipIndex: operationData.relationshipIndex || 0
+        };
+        var operation = new clazz.Operation(
+          newOperationData,
+          this
+        );
+        return operation;
+      },
+
+
+      _addOperation: function(operation) {
+        this.undoManager.add(operation);
+      },
+
+
+      _onPreviouBtnClick: function() {
+        this.undoManager.undo();
+      },
+      /*************************
+       * Methods for control dom
+       *************************/
+
+      _clearPage: function() {
+        html.empty(this.contentBox);
+
+        array.forEach(this._temporaryData.eventHandles, function(handle) {
+          if(handle && handle.remove) {
+            handle.remove();
+          }
+        }, this);
+        this._temporaryData.eventHandles = [];
+
+        array.forEach(this._temporaryData.dijits, function(dijit) {
+          if(dijit && dijit.destroy) {
+            dijit.destroy();
+          }
+        }, this);
+        this._temporaryData.dijits = [];
+      },
+
+      _setTitle: function(title, className) {
+        if(title) {
+          html.create('div', {
+            'class': 'title-box ' + (className ? className : ''),
+            innerHTML: title
+          }, this.contentBox);
+          /*
+          html.create('div', {
+            'class': 'hzLine'
+          }, this.contentBox);
+          */
+        }
+      },
+
+      _setOperationTitle: function(title) {
+        html.setAttr(this.operationTitle, 'innerHTML', title);
+        html.setAttr(this.operationTitle, 'title', title);
+      },
+
+      //get field selector
+      _showFieldSelector: function(relatedLayerInfo) {
+        var defaultDisplayFieldName = "objecid";
+        var titleBox = query(".title-box", this.contentBox)[0];
+        var relatedLayer = relatedLayerInfo.layerObject;
+        var items = [];
+
+        if(!titleBox || !relatedLayerInfo) {
+          return defaultDisplayFieldName;
+        }
+
+        var popupInfo = relatedLayerInfo.getPopupInfo();
+        if(popupInfo && popupInfo.title) {
+          items.push({
+            label: window.jimuNls.popup.saveAsPopupTitle,
+            value: "popupTitle"
+          });
+        }
+
+        var fields = [];
+        if(popupInfo && popupInfo.fieldInfos) {
+          array.forEach(popupInfo.fieldInfos, function(fieldInfo) {
+            var field = {};
+            if(fieldInfo.visible) {
+              field.name = fieldInfo.fieldName;
+              field.alias = fieldInfo.label;
+              fields.push(field);
+            }
+          });
+        } else {
+          fields = relatedLayer.fields;
+        }
+
+        array.forEach(fields, function(field){
+          if(field.name.toLowerCase() !== "globalid" &&
+            field.name.toLowerCase() !== "shape"){
+            items.push({
+              label: field.alias || field.name,
+              value: field.name
+            });
+          }
+        });
+
+        var fieldSelector = new DropdownMenu({
+          items: items
+        }).placeAt(titleBox);
+        fieldSelector.domNode.title = window.jimuNls.popup.chooseFieldTip;
+
+        // get default display field name
+        var oldDefaultDisplayFieldName =
+          lang.getObject("_wabProperties.popupInfo.displayFieldOfRelatedRecordList", false, relatedLayer);
+        var displayOrObjectField = this._ignoreCaseToGetFieldObject(relatedLayerInfo.layerObject,
+          relatedLayerInfo.layerObject.displayField ||
+          relatedLayerInfo.layerObject.objectIdField);
+        var appConfig = ConfigManager.getInstance().getAppConfig();
+        if(oldDefaultDisplayFieldName) {
+          defaultDisplayFieldName = oldDefaultDisplayFieldName;
+        } else if(appConfig.configWabVersion === "2.3" && displayOrObjectField && displayOrObjectField.name) {
+          // back compatibility for online4.4
+          defaultDisplayFieldName = displayOrObjectField.name;
+        } else if(popupInfo && popupInfo.title) {
+          defaultDisplayFieldName = "popupTitle";
+        } else if(displayOrObjectField && displayOrObjectField.name) {
+          defaultDisplayFieldName = displayOrObjectField.name;
+        } else if(items.length > 0) {
+          defaultDisplayFieldName = items[0].value;
+        }
+
+        if(defaultDisplayFieldName) {
+          // hilight item
+          fieldSelector.setHighlightValue(defaultDisplayFieldName);
+          lang.setObject("_wabProperties.popupInfo.displayFieldOfRelatedRecordList",
+                         defaultDisplayFieldName,
+                         relatedLayer);
+        }
+        this._temporaryData.dijits.push(fieldSelector);
+
+        // listen on selcector change
+        var fieldSelectorChangeHandle = on(fieldSelector,
+                                           'click-item',
+                                           lang.hitch(this,function(relatedLayerInfo, newValue) {
+          query(".item.record-item", this.contentBox).forEach(lang.hitch(this, function(node) {
+            lang.setObject("_wabProperties.popupInfo.displayFieldOfRelatedRecordList", newValue, relatedLayer);
+            var displayTitle = this._getDisplayTitleOfRelatedRecord(relatedLayerInfo,
+                                                                    node.relatedRecord,
+                                                                    newValue);
+            node.innerHTML = displayTitle;
+          }));
+        }, relatedLayerInfo));
+        this._temporaryData.eventHandles.push(fieldSelectorChangeHandle);
+        return defaultDisplayFieldName;
+      }
+    });
+
+    // operation class
+    clazz.Operation = declare([OperationBase], {
+      constructor: function(operationData, relatedRecordsPopupProjector) {
+        this.data = operationData;
+        this.relatedRecordsPopupProjector = relatedRecordsPopupProjector;
+      },
+
+      performUndo: function() {
+        this.relatedRecordsPopupProjector.setPopupContent(this);
+      }
+    });
+
+
+    clazz.PopupUIController = declare([], {
+      constructor: function(rrPopupProjector) {
+        this.rrPopupProjector = rrPopupProjector;
+        this.popup = rrPopupProjector.popup;
+        this.initTempPopup();
+        this._initTempPopupForDisplayTitle();
+        this._initZoomToBtn();
+        this._setScrollable();
+      },
+
+      initTempPopup: function() {
+        this._tempPopup = new Popup({/*titleInBody: false*/}, html.create('div'));
+      },
+
+      _initTempPopupForDisplayTitle: function() {
+        this._tempPopupForDisplayTitle = new Popup({/*titleInBody: false*/}, html.create('div'));
+        this._tempPopupForDisplayTitle.show();
+      },
+
+      destroy: function() {
+        this._tempPopup.destroy();
+        this._tempPopupForDisplayTitle.destroy();
+        if(this._zoomToBtnClickHandle && this._zoomToBtnClickHandle.remove) {
+          this._zoomToBtnClickHandle.remove();
+        }
+        if(this._zoomToBtnANode) {
+          html.destroy(this._zoomToBtnANode);
+        }
+        if(this.toucemoveScrollHandle && this.toucemoveScrollHandle.remove) {
+          this.toucemoveScrollHandle.remove();
+        }
+      },
+
+      addDomNode: function(domNode) {
+        setTimeout(lang.hitch(this, function() {
+          var refDomNode = this._getRefDomNode();
+          if(refDomNode) {
+            html.place(domNode, refDomNode, "after");
+          }
+        }), 1);
+      },
+
+      setFeature: function(feature) {
+        this._tempPopup.setFeatures([feature]);
+        var esriViewPopupDomNode = query(".esriViewPopup", this._tempPopup.domNode)[0];
+        if(esriViewPopupDomNode) {
+          /*
+          var contentPaneDomNode = query(".contentPane", this.popup.domNode)[0];
+          contentPaneDomNode.removeChild(this.rrPopupProjector.domNode);
+          */
+          // var projectorParentNode = query(".related-records-popup-projector").parent()[0];
+          // projectorParentNode.removeChild(this.rrPopupProjector.domNode);
+          this.setContent(esriViewPopupDomNode);
+          html.place(this.rrPopupProjector.domNode, esriViewPopupDomNode, "after");
+          this._unsetScrollable();
+        }
+      },
+
+      setContent: function(content) {
+        var projectorParentNode = query(".related-records-popup-projector").parent()[0];
+        if (projectorParentNode) {
+          projectorParentNode.removeChild(this.rrPopupProjector.domNode);
+        }
+        this.popup.setContent(content);
+        this._unsetScrollable();
+      },
+
+      _setScrollable: function() {
+        var contentPane = query(".contentPane", this.popup.domNode)[0];
+        if (has("esri-touch") && contentPane) {
+          this.toucemoveScrollHandle = on(contentPane, "touchmove", lang.hitch(this, function (evt) {
+            evt.preventDefault();
+            var esriViewPopupDomNode = query(".esriViewPopup", this.popup.domNode)[0];
+            if(!esriViewPopupDomNode) {
+              return;
+            }
+            var child = contentPane.firstChild;
+            if (child instanceof Text) {
+              child = contentPane.childNodes[1];
+            }
+
+            if(this.rrPopupProjector.domNode) {
+              html.setStyle(this.rrPopupProjector.contentBox, {
+                "-webkit-transition-property": "-webkit-transform",
+                "-webkit-transform": "translate(" + child._currentX + "px, " + child._currentY + "px)"
+              });
+            }
+          }));
+        }
+      },
+
+      _unsetScrollable: function() {
+        html.setStyle(this.rrPopupProjector.contentBox, {
+          "-webkit-transition-property": "none",
+          "-webkit-transform": "none"
+        });
+
+        html.setStyle(this.rrPopupProjector.domNode, {
+          "-webkit-transition-property": "none",
+          "-webkit-transform": "none"
+        });
+      },
+
+
+      getDisplayTitle: function(feature) {
+        var displayTitle;
+        this._tempPopupForDisplayTitle.setFeatures([feature]);
+        var attrValueTdDomNode = query("td.attrValue", this._tempPopupForDisplayTitle.domNode)[0];
+        displayTitle = attrValueTdDomNode && attrValueTdDomNode.innerHTML;
+        return displayTitle;
+      },
+
+      _getRefDomNode: function() {
+        return this._getViewPopupDomNode();
+      },
+
+      _getViewPopupDomNode: function() {
+        var refDomNode = query(".esriViewPopup", this.popup.domNode)[0];
+        return refDomNode;
+      },
+
+      _setPopupTitleInBody: function() {
+        if(this.rrPopupProjector.undoManager.peekUndo()) {
+          this._tempPopup.set("titleInBody", false);
+        } else {
+          this._tempPopup.set("titleInBody", true);
+        }
+      },
+
+      _initZoomToBtn: function() {
+        /*jshint scripturl:true*/
+        var actionListNode = query(".actionList", this.popup.domNode)[0];
+        this._oldZoomToBtnANdoe = query(".action", actionListNode)[0];
+        this._zoomToBtnANode = html.create('a', {
+          'class': "action",
+          'style': "display: none",
+          'href': "javascript:void(0)"
+        }, actionListNode);
+
+        this._zoomToBtn = html.create('span', {
+          'innerHTML': window.jimuNls.common.zoomTo
+        }, this._zoomToBtnANode);
+        this._showOldZoomToBtn();
+      },
+
+      _hideZoomToBtn: function() {
+        if(this._zoomToBtnANode) {
+          html.setStyle(this._zoomToBtnANode, 'display', 'none');
+        }
+      },
+
+      _showZoomToBtn: function() {
+        if(this._zoomToBtnANode) {
+          html.setStyle(this._zoomToBtnANode, 'display', 'inline-block');
+        }
+      },
+
+      _hideOldZoomToBtn: function() {
+        if(this._oldZoomToBtnANdoe) {
+          html.setStyle(this._oldZoomToBtnANdoe, 'display', 'none');
+        }
+      },
+
+      _showOldZoomToBtn: function() {
+        if(this._oldZoomToBtnANdoe) {
+          html.setStyle(this._oldZoomToBtnANdoe, 'display', 'inline-block');
+        }
+      },
+
+      updateZoomToBtn: function(features) {
+        this._hideOldZoomToBtn();
+        if(!features || features.length < 1 || !features[0].geometry) {
+          this._hideZoomToBtn();
+          return;
+        } else {
+          this._showZoomToBtn();
+        }
+
+        if(this._zoomToBtnClickHandle && this._zoomToBtnClickHandle.remove) {
+          this._zoomToBtnClickHandle.remove();
+        }
+        this._zoomToBtnClickHandle = on(this._zoomToBtn, "click", lang.hitch(this, function() {
+          var ext = null;
+          try{
+            ext = graphicsUtils.graphicsExtent(features);
+          }catch(e){
+            console.error(e);
+          }
+          if(ext){
+            this.rrPopupProjector.popupManager.mapManager.map.setExtent(ext);
+            this.popup.hide();
+          }
+        }));
+      },
+
+      changeRefDomNode: function() {
+        html.setStyle(this.rrPopupProjector.operationBox, 'display', 'block');
+        html.addClass(this.rrPopupProjector.domNode, 'second-page-mode');
+        var refDomNode = this._getViewPopupDomNode();
+        if(refDomNode ) {
+          html.addClass(refDomNode, 'second-page-mode');
+        }
+      },
+
+      revertRefDomNode: function() {
+        html.setStyle(this.rrPopupProjector.operationBox, 'display', 'none');
+        //html.removeClass(this.refDomNode, 'second-page-mode');
+        html.removeClass(this.rrPopupProjector.domNode, 'second-page-mode');
+        this._hideZoomToBtn();
+        this._showOldZoomToBtn();
+      }
+    });
+
+    clazz.PopupMobileUIController = declare([clazz.PopupUIController], {
+      initTempPopup: function() {
+        this._tempPopup = new PopupMobile({}, html.create('div'));
+      },
+
+      setFeature: function(feature) {
+        this._tempPopup.setFeatures([feature]);
+        // mobilePopupInfoView is the second page of mobile popup.
+        var tempMobilePopupInfoView = query(".esriMobileInfoView.esriMobilePopupInfoView", this._tempPopup.domNode)[0];
+        var tempEsriViewPopupDomNode = query(".esriViewPopup", tempMobilePopupInfoView)[0];
+        if(tempEsriViewPopupDomNode) {
+          // var projectorParentNode = query(".related-records-popup-projector").parent()[0];
+          // projectorParentNode.removeChild(this.rrPopupProjector.domNode);
+          this.setContent(tempEsriViewPopupDomNode);
+          html.place(this.rrPopupProjector.domNode, tempEsriViewPopupDomNode, "after");
+        }
+      },
+
+      updateZoomToBtn: function() {
+      },
+
+      _initZoomToBtn: function() {
+      },
+
+      _getRefDomNode: function() {
+        var refDomNode;
+        var mobileInfoViewItems = query(".esriMobilePopupInfoView .esriMobileInfoViewItem");
+        var mobileActionListNode = mobileInfoViewItems[1];
+        refDomNode = mobileActionListNode;
+        return refDomNode;
+      },
+
+      _getViewPopupDomNode: function() {
+        var mobilePopupInfoView = query(".esriMobileInfoView.esriMobilePopupInfoView")[0];
+        var refDomNode = query(".esriViewPopup", mobilePopupInfoView)[0];
+        return refDomNode;
+      }
+    });
+    return clazz;
+  });

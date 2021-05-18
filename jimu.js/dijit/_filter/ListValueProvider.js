@@ -1,16 +1,412 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/aspect dojo/Deferred dojo/_base/lang dojo/_base/html dojo/_base/array dojo/on dojo/_base/declare ./ValueProvider dojo/store/Memory jimu/utils dijit/form/FilteringSelect".split(" "),function(l,k,d,f,h,m,n,p,q,g,r){return n([p],{templateString:"\x3cdiv\x3e\x3c/div\x3e",codedValues:null,staticValues:null,showNullValues:!1,layerDataChanged:!1,ifDropDown:!1,customId:null,postCreate:function(){this.inherited(arguments);f.addClass(this.domNode,"jimu-filter-list-value-provider");this.customId=
-this.partObj.vpId;this._initValueSelect();this._uniqueValueCache={};this.noDataTips='\x3cdiv class\x3d"error-tip-section" style\x3d"display: block;"\x3e\x3cspan class\x3d"jimu-icon jimu-icon-error"\x3e\x3c/span\x3e\x3cspan class\x3d"jimu-state-error-text"\x3e'+this.nls.noFilterValueTip+"\x3c/span\x3e\x3c/div\x3e";var a=new q({idProperty:"id",data:[]});this.valuesSelect.set("store",a);this.isNumberField=g.isNumberField(this.fieldInfo.type);!this.staticValues&&"function"===typeof this.valuesSelect._onDropDownMouseDown&&
-(!this.codedValues||this.codedValues&&this.filterCodedValue)&&(this.own(l.before(this.valuesSelect,"_onDropDownMouseDown",d.hitch(this,this._onBeforeDropDownMouseDown))),this.own(m(document.body,"click",d.hitch(this,this._onBodyClick))),this.layerInfo&&this.layerInfo.getLayerObject().then(d.hitch(this,function(a){a.on("edits-complete",d.hitch(this,function(){this.layerDataChanged=!0}))})))},_initValueSelect:function(){var a={searchAttr:"label",required:!1,intermediateChanges:!0};this.customId&&(a["aria-label"]=
-this.partObj.interactiveObj.prompt+" "+this.partObj.interactiveObj.hint);this.valuesSelect=new r(a);this.valuesSelect.startup();this.valuesSelect.on("input",d.hitch(this,this._onFilteringSelectInput));f.setStyle(this.valuesSelect.domNode,"width","100%");this.valuesSelect.placeAt(this.domNode)},_onFilteringSelectInput:function(){this.emit("change")},_getCodedValueLabelsBySubTypeId:function(){var a=this.getDropdownFilterPartsObj();return this.getCodedValueListByPartsObj(this.layerDefinition,this.fieldName,
-a,this.codedValues)},_onBeforeDropDownMouseDown:function(){this.ifDropDown=!0;this._tryUpdatingUniqueValues(void 0,!0);return arguments},_onBodyClick:function(a){a=a.target||a.srcElement;a===this.domNode||f.isDescendant(a,this.domNode)||this.msgDiv&&f.setStyle(this.msgDiv,"display","none")},getDijits:function(){return[this.valuesSelect]},isValidValue:function(){return 0<this.getStatus()},getStatus:function(){var a=this.valuesSelect.get("item");if(a&&void 0!==a.value){if(this.isNumberField&&!g.isValidNumber(a.value)&&
-"value"===this.partObj.valueObj.type){var c=parseFloat(a.value);return g.isValidNumber(c)?(a.value=c,this._getStatusForDijit(this.valuesSelect)):-1}return this._getStatusForDijit(this.valuesSelect)}return 0},_getStatusForDijit:function(a){return a.validate()?a.get("DisplayedValue")?1:0:-1},setValueObject:function(a){return this.staticValues?this._setValueForStaticValues(a.value,this.staticValues):this.codedValues?this.filterCodedValue?this._tryUpdatingUniqueValues(a.value,!1):this._setValueForStaticValues(a.value,
-this.codedValues):this._tryUpdatingUniqueValues(a.value,!1)},getValueObject:function(){if(this.isValidValue()){var a=this.valuesSelect.get("item").value;return{isValid:!0,type:this.partObj.valueObj.type,value:a}}return null},tryGetValueObject:function(){return this.isValidValue()?this.getValueObject():this.isEmptyValue()?{isValid:!0,type:this.partObj.valueObj.type,value:"string"===this.shortType?"":null}:null},setRequired:function(a){this.valuesSelect.set("required",a)},_setValueForStaticValues:function(a,
-c){var b=null,e=-1,b=null;c&&(b=h.map(c,d.hitch(this,function(b,c){b={id:c,value:b.value,label:b.label};b.value+""===a+""&&(e=c);return b})),this.valuesSelect.store.setData(b),0<=e&&(b=this.valuesSelect.store.get(e))&&this.valuesSelect.set("item",b),this._checkIfNoData())},_uniqueValueLoadingDef:null,_uniqueValueLoadingExpr:"",_uniqueValueCache:null,_tryUpdatingUniqueValues:function(a,c){var b=new k;if(this.valuesSelect._opened)this._checkIfNoData(),b.resolve();else{var e=this.getDropdownFilterExpr();
-e!==this._uniqueValueLoadingExpr||this.layerDataChanged?(this.valuesSelect.readOnly=!0,this._uniqueValueLoadingDef&&(this._uniqueValueLoadingDef.reject(),this._uniqueValueLoadingDef=null),this._uniqueValueLoadingExpr=e,this._uniqueValueLoadingDef=this._getUniqueValues(e),this._uniqueValueLoadingDef.then(d.hitch(this,function(t){this.domNode&&(this._uniqueValueLoadingDef=null,this.valuesSelect.readOnly=!1,this._setValueForUniqueValues(a,t),this._hideLoadingIcon(),c&&this.valuesSelect.toggleDropDown(),
-this._checkIfNoData(),b.resolve())}),d.hitch(this,function(a){console.error(a);this.domNode&&(this._uniqueValueLoadingDef=null,this.valuesSelect.readOnly=!1,this._hideLoadingIcon(),this._checkIfNoData(),b.reject(a))}))):(this._checkIfNoData(),b.resolve())}return b},_setValueForUniqueValues:function(a,c){c.sort(function(a,b){return a.value<b.value?-1:a.value===b.value?0:1});this.showNullValues||(c=h.filter(c,d.hitch(this,function(a){return"\x3cNull\x3e"!==a.value&&null!==a.value})));if(void 0===a){var b=
-this.getValueObject();b&&(a=b.value)}var e=-1,b=null;c=h.map(c,d.hitch(this,function(b,c){var d={id:c,value:b.value,label:b.label};b.value+""===a+""&&(e=c);return d}));this.valuesSelect.store.setData(c);0<=e&&(b=this.valuesSelect.store.get(e));this.valuesSelect.set("item",b)},_checkIfNoData:function(){this.runtime&&this.ifDropDown&&(this.ifDropDown=!1,0===this.valuesSelect.store.data.length&&(this.msgDiv?f.setStyle(this.msgDiv,"display","block"):(this.msgDiv=document.createElement("div"),f.addClass(this.msgDiv,
-"jimu-filter-list-value-provider-tip-container"),this.msgDiv.innerHTML=this.noDataTips,this.valuesSelect.domNode.parentNode.appendChild(this.msgDiv))))},_showLoadingIcon:function(){f.addClass(this.valuesSelect.domNode,"loading")},_hideLoadingIcon:function(){f.removeClass(this.valuesSelect.domNode,"loading")},_getUniqueValues:function(a){var c=new k;this._uniqueValueCache[a]&&!this.layerDataChanged?c.resolve(this._uniqueValueCache[a]):(this._showLoadingIcon(),g.getUniqueValues(this.url,this.fieldName,
-a,this.layerDefinition,this.fieldPopupInfo).then(d.hitch(this,function(b){this.domNode&&(this._uniqueValueCache[a]=b,c.resolve(b),this._hideLoadingIcon())}),d.hitch(this,function(a){this.domNode&&(c.reject(a),this._hideLoadingIcon())})));this.layerDataChanged=!1;return c}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/aspect',
+  'dojo/Deferred',
+  'dojo/_base/lang',
+  'dojo/_base/html',
+  'dojo/_base/array',
+  'dojo/on',
+  'dojo/_base/declare',
+  './ValueProvider',
+  'dojo/store/Memory',
+  'jimu/utils',
+  'dijit/form/FilteringSelect'
+],
+  function(aspect, Deferred, lang, html, array, on, declare, ValueProvider,
+    Memory, jimuUtils, FilteringSelect) {
+
+    return declare([ValueProvider], {
+      templateString: '<div></div>',
+      codedValues: null,//[{value,label}] for coded values and sub types
+      staticValues: null,//[{value,label}]
+      showNullValues: false,//show null values
+      layerDataChanged: false, //layer data update status
+      ifDropDown: false,
+      customId: null, //optional, for screen readers
+
+      postCreate: function(){
+        this.inherited(arguments);
+        html.addClass(this.domNode, 'jimu-filter-list-value-provider');
+        this.customId = this.partObj.vpId;
+        this._initValueSelect();
+
+        this._uniqueValueCache = {};
+        this.noDataTips = '<div class="error-tip-section" style="display: block;">' +
+                          '<span class="jimu-icon jimu-icon-error"></span>' +
+                          '<span class="jimu-state-error-text">' + this.nls.noFilterValueTip + '</span></div>';
+
+        //[{id,value,label}]
+        var store = new Memory({idProperty:'id', data: []});
+        this.valuesSelect.set('store', store);
+
+        //is numberical field
+        this.isNumberField = jimuUtils.isNumberField(this.fieldInfo.type);
+
+        if(!this.staticValues && typeof this.valuesSelect._onDropDownMouseDown === 'function'){
+          if(!this.codedValues || (this.codedValues && this.filterCodedValue)){
+            this.own(
+              aspect.before(this.valuesSelect,
+                            "_onDropDownMouseDown",
+                            lang.hitch(this, this._onBeforeDropDownMouseDown))
+            );
+            this.own(on(document.body, 'click', lang.hitch(this, this._onBodyClick)));
+
+            if(this.layerInfo){ //it always exsits because it's required from valueProviderFactory constructor
+              //it will tragger after the  add/remove/update events happen
+              this.layerInfo.getLayerObject().then(lang.hitch(this, function(layerObject){
+                layerObject.on("edits-complete", lang.hitch(this, function() {
+                  this.layerDataChanged = true;
+                }));
+              }));
+            }
+          }
+        }
+      },
+
+      _initValueSelect: function(){
+        var options = {
+          searchAttr: 'label',
+          required: false,
+          intermediateChanges: true
+        };
+        if(this.customId){//use this attr because FilteringSelect uses input for Interaction
+          options['aria-label'] = this.partObj.interactiveObj.prompt + ' ' + this.partObj.interactiveObj.hint;
+        }
+        this.valuesSelect = new FilteringSelect(options);
+        this.valuesSelect.startup();
+        this.valuesSelect.on('input', lang.hitch(this, this._onFilteringSelectInput));
+        html.setStyle(this.valuesSelect.domNode, 'width', '100%');
+        this.valuesSelect.placeAt(this.domNode);
+      },
+
+      _onFilteringSelectInput: function(){
+        this.emit('change');
+      },
+
+      _getCodedValueLabelsBySubTypeId:function(){
+        // var newExpr = this.getDropdownFilterExpr();
+        // return jimuUtils.getCodedValueLabelsByExprs(this.layerDefinition, this.fieldName, newExpr, this.codedValues);
+        var newParj = this.getDropdownFilterPartsObj();
+        return this.getCodedValueListByPartsObj(this.layerDefinition, this.fieldName, newParj, this.codedValues);
+      },
+
+      _onBeforeDropDownMouseDown: function(){
+        this.ifDropDown = true;
+        this._tryUpdatingUniqueValues(undefined, true);
+        return arguments;
+      },
+
+      _onBodyClick: function(evt){
+        var target = evt.target || evt.srcElement;
+        if(target === this.domNode || html.isDescendant(target, this.domNode)){
+          return;
+        }
+        if(this.msgDiv){
+          html.setStyle(this.msgDiv, "display", "none");
+        }
+      },
+
+      getDijits: function(){
+        return [this.valuesSelect];
+      },
+
+      isValidValue: function(){
+        return this.getStatus() > 0;
+      },
+
+      //-1 means invalid value type
+      //0 means empty value, this ValueProvider should be ignored
+      //1 means valid value
+      getStatus: function(){
+        var item = this.valuesSelect.get('item');
+        if(item){
+          if(item.value !== undefined){ //if(item.label !== ''){
+            //Its value must be a string when valueType is 'field', not need to check validation
+            if(this.isNumberField && !jimuUtils.isValidNumber(item.value) &&
+             this.partObj.valueObj.type === 'value'){
+              var newVal = parseFloat(item.value);
+              if(jimuUtils.isValidNumber(newVal)){
+                item.value = newVal;
+                return this._getStatusForDijit(this.valuesSelect);
+              }
+              return -1;
+            }
+            return this._getStatusForDijit(this.valuesSelect);
+          }else{
+            return 0;
+          }
+        }else{
+          return 0;
+        }
+      },
+
+      //return -1 means input a wrong value
+      //return 0 means empty value
+      //return 1 means valid value
+      _getStatusForDijit: function(dijit){
+        if(dijit.validate()){
+          if(dijit.get("DisplayedValue")){
+            return 1;
+          }else{
+            return 0;
+          }
+        }else{
+          return -1;
+        }
+      },
+
+      //maybe return a deferred
+      setValueObject: function(valueObj){
+        if(this.staticValues){
+          return this._setValueForStaticValues(valueObj.value, this.staticValues);
+        } else if(this.codedValues){
+          if(this.filterCodedValue){
+
+            return this._tryUpdatingUniqueValues(valueObj.value, false);
+          }else{
+            return this._setValueForStaticValues(valueObj.value, this.codedValues);
+          }
+        } else{
+          return this._tryUpdatingUniqueValues(valueObj.value, false);
+        }
+      },
+
+      getValueObject: function(){
+        if(this.isValidValue()){
+          var item = this.valuesSelect.get('item');
+          var value = item.value;
+          return {
+            "isValid": true,
+            "type": this.partObj.valueObj.type,
+            "value": value
+          };
+        }
+        return null;
+      },
+
+      tryGetValueObject: function(){
+        if(this.isValidValue()){
+          return this.getValueObject();
+        }else if(this.isEmptyValue()){
+          return {
+            "isValid": true,
+            "type": this.partObj.valueObj.type,
+            "value": this.shortType === 'string' ? "" : null
+          };
+        }
+        return null;
+      },
+
+      setRequired: function(required){
+        this.valuesSelect.set("required", required);
+      },
+
+      /*disable: function(){
+        this.inherited(arguments);
+        this.valuesSelect.closeDropDown(true);
+        this.valuesSelect.set('disabled', true);
+      },
+
+      enable: function(){
+        this.inherited(arguments);
+        this.valuesSelect.set('disabled', false);
+      },*/
+
+      _setValueForStaticValues: function(selectedValue, valueLabels){
+        //selectedValue maybe undefined or null
+        var data = null;
+        var selectedId = -1;
+        var selectedItem = null;
+        if(valueLabels){
+          data = array.map(valueLabels, lang.hitch(this, function(item, index){
+            var dataItem = {
+              id: index,
+              value: item.value,
+              label: item.label
+            };
+            if(dataItem.value + '' === selectedValue + ''){
+              selectedId = index;
+            }
+            return dataItem;
+          }));
+          this.valuesSelect.store.setData(data);
+          if(selectedId >= 0){
+            selectedItem = this.valuesSelect.store.get(selectedId);
+            if(selectedItem){
+              this.valuesSelect.set('item', selectedItem);
+            }
+          }
+          this._checkIfNoData();
+        }
+      },
+
+      _uniqueValueLoadingDef: null,
+      _uniqueValueLoadingExpr: '',
+      _uniqueValueCache: null,//{expr1:values1,expr2:values2}
+
+      _tryUpdatingUniqueValues: function(selectedValue, showDropDownAfterValueUpdate){
+        var def = new Deferred();
+        if(!this.valuesSelect._opened){
+          var newExpr = this.getDropdownFilterExpr();
+          if(newExpr !== this._uniqueValueLoadingExpr || this.layerDataChanged){
+            //expr changed
+            this.valuesSelect.readOnly = true;
+            if(this._uniqueValueLoadingDef){
+              this._uniqueValueLoadingDef.reject();
+              this._uniqueValueLoadingDef = null;
+            }
+            this._uniqueValueLoadingExpr = newExpr;
+            this._uniqueValueLoadingDef = this._getUniqueValues(newExpr);
+            this._uniqueValueLoadingDef.then(lang.hitch(this, function(valueLabels){
+              if(!this.domNode){
+                return;
+              }
+              this._uniqueValueLoadingDef = null;
+              this.valuesSelect.readOnly = false;
+              this._setValueForUniqueValues(selectedValue, valueLabels);
+              this._hideLoadingIcon();
+              if(showDropDownAfterValueUpdate){
+                this.valuesSelect.toggleDropDown();
+              }
+              this._checkIfNoData();
+              def.resolve();
+            }), lang.hitch(this, function(err){
+              console.error(err);
+              if(!this.domNode){
+                return;
+              }
+              this._uniqueValueLoadingDef = null;
+              this.valuesSelect.readOnly = false;
+              this._hideLoadingIcon();
+              this._checkIfNoData();
+              def.reject(err);
+            }));
+          }else{
+            this._checkIfNoData();
+            def.resolve();
+          }
+        }else{
+          this._checkIfNoData();
+          def.resolve();
+        }
+        return def;
+      },
+
+      //return a deferred
+      _setValueForUniqueValues: function(selectedValue, valueLabels){
+        valueLabels.sort(function(item1, item2){
+          if(item1.value < item2.value){
+            return -1;
+          }else if(item1.value === item2.value){
+            return 0;
+          }else{
+            return 1;
+          }
+        });
+        //selectedValue maybe undefined or null
+        if(!this.showNullValues){
+          valueLabels = array.filter(valueLabels, lang.hitch(this, function(item){
+            return item.value !== '<Null>' && item.value !== null;
+          }));
+        }
+        if(selectedValue === undefined){
+          var currentValueObj = this.getValueObject();
+          if(currentValueObj){
+            selectedValue = currentValueObj.value;
+          }
+        }
+        var selectedId = -1;
+        var selectedItem = null;
+        var data = array.map(valueLabels, lang.hitch(this, function(item, index) {
+          var dataItem = {
+            id: index,
+            value: item.value,
+            label: item.label
+          };
+
+          if (item.value + '' === selectedValue + '') {
+            selectedId = index;
+          }
+
+          return dataItem;
+        }));
+
+        this.valuesSelect.store.setData(data);
+
+        if (selectedId >= 0) {
+          selectedItem = this.valuesSelect.store.get(selectedId);
+        }
+
+        //selectedItem maybe null
+        //we need to set item to null to clear the previous invlaid value
+        this.valuesSelect.set('item', selectedItem);
+      },
+
+      _checkIfNoData: function(){
+        if(this.runtime && this.ifDropDown){
+          this.ifDropDown = false;
+          var dataList = this.valuesSelect.store.data;
+          if (dataList.length === 0) {
+            if(!this.msgDiv){
+              this.msgDiv = document.createElement('div');
+              html.addClass(this.msgDiv, "jimu-filter-list-value-provider-tip-container");
+              this.msgDiv.innerHTML = this.noDataTips;
+              this.valuesSelect.domNode.parentNode.appendChild(this.msgDiv);
+            }else{
+              html.setStyle(this.msgDiv, "display", "block");
+            }
+          }
+        }
+      },
+
+      _showLoadingIcon: function(){
+        html.addClass(this.valuesSelect.domNode, 'loading');
+      },
+
+      _hideLoadingIcon: function(){
+        html.removeClass(this.valuesSelect.domNode, 'loading');
+      },
+
+      _getUniqueValues: function(where){
+        var def = new Deferred();
+        if(this._uniqueValueCache[where] && !this.layerDataChanged){
+          def.resolve(this._uniqueValueCache[where]);
+        }else{
+          this._showLoadingIcon();
+          jimuUtils.getUniqueValues(this.url, this.fieldName, where, this.layerDefinition, this.fieldPopupInfo)
+          .then(lang.hitch(this, function(valueLabels){
+            if(!this.domNode){
+              return;
+            }
+            this._uniqueValueCache[where] = valueLabels;
+            def.resolve(valueLabels);
+            this._hideLoadingIcon();
+          }), lang.hitch(this, function(err){
+            if(!this.domNode){
+              return;
+            }
+            def.reject(err);
+            this._hideLoadingIcon();
+          }));
+        }
+        this.layerDataChanged = false;//reset default value
+        return def;
+      }
+
+    });
+  });

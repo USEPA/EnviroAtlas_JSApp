@@ -1,10 +1,211 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dijit/_WidgetBase dijit/_TemplatedMixin dojo/_base/lang dojo/_base/html dojo/on dojo/_base/Color dijit/TooltipDialog dijit/popup jimu/dijit/ColorSelector".split(" "),function(h,k,l,c,d,f,e,m,g,n){return h([k,l],{baseClass:"jimu-color-picker-btn",declaredClass:"jimu.dijit.ColorPickerButton",templateString:'\x3cdiv\x3e\x3cdiv class\x3d"color-node" data-dojo-attach-point\x3d"colorNode"\x3e\x3c/div\x3e\x3cdiv class\x3d"seperator"\x3e\x3c/div\x3e\x3cdiv class\x3d"action-node" data-dojo-attach-point\x3d"actionNode"\x3e\x3c/div\x3e\x3c/div\x3e',
-_isTooltipDialogOpened:!1,color:null,showHex:!0,showHsv:!0,showRgb:!0,ensureMode:!1,postMixInProperties:function(){this.nls=window.jimuNls.common},postCreate:function(){this.inherited(arguments);this.color?this.color instanceof e||(this.color=new e(this.color)):this.color=new e("#ccc");d.setStyle(this.colorNode,"backgroundColor",this.color.toHex());this.colorNode.title=this.color.toHex();this.showLabel&&this._changeLabel(this.color);this._createTooltipDialog(this.domNode);this._hideTooltipDialog();
-this.own(f(this.colorNode,"click",c.hitch(this,this._onNodeClick)));this.own(f(this.actionNode,"click",c.hitch(this,this._onNodeClick)));this.own(f(document.body,"click",c.hitch(this,function(a){this.isPartOfPopup(a.target||a.srcElement)||this._hideTooltipDialog()})))},_onNodeClick:function(a){a.stopPropagation();a.preventDefault();this._isTooltipDialogOpened?this._hideTooltipDialog():this._showTooltipDialog()},destroy:function(){g.close(this.tooltipDialog);this.picker.destroy();this.tooltipDialog.destroy();
-this.inherited(arguments)},isPartOfPopup:function(a){var b=this.tooltipDialog.domNode;return a===b||d.isDescendant(a,b)},hideTooltipDialog:function(){this._hideTooltipDialog()},_showTooltipDialog:function(){g.open({parent:this.getParent(),popup:this.tooltipDialog,around:this.domNode});this._isTooltipDialogOpened=!0},_hideTooltipDialog:function(){g.close(this.tooltipDialog);this._isTooltipDialogOpened=!1},_createTooltipDialog:function(){var a=d.create("div");this.tooltipDialog=new m({content:a});d.addClass(this.tooltipDialog.domNode,
-"jimu-color-picker-dialog");this.picker=new n({showHex:this.showHex,showRgb:this.showRgb,showHsv:this.showHsv,value:this.color.toHex(),onChange:c.hitch(this,function(a){this.ensureMode||(a=new e(a),this.setColor(a))})});this.picker.placeAt(a);this.picker.startup();if(this.ensureMode){var b=d.create("div",{"class":"jimu-btn jimu-btn-vacation jimu-float-trailing jimu-leading-margin1",title:this.nls.cancel,innerHTML:this.nls.cancel},a);this.own(f(b,"click",c.hitch(this,function(){this._hideTooltipDialog()})));
-b=d.create("div",{"class":"jimu-btn jimu-float-trailing jimu-leading-margin1",title:this.nls.ok,innerHTML:this.nls.ok},a);this.own(f(b,"click",c.hitch(this,function(){var a=this.picker.get("value");this.setColor(new e(a));this._hideTooltipDialog()})));a=d.create("div",{"class":"jimu-btn jimu-float-trailing jimu-leading-margin1",title:this.nls.apply,innerHTML:this.nls.apply},a);this.own(f(a,"click",c.hitch(this,function(){var a=this.picker.get("value");this.setColor(new e(a))})))}},setColor:function(a){if(a instanceof
-e){var b=this.color,c="";b&&(c=b.toHex());b=a.toHex();this.color=a;d.setStyle(this.colorNode,"backgroundColor",b);c!==b&&(this.picker.set("value",b),this.onChange(new e(b)))}},getColor:function(){return this.color},onChange:function(a){}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define(['dojo/_base/declare',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dojo/_base/lang',
+  'dojo/_base/html',
+  'dojo/on',
+  'dojo/_base/Color',
+  'dijit/TooltipDialog',
+  'dijit/popup',
+  "jimu/dijit/ColorSelector"
+],
+function(declare, _WidgetBase, _TemplatedMixin, lang, html, on, Color, TooltipDialog,
+  dojoPopup, ColorSelector) {
+  return declare([_WidgetBase, _TemplatedMixin], {
+    baseClass: 'jimu-color-picker-btn',
+    declaredClass: 'jimu.dijit.ColorPickerButton',
+    templateString: '<div>' +
+      '<div class="color-node" data-dojo-attach-point="colorNode"></div>' +
+      '<div class="seperator"></div>' +
+      '<div class="action-node" data-dojo-attach-point="actionNode"></div>' +
+    '</div>',
+    _isTooltipDialogOpened: false,
+
+    //options:
+    color: null, //dojo.Color or hex string
+    showHex: true,
+    showHsv: true,
+    showRgb: true,
+    ensureMode: false,
+
+    //public methods:
+    //setColor
+    //getColor
+    //isPartOfPopup
+
+    //events:
+    //change
+
+    postMixInProperties: function() {
+      this.nls = window.jimuNls.common;
+    },
+
+    postCreate: function() {
+      this.inherited(arguments);
+      if (this.color) {
+        if (!(this.color instanceof Color)) {
+          this.color = new Color(this.color);
+        }
+      } else {
+        this.color = new Color('#ccc');
+      }
+
+      html.setStyle(this.colorNode, 'backgroundColor', this.color.toHex());
+      this.colorNode.title = this.color.toHex();
+
+      if (this.showLabel) {
+        this._changeLabel(this.color);
+      }
+      this._createTooltipDialog(this.domNode);
+      this._hideTooltipDialog();
+
+      this.own(on(this.colorNode, 'click', lang.hitch(this, this._onNodeClick)));
+      this.own(on(this.actionNode, 'click', lang.hitch(this, this._onNodeClick)));
+
+      this.own(on(document.body, 'click', lang.hitch(this, function(event) {
+        var target = event.target || event.srcElement;
+        if (!this.isPartOfPopup(target)) {
+          this._hideTooltipDialog();
+        }
+      })));
+    },
+
+    _onNodeClick: function(event) {
+      event.stopPropagation();
+      event.preventDefault();
+
+      if (this._isTooltipDialogOpened) {
+        this._hideTooltipDialog();
+      } else {
+        this._showTooltipDialog();
+      }
+    },
+
+    destroy: function() {
+      dojoPopup.close(this.tooltipDialog);
+      this.picker.destroy();
+      this.tooltipDialog.destroy();
+      this.inherited(arguments);
+    },
+
+    isPartOfPopup: function(target) {
+      var node = this.tooltipDialog.domNode;
+      var isInternal = target === node || html.isDescendant(target, node);
+      return isInternal;
+    },
+
+    hideTooltipDialog: function() {
+      this._hideTooltipDialog();
+    },
+
+    _showTooltipDialog: function() {
+      dojoPopup.open({
+        parent: this.getParent(),
+        popup: this.tooltipDialog,
+        around: this.domNode
+      });
+      this._isTooltipDialogOpened = true;
+    },
+
+    _hideTooltipDialog: function() {
+      dojoPopup.close(this.tooltipDialog);
+      this._isTooltipDialogOpened = false;
+    },
+
+    _createTooltipDialog: function() {
+      var ttdContent = html.create("div");
+      this.tooltipDialog = new TooltipDialog({
+        content: ttdContent
+      });
+      html.addClass(this.tooltipDialog.domNode, 'jimu-color-picker-dialog');
+      this.picker = new ColorSelector({
+        showHex: this.showHex,
+        showRgb: this.showRgb,
+        showHsv: this.showHsv,
+        value: this.color.toHex(),
+        onChange: lang.hitch(this, function(newHex) {
+          if (!this.ensureMode) {
+            var color = new Color(newHex);
+            this.setColor(color);
+          }
+        })
+      });
+      this.picker.placeAt(ttdContent);
+      this.picker.startup();
+
+      if (this.ensureMode) {
+        var cancel = html.create('div', {
+          'class': 'jimu-btn jimu-btn-vacation jimu-float-trailing jimu-leading-margin1',
+          'title': this.nls.cancel,
+          'innerHTML': this.nls.cancel
+        }, ttdContent);
+        this.own(on(cancel, 'click', lang.hitch(this, function() {
+          this._hideTooltipDialog();
+        })));
+
+        var ok = html.create('div', {
+          'class': 'jimu-btn jimu-float-trailing jimu-leading-margin1',
+          'title': this.nls.ok,
+          'innerHTML': this.nls.ok
+        }, ttdContent);
+        this.own(on(ok, 'click', lang.hitch(this, function() {
+          var c = this.picker.get('value');
+          this.setColor(new Color(c));
+          this._hideTooltipDialog();
+        })));
+
+        var apply = html.create('div', {
+          'class': 'jimu-btn jimu-float-trailing jimu-leading-margin1',
+          'title': this.nls.apply,
+          'innerHTML': this.nls.apply
+        }, ttdContent);
+        this.own(on(apply, 'click', lang.hitch(this, function() {
+          var c = this.picker.get('value');
+          this.setColor(new Color(c));
+        })));
+      }
+    },
+
+    setColor: function(newColor) {
+      if (!(newColor instanceof Color)) {
+        return;
+      }
+      var oldColor = this.color;
+      var oldHex = '';
+      if (oldColor) {
+        oldHex = oldColor.toHex();
+      }
+      var newHex = newColor.toHex();
+      this.color = newColor;
+      html.setStyle(this.colorNode, 'backgroundColor', newHex);
+      if (oldHex !== newHex) {
+        this.picker.set('value', newHex);
+        this.onChange(new Color(newHex));
+      }
+    },
+
+    getColor: function() {
+      return this.color;
+    },
+
+    onChange: function(newColor) {
+      /*jshint unused: false*/
+    }
+  });
+});

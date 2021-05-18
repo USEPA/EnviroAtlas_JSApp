@@ -1,25 +1,920 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/lang dojo/_base/array dojo/aspect dojo/Deferred dojo/cookie dojo/json dojo/topic dojo/request/script esri/kernel esri/config esri/request esri/urlUtils esri/sniff esri/IdentityManager esri/arcgis/OAuthInfo jimu/portalUrlUtils jimu/utils esri/layers/vectorTiles/kernel".split(" "),function(d,h,t,n,l,u,p,q,e,m,v,w,y,r,z,f,x,A){"function"!==typeof l.getAll&&(l.getAll=function(a){var b=[];(a=l(a))&&b.push(a);return b});r={portalUrl:null,cookiePath:"/",_started:!1,webTierPortalUrls:[],
-isInBuilderWindow:function(){return!!window.isBuilder},isInConfigOrPreviewWindow:function(){return x.isInConfigOrPreviewWindow()},isStringStartWith:function(a,b){return a.substr(0,b.length)===b},getCookiePath:function(){return this.cookiePath},setPortalUrl:function(a){(a=f.getStandardPortalUrl(a))&&(a+="/");this.portalUrl=a},getPortalUrl:function(){return this.portalUrl},isWebTierPortal:function(a){var b=new n,c=f.getStandardPortalUrl(a);a=c+"/sharing";var g=f.setHttpsProtocol(c+"/sharing/generateToken?f\x3djson"),
-k=f.setHttpsProtocol(a);q.get(g,{jsonp:"callback"}).then(d.hitch(this,function(a){a.token?(this.webTierPortalUrls.push(c),this.removeWabAuthCookie(),e.id.getCredential(k).then(d.hitch(this,function(d){function e(a){var b=a.creationTime||(new Date).getTime(),c=a.expires;0<b&&0<c&&c>b&&setTimeout(function(){q.get(g,{jsonp:"callback"}).then(function(b){b.token&&(a.token=b.token,a.expires=b.expires,a.creationTime=(new Date).getTime(),a.refreshServerTokens(),e(a))},function(a){console.error(a)})},.8*(c-
-b))}d.token||(d.token=a.token);d.expires||(d.expires=a.expires);var k=this.findServerFromCorsEnabledServers(d.server);-1<k&&m.defaults.io.corsEnabledServers.splice(k,1);this._pushCorsEnabledServerInfo({host:f.getServerByUrl(c),withCredentials:!0});b.resolve(!0);e(d)}),d.hitch(this,function(){b.resolve(!0)}))):b.resolve(!1)}),d.hitch(this,function(a){console.error(a);b.reject(a)}));return b},addAuthorizedCrossOriginDomains:function(a){if(a&&0<a.length)for(var b=0;b<a.length;b++)this.addWithCredentialDomain(a[b])},
-addWithCredentialDomain:function(a){if(a&&"string"===typeof a){var b=m.defaults.io.corsEnabledServers,c=f.getServerByUrl(a);(a=f.getServerWithProtocol(a))||(a="http://"+c);a=this.findServerFromCorsEnabledServers(a);-1<a&&b.splice(a,1);this._pushCorsEnabledServerInfo({host:c,withCredentials:!0})}},findServerFromCorsEnabledServers:function(a){var b=m.defaults.io.corsEnabledServers,c,d=-1;y("esri-cors")&&b&&b.length&&h.some(b,function(b,e){b=!b||"object"!==typeof b||b instanceof RegExp?b:b.host;return!(b instanceof
-RegExp)&&b&&(c=0!==b.trim().toLowerCase().indexOf("http"),w.hasSameOrigin(a,c?"http://"+b:b)||c&&w.hasSameOrigin(a,"https://"+b))?(d=e,!0):!1});return d},_pushCorsEnabledServerInfo:function(a){if(a){var b=m.defaults.io.corsEnabledServers,c="charAt charCodeAt concat endsWith indexOf lastIndexOf localeCompare match replace search slice split startsWith substr substring toLocaleLowerCase toLocaleUpperCase toLowerCase toString toUpperCase trim trimLeft trimRight valueOf".split(" ");if("object"===typeof a&&
-"string"===typeof a.host){for(var d in a.host)a[d]="function"===typeof a.host[d]?function(){return a.host[d].apply(a.host,arguments)}:a.host[d];a.length=a.host.length;h.forEach(c,function(b){"function"===typeof a.host[b]&&(a[b]=function(){return a.host[b].apply(a.host,arguments)})})}b.push(a)}},tryRegisterCredential:function(a){return this.isValidCredential(a)?h.some(e.id.credentials,d.hitch(this,function(b){return a.token===b.token}))?!1:(e.id.credentials.push(a),!0):!1},registerToken:function(a){var b=
-f.getSharingUrl(this.portalUrl);e.id.findCredential(b)&&h.some(e.id.credentials,d.hitch(this,function(a,b){if(this.isValidPortalCredentialOfPortalUrl(this.portalUrl,a))return e.id.credentials.splice(b,1),!0}));return this._getTokenInfo(a).then(function(a){a&&e.id.registerToken(a)})},_getTokenInfo:function(a){var b=f.getPortalSelfInfoUrl(this.portalUrl);return q.get(b+("?f\x3djson\x26token\x3d"+a),{jsonp:"callback"}).then(d.hitch(this,function(b){return b.user?{server:f.getSharingUrl(this.portalUrl),
-ssl:b.allSSL,token:a,userId:b.user.username}:null}),function(a){console.error(a);throw Error(window.jimuNls.urlParams.validateTokenError);})},_isInvalidPortalUrl:function(a){return a&&"string"===typeof a&&d.trim(a)},signInPortal:function(a){var b=new n;if(this._isInvalidPortalUrl(a)){a=f.getStandardPortalUrl(a);var c=f.getSharingUrl(a),g=this.getPortalCredential(a);g?setTimeout(d.hitch(this,function(){b.resolve(g)}),0):b=e.id.getCredential(c)}else setTimeout(d.hitch(this,function(){b.reject("Invalid portalurl.")}),
-0);return b},_loadPortalSelfInfo:function(a){a=f.getPortalSelfInfoUrl(a);return v({url:a,handleAs:"json",content:{f:"json"},callbackParamName:"callback"})},registerOAuthInfo:function(a,b){if(!a||"string"!==typeof a||!b||"string"!==typeof b)return null;var c=e.id.findOAuthInfo(a);c||(c=window.location.protocol+"//"+window.location.host+require.toUrl("jimu")+"/oauth-callback.html",c=new z({appId:b,expiration:20159,portalUrl:a,authNamespace:"/",popup:!0,popupCallbackUrl:c}),e.id.registerOAuthInfos([c]));
-c.appId=b;return c},signOutAll:function(){var a=f.getStandardPortalUrl(this.portalUrl),b=!!e.id.findCredential(a+"/sharing/rest");window.appInfo.isRunInPortal?this.removeEsriAuthCookieStorage():this.removeWabAuthCookie();e.id.destroyCredentials();e.id._oAuthHash=null;b&&this._publishCurrentPortalUserSignOut(a)},userHaveSignInPortal:function(a){return!!this.getPortalCredential(d.trim(a||""))},isValidCredential:function(a){var b=!1;if(a){var b=a.token,c=a.server,e=a.scope,b=b&&"string"===typeof b&&
-d.trim(b),c=c&&"string"===typeof c&&d.trim(c),e="portal"===e||"server"===e,f=!0;a.expires&&(a=parseInt(a.expires,10),f=(new Date).getTime(),f=a>f);b=b&&c&&e&&f}return b},isValidPortalCredentialOfPortalUrl:function(a,b){var c=!1;this.isValidCredential(b)&&(c="portal"===b.scope,a=f.isSameServer(a,b.server),c=c&&a);return c},getPortalCredential:function(a){var b=null;a=d.trim(a||"");if(!a)return null;a=f.getStandardPortalUrl(a);(b=this._filterPortalCredential(a,e.id.credentials))||this._tryConvertArcGIScomCrendentialToOrgCredential();
-return b},_tryConvertArcGIScomCrendentialToOrgCredential:function(){var a=this.portalUrl;if(a&&(a=f.getStandardPortalUrl(a),f.isOrgOnline(a)&&!this._filterPortalCredential(a,e.id.credentials))){var b=this._filterPortalCredential("http://www.arcgis.com",e.id.credentials);b&&e.id.registerToken({token:b.token,scope:"portal",userId:b.userId,server:a+"/sharing/rest",expires:b.expires})}},saveAndRegisterCookieToCredential:function(a){a=d.clone(a);a.referer=window.location.host;a.scope="portal";a.isAdmin=
-!!a.isAdmin;this.saveWabCookie(a);var b=a.server+"/sharing/rest";a.server=b;e.id.registerToken(a);return e.id.findCredential(b,a.userId)},registerAuth2Hash:function(a){a=d.clone(a);var b=1E3*parseInt(a.expires_in,10),b=(new Date).getTime()+b,c=f.getStandardPortalUrl(a.state.portalUrl);return this.saveAndRegisterCookieToCredential({referer:window.location.host,server:c,token:a.access_token,expires:b,userId:a.username,scope:"portal",isAdmin:!!a.isAdmin})},saveWabCookie:function(a){this.removeCookie("wab_auth");
-l("wab_auth",u.stringify(a),{expires:new Date(a.expires),path:"/"})},removeWabAuthCookie:function(){this.removeCookie("wab_auth")},removeEsriAuthCookieStorage:function(){this.removeCookie("esri_auth");window.localStorage&&window.localStorage.removeItem("esriJSAPIOAuth");window.sessionStorage&&window.sessionStorage.removeItem("esriJSAPIOAuth")},_filterPortalCredential:function(a,b){var c=null;a=f.getStandardPortalUrl(a);b&&0<b.length&&(b=h.filter(b,d.hitch(this,function(b){return this.isValidPortalCredentialOfPortalUrl(a,
-b)})),0<b.length&&(c=b[b.length-1]));return c},_removePortalCredential:function(a){var b=d.trim(a||"");if(b){b=f.getStandardPortalUrl(b);for(a=h.filter(e.id.credentials,d.hitch(this,function(a){return this.isValidPortalCredentialOfPortalUrl(b,a)}));0<a.length;)a[0].destroy(),a.splice(0,1);e.id.credentials=h.filter(e.id.credentials,d.hitch(this,function(a){return!this.isValidPortalCredentialOfPortalUrl(b,a)}))}},getUserIdByToken:function(a,b){var c=new n;if(a&&"string"===typeof a&&b&&"string"===typeof b){var g=
-f.getStandardPortalUrl(b);b=h.filter(e.id.credentials,d.hitch(this,function(b){var c=b.token===a&&b.userId;b=f.isSameServer(g,b.server);return c&&b}));if(0<b.length){var k=b[0];setTimeout(d.hitch(this,function(){c.resolve(k.userId)}),0);return c}b=f.getCommunitySelfUrl(g);v({url:b,handleAs:"json",content:{f:"json"},callbackParamName:"callback"}).then(d.hitch(this,function(a){c.resolve(a&&a.username||"")}),d.hitch(this,function(a){console.error(a);c.reject("fail to get userId by token")}))}else setTimeout(d.hitch(this,
-function(){c.reject("invalid parameters")}),0);return c},xtGetCredentialFromCookie:function(a){var b=l("wab_auth"),c=null;if(b)try{c=u.parse(b)}catch(g){console.error(g)}if(!c||"object"!==typeof c||!f.isSameServer(a,c.server)||window.location.host!==c.referer)return null;c.expires=parseInt(c.expires,10);b=(new Date).getTime();if(!(c.expires>b))return this.removeCookie("wab_auth"),null;a+="/sharing/rest";c.server=a;(b=e.id.findCredential(a))||e.id.registerToken(c);return b=e.id.findCredential(a)},
-removeCookie:function(a){var b=this.getCookiePath();x.removeCookie(a,b)},_getDomainsByServerName:function(a){var b=a.split("."),c=b.length;return h.map(b,d.hitch(this,function(a,e){a=b.slice(e,c);var f="",g=a.length-1;h.forEach(a,d.hitch(this,function(a,b){f+=a;b!==g&&(f+=".")}));return f}))},_publishCurrentPortalUserSignIn:function(a){if(this.isValidCredential(a))try{p.publish("userSignIn",a)}catch(b){console.error(b)}},_publishAnyUserSignIn:function(a){if(this.isValidCredential(a))try{p.publish("anyUserSignIn",
-a)}catch(b){console.error(b)}},_publishCurrentPortalUserSignOut:function(a){try{p.publish("userSignOut",a)}catch(b){console.error(b)}},_signInSuccess:function(a){try{this.isValidPortalCredentialOfPortalUrl(this.portalUrl,a)&&this._publishCurrentPortalUserSignIn(a),this._publishAnyUserSignIn(a)}catch(b){console.error(b)}},_bindEvents:function(){t.after(e.id,"signIn",d.hitch(this,function(a,b){console.log(b[1]);t.after(a,"callback",d.hitch(this,function(a,b){this._signInSuccess(b[0],!1)}));return a}))},
-isStart:function(){return this._started},startup:function(){if(!this._started){if(this.isInConfigOrPreviewWindow()){var a=window.parent;if(a){var b=a.esri&&a.esri.id;b._wab="builder";if(b){e.id=b;var c=window.esriConfig.defaults.io,a=a.esriConfig.defaults.io;c.corsEnabledServers=a.corsEnabledServers;c.webTierAuthServers=a.webTierAuthServers;c._processedCorsServers=a._processedCorsServers;c.corsStatus=a.corsStatus;Object.defineProperty(A,"id",{get:function(){return b},enumerable:!0,configurable:!0})}}}this._bindEvents();
-this._started=!0}}};r.startup();return r});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'dojo/aspect',
+  'dojo/Deferred',
+  'dojo/cookie',
+  'dojo/json',
+  'dojo/topic',
+  'dojo/request/script',
+  'esri/kernel',
+  'esri/config',
+  'esri/request',
+  'esri/urlUtils',
+  'esri/sniff',
+  'esri/IdentityManager',
+  'esri/arcgis/OAuthInfo',
+  'jimu/portalUrlUtils',
+  'jimu/utils',
+  'esri/layers/vectorTiles/kernel'
+],
+function(lang, array, aspect, Deferred, cookie, json, topic, dojoScript, esriNS, esriConfig,
+  esriRequest, esriUrlUtils, has, IdentityManager, OAuthInfo, portalUrlUtils, jimuUtils, vectorTilesKernel) {
+  /*jshint -W069 */
+
+  //patch for JS API 3.10
+  var hasMethod = typeof cookie.getAll === 'function';
+  if(!hasMethod){
+    cookie.getAll = function(e){
+      var result = [];
+      var v = cookie(e);
+      if(v){
+        result.push(v);
+      }
+      return result;
+    };
+  }
+
+  //events:
+  //anyUserSignIn: any user sign in, including portal user and arcgis server user
+  //userSignIn: current portal user sign in
+  //userSignOut: current portal user sign out
+
+  var mo = {
+    portalUrl: null,
+    cookiePath: '/',
+    _started: false,
+    webTierPortalUrls: [],
+
+    //public methods:
+    //isInBuilderWindow
+    //isInConfigOrPreviewWindow
+    //signInPortal
+    //userHaveSignInPortal
+    //isValidCredential
+    //isValidPortalCredentialOfPortalUrl
+    //isWebTierPortal
+    //addAuthorizedCrossOriginDomains
+    //addWithCredentialDomain
+    //getPortalCredential
+    //getUserIdByToken
+    //xtGetCredentialFromCookie
+    //isStart
+    //startup
+
+    isInBuilderWindow: function(){
+      return !!(window.isBuilder);
+    },
+
+    isInConfigOrPreviewWindow: function(){
+      return jimuUtils.isInConfigOrPreviewWindow();
+    },
+
+    isStringStartWith: function(str, prefix){
+      return str.substr(0, prefix.length) === prefix;
+    },
+
+    getCookiePath: function() {
+      return this.cookiePath;
+    },
+
+    setPortalUrl: function(_portalUrl) {
+      var thePortalUrl = portalUrlUtils.getStandardPortalUrl(_portalUrl);
+      if (thePortalUrl) {
+        thePortalUrl += '/';
+      }
+      this.portalUrl = thePortalUrl;
+    },
+
+    getPortalUrl: function() {
+      return this.portalUrl;
+    },
+
+    isWebTierPortal: function(_portalUrl){
+      var def = new Deferred();
+      var thePortalUrl = portalUrlUtils.getStandardPortalUrl(_portalUrl);
+      var sharingUrl = thePortalUrl + "/sharing";
+      // var tokenUrl = thePortalUrl + "/sharing/rest/generateToken?f=json";
+      // The url should not include 'rest' because portal 10.3 doesn't support GET method with 'rest' and
+      // get following error
+      // {"error":{"code":405,"messageCode":"GWM_0005","message":"Method not supported.","details":[]}}
+      var tokenUrl = thePortalUrl + "/sharing/generateToken?f=json";
+      var httpsTokenUrl = portalUrlUtils.setHttpsProtocol(tokenUrl);
+      var httpsSharingUrl = portalUrlUtils.setHttpsProtocol(sharingUrl);
+
+      dojoScript.get(httpsTokenUrl, {
+        jsonp: 'callback'
+      }).then(lang.hitch(this, function(response){
+        //if web-tier(iwa/pki), the response is {expires,ssl,token}
+        //else the response is :
+        // {
+        //   "error": {
+        //     "code": 400,
+        //     "message": "Unable to generate token.",
+        //     "details": ["'username' must be specified.",
+        //                 "'password' must be specified.",
+        //                 "'referer' must be specified."]
+        //   }
+        // }
+        if(response.token){
+          //web-tier authorization
+
+          this.webTierPortalUrls.push(thePortalUrl);
+
+          //we should not save cookie of web-tier authorization
+          this.removeWabAuthCookie();
+
+          //if portal uses LDAP authorization and HTTPS-Only enabled,
+          //esriNS.id.getCredential will fail if uses http protocol
+          //so we should use https sharing url here
+          esriNS.id.getCredential(httpsSharingUrl).then(lang.hitch(this, function(credential){
+            if(!credential.token){
+              credential.token = response.token;
+            }
+            if(!credential.expires){
+              credential.expires = response.expires;
+            }
+
+            //#releated issue 4096
+            /*****************************************
+             * Workaround to fix API 3.14 bug that doesn't use withCredentials when web-tier.
+             *****************************************/
+            //var portalInfo = esriNS.id.findServerInfo(credential.server);
+
+            // If the portal uses web-tier authentication, add the server host
+            // to cors list and specify that withCredentials flag must be enabled.
+            //if (portalInfo.webTierAuth) {//portalInfo.webTierAuth should be true here
+
+            // REMOVE the current entry in CORS list for this portal.
+            //var corsListIndex = esriUrlUtils.canUseXhr(credential.server, true);
+            var corsListIndex = this.findServerFromCorsEnabledServers(credential.server);
+            if (corsListIndex > -1) {
+              esriConfig.defaults.io.corsEnabledServers.splice(corsListIndex, 1);
+            }
+
+            // ADD a new entry for this portal in CORS list.
+            // esriConfig.defaults.io.corsEnabledServers.push({
+            //   host: portalUrlUtils.getServerByUrl(thePortalUrl),
+            //   withCredentials: true
+            // });
+            this._pushCorsEnabledServerInfo({
+              host: portalUrlUtils.getServerByUrl(thePortalUrl),
+              withCredentials: true
+            });
+            //}
+            /*****************************************/
+
+            //should not save credential of iwa to cookie because the cookie is not useful
+            def.resolve(true);
+
+            function setRegenerateTokenTimer(cre){
+              var creationTime = cre.creationTime || new Date().getTime();
+              var expires = cre.expires;
+              if(creationTime > 0 && expires > 0 && expires > creationTime){
+                var span = expires - creationTime;
+                var time = span * 0.8;
+                setTimeout(function() {
+                  dojoScript.get(httpsTokenUrl, {
+                    jsonp: 'callback'
+                  }).then(function(res) {
+                    if (res.token) {
+                      cre.token = res.token;
+                      cre.expires = res.expires;
+                      cre.creationTime = new Date().getTime();
+                      cre.refreshServerTokens();
+                      setRegenerateTokenTimer(cre);
+                    }
+                  }, function(err) {
+                    console.error(err);
+                  });
+                }, time);
+              }
+            }
+
+            setRegenerateTokenTimer(credential);
+          }), lang.hitch(this, function(){
+            def.resolve(true);
+          }));
+        }
+        else{
+          //normal authorization
+          def.resolve(false);
+        }
+      }), lang.hitch(this, function(err){
+        //network error
+        console.error(err);
+        def.reject(err);
+      }));
+
+      return def;
+    },
+
+    addAuthorizedCrossOriginDomains: function(domains){
+      if(domains && domains.length > 0){
+        for(var i = 0; i < domains.length; i++) {
+          this.addWithCredentialDomain(domains[i]);
+        }
+      }
+    },
+
+    addWithCredentialDomain: function(domain){
+      // add if trusted host is not null, undefined, or empty string
+      if(domain && typeof domain === 'string'){
+        var corsEnabledServers = esriConfig.defaults.io.corsEnabledServers;
+
+        var server = portalUrlUtils.getServerByUrl(domain);
+        var serverWithProtocol = portalUrlUtils.getServerWithProtocol(domain);
+        if(!serverWithProtocol){
+          serverWithProtocol = "http://" + server;
+        }
+
+        // REMOVE the current entry in CORS list
+        //var corsListIndex = esriUrlUtils.canUseXhr(serverWithProtocol, true);
+        var corsListIndex = this.findServerFromCorsEnabledServers(serverWithProtocol);
+        if (corsListIndex > -1) {
+          corsEnabledServers.splice(corsListIndex, 1);
+        }
+
+        // ADD a new entry for this portal in CORS list.
+        // corsEnabledServers.push({
+        //   host: server,
+        //   withCredentials: true
+        // });
+        this._pushCorsEnabledServerInfo({
+          host: server,
+          withCredentials: true
+        });
+      }
+    },
+
+    // finde server index from corsEnabledServers.
+    // return: server index
+    findServerFromCorsEnabledServers: function(url) {
+      var servers = esriConfig.defaults.io.corsEnabledServers;
+      var sansProtocol, found = -1;
+
+      if (has("esri-cors") && servers && servers.length) {
+        array.some(servers, function(serverInfo, idx) {
+          // Items in corsEnabledServers list can be RegExp, or strings, or objects with
+          // "host" and "withCredentials" properties.
+          var server = (serverInfo && typeof serverInfo === "object" && !(serverInfo instanceof RegExp)) ?
+            serverInfo.host : serverInfo;
+          if (server instanceof RegExp) {
+            return false;
+          } else if (server) {
+            sansProtocol = server.trim().toLowerCase().indexOf("http") !== 0;
+
+            if (esriUrlUtils.hasSameOrigin(url, sansProtocol ? ("http://" + server) : server) ||
+                (sansProtocol && esriUrlUtils.hasSameOrigin(url, "https://" + server))) {
+              found = idx;
+              return true;
+            }
+          }
+          return false;
+        });
+      }
+
+      return found;
+    },
+
+    _pushCorsEnabledServerInfo: function(serverInfo){
+      /*jshint -W083 */
+      if(!serverInfo){
+        return;
+      }
+
+      var corsEnabledServers = esriConfig.defaults.io.corsEnabledServers;
+      var methodNames = ["charAt", "charCodeAt", "concat", "endsWith", "indexOf",
+        "lastIndexOf", "localeCompare", "match", "replace", "search", "slice", "split",
+        "startsWith", "substr", "substring", "toLocaleLowerCase", "toLocaleUpperCase",
+        "toLowerCase", "toString", "toUpperCase", "trim", "trimLeft", "trimRight", "valueOf"];
+
+      if(typeof serverInfo === "object" && typeof serverInfo.host === "string"){
+        //object
+        for(var key1 in serverInfo.host){
+          if(typeof serverInfo.host[key1] === 'function'){
+            serverInfo[key1] = function(){
+              return serverInfo.host[key1].apply(serverInfo.host, arguments);
+            };
+          }else{
+            serverInfo[key1] = serverInfo.host[key1];
+          }
+        }
+
+        serverInfo.length = serverInfo.host.length;
+
+        array.forEach(methodNames, function(methodName){
+          if(typeof serverInfo.host[methodName] === 'function'){
+            serverInfo[methodName] = function(){
+              return serverInfo.host[methodName].apply(serverInfo.host, arguments);
+            };
+          }
+        });
+      }
+
+      corsEnabledServers.push(serverInfo);
+    },
+
+    tryRegisterCredential: function( /* esri.Credential */ credential) {
+      if(!this.isValidCredential(credential)){
+        return false;
+      }
+
+      var isExist = array.some(esriNS.id.credentials, lang.hitch(this, function(c) {
+        return credential.token === c.token;
+      }));
+
+      if (!isExist) {
+        esriNS.id.credentials.push(credential);
+        return true;
+      }
+
+      return false;
+    },
+
+    registerToken: function(token){
+      var sharingRest = portalUrlUtils.getSharingUrl(this.portalUrl);
+      var cre = esriNS.id.findCredential(sharingRest);
+      if(cre){
+        //remove the exists credential
+        array.some(esriNS.id.credentials, lang.hitch(this, function(c, i) {
+          if(this.isValidPortalCredentialOfPortalUrl(this.portalUrl, c)){
+            esriNS.id.credentials.splice(i, 1);
+            return true;
+          }
+        }));
+      }
+
+      return this._getTokenInfo(token).then(function(tokenInfo){
+        if(tokenInfo){
+          esriNS.id.registerToken(tokenInfo);
+        }
+      });
+    },
+
+    _getTokenInfo: function(token){
+      var portalSelfUrl = portalUrlUtils.getPortalSelfInfoUrl(this.portalUrl);
+      portalSelfUrl += '?f=json&token=' + token;
+      return dojoScript.get(portalSelfUrl, {
+        jsonp: 'callback'
+      }).then(lang.hitch(this, function(res){
+        if(res.user){
+          return {
+            server: portalUrlUtils.getSharingUrl(this.portalUrl),
+            ssl: res.allSSL,
+            token: token,
+            userId: res.user.username
+          };
+        }else{
+          // throw Error(window.jimuNls.urlParams.invalidToken);
+          return null;
+        }
+      }), function(err){
+        console.error(err);
+        throw Error(window.jimuNls.urlParams.validateTokenError);
+      });
+    },
+
+    _isInvalidPortalUrl: function(s){
+      return s && typeof s === 'string' && lang.trim(s);
+    },
+
+    signInPortal: function(_portalUrl){
+      var def = new Deferred();
+
+      if(!this._isInvalidPortalUrl(_portalUrl)){
+        setTimeout(lang.hitch(this, function(){
+          def.reject("Invalid portalurl.");
+        }), 0);
+      }
+      else{
+        var thePortalUrl = portalUrlUtils.getStandardPortalUrl(_portalUrl);
+        var sharingUrl = portalUrlUtils.getSharingUrl(thePortalUrl);
+        var credential = this.getPortalCredential(thePortalUrl);
+        if(credential){
+          setTimeout(lang.hitch(this, function(){
+            def.resolve(credential);
+          }), 0);
+        }
+        else{
+          def = esriNS.id.getCredential(sharingUrl);
+        }
+      }
+
+      return def;
+    },
+
+    _loadPortalSelfInfo: function(_portalUrl){
+      var portalSelfUrl = portalUrlUtils.getPortalSelfInfoUrl(_portalUrl);
+      return esriRequest({
+        url: portalSelfUrl,
+        handleAs: 'json',
+        content: {f:'json'},
+        callbackParamName: 'callback'
+      });
+    },
+
+    registerOAuthInfo: function(portalUrl, appId){
+      var validParams = portalUrl && typeof portalUrl === 'string' &&
+       appId && typeof appId === 'string';
+      if(!validParams){
+        return null;
+      }
+      var oAuthInfo = esriNS.id.findOAuthInfo(portalUrl);
+      if(!oAuthInfo){
+        var oauthReturnUrl = window.location.protocol + "//" + window.location.host +
+         require.toUrl("jimu") + "/oauth-callback.html";
+        //OAuth will lose 'persist' query parameter if set expiration to two weeks exectly.
+        oAuthInfo = new OAuthInfo({
+          appId: appId,
+          expiration: 14 * 24 * 60 - 1,
+          portalUrl: portalUrl,
+          authNamespace: '/',
+          popup: true,
+          popupCallbackUrl: oauthReturnUrl
+        });
+        esriNS.id.registerOAuthInfos([oAuthInfo]);
+      }
+      oAuthInfo.appId = appId;
+      return oAuthInfo;
+    },
+
+    signOutAll: function(){
+      var portalUrl = portalUrlUtils.getStandardPortalUrl(this.portalUrl);
+      var sharingRest = portalUrl + '/sharing/rest';
+      var cre = esriNS.id.findCredential(sharingRest);
+      var isPublishEvent = !!cre;
+      if(window.appInfo.isRunInPortal){
+        this.removeEsriAuthCookieStorage();
+      }
+      else{
+        this.removeWabAuthCookie();
+      }
+      esriNS.id.destroyCredentials();
+      //if sign in portal with oAuth, esriNS.id._oAuthHash will not be null
+      esriNS.id._oAuthHash = null;
+      if(isPublishEvent){
+        this._publishCurrentPortalUserSignOut(portalUrl);
+      }
+    },
+
+    userHaveSignInPortal: function(_portalUrl) {
+      return !!this.getPortalCredential(lang.trim(_portalUrl || ''));
+    },
+
+    isValidCredential: function(/* esri.Credential */ credential){
+      var isValid = false;
+
+      if(credential){
+        var token = credential.token;
+        var server = credential.server;
+        var theScope = credential['scope'];
+        var isValidToken = token && typeof token === "string" && lang.trim(token);
+        var isValidServer = server && typeof server === "string" && lang.trim(server);
+        var isValidScope = theScope === 'portal' || theScope === "server";
+        var isValidExpires = true;
+        if (credential.expires) {
+          var expireTime = parseInt(credential.expires, 10);
+          var nowDate = new Date();
+          var nowTime = nowDate.getTime();
+          isValidExpires = expireTime > nowTime;
+        }
+        isValid = isValidToken && isValidServer && isValidScope && isValidExpires;
+      }
+
+      return isValid;
+    },
+
+    isValidPortalCredentialOfPortalUrl: function(thePortalUrl, credential){
+      var isValid = false;
+
+      if(this.isValidCredential(credential)){
+        var isPortalScope = credential['scope'] === 'portal';
+        var isSameServer = portalUrlUtils.isSameServer(thePortalUrl, credential.server);
+        isValid = isPortalScope && isSameServer;
+      }
+
+      return isValid;
+    },
+
+    getPortalCredential: function(_portalUrl) {
+      var credential = null;
+      var thePortalUrl = lang.trim(_portalUrl || '');
+      if (!thePortalUrl) {
+        return null;
+      }
+      thePortalUrl = portalUrlUtils.getStandardPortalUrl(thePortalUrl);
+      //var credentials =[];
+
+      //var sharingUrl = thePortalUrl + '/sharing';
+      //c = esriNS.id.findCredential(sharingUrl);
+
+      //find portal credential from esriNS.id.credentials
+      credential = this._filterPortalCredential(thePortalUrl, esriNS.id.credentials);
+
+      if(!credential){
+        this._tryConvertArcGIScomCrendentialToOrgCredential();
+      }
+
+      return credential;
+    },
+
+    _tryConvertArcGIScomCrendentialToOrgCredential: function(){
+      var portalUrl = this.portalUrl;
+      if(!portalUrl){
+        return;
+      }
+      portalUrl = portalUrlUtils.getStandardPortalUrl(portalUrl);
+      if(portalUrlUtils.isOrgOnline(portalUrl)){
+        var credential = this._filterPortalCredential(portalUrl, esriNS.id.credentials);
+        if(!credential){
+          var arcgiscomCredential = this._filterPortalCredential("http://www.arcgis.com", esriNS.id.credentials);
+          if(arcgiscomCredential){
+            //we need to register a new credential which server is this.portalUrl based on arcgiscomCredential
+            var sharingUrl = portalUrl + "/sharing/rest";
+            var auth = {
+              token: arcgiscomCredential.token,
+              scope: "portal",
+              userId: arcgiscomCredential.userId,
+              server: sharingUrl,
+              expires: arcgiscomCredential.expires
+            };
+            esriNS.id.registerToken(auth);
+          }
+        }
+      }
+    },
+
+    //save wab_auth cookie, register token, return credential
+    saveAndRegisterCookieToCredential: function(cookieValue){
+      //server,token,userId,expires
+      var wabAuth = lang.clone(cookieValue);
+      wabAuth.referer = window.location.host;
+      wabAuth.scope = 'portal';
+      wabAuth.isAdmin = !!wabAuth.isAdmin;
+
+      this.saveWabCookie(wabAuth);
+
+      var sharingRest = wabAuth.server + "/sharing/rest";
+      wabAuth.server = sharingRest;
+      esriNS.id.registerToken(wabAuth);
+      var cre = esriNS.id.findCredential(sharingRest, wabAuth.userId);
+      //cre.resources = ["http://portalUrl/sharing/rest"]
+      return cre;
+    },
+
+    //save wab_auth cookie, register token, return credential
+    registerAuth2Hash: function(_authHash){
+      var authHash = lang.clone(_authHash);
+      //{access_token,expires_in,persist,username,state}
+
+      //check expires
+      var expiresInS = parseInt(authHash.expires_in, 10); //seconds
+      var expiresInMS = expiresInS * 1000; //milliseconds
+      var dateNow = new Date();
+      var expiresTime = dateNow.getTime() + expiresInMS;
+      var server = portalUrlUtils.getStandardPortalUrl(authHash.state.portalUrl);
+
+      var wabAuth = {
+        referer: window.location.host,
+        server: server,
+        token: authHash.access_token,
+        expires: expiresTime,
+        userId: authHash.username,
+        scope: 'portal',
+        isAdmin: !!authHash.isAdmin
+      };
+
+      var cre = this.saveAndRegisterCookieToCredential(wabAuth);
+      return cre;
+    },
+
+    saveWabCookie: function(wabAuth){
+      var cookieName = "wab_auth";
+      this.removeCookie(cookieName);
+      cookie(cookieName, json.stringify(wabAuth), {
+        expires: new Date(wabAuth.expires),
+        path: '/'
+      });
+    },
+
+    removeWabAuthCookie: function(){
+      this.removeCookie("wab_auth");
+    },
+
+    removeEsriAuthCookieStorage: function() {
+      this.removeCookie('esri_auth');
+
+      var itemName = "esriJSAPIOAuth";
+      if (window.localStorage) {
+        window.localStorage.removeItem(itemName);
+      }
+      if (window.sessionStorage) {
+        window.sessionStorage.removeItem(itemName);
+      }
+    },
+
+    _filterPortalCredential: function(thePortalUrl, credentials){
+      var credential = null;
+
+      thePortalUrl = portalUrlUtils.getStandardPortalUrl(thePortalUrl);
+
+      if(credentials && credentials.length > 0){
+        var filterCredentials = array.filter(credentials, lang.hitch(this, function(c){
+          return this.isValidPortalCredentialOfPortalUrl(thePortalUrl, c);
+        }));
+
+        //return the last valid credential
+        if(filterCredentials.length > 0){
+          var lastIndex = filterCredentials.length - 1;
+          credential = filterCredentials[lastIndex];
+        }
+      }
+
+      return credential;
+    },
+
+    _removePortalCredential: function(_portalUrl) {
+      var thePortalUrl = lang.trim(_portalUrl || '');
+      if (!thePortalUrl) {
+        return;
+      }
+      thePortalUrl = portalUrlUtils.getStandardPortalUrl(thePortalUrl);
+
+      var filterCredentials = array.filter(esriNS.id.credentials, lang.hitch(this, function(c) {
+        return this.isValidPortalCredentialOfPortalUrl(thePortalUrl, c);
+      }));
+
+      while (filterCredentials.length > 0) {
+        var c = filterCredentials[0];
+        //if c has attribute _oAuthCred,
+        // c._oAuthCred will also destroy and remove relevant info from storage
+        c.destroy();
+        filterCredentials.splice(0, 1);
+      }
+
+      esriNS.id.credentials = array.filter(esriNS.id.credentials, lang.hitch(this, function(c) {
+        return !this.isValidPortalCredentialOfPortalUrl(thePortalUrl, c);
+      }));
+    },
+
+    getUserIdByToken: function(token, _portalUrl) {
+      var def = new Deferred();
+      var validToken = token && typeof token === 'string';
+      var validPortalUrl = _portalUrl && typeof _portalUrl === 'string';
+      if (validToken && validPortalUrl) {
+        var thePortalUrl = portalUrlUtils.getStandardPortalUrl(_portalUrl);
+        var cs = array.filter(esriNS.id.credentials, lang.hitch(this, function(credential) {
+          var b = credential.token === token && credential.userId;
+          var isSameServer = portalUrlUtils.isSameServer(thePortalUrl, credential.server);
+          return b && isSameServer;
+        }));
+
+        if(cs.length > 0){
+          var c = cs[0];
+          setTimeout(lang.hitch(this, function(){
+            def.resolve(c.userId);
+          }), 0);
+          return def;
+        }
+
+        var url = portalUrlUtils.getCommunitySelfUrl(thePortalUrl);
+        esriRequest({
+          url: url,
+          handleAs: 'json',
+          content: {
+            f: 'json'
+          },
+          callbackParamName: 'callback'
+        }).then(lang.hitch(this, function(response) {
+          var username = (response && response.username) || '';
+          def.resolve(username);
+        }), lang.hitch(this, function(err) {
+          console.error(err);
+          def.reject('fail to get userId by token');
+        }));
+        return def;
+      } else {
+        setTimeout(lang.hitch(this, function(){
+          def.reject('invalid parameters');
+        }), 0);
+        return def;
+      }
+    },
+
+    xtGetCredentialFromCookie: function(portalUrl){
+      //{referer,server,scope,token,expires,userId,isAdmin}
+      var strAuth = cookie("wab_auth");
+      var wabAuth = null;
+
+      if(strAuth){
+        try{
+          wabAuth = json.parse(strAuth);
+        }
+        catch(e){
+          console.error(e);
+        }
+      }
+
+      if(!(wabAuth && typeof wabAuth === 'object')){
+        return null;
+      }
+
+      //check server
+      var server = wabAuth.server;
+      var isValidServer = portalUrlUtils.isSameServer(portalUrl, server);
+      if(!isValidServer){
+        return null;
+      }
+
+      //check referer
+      var isValidReferer = window.location.host === wabAuth.referer;
+      if (!isValidReferer) {
+        return null;
+      }
+
+      //check expires
+      wabAuth.expires = parseInt(wabAuth.expires, 10);
+      var dateNow = new Date();
+      var timeNow = dateNow.getTime();
+      var isValidExpires = wabAuth.expires > timeNow;
+      if (!isValidExpires) {
+        this.removeCookie("wab_auth");
+        return null;
+      }
+
+      //var sharingUrl = portalUrlUtils.getSharingUrl(portalUrl);
+      //wabAuth.resources = [sharingUrl];
+
+      //expires,isAdmin,server,ssl,token,userId,scope
+      //var cre = new Credential(wabAuth);
+      //return cre;
+
+      //Note: server must include '/sharing'
+      var restUrl = portalUrl + '/sharing/rest';
+      wabAuth.server = restUrl;
+      var cre = esriNS.id.findCredential(restUrl);
+      if(!cre){
+        esriNS.id.registerToken(wabAuth);
+      }
+
+      cre = esriNS.id.findCredential(restUrl);
+
+      return cre;
+    },
+
+    removeCookie: function(cookieName) {
+      var path = this.getCookiePath();
+      jimuUtils.removeCookie(cookieName, path);
+    },
+
+    _getDomainsByServerName: function(serverName){
+      var splits = serverName.split('.');
+      var length = splits.length;
+      var domains = array.map(splits, lang.hitch(this, function(v, index){
+        /*jshint unused:false*/
+        var arr = splits.slice(index, length);
+        var str = "";
+        var lastIndex = arr.length - 1;
+        array.forEach(arr, lang.hitch(this, function(s, idx){
+          str += s;
+          if(idx !== lastIndex){
+            str += '.';
+          }
+        }));
+        return str;
+      }));
+      return domains;
+    },
+
+    _publishCurrentPortalUserSignIn: function(/* esri.Credential */ credential){
+      if(!this.isValidCredential(credential)){
+        return;
+      }
+
+      try{
+        topic.publish('userSignIn', credential);
+      }
+      catch(e){
+        console.error(e);
+      }
+    },
+
+    _publishAnyUserSignIn: function(/* esri.Credential */ credential){
+      if(!this.isValidCredential(credential)){
+        return;
+      }
+
+      try{
+        topic.publish('anyUserSignIn', credential);
+      }
+      catch(e){
+        console.error(e);
+      }
+    },
+
+    _publishCurrentPortalUserSignOut: function(thePortalUrl){
+      try {
+        topic.publish('userSignOut', thePortalUrl);
+      } catch (e) {
+        console.error(e);
+      }
+    },
+
+    _signInSuccess: function(/* esri.Credential */ credential /*, persist*/) {
+      try{
+        var isCreOfCurrentPortal = this.isValidPortalCredentialOfPortalUrl(this.portalUrl,
+                                                                           credential);
+
+        if(isCreOfCurrentPortal){
+          this._publishCurrentPortalUserSignIn(credential);
+        }
+
+        this._publishAnyUserSignIn(credential);
+      }
+      catch(e){
+        console.error(e);
+      }
+    },
+
+    _bindEvents: function(){
+      //signIn event
+      aspect.after(esriNS.id, 'signIn', lang.hitch(this, function(def , signInInputParams){
+        // var url = signInInputParams[0];
+        var serverInfo = signInInputParams[1];
+        console.log(serverInfo);
+        aspect.after(def, 'callback', lang.hitch(this, function(returnValue, callbackInputParams){
+          /*jshint unused:false*/
+          var credential = callbackInputParams[0];
+          //esriNS.id._isRESTService
+          this._signInSuccess(credential, false);
+        }));
+        return def;
+      }));
+    },
+
+    isStart: function(){
+      return this._started;
+    },
+
+    startup: function(){
+      if(this._started){
+        return;
+      }
+
+      if(this.isInConfigOrPreviewWindow()){
+        var builderWindow = window.parent;
+        if(builderWindow){
+          var builderIM = builderWindow.esri && builderWindow.esri.id;
+          builderIM._wab = 'builder';
+          if(builderIM){
+            IdentityManager = builderIM;
+            //use builder's IdentityManager
+            esriNS.id = builderIM;
+            var currentIO = window.esriConfig.defaults.io;
+            var builderIO = builderWindow.esriConfig.defaults.io;
+            //need to sync properties of defaults.io between curent window and builder window
+            currentIO.corsEnabledServers = builderIO.corsEnabledServers;
+            currentIO.webTierAuthServers = builderIO.webTierAuthServers;
+            //for 3.11 and lower api
+            currentIO._processedCorsServers = builderIO._processedCorsServers;
+            //for 3.12 and higher api
+            currentIO.corsStatus = builderIO.corsStatus;
+
+            //because vector tile has it's own identity manager, so replce it here.
+            Object.defineProperty(vectorTilesKernel, "id", {
+              get: function () {
+                return builderIM;
+              },
+              enumerable: true,
+              configurable: true
+            });
+          }
+        }
+      }
+
+      this._bindEvents();
+      this._started = true;
+    }
+  };
+
+  mo.startup();
+
+  return mo;
+});

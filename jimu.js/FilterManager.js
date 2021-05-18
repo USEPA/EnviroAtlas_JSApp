@@ -1,9 +1,248 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define(["dojo/_base/declare","dojo/_base/lang","dojo/topic","esri/lang","./LayerInfos/LayerInfos"],function(p,e,h,q,n){var l=null,m=p(null,{_filters:null,layerInfos:null,constructor:function(){this._filters={};window.isBuilder?(h.subscribe("app/mapLoaded",e.hitch(this,this._onMapLoaded)),h.subscribe("app/mapChanged",e.hitch(this,this._onMapChanged))):(h.subscribe("mapLoaded",e.hitch(this,this._onMapLoaded)),h.subscribe("mapChanged",e.hitch(this,this._onMapChanged)));h.subscribe("widgetDestroyed",
-e.hitch(this,this._onWidgetDestroyed))},getWidgetFilter:function(a,b){return e.getObject(a+".filterExprs."+b,!1,this._filters)},applyWidgetFilter:function(a,b,c,d,e,g){var f="object"===typeof a?a:null;f&&(a=f.layerId,b=f.widgetId,c=f.expression,d=f.enableMapFilter,e=f.useAND,g=f.zoomAfterFilter);this._setFilterExp(a,b,c,d,e);b=this.layerInfos.getLayerInfoById(a)||this.layerInfos.getTableInfoById(a);a=this.getFilterExp(a);null!==a&&b&&b.setFilter(a,{zoomAfterFilter:g})},_onMapLoaded:function(){this.layerInfos=
-n.getInstanceSync();this._traversalFilter()},_onMapChanged:function(){this.layerInfos=n.getInstanceSync();this._traversalFilter()},_onWidgetDestroyed:function(a){for(var b in this._filters)if(this._filters[b]){var c=this._filters[b];if(c){var d=c.filterExprs,c=c.mapFilterControls;d&&delete d[a];c&&delete c[a]}}},_traversalFilter:function(){this.layerInfos.traversalAll(e.hitch(this,function(a){this._filters[a.id]||(this._filters[a.id]={definitionExpression:a.getFilter(),filterExprs:{},mapFilterControls:{}})}))},
-_getPriorityOfMapFilter:function(a){a=e.getObject(a+".mapFilterControls",!1,this._filters);var b=0,c;for(c in a){var d=a[c];d.priority>b&&(b=d.priority)}return b},_getMapFilterControl:function(a){a=e.getObject(a+".mapFilterControls",!1,this._filters);var b=0,c=null,d;for(d in a){var k=a[d];k.priority>b&&(b=k.priority,c=k)}return c},_setFilterExp:function(a,b,c,d,k){var g=a+".filterExprs."+b,f=a+".mapFilterControls."+b;c?(e.setObject(g,c,this._filters),q.isDefined(d)&&(a=this._getPriorityOfMapFilter(a),
-e.setObject(f,{enable:d,useAND:k,priority:a+1},this._filters))):(e.getObject(g,!1,this._filters)&&delete this._filters[a].filterExprs[b],e.getObject(f,!1,this._filters)&&delete this._filters[a].mapFilterControls[b])},getFilterExp:function(a,b){if(!this._filters[a])return null;var c=[],d=this._filters[a].definitionExpression,e=this._filters[a].filterExprs;a=this._getMapFilterControl(a);for(var g in e){var f=e[g];b&&0<=g.indexOf(b)||f&&c.push("("+f+")")}b=c.join(" AND ");return d&&a&&a.enable||d&&null===
-a?b?a&&!1===a.useAND?"("+d+") OR "+b:"("+d+") AND "+b:d:b}});m.getInstance=function(){if(null===l)l=new m,window._filterManager=l;else return l};return m});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define(['dojo/_base/declare',
+    'dojo/_base/lang',
+    'dojo/topic',
+    'esri/lang',
+    './LayerInfos/LayerInfos'
+  ],
+  function(declare, lang, topic, esriLnag,
+    LayerInfos) {
+    var instance = null;
+
+    var clazz = declare(null, {
+      /**
+       * {
+       *   layerId: {
+       *     definitionExpression: //layer's definitionExpression
+       *     filterExprs: {
+       *        // widgetId: filterExpr
+       *      },
+       *      mapFilterControls: {
+       *        // widgetId: {enable, useAND, priority}
+       *      }
+       *   }
+       * }
+       * @type {[type]}
+       */
+      _filters: null,
+      layerInfos: null,
+
+      constructor: function() {
+        this._filters = {};
+
+        if (window.isBuilder) {
+          topic.subscribe('app/mapLoaded', lang.hitch(this, this._onMapLoaded));
+          topic.subscribe('app/mapChanged', lang.hitch(this, this._onMapChanged));
+        } else {
+          topic.subscribe('mapLoaded', lang.hitch(this, this._onMapLoaded));
+          topic.subscribe('mapChanged', lang.hitch(this, this._onMapChanged));
+        }
+
+        topic.subscribe('widgetDestroyed', lang.hitch(this, this._onWidgetDestroyed));
+      },
+
+      /**
+       * deprecated
+       */
+      getWidgetFilter: function(layerId, widgetId) {
+        var prop = layerId + '.filterExprs.' + widgetId;
+        return lang.getObject(prop, false, this._filters);
+      },
+
+      /**
+       * apply Filter expression to a layer.
+       * This method can be invoked with these 2 format:
+       * 1)
+       * @param  {[string]} layerId         [the layer id]
+       * @param  {[type]} widgetId        [description]
+       * @param  {[type]} expression      [description]
+       * @param  {[type]} enableMapFilter [true/false or null or undefined]
+       * @param  {[type]} useAND [true/false or null or undefined]
+       * @param  {[type]} zoomAfterFilter [true/false or null or undefined]
+       * 2)
+       * @param options: an object with all of the above properties.
+       */
+      applyWidgetFilter: function(layerId, widgetId, expression, enableMapFilter, useAND, zoomAfterFilter) {
+        var options = typeof layerId === 'object'? layerId: null;
+
+        if(options){
+          layerId = options.layerId;
+          widgetId = options.widgetId;
+          expression = options.expression;
+          enableMapFilter = options.enableMapFilter;
+          useAND = options.useAND;
+          zoomAfterFilter = options.zoomAfterFilter;
+        }
+
+        this._setFilterExp(layerId, widgetId, expression, enableMapFilter, useAND);
+
+        var layerInfo = this.layerInfos.getLayerInfoById(layerId) ||
+          this.layerInfos.getTableInfoById(layerId);
+        var filterExp = this.getFilterExp(layerId);
+        if (filterExp !== null && layerInfo) {
+          layerInfo.setFilter(filterExp, {'zoomAfterFilter': zoomAfterFilter});
+        }
+      },
+
+      _onMapLoaded: function() {
+        this.layerInfos = LayerInfos.getInstanceSync();
+
+        this._traversalFilter();
+      },
+
+      _onMapChanged: function() {
+        this.layerInfos = LayerInfos.getInstanceSync();
+
+        this._traversalFilter();
+      },
+
+      _onWidgetDestroyed: function(w) {
+        for (var layerId in this._filters) {
+          if (this._filters[layerId]) {
+            var filterObj = this._filters[layerId];
+            if (filterObj) {
+              var filterExprs = filterObj.filterExprs;
+              var mapFilterControls = filterObj.mapFilterControls;
+              if (filterExprs) {
+                delete filterExprs[w];
+              }
+              if (mapFilterControls) {
+                delete mapFilterControls[w];
+              }
+            }
+          }
+        }
+      },
+
+      _traversalFilter: function() {
+        this.layerInfos.traversalAll(lang.hitch(this, function(layerInfo) {
+          if (!this._filters[layerInfo.id]) {
+            this._filters[layerInfo.id] = {
+              definitionExpression: layerInfo.getFilter(),
+              filterExprs: {
+                // widgetId: filterExpr
+              },
+              mapFilterControls: {
+                // widgetId: {enable, useAND, priority}
+              }
+            };
+          }
+        }));
+      },
+
+      _getPriorityOfMapFilter: function(layerId) {
+        var mapFilterControls = lang.getObject(layerId + '.mapFilterControls',
+          false, this._filters);
+        var count = 0;
+        for (var p in mapFilterControls) {
+          var control = mapFilterControls[p];
+          if (control.priority > count) {
+            count = control.priority;
+          }
+        }
+
+        return count;
+      },
+
+      _getMapFilterControl: function(layerId) {
+        var mapFilterControls = lang.getObject(layerId + '.mapFilterControls',
+          false, this._filters);
+        var count = 0;
+        var priorityControl = null;
+        for (var p in mapFilterControls) {
+          var control = mapFilterControls[p];
+          if (control.priority > count) {
+            count = control.priority;
+            priorityControl = control;
+          }
+        }
+
+        return priorityControl;
+      },
+
+      _setFilterExp: function(layerId, widgetId, expression, enableMapFilter, useAND) {
+        var prop = layerId + '.filterExprs.' + widgetId;
+        var mapFilterControl = layerId + '.mapFilterControls.' + widgetId;
+        if (!expression) {
+          if (lang.getObject(prop, false, this._filters)) {
+            delete this._filters[layerId].filterExprs[widgetId];
+          }
+          if (lang.getObject(mapFilterControl, false, this._filters)) {
+            delete this._filters[layerId].mapFilterControls[widgetId];
+          }
+          return;
+        }
+
+        lang.setObject(prop, expression, this._filters);
+
+        if (esriLnag.isDefined(enableMapFilter)) {
+          var priority = this._getPriorityOfMapFilter(layerId);
+          lang.setObject(mapFilterControl, {
+            enable: enableMapFilter,
+            useAND: useAND,
+            priority: priority + 1
+          }, this._filters);
+        }
+      },
+
+      getFilterExp: function(layerId, excludeWidgetId) {
+        if (!this._filters[layerId]) {
+          return null;
+        }
+
+        var parts = [];
+        var dexp = this._filters[layerId].definitionExpression;
+        var filterExprs = this._filters[layerId].filterExprs;
+        var mfControl = this._getMapFilterControl(layerId);
+
+        for (var p in filterExprs) {
+          var expr = filterExprs[p];
+          if(excludeWidgetId && p.indexOf(excludeWidgetId) >= 0){
+            continue; //not including filters from current widget.   
+          }
+          if (expr) {
+            parts.push('(' + expr + ')');
+          }
+        }
+
+        var widgetFilter = parts.join(' AND ');
+        if ((dexp && mfControl && mfControl.enable) || (dexp && mfControl === null)) {
+          if (!widgetFilter) {
+            return dexp;
+          } else if (mfControl && mfControl.useAND === false) {
+            return '(' + dexp + ') OR ' + widgetFilter;
+          } else {
+            return '(' + dexp + ') AND ' + widgetFilter;
+          }
+        } else {
+          return widgetFilter;
+        }
+      }
+    });
+
+    clazz.getInstance = function() {
+      if (instance === null) {
+        instance = new clazz();
+        window._filterManager = instance;
+      } else {
+        return instance;
+      }
+    };
+
+    return clazz;
+  });

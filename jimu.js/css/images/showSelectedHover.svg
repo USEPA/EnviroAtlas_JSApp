@@ -1,12 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="16px" height="9px" viewBox="0 0 16 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
-    <title>icons/selected/selected</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="filter" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="select-component" transform="translate(-271.000000, -764.000000)" fill="#000000">
-            <path d="M273.082049,766.259378 L275.218028,764 L276,764.870311 L273.082049,768 L271,765.740622 L271.781972,764.870311 L273.082049,766.259378 Z M278,765 L287,765 L287,767 L278,767 L278,765 Z M273.082049,771.259378 L275.218028,769 L276,769.870311 L273.082049,773 L271,770.740622 L271.781972,769.870311 L273.082049,771.259378 Z M278,770 L287,770 L287,772 L278,772 L278,770 Z" id="icons/selected/selected"></path>
-        </g>
-    </g>
-</svg>
+<svg width="16" height="9" xmlns="http://www.w3.org/2000/svg"><path d="M2.082 2.26L4.218 0 5 .87 2.082 4 0 1.74.782.87l1.3 1.39zM7 1h9v2H7V1zM2.082 7.26L4.218 5 5 5.87 2.082 9 0 6.74l.782-.87 1.3 1.39zM7 6h9v2H7V6z" fill-rule="evenodd"/></svg>

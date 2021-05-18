@@ -1,30 +1,662 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/_filter/EditTable.html":'\x3cdiv\x3e\r\n    \x3cdiv class\x3d"jimu-multiple-set-container"\x3e\r\n      \x3cdiv data-dojo-attach-point\x3d"" class\x3d"items-list-content items-list-header"  \x3e\r\n        \x3cdiv class\x3d"item"\x3e\r\n          \x3cdiv class\x3d"label jimu-ellipsis" title\x3d"${Nls.value}"\x3e${Nls.value}\x3c/div\x3e\r\n          \x3cdiv class\x3d"label jimu-ellipsis" title\x3d"${CommonNls.label}"\x3e${CommonNls.label}\x3c/div\x3e\r\n          \x3cdiv class\x3d"label checkboxHeader jimu-ellipsis" title\x3d"${CommonNls.defaults}"\x3e${CommonNls.defaults}\x3c/div\x3e\r\n          \x3cdiv class\x3d"label lableR jimu-ellipsis" title\x3d"${CommonNls.actions}"\x3e${CommonNls.actions}\x3c/div\x3e\r\n        \x3c/div\x3e\r\n      \x3c/div\x3e\r\n      \x3cdiv data-dojo-attach-point\x3d"listContent" class\x3d"items-list-content" data-dojo-attach-event\x3d"click:_onListContentClicked, dblclick:_onListContentDblClicked"\x3e\r\n      \x3c/div\x3e\r\n    \x3c/div\x3e\r\n  \x3c/div\x3e'}});
-define("dojo/_base/lang dojo/_base/html dojo/Evented dojo/on dojo/keys dojo/dom-attr dojo/_base/declare dijit/_WidgetBase dojo/query dijit/form/ValidationTextBox dijit/form/NumberTextBox dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/text!./EditTable.html jimu/utils".split(" "),function(k,d,n,m,p,l,q,r,g,t,u,v,w,x,h){return q([r,v,w,n],{templateString:x,currentItem:null,dataList:[],codedValues:null,isNumberField:!0,tableType:"unique",postMixInProperties:function(){this.inherited(arguments);
-this.CommonNls=window.jimuNls.common;this.Nls=window.jimuNls.filterBuilder},postCreate:function(){this.inherited(arguments);d.addClass(this.domNode,"jimu-filter-mutcheck-list-value-provider");"unique"===this.tableType?(this.inputType="radio",d.addClass(this.listContent,"radio-items-list-content")):this.inputType="checkbox"},_onListContentDblClicked:function(a){this.isSearch=!1;var c=a.target||a.srcElement,b=h.getAncestorDom(c,function(a){return d.hasClass(a,"item")},3);if(b&&(d.hasClass(c,"name")||
-d.hasClass(c,"alias"))&&(!d.hasClass(b,"empty")||!d.hasClass(c,"name"))){this._dijit?(this.editState="active",this.updateInputDivPre=this.updateInputDiv,this._dijitPre=this._dijit):this.editState="negative";a=this._getNodeText(c);var e=decodeURIComponent(d.getAttr(c,"data")),b=d.hasClass(b,"custom");this.placeHolder=d.hasClass(c,"name")&&!this.codedValues?e:a;b?d.hasClass(c,"alias")&&this.placeHolder!==this.customLabel?this.currentLabel=a:this.currentLabel=NaN:this.currentLabel=this.isNumberField&&
-d.hasClass(c,"name")&&!this.codedValues?parseFloat(this.placeHolder):this.placeHolder;l.set(c,"innerHTML","");a="";d.hasClass(c,"name")&&(a='\x3cdiv class\x3d"searchBtn"\x3e\x3cdiv class\x3d"jimu-icon jimu-icon-down-arrow-8"\x3e\x3c/div\x3e\x3c/div\x3e');this.updateInputDiv=d.create("div",{"class":"updateInputDiv",innerHTML:'\x3cdiv class\x3d"inputDiv"\x3e\x3c/div\x3e'+a},c);a=g(".inputDiv",this.updateInputDiv)[0];this.searchBtn=g(".searchBtn",this.updateInputDiv)[0];this.own(m(this.updateInputDiv,
-"dblclick",k.hitch(this,function(a){a.stopPropagation();a.preventDefault()})));e={required:!1,intermediateChanges:!1,value:this.currentLabel};this.codedValues&&d.hasClass(c,"name")&&(e.disabled=!0);this.isNumberField&&d.hasClass(c,"name")?(e.constraints={pattern:"#####0.##########"},this._dijit=new u(e)):(e.trim=!0,this._dijit=new t(e));this._dijit.startup();this._dijit.on("keydown",function(a){(a.keyCode||a.which)===p.ENTER&&this._dijit.emit("blur")}.bind(this));this._dijit.on("blur",k.hitch(this,
-function(){if(this._dijit){var a="Error"!==this._dijit.state?this._dijit.displayedValue:this.currentLabel;this.isNumberField&&d.hasClass(c,"name")&&"Error"===this._dijit.state&&this._dijit.setValue(parseFloat(a));var a=h.sanitizeHTML(a),b=this._dijit.get("value");""!==b&&b?d.hasClass(c,"name")&&(this.placeHolder===this.customValue||"NaN"===this.placeHolder&&""!==this._dijit.displayedValue)&&(b=h.getAncestorDom(this._dijit.domNode,function(a){return d.hasClass(a,"item")},4),d.removeClass(b,"custom"),
-this.emit("editTable_itemChanged")):a=this.placeHolder;this.newLabel=a;setTimeout(k.hitch(this,function(){var a,c;if(this.isSearch||"active"===this.editState)"active"===this.editState&&(b=this.updateInputDivPre.parentNode,c=decodeURIComponent(d.getAttr(b,"data")),d.hasClass(b,"name")?this.currentValLabel=""===this._dijitPre.displayedValue?c===this.customValue?this.customValue:this.isNumberField?this._getLocalNumber(c):c:this.isNumberField?this._getLocalNumber(this._dijitPre.value):this._dijitPre.value:
-this.currentValLabel=""===this._dijitPre.displayedValue?c===this.customLabel?this.customLabel:c:this._dijitPre.displayedValue,!d.hasClass(b,"name")||"NaN"===this.newLabel||this.newLabel===this.customValue||this._getNodeText(b.nextSibling)!==this.customLabel&&this._dijit.value!==this.customLabel||(d.isDescendant(this.updateInputDiv,b.nextSibling)?this._dijit.set("value",this.currentValLabel):(a=this.isNumberField?this.currentValLabel:this.newLabel,d.setAttr(b.nextSibling,"data",encodeURIComponent(a)),
-this._setNodeText(b.nextSibling,a),d.setAttr(b.nextSibling,"title",a))),a=d.hasClass(b,"name")?""===this._dijitPre.displayedValue?c===this.customValue?this.customValue:c:this._dijitPre.value:this.newLabel,d.setAttr(b,"data",encodeURIComponent(a)),a=d.hasClass(b,"name")?this.currentValLabel:this.newLabel,this._setNodeText(b,a),d.setAttr(b,"title",a),this._dijitPre=this.updateInputDivPre=null,this.editState="negative");else{var b=this.updateInputDiv.parentNode;c=decodeURIComponent(d.getAttr(b,"data"));
-d.hasClass(b,"name")?this.currentValLabel=""===this._dijit.displayedValue?c===this.customValue?this.customValue:this.isNumberField?this._getLocalNumber(c):c:this.isNumberField?this._getLocalNumber(this._dijit.value):this._dijit.value:this.currentValLabel=""===this._dijit.displayedValue?c===this.customLabel?this.customLabel:c:this._dijit.displayedValue;d.hasClass(b,"name")&&"NaN"!==this.newLabel&&this.newLabel!==this.customValue&&this._getNodeText(b.nextSibling)===this.customLabel&&(a=this.isNumberField?
-this.currentValLabel:this.newLabel,d.setAttr(b.nextSibling,"data",encodeURIComponent(a)),this._setNodeText(b.nextSibling,a),d.setAttr(b.nextSibling,"title",a));a=d.hasClass(b,"name")?""===this._dijit.displayedValue?c===this.customValue?this.customValue:c:this._dijit.value:this.newLabel;d.setAttr(b,"data",encodeURIComponent(a));a=d.hasClass(b,"name")?this.currentValLabel:this.newLabel;this._setNodeText(b,a);d.setAttr(b,"title",a);this._dijit=null;this.isSearch=!1}}),300);this.placeHolder=""}}));d.setStyle(this._dijit.domNode,
-"width","100%");this._dijit.placeAt(a);g("input",this._dijit.domNode)[1].focus();this.searchBtn&&(this.own(m(this.searchBtn,"click",k.hitch(this,function(a){this.isSearch||(this.isSearch=!0,this.searchTarget=a.target||a.srcElement,this.emit("editTable_openListSelectByName",this.newLabel),a.stopPropagation(),a.preventDefault())}))),this.codedValues&&this.searchBtn.click())}},_getLocalNumber:function(a){"string"===typeof a&&(a=parseFloat(a));this.emit("editTable_getValLabelsArrayForNumber",!0,[a]);
-return this.currentValLabel},_setNewLabel:function(a,c){var b;void 0===a&&void 0===c&&(""!==this._dijit.displayedValue?this.codedValues?(c=this._dijit.displayedValue,a=this._getCodeFromCodevalueLabel(c)):(c=a=this._dijit.value,this.isNumberField&&this.newLabel!==this.customValue&&(c=this._getLocalNumber(a))):(a=c=this.customValue,this.updateInputDiv&&this.updateInputDiv.parentNode&&(b=this.updateInputDiv.parentNode,b=decodeURIComponent(d.getAttr(b,"data")),b!==this.customValue&&(a=this.isNumberField?
-parseFloat(b):b,c=this.codedValues?this._getLabelFromCodevalue(a):this.isNumberField?this._getLocalNumber(a):a))));this.updateInputDiv&&this.updateInputDiv.parentNode&&(b=this.updateInputDiv.parentNode,c!==this.customValue&&this._getNodeText(b.nextSibling)===this.customLabel&&(d.setAttr(b.nextSibling,"data",encodeURIComponent(c)),this._setNodeText(b.nextSibling,c),d.setAttr(b.nextSibling,"title",c)),this.codedValues||(a=a?a:decodeURIComponent(d.getAttr(b,"data"))),d.setAttr(b,"data",encodeURIComponent(a)),
-a=b.parentNode,c!==this.customValue&&d.removeClass(a,"custom"),this._setNodeText(b,c),d.setAttr(b,"title",c));this._dijit=this.updateInputDiv=null},_onListContentClicked:function(a){a=a.target||a.srcElement;var c=h.getAncestorDom(a,function(a){return d.hasClass(a,"item")},3);c&&(d.hasClass(a,"checkboxEmpty")?d.hasClass(a,"checked")?d.removeClass(a,"checked"):d.addClass(a,"checked"):d.hasClass(a,this.inputType)?("radio"===this.inputType&&!0===this.currentItem&&(this.currentItem=this.getCurrentItem()),
-d.hasClass(a,"checked")?"radio"!==this.inputType?d.removeClass(a,"checked"):d.hasClass(this.currentItem,"checked")||d.removeClass(a,"checked"):("radio"===this.inputType&&this.currentItem&&d.removeClass(this.currentItem,"checked"),d.addClass(a,"checked"),this.currentItem=a)):d.hasClass(a,"action")&&(d.hasClass(a,"up")?c.previousElementSibling&&d.place(c,c.previousElementSibling,"before"):d.hasClass(a,"down")?c.nextElementSibling&&d.place(c,c.nextElementSibling,"after"):d.hasClass(a,"delete")&&(d.destroy(c),
-this.emit("editTable_itemChanged"))))},_getLabelFromCodevalue:function(a){for(var c=a,b=0;b<this.codedValues.length;b++){var d=this.codedValues[b];if(d.value===a){c=d.label;break}}return c},_getCodeFromCodevalueLabel:function(a){for(var c=a,b=0;b<this.codedValues.length;b++){var d=this.codedValues[b];if(d.label===a){c=d.value;break}}return c},_createEmptyTarget:function(a){for(var c=this.emptyStr,b=this.emptyLabel?this.emptyLabel:c,e=" checked",f=0;f<a.length;f++)if(a[f].isChecked){e="";break}" checked"===
-e&&(this.currentItem=!0);var f='data\x3d"'+encodeURIComponent(c)+'"',g="",h=this.Nls.emptyValueTips;if(0===a.length||this.enableEmpty)g=" checked";return d.create("div",{"class":"item empty",innerHTML:'\x3cdiv class\x3d"label name jimu-ellipsis" style\x3d"cursor: default;"'+f+"\x3e"+c+'\x3c/div\x3e\x3cdiv class\x3d"label alias jimu-ellipsis-Blanks" data\x3d"'+b+'"\x3e'+b+'\x3c/div\x3e\x3cdiv class\x3d"label '+this.inputType+e+' jimu-ellipsis"\x3e\x3c/div\x3e\x3cdiv class\x3d"label checkbox checkboxEmpty'+
-g+' jimu-ellipsis jimu-flipx" title\x3d"'+h+'"\x3e\x3c/div\x3e'},this.listContent)},_createTarget:function(a,c,b,e,f){var h="item";f&&(a=c=this.customValue,b=this.customLabel,h="item custom");a=a||0===a?a:"";c=c||"";b=b?b:a;e=e?e:"";var k=a;(this.codedValues||this.isNumberField)&&a!==this.Nls.addValuePlaceHolder&&(k=this.codedValues?this._getLabelFromCodevalue(a):c);c=this.isNumberField?a:encodeURIComponent(a);e=d.create("div",{"class":h,innerHTML:'\x3cdiv class\x3d"label name jimu-ellipsis-Blanks" '+
-('data\x3d"'+c+'"')+"\x3e"+k+'\x3c/div\x3e\x3cdiv class\x3d"label alias jimu-ellipsis-Blanks" data\x3d"'+b+'"\x3e'+b+'\x3c/div\x3e\x3cdiv class\x3d"label '+this.inputType+e+' jimu-ellipsis"\x3e\x3c/div\x3e\x3cdiv class\x3d"actions jimu-float-trailing"\x3e\x3cdiv class\x3d"delete action jimu-float-trailing"\x3e\x3c/div\x3e\x3cdiv class\x3d"down action jimu-float-trailing"\x3e\x3c/div\x3e\x3cdiv class\x3d"up action jimu-float-trailing"\x3e\x3c/div\x3e\x3c/div\x3e'},this.listContent);f&&(f=g(".name",
-e)[0],d.setAttr(f,"title",a),d.setAttr(f.nextSibling,"title",b));return e},_destroyTarget:function(a){for(var c=g(".item .name",this.listContent),b=0;b<c.length;b++){var e=c[b];if(l.get(this._dijit.domNode.parentNode,"innerHTML")===a){d.destroy(e.parentNode);break}}},getCurrentItem:function(){for(var a=g(".item .radio",this.listContent),c=0;c<a.length;c++){var b=a[c];if(d.hasClass(b,"checked"))return b}return null},_getEmptyLabel:function(){var a=g(".label.alias",this.listContent.firstChild)[0],c=
-this._getNodeText(a);a.children.length&&(c="Error"===this._dijit.state?decodeURIComponent(d.getAttr(a,"data")):this._dijit.value);return c=h.sanitizeHTML(c)},_getEmptyStatus:function(){var a=g(".checkboxEmpty",this.listContent.firstChild)[0];return d.hasClass(a,"checked")?!0:!1},_getNodeText:function(a){return a.textContent||a.innerText||""},_setNodeText:function(a,c){a.innerHTML="\x26nbsp;";a.textContent?a.textContent=c:a.innerText=c},getListValues:function(){this.listItemsArray=[];this.listValuesArray=
-[];for(var a=g(".item .name",this.listContent),c="radio"===this.inputType?1:0;c<a.length;c++){var b=a[c],e=h.getAncestorDom(b,function(a){return d.hasClass(a,"item")},3);if(!d.hasClass(e,"custom")){var e=this._getNodeText(b),f=decodeURIComponent(d.getAttr(b,"data"));if(this.isNumberField||this.codedValues)e=f;b.children.length&&(e="Error"===this._dijit.state?f:this._dijit.value,this.codedValues&&(e=this._getCodeFromCodevalueLabel(e),e=void 0!==e?e:f));e=this.isNumberField?parseFloat(e):h.sanitizeHTML(e);
-f=this._getNodeText(b.nextSibling);f===this.customLabel&&(f=e.toString(),this.isNumberField&&(f=this._getLocalNumber(f)));b.nextSibling.children.length&&(f="Error"===this._dijit.state?decodeURIComponent(d.getAttr(b.nextSibling,"data")):this._dijit.value);f=h.sanitizeHTML(f);f={value:e,alias:f,isChecked:!1};this.listItemsArray.push(f);this.listValuesArray.push(e);d.hasClass(b.nextSibling.nextSibling,"checked")&&(f.isChecked=!0)}}a={list:this.listItemsArray,valueList:this.listValuesArray};"radio"===
-this.inputType&&(a.emptyLabel=this._getEmptyLabel(),a.enableEmpty=this._getEmptyStatus());return a},setListValues:function(a,c){l.set(this.listContent,"innerHTML","");"radio"===this.inputType&&this._createEmptyTarget(a);for(var b=0;b<a.length;b++){var e=a[b],f="";e.isChecked&&(f=" checked",this.currentItem=!0);this._createTarget(e.value,c?c[b].label:e.value,e.alias,f)}a=g(".name",this.listContent);for(c=0;c<a.length;c++)b=a[c],d.setAttr(b,"title",this._getNodeText(b)),b=b.nextSibling,d.setAttr(b,
-"title",this._getNodeText(b))},_initTable:function(){},getDijits:function(){return[this.mutiValuesSelect]},destroy:function(){this.inherited(arguments)}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+    'dojo/_base/lang',
+    'dojo/_base/html',
+    'dojo/Evented',
+    'dojo/on',
+    'dojo/keys',
+    'dojo/dom-attr',
+    'dojo/_base/declare',
+    'dijit/_WidgetBase',
+    'dojo/query',
+    'dijit/form/ValidationTextBox',
+    'dijit/form/NumberTextBox',
+    'dijit/_TemplatedMixin',
+    'dijit/_WidgetsInTemplateMixin',
+    'dojo/text!./EditTable.html',
+    'jimu/utils'
+  ],
+    function(lang, html, Evented, on, keys, domAttr, declare, _WidgetBase, query,
+      ValidationTextBox, NumberTextBox,
+      _TemplatedMixin, _WidgetsInTemplateMixin,template, jimuUtils) {
+
+    return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+        templateString: template,
+        currentItem: null, //for radio
+        dataList:[],
+        codedValues: null,
+
+        //optional
+        isNumberField: true, //for validate
+        tableType: 'unique', //for input[type=radio]
+
+        postMixInProperties:function(){
+          this.inherited(arguments);
+          this.CommonNls = window.jimuNls.common;
+          this.Nls = window.jimuNls.filterBuilder;
+        },
+
+        postCreate: function(){
+          this.inherited(arguments);
+          html.addClass(this.domNode, 'jimu-filter-mutcheck-list-value-provider');
+
+          if(this.tableType === 'unique'){
+            this.inputType = 'radio';
+            html.addClass(this.listContent, 'radio-items-list-content');
+          }else{
+            this.inputType = 'checkbox';
+          }
+        },
+
+        //add dblclick event to item.
+        _onListContentDblClicked: function(event){
+          // console.log('dbclick...');
+          this.isSearch = false;
+          var target = event.target || event.srcElement;
+          var itemDom = jimuUtils.getAncestorDom(target, function(dom){
+            return html.hasClass(dom, 'item');
+          }, 3);
+          if(!itemDom){
+            return;
+          }
+          if(!(html.hasClass(target, 'name') || html.hasClass(target, 'alias'))){
+            return;
+          }
+
+          //allow to change emptyLabel
+          if(html.hasClass(itemDom, 'empty') && html.hasClass(target, 'name') ){
+            return;
+          }
+
+          if(this._dijit){//click another when one is active
+            this.editState = 'active';
+            this.updateInputDivPre = this.updateInputDiv;
+            this._dijitPre = this._dijit;
+          }else{
+            this.editState = 'negative';
+          }
+
+          var nodeText = this._getNodeText(target);
+          var nodeData = decodeURIComponent(html.getAttr(target, 'data'));
+          //custom
+          var isCustom = html.hasClass(itemDom, 'custom');
+          this.placeHolder = (html.hasClass(target, 'name') && !this.codedValues) ? nodeData : nodeText;
+          if(!isCustom){
+            this.currentLabel = (this.isNumberField && html.hasClass(target, 'name') && !this.codedValues) ?
+              parseFloat(this.placeHolder) : this.placeHolder;//string need to be number when operator is ','
+          }else{
+            if(html.hasClass(target, 'alias') && this.placeHolder !== this.customLabel){
+              this.currentLabel = nodeText;
+            }else{
+              this.currentLabel = NaN;
+            }
+          }
+
+          domAttr.set(target, "innerHTML", '');
+
+          var searchHtml = '';
+          if(html.hasClass(target, 'name')){
+            // '<span class="searchBtn" data-dojo-attach-event="click:_onSearchClicked">Search</span>'
+            // searchHtml = '<span class="searchBtn">' + this.CommonNls.search + '</span>';
+            // searchHtml = '<div class="searchBtn jimu-icon jimu-icon-search"></div>';
+            searchHtml = '<div class="searchBtn"><div class="jimu-icon jimu-icon-down-arrow-8"></div></div>';
+          }
+          this.updateInputDiv = html.create("div", {
+            "class": "updateInputDiv",
+            "innerHTML":  '<div class="inputDiv"></div>' + searchHtml
+          }, target);
+          var inputNode = query('.inputDiv', this.updateInputDiv)[0];
+          this.searchBtn = query('.searchBtn', this.updateInputDiv)[0];
+
+          this.own(on(this.updateInputDiv, 'dblclick', lang.hitch(this, function(event){
+            // console.log('dbclick..input...');
+            event.stopPropagation();
+            event.preventDefault();
+          })));
+          var dijitOptions = {
+            required: false,
+            intermediateChanges: false,
+            value: this.currentLabel
+          };
+          if(this.codedValues && html.hasClass(target, 'name')){
+            dijitOptions.disabled = true;
+          }
+
+          if(this.isNumberField && html.hasClass(target, 'name')){ //number
+            dijitOptions.constraints = {pattern: "#####0.##########"};
+            this._dijit = new NumberTextBox(dijitOptions);
+          }else{ //string
+            dijitOptions.trim = true;
+            this._dijit = new ValidationTextBox(dijitOptions);
+          }
+          this._dijit.startup();
+
+          this._dijit.on('keydown', (function(e){
+            var code = e.keyCode || e.which;
+            if (code === keys.ENTER) {
+              this._dijit.emit('blur');
+            }
+          }).bind(this));
+
+          // this._dijit.on('mouseleave', (function(event){
+          this._dijit.on('blur', lang.hitch(this, function(){
+            // input 1.235.265,256, then:
+            //  _dijit._lastInputEventValue='1.235.265,256'
+            //  _dijit.displayedValue = '1235265,256'
+            //  _dijit.value = 1235265.256
+            if(!this._dijit){
+              return;
+            }
+            var newLabel = this._dijit.state !== 'Error'? this._dijit.displayedValue : this.currentLabel;
+            if(this.isNumberField && html.hasClass(target, 'name') && this._dijit.state === 'Error'){
+              this._dijit.setValue(parseFloat(newLabel));//reset last value when dijit has error.
+            }
+            newLabel = jimuUtils.sanitizeHTML(newLabel);
+            var dijitVal = this._dijit.get('value');
+            if(dijitVal === '' || !dijitVal){//back to its previous value('' || NaN)
+              newLabel = this.placeHolder;
+            }else{
+              if(html.hasClass(target, 'name') && (this.placeHolder === this.customValue ||
+                (this.placeHolder === 'NaN' && this._dijit.displayedValue !== ''))){//only verify by item's value
+                var itemDom = jimuUtils.getAncestorDom(this._dijit.domNode, function(dom){
+                  return html.hasClass(dom, 'item');
+                }, 4);
+                html.removeClass(itemDom, 'custom');
+                this.emit("editTable_itemChanged");
+              }
+            }
+
+            // domAttr.set(this._dijit.domNode.parentNode, "innerHTML", newLabel);
+            // domAttr.set(this.updateInputDiv.parentNode, "innerHTML", newLabel);
+            this.newLabel = newLabel;
+
+            // setTimeout(lang.hitch(this, this._dijitBlurTimeout), 300);
+            setTimeout(lang.hitch(this, function(){
+              var newValue, displayTxt, labelTxt, nodeData;
+              if(!this.isSearch && this.editState !== 'active'){
+                var inputParentNode = this.updateInputDiv.parentNode;
+                nodeData = decodeURIComponent(html.getAttr(inputParentNode, 'data'));
+                if(html.hasClass(inputParentNode, 'name')){
+                  this.currentValLabel = this._dijit.displayedValue === '' ?
+                  (nodeData === this.customValue ? this.customValue :
+                    (this.isNumberField ? this._getLocalNumber(nodeData) : nodeData)):
+                  (this.isNumberField ? this._getLocalNumber(this._dijit.value) : this._dijit.value);
+                }else{
+                  this.currentValLabel = this._dijit.displayedValue === '' ?
+                    (nodeData === this.customLabel ? this.customLabel : nodeData) : this._dijit.displayedValue;
+                }
+                if(html.hasClass(inputParentNode, 'name') &&
+                  (this.newLabel !== 'NaN' && this.newLabel !== this.customValue) &&
+                  this._getNodeText(inputParentNode.nextSibling) === this.customLabel){//value triggers label only at first time.
+                  labelTxt = this.isNumberField ? this.currentValLabel : this.newLabel;
+                  html.setAttr(inputParentNode.nextSibling, 'data', encodeURIComponent(labelTxt));
+                  this._setNodeText(inputParentNode.nextSibling, labelTxt);
+                  html.setAttr(inputParentNode.nextSibling, 'title', labelTxt);
+                }
+
+                newValue = html.hasClass(inputParentNode, 'name') ?
+                  (this._dijit.displayedValue === '' ?
+                  (nodeData === this.customValue ? this.customValue : nodeData) : this._dijit.value) : this.newLabel;
+                html.setAttr(inputParentNode, 'data', encodeURIComponent(newValue));
+                displayTxt = html.hasClass(inputParentNode, 'name') ? this.currentValLabel : this.newLabel;
+                this._setNodeText(inputParentNode, displayTxt);
+                html.setAttr(inputParentNode, 'title', displayTxt);
+                this._dijit = null;
+                this.isSearch = false;
+              }else if(this.editState === 'active'){
+                var inputPreParentNode = this.updateInputDivPre.parentNode;
+                nodeData = decodeURIComponent(html.getAttr(inputPreParentNode, 'data'));
+                if(html.hasClass(inputPreParentNode, 'name')){
+                  this.currentValLabel = this._dijitPre.displayedValue === '' ?
+                  (nodeData === this.customValue ? this.customValue :
+                  (this.isNumberField ? this._getLocalNumber(nodeData) : nodeData)):
+                  (this.isNumberField ? this._getLocalNumber(this._dijitPre.value) : this._dijitPre.value);
+                }else{
+                  this.currentValLabel = this._dijitPre.displayedValue === '' ?
+                    (nodeData === this.customLabel ? this.customLabel : nodeData) : this._dijitPre.displayedValue;
+                }
+                if(html.hasClass(inputPreParentNode, 'name') &&
+                  (this.newLabel !== 'NaN' && this.newLabel !== this.customValue) &&
+                  (this._getNodeText(inputPreParentNode.nextSibling) === this.customLabel ||
+                    this._dijit.value === this.customLabel)){
+                  //don't trigger to update label if we click value, then click its label
+                  if(html.isDescendant(this.updateInputDiv, inputPreParentNode.nextSibling) ){
+                    // this._dijit.set('value', this._dijitPre.value);
+                    this._dijit.set('value', this.currentValLabel);
+                  }else{
+                    labelTxt = this.isNumberField ? this.currentValLabel : this.newLabel;
+                    html.setAttr(inputPreParentNode.nextSibling, 'data', encodeURIComponent(labelTxt));
+                    this._setNodeText(inputPreParentNode.nextSibling, labelTxt);
+                    html.setAttr(inputPreParentNode.nextSibling, 'title', labelTxt);
+                  }
+                }
+                newValue = html.hasClass(inputPreParentNode, 'name') ?
+                  (this._dijitPre.displayedValue === '' ?
+                  (nodeData === this.customValue ? this.customValue : nodeData) : this._dijitPre.value) : this.newLabel;
+                html.setAttr(inputPreParentNode, 'data', encodeURIComponent(newValue));
+                displayTxt = html.hasClass(inputPreParentNode, 'name') ? this.currentValLabel : this.newLabel;
+                this._setNodeText(inputPreParentNode, displayTxt);
+                html.setAttr(inputPreParentNode, 'title', displayTxt);
+                this.updateInputDivPre = null;
+                this._dijitPre = null;
+                this.editState = 'negative';
+              }
+            }), 300);
+            // this._dijit = null;
+            this.placeHolder = '';
+          }));
+          html.setStyle(this._dijit.domNode, 'width', '100%');
+          // this._dijit.placeAt(target);
+          this._dijit.placeAt(inputNode);
+
+          // this._dijit.onFocus();
+          // this._dijit.domNode.focus();
+          var input = query('input', this._dijit.domNode)[1];
+          // if(this._dijit.get('value') === ''){
+          //   domAttr.set(input, "placeholder", this.placeHolder);
+          // }
+          input.focus();
+
+          if(this.searchBtn){
+            this.own(on(this.searchBtn, 'click', lang.hitch(this, function(event){
+              if(this.isSearch){//prevent secondary clicks
+                // console.log('repeated click');
+                return;
+              }
+              this.isSearch = true;
+              var _target = event.target || event.srcElement;
+              this.searchTarget = _target;
+              this.emit("editTable_openListSelectByName", this.newLabel);
+              event.stopPropagation();
+              event.preventDefault();
+            })));
+
+            if(this.codedValues){
+              this.searchBtn.click();
+            }
+          }
+        },
+
+        _getLocalNumber: function(num){
+          if(typeof num === 'string'){
+            num = parseFloat(num);
+          }
+          this.emit('editTable_getValLabelsArrayForNumber', true, [num]);
+          return this.currentValLabel;
+        },
+
+        _setNewLabel: function(value, name){
+          var nameNode;
+          if(value === undefined && name === undefined){
+            if(this._dijit.displayedValue !== ''){
+              if(this.codedValues){
+                name = this._dijit.displayedValue;
+                value = this._getCodeFromCodevalueLabel(name);
+              }else{
+                value = this._dijit.value;
+                name = value;
+                if(this.isNumberField && this.newLabel !== this.customValue){
+                  name = this._getLocalNumber(value);
+                }
+              }
+            }else{
+              value = name = this.customValue;
+              if(this.updateInputDiv && this.updateInputDiv.parentNode){
+                nameNode = this.updateInputDiv.parentNode;
+                var nodeData = decodeURIComponent(html.getAttr(nameNode, 'data'));
+                if(nodeData !== this.customValue){
+                  value = this.isNumberField ? parseFloat(nodeData) : nodeData;
+                  if(this.codedValues){
+                    name = this._getLabelFromCodevalue(value);
+                  }else{
+                    name = this.isNumberField ? this._getLocalNumber(value) : value;
+                  }
+                }
+              }
+            }
+          }
+          if(this.updateInputDiv && this.updateInputDiv.parentNode){
+            nameNode = this.updateInputDiv.parentNode;
+            if(name !== this.customValue && this._getNodeText(nameNode.nextSibling) === this.customLabel){
+              html.setAttr(nameNode.nextSibling, 'data', encodeURIComponent(name));
+              this._setNodeText(nameNode.nextSibling, name);
+              html.setAttr(nameNode.nextSibling, 'title', name);
+            }
+            if(!this.codedValues){
+              value = value ? value : decodeURIComponent(html.getAttr(nameNode, 'data'));
+            }
+            html.setAttr(nameNode, 'data', encodeURIComponent(value));
+            var itemDom = nameNode.parentNode;
+            if(name !== this.customValue){
+              html.removeClass(itemDom, 'custom');
+            }
+            this._setNodeText(nameNode, name);
+            html.setAttr(nameNode, 'title', name);
+          }
+          this.updateInputDiv = null;
+          this._dijit = null;
+        },
+
+        // _onSearchClicked: function(){
+        //   this.emit("editTable_openListSelectByName", 'table');
+        // },
+
+        _onListContentClicked: function(event){
+          var target = event.target || event.srcElement;
+          var itemDom = jimuUtils.getAncestorDom(target, function(dom){
+            return html.hasClass(dom, 'item');
+          }, 3);
+          if(!itemDom){
+            return;
+          }
+          if(html.hasClass(target, 'checkboxEmpty')){
+            if(html.hasClass(target, 'checked')){
+              html.removeClass(target, 'checked');
+            }else{
+              html.addClass(target, 'checked');
+            }
+          }else if(html.hasClass(target, this.inputType)){
+            if(this.inputType === 'radio' && this.currentItem === true){
+              this.currentItem = this.getCurrentItem();
+            }
+            if(html.hasClass(target, 'checked')){
+              if(this.inputType !== 'radio'){
+                html.removeClass(target, 'checked');
+              }else if(!html.hasClass(this.currentItem, 'checked')){ //can't unchecked current radio
+                html.removeClass(target, 'checked');
+              }
+            }else{
+              if(this.inputType === 'radio' && this.currentItem){
+                html.removeClass(this.currentItem, 'checked');
+              }
+              html.addClass(target, 'checked');
+              this.currentItem = target;
+            }
+          }else if(html.hasClass(target, 'action')){
+            // if(html.hasClass(target, 'enabled')){
+            //   html.removeClass(target, 'enabled');
+            //   html.addClass(target, 'disabled');
+            // }else if(html.hasClass(target, 'disabled')){
+            //   html.removeClass(target, 'disabled');
+            //   html.addClass(target, 'enabled');
+            // }else
+            if(html.hasClass(target, 'up')){
+              if(itemDom.previousElementSibling){
+                html.place(itemDom, itemDom.previousElementSibling, 'before');
+              }
+            }else if(html.hasClass(target, 'down')){
+              if(itemDom.nextElementSibling){
+                html.place(itemDom, itemDom.nextElementSibling, 'after');
+              }
+            }else if(html.hasClass(target, 'delete')){
+              html.destroy(itemDom);
+              this.emit('editTable_itemChanged');
+            }
+          }
+        },
+
+        _getLabelFromCodevalue: function(codevalue){
+          var label = codevalue;
+          for(var key = 0; key < this.codedValues.length; key ++){
+            var item = this.codedValues[key];
+            if(item.value === codevalue){
+              label = item.label;
+              break;
+            }
+          }
+          return label;
+        },
+
+        _getCodeFromCodevalueLabel: function(label){
+          var codevalue = label;
+          for(var key = 0; key < this.codedValues.length; key ++){
+            var item = this.codedValues[key];
+            if(item.label === label){
+              codevalue = item.value;
+              break;
+            }
+          }
+          return codevalue;
+        },
+
+        _createEmptyTarget: function(dataList){
+          var name = this.emptyStr;
+          var label = this.emptyLabel ? this.emptyLabel : name;
+          var checkedClass = ' checked';
+          for(var key = 0; key < dataList.length; key ++){
+            if(dataList[key].isChecked){
+              checkedClass = '';
+              break;
+            }
+          }
+          if(checkedClass === ' checked'){
+            this.currentItem = true;
+          }
+          var dataAttr = "data=\"" + encodeURIComponent(name) + "\"";
+
+          var enableClass = '';
+          var enableTitle = this.Nls.emptyValueTips;
+          if(dataList.length === 0 || this.enableEmpty){
+            enableClass = ' checked';
+          }
+
+          var target = html.create("div", {
+            "class": 'item empty',
+            "innerHTML": '<div class="label name jimu-ellipsis" style="cursor: default;"' + dataAttr + '>' +
+                         name + '</div>' +
+                         '<div class="label alias jimu-ellipsis-Blanks" data="' + label + '">' + label + '</div>' +
+                         '<div class="label ' + this.inputType + checkedClass + ' jimu-ellipsis"></div>' +
+                         '<div class="label checkbox checkboxEmpty' + enableClass + ' jimu-ellipsis jimu-flipx" ' +
+                         'title="' + enableTitle + '"></div>'
+          }, this.listContent);
+          return target;
+        },
+
+        _createTarget: function(name, nameLabel, label, checkedClass, isCustom){
+          var itemClass = 'item';
+          if(isCustom){
+            name = nameLabel = this.customValue;
+            label = this.customLabel;
+            itemClass = 'item custom';
+          }
+          name = (name || name === 0) ? name : ""; //name could be 0 when it's a numberical field.
+          nameLabel = nameLabel || "";
+          label = label ? label : name;
+          checkedClass = checkedClass ? checkedClass : '';
+          //save value to nameDom include codedvalue
+          var value = name, dataAttr = '';
+          if((this.codedValues || this.isNumberField) && name !== this.Nls.addValuePlaceHolder){
+            value = this.codedValues ? this._getLabelFromCodevalue(name) : nameLabel;
+          }
+          var dataValue = this.isNumberField ? name : encodeURIComponent(name);//string maybe has ',""
+          dataAttr = "data=\"" + dataValue + "\"";
+          var target = html.create("div", {
+            "class": itemClass,
+            "innerHTML": '<div class="label name jimu-ellipsis-Blanks" ' + dataAttr + '>' +
+                         value + '</div>' +
+                         '<div class="label alias jimu-ellipsis-Blanks" data="' + label + '">' + label + '</div>' +
+                         '<div class="label ' + this.inputType + checkedClass + ' jimu-ellipsis"></div>' +
+                         '<div class="actions jimu-float-trailing">' +
+                            '<div class="delete action jimu-float-trailing"></div>' +
+                            '<div class="down action jimu-float-trailing"></div>' +
+                            '<div class="up action jimu-float-trailing"></div>' +
+                         '</div>'
+          }, this.listContent);
+          if(isCustom){
+            var nameNode = query('.name', target)[0];
+            html.setAttr(nameNode, 'title', name);
+            var labelNode = nameNode.nextSibling;
+            html.setAttr(labelNode, 'title', label);
+          }
+          return target;
+        },
+
+        _destroyTarget: function(name){
+          var labels = query('.item .name', this.listContent);
+          for(var key = 0; key < labels.length; key++){
+            var label = labels[key];
+            var labelTxt = domAttr.get(this._dijit.domNode.parentNode, "innerHTML");
+            if(labelTxt === name){
+              html.destroy(label.parentNode);
+              break;
+            }
+          }
+        },
+
+        getCurrentItem: function(){
+          var items = query('.item .radio', this.listContent);
+          for(var key = 0; key < items.length; key ++){
+            var item = items[key];
+            if(html.hasClass(item,'checked')){
+              return item;
+            }
+          }
+          return null;
+        },
+
+        _getEmptyLabel: function(){
+          var labelDom = query('.label.alias', this.listContent.firstChild)[0];
+          var label = this._getNodeText(labelDom);
+          if(labelDom.children.length){//edit state
+            label = this._dijit.state === 'Error' ?
+              decodeURIComponent(html.getAttr(labelDom, 'data')) : this._dijit.value;
+          }
+          label = jimuUtils.sanitizeHTML(label);
+          return label;
+        },
+
+        _getEmptyStatus: function(){
+          // return query('.enabled', this.listContent.firstChild).length;
+          var emptyDom = query('.checkboxEmpty', this.listContent.firstChild)[0];
+          return html.hasClass(emptyDom, 'checked') ? true : false;
+        },
+
+        _getNodeText: function(target){
+          return target.textContent || target.innerText || '';
+        },
+
+        _setNodeText: function(target, label){
+          target.innerHTML = '&nbsp;'; //for inputDom tree
+          if(target.textContent){
+            target.textContent = label;
+          }else{
+            target.innerText = label;
+          }
+        },
+
+        getListValues: function(){
+          this.listItemsArray = [];//['a','b','c'];
+          this.listValuesArray = [];
+          var items = query('.item .name',this.listContent);
+          var firstKey = this.inputType === 'radio' ? 1 : 0;
+          for(var key = firstKey; key < items.length; key ++){
+            var item = items[key];
+            var parentDom = jimuUtils.getAncestorDom(item, function(dom){
+              return html.hasClass(dom, 'item');
+            }, 3);
+            if(html.hasClass(parentDom, 'custom')){//delete item if value does not update
+              continue;
+            }
+            var itemVal = this._getNodeText(item);
+            var itemData = decodeURIComponent(html.getAttr(item, 'data'));
+            if(this.isNumberField || this.codedValues){
+              itemVal = itemData;
+            }
+            if(item.children.length){//edit state
+              itemVal = this._dijit.state === 'Error' ? itemData : this._dijit.value;
+              if(this.codedValues){
+                var code = this._getCodeFromCodevalueLabel(itemVal);
+                itemVal = code !== undefined ? code : itemData;
+              }
+            }
+            itemVal = this.isNumberField? parseFloat(itemVal): jimuUtils.sanitizeHTML(itemVal);
+
+            var alias = this._getNodeText(item.nextSibling);
+            if(alias === this.customLabel){//when value exists and label is undefined yet
+              alias = itemVal.toString();
+              if(this.isNumberField){
+                alias = this._getLocalNumber(alias);
+              }
+            }
+            if(item.nextSibling.children.length){//edit state
+              alias = this._dijit.state === 'Error' ?
+                decodeURIComponent(html.getAttr(item.nextSibling, 'data')) : this._dijit.value;
+            }
+            alias = jimuUtils.sanitizeHTML(alias);
+            var itemObj = {
+              value: itemVal,
+              alias: alias,
+              isChecked: false
+            };
+            this.listItemsArray.push(itemObj);
+            this.listValuesArray.push(itemVal);
+            if(html.hasClass(item.nextSibling.nextSibling, 'checked')){
+              itemObj.isChecked = true;
+            }
+          }
+          var result = {
+            list: this.listItemsArray,
+            valueList: this.listValuesArray //for multiple select to verify if cbxItem should be checked
+          };
+          if(this.inputType === 'radio'){
+            result.emptyLabel = this._getEmptyLabel();
+            result.enableEmpty = this._getEmptyStatus();//save this to config to keep old version
+          }
+          return result;
+        },
+
+        setListValues: function(dataList, labelsArray){
+          domAttr.set(this.listContent, "innerHTML", '');
+          if(this.inputType === 'radio'){ // only radio has empty target
+            this._createEmptyTarget(dataList);
+          }
+          for(var key = 0; key < dataList.length; key ++){
+            var data = dataList[key];
+            var checkedClass = '';
+            if(data.isChecked){
+              checkedClass = ' checked';
+              this.currentItem = true;
+            }
+
+            var valLabel = labelsArray ? labelsArray[key].label : data.value;
+            this._createTarget(data.value, valLabel, data.alias, checkedClass);
+          }
+          //add title attr for name nodes and alias nodes
+          var nameNodes = query('.name', this.listContent);
+          for(var k = 0; k < nameNodes.length; k ++){
+            var nameNode = nameNodes[k];
+            html.setAttr(nameNode, 'title', this._getNodeText(nameNode));
+            var labelNode = nameNode.nextSibling;
+            html.setAttr(labelNode, 'title', this._getNodeText(labelNode));
+          }
+        },
+
+
+        _initTable: function(){
+
+        },
+
+        getDijits: function(){
+          return [this.mutiValuesSelect];
+        },
+
+        destroy:function(){
+          this.inherited(arguments);
+        }
+      });
+  });

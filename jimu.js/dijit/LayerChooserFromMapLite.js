@@ -1,19 +1,598 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/on dojo/_base/declare dojo/promise/all dojo/_base/lang dojo/_base/html dojo/_base/array jimu/dijit/CheckBox jimu/dijit/LayerChooserFromMap jimu/LayerStructure".split(" "),function(m,k,n,g,e,l,r,p,q){var f=k([p],{templateString:'\x3cdiv style\x3d"width:100%;"\x3e\x3cdiv data-dojo-attach-point\x3d"errorTipSection" class\x3d"error-tip-section"\x3e\x3cspan class\x3d"jimu-icon jimu-icon-error"\x3e\x3c/span\x3e\x3cspan class\x3d"jimu-state-error-text" data-dojo-attach-point\x3d"errTip"\x3e${nls.noLayersTip}\x3c/span\x3e\x3c/div\x3e\x3cdiv data-dojo-attach-point\x3d"treeSection" class\x3d"tree-section"\x3e\x3cul data-dojo-attach-point\x3d"treeUl" class\x3d"tree-ul tree-root-ul"\x3e\x3c/ul\x3e\x3c/div\x3e\x3c/div\x3e',
-map:null,layerStateController:null,layerState:null,customFilter:null,onlySelectLeafLayer:!1,displayLayerTypeIcon:!0,showTables:!0,viewMode:!1,onlyShowWebMapLayers:!1,layerStructure:null,_layerDatas:null,_eventHandles:null,postMixInProperties:function(){this.nls=window.jimuNls.basicLayerChooserFromMap},postCreate:function(){e.addClass(this.domNode,"jimu-basic-layer-chooser-from-map");e.addClass(this.domNode,"jimu-basic-layer-chooser-from-map-lite");this._layerDatas={};this._eventHandles=[];this.layerStructure=
-this.map?q.createInstance(this.map):q.getInstance();this.layerInfosObj=this.layerStructure._layerInfos;this.layerState=this._clearLayerState(this.layerState)||{};this.layerStateController||(this.layerStateController=new f.LayerStateController);var a;a=this.customFilter?g.hitch(this,this.customFilter):g.hitch(this,this.filter);this.filter=p.andCombineFilters([this.basicFilter,a]);this._createTree()},_createTree:function(){var a,b;this.onlyShowWebMapLayers?(a=this.layerStructure.getWebmapLayerNodes(),
-b=this.layerStructure.getWebmapTableNodes()):(a=this.layerStructure.getLayerNodes(),b=this.layerStructure.getTableNodes());0<this._createLayerNodes(a.concat(this.showTables?b:[]),this.treeUl)&&(e.setStyle(this.errorTipSection,"display","none"),this.layerStateController.restoreState(this.layerState,this.layerStructure))},_createLayerNodes:function(a,b){var c=l.map(a,function(a){return this.filter(a._layerInfo)},this),d=0;n(c).then(g.hitch(this,function(c){l.forEach(c,function(c,e){c&&(this._createLayerNode(a[e],
-b),d++)},this)}));return d},_createLayerNode:function(a,b){var c=e.create("li",{"class":"tree-node-li",id:"layerchooserlite-tree-node-li-"+a.id},b),d=e.create("div",{"class":"tree-node-div"},c);b=e.create("span",{"class":"tree-node-column-span collapse-span"},d);var f=e.create("span",{"class":"tree-node-column-span check-box-span"},d),f=e.create("div",{"class":"tree-node-column-div check-box-div"},f),t=e.create("span",{"class":"tree-node-column-span icon-span "+(this.displayLayerTypeIcon?"display":
-"")},d),h;h=(h=this.layerState[a.id])?h.selected:this.layerStateController.getState(a);h=new r({checked:h},f);var k=e.create("span",{"class":"tree-node-column-span title-span",innerHTML:a.title},d),l=e.create("ul",{"class":"tree-ul tree-subnode-ul",style:"display:none; "},c),c={layerNode:a,layerNodeLi:c,layerNodeDiv:d,collapseSpan:b,iconSpan:t,checkBox:h,subLayerNodeUl:l,hasBeenOpened:!1};this._layerDatas[a.id]=c;a.isLeaf()||(e.addClass(b,"is-leaf"),e.addClass(k,"is-leaf"),a=m(b,"click",g.hitch(this,
-this._onCollapse,c)),this._eventHandles.push(a),a=m(k,"click",g.hitch(this,this._onCollapse,c)),this._eventHandles.push(a),this.onlySelectLeafLayer&&(h.setStatus(!1),e.setStyle(f,"display","none")));!0===this.viewMode&&h.setStatus(!1);a=m(h.domNode,"click",g.hitch(this,this._onCheckBoxChange,c));this._eventHandles.push(a);this._setIconImage(c,!1);return c},_setIconImage:function(a,b){if(this.displayLayerTypeIcon){var c=a.layerNode,d=c.getLayerType(),f=c.getLayerObject();n({layerType:d,layerObject:f}).then(g.hitch(this,
-function(d){var f;d.layerType&&d.layerObject&&(f={type:d.layerType,layerInfo:c._layerInfo},d=window.location.protocol+"//"+window.location.host+require.toUrl("jimu"),(f=this._getIconInfo(f,b).imageName)&&e.setStyle(a.iconSpan,"background-image","url("+d+"/css/images/"+f+")"))}))}},_getCheckBoxValue:function(a){return a.getStatus()?a.getValue():!1},_clearLayerState:function(a){var b={};a&&this.layerStructure.traversal(g.hitch(this,function(c){a[c.id]&&(b[c.id]={selected:a[c.id].selected})}));return b},
-_selectOrDeselectLayer:function(a,b){if(a=this._layerDatas[a])a.checkBox.setValue(b),this._onCheckBoxChange(a)},selectLayer:function(a){this._selectOrDeselectLayer(a,!0)},deselectLayer:function(a){this._selectOrDeselectLayer(a,!1)},getState:function(){var a=g.clone(this.layerState),b;for(b in this._layerDatas)this._layerDatas.hasOwnProperty(b)&&"function"!==typeof this._layerDatas[b]&&(this._getCheckBoxValue(this._layerDatas[b].checkBox)?a[b]={selected:!0}:a[b]={selected:!1});return a},restoreState:function(a){this.layerState=
-this._clearLayerState(a);for(var b in this._layerDatas)if(this._layerDatas.hasOwnProperty(b)&&"function"!==typeof this._layerDatas[b]){var c=(a=this._layerDatas[b])&&a.checkBox,d=this.layerState[b];d?c.setValue(d.selected):c.setValue(this.layerStateController.getState(a.layerNode))}this.layerStateController.restoreState(this.layerState,this.layerStructure)},setViewMode:function(a){for(var b in this._layerDatas)if(this._layerDatas.hasOwnProperty(b)&&"function"!==typeof this._layerDatas[b]){var c=this._layerDatas[b],
-c=c&&c.checkBox;!0===a?(this.viewMode=!0,c.setStatus(!1)):(this.viewMode=!1,c.setStatus(!0))}},getSelectedLayerNodes:function(){var a=[],b=this.getState(),c;for(c in b)if(b.hasOwnProperty(c)&&"function"!==typeof b[c]&&b[c].selected){var d=this.layerStructure.getNodeById(c);d&&a.push(d)}return a},getLoadedLayerNodes:function(){var a=[],b;for(b in this._layerDatas)if(this._layerDatas.hasOwnProperty(b)&&"function"!==typeof this._layerDatas[b]){var c=this.layerStructure.getNodeById(b);c&&a.push(c)}return a},
-getLayerAssociateDomNodesById:function(a){var b=null;(a=this._layerDatas[a])&&(b={collapseIcon:a.collapseSpan,checkBox:a.checkBox.domNode,layerTypeIcon:a.iconSpan});return b},getSelectedItems:function(){var a=[];return a=l.map(this.getSelectedLayerNodes(),function(a){return{name:a.title,url:a.getUrl(),layerInfo:a._layerInfo}},this)},getAllItems:function(){return[]},_clear:function(){this._layerDatas={};l.forEach(this._eventHandles,function(a){a.remove()},this);this._eventHandles=[];e.empty(this.treeUl)},
-destroy:function(){this._clear();this.map&&this.layerStructure.destroy();this.shelter&&(this.shelter.destroy(),this.shelter=null);this.inherited(arguments)},_onCollapse:function(a){var b="none"===e.getStyle(a.subLayerNodeUl,"display")?!0:!1;b?(e.setStyle(a.subLayerNodeUl,"display","block"),e.addClass(a.collapseSpan,"opened")):(e.setStyle(a.subLayerNodeUl,"display","none"),e.removeClass(a.collapseSpan,"opened"));this._setIconImage(a,b);a.hasBeenOpened||(this._createLayerNodes(a.layerNode.getSubNodes(),
-a.subLayerNodeUl),a.hasBeenOpened=!0)},_onCheckBoxChange:function(a,b){this.layerStateController.setState(a.layerNode,this._getCheckBoxValue(a.checkBox));this.emit("selection-change",a.layerNode,this._getCheckBoxValue(a.checkBox));this._onTreeClick(a,b)},_onLayerInfosChanged:function(){this._createTree();this.emit("update")},_onLayerInfosIsShowInMapChanged:function(){this._createTree();this.emit("update")},_onTreeClick:function(a,b){a={name:a.layerNode.title||"",parent:null,layerInfo:a.layerNode._layerInfo,
-type:null,layerClass:null,id:null,isLeaf:a.layerNode.isLeaf(),hasChildren:a.layerNode.isLeaf()?!1:!0};this.emit("tree-click",a,null,b)}});f.LayerStateController=k(null,{getState:function(a){return!0},setState:function(a,b){return this},restoreState:function(a,b){return this}});f.LayerVisibilityStateController=k(f.LayerStateController,{getState:function(a){return a.isToggledOn()},setState:function(a,b){a.toggle();return this},restoreState:function(a,b){var c={layerOptions:{}},d;for(d in a)a.hasOwnProperty(d)&&
-"function"!==typeof a[d]&&(c.layerOptions[d]={visible:a[d].selected});b.restoreState(c);return this}});f.layerVisibilityStateController=new f.LayerVisibilityStateController;f.LayerLegendStateController=k(f.LayerStateController,{getState:function(a){return a.isShowLegend()}});f.layerLegendStateController=new f.LayerLegendStateController;return f});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([ 'dojo/on',
+    'dojo/_base/declare',
+    'dojo/promise/all',
+    'dojo/_base/lang',
+    'dojo/_base/html',
+    'dojo/_base/array',
+    'jimu/dijit/CheckBox',
+    'jimu/dijit/LayerChooserFromMap',
+    'jimu/LayerStructure'
+  ],
+  function(on, declare, all, lang, html, array, CheckBox, LayerChooserFromMap, LayerStructure) {
+
+    var LayerChooser = declare([LayerChooserFromMap], {
+      templateString:'<div style="width:100%;">' +
+        '<div data-dojo-attach-point="errorTipSection" class="error-tip-section">' +
+          '<span class="jimu-icon jimu-icon-error"></span>' +
+          '<span class="jimu-state-error-text" data-dojo-attach-point="errTip">' +
+          '${nls.noLayersTip}</span>' +
+        '</div>' +
+        '<div data-dojo-attach-point="treeSection" class="tree-section">' +
+          '<ul data-dojo-attach-point="treeUl" class="tree-ul tree-root-ul"></ul>' +
+        '</div>' +
+      '</div>',
+
+      //constructor options:
+      //multiple: false, //Can select multiple layers or a single layer.
+      //onlyShowVisible: false,                        //optional
+      //updateWhenLayerInfosIsShowInMapChanged: false, //optional
+      map: null,                                       //optional
+      layerStateController: null,                      //optional
+      layerState: null,                                //optional
+      customFilter: null,                              //optional
+      onlySelectLeafLayer: false,                      //optional
+      displayLayerTypeIcon: true,                      //optional
+      showTables: true,                                //optional
+      viewMode: false,                                 //optional
+      onlyShowWebMapLayers: false,                     //optional
+
+      //public methods:
+      //getSelectedItems
+
+      //events:
+      //tree-click
+      //update
+
+      layerStructure: null,
+      _layerDatas: null,
+      _eventHandles: null,
+
+      postMixInProperties:function(){
+        this.nls = window.jimuNls.basicLayerChooserFromMap;
+      },
+
+      postCreate: function() {
+        //this.inherited(arguments);
+        html.addClass(this.domNode, 'jimu-basic-layer-chooser-from-map');
+        html.addClass(this.domNode, 'jimu-basic-layer-chooser-from-map-lite');
+
+        /*
+        this.shelter = new LoadingIndicator({hidden:true});
+        this.shelter.placeAt(this.domNode);
+        this.shelter.startup();
+        */
+
+        // init properties
+        this._layerDatas = {};
+        this._eventHandles = [];
+
+        // init layerStructure
+        if(this.map){
+          this.layerStructure = LayerStructure.createInstance(this.map);
+        } else {
+          this.layerStructure = LayerStructure.getInstance();
+        }
+        this.layerInfosObj = this.layerStructure._layerInfos;
+
+        // clear layer state
+        this.layerState = this._clearLayerState(this.layerState) || {};
+
+        /*
+        this.own(on(this.layerStructure,
+          LayerStructure.EVENT_STRUCTURE_CHANGE,
+          lang.hitch(this, this._onLayerInfosChanged)));
+        if(this.updateWhenLayerInfosIsShowInMapChanged) {
+          this.own(on(this.layerStructure,
+             LayerStructure.EVENT_VISIBILITY_CHANGE,
+             lang.hitch(this, this._onLayerInfosIsShowInMapChanged)));
+        }
+        */
+
+        // init layerStateController
+        if(!this.layerStateController) {
+          this.layerStateController = new LayerChooser.LayerStateController();
+        }
+
+        // init filter
+        var filter;
+        if(this.customFilter) {
+          filter = lang.hitch(this, this.customFilter);
+        } else {
+          filter = lang.hitch(this, this.filter);
+        }
+        this.filter = LayerChooserFromMap.andCombineFilters([this.basicFilter, filter]);
+
+        // create tree
+        this._createTree();
+      },
+
+      _createTree: function() {
+        var layerNodes, tableNodes;
+        if(this.onlyShowWebMapLayers) {
+          layerNodes = this.layerStructure.getWebmapLayerNodes();
+          tableNodes = this.layerStructure.getWebmapTableNodes();
+        } else {
+          layerNodes = this.layerStructure.getLayerNodes();
+          tableNodes = this.layerStructure.getTableNodes();
+        }
+        var createdCount = this._createLayerNodes(layerNodes.concat(this.showTables ? tableNodes : []), this.treeUl);
+
+        if(createdCount > 0) {
+          html.setStyle(this.errorTipSection, 'display', 'none');
+          this.layerStateController.restoreState(this.layerState, this.layerStructure);
+        }
+      },
+
+      _createLayerNodes: function(layerNodes, nodeUl) {
+        var filterDefs = array.map(layerNodes, function(layerNode) {
+          return this.filter(layerNode._layerInfo);
+        }, this);
+
+        var createdCount = 0;
+        all(filterDefs).then(lang.hitch(this, function(results) {
+          array.forEach(results, function(isPass, index) {
+            if(isPass) {
+              this._createLayerNode(layerNodes[index], nodeUl);
+              createdCount++;
+            }
+          }, this);
+        }));
+
+        return createdCount;
+      },
+
+      _createLayerNode: function(layerNode, nodeUl) {
+        var handle;
+
+        var layerNodeLi = html.create('li', {
+          'class': 'tree-node-li',
+          'id': 'layerchooserlite-tree-node-li-' + layerNode.id
+          //'style': 'display:none'
+        }, nodeUl);
+
+        var layerNodeDiv = html.create('div', {
+          'class': 'tree-node-div'
+        }, layerNodeLi);
+
+        var collapseSpan = html.create('span', {
+          'class': 'tree-node-column-span collapse-span'
+        }, layerNodeDiv);
+
+        var checkBoxSpan = html.create('span', {
+          'class': 'tree-node-column-span check-box-span'
+        }, layerNodeDiv);
+
+        var checkBoxDiv = html.create('div', {
+          'class': 'tree-node-column-div check-box-div'
+        }, checkBoxSpan);
+
+        var displayIconClass = this.displayLayerTypeIcon ? "display" : "";
+        var iconSpan = html.create('span', {
+          'class': 'tree-node-column-span icon-span ' + displayIconClass
+        }, layerNodeDiv);
+
+        /*
+        var iconDiv = html.create('div', {
+          'class': 'tree-node-column-div icon-div',
+          'style': iconSpanStyle
+        }, iconSpan);
+        */
+
+        // restore layer state
+        var state;
+        var oldState = this.layerState[layerNode.id];
+        if(oldState) {
+          state = oldState.selected;
+        } else {
+          state = this.layerStateController.getState(layerNode);
+        }
+
+        var checkBox = new CheckBox({
+          'checked': state
+        }, checkBoxDiv);
+
+        var titleSpan = html.create('span', {
+          'class': 'tree-node-column-span title-span',
+          'innerHTML': layerNode.title
+        }, layerNodeDiv);
+
+
+        // create subLayerNode ul
+        var subLayerNodeUl = html.create('ul', {
+          'class': 'tree-ul tree-subnode-ul',
+          'style': 'display:none; '
+        }, layerNodeLi);
+
+        var layerData = {
+          layerNode: layerNode,
+          layerNodeLi: layerNodeLi,
+          layerNodeDiv: layerNodeDiv,
+          collapseSpan: collapseSpan,
+          iconSpan: iconSpan,
+          checkBox: checkBox,
+          subLayerNodeUl: subLayerNodeUl,
+          hasBeenOpened: false
+        };
+
+        this._layerDatas[layerNode.id] = layerData;
+        if(!layerNode.isLeaf()) {
+          html.addClass(collapseSpan, 'is-leaf');
+          html.addClass(titleSpan, 'is-leaf');
+          handle = on(collapseSpan, 'click', lang.hitch(this, this._onCollapse, layerData));
+          this._eventHandles.push(handle);
+          handle = on(titleSpan, 'click', lang.hitch(this, this._onCollapse, layerData));
+          this._eventHandles.push(handle);
+          if(this.onlySelectLeafLayer) {
+            checkBox.setStatus(false);
+            html.setStyle(checkBoxDiv, 'display', 'none');
+          }
+        }
+
+        if(this.viewMode === true) {
+          checkBox.setStatus(false);
+        }
+
+        //this.own(on(checkBox, 'change', lang.hitch(this, this._onCheckBoxChange, layerData)));
+        handle = on(checkBox.domNode, 'click', lang.hitch(this, this._onCheckBoxChange, layerData));
+        this._eventHandles.push(handle);
+
+        this._setIconImage(layerData, false);
+
+        return layerData;
+      },
+
+      _setIconImage: function(layerData, opened) {
+        if(!this.displayLayerTypeIcon) {
+          return;
+        }
+
+        var layerNode = layerData.layerNode;
+        var layerTypeDef = layerNode.getLayerType();
+        var layerObjectDef = layerNode.getLayerObject();
+        all({
+          layerType: layerTypeDef,
+          layerObject: layerObjectDef
+        }).then(lang.hitch(this, function(result) {
+          var item;
+          if(result.layerType && result.layerObject) {
+            item = {
+              type: result.layerType,
+              layerInfo: layerNode._layerInfo
+            };
+
+            var baseUrl = window.location.protocol + "//" + window.location.host + require.toUrl("jimu");
+            var imageName = this._getIconInfo(item, opened).imageName;
+            if (imageName) {
+              var backgroundImageUrl = "url(" + baseUrl + "/css/images/" + imageName + ")";
+              html.setStyle(layerData.iconSpan, 'background-image', backgroundImageUrl);
+            }
+          }
+        }));
+      },
+
+      _getCheckBoxValue: function(checkBox) {
+        return checkBox.getStatus() ? checkBox.getValue() : false;
+      },
+
+      _clearLayerState: function(layerState) {
+        var newLayerState = {};
+        if(layerState) {
+          this.layerStructure.traversal(lang.hitch(this, function(layerNode) {
+            if(layerState[layerNode.id]) {
+              newLayerState[layerNode.id] = {
+                selected: layerState[layerNode.id].selected
+              };
+            }
+          }));
+        }
+        return newLayerState;
+      },
+
+
+      _selectOrDeselectLayer: function(layerId, isSelect) {
+        var layerData = this._layerDatas[layerId];
+        if(layerData) {
+          layerData.checkBox.setValue(isSelect);
+          this._onCheckBoxChange(layerData);
+        }
+      },
+
+      selectLayer: function(layerId) {
+        this._selectOrDeselectLayer(layerId, true);
+      },
+
+      deselectLayer: function(layerId) {
+        this._selectOrDeselectLayer(layerId, false);
+      },
+
+      // layerState: {
+      //  id: {
+      //        selected: true/false
+      //      }
+      //  }
+      getState: function() {
+        var layerState = lang.clone(this.layerState);
+
+        for (var id in this._layerDatas) {
+          if(this._layerDatas.hasOwnProperty(id) && (typeof this._layerDatas[id] !== 'function')) {
+            var layerData = this._layerDatas[id];
+            var checkBox = layerData.checkBox;
+            if(this._getCheckBoxValue(checkBox)) {
+              layerState[id] = {selected: true};
+            } else {
+              layerState[id] = {selected: false};
+            }
+          }
+        }
+        return layerState;
+      },
+
+      // layerState: {
+      //  id: {
+      //        selected: true/false
+      //      }
+      //  }
+      restoreState: function(layerState) {
+        this.layerState = this._clearLayerState(layerState);
+        for (var id in this._layerDatas) {
+          if(this._layerDatas.hasOwnProperty(id) &&
+             (typeof this._layerDatas[id] !== 'function')) {
+            var layerData = this._layerDatas[id];
+            var checkBox = layerData && layerData.checkBox;
+            var state = this.layerState[id];
+            if(state) {
+              checkBox.setValue(state.selected);
+            } else {
+              checkBox.setValue(this.layerStateController.getState(layerData.layerNode));
+            }
+          }
+        }
+        this.layerStateController.restoreState(this.layerState, this.layerStructure);
+      },
+
+      setViewMode: function(viewMode) {
+        for (var id in this._layerDatas) {
+          if(this._layerDatas.hasOwnProperty(id) &&
+             (typeof this._layerDatas[id] !== 'function')) {
+            var layerData = this._layerDatas[id];
+            var checkBox = layerData && layerData.checkBox;
+            if(viewMode === true) {
+              this.viewMode = true;
+              checkBox.setStatus(false);
+            } else {
+              this.viewMode = false;
+              checkBox.setStatus(true);
+            }
+          }
+        }
+      },
+
+      getSelectedLayerNodes: function() {
+        // some selected layers may have not been loaded.
+        var selectedLayerNodes = [];
+        var layerState =  this.getState();
+        for (var id in layerState) {
+          if(layerState.hasOwnProperty(id) && (typeof layerState[id] !== 'function')) {
+            if(layerState[id].selected) {
+              var layerNode = this.layerStructure.getNodeById(id);
+              if(layerNode) {
+                selectedLayerNodes.push(layerNode);
+              }
+            }
+          }
+        }
+        return selectedLayerNodes;
+      },
+
+      getLoadedLayerNodes: function() {
+        var loadedLayerNodes = [];
+        for(var id in this._layerDatas) {
+          if(this._layerDatas.hasOwnProperty(id) && (typeof this._layerDatas[id] !== 'function')) {
+            var layerNode = this.layerStructure.getNodeById(id);
+            if(layerNode) {
+              loadedLayerNodes.push(layerNode);
+            }
+          }
+        }
+        return loadedLayerNodes;
+      },
+
+      getLayerAssociateDomNodesById: function(layerId) {
+        var domNodes = null;
+        var layerData = this._layerDatas[layerId];
+        if(layerData) {
+          domNodes = {
+            collapseIcon: layerData.collapseSpan,
+            checkBox: layerData.checkBox.domNode,
+            layerTypeIcon: layerData.iconSpan
+          };
+        }
+        return domNodes;
+      },
+
+      //compatible with the LayerChooserFromMap
+      //return an array, each element has 'name', 'url' and 'layerInfo' attribute
+      getSelectedItems: function(){
+        var handledItems = [];
+        handledItems = array.map(this.getSelectedLayerNodes(), function(layerNode) {
+          return {
+            name: layerNode.title,
+            url: layerNode.getUrl(),
+            layerInfo: layerNode._layerInfo
+          };
+        }, this);
+        return handledItems;
+      },
+
+      //compatible with the LayerChooserFromMap
+      //return an array, each element has 'name', 'url' and 'layerInfo' attribute
+      getAllItems: function(){
+        var handledItems = [];
+        return handledItems;
+      },
+
+
+      _clear:function(){
+        // clear this._layerDatas
+        this._layerDatas = {};
+
+        // clear this._eventHandles
+        array.forEach(this._eventHandles, function(eventHandle) {
+          eventHandle.remove();
+        }, this);
+        this._eventHandles = [];
+
+        // clear tree
+        html.empty(this.treeUl);
+      },
+
+      destroy: function(){
+        this._clear();
+
+        if(this.map) {
+          this.layerStructure.destroy();
+        }
+
+        if(this.shelter){
+          this.shelter.destroy();
+          this.shelter = null;
+        }
+
+        this.inherited(arguments);
+      },
+
+      /*****************************
+      * Events
+      *****************************/
+      _onCollapse: function(layerData) {
+        var displayOfSubLayerUl = html.getStyle(layerData.subLayerNodeUl, 'display');
+        var collapsed = (displayOfSubLayerUl === "none") ? true : false;
+        if(collapsed) {
+          html.setStyle(layerData.subLayerNodeUl, 'display', 'block');
+          html.addClass(layerData.collapseSpan, 'opened');
+        } else {
+          html.setStyle(layerData.subLayerNodeUl, 'display', 'none');
+          html.removeClass(layerData.collapseSpan, 'opened');
+        }
+
+        this._setIconImage(layerData, collapsed);
+
+        if(!layerData.hasBeenOpened) {
+          this._createLayerNodes(layerData.layerNode.getSubNodes(), layerData.subLayerNodeUl);
+          layerData.hasBeenOpened = true;
+        }
+
+      },
+
+      _onCheckBoxChange: function(layerData, evt) {
+        this.layerStateController.setState(layerData.layerNode, this._getCheckBoxValue(layerData.checkBox));
+        this.emit('selection-change', layerData.layerNode, this._getCheckBoxValue(layerData.checkBox));
+        this._onTreeClick(layerData, evt);
+      },
+
+      _onLayerInfosChanged: function() {
+        /*jshint unused: false*/
+        // need to filter the layer.
+        this._createTree();
+        this.emit('update');
+      },
+
+      _onLayerInfosIsShowInMapChanged: function(){
+        /*jshint unused: false*/
+        // need to filter the layer.
+        this._createTree();
+        this.emit('update');
+      },
+
+      //to be override
+      //send 'tree-click' event for compatible with the LayerChooserFromMap
+      _onTreeClick: function(layerData, evt){
+        /*jshint unused: false*/
+        var item = {
+          name: layerData.layerNode.title || "",
+          parent: null,
+          layerInfo: layerData.layerNode._layerInfo,
+          type: null,
+          layerClass: null,
+          id: null,
+          isLeaf: layerData.layerNode.isLeaf(),
+          hasChildren: layerData.layerNode.isLeaf() ? false : true
+        };
+        this.emit('tree-click', item, null, evt);
+      }
+    });
+
+    LayerChooser.LayerStateController = declare(null, {
+      // get state for single layer
+      getState: function(layerNode) {
+        /*jshint unused: false*/
+        return true;
+      },
+
+      // set state for single layer
+      setState: function(layerNode, selected) {
+        /*jshint unused: false*/
+        return this;
+      },
+
+      restoreState: function(layerState, layerStructure) {
+        /*jshint unused: false*/
+        return this;
+      }
+
+    });
+
+    LayerChooser.LayerVisibilityStateController = declare(LayerChooser.LayerStateController, {
+      getState: function(layerNode) {
+        return layerNode.isToggledOn();
+      },
+
+      setState: function(layerNode, selected) {
+        /*jshint unused: false*/
+        layerNode.toggle();
+        return this;
+      },
+
+      restoreState: function(layerState, layerStructure) {
+        var options = {layerOptions: {}};
+
+        for (var id in layerState) {
+          if(layerState.hasOwnProperty(id) &&
+             (typeof layerState[id] !== 'function')) {
+            var state = layerState[id];
+            options.layerOptions[id] = {visible: state.selected};
+          }
+        }
+
+        layerStructure.restoreState(options);
+        return this;
+      }
+    });
+    LayerChooser.layerVisibilityStateController =  new LayerChooser.LayerVisibilityStateController();
+
+    LayerChooser.LayerLegendStateController = declare(LayerChooser.LayerStateController, {
+      getState: function(layerNode) {
+        //return layerNode.isToggledOnLegendFromWebMap();
+        return layerNode.isShowLegend();
+      }
+    });
+    LayerChooser.layerLegendStateController =  new LayerChooser.LayerLegendStateController();
+
+    return LayerChooser;
+  });

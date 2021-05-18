@@ -1,8 +1,134 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/ColorTransparencyPicker.html":'\x3cdiv class\x3d"jimu-colorTransparencyPicker"\x3e\r\n  \x3cdiv class\x3d"colorPicker" data-dojo-attach-point\x3d"colorPicker"\x3e\x3c/div\x3e\r\n  \x3cspan class\x3d"trans"\x3e${nls.transparency}\x3c/span\x3e\r\n  \x3cdiv class\x3d"sliderbar" data-dojo-attach-point\x3d"sliderBar"\x3e\x3c/div\x3e\r\n  \x3cinput type\x3d"text" data-dojo-type\x3d"dijit/form/NumberSpinner" value\x3d"0"\r\n         data-dojo-attach-point\x3d"spinner" data-dojo-props\x3d"smallDelta:10,intermediateChanges:true,constraints: {min:0,max:100}"\x3e\r\n  \x3cspan \x3e%\x3c/span\x3e\r\n\x3c/div\x3e\r\n\r\n'}});
-define("dojo/_base/declare dojo/_base/lang dojo/_base/Color dojo/on dojo/query dojo/_base/html dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/text!./templates/ColorTransparencyPicker.html dijit/form/HorizontalSlider jimu/dijit/ColorPickerPopup dijit/form/NumberSpinner".split(" "),function(e,c,f,d,g,h,k,l,m,n,p,q){return e([k,l,m],{_defaultColor:"#485566",templateString:n,_MINIMUN:0,_MAXIMIUM:100,postMixInProperties:function(){this.nls=window.jimuNls.transparency},postCreate:function(){this.colorPicker=
-new q({color:this._defaultColor},this.colorPicker);this.colorPicker.startup();this.slider=new p({name:"slider",value:0,minimum:this._MINIMUN,maximum:this._MAXIMIUM,discreteValues:101,intermediateChanges:!0,showButtons:!1,style:"width:140px;display: inline-block;"},this.sliderBar);this.slider.startup();this.inherited(arguments)},startup:function(){this.own(d(this.slider,"change",c.hitch(this,function(a){!1===this._isSameVal()&&this.spinner.setValue(a)})));this.own(d(this.spinner,"change",c.hitch(this,
-function(a){isNaN(a)&&this.spinner.setValue(0);!1===this._isSameVal()&&this.spinner.isInRange()&&this.slider.setValue(a)})));this._stylePolyfill();this.inherited(arguments)},_isSameVal:function(){return this.slider.getValue()===this.spinner.getValue()},isValid:function(){var a=this.slider.getValue();return a<this._MINIMUN||a>this._MAXIMIUM||!this.spinner.isValid()?!1:!0},getValues:function(){var a=null,b=null;(b=this.colorPicker.getColor())&&b.toHex&&(a=b.toHex());b=this.spinner.getValue()/100;return{color:a,
-transparency:b}},setValues:function(a){if("object"===typeof a||"string"===typeof a)this.colorPicker.setColor(new f(a.color)),a.transparency="undefined"===typeof a.transparency?0:100*a.transparency,this.slider.setValue(a.transparency),this.spinner.setValue(a.transparency)},_stylePolyfill:function(){var a=g(".dijitSliderLeftBumper",this.domNode)[0];a&&a.parentNode&&h.setStyle(a.parentNode,"background-color","#24b5cc")}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+    'dojo/_base/declare',
+    "dojo/_base/lang",
+    'dojo/_base/Color',
+    'dojo/on',
+    "dojo/query",
+    "dojo/_base/html",
+    'dijit/_WidgetBase',
+    'dijit/_TemplatedMixin',
+    'dijit/_WidgetsInTemplateMixin',
+    'dojo/text!./templates/ColorTransparencyPicker.html',
+    "dijit/form/HorizontalSlider",
+    'jimu/dijit/ColorPickerPopup',
+    "dijit/form/NumberSpinner"
+  ],
+  function(declare, lang, Color, on, query, html,
+           _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template,
+           HorizontalSlider, ColorPicker) {
+    return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
+      _defaultColor: '#485566',
+      templateString: template,
+      //nls: null,
+      _MINIMUN: 0,
+      _MAXIMIUM: 100,
+
+      postMixInProperties: function () {
+        this.nls = window.jimuNls.transparency;
+      },
+      postCreate: function() {
+        this.colorPicker = new ColorPicker({
+          color: this._defaultColor
+        }, this.colorPicker);
+        this.colorPicker.startup();
+
+        this.slider = new HorizontalSlider({
+          name: "slider",
+          value: 0,
+          minimum: this._MINIMUN,
+          maximum: this._MAXIMIUM,
+          discreteValues: 101,
+          intermediateChanges: true,
+          showButtons: false,
+          style: "width:140px;display: inline-block;"
+        }, this.sliderBar);
+        this.slider.startup();
+
+        this.inherited(arguments);
+      },
+      startup: function() {
+        this.own(on(this.slider, 'change', lang.hitch(this, function(val) {
+          if (false === this._isSameVal()) {
+            this.spinner.setValue(val);
+          }
+        })));
+
+        this.own(on(this.spinner, 'change', lang.hitch(this, function (val) {
+          if (isNaN(val)) {
+            this.spinner.setValue(0);
+          }
+          if (false === this._isSameVal()) {
+            if (this.spinner.isInRange()) {
+              this.slider.setValue(val);
+            }
+          }
+        })));
+
+        this._stylePolyfill();
+        this.inherited(arguments);
+      },
+      _isSameVal: function() {
+        return this.slider.getValue() === this.spinner.getValue();
+      },
+      isValid: function () {
+        var sliderValue = this.slider.getValue();
+        if (sliderValue < this._MINIMUN || sliderValue > this._MAXIMIUM) {
+          return false;
+        }
+        if (!this.spinner.isValid()) {
+          return false;
+        }
+
+        return true;
+      },
+      getValues: function() {
+        var rgb = null,
+          a = null;
+        var bgColor = this.colorPicker.getColor();
+        if (bgColor && bgColor.toHex) {
+          rgb = bgColor.toHex();
+        }
+        a = this.spinner.getValue() / 100;
+
+        return {
+          color: rgb,
+          transparency: a
+        };
+      },
+      setValues: function(obj) {
+        if (typeof obj === "object" || typeof obj === "string") {
+          this.colorPicker.setColor(new Color(obj.color));
+
+          if (typeof obj.transparency === "undefined") {
+            obj.transparency = 0;
+          } else {
+            obj.transparency = obj.transparency * 100;
+          }
+          this.slider.setValue(obj.transparency);
+          this.spinner.setValue(obj.transparency);
+        }
+      },
+      _stylePolyfill: function() {
+        var leftBumper = query('.dijitSliderLeftBumper', this.domNode)[0];
+        if (leftBumper && leftBumper.parentNode) {
+          html.setStyle(leftBumper.parentNode, 'background-color', "#24b5cc");
+        }
+      }
+    });
+  });

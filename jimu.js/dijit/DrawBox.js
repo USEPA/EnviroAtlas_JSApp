@@ -1,19 +1,516 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/DrawBox.html":'\x3cdiv style\x3d"position:relative;width:100%;"\x3e\r\n\t\x3cdiv class\x3d"draw-items"\x3e\r\n\t\t\x3cdiv title\x3d"${nls.point}" data-geotype\x3d"POINT" data-commontype\x3d"point" class\x3d"draw-item point-icon" data-dojo-attach-point\x3d"pointIcon"\x3e\x3c/div\x3e\r\n\t\t\x3cdiv title\x3d"${nls.line}" data-geotype\x3d"LINE" data-commontype\x3d"polyline" class\x3d"draw-item line-icon" data-dojo-attach-point\x3d"lineIcon"\x3e\x3c/div\x3e\r\n\t\t\x3cdiv title\x3d"${nls.polyline}" data-geotype\x3d"POLYLINE" data-commontype\x3d"polyline" class\x3d"draw-item polyline-icon" data-dojo-attach-point\x3d"polylineIcon"\x3e\x3c/div\x3e\r\n\t\t\x3cdiv title\x3d"${nls.freehandPolyline}" data-geotype\x3d"FREEHAND_POLYLINE" data-commontype\x3d"polyline" class\x3d"draw-item freehand-polyline-icon" data-dojo-attach-point\x3d"freehandPolylineIcon"\x3e\x3c/div\x3e\r\n\t\t\x3cdiv title\x3d"${nls.arrow}" data-geotype\x3d"ARROW" data-commontype\x3d"arrow" class\x3d"draw-item arrow-icon" data-dojo-attach-point\x3d"arrowIcon"\x3e\x3c/div\x3e\r\n\t\t\x3cdiv title\x3d"${nls.triangle}" data-geotype\x3d"TRIANGLE" data-commontype\x3d"polygon" class\x3d"draw-item triangle-icon" data-dojo-attach-point\x3d"triangleIcon"\x3e\x3c/div\x3e\r\n\t\t\x3cdiv title\x3d"${nls.extent}" data-geotype\x3d"EXTENT" data-commontype\x3d"polygon" class\x3d"draw-item extent-icon" data-dojo-attach-point\x3d"extentIcon"\x3e\x3c/div\x3e\r\n\t\t\x3cdiv title\x3d"${nls.circle}" data-geotype\x3d"CIRCLE" data-commontype\x3d"polygon" class\x3d"draw-item circle-icon" data-dojo-attach-point\x3d"circleIcon"\x3e\x3c/div\x3e\r\n\t\t\x3cdiv title\x3d"${nls.ellipse}" data-geotype\x3d"ELLIPSE" data-commontype\x3d"polygon" class\x3d"draw-item ellipse-icon" data-dojo-attach-point\x3d"ellipseIcon"\x3e\x3c/div\x3e\r\n\t\t\x3cdiv title\x3d"${nls.polygon}" data-geotype\x3d"POLYGON" data-commontype\x3d"polygon" class\x3d"draw-item polygon-icon" data-dojo-attach-point\x3d"polygonIcon"\x3e\x3c/div\x3e\r\n\t\t\x3cdiv title\x3d"${nls.freehandPolygon}" data-geotype\x3d"FREEHAND_POLYGON" data-commontype\x3d"polygon" class\x3d"draw-item freehand-polygon-icon" data-dojo-attach-point\x3d"freehandPolygonIcon"\x3e\x3c/div\x3e\r\n\t\t\x3cdiv title\x3d"${nls.text}" data-geotype\x3d"TEXT" data-commontype\x3d"text" class\x3d"draw-item text-icon" data-dojo-attach-point\x3d"textIcon" data-dojo-attach-point\x3d"textIcon"\x3e\x3c/div\x3e\r\n\t\t\x3cdiv class\x3d"drawings-clear" data-dojo-attach-point\x3d"btnClear" title\x3d"${nls.clear}"\x3e\x3c/div\x3e\r\n\t\x3c/div\x3e\r\n\x3c/div\x3e'}});
-define("dojo/_base/declare dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/text!./templates/DrawBox.html dojo/_base/lang dojo/_base/html dojo/_base/array dojo/on dijit/a11yclick dojo/query dojo/Evented esri/graphic esri/layers/GraphicsLayer jimu/dijit/Draw esri/symbols/jsonUtils esri/geometry/Polygon".split(" "),function(q,r,t,u,v,e,c,l,h,p,g,w,x,y,m,n,z){var k={};return q([r,t,u,w],{templateString:v,baseClass:"jimu-draw-box",declaredClass:"jimu.dijit.DrawBox",nls:null,
-drawLayer:null,drawLayerId:null,drawToolBar:null,_isDisabled:!1,_shiftKey:!1,_ctrlKey:!1,_metaKey:!1,types:null,geoTypes:null,map:null,pointSymbol:null,polylineSymbol:null,polygonSymbol:null,textSymbol:null,showClear:!1,keepOneGraphic:!1,deactivateAfterDrawing:!0,postMixInProperties:function(){this.nls=window.jimuNls.drawBox},postCreate:function(){this.inherited(arguments);var a={};this.drawLayerId&&(a.id=this.drawLayerId);this.drawLayer=new y(a);this._initDefaultSymbols();this._initTypes();a=g(".draw-item",
-this.domNode);a.forEach(function(a){c.setAttr(a,"role","button");c.setAttr(a,"tabindex","0")});this.own(a.on(p,e.hitch(this,this._onItemClick)));c.setAttr(this.btnClear,"role","button");c.setAttr(this.btnClear,"tabindex","0");this.own(h(this.btnClear,p,e.hitch(this,this._onClickClear)));this.own(h(document.body,"keydown",e.hitch(this,function(a){this._shiftKey=!!a.shiftKey;this._ctrlKey=!!a.ctrlKey;this._metaKey=!!a.metaKey})));this.own(h(document.body,"keyup",e.hitch(this,function(a){this._shiftKey=
-!!a.shiftKey;this._ctrlKey=!!a.ctrlKey;this._metaKey=!!a.metaKey})));this.map&&this.setMap(this.map);c.setStyle(this.btnClear,"display",!0===this.showClear?"block":"none");this.enable();k[this.id]=this},enable:function(){this._isDisabled=!1;c.addClass(this.domNode,"enabled");c.removeClass(this.domNode,"disabled")},disable:function(){this._isDisabled=!0;c.addClass(this.domNode,"disabled");c.removeClass(this.domNode,"enabled");this.deactivate()},hideLayer:function(){this.drawLayer&&this.drawLayer.hide()},
-showLayer:function(){this.drawLayer&&this.drawLayer.show()},isEnabled:function(){return!this._isDisabled},isActive:function(){var a=g(".draw-item.jimu-state-active",this.domNode);return a&&0<a.length},disableWebMapPopup:function(){this.map&&this.map.setInfoWindowOnClick(!1)},enableWebMapPopup:function(){this.map&&this.map.setInfoWindowOnClick(!0)},destroy:function(){this.deactivate();this.drawLayer&&this.map&&this.map.removeLayer(this.drawLayer);this.drawLayer=this.map=this.drawToolBar=null;delete k[this.id];
-this.inherited(arguments)},setMap:function(a){a&&(this.map=a,this.map.addLayer(this.drawLayer),this.drawToolBar=new m(this.map),this.drawToolBar.setMarkerSymbol(this.pointSymbol),this.drawToolBar.setLineSymbol(this.polylineSymbol),this.drawToolBar.setFillSymbol(this.polygonSymbol),this.own(h(this.drawToolBar,"draw-end",e.hitch(this,this._onDrawEnd))))},setPointSymbol:function(a){this.pointSymbol=a;this.drawToolBar.setMarkerSymbol(this.pointSymbol)},setLineSymbol:function(a){this.polylineSymbol=a;
-this.drawToolBar.setLineSymbol(a)},setPolygonSymbol:function(a){this.polygonSymbol=a;this.drawToolBar.setFillSymbol(a)},setTextSymbol:function(a){this.textSymbol=a},reset:function(){this.deactivate();this.clear()},clear:function(){this.drawLayer.clear();this.onClear()},deactivate:function(){this.enableWebMapPopup();g(".draw-item",this.domNode).removeClass("jimu-state-active");this.drawToolBar&&(this.drawToolBar.deactivate(),this.emit("draw-deactivate"))},activate:function(a){var b=null,d=g(".draw-item",
-this.domNode);"TEXT"===a?(a="POINT",b=this.textIcon):(d=d.filter(function(b){return b.getAttribute("data-geotype")===a}),0<d.length&&(b=d[0]));b&&this._activate(b)},onIconSelected:function(a,b,d){this.emit("icon-selected",a,b,d)},onDrawEnd:function(a,b,d,c,g,e){this.emit("draw-end",a,b,d,c,g,e)},onClear:function(){this.emit("clear")},addGraphic:function(a){this.keepOneGraphic&&this.drawLayer.clear();this.drawLayer.add(a)},removeGraphic:function(a){this.drawLayer.remove(a)},getFirstGraphic:function(){var a=
-null;this.drawLayer&&0<this.drawLayer.graphics.length&&(a=this.drawLayer.graphics[0]);return a},show:function(){c.removeClass(this.domNode,"hidden")},hide:function(){c.addClass(this.domNode,"hidden")},getDrawItemIcons:function(){return g(".draw-item",this.domNode)},_onClickClear:function(){this._isDisabled||(this.clear(),this.emit("user-clear"))},_initDefaultSymbols:function(){var a={style:"esriSMSCircle",color:[0,0,128,128],name:"Circle",outline:{color:[0,0,128,255],width:1},type:"esriSMS",size:18},
-b={style:"esriSLSSolid",color:[79,129,189,255],width:3,name:"Blue 1",type:"esriSLS"},d={style:"esriSFSSolid",color:[79,129,189,128],type:"esriSFS",outline:{style:"esriSLSSolid",color:[54,93,141,255],width:1.5,type:"esriSLS"}};this.pointSymbol||(this.pointSymbol=n.fromJson(a));this.polylineSymbol||(this.polylineSymbol=n.fromJson(b));this.polygonSymbol||(this.polygonSymbol=n.fromJson(d))},_initTypes:function(){this.geoTypes&&0<this.geoTypes.length?this.types=null:(this.geoTypes=[],this.types&&0<this.types.length||
-(this.types=["point","arrow","polyline","polygon"]),0<=this.types.indexOf("point")&&(this.geoTypes=this.geoTypes.concat(["POINT"])),0<=this.types.indexOf("arrow")&&(this.geoTypes=this.geoTypes.concat(["ARROW"])),0<=this.types.indexOf("polyline")&&(this.geoTypes=this.geoTypes.concat(["LINE","POLYLINE","FREEHAND_POLYLINE"])),0<=this.types.indexOf("polygon")&&(this.geoTypes=this.geoTypes.concat("TRIANGLE EXTENT CIRCLE ELLIPSE POLYGON FREEHAND_POLYGON".split(" "))),0<=this.types.indexOf("text")&&(this.geoTypes=
-this.geoTypes.concat(["TEXT"])));var a=g(".draw-item",this.domNode);a.style("display","none");l.forEach(a,e.hitch(this,function(a){var b=a.getAttribute("data-geotype"),b=0<=l.indexOf(this.geoTypes,b);c.setStyle(a,"display",b?"block":"none")}))},_onItemClick:function(a){this._isDisabled||(a=a.target||a.srcElement,c.hasClass(a,"draw-item")&&(c.hasClass(a,"jimu-state-active")?this.deactivate():this._activate(a)))},_activate:function(a){this._deactiveAllDrawBoxes();g(".draw-item",this.domNode).removeClass("jimu-state-active");
-c.addClass(a,"jimu-state-active");var b=a.getAttribute("data-geotype"),d=a.getAttribute("data-commontype"),f=m[b];"TEXT"===b&&(f=m.POINT);this.disableWebMapPopup();this.drawToolBar.activate(f);this.emit("draw-activate",f);this.onIconSelected(a,b,d)},_onDrawEnd:function(a){var b=g(".draw-item.jimu-state-active",this.domNode)[0],d=b.getAttribute("data-geotype"),b=b.getAttribute("data-commontype"),f=null,f="extent"===a.geometry.type?z.fromExtent(a.geometry):a.geometry;f.geoType=d;f.commonType=b;a=f.type;
-var e=null,e="point"===a||"multipoint"===a?c.hasClass(this.textIcon,"jimu-state-active")?this.textSymbol:this.pointSymbol:"line"===a||"polyline"===a?this.polylineSymbol:this.polygonSymbol,f=new x(f,e,null,null);this.keepOneGraphic&&this.drawLayer.clear();this.drawLayer.add(f);this.deactivateAfterDrawing&&this.deactivate();this.onDrawEnd(f,d,b,this._shiftKey,this._ctrlKey,this._metaKey)},_deactiveAllDrawBoxes:function(){var a;l.forEach(Object.keys(k),e.hitch(this,function(b){(a=k[b])&&a.drawToolBar&&
-b!==this.id&&a.deactivate()}))}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dijit/_WidgetsInTemplateMixin',
+  'dojo/text!./templates/DrawBox.html',
+  'dojo/_base/lang',
+  'dojo/_base/html',
+  'dojo/_base/array',
+  'dojo/on',
+  "dijit/a11yclick",
+  'dojo/query',
+  'dojo/Evented',
+  'esri/graphic',
+  'esri/layers/GraphicsLayer',
+  // 'esri/toolbars/draw',
+  'jimu/dijit/Draw',
+  'esri/symbols/jsonUtils',
+  'esri/geometry/Polygon'
+],
+function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, lang, html,
+  array, on, a11yclick, query, Evented, Graphic, GraphicsLayer, Draw, jsonUtils, Polygon) {
+  var instancesObj = {};
+
+  return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+    templateString:template,
+    baseClass: 'jimu-draw-box',
+    declaredClass: 'jimu.dijit.DrawBox',
+    nls:null,
+    drawLayer:null,
+    drawLayerId:null,
+    drawToolBar:null,
+    _isDisabled: false,
+    _shiftKey: false,
+    _ctrlKey: false,
+    _metaKey: false, //used for Mac
+
+    //options:
+    //note: 'types' is mutually exclusive with 'geoTypes' and the latter has high priority
+    //available types: ['point','polyline','polygon','text']
+    types:null,
+    /*available geoTypes:
+      ["POINT",
+       "ARROW",
+       "LINE", "POLYLINE", "FREEHAND_POLYLINE",
+       "TRIANGLE", "EXTENT", "CIRCLE", "ELLIPSE", "POLYGON", "FREEHAND_POLYGON",
+       "TEXT"]
+    */
+    geoTypes:null,//if 'geoTypes' is set, 'types' is ignored
+    map:null,
+    pointSymbol:null,
+    polylineSymbol:null,
+    polygonSymbol:null,
+    textSymbol:null,
+    showClear:false,//show Clear button or not
+    keepOneGraphic:false,//only keep one graphic or not
+    deactivateAfterDrawing: true,//deactivate drawToolbar or not after every drawing
+
+    //public methods:
+    //setMap
+    //setPointSymbol
+    //setLineSymbol
+    //setPolygonSymbol
+    //setTextSymbol
+    //addGraphic
+    //removeGraphic
+    //reset
+    //clear
+    //activate
+    //deactivate
+    //enable
+    //disable
+    //isEnabled
+
+    //events:
+    //icon-selected
+    //draw-end
+    //clear
+    //user-clear
+    //draw-activate
+    //draw-deactivate
+
+    //css classes:
+    //draw-item
+    //point-icon
+    //arrow-icon
+    //line-icon
+    //polyline-icon
+    //freehand-polyline-icon
+    //triangle-icon
+    //extent-icon
+    //circle-icon
+    //ellipse-icon
+    //polygon-icon
+    //freehand-polygon-icon
+    //text-icon
+    //drawings-clear
+
+    postMixInProperties:function(){
+      this.nls = window.jimuNls.drawBox;
+    },
+
+    postCreate:function(){
+      this.inherited(arguments);
+      var layerArgs = {};
+      if(this.drawLayerId){
+        layerArgs.id = this.drawLayerId;
+      }
+      this.drawLayer = new GraphicsLayer(layerArgs);
+      this._initDefaultSymbols();
+      this._initTypes();
+      var items = query('.draw-item', this.domNode);
+      items.forEach(function(item){
+        html.setAttr(item, 'role', 'button');
+        html.setAttr(item, 'tabindex', '0');
+      });
+      this.own(items.on(a11yclick, lang.hitch(this, this._onItemClick)));
+
+      html.setAttr(this.btnClear, 'role', 'button');
+      html.setAttr(this.btnClear, 'tabindex', '0');
+      this.own(on(this.btnClear, a11yclick, lang.hitch(this, this._onClickClear)));
+      //bind key events before draw-end
+      this.own(on(document.body, 'keydown', lang.hitch(this, function(event){
+        this._shiftKey = !!event.shiftKey;
+        this._ctrlKey = !!event.ctrlKey;
+        this._metaKey = !!event.metaKey;
+      })));
+      this.own(on(document.body, 'keyup', lang.hitch(this, function(event){
+        this._shiftKey = !!event.shiftKey;
+        this._ctrlKey = !!event.ctrlKey;
+        this._metaKey = !!event.metaKey;
+      })));
+
+      if(this.map){
+        this.setMap(this.map);
+      }
+      var display = this.showClear === true ? 'block' : 'none';
+      html.setStyle(this.btnClear, 'display', display);
+      this.enable();
+
+      instancesObj[this.id] = this;
+    },
+
+    enable: function(){
+      this._isDisabled = false;
+      html.addClass(this.domNode, 'enabled');
+      html.removeClass(this.domNode, 'disabled');
+    },
+
+    disable: function(){
+      this._isDisabled = true;
+      html.addClass(this.domNode, 'disabled');
+      html.removeClass(this.domNode, 'enabled');
+      this.deactivate();
+    },
+
+    hideLayer: function(){
+      if(this.drawLayer){
+        this.drawLayer.hide();
+      }
+    },
+
+    showLayer: function(){
+      if(this.drawLayer){
+        this.drawLayer.show();
+      }
+    },
+
+    isEnabled: function(){
+      return !this._isDisabled;
+    },
+
+    isActive: function(){
+      var items = query('.draw-item.jimu-state-active', this.domNode);
+      return items && items.length > 0;
+    },
+
+    disableWebMapPopup:function(){
+      if(this.map){
+        this.map.setInfoWindowOnClick(false);
+      }
+    },
+
+    enableWebMapPopup:function(){
+      if(this.map){
+        this.map.setInfoWindowOnClick(true);
+      }
+    },
+
+    destroy:function(){
+      this.deactivate();
+
+      if(this.drawLayer){
+        if(this.map){
+          this.map.removeLayer(this.drawLayer);
+        }
+      }
+
+      this.drawToolBar = null;
+      this.map = null;
+      this.drawLayer = null;
+      delete instancesObj[this.id];
+      this.inherited(arguments);
+    },
+
+    setMap:function(map){
+      if(map){
+        this.map = map;
+        this.map.addLayer(this.drawLayer);
+        this.drawToolBar = new Draw(this.map);
+        this.drawToolBar.setMarkerSymbol(this.pointSymbol);
+        this.drawToolBar.setLineSymbol(this.polylineSymbol);
+        this.drawToolBar.setFillSymbol(this.polygonSymbol);
+        this.own(on(this.drawToolBar, 'draw-end', lang.hitch(this, this._onDrawEnd)));
+      }
+    },
+
+    setPointSymbol:function(symbol){
+      this.pointSymbol = symbol;
+      this.drawToolBar.setMarkerSymbol(this.pointSymbol);
+    },
+
+    setLineSymbol:function(symbol){
+      this.polylineSymbol = symbol;
+      this.drawToolBar.setLineSymbol(symbol);
+    },
+
+    setPolygonSymbol:function(symbol){
+      this.polygonSymbol = symbol;
+      this.drawToolBar.setFillSymbol(symbol);
+    },
+
+    setTextSymbol:function(symbol){
+      this.textSymbol = symbol;
+    },
+
+    reset: function(){
+      this.deactivate();
+      this.clear();
+    },
+
+    clear:function(){
+      this.drawLayer.clear();
+      this.onClear();
+    },
+
+    deactivate:function(){
+      this.enableWebMapPopup();
+      query('.draw-item', this.domNode).removeClass('jimu-state-active');
+      if(this.drawToolBar){
+        this.drawToolBar.deactivate();
+        this.emit('draw-deactivate');
+      }
+    },
+
+    activate: function(tool){
+      //tool available values:
+      //POINT
+      //LINE,POLYLINE,FREEHAND_POLYLINE
+      //TRIANGLE,EXTENT,CIRCLE,ELLIPSE,POLYGON,FREEHAND_POLYGON
+      //TEXT
+      var itemIcon = null;
+      var items = query('.draw-item', this.domNode);
+      if(tool === 'TEXT'){
+        tool = 'POINT';
+        itemIcon = this.textIcon;
+      }else{
+        var filterItems = items.filter(function(itemNode){
+          return itemNode.getAttribute('data-geotype') === tool;
+        });
+        if(filterItems.length > 0){
+          itemIcon = filterItems[0];
+        }
+      }
+      if(itemIcon){
+        this._activate(itemIcon);
+      }
+    },
+
+    onIconSelected:function(target, geotype, commontype){
+      this.emit("icon-selected", target, geotype, commontype);
+    },
+
+    onDrawEnd:function(graphic, geotype, commontype, shiftKey, ctrlKey, metaKey){
+      this.emit('draw-end', graphic, geotype, commontype, shiftKey, ctrlKey, metaKey);
+    },
+
+    onClear:function(){
+      this.emit("clear");
+    },
+
+    addGraphic:function(g){
+      if(this.keepOneGraphic){
+        this.drawLayer.clear();
+      }
+      this.drawLayer.add(g);
+    },
+
+    removeGraphic:function(g){
+      this.drawLayer.remove(g);
+    },
+
+    getFirstGraphic: function(){
+      var firstGraphic = null;
+      if(this.drawLayer && this.drawLayer.graphics.length > 0){
+        firstGraphic = this.drawLayer.graphics[0];
+      }
+      return firstGraphic;
+    },
+
+    show: function(){
+      html.removeClass(this.domNode, 'hidden');
+    },
+
+    hide: function(){
+      html.addClass(this.domNode, 'hidden');
+    },
+
+    getDrawItemIcons: function(){
+      return query('.draw-item', this.domNode);
+    },
+
+    _onClickClear: function(){
+      if(this._isDisabled){
+        return;
+      }
+      this.clear();
+      this.emit("user-clear");
+    },
+
+    _initDefaultSymbols:function(){
+      var pointSys = {
+        "style": "esriSMSCircle",
+        "color": [0, 0, 128, 128],
+        "name": "Circle",
+        "outline": {
+          "color": [0, 0, 128, 255],
+          "width": 1
+        },
+        "type": "esriSMS",
+        "size": 18
+      };
+      var lineSys = {
+        "style": "esriSLSSolid",
+        "color": [79, 129, 189, 255],
+        "width": 3,
+        "name": "Blue 1",
+        "type": "esriSLS"
+      };
+      var polygonSys = {
+        "style": "esriSFSSolid",
+        "color": [79, 129, 189, 128],
+        "type": "esriSFS",
+        "outline": {
+          "style": "esriSLSSolid",
+          "color": [54, 93, 141, 255],
+          "width": 1.5,
+          "type": "esriSLS"
+        }
+      };
+      if(!this.pointSymbol){
+        this.pointSymbol = jsonUtils.fromJson(pointSys);
+      }
+      if(!this.polylineSymbol){
+        this.polylineSymbol = jsonUtils.fromJson(lineSys);
+      }
+      if(!this.polygonSymbol){
+        this.polygonSymbol = jsonUtils.fromJson(polygonSys);
+      }
+    },
+
+    _initTypes:function(){
+      if(this.geoTypes && this.geoTypes.length > 0){
+        //if 'geoTypes' is set, we ignore 'types'
+        this.types = null;
+      }else{
+        this.geoTypes = [];
+        if(!(this.types && this.types.length > 0)){
+          this.types = ['point', 'arrow', 'polyline', 'polygon'];
+        }
+        if(this.types.indexOf('point') >= 0){
+          this.geoTypes = this.geoTypes.concat(["POINT"]);
+        }
+        if(this.types.indexOf('arrow') >= 0){
+          this.geoTypes = this.geoTypes.concat(["ARROW"]);
+        }
+        if(this.types.indexOf('polyline') >= 0){
+          this.geoTypes = this.geoTypes.concat(["LINE", "POLYLINE", "FREEHAND_POLYLINE"]);
+        }
+        if(this.types.indexOf('polygon') >= 0){
+          var a = ["TRIANGLE", "EXTENT", "CIRCLE", "ELLIPSE", "POLYGON", "FREEHAND_POLYGON"];
+          this.geoTypes = this.geoTypes.concat(a);
+        }
+        if(this.types.indexOf('text') >= 0){
+          this.geoTypes = this.geoTypes.concat(["TEXT"]);
+        }
+      }
+      var items = query('.draw-item', this.domNode);
+      items.style('display', 'none');
+      array.forEach(items, lang.hitch(this, function(item){
+        var geoType = item.getAttribute('data-geotype');
+        var display = array.indexOf(this.geoTypes, geoType) >= 0;
+        html.setStyle(item, 'display', display ? 'block' : 'none');
+      }));
+    },
+
+    _onItemClick:function(event){
+      if(this._isDisabled){
+        return;
+      }
+      var target = event.target || event.srcElement;
+      if(!html.hasClass(target, 'draw-item')){
+        return;
+      }
+      var isSelected = html.hasClass(target, 'jimu-state-active');
+
+      //toggle tools on and off
+      if(isSelected){
+        this.deactivate();
+      }else{
+        this._activate(target);
+      }
+    },
+
+    _activate: function(itemIcon){
+      this._deactiveAllDrawBoxes();
+
+      var items = query('.draw-item', this.domNode);
+      items.removeClass('jimu-state-active');
+      html.addClass(itemIcon, 'jimu-state-active');
+      var geotype = itemIcon.getAttribute('data-geotype');
+      var commontype = itemIcon.getAttribute('data-commontype');
+      var tool = Draw[geotype];
+      if(geotype === 'TEXT'){
+        tool = Draw.POINT;
+      }
+      this.disableWebMapPopup();
+      this.drawToolBar.activate(tool);
+      this.emit('draw-activate', tool);
+      this.onIconSelected(itemIcon, geotype, commontype);
+    },
+
+    _onDrawEnd:function(event){
+      var selectedItem = query('.draw-item.jimu-state-active', this.domNode)[0];
+      var geotype = selectedItem.getAttribute('data-geotype');
+      var commontype = selectedItem.getAttribute('data-commontype');
+      var geometry = null;
+
+      if(event.geometry.type === 'extent'){
+        //convert extent to polygon because Analysis dijit doesn't support extent
+        geometry = Polygon.fromExtent(event.geometry);
+      }else{
+        geometry = event.geometry;
+      }
+
+      geometry.geoType = geotype;
+      geometry.commonType = commontype;
+
+      var type = geometry.type;
+      var symbol = null;
+
+      if (type === "point" || type === "multipoint") {
+        if(html.hasClass(this.textIcon, 'jimu-state-active')){
+          symbol = this.textSymbol;
+        }
+        else{
+          symbol = this.pointSymbol;
+        }
+      } else if (type === "line" || type === "polyline") {
+        symbol = this.polylineSymbol;
+      } else {
+        symbol = this.polygonSymbol;
+      }
+
+      var g = new Graphic(geometry, symbol, null, null);
+
+      if(this.keepOneGraphic){
+        this.drawLayer.clear();
+      }
+
+      this.drawLayer.add(g);
+
+      if(this.deactivateAfterDrawing){
+        this.deactivate();
+      }
+
+      this.onDrawEnd(g, geotype, commontype, this._shiftKey, this._ctrlKey, this._metaKey);
+    },
+
+    _deactiveAllDrawBoxes: function() {
+      var widget;
+      array.forEach(Object.keys(instancesObj), lang.hitch(this, function(key) {
+        widget = instancesObj[key];
+        if (widget && widget.drawToolBar && key !== this.id) {
+          widget.deactivate();
+        }
+      }));
+    }
+  });
+});

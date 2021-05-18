@@ -1,11 +1,230 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/_DataFields.html":'\x3cdiv\x3e\r\n\t\x3cdiv data-dojo-attach-point\x3d"fieldsContent" class\x3d"fields-content"\x3e\r\n\t\x3c/div\x3e\r\n\t\x3cdiv class\x3d"operation"\x3e\r\n\t\t\x3cdiv data-dojo-attach-point\x3d"btnUp" data-dojo-attach-event\x3d"onclick:_moveUp" class\x3d"jimu-icon jimu-icon-up" title\x3d"${nls.moveUp}"\x3e\x3c/div\x3e\r\n\t\t\x3cdiv data-dojo-attach-point\x3d"btnDown" data-dojo-attach-event\x3d"onclick:_moveDown" class\x3d"jimu-icon jimu-icon-down" title\x3d"${nls.moveDown}"\x3e\x3c/div\x3e\r\n\t\x3c/div\x3e\r\n\x3c/div\x3e'}});
-define("dojo/_base/declare dojo/_base/lang dojo/_base/array dojo/_base/html dojo/_base/query dojo/on dijit/_WidgetBase dijit/_TemplatedMixin dojo/Evented dojo/text!./templates/_DataFields.html".split(" "),function(k,c,e,d,f,g,l,m,n,p){return k([l,n,m],{baseClass:"jimu-dijit-data-fields",templateString:p,isSingle:!1,postMixInProperties:function(){this.nls=c.clone(window.jimuNls.simpleTable)},postCreate:function(){this.inherited(arguments);this.own(g(this.domNode,"click",c.hitch(this,this._onDomClicked)))},
-clear:function(){d.empty(this.fieldsContent);this.emit("change")},setSingleMode:function(){this.isSingle=!0;this._checkSingleMode()},setMultipleMode:function(){this.isSingle=!1},_checkSingleMode:function(a){if(this.isSingle){var b=f("input",this.domNode),b=e.filter(b,c.hitch(this,function(a){return a.checked}));0!==b.length&&(a||(a=b[0]),b=e.filter(b,c.hitch(this,function(b){return b!==a})),e.forEach(b,c.hitch(this,function(a){a.checked=!1})))}},setFields:function(a){this.clear();e.forEach(a,c.hitch(this,
-function(a){var b=d.toDom('\x3cdiv class\x3d"field-item"\x3e\x3cinput type\x3d"checkbox" /\x3e\x3cspan class\x3d"jimu-ellipsis" /\x3e\x3c/div\x3e'),e=f("input",b)[0],h=f("span",b)[0];e.checked=!!a.checked;h.innerHTML=a.alias||a.name;h.title=a.alias||a.name;b.fieldName=a.name;d.place(b,this.fieldsContent);this.own(g(e,"change",c.hitch(this,function(){e.checked&&this._checkSingleMode(e);this.emit("change")})))}));this.emit("change")},selectFields:function(a,b){c.isArrayLike(a)&&(a=c.clone(a),a.reverse(),
-e.forEach(a,c.hitch(this,function(a){if(a=this._getFieldItemDivByName(a))b||d.place(a,a.parentNode,"first"),f("input",a)[0].checked=!0})));this.emit("change")},getSelectedFieldNames:function(){var a=f(".field-item",this.fieldsContent),b=[];e.forEach(a,c.hitch(this,function(a){f("input",a)[0].checked&&b.push(a.fieldName)}));return b},_getFieldItemDivByName:function(a){var b=f(".field-item",this.fieldsContent);return e.filter(b,c.hitch(this,function(b){return b.fieldName===a}))[0]},_onDomClicked:function(a){a=
-a.target||a.srcElement;if(d.isDescendant(a,this.fieldsContent)&&a!==this.fieldsContent){var b=a.tagName.toLowerCase(),c=null;d.hasClass(a,"field-item")?this._selectFieldItemDom(a):"span"===b?(c=a.parentNode,this._selectFieldItemDom(c)):"input"===b&&(c=a.parentNode,a.checked?this._selectFieldItemDom(c):d.removeClass(c,"selected"));this._updateHighLightIcons()}},_updateHighLightIcons:function(){var a=this._getSelectedFieldItemDiv();a&&d.hasClass(a,"selected")&&(a.previousSibling?d.addClass(this.btnUp,
-"high-light"):d.removeClass(this.btnUp,"high-light"),a.nextSibling?d.addClass(this.btnDown,"high-light"):d.removeClass(this.btnDown,"high-light"))},_selectFieldItemDom:function(a){f(".field-item",this.fieldsContent).removeClass("selected");d.addClass(a,"selected")},_getSelectedFieldItemDiv:function(){var a=null,b=f(".field-item.selected",this.fieldsContent);0<b.length&&(a=b[0]);return a},_moveUp:function(){var a=this._getSelectedFieldItemDiv();a&&a.previousSibling&&d.place(a,a.previousSibling,"before");
-this._updateHighLightIcons()},_moveDown:function(){var a=this._getSelectedFieldItemDiv();a&&a.nextSibling&&d.place(a,a.nextSibling,"after");this._updateHighLightIcons()}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'dojo/_base/html',
+  'dojo/_base/query',
+  'dojo/on',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dojo/Evented',
+  'dojo/text!./templates/_DataFields.html'
+],
+function(declare, lang, array, html, query, on, _WidgetBase, _TemplatedMixin, Evented, template) {
+  return declare([_WidgetBase, Evented, _TemplatedMixin], {
+    baseClass: 'jimu-dijit-data-fields',
+    templateString: template,
+    isSingle: false,
+
+    //public methods:
+    //clear
+    //setFields
+    //selectFields
+    //getSelectedFieldNames
+
+    postMixInProperties:function(){
+      this.nls = lang.clone(window.jimuNls.simpleTable);
+    },
+
+    postCreate: function(){
+      this.inherited(arguments);
+      this.own(on(this.domNode, 'click', lang.hitch(this, this._onDomClicked)));
+    },
+
+    clear: function(){
+      html.empty(this.fieldsContent);
+      this.emit('change');
+    },
+
+    setSingleMode: function(){
+      this.isSingle = true;
+      this._checkSingleMode();
+    },
+
+    setMultipleMode: function(){
+      this.isSingle = false;
+    },
+
+    _checkSingleMode: function(checkedBox){
+      if(!this.isSingle){
+        return;
+      }
+
+      var allCbxes  = query('input', this.domNode);
+
+      var checkedCbxes = array.filter(allCbxes, lang.hitch(this, function(cbx){
+        return cbx.checked;
+      }));
+
+      if(checkedCbxes.length === 0){
+        return;
+      }
+
+      if(!checkedBox){
+        checkedBox = checkedCbxes[0];
+      }
+
+      var invalidCheckedCbxes = array.filter(checkedCbxes, lang.hitch(this, function(cbx){
+        return cbx !== checkedBox;
+      }));
+
+      array.forEach(invalidCheckedCbxes, lang.hitch(this, function(cbx){
+        cbx.checked = false;
+      }));
+    },
+
+    setFields: function(fields){
+      //[{name,alias,checked}]
+      this.clear();
+      array.forEach(fields, lang.hitch(this, function(item){
+        var str = '<div class="field-item"><input type="checkbox" /><span class="jimu-ellipsis" /></div>';
+        var fieldItemDom = html.toDom(str);
+        var cbx = query('input', fieldItemDom)[0];
+        var span = query('span', fieldItemDom)[0];
+        cbx.checked = !!item.checked;
+        span.innerHTML = item.alias || item.name;
+        span.title = item.alias || item.name;
+        fieldItemDom.fieldName = item.name;
+        html.place(fieldItemDom, this.fieldsContent);
+        this.own(on(cbx, 'change', lang.hitch(this, function(){
+          if(cbx.checked){
+            this._checkSingleMode(cbx);
+          }
+          this.emit('change');
+        })));
+      }));
+      this.emit('change');
+    },
+
+    selectFields: function(fieldNames, notMoveFieldToFirst) {
+      if (lang.isArrayLike(fieldNames)) {
+        var names = lang.clone(fieldNames);
+        names.reverse();
+        array.forEach(names, lang.hitch(this, function(name) {
+          var fieldItemDom = this._getFieldItemDivByName(name);
+          if (fieldItemDom) {
+            if(!notMoveFieldToFirst){
+              html.place(fieldItemDom, fieldItemDom.parentNode, 'first');
+            }
+            var cbx = query('input', fieldItemDom)[0];
+            cbx.checked = true;
+          }
+        }));
+      }
+      this.emit('change');
+    },
+
+    getSelectedFieldNames: function(){
+      var fieldItemDivs = query('.field-item', this.fieldsContent);
+      var fieldNames = [];
+      array.forEach(fieldItemDivs, lang.hitch(this, function(fieldItemDom){
+        var cbx = query('input', fieldItemDom)[0];
+        if(cbx.checked){
+          fieldNames.push(fieldItemDom.fieldName);
+        }
+      }));
+      return fieldNames;
+    },
+
+    _getFieldItemDivByName: function(name){
+      var divs = query('.field-item', this.fieldsContent);
+      var fieldItemDoms = array.filter(divs, lang.hitch(this, function(div){
+        return div.fieldName === name;
+      }));
+      return fieldItemDoms[0];
+    },
+
+    _onDomClicked: function(event){
+      var target = event.target || event.srcElement;
+      if(html.isDescendant(target, this.fieldsContent) && target !== this.fieldsContent){
+        var tagName = target.tagName.toLowerCase();
+        var fieldItemDom = null;
+        if(html.hasClass(target, 'field-item')){
+          fieldItemDom = target;
+          this._selectFieldItemDom(fieldItemDom);
+        }
+        else if(tagName === 'span'){
+          fieldItemDom = target.parentNode;
+          this._selectFieldItemDom(fieldItemDom);
+        }
+        else if(tagName === 'input'){
+          fieldItemDom = target.parentNode;
+          if(target.checked){
+            this._selectFieldItemDom(fieldItemDom);
+          }
+          else{
+            html.removeClass(fieldItemDom, 'selected');
+          }
+        }
+
+        this._updateHighLightIcons();
+      }
+    },
+
+    _updateHighLightIcons: function() {
+      var fieldItemDom = this._getSelectedFieldItemDiv();
+
+      if (fieldItemDom && html.hasClass(fieldItemDom, 'selected')) {
+        var highLightClass = 'high-light';
+
+        if (fieldItemDom.previousSibling) {
+          html.addClass(this.btnUp, highLightClass);
+        } else {
+          html.removeClass(this.btnUp, highLightClass);
+        }
+
+        if (fieldItemDom.nextSibling) {
+          html.addClass(this.btnDown, highLightClass);
+        } else {
+          html.removeClass(this.btnDown, highLightClass);
+        }
+      }
+    },
+
+    _selectFieldItemDom: function(fieldItemDom){
+      query('.field-item', this.fieldsContent).removeClass('selected');
+      html.addClass(fieldItemDom, 'selected');
+    },
+
+    _getSelectedFieldItemDiv: function(){
+      var fieldItemDom = null;
+      var divs = query('.field-item.selected', this.fieldsContent);
+      if(divs.length > 0){
+        fieldItemDom = divs[0];
+      }
+      return fieldItemDom;
+    },
+
+    _moveUp: function(){
+      var fieldItemDom = this._getSelectedFieldItemDiv();
+      if(fieldItemDom && fieldItemDom.previousSibling){
+        html.place(fieldItemDom, fieldItemDom.previousSibling, 'before');
+      }
+      this._updateHighLightIcons();
+    },
+
+    _moveDown: function(){
+      var fieldItemDom = this._getSelectedFieldItemDiv();
+      if(fieldItemDom && fieldItemDom.nextSibling){
+        html.place(fieldItemDom, fieldItemDom.nextSibling, 'after');
+      }
+      this._updateHighLightIcons();
+    }
+  });
+});

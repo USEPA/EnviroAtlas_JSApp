@@ -1,12 +1,287 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dojo/_base/lang dojo/_base/array dojo/topic dojo/Deferred dojo/promise/all ./featureActions/main ./utils".split(" "),function(p,d,e,f,l,h,q,n){var k=null,m=p(null,{constructor:function(){this._actions=[];window.isBuilder?(f.subscribe("app/mapLoaded",d.hitch(this,this._onMapLoaded)),f.subscribe("app/mapChanged",d.hitch(this,this._onMapChanged))):(f.subscribe("mapLoaded",d.hitch(this,this._onMapLoaded)),f.subscribe("mapChanged",d.hitch(this,this._onMapChanged)));window.isBuilder?
-(f.subscribe("app/appConfigLoaded",d.hitch(this,this._onAppConfigLoaded)),f.subscribe("app/appConfigChanged",d.hitch(this,this._onAppConfigChanged))):(f.subscribe("appConfigLoaded",d.hitch(this,this._onAppConfigLoaded)),f.subscribe("appConfigChanged",d.hitch(this,this._onAppConfigChanged)));this._registerFrameworkActions()},getAllActions:function(){return this._actions},getSupportedActions:function(a){a=this._getFeatureSet(a);var b=[];e.forEach(this._actions,function(g){var c=this.testActionSupportFeature(g,
-a);c.action=g;b.push(c)},this);return h(b).then(d.hitch(this,function(a){return a.map(d.hitch(this,function(a,b){return{result:a,action:this._actions[b]}})).filter(function(a){return a.result}).map(function(a){return a.action})}))},testActionSupportFeature:function(a,b){b=this._getFeatureSet(b);var g;b.features&&0<b.features.length&&(g=b.features[0].getLayer());a=a.isFeatureSupported(b,g);var c=new l;a&&"function"===typeof a.then?a.then(function(a){c.resolve(a)},function(a){console.error(a);c.resolve(!1)}):
-c.resolve(a);return c},registerAction:function(a){var b=new l;require([a.uri],d.hitch(this,function(g){var c=new g({map:this.map,appConfig:this.appConfig,label:a.label,name:a.name,widgetId:a.widgetId});e.some(this._actions,function(a){return c.name===a.name&&c.widgetId===a.widgetId})?(console.warn("Feature/FeatureSet action has been registered.",c.name),b.reject("Feature/FeatureSet action has been registered.",c.name)):(this._actions.push(c),b.resolve(c))}));return b},removeActionsByWidgetId:function(a){this._actions=
-e.filter(this._actions,function(b){return b.widgetId!==a},this)},getActionsByWidgetId:function(a){return e.filter(this._actions,function(b){return b.widgetId===a},this)},getActionsByActionName:function(a){return e.filter(this._actions,function(b){return b.name===a},this)},registerWidgetFeatureActions:function(a){var b=new l;if(!a.featureActions||!a.uri)return b.resolve(),b;var g=[];e.forEach(a.featureActions,function(b){g.push(this.registerAction({uri:a.isRemote?a.amdFolder+b.uri+".js":a.amdFolder+
-b.uri,widgetId:a.id,name:b.name,label:a.manifest["i18nLabels_featureAction_"+b.name][window.dojoConfig.locale]||a.manifest["i18nLabels_featureAction_"+b.name].defaultLabel}))},this);return h(g)},registerAllWidgetFeatureActions:function(a){var b=[];a.visitElement(d.hitch(this,function(a){a.uri&&a.visible&&b.push(this.registerWidgetFeatureActions(a))}));return h(b).then(function(){f.publish("widgetsActionsRegistered")})},_reRegisterWidgetActions:function(a){var b=[];e.forEach(this.getAllActions(),function(b){var c=
-a.getConfigElementById(b.widgetId);"framework"===b.widgetId||c&&c.uri&&!1!==c.visible||this.removeActionsByWidgetId(b.widgetId)},this);a.visitElement(d.hitch(this,function(a){a.uri&&a.visible&&0===this.getActionsByWidgetId(a.id).length&&b.push(this.registerWidgetFeatureActions(a))}));0<b.length&&h(b).then(function(){f.publish("widgetsActionsRegistered")})},_registerFrameworkActions:function(){e.forEach(q,function(a){this.registerAction({uri:a.uri,widgetId:"framework",label:window.jimuNls.featureActions[a.name],
-name:a.name})},this)},_getFeatureSet:function(a){return"[object Object]"===Object.prototype.toString.call(a)?a.features?a:n.toFeatureSet([a]):n.toFeatureSet(a)},_onAppConfigLoaded:function(a){this.appConfig=a=d.clone(a);this._setActionsAppConfig(a);this.registerAllWidgetFeatureActions(this.appConfig)},_onAppConfigChanged:function(a){this.appConfig=a=d.clone(a);this._reRegisterWidgetActions(this.appConfig);this._setActionsAppConfig(a)},_onMapLoaded:function(a){this.map=a;this._setActionsMap(a)},_onMapChanged:function(a){this.map=
-a;this._setActionsMap(a)},_setActionsMap:function(a){e.forEach(this._actions,function(b){b.setMap(a)},this)},_setActionsAppConfig:function(a){e.forEach(this._actions,function(b){b.setAppConfig(a)},this)}});m.getInstance=function(){null===k&&(k=new m,window._featureActionManager=k);return k};return m});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define(['dojo/_base/declare',
+    'dojo/_base/lang',
+    'dojo/_base/array',
+    'dojo/topic',
+    'dojo/Deferred',
+    'dojo/promise/all',
+    './featureActions/main',
+    './utils'
+  ],
+  function(declare, lang, array, topic, Deferred, all, frameWorkActions, jimuUtils) {
+    var instance = null,
+    clazz = declare(null, {
+
+      constructor: function() {
+        this._actions = [];
+
+        if(window.isBuilder){
+          topic.subscribe("app/mapLoaded", lang.hitch(this, this._onMapLoaded));
+          topic.subscribe("app/mapChanged", lang.hitch(this, this._onMapChanged));
+        }else{
+          topic.subscribe("mapLoaded", lang.hitch(this, this._onMapLoaded));
+          topic.subscribe("mapChanged", lang.hitch(this, this._onMapChanged));
+        }
+
+        // if(window.isBuilder){
+        //   topic.subscribe("app/sceneViewLoaded", lang.hitch(this, this._onSceneViewLoaded));
+        //   topic.subscribe("app/sceneViewChanged", lang.hitch(this, this._onSceneViewChanged));
+        // }else{
+        //   topic.subscribe("sceneViewLoaded", lang.hitch(this, this._onSceneViewLoaded));
+        //   topic.subscribe("sceneViewChanged", lang.hitch(this, this._onSceneViewChanged));
+        // }
+
+        if(window.isBuilder){
+          topic.subscribe("app/appConfigLoaded", lang.hitch(this, this._onAppConfigLoaded));
+          topic.subscribe("app/appConfigChanged", lang.hitch(this, this._onAppConfigChanged));
+        }else{
+          topic.subscribe("appConfigLoaded", lang.hitch(this, this._onAppConfigLoaded));
+          topic.subscribe("appConfigChanged", lang.hitch(this, this._onAppConfigChanged));
+        }
+
+        this._registerFrameworkActions();
+      },
+
+      getAllActions: function(){
+        return this._actions;
+      },
+
+      getSupportedActions: function(featureSet){
+        featureSet = this._getFeatureSet(featureSet);
+        var defs = [];
+        array.forEach(this._actions, function(action){
+          var def = this.testActionSupportFeature(action, featureSet);
+          def.action = action;
+          defs.push(def);
+        }, this);
+
+        return all(defs).then(lang.hitch(this, function(results){
+          return results.map(lang.hitch(this, function(result, i){
+            return {
+              result: result,
+              action: this._actions[i]
+            };
+          })).filter(function(obj){
+            return obj.result;
+          }).map(function(obj){
+            return obj.action;
+          });
+        }));
+      },
+
+      testActionSupportFeature: function(action, featureSet){
+        featureSet = this._getFeatureSet(featureSet);
+        var layer;
+        if(featureSet.features && featureSet.features.length > 0){
+          layer = featureSet.features[0].getLayer();
+        }
+        var ret = action.isFeatureSupported(featureSet, layer);
+        var def = new Deferred();
+        if(ret && typeof ret.then === 'function'){
+          //if action def reject, we change to resolve(false) here.
+          ret.then(function(result){
+            def.resolve(result);
+          }, function(err){
+            console.error(err);
+            def.resolve(false);
+          });
+        }else{
+          def.resolve(ret);
+        }
+        return def;
+      },
+
+      registerAction: function(actionOptions){
+        var def = new Deferred();
+        require([actionOptions.uri], lang.hitch(this, function(actionClass){
+          var action = new actionClass({
+            map: this.map,
+            appConfig: this.appConfig,
+            label: actionOptions.label,
+            name: actionOptions.name,
+            widgetId: actionOptions.widgetId
+          });
+
+          //make sure one action is registered once only, for one widget
+          if(array.some(this._actions, function(_action){
+            return action.name === _action.name && action.widgetId === _action.widgetId;
+          })){
+            console.warn('Feature/FeatureSet action has been registered.', action.name);
+            def.reject('Feature/FeatureSet action has been registered.', action.name);
+            return;
+          }
+
+          this._actions.push(action);
+          def.resolve(action);
+        }));
+
+        return def;
+      },
+
+      removeActionsByWidgetId: function(widgetId){
+        this._actions = array.filter(this._actions, function(_action) {
+          return _action.widgetId !== widgetId;
+        }, this);
+      },
+
+      getActionsByWidgetId: function(widgetId){
+        return array.filter(this._actions, function(_action) {
+          return _action.widgetId === widgetId;
+        }, this);
+      },
+
+      getActionsByActionName: function(actionName){
+        return array.filter(this._actions, function(_action) {
+          return _action.name === actionName;
+        }, this);
+      },
+
+      registerWidgetFeatureActions: function(widgetJson){
+        var def = new Deferred();
+        if(!widgetJson.featureActions || !widgetJson.uri){
+          def.resolve();
+          return def;
+        }
+
+        var defs = [];
+        array.forEach(widgetJson.featureActions, function(action){
+          var uri;
+          if(widgetJson.isRemote){
+            uri = widgetJson.amdFolder + action.uri + '.js';
+          }else{
+            uri = widgetJson.amdFolder + action.uri;
+          }
+
+          defs.push(this.registerAction({
+            uri: uri,
+            widgetId: widgetJson.id,
+            name: action.name,
+            label: widgetJson.manifest['i18nLabels_featureAction_' + action.name][window.dojoConfig.locale] ||
+              widgetJson.manifest['i18nLabels_featureAction_' + action.name].defaultLabel
+          }));
+        }, this);
+        return all(defs);
+      },
+
+      registerAllWidgetFeatureActions: function(appConfig){
+        var defs = [];
+        appConfig.visitElement(lang.hitch(this, function(e){
+          if(e.uri && e.visible){
+            defs.push(this.registerWidgetFeatureActions(e));
+          }
+        }));
+        return all(defs).then(function(){
+          topic.publish('widgetsActionsRegistered');
+        });
+      },
+
+      _reRegisterWidgetActions: function(appConfig){
+        var defs = [];
+        //remove actions that it's widget have been removed
+        array.forEach(this.getAllActions(), function(action){
+          var e = appConfig.getConfigElementById(action.widgetId);
+          if(action.widgetId !== 'framework' && (!e || !e.uri || e.visible === false)){
+            this.removeActionsByWidgetId(action.widgetId);
+          }
+        }, this);
+
+        //load new widgets actions
+        appConfig.visitElement(lang.hitch(this, function(e){
+          if(e.uri && e.visible &&
+            this.getActionsByWidgetId(e.id).length === 0){
+            defs.push(this.registerWidgetFeatureActions(e));
+          }
+        }));
+
+        if(defs.length > 0){
+          all(defs).then(function(){
+            topic.publish('widgetsActionsRegistered');
+          });
+        }
+      },
+
+      _registerFrameworkActions: function(){
+        array.forEach(frameWorkActions, function(action){
+          this.registerAction({
+            uri: action.uri,
+            widgetId: 'framework',
+            label: window.jimuNls.featureActions[action.name],
+            name: action.name
+          });
+        }, this);
+      },
+
+      _getFeatureSet: function(val){
+        //val can be: feature, [feature], featureSet
+        if(Object.prototype.toString.call(val) === '[object Object]'){
+          if(!val.features){
+            return jimuUtils.toFeatureSet([val]);
+          }else{
+            return val;
+          }
+        }else{
+          return jimuUtils.toFeatureSet(val);
+        }
+      },
+
+      _onAppConfigLoaded: function(_appConfig) {
+        var appConfig = lang.clone(_appConfig);
+        this.appConfig = appConfig;
+        this._setActionsAppConfig(appConfig);
+        this.registerAllWidgetFeatureActions(this.appConfig);
+      },
+
+      _onAppConfigChanged: function(_appConfig) {
+        var appConfig = lang.clone(_appConfig);
+        this.appConfig = appConfig;
+        this._reRegisterWidgetActions(this.appConfig);
+        this._setActionsAppConfig(appConfig);
+      },
+
+      _onMapLoaded: function(map) {
+        this.map = map;
+        this._setActionsMap(map);
+      },
+
+      _onMapChanged: function(map) {
+        this.map = map;
+        this._setActionsMap(map);
+      },
+
+      _setActionsMap: function(map){
+        array.forEach(this._actions, function(_action) {
+          _action.setMap(map);
+        }, this);
+      },
+
+      _setActionsAppConfig: function(appConfig){
+        array.forEach(this._actions, function(_action) {
+          _action.setAppConfig(appConfig);
+        }, this);
+      }
+    });
+
+    clazz.getInstance = function() {
+      if (instance === null) {
+        instance = new clazz();
+        window._featureActionManager = instance;
+      }
+      return instance;
+    };
+    return clazz;
+  });

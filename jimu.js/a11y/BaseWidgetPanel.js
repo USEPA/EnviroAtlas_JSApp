@@ -1,8 +1,125 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/lang dojo/_base/html dojo/query dojo/on dojo/keys ./../utils".split(" "),function(h,d,m,k,e,g){var c={frameSectionIndex:"91"};c.panelNls=window.jimuNls.panelHeader;c._addTagToGroupPanel=function(){var a=this.config.widgets;this.isGroupPanel=!0;a.forEach(function(a){a.inGroupPanel=!0})};c._setAriaLabel=function(a,f){var e;a.folded?(e=c.panelNls.expanded,d.setStyle(a.containerNode,"display","inherit")):(e=c.panelNls.collapsed,d.setStyle(a.containerNode,"display","none"));f=g.getSubstituteString(f,
-e);d.setAttr(a.titleNode,"aria-label",f)};c._initFrameEvents=function(a,f,l){if(this.isGroupPanel){var n=g.getSubstituteString(f.label,c.panelNls.expanded);f=g.getSubstituteString(f.label,c.panelNls.pressToFocus);d.setAttr(a.titleNode,"aria-label",n);d.setAttr(a.titleNode,"tabindex",c.frameSectionIndex);d.setAttr(a.containerNode,"aria-label",f);d.setAttr(a.containerNode,"tabindex",c.frameSectionIndex);0===l?this.firstTitleNode=a.titleNode:l===this.config.widgets.length-1&&(this.lastTitleNode=a.titleNode,
-this.lastContent=a.containerNode);this.own(k(a.titleNode,"click",h.hitch(this,function(){a.foldEnable&&this._setAriaLabel(a,a.label)})));this.own(k(a.titleNode,"keydown",h.hitch(this,function(b){d.hasClass(b.target,"title")&&(b.keyCode===e.TAB?b.target===this.firstTitleNode&&b.shiftKey?(b.preventDefault(),this.lastContent.focus()):b.target!==this.lastTitleNode||b.shiftKey||"none"!==d.getStyle(this.lastContent,"display")||(b.preventDefault(),this.firstTitleNode.focus()):!a.foldEnable||b.keyCode!==
-e.ENTER&&b.keyCode!==e.SPACE||(b.stopPropagation(),this._setAriaLabel(a,a.label),a.onFoldableNodeClick()))})));this.own(k(a.containerNode,"keydown",h.hitch(this,function(b){var c=b.target;d.hasClass(c,"jimu-panel-content")?b.keyCode===e.ENTER?(b=m(".jimu-widget",c)[0])&&g.focusFirstFocusNode(b):b.target!==this.lastContent||b.shiftKey||b.keyCode!==e.TAB||(b.preventDefault(),this.firstTitleNode.focus()):b.keyCode===e.ESCAPE&&(b.stopPropagation(),a.containerNode.focus())})))}};c._onOpenAndFocus=function(){this.config.openAtStart&&
-!this._isFirstOpenAtStart?this._isFirstOpenAtStart=!0:this.isGroupPanel&&this.firstTitleNode&&this.firstTitleNode.focus()};return c});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+define([
+  'dojo/_base/lang',
+  'dojo/_base/html',
+  'dojo/query',
+  'dojo/on',
+  'dojo/keys',
+  './../utils'
+],
+  function (lang, html, query, on, keys, utils) {
+    var mo = {};
+
+    mo.frameSectionIndex = '91';
+    mo.panelNls = window.jimuNls.panelHeader;
+
+    mo._addTagToGroupPanel = function(){
+      var configs = this.config.widgets;
+      this.isGroupPanel = true; // it's a group panel with several widgets
+      configs.forEach(function(widget){
+        widget.inGroupPanel = true; // add inGroupPanel attr to every widget.
+      });
+    };
+
+    mo._setAriaLabel = function(frame, widgetLabel){
+      var ariaLabel;
+      if(frame.folded){
+        ariaLabel = mo.panelNls.expanded;
+        html.setStyle(frame.containerNode, 'display', 'inherit');
+      }else{
+        ariaLabel = mo.panelNls.collapsed;
+        //hide node for removing it from tabbing order
+        html.setStyle(frame.containerNode, 'display', 'none');
+      }
+      var titleAriaLabel = utils.getSubstituteString(widgetLabel, ariaLabel);
+      html.setAttr(frame.titleNode, 'aria-label', titleAriaLabel);
+    };
+
+    mo._initFrameEvents = function (frame, widgetConfig, index) {
+      if(this.isGroupPanel){
+        var titleAriaLabel = utils.getSubstituteString(widgetConfig.label, mo.panelNls.expanded);
+        var contentAriaLabel = utils.getSubstituteString(widgetConfig.label, mo.panelNls.pressToFocus);
+        html.setAttr(frame.titleNode, 'aria-label', titleAriaLabel);
+        html.setAttr(frame.titleNode, 'tabindex', mo.frameSectionIndex);
+        html.setAttr(frame.containerNode, 'aria-label', contentAriaLabel);
+        html.setAttr(frame.containerNode, 'tabindex', mo.frameSectionIndex);
+        if(index === 0){
+          this.firstTitleNode = frame.titleNode;
+        }else if(index === this.config.widgets.length - 1){
+          this.lastTitleNode = frame.titleNode;
+          this.lastContent = frame.containerNode;
+        }
+
+        this.own(on(frame.titleNode, 'click', lang.hitch(this, function(){
+          if(frame.foldEnable){
+            this._setAriaLabel(frame, frame.label);
+          }
+        })));
+        this.own(on(frame.titleNode, 'keydown', lang.hitch(this, function(evt){
+          if(html.hasClass(evt.target, 'title')){
+            if(evt.keyCode === keys.TAB){
+              if(evt.target === this.firstTitleNode && evt.shiftKey){
+                evt.preventDefault();
+                this.lastContent.focus();
+              }
+              //tab last titleNode to first titleNode when last contentNode is folded
+              else if(evt.target === this.lastTitleNode && !evt.shiftKey &&
+                html.getStyle(this.lastContent, 'display') === 'none'){
+                evt.preventDefault();
+                this.firstTitleNode.focus();
+              }
+            }else if(frame.foldEnable && (evt.keyCode === keys.ENTER || evt.keyCode === keys.SPACE)){
+              evt.stopPropagation();
+              this._setAriaLabel(frame, frame.label);
+              frame.onFoldableNodeClick();
+            }
+          }
+        })));
+
+        this.own(on(frame.containerNode, 'keydown', lang.hitch(this, function(evt){
+          var container = evt.target;
+          if(html.hasClass(container, 'jimu-panel-content')){
+            if(evt.keyCode === keys.ENTER){
+              var widgetDom = query('.jimu-widget', container)[0];
+              if(widgetDom){
+                utils.focusFirstFocusNode(widgetDom);
+              }
+            }else if(evt.target === this.lastContent && !evt.shiftKey && evt.keyCode === keys.TAB){
+              evt.preventDefault();
+              this.firstTitleNode.focus();
+            }
+          }else if(evt.keyCode === keys.ESCAPE){
+            evt.stopPropagation();
+            frame.containerNode.focus();
+          }
+        })));
+      }
+    };
+
+    mo._onOpenAndFocus = function(){
+      //Not focus first title node at first time when openAtStart is true.
+      if(this.config.openAtStart && !this._isFirstOpenAtStart){
+        this._isFirstOpenAtStart = true;
+        return;
+      }
+      if(this.isGroupPanel && this.firstTitleNode){
+        this.firstTitleNode.focus();
+      }
+    };
+
+    return mo;
+  });

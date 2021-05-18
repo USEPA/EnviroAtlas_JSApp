@@ -1,8 +1,156 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo dijit dijit/_editor/_Plugin jimu/dijit/ImageChooser dojo/_base/html dojo/_base/lang dojo/sniff dojo/i18n dojo/_base/connect dojo/_base/declare".split(" "),function(d,f,g,c,h,k,l,m){d.experimental("dojox.editor.plugins.ChooseImage");var e=d.declare("dojox.editor.plugins.ChooseImage",g,{iconClassPrefix:"editorIcon",useDefaultCommand:!1,_initButton:function(){this.createFileInput();this.command="chooseImage";var a=m.getLocalization("dijit._editor","commands");this.button=new f.form.Button({label:a.insertImage,
-showLabel:!1,iconClass:this.iconClassPrefix+" "+this.iconClassPrefix+"UploadImage",tabIndex:"-1",onClick:k.hitch(this,this._chooseImage)});this.button.set("readOnly",!1);this.editor.commands[this.command]="Upload Image";this.inherited("_initButton",arguments);delete this.command},updateState:function(){var a=this.get("disabled");this.button.set("disabled",this.get("disabled"));!0===a?(h.addClass(this.button,"dijitButtonDisabled"),this.imageChooser.disableChooseImage()):(h.removeClass(this.button,
-"dijitButtonDisabled"),this.imageChooser.enableChooseImage())},createFileInput:function(){var a=d.create("span",{innerHTML:"."},document.body);this.imageChooser=new c({showSelfImg:!1,cropImage:!1,format:[c.GIF,c.JPEG,c.PNG]},a);this.connect(this.imageChooser,"onImageChange","insertTempImage")},_chooseImage:function(){var a=this.imageChooser.mask;if(l("safari")){var b=document.createEvent("MouseEvents");b.initEvent("click",!0,!0);a.dispatchEvent(b)}else a.click()},onComplete:function(a){a=a[0];var b=
-d.byId(this.currentImageId,this.editor.document),c;c=this.downloadPath?this.downloadPath+a.name:a.file;b.src=c;d.attr(b,"_djrealurl",c);a.width&&(b.width=a.width,b.height=a.height)},insertTempImage:function(a,b){b=b&&b.fileName?'alt\x3d"'+b.fileName+'"':"";this.currentImageId="img_"+(new Date).getTime();this.editor.execCommand("inserthtml",'\x3cimg id\x3d"'+this.currentImageId+'" src\x3d"'+a+'" '+b+"/\x3e")},destroy:function(){this.imageChooser&&this.imageChooser.destroy();this.inherited(arguments)}});
-d.subscribe(f._scopeName+".Editor.getPlugin",null,function(a){if(!a.plugin)switch(a.args.name){case "chooseImage":a.plugin=new e({url:a.args.url})}});g.registry.chooseImage=function(a){return new e(a)};return e});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+define([
+  "dojo",
+  "dijit",
+  "dijit/_editor/_Plugin",
+  "jimu/dijit/ImageChooser",
+  "dojo/_base/html",
+  'dojo/_base/lang',
+  "dojo/sniff",
+  "dojo/i18n",
+  "dojo/_base/connect",
+  "dojo/_base/declare"
+], function(
+  dojo, dijit, _Plugin, ImageChooser, html, lang, has, i18n
+) {
+  dojo.experimental("dojox.editor.plugins.ChooseImage");
+
+  var ChooseImage = dojo.declare("dojox.editor.plugins.ChooseImage", _Plugin, {
+    iconClassPrefix: "editorIcon",
+    useDefaultCommand: false,
+
+    _initButton: function() {
+      this.createFileInput();
+      this.command = "chooseImage";
+
+      var strings = i18n.getLocalization("dijit._editor", "commands");
+      this.button = new dijit.form.Button({
+        label: strings.insertImage,
+        showLabel: false,
+        iconClass: this.iconClassPrefix + " " + this.iconClassPrefix + "UploadImage",
+        tabIndex: "-1",
+        onClick: lang.hitch(this, this._chooseImage)
+      });
+      this.button.set("readOnly", false);
+
+      this.editor.commands[this.command] = "Upload Image";
+      this.inherited("_initButton", arguments);
+      delete this.command;
+    },
+
+    updateState: function() {
+      //change icon ,when "viewsource" dijit clicked
+      var disabled = this.get("disabled");
+      this.button.set("disabled",this.get("disabled"));
+      if (true === disabled) {
+        html.addClass(this.button, 'dijitButtonDisabled');
+        this.imageChooser.disableChooseImage();
+      } else {
+        html.removeClass(this.button, 'dijitButtonDisabled');
+        this.imageChooser.enableChooseImage();
+      }
+    },
+
+    createFileInput: function() {
+      var node = dojo.create('span', {
+        innerHTML: "."
+      }, document.body);
+      this.imageChooser = new ImageChooser({
+        showSelfImg: false,
+        cropImage: false,
+        format: [ImageChooser.GIF, ImageChooser.JPEG, ImageChooser.PNG]
+      }, node);
+
+      this.connect(this.imageChooser, "onImageChange", "insertTempImage");
+      // this.connect(this.button, "onComplete", "onComplete");
+    },
+
+    _chooseImage: function () {
+      var mask = this.imageChooser.mask;
+      if (has('safari')) {
+        // # First create an event
+        var click_ev = document.createEvent("MouseEvents");
+        // # initialize the event
+        click_ev.initEvent("click", true /* bubble */, true /* cancelable */);
+        // # trigger the evevnt/
+        mask.dispatchEvent(click_ev);
+      } else {
+        mask.click();
+      }
+    },
+
+    onComplete: function(data /*,ioArgs,widgetRef*/ ) {
+      data = data[0];
+      // Image is ready to insert
+      var tmpImgNode = dojo.byId(this.currentImageId, this.editor.document);
+      var file;
+      // download path is mainly used so we can access a PHP script
+      // not relative to this file. The server *should* return a qualified path.
+      if (this.downloadPath) {
+        file = this.downloadPath + data.name;
+      } else {
+        file = data.file;
+      }
+
+      tmpImgNode.src = file;
+      dojo.attr(tmpImgNode, '_djrealurl', file);
+
+      if (data.width) {
+        tmpImgNode.width = data.width;
+        tmpImgNode.height = data.height;
+      }
+    },
+
+    insertTempImage: function(fileData, fileProperty) {
+      //add alt property for screen readers.
+      var imgAlt = (fileProperty && fileProperty.fileName) ? 'alt="' + fileProperty.fileName + '"' : '';
+      // summary:
+      //    inserting a "busy" image to show something is hapening
+      //    during upload and download of the image.
+      this.currentImageId = "img_" + (new Date().getTime());
+      var iTxt = '<img id="' + this.currentImageId + '" src="' + fileData + '" ' + imgAlt + '/>';
+      this.editor.execCommand('inserthtml', iTxt);
+    },
+
+    destroy: function () {
+      if (this.imageChooser) {
+        this.imageChooser.destroy();
+      }
+
+      this.inherited(arguments);
+    }
+  });
+
+  dojo.subscribe(dijit._scopeName + ".Editor.getPlugin", null, function(o) {
+    if (o.plugin) {
+      return;
+    }
+    switch (o.args.name) {
+      case "chooseImage":
+        o.plugin = new ChooseImage({
+          url: o.args.url
+        });
+    }
+  });
+
+  /*jshint sub: true */
+  _Plugin.registry["chooseImage"] = function(args){
+    return new ChooseImage(args);
+  };
+
+  return ChooseImage;
+});

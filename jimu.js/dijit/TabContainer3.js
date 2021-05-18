@@ -1,11 +1,235 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/TabContainer3.html":'\x3cdiv\x3e\r\n  \x3cdiv class\x3d"control-node" data-dojo-attach-point\x3d"controlNode"\x3e\r\n    \x3ctable data-dojo-attach-point\x3d"controlTable" class\x3d"control-table" cellpading\x3d"0"\x3e\r\n      \x3ctbody\x3e\r\n        \x3ctr data-dojo-attach-point\x3d"tabTr"\x3e\r\n        \x3c/tr\x3e\r\n      \x3c/tbody\x3e\r\n    \x3c/table\x3e\r\n  \x3c/div\x3e\r\n  \x3cdiv class\x3d"container-node" data-dojo-attach-point\x3d"containerNode"\x3e\x3c/div\x3e\r\n  \x3cdiv class\x3d"tab-shelter" data-dojo-attach-point\x3d"shelter"\x3e\x3c/div\x3e\r\n\x3c/div\x3e'}});
-define("dojo/_base/declare dojo/_base/lang dojo/_base/array dojo/_base/html dojo/on dojo/keys dojo/Evented dojo/query dijit/_WidgetBase dijit/_TemplatedMixin dojo/text!./templates/TabContainer3.html jimu/dijit/ViewStack jimu/utils".split(" "),function(l,f,g,d,h,e,m,k,n,p,q,r,t){return l([n,p,m],{templateString:q,baseClass:"jimu-tab3",declaredClass:"jimu.dijit.TabContainer3",_currentIndex:-1,selected:"",tabs:null,average:!0,postCreate:function(){this.inherited(arguments);this._initSelf();this.selected?
-this.selectTab(this.selected):0<this.tabs.length&&this.selectTab(this.tabs[0].title)},selectTab:function(b){g.forEach(this.tabItems,f.hitch(this,function(a,c){d.removeClass(a,"jimu-state-active");d.setAttr(a,"tabindex","-1");a.label===b&&(d.addClass(a,"jimu-state-active"),d.setAttr(a,"tabindex","0"),this._currentIndex=c)}));this.viewStack.switchView(b);this.emit("tabChanged",b)},addTab:function(b){if(!this.average){var a=k("td:last-child",this.tabTr);0<a.length&&d.destroy(a[0])}0<g.filter(this.tabs,
-function(a){return a.title===b.title}).length?console.error("tab title conflict: "+b.title):(this.tabs.push(b),this._createTab(b),this.average||this._addEmptyTab())},_addEmptyTab:function(){var b=d.toDom('\x3ctd nowrap class\x3d"tab-item-td tab-item-td-empty" style\x3d"border-bottom:1px solid #ccc;"\x3e\x3cdiv class\x3d"tab-item-div"\x3e\x3c/div\x3e\x3c/td\x3e');d.place(b,this.tabTr)},removeTab:function(b){var a=-1;if(g.some(this.tabs,function(d,c){if(d.title===b)return a=c,!0})){var c=this.tabs.splice(a,
-1)[0];g.some(this.tabItems,function(a,c){if(a.label===b)return this.tabItems.splice(c,1),d.destroy(a),!0},this);this.viewStack.removeView(c.content)}},showShelter:function(){d.setStyle(this.shelter,"display","block")},hideShelter:function(){d.setStyle(this.shelter,"display","none")},getSelectedIndex:function(){return this._currentIndex},getSelectedTitle:function(){return this.viewStack.getSelectedLabel()},_initSelf:function(){this.viewStack=new r(null,this.containerNode);this.own(h(this.containerNode,
-"keydown",f.hitch(this,function(b){b.keyCode===e.ESCAPE&&(b.stopPropagation(),this.tabItems[this._currentIndex].focus())})));this.tabItems=[];g.forEach(this.tabs,function(b){this._createTab(b)},this);this.own(h(this.tabTr,"keydown",f.hitch(this,function(b){var a=b.target,c;b.keyCode===e.RIGHT_ARROW?c=a.nextElementSibling?!this.average&&d.hasClass(a.nextElementSibling,"tab-item-td-empty")?this.tabItems[0]:a.nextElementSibling:this.tabItems[0]:b.keyCode===e.LEFT_ARROW?c=a.previousElementSibling?a.previousElementSibling:
-this.tabItems[this.tabItems.length-1]:b.keyCode===e.HOME?c=this.tabItems[0]:b.keyCode===e.END&&(c=this.tabItems[this.tabItems.length-1]);c&&(a=c,c.focus())})));this.average?(this.controlTable.style.tableLayout="fixed",d.addClass(this.domNode,"average")):this._addEmptyTab()},startup:function(){this.inherited(arguments);this._started=!0},_createTab:function(b){var a=d.toDom('\x3ctd nowrap class\x3d"tab-item-td"\x3e\x3cdiv class\x3d"tab-item-div"\x3e\x3c/div\x3e\x3c/td\x3e');a.label=b.title||"";a.title=
-b.title;d.place(a,this.tabTr);var c=k(".tab-item-div",a)[0];c.innerHTML=t.sanitizeHTML(a.label);c.label=a.label;b.content.label=a.label;this.viewStack.addView(b.content);this.own(h(a,"click",f.hitch(this,function(a){this._onSelect(b.title,a)})));this.own(h(a,"keydown",f.hitch(this,function(a){a.keyCode!==e.ENTER&&a.keyCode!==e.SPACE||this._onSelect(b.title,a)})));this.tabItems.push(a)},_onSelect:function(b,a){d.hasClass(a.target,"jimu-state-active")||this.selectTab(b)}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'dojo/_base/html',
+  'dojo/on',
+  'dojo/keys',
+  'dojo/Evented',
+  'dojo/query',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dojo/text!./templates/TabContainer3.html',
+  'jimu/dijit/ViewStack',
+  'jimu/utils'
+],
+function(declare, lang, array, html, on, keys, Evented, query,
+  _WidgetBase, _TemplatedMixin, template, ViewStack, jimuUtils){
+  return declare([_WidgetBase, _TemplatedMixin, Evented], {
+    templateString: template,
+    'baseClass':'jimu-tab3',
+    declaredClass: 'jimu.dijit.TabContainer3',
+    _currentIndex: -1,
+
+    //options:
+    selected: '',
+    tabs: null,//[{title,content}]
+    average: true,
+
+    //public methods:
+    //selectTab
+    //hideShelter
+    //showShelter
+
+    //event: tabChanged
+
+    //css classes:
+    //tab-item-td
+
+    postCreate: function(){
+      this.inherited(arguments);
+      this._initSelf();
+      if(this.selected){
+        this.selectTab(this.selected);
+      }else if(this.tabs.length > 0){
+        this.selectTab(this.tabs[0].title);
+      }
+    },
+
+    selectTab: function(title){
+      // var tds = query('td', this.tabTr);
+      array.forEach(this.tabItems, lang.hitch(this, function(td, index) {
+        html.removeClass(td, 'jimu-state-active');
+        html.setAttr(td, 'tabindex', '-1');
+        if (td.label === title) {
+          html.addClass(td, 'jimu-state-active');
+          html.setAttr(td, 'tabindex', '0');
+          this._currentIndex = index;
+        }
+      }));
+      // this.controlNode.removeChild(this.controlTable);
+      // html.place(this.controlTable, this.controlNode);
+      this.viewStack.switchView(title);
+      this.emit('tabChanged', title);
+    },
+
+    addTab: function(tabConfig){
+      if(!this.average){
+        //remove last td int this.tabTr
+        var lastTd = query('td:last-child', this.tabTr);
+        if(lastTd.length > 0){
+          html.destroy(lastTd[0]);
+        }
+      }
+
+      //create tab
+      var tabsHasSameTitle = array.filter(this.tabs, function(tab){
+        return tab.title === tabConfig.title;
+      });
+      if(tabsHasSameTitle.length > 0){
+        console.error('tab title conflict: ' + tabConfig.title);
+        return;
+      }
+      this.tabs.push(tabConfig);
+      this._createTab(tabConfig);
+
+      if(!this.average){
+        this._addEmptyTab();
+      }
+    },
+
+    _addEmptyTab: function(){
+      var strTabItemTd = '<td nowrap class="tab-item-td tab-item-td-empty" style="border-bottom:1px solid #ccc;">' +
+      '<div class="tab-item-div"></div></td>';
+      var tabItemTd = html.toDom(strTabItemTd);
+      html.place(tabItemTd, this.tabTr);
+    },
+
+    removeTab: function(title){
+      var idx = -1;
+      var result = array.some(this.tabs, function(item, i){
+        if(item.title === title){
+          idx = i;
+          return true;
+        }
+      });
+
+      if(result){
+        //remove from this.tabs
+        var removedTab = this.tabs.splice(idx, 1)[0];
+        //remove from this.tabTr
+        array.some(this.tabItems, function(tdItem, index){
+          if(tdItem.label === title){
+            this.tabItems.splice(index, 1);
+            html.destroy(tdItem);
+            return true;
+          }
+        }, this);
+        //remove from this.viewStack
+        this.viewStack.removeView(removedTab.content);
+      }
+    },
+
+    showShelter: function(){
+      html.setStyle(this.shelter, 'display', 'block');
+    },
+
+    hideShelter: function(){
+      html.setStyle(this.shelter, 'display', 'none');
+    },
+
+    getSelectedIndex: function(){
+      return this._currentIndex;
+    },
+
+    getSelectedTitle: function(){
+      return this.viewStack.getSelectedLabel();
+    },
+
+    _initSelf:function(){
+      this.viewStack = new ViewStack(null, this.containerNode);
+      this.own(on(this.containerNode, 'keydown', lang.hitch(this, function(evt){
+        if(evt.keyCode === keys.ESCAPE){
+          evt.stopPropagation();
+          this.tabItems[this._currentIndex].focus();
+        }
+      })));
+
+      this.tabItems = [];
+      array.forEach(this.tabs, function(tabConfig){
+        this._createTab(tabConfig);
+      }, this);
+
+      this.own(on(this.tabTr, 'keydown', lang.hitch(this, function(evt){
+        var currentTab = evt.target;
+        var nextItem;
+        if(evt.keyCode === keys.RIGHT_ARROW){
+          nextItem = currentTab.nextElementSibling ?
+            (!this.average && html.hasClass(currentTab.nextElementSibling, 'tab-item-td-empty') ?
+              this.tabItems[0] : currentTab.nextElementSibling) : this.tabItems[0];
+        }else if(evt.keyCode === keys.LEFT_ARROW){
+          nextItem = currentTab.previousElementSibling ?
+            currentTab.previousElementSibling : this.tabItems[this.tabItems.length - 1];
+        }else if(evt.keyCode === keys.HOME){
+          nextItem = this.tabItems[0];
+        }else if(evt.keyCode === keys.END){
+          nextItem = this.tabItems[this.tabItems.length - 1];
+        }
+        if(nextItem){
+          currentTab = nextItem;
+          nextItem.focus();
+        }
+      })));
+
+      if(this.average){
+        this.controlTable.style.tableLayout = 'fixed';
+        html.addClass(this.domNode, 'average');
+      }else{
+        this._addEmptyTab();
+      }
+    },
+
+    startup: function() {
+      this.inherited(arguments);
+      this._started = true;
+    },
+
+    _createTab:function(tabConfig){
+      var strTabItemTd = '<td nowrap class="tab-item-td"><div class="tab-item-div"></div></td>';
+      var tabItemTd = html.toDom(strTabItemTd);
+      tabItemTd.label = tabConfig.title || '';
+      tabItemTd.title = tabConfig.title;
+      html.place(tabItemTd, this.tabTr);
+      var tabItemDiv = query('.tab-item-div', tabItemTd)[0];
+      tabItemDiv.innerHTML = jimuUtils.sanitizeHTML(tabItemTd.label);
+      tabItemDiv.label = tabItemTd.label;
+      tabConfig.content.label = tabItemTd.label;
+      this.viewStack.addView(tabConfig.content);
+
+      this.own(on(tabItemTd, 'click', lang.hitch(this, function(evt){
+        this._onSelect(tabConfig.title, evt);
+      })));
+      this.own(on(tabItemTd, 'keydown', lang.hitch(this, function(evt){
+        if(evt.keyCode === keys.ENTER || evt.keyCode === keys.SPACE){
+          this._onSelect(tabConfig.title, evt);
+        }
+      })));
+      this.tabItems.push(tabItemTd);
+    },
+
+    _onSelect: function(title, evt){
+      var tabItemTd = evt.target;
+      if(html.hasClass(tabItemTd, 'jimu-state-active')){
+        return;
+      }
+      this.selectTab(title);
+    }
+
+  });
+});

@@ -1,9 +1,157 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/_BasicServiceChooser.html":'\x3cdiv\x3e\r\n\t\x3ctable class\x3d"layout"\x3e\r\n\t\t\x3ccolgroup\x3e\r\n\t\t  \x3ccol width\x3d"auto"\x3e\x3c/col\x3e\r\n\t\t  \x3ccol width\x3d"100px;"\x3e\x3c/col\x3e\r\n\t  \x3c/colgroup\x3e\r\n\t\t\x3ctbody\x3e\r\n\t\t\t\x3ctd\x3e\r\n\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"urlTextBox" data-dojo-type\x3d"dijit/form/ValidationTextBox" data-dojo-props\x3d\'required:true,trim:true,disabled:true\' style\x3d"width:100%;"\x3e\x3c/div\x3e\r\n\t\t\t\x3c/td\x3e\r\n\t\t\t\x3ctd\x3e\r\n\t\t\t\t\x3cdiv class\x3d"jimu-btn set-source" data-dojo-attach-point\x3d"btnSetSource" data-dojo-attach-event\x3d"onclick:_onBtnSetSourceClick"\x3e${nls.set}\x3c/div\x3e\r\n\t\t\t\x3c/td\x3e\r\n\t\t\x3c/tbody\x3e\r\n\t\x3c/table\x3e\r\n\x3c/div\x3e'}});
-define("dojo/_base/declare dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/text!./templates/_BasicServiceChooser.html dojo/Evented dojo/_base/html dojo/_base/lang dojo/on dojo/Deferred dijit/TooltipDialog dijit/popup esri/request dijit/form/ValidationTextBox jimu/dijit/LoadingIndicator".split(" "),function(h,k,l,m,n,p,e,c,f,q,r,d,g){return h([k,l,m,p],{templateString:n,url:"",postMixInProperties:function(){this.nls=c.mixin({},window.jimuNls.common);this.nls=c.mixin(this.nls,
-window.jimuNls.basicServiceChooser)},postCreate:function(){this.inherited(arguments);e.addClass(this.domNode,"jimu-basic-service-chooser");this._initSelf()},setUrl:function(a){this.url=a;var b=new q;this.url&&"string"===typeof this.url?(this.urlTextBox.set("value",this.url),b=g({url:this.url,handleAs:"json",content:{f:"json"},callbackParamName:"callback"})):setTimeout(c.hitch(this,function(){b.reject("Invalid url.")}),0);return b},getUrl:function(){return this.urlTextBox.get("value")},_initSelf:function(){this.scc=
-this._createServiceChooserContent({multiple:!1,url:this.url});this.own(f(this.scc,"ok",c.hitch(this,this._onOk)));this.own(f(this.scc,"cancel",c.hitch(this,this._onCancel)));var a=e.create("div");this.tooltipDialog=new r({content:a});this.scc.placeAt(a);this.url&&"string"===typeof this.url&&this.urlTextBox.set("value",this.url)},_createServiceChooserContent:function(a){},_onBtnSetSourceClick:function(a){a.stopPropagation();a.preventDefault();d.close(this.tooltipDialog);d.open({popup:this.tooltipDialog,
-around:this.urlTextBox.domNode})},_onOk:function(a){var b=a[0];this.urlTextBox.set("value",b.url);d.close(this.tooltipDialog);b.definition?this.emit("ok",b):g({url:b.url,handleAs:"json",callbackParamName:"callback",content:{f:"json"}}).then(c.hitch(this,function(a){b.definition=a;this.emit("ok",b)}))},_onCancel:function(){d.close(this.tooltipDialog);this.emit("cancel")},destroy:function(){this.scc&&this.scc.destroy();this.scc=null;this.tooltipDialog&&this.tooltipDialog.destroy();this.tooltipDialog=
-null;this.inherited(arguments)}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define(['dojo/_base/declare',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dijit/_WidgetsInTemplateMixin',
+  'dojo/text!./templates/_BasicServiceChooser.html',
+  'dojo/Evented',
+  'dojo/_base/html',
+  'dojo/_base/lang',
+  'dojo/on',
+  'dojo/Deferred',
+  'dijit/TooltipDialog',
+  'dijit/popup',
+  'esri/request',
+  'dijit/form/ValidationTextBox',
+  'jimu/dijit/LoadingIndicator'
+],
+function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, Evented,
+  html, lang, on, Deferred, TooltipDialog, dojoPopup, esriRequest) {
+  return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+    templateString: template,
+    url:'',
+
+    //public methods:
+    //setUrl
+    //getUrl
+
+    //methods to be override:
+    //_createServiceChooserContent
+
+    //events:
+    //ok
+    //cancel
+
+    postMixInProperties:function(){
+      this.nls = lang.mixin({}, window.jimuNls.common);
+      this.nls = lang.mixin(this.nls, window.jimuNls.basicServiceChooser);
+    },
+
+    postCreate: function(){
+      this.inherited(arguments);
+      html.addClass(this.domNode, 'jimu-basic-service-chooser');
+      this._initSelf();
+    },
+
+    setUrl: function(url){
+      this.url = url;
+      var def = new Deferred();
+      if(this.url && typeof this.url === 'string'){
+        this.urlTextBox.set('value', this.url);
+        def = esriRequest({
+          url: this.url,
+          handleAs: 'json',
+          content:{f:'json'},
+          callbackParamName: 'callback'
+        });
+      }
+      else{
+        setTimeout(lang.hitch(this, function(){
+          def.reject("Invalid url.");
+        }), 0);
+      }
+      return def;
+    },
+
+    getUrl: function(){
+      return this.urlTextBox.get('value');
+    },
+
+    _initSelf: function(){
+      var args = {
+        multiple: false,
+        url: this.url
+      };
+      this.scc = this._createServiceChooserContent(args);
+      this.own(on(this.scc, 'ok', lang.hitch(this, this._onOk)));
+      this.own(on(this.scc, 'cancel', lang.hitch(this, this._onCancel)));
+      var ttdContent = html.create("div");
+      this.tooltipDialog = new TooltipDialog({
+        content: ttdContent
+      });
+      this.scc.placeAt(ttdContent);
+
+      if (this.url && typeof this.url === 'string') {
+        this.urlTextBox.set('value', this.url);
+      }
+    },
+
+    //to be override, return a service chooser content
+    _createServiceChooserContent: function(args){/* jshint unused: false */},
+
+    _onBtnSetSourceClick: function(event){
+      event.stopPropagation();
+      event.preventDefault();
+      dojoPopup.close(this.tooltipDialog);
+      dojoPopup.open({
+        popup: this.tooltipDialog,
+        around: this.urlTextBox.domNode
+      });
+    },
+
+    _onOk: function(items){
+      var item = items[0];
+      this.urlTextBox.set('value', item.url);
+      dojoPopup.close(this.tooltipDialog);
+      if(item.definition){
+        this.emit('ok', item);
+      }
+      else{
+        esriRequest({
+          url: item.url,
+          handleAs: 'json',
+          callbackParamName: 'callback',
+          content: {
+            f: 'json'
+          }
+        }).then(lang.hitch(this, function(definition){
+          item.definition = definition;
+          this.emit('ok', item);
+        }));
+      }
+    },
+
+    _onCancel: function(){
+      dojoPopup.close(this.tooltipDialog);
+      this.emit('cancel');
+    },
+
+    destroy: function(){
+      if(this.scc){
+        this.scc.destroy();
+      }
+      this.scc = null;
+      if(this.tooltipDialog){
+        this.tooltipDialog.destroy();
+      }
+      this.tooltipDialog = null;
+      this.inherited(arguments);
+    }
+
+  });
+});

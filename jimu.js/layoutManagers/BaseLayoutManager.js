@@ -1,16 +1,460 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dojo/_base/lang dojo/_base/array dojo/_base/html dijit/_WidgetBase dojo/Deferred dojo/promise/all ../utils ../WidgetPlaceholder ../OnScreenWidgetIcon ./A11yLayoutManager".split(" "),function(m,f,d,e,n,l,p,h,q,r,t){var k=null,g;g=m([n],{constructor:function(){this.widgetPlaceholders=[];this.onScreenWidgetIcons=[];this.invisibleWidgetIds=[]},name:"BaseLayoutManager",mapId:"map",map:null,layoutId:"jimu-layout-manager",postCreate:function(){this.containerNode=this.domNode;this.layoutId=
-jimuConfig.layoutId},resize:function(){},isSupportEdit:function(){return!1},getMapDiv:function(){},setMap:function(a){this.map=a},onEnter:function(a,b){var c=new l;this.appConfig=a;this.mapId=b;c.resolve();return c},onLeave:function(){},onThemeLoad:function(){},loadAndLayout:function(a){},openWidget:function(a){},onLayoutChange:function(a){},onWidgetChange:function(a,b){},onGroupChange:function(a,b){},onWidgetPoolChange:function(a,b){this.reloadControllerWidget(a,b.controllerId)},onOnScreenOrderChange:function(a,
-b){d.forEach(b,f.hitch(this,function(a){a.uri?d.some(this.onScreenWidgetIcons,f.hitch(this,function(b){if(b.configId===a.id)return e.setStyle(b.domNode,h.getPositionStyle({top:a.position.top,left:a.position.left,right:a.position.right,bottom:a.position.bottom,width:40,height:40})),b.moveTo(a.position),!0})):d.some(this.widgetPlaceholders,f.hitch(this,function(b){if(b.index===a.placeholderIndex){var c=h.getPositionStyle({top:a.position.top,left:a.position.left,right:a.position.right,bottom:a.position.bottom,
-width:40,height:40});e.setStyle(b.domNode,c);return!0}}))}))},onActionTriggered:function(a){},onLayoutDefinitionChange:function(a,b){},onOnScreenGroupsChange:function(a,b){},destroyOnScreenWidgetsAndGroups:function(a){},loadOnScreenWidgets:function(a){var b=[];d.forEach(a.widgetOnScreen.widgets,function(c){!1===c.visible?this.invisibleWidgetIds.push(c.id):b.push(this.loadOnScreenWidget(c,a))},this);return p(b)},loadOnScreenWidget:function(a,b){var c=new l;if("config"===b.mode&&!a.uri)return b=this._createOnScreenWidgetPlaceHolder(a),
-c.resolve(b),c;if(!a.uri)return c.resolve(null),c;a.inPanel||a.closeable?(b=this._createOnScreenWidgetIcon(a),c.resolve(b)):this.widgetManager.loadWidget(a).then(f.hitch(this,function(b){try{b.setPosition(b.position),this.widgetManager.openWidget(b)}catch(u){console.log(console.error("fail to startup widget "+b.name+". "+u.stack))}b.configId=a.id;c.resolve(b)}),function(a){c.reject(a)});return c},onOnScreenWidgetChange:function(a,b){b=a.getConfigElementById(b.id);b.isController?this.reloadControllerWidget(a,
-b.id):(d.forEach(this.widgetPlaceholders,function(c){c.configId===b.id&&(c.destroy(),this.loadOnScreenWidget(b,a))},this),this.removeDestroyed(this.widgetPlaceholders),this._updatePlaceholder(a),d.forEach(this.onScreenWidgetIcons,function(c){if(c.configId===b.id){var d=c.state;c.destroy();this.loadOnScreenWidget(b,a).then(function(a){if(b.uri&&"opened"===d)a.onClick()})}},this),this.removeDestroyed(this.onScreenWidgetIcons),d.forEach(this.widgetManager.getOnScreenOffPanelWidgets(),function(c){c.configId===
-b.id&&(c.destroy(),!1===b.visible?0>this.invisibleWidgetIds.indexOf(b.id)&&this.invisibleWidgetIds.push(b.id):this.loadOnScreenWidget(b,a))},this),d.forEach(this.invisibleWidgetIds,function(c){c===b.id&&!1!==b.visible&&(this.loadOnScreenWidget(b,a),c=this.invisibleWidgetIds.indexOf(b.id),this.invisibleWidgetIds.splice(c,1))},this),b.isOnScreen||d.forEach(this.widgetManager.getControllerWidgets(),function(c){c.widgetIsControlled(b.id)&&this.reloadControllerWidget(a,c.id)},this))},destroyOnScreenWidgetIcons:function(){d.forEach(this.onScreenWidgetIcons,
-function(a){a.destroy()},this);this.onScreenWidgetIcons=[]},destroyOnScreenOffPanelWidgets:function(){d.forEach(this.widgetManager.getOnScreenOffPanelWidgets(),function(a){a.isController?this._destroyControllerWidget(a):this.widgetManager.destroyWidget(a)},this)},destroyWidgetPlaceholders:function(){d.forEach(this.widgetPlaceholders,function(a){a.destroy()},this);this.widgetPlaceholders=[]},removeDestroyed:function(a){var b=[];d.forEach(a,function(a){a._destroyed&&b.push(a)});d.forEach(b,function(b){b=
-a.indexOf(b);a.splice(b,1)})},_createOnScreenWidgetPlaceHolder:function(a){var b;b="map"===a.position.relativeTo?this.mapId:this.layoutId;var c=f.clone(a);c.position.width=40;c.position.height=40;var d=h.getPositionStyle(c.position);a=new q({index:c.placeholderIndex,configId:a.id});e.setStyle(a.domNode,d);e.place(a.domNode,b);this.widgetPlaceholders.push(a);return a},_createOnScreenWidgetIcon:function(a){var b=new r({panelManager:this.panelManager,widgetManager:this.widgetManager,widgetConfig:a,configId:a.id,
-map:this.map});"map"===a.position.relativeTo?e.place(b.domNode,this.mapId):e.place(b.domNode,this.layoutId);e.setStyle(b.domNode,h.getPositionStyle({top:a.position.top,left:a.position.left,right:a.position.right,bottom:a.position.bottom,width:40,height:40}));b.startup();!this.openAtStartWidget&&a.openAtStart&&(b.switchToOpen(),this.openAtStartWidget=a.name);this.onScreenWidgetIcons.push(b);return b},reloadControllerWidget:function(a,b){var c=this.widgetManager.getWidgetById(b);if(c){var d=c.getOpenedIds(),
-e=c.windowState;this._destroyControllerWidget(c);this._loadControllerWidget(a,b,d,e)}else this._loadControllerWidget(a,b)},_doPostLoad:function(){require(["dynamic-modules/postload"])},_destroyControllerWidget:function(a){d.forEach(a.getAllConfigs(),function(a){if(a.widgets)this.panelManager.destroyPanel(a.id+"_panel"),d.forEach(a.widgets,function(a){this.panelManager.destroyPanel(a.id+"_panel")},this);else{var b=this.widgetManager.getWidgetById(a.id);b&&(a.inPanel?this.panelManager.destroyPanel(b.getPanel()):
-this.widgetManager.destroyWidget(b))}},this);this.widgetManager.destroyWidget(a)},_loadControllerWidget:function(a,b,c,d){b=a.getConfigElementById(b);!1!==b.visible&&this.loadOnScreenWidget(b,a).then(f.hitch(this,function(a){d&&this.widgetManager.changeWindowStateTo(a,d);c&&a.setOpenedIds(c)}))},_updatePlaceholder:function(a){d.forEach(this.widgetPlaceholders,function(b){b.setIndex(a.getConfigElementById(b.configId).placeholderIndex)},this)}});g.extend(t);g.getInstance=function(){null===k&&(k=new g);
-return k};return g});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'dojo/_base/html',
+  'dijit/_WidgetBase',
+  'dojo/Deferred',
+  'dojo/promise/all',
+  '../utils',
+  '../WidgetPlaceholder',
+  '../OnScreenWidgetIcon',
+  "./A11yLayoutManager"
+],
+
+function(declare, lang, array, html, _WidgetBase, Deferred, all, jimuUtils,
+  WidgetPlaceholder, OnScreenWidgetIcon, a11y) {
+  var instance = null, clazz;
+
+  /*jshint unused:false */
+  /* global jimuConfig:true */
+
+  clazz = declare([_WidgetBase], {
+    constructor: function() {
+      this.widgetPlaceholders = [];
+      this.onScreenWidgetIcons = [];
+      this.invisibleWidgetIds = [];
+    },
+
+    name: 'BaseLayoutManager',
+    mapId: 'map',
+    map: null,
+    layoutId: 'jimu-layout-manager',
+
+    postCreate: function(){
+      this.containerNode = this.domNode;
+      this.layoutId = jimuConfig.layoutId;
+    },
+
+    resize: function() {
+    },
+
+    isSupportEdit: function(){
+      return false;
+    },
+
+    getMapDiv: function(){
+    },
+
+    setMap: function(map){
+      this.map = map;
+    },
+
+    onEnter: function(appConfig, mapId){
+      var def = new Deferred();
+      this.appConfig = appConfig;
+      this.mapId = mapId;
+      def.resolve();
+      return def;
+    },
+
+    onLeave: function(){
+
+    },
+
+    onThemeLoad: function() {
+    },
+
+    /**
+     * do load and layout job in this function, including onscreen widgets and map
+     *
+     * @param  {[type]} appConfig [description]
+     * @return {[type]}           [description]
+     */
+    loadAndLayout: function(appConfig){
+
+    },
+
+    openWidget: function(widgetId){
+
+    },
+
+    /////////////functions to handle builder events
+    onLayoutChange: function(appConfig){
+
+    },
+
+    onWidgetChange: function(appConfig, widgetJson){
+
+    },
+
+    onGroupChange: function(appConfig, groupJson){
+
+    },
+
+    onWidgetPoolChange: function(appConfig, changeData){
+      this.reloadControllerWidget(appConfig, changeData.controllerId);
+    },
+
+    onOnScreenOrderChange: function(appConfig, onscreenWidgets){
+      array.forEach(onscreenWidgets, lang.hitch(this, function(widgetConfig) {
+        if (!widgetConfig.uri) {
+          array.some(this.widgetPlaceholders, lang.hitch(this, function(phDijit) {
+            if (phDijit.index === widgetConfig.placeholderIndex) {
+              var style = jimuUtils.getPositionStyle({
+                top: widgetConfig.position.top,
+                left: widgetConfig.position.left,
+                right: widgetConfig.position.right,
+                bottom: widgetConfig.position.bottom,
+                width: 40,
+                height: 40
+              });
+              html.setStyle(phDijit.domNode, style);
+              return true;
+            }
+          }));
+        } else {
+          array.some(this.onScreenWidgetIcons, lang.hitch(this, function(iconDijit) {
+            if (iconDijit.configId === widgetConfig.id) {
+              html.setStyle(iconDijit.domNode, jimuUtils.getPositionStyle({
+                top: widgetConfig.position.top,
+                left: widgetConfig.position.left,
+                right: widgetConfig.position.right,
+                bottom: widgetConfig.position.bottom,
+                width: 40,
+                height: 40
+              }));
+              iconDijit.moveTo(widgetConfig.position);
+              return true;
+            }
+          }));
+        }
+      }));
+    },
+
+    onActionTriggered: function(actionInfo){
+    },
+
+    onLayoutDefinitionChange: function(appConfig, layoutDefinition){
+
+    },
+
+    onOnScreenGroupsChange: function(appConfig, groups){
+
+    },
+
+    destroyOnScreenWidgetsAndGroups: function(appConfig){
+
+    },
+
+    /*
+      Because, for now, onscreen widgets are managed by the same way by these 2 layout manager, so, put code here.
+      when we have a layout that does not use the same way to manage onscreen widgets, we'll refactor the code
+      These functions are used to called by sub class, not used to be inherited.
+    */
+
+    loadOnScreenWidgets: function(appConfig){
+      var defs = [];
+      array.forEach(appConfig.widgetOnScreen.widgets, function(widgetConfig) {
+        if(widgetConfig.visible === false){
+          this.invisibleWidgetIds.push(widgetConfig.id);
+          return;
+        }
+        defs.push(this.loadOnScreenWidget(widgetConfig, appConfig));
+      }, this);
+
+      return all(defs);
+    },
+
+    loadOnScreenWidget: function(widgetConfig, appConfig){
+      var def = new Deferred();
+
+      if(appConfig.mode === 'config' && !widgetConfig.uri){
+        var placeholder = this._createOnScreenWidgetPlaceHolder(widgetConfig);
+        def.resolve(placeholder);
+        return def;
+      }else if(!widgetConfig.uri){
+        //in run mode, when no uri, do nothing
+        def.resolve(null);
+        return def;
+      }
+
+      var iconDijit;
+      if(widgetConfig.inPanel || widgetConfig.closeable){//TODO closeable rename
+        //in panel widget or closeable off panel widget
+        iconDijit = this._createOnScreenWidgetIcon(widgetConfig);
+        def.resolve(iconDijit);
+      }else{
+        //off panel
+        this.widgetManager.loadWidget(widgetConfig).then(lang.hitch(this, function(widget){
+          try{
+            widget.setPosition(widget.position);
+            this.widgetManager.openWidget(widget);
+          }catch(err){
+            console.log(console.error('fail to startup widget ' + widget.name + '. ' + err.stack));
+          }
+
+          widget.configId = widgetConfig.id;
+          def.resolve(widget);
+        }), function(err){
+          def.reject(err);
+        });
+      }
+
+      return def;
+    },
+
+    onOnScreenWidgetChange: function(appConfig, widgetJson){
+      widgetJson = appConfig.getConfigElementById(widgetJson.id);
+      if(widgetJson.isController){
+        this.reloadControllerWidget(appConfig, widgetJson.id);
+        return;
+      }
+      array.forEach(this.widgetPlaceholders, function(placeholder){
+        if(placeholder.configId === widgetJson.id){
+          placeholder.destroy();
+          this.loadOnScreenWidget(widgetJson, appConfig);
+        }
+      }, this);
+      this.removeDestroyed(this.widgetPlaceholders);
+      this._updatePlaceholder(appConfig);
+
+      array.forEach(this.onScreenWidgetIcons, function(icon){
+        if(icon.configId === widgetJson.id){
+          var state = icon.state;
+          icon.destroy();
+          this.loadOnScreenWidget(widgetJson, appConfig).then(function(iconNew){
+            if(widgetJson.uri && state === 'opened'){
+              iconNew.onClick();
+            }
+          });
+        }
+      }, this);
+      this.removeDestroyed(this.onScreenWidgetIcons);
+
+      array.forEach(this.widgetManager.getOnScreenOffPanelWidgets(), function(widget){
+        if(widget.configId === widgetJson.id){
+          widget.destroy();
+          if(widgetJson.visible === false){
+            if(this.invisibleWidgetIds.indexOf(widgetJson.id) < 0){
+              this.invisibleWidgetIds.push(widgetJson.id);
+            }
+            return;
+          }
+          this.loadOnScreenWidget(widgetJson, appConfig);
+        }
+      }, this);
+
+      //if widget change visible from invisible, it's not exist in onscreen offpanel Widgets
+      //so, load it here
+      array.forEach(this.invisibleWidgetIds, function(widgetId){
+        if(widgetId === widgetJson.id && widgetJson.visible !== false){
+          this.loadOnScreenWidget(widgetJson, appConfig);
+          var i = this.invisibleWidgetIds.indexOf(widgetJson.id);
+          this.invisibleWidgetIds.splice(i, 1);
+        }
+      }, this);
+
+      if(!widgetJson.isOnScreen){
+        array.forEach(this.widgetManager.getControllerWidgets(), function(controllerWidget){
+          if(controllerWidget.widgetIsControlled(widgetJson.id)){
+            this.reloadControllerWidget(appConfig, controllerWidget.id);
+          }
+        }, this);
+      }
+    },
+
+    destroyOnScreenWidgetIcons: function(){
+      array.forEach(this.onScreenWidgetIcons, function(icon){
+        icon.destroy();
+      }, this);
+      this.onScreenWidgetIcons = [];
+    },
+
+    destroyOnScreenOffPanelWidgets: function(){
+      array.forEach(this.widgetManager.getOnScreenOffPanelWidgets(), function(widget){
+        if(widget.isController){
+          this._destroyControllerWidget(widget);
+        }else{
+          this.widgetManager.destroyWidget(widget);
+        }
+      }, this);
+    },
+
+    destroyWidgetPlaceholders: function(){
+      array.forEach(this.widgetPlaceholders, function(placeholder){
+        placeholder.destroy();
+      }, this);
+      this.widgetPlaceholders = [];
+    },
+
+    removeDestroyed: function(_array){
+      var willBeDestroyed = [];
+      array.forEach(_array, function(e){
+        if(e._destroyed){
+          willBeDestroyed.push(e);
+        }
+      });
+      array.forEach(willBeDestroyed, function(e){
+        var i = _array.indexOf(e);
+        _array.splice(i, 1);
+      });
+    },
+
+    _createOnScreenWidgetPlaceHolder: function(widgetConfig){
+      var pid;
+      if(widgetConfig.position.relativeTo === 'map'){
+        pid = this.mapId;
+      }else{
+        pid = this.layoutId;
+      }
+      var cfg = lang.clone(widgetConfig);
+
+      cfg.position.width = 40;
+      cfg.position.height = 40;
+      var style = jimuUtils.getPositionStyle(cfg.position);
+      var phDijit = new WidgetPlaceholder({
+        index: cfg.placeholderIndex,
+        configId: widgetConfig.id
+      });
+      html.setStyle(phDijit.domNode, style);
+      html.place(phDijit.domNode, pid);
+      this.widgetPlaceholders.push(phDijit);
+      return phDijit;
+    },
+
+    _createOnScreenWidgetIcon: function(widgetConfig){
+      var iconDijit = new OnScreenWidgetIcon({
+        panelManager: this.panelManager,
+        widgetManager: this.widgetManager,
+        widgetConfig: widgetConfig,
+        configId: widgetConfig.id,
+        map: this.map
+      });
+
+      if(widgetConfig.position.relativeTo === 'map'){
+        html.place(iconDijit.domNode, this.mapId);
+      }else{
+        html.place(iconDijit.domNode, this.layoutId);
+      }
+      //icon position doesn't use width/height in config
+      html.setStyle(iconDijit.domNode, jimuUtils.getPositionStyle({
+        top: widgetConfig.position.top,
+        left: widgetConfig.position.left,
+        right: widgetConfig.position.right,
+        bottom: widgetConfig.position.bottom,
+        width: 40,
+        height: 40
+      }));
+      iconDijit.startup();
+
+      if(!this.openAtStartWidget && widgetConfig.openAtStart){
+        iconDijit.switchToOpen();
+        this.openAtStartWidget = widgetConfig.name;
+      }
+
+      this.onScreenWidgetIcons.push(iconDijit);
+      return iconDijit;
+    },
+
+    reloadControllerWidget: function(appConfig, controllerId){
+      var controllerWidget = this.widgetManager.getWidgetById(controllerId);
+      if(!controllerWidget){
+        this._loadControllerWidget(appConfig, controllerId);
+        return;
+      }
+
+      //get old info
+      var openedIds = controllerWidget.getOpenedIds();
+      var windowState = controllerWidget.windowState;
+
+      this._destroyControllerWidget(controllerWidget);
+      this._loadControllerWidget(appConfig, controllerId, openedIds, windowState);
+    },
+
+     _doPostLoad: function(){
+      //load somethings that may be used later.
+      //let it load behind the stage.
+      require(['dynamic-modules/postload']);
+    },
+
+    _destroyControllerWidget: function(controllerWidget){
+      //destory all panels controlled by the controller.
+      //we can't destroy the opened only, because some panels are closed but the
+      //instance is still exists
+
+      //destroy controlled widgets
+      array.forEach(controllerWidget.getAllConfigs(), function(configJson){
+        if(configJson.widgets){//it's group
+          this.panelManager.destroyPanel(configJson.id + '_panel');
+          array.forEach(configJson.widgets, function(widgetItem){
+            //Group items must be in panel
+            this.panelManager.destroyPanel(widgetItem.id + '_panel');
+          }, this);
+        }else{
+          var widget = this.widgetManager.getWidgetById(configJson.id);
+          if(!widget){
+            return;
+          }
+          if(configJson.inPanel){
+            this.panelManager.destroyPanel(widget.getPanel());
+          }else{
+            this.widgetManager.destroyWidget(widget);
+          }
+        }
+
+      }, this);
+
+      //destroy controller itself
+      this.widgetManager.destroyWidget(controllerWidget);
+    },
+
+    _loadControllerWidget: function(appConfig, controllerId, openedIds, windowState){
+      //load widget
+      var newControllerJson = appConfig.getConfigElementById(controllerId);
+      if(newControllerJson.visible === false){
+        return;
+      }
+      this.loadOnScreenWidget(newControllerJson, appConfig).then(lang.hitch(this, function(widget){
+        if(windowState){
+          this.widgetManager.changeWindowStateTo(widget, windowState);
+        }
+        if(openedIds){
+          widget.setOpenedIds(openedIds);
+        }
+      }));
+    },
+
+    _updatePlaceholder: function (appConfig) {
+      array.forEach(this.widgetPlaceholders, function(placehoder){
+        placehoder.setIndex(appConfig.getConfigElementById(placehoder.configId).placeholderIndex);
+      }, this);
+    }
+
+  });
+
+  clazz.extend(a11y);
+  clazz.getInstance = function() {
+    if (instance === null) {
+      instance = new clazz();
+    }
+    return instance;
+  };
+  return clazz;
+});
