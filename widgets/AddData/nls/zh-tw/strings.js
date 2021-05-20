@@ -95,7 +95,8 @@ define({
   },
   "addFromUrl": {
     "type": "類型",
-    "url": "URL",
+      "url": "URL",
+      "name": "Layer Name",
     "types": {
       "ArcGIS": "ArcGIS Server Web 服務",
       "WMS": "WMS OGC Web 服務",

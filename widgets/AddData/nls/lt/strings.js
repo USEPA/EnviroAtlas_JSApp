@@ -95,7 +95,8 @@ define({
   },
   "addFromUrl": {
     "type": "Tipas",
-    "url": "URL",
+      "url": "URL",
+      "name": "Layer Name",
     "types": {
       "ArcGIS": "ArcGIS Server  internetinė paslauga",
       "WMS": "WMS OGC internetinė paslauga",

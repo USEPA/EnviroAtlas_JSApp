@@ -95,7 +95,8 @@ define({
   },
   "addFromUrl": {
     "type": "Mappen innehåller inte ett giltigt app-projekt",
-    "url": "URL",
+      "url": "URL",
+      "name": "Layer Name",
     "types": {
       "ArcGIS": "En ArcGIS Server-webbtjänst",
       "WMS": "En WMS OGC-webbtjänst",

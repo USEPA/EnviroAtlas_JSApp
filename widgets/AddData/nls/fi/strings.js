@@ -95,7 +95,8 @@ define({
   },
   "addFromUrl": {
     "type": "Tyyppi",
-    "url": "URL-osoite",
+      "url": "URL-osoite",
+      "name": "Layer Name",
     "types": {
       "ArcGIS": "ArcGIS Server Web Service -palvelu",
       "WMS": "WMS OGC Web Service -palvelu",
