@@ -496,7 +496,8 @@ define(['dojo/_base/declare',
         this.close();
       },
       onLearnClick: function(){
-        this.openWidgetById('widgets_AddWebMapData');
+          this.openWidgetById('widgets_AddWebMapData');
+          this.close();
         var wm = WidgetManager.getInstance();
         widget = wm.getWidgetById('themes_TabTheme_widgets_SidebarController_Widget_20');
         for (var i=0; i<widget.tabs.length; i++){
@@ -505,7 +506,6 @@ define(['dojo/_base/declare',
                 widget.selectTab(i);
             }
         }
-        this.close();
       },   
       close: function() {
         this._isClosed = true;
