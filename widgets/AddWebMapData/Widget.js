@@ -545,18 +545,7 @@ define(['dojo/_base/declare',
                 message : "This will replace all layers currently added to the map. If you wish to save your current layer selection, please use the save session widget first.",
                 type : 'question',
                 buttons : [{
-                    label : "Cancel and save session",
-                    onClick : lang.hitch(this, function() {
-                        //console.log('ChangeWebMap :: promptUserToZoomToItem :: keep current extent');
-                        dlg.close();
-                        //Show Save Session Widget
-                        var widgetName = 'SaveSession';
-                        var pm = PanelManager.getInstance();
-                        var widgets = pm.widgetManager.appConfig.getConfigElementsByName(widgetName);
-                        pm.showPanel(widgets[0]);
-                    })
-                }, {
-                    label : "Proceed",
+                     label : "Proceed",
                     onClick : lang.hitch(this, function() {
                         dlg.close();
                         //console.log('ChangeWebMap :: promptUserToZoomToItem :: zooming to new extent');
@@ -565,6 +554,17 @@ define(['dojo/_base/declare',
                             layerListWidget._onRemoveLayersClick();
                         }
                         this._onConfirmation(item);
+                    })
+                }, {
+					label : "Cancel and save session",
+                    onClick : lang.hitch(this, function() {
+                        //console.log('ChangeWebMap :: promptUserToZoomToItem :: keep current extent');
+                        dlg.close();
+                        //Show Save Session Widget
+                        var widgetName = 'SaveSession';
+                        var pm = PanelManager.getInstance();
+                        var widgets = pm.widgetManager.appConfig.getConfigElementsByName(widgetName);
+                        pm.showPanel(widgets[0]);
                     })
                 }]
             });

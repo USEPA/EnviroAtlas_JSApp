@@ -58,8 +58,8 @@ define({
         90: "Woody Wetlands",
         95: "Emergent Herbaceous Wetlands",
       },
-      layer: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/TO7_NLCD_Flood/ImageServer',
-      /*layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/TO7_NLCD/ImageServer', */
+      /*layer: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/TO7_NLCD_Flood/ImageServer', */
+      layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/TO7_NLCD_Dasy/ImageServer', 
       OBJECTIDS: {
         2001: 1,
         2004: 2,
@@ -93,19 +93,23 @@ define({
       columnHeaders: ['Land Cover Type', 'Code', 'Area (km2)', 'Percentage']
     },
     "population-floodplains": {
-      layer: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/TO7_Pop_Flood_Roads_Padus/ImageServer',
+      /* layer: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/TO7_Pop_Flood_Roads_Padus/ImageServer', */
+	  layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/TO7_Pop/ImageServer', 
       lockRasterId: 2,
       layersUsed: ['Estimated Floodplains', 'Dasymetric Population']
     },
     "population-roads": {
-      layer: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/TO7_Pop_Flood_Roads_Padus/ImageServer',
+      /* layer: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/TO7_Pop_Flood_Roads_Padus/ImageServer', */
+	  layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/TO7_Pop/ImageServer', 
       lockRasterId: 4,
       layersUsed: ['FAF4 Roads', 'Dasymetric Population']
     },
     populationRasterId: 10,
     padus: {
-      layer: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/TO7_Pop_Flood_Roads_Padus/ImageServer',
-      polys: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/PADUS_Shapefile/MapServer/0',
+      /* layer: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/TO7_Pop_Flood_Roads_Padus/ImageServer', */
+	  layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/TO7_Pop/ImageServer', 
+      /* polys: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/PADUS_Shapefile/MapServer/0', */
+	  polys: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/PADUS_Shapefile/MapServer/0',
       lockRasterId: 7,
       layersUsed: ['PADUS']
     },
@@ -122,6 +126,6 @@ define({
     countyLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Counties/FeatureServer/0',
     districtLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_116th_Congressional_Districts/FeatureServer/0',
     "huc-12Layer": 'https://enviroatlas2.epa.gov/arcgis/rest/services/test_services/allResults/MapServer/0',
-    "huc-8Layer": 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/HUC8/MapServer/0'
+    "huc-8Layer": 'https://leb.epa.gov/arcgis/rest/services/Supplemental/HUC8/MapServer/0'
   },
 });

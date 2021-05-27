@@ -1466,8 +1466,8 @@ define([
           this.layersUsedList.innerHTML = `<li>${this.nlcdYear} NLCD</li>`
         } else if (indicator === 'nlcd-change') {
           this.layersUsedList.innerHTML = `
-            <li>${this.nlcdChangeYear1} NLCD}</li>
-            <li>${this.nlcdChangeYear2} NLCD}</li>
+            <li>${this.nlcdChangeYear1} NLCD</li>
+            <li>${this.nlcdChangeYear2} NLCD</li>
           `
         } else {
           this.layersUsedList.innerHTML = `
