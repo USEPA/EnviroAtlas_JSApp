@@ -1,12 +1,238 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/GpSource.html":'\x3cdiv\x3e\r\n  \x3cdiv style\x3d"display: flex;"\x3e\r\n    \x3cdiv\x3e\r\n      \x3cinput name\x3d"gpsource_mode" id\x3d"gpsource_fromportal_${uniqueID}" data-dojo-attach-point\x3d"portalRadio" data-dojo-type\x3d"dijit/form/RadioButton"/\x3e\r\n      \x3clabel for\x3d"gpsource_fromportal_${uniqueID}" data-dojo-attach-point\x3d"portalLabel"\x3e${nls.selectFromPortal}\x3c/label\x3e\r\n    \x3c/div\x3e\r\n    \x3cdiv style\x3d"margin-left: 20px;"\x3e\r\n      \x3cinput name\x3d"gpsource_mode" id\x3d"gpsource_fromurl_${uniqueID}" data-dojo-attach-point\x3d"urlRadio" data-dojo-type\x3d"dijit/form/RadioButton"/\x3e\r\n      \x3clabel for\x3d"gpsource_fromurl_${uniqueID}" data-dojo-attach-point\x3d"urlLabel"\x3e${nls.addServiceUrl}\x3c/label\x3e\r\n    \x3c/div\x3e\r\n  \x3c/div\x3e\r\n  \x3cdiv class\x3d"source-content"\x3e\r\n    \x3cdiv data-dojo-attach-point\x3d"operationTip" class\x3d"operation-tip"\x3e\x3c/div\x3e\r\n    \x3cdiv data-dojo-attach-point\x3d"hflcContainer" class\x3d"dijit-container hflc-container" style\x3d"display:none;"\x3e\x3c/div\x3e\r\n    \x3cdiv data-dojo-attach-point\x3d"flscContainer" class\x3d"dijit-container flsc-container" style\x3d"display:none;"\x3e\x3c/div\x3e\r\n  \x3c/div\x3e\r\n\x3c/div\x3e'}});
-define("dojo/_base/declare dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/text!./templates/GpSource.html dojo/_base/lang dojo/_base/html dojo/on dojo/Evented jimu/dijit/GpChooserFromPortal jimu/dijit/_GpServiceChooserContent jimu/portalUrlUtils dijit/form/RadioButton".split(" "),function(e,f,g,h,k,b,c,d,l,m,n,p){var q=0;return e([f,g,h,l],{templateString:k,baseClass:"jimu-gp-source",declaredClass:"jimu.dijit.GpSource",nls:null,multiple:!1,portalUrl:null,uniqueID:null,mode:null,
-constructor:function(){this.inherited(arguments);this.uniqueID=++q},postMixInProperties:function(){this.nls=window.jimuNls.gpSource;this.portalUrl=p.getStandardPortalUrl(this.portalUrl)},postCreate:function(){this.inherited(arguments);this._initSelf()},getSelectedItems:function(){var a=[];this.portalRadio.checked?a=this.gpcPortal.getSelectedItems():this.urlRadio.checked&&(a=this.gpcUrl.getSelectedItems());return a},startup:function(){this._started||(this.inherited(arguments),this.gpcPortal.startup(),
-this.gpcUrl.startup());this._started=!0},_initSelf:function(){this._initRadios();this._createGpChooserFromPortal();this._createGpServiceChooserContent();this._onRadioClicked("url");this.own(d(this.urlRadio,"click",b.hitch(this,function(){this._onRadioClicked("url")})));this.own(d(this.portalRadio,"click",b.hitch(this,function(){this._onRadioClicked("portal")})))},_createGpChooserFromPortal:function(){this.gpcPortal=new m({multiple:this.multiple,portalUrl:this.portalUrl,style:{width:"100%",height:"100%"}});
-this.gpcPortal.operationTip=this.nls.chooseItem;this.gpcPortal.placeAt(this.hflcContainer);this.own(d(this.gpcPortal,"next",b.hitch(this,function(){this.gpcPortal.operationTip=this.nls.chooseItem+" -\x3e "+this.nls.chooseTask;this._updateOperationTip()})));this.own(d(this.gpcPortal,"back",b.hitch(this,function(){this.gpcPortal.operationTip=this.nls.chooseItem;this._updateOperationTip()})));this.own(d(this.gpcPortal,"ok",b.hitch(this,function(a){a&&0<a.length&&this.emit("ok",a)})));this.own(d(this.gpcPortal,
-"cancel",b.hitch(this,function(){this.emit("cancel")})));0<=(this.portalUrl||"").toLowerCase().indexOf(".arcgis.com")?this.portalLabel.innerHTML=this.nls.selectFromOnline:this.portalLabel.innerHTML=this.nls.selectFromPortal},_createGpServiceChooserContent:function(){this.gpcUrl=new n({multiple:this.multiple,style:{width:"100%",height:"100%"}});this.gpcUrl.operationTip=this.nls.setServiceUrl;this.gpcUrl.placeAt(this.flscContainer);this.own(d(this.gpcUrl,"ok",b.hitch(this,function(a){a&&0<a.length&&
-this.emit("ok",a)})));this.own(d(this.gpcUrl,"cancel",b.hitch(this,function(){this.emit("cancel")})))},_initRadios:function(){var a="gpSourceRadios_"+this._getRandomString();this.portalRadio.name=a;c.setAttr(this.portalRadio,"id","portalRadio_"+this._getRandomString());c.setAttr(this.portalLabel,"for",this.portalRadio.id);this.urlRadio.name=a;c.setAttr(this.urlRadio,"id","urlRadio_"+this._getRandomString());c.setAttr(this.urlLabel,"for",this.urlRadio.id)},_getRandomString:function(){var a=Math.random().toString();
-return a=a.slice(2,a.length)},_onRadioClicked:function(a){this.mode!==a&&(this.mode=a,"portal"===a?(this.portalRadio.set("checked",!0),this.urlRadio.set("checked",!1),c.setStyle(this.hflcContainer,"display","block"),c.setStyle(this.flscContainer,"display","none"),this.operationTip.innerHTML=this.nls.chooseItem):"url"===a&&(this.portalRadio.set("checked",!1),this.urlRadio.set("checked",!0),c.setStyle(this.hflcContainer,"display","none"),c.setStyle(this.flscContainer,"display","block"),this.operationTip.innerHTML=
-this.nls.setServiceUrl,setTimeout(b.hitch(this,function(){this.gpcUrl.focusInput()}),50)),this._updateOperationTip())},_updateOperationTip:function(){if(this.portalRadio.checked){this.operationTip.innerHTML=this.gpcPortal.operationTip;var a=this.gpcPortal.browserContainer;a.style.top=0;var b=this.operationTip.clientHeight;19<=b&&(a.style.top=b-19+"px")}else this.urlRadio.checked&&(this.operationTip.innerHTML=this.gpcUrl.operationTip)}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dijit/_WidgetsInTemplateMixin',
+  'dojo/text!./templates/GpSource.html',
+  'dojo/_base/lang',
+  'dojo/_base/html',
+  'dojo/on',
+  'dojo/Evented',
+  'jimu/dijit/GpChooserFromPortal',
+  'jimu/dijit/_GpServiceChooserContent',
+  'jimu/portalUrlUtils',
+  'dijit/form/RadioButton'
+],
+function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
+  template, lang, html, on, Evented, GpChooserFromPortal,
+  _GpServiceChooserContent, portalUrlUtils) {
+
+  var idCounter = 0;
+
+  return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+    templateString: template,
+    baseClass: 'jimu-gp-source',
+    declaredClass: 'jimu.dijit.GpSource',
+    nls: null,
+
+    //common options:
+    multiple: false,
+
+    //GpChooserFromPortal options
+    portalUrl: null,
+    uniqueID: null,
+    mode: null,
+
+    //public methods:
+    //getSelectedItems return[{name,url}]
+
+    //events:
+    //ok
+    //cancel
+
+    constructor: function() {
+      this.inherited(arguments);
+      this.uniqueID = ++idCounter;
+    },
+
+    postMixInProperties: function(){
+      this.nls = window.jimuNls.gpSource;
+      this.portalUrl = portalUrlUtils.getStandardPortalUrl(this.portalUrl);
+    },
+
+    postCreate: function(){
+      this.inherited(arguments);
+      this._initSelf();
+    },
+
+    getSelectedItems: function(){
+      var items = [];
+      if(this.portalRadio.checked){
+        items = this.gpcPortal.getSelectedItems();
+      }
+      else if(this.urlRadio.checked){
+        items = this.gpcUrl.getSelectedItems();
+      }
+      return items;
+    },
+
+    startup: function(){
+      if(!this._started){
+        this.inherited(arguments);
+        this.gpcPortal.startup();
+        this.gpcUrl.startup();
+      }
+      this._started = true;
+    },
+
+    _initSelf: function(){
+      this._initRadios();
+
+      //create GpChooserFromPortal
+      this._createGpChooserFromPortal();
+
+      //create _GpServiceChooserContent
+      this._createGpServiceChooserContent();
+
+      this._onRadioClicked('url');
+
+      this.own(on(this.urlRadio, 'click', lang.hitch(this, function() {
+        this._onRadioClicked('url');
+      })));
+      this.own(on(this.portalRadio, 'click', lang.hitch(this, function() {
+        this._onRadioClicked('portal');
+      })));
+    },
+
+    _createGpChooserFromPortal: function(){
+      var args2 = {
+        multiple: this.multiple,
+        portalUrl: this.portalUrl,
+        style: {
+          width: '100%',
+          height: '100%'
+        }
+      };
+      this.gpcPortal = new GpChooserFromPortal(args2);
+      this.gpcPortal.operationTip = this.nls.chooseItem;
+      this.gpcPortal.placeAt(this.hflcContainer);
+
+      this.own(on(this.gpcPortal, 'next', lang.hitch(this, function(){
+        this.gpcPortal.operationTip = this.nls.chooseItem + " -> " + this.nls.chooseTask;
+        this._updateOperationTip();
+      })));
+
+      this.own(on(this.gpcPortal, 'back', lang.hitch(this, function(){
+        this.gpcPortal.operationTip = this.nls.chooseItem;
+        this._updateOperationTip();
+      })));
+
+      this.own(on(this.gpcPortal, 'ok', lang.hitch(this, function(items){
+        if(items && items.length > 0){
+          this.emit('ok', items);
+        }
+      })));
+
+      this.own(on(this.gpcPortal, 'cancel', lang.hitch(this, function(){
+        this.emit('cancel');
+      })));
+
+      var portalUrl = this.portalUrl || '';
+      if(portalUrl.toLowerCase().indexOf('.arcgis.com') >= 0){
+        this.portalLabel.innerHTML = this.nls.selectFromOnline;
+      }
+      else{
+        this.portalLabel.innerHTML = this.nls.selectFromPortal;
+      }
+    },
+
+    _createGpServiceChooserContent: function(){
+      var args3 = {
+        multiple: this.multiple,
+        style: {
+          width: '100%',
+          height: '100%'
+        }
+      };
+      this.gpcUrl = new _GpServiceChooserContent(args3);
+      this.gpcUrl.operationTip = this.nls.setServiceUrl;
+      this.gpcUrl.placeAt(this.flscContainer);
+
+      this.own(on(this.gpcUrl, 'ok', lang.hitch(this, function(items){
+        if(items && items.length > 0){
+          this.emit('ok', items);
+        }
+      })));
+
+      this.own(on(this.gpcUrl, 'cancel', lang.hitch(this, function(){
+        this.emit('cancel');
+      })));
+    },
+
+    _initRadios: function(){
+      var name = "gpSourceRadios_" + this._getRandomString();
+      this.portalRadio.name = name;
+      html.setAttr(this.portalRadio, 'id', "portalRadio_" + this._getRandomString());
+      html.setAttr(this.portalLabel, 'for', this.portalRadio.id);
+
+      this.urlRadio.name = name;
+      html.setAttr(this.urlRadio, 'id', "urlRadio_" + this._getRandomString());
+      html.setAttr(this.urlLabel, 'for', this.urlRadio.id);
+    },
+
+    _getRandomString: function(){
+      var str = Math.random().toString();
+      str = str.slice(2, str.length);
+      return str;
+    },
+
+    _onRadioClicked: function(mode){
+      if (this.mode === mode) {
+        return;
+      }
+
+      this.mode = mode;
+      if(mode === 'portal'){
+        this.portalRadio.set('checked', true);
+        this.urlRadio.set('checked', false);
+        html.setStyle(this.hflcContainer, 'display', 'block');
+        html.setStyle(this.flscContainer, 'display', 'none');
+        this.operationTip.innerHTML = this.nls.chooseItem;
+      } else if(mode === 'url'){
+        this.portalRadio.set('checked', false);
+        this.urlRadio.set('checked', true);
+        html.setStyle(this.hflcContainer, 'display', 'none');
+        html.setStyle(this.flscContainer, 'display', 'block');
+        this.operationTip.innerHTML = this.nls.setServiceUrl;
+        setTimeout(lang.hitch(this, function() {
+          this.gpcUrl.focusInput();
+        }), 50);
+      }
+
+      this._updateOperationTip();
+    },
+
+    _updateOperationTip: function(){
+      if(this.portalRadio.checked){
+        this.operationTip.innerHTML = this.gpcPortal.operationTip;
+        //update style
+        var browserContainer = this.gpcPortal.browserContainer;
+        browserContainer.style.top = 0;
+        var operationTipHeight = this.operationTip.clientHeight;
+        if(operationTipHeight >= 19){
+          browserContainer.style.top = (operationTipHeight - 19) + 'px';
+        }
+      }
+      else if(this.urlRadio.checked){
+        this.operationTip.innerHTML = this.gpcUrl.operationTip;
+      }
+    }
+
+  });
+});

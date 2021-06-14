@@ -1,73 +1,2151 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dojo/_base/lang dojo/_base/array dojo/date/locale dojo/number esri/lang dojo/data/ItemFileWriteStore jimu/utils moment/moment".split(" "),function(u,m,n,t,r,q,v,k,p){var l=u([],{_stringFieldType:"esriFieldTypeString",_dateFieldType:"esriFieldTypeDate",_numberFieldTypes:["esriFieldTypeOID","esriFieldTypeSmallInteger","esriFieldTypeInteger","esriFieldTypeSingle","esriFieldTypeDouble"],_supportFieldTypes:[],dayInMS:864E5,HourInMS:36E5,MinuteInMS:6E4,SecInMS:1E3,fieldsStore:null,
-isHosted:!1,constructor:function(){String.prototype.startsWith=function(a){return 0===this.indexOf(a)};String.prototype.endsWith=function(a){return this.substring(this.length-a.length)===a};String.prototype.count=function(a){return this.split(a).length-1};String.prototype.trim||(String.prototype.trim=m.trim);this._supportFieldTypes=[];this._supportFieldTypes.push(this._stringFieldType);this._supportFieldTypes.push(this._dateFieldType);this._supportFieldTypes=this._supportFieldTypes.concat(this._numberFieldTypes);
-this.filterBuilderNls=window.jimuNls.filterBuilder},OPERATORS:{stringOperatorIs:"stringOperatorIs",stringOperatorIsNot:"stringOperatorIsNot",stringOperatorStartsWith:"stringOperatorStartsWith",stringOperatorEndsWith:"stringOperatorEndsWith",stringOperatorContains:"stringOperatorContains",stringOperatorDoesNotContain:"stringOperatorDoesNotContain",stringOperatorIsAnyOf:"stringOperatorIsAnyOf",stringOperatorIsNoneOf:"stringOperatorIsNoneOf",stringOperatorIsBlank:"stringOperatorIsBlank",stringOperatorIsNotBlank:"stringOperatorIsNotBlank",
-numberOperatorIs:"numberOperatorIs",numberOperatorIsNot:"numberOperatorIsNot",numberOperatorIsAtLeast:"numberOperatorIsAtLeast",numberOperatorIsLessThan:"numberOperatorIsLessThan",numberOperatorIsAtMost:"numberOperatorIsAtMost",numberOperatorIsGreaterThan:"numberOperatorIsGreaterThan",numberOperatorIsBetween:"numberOperatorIsBetween",numberOperatorIsNotBetween:"numberOperatorIsNotBetween",numberOperatorIsAnyOf:"numberOperatorIsAnyOf",numberOperatorIsNoneOf:"numberOperatorIsNoneOf",numberOperatorIsBlank:"numberOperatorIsBlank",
-numberOperatorIsNotBlank:"numberOperatorIsNotBlank",dateOperatorIsOn:"dateOperatorIsOn",dateOperatorIsNotOn:"dateOperatorIsNotOn",dateOperatorIsBefore:"dateOperatorIsBefore",dateOperatorIsAfter:"dateOperatorIsAfter",dateOperatorIsOnOrBefore:"dateOperatorIsOnOrBefore",dateOperatorIsOnOrAfter:"dateOperatorIsOnOrAfter",dateOperatorIsBetween:"dateOperatorIsBetween",dateOperatorIsNotBetween:"dateOperatorIsNotBetween",dateOperatorIsBlank:"dateOperatorIsBlank",dateOperatorIsNotBlank:"dateOperatorIsNotBlank",
-dateOperatorInTheLast:"dateOperatorInTheLast",dateOperatorNotInTheLast:"dateOperatorNotInTheLast",dateOperatorIsIn:"dateOperatorIsIn",dateOperatorIsNotIn:"dateOperatorIsNotIn",dateOperatorMinutes:"dateOperatorMinutes",dateOperatorHours:"dateOperatorHours",dateOperatorDays:"dateOperatorDays",dateOperatorWeeks:"dateOperatorWeeks",dateOperatorMonths:"dateOperatorMonths",dateOperatorYears:"dateOperatorYears"},prepare:function(a,b){this.isHosted=k.isHostedService(a);b=b||[];this.setFieldsStoreByFieldInfos(b)},
-isPartsObjHasError:function(a){var b=!1;a&&(b=a.parts&&0<=a.parts.length?n.every(a.parts,m.hitch(this,function(a){return a.parts?0<a.parts.length?n.every(a.parts,m.hitch(this,function(a){return!a.error})):!1:!a.error})):!1);return!b},isAskForValues:function(a){return l.isAskForValues(a)},hasVirtualDate:function(a){return l.hasVirtualDate(a)},setFieldsStoreByFieldInfos:function(a){a=n.filter(a,m.hitch(this,function(a){return 0<=this._supportFieldTypes.indexOf(a.type)}));a=n.map(a,function(a,c){var b;
-switch(a.type){case "esriFieldTypeString":b="string";break;case "esriFieldTypeDate":b="date";break;default:b="number"}return{id:c,label:a.name,shortType:b,alias:a.alias,editable:a.editable,name:a.name,nullable:a.nullable,type:a.type}},this);this.fieldsStore=new v({data:{identifier:"id",label:"label",items:a}});return a.length},_validatePartsObj:function(a){return a&&"object"===typeof a},_isObject:function(a){return a&&"object"===typeof a},_isString:function(a){return a&&"string"===typeof a},containsNonLatinCharacter:function(a){for(var b=
-0;b<a.length;b++)if(255<a.charCodeAt(b))return!0;return!1},getExprByFilterObj:function(a){if(!n.every(a.parts,function(a){return!!a}))return null;if(!this.isPartsObjReadyToBuild(a))return a.expr="",a.displaySQL="",a.expr;this._handleVirtualDate(a);var b="",c="",e,d;if(0===a.parts.length)c=b="1\x3d1";else if(1===a.parts.length)e=a.parts[0],e.valueObj&&m.isArray(e.valueObj.value)&&"multiple"!==e.valueObj.type?(d=this._checkIfValObjArrayAndChecked(e.valueObj.value))?(b=this.builtFilterString(e),c=e.displaySQL):
-c=b="1\x3d1":(b=this.builtFilterString(e),c=e.displaySQL);else for(var f="",g=0;g<a.parts.length;g++){e=a.parts[g];e.valueObj&&m.isArray(e.valueObj.value)&&"multiple"!==e.valueObj.type?(d=this._checkIfValObjArrayAndChecked(e.valueObj.value))?(d=this.builtFilterString(e),e=e.displaySQL):e=d="1\x3d1":(d=this.builtFilterString(e),e=e.displaySQL);if(!q.isDefined(d))return null;b+=f+"("+d+")";c+=f+"("+e+")";f=f||" "+a.logicalOperator+" "}a.expr=b;a.displaySQL=c;return b},_checkIfValObjArrayAndChecked:function(a){var b=
-!1,c;for(c in a)if(a[c].isChecked){b=!0;break}return b},_handleVirtualDate:function(a){this.hasVirtualDate(a)&&n.forEach(a.parts,m.hitch(this,function(a){a.parts?n.forEach(a.parts,m.hitch(this,function(a){this._updateRealDateByVirtualDate(a)})):this._updateRealDateByVirtualDate(a)}))},_updateRealDateByVirtualDate:function(a){var b;b=[this.OPERATORS.dateOperatorIsOn,this.OPERATORS.dateOperatorIsNotOn,this.OPERATORS.dateOperatorIsBefore,this.OPERATORS.dateOperatorIsAfter,this.OPERATORS.dateOperatorIsOnOrBefore,
-this.OPERATORS.dateOperatorIsOnOrAfter];a.valueObj.virtualDate?a.operator===this.OPERATORS.dateOperatorIsIn||a.operator===this.OPERATORS.dateOperatorIsNotIn?(b=l.getRealDateByVirtualDate(a.valueObj.virtualDate),a.value1=b[0],a.value2=b[1],a.valueObj.value1=k.getDateTimeStr(b[0]),a.valueObj.value2=k.getDateTimeStr(b[1])):-1<b.indexOf(a.operator)&&(b=l.getRealDateByVirtualDate(a.valueObj.virtualDate),a.value=b,a.valueObj.value=k.getDateTimeStr(b)):(a.valueObj.virtualDate1&&(b=l.getRealDateByVirtualDate(a.valueObj.virtualDate1),
-a.value1=b,a.valueObj.value1=k.getDateTimeStr(b)),a.valueObj.virtualDate2&&(b=l.getRealDateByVirtualDate(a.valueObj.virtualDate2),a.value2=b,a.valueObj.value2=k.getDateTimeStr(b)))},isPartsObjReadyToBuild:function(a){return n.every(a.parts,m.hitch(this,function(a){return a.parts?n.every(a.parts,m.hitch(this,function(a){return this._isPartReadyToBuild(a)})):this._isPartReadyToBuild(a)}))},_isPartReadyToBuild:function(a){var b=a.fieldObj.shortType,c=a.operator,e=a.valueObj;a=e.type||"value";var d=e.value,
-f=e.value1,e=e.value2;if("value"===a){if("string"===b)return c===this.OPERATORS.stringOperatorIsBlank||c===this.OPERATORS.stringOperatorIsNotBlank?!0:k.isNotEmptyString(d);if("number"===b)return c===this.OPERATORS.numberOperatorIsBlank||c===this.OPERATORS.numberOperatorIsNotBlank?!0:c===this.OPERATORS.numberOperatorIsBetween||c===this.OPERATORS.numberOperatorIsNotBetween?k.isValidNumber(f)&&k.isValidNumber(e):k.isValidNumber(d);if("date"===b)return c===this.OPERATORS.dateOperatorIsBlank||c===this.OPERATORS.dateOperatorIsNotBlank?
-!0:c===this.OPERATORS.dateOperatorIsBetween||c===this.OPERATORS.dateOperatorIsNotBetween||c===this.OPERATORS.dateOperatorIsIn||c===this.OPERATORS.dateOperatorIsNotIn?k.isNotEmptyString(f)&&k.isNotEmptyString(e):c===this.OPERATORS.dateOperatorInTheLast||c===this.OPERATORS.dateOperatorNotInTheLast?void 0!==d&&null!==d:k.isNotEmptyString(d)}else{if("field"===a)return k.isNotEmptyString(d);if("unique"===a){if("string"===b)return k.isNotEmptyString(d);if("number"===b)return k.isValidNumber(d);if("date"===
-b)return k.isValidDate(d)}else if("multiple"===a){if("string"===b)return k.isNotEmptyStringArray(d);if("number"===b)return k.isValidNumberArray(d)}else if("values"!==a&&("uniquePredefined"===a||"multiplePredefined"===a)){if("string"===b)return k.isNotEmptyStringArray(d);if("number"===b)return k.isValidNumberArray(d)}}return!1},builtFilterString:function(a){var b="",c="";if(a.parts)for(var e="",d=0;d<a.parts.length;d++){var f=a.parts[d],g=this.builtSingleFilterString(f);f.expr=g.whereClause;if(!q.isDefined(g.whereClause))return null;
-b+=e+g.whereClause;c+=e+f.displaySQL;e=" "+a.logicalOperator+" "}else a&&a.valueObj&&"multiple"===a.valueObj.type&&0===a.valueObj.value.length?b=c="1\x3d1":(b=this.builtSingleFilterString(a).whereClause,c=a.displaySQL);a.expr=b;a.displaySQL=c;return b},_preBuiltSingleFilterString:function(a){if("string"===a.fieldObj.shortType&&"\x3cNull\x3e"===a.valueObj.value){if(a.operator===this.OPERATORS.stringOperatorIs)return{whereClause:a.fieldObj.name+" IS NULL"};if(a.operator===this.OPERATORS.stringOperatorIsNot)return{whereClause:a.fieldObj.name+
-" IS NOT NULL"}}if("number"===a.fieldObj.shortType&&"\x3cNull\x3e"===a.valueObj.value){if(a.operator===this.OPERATORS.numberOperatorIs)return{whereClause:a.fieldObj.name+" IS NULL"};if(a.operator===this.OPERATORS.numberOperatorIsNot)return{whereClause:a.fieldObj.name+" IS NOT NULL"}}return null},_handlePrefixStringsForIn:function(a,b){for(var c=[],e=0;e<a.length;e++){var d=a[e],d=d.replace(/\'/g,"''"),f=this.isHosted&&this.containsNonLatinCharacter(d)?"N":"",d=b||this.isHosted?d:d.toUpperCase(),d=
-""+f+"'"+d+"'";c.push(d)}return c.join(",")},builtSingleFilterString:function(a){this.isHosted&&(a.caseSensitive=!1);if(q.isDefined(a.valueObj.isValid)&&!a.valueObj.isValid)return{whereClause:null};var b=this._preBuiltSingleFilterString(a);if(b)return b;var b=a.valueObj.value,c=a.valueObj.value1,e=a.valueObj.value2,d="",f="",g=[];if("string"===a.fieldObj.shortType){c="";b&&"field"!==a.valueObj.type&&this.isHosted&&!m.isArray(b)&&this.containsNonLatinCharacter(b)&&(c="N");!b||"multiplePredefined"!==
-a.valueObj.type&&"uniquePredefined"!==a.valueObj.type||(g=[],n.forEach(b,m.hitch(this,function(a){a.isChecked&&g.push(a.value)})),a.operator===this.OPERATORS.stringOperatorIs||a.operator===this.OPERATORS.stringOperatorIsNot?(b=g[0],this.isHosted&&this.containsNonLatinCharacter(b)&&(c="N")):b=g);var h=[];switch(a.operator){case this.OPERATORS.stringOperatorIs:d="field"===a.valueObj.type?a.fieldObj.name+" \x3d "+b:a.caseSensitive||this.isHosted?a.fieldObj.name+" \x3d "+c+"'"+b.replace(/\'/g,"''")+"'":
-"UPPER("+a.fieldObj.name+") \x3d "+c+"'"+b.replace(/\'/g,"''").toUpperCase()+"'";break;case this.OPERATORS.stringOperatorIsNot:d="field"===a.valueObj.type?a.fieldObj.name+" \x3c\x3e "+b:a.caseSensitive||this.isHosted?a.fieldObj.name+" \x3c\x3e "+c+"'"+b.replace(/\'/g,"''")+"'":"UPPER("+a.fieldObj.name+") \x3c\x3e "+c+"'"+b.replace(/\'/g,"''").toUpperCase()+"'";break;case this.OPERATORS.stringOperatorStartsWith:h=[];"multiplePredefined"===a.valueObj.type||"uniquePredefined"===a.valueObj.type?(n.forEach(b,
-m.hitch(this,function(b){var c=this.isHosted&&this.containsNonLatinCharacter(b)?"N":"";a.caseSensitive||this.isHosted?h.push(a.fieldObj.name+" LIKE "+c+"'"+b.replace(/\'/g,"''")+"%'"):h.push("UPPER("+a.fieldObj.name+") LIKE "+c+"'"+b.replace(/\'/g,"''").toUpperCase()+"%'")})),d="(("+h.join(") OR (")+"))"):d=a.caseSensitive||this.isHosted?a.fieldObj.name+" LIKE "+c+"'"+b.replace(/\'/g,"''")+"%'":"UPPER("+a.fieldObj.name+") LIKE "+c+"'"+b.replace(/\'/g,"''").toUpperCase()+"%'";break;case this.OPERATORS.stringOperatorEndsWith:h=
-[];"multiplePredefined"===a.valueObj.type||"uniquePredefined"===a.valueObj.type?(n.forEach(b,m.hitch(this,function(b){var c=this.isHosted&&this.containsNonLatinCharacter(b)?"N":"";a.caseSensitive||this.isHosted?h.push(a.fieldObj.name+" LIKE "+c+"'%"+b.replace(/\'/g,"''")+"'"):h.push("UPPER("+a.fieldObj.name+") LIKE "+c+"'%"+b.replace(/\'/g,"''").toUpperCase()+"'")})),d="(("+h.join(") OR (")+"))"):d=a.caseSensitive||this.isHosted?a.fieldObj.name+" LIKE "+c+"'%"+b.replace(/\'/g,"''")+"'":"UPPER("+a.fieldObj.name+
-") LIKE "+c+"'%"+b.replace(/\'/g,"''").toUpperCase()+"'";break;case this.OPERATORS.stringOperatorContains:h=[];"multiplePredefined"===a.valueObj.type||"uniquePredefined"===a.valueObj.type?(n.forEach(b,m.hitch(this,function(b){var c=this.isHosted&&this.containsNonLatinCharacter(b)?"N":"";a.caseSensitive||this.isHosted?h.push(a.fieldObj.name+" LIKE "+c+"'%"+b.replace(/\'/g,"''")+"%'"):h.push("UPPER("+a.fieldObj.name+") LIKE "+c+"'%"+b.replace(/\'/g,"''").toUpperCase()+"%'")})),d="(("+h.join(") OR (")+
-"))"):d=a.caseSensitive||this.isHosted?a.fieldObj.name+" LIKE "+c+"'%"+b.replace(/\'/g,"''")+"%'":"UPPER("+a.fieldObj.name+") LIKE "+c+"'%"+b.replace(/\'/g,"''").toUpperCase()+"%'";break;case this.OPERATORS.stringOperatorDoesNotContain:h=[];"multiplePredefined"===a.valueObj.type||"uniquePredefined"===a.valueObj.type?(n.forEach(b,m.hitch(this,function(b){var c=this.isHosted&&this.containsNonLatinCharacter(b)?"N":"";a.caseSensitive||this.isHosted?h.push(a.fieldObj.name+" NOT LIKE "+c+"'%"+b.replace(/\'/g,
-"''")+"%'"):h.push("UPPER("+a.fieldObj.name+") NOT LIKE "+c+"'%"+b.replace(/\'/g,"''").toUpperCase()+"%'")})),d="(("+h.join(") AND (")+"))"):d=a.caseSensitive||this.isHosted?a.fieldObj.name+" NOT LIKE "+c+"'%"+b.replace(/\'/g,"''")+"%'":"UPPER("+a.fieldObj.name+") NOT LIKE "+c+"'%"+b.replace(/\'/g,"''").toUpperCase()+"%'";break;case this.OPERATORS.stringOperatorIsAnyOf:b=this._handlePrefixStringsForIn(b,a.caseSensitive);d=a.caseSensitive||this.isHosted?a.fieldObj.name+" IN ("+b+")":"UPPER("+a.fieldObj.name+
-") IN ("+b+")";break;case this.OPERATORS.stringOperatorIsNoneOf:b=this._handlePrefixStringsForIn(b,a.caseSensitive);d=a.caseSensitive||this.isHosted?a.fieldObj.name+" NOT IN ("+b+")":"UPPER("+a.fieldObj.name+") NOT IN ("+b+")";break;case this.OPERATORS.stringOperatorIsBlank:d=a.fieldObj.name+" IS NULL";break;case this.OPERATORS.stringOperatorIsNotBlank:d=a.fieldObj.name+" IS NOT NULL"}}else if("number"===a.fieldObj.shortType)switch(!b||"uniquePredefined"!==a.valueObj.type&&"multiplePredefined"!==
-a.valueObj.type?b&&"multiple"===a.valueObj.type&&(b=b.join(",")):(g=[],n.forEach(b,m.hitch(this,function(a){a.isChecked&&g.push(a.value)})),b=g.join(",")),a.operator){case this.OPERATORS.numberOperatorIs:d=a.fieldObj.name+" \x3d "+b;break;case this.OPERATORS.numberOperatorIsNot:d=a.fieldObj.name+" \x3c\x3e "+b;break;case this.OPERATORS.numberOperatorIsAtLeast:d=a.fieldObj.name+" \x3e\x3d "+b;break;case this.OPERATORS.numberOperatorIsLessThan:d=a.fieldObj.name+" \x3c "+b;break;case this.OPERATORS.numberOperatorIsAtMost:d=
-a.fieldObj.name+" \x3c\x3d "+b;break;case this.OPERATORS.numberOperatorIsGreaterThan:d=a.fieldObj.name+" \x3e "+b;break;case this.OPERATORS.numberOperatorIsAnyOf:d=a.fieldObj.name+" IN ("+b+")";break;case this.OPERATORS.numberOperatorIsNoneOf:d=a.fieldObj.name+" NOT IN ("+b+")";break;case this.OPERATORS.numberOperatorIsBetween:d=a.fieldObj.name+" BETWEEN "+c+" AND "+e;break;case this.OPERATORS.numberOperatorIsNotBetween:d=a.fieldObj.name+" NOT BETWEEN "+c+" AND "+e;break;case this.OPERATORS.numberOperatorIsBlank:d=
-a.fieldObj.name+" IS NULL";break;case this.OPERATORS.numberOperatorIsNotBlank:d=a.fieldObj.name+" IS NOT NULL"}else{"field"!==a.valueObj.type&&(b&&(b=k.getDateByDateTimeStr(b)),c&&(c=k.getDateByDateTimeStr(c)),e&&(e=k.getDateByDateTimeStr(e)));var f=a.valueObj.enableTime,l=a.valueObj.timeAccuracy;switch(a.operator){case this.OPERATORS.dateOperatorIsOn:"field"===a.valueObj.type?d=a.fieldObj.name+" \x3d "+b:(d="unique"===a.valueObj.type?this._getEndDateByTimeForUnique(b,a.fieldObj.dateFormat):this._getEndDateByTime(b,
-f,l),d="("+a.fieldObj.name+" BETWEEN "+(this.isHosted?"":"timestamp ")+"'"+this.formatDate(b)+"' AND "+(this.isHosted?"":"timestamp ")+"'"+d+"') AND ("+a.fieldObj.name+" \x3c\x3e "+(this.isHosted?"":"timestamp ")+"'"+d+"')");break;case this.OPERATORS.dateOperatorIsNotOn:"field"===a.valueObj.type?d=a.fieldObj.name+" \x3c\x3e "+b:(d="unique"===a.valueObj.type?this._getEndDateByTimeForUnique(b,a.fieldObj.dateFormat):this._getEndDateByTime(b,f,l),d="("+a.fieldObj.name+" \x3c "+(this.isHosted?"":"timestamp ")+
-"'"+this.formatDate(b)+"') OR ("+a.fieldObj.name+" \x3e\x3d "+(this.isHosted?"":"timestamp ")+"'"+d+"')");break;case this.OPERATORS.dateOperatorIsBefore:d="field"===a.valueObj.type?a.fieldObj.name+" \x3c "+b:a.fieldObj.name+" \x3c "+(this.isHosted?"":"timestamp ")+"'"+this.formatDate(b)+"'";break;case this.OPERATORS.dateOperatorIsAfter:"field"===a.valueObj.type?d=a.fieldObj.name+" \x3e "+b:(d="unique"===a.valueObj.type?this._getEndDateByTimeForUnique(b,a.fieldObj.dateFormat):this._getEndDateByTime(b,
-f,l),d=a.fieldObj.name+" \x3e\x3d "+(this.isHosted?"":"timestamp ")+"'"+d+"'");break;case this.OPERATORS.dateOperatorIsOnOrBefore:"field"===a.valueObj.type?d=a.fieldObj.name+" \x3c\x3d "+b:(d="unique"===a.valueObj.type?this._getEndDateByTimeForUnique(b,a.fieldObj.dateFormat):this._getEndDateByTime(b,f,l),d=a.fieldObj.name+" \x3c "+(this.isHosted?"":"timestamp ")+"'"+d+"'");break;case this.OPERATORS.dateOperatorIsOnOrAfter:d="field"===a.valueObj.type?a.fieldObj.name+" \x3e\x3d "+b:a.fieldObj.name+
-" \x3e\x3d "+(this.isHosted?"":"timestamp ")+"'"+this.formatDate(b)+"'";break;case this.OPERATORS.dateOperatorInTheLast:d=a.fieldObj.name+" BETWEEN CURRENT_TIMESTAMP - "+this._convertRangeToDays(a.valueObj.value,a.valueObj.range)+" AND CURRENT_TIMESTAMP";break;case this.OPERATORS.dateOperatorNotInTheLast:d=a.fieldObj.name+" NOT BETWEEN CURRENT_TIMESTAMP - "+this._convertRangeToDays(a.valueObj.value,a.valueObj.range)+" AND CURRENT_TIMESTAMP";break;case this.OPERATORS.dateOperatorIsBetween:case this.OPERATORS.dateOperatorIsIn:d=
-this._getEndDateByTime(e,a.valueObj.enableTime2,a.valueObj.timeAccuracy2);d="("+a.fieldObj.name+" BETWEEN "+(this.isHosted?"":"timestamp ")+"'"+this.formatDate(c)+"' AND "+(this.isHosted?"":"timestamp ")+"'"+d+"') AND ("+a.fieldObj.name+" \x3c\x3e "+(this.isHosted?"":"timestamp ")+"'"+d+"')";break;case this.OPERATORS.dateOperatorIsNotBetween:case this.OPERATORS.dateOperatorIsNotIn:d=this._getEndDateByTime(e,a.valueObj.enableTime2,a.valueObj.timeAccuracy2);d="("+a.fieldObj.name+" \x3c "+(this.isHosted?
-"":"timestamp ")+"'"+this.formatDate(c)+"') OR ("+a.fieldObj.name+" \x3e\x3d "+(this.isHosted?"":"timestamp ")+"'"+d+"')";break;case this.OPERATORS.dateOperatorIsBlank:d=a.fieldObj.name+" IS NULL";break;case this.OPERATORS.dateOperatorIsNotBlank:d=a.fieldObj.name+" IS NOT NULL"}}"date"===a.fieldObj.shortType?(b=m.clone(a.valueObj),b.dateFormat=a.fieldObj.dateFormat,f=this.getDisplaySQL(a.fieldObj.name,b,a.operator)):f=d;a.displaySQL=f;return{whereClause:d}},_getEndDateByTime:function(a,b,c){a=b?"s"===
-c?this.addSec(a):"m"===c?this.addMinute(a):this.addHour(a):this.addDay(a);return this.formatDate(a)},_getEndDateByTimeForUnique:function(a,b){a=b&&0<=b.indexOf("ShortTime")?this.addMinute(a):b&&0<=b.indexOf("LongTime")?this.addSec(a):this.addDay(a);return this.formatDate(a)},_getDisplayDates:function(a){var b={value:a.virtualDate,value1:a.virtualDate1,value2:a.virtualDate2},c=""===a.dateFormat?{}:{format:{dateFormat:a.dateFormat}};b.value=""===a.virtualDate||void 0===a.virtualDate?"field"===a.type?
-a.value:"unique"===a.type?k.localizeDateByFieldInfo(k.getDateByDateTimeStr(a.value),c):k.localizeDateTimeByFieldInfo(k.getDateByDateTimeStr(a.value),c,a.enableTime,a.timeAccuracy):this.filterBuilderNls[a.virtualDate];b.value1=""===a.virtualDate1?k.localizeDateTimeByFieldInfo(k.getDateByDateTimeStr(a.value1),c,a.enableTime1,a.timeAccuracy1):this.filterBuilderNls[a.virtualDate1];b.value2=""===a.virtualDate2?k.localizeDateTimeByFieldInfo(k.getDateByDateTimeStr(a.value2),c,a.enableTime2,a.timeAccuracy2):
-this.filterBuilderNls[a.virtualDate2];return b},getDisplaySQL:function(a,b,c){var e="";0<c.indexOf("InTheLast")?e=this.filterBuilderNls[c]+" "+b.value+" "+this._getDateRangeEnum(b.value,b.range):(b=this._getDisplayDates(b,c),e=0<c.indexOf("Between")?this.filterBuilderNls[c]+" "+b.value1+" "+this.filterBuilderNls.and+" "+b.value2:0<c.indexOf("Blank")?this.filterBuilderNls[c]:this.filterBuilderNls[c]+" "+b.value);return a+" "+e},_getDateRangeEnum:function(a,b){b={dateOperatorYears:"year",dateOperatorDays:"day",
-dateOperatorMonths:"month",dateOperatorWeeks:"week",dateOperatorHours:"hour",dateOperatorMinutes:"minute"}[b];return window.jimuNls.timeUnit[1<a?b+"s":b].toLowerCase()},_convertRangeToDays:function(a,b){var c=a;b===this.OPERATORS.dateOperatorYears?c=365*a:b===this.OPERATORS.dateOperatorMonths?c=30*a:b===this.OPERATORS.dateOperatorWeeks?c=7*a:b===this.OPERATORS.dateOperatorHours?c=a/24:b===this.OPERATORS.dateOperatorMinutes&&(c=a/1440);return c=Math.round(1E6*c)/1E6},formatDate:function(a){a=new Date(a);
-return""+a.getUTCFullYear()+"-"+r.format(a.getUTCMonth()+1,{pattern:"00"})+"-"+r.format(a.getUTCDate(),{pattern:"00"})+" "+r.format(a.getUTCHours(),{pattern:"00"})+":"+r.format(a.getUTCMinutes(),{pattern:"00"})+":"+r.format(a.getUTCSeconds(),{pattern:"00"})},addDay:function(a){return new Date(a.getTime()+this.dayInMS)},addHour:function(a){return new Date(a.getTime()+this.HourInMS)},addMinute:function(a){return new Date(a.getTime()+this.MinuteInMS)},addSec:function(a){return new Date(a.getTime()+this.SecInMS)},
-getFilterObjByExpr:function(a){if(a&&this.fieldsStore){var b=this.replaceStrings(a);a=b.defExpr;var c=this.findParts(a,"AND");1===c.parts.length&&(c=this.findParts(a,"OR"),1===c.parts.length&&(c.logicalOperator="AND"));n.forEach(c.parts,function(a){a.expr=a.expr.trim();if(a.expr.startsWith("(")&&-1<a.expr.search(/\)$/)){var b=a.expr.substring(1,a.expr.length-1),c=b.indexOf("("),e=b.indexOf(")");if(-1===c&&-1===e||c<e)a.expr=b}b=this.findParts(a.expr,"AND");1===b.parts.length&&(b=this.findParts(a.expr,
-"OR"));1<b.parts.length&&(a.parts=b.parts,a.logicalOperator=b.logicalOperator)},this);this.parseExpr(c);this.reReplaceStrings(b,c,m.hitch(this,function(){c&&c.parts&&n.forEach(c.parts,m.hitch(this,function(a){a&&(a.parts?n.forEach(a.parts,m.hitch(this,function(a){this._handleParsedValuesForSinglePart(a);this._addDefalutValueTypeForSinglePart(a)})):(this._handleParsedValuesForSinglePart(a),this._addDefalutValueTypeForSinglePart(a)))}))}));this.isPartsObjHasError(c)&&(c=null);return c}},_handleParsedValuesForSinglePart:function(a){a&&
-a.fieldObj&&"number"===a.fieldObj.shortType&&a.valueObj&&(a.valueObj.hasOwnProperty("value")&&(a.valueObj.value=parseFloat(a.valueObj.value)),a.valueObj.hasOwnProperty("value1")&&(a.valueObj.value1=parseFloat(a.valueObj.value1)),a.valueObj.hasOwnProperty("value2")&&(a.valueObj.value2=parseFloat(a.valueObj.value2)))},_addDefalutValueTypeForSinglePart:function(a){a&&a.valueObj&&!a.valueObj.type&&(a.valueObj.type="value")},replaceStrings:function(a){for(var b=a,c=function(a,b,d){var e=-1,e=a.indexOf("'",
-d+1);return e===d+1?(e=a.indexOf("'",e+1),c(a,b,e)):d},e=[],d=a.indexOf("'");-1<d;){var f=d,d=a.indexOf("'",d+1),g=0,d=c(a,f,d);"%"===a[f+1]&&f++;"%"===a[d-1]&&(--d,g++);var h=a.substring(f+1,d);"N"===a[f-1]&&(a=a.substring(0,f-1)+a.substring(f),--f,--d);this.isDateString(h)||-1!==h.indexOf("{")?d=a.indexOf("'",d+1+g):(e.push(h),a=a.substring(0,f+1)+"#"+(e.length-1)+"#"+a.substring(d),d=a.indexOf("'",a.lastIndexOf("#")+2+g))}return{origDefExpr:b,defExpr:a,savedStrings:e}},reReplaceStrings:function(a,
-b,c){var e=a.savedStrings;if(!e.length)c&&"function"===typeof c&&c();else if(e.length){var d=function(a,b){if(void 0===a.valueObj||null===a.valueObj||void 0===a.valueObj.value||null===a.valueObj.value||"string"!==a.fieldObj.shortType)return!1;var c=a.valueObj.value.indexOf("#"),d=a.valueObj.value.lastIndexOf("#");return q.isDefined(a.valueObj.value)&&-1<c?(a.valueObj.value=b[parseInt(a.valueObj.value.substring(c+1,d),10)].replace(/\'\'/g,"'"),this.builtSingleFilterString(a),!0):!1},d=m.hitch(this,
-d),f=!1;n.forEach(b.parts,function(a){if(a.parts){var b=!1;n.forEach(a.parts,function(a){b=d(a,e)||b});b&&(f=b,a.expr=this.builtFilterString(a))}else(f=d(a,e)||f)&&this.builtFilterString(a)},this);c&&"function"===typeof c&&c();f&&(b.expr=null,this.getExprByFilterObj(b))}},isDateString:function(a){return 19===a.length&&"-"===a.charAt(4)&&"-"===a.charAt(7)&&" "===a.charAt(10)&&":"===a.charAt(13)&&":"===a.charAt(16)?!0:!1},findParts:function(a,b){for(var c=a.toLowerCase(),e=" "+b.toLowerCase()+" ",d=
-[],f=0,g=c.indexOf(e);0<g;){var h=a.substring(f,g),k=h.toLowerCase(),l=h.count("("),m=h.count(")"),n=h.count("'");l!==m||1===n%2?g=c.indexOf(e,g+1):-1<k.indexOf(" between ")&&-1===k.indexOf(" and ")?g=c.indexOf(e,g+1):(d.push({expr:h}),f=g+e.length,g=c.indexOf(e,f))}d.push({expr:a.substring(f)});for(c=d.length-1;0<=c;c--)!this.hasOperator(d[c].expr)&&0<c&&(d[c-1].expr+=" "+b+" "+d[c].expr,d.splice(c,1));return{expr:a,parts:d,logicalOperator:b}},hasOperator:function(a){a=a.toLowerCase();return-1<a.indexOf("{")&&
--1<a.indexOf("}")||-1<a.indexOf(" \x3d ")||-1<a.indexOf(" \x3c ")||-1<a.indexOf(" \x3e ")||-1<a.indexOf(" \x3c\x3e ")||-1<a.indexOf(" \x3c\x3d ")||-1<a.indexOf(" \x3e\x3d ")||-1<a.indexOf(" like ")||-1<a.indexOf(" between ")||-1<a.indexOf(" date")||-1<a.indexOf(" is null")||-1<a.indexOf(" is not null")?!0:!1},parseExpr:function(a){n.forEach(a.parts,function(a){a.parts?this.parseExpr(a):this.parseSingleExpr(a)},this)},_preParseSingleExpr:function(a){var b=null;try{if(b=m.clone(a),b.expr=b.expr.trim(),
-/^UPPER\((.*)\)(\s+|\s+NOT\s+)LIKE\s+UPPER\(N?'(.*)'\)$/i.test(b.expr)){var c=a="",e=b.expr.match(/^UPPER\((.*)\)\s+/i);if(e&&2<=e.length)a=e[1];else return null;var d=b.expr.match(/UPPER\(N?'(.*)'\)$/i);if(d&&2<=d.length)c="'"+d[1]+"'";else return null;b.expr=b.expr.replace(/^UPPER\((.*)\)\s+/i,a+" ");b.expr=b.expr.replace(/UPPER\(N?'(.*)'\)$/i,c);b.caseSensitive=!1}else/^(.+)(\s+|\s+NOT\s+)LIKE\s+N?'(.*)'$/i.test(b.expr)&&(b.caseSensitive=!0)}catch(f){return console.log(f),null}b&&this.isHosted&&
-(b.caseSensitive=!1);return b},_removeOperator:function(a,b,c){b=b.substring(c).trim();"date"===a&&!this.isHosted&&b.toLowerCase().startsWith("timestamp ")&&(b=b.substring(10).trim());return b},parseSingleExpr:function(a){var b=this._preParseSingleExpr(a);b&&(a=m.mixin(a,b));var b=a.expr.trim(),c=b.indexOf(" "),e=b.substring(0,c);a.fieldObj={name:e};a.valueObj={};this.getFieldItemByName({name:e},function(b){a.fieldObj.shortType=b.shortType[0];a.fieldObj.label=b.label[0]},function(){a.error={msg:"unknown field name ("+
-e+")",code:1}});b=b.substring(c+1).trim();c=b.toLowerCase();c.startsWith("\x3d ")?(b=this._removeOperator(a.fieldObj.shortType,b,2),this.storeValue(b,a),a.operator="date"===a.fieldObj.shortType?this.OPERATORS.dateOperatorIsOn:"string"===a.fieldObj.shortType?this.OPERATORS.stringOperatorIs:this.OPERATORS.numberOperatorIs):c.startsWith("\x3c ")?(b=this._removeOperator(a.fieldObj.shortType,b,2),this.storeValue(b,a),"date"===a.fieldObj.shortType?a.operator=this.OPERATORS.dateOperatorIsBefore:"number"===
-a.fieldObj.shortType?a.operator=this.OPERATORS.numberOperatorIsLessThan:a.error={msg:"operator ("+c+") not supported for string",code:3}):c.startsWith("\x3e ")?(b=this._removeOperator(a.fieldObj.shortType,b,2),this.storeValue(b,a),"date"===a.fieldObj.shortType?a.operator=this.OPERATORS.dateOperatorIsAfter:"number"===a.fieldObj.shortType?a.operator=this.OPERATORS.numberOperatorIsGreaterThan:a.error={msg:"operator ("+c+") not supported for string",code:3}):c.startsWith("\x3c\x3e ")?(b=this._removeOperator(a.fieldObj.shortType,
-b,3),this.storeValue(b,a),a.operator="date"===a.fieldObj.shortType?this.OPERATORS.dateOperatorIsNotOn:"string"===a.fieldObj.shortType?this.OPERATORS.stringOperatorIsNot:this.OPERATORS.numberOperatorIsNot):c.startsWith("\x3c\x3d ")?(b=this._removeOperator(a.fieldObj.shortType,b,3),this.storeValue(b,a),"date"===a.fieldObj.shortType?a.operator=this.OPERATORS.dateOperatorIsOnOrBefore:"number"===a.fieldObj.shortType?a.operator=this.OPERATORS.numberOperatorIsAtMost:a.error={msg:"operator ("+c+") not supported for string",
-code:3}):c.startsWith("\x3e\x3d ")?(b=this._removeOperator(a.fieldObj.shortType,b,3),this.storeValue(b,a),"date"===a.fieldObj.shortType?a.operator=this.OPERATORS.dateOperatorIsOnOrAfter:"number"===a.fieldObj.shortType?a.operator=this.OPERATORS.numberOperatorIsAtLeast:a.error={msg:"operator ("+c+") not supported for string",code:3}):c.startsWith("like ")?(b=b.substring(5).trim(),b.startsWith("N'")&&(b=b.substring(1,b.length)),b.startsWith("'%")&&b.endsWith("%'")?(this.storeValue(b.substring(2,b.length-
-2),a),a.operator=this.OPERATORS.stringOperatorContains):b.startsWith("'%")&&b.endsWith("'")?(this.storeValue(b.substring(2,b.length-1),a),a.operator=this.OPERATORS.stringOperatorEndsWith):b.startsWith("'")&&b.endsWith("%'")?(this.storeValue(b.substring(1,b.length-2),a),a.operator=this.OPERATORS.stringOperatorStartsWith):a.error={msg:"value ("+c+") not supported for LIKE",code:3}):c.startsWith("not like ")?(b=b.substring(9).trim(),b.startsWith("N'")&&(b=b.substring(1,b.length)),b.startsWith("'%")&&
-b.endsWith("%'")?(this.storeValue(b.substring(2,b.length-2),a),a.operator=this.OPERATORS.stringOperatorDoesNotContain):a.error={msg:"value ("+c+") not supported for NOT LIKE",code:3}):c.startsWith("between ")?this._updatePartForBetween(b,!0,a):c.startsWith("not between ")?this._updatePartForBetween(b,!1,a):"is null"===c?(a.valueObj.value=null,a.operator="date"===a.fieldObj.shortType?this.OPERATORS.dateOperatorIsBlank:"string"===a.fieldObj.shortType?this.OPERATORS.stringOperatorIsBlank:this.OPERATORS.numberOperatorIsBlank):
-"is not null"===c?(a.valueObj.value=null,a.operator="date"===a.fieldObj.shortType?this.OPERATORS.dateOperatorIsNotBlank:"string"===a.fieldObj.shortType?this.OPERATORS.stringOperatorIsNotBlank:this.OPERATORS.numberOperatorIsNotBlank):a.error={msg:"unknown operator ("+c+")",code:2};if(q.isDefined(a.valueObj.value)&&"string"===typeof a.valueObj.value&&a.valueObj.value.startsWith("{")&&a.valueObj.value.endsWith("}")||q.isDefined(a.valueObj.value1)&&"string"===typeof a.valueObj.value1&&a.valueObj.value1.startsWith("{")&&
-a.valueObj.value1.endsWith("}"))a.isInteractive=!0},getFieldItemByName:function(a,b,c){this.fieldsStore.fetch({query:a,onComplete:m.hitch(this,function(a){a&&a.length?b(a[0]):c()})})},subtractDay:function(a){return new Date(a.getTime()-this.dayInMS)},_updatePartForBetween:function(a,b,c){var e,d,f,g,h;a=this._removeOperator(c.fieldObj.shortType,a,(b?"between ":"not between ").length);e=a.toLowerCase().indexOf(" and ");if(-1<e)if(d=a.substring(0,e).trim(),d.startsWith("CURRENT_TIMESTAMP "))if(d=d.substring(18).trim(),
-d.startsWith("-")){c.operator=b?this.OPERATORS.dateOperatorInTheLast:this.OPERATORS.dateOperatorNotInTheLast;try{h=parseFloat(d.substring(1).trim()),1<=h?(f=this.OPERATORS.dateOperatorDays,g=h/365,1E-4>Math.abs(g-Math.round(g))?(h=Math.round(g),f=this.OPERATORS.dateOperatorYears):(g=h/30,1E-4>Math.abs(g-Math.round(g))?(h=Math.round(g),f=this.OPERATORS.dateOperatorMonths):(g=h/7,1E-4>Math.abs(g-Math.round(g))&&(h=Math.round(g),f=this.OPERATORS.dateOperatorWeeks)))):(f=this.OPERATORS.dateOperatorMinutes,
-h*=24,1E-4>Math.abs(h-Math.round(h))?f=this.OPERATORS.dateOperatorHours:h*=60),c.valueObj.value=h,c.valueObj.range=f}catch(w){c.error={msg:"missing count for '"+(b?"":"not ")+"in the last'",code:3}}}else c.error={msg:"'"+(b?"":"not ")+"in the next' not supported",code:3};else if(a=this._removeOperator(c.fieldObj.shortType,a.substring(e),5),this.storeValue1(d,c),this.storeValue2(a,c),"date"===c.fieldObj.shortType){if(c.operator=b?this.OPERATORS.dateOperatorIsBetween:this.OPERATORS.dateOperatorIsNotBetween,
-"object"===typeof c.valueObj.value1&&"object"===typeof c.valueObj.value2)try{1E3>Math.abs(this.subtractDay(c.valueObj.value2).getTime()-c.valueObj.value1.getTime())&&(c.valueObj.value=c.valueObj.value1,delete c.valueObj.value1,delete c.valueObj.value2,c.operator=b?this.OPERATORS.dateOperatorIsOn:this.OPERATORS.dateOperatorIsNotOn)}catch(w){}}else"number"===c.fieldObj.shortType||"oid"===c.fieldObj.shortType?c.operator=b?this.OPERATORS.numberOperatorIsBetween:this.OPERATORS.numberOperatorIsNotBetween:
-c.error={msg:c.fieldObj.shortType+" field not supported for "+(b?"":"NOT ")+"BETWEEN",code:3};else c.error={msg:"missing AND operator for "+(b?"":"NOT ")+"BETWEEN",code:3}},storeValue:function(a,b){if(a.startsWith("{")&&a.endsWith("}"))b.valueObj.value=a;else if(a.startsWith("'{")&&a.endsWith("}'"))b.valueObj.value=a.substring(1,a.length-1);else if("date"===b.fieldObj.shortType)if(a.startsWith("'")&&a.endsWith("'")){var c=a.substring(1,a.length-1);b.valueObj.value=this.parseDate(c)}else b.valueObj.value=
-a,b.valueObj.type="field";else"string"===b.fieldObj.shortType?(a.startsWith("#")||a.startsWith("%#"))&&(a.endsWith("#")||a.endsWith("#%"))?b.valueObj.value=a:a.startsWith("'")&&a.endsWith("'")?b.valueObj.value=a.substring(1,a.length-1).replace(/\'\'/g,"'"):(b.valueObj.value=a,b.valueObj.type="field",this.getFieldItemByName({name:a},function(a){b.valueObj.label=a.label[0]},function(){b.error={msg:"unknown field name ("+a+")",code:1}})):(b.valueObj.value=a,isNaN(a)&&(b.valueObj.type="field",this.getFieldItemByName({name:a},
-function(a){b.valueObj.label=a.label[0]},function(){b.error={msg:"unknown field name ("+a+")",code:1}})))},storeValue1:function(a,b){a.startsWith("{")&&a.endsWith("}")?b.valueObj.value1=a:a.startsWith("'{")&&a.endsWith("}'")?b.valueObj.value1=a.substring(1,a.length-1):"date"===b.fieldObj.shortType?a.startsWith("'")&&a.endsWith("'")?(a=a.substring(1,a.length-1),b.valueObj.value1=this.parseDate(a)):(b.valueObj.value1=a,b.valueObj.type="field"):(b.valueObj.value1=a,isNaN(a)&&(b.valueObj.type="field"))},
-storeValue2:function(a,b){a.startsWith("{")&&a.endsWith("}")?b.valueObj.value2=a:a.startsWith("'{")&&a.endsWith("}'")?b.valueObj.value2=a.substring(1,a.length-1):"date"===b.fieldObj.shortType?a.startsWith("'")&&a.endsWith("'")?(a=a.substring(1,a.length-1),b.valueObj.value2=this.parseDate(a)):(b.valueObj.value2=a,b.valueObj.type="field"):(b.valueObj.value2=a,isNaN(a)&&(b.valueObj.type="field"))},parseDate:function(a){var b=t.parse(a,{datePattern:"yyyy-MM-dd",timePattern:"HH:mm:ss"});b||(b=t.parse(a.replace(" ",
-", "),{datePattern:"yyyy-MM-dd",timePattern:"HH:mm:ss"}))||(b=t.parse(a.replace(" "," - "),{datePattern:"yyyy-MM-dd",timePattern:"HH:mm:ss"}));return b}});l.VIRTUAL_DATE_CUSTOM="custom";l.VIRTUAL_DATE_TODAY="today";l.VIRTUAL_DATE_YESTERDAY="yesterday";l.VIRTUAL_DATE_TOMORROW="tomorrow";l.VIRTUAL_DATE_THIS_WEEK="thisWeek";l.VIRTUAL_DATE_THIS_MONTH="thisMonth";l.VIRTUAL_DATE_THIS_QUARTER="thisQuarter";l.VIRTUAL_DATE_THIS_YEAR="thisYear";l.isAskForValues=function(a){var b=!1;return b=n.some(a.parts,
-function(a){return a.parts?n.some(a.parts,function(a){return!!a.interactiveObj}):!!a.interactiveObj})};l.hasVirtualDate=function(a){var b=!1;return b=n.some(a.parts,function(a){return a.parts?n.some(a.parts,function(a){return!!a.valueObj.virtualDate||!!a.valueObj.virtualDate1||!!a.valueObj.virtualDate2}):!!a.valueObj.virtualDate||!!a.valueObj.virtualDate1||!!a.valueObj.virtualDate2})};l.getRealDateByVirtualDate=function(a){var b=null,c=new Date,e=c.getTime();switch(a){case l.VIRTUAL_DATE_TODAY:b=
-c;break;case l.VIRTUAL_DATE_YESTERDAY:b=new Date(e-864E5);break;case l.VIRTUAL_DATE_TOMORROW:b=new Date(e+864E5);break;case l.VIRTUAL_DATE_THIS_WEEK:b=[p().startOf("week").toDate(),p().endOf("week").toDate()];break;case l.VIRTUAL_DATE_THIS_MONTH:b=[p().startOf("month").toDate(),p().endOf("month").toDate()];break;case l.VIRTUAL_DATE_THIS_QUARTER:b=[p().startOf("quarter").toDate(),p().endOf("quarter").toDate()];break;case l.VIRTUAL_DATE_THIS_YEAR:b=[p().startOf("year").toDate(),p().endOf("year").toDate()]}return b};
-return l});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'dojo/date/locale',
+  'dojo/number',
+  'esri/lang',
+  'dojo/data/ItemFileWriteStore',
+  'jimu/utils',
+  'moment/moment'
+],
+function(declare, lang, array, locale, dojoNumber, esriLang, ItemFileWriteStore, jimuUtils, moment) {
+
+  //refer arcgisonline/sharing/dijit/dialog/FilterDlg.js
+  var clazz = declare([], {
+    _stringFieldType: 'esriFieldTypeString',
+    _dateFieldType: 'esriFieldTypeDate',
+    _numberFieldTypes: ['esriFieldTypeOID',
+                        'esriFieldTypeSmallInteger',
+                        'esriFieldTypeInteger',
+                        'esriFieldTypeSingle',
+                        'esriFieldTypeDouble'],
+    _supportFieldTypes: [],
+
+    dayInMS : 24 * 60 * 60 * 1000,// 1 day
+    HourInMS: 60 * 60 * 1000,// 1 hour
+    MinuteInMS : 60 * 1000,// 1 minute
+    SecInMS : 1000,// 1 second
+
+    fieldsStore: null,
+    isHosted: false,//indicate it is a hosted rest service or not
+
+    //methods renamed:
+    //parseDefinitionExpression->getFilterObjByExpr
+    //builtCompleteFilter->getExprByFilterObj
+
+    //public methods:
+    //isAskForValues: check partsObj has 'ask for value' option or not
+    //hasVirtualDate: check partsObj has virtual date (like today, yesterday) or not
+    //getExprByFilterObj: partsObj->expr, get sql expression by json partsObj
+    //getFilterObjByExpr: expr->partsObj, parse sql expression to json partsObj, this method is deprecated
+    //prepare:set url and fields, method getFilterObjByExpr will read info from fields
+
+    //modify methods(with hint 'code for wab'):
+    //builtSingleFilterString
+
+
+    //Description:
+    //builtSingleFilterString is the core method used to convert single partObj to expr
+    //parseSingleExpr is the core method used to parse single expr to partObj
+
+    constructor: function(){
+      String.prototype.startsWith = function(str) {
+        return (this.indexOf(str) === 0);
+      };
+
+      String.prototype.endsWith = function(str) {
+        return (this.substring(this.length - (str.length)) === str);
+      };
+
+      String.prototype.count = function (c) {
+        return this.split(c).length - 1;
+      };
+
+      if(!String.prototype.trim){
+        String.prototype.trim = lang.trim;
+      }
+
+      this._supportFieldTypes = [];
+      this._supportFieldTypes.push(this._stringFieldType);
+      this._supportFieldTypes.push(this._dateFieldType);
+      this._supportFieldTypes = this._supportFieldTypes.concat(this._numberFieldTypes);
+
+      this.filterBuilderNls = window.jimuNls.filterBuilder;
+    },
+
+    OPERATORS:{
+      //string operators
+      stringOperatorIs:'stringOperatorIs',
+      stringOperatorIsNot:'stringOperatorIsNot',
+      stringOperatorStartsWith:'stringOperatorStartsWith',
+      stringOperatorEndsWith:'stringOperatorEndsWith',
+      stringOperatorContains:'stringOperatorContains',
+      stringOperatorDoesNotContain:'stringOperatorDoesNotContain',
+      stringOperatorIsAnyOf: "stringOperatorIsAnyOf",
+      stringOperatorIsNoneOf: "stringOperatorIsNoneOf",
+      stringOperatorIsBlank:'stringOperatorIsBlank',
+      stringOperatorIsNotBlank:'stringOperatorIsNotBlank',
+
+      //new added
+      //stringOperatorContainsCaseInSensitive:'stringOperatorContainsCaseInSensitive',
+
+      //number operators
+      numberOperatorIs:'numberOperatorIs',
+      numberOperatorIsNot:'numberOperatorIsNot',
+      numberOperatorIsAtLeast:'numberOperatorIsAtLeast',
+      numberOperatorIsLessThan:'numberOperatorIsLessThan',
+      numberOperatorIsAtMost:'numberOperatorIsAtMost',
+      numberOperatorIsGreaterThan:'numberOperatorIsGreaterThan',
+      numberOperatorIsBetween:'numberOperatorIsBetween',
+      numberOperatorIsNotBetween:'numberOperatorIsNotBetween',
+      numberOperatorIsAnyOf:'numberOperatorIsAnyOf',
+      numberOperatorIsNoneOf:'numberOperatorIsNoneOf',
+      numberOperatorIsBlank:'numberOperatorIsBlank',
+      numberOperatorIsNotBlank:'numberOperatorIsNotBlank',
+
+      //date operators
+      dateOperatorIsOn:'dateOperatorIsOn',
+      dateOperatorIsNotOn:'dateOperatorIsNotOn',
+      dateOperatorIsBefore:'dateOperatorIsBefore',
+      dateOperatorIsAfter:'dateOperatorIsAfter',
+      dateOperatorIsOnOrBefore:'dateOperatorIsOnOrBefore',
+      dateOperatorIsOnOrAfter:'dateOperatorIsOnOrAfter',
+      dateOperatorIsBetween:'dateOperatorIsBetween',
+      dateOperatorIsNotBetween:'dateOperatorIsNotBetween',
+      dateOperatorIsBlank:'dateOperatorIsBlank',
+      dateOperatorIsNotBlank:'dateOperatorIsNotBlank',
+      dateOperatorInTheLast:'dateOperatorInTheLast',
+      dateOperatorNotInTheLast:'dateOperatorNotInTheLast',
+      dateOperatorIsIn:'dateOperatorIsIn',
+      dateOperatorIsNotIn:'dateOperatorIsNotIn',
+
+      //not operators, date types used for dateOperatorInTheLast and dateOperatorNotInTheLast
+      dateOperatorMinutes:'dateOperatorMinutes',
+      dateOperatorHours:'dateOperatorHours',
+      dateOperatorDays:'dateOperatorDays',
+      dateOperatorWeeks:'dateOperatorWeeks',
+      dateOperatorMonths:'dateOperatorMonths',
+      dateOperatorYears:'dateOperatorYears'
+    },
+
+    //set url and fields, method getFilterObjByExpr will read info from fields
+    //allFieldsInfos: layerDefinition.fields
+    prepare: function(url, allFieldsInfos){
+      this.isHosted = jimuUtils.isHostedService(url);
+      allFieldsInfos = allFieldsInfos || [];
+      this.setFieldsStoreByFieldInfos(allFieldsInfos);
+    },
+
+    isPartsObjHasError: function(partsObj){
+      var isValidPartsObj = false;
+      if(partsObj){
+        if(partsObj.parts && partsObj.parts.length >= 0){
+          isValidPartsObj = array.every(partsObj.parts, lang.hitch(this, function(part){
+            if(part.parts){
+              if(part.parts.length > 0){
+                return array.every(part.parts, lang.hitch(this, function(singlePart){
+                  return !singlePart.error;
+                }));
+              }else{
+                return false;
+              }
+            }else{
+              return !part.error;
+            }
+          }));
+        }else{
+          isValidPartsObj = false;
+        }
+      }
+      return !isValidPartsObj;
+    },
+
+    //check partsObj has 'ask for value' option or not
+    isAskForValues: function(partsObj){
+      return clazz.isAskForValues(partsObj);
+    },
+
+    //check partsObj has virtual date (like today, yesterday) or not
+    hasVirtualDate: function(partsObj){
+      return clazz.hasVirtualDate(partsObj);
+    },
+
+    setFieldsStoreByFieldInfos: function(allFieldsInfos){
+      var fieldsInfos = array.filter(allFieldsInfos, lang.hitch(this, function(fieldInfo){
+        return this._supportFieldTypes.indexOf(fieldInfo.type) >= 0;
+      }));
+      var items = array.map(fieldsInfos, function(fieldInfo, idx){
+        var shortType;
+        switch (fieldInfo.type) {
+          case "esriFieldTypeString":
+            shortType = "string";
+            break;
+          case "esriFieldTypeDate":
+            shortType = "date";
+            break;
+          default: // numbers
+            shortType = "number";
+            break;
+        }
+
+        return {
+          id: idx,
+          label: fieldInfo.name, //fieldInfo.label, //(fieldInfo.alias || fieldInfo.name),
+          shortType: shortType,
+          alias: fieldInfo.alias,
+          editable: fieldInfo.editable,
+          name: fieldInfo.name,
+          nullable: fieldInfo.nullable,
+          type: fieldInfo.type
+        };
+      }, this);
+
+      this.fieldsStore = new ItemFileWriteStore({
+        data: {
+          identifier: 'id',
+          label: 'label',
+          items: items
+        }
+      });
+
+      return items.length;
+    },
+
+    _validatePartsObj:function(partsObj){
+      return partsObj && typeof partsObj === 'object';
+    },
+
+    _isObject: function(o){
+      return o && typeof o === 'object';
+    },
+
+    _isString: function(s){
+      return s && typeof s === 'string';
+    },
+
+    containsNonLatinCharacter: function(string) {
+      /*
+      console.log(string);
+      for (var k = 0; k < string.length; k++) {
+        console.log(string.charCodeAt(k));
+      }
+      */
+      for (var i = 0; i < string.length; i++) {
+        if (string.charCodeAt(i) > 255) {
+          return true;
+        }
+      }
+      return false;
+
+    },
+
+    /**************************************************/
+    /****  stringify                               ****/
+    /**************************************************/
+    //builtCompleteFilter
+    //partsObj->expr, get sql expression by json partsObj
+    //1. If return null or empty string, it means we can't get a valid sql expresion
+    //2. If return a non-empty string, it means we can get a valid sql expression
+    getExprByFilterObj: function(partsObj) {
+      //check part if valid or not, if part is null, it is invalid
+      var isValidParts = array.every(partsObj.parts, function(part){
+        return !!part;
+      });
+      if(!isValidParts){
+        return null;
+      }
+
+      //before build filter string, we need to check it is ready or not to build
+      //because user maybe check 'Ask for values' option and place empty value(s)
+      if(!this.isPartsObjReadyToBuild(partsObj)){
+        partsObj.expr = "";
+        partsObj.displaySQL = "";
+        return partsObj.expr;
+      }
+
+      //convert virtual date to real date
+      this._handleVirtualDate(partsObj);
+
+      //real code to build filter string
+      var filterString = "", displaySQL = "";
+      var part, isChecked;
+      if(partsObj.parts.length === 0){
+        filterString = "1=1";
+        displaySQL = "1=1";
+      }else if(partsObj.parts.length === 1) {
+        part = partsObj.parts[0];
+        if(part.valueObj && lang.isArray(part.valueObj.value) && part.valueObj.type !== 'multiple'){
+          isChecked = this._checkIfValObjArrayAndChecked(part.valueObj.value);
+          if(isChecked){
+            filterString = this.builtFilterString(part);
+            displaySQL = part.displaySQL;
+          }else{
+            filterString = "1=1";
+            displaySQL = "1=1";
+          }
+        }else{
+          filterString = this.builtFilterString(part);
+          displaySQL = part.displaySQL;
+        }
+      } else {
+        var join = "";
+        //dojo.forEach(allFilters, function(node){
+        for (var i = 0; i < partsObj.parts.length; i++) {
+          part = partsObj.parts[i];
+
+          var str, str2;
+          if(part.valueObj && lang.isArray(part.valueObj.value) && part.valueObj.type !== 'multiple'){
+            isChecked = this._checkIfValObjArrayAndChecked(part.valueObj.value);
+            if(isChecked){
+              str = this.builtFilterString(part);
+              str2 = part.displaySQL;
+            }else{
+              str = "1=1";
+              str2 = "1=1";
+            }
+          }else{
+            str = this.builtFilterString(part);
+            str2 = part.displaySQL;
+          }
+          if (!esriLang.isDefined(str)) {
+            // we're missing input
+            return null;
+          }
+          filterString += join + "(" + str + ")";
+          displaySQL += join + "(" + str2 + ")";
+          join = join || (" " + partsObj.logicalOperator + " ");
+        }
+      }
+      partsObj.expr = filterString;
+      partsObj.displaySQL = displaySQL;
+      return filterString;
+    },
+
+    _checkIfValObjArrayAndChecked: function(valObjArray){
+      var isChecked = false;
+      for(var key in valObjArray){
+        if(valObjArray[key].isChecked){
+          isChecked = true;
+          break;
+        }
+      }
+      return isChecked;
+    },
+
+    _handleVirtualDate: function(partsObj){
+      if(!this.hasVirtualDate(partsObj)){
+        return;
+      }
+      array.forEach(partsObj.parts, lang.hitch(this, function(part){
+        if(part.parts){
+          array.forEach(part.parts, lang.hitch(this, function(singlePart){
+            this._updateRealDateByVirtualDate(singlePart);
+          }));
+        }else{
+          this._updateRealDateByVirtualDate(part);
+        }
+      }));
+    },
+
+    _updateRealDateByVirtualDate: function(singlePart){
+      var v;
+      var singleVirtualDateOpts = [
+        this.OPERATORS.dateOperatorIsOn,
+        this.OPERATORS.dateOperatorIsNotOn,
+        this.OPERATORS.dateOperatorIsBefore,
+        this.OPERATORS.dateOperatorIsAfter,
+        this.OPERATORS.dateOperatorIsOnOrBefore,
+        this.OPERATORS.dateOperatorIsOnOrAfter
+      ];
+      if(singlePart.valueObj.virtualDate){
+        if(singlePart.operator === this.OPERATORS.dateOperatorIsIn ||
+          singlePart.operator === this.OPERATORS.dateOperatorIsNotIn){
+          var values = clazz.getRealDateByVirtualDate(singlePart.valueObj.virtualDate);
+          singlePart.value1 = values[0];
+          singlePart.value2 = values[1];
+          singlePart.valueObj.value1 = jimuUtils.getDateTimeStr(values[0]);
+          singlePart.valueObj.value2 = jimuUtils.getDateTimeStr(values[1]);
+        }else if(singleVirtualDateOpts.indexOf(singlePart.operator) > -1){
+          v = clazz.getRealDateByVirtualDate(singlePart.valueObj.virtualDate);
+          singlePart.value = v;
+          singlePart.valueObj.value = jimuUtils.getDateTimeStr(v);
+        }
+      }else{
+        if(singlePart.valueObj.virtualDate1){
+          v = clazz.getRealDateByVirtualDate(singlePart.valueObj.virtualDate1);
+          singlePart.value1 = v;
+          singlePart.valueObj.value1 = jimuUtils.getDateTimeStr(v);
+        }
+
+        if(singlePart.valueObj.virtualDate2){
+          v = clazz.getRealDateByVirtualDate(singlePart.valueObj.virtualDate2);
+          singlePart.value2 = v;
+          singlePart.valueObj.value2 = jimuUtils.getDateTimeStr(v);
+        }
+      }
+    },
+
+    //check it is ready or not to build filter string by askForValues opiton
+    isPartsObjReadyToBuild: function(partsObj){
+      var isReady = array.every(partsObj.parts, lang.hitch(this, function(part){
+        var result;
+        if(part.parts){
+          result = array.every(part.parts, lang.hitch(this, function(subPart){
+            return this._isPartReadyToBuild(subPart);
+          }));
+        }else{
+          result = this._isPartReadyToBuild(part);
+        }
+        return result;
+      }));
+      return isReady;
+    },
+
+    _isPartReadyToBuild: function(part){
+      var shortType = part.fieldObj.shortType;
+      var operator = part.operator;
+      var valueObj = part.valueObj;
+      //if value type is missing, we use 'value' as default
+      //it is useful when parse a sql into partsObj because it doesn't have value type
+      var valueType = valueObj.type || 'value';
+      var value = valueObj.value;
+      var value1 = valueObj.value1;
+      var value2 = valueObj.value2;
+
+      if (valueType === 'value') {
+        if (shortType === 'string') {
+          if (operator === this.OPERATORS.stringOperatorIsBlank ||
+            operator === this.OPERATORS.stringOperatorIsNotBlank) {
+            return true;
+          } else {
+            return jimuUtils.isNotEmptyString(value);
+          }
+        } else if (shortType === 'number') {
+          if(operator === this.OPERATORS.numberOperatorIsBlank ||
+             operator === this.OPERATORS.numberOperatorIsNotBlank){
+            return true;
+          }else if(operator === this.OPERATORS.numberOperatorIsBetween ||
+                  operator === this.OPERATORS.numberOperatorIsNotBetween){
+            return jimuUtils.isValidNumber(value1) && jimuUtils.isValidNumber(value2);
+          }else{
+            return jimuUtils.isValidNumber(value);
+          }
+        } else if (shortType === 'date') {
+          if(operator === this.OPERATORS.dateOperatorIsBlank ||
+             operator === this.OPERATORS.dateOperatorIsNotBlank){
+            return true;
+          }
+          else if(operator === this.OPERATORS.dateOperatorIsBetween ||
+                  operator === this.OPERATORS.dateOperatorIsNotBetween ||
+                  operator === this.OPERATORS.dateOperatorIsIn ||
+                  operator === this.OPERATORS.dateOperatorIsNotIn){
+            return jimuUtils.isNotEmptyString(value1) && jimuUtils.isNotEmptyString(value2);
+          }
+          else if(operator === this.OPERATORS.dateOperatorInTheLast ||
+                  operator === this.OPERATORS.dateOperatorNotInTheLast){
+            return value !== undefined && value !== null;
+          }else{
+            return jimuUtils.isNotEmptyString(value);
+          }
+        }
+      }else if(valueType === 'field'){
+        return jimuUtils.isNotEmptyString(value);
+      }else if(valueType === 'unique'){
+        if(shortType === 'string'){
+          return jimuUtils.isNotEmptyString(value);
+        }else if(shortType === 'number'){
+          return jimuUtils.isValidNumber(value);
+        }else if(shortType === 'date'){
+          return jimuUtils.isValidDate(value);
+        }
+      }
+      else if(valueType === 'multiple'){
+        if(shortType === 'string'){
+          return jimuUtils.isNotEmptyStringArray(value);
+        }else if(shortType === 'number'){
+          return jimuUtils.isValidNumberArray(value);
+        }
+      }
+      else if(valueType === 'values'){
+
+      }
+      else if(valueType === 'uniquePredefined' || valueType === 'multiplePredefined'){
+        if(shortType === 'string'){
+          return jimuUtils.isNotEmptyStringArray(value);
+        }else if(shortType === 'number'){
+          return jimuUtils.isValidNumberArray(value);
+        }
+      }
+
+      return false;
+    },
+
+    builtFilterString: function(partsObj) {
+      var filterString = "", displaySQL = "";
+      if (partsObj.parts) {
+        // set
+        var join = "";
+        for (var i = 0; i < partsObj.parts.length; i++) {
+          var part = partsObj.parts[i];
+          var obj = this.builtSingleFilterString(part);
+          part.expr = obj.whereClause;  //displaySQL exists in part already
+          if (!esriLang.isDefined(obj.whereClause)) {
+            // we're missing input
+            return null;
+          }
+          filterString += join + obj.whereClause;
+          displaySQL += join + part.displaySQL;
+          join = " " + partsObj.logicalOperator + " ";
+        }
+      } else {
+        // single expression
+        if(partsObj && partsObj.valueObj && partsObj.valueObj.type === 'multiple' &&
+          partsObj.valueObj.value.length === 0){
+          filterString = displaySQL = '1=1';
+        }else{
+          filterString = this.builtSingleFilterString(partsObj).whereClause;
+          displaySQL = partsObj.displaySQL;
+        }
+      }
+      partsObj.expr = filterString;
+      partsObj.displaySQL = displaySQL;
+      return filterString;
+    },
+
+    _preBuiltSingleFilterString: function(part){
+      if(part.fieldObj.shortType === 'string' && part.valueObj.value === "<Null>"){
+        if(part.operator === this.OPERATORS.stringOperatorIs){
+          return {
+            whereClause: part.fieldObj.name + " IS NULL"
+          };
+        }else if(part.operator === this.OPERATORS.stringOperatorIsNot){
+          return {
+            whereClause: part.fieldObj.name + " IS NOT NULL"
+          };
+        }
+      }
+
+      if(part.fieldObj.shortType === 'number' && part.valueObj.value === "<Null>"){
+        if(part.operator === this.OPERATORS.numberOperatorIs){
+          return {
+            whereClause: part.fieldObj.name + " IS NULL"
+          };
+        }else if(part.operator === this.OPERATORS.numberOperatorIsNot){
+          return {
+            whereClause: part.fieldObj.name + " IS NOT NULL"
+          };
+        }
+      }
+      return null;
+    },
+
+    //get stings with prefix for operator: isIn or not (multiple and predefined-multiple)
+    //handels strings, like: abc a'b'c, a"b"c
+    _handlePrefixStringsForIn: function(valsArray, caseSensitive){
+      var newVals = [];
+      for(var key = 0; key < valsArray.length; key ++){
+        var val = valsArray[key];
+        val = val.replace(/\'/g, "''");//use '' instead of ' to build expr
+        var prefix = (this.isHosted && this.containsNonLatinCharacter(val)) ? 'N' : '';
+        val = (caseSensitive || this.isHosted) ? val : val.toUpperCase();
+        val = "" + prefix + "'" + val + "'";
+        newVals.push(val);
+      }
+      return newVals.join(","); //"'Clow',N'Qβ'"
+    },
+
+    builtSingleFilterString: function(part) {
+
+      if(this.isHosted){
+        part.caseSensitive = false;
+      }
+      // TODO check that expression value has a value ...
+      if (esriLang.isDefined(part.valueObj.isValid) && !part.valueObj.isValid) {
+        return {
+          whereClause: null
+        };
+      }
+
+      var preBuildResult = this._preBuiltSingleFilterString(part);
+      if(preBuildResult){
+        return preBuildResult;
+      }
+
+      var value = part.valueObj.value;
+      var value1 = part.valueObj.value1;
+      var value2 = part.valueObj.value2;
+
+      var whereClause = "", displaySQL = "";
+      var valsArray = [];
+      if (part.fieldObj.shortType === "string") {
+
+        var prefix = "";
+        if (value && part.valueObj.type !== 'field' && this.isHosted) {
+          if(!lang.isArray(value) && this.containsNonLatinCharacter(value)){
+            prefix = 'N';
+          }
+        }
+
+        //exact query for predefined types
+        if(value && (part.valueObj.type === 'multiplePredefined' || part.valueObj.type === 'uniquePredefined')){
+          valsArray = [];
+          array.forEach(value, lang.hitch(this, function(valObj) {
+            if(valObj.isChecked){
+              valsArray.push(valObj.value);
+            }
+          }));
+
+          //add functions to get 'a','b','c' from [{value:'a'},{}]
+          // valsArray = valsArray.length > 0 ? valsArray : ['']; //does not exist
+          if(part.operator === this.OPERATORS.stringOperatorIs || part.operator === this.OPERATORS.stringOperatorIsNot){
+            value = valsArray[0];
+            if(this.isHosted && this.containsNonLatinCharacter(value)){
+              prefix = 'N';
+            }
+          }else{ //is any of, contain, start with, ...
+            value = valsArray;
+          }
+        }
+        var subWhereClause = [];
+        switch (part.operator) {
+          case this.OPERATORS.stringOperatorIs:
+            if (part.valueObj.type === 'field') {
+              whereClause = part.fieldObj.name + " = " + value;
+            }else {
+              if(part.caseSensitive || this.isHosted){
+                whereClause = part.fieldObj.name + " = " +
+                 prefix + "'" + value.replace(/\'/g, "''") + "'";
+              }else{
+                whereClause = "UPPER(" + part.fieldObj.name + ") = " +
+                 "" + prefix + "'" + value.replace(/\'/g, "''").toUpperCase() + "'";
+              }
+            }
+            break;
+          case this.OPERATORS.stringOperatorIsNot:
+            if (part.valueObj.type === 'field') {
+              whereClause = part.fieldObj.name + " <> " + value;
+            }else {
+              if(part.caseSensitive || this.isHosted){
+                whereClause = part.fieldObj.name + " <> " + prefix +
+                 "'" + value.replace(/\'/g, "''") + "'";
+              }else{
+                whereClause = "UPPER(" + part.fieldObj.name + ") <> " +
+                 "" + prefix + "'" + value.replace(/\'/g, "''").toUpperCase() + "'";
+              }
+            }
+            break;
+          case this.OPERATORS.stringOperatorStartsWith:
+            // if(part.caseSensitive){
+            //   whereClause = part.fieldObj.name + " LIKE " + prefix +
+            //    "'" + value.replace(/\'/g, "''") + "%'";
+            // }
+            // else{
+            //   //UPPER(County) LIKE UPPER(N'石景山区%')
+            //   whereClause = "UPPER(" + part.fieldObj.name + ") LIKE " +
+            //    "" + prefix + "'" + value.replace(/\'/g, "''").toUpperCase() + "%'";
+            // }
+            subWhereClause = [];
+            if (part.valueObj.type === 'multiplePredefined' || part.valueObj.type === 'uniquePredefined') {
+              array.forEach(value, lang.hitch(this, function(val) {
+                var _prefix = (this.isHosted && this.containsNonLatinCharacter(val)) ? 'N' : '';
+                if(part.caseSensitive || this.isHosted){
+                  subWhereClause.push(part.fieldObj.name + " LIKE " + _prefix +
+                   "'" + val.replace(/\'/g, "''") + "%'");
+                }
+                else{
+                  subWhereClause.push("UPPER(" + part.fieldObj.name + ") LIKE " +
+                   "" + _prefix + "'" + val.replace(/\'/g, "''").toUpperCase() + "%'");
+                }
+              }));
+              whereClause = "((" + subWhereClause.join(') OR (') + "))";
+            }else{
+              if(part.caseSensitive || this.isHosted){
+                whereClause = part.fieldObj.name + " LIKE " + prefix +
+                "'" + value.replace(/\'/g, "''") + "%'";
+              }
+              else{
+                //UPPER(County) LIKE UPPER(N'石景山区%')
+                whereClause = "UPPER(" + part.fieldObj.name + ") LIKE " +
+                "" + prefix + "'" + value.replace(/\'/g, "''").toUpperCase() + "%'";
+              }
+            }
+            break;
+          case this.OPERATORS.stringOperatorEndsWith:
+            subWhereClause = [];
+            if (part.valueObj.type === 'multiplePredefined' || part.valueObj.type === 'uniquePredefined') {
+              array.forEach(value, lang.hitch(this, function(val) {
+                var _prefix = (this.isHosted && this.containsNonLatinCharacter(val)) ? 'N' : '';
+                if(part.caseSensitive || this.isHosted){
+                  subWhereClause.push(part.fieldObj.name + " LIKE " + _prefix +
+                  "'%" + val.replace(/\'/g, "''") + "'");
+                }
+                else{
+                  subWhereClause.push("UPPER(" + part.fieldObj.name + ") LIKE " +
+                  "" + _prefix + "'%" + val.replace(/\'/g, "''").toUpperCase() + "'");
+                }
+              }));
+              whereClause = "((" + subWhereClause.join(') OR (') + "))";
+            }else{
+              if(part.caseSensitive || this.isHosted){
+                whereClause = part.fieldObj.name + " LIKE " + prefix +
+              "'%" + value.replace(/\'/g, "''") + "'";
+              }
+              else{
+                //UPPER(County) LIKE UPPER(N'%石景山区')
+                whereClause = "UPPER(" + part.fieldObj.name + ") LIKE " +
+              "" + prefix + "'%" + value.replace(/\'/g, "''").toUpperCase() + "'";
+              }
+            }
+            break;
+          case this.OPERATORS.stringOperatorContains:
+            subWhereClause = [];
+            if (part.valueObj.type === 'multiplePredefined' || part.valueObj.type === 'uniquePredefined') {
+              array.forEach(value, lang.hitch(this, function(val) {
+                var _prefix = (this.isHosted && this.containsNonLatinCharacter(val)) ? 'N' : '';
+                if(part.caseSensitive || this.isHosted){
+                  subWhereClause.push(part.fieldObj.name + " LIKE " + _prefix +
+                  "'%" + val.replace(/\'/g, "''") + "%'");
+                }
+                else{
+                  subWhereClause.push("UPPER(" + part.fieldObj.name + ") LIKE " +
+                  "" + _prefix + "'%" + val.replace(/\'/g, "''").toUpperCase() + "%'");
+                }
+              }));
+              whereClause = "((" + subWhereClause.join(') OR (') + "))";
+            }else{
+              if(part.caseSensitive || this.isHosted){
+                whereClause = part.fieldObj.name + " LIKE " + prefix +
+              "'%" + value.replace(/\'/g, "''") + "%'";
+              }
+              else{
+                //UPPER(County) LIKE UPPER(N'%石景山区%')
+                whereClause = "UPPER(" + part.fieldObj.name + ") LIKE " +
+              "" + prefix + "'%" + value.replace(/\'/g, "''").toUpperCase() + "%'";
+              }
+            }
+            break;
+          case this.OPERATORS.stringOperatorDoesNotContain:
+            subWhereClause = [];
+            if (part.valueObj.type === 'multiplePredefined' || part.valueObj.type === 'uniquePredefined') {
+              array.forEach(value, lang.hitch(this, function(val) {
+                var _prefix = (this.isHosted && this.containsNonLatinCharacter(val)) ? 'N' : '';
+                if(part.caseSensitive || this.isHosted){
+                  subWhereClause.push(part.fieldObj.name + " NOT LIKE " + _prefix +
+                  "'%" + val.replace(/\'/g, "''") + "%'");
+                }
+                else{
+                  subWhereClause.push("UPPER(" + part.fieldObj.name + ") NOT LIKE " +
+                  "" + _prefix + "'%" + val.replace(/\'/g, "''").toUpperCase() + "%'");
+                }
+              }));
+              whereClause = "((" + subWhereClause.join(') AND (') + "))";
+            }else{
+              if(part.caseSensitive || this.isHosted){
+                whereClause = part.fieldObj.name + " NOT LIKE " + prefix +
+              "'%" + value.replace(/\'/g, "''") + "%'";
+              }
+              else{
+                //UPPER(County) NOT LIKE UPPER(N'%石景山区%')
+                whereClause = "UPPER(" + part.fieldObj.name + ") NOT LIKE " +
+              "" +  prefix + "'%" + value.replace(/\'/g, "''").toUpperCase() + "%'";
+              }
+            }
+            break;
+          case this.OPERATORS.stringOperatorIsAnyOf: //caseSensitive
+            value = this._handlePrefixStringsForIn(value, part.caseSensitive);
+            if(part.caseSensitive || this.isHosted){
+              whereClause = part.fieldObj.name + " IN (" + value + ")";
+            }else{
+              whereClause = "UPPER(" + part.fieldObj.name + ") IN (" + value + ")";
+            }
+            break;
+          case this.OPERATORS.stringOperatorIsNoneOf:
+            value = this._handlePrefixStringsForIn(value, part.caseSensitive);
+            if(part.caseSensitive || this.isHosted){
+              whereClause = part.fieldObj.name + " NOT IN (" + value + ")";
+            }else{
+              whereClause = "UPPER(" + part.fieldObj.name + ") NOT IN (" + value + ")";
+            }
+            break;
+          case this.OPERATORS.stringOperatorIsBlank:
+            whereClause = part.fieldObj.name + " IS NULL";
+            break;
+          case this.OPERATORS.stringOperatorIsNotBlank:
+            whereClause = part.fieldObj.name + " IS NOT NULL";
+            break;
+        }
+
+      } else if (part.fieldObj.shortType === "number") {
+        if(value &&  (part.valueObj.type === 'uniquePredefined' || part.valueObj.type === 'multiplePredefined')){
+          //add functions to get '1,2,3' from [{value:'1'},{value:'2'}]
+          valsArray = [];
+          array.forEach(value, lang.hitch(this, function(valObj) {
+            if(valObj.isChecked){
+              valsArray.push(valObj.value);
+            }
+          }));
+          value = valsArray.join(',');
+        }else if(value && part.valueObj.type === 'multiple'){
+          value = value.join(',');
+        }
+        switch (part.operator) {
+          case this.OPERATORS.numberOperatorIs:
+            whereClause = part.fieldObj.name + " = " + value;
+            break;
+          case this.OPERATORS.numberOperatorIsNot:
+            whereClause = part.fieldObj.name + " <> " + value;
+            break;
+          case this.OPERATORS.numberOperatorIsAtLeast:
+            whereClause = part.fieldObj.name + " >= " + value;
+            break;
+          case this.OPERATORS.numberOperatorIsLessThan:
+            whereClause = part.fieldObj.name + " < " + value;
+            break;
+          case this.OPERATORS.numberOperatorIsAtMost:
+            whereClause = part.fieldObj.name + " <= " + value;
+            break;
+          case this.OPERATORS.numberOperatorIsGreaterThan:
+            whereClause = part.fieldObj.name + " > " + value;
+            break;
+          case this.OPERATORS.numberOperatorIsAnyOf:
+            whereClause = part.fieldObj.name + " IN (" + value + ")";
+            break;
+          case this.OPERATORS.numberOperatorIsNoneOf:
+            whereClause = part.fieldObj.name + " NOT IN (" + value + ")";
+            break;
+          case this.OPERATORS.numberOperatorIsBetween:
+            whereClause = part.fieldObj.name + " BETWEEN " + value1 + " AND " + value2;
+            break;
+          case this.OPERATORS.numberOperatorIsNotBetween:
+            whereClause = part.fieldObj.name + " NOT BETWEEN " + value1 + " AND " + value2;
+            break;
+          case this.OPERATORS.numberOperatorIsBlank:
+            whereClause = part.fieldObj.name + " IS NULL";
+            break;
+          case this.OPERATORS.numberOperatorIsNotBlank:
+            whereClause = part.fieldObj.name + " IS NOT NULL";
+            break;
+        }
+
+      } else { // date
+        // value is Date object when we had a DateTextBox
+        // value is String when we had unique values list
+        // if(part.valueObj.type === 'unique'){
+        //   value = jimuUtils.getDateByDateTimeStr(value);
+        // }
+        // if (esriLang.isDefined(value) && part.valueObj.type !== 'field' &&
+        //  (typeof value === "string")) {
+        //   // e.g. "7/7/2010 12:00:00 AM" returned by generateRenderer
+        //   value = new Date(value);
+        // }
+
+        //code for wab
+        //start
+        if(part.valueObj.type !== 'field'){
+          if(value){
+            // value = new Date(value);
+            value = jimuUtils.getDateByDateTimeStr(value);
+          }
+          if(value1){
+            // value1 = new Date(value1);
+            value1 = jimuUtils.getDateByDateTimeStr(value1);
+          }
+          if(value2){
+            // value2 = new Date(value2);
+            value2 = jimuUtils.getDateByDateTimeStr(value2);
+          }
+        }
+        //end
+        var enableTime = part.valueObj.enableTime;
+        var timeAccuracy = part.valueObj.timeAccuracy;
+        var endDateTime;
+        switch (part.operator) {
+          case this.OPERATORS.dateOperatorIsOn:
+            if (part.valueObj.type === 'field') {
+              whereClause = part.fieldObj.name + " = " + value;
+            } else {
+              if (part.valueObj.type === 'unique'){
+                endDateTime = this._getEndDateByTimeForUnique(value, part.fieldObj.dateFormat);
+              }else{
+                endDateTime = this._getEndDateByTime(value, enableTime, timeAccuracy);
+              }
+              whereClause = "(" + part.fieldObj.name + " BETWEEN " + (this.isHosted ? "" : "timestamp ") +
+                "'" + this.formatDate(value) + "' AND " + (this.isHosted ? "" : "timestamp ") +
+                "'" + endDateTime + "') AND " +
+                "(" + part.fieldObj.name + " <> " + (this.isHosted ? "" : "timestamp ") + "'" + endDateTime + "')";
+            }
+            break;
+          case this.OPERATORS.dateOperatorIsNotOn:
+            if (part.valueObj.type === 'field') {
+              whereClause = part.fieldObj.name + " <> " + value;
+            } else {
+              if (part.valueObj.type === 'unique'){
+                endDateTime = this._getEndDateByTimeForUnique(value, part.fieldObj.dateFormat);
+              }else{
+                endDateTime = this._getEndDateByTime(value, enableTime, timeAccuracy);
+              }
+              whereClause = "(" + part.fieldObj.name + " < " +
+                (this.isHosted ? "" : "timestamp ") + "'" + this.formatDate(value) + "') OR " +
+                "(" + part.fieldObj.name + " >= " + (this.isHosted ? "" : "timestamp ") + "'" + endDateTime + "')";
+            }
+            break;
+          case this.OPERATORS.dateOperatorIsBefore:
+            if (part.valueObj.type === 'field') {
+              whereClause = part.fieldObj.name + " < " + value;
+            } else {
+              whereClause = part.fieldObj.name + " < " +
+               (this.isHosted ? "" : "timestamp ") + "'" + this.formatDate(value) + "'";
+            }
+            break;
+          case this.OPERATORS.dateOperatorIsAfter:
+            if (part.valueObj.type === 'field') {
+              whereClause = part.fieldObj.name + " > " + value;
+            } else {
+              if (part.valueObj.type === 'unique'){
+                endDateTime = this._getEndDateByTimeForUnique(value, part.fieldObj.dateFormat);
+              }else{
+                endDateTime = this._getEndDateByTime(value, enableTime, timeAccuracy);
+              }
+              whereClause = part.fieldObj.name + " >= " +
+                (this.isHosted ? "" : "timestamp ") + "'" + endDateTime + "'";
+            }
+            break;
+          case this.OPERATORS.dateOperatorIsOnOrBefore:
+            if (part.valueObj.type === 'field') {
+              whereClause = part.fieldObj.name + " <= " + value;
+            } else {
+              if (part.valueObj.type === 'unique'){
+                endDateTime = this._getEndDateByTimeForUnique(value, part.fieldObj.dateFormat);
+              }else{
+                endDateTime = this._getEndDateByTime(value, enableTime, timeAccuracy);
+              }
+              whereClause = part.fieldObj.name + " < " +
+                (this.isHosted ? "" : "timestamp ") + "'" + endDateTime + "'";
+            }
+            break;
+          case this.OPERATORS.dateOperatorIsOnOrAfter:
+            if (part.valueObj.type === 'field') {
+              whereClause = part.fieldObj.name + " >= " + value;
+            } else {
+              whereClause = part.fieldObj.name + " >= " +
+               (this.isHosted ? "" : "timestamp ") + "'" + this.formatDate(value) + "'";
+            }
+            break;
+          case this.OPERATORS.dateOperatorInTheLast:
+            whereClause = part.fieldObj.name + " BETWEEN CURRENT_TIMESTAMP - " +
+              this._convertRangeToDays(part.valueObj.value, part.valueObj.range) +
+              " AND CURRENT_TIMESTAMP";
+            break;
+          case this.OPERATORS.dateOperatorNotInTheLast:
+            whereClause = part.fieldObj.name + " NOT BETWEEN CURRENT_TIMESTAMP - " +
+              this._convertRangeToDays(part.valueObj.value, part.valueObj.range) +
+              " AND CURRENT_TIMESTAMP";
+            break;
+          case this.OPERATORS.dateOperatorIsBetween:
+          case this.OPERATORS.dateOperatorIsIn:
+            endDateTime = this._getEndDateByTime(value2, part.valueObj.enableTime2, part.valueObj.timeAccuracy2);
+            whereClause = "(" + part.fieldObj.name + " BETWEEN " + (this.isHosted ? "" : "timestamp ") +
+              "'" + this.formatDate(value1) + "' AND " + (this.isHosted ? "" : "timestamp ") +
+              "'" + endDateTime + "') AND " +
+              "(" + part.fieldObj.name + " <> " + (this.isHosted ? "" : "timestamp ") + "'" + endDateTime + "')";
+            break;
+          case this.OPERATORS.dateOperatorIsNotBetween:
+          case this.OPERATORS.dateOperatorIsNotIn:
+            endDateTime = this._getEndDateByTime(value2, part.valueObj.enableTime2, part.valueObj.timeAccuracy2);
+            whereClause = "(" + part.fieldObj.name + " < " +
+              (this.isHosted ? "" : "timestamp ") + "'" + this.formatDate(value1) + "') OR " +
+              "(" + part.fieldObj.name + " >= " + (this.isHosted ? "" : "timestamp ") + "'" + endDateTime + "')";
+            break;
+          case this.OPERATORS.dateOperatorIsBlank:
+            whereClause = part.fieldObj.name + " IS NULL";
+            break;
+          case this.OPERATORS.dateOperatorIsNotBlank:
+            whereClause = part.fieldObj.name + " IS NOT NULL";
+            break;
+        }
+      }
+
+      if(part.fieldObj.shortType === "date"){
+        // displaySQL = this.getDisplaySQL(part.fieldObj.name,part.valueObj,part.operator);
+        var _valObj = lang.clone(part.valueObj);
+        _valObj.dateFormat = part.fieldObj.dateFormat;
+        displaySQL = this.getDisplaySQL(part.fieldObj.name, _valObj, part.operator);
+      }else{
+        displaySQL = whereClause;
+      }
+      part.displaySQL = displaySQL;
+
+      return {
+        whereClause: whereClause
+      };
+    },
+
+    //Between dt1 and dt2, it includes dt1 and dt2
+    //enableTime = true:
+    //  for shorTime: "6:30"-->["6:30:00", "6:31:00"] excluding the last moment.
+    //  for longTime/noTime: "6:30:15"-->["6:30:15", "6:30:16"] excluding the last moment.
+    _getEndDateByTime:function(value, enableTime, timeAccuracy){//, dateFormat){
+      var newValue;
+      if(enableTime){
+        if(timeAccuracy === 's'){
+          newValue = this.addSec(value);
+        }else if(timeAccuracy === 'm'){
+          newValue = this.addMinute(value);
+        }else{//h
+          newValue = this.addHour(value);
+        }
+      }else{
+        newValue = this.addDay(value);
+      }
+      return this.formatDate(newValue);
+    },
+
+    //  honor date format by mapviewer configured
+    //  for shorTime: "6:30"-->["6:30:00", "6:31:00"] excluding the last moment.
+    //  for longTime: "6:30:15"-->["6:30:15", "6:30:16"] excluding the last moment.
+    //  for noTime/noDateFormat:'ymd'--->['ymd 00:00:00', 'ymd 00:00:00'] excluding the last moment.
+    _getEndDateByTimeForUnique:function(value, dateFormat){
+      var newValue;
+      if(dateFormat && dateFormat.indexOf('ShortTime') >= 0){
+        newValue = this.addMinute(value);
+      }else if(dateFormat && dateFormat.indexOf('LongTime') >= 0){
+        newValue = this.addSec(value);
+      }else {
+        newValue = this.addDay(value);
+      }
+      return this.formatDate(newValue);
+    },
+
+    _getDisplayDates:function(valObj){
+      var uiDates = {value: valObj.virtualDate, value1: valObj.virtualDate1, value2: valObj.virtualDate2};
+      var fieldInfo = valObj.dateFormat === "" ? {} : {format: {dateFormat: valObj.dateFormat}};
+      if(valObj.virtualDate === '' || valObj.virtualDate === undefined){
+        if(valObj.type === "field"){
+          uiDates.value = valObj.value;
+        }else if(valObj.type === "unique"){
+          uiDates.value = jimuUtils.localizeDateByFieldInfo(jimuUtils.getDateByDateTimeStr(valObj.value), fieldInfo);
+        }else{
+          uiDates.value = jimuUtils.localizeDateTimeByFieldInfo(jimuUtils.getDateByDateTimeStr(valObj.value), fieldInfo,
+           valObj.enableTime, valObj.timeAccuracy);
+        }
+      }else{
+        uiDates.value = this.filterBuilderNls[valObj.virtualDate];
+      }
+
+      if(valObj.virtualDate1 === ''){
+        uiDates.value1 = jimuUtils.localizeDateTimeByFieldInfo(jimuUtils.getDateByDateTimeStr(valObj.value1),
+         fieldInfo, valObj.enableTime1, valObj.timeAccuracy1);
+      }else{
+        uiDates.value1 = this.filterBuilderNls[valObj.virtualDate1];
+      }
+
+      if(valObj.virtualDate2 === ''){
+        uiDates.value2 = jimuUtils.localizeDateTimeByFieldInfo(jimuUtils.getDateByDateTimeStr(valObj.value2),
+         fieldInfo, valObj.enableTime2, valObj.timeAccuracy2);
+      }else{
+        uiDates.value2 = this.filterBuilderNls[valObj.virtualDate2];
+      }
+
+      return uiDates;
+    },
+
+    getDisplaySQL:function(fName, valObj, type){
+      var whereClause = '';
+      if(type.indexOf('InTheLast') > 0){
+        whereClause = this.filterBuilderNls[type] + ' ' + valObj.value + ' ' +
+         this._getDateRangeEnum(valObj.value, valObj.range);
+      }else{
+        var whereDates = this._getDisplayDates(valObj, type);
+        if (type.indexOf("Between") > 0) {
+          whereClause = this.filterBuilderNls[type] + ' ' + whereDates.value1 + ' ' + this.filterBuilderNls.and + ' ' +
+           whereDates.value2;
+        }else if(type.indexOf('Blank') > 0){
+          whereClause = this.filterBuilderNls[type];
+        }else{
+          whereClause = this.filterBuilderNls[type] + ' ' + whereDates.value;
+        }
+      }
+      return fName + ' ' + whereClause;
+    },
+
+    _getDateRangeEnum: function(value, range){
+      var _rangeDateEnum = {
+        'dateOperatorYears': 'year',
+        'dateOperatorDays': 'day',
+        'dateOperatorMonths': 'month',
+        'dateOperatorWeeks': 'week',
+        'dateOperatorHours': 'hour',
+        'dateOperatorMinutes': 'minute'
+      };
+      range = _rangeDateEnum[range];
+      return window.jimuNls.timeUnit[value > 1 ? range + 's' : range].toLowerCase();
+    },
+
+    _convertRangeToDays: function(rangeCount, rangeType) {
+      var days = rangeCount;  // this.OPERATORS.dateOperatorDays
+
+      if (rangeType === this.OPERATORS.dateOperatorYears) {
+        // not accurate; same as AGOL approach
+        days = rangeCount * 365;
+      } else if (rangeType === this.OPERATORS.dateOperatorMonths) {
+        // not accurate; same as AGOL approach
+        days = rangeCount * 30;
+      } else if (rangeType === this.OPERATORS.dateOperatorWeeks) {
+        days = rangeCount * 7;
+      } else if (rangeType === this.OPERATORS.dateOperatorHours) {
+        days = rangeCount / 24;
+      } else if (rangeType === this.OPERATORS.dateOperatorMinutes) {
+        days = rangeCount / (24 * 60);
+      }
+
+      // Round days to 6 decimal places--enough for one minute (0.000694 days)
+      days = Math.round(days * 1000000) / 1000000;
+
+      return days;
+    },
+
+    formatDate: function(value){
+      var date = new Date(value);
+      return "" + date.getUTCFullYear() + "-" +
+        dojoNumber.format(date.getUTCMonth() + 1, {pattern: "00"}) + "-" +
+        dojoNumber.format(date.getUTCDate(), {pattern: "00"}) + " " +
+        dojoNumber.format(date.getUTCHours(), {pattern: "00"}) + ":" +
+        dojoNumber.format(date.getUTCMinutes(), {pattern: "00"}) + ":" +
+        dojoNumber.format(date.getUTCSeconds(), {pattern: "00"});
+    },
+
+    addDay: function(date){
+      return new Date(date.getTime() + this.dayInMS);
+    },
+    addHour: function(date){
+      return new Date(date.getTime() + this.HourInMS);
+    },
+    addMinute: function(date){
+      return new Date(date.getTime() + this.MinuteInMS);
+    },
+    addSec: function(date){
+      return new Date(date.getTime() + this.SecInMS);
+    },
+
+    /**************************************************/
+    /****  parse                                   ****/
+    /**************************************************/
+    //expr->partsObj
+    //expr->partsObj, parse sql expression to json partsObj
+    //if we can parse the expr successfully, the function returns a object
+    //otherwise, null or undefined is returned
+    getFilterObjByExpr: function(defExpr){
+      if (!defExpr || !this.fieldsStore) {
+        return;
+      }
+
+      var obj = this.replaceStrings(defExpr);
+      defExpr = obj.defExpr;
+
+      var partsObj = this.findParts(defExpr, "AND");
+      if (partsObj.parts.length === 1) {
+        partsObj = this.findParts(defExpr, "OR");
+        if (partsObj.parts.length === 1) {
+          // just a simple expression
+          partsObj.logicalOperator = "AND";
+        }
+      }
+
+      // only 2 levels
+      array.forEach(partsObj.parts, function(part){
+        part.expr = part.expr.trim();
+        if (part.expr.startsWith('(') && (part.expr.search(/\)$/) > -1)) {
+          // part.expr.endsWith(')') -> Invalid regular expression: /)$/: Unmatched ')'
+          // (field = 1 AND field = 2)
+          // (field = 1) AND (field = 2)
+          var str = part.expr.substring(1, part.expr.length - 1);
+          var pos1 = str.indexOf('(');
+          var pos2 = str.indexOf(')');
+          if ((pos1 === -1 && pos2 === -1) || pos1 < pos2) {
+            part.expr = str;
+          }
+        }
+
+        var subPartsObj = this.findParts(part.expr, "AND");
+        if (subPartsObj.parts.length === 1) {
+          subPartsObj = this.findParts(part.expr, "OR");
+        }
+        if (subPartsObj.parts.length > 1) {
+          part.parts = subPartsObj.parts;
+          part.logicalOperator = subPartsObj.logicalOperator;
+        }
+      }, this);
+
+      this.parseExpr(partsObj);
+
+      //Portal code
+      this.reReplaceStrings(obj, partsObj, lang.hitch(this, function(){
+        //WAB Code
+        if(partsObj && partsObj.parts){
+          array.forEach(partsObj.parts, lang.hitch(this, function(partOrParts) {
+            if (partOrParts) {
+              if (partOrParts.parts) {
+                //handle expression set
+                array.forEach(partOrParts.parts, lang.hitch(this, function(singlePart) {
+                  //parse numbers
+                  this._handleParsedValuesForSinglePart(singlePart);
+                  //add 'value' type if value type is missing
+                  this._addDefalutValueTypeForSinglePart(singlePart);
+                }));
+              } else {
+                //handle single expression
+                //parse numbers
+                this._handleParsedValuesForSinglePart(partOrParts);
+                //add 'value' type if value type is missing
+                this._addDefalutValueTypeForSinglePart(partOrParts);
+              }
+            }
+          }));
+        }
+      }));
+
+      //WAB Code
+      //We need to check if the partsObj has error info or not.
+      if(this.isPartsObjHasError(partsObj)){
+        //invalid partsObj
+        partsObj = null;
+      }
+
+      return partsObj;
+    },
+
+    //handle number values
+    _handleParsedValuesForSinglePart: function(singlePart){
+      if(singlePart){
+        if(singlePart.fieldObj && singlePart.fieldObj.shortType === 'number'){
+          if(singlePart.valueObj){
+            if(singlePart.valueObj.hasOwnProperty('value')){
+              singlePart.valueObj.value = parseFloat(singlePart.valueObj.value);
+            }
+            if(singlePart.valueObj.hasOwnProperty('value1')){
+              singlePart.valueObj.value1 = parseFloat(singlePart.valueObj.value1);
+            }
+            if(singlePart.valueObj.hasOwnProperty('value2')){
+              singlePart.valueObj.value2 = parseFloat(singlePart.valueObj.value2);
+            }
+          }
+        }
+      }
+    },
+
+    //add defalut 'type' property for valueObj if it is missing.
+    _addDefalutValueTypeForSinglePart: function(singlePart){
+      if(singlePart && singlePart.valueObj){
+        if(!singlePart.valueObj.type){
+          singlePart.valueObj.type = 'value';
+        }
+      }
+    },
+
+    replaceStrings: function(defExpr){
+      var origDefExpr = defExpr;
+
+      // remove all strings from defExpr so parsing is easier
+      // 'Bob' / '''Bob' / 'Bob''' / 'Bob''Fred' / ''
+      var getEnd = function(defExpr, start, pos){
+        var end = -1;
+        var pos2;
+        if (pos === start + 1) {
+          pos2 = defExpr.indexOf("'", pos + 1);
+          if (pos2 === pos + 1) {
+            // single quotes inside string
+            end = defExpr.indexOf("'", pos2 + 1);
+            return getEnd(defExpr, start, end);
+          } else {
+            // end of string
+            end = pos;
+          }
+        } else {
+          pos2 = defExpr.indexOf("'", pos + 1);
+          if (pos2 === pos + 1) {
+            // single quotes inside string
+            end = defExpr.indexOf("'", pos2 + 1);
+            return getEnd(defExpr, start, end);
+          } else {
+            // end of string
+            end = pos;
+          }
+        }
+        return end;
+      };
+
+      var savedStrings = [];
+      var pos = defExpr.indexOf("'");
+      while (pos > -1) {
+        var start = pos;
+        var end = defExpr.indexOf("'", pos + 1);
+        var endAdd = 0;
+        end = getEnd(defExpr, start, end);
+        if (defExpr[start + 1] === '%') {
+          start++;
+        }
+        if (defExpr[end - 1] === '%') {
+          end = end - 1;
+          endAdd++;
+        }
+        var string = defExpr.substring(start + 1, end);
+
+        // non-latin strings have to start with N; supported only on hosted FS
+        if (defExpr[start - 1] === 'N') {
+          defExpr = defExpr.substring(0, start - 1) + defExpr.substring(start);
+          start = start - 1;
+          end = end - 1;
+        }
+
+        if (!this.isDateString(string) && string.indexOf("{") === -1) {
+          // no dates and no parameterized values
+          savedStrings.push(string);
+          defExpr = defExpr.substring(0, start + 1) + "#" +
+           (savedStrings.length - 1) + "#" + defExpr.substring(end);
+          pos = defExpr.indexOf("'", (defExpr.lastIndexOf('#') + 2 + endAdd));
+        } else {
+          pos = defExpr.indexOf("'", end + 1 + endAdd);
+        }
+      }
+
+      return {
+        origDefExpr: origDefExpr,
+        defExpr: defExpr,
+        savedStrings: savedStrings
+      };
+    },
+
+    reReplaceStrings: function(obj, partsObj, /*optional*/ callback){
+      var savedStrings = obj.savedStrings;
+      if (!savedStrings.length) {
+        //WAB Code
+        if(callback && typeof callback === 'function'){
+          callback();
+        }
+        return;
+      }
+
+      if (savedStrings.length) {
+        // put the strings back in
+        var replace = function (part, savedStrings) {
+          if (part.valueObj === undefined ||
+            part.valueObj === null) {
+            return false;
+          }
+          if (part.valueObj.value === undefined ||
+            part.valueObj.value === null) {
+            return false;
+          }
+          if (part.fieldObj.shortType !== "string") {
+            return false;
+          }
+          var start = part.valueObj.value.indexOf("#");
+          var end = part.valueObj.value.lastIndexOf("#");
+          if (esriLang.isDefined(part.valueObj.value) && start > -1) {
+            part.valueObj.value =
+              savedStrings[parseInt(part.valueObj.value.substring(start + 1, end), 10)]
+              .replace(/\'\'/g, "'");
+            this.builtSingleFilterString(part);
+            return true;
+          }
+          return false;
+        };
+        replace = lang.hitch(this, replace);
+
+        var replaced = false;
+        array.forEach(partsObj.parts, function(part){
+          if (part.parts) {
+            // set
+            var setReplaced = false;
+            array.forEach(part.parts, function(subPart){
+              // expr
+              setReplaced = replace(subPart, savedStrings) || setReplaced;
+            });
+            if (setReplaced) {
+              replaced = setReplaced;
+              part.expr = this.builtFilterString(part);
+            }
+          } else {
+            // expr
+            replaced = replace(part, savedStrings) || replaced;
+            if (replaced) {
+              this.builtFilterString(part);
+            }
+          }
+        }, this);
+
+        //WAB Code
+        if(callback && typeof callback === 'function'){
+          callback();
+        }
+
+        //Portal Code
+        if (replaced) {
+          partsObj.expr = null;
+          this.getExprByFilterObj(partsObj);
+        }
+      }
+    },
+
+    isDateString: function(string){
+      // 2012-12-21 00:00:00
+      if (string.length === 19 &&
+      string.charAt(4) === '-' &&
+      string.charAt(7) === '-' &&
+      string.charAt(10) === ' ' &&
+      string.charAt(13) === ':' &&
+      string.charAt(16) === ':') {
+        return true;
+      }
+      return false;
+    },
+
+    findParts: function(defExpr, logicalOperator){
+      var lowerDefExpr = defExpr.toLowerCase();
+      var conStr = " " + logicalOperator.toLowerCase() + " ";
+      var parts = [];
+      var lastPos = 0;
+      var pos = lowerDefExpr.indexOf(conStr);
+      while (pos > 0) {
+        var str = defExpr.substring(lastPos, pos);
+        var lowerStr = str.toLowerCase();
+        // TODO don't count parenthesis within a string ....
+        // TODO don't check between within a string ....
+        var oB = str.count('(');
+        var cB = str.count(')');
+        // single quotes within a string are used as 2 single quotes
+        var sQ = str.count('\'');
+        if (oB !== cB || sQ % 2 === 1) {
+          // we don't have the full part
+          pos = lowerDefExpr.indexOf(conStr, pos + 1);
+        } else if (lowerStr.indexOf(" between ") > -1 && lowerStr.indexOf(" and ") === -1) {
+          pos = lowerDefExpr.indexOf(conStr, pos + 1);
+        } else {
+          parts.push({
+            expr: str
+          });
+          lastPos = pos + conStr.length;
+          pos = lowerDefExpr.indexOf(conStr, lastPos);
+        }
+      }
+      parts.push({
+        expr: defExpr.substring(lastPos)
+      });
+
+      // make sure all parts have operators; if not add the part to the previous part
+      var len = parts.length;
+      for (var i = len - 1; i >= 0; i--) {
+        if (!this.hasOperator(parts[i].expr) && i > 0) {
+          parts[i - 1].expr += " " + logicalOperator + " " + parts[i].expr;
+          parts.splice(i, 1);
+        }
+      }
+
+      return {
+        expr: defExpr,
+        parts: parts,
+        logicalOperator: logicalOperator
+      };
+    },
+
+    hasOperator: function(str){
+      str = str.toLowerCase();
+
+      if (str.indexOf("{") > -1 && str.indexOf("}") > -1) {
+        // parameterized def Expr
+        return true;
+      } else if (str.indexOf(" = ") > -1 ||
+      str.indexOf(" < ") > -1 ||
+      str.indexOf(" > ") > -1 ||
+      str.indexOf(" <> ") > -1 ||
+      str.indexOf(" <= ") > -1 ||
+      str.indexOf(" >= ") > -1 ||
+      str.indexOf(" like ") > -1 ||
+      //str.indexOf(" not like ") > -1 ||
+      str.indexOf(" between ") > -1 ||
+      str.indexOf(" date") > -1 ||
+      //str.indexOf(" not between ") > -1 ||
+      str.indexOf(" is null") > -1 ||
+      str.indexOf(" is not null") > -1) {
+        return true;
+      }
+      return false;
+    },
+
+    parseExpr: function(partsObj){
+      array.forEach(partsObj.parts, function(part){
+        if (part.parts) {
+          this.parseExpr(part);
+        } else {
+          this.parseSingleExpr(part);
+        }
+      }, this);
+    },
+
+    //code for wab
+    _preParseSingleExpr: function(_part) {
+      // part: {expr: "<str>"}
+      // {expr: "UPPER(CITY_NAME) LIKE UPPER('%#0#%')"}
+      //expr:
+      //for not hosted service
+      // UPPER(County) LIKE UPPER('shijingshan%')
+      // UPPER(County) LIKE UPPER('%shijingshan')
+      // UPPER(County) LIKE UPPER('%shijingshan%')
+      // UPPER(County) NOT LIKE UPPER('%shijingshan%')
+      //for hosted service(maybe doesn't has prefix N)
+      // UPPER(County) LIKE UPPER(N'石景山区%')
+      // UPPER(County) LIKE UPPER(N'%石景山区')
+      // UPPER(County) LIKE UPPER(N'%石景山区%')
+      // UPPER(County) NOT LIKE UPPER(N'%石景山区%')
+      var part = null;
+      try {
+        part = lang.clone(_part);
+        part.expr = part.expr.trim();
+
+        //str: CITY_NAME LIKE '%#0#%'
+        var regIgnoreCaseLike = /^UPPER\((.*)\)(\s+|\s+NOT\s+)LIKE\s+UPPER\(N?'(.*)'\)$/i;
+        //UPPER(CITY_NAME) LIKE UPPER('%BEIJING%') or UPPER(CITY_NAME) LIKE UPPER(N'%北京%')
+        if (regIgnoreCaseLike.test(part.expr)) {
+          var fieldName = '';
+          var value = '';
+          var reg1 = /^UPPER\((.*)\)\s+/i;
+          var match1 = part.expr.match(reg1);
+
+          if (match1 && match1.length >= 2) {
+            fieldName = match1[1]; //CITY_NAME
+          } else {
+            return null;
+          }
+
+          var reg2 = /UPPER\(N?'(.*)'\)$/i;
+          var match2 = part.expr.match(reg2);
+
+          if (match2 && match2.length >= 2) {
+            value = "'" + match2[1] + "'"; //'%#0#%'
+          } else {
+            return null;
+          }
+
+          part.expr = part.expr.replace(/^UPPER\((.*)\)\s+/i, fieldName + ' ');
+          part.expr = part.expr.replace(/UPPER\(N?'(.*)'\)$/i, value);
+          part.caseSensitive = false;
+          //return part;
+        }
+        else{
+          var regCaseSensitive = /^(.+)(\s+|\s+NOT\s+)LIKE\s+N?'(.*)'$/i;
+          if(regCaseSensitive.test(part.expr)){
+            part.caseSensitive = true;
+            //return part;
+          }
+        }
+      } catch (e) {
+        console.log(e);
+        return null;
+      }
+
+      if(part){
+        if(this.isHosted){
+          part.caseSensitive = false;
+        }
+      }
+
+      return part;
+    },
+
+    _removeOperator: function(shortType, str, operatorSize) {
+      //PR 8530
+      var timestamp = "timestamp ";
+      str = str.substring(operatorSize).trim();  // remove operator
+
+      // Remove "timestamp" flag for non-hosted sources
+      if (shortType === "date" && !this.isHosted && str.toLowerCase().startsWith(timestamp)) {
+        // timestamp '2014-01-01'
+        str = str.substring(timestamp.length).trim();
+      }
+
+      return str;
+    },
+
+    parseSingleExpr: function(part){
+      //code for wab, try handle with case sensitive
+      //samples: {expr: "UPPER(CITY_NAME) LIKE UPPER('%#0#%')"}
+      //start
+      var parsedPart = this._preParseSingleExpr(part);
+      if(parsedPart){
+        part = lang.mixin(part, parsedPart);
+      }
+      //end
+
+      // part: {expr: "<str>"}
+      // {"expr":"CITY_NAME = '#0#'"}
+      // {"expr": "CITY_NAME LIKE '%#0#%'"}
+      var str = part.expr.trim();
+      var pos = str.indexOf(" ");
+      var fieldName = str.substring(0, pos);
+      part.fieldObj = {
+        name: fieldName
+      };
+      part.valueObj = {};// value, value1, value2, type, period
+      this.getFieldItemByName({
+        name: fieldName
+      }, function(item){
+        part.fieldObj.shortType = item.shortType[0];
+        part.fieldObj.label = item.label[0];
+      }, function(){
+        part.error = {
+          msg: "unknown field name (" + fieldName + ")",
+          code: 1
+        };
+      });
+      str = str.substring(pos + 1).trim();
+      var lStr = str.toLowerCase();
+
+      if (lStr.startsWith("= ")) {
+        str = this._removeOperator(part.fieldObj.shortType, str, "= ".length);
+
+        this.storeValue(str, part);//this.storeValue(str.substring(2).trim(), part);
+        if (part.fieldObj.shortType === "date") {
+          part.operator = this.OPERATORS.dateOperatorIsOn;
+        } else if (part.fieldObj.shortType === "string") {
+          part.operator = this.OPERATORS.stringOperatorIs;
+        } else { // number
+          part.operator = this.OPERATORS.numberOperatorIs;
+        }
+
+      } else if (lStr.startsWith("< ")) {
+        str = this._removeOperator(part.fieldObj.shortType, str, "< ".length);
+
+        this.storeValue(str, part);//this.storeValue(str.substring(2).trim(), part);
+        if (part.fieldObj.shortType === "date") {
+          part.operator = this.OPERATORS.dateOperatorIsBefore;
+        } else if (part.fieldObj.shortType === "number") {
+          part.operator = this.OPERATORS.numberOperatorIsLessThan;
+        } else {
+          part.error = {
+            msg: "operator (" + lStr + ") not supported for string",
+            code: 3
+          };
+        }
+
+      } else if (lStr.startsWith("> ")) {
+        str = this._removeOperator(part.fieldObj.shortType, str, "> ".length);
+
+        this.storeValue(str, part);//this.storeValue(str.substring(2).trim(), part);
+        if (part.fieldObj.shortType === "date") {
+          part.operator = this.OPERATORS.dateOperatorIsAfter;
+        } else if (part.fieldObj.shortType === "number") {
+          part.operator = this.OPERATORS.numberOperatorIsGreaterThan;
+        } else {
+          part.error = {
+            msg: "operator (" + lStr + ") not supported for string",
+            code: 3
+          };
+        }
+
+      } else if (lStr.startsWith("<> ")) {
+        str = this._removeOperator(part.fieldObj.shortType, str, "<> ".length);
+
+        this.storeValue(str, part);//this.storeValue(str.substring(3).trim(), part);
+        if (part.fieldObj.shortType === "date") {
+          part.operator = this.OPERATORS.dateOperatorIsNotOn;
+        } else if (part.fieldObj.shortType === "string") {
+          part.operator = this.OPERATORS.stringOperatorIsNot;
+        } else { // number
+          part.operator = this.OPERATORS.numberOperatorIsNot;
+        }
+
+      } else if (lStr.startsWith("<= ")) {
+        str = this._removeOperator(part.fieldObj.shortType, str, "<= ".length);
+
+        this.storeValue(str, part);
+        if (part.fieldObj.shortType === "date") {
+          part.operator = this.OPERATORS.dateOperatorIsOnOrBefore;
+        } else if (part.fieldObj.shortType === "number") {
+          part.operator = this.OPERATORS.numberOperatorIsAtMost;
+        } else {
+          part.error = {
+            msg: "operator (" + lStr + ") not supported for string",
+            code: 3
+          };
+        }
+
+      } else if (lStr.startsWith(">= ")) {
+        str = this._removeOperator(part.fieldObj.shortType, str, ">= ".length);
+
+        this.storeValue(str, part);
+        if (part.fieldObj.shortType === "date") {
+          part.operator = this.OPERATORS.dateOperatorIsOnOrAfter;
+        } else if (part.fieldObj.shortType === "number") {
+          part.operator = this.OPERATORS.numberOperatorIsAtLeast;
+        } else {
+          part.error = {
+            msg: "operator (" + lStr + ") not supported for string",
+            code: 3
+          };
+        }
+
+      } else if (lStr.startsWith("like ")) {
+
+        // only string fields
+        str = str.substring(5).trim();
+        if (str.startsWith('N\'')) {
+          str = str.substring(1, str.length);
+        }
+        if (str.startsWith('\'%') && str.endsWith('%\'')) {
+          this.storeValue(str.substring(2, str.length - 2), part);
+          part.operator = this.OPERATORS.stringOperatorContains;
+        } else if (str.startsWith('\'%') && str.endsWith('\'')) {
+          this.storeValue(str.substring(2, str.length - 1), part);
+          part.operator = this.OPERATORS.stringOperatorEndsWith;
+        } else if (str.startsWith('\'') && str.endsWith('%\'')) {
+          this.storeValue(str.substring(1, str.length - 2), part);
+          part.operator = this.OPERATORS.stringOperatorStartsWith;
+        } else {
+          part.error = {
+            msg: "value (" + lStr + ") not supported for LIKE",
+            code: 3
+          };
+        }
+
+      } else if (lStr.startsWith("not like ")) {
+
+        // only string fields
+        str = str.substring(9).trim();
+        if (str.startsWith('N\'')) {
+          str = str.substring(1, str.length);
+        }
+        if (str.startsWith('\'%') && str.endsWith('%\'')) {
+          //this.storeValue(str.substring(1, str.length - 2), part);
+          this.storeValue(str.substring(2, str.length - 2), part);
+          part.operator = this.OPERATORS.stringOperatorDoesNotContain;
+        } else {
+          part.error = {
+            msg: "value (" + lStr + ") not supported for NOT LIKE",
+            code: 3
+          };
+        }
+
+      } else if (lStr.startsWith("between ")) {
+        this._updatePartForBetween(str, true, part);
+
+      } else if (lStr.startsWith("not between ")) {
+        this._updatePartForBetween(str, false, part);
+
+      } else if (lStr === "is null") {
+
+        part.valueObj.value = null;
+        if (part.fieldObj.shortType === "date") {
+          part.operator = this.OPERATORS.dateOperatorIsBlank;
+        } else if (part.fieldObj.shortType === "string") {
+          part.operator = this.OPERATORS.stringOperatorIsBlank;
+        } else { // number
+          part.operator = this.OPERATORS.numberOperatorIsBlank;
+        }
+
+      } else if (lStr === "is not null") {
+
+        part.valueObj.value = null;
+        if (part.fieldObj.shortType === "date") {
+          part.operator = this.OPERATORS.dateOperatorIsNotBlank;
+        } else if (part.fieldObj.shortType === "string") {
+          part.operator = this.OPERATORS.stringOperatorIsNotBlank;
+        } else { // number
+          part.operator = this.OPERATORS.numberOperatorIsNotBlank;
+        }
+
+      } else {
+        part.error = {
+          msg: "unknown operator (" + lStr + ")",
+          code: 2
+        };
+      }
+
+      if ((esriLang.isDefined(part.valueObj.value) && (typeof part.valueObj.value === "string") &&
+        part.valueObj.value.startsWith("{") && part.valueObj.value.endsWith("}")) ||
+      (esriLang.isDefined(part.valueObj.value1) && (typeof part.valueObj.value1 === "string") &&
+        part.valueObj.value1.startsWith("{") && part.valueObj.value1.endsWith("}"))) {
+        // value2 is same as value1, we don't need to check
+        part.isInteractive = true;
+      }
+
+      // {
+      //   "expr": "CITY_NAME LIKE '#0#%'",
+      //   "fieldObj": {
+      //     "name": "CITY_NAME",
+      //     "shortType": "string",
+      //     "label": "CITY_NAME"
+      //   },
+      //   "valueObj": {
+      //     "value": "#0#"
+      //   },
+      //   "operator": "stringOperatorStartsWith"
+      // }
+    },
+
+    getFieldItemByName: function(query, handler, errorHandler){
+      this.fieldsStore.fetch({
+        query: query,
+        onComplete: lang.hitch(this, function(items){
+          if (items && items.length) {
+            handler(items[0]);
+          } else {
+            errorHandler();
+          }
+        })
+      });
+    },
+
+    subtractDay: function(date){
+      return new Date(date.getTime() - this.dayInMS);
+    },
+
+    /**
+     * Parses a single BETWEEN or NOT BETWEEN expression.
+     * @param {string} str Expression to parse
+     * @param {boolean} isBetween Indicates if expression to be handled as BETWEEN (true) or NOT BETWEEN (false)
+     * @param {object} part Parsed expression; input uses part.fieldObj.shortType; output produces part.operator,
+     * part.valueObj, part.error
+     */
+    _updatePartForBetween: function (str, isBetween, part) {
+      // Supported cases:
+      // ["NOT "] "BETWEEN <number> AND <number>"
+      // ["NOT "] "BETWEEN <param> AND <param>"  parameterized
+      // ["NOT "] "BETWEEN <datestring> AND <datestring>"  not hosted
+      // ["NOT "] "BETWEEN timestamp <datestring> AND timestamp <datestring>"  hosted
+      // ["NOT "] "BETWEEN CURRENT_TIMESTAMP - <number> AND CURRENT_TIMESTAMP"
+      var pos, left, right, rangeType, testRangeCount, rangeCount, epsilon = 0.0001,
+        betweenPrefix = isBetween ? "between " : "not between ";
+
+      // Remove "between " (isBetween true) or "not between" (otherwise) and, if present, "timestamp " from beginning
+      str = this._removeOperator(part.fieldObj.shortType, str, betweenPrefix.length);
+
+      // "AND" separator is required
+      pos = str.toLowerCase().indexOf(" and ");
+      if (pos > -1) {
+        left = str.substring(0, pos).trim();
+
+        // Pull out "in the last..." operator
+        if (left.startsWith("CURRENT_TIMESTAMP ")) {
+          left = left.substring("CURRENT_TIMESTAMP ".length).trim();
+          if (left.startsWith("-")) {
+            part.operator = isBetween ? this.OPERATORS.dateOperatorInTheLast : this.OPERATORS.dateOperatorNotInTheLast;
+            try {
+              // Guess rangeType by finding integer number of range units. Can't tell difference between 1 month and
+              // 30 days, however, or 1 year and 365 days.
+              rangeCount = parseFloat(left.substring(1).trim());
+
+              if (rangeCount >= 1) {
+                // days, weeks, months, years
+                rangeType = this.OPERATORS.dateOperatorDays;
+                testRangeCount = rangeCount / 365;
+                if (Math.abs(testRangeCount - Math.round(testRangeCount)) < epsilon) {
+                  rangeCount = Math.round(testRangeCount);
+                  rangeType = this.OPERATORS.dateOperatorYears;
+                } else {
+                  testRangeCount = rangeCount / 30;
+                  if (Math.abs(testRangeCount - Math.round(testRangeCount)) < epsilon) {
+                    rangeCount = Math.round(testRangeCount);
+                    rangeType = this.OPERATORS.dateOperatorMonths;
+                  } else {
+                    testRangeCount = rangeCount / 7;
+                    if (Math.abs(testRangeCount - Math.round(testRangeCount)) < epsilon) {
+                      rangeCount = Math.round(testRangeCount);
+                      rangeType = this.OPERATORS.dateOperatorWeeks;
+                    }
+                  }
+                }
+              } else {
+                // hours, minutes
+                rangeType = this.OPERATORS.dateOperatorMinutes;
+                rangeCount *= 24;
+                if (Math.abs(rangeCount - Math.round(rangeCount)) < epsilon) {
+                  rangeType = this.OPERATORS.dateOperatorHours;
+                } else {
+                  rangeCount *= 60;
+                }
+              }
+
+              part.valueObj.value = rangeCount;
+              part.valueObj.range = rangeType;
+            } catch (ignore) {
+              part.error = {
+                msg: "missing count for '" + (isBetween ? "" : "not ") + "in the last'",
+                code: 3
+              };
+            }
+          } else {
+            part.error = {
+              msg: "'" + (isBetween ? "" : "not ") + "in the next' not supported",
+              code: 3
+            };
+          }
+
+        } else {
+          // Remove " and " and, if present, "timestamp " from beginning of part after AND
+          right = this._removeOperator(part.fieldObj.shortType, str.substring(pos), " and ".length);
+
+          this.storeValue1(left, part);
+          this.storeValue2(right, part);
+
+          if (part.fieldObj.shortType === "date") {
+            part.operator = isBetween ? this.OPERATORS.dateOperatorIsBetween : this.OPERATORS.dateOperatorIsNotBetween;
+
+            // Check for case where values are Dates 24 hours apart--they're used as a range for "on"
+            if (typeof part.valueObj.value1 === "object" && typeof part.valueObj.value2 === "object") {
+              try {
+                if (Math.abs(this.subtractDay(part.valueObj.value2).getTime() -
+                                              part.valueObj.value1.getTime()) < 1000) {
+                  part.valueObj.value = part.valueObj.value1;
+                  delete part.valueObj.value1;
+                  delete part.valueObj.value2;
+                  part.operator = isBetween ? this.OPERATORS.dateOperatorIsOn : this.OPERATORS.dateOperatorIsNotOn;
+                }
+              } catch (ignore) {
+              }
+            }
+          } else if (part.fieldObj.shortType === "number" || part.fieldObj.shortType === "oid") {
+            part.operator =
+              isBetween ? this.OPERATORS.numberOperatorIsBetween : this.OPERATORS.numberOperatorIsNotBetween;
+          } else {
+            part.error = {
+              msg: part.fieldObj.shortType + " field not supported for " + (isBetween ? "" : "NOT ") + "BETWEEN",
+              code: 3
+            };
+          }
+        }
+
+      } else {
+        part.error = {
+          msg: "missing AND operator for " + (isBetween ? "" : "NOT ") + "BETWEEN",
+          code: 3
+        };
+      }
+    },
+
+    storeValue: function(str, part){
+
+      if (str.startsWith('{') && str.endsWith('}')) {
+        // interactive placeholder
+        part.valueObj.value = str;
+      } else if (str.startsWith('\'{') && str.endsWith('}\'')) {
+        // interactive placeholder
+        part.valueObj.value = str.substring(1, str.length - 1);
+      } else if (part.fieldObj.shortType === "date") {
+        if (str.startsWith('\'') && str.endsWith('\'')) {
+          var dateStr = str.substring(1, str.length - 1);
+          part.valueObj.value = this.parseDate(dateStr);
+          //console.log("dateStr "+dateStr+" to Date "+part.valueObj.value.toString());
+        } else {
+          part.valueObj.value = str;
+          part.valueObj.type = 'field';
+        }
+      } else if (part.fieldObj.shortType === "string") {
+        if ((str.startsWith('#') || str.startsWith('%#')) &&
+            (str.endsWith('#') || str.endsWith('#%'))) {
+          part.valueObj.value = str;
+        } else if (str.startsWith('\'') && str.endsWith('\'')) {
+          part.valueObj.value = str.substring(1, str.length - 1).replace(/\'\'/g, "'");
+        } else {
+          part.valueObj.value = str;
+          part.valueObj.type = 'field';
+          this.getFieldItemByName({
+            name: str
+          }, function(item){
+            part.valueObj.label = item.label[0];
+          }, function(){
+            part.error = {
+              msg: "unknown field name (" + str + ")",
+              code: 1
+            };
+          });
+        }
+      } else { // number
+        part.valueObj.value = str;
+        if (isNaN(str)) {
+          part.valueObj.type = 'field';
+          this.getFieldItemByName({
+            name: str
+          }, function(item){
+            part.valueObj.label = item.label[0];
+          }, function(){
+            part.error = {
+              msg: "unknown field name (" + str + ")",
+              code: 1
+            };
+          });
+        }
+      }
+    },
+
+    storeValue1: function(str, part){
+      // not for string fields
+
+      if (str.startsWith('{') && str.endsWith('}')) {
+        // interactive placeholder
+        part.valueObj.value1 = str;
+      } else if (str.startsWith('\'{') && str.endsWith('}\'')) {
+        // interactive placeholder
+        part.valueObj.value1 = str.substring(1, str.length - 1);
+      } else if (part.fieldObj.shortType === "date") {
+        if (str.startsWith('\'') && str.endsWith('\'')) {
+          var dateStr = str.substring(1, str.length - 1);
+          part.valueObj.value1 = this.parseDate(dateStr);
+          //console.log("dateStr "+dateStr+" to Date "+part.valueObj.value.toString());
+        } else {
+          part.valueObj.value1 = str;
+          part.valueObj.type = 'field';
+        }
+      } else { // number
+        part.valueObj.value1 = str;
+        if (isNaN(str)) {
+          part.valueObj.type = 'field';
+        }
+      }
+    },
+
+    storeValue2: function(str, part){
+      // not for string fields
+
+      if (str.startsWith('{') && str.endsWith('}')) {
+        // interactive placeholder
+        part.valueObj.value2 = str;
+      } else if (str.startsWith('\'{') && str.endsWith('}\'')) {
+        // interactive placeholder
+        part.valueObj.value2 = str.substring(1, str.length - 1);
+      } else if (part.fieldObj.shortType === "date") {
+        if (str.startsWith('\'') && str.endsWith('\'')) {
+          var dateStr = str.substring(1, str.length - 1);
+          part.valueObj.value2 = this.parseDate(dateStr);
+          //console.log("dateStr "+dateStr+" to Date "+part.valueObj.value.toString());
+        } else {
+          part.valueObj.value2 = str;
+          part.valueObj.type = 'field';
+        }
+      } else { // number
+        part.valueObj.value2 = str;
+        if (isNaN(str)) {
+          part.valueObj.type = 'field';
+        }
+      }
+    },
+
+    parseDate: function(strValue){
+      // we know strValue looks like this 'yyyy-MM-dd HH:mm:ss' (e.g. '2013-03-01 00:00:00')
+      // some locals (e.g. en) expect a comma after the date like this '2013-03-01, 00:00:00'
+      // de, e.g., does not use a comma like this '2013-03-01 00:00:00'
+      // el, e.g., uses a dash like this '2013-03-01 - 00:00:00'
+      // looked up in dojo/cldr/nls/<locale>/gregorian.js
+      var date = locale.parse(strValue, {
+        datePattern: "yyyy-MM-dd",
+        timePattern: "HH:mm:ss"
+      });
+      if (!date) {
+        date = locale.parse(strValue.replace(" ", ", "), {
+          datePattern: "yyyy-MM-dd",
+          timePattern: "HH:mm:ss"
+        });
+        if (!date) {
+          date = locale.parse(strValue.replace(" ", " - "), {
+            datePattern: "yyyy-MM-dd",
+            timePattern: "HH:mm:ss"
+          });
+        }
+      }
+      return date;
+    }
+  });
+
+  clazz.VIRTUAL_DATE_CUSTOM = 'custom';
+  clazz.VIRTUAL_DATE_TODAY = 'today';
+  clazz.VIRTUAL_DATE_YESTERDAY = 'yesterday';
+  clazz.VIRTUAL_DATE_TOMORROW = 'tomorrow';
+  clazz.VIRTUAL_DATE_THIS_WEEK = 'thisWeek';
+  clazz.VIRTUAL_DATE_THIS_MONTH = 'thisMonth';
+  clazz.VIRTUAL_DATE_THIS_QUARTER = 'thisQuarter';
+  clazz.VIRTUAL_DATE_THIS_YEAR = 'thisYear';
+
+  //check partsObj has 'ask for value' option or not
+  clazz.isAskForValues = function(partsObj){
+    var result = false;
+    var parts = partsObj.parts;
+    result = array.some(parts, function(item) {
+      if (item.parts) {
+        return array.some(item.parts, function(part) {
+          return !!part.interactiveObj;
+        });
+      } else {
+        return !!item.interactiveObj;
+      }
+    });
+    return result;
+  };
+
+  //check partsObj has virtual date (like today, yesterday) or not
+  clazz.hasVirtualDate = function(partsObj){
+    var result = false;
+    var parts = partsObj.parts;
+    result = array.some(parts, function(item) {
+      if (item.parts) {
+        return array.some(item.parts, function(part) {
+          return !!part.valueObj.virtualDate || !!part.valueObj.virtualDate1 || !!part.valueObj.virtualDate2;
+        });
+      } else {
+        return !!item.valueObj.virtualDate || !!item.valueObj.virtualDate1 || !!item.valueObj.virtualDate2;
+      }
+    });
+    return result;
+  };
+
+  //get real date by virtual date
+  clazz.getRealDateByVirtualDate = function(virtualDate){
+    var date = null;
+    var currentDate = new Date();
+    var currentTime = currentDate.getTime();
+    var oneDayMillseconds = 24 * 60 * 60 * 1000;
+    switch(virtualDate){
+      case clazz.VIRTUAL_DATE_TODAY:
+        date = currentDate;
+        break;
+      case clazz.VIRTUAL_DATE_YESTERDAY:
+        date = new Date(currentTime - oneDayMillseconds);
+        break;
+      case clazz.VIRTUAL_DATE_TOMORROW:
+        date = new Date(currentTime + oneDayMillseconds);
+        break;
+      case clazz.VIRTUAL_DATE_THIS_WEEK:
+        date = [moment().startOf('week').toDate(), moment().endOf('week').toDate()];
+        break;
+      case clazz.VIRTUAL_DATE_THIS_MONTH:
+        date = [moment().startOf('month').toDate(), moment().endOf('month').toDate()];
+        break;
+      case clazz.VIRTUAL_DATE_THIS_QUARTER:
+        date = [moment().startOf('quarter').toDate(), moment().endOf('quarter').toDate()];
+        break;
+      case clazz.VIRTUAL_DATE_THIS_YEAR:
+        date = [moment().startOf('year').toDate(), moment().endOf('year').toDate()];
+        break;
+      default:
+        break;
+    }
+    return date;
+  };
+
+  return clazz;
+});

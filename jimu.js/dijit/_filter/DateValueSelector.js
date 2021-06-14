@@ -1,20 +1,479 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/aspect dojo/Evented dojo/on dojo/keys dojo/query dojo/_base/html dojo/_base/lang dojo/_base/array dojo/_base/declare dijit/_WidgetBase jimu/filterUtils jimu/utils jimu/dijit/Popup jimu/dijit/formSelect jimu/dijit/dateTimePicker".split(" "),function(k,m,f,l,n,e,c,p,q,r,g,h,t,u,v){return q([r,m],{virtualDates:null,customId:null,postMixInProperties:function(){this.inherited(arguments);this.nls=window.jimuNls.filterBuilder},postCreate:function(){this.inherited(arguments);e.addClass(this.domNode,
-"jimu-date-value-selector");this.dateTypeSelect=new u({"aria-label":this.prompt});e.addClass(this.dateTypeSelect.domNode,"date-type-select");e.addClass(this.dateTypeSelect.domNode,"restrict-select-width");this.dateTypeSelect.placeAt(this.domNode);this.own(f(this.dateTypeSelect,"change",c.hitch(this,function(){this._onDateTypeSelectChanged()})));this.virtualDates&&0<this.virtualDates.length||(this.virtualDates=[g.VIRTUAL_DATE_TODAY,g.VIRTUAL_DATE_YESTERDAY,g.VIRTUAL_DATE_TOMORROW],this.runtime&&this.virtualDates.unshift(g.VIRTUAL_DATE_CUSTOM));
-this.dateTypeSelect.addOption({value:"",label:"\x26nbsp;"});(!this.runtime||this.runtime&&0<=this.virtualDates.indexOf(g.VIRTUAL_DATE_CUSTOM))&&this.dateTypeSelect.addOption({value:"custom",label:this.nls.custom});p.map(this.virtualDates,c.hitch(this,function(b){if("custom"!==b){var a={value:b,label:b};switch(b){case g.VIRTUAL_DATE_TODAY:a.label=this.nls.today;break;case g.VIRTUAL_DATE_YESTERDAY:a.label=this.nls.yesterday;break;case g.VIRTUAL_DATE_TOMORROW:a.label=this.nls.tomorrow}this.dateTypeSelect.addOption(a)}}));
-this.dateTypeSelect.startup();this.own(f(e.byId("main-page"),"click",c.hitch(this,function(){this.hideDateTimePopup()})));this.own(k.before(this.dateTypeSelect,"openDropDown",c.hitch(this,function(){this.hideDateTimePopup();"custom"===this.dateTypeSelect.getValue()&&this.dateTimeObj&&this.dateTimeObj.value&&(this.dateTypeSelect.textDirNode.innerText=this.dateTimeObj.value);"custom"!==this.dateTypeSelect.getValue()&&this.dateTimePopup&&this.dateTimePopup.hide()})));this.own(k.after(this.dateTypeSelect,
-"closeDropDown",c.hitch(this,function(){this.customId||e.setAttr(this.dateTypeSelect,"aria-label",this.dateTypeSelect.textDirNode.innerText);this.dateTypeSelect.textDirNode.title="";setTimeout(c.hitch(this,function(){"custom"===this.dateTypeSelect.getValue()&&this.dateTimeObj&&this.dateTimeObj.value&&this.dateTypeSelect.textDirNode&&(this.dateTypeSelect.textDirNode.innerText=this.dateTimeObj.value,this.dateTypeSelect.textDirNode.title=this.dateTimeObj.value);this.dateTimePopup&&this.dateTimePopup.domNode&&
-"block"===e.getStyle(this.dateTimePopup.domNode,"display")&&this.dateTimePicker&&this.dateTimePicker.calendar&&this.dateTimePicker.calendar.focus()}),200)})));this.own(k.after(this.dateTypeSelect.dropDown,"onItemClick",c.hitch(this,function(b){b&&"custom"===b.option.value&&this.showDateTimePopup()}),!0));this.popupInfo&&this.popupInfo.fieldInfos&&(this.fieldInfo=this.popupInfo.fieldInfos.filter(c.hitch(this,function(b){return b.fieldName===this._fieldInfo.name}))[0])},hideDateTimePopup:function(){this.dateTimePopup&&
-this.dateTimePopup.domNode&&"block"===e.getStyle(this.dateTimePopup.domNode,"display")&&(this.dateTimePicker&&!0===this.dateTimePopupClick?this.dateTimePopupClick=!1:this.dateTimePopup.hide())},getDijits:function(){return[]},setValueObject:function(b){if(b.virtualDate&&"custom"!==b.virtualDate)this.dateTypeSelect.set("value",b.virtualDate,!1),this.customId||e.setAttr(this.dateTypeSelect,"aria-label",b.virtualDate);else if(this.dateTypeSelect.set("value","custom",!1),b.value){var a=h.getDateByDateTimeStr(b.value),
-d=h.localizeDateTimeByFieldInfo(a,this.fieldInfo,b.enableTime,b.timeAccuracy);this.dateTimeObj={date:a,value:d};this.dateTypeSelect.textDirNode.innerText=d;this.dateTypeSelect.textDirNode.title=d;this.enableTime=b.enableTime;this.timeAccuracy=b.timeAccuracy;this.customId||e.setAttr(this.dateTypeSelect,"aria-label",this.dateTypeSelect.textDirNode.innerText)}},getValueObject:function(){return this.isValidValue()?this.tryGetValueObject():null},tryGetValueObject:function(){if(this.isInvalidValue())return null;
-var b={value:null,virtualDate:""},a=this.dateTypeSelect.get("value"),d=null;"custom"===a?(d=this.dateTimeObj.date,b.value=d?h.getDateTimeStr(d,!0):null,b.virtualDate="",b.enableTime=this.enableTime?this.enableTime:!1,b.timeAccuracy=this.timeAccuracy?this.timeAccuracy:""):(d=g.getRealDateByVirtualDate(a),b.virtualDate=a,d?b.value=h.getDateTimeStr(d):b=null);return b},setRequired:function(){},getStatus:function(){return"custom"===this.dateTypeSelect.get("value")?this.dateTimePicker?this._getStatusForDijit(this.dateTimePicker):
-this.dateTimeObj?1:0:""===this.dateTypeSelect.get("value")?0:1},_getStatusForDijit:function(b){return b.validate()?b.get("DisplayedValue")?1:0:-1},isInvalidValue:function(){return 0>this.getStatus()},isEmptyValue:function(){return 0===this.getStatus()},isValidValue:function(){return 0<this.getStatus()},_onDateTypeSelectChanged:function(){"dateTime"===this.dateTypeSelect.get("value")&&this.showDateTimePopup();this.emit("change",this.dateTypeSelect.get("value"))},showDateTimePopup:function(){if(this.dateTimePopup)this.resize(),
-this.dateTimePicker.reset(),this.dateTimePopup.show();else{this.dateTimeObj||(this.dateTimeObj={date:null});this.dateTimePicker=new v({runtime:this.runtime,value:this.dateTimeObj.date,fieldInfo:this.fieldInfo,enableTime:this.enableTime,timeAccuracy:this.timeAccuracy});this.own(f(this.dateTimePicker,"created",c.hitch(this,function(a){this.dateTypeSelect.textDirNode.innerText=a.value;this.dateTypeSelect.textDirNode.title=a.value;this.dateTimeObj=a})));this.own(f(this.dateTimePicker,"timeChange",c.hitch(this,
-function(a){a&&(this.dateTypeSelect.textDirNode.innerText=a.value,this.dateTypeSelect.textDirNode.title=a.value,this.enableTime=a.enableTime,this.timeAccuracy=a.timeAccuracy,this.dateTimeObj=a,this.emit("change"))})));this.own(f(this.dateTimePicker,"timeStatusChanged",c.hitch(this,function(){this.popupH=this.enableTime?353:309})));this.own(f(this.dateTimePicker,"close",c.hitch(this,function(){this.dateTimePopup.hide();this.dateTypeSelect.focus()})));this.runtime?this._isOnlyShowDate()?(this.popupH=
-265,this.own(f(this.dateTimePicker,"calendarChange",c.hitch(this,function(a){a&&this.dateTypeSelect.textDirNode.innerText!==a.value&&(this.dateTypeSelect.textDirNode.innerText=a.value,this.dateTypeSelect.textDirNode.title=a.value,this.enableTime=a.enableTime,this.timeAccuracy=a.timeAccuracy,this.dateTimeObj=a,this.emit("change"))})))):this.popupH=320:this.popupH=this.enableTime?353:309;var b=this._calculatePopup();this.dateTimePopup=new t({width:this.popupW,autoHeight:!0,classNames:["dijitCalendarPopup",
-"jimu-popup-date-time-picker"],content:this.dateTimePicker.domNode,enableMoveable:!1,hasTitle:!1,hasOverlay:!1,contentHasNoMargin:!0,moveToCenter:!1,customPosition:{left:b.left,top:b.top},useFocusLogic:!1,onClose:c.hitch(this,function(){this.dateTimePopup.hide();return!1}),buttons:[]});this._isOnlyShowDate()&&e.setStyle(this.dateTimePopup.contentContainerNode,{marginBottom:"-3px"});this.own(f(this.dateTimePopup.domNode,"click",c.hitch(this,function(){this.dateTimePopupClick=!0})));this.own(f(this.dateTimePopup.domNode,
-"keydown",c.hitch(this,function(a){a.keyCode===l.ESCAPE?(this.dateTimePopup.hide(),this.dateTypeSelect.focus()):this.runtime&&a.keyCode===l.TAB&&(a.preventDefault(),this._isOnlyShowDate()||(e.hasClass(a.target,"dijitCalendarSelectedDate")?this.dateTimePicker.timeTextBox.focusNode:this.dateTimePicker.calendar).focus())})))}},_getLastBtnFromDTPopup:function(){for(var b=null,a=n(".jimu-btn",this.dateTimePopup.buttonContainer),d=a.length-1;0<=d;d--)if("none"!==e.getStyle(a[d],"display")){b=a[d];break}return b},
-_isOnlyShowDate:function(){return this.runtime&&!this.enableTime?!0:!1},_calculatePopup:function(){var b=e.getStyle(this.domNode,"width");this.popupW=210<b?b:210;var a=e.position(this.domNode),d=e.position(document.body).h,c=a.y+30;d-c<this.popupH&&(c=a.y-this.popupH,c=0<c?c:(d-this.popupH)/2);d=e.position(document.body).w;a.x+this.popupW>d&&(a.x-=this.popupW-b);return{left:a.x,top:c-1}},resize:function(){var b=this._calculatePopup();this.dateTimePopup.setCustomPosition(b.left,b.top,this.popupW,this.popupH)},
-destroy:function(){this.dateTimePopup&&(this.dateTimePopup.onClose=c.hitch(this,function(){return!0}),this.dateTimePopup.close())}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/aspect',
+  'dojo/Evented',
+  'dojo/on',
+  'dojo/keys',
+  'dojo/query',
+  'dojo/_base/html',
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'dojo/_base/declare',
+  'dijit/_WidgetBase',
+  'jimu/filterUtils',
+  'jimu/utils',
+  'jimu/dijit/Popup',
+  'jimu/dijit/formSelect',
+  'jimu/dijit/dateTimePicker'
+],
+  function(aspect, Evented, on, keys, query, html, lang, array, declare, _WidgetBase,
+    filterUtils, jimuUtils, Popup, jimuSelect, dateTimePicker) {
+
+    return declare([_WidgetBase, Evented], {
+
+      //options:
+      virtualDates: null,//['today', 'yesterday', 'tomorrow']
+      customId: null, //optional, for screen readers
+
+      //events:
+      //change
+
+      postMixInProperties: function(){
+        this.inherited(arguments);
+        this.nls = window.jimuNls.filterBuilder;
+      },
+
+      postCreate: function(){
+        this.inherited(arguments);
+        html.addClass(this.domNode, 'jimu-date-value-selector');
+
+        this.dateTypeSelect = new jimuSelect({'aria-label': this.prompt});//it uses table tag not select.
+        html.addClass(this.dateTypeSelect.domNode, 'date-type-select');
+        html.addClass(this.dateTypeSelect.domNode, 'restrict-select-width');
+        this.dateTypeSelect.placeAt(this.domNode);
+
+        //bind change event
+        this.own(on(this.dateTypeSelect, 'change', lang.hitch(this, function(){
+          this._onDateTypeSelectChanged();
+        })));
+
+        if(!(this.virtualDates && this.virtualDates.length > 0)){
+          this.virtualDates =
+            [filterUtils.VIRTUAL_DATE_TODAY, filterUtils.VIRTUAL_DATE_YESTERDAY, filterUtils.VIRTUAL_DATE_TOMORROW];
+          if(this.runtime){
+            this.virtualDates.unshift(filterUtils.VIRTUAL_DATE_CUSTOM);
+          }
+        }
+        this.dateTypeSelect.addOption({
+          value: '',
+          label: '&nbsp;'
+        });
+        if(!this.runtime || (this.runtime && this.virtualDates.indexOf(filterUtils.VIRTUAL_DATE_CUSTOM) >= 0) ){
+          this.dateTypeSelect.addOption({
+            value: 'custom',
+            label: this.nls.custom
+          });
+        }
+        array.map(this.virtualDates, lang.hitch(this, function(virtualDate){
+          if(virtualDate !== 'custom'){
+            var option = {
+              value: virtualDate,
+              label: virtualDate
+            };
+            switch(virtualDate){
+              case filterUtils.VIRTUAL_DATE_TODAY:
+                option.label = this.nls.today;
+                break;
+              case filterUtils.VIRTUAL_DATE_YESTERDAY:
+                option.label = this.nls.yesterday;
+                break;
+              case filterUtils.VIRTUAL_DATE_TOMORROW:
+                option.label = this.nls.tomorrow;
+                break;
+              default:
+                break;
+            }
+            this.dateTypeSelect.addOption(option);
+          }
+        }));
+        this.dateTypeSelect.startup();
+
+        this.own(on(html.byId('main-page'), 'click', lang.hitch(this, function(){
+          this.hideDateTimePopup();
+        })));
+
+        this.own(aspect.before(this.dateTypeSelect, 'openDropDown', lang.hitch(this, function(){
+          this.hideDateTimePopup();
+          if(this.dateTypeSelect.getValue() === 'custom' && this.dateTimeObj && this.dateTimeObj.value){
+            this.dateTypeSelect.textDirNode.innerText = this.dateTimeObj.value;
+          }
+          if(this.dateTypeSelect.getValue() !== 'custom' && this.dateTimePopup){
+            this.dateTimePopup.hide();
+            // this.dateTimeObj = null;
+            // this.enableTime = false;
+            // this.dateTimePopup.onClose = lang.hitch(this, function () {
+            //   return true;
+            // });
+            // this.dateTimePopup.close();
+            // this.dateTimePopup = null;
+          }
+        })));
+
+        this.own(aspect.after(this.dateTypeSelect, 'closeDropDown', lang.hitch(this, function(){
+          if(!this.customId){//update aria-label
+            html.setAttr(this.dateTypeSelect, 'aria-label', this.dateTypeSelect.textDirNode.innerText);
+          }
+          this.dateTypeSelect.textDirNode.title = '';
+          setTimeout(lang.hitch(this, function() {
+            if(this.dateTypeSelect.getValue() === 'custom' && this.dateTimeObj && this.dateTimeObj.value &&
+             this.dateTypeSelect.textDirNode){
+              this.dateTypeSelect.textDirNode.innerText = this.dateTimeObj.value;
+              this.dateTypeSelect.textDirNode.title = this.dateTimeObj.value;
+            }
+            if(this.dateTimePopup && this.dateTimePopup.domNode &&
+             html.getStyle(this.dateTimePopup.domNode, 'display') === 'block' &&
+             this.dateTimePicker && this.dateTimePicker.calendar){
+              this.dateTimePicker.calendar.focus(); //focus on the selected day
+            }
+          }), 200);
+        })));
+
+        this.own(aspect.after(this.dateTypeSelect.dropDown, 'onItemClick', lang.hitch(this, function(item){
+          if(item && item.option.value === 'custom'){
+            this.showDateTimePopup();
+          }
+        }), true));
+
+        if(this.popupInfo && this.popupInfo.fieldInfos){
+          this.fieldInfo = this.popupInfo.fieldInfos.filter(lang.hitch(this, function(f){
+            return f.fieldName === this._fieldInfo.name;
+          }))[0];
+        }
+      },
+
+      hideDateTimePopup: function(){
+        if(this.dateTimePopup && this.dateTimePopup.domNode &&
+         html.getStyle(this.dateTimePopup.domNode, 'display') === 'block'){
+          if(this.dateTimePicker && this.dateTimePopupClick === true){
+            this.dateTimePopupClick = false;
+          }else{
+            this.dateTimePopup.hide();
+          }
+        }
+      },
+
+      getDijits: function(){
+        // return [this._dijit1, this._dijit2];
+        return [];
+      },
+
+      //valueObj: {value,virtualDate}
+      setValueObject: function(valueObj){
+        //valueObj.value: string
+        //virtualDate: today,yesterday,...
+
+        if(!valueObj.virtualDate || valueObj.virtualDate === 'custom'){
+          //custom date
+          this.dateTypeSelect.set('value', 'custom', false);
+          if(valueObj.value){
+            var date = jimuUtils.getDateByDateTimeStr(valueObj.value);
+            var value = jimuUtils.localizeDateTimeByFieldInfo(date, this.fieldInfo,
+              valueObj.enableTime, valueObj.timeAccuracy);
+            this.dateTimeObj = {date: date, value: value};
+
+            this.dateTypeSelect.textDirNode.innerText = value;
+            this.dateTypeSelect.textDirNode.title = value;
+            this.enableTime = valueObj.enableTime;
+            this.timeAccuracy = valueObj.timeAccuracy;
+
+            //this dijit uses table tag not select, so aria-label would stop reading prompt label.
+            if(!this.customId){
+              html.setAttr(this.dateTypeSelect, 'aria-label', this.dateTypeSelect.textDirNode.innerText);
+            }
+          }
+        }else{
+          //virtual date
+          this.dateTypeSelect.set('value', valueObj.virtualDate, false);
+          if(!this.customId){
+            html.setAttr(this.dateTypeSelect, 'aria-label', valueObj.virtualDate);
+          }
+        }
+      },
+
+      //return {value,virtualDate}
+      getValueObject: function(){
+        if(!this.isValidValue()){
+          return null;
+        }
+
+        return this.tryGetValueObject();
+      },
+
+      //return {value,virtualDate}
+      tryGetValueObject: function(){
+        if(this.isInvalidValue()){
+          return null;
+        }
+
+        var result = {
+          "value": null,//date.toDateString()
+          "virtualDate": ''//today,yesterday,...
+        };
+
+        var virtualDate = this.dateTypeSelect.get('value');
+        var date = null;
+
+        if(virtualDate === 'custom'){
+          date = this.dateTimeObj.date;
+          if(date){
+            result.value = jimuUtils.getDateTimeStr(date, true);//save a full date time format
+          }else{
+            result.value = null;
+          }
+          result.virtualDate = '';
+          result.enableTime = this.enableTime ? this.enableTime : false;
+          result.timeAccuracy = this.timeAccuracy ? this.timeAccuracy : '';
+        }else{
+          date = filterUtils.getRealDateByVirtualDate(virtualDate);
+          result.virtualDate = virtualDate;
+          if(date){
+            result.value = jimuUtils.getDateTimeStr(date);
+          }else{
+            result = null;
+          }
+        }
+
+        return result;
+      },
+
+      setRequired: function(){
+      },
+
+      //-1 means invalid value type
+      //0 means empty value, this ValueProvider should be ignored
+      //1 means valid value
+      getStatus: function(){
+        if(this.dateTypeSelect.get('value') === 'custom'){
+          if(this.dateTimePicker) {
+            return this._getStatusForDijit(this.dateTimePicker);
+          }else{
+            return this.dateTimeObj ? 1 : 0;
+          }
+        }else if(this.dateTypeSelect.get('value') === ''){
+          return 0;
+        }else{
+          return 1;
+        }
+      },
+
+      //return -1 means input a wrong value
+      //return 0 means empty value
+      //return 1 means valid value
+      _getStatusForDijit: function(dijit){
+        if(dijit.validate()){
+          if(dijit.get("DisplayedValue")){
+            return 1;
+          }else{
+            return 0;
+          }
+        }else{
+          return -1;
+        }
+      },
+
+      isInvalidValue: function(){
+        return this.getStatus() < 0;
+      },
+
+      isEmptyValue: function(){
+        return this.getStatus() === 0;
+      },
+
+      isValidValue: function(){
+        return this.getStatus() > 0;
+      },
+
+      _onDateTypeSelectChanged: function(){
+        if(this.dateTypeSelect.get('value') === 'dateTime'){
+          this.showDateTimePopup();
+        }
+        this.emit('change', this.dateTypeSelect.get('value'));
+      },
+
+      showDateTimePopup: function(){
+        if(this.dateTimePopup){
+          this.resize();
+          this.dateTimePicker.reset();
+          this.dateTimePopup.show();
+          return;
+        }
+
+        if(!this.dateTimeObj){
+          this.dateTimeObj = {date: null};
+        }
+        this.dateTimePicker = new dateTimePicker({
+          runtime: this.runtime,
+          value: this.dateTimeObj.date,
+          fieldInfo: this.fieldInfo,
+          enableTime: this.enableTime,
+          timeAccuracy: this.timeAccuracy
+
+        });
+        this.own(on(this.dateTimePicker, 'created', lang.hitch(this, function(dateTimeObj){
+          this.dateTypeSelect.textDirNode.innerText = dateTimeObj.value;//overwrite current day value
+          this.dateTypeSelect.textDirNode.title = dateTimeObj.value;
+          this.dateTimeObj = dateTimeObj;
+        })));
+
+        this.own(on(this.dateTimePicker, 'timeChange', lang.hitch(this, function(dateTimeObj){
+          if(dateTimeObj){
+            this.dateTypeSelect.textDirNode.innerText = dateTimeObj.value;
+            this.dateTypeSelect.textDirNode.title = dateTimeObj.value;
+            this.enableTime = dateTimeObj.enableTime;
+            this.timeAccuracy = dateTimeObj.timeAccuracy;
+            this.dateTimeObj = dateTimeObj;
+            this.emit('change');
+          }
+        })));
+
+        //setting: checkbox status
+        this.own(on(this.dateTimePicker, 'timeStatusChanged', lang.hitch(this, function(){
+          this.popupH = this.enableTime ? 353 : 309;
+        })));
+
+
+        this.own(on(this.dateTimePicker, 'close', lang.hitch(this, function(){
+          this.dateTimePopup.hide();
+          this.dateTypeSelect.focus();
+        })));
+
+        if(this.runtime){
+          if(this._isOnlyShowDate()){
+            this.popupH = 265;
+            this.own(on(this.dateTimePicker, 'calendarChange', lang.hitch(this, function(dateTimeObj){
+              if(dateTimeObj){
+                if(this.dateTypeSelect.textDirNode.innerText !== dateTimeObj.value){
+                  this.dateTypeSelect.textDirNode.innerText = dateTimeObj.value;
+                  this.dateTypeSelect.textDirNode.title = dateTimeObj.value;
+                  this.enableTime = dateTimeObj.enableTime;
+                  this.timeAccuracy = dateTimeObj.timeAccuracy;
+                  this.dateTimeObj = dateTimeObj;
+                  this.emit('change');
+                }
+              }
+            })));
+          }else{
+            this.popupH = 320;
+          }
+        }else{
+          this.popupH = this.enableTime ? 353 : 309;
+        }
+
+        var popupPosition = this._calculatePopup();
+        this.dateTimePopup = new Popup({
+          width: this.popupW,
+          // height: this.popupH,
+          autoHeight: true,
+          classNames: ['dijitCalendarPopup', 'jimu-popup-date-time-picker'],
+          content: this.dateTimePicker.domNode,
+          enableMoveable: false,
+          hasTitle: false,
+          hasOverlay: false,
+          contentHasNoMargin: true,
+          moveToCenter: false,
+          customPosition: {left: popupPosition.left, top: popupPosition.top},
+          useFocusLogic: false,
+          onClose: lang.hitch(this, function () {
+            this.dateTimePopup.hide();
+            return false;
+          }),
+          buttons:[]
+        });
+        if(this._isOnlyShowDate()){
+          html.setStyle(this.dateTimePopup.contentContainerNode, {
+            marginBottom: '-3px'
+          });
+        }
+        this.own(on(this.dateTimePopup.domNode, 'click', lang.hitch(this, function(){
+          this.dateTimePopupClick = true;
+        })));
+        this.own(on(this.dateTimePopup.domNode, 'keydown', lang.hitch(this, function(evt){
+          if(evt.keyCode === keys.ESCAPE){
+            this.dateTimePopup.hide();
+            this.dateTypeSelect.focus();
+          }else if(this.runtime && evt.keyCode === keys.TAB){
+            evt.preventDefault(); //keep focusing on current date if no timePicker
+            if(!this._isOnlyShowDate()){
+              var focusNode = html.hasClass(evt.target, 'dijitCalendarSelectedDate') ?
+                this.dateTimePicker.timeTextBox.focusNode : this.dateTimePicker.calendar;
+              focusNode.focus();
+            }
+          }
+        })));
+      },
+
+      _getLastBtnFromDTPopup: function(){//from Popup dijit
+        var lastBtn = null;
+        var btns = query('.jimu-btn', this.dateTimePopup.buttonContainer);
+        for(var i = btns.length - 1; i >= 0; i--) {
+          if(html.getStyle(btns[i], 'display') !== 'none'){
+            lastBtn = btns[i];
+            break;
+          }
+        }
+        return lastBtn;
+      },
+
+      _isOnlyShowDate: function(){
+        if(this.runtime && !this.enableTime){
+          return true;
+        }
+        return false;
+      },
+
+      _calculatePopup: function(){
+        var selectBtnW = html.getStyle(this.domNode, 'width');
+        this.popupW = selectBtnW > 210 ? selectBtnW : 210; //mixWidth
+
+        var rPosition = html.position(this.domNode);
+
+        //The pop-up displayed below the button by default
+        var bodyH = html.position(document.body).h;
+        var popupTop = rPosition.y + 30;
+        if(bodyH - popupTop < this.popupH){
+          popupTop = rPosition.y - this.popupH;
+          popupTop = popupTop > 0 ? popupTop : ((bodyH - this.popupH) / 2);
+        }
+        //The pop-up is aligned to the left of the button
+        var bodyW = html.position(document.body).w;
+        if(rPosition.x + this.popupW > bodyW){
+          rPosition.x = rPosition.x - (this.popupW - selectBtnW);
+        }
+
+        return {
+          left: rPosition.x,
+          top: popupTop - 1
+        };
+      },
+
+      resize: function(){
+        var popupPosition = this._calculatePopup();
+        this.dateTimePopup.setCustomPosition(popupPosition.left, popupPosition.top, this.popupW, this.popupH);
+      },
+
+      destroy: function() {
+        if(this.dateTimePopup){
+          this.dateTimePopup.onClose = lang.hitch(this, function() {
+            return true;
+          });
+          this.dateTimePopup.close();
+        }
+      }
+
+    });
+  });

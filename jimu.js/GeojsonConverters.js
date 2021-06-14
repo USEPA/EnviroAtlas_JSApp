@@ -1,10 +1,350 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define([],function(){function t(b){var d;a:{d=b[0];for(var a=0;a<d.length;a++)if(d[a]!==b[b.length-1][a]){d=!1;break a}d=!0}d||b.push(b[0]);return b}function u(b){var d=0,a=0,c=b.length,f=b[a],e;for(a;a<c-1;a++)e=b[a+1],d+=(e[0]-f[0])*(e[1]+f[1]),f=e;return 0<=d}function w(b,d){for(var a=0;a<b.length-1;a++)for(var c=0;c<d.length-1;c++){var f;a:{var e=b[a],h=b[a+1],g=d[c],l=d[c+1],k=(l[0]-g[0])*(e[1]-g[1])-(l[1]-g[1])*(e[0]-g[0]);f=(h[0]-e[0])*(e[1]-g[1])-(h[1]-e[1])*(e[0]-g[0]);e=(l[1]-g[1])*(h[0]-
-e[0])-(l[0]-g[0])*(h[1]-e[1]);if(0!==e&&(k/=e,f/=e,0<=k&&1>=k&&0<=f&&1>=f)){f=!0;break a}f=!1}if(f)return!0}return!1}function p(b){var d=[];b=b.slice(0);var a=t(b.shift().slice(0));if(4<=a.length)for(u(a)||a.reverse(),d.push(a),a=0;a<b.length;a++){var c=t(b[a].slice(0));4<=c.length&&(u(c)&&c.reverse(),d.push(c))}return d}function x(b){var d={},a;for(a in b)b.hasOwnProperty(a)&&(d[a]=b[a]);return d}var r={arcgisToGeoJSON:function(b,d){var a={};"number"===typeof b.x&&"number"===typeof b.y&&(a.type=
-"Point",a.coordinates=[b.x,b.y]);b.points&&(a.type="MultiPoint",a.coordinates=b.points.slice(0));b.paths&&(1===b.paths.length?(a.type="LineString",a.coordinates=b.paths[0].slice(0)):(a.type="MultiLineString",a.coordinates=b.paths.slice(0)));if(b.rings){var c=b.rings.slice(0),a=[],f=[],e,h;for(h=0;h<c.length;h++){var g=t(c[h].slice(0));4>g.length||(u(g)?a.push([g]):f.push(g))}for(g=[];f.length;){h=f.pop();for(var l=!1,c=a.length-1;0<=c;c--){var k=e=a[c][0],m=h;e=w(k,m);for(var m=m[0],v=!1,n=-1,p=k.length,
-q=p-1;++n<p;q=n)(k[n][1]<=m[1]&&m[1]<k[q][1]||k[q][1]<=m[1]&&m[1]<k[n][1])&&m[0]<(k[q][0]-k[n][0])*(m[1]-k[n][1])/(k[q][1]-k[n][1])+k[n][0]&&(v=!v);k=v;if(!e&&k){a[c].push(h);l=!0;break}}l||g.push(h)}for(;g.length;){h=g.pop();f=!1;for(c=a.length-1;0<=c;c--)if(e=a[c][0],w(e,h)){a[c].push(h);f=!0;break}f||a.push([h.reverse()])}a=1===a.length?{type:"Polygon",coordinates:a[0]}:{type:"MultiPolygon",coordinates:a}}if(b.geometry||b.attributes)a.type="Feature",a.geometry=b.geometry?r.arcgisToGeoJSON(b.geometry):
-null,a.properties=b.attributes?x(b.attributes):null,b.attributes&&(a.id=b.attributes[d]||b.attributes.OBJECTID||b.attributes.FID);return a},geojsonToArcGIS:function(b,d){d=d||"OBJECTID";var a={wkid:4326},c={};switch(b.type){case "Point":c.x=b.coordinates[0];c.y=b.coordinates[1];c.spatialReference=a;break;case "MultiPoint":c.points=b.coordinates.slice(0);c.spatialReference=a;break;case "LineString":c.paths=[b.coordinates.slice(0)];c.spatialReference=a;break;case "MultiLineString":c.paths=b.coordinates.slice(0);
-c.spatialReference=a;break;case "Polygon":c.rings=p(b.coordinates.slice(0));c.spatialReference=a;break;case "MultiPolygon":d=c;b=b.coordinates.slice(0);for(var f=[],e=0;e<b.length;e++)for(var h=p(b[e]),g=h.length-1;0<=g;g--){var l=h[g].slice(0);f.push(l)}d.rings=f;c.spatialReference=a;break;case "Feature":b.geometry&&(c.geometry=r.geojsonToArcGIS(b.geometry,d));c.attributes=b.properties?x(b.properties):{};b.id&&(c.attributes[d]=b.id);break;case "FeatureCollection":c=[];for(a=0;a<b.features.length;a++)c.push(r.geojsonToArcGIS(b.features[a],
-d));break;case "GeometryCollection":for(c=[],a=0;a<b.geometries.length;a++)c.push(r.geojsonToArcGIS(b.geometries[a],d))}return c}};return r});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+/**
+ * github url: https://github.com/Esri/arcgis-to-geojson-utils
+ */
+define([], function() {
+  var mo = {};
+  // checks if 2 x,y points are equal
+  function pointsEqual (a, b) {
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] !== b[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // checks if the first and last points of a ring are equal and closes the ring
+  function closeRing (coordinates) {
+    if (!pointsEqual(coordinates[0], coordinates[coordinates.length - 1])) {
+      coordinates.push(coordinates[0]);
+    }
+    return coordinates;
+  }
+
+  // determine if polygon ring coordinates are clockwise. clockwise signifies outer ring, counter-clockwise an inner ring
+  // or hole. this logic was found at http://stackoverflow.com/questions/1165647/how-to-determine-if-a-list-of-polygon-
+  // points-are-in-clockwise-order
+  function ringIsClockwise (ringToTest) {
+    var total = 0;
+    var i = 0;
+    var rLength = ringToTest.length;
+    var pt1 = ringToTest[i];
+    var pt2;
+    for (i; i < rLength - 1; i++) {
+      pt2 = ringToTest[i + 1];
+      total += (pt2[0] - pt1[0]) * (pt2[1] + pt1[1]);
+      pt1 = pt2;
+    }
+    return (total >= 0);
+  }
+
+  // ported from terraformer.js https://github.com/Esri/Terraformer/blob/master/terraformer.js#L504-L519
+  function vertexIntersectsVertex (a1, a2, b1, b2) {
+    var uaT = ((b2[0] - b1[0]) * (a1[1] - b1[1])) - ((b2[1] - b1[1]) * (a1[0] - b1[0]));
+    var ubT = ((a2[0] - a1[0]) * (a1[1] - b1[1])) - ((a2[1] - a1[1]) * (a1[0] - b1[0]));
+    var uB = ((b2[1] - b1[1]) * (a2[0] - a1[0])) - ((b2[0] - b1[0]) * (a2[1] - a1[1]));
+
+    if (uB !== 0) {
+      var ua = uaT / uB;
+      var ub = ubT / uB;
+
+      if (ua >= 0 && ua <= 1 && ub >= 0 && ub <= 1) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  // ported from terraformer.js https://github.com/Esri/Terraformer/blob/master/terraformer.js#L521-L531
+  function arrayIntersectsArray (a, b) {
+    for (var i = 0; i < a.length - 1; i++) {
+      for (var j = 0; j < b.length - 1; j++) {
+        if (vertexIntersectsVertex(a[i], a[i + 1], b[j], b[j + 1])) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  // ported from terraformer.js https://github.com/Esri/Terraformer/blob/master/terraformer.js#L470-L480
+  function coordinatesContainPoint (coordinates, point) {
+    var contains = false;
+    for (var i = -1, l = coordinates.length, j = l - 1; ++i < l; j = i) {
+      if (((coordinates[i][1] <= point[1] && point[1] < coordinates[j][1]) ||
+          (coordinates[j][1] <= point[1] && point[1] < coordinates[i][1])) &&
+          (point[0] < (((coordinates[j][0] - coordinates[i][0]) * (point[1] - coordinates[i][1])) /
+            (coordinates[j][1] - coordinates[i][1])) + coordinates[i][0])) {
+        contains = !contains;
+      }
+    }
+    return contains;
+  }
+
+  // ported from terraformer-arcgis-parser.js https://github.com/Esri/terraformer-arcgis-parser/blob/master/terraformer-arcgis-parser.js#L106-L113
+  function coordinatesContainCoordinates (outer, inner) {
+    var intersects = arrayIntersectsArray(outer, inner);
+    var contains = coordinatesContainPoint(outer, inner[0]);
+    if (!intersects && contains) {
+      return true;
+    }
+    return false;
+  }
+
+  // do any polygons in this array contain any other polygons in this array?
+  // used for checking for holes in arcgis rings
+  // ported from terraformer-arcgis-parser.js https://github.com/Esri/terraformer-arcgis-parser/blob/master/terraformer-arcgis-parser.js#L117-L172
+  function convertRingsToGeoJSON (rings) {
+    var outerRings = [];
+    var holes = [];
+    var x; // iterator
+    var outerRing; // current outer ring being evaluated
+    var hole; // current hole being evaluated
+
+    // for each ring
+    for (var r = 0; r < rings.length; r++) {
+      var ring = closeRing(rings[r].slice(0));
+      if (ring.length < 4) {
+        continue;
+      }
+      // is this ring an outer ring? is it clockwise?
+      if (ringIsClockwise(ring)) {
+        var polygon = [ ring ];
+        outerRings.push(polygon); // push to outer rings
+      } else {
+        holes.push(ring); // counterclockwise push to holes
+      }
+    }
+
+    var uncontainedHoles = [];
+
+    // while there are holes left...
+    while (holes.length) {
+      // pop a hole off out stack
+      hole = holes.pop();
+
+      // loop over all outer rings and see if they contain our hole.
+      var contained = false;
+      for (x = outerRings.length - 1; x >= 0; x--) {
+        outerRing = outerRings[x][0];
+        if (coordinatesContainCoordinates(outerRing, hole)) {
+          // the hole is contained push it into our polygon
+          outerRings[x].push(hole);
+          contained = true;
+          break;
+        }
+      }
+
+      // ring is not contained in any outer ring
+      // sometimes this happens https://github.com/Esri/esri-leaflet/issues/320
+      if (!contained) {
+        uncontainedHoles.push(hole);
+      }
+    }
+
+    // if we couldn't match any holes using contains we can try intersects...
+    while (uncontainedHoles.length) {
+      // pop a hole off out stack
+      hole = uncontainedHoles.pop();
+
+      // loop over all outer rings and see if any intersect our hole.
+      var intersects = false;
+
+      for (x = outerRings.length - 1; x >= 0; x--) {
+        outerRing = outerRings[x][0];
+        if (arrayIntersectsArray(outerRing, hole)) {
+          // the hole is contained push it into our polygon
+          outerRings[x].push(hole);
+          intersects = true;
+          break;
+        }
+      }
+
+      if (!intersects) {
+        outerRings.push([hole.reverse()]);
+      }
+    }
+
+    if (outerRings.length === 1) {
+      return {
+        type: 'Polygon',
+        coordinates: outerRings[0]
+      };
+    } else {
+      return {
+        type: 'MultiPolygon',
+        coordinates: outerRings
+      };
+    }
+  }
+
+  // This function ensures that rings are oriented in the right directions
+  // outer rings are clockwise, holes are counterclockwise
+  // used for converting GeoJSON Polygons to ArcGIS Polygons
+  function orientRings (poly) {
+    var output = [];
+    var polygon = poly.slice(0);
+    var outerRing = closeRing(polygon.shift().slice(0));
+    if (outerRing.length >= 4) {
+      if (!ringIsClockwise(outerRing)) {
+        outerRing.reverse();
+      }
+
+      output.push(outerRing);
+
+      for (var i = 0; i < polygon.length; i++) {
+        var hole = closeRing(polygon[i].slice(0));
+        if (hole.length >= 4) {
+          if (ringIsClockwise(hole)) {
+            hole.reverse();
+          }
+          output.push(hole);
+        }
+      }
+    }
+
+    return output;
+  }
+
+  // This function flattens holes in multipolygons to one array of polygons
+  // used for converting GeoJSON Polygons to ArcGIS Polygons
+  function flattenMultiPolygonRings (rings) {
+    var output = [];
+    for (var i = 0; i < rings.length; i++) {
+      var polygon = orientRings(rings[i]);
+      for (var x = polygon.length - 1; x >= 0; x--) {
+        var ring = polygon[x].slice(0);
+        output.push(ring);
+      }
+    }
+    return output;
+  }
+
+  // shallow object clone for feature properties and attributes
+  // from http://jsperf.com/cloning-an-object/2
+  function shallowClone (obj) {
+    var target = {};
+    for (var i in obj) {
+      if (obj.hasOwnProperty(i)) {
+        target[i] = obj[i];
+      }
+    }
+    return target;
+  }
+
+  mo.arcgisToGeoJSON = function (arcgis, idAttribute) {
+    var geojson = {};
+
+    if (typeof arcgis.x === 'number' && typeof arcgis.y === 'number') {
+      geojson.type = 'Point';
+      geojson.coordinates = [arcgis.x, arcgis.y];
+    }
+
+    if (arcgis.points) {
+      geojson.type = 'MultiPoint';
+      geojson.coordinates = arcgis.points.slice(0);
+    }
+
+    if (arcgis.paths) {
+      if (arcgis.paths.length === 1) {
+        geojson.type = 'LineString';
+        geojson.coordinates = arcgis.paths[0].slice(0);
+      } else {
+        geojson.type = 'MultiLineString';
+        geojson.coordinates = arcgis.paths.slice(0);
+      }
+    }
+
+    if (arcgis.rings) {
+      geojson = convertRingsToGeoJSON(arcgis.rings.slice(0));
+    }
+
+    if (arcgis.geometry || arcgis.attributes) {
+      geojson.type = 'Feature';
+      geojson.geometry = (arcgis.geometry) ? mo.arcgisToGeoJSON(arcgis.geometry) : null;
+      geojson.properties = (arcgis.attributes) ? shallowClone(arcgis.attributes) : null;
+      if (arcgis.attributes) {
+        geojson.id = arcgis.attributes[idAttribute] || arcgis.attributes.OBJECTID || arcgis.attributes.FID;
+      }
+    }
+
+    return geojson;
+  };
+
+  mo.geojsonToArcGIS = function (geojson, idAttribute) {
+    idAttribute = idAttribute || 'OBJECTID';
+    var spatialReference = { wkid: 4326 };
+    var result = {};
+    var i;
+
+    switch (geojson.type) {
+      case 'Point':
+        result.x = geojson.coordinates[0];
+        result.y = geojson.coordinates[1];
+        result.spatialReference = spatialReference;
+        break;
+      case 'MultiPoint':
+        result.points = geojson.coordinates.slice(0);
+        result.spatialReference = spatialReference;
+        break;
+      case 'LineString':
+        result.paths = [geojson.coordinates.slice(0)];
+        result.spatialReference = spatialReference;
+        break;
+      case 'MultiLineString':
+        result.paths = geojson.coordinates.slice(0);
+        result.spatialReference = spatialReference;
+        break;
+      case 'Polygon':
+        result.rings = orientRings(geojson.coordinates.slice(0));
+        result.spatialReference = spatialReference;
+        break;
+      case 'MultiPolygon':
+        result.rings = flattenMultiPolygonRings(geojson.coordinates.slice(0));
+        result.spatialReference = spatialReference;
+        break;
+      case 'Feature':
+        if (geojson.geometry) {
+          result.geometry = mo.geojsonToArcGIS(geojson.geometry, idAttribute);
+        }
+        result.attributes = (geojson.properties) ? shallowClone(geojson.properties) : {};
+        if (geojson.id) {
+          result.attributes[idAttribute] = geojson.id;
+        }
+        break;
+      case 'FeatureCollection':
+        result = [];
+        for (i = 0; i < geojson.features.length; i++) {
+          result.push(mo.geojsonToArcGIS(geojson.features[i], idAttribute));
+        }
+        break;
+      case 'GeometryCollection':
+        result = [];
+        for (i = 0; i < geojson.geometries.length; i++) {
+          result.push(mo.geojsonToArcGIS(geojson.geometries[i], idAttribute));
+        }
+        break;
+    }
+
+    return result;
+  };
+
+  return mo;
+});

@@ -1,7 +1,115 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define(["dojo/_base/declare"],function(c){return c([],{constructor:function(a){this.chart=a.chart;this.chartUtils=a.chartUtils},produceOption:function(a,b){a=this.chartUtils.preProcessConfig(a,b);"curved"===b.shape?a=this.setCurvedGaugeOption(a,b):"vertical"===b.shape?a=this.setVerticalGaugeOption(a,b):"horizontal"===b.shape?a=this.setHorizontalGaugeOption(a,b):console.error("invaild gauge shape");a=this.chartUtils.settingLabelColor(a,b);return a=this.chartUtils.settingValueStyle(a,b)},setCurvedGaugeOption:function(a,
-b){a=this.chartUtils.initCurvedOption(a);a=this.chartUtils.settingCurvedSeries(a,b);a=this.chartUtils.settingCurvedTooltip(a,b);a=this.chartUtils.settingCurvedGaugeColor(a,b);return a=this.chartUtils.settingCurvedTargets(a,b)},setVerticalGaugeOption:function(a,b){a=this.chartUtils.initVerticalOption(a,this.vertical);a=this.chartUtils.setVerticalGrid(a);a=this.chartUtils.settingVerticalAxis(a,b);a=this.chartUtils.settingVerticalSeries(a,b);a=this.chartUtils.settingGaugeColumnColor(a,b);return a=this.chartUtils.settingVerticalGaugeRTL(a,
-b)},setHorizontalGaugeOption:function(a,b){a=this.chartUtils.initHorizontalOption(a,this.horizontal);a=this.chartUtils.setHorizontalGrid(a);a=this.chartUtils.settingHorizontalAxis(a,b);a=this.chartUtils.settingHorizontalSeries(a,b);a=this.chartUtils.settingGaugeColumnColor(a,b);return a=this.chartUtils.settingHorizontalGaugeRTL(a,b)},resetGraphic:function(a){if("horizontal"===a.shape||"vertical"===a.shape)a=this.chartUtils.createTargetGraphic(a),this.clearGraphic(),this.chart.setOption({graphic:a}),
-this.cacheGraphic=null,this.cacheGraphic=a},clearGraphic:function(){this.cacheGraphic&&(this.cacheGraphic.forEach(function(a){a.$action="remove"}),this.chart.setOption({graphic:this.cacheGraphic}))},resetGrid:function(a){("horizontal"===a.shape||"vertical"===a.shape)&&(a=this.chartUtils.updateGridForVerticalGauge(a))&&this.chart.setOption({grid:a})}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+define([
+    'dojo/_base/declare'
+  ],
+  function(declare) {
+    return declare([], {
+
+      constructor: function(option) {
+        this.chart = option.chart;
+        this.chartUtils = option.chartUtils;
+      },
+
+      produceOption: function(option, config) {
+        option = this.chartUtils.preProcessConfig(option, config);
+
+        if (config.shape === 'curved') {
+          option = this.setCurvedGaugeOption(option, config);
+        } else if (config.shape === 'vertical') {
+          option = this.setVerticalGaugeOption(option, config);
+        } else if (config.shape === 'horizontal') {
+          option = this.setHorizontalGaugeOption(option, config);
+        } else {
+          console.error('invaild gauge shape');
+        }
+
+        option = this.chartUtils.settingLabelColor(option, config);
+        option = this.chartUtils.settingValueStyle(option, config);
+        return option;
+      },
+
+      setCurvedGaugeOption: function(option, config) {
+        option = this.chartUtils.initCurvedOption(option);
+        option = this.chartUtils.settingCurvedSeries(option, config);
+        option = this.chartUtils.settingCurvedTooltip(option, config);
+        option = this.chartUtils.settingCurvedGaugeColor(option, config);
+        option = this.chartUtils.settingCurvedTargets(option, config);
+        return option;
+      },
+
+      setVerticalGaugeOption: function(option, config) {
+        option = this.chartUtils.initVerticalOption(option, this.vertical);
+        option = this.chartUtils.setVerticalGrid(option);
+        option = this.chartUtils.settingVerticalAxis(option, config);
+        option = this.chartUtils.settingVerticalSeries(option, config);
+        option = this.chartUtils.settingGaugeColumnColor(option, config);
+        option = this.chartUtils.settingVerticalGaugeRTL(option, config);
+
+        return option;
+      },
+
+      setHorizontalGaugeOption: function(option, config) {
+        option = this.chartUtils.initHorizontalOption(option, this.horizontal);
+        option = this.chartUtils.setHorizontalGrid(option);
+        option = this.chartUtils.settingHorizontalAxis(option, config);
+        option = this.chartUtils.settingHorizontalSeries(option, config);
+        option = this.chartUtils.settingGaugeColumnColor(option, config);
+        option = this.chartUtils.settingHorizontalGaugeRTL(option, config);
+
+        return option;
+      },
+
+      //-------------dynamic update graphic----------
+      resetGraphic: function(config) {
+        if (config.shape !== 'horizontal' && config.shape !== 'vertical') {
+          return;
+        }
+        var graphic = this.chartUtils.createTargetGraphic(config);
+        this.clearGraphic();
+        this.chart.setOption({
+          graphic: graphic
+        });
+        this.cacheGraphic = null;
+        this.cacheGraphic = graphic;
+      },
+
+      clearGraphic: function() {
+        if (this.cacheGraphic) {
+          this.cacheGraphic.forEach(function(cacheGraph) {
+            cacheGraph.$action = 'remove';
+          });
+          this.chart.setOption({
+            graphic: this.cacheGraphic
+          });
+        }
+      },
+      //-------------dynamic update grid----------
+      resetGrid: function(config) {
+        if (config.shape !== 'horizontal' && config.shape !== 'vertical') {
+          return;
+        }
+        var grid = this.chartUtils.updateGridForVerticalGauge(config);
+        if (!grid) {
+          return;
+        }
+        this.chart.setOption({
+          grid: grid
+        });
+      }
+
+    });
+  });

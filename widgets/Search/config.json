@@ -1,5 +1,22 @@
 {
-  "allPlaceholder": "",
-  "showInfoWindowOnSelect": true,
-  "sources":[]
+    "allPlaceholder": "",
+    "showInfoWindowOnSelect": true,
+    "sources": [{
+            "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer",
+            "name": "World Geocoding Service",
+            "singleLineFieldName": "SingleLine",
+            "placeholder": "Find address or place",
+            "countryCode": "",
+            "panToScale": false,
+            "zoomScale": null,
+            "maxSuggestions": 6,
+            "maxResults": 6,
+            "searchInCurrentMapExtent": false,
+            "enableLocalSearch": true,
+            "localSearchMinScale": 300000,
+            "localSearchDistance": 50000,
+            "radiusUnit": "meter",
+            "type": "locator"
+        }
+    ]
 }

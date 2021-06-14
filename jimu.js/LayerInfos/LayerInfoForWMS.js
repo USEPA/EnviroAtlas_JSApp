@@ -1,9 +1,245 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dojo/_base/array dojo/_base/lang dojo/topic dojo/Deferred esri/graphicsUtils dojo/aspect ./LayerInfo ./LayerInfoForDefaultWMS esri/layers/FeatureLayer esri/lang".split(" "),function(e,f,g,k,l,q,m,n,r,t,p){return e(n,{constructor:function(a,b){},_getExtent:function(){var a=new l;a.resolve(this.layerObject.extent||this.layerObject.fullExtent);return a},_initVisible:function(){this._visible=this.layerObject.visible},_setTopLayerVisible:function(a){this._visible=a;this.layerObject.setVisibility(a)},
-_setSubLayerVisible:function(a){var b=[],d,b=g.clone(this.originOperLayer.layerObject.visibleLayers),c;for(c in a)if(a.hasOwnProperty(c)&&"function"!==typeof a[c]){var e=a[c],h=c.toString();d=f.indexOf(b,h);e?0>d&&b.push(h):0<=d&&b.splice(d,1)}this._setVisibleLayersBySelfFlag=!0;this.layerObject.setVisibleLayers(b)},_resetLayerObjectVisiblity:function(a){var b=a?a[this.id]:null,d=!1;if(a){b&&this.layerObject.setVisibility(b.visible);var b={},c;for(c in a)a.hasOwnProperty(c)&&"function"!==typeof a[c]&&
-(d=!0,b[c]=a[c].visible);d&&this._setSubLayerVisibleByCheckedInfo(b)}},_setSubLayerVisibleByCheckedInfo:function(a){var b={};this.traversal(function(b){b.isRootLayer()||p.isDefined(a[b.id])&&b._setVisible(a[b.id])});this.traversal(function(a){0===a.getSubLayers().length&&(b[a.subId]=a._isAllSubLayerVisibleOnPath())});this._setSubLayerVisible(b)},_getServiceDefinition:function(){var a=this.getUrl();return this._serviceDefinitionBuffer.getRequest(this.subId).request(a)},_serviceDefinitionRequest:function(a){return this._normalRequest(a,
-{SERVICE:"WMS",REQUEST:"GetCapabilities"},"xml")},obtainNewSubLayers:function(){var a=[];f.forEach(this.layerObject.layerInfos,function(b,d){b=this._getOperLayerFromWMSLayerInfo(b,this);b=this._layerInfoFactory.create(b);a.push(b);b.init()},this);a.reverse();return a},_getOperLayerFromWMSLayerInfo:function(a,b){return{layerObject:this.layerObject,title:a.label||a.title||a.name||" ",id:this.id+"_"+(a.name||a.title+"-"+Math.random()),subId:a.name||"-",wms:{layerInfo:this,subId:a.name||"-",wmsLayerInfo:a},
-selfType:"wms",parentLayerInfo:b}},_bindEvent:function(){this.inherited(arguments);this.layerObject&&!this.layerObject.empty&&m.after(this.layerObject,"setVisibleLayers",g.hitch(this,this._onVisibleLayersChanged))},_onVisibleLayersChanged:function(){var a=[];this._setVisibleLayersBySelfFlag||(this.traversal(function(a){a.isRootLayer()||a._initVisible()}),this._setVisibleLayersBySelfFlag=!1);this.traversal(function(b){b.isRootLayer()||a.push(b)});this._setVisibleLayersBySelfFlag=!1;k.publish("layerInfos/layerInfo/visibleChanged",
-a);this._isShowInMapChanged2()}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  'dojo/_base/array',
+  'dojo/_base/lang',
+  'dojo/topic',
+  'dojo/Deferred',
+  'esri/graphicsUtils',
+  'dojo/aspect',
+  './LayerInfo',
+  './LayerInfoForDefaultWMS',
+  'esri/layers/FeatureLayer',
+  'esri/lang'
+], function(declare, array, lang, topic, Deferred, graphicsUtils, aspect,
+LayerInfo, LayerInfoForDefaultWMS, FeatureLayer, esriLang) {
+  /*jshint unused: false*/
+  return declare(LayerInfo, {
+
+    constructor: function( operLayer, map) {
+      /*jshint unused: false*/
+    },
+
+    _getExtent: function() {
+      var def = new Deferred();
+      def.resolve(this.layerObject.extent || this.layerObject.fullExtent);
+      return def;
+    },
+
+
+    // _resetLayerObjectVisiblity: function(layerOptions) {
+    //   var layerOption  = layerOptions ? layerOptions[this.id]: null;
+    //   if(layerOptions) {
+    //     //reste visibility for parent layer.
+    //     if(layerOption) {
+    //       this.layerObject.setVisibility(layerOption.visible);
+    //     }
+
+    //     //reste visibles of sublayer.
+    //     var subLayersVisible = {};
+    //     var haseConfiguredInLayerOptionsflag = false;
+
+    //     // set visilbe for all sublayers
+    //     this.traversal(function(layerInfo) {
+    //       if(!layerInfo.isRootLayer()) {
+    //         if(esriLang.isDefined(layerOptions[layerInfo.id])) {
+    //           layerInfo._setVisible(layerOptions[layerInfo.id].visible);
+    //         }
+    //       }
+    //     });
+
+    //     this.traversal(function(layerInfo) {
+    //       if (layerInfo.getSubLayers().length === 0) {
+    //         subLayersVisible[layerInfo.subId] =
+    //           layerInfo._isAllSubLayerVisibleOnPath();
+    //       }
+    //     });
+    //     if(haseConfiguredInLayerOptionsflag) {
+    //       this._setSubLayerVisible(subLayersVisible);
+    //     }
+    //   }
+    // },
+
+
+
+    _initVisible: function() {
+      this._visible = this.layerObject.visible;
+    },
+
+    _setTopLayerVisible: function(visible) {
+      this._visible = visible;
+      this.layerObject.setVisibility(visible);
+    },
+
+    _setSubLayerVisible: function(layersVisible) {
+      // summary:
+      //   set seblayer visible
+      // description:
+      //   paramerter:
+      //   {subLayerId: visble}
+      var ary = [], index;
+      ary = lang.clone(this.originOperLayer.layerObject.visibleLayers);
+
+      for (var child in layersVisible) {
+        if(layersVisible.hasOwnProperty(child) &&
+           (typeof layersVisible[child] !== 'function') /*&&child !== 'config'*/) {
+          var visible = layersVisible[child];
+          var subLayerId = child.toString();
+          index = array.indexOf(ary, subLayerId);
+          if (visible) {
+            if (index < 0) {
+              ary.push(subLayerId);
+            }
+          } else {
+            if (index >= 0) {
+              ary.splice(index, 1);
+            }
+          }
+        }
+      }
+      this._setVisibleLayersBySelfFlag = true;
+      this.layerObject.setVisibleLayers(ary);
+    },
+
+    _resetLayerObjectVisiblity: function(layerOptions) {
+      var layerOption  = layerOptions ? layerOptions[this.id]: null;
+      var haseConfiguredInLayerOptionsflag = false;
+      if(layerOptions) {
+        //reste visibility for parent layer.
+        if(layerOption) {
+          this.layerObject.setVisibility(layerOption.visible);
+        }
+        //reste visibility for sublayers.
+        var subLayersCheckedInfo = {};
+        for ( var id in layerOptions) {
+          if(layerOptions.hasOwnProperty(id) &&
+             (typeof layerOptions[id] !== 'function')) {
+            haseConfiguredInLayerOptionsflag = true;
+            subLayersCheckedInfo[id] = layerOptions[id].visible;
+          }
+        }
+
+        if(haseConfiguredInLayerOptionsflag) {
+          this._setSubLayerVisibleByCheckedInfo(subLayersCheckedInfo);
+        }
+      }
+
+    },
+
+    _setSubLayerVisibleByCheckedInfo: function(checkedInfo) {
+      var subLayersVisible = {};
+
+      // set visilbe for all sublayers
+      this.traversal(function(layerInfo) {
+        if(!layerInfo.isRootLayer()) {
+          if(esriLang.isDefined(checkedInfo[layerInfo.id])) {
+            layerInfo._setVisible(checkedInfo[layerInfo.id]);
+          }
+        }
+      });
+
+      this.traversal(function(layerInfo) {
+        if (layerInfo.getSubLayers().length === 0) {
+          subLayersVisible[layerInfo.subId] =
+            layerInfo._isAllSubLayerVisibleOnPath();
+        }
+      });
+      this._setSubLayerVisible(subLayersVisible);
+    },
+
+    /***************************************************
+     * methods for control layer definition
+     ***************************************************/
+    _getServiceDefinition: function() {
+      var url = this.getUrl();
+      var requestProxy = this._serviceDefinitionBuffer.getRequest(this.subId);
+      return requestProxy.request(url);
+    },
+
+    _serviceDefinitionRequest: function(url) {
+      return this._normalRequest(url, {'SERVICE': 'WMS', 'REQUEST': 'GetCapabilities'}, 'xml');
+    },
+
+    //---------------new section-----------------------------------------
+
+    obtainNewSubLayers: function() {
+      var newSubLayerInfos = [];
+      array.forEach(this.layerObject.layerInfos, function(wmsLayerInfo, index){
+        var subLayerInfo;
+        var operLayer = this._getOperLayerFromWMSLayerInfo(wmsLayerInfo, this);
+        subLayerInfo = this._layerInfoFactory.create(operLayer);
+
+        newSubLayerInfos.push(subLayerInfo);
+        subLayerInfo.init();
+      }, this);
+
+      newSubLayerInfos.reverse();
+      return newSubLayerInfos;
+    },
+
+    _getOperLayerFromWMSLayerInfo: function(wmsLayerInfo, parentLayerInfo) {
+      return {
+        layerObject: this.layerObject, //the subLayerObject is WMS layer also.
+        title: wmsLayerInfo.label || wmsLayerInfo.title || wmsLayerInfo.name || " ",
+        // WMS sub layer does not have id, set the id by 'parentId' + name.
+        // group layer might does not have wmsLayerInfo.name.
+        id: this.id + '_' + (wmsLayerInfo.name || (wmsLayerInfo.title + "-" + Math.random())),
+        subId: wmsLayerInfo.name || "-",
+        wms: {"layerInfo": this, "subId": wmsLayerInfo.name || "-", "wmsLayerInfo": wmsLayerInfo},
+        selfType: 'wms',
+        parentLayerInfo: parentLayerInfo
+      };
+    },
+
+    /****************
+     * Event
+     ***************/
+    _bindEvent: function() {
+      this.inherited(arguments);
+      if(this.layerObject && !this.layerObject.empty) {
+        aspect.after(this.layerObject, "setVisibleLayers",
+          lang.hitch(this, this._onVisibleLayersChanged));
+      }
+    },
+
+    _onVisibleLayersChanged: function() {
+      var changedLayerInfos = [];
+
+      // send event
+      if(!this._setVisibleLayersBySelfFlag) {
+        this.traversal(function(layerInfo) {
+          // init visible for every sublayer.
+          if(!layerInfo.isRootLayer()) {
+            layerInfo._initVisible();
+          }
+        });
+        this._setVisibleLayersBySelfFlag = false;
+      }
+      this.traversal(function(layerInfo) {
+        // init visible for every sublayer.
+        //layerInfo._initVisible();
+        if(!layerInfo.isRootLayer()) {
+          changedLayerInfos.push(layerInfo);
+        }
+      });
+      this._setVisibleLayersBySelfFlag = false;
+      topic.publish('layerInfos/layerInfo/visibleChanged', changedLayerInfos);
+      this._isShowInMapChanged2();
+    }
+  });
+});

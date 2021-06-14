@@ -1,7 +1,203 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dojo/_base/array dojo/_base/html dojo/Deferred dojo/dom-construct dojo/on ./LayerInfoForDefault".split(" "),function(f,e,g,h,d,k,l){return f(l,{constructor:function(a,b){this.layerObject=a.layerObject},_resetLayerObjectVisiblity:function(){},_initVisible:function(){var a=!1;this.traversal(function(b){if(0<=e.indexOf(b.layerObject.visibleLayers,b.subId))return a=!0});this._visible=a},_setVisible:function(a){this._visible=a?!0:!1},_setTopLayerVisible:function(a){var b=this.originOperLayer.wms;
-this._visible=a?!0:!1;var c={};this.traversal(function(a){0===a.getSubLayers().length&&(c[a.subId]=a._isAllSubLayerVisibleOnPath())});b.layerInfo._setSubLayerVisible(c)},_getServiceDefinition:function(){var a=this.getUrl();return this._serviceDefinitionBuffer.getRequest(this.subId).request(a)},_serviceDefinitionRequest:function(a){return this._normalRequest(a,{SERVICE:"WMS",REQUEST:"GetCapabilities"},"xml")},obtainNewSubLayers:function(){var a=[],b=this.originOperLayer.wms;e.forEach(b.wmsLayerInfo.subLayers,
-function(c){c=b.layerInfo._getOperLayerFromWMSLayerInfo(c,this);c=this._layerInfoFactory.create(c);a.push(c);c.init()},this);return a},drawLegends:function(a){this._initLegendsNode(a)},_initLegendsNode:function(a){if(this.originOperLayer.wms.wmsLayerInfo.legendURL){var b=d.create("img",{"class":"legend-div-image",src:this.originOperLayer.wms.wmsLayerInfo.legendURL});k(b,"load",function(){d.empty(a);var c=d.create("div",{"class":"legend-div"},a);g.place(b,c)})}else d.empty(a)},getOpacity:function(){},
-setOpacity:function(a){},enablePopup:function(){this.originOperLayer.wms.wmsLayerInfo.showPopup=!0},disablePopup:function(){this.originOperLayer.wms.wmsLayerInfo.showPopup=!1},isPopupEnabled:function(){return this.originOperLayer.wms.wmsLayerInfo.showPopup},isSupportPopup:function(){var a=new h;this.originOperLayer.wms.wmsLayerInfo.queryable?a.resolve(!0):a.resolve(!1);return a},_bindEvent:function(){},_onVisibleLayersChanged:function(){},getScaleRange:function(){return this.originOperLayer.wms.layerInfo.getScaleRange()}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  'dojo/_base/array',
+  'dojo/_base/html',
+  'dojo/Deferred',
+  'dojo/dom-construct',
+  'dojo/on',
+  './LayerInfoForDefault'
+], function(declare, array, html, Deferred, domConstruct, on, LayerInfoForDefault) {
+  var clazz = declare(LayerInfoForDefault, {
+
+
+    constructor: function(operLayer, map) {
+      this.layerObject = operLayer.layerObject;
+      /*jshint unused: false*/
+    },
+
+    _resetLayerObjectVisiblity: function() {
+      // do not do anything.
+    },
+
+    _initVisible: function() {
+      var visible = false;
+      this.traversal(function(layerInfo) {
+        var index = array.indexOf(layerInfo.layerObject.visibleLayers, layerInfo.subId);
+        if (index >= 0) {
+          visible = true;
+          return true;
+        }
+      });
+
+      this._visible = visible;
+    },
+
+    _setVisible: function(visible) {
+      this._visible = visible ? true : false;
+    },
+
+    _setTopLayerVisible: function(visible) {
+      var wms = this.originOperLayer.wms;
+
+      if(visible) {
+        this._visible = true;
+      } else {
+        this._visible = false;
+      }
+
+      var subLayersVisible = {};
+      this.traversal(function(layerInfo) {
+        if (layerInfo.getSubLayers().length === 0) {
+          subLayersVisible[layerInfo.subId] =
+            layerInfo._isAllSubLayerVisibleOnPath();
+        }
+      });
+      wms.layerInfo._setSubLayerVisible(subLayersVisible);
+    },
+
+
+    // show: function() {
+    //   var rootLayerInfo = this.getRootLayerInfo();
+    //   var checkedInfo = this._prepareCheckedInfoForShowOrHide(true);
+    //   rootLayerInfo._setSubLayerVisibleByCheckedInfo(checkedInfo);
+    //   rootLayerInfo.show();
+    // },
+
+    // hide: function() {
+    //   var rootLayerInfo = this.getRootLayerInfo();
+    //   var checkedInfo = this._prepareCheckedInfoForShowOrHide(false);
+    //   rootLayerInfo._setSubLayerVisibleByCheckedInfo(checkedInfo);
+    //   rootLayerInfo.hide();
+    // },
+
+    /***************************************************
+     * methods for control layer definition
+     ***************************************************/
+    _getServiceDefinition: function() {
+      var url = this.getUrl();
+      var requestProxy = this._serviceDefinitionBuffer.getRequest(this.subId);
+      return requestProxy.request(url);
+    },
+
+    _serviceDefinitionRequest: function(url) {
+      return this._normalRequest(url, {'SERVICE': 'WMS', 'REQUEST': 'GetCapabilities'}, 'xml');
+    },
+    //---------------new section-----------------------------------------
+    // operLayer = {
+    //    layerObject: layer,
+    //    title: layer.label || layer.title || layer.name || layer.id || " ",
+    //    id: layerId || " ",
+    //    subLayers: [operLayer, ... ],
+    //    wms: {"layerInfo": this, "subId": layerInfo.name, "wmsLayerInfo": layerInfo},
+    // };
+
+    obtainNewSubLayers: function() {
+      var newSubLayerInfos = [];
+      var wms = this.originOperLayer.wms;
+      array.forEach(wms.wmsLayerInfo.subLayers, function(wmsLayerInfo){
+        var subLayerInfo;
+        var operLayer = wms.layerInfo._getOperLayerFromWMSLayerInfo(wmsLayerInfo, this);
+        subLayerInfo = this._layerInfoFactory.create(operLayer);
+
+        newSubLayerInfos.push(subLayerInfo);
+        subLayerInfo.init();
+      }, this);
+
+      return newSubLayerInfos;
+    },
+
+    drawLegends: function(legendsNode) {
+      this._initLegendsNode(legendsNode);
+    },
+
+    _initLegendsNode: function(legendsNode) {
+      if(this.originOperLayer.wms.wmsLayerInfo.legendURL) {
+        var legendImg = domConstruct.create("img", {
+          "class": "legend-div-image",
+          "src": this.originOperLayer.wms.wmsLayerInfo.legendURL
+        });
+        on(legendImg, 'load', function(){
+          domConstruct.empty(legendsNode);
+          var legendDiv = domConstruct.create("div", {
+            "class": "legend-div"
+          }, legendsNode);
+          html.place(legendImg, legendDiv);
+        });
+      } else {
+        domConstruct.empty(legendsNode);
+      }
+    },
+
+    getOpacity: function() {
+    },
+
+    setOpacity: function(opacity) {
+      /*jshint unused: false*/
+    },
+
+    enablePopup: function() {
+      var wmsLayerInfo = this.originOperLayer.wms.wmsLayerInfo;
+      wmsLayerInfo.showPopup = true;
+    },
+
+    disablePopup: function() {
+      var wmsLayerInfo = this.originOperLayer.wms.wmsLayerInfo;
+      wmsLayerInfo.showPopup = false;
+    },
+
+    isPopupEnabled: function() {
+      var wmsLayerInfo = this.originOperLayer.wms.wmsLayerInfo;
+      return wmsLayerInfo.showPopup;
+    },
+
+    isSupportPopup: function() {
+      var def = new Deferred();
+      var wmsLayerInfo = this.originOperLayer.wms.wmsLayerInfo;
+
+      if(wmsLayerInfo.queryable) {
+        def.resolve(true);
+      } else {
+        def.resolve(false);
+      }
+      return def;
+    },
+
+    /****************
+     * Event
+     ***************/
+    _bindEvent: function() {
+      // because layerObject is WMS layer.
+      // so does not call inherited(arguments),
+      // so does not listen _onVisibilityChanged() for subLayer
+
+      // So far, JS-API does not support event for 'visible-layers-change'
+      // this.layerObject.on('visible-layers-change',
+      //                       lang.hitch(this, this._onVisibleLayersChanged));
+    },
+
+    _onVisibleLayersChanged: function() {
+    },
+
+    getScaleRange: function() {
+      return this.originOperLayer.wms.layerInfo.getScaleRange();
+    }
+
+  });
+  return clazz;
+});

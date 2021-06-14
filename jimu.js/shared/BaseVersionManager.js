@@ -1,5 +1,92 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define(function(){return function(){this.versions=[];this.upgrade=function(b,a,c){a=this.getVersionIndex(a);c=this.getVersionIndex(c);if(a>c)throw Error("New version should higher than old version.");for(a+=1;a<=c;a++)this.versions[a].upgrader&&(b=this.versions[a].upgrader(b));return b};this.getVersionIndex=function(b){b=this.fixVersion(b);var a,c;for(c=0;c<this.versions.length;c++)this.versions[c].version===b&&(a=c);null===b&&(a=-1);void 0===a&&(a=this.versions.length-1);return a};this.fixVersion=
-function(b){return b?b:null}}});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+define(function() {
+  //we don't use dojo's declare to define class
+  //because this function will be used in node.js
+
+  function BaseVersionManager(){
+    /******************************************************
+      element signature:
+      {
+        //the version you want to upgrade to. version format: 1.0.0
+        version: '',
+
+        //the version discription
+        description: '',
+
+        //the upgrade logic to upgrade from the latest old verion to this version
+        //the first upgrader will upgrade unknow version to the first version
+        upgrader: function(oldConfig){
+          //your logic here
+          return newConfig;
+        }
+      }
+    ******************************************************/
+    this.versions = [];
+
+    this.upgrade = function(config, _oldVersion, _newVersion){
+      //the config is the old version
+      //method should return new upgraded config
+      var oldVersionIndex = this.getVersionIndex(_oldVersion);
+      var newVersionIndex = this.getVersionIndex(_newVersion);
+
+      if(oldVersionIndex > newVersionIndex){
+        throw Error('New version should higher than old version.');
+      }
+      var newConfig = config, i;
+      for(i = oldVersionIndex + 1; i <= newVersionIndex; i++){
+        if(!this.versions[i].upgrader){
+          //if no upgrader, we consider the version is compatible
+          continue;
+        }
+        newConfig = this.versions[i].upgrader(newConfig);
+      }
+      return newConfig;
+    };
+
+    this.getVersionIndex = function(_version){
+      var version = this.fixVersion(_version);
+      var versionIndex, i;
+
+      for(i = 0; i < this.versions.length; i++){
+        if(this.versions[i].version === version){
+          versionIndex = i;
+        }
+      }
+      //if there is no version, we assume it's very old and will upgrade from the first version
+      if(version === null){
+        versionIndex = -1;
+      }
+
+      if(versionIndex === undefined){
+        //for unknown version, we assume it's the latest version but it's not in versions array.
+        versionIndex = this.versions.length - 1;
+      }
+
+      return versionIndex;
+    };
+
+    this.fixVersion = function(version){
+      if(!version){
+        return null;
+      }
+      return version;
+      //TODO
+    };
+  }
+
+  return BaseVersionManager;
+});

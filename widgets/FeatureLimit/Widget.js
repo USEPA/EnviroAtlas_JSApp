@@ -76,7 +76,7 @@ define(['dojo/_base/declare', 'dojo/_base/html', 'dijit/_WidgetsInTemplateMixin'
 			}
 			if (urlForQuery != "") {
 				//modify url to address "Cross-Origin Request Blocked" issue
-				if (window.location.href.indexOf("leb.epa.gov")) {
+				if (window.location.href.indexOf("leb.epa.gov") > -1) {
 					urlForQuery = urlForQuery.replace("enviroatlas.epa.gov", "leb.epa.gov");
 				}	
 				

@@ -1,4 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define({"widgets/OverviewMap/setting/nls/strings":{visible:"Prika\u017ei preglednu kartu prema zadanim postavkama",minWidth:"Min. \u0161irina",minHeight:"Min, visina",maxWidth:"Maks. \u0161irina",maxHeight:"Maks. visina",minText:"Minimum",maxText:"maksimum",attachText:"Odredite u koji kut karte \u017eelite umetnuti ovaj widget.",expandText:"Na po\u010detku pro\u0161irite widget",topLeft:"Gore lijevo",topRight:"Gore desno",bottomLeft:"Donje lijevo",bottomRight:"Donje desno",_localized:{}}});

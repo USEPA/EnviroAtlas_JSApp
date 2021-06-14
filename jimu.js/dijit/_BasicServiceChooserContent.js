@@ -1,11 +1,259 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/_BasicServiceChooserContent.html":'\x3cdiv\x3e\r\n\t\x3cdiv class\x3d"content-section"\x3e\r\n\t\t\x3ctable class\x3d"layout"\x3e\r\n\t\t\t\x3ccolgroup\x3e\r\n\t\t\t\t\x3ccol width\x3d"80px" align\x3d"right"\x3e\x3c/col\x3e\r\n\t\t\t\t\x3ccol width\x3d"auto"\x3e\x3c/col\x3e\r\n\t\t\t\t\x3ccol width\x3d"170px"\x3e\x3c/col\x3e\r\n\t\t\t\x3c/colgroup\x3e\r\n\t\t\t\x3ctbody\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd class\x3d"first-td"\x3e\r\n\t\t\t\t\t\t\x3cspan\x3eURL:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"urlInput" data-dojo-type\x3d"jimu/dijit/URLInput" style\x3d"width:100%;"\x3e\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cdiv class\x3d"jimu-btn jimu-state-disabled validate-btn jimu-float-trailing" data-dojo-attach-point\x3d"btnValidate" data-dojo-attach-event\x3d"onclick:_onBtnValidateClick"\x3e${nls.validate}\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr data-dojo-attach-point\x3d"exampleTr" class\x3d"example-tr"\x3e\r\n\t\t\t\t\t\x3ctd class\x3d"first-td" style\x3d"padding-top:5px;"\x3e\r\n\t\t\t\t\t\t\x3cspan title\x3d"${nls.example}:"\x3e${nls.example}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd data-dojo-attach-point\x3d"exampleTd" colspan\x3d"2" style\x3d"padding-top:5px;font-style:italic;color:#ccc;"\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\x3c/tbody\x3e\r\n\t\t\x3c/table\x3e\r\n\t\t\x3cdiv class\x3d"service-browser-container" data-dojo-attach-point\x3d"serviceBrowserContainer"\x3e\r\n\t\t\t\x3cdiv class\x3d"error-section" data-dojo-attach-point\x3d"errorSection"\x3e\r\n\t\t\t\t\x3cspan class\x3d"jimu-icon jimu-icon-error"\x3e\x3c/span\x3e\r\n\t\t\t\t\x3cspan class\x3d"error-message" data-dojo-attach-point\x3d"errorNode"\x3e\x3c/span\x3e\r\n\t\t\t\x3c/div\x3e\r\n\t\t\x3c/div\x3e\r\n\t\x3c/div\x3e\r\n\t\x3cdiv class\x3d"operations"\x3e\r\n\t\t\x3cdiv class\x3d"jimu-btn jimu-float-trailing cancel jimu-btn-vacation" data-dojo-attach-event\x3d"onclick:_onBtnCancelClick"\x3e${nls.cancel}\x3c/div\x3e\r\n\t\t\x3cdiv class\x3d"jimu-btn jimu-float-trailing jimu-state-disabled ok" data-dojo-attach-point\x3d"btnOk" data-dojo-attach-event\x3d"onclick:_onBtnOkClick"\x3e${nls.ok}\x3c/div\x3e\r\n\t\x3c/div\x3e\r\n\t\x3cdiv data-dojo-attach-point\x3d"loading" data-dojo-type\x3d"jimu/dijit/LoadingIndicator" data-dojo-props\x3d\'hidden:true\'\x3e\x3c/div\x3e\r\n\x3c/div\x3e'}});
-define("dojo/_base/declare dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/text!./templates/_BasicServiceChooserContent.html dojo/Evented dojo/Deferred dojo/_base/html dojo/_base/array dojo/_base/lang dojo/on dojo/aspect dojo/promise/all jimu/dijit/URLInput jimu/dijit/LoadingIndicator".split(" "),function(f,g,h,k,l,m,e,c,n,d,p,q,r,t,u){return f([g,h,k,m],{templateString:l,_examples:["http://myserver/arcgis/rest/services","http://myserver/arcgis/rest/services/folder","http://myserver/arcgis/rest/services/myservice/servicetype"],
-multiple:!1,url:"",getSelectedItems:function(){return this.serviceBrowser.getSelectedItems()},postMixInProperties:function(){this.nls=d.mixin({},window.jimuNls.common);this.nls=d.mixin(this.nls,window.jimuNls.basicServiceChooser)},postCreate:function(){this.inherited(arguments);c.addClass(this.domNode,"jimu-basic-service-chooser-content");this.multiple=!!this.multiple;this._initSelf();this.exampleTd.innerHTML=this.exampleTd.innerHTML},setUrl:function(a){var b=new e;(this.url=a)&&"string"===typeof this.url?
-(this.urlInput.set("value",this.url),b=this._onBtnValidateClick()):b.reject();return b},focusInput:function(){this.urlInput.focus()},_initSelf:function(){this._examples&&0<this._examples.length?n.forEach(this._examples,d.hitch(this,function(a){c.create("div",{innerHTML:a,"class":"example-url"},this.exampleTd)})):c.setStyle(this.exampleTr,"display","none");var a={multiple:this.multiple,_onTreeClick:d.hitch(this,this._onTreeClick)};this.serviceBrowser=this._createServiceBrowser(a);this.serviceBrowser.placeAt(this.serviceBrowserContainer);
-this.serviceBrowser.startup();this.own(q.after(this.urlInput,"validator",d.hitch(this,this._afterUrlValidate)));this.url&&"string"===typeof this.url&&this.urlInput.set("value",this.url);this.own(p(this.serviceBrowser,"error",d.hitch(this,this._onServiceBrowserError)))},_createServiceBrowser:function(a){},_validateUrl:function(a){a=a.replace(/\/*$/g,"");if((a=a.match(/\/rest\/services\/*(.*)/gi))&&0<a.length)if(a=a[0].replace(/\/rest\/services\/*/,"")){var b=a.split("/");if(1===b.length)return!0;if(2===
-b.length)return this.serviceBrowser.isServiceTypeSupported(b[1]);if(3<=b.length)return a=this.serviceBrowser.isServiceTypeSupported(b[1]),b=this.serviceBrowser.isServiceTypeSupported(b[2]),a||b}else return!0;else return!1},_afterUrlValidate:function(a){a&&(a=this.urlInput.get("value"),a=this._validateUrl(a));a?c.removeClass(this.btnValidate,"jimu-state-disabled"):c.addClass(this.btnValidate,"jimu-state-disabled");return a},_onServiceBrowserError:function(a){this._showErrorMessage(a)},_showErrorMessage:function(a){a&&
-"string"===typeof a?(this.errorNode.innerHTML=a,c.addClass(this.errorSection,"visible")):c.removeClass(this.errorSection,"visible")},_clearErrorMessage:function(){this.errorNode.innerHTML="";c.removeClass(this.errorSection,"visible")},_onBtnValidateClick:function(){this._clearErrorMessage();var a=new e;if(this.urlInput.validate()){var b=this.urlInput.get("value");this.serviceBrowser.setUrl(b).then(d.hitch(this,function(){this.domNode&&this._checkSelectedItemsNumber();a.resolve()}),d.hitch(this,function(){this.domNode&&
-this._checkSelectedItemsNumber();a.reject()}));this.emit("validate-click")}else a.reject();return a},_checkSelectedItemsNumber:function(){0<this.getSelectedItems().length?c.removeClass(this.btnOk,"jimu-state-disabled"):c.addClass(this.btnOk,"jimu-state-disabled")},_onTreeClick:function(){this._checkSelectedItemsNumber()},_onBtnOkClick:function(){var a=this.getSelectedItems();0<a.length&&this.emit("ok",a)},_onBtnCancelClick:function(){this.emit("cancel")}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define(['dojo/_base/declare',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dijit/_WidgetsInTemplateMixin',
+  'dojo/text!./templates/_BasicServiceChooserContent.html',
+  'dojo/Evented',
+  'dojo/Deferred',
+  'dojo/_base/html',
+  'dojo/_base/array',
+  'dojo/_base/lang',
+  'dojo/on',
+  'dojo/aspect',
+  'dojo/promise/all',
+  'jimu/dijit/URLInput',
+  'jimu/dijit/LoadingIndicator'
+],
+function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, Evented,
+  Deferred, html, array, lang, on, aspect, all, URLInput, LoadingIndicator) {
+  /*jshint unused: false*/
+  return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+    templateString: template,
+
+    _examples:['http://myserver/arcgis/rest/services',
+    'http://myserver/arcgis/rest/services/folder',
+    'http://myserver/arcgis/rest/services/myservice/servicetype'],
+
+    //options:
+    multiple: false,
+    url:'',
+
+    //public methods:
+    //setUrl
+
+    //events:
+    //ok
+    //cancel
+
+    //methods need to override:
+    //_createServiceBrowser, return a service browser
+
+    //public methods:
+    //getSelectedItems return [{name,url, /*optional*/ definition}]
+
+    getSelectedItems: function(){
+      return this.serviceBrowser.getSelectedItems();
+    },
+
+    postMixInProperties:function(){
+      this.nls = lang.mixin({}, window.jimuNls.common);
+      this.nls = lang.mixin(this.nls, window.jimuNls.basicServiceChooser);
+    },
+
+    postCreate: function(){
+      this.inherited(arguments);
+      html.addClass(this.domNode, 'jimu-basic-service-chooser-content');
+      this.multiple = !!this.multiple;
+      this._initSelf();
+      this.exampleTd.innerHTML = this.exampleTd.innerHTML;
+    },
+
+    setUrl: function(url){
+      var def = new Deferred();
+
+      this.url = url;
+      if(this.url && typeof this.url === 'string'){
+        this.urlInput.set('value', this.url);
+        def = this._onBtnValidateClick();
+      }
+      else{
+        def.reject();
+      }
+
+      return def;
+    },
+
+    focusInput: function(){
+      this.urlInput.focus();
+    },
+
+    _initSelf: function(){
+      //set examples
+      if(this._examples && this._examples.length > 0){
+        array.forEach(this._examples, lang.hitch(this, function(example){
+          html.create('div', {
+            innerHTML: example,
+            'class': 'example-url'
+          }, this.exampleTd);
+        }));
+      }
+      else{
+        html.setStyle(this.exampleTr, 'display', 'none');
+      }
+
+      //set service browser
+      var args = {
+        multiple: this.multiple,
+        _onTreeClick: lang.hitch(this, this._onTreeClick)
+      };
+      this.serviceBrowser = this._createServiceBrowser(args);
+      this.serviceBrowser.placeAt(this.serviceBrowserContainer);
+      this.serviceBrowser.startup();
+
+      this.own(aspect.after(this.urlInput, 'validator', lang.hitch(this, this._afterUrlValidate)));
+
+      if(this.url && typeof this.url === 'string'){
+        this.urlInput.set('value', this.url);
+      }
+
+      this.own(on(this.serviceBrowser, 'error', lang.hitch(this, this._onServiceBrowserError)));
+    },
+
+    //to be override,return a service browser
+    _createServiceBrowser: function(args){/* jshint unused: false */},
+
+    //to be override,return a bool value
+    _validateUrl: function(url){
+      url = url.replace(/\/*$/g, '');
+      var matchResult = url.match(/\/rest\/services\/*(.*)/gi);
+      if(matchResult && matchResult.length > 0){
+        //"/rest/services/SampleWorldCities/MapServer/"
+        var url2 = matchResult[0];
+        //"SampleWorldCities/MapServer/"
+        var url3 = url2.replace(/\/rest\/services\/*/, "");
+        if(url3){
+          var splits = url3.split("/");
+          if(splits.length === 1){
+            //url ends with folder name
+            //url: http://sampleserver6.arcgisonline.com/arcgis/rest/services/Elevation
+            return true;
+          }else if(splits.length === 2){
+            //url ends with service type
+            //url: http://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/MapServer
+            return this.serviceBrowser.isServiceTypeSupported(splits[1]);
+          }else if(splits.length >= 3){
+            //url ends with service type and has folder
+            //url:http://sampleserver6/arcgis/rest/services/SampleWorldCities/MapServer/0
+            //or
+            //url:http://sampleserver6/arcgis/rest/services/Elevation/WorldElevations/MapServer
+            var b1 = this.serviceBrowser.isServiceTypeSupported(splits[1]);
+            var b2 = this.serviceBrowser.isServiceTypeSupported(splits[2]);
+            return b1 || b2;
+          }
+        }else{
+          //url ends with "rest/services"
+          //url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services"
+          return true;
+        }
+      }else{
+        return false;
+      }
+    },
+
+    _afterUrlValidate: function(isValidate){
+      var disabledClass = 'jimu-state-disabled';
+
+      if(isValidate){
+        var url = this.urlInput.get('value');
+        isValidate = this._validateUrl(url);
+      }
+
+      if(isValidate){
+        html.removeClass(this.btnValidate, disabledClass);
+      }else{
+        html.addClass(this.btnValidate, disabledClass);
+      }
+
+      return isValidate;
+    },
+
+    _onServiceBrowserError: function(msg){
+      this._showErrorMessage(msg);
+    },
+
+    _showErrorMessage: function(msg){
+      if(msg && typeof msg === 'string'){
+        this.errorNode.innerHTML = msg;
+        html.addClass(this.errorSection, 'visible');
+      }else{
+        html.removeClass(this.errorSection, 'visible');
+      }
+    },
+
+    _clearErrorMessage: function(){
+      this.errorNode.innerHTML = '';
+      html.removeClass(this.errorSection, 'visible');
+    },
+
+    _onBtnValidateClick: function(){
+      this._clearErrorMessage();
+
+      var def = new Deferred();
+
+      var isValidate = this.urlInput.validate();
+      if(isValidate){
+        var url = this.urlInput.get('value');
+        this.serviceBrowser.setUrl(url).then(lang.hitch(this, function(){
+          if(this.domNode){
+            this._checkSelectedItemsNumber();
+          }
+          def.resolve();
+        }), lang.hitch(this, function(){
+          if(this.domNode){
+            this._checkSelectedItemsNumber();
+          }
+          def.reject();
+        }));
+        this.emit('validate-click');
+      }
+      else{
+        def.reject();
+      }
+
+      return def;
+    },
+
+    _checkSelectedItemsNumber: function(){
+      var disabledClass = 'jimu-state-disabled';
+      var items = this.getSelectedItems();
+      if(items.length > 0){
+        html.removeClass(this.btnOk, disabledClass);
+      }
+      else{
+        html.addClass(this.btnOk, disabledClass);
+      }
+    },
+
+    _onTreeClick: function(){
+      this._checkSelectedItemsNumber();
+    },
+
+    _onBtnOkClick: function(){
+      var items = this.getSelectedItems();
+      if(items.length > 0){
+        this.emit('ok', items);
+      }
+    },
+
+    _onBtnCancelClick: function(){
+      this.emit('cancel');
+    }
+
+  });
+});

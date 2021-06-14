@@ -1,27 +1,786 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/Filter.html":'\x3cdiv\x3e\r\n\t\x3cdiv data-dojo-attach-point\x3d"contentSection" class\x3d"content-section"\x3e\r\n\t\t\x3cdiv data-dojo-attach-point\x3d"desktopAddSection" class\x3d"desktop-add-section hidden"\x3e\r\n\t\t\t\x3cdiv role\x3d"button" tabindex\x3d"0" data-dojo-attach-point\x3d"btnAddExpDesktop" class\x3d"add-with-icon add-expression jimu-float-leading jimu-state-disabled"\x3e\r\n\t\t\t\t\x3cspan class\x3d"jimu-icon jimu-icon-add"\x3e\x3c/span\x3e\r\n\t\t\t\t\x3cspan class\x3d"add-label"\x3e${nls.addAnotherExpression}\x3c/span\x3e\r\n\t\t\t\x3c/div\x3e\r\n\t\t\t\x3cdiv role\x3d"button" tabindex\x3d"0" data-dojo-attach-point\x3d"btnAddSetDesktop" class\x3d"add-with-icon add-set jimu-float-leading jimu-state-disabled"\x3e\r\n\t\t\t\t\x3cspan class\x3d"jimu-icon jimu-icon-add"\x3e\x3c/span\x3e\r\n\t\t\t\t\x3cspan class\x3d"add-label"\x3e${nls.addSet}\x3c/span\x3e\r\n\t\t\t\x3c/div\x3e\r\n\t\t\x3c/div\x3e\r\n\t\t\x3cdiv data-dojo-attach-point\x3d"matchMsg" class\x3d"match-msg"\x3e\r\n\t\t\t\x3cdiv data-dojo-attach-point\x3d"oneOrZeroMsg" tabindex\x3d"0" style\x3d"display:none;"\x3e${nls.oneOrZeroMsg}\x3c/div\x3e\r\n\t\t\t\x3cselect data-dojo-attach-point\x3d"allAnySelect" data-dojo-type\x3d"jimu/dijit/formSelect" class\x3d"dijit-form-Select restrict-select-width" style\x3d"width:100%;height:30px;"\x3e\r\n\t\t\t\t\x3coption value\x3d"AND" selected\x3e${nls.matchMsgAll}\x3c/option\x3e\r\n\t\t\t\t\x3coption value\x3d"OR"\x3e${nls.matchMsgAny}\x3c/option\x3e\r\n\t\t\t\x3c/select\x3e\r\n\t\t\x3c/div\x3e\r\n\t\t\x3cdiv class\x3d"allExpsBox" data-dojo-attach-point\x3d"allExpsBox"\x3e\r\n\t\t\x3c/div\x3e\r\n\t\x3c/div\x3e\r\n\t\x3cdiv data-dojo-attach-point\x3d"errorSection" class\x3d"hidden"\x3e\r\n\t\t\x3cspan class\x3d"jimu-icon jimu-icon-error"\x3e\x3c/span\x3e\r\n\t\t\x3cspan data-dojo-attach-point\x3d"errorTip" class\x3d"error-tip"\x3e\x3c/span\x3e\r\n\t\x3c/div\x3e\r\n\t\x3cdiv data-dojo-attach-point\x3d"mobileAddSection" class\x3d"mobile-add-section hidden"\x3e\r\n\t\t\x3cdiv role\x3d"button" tabindex\x3d"0" title\x3d"${nls.addAnotherExpression}" class\x3d"jimu-btn jimu-btn-vacation jimu-float-leading jimu-state-disabled" data-dojo-attach-point\x3d"btnAddExpMobile"\x3e\r\n\t\t\t+ ${nls.addAnotherExpression}\r\n\t\t\x3c/div\x3e\r\n\t\t\x3cdiv role\x3d"button" tabindex\x3d"0" title\x3d"${nls.addSet}" class\x3d"jimu-btn jimu-btn-vacation jimu-float-leading jimu-state-disabled" data-dojo-attach-point\x3d"btnAddSetMobile"\x3e\r\n\t\t\t+ ${nls.addSet}\r\n\t\t\x3c/div\x3e\r\n\t\x3c/div\x3e\r\n\t\x3cdiv data-dojo-attach-point\x3d"noFilterTipSection" class\x3d"no-filter-tip hidden" tabindex\x3d"0"\x3e\x3c/div\x3e\r\n\t\x3cdiv data-dojo-attach-point\x3d"loading" data-dojo-type\x3d"jimu/dijit/LoadingIndicator" data-dojo-props\x3d"hidden:true"\x3e\x3c/div\x3e\r\n\x3c/div\x3e'}});
-define("dojo/on dijit/a11yclick dojo/Evented dojo/_base/declare dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/text!./templates/Filter.html jimu/filterUtils jimu/utils jimu/LayerInfos/LayerInfos jimu/dijit/_filter/ValueProviderFactory dijit/registry dojo/_base/lang dojo/_base/html dojo/_base/array dojo/aspect dojo/Deferred esri/request ./_SingleFilter ./_FilterSet jimu/dijit/formSelect ./LoadingIndicator".split(" "),function(h,l,r,t,u,v,w,x,y,m,z,A,B,c,d,f,p,n,q,C,D){return t([u,
-v,w,y,r],{templateString:x,baseClass:"jimu-filter",declaredClass:"jimu.dijit.Filter",nls:null,autoSwitchMode:!0,_validOptions:!1,_layerDefinition:null,_popupFieldsInfo:[],_def:null,valueProviderFactory:null,featureLayerId:null,layerInfosObj:null,mode:"desktop",noFilterTip:"",enableAskForValues:!1,mobileBreakWidth:600,runtime:!1,widgetId:"",postMixInProperties:function(){this.nls=window.jimuNls.filterBuilder;this.nls.add=window.jimuNls.common.add;this.nls.apply=window.jimuNls.common.apply;this.layerInfosObj=
-z.getInstanceSync();this.inherited(arguments)},postCreate:function(){this.inherited(arguments);this._setDesktopMode();this.noFilterTip&&"string"===typeof this.noFilterTip&&(this.noFilterTipSection.innerHTML=m.sanitizeHTML(this.noFilterTip));this._bindBtnsEvent()},startup:function(){this.inherited(arguments);this.autoUpdateMode()},resize:function(){this.autoUpdateMode()},_bindBtnsEvent:function(){this.own(h(this.btnAddExpDesktop,l,c.hitch(this,function(){this._onBtnAddExpClick()})));this.own(h(this.btnAddSetDesktop,
-l,c.hitch(this,function(){this._onBtnAddSetClick()})));this.own(h(this.btnAddExpMobile,l,c.hitch(this,function(){this._onBtnAddExpClick()})));this.own(h(this.btnAddSetMobile,l,c.hitch(this,function(){this._onBtnAddSetClick()})))},autoUpdateMode:function(){this.autoSwitchMode&&(this._clearMode(),this.domNode.clientWidth>=this.mobileBreakWidth?this._setDesktopMode():this._setMobileMode())},setMode:function(a){"desktop"===a?this._setDesktopMode():"mobile"===a&&this._setMobileMode()},_setMode:function(a){this.mode=
-a;this._setModeClass(this.mode)},_setModeClass:function(a){d.removeClass(this.domNode,"desktop-mode");d.removeClass(this.domNode,"mobile-mode");d.addClass(this.desktopAddSection,"hidden");d.addClass(this.mobileAddSection,"hidden");a&&d.addClass(this.domNode,a+"-mode")},_clearMode:function(){this._setModeClass("")},_setDesktopMode:function(){this._setMode("desktop");d.removeClass(this.desktopAddSection,"hidden")},_setMobileMode:function(){this._setMode("mobile");d.removeClass(this.mobileAddSection,
-"hidden")},reset:function(){this.isBuilding()||(this.removeAllFilters(),this.url=null,this.isHosted=!1,this._layerDefinition=null,this._popupFieldsInfo=[],this.valueProviderFactory=this.partsObj=this.expr=this.featureLayerId=null)},isBuilding:function(){return this._def&&!this._def.isFulfilled()},build:function(a){var b=new n;this.isBuilding()?b.reject("Filter is already building."):(this._def=null,this.reset(),this.url=a.url,this.isHosted=m.isHostedService(this.url),this._layerDefinition=a.layerDefinition,
-this.featureLayerId=a.featureLayerId,a.widgetId&&(this.widgetId=a.widgetId),a.partsObj?(this.partsObj=this._updatePartsObj(a.partsObj),this._def=this._init("partsObj")):(this.expr=a.expr||"1\x3d1",this._def=this._init("expr")),b=this._def);return b},buildByExpr:function(a,b,e){console.warn("Filter#buildByExpr() method is deprecated, please use Filter#build() instead.");return this.build({url:a,expr:b,layerDefinition:e,featureLayerId:this.featureLayerId})},buildByFilterObj:function(a,b,e){console.warn("Filter#buildByFilterObj() method is deprecated, please use Filter#build() instead.");
-return this.build({url:a,partsObj:b,layerDefinition:e,featureLayerId:this.featureLayerId})},_updatePartsObj:function(a){f.forEach(a,c.hitch(this,function(a){a.parts?f.forEach(a.parts,c.hitch(this,function(a){a.interactiveObj&&!0===a.interactiveObj.cascade?a.interactiveObj.cascade="previous":!1===a.interactiveObj.cascade&&(a.interactiveObj.cascade="none")})):a.interactiveObj&&!0===a.interactiveObj.cascade?a.interactiveObj.cascade="previous":!1===a.interactiveObj.cascade&&(a.interactiveObj.cascade=
-"none")}));return a},removeAllFilters:function(){this._destroyAllFilters()},_getLayerDefinitionRaw:function(a,b){var e=new n;b?e.resolve(b):(this.loading.show(),q({url:a,content:{f:"json"},handleAs:"json",callbackParamName:"callback"}).then(c.hitch(this,function(a){this.domNode?(this.loading.hide(),e.resolve(a)):e.reject()}),c.hitch(this,function(a){console.error(a);e.reject();this.domNode&&this.loading.hide()})));return e},_validateLayerDefinition:function(a){return this._isObject(a)},_init:function(a){var b=
-new n;if(!this._isString(this.url))return b.reject(),b;var e=c.hitch(this,function(){setTimeout(c.hitch(this,function(){this.emit("change");b.resolve()}),1500)}),g=c.hitch(this,function(){d.addClass(this.errorSection,"hidden");this.removeAllFilters();var k;this.featureLayerId&&(this._tryOverrideFieldAliases(this.featureLayerId,this._layerDefinition),k=this.layerInfosObj.getLayerOrTableInfoById(this.featureLayerId).getPopupInfo());var g=this._layerDefinition.fields;g&&0<g.length?(this._popupFieldsInfo=
-k?m.completePopupFieldFromLayerField(g,k.fieldInfos):g,(g=f.filter(g,c.hitch(this,function(a){return 0<=this._supportFieldTypes.indexOf(a.type)})))&&0<g.length?(this._validOptions=!0,d.removeClass(this.btnAddSetDesktop,"jimu-state-disabled"),d.removeClass(this.btnAddExpDesktop,"jimu-state-disabled"),d.removeClass(this.btnAddSetMobile,"jimu-state-disabled"),d.removeClass(this.btnAddExpMobile,"jimu-state-disabled"),this.createFieldsStore(),this.valueProviderFactory=new A({url:this.url,layerDefinition:this._layerDefinition,
-featureLayerId:this.featureLayerId}),"expr"===a?this._isString(this.expr)?("1\x3d1"===this.expr.replace(/\s/gi,"")&&this.removeAllFilters(),this._parseExpr(this.expr)?e():b.reject()):b.reject():"partsObj"===a?this._validatePartsObj(this.partsObj)?(this._parsePartsObj(this.partsObj),e()):b.reject():this._validatePartsObj(this.partsObj)?(this._parsePartsObj(this.partsObj),e()):this._isString(this.expr)?this._parseExpr(this.expr)?e():b.reject():(this.removeAllFilters(),e())):(this._showErrorOptions(this.nls.error.noFilterFields),
-b.reject())):(k&&(this._popupFieldsInfo=k.fieldInfos),b.reject())});this._validateLayerDefinition(this._layerDefinition)?g():(this.loading.show(),q({url:this.url,content:{f:"json"},handleAs:"json",callbackParamName:"callback"}).then(c.hitch(this,function(a){this.domNode?(this.loading.hide(),this._layerDefinition=a,g()):b.reject()}),c.hitch(this,function(a){console.error(a);b.reject();this.domNode&&this.loading.hide()})));return b},_tryOverrideFieldAliases:function(a,b){if(a=this.layerInfosObj.getLayerOrTableInfoById(a))if(a=
-a.getPopupInfo())if(a=a.fieldInfos,b=b.fields,a&&0<a.length&&b&&0<b.length){var e={};f.forEach(a,c.hitch(this,function(a){a.fieldName&&(e[a.fieldName]=a)}));f.forEach(b,c.hitch(this,function(a){var b=e[a.name];b&&b.label&&(a.alias=b.label)}))}},toJson:function(){var a={logicalOperator:this.allAnySelect.value,parts:[]},b=this._getAllSingleFiltersAndFilterSets();if(0===b.length)return a.expr="1\x3d1",a;f.forEach(b,c.hitch(this,function(b){b=b.toJson();a.parts.push(b)}));return f.every(a.parts,c.hitch(this,
-function(a){return!!a}))&&0<a.parts.length?(a.expr=this.getExprByFilterObj(a),a):null},createFieldsStore:function(){if(this._layerDefinition.fields&&0!==this._layerDefinition.fields.length){var a=c.clone(this._layerDefinition.fields);0===this.setFieldsStoreByFieldInfos(a)&&this._showErrorOptions(this.nls.error.noFilterFields)}else this._showErrorOptions(this.nls.error.noFilterFields)},_parsePartsObj:function(a){this._validatePartsObj(a)&&(this.removeAllFilters(),this._buildEditUIByPartsObj(a))},_parseExpr:function(a){this._destroyAllFilters();
-var b=null;if(!this._validateLayerDefinition(this._layerDefinition))return b;if(!a||"string"!==typeof a)return this._showErrorOptions(this.nls.error.invalidSQL),b;if("1\x3d1"===this.expr.replace(/\s/gi,""))return b={expr:"1\x3d1",parts:[],logicalOperator:"AND"};try{b=this.getFilterObjByExpr(a)}catch(e){b=null,console.error(e)}b?this._buildEditUIByPartsObj(b):this._showErrorOptions(this.nls.error.cantParseSQL);return b},_buildEditUIByPartsObj:function(a){a&&(this._destroyAllFilters(),f.forEach(a.parts,
-c.hitch(this,function(a){a.parts?this._addFilterSet(a):a.fieldObj&&a.operator&&a.valueObj&&this._addSingleFilter(a)})),this.allAnySelect.value=a.logicalOperator,this._setFilterMsgUI(a.parts.length))},_addSingleFilter:function(a){a={widgetId:this.widgetId,url:this.url,layerInfo:this._layerDefinition,popupFieldsInfo:this._popupFieldsInfo,stringFieldType:this._stringFieldType,dateFieldType:this._dateFieldType,numberFieldTypes:this._numberFieldTypes,part:a,OPERATORS:c.mixin({},this.OPERATORS),enableAskForValues:this.enableAskForValues,
-isHosted:this.isHosted,valueProviderFactory:this.valueProviderFactory,runtime:this.runtime};a=new C(a);a.placeAt(this.allExpsBox);a.startup();this.own(p.after(a,"_destroySelf",c.hitch(this,function(){this._checkFilterNumbers();this._focusOnMobileAdd();this.emit("change")})));this.own(h(a,"change",c.hitch(this,function(){this.emit("change")})));this._checkFilterNumbers();return a},_focusOnMobileAdd:function(){d.hasClass(this.mobileAddSection,"hidden")||this.btnAddExpMobile.focus()},_addFilterSet:function(a){a=
-{widgetId:this.widgetId,url:this.url,layerInfo:this._layerDefinition,popupFieldsInfo:this._popupFieldsInfo,stringFieldType:this._stringFieldType,dateFieldType:this._dateFieldType,numberFieldTypes:this._numberFieldTypes,partsObj:a,OPERATORS:c.mixin({},this.OPERATORS),enableAskForValues:this.enableAskForValues,isHosted:this.isHosted,valueProviderFactory:this.valueProviderFactory,runtime:this.runtime};a=new D(a);a.placeAt(this.allExpsBox);a.startup();this.own(p.after(a,"_destroySelf",c.hitch(this,function(){this._checkFilterNumbers();
-this._focusOnMobileAdd();this.emit("change")})));this.own(h(a,"change",c.hitch(this,function(){this.emit("change")})));this._checkFilterNumbers();return a},_destroyAllFilters:function(){for(var a=this._getAllSingleFiltersAndFilterSets();0<a.length;)a[0].destroy(),a.splice(0,1);this._checkFilterNumbers()},_getAllSingleFiltersAndFilterSetsDoms:function(){var a=[];this.allExpsBox.childNodes&&0<this.allExpsBox.childNodes.length&&f.forEach(this.allExpsBox.childNodes,c.hitch(this,function(b){(d.hasClass(b,
-"jimu-single-filter")||d.hasClass(b,"jimu-filter-set"))&&a.push(b)}));return a},_getAllSingleFiltersAndFilterSets:function(){var a=this._getAllSingleFiltersAndFilterSetsDoms();return f.map(a,c.hitch(this,function(a){return B.byNode(a)}))},_setFilterMsgUI:function(a){2>a?(this.allAnySelect.value="AND",d.setStyle(this.allAnySelect.domNode,"display","none"),d.setStyle(this.oneOrZeroMsg,"display","block")):(d.setStyle(this.oneOrZeroMsg,"display","none"),d.setStyle(this.allAnySelect.domNode,"display",
-"inline-table"))},_checkFilterNumbers:function(){var a=this._getAllSingleFiltersAndFilterSetsDoms();this._setFilterMsgUI(a.length);0<a.length?d.addClass(this.noFilterTipSection,"hidden"):d.removeClass(this.noFilterTipSection,"hidden");this.emit("filter-number-change")},_showErrorOptions:function(a){console.error(a);d.addClass(this.errorSection,"hidden");this.errorTip.innerHTML=a;this.loading.hide()},_onBtnApplyClicked:function(){this.emit("apply")},_onBtnAddSetClick:function(){this._layerDefinition&&
-this._validOptions&&(this._addFilterSet(),this.emit("change"))},_onBtnAddExpClick:function(){this._layerDefinition&&this._validOptions&&(this._addSingleFilter(),this.emit("change"))}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/on',
+  "dijit/a11yclick",
+  'dojo/Evented',
+  'dojo/_base/declare',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dijit/_WidgetsInTemplateMixin',
+  'dojo/text!./templates/Filter.html',
+  'jimu/filterUtils',
+  'jimu/utils',
+  'jimu/LayerInfos/LayerInfos',
+  'jimu/dijit/_filter/ValueProviderFactory',
+  'dijit/registry',
+  'dojo/_base/lang',
+  'dojo/_base/html',
+  'dojo/_base/array',
+  'dojo/aspect',
+  'dojo/Deferred',
+  'esri/request',
+  './_SingleFilter',
+  './_FilterSet',
+  'jimu/dijit/formSelect',
+  './LoadingIndicator'
+],
+function(on, a11yclick, Evented, declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, filterUtils,
+  jimuUtils, LayerInfos, ValueProviderFactory, registry, lang, html, array, aspect, Deferred, esriRequest,
+  SingleFilter, FilterSet) {
+
+  return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, filterUtils, Evented], {
+    templateString: template,
+    baseClass: 'jimu-filter',
+    declaredClass: 'jimu.dijit.Filter',
+    nls: null,
+
+    autoSwitchMode: true,
+
+    //test urls:
+    //http://discomap.eea.europa.eu/arcgis/rest/services/
+    //NoiseWatch/NoiseWatch_Overview_WM/MapServer/3
+
+    //http://discomap.eea.europa.eu/arcgis/rest/services/
+    //NoiseWatch/NoiseWatch_Overview_WM/MapServer/8
+
+    //http://ec2-50-16-225-130.compute-1.amazonaws.com/arcgis/rest/services/
+    //Agriculture/Inspection_history/MapServer/0
+
+    //http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/
+    //Demographics/ESRI_Census_USA/MapServer/5
+
+    //http://sampleserver6.arcgisonline.com/arcgis/rest/services/
+    //SampleWorldCities/MapServer/0
+
+    _validOptions: false,
+    _layerDefinition: null,
+    _popupFieldsInfo:[],
+    _def: null,
+    valueProviderFactory: null,
+    featureLayerId: null,
+    layerInfosObj: null,
+    mode: 'desktop',//desktop, mobile
+
+    //options:
+    noFilterTip: '',//optional
+    enableAskForValues: false,//optional
+    mobileBreakWidth: 600,
+    runtime: false, //optional
+    widgetId: '', //requred when runtime is true.
+
+    //public methods:
+    //build: partsObj or expr -> UI
+    //buildByExpr: expr->UI
+    //buildByFilterObj: partsObj->UI
+    //toJson: UI->partsObj
+    //getFilterObjByExpr(inherited): expr->partsObj
+    //getExprByFilterObj(inherited): partsObj->expr
+    //autoUpdateMode: update UI mode automatically
+    //setMode: set fixed UI mode
+
+    //attributes:
+    //url: null, //required
+    //expr: null,//optional
+    //partsObj: null,//optional
+
+    //css classes:
+    //jimu-single-filter
+    //jimu-filter-set
+    //no-filter-tip
+
+    //events:
+    //change
+
+    postMixInProperties:function(){
+      this.nls = window.jimuNls.filterBuilder;
+      this.nls.add = window.jimuNls.common.add;
+      this.nls.apply = window.jimuNls.common.apply;
+      this.layerInfosObj = LayerInfos.getInstanceSync();
+      this.inherited(arguments);
+    },
+
+    postCreate: function(){
+      this.inherited(arguments);
+      this._setDesktopMode();
+      if(this.noFilterTip && typeof this.noFilterTip === 'string'){
+        this.noFilterTipSection.innerHTML = jimuUtils.sanitizeHTML(this.noFilterTip);
+      }
+
+      this._bindBtnsEvent();
+    },
+
+    startup: function(){
+      this.inherited(arguments);
+      this.autoUpdateMode();
+    },
+
+    resize: function(){
+      this.autoUpdateMode();
+    },
+
+    _bindBtnsEvent: function(){
+      //dasktop
+      this.own(on(this.btnAddExpDesktop, a11yclick, lang.hitch(this, function () {
+        this._onBtnAddExpClick();
+      })));
+      this.own(on(this.btnAddSetDesktop, a11yclick, lang.hitch(this, function () {
+        this._onBtnAddSetClick();
+      })));
+
+      //mobile
+      this.own(on(this.btnAddExpMobile, a11yclick, lang.hitch(this, function () {
+        this._onBtnAddExpClick();
+      })));
+      this.own(on(this.btnAddSetMobile, a11yclick, lang.hitch(this, function () {
+        this._onBtnAddSetClick();
+      })));
+    },
+
+    //Update mode automatically. Should call this method when widget resize if Filter hosted in widget
+    autoUpdateMode: function(){
+      if(!this.autoSwitchMode){
+        return;
+      }
+      this._clearMode();
+      var w = this.domNode.clientWidth;
+      if(w >= this.mobileBreakWidth){
+        this._setDesktopMode();
+      }else{
+        this._setMobileMode();
+      }
+    },
+
+    setMode: function(mode){
+      if(mode === 'desktop'){
+        this._setDesktopMode();
+      }else if(mode === 'mobile'){
+        this._setMobileMode();
+      }
+    },
+
+    _setMode: function(mode){
+      this.mode = mode;
+      this._setModeClass(this.mode);
+    },
+
+    _setModeClass: function(mode){
+      html.removeClass(this.domNode, 'desktop-mode');
+      html.removeClass(this.domNode, 'mobile-mode');
+      html.addClass(this.desktopAddSection, 'hidden');
+      html.addClass(this.mobileAddSection, 'hidden');
+      if(mode){
+        html.addClass(this.domNode, mode + '-mode');
+      }
+    },
+
+    _clearMode: function(){
+      this._setModeClass("");
+    },
+
+    _setDesktopMode: function(){
+      this._setMode('desktop');
+      html.removeClass(this.desktopAddSection, 'hidden');
+    },
+
+    _setMobileMode: function(){
+      this._setMode('mobile');
+      html.removeClass(this.mobileAddSection, 'hidden');
+    },
+
+    reset: function(){
+      if(!this.isBuilding()){
+        this.removeAllFilters();
+        this.url = null;
+        this.isHosted = false;
+        this._layerDefinition = null;
+        this._popupFieldsInfo = [];
+        this.featureLayerId = null;
+        this.expr = null;
+        this.partsObj = null;
+        this.valueProviderFactory = null;
+      }
+    },
+
+    isBuilding: function(){
+      return this._def && !this._def.isFulfilled();
+    },
+
+    /*
+    options.url: required,
+    options.partsObj: {logicalOperator,parts,expr}
+    options.expr: sql expression
+    options.partsObj or options.expr is required. options.partsObj has priority.
+    options.layerDefinition: optional
+    options.featureLayerId: optional
+    options.widgetId: required when runtime mode
+    */
+    build: function(options){
+      var def = new Deferred();
+
+      if(this.isBuilding()){
+        def.reject('Filter is already building.');
+      } else{
+        this._def = null;
+        this.reset();
+        this.url = options.url;
+        this.isHosted = jimuUtils.isHostedService(this.url);
+        this._layerDefinition = options.layerDefinition;
+        this.featureLayerId = options.featureLayerId;
+        if(options.widgetId){
+          this.widgetId = options.widgetId;
+        }
+
+        if(options.partsObj){
+          this.partsObj = this._updatePartsObj(options.partsObj);
+          this._def = this._init("partsObj");
+        }else{
+          this.expr = options.expr || '1=1';
+          this._def = this._init("expr");
+        }
+        def = this._def;
+      }
+
+      return def;
+    },
+
+    buildByExpr: function(url, expr, /*optional*/ layerDefinition){
+      console.warn('Filter#buildByExpr() method is deprecated, please use Filter#build() instead.');
+      var options = {
+        url: url,
+        expr: expr,
+        layerDefinition: layerDefinition,
+        featureLayerId: this.featureLayerId
+      };
+
+      return this.build(options);
+    },
+
+    //partsObj:{logicalOperator,parts,expr}
+    buildByFilterObj: function(url, partsObj, /*optional*/ layerDefinition){
+      console.warn('Filter#buildByFilterObj() method is deprecated, please use Filter#build() instead.');
+      var options = {
+        url: url,
+        partsObj: partsObj,
+        layerDefinition: layerDefinition,
+        featureLayerId: this.featureLayerId
+      };
+
+      return this.build(options);
+    },
+
+    _updatePartsObj: function(partsObj) {
+      //update interactiveObj.cascade: all previous none
+      array.forEach(partsObj, lang.hitch(this, function(item) {
+        if (item.parts) {
+          array.forEach(item.parts, lang.hitch(this, function(item2) {
+            if (item2.interactiveObj && item2.interactiveObj.cascade === true) {
+              item2.interactiveObj.cascade = "previous";
+            } else if (item2.interactiveObj.cascade === false) {
+              item2.interactiveObj.cascade = "none";
+            }
+          }));
+        } else {
+          if (item.interactiveObj && item.interactiveObj.cascade === true) {
+            item.interactiveObj.cascade = "previous";
+          } else if (item.interactiveObj.cascade === false) {
+            item.interactiveObj.cascade = "none";
+          }
+        }
+      }));
+
+      return partsObj;
+    },
+
+    removeAllFilters: function(){
+      this._destroyAllFilters();
+    },
+
+    _getLayerDefinitionRaw: function(url, /*optional*/ layerDefinition){
+      var def = new Deferred();
+      if(layerDefinition){
+        def.resolve(layerDefinition);
+      } else{
+        this.loading.show();
+        esriRequest({
+          url: url,
+          content: {f:'json'},
+          handleAs: 'json',
+          callbackParamName: 'callback'
+        }).then(lang.hitch(this, function(response){
+          if(!this.domNode){
+            def.reject();
+            return;
+          }
+          this.loading.hide();
+          def.resolve(response);
+        }), lang.hitch(this, function(err){
+          console.error(err);
+          def.reject();
+          if(!this.domNode){
+            return;
+          }
+          this.loading.hide();
+        }));
+      }
+      return def;
+    },
+
+    _validateLayerDefinition: function(_layerDefinition){
+      return this._isObject(_layerDefinition);
+    },
+
+    //return Deferred
+    _init: function(mode){
+      var def = new Deferred();
+
+      if(!this._isString(this.url)){
+        def.reject();
+        return def;
+      }
+
+      var resolveDef = lang.hitch(this, function(){
+        setTimeout(lang.hitch(this, function() {
+          this.emit('change');
+          def.resolve();
+        }), 1500);
+      });
+
+      var callback = lang.hitch(this, function() {
+        html.addClass(this.errorSection, 'hidden');
+        this.removeAllFilters();
+
+        var _popup;
+        if(this.featureLayerId){
+          this._tryOverrideFieldAliases(this.featureLayerId, this._layerDefinition);
+          var _layerInfo = this.layerInfosObj.getLayerOrTableInfoById(this.featureLayerId);
+          _popup = _layerInfo.getPopupInfo();
+        }
+        var fields = this._layerDefinition.fields;
+        if (!(fields && fields.length > 0)) {
+          if(_popup){
+            this._popupFieldsInfo = _popup.fieldInfos;
+          }
+          def.reject();
+          return;
+        }else{
+          if(_popup){
+            //complete popup.fieldInfos with layerDef.fields
+            this._popupFieldsInfo = jimuUtils.completePopupFieldFromLayerField(fields, _popup.fieldInfos);
+          }else{
+            //use layerDef.fields instead if pop-up is disabled
+            this._popupFieldsInfo = fields;
+          }
+        }
+
+        fields = array.filter(fields, lang.hitch(this, function(fieldInfo) {
+          return this._supportFieldTypes.indexOf(fieldInfo.type) >= 0;
+        }));
+        var invalidFields = fields && fields.length > 0;
+        if (!invalidFields) {
+          this._showErrorOptions(this.nls.error.noFilterFields);
+          def.reject();
+          return;
+        }
+        this._validOptions = true;
+
+        html.removeClass(this.btnAddSetDesktop, 'jimu-state-disabled');
+        html.removeClass(this.btnAddExpDesktop, 'jimu-state-disabled');
+        html.removeClass(this.btnAddSetMobile, 'jimu-state-disabled');
+        html.removeClass(this.btnAddExpMobile, 'jimu-state-disabled');
+
+        this.createFieldsStore();
+        this.valueProviderFactory = new ValueProviderFactory({
+          url: this.url,
+          layerDefinition: this._layerDefinition,
+          featureLayerId: this.featureLayerId
+        });
+
+        if (mode === 'expr') {
+          if (this._isString(this.expr)) {
+            var expression = this.expr.replace(/\s/gi, '');
+            if (expression === '1=1') {
+              this.removeAllFilters();
+            }
+            if(this._parseExpr(this.expr)){
+              resolveDef();
+            } else{
+              def.reject();
+            }
+          } else{
+            def.reject();
+          }
+        } else if (mode === 'partsObj') {
+          if (this._validatePartsObj(this.partsObj)) {
+            this._parsePartsObj(this.partsObj);
+            resolveDef();
+          } else{
+            def.reject();
+          }
+        } else{
+          if (this._validatePartsObj(this.partsObj)) {
+            this._parsePartsObj(this.partsObj);
+            resolveDef();
+          } else if (this._isString(this.expr)) {
+            if(this._parseExpr(this.expr)){
+              resolveDef();
+            }else{
+              def.reject();
+            }
+          } else{
+            //default is '1=1'
+            this.removeAllFilters();
+            resolveDef();
+          }
+        }
+      });
+
+      if(this._validateLayerDefinition(this._layerDefinition)){
+        callback();
+      } else{
+        this.loading.show();
+        esriRequest({
+          url: this.url,
+          content: {f:'json'},
+          handleAs: 'json',
+          callbackParamName: 'callback'
+        }).then(lang.hitch(this, function(response){
+          if(!this.domNode){
+            def.reject();
+            return;
+          }
+          this.loading.hide();
+          this._layerDefinition = response;
+          callback();
+        }), lang.hitch(this, function(err){
+          console.error(err);
+          def.reject();
+          if(!this.domNode){
+            return;
+          }
+          this.loading.hide();
+        }));
+      }
+
+      return def;
+    },
+
+    _tryOverrideFieldAliases: function(layerId, layerDefinition){
+      var layerInfo = this.layerInfosObj.getLayerOrTableInfoById(layerId);
+      if(layerInfo){
+        var popupInfo = layerInfo.getPopupInfo();
+        if(popupInfo){
+          var popupFieldInfos = popupInfo.fieldInfos;//[{fieldName,label,tooltip,visible,format,stringFieldOption}]
+          var serviceFieldInfos = layerDefinition.fields;//[{name,alias}]
+          //replace serviceFieldInfo's alias with popupFieldInfo's label
+          if(popupFieldInfos && popupFieldInfos.length > 0 && serviceFieldInfos && serviceFieldInfos.length > 0){
+            var popupFieldInfosObj = {};
+            array.forEach(popupFieldInfos, lang.hitch(this, function(popupFieldInfo){
+              if(popupFieldInfo.fieldName){
+                popupFieldInfosObj[popupFieldInfo.fieldName] = popupFieldInfo;
+              }
+            }));
+            array.forEach(serviceFieldInfos, lang.hitch(this, function(serviceFieldInfo){
+              var popupFieldInfo = popupFieldInfosObj[serviceFieldInfo.name];
+              if(popupFieldInfo && popupFieldInfo.label){
+                serviceFieldInfo.alias = popupFieldInfo.label;
+              }
+            }));
+          }
+        }
+      }
+    },
+
+
+    /**************************************************/
+    /****  stringify                               ****/
+    /**************************************************/
+    toJson:function(){
+      var json = {
+        logicalOperator: this.allAnySelect.value,
+        parts: []
+      };
+      var filters = this._getAllSingleFiltersAndFilterSets();
+      if(filters.length === 0){
+        json.expr = '1=1';
+        return json;
+      }
+      array.forEach(filters, lang.hitch(this, function(filter){
+        var part = filter.toJson();
+        json.parts.push(part);
+      }));
+      var validParts = array.every(json.parts, lang.hitch(this, function(part){
+        return !!part;
+      }));
+      if(validParts && json.parts.length > 0){
+        json.expr = this.getExprByFilterObj(json);
+        return json;
+      } else{
+        return null;
+      }
+    },
+
+    /**************************************************/
+    /****  lists                                   ****/
+    /**************************************************/
+
+    createFieldsStore: function(){
+      if(!this._layerDefinition.fields || this._layerDefinition.fields.length === 0){
+        this._showErrorOptions(this.nls.error.noFilterFields);
+        return;
+      }
+
+      // var copyLayerInfo = lang.clone(this._layerDefinition);
+      // var layerInfoFields = copyLayerInfo.fields;
+      var layerInfoFields = lang.clone(this._layerDefinition.fields);
+
+      // layerInfoFields = layerInfoFields.sort(function(a, b){
+      //   a.label = a.alias || a.name;
+      //   b.label = b.alias || b.name;
+      //   return a.label < b.label ? -1 : a.label > b.label ? 1 : 0;
+      // });
+
+      var validFieldCount = this.setFieldsStoreByFieldInfos(layerInfoFields);
+
+      if(validFieldCount === 0){
+        this._showErrorOptions(this.nls.error.noFilterFields);
+      }
+    },
+
+    /**************************************************/
+    /****  parse                                   ****/
+    /**************************************************/
+    _parsePartsObj:function(partsObj){
+      if(!this._validatePartsObj(partsObj)){
+        return;
+      }
+      this.removeAllFilters();
+      this._buildEditUIByPartsObj(partsObj);
+    },
+
+    _parseExpr:function(expr){
+      this._destroyAllFilters();
+      var partsObj = null;
+      if(!this._validateLayerDefinition(this._layerDefinition)){
+        return partsObj;
+      }
+
+      if(!expr || typeof expr !== 'string'){
+        this._showErrorOptions(this.nls.error.invalidSQL);
+        return partsObj;
+      }
+
+      if(this.expr.replace(/\s/gi, '') === "1=1"){
+        partsObj = {
+          "expr": "1=1",
+          "parts": [],
+          "logicalOperator": "AND"
+        };
+        return partsObj;
+      }
+
+      try{
+        //try parse expr into partsObj
+        partsObj = this.getFilterObjByExpr(expr);
+      }catch(e){
+        partsObj = null;
+        console.error(e);
+      }
+
+      //if get null, it indicates we can't parse expr to a valid partsObj
+      if(partsObj){
+        this._buildEditUIByPartsObj(partsObj);
+      }else{
+        this._showErrorOptions(this.nls.error.cantParseSQL);
+      }
+
+      return partsObj;
+    },
+
+    _buildEditUIByPartsObj:function(partsObj){
+      if(!partsObj){
+        return;
+      }
+      this._destroyAllFilters();
+      array.forEach(partsObj.parts, lang.hitch(this, function(item){
+        if(item.parts){
+          //FilterSet
+          this._addFilterSet(item);
+        } else if(item.fieldObj && item.operator && item.valueObj){
+          //SingleFilter
+          this._addSingleFilter(item);
+        }
+      }));
+      //reset all/any operator from config
+      this.allAnySelect.value = partsObj.logicalOperator;
+      this._setFilterMsgUI(partsObj.parts.length);
+    },
+
+    /**************************************************/
+    /****  edit                                    ****/
+    /**************************************************/
+
+    _addSingleFilter:function(/*optional*/ part){
+      var args = {
+        widgetId: this.widgetId,
+        url: this.url,
+        layerInfo: this._layerDefinition,
+        popupFieldsInfo: this._popupFieldsInfo,
+        stringFieldType: this._stringFieldType,
+        dateFieldType: this._dateFieldType,
+        numberFieldTypes: this._numberFieldTypes,
+        part: part,
+        OPERATORS: lang.mixin({}, this.OPERATORS),
+        enableAskForValues: this.enableAskForValues,
+        isHosted: this.isHosted,
+        valueProviderFactory: this.valueProviderFactory,
+        runtime: this.runtime
+      };
+      var singleFilter = new SingleFilter(args);
+      singleFilter.placeAt(this.allExpsBox);
+      singleFilter.startup();
+      this.own(aspect.after(singleFilter, '_destroySelf', lang.hitch(this, function(){
+        this._checkFilterNumbers();
+        this._focusOnMobileAdd();
+        this.emit('change');
+      })));
+      this.own(on(singleFilter, 'change', lang.hitch(this, function(){
+        this.emit('change');
+      })));
+      this._checkFilterNumbers();
+      return singleFilter;
+    },
+
+    _focusOnMobileAdd: function(){
+      if(!html.hasClass(this.mobileAddSection, 'hidden')){
+        this.btnAddExpMobile.focus();
+      }
+    },
+
+    _addFilterSet:function(/*optional*/ partsObj){
+      var args = {
+        widgetId: this.widgetId,
+        url: this.url,
+        layerInfo: this._layerDefinition,
+        popupFieldsInfo: this._popupFieldsInfo,
+        stringFieldType: this._stringFieldType,
+        dateFieldType: this._dateFieldType,
+        numberFieldTypes: this._numberFieldTypes,
+        partsObj: partsObj,
+        OPERATORS: lang.mixin({}, this.OPERATORS),
+        enableAskForValues: this.enableAskForValues,
+        isHosted: this.isHosted,
+        valueProviderFactory: this.valueProviderFactory,
+        runtime: this.runtime
+      };
+      var filterSet = new FilterSet(args);
+      filterSet.placeAt(this.allExpsBox);
+      filterSet.startup();
+      this.own(aspect.after(filterSet, '_destroySelf', lang.hitch(this, function(){
+        this._checkFilterNumbers();
+        this._focusOnMobileAdd();
+        this.emit('change');
+      })));
+      this.own(on(filterSet, 'change', lang.hitch(this, function(){
+        this.emit('change');
+      })));
+      this._checkFilterNumbers();
+      return filterSet;
+    },
+
+    _destroyAllFilters:function(){
+      var filters = this._getAllSingleFiltersAndFilterSets();
+      while(filters.length > 0){
+        var f = filters[0];
+        f.destroy();
+        filters.splice(0, 1);
+      }
+      this._checkFilterNumbers();
+    },
+
+    _getAllSingleFiltersAndFilterSetsDoms: function(){
+      var doms = [];
+      if(this.allExpsBox.childNodes && this.allExpsBox.childNodes.length > 0){
+        array.forEach(this.allExpsBox.childNodes, lang.hitch(this, function(childNode){
+          if(html.hasClass(childNode, 'jimu-single-filter') || html.hasClass(childNode, 'jimu-filter-set')){
+            doms.push(childNode);
+          }
+        }));
+      }
+      return doms;
+    },
+
+    _getAllSingleFiltersAndFilterSets:function(){
+      var nodes = this._getAllSingleFiltersAndFilterSetsDoms();
+      var filters = array.map(nodes, lang.hitch(this, function(node){
+        return registry.byNode(node);
+      }));
+      return filters;
+    },
+
+    _setFilterMsgUI: function(filterLength){
+      if(filterLength < 2){
+        //this default value need to set before config's value
+        this.allAnySelect.value = 'AND';
+        html.setStyle(this.allAnySelect.domNode, 'display', 'none');
+        html.setStyle(this.oneOrZeroMsg, 'display', 'block');
+      }else{
+        html.setStyle(this.oneOrZeroMsg, 'display', 'none');
+        html.setStyle(this.allAnySelect.domNode, 'display', 'inline-table');
+      }
+    },
+
+    _checkFilterNumbers:function(){
+      var filterDoms = this._getAllSingleFiltersAndFilterSetsDoms();
+      this._setFilterMsgUI(filterDoms.length);
+      if(filterDoms.length > 0){
+        html.addClass(this.noFilterTipSection, 'hidden');
+      } else{
+        html.removeClass(this.noFilterTipSection, 'hidden');
+      }
+
+      this.emit("filter-number-change");
+    },
+
+    _showErrorOptions:function(strError){
+      console.error(strError);
+      html.addClass(this.errorSection, 'hidden');
+      this.errorTip.innerHTML = strError;
+      this.loading.hide();
+    },
+
+    _onBtnApplyClicked: function(){
+      this.emit('apply');
+    },
+
+    _onBtnAddSetClick:function(){
+      if(!this._layerDefinition || !this._validOptions){
+        return;
+      }
+      this._addFilterSet();
+      this.emit('change');
+    },
+
+    _onBtnAddExpClick:function(){
+      if(!this._layerDefinition || !this._validOptions){
+        return;
+      }
+      this._addSingleFilter();
+      this.emit('change');
+    }
+  });
+});

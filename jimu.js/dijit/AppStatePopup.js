@@ -1,8 +1,170 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dijit/_WidgetBase dojo/_base/lang dojo/_base/html dojo/on dojo/mouse dojo/_base/fx dojo/topic dojo/Evented".split(" "),function(l,m,b,c,e,g,h,k,n){var d=1E3,f=1E4;return l([m,n],{baseClass:"jimu-appstate-popup",declaredClass:"jimu.dijit.AppStatePopup",currentState:0,timeoutHandler:void 0,constructor:function(a){this.inherited(arguments);"animationDuration"in a&&(d=a.animationDuration);"autoCloseInterval"in a&&(f=a.autoCloseInterval)},postCreate:function(){window.appInfo.isRunInMobile&&
-c.addClass(this.domNode,"mobile");var a=c.create("div",{"class":"appstate-header"});c.create("div",{"class":"appstate-title",innerHTML:this.nls.title},a);var d=c.create("div",{"class":"appstate-close"},a);c.place(a,this.domNode);a=c.create("div",{"class":"appstate-tips",innerHTML:this.nls.restoreMap});c.place(a,this.domNode);this.own(e(a,"click",b.hitch(this,function(){this.emit("applyAppState");this.hide()})));this.own(e(d,"click",b.hitch(this,function(){this.hide()})));this.own(e(this.domNode,g.enter,
-b.hitch(this,function(){this._timerStop()})));this.own(e(this.domNode,g.leave,b.hitch(this,function(){this._timerStart()})))},show:function(){h.animateProperty({node:this.domNode,duration:d,properties:window.appInfo.isRunInMobile?{top:{start:-120,end:0}}:{bottom:{start:-100,end:10}},onEnd:b.hitch(this,function(){this.currentState=1})}).play();k.subscribe("splashPopupShow",b.hitch(this,function(){this._timerStop()}));k.subscribe("splashPopupHide",b.hitch(this,function(){this._timerStart()}));this.timeoutHandler=
-setTimeout(b.hitch(this,this.hide),f)},hide:function(){0!==this.currentState&&h.animateProperty({node:this.domNode,duration:d,properties:window.appInfo.isRunInMobile?{top:{start:0,end:-120}}:{bottom:{start:10,end:-100}},onEnd:b.hitch(this,function(){this.currentState=0;c.setStyle(this.domNode,"display","none")})}).play()},_timerStart:function(){1!==this.currentState||this.timeoutHandler||(this.timeoutHandler=setTimeout(b.hitch(this,this.hide),f))},_timerStop:function(){this.timeoutHandler&&(clearTimeout(this.timeoutHandler),
-this.timeoutHandler=void 0)}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+define(['dojo/_base/declare',
+  'dijit/_WidgetBase',
+  'dojo/_base/lang',
+  'dojo/_base/html',
+  'dojo/on',
+  'dojo/mouse',
+  'dojo/_base/fx',
+  'dojo/topic',
+  'dojo/Evented'
+], function(declare, _WidgetBase, lang, html, on, Mouse, baseFx, topic, Evented) {
+  var ANIMATION_DURATION = 1000,
+    AUTO_CLOSE_INTERVAL = 10000,
+    STATE_HIDE = 0,
+    STATE_SHOW = 1;
+
+  return declare([_WidgetBase, Evented], {
+    'baseClass': 'jimu-appstate-popup',
+    declaredClass: 'jimu.dijit.AppStatePopup',
+
+    currentState: STATE_HIDE,
+    timeoutHandler: undefined,
+
+    constructor: function(params) {
+      this.inherited(arguments);
+      if('animationDuration' in params) {
+        ANIMATION_DURATION = params.animationDuration;
+      }
+
+      if('autoCloseInterval' in params) {
+        AUTO_CLOSE_INTERVAL = params.autoCloseInterval;
+      }
+    },
+
+    postCreate: function() {
+      if(window.appInfo.isRunInMobile){
+        html.addClass(this.domNode, 'mobile');
+      }
+      var header = html.create('div', {
+        'class': 'appstate-header'
+      });
+      html.create('div', {
+        'class': 'appstate-title',
+        innerHTML: this.nls.title
+      }, header);
+      var closeNode = html.create('div', {
+        'class': 'appstate-close'
+      }, header);
+      html.place(header, this.domNode);
+      var labelNode = html.create('div', {
+        'class': 'appstate-tips',
+        innerHTML: this.nls.restoreMap
+      });
+      html.place(labelNode, this.domNode);
+
+      this.own(on(labelNode, 'click', lang.hitch(this, function() {
+        this.emit('applyAppState');
+        this.hide();
+      })));
+
+      this.own(on(closeNode, 'click', lang.hitch(this, function() {
+        this.hide();
+      })));
+
+      this.own(on(this.domNode, Mouse.enter, lang.hitch(this, function() {
+        this._timerStop();
+      })));
+
+      this.own(on(this.domNode, Mouse.leave, lang.hitch(this, function() {
+        this._timerStart();
+      })));
+    },
+
+    show: function() {
+      var animProperties;
+      if(window.appInfo.isRunInMobile){
+        animProperties = {
+          top: {
+            start: -120,
+            end: 0
+          }
+        };
+      }else {
+        animProperties = {
+          bottom: {
+            start: -100,
+            end: 10
+          }
+        };
+      }
+      baseFx.animateProperty({
+        node: this.domNode,
+        duration: ANIMATION_DURATION,
+        properties: animProperties,
+        onEnd: lang.hitch(this, function() {
+          this.currentState = STATE_SHOW;
+        })
+      }).play();
+
+      //wait for splash hide, when init
+      topic.subscribe("splashPopupShow", lang.hitch(this, function () {
+        this._timerStop();
+      }));
+      topic.subscribe("splashPopupHide", lang.hitch(this, function () {
+        this._timerStart();
+      }));
+
+      this.timeoutHandler = setTimeout(lang.hitch(this, this.hide), AUTO_CLOSE_INTERVAL);
+    },
+
+    hide: function() {
+      if(this.currentState === STATE_HIDE) {
+        return;
+      }
+
+      var animProperties;
+      if(window.appInfo.isRunInMobile){
+        animProperties = {
+          top: {
+            start: 0,
+            end: -120
+          }
+        };
+      }else {
+        animProperties = {
+          bottom: {
+            start: 10,
+            end: -100
+          }
+        };
+      }
+
+      baseFx.animateProperty({
+        node: this.domNode,
+        duration: ANIMATION_DURATION,
+        properties: animProperties,
+        onEnd: lang.hitch(this, function() {
+          this.currentState = STATE_HIDE;
+          html.setStyle(this.domNode, 'display', 'none');
+        })
+      }).play();
+    },
+
+    _timerStart: function () {
+      if (this.currentState === STATE_SHOW && !this.timeoutHandler) {
+        this.timeoutHandler = setTimeout(lang.hitch(this, this.hide), AUTO_CLOSE_INTERVAL);
+      }
+    },
+    _timerStop: function () {
+      if (this.timeoutHandler) {
+        clearTimeout(this.timeoutHandler);
+        this.timeoutHandler = undefined;
+      }
+    }
+  });
+});

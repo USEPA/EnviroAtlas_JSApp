@@ -4,14 +4,15 @@
   margin-left: 0px;
   margin-top: 0;
   width: 100%;
+  outline-offset: -2px !important;
 }
 
 .jimu-widget-footer .footer-widget-copyright{
   max-width: 800px;
-  color:#4c4c4c;
+  color:#fff;
   font-size: 12px;
   text-align: center;
-  line-height: 22px;
+  line-height: 24px;
   margin-left: auto;
   margin-right: auto;
 }

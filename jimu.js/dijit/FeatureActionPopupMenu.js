@@ -1,11 +1,290 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dojo/_base/html dojo/_base/lang dojo/_base/array jimu/accessibleUtils dojo/on dojo/keys dijit/a11yclick dojo/dom-geometry dijit/_WidgetBase dijit/_TemplatedMixin jimu/FeatureActionManager ./FeatureActionPopupMenuItem".split(" "),function(m,c,d,k,n,g,f,p,q,r,t,u,v){var h=null,l=m([r,t],{baseClass:"popup-menu",templateString:'\x3cdiv\x3e\x3cdiv data-dojo-attach-point\x3d"menuNode" class\x3d"menu-content"\x3e\x3cdiv class\x3d"menu-title" data-dojo-attach-point\x3d"titleNode"\x3e\x3cdiv role\x3d"title" class\x3d"label jimu-float-leading" data-dojo-attach-point\x3d"labelNode" tabindex\x3d"0"\x3e\x3c/div\x3e\x3cdiv class\x3d"feature-action icon-close close-btn jimu-float-trailing" data-dojo-attach-point\x3d"closeBtn" tabindex\x3d"0"\x3e\x3c/div\x3e\x3c/div\x3e\x3cdiv class\x3d"menu-items" data-dojo-attach-point\x3d"menuContent" tabindex\x3d"0"\x3e\x3c/div\x3e\x3c/div\x3e\x3c/div\x3e',
-postCreate:function(){this._setFocusedNodeBeforeOpen();this.inherited(arguments);this.hide();this.menuItems=[];this.own(g(this.domNode,"click",d.hitch(this,function(a){a=a.target||a.srcElement;a===this.menuNode||c.isDescendant(a,this.menuNode)||this.hide()})));this._a11y_addEvents()},_setFocusedNodeBeforeOpen:function(){this.focusedNodeBeforeOpen=document.activeElement},_a11y_addEvents:function(){this.own(g(this.labelNode,"keydown",d.hitch(this,function(a){a.shiftKey&&a.keyCode===f.TAB&&(a.preventDefault(),
-this.hide())})));this.own(g(this.closeBtn,p,d.hitch(this,this.hide)));this.own(g(this.menuContent,"focus",d.hitch(this,function(){this.currentMenuItem=this.menuItems[0].domNode;k.forEach(this.menuItems,function(a){c.hasClass(a.domNode,"selected")&&(this.currentMenuItem=a.domNode)});this.currentMenuItem.focus()})));this.own(g(this.menuContent,"keydown",d.hitch(this,function(a){a.keyCode===f.ESCAPE&&(a.stopPropagation(),this.hide());if(c.hasClass(a.target,"popup-menu-item"))if(a.keyCode!==f.TAB||(!a.shiftKey||
-this.hasTitle)&&a.shiftKey){var b;a.keyCode===f.DOWN_ARROW?b=this.currentMenuItem.nextSibling?this.currentMenuItem.nextSibling:this.currentMenuItem:a.keyCode===f.UP_ARROW?b=this.currentMenuItem.previousSibling?this.currentMenuItem.previousSibling:this.currentMenuItem:a.keyCode===f.HOME?b=this.menuItems[0].domNode:a.keyCode===f.END&&(b=this.menuItems[this.menuItems.length-1].domNode);b&&(this.currentMenuItem=b,b.focus())}else a.preventDefault(),this.hide()})))},setActions:function(a){this.clearActions();
-k.forEach(a,d.hitch(this,this._addMenuItem))},appendAction:function(a){this._addMenuItem(a)},clearActions:function(){this.menuItems=[];c.empty(this.menuContent)},_addMenuItem:function(a){var b=new v({action:a});c.place(b.domNode,this.menuContent);b.startup();this.menuItems.push(b);this.own(g(b,"click",d.hitch(this,function(a){a?(a=0<=["ShowStatistics","SaveToMyContent","ChangeSymbol"].indexOf(b.action.name),n.isInNavMode()&&a||this.hide()):this.hide()})))},markAsSelected:function(a){k.forEach(this.menuItems,
-function(b){b.action.label===a.label?b.setSelected(!0):b.setSelected(!1)})},prepareActions:function(a,b){return u.getInstance().getSupportedActions(a).then(d.hitch(this,function(c){!1===b&&(c=k.filter(c,function(a){return 0!==a.name.indexOf("Export")&&"SaveToMyContent"!==a.name}));k.forEach(c,function(b){b.data=a},this);this.setActions(c)}))},hide:function(){c.setStyle(this.domNode,"display","none");this.focusedNodeBeforeOpen&&this.focusedNodeBeforeOpen.focus()},show:function(a,b){if(0===this.menuItems.length)c.setStyle(this.domNode,
-"display","none");else{"string"===typeof b&&""!==b?(this.labelNode.innerHTML=b,c.setStyle(this.titleNode,"display","")):(this.labelNode.innerHTML="",c.setStyle(this.titleNode,"display","none"));var d=a.y+a.h,e;a=window.isRTL?a.x:a.x+a.w;c.setStyle(this.domNode,"display","");c.setStyle(this.menuNode,{left:"-1000px",top:"0px",display:"block"});e=q.getMarginSize(this.menuNode);c.setStyle(this.menuNode,{left:(window.isRTL?a+e.w>window.innerWidth?window.innerWidth-e.w:0>a?0:a:0>a-e.w?0:a>window.innerWidth?
-window.innerWidth-e.w:a-e.w)+"px",top:(e.h>window.innerHeight?0:d+e.h>window.innerHeight?window.innerHeight-e.h:d+e.h+5<window.innerHeight?d+5:d)+"px"});"string"===typeof b&&""!==b?(this.labelNode.focus(),this.hasTitle=!0):(this.menuContent.focus(),this.hasTitle=!1)}}});l.getInstance=function(){null===h&&(h=new l,c.place(h.domNode,document.body),h.startup());h.setActions([]);return h};return l});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define(['dojo/_base/declare',
+  'dojo/_base/html',
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'jimu/accessibleUtils',
+  'dojo/on',
+  'dojo/keys',
+  "dijit/a11yclick",
+  'dojo/dom-geometry',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'jimu/FeatureActionManager',
+  './FeatureActionPopupMenuItem'
+], function(declare, html, lang, array, a11yUtils, on, keys, a11yclick, domGeom, _WidgetBase, _TemplatedMixin,
+  FeatureActionManager, PopupMenuItem) {
+  var instance = null;
+  var clazz = declare([_WidgetBase, _TemplatedMixin], {
+    baseClass: 'popup-menu',
+    templateString: '<div>' +
+        '<div data-dojo-attach-point="menuNode" class="menu-content">' +
+          '<div class="menu-title" data-dojo-attach-point="titleNode">' +
+           '<div role="title" class="label jimu-float-leading" data-dojo-attach-point="labelNode" tabindex="0"></div>' +
+           '<div class="feature-action icon-close close-btn jimu-float-trailing"' +
+           ' data-dojo-attach-point="closeBtn" tabindex="0"></div>' +
+          '</div>' +
+          '<div class="menu-items" data-dojo-attach-point="menuContent" tabindex="0"></div>' +
+        '</div>' +
+      '</div>',
+
+    postCreate: function() {
+      this._setFocusedNodeBeforeOpen();
+      this.inherited(arguments);
+
+      this.hide();
+      this.menuItems = [];
+      this.own(on(this.domNode, 'click', lang.hitch(this, function(event) {
+        var target = event.target || event.srcElement, isInternal;
+        isInternal = (target === this.menuNode) || html.isDescendant(target, this.menuNode);
+        if(!isInternal) {
+          this.hide();
+        }
+      })));
+
+      //add events for a11y
+      this._a11y_addEvents();
+
+    },
+
+    _setFocusedNodeBeforeOpen: function(){
+      this.focusedNodeBeforeOpen = document.activeElement;
+    },
+
+    _a11y_addEvents: function(){
+      this.own(on(this.labelNode, 'keydown', lang.hitch(this, function(evt){
+        if(evt.shiftKey && evt.keyCode === keys.TAB){
+          evt.preventDefault();
+          this.hide();
+        }
+      })));
+
+      this.own(on(this.closeBtn, a11yclick, lang.hitch(this, this.hide)));
+
+      this.own(on(this.menuContent, 'focus', lang.hitch(this, function(){
+        this.currentMenuItem = this.menuItems[0].domNode;//default
+        array.forEach(this.menuItems, function(menuItem) {//use selected item instead
+          if (html.hasClass(menuItem.domNode, 'selected')) {
+            this.currentMenuItem = menuItem.domNode;
+          }
+        });
+        this.currentMenuItem.focus();
+      })));
+      this.own(on(this.menuContent, 'keydown', lang.hitch(this, function(evt){
+        if(evt.keyCode === keys.ESCAPE){
+          evt.stopPropagation();
+          this.hide();
+        }
+        //when focusing on one item
+        if(html.hasClass(evt.target, 'popup-menu-item')){
+          //tab/esc to close it
+          if(evt.keyCode === keys.TAB && ((evt.shiftKey && !this.hasTitle) || !evt.shiftKey)){
+            evt.preventDefault();
+            this.hide();
+          } else{
+            var nextItem;
+            if(evt.keyCode === keys.DOWN_ARROW){
+              nextItem = this.currentMenuItem.nextSibling ?
+               this.currentMenuItem.nextSibling : this.currentMenuItem;
+            }else if(evt.keyCode === keys.UP_ARROW){
+              nextItem = this.currentMenuItem.previousSibling ?
+               this.currentMenuItem.previousSibling : this.currentMenuItem;
+            }else if(evt.keyCode === keys.HOME){
+              nextItem = this.menuItems[0].domNode;
+            }else if(evt.keyCode === keys.END){
+              nextItem = this.menuItems[this.menuItems.length - 1].domNode;
+            }
+            if(nextItem){
+              this.currentMenuItem = nextItem;
+              nextItem.focus();
+            }
+          }
+        }
+      })));
+    },
+
+    /**
+     * Set array of actions.
+     * Each action should follow this pattern:
+     * {
+     *    icon: string;
+     *    label: string;
+     *    onExecute: () => Promise;
+     *    data: Object
+     * }
+     */
+    setActions: function(actions) {
+      this.clearActions();
+
+      array.forEach(actions, lang.hitch(this, this._addMenuItem));
+    },
+
+    appendAction: function(action) {
+      this._addMenuItem(action);
+    },
+
+    clearActions: function() {
+      this.menuItems = [];
+      html.empty(this.menuContent);
+    },
+
+    _addMenuItem: function(action) {
+      var menuItem = new PopupMenuItem({
+        action: action
+      });
+      html.place(menuItem.domNode, this.menuContent);
+      menuItem.startup();
+
+      this.menuItems.push(menuItem);
+
+      // this.own(on(menuItem, 'click', lang.hitch(this, this.hide)));
+      this.own(on(menuItem, 'click', lang.hitch(this, function(data){
+        if(!data){
+          this.hide();
+        }else{//enter event
+          //keep menu popup opend if it has action popup.
+          var popupActions = ['ShowStatistics', 'SaveToMyContent', 'ChangeSymbol'];
+          var hasPopup = popupActions.indexOf(menuItem.action.name) >= 0;
+          if(!(a11yUtils.isInNavMode() && hasPopup)){
+            this.hide();
+          }
+        }
+      })));
+    },
+
+    markAsSelected: function(action) {
+      array.forEach(this.menuItems, function(menuItem) {
+        if (menuItem.action.label === action.label) {
+          menuItem.setSelected(true);
+        } else {
+          menuItem.setSelected(false);
+        }
+      });
+    },
+
+    prepareActions: function(featureset, allowExport) {
+      var fm = FeatureActionManager.getInstance();
+
+      return fm.getSupportedActions(featureset).then(lang.hitch(this, function(actions) {
+        if (allowExport === false) {
+          actions = array.filter(actions, function(action) {
+            return action.name.indexOf('Export') !== 0 && action.name !== 'SaveToMyContent';
+          });
+        }
+
+        array.forEach(actions, function(action){
+          action.data = featureset;
+        }, this);
+
+        this.setActions(actions);
+      }));
+    },
+
+    hide: function() {
+      html.setStyle(this.domNode, 'display', 'none');
+      if(this.focusedNodeBeforeOpen){
+        this.focusedNodeBeforeOpen.focus();
+      }
+    },
+
+    show: function(position, title) {
+      if(this.menuItems.length === 0) {
+        html.setStyle(this.domNode, 'display', 'none');
+        return;
+      }
+
+      if(typeof title === 'string' && title !== '') {
+        this.labelNode.innerHTML = title;
+        html.setStyle(this.titleNode, 'display', '');
+      } else {
+        this.labelNode.innerHTML = '';
+        html.setStyle(this.titleNode, 'display', 'none');
+      }
+
+      var anchorX, anchorY = position.y + position.h, left, top, size, offset = 5;
+      if(window.isRTL) {
+        anchorX = position.x;
+      }else {
+        anchorX = position.x + position.w;
+      }
+
+      html.setStyle(this.domNode, 'display', '');
+
+      html.setStyle(this.menuNode, {
+        left: '-1000px',
+        top: '0px',
+        display: 'block'
+      });
+
+      size = domGeom.getMarginSize(this.menuNode);
+
+      if(window.isRTL) {
+        if(anchorX + size.w > window.innerWidth){ // beyond right side of the browser
+          left = window.innerWidth - size.w;
+        }else if(anchorX < 0){// beyond left side of the browser
+          left = 0;
+        }else{
+          left = anchorX;
+        }
+      } else {
+        if(anchorX - size.w < 0){ // beyond left side of the browser
+          left = 0;
+        }else if(anchorX > window.innerWidth){ // beyond right side of the browser
+          left = window.innerWidth - size.w;
+        }else{
+          left = anchorX - size.w;
+        }
+      }
+
+      if(size.h > window.innerHeight) {
+        top = 0;
+      }else if(anchorY + size.h > window.innerHeight){
+        top = window.innerHeight - size.h;
+      }else if(anchorY + size.h + offset < window.innerHeight){
+        top = anchorY + offset;
+      }else {
+        top = anchorY;
+      }
+
+      html.setStyle(this.menuNode, {
+        left: left + 'px',
+        top: top + 'px'
+      });
+
+      if(typeof title === 'string' && title !== '') {
+        this.labelNode.focus();
+        this.hasTitle = true;
+      } else {
+        this.menuContent.focus();
+        this.hasTitle = false;
+      }
+    }
+  });
+
+  clazz.getInstance = function() {
+    if (instance === null) {
+      instance = new clazz();
+      html.place(instance.domNode, document.body);
+      instance.startup();
+    }
+    instance.setActions([]);
+    return instance;
+  };
+
+  return clazz;
+});

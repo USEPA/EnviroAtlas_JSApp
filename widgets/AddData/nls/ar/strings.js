@@ -95,7 +95,8 @@ define({
   },
   "addFromUrl": {
     "type": "النوع",
-    "url": "عنوان URL",
+      "url": "عنوان URL",
+      "name": "Layer Name",
     "types": {
       "ArcGIS": "خدمة ويب خادم ArcGIS",
       "WMS": "خدمة ويب WMS OGC",

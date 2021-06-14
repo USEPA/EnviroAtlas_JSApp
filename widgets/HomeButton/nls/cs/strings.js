@@ -1,3 +1,3 @@
 define({
-  "_widgetLabel": "Domov"
+  "_widgetLabel": "Domů"
 });

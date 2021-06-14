@@ -1,49 +1,1342 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/SymbolChooser.html":'\x3cdiv class\x3d"symbol-chooser" style\x3d"width:320px;"\x3e\r\n\t\x3cdiv class\x3d"symbol-section point-symbol-section" data-dojo-attach-point\x3d"pointSection"\x3e\r\n\t\t\x3ctable class\x3d"symbol-set-table" cellspacing\x3d"0"\x3e\r\n\t\t\t\x3ccolgroup\x3e\r\n\t\t\t\t\x3ccol width\x3d"130px"\x3e\x3c/col\x3e\r\n\t\t\t\t\x3ccol width\x3d"auto"\x3e\x3c/col\x3e\r\n\t\t\t\x3c/colgroup\x3e\r\n\t\t\t\x3ctbody\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan\x3e${nls.preview}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"pointSymPreview" style\x3d"width:100%;"\x3e\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr class\x3d"point-sym-class-select-tr"\x3e\r\n\t\t\t\t\t\x3ctd colspan\x3d"2"\x3e\r\n\t\t\t\t\t\t\x3cselect class\x3d"restrict-select-width" data-dojo-attach-point\x3d"pointSymClassSelect" data-dojo-type\x3d"jimu/dijit/formSelect" aria-label\x3d"${nls.markerCategory}" style\x3d"width:100%;height:30px;"\x3e\r\n\t\t\t\t\t\t\x3c/select\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr data-dojo-attach-point\x3d"pointCustomImageTr"\x3e\r\n\t\t\t\t\t\x3ctd colspan\x3d"2" data-dojo-attach-point\x3d"customImageTd" class\x3d"custom-image-td"\x3e\r\n\t\t\t\t\t\t\x3cdiv class\x3d"image-file-tip jimu-ellipsis jimu-leading-margin1" data-dojo-attach-point\x3d"imageNameNode"\x3e${nls.noFileChoosen}\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr class\x3d"point-icon-tables-tr" data-dojo-attach-point\x3d"pointIconTablesTr"\x3e\r\n\t\t\t\t\t\x3ctd colspan\x3d"2" style\x3d"position:relative"\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-type\x3d"jimu/dijit/LoadingIndicator" data-dojo-attach-point\x3d"loadingShelter" data-dojo-props\x3d\'hidden:true\'\x3e\x3c/div\x3e\r\n\t\t\t\t\t\t\x3cdiv class\x3d"icon-tables" data-dojo-attach-point\x3d"pointIconTables"\x3e\r\n\t\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word" data-a11y-label-id\x3d"point-symbol-section-symbolSize"\x3e${nls.symbolSize}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"pointSize" data-dojo-type\x3d"dijit/form/NumberSpinner" data-a11y-label-by\x3d"point-symbol-section-symbolSize" style\x3d"width:100%;" data-dojo-props\x3d\'value:18,smallDelta:1,largeDelta:10,constraints:{min:1,max:50},intermediateChanges:true,required:true\'\x3e\x3c/input\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr data-dojo-attach-point\x3d"pointColorTr"\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word" data-a11y-label-id\x3d"point-symbol-section-color"\x3e${nls.color}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"pointColor" data-dojo-type\x3d"jimu/dijit/ColorPicker" data-a11y-label-by\x3d"point-symbol-section-color" style\x3d"width:100%;height:30px;" data-dojo-props\x3d\'color:[0,0,128,128]\'\x3e\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr data-dojo-attach-point\x3d"pointOpacityTr"\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word" data-a11y-label-id\x3d"point-symbol-section-transparency"\x3e${nls.transparency}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"pointAlpha" data-dojo-type\x3d"jimu/dijit/_Transparency" data-a11y-label-by\x3d"point-symbol-section-transparency" data-dojo-props\x3d\'alpha:0.5\' style\x3d"width:100%;font-size:13px;"\x3e\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr data-dojo-attach-point\x3d"pointOutlineColorTr"\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word" data-a11y-label-id\x3d"point-symbol-section-outlineColor"\x3e${nls.outlineColor}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"pointOutlineColor" data-dojo-type\x3d"jimu/dijit/ColorPicker" data-a11y-label-by\x3d"point-symbol-section-outlineColor" style\x3d"width:100%;height:30px;" data-dojo-props\x3d\'color:[0,0,128,255]\'\x3e\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr data-dojo-attach-point\x3d"pointOulineWidthTr"\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word" data-a11y-label-id\x3d"point-symbol-section-outlineWidth"\x3e${nls.outlineWidth}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"pointOutlineWidth" data-dojo-type\x3d"dijit/form/NumberSpinner"  data-a11y-label-by\x3d"point-symbol-section-outlineWidth" style\x3d"width:100%;" data-dojo-props\x3d\'value:1,smallDelta:1,constraints:{min:0,max:5},intermediateChanges:true\'\x3e\x3c/input\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\x3c/tbody\x3e\r\n\t\t\x3c/table\x3e\r\n\t\x3c/div\x3e\r\n\t\x3cdiv class\x3d"symbol-section line-symbol-section" data-dojo-attach-point\x3d"lineSection"\x3e\r\n\t\t\x3ctable class\x3d"symbol-set-table" cellspacing\x3d"0"\x3e\r\n\t\t\t\x3ccolgroup\x3e\r\n\t\t\t\t\x3ccol width\x3d"130px"\x3e\x3c/col\x3e\r\n\t\t\t\t\x3ccol width\x3d"auto"\x3e\x3c/col\x3e\r\n\t\t\t\x3c/colgroup\x3e\r\n\t\t\t\x3ctbody\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word"\x3e${nls.preview}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"lineSymPreview" style\x3d"width:100%;overflow:hidden;"\x3e\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd colspan\x3d"2"\x3e\r\n\t\t\t\t\t\t\x3cdiv class\x3d"icon-tables" data-dojo-attach-point\x3d"lineIconTables"\x3e\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word" data-a11y-label-id\x3d"line-symbol-section-color"\x3e${nls.color}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"lineColor" data-dojo-type\x3d"jimu/dijit/ColorPicker" data-a11y-label-by\x3d"line-symbol-section-color" style\x3d"width:100%;height:30px;" data-dojo-props\x3d\'color:"#9bbb59"\'\x3e\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word" data-a11y-label-id\x3d"line-symbol-section-style"\x3e${nls.style}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cselect class\x3d"restrict-select-width" data-dojo-attach-point\x3d"lineStylesSelect" data-dojo-type\x3d"jimu/dijit/formSelect" data-a11y-label-by\x3d"line-symbol-section-style" style\x3d"width:100%;height:30px;"\x3e\r\n\t\t\t\t\t\t\t\x3coption value\x3d"solid"\x3e${nls.solid}\x3c/option\x3e\r\n\t\t\t\t\t\t\t\x3coption value\x3d"dash"\x3e${nls.dash}\x3c/option\x3e\r\n\t\t\t\t\t\t\t\x3coption value\x3d"dot"\x3e${nls.dot}\x3c/option\x3e\r\n\t\t\t\t\t\t\t\x3coption value\x3d"dashdot"\x3e${nls.dashDot}\x3c/option\x3e\r\n\t\t\t\t\t\t\t\x3coption value\x3d"longdashdotdot"\x3e${nls.dashDotDot}\x3c/option\x3e\r\n\t\t\t\t\t\t\x3c/select\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word" data-a11y-label-id\x3d"line-symbol-section-transparency"\x3e${nls.transparency}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"lineAlpha" data-dojo-type\x3d"jimu/dijit/_Transparency" data-a11y-label-by\x3d"line-symbol-section-transparency" data-dojo-props\x3d\'alpha:1\' style\x3d"width:100%;font-size:13px;"\x3e\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word" data-a11y-label-id\x3d"line-symbol-section-width"\x3e${nls.width}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"lineWidth" data-dojo-type\x3d"dijit/form/NumberSpinner" style\x3d"width:100%;"\r\n\t\t\t\t\t\tdata-a11y-label-by\x3d"line-symbol-section-width" data-dojo-props\x3d\'value:3,smallDelta:1,constraints:{min:1,max:50},intermediateChanges:true,required:true\'\x3e\x3c/input\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\x3c/tbody\x3e\r\n\t\t\x3c/table\x3e\r\n\t\x3c/div\x3e\r\n\t\x3cdiv class\x3d"symbol-section fill-symbol-section" data-dojo-attach-point\x3d"fillSection"\x3e\r\n\t\t\x3ctable class\x3d"symbol-set-table" cellspacing\x3d"0"\x3e\r\n\t\t\t\x3ccolgroup\x3e\r\n\t\t\t\t\x3ccol width\x3d"130px"\x3e\x3c/col\x3e\r\n\t\t\t\t\x3ccol width\x3d"auto"\x3e\x3c/col\x3e\r\n\t\t\t\x3c/colgroup\x3e\r\n\t\t\t\x3ctbody\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word"\x3e${nls.preview}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"fillSymPreview" style\x3d"width:100%;"\x3e\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd colspan\x3d"2"\x3e\r\n\t\t\t\t\t\t\x3cdiv class\x3d"icon-tables" data-dojo-attach-point\x3d"fillIconTables"\x3e\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word" data-a11y-label-id\x3d"fill-symbol-section-color"\x3e${nls.color}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"fillColor" data-dojo-type\x3d"jimu/dijit/ColorPicker" data-a11y-label-by\x3d"fill-symbol-section-color" style\x3d"width:100%;height:30px;" data-dojo-props\x3d\'color:"#9bbb59"\'\x3e\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr class\x3d"arrowWidthTr"\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word" data-a11y-label-id\x3d"arrow-symbol-section-width"\x3e${nls.width}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"arrowWidth" data-dojo-type\x3d"dijit/form/NumberSpinner" style\x3d"width:100%;"\r\n\t\t\t\t\t\tdata-a11y-label-by\x3d"arrow-symbol-section-width" data-dojo-props\x3d\'value:12,smallDelta:1,constraints:{min:1,max:50},intermediateChanges:true,required:true\'\x3e\x3c/input\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word" data-a11y-label-id\x3d"fill-symbol-section-transparency"\x3e${nls.transparency}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"fillAlpha" data-dojo-type\x3d"jimu/dijit/_Transparency" data-a11y-label-by\x3d"fill-symbol-section-transparency" data-dojo-props\x3d\'alpha:0.5\' style\x3d"width:100%;font-size:13px;"\x3e\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word" data-a11y-label-id\x3d"fill-symbol-section-outlineColor"\x3e${nls.outlineColor}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"fillOutlineColor" data-dojo-type\x3d"jimu/dijit/ColorPicker" data-a11y-label-by\x3d"fill-symbol-section-outlineColor" style\x3d"width:100%;height:30px;" data-dojo-props\x3d\'color:"#738c3d"\'\x3e\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word" data-a11y-label-id\x3d"fill-symbol-section-outlineWidth"\x3e${nls.outlineWidth}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"fillOutlineWidth" data-dojo-type\x3d"dijit/form/NumberSpinner" style\x3d"width:100%;"\r\n\t\t\t\t\t\tdata-a11y-label-by\x3d"fill-symbol-section-outlineWidth" data-dojo-props\x3d\'value:2,smallDelta:1,constraints:{min:0,max:50},intermediateChanges:true\'\x3e\x3c/input\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\x3c/tbody\x3e\r\n\t\t\x3c/table\x3e\r\n\t\x3c/div\x3e\r\n\t\x3cdiv class\x3d"symbol-section text-symbol-section" data-dojo-attach-point\x3d"textSection"\x3e\r\n\t\t\x3ctable class\x3d"symbol-set-table" cellspacing\x3d"0"\x3e\r\n\t\t\t\x3ccolgroup\x3e\r\n\t\t\t\t\x3ccol width\x3d"130px"\x3e\x3c/col\x3e\r\n\t\t\t\t\x3ccol width\x3d"auto"\x3e\x3c/col\x3e\r\n\t\t\t\x3c/colgroup\x3e\r\n\t\t\t\x3ctbody\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word"\x3e${nls.preview}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan data-dojo-attach-point\x3d"textPreview"\x3e\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word" data-a11y-label-id\x3d"text-symbol-section-text"\x3e${nls.text}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cinput class\x3d"text-input" data-dojo-attach-point\x3d"inputText" type\x3d"text"  data-a11y-label-by\x3d"text-symbol-section-text" style\x3d"width:100%;" /\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word" data-a11y-label-id\x3d"text-symbol-section-fontColor"\x3e${nls.fontColor}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cdiv data-dojo-attach-point\x3d"textColor" data-dojo-type\x3d"jimu/dijit/ColorPicker" data-a11y-label-by\x3d"text-symbol-section-fontColor" style\x3d"width:100%;height:30px;" data-dojo-props\x3d\'color:"#000"\'\x3e\x3c/div\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\t\x3ctr\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cspan class\x3d"jimu-break-word" data-a11y-label-id\x3d"text-symbol-section-fontSize"\x3e${nls.fontSize}:\x3c/span\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"textFontSize" data-dojo-type\x3d"dijit/form/NumberSpinner"\r\n\t\t\t\t\t\tdata-a11y-label-by\x3d"text-symbol-section-fontSize" style\x3d"width:100%;" data-dojo-props\x3d\'value:20,smallDelta:1,constraints:{min:1,max:100},intermediateChanges:true,required:true\'\x3e\x3c/input\x3e\r\n\t\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3c/tr\x3e\r\n\t\t\t\x3c/tbody\x3e\r\n\t\t\x3c/table\x3e\r\n\t\x3c/div\x3e\r\n\x3c/div\x3e'}});
-define("dojo/_base/declare dijit/_WidgetBase jimu/dijit/BindLabelPropsMixin dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/text!./templates/SymbolChooser.html dojo/Evented dojo/_base/lang dojo/_base/html dojo/_base/array dojo/on dojo/sniff dojo/query dojo/request/xhr dojo/Deferred dojox/gfx dojo/promise/all jimu/utils jimu/symbolUtils jimu/portalUrlUtils esri/symbols/jsonUtils esri/symbols/SimpleMarkerSymbol esri/symbols/PictureMarkerSymbol esri/symbols/SimpleLineSymbol esri/symbols/SimpleFillSymbol esri/symbols/TextSymbol esri/symbols/Font esri/arcgis/Portal esri/request jimu/dijit/ImageChooser jimu/dijit/ColorPicker jimu/dijit/_Transparency jimu/dijit/LoadingIndicator jimu/dijit/formSelect dijit/form/NumberSpinner".split(" "),
-function(v,w,x,y,z,A,B,d,c,l,f,C,g,p,k,D,E,q,r,F,m,G,H,n,t,I,J,K,L,M){return v([w,x,y,z,B],{templateString:A,baseClass:"jimu-symbol-chooser",declaredClass:"jimu.dijit.SymbolChooser",nls:null,_pointEventsBinded:!1,_lineEventBinded:!1,_fillEventBinded:!1,_textEventBinded:!1,_invokeSymbolChangeEvent:!0,_customPictureMarkerSymbol:null,isArrow:!1,symbol:null,type:null,DEFAULT_PORTAL_URL:"//arcgis.com/",_portalLoadTimeoutInMs:3E3,_isOnline:!0,_localTypes:"basic A-Z arrows business cartographic nationalParkService outdoorRecreation peoplePlaces safetyHealth shapes transportation damage disasters emergencyManagement generalInfrastructure localGovernment numbers pointsOfInterest stateGovernment FireFly".split(" "),
-cropImage:!1,postMixInProperties:function(){this.nls=window.jimuNls.symbolChooser;this._setTemplateNls()},postCreate:function(){this.inherited(arguments);this._initImageChooser();this.own(f(document.body,"click",d.hitch(this,this._onBodyClicked)));(this._isIE8=8===C("ie"))&&c.addClass(this.domNode,"ie8");this.symbol?this.showBySymbol(this.symbol):this.type&&this.showByType(this.type)},reset:function(){this.symbol=this.type=null;this._hideAllSections()},showBySymbol:function(a){this.reset();var b=
-a&&a.declaredClass;b&&"string"===typeof b&&0<=b.indexOf("esri.symbol")&&(this.symbol=this._cloneSymbol(a),this.isSimpleMarkerSymbol(this.symbol)||this.isPictureMarkerSymbol(this.symbol)?(this.type="marker",this._initPointSection()):this.isSimpleLineSymbol(this.symbol)?(this.type="line",this._initLineSection()):this._isSimpleFillSymbol(this.symbol)?(this.type="fill",this._initFillSection()):this._isTextSymbol(this.symbol)&&(this.type="text",this._initTextSection()))},showByType:function(a){this.reset();
-if("marker"===a||"line"===a||"fill"===a||"text"===a)this.type=a,"marker"===this.type?this._initPointSection():"line"===this.type?this._initLineSection():"fill"===this.type?this._initFillSection():"text"===this.type&&this._initTextSection()},getSymbol:function(){return this._getSymbol(!1)},getValidSymbol:function(){return this._getSymbol(!0)},_getSymbol:function(a){var b=null;"marker"===this.type?b=this._getPointSymbolBySetting(a):"line"===this.type?b=this._getLineSymbolBySetting(a):"fill"===this.type?
-b=this._getFillSymbolBySetting(a):"text"===this.type&&(b=this._getTextSymbolBySetting(a));a=null;b&&(a=this._cloneSymbol(b));return a},hideColorPicker:function(){for(var a="pointColor pointOutlineColor lineColor fillColor fillOutlineColor textColor".split(" "),b=0,e=a.length;b<e;b++){var c=a[b];this[c]&&this[c].hideTooltipDialog()}},_onBodyClicked:function(a){a=a.target||a.srcElement;this._tryHideDropDownOfSelectDijit(a,this.pointSymClassSelect);this._tryHideDropDownOfSelectDijit(a,this.lineStylesSelect)},
-_tryHideDropDownOfSelectDijit:function(a,b){var e=b.domNode,d=b.dropDown.domNode,e=a===e||c.isDescendant(a,e);a=a===d||c.isDescendant(a,d);if(!e&&!a)b.dropDown.onCancel()},_onChange:function(a){a=this._cloneSymbol(a);this.emit("change",a)},_hideAllSections:function(){g(".symbol-section",this.domNode).style("display","none")},_showSection:function(a){this._hideAllSections();g("."+a+"-symbol-section",this.domNode).style("display","block")},_getAncestor:function(a,b,e){return q.getAncestorDom(a,b,e)},
-_getAbsoluteUrl:function(a){return window.location.protocol+"//"+window.location.host+require.toUrl(a)},_cloneSymbol:function(a){if(!a)return null;var b=a;try{var e=a.toJson(),b=m.fromJson(e);"fill"===this.type&&(b.arrowWidth=a.arrowWidth)}catch(h){console.error(h)}return b},_createSymbolIconTable:function(a,b,e){var h=this.type+"-icon-table";a=c.toDom('\x3ctable class\x3d"'+("icon-table "+h+" "+(h+"-"+a))+'"\x3e\x3ctbody\x3e\x3c/tbody\x3e\x3c/table\x3e');for(var h=g("tbody",a)[0],f=Math.ceil(b.length/
-8),u=0;u<f;u++)c.create("tr",{},h);var k=g("tr",a);l.forEach(b,d.hitch(this,function(a,b){var h=d.clone(a),f=m.fromJson(a);b=c.create("td",{},k[Math.floor(b/8)]);c.addClass(b,"symbol-td-item");f=this._createSymbolNode(f);c.addClass(f,"symbol-div-item");var g=f.firstChild;c.addClass(g,"svg-node");if(this._isIE8&&"point"===e)if(window.isRTL){if("Cross"===a.name||"X"===a.name)c.setStyle(g,"right","-20px"),c.setStyle(f,"marginTop","20px")}else"Cross"!==a.name&&"X"!==a.name||c.setStyle(f,"marginTop","20px");
-f.symbol=h;c.place(f,b)}));return a},_updatePreview:function(a){var b=this._cloneSymbol(this.symbol);c.empty(a);(b=r.createSymbolNode(b))||(b=c.create("div"));c.place(b,a)},_createSymbolNode:function(a){(a=r.createSymbolNode(a,{width:36,height:36}))||(a=c.create("div"));c.setStyle(a,{width:"36px",height:"36px"});return a},_getLineShapeDesc:function(a){var b=null;if(this.isSimpleLineSymbol(a)||this.isCartographicLineSymbol(a))b={defaultShape:{type:"path",path:"M -90,0 L 90,0 E"},fill:null,stroke:a.getStroke()};
-return b},_initPointSection:function(){this._showSection("point");this._pointEventsBinded||(this._pointEventsBinded=!0,this._bindPointEvents(),this._onPointSymClassSelectChange());this.isPictureMarkerSymbol(this.symbol)?this._showBuildInPictureMarkerSymSettings():(this.isSimpleMarkerSymbol(this.symbol)||(this.symbol=new G({style:"esriSMSCircle",color:[0,0,128,128],name:"Circle",outline:{color:[0,0,128,255],width:1},type:"esriSMS",size:18})),this._showSimpleMarkerSymSettings());this._initPointSettings(this.symbol);
-this._getPointSymbolBySetting()},_bindPointEvents:function(){this.own(f(this.pointIconTables,".symbol-div-item:click",d.hitch(this,this._onPointSymIconItemClick)));this.own(f(this.pointSymClassSelect,"change",d.hitch(this,this._onPointSymClassSelectChange)));this.own(f(this.pointSize,"change",d.hitch(this,this._onPointSymbolChange,!1)));this.own(f(this.pointColor,"change",d.hitch(this,this._onPointSymbolChange,!1)));this.own(f(this.pointAlpha,"change",d.hitch(this,this._onPointSymbolChange,!1)));
-this.own(f(this.pointOutlineColor,"change",d.hitch(this,this._onPointSymbolChange,!1)));this.own(f(this.pointOutlineWidth,"change",d.hitch(this,this._onPointSymbolChange,!1)))},_onPointSymbolChange:function(a){this._invokeSymbolChangeEvent&&(this._getPointSymbolBySetting(a),this._onChange(this.symbol))},_initPointSettings:function(a){if(a){this._invokeSymbolChangeEvent=!1;if(this.isSimpleMarkerSymbol(a)){if(this.pointSize.set("value",a.size),this.pointColor.setColor(a.color),this.pointAlpha.setAlpha(parseFloat(a.color.a.toFixed(2))),
-a=a.outline)this.pointOutlineColor.setColor(a.color),this.pointOutlineWidth.set("value",parseFloat(a.width.toFixed(0)))}else this.isPictureMarkerSymbol(a)&&this.pointSize.set("value",a.width);this._invokeSymbolChangeEvent=!0}},isSimpleMarkerSymbol:function(a){return a&&"esri.symbol.SimpleMarkerSymbol"===a.declaredClass},isPictureMarkerSymbol:function(a){return a&&"esri.symbol.PictureMarkerSymbol"===a.declaredClass},_isCustomImageOptionSelected:function(){return"custom"===this.pointSymClassSelect.get("value")},
-_onPointSymClassSelectChange:function(){if(this._isCustomImageOptionSelected())this._showCustomPictureMarkerSymSettings(),this._customPictureMarkerSymbol&&(this.symbol=this._customPictureMarkerSymbol,this._onPointSymbolChange());else{this._showSimpleMarkerSymSettings();this._showSelectedPointSymIconTable();var a=this.pointSymClassSelect.get("value");this.pointSymClassSelect["def"+a]?(a=this.pointSymClassSelect.getOptions(a),this.pointSymClassSelect.domNode.title=a?a.label:""):this._requestPointSymJson(a)}},
-_hideAllPointSymIconTable:function(){g(".marker-icon-table",this.pointIconTables).style("display","none")},_showSelectedPointSymIconTable:function(){this._hideAllPointSymIconTable();var a=this.pointSymClassSelect.get("value"),a=g(".marker-icon-table-"+a,this.pointIconTables);0<a.length&&a.style("display","table")},_getLocalSymbols:function(a){a=a||this.pointSymClassSelect.get("value");a=this._getAbsoluteUrl("jimu/dijit/SymbolsInfo/"+a+".json");return p(a,{handleAs:"json"})},_getPortalSymbolsByType:function(a){var b=
-new k;a?this._fetchSymbols(a).then(d.hitch(this,function(a){b.resolve(a)}),d.hitch(this,function(a){b.reject(a)})):b.reject(null);return b},_requestPointSymJson:function(a){this.pointSymClassSelect["def"+a]||(this.loadingShelter.show(),!this._isOnline&&window.isXT?this._offLineGetSymbols(a):this._symbolTypes?this._handleGetPointSymbols(d.hitch(this,this._getPortalSymbolsByType),a):this._initPortal().then(d.hitch(this,this._fetchSymbolTypes)).then(d.hitch(this,function(b){this.domNode&&(this._clearOptions(),
-this._createOptions(b),this._handleGetPointSymbols(d.hitch(this,this._getPortalSymbolsByType),a))}),d.hitch(this,function(b){this.domNode&&(window.isXT?this._offLineGetSymbols(a):(this.loadingShelter.hide(),console.error("Fetching symbols failed",b)))})))},_offLineGetSymbols:function(a){this._isOnline=!1;if(0===this.pointSymClassSelect.options.length){var b=[];l.forEach(this._localTypes,d.hitch(this,function(a,c){b.push({id:c,title:this.nls[a]||a})}));this._clearOptions();this._createOptions(b)}this._handleGetPointSymbols(d.hitch(this,
-this._getLocalSymbols),a)},_clearOptions:function(){this.pointSymClassSelect&&this.pointSymClassSelect.removeOption(this.pointSymClassSelect.options)},_createOptions:function(a){if(this.pointSymClassSelect){var b=[],e="",c=!1;"[object Array]"===Object.prototype.toString.call(a)&&0<a.length&&l.forEach(a,d.hitch(this,function(a){e=a.title||a.name;c=e===this.nls.basic?!0:!1;e&&(a.id||0===a.id)&&b.push({label:e,value:a.id,selected:c})}));b.push({label:this.nls.customImage,value:"custom"});this.pointSymClassSelect.addOption(b)}},
-_initPortal:function(){var a=new k;if(this._portal)a.resolve();else{var b=F.getStandardPortalUrl(window.portalUrl),e=new K.Portal(b?b:this.DEFAULT_PORTAL_URL);if(e.loaded)return this._portal=e,a.resolve(),a.promise;this.own(e.on("load",d.hitch(this,function(){this._portal=e;a.resolve()})));setTimeout(function(){a.reject()},this._portalLoadTimeoutInMs)}return a},_handleGetPointSymbols:function(a,b){if(this.pointSymClassSelect){var e=b||this.pointSymClassSelect.get("value");b="def"+e;a=a(e);this.pointSymClassSelect[b]=
-a;a.then(d.hitch(this,function(a){this.domNode&&(this.loadingShelter.hide(),this._getPointSymbolsSucess(e,a))}),d.hitch(this,function(a){this.domNode&&(this.loadingShelter.hide(),console.error("Fetching symbols failed",a))}))}},_getPointSymbolsSucess:function(a,b){if(this.domNode){var e=this.pointSymClassSelect.getOptions(a);this.pointSymClassSelect.domNode.title=e?e.label:"";a=this._createSymbolIconTable(a,b,"point");c.place(a,this.pointIconTables);this._showSelectedPointSymIconTable()}},_fetchSymbols:function(a){var b=
-[],e=new k,b=this._symbolTypes.filter(function(b){return b.id===a});this._getSymbolListData(b).then(d.hitch(this,function(a){e.resolve(a)}),d.hitch(this,function(a){console.warn("fetch symbols failed",a);e.reject(a)}));return e},_getSymbolListData:function(a){a=l.filter(a,function(a){return a.dataUrl});a=l.map(a,function(a){return L({url:a.dataUrl}).promise});return E(a).then(function(a){return a[0]})},_fetchSymbolTypes:function(){var a=new k;this._symbolTypes?a.resolve(this._symbolTypes):this._getSymbolListGroupId().then(d.hitch(this,
-this._getSymbolListItems)).then(d.hitch(this,function(b){this._symbolTypes=b;a.resolve(b)}),d.hitch(this,function(b){console.warn("fetch symbol types failed",b);a.reject(b)}));return a},_getSymbolListGroupId:function(){var a=new k;this._portal||a.reject("no portal");this._portal.queryGroups({q:this._portal.symbolSetsGroupQuery}).then(function(b){a.resolve(b.results[0].id)},d.hitch(this,function(b){console.warn("get symbol list group id failed",b);a.reject(b)}));return a},_getSymbolListItems:function(a){var b=
-new k,e=this._portal;a="group:"+a+' AND type:"Symbol Set"';var c=[];this._portal||b.reject("no portal");a="vml"===D.renderer?a+' AND -typekeywords:"by value"':a+' AND (typekeywords:"by value" AND typekeywords:"marker")';e.queryItems({q:a,num:20,sortField:"title"}).then(d.hitch(this,function(a){var e,d,f,h;l.forEach(a.results,function(a){e=a.typeKeywords.join(" ");-1<e.indexOf("marker")&&(d=a.title,f={name:d,id:a.id,title:a.title,keywords:e,dataUrl:a.itemDataUrl},(h=-1<e.indexOf("default"))?(f.defaultType=
-!0,c.unshift(f)):c.push(f))},this);0<c.length?b.resolve(c):b.reject()}),function(){b.reject()});return b},_onPointSymIconItemClick:function(a){if(a=this._getAncestor(a.target||a.srcElement,function(a){return c.hasClass(a,"symbol-div-item")},5))if(g(".selected-symbol-div-item",a.parentNode.parentNode.parentNode).removeClass("selected-symbol-div-item"),c.addClass(a,"selected-symbol-div-item"),a=a.symbol){this.symbol=m.fromJson(a);a=c.getStyle(this.pointColorTr,"display");this.isSimpleMarkerSymbol(this.symbol)?
-this._showSimpleMarkerSymSettings():this._showBuildInPictureMarkerSymSettings();this._onPointSymbolChange(!0);var b=c.getStyle(this.pointColorTr,"display");a!==b&&this.emit("resize")}},_showSimpleMarkerSymSettings:function(){c.addClass(this.pointCustomImageTr,"hidden");c.removeClass(this.pointIconTablesTr,"hidden");c.removeClass(this.pointColorTr,"hidden");c.removeClass(this.pointOpacityTr,"hidden");c.removeClass(this.pointOutlineColorTr,"hidden");c.removeClass(this.pointOulineWidthTr,"hidden")},
-_showBuildInPictureMarkerSymSettings:function(){c.addClass(this.pointCustomImageTr,"hidden");c.removeClass(this.pointIconTablesTr,"hidden");c.addClass(this.pointColorTr,"hidden");c.addClass(this.pointOpacityTr,"hidden");c.addClass(this.pointOutlineColorTr,"hidden");c.addClass(this.pointOulineWidthTr,"hidden")},_showCustomPictureMarkerSymSettings:function(){c.removeClass(this.pointCustomImageTr,"hidden");c.addClass(this.pointIconTablesTr,"hidden");c.addClass(this.pointColorTr,"hidden");c.addClass(this.pointOpacityTr,
-"hidden");c.addClass(this.pointOutlineColorTr,"hidden");c.addClass(this.pointOulineWidthTr,"hidden")},_getPointSymbolBySetting:function(a){if(!this.symbol||a&&!this.pointSize.validate())return null;var b=parseFloat(this.pointSize.get("value"));if(this.isSimpleMarkerSymbol(this.symbol)){if(a&&!this.pointOutlineWidth.validate())return null;this.symbol.setSize(b);a=this.pointColor.getColor();b=this.pointAlpha.getAlpha();a.a=b;this.symbol.setColor(a);a=this.pointOutlineColor.getColor();var b=(b=parseFloat(this.pointOutlineWidth.get("value")))?
-b:0,e=new n;e.setStyle(n.STYLE_SOLID);e.setColor(a);e.setWidth(b);this.symbol.setOutline(e)}else this.isPictureMarkerSymbol(this.symbol)&&(this.symbol.setWidth(b),this.symbol.setHeight(b));this._updatePreview(this.pointSymPreview);return this.symbol},_initImageChooser:function(){this.imageChooser=new M({cropImage:this.cropImage,customZIndex:this.customZIndex,showSelfImg:!1,goldenWidth:16,goldenHeight:16,format:["image/gif","image/png","image/jpeg"],label:this.nls.chooseFile});c.addClass(this.imageChooser.domNode,
-"custom-image-chooser");this.own(f(this.imageChooser,"change",d.hitch(this,this._onImageChange)));this.imageChooser.placeAt(this.customImageTd,"first")},_onImageChange:function(a,b){this.imageNameNode.innerHTML=b.fileName;a=a.replace(/^data:image\/.*;base64,/,"");b=parseFloat(this.pointSize.get("value"));this._customPictureMarkerSymbol=this.symbol=new H({type:"esriPMS",url:null,imageData:a,contentType:"image/png",color:null,width:b,height:b,angle:0,xoffset:0,yoffset:0});this._onPointSymbolChange()},
-_initLineSection:function(){this._showSection("line");this._lineEventBinded||(this._lineEventBinded=!0,this._bindLineEvents(),this._requestLineSymJson("line"));this._initLineSettings(this.symbol);this._getLineSymbolBySetting()},_bindLineEvents:function(){this.own(f(this.lineIconTables,".symbol-div-item:click",d.hitch(this,this._onLineSymIconItemClick)));this.own(f(this.lineColor,"change",d.hitch(this,this._onLineSymbolChange)));this.own(f(this.lineStylesSelect,"change",d.hitch(this,this._onLineSymbolChange)));
-this.own(f(this.lineAlpha,"change",d.hitch(this,this._onLineSymbolChange)));this.own(f(this.lineWidth,"change",d.hitch(this,this._onLineSymbolChange)))},_onLineSymbolChange:function(){this._invokeSymbolChangeEvent&&(this._getLineSymbolBySetting(),this._onChange(this.symbol))},_initLineSettings:function(a){a&&(this._invokeSymbolChangeEvent=!1,this.lineColor.setColor(a.color),this.lineAlpha.setAlpha(parseFloat(a.color.a.toFixed(2))),this.lineWidth.set("value",parseFloat(a.width.toFixed(0))),this.lineStylesSelect.set("value",
-a.style),this._invokeSymbolChangeEvent=!0)},isSimpleLineSymbol:function(a){return a&&"esri.symbol.SimpleLineSymbol"===a.declaredClass},isCartographicLineSymbol:function(a){return a&&"esri.symbol.CartographicLineSymbol"===a.declaredClass},_requestLineSymJson:function(a){var b=this._getAbsoluteUrl("jimu/dijit/SymbolsInfo/"+a+".json");p(b,{handleAs:"json"}).then(d.hitch(this,function(b){this.domNode&&(b=this._createSymbolIconTable(a,b,"line"),c.place(b,this.lineIconTables))}),d.hitch(this,function(a){console.error("get line symbol failed",
-a)}))},_onLineSymIconItemClick:function(a){if(a=this._getAncestor(a.target||a.srcElement,function(a){return c.hasClass(a,"symbol-div-item")},5))if(g(".selected-symbol-div-item",a.parentNode.parentNode.parentNode).removeClass("selected-symbol-div-item"),c.addClass(a,"selected-symbol-div-item"),a=a.symbol)a=m.fromJson(a),this._initLineSettings(a),this._onLineSymbolChange()},_getLineSymbolBySetting:function(a){if(a&&!this.lineWidth.validate())return null;this.symbol=new n;a=this.lineColor.getColor();
-var b=this.lineStylesSelect.get("value");a.a=this.lineAlpha.getAlpha();var c=parseFloat(this.lineWidth.get("value"));this.symbol.setStyle(b);this.symbol.setColor(a);this.symbol.setWidth(c);this._updatePreview(this.lineSymPreview);return this.symbol},setFillSectionType:function(a){a?c.addClass(this.fillSection,"arrow-symbol-section"):(c.removeClass(this.fillSection,"arrow-symbol-section"),this.isArrow&&!this.arrowWidth.validate()&&this.arrowWidth.set("value",12));this.isArrow=a},_initFillSection:function(){this.setFillSectionType(this.isArrow);
-this._showSection("fill");this._fillEventBinded||(this._fillEventBinded=!0,this._bindFillEvents(),this._requestFillSymJson("fill"));this._initFillSettings(this.symbol);this._getFillSymbolBySetting()},_bindFillEvents:function(){this.own(f(this.fillIconTables,".symbol-div-item:click",d.hitch(this,this._onFillSymIconItemClick)));this.own(f(this.fillColor,"change",d.hitch(this,this._onFillSymbolChange,!1)));this.own(f(this.fillAlpha,"change",d.hitch(this,this._onFillSymbolChange,!1)));this.own(f(this.fillOutlineColor,
-"change",d.hitch(this,this._onFillSymbolChange,!1)));this.own(f(this.fillOutlineWidth,"change",d.hitch(this,this._onFillSymbolChange,!1)));this.own(f(this.arrowWidth,"change",d.hitch(this,this._onFillSymbolChange,!1)))},_onFillSymbolChange:function(a){this._invokeSymbolChangeEvent&&(this._getFillSymbolBySetting(a),this._onChange(this.symbol))},_initFillSettings:function(a){a&&(this._invokeSymbolChangeEvent=!1,this.fillColor.setColor(a.color),this.fillAlpha.setAlpha(parseFloat(a.color.a.toFixed(2))),
-a.outline&&(this.fillOutlineColor.setColor(a.outline.color),this.fillOutlineWidth.set("value",parseInt(a.outline.width,10))),this._invokeSymbolChangeEvent=!0,this.arrowWidth.set("value",parseInt(a.arrowWidth,10)))},_isSimpleFillSymbol:function(a){return a&&"esri.symbol.SimpleFillSymbol"===a.declaredClass},_requestFillSymJson:function(a){var b=this._getAbsoluteUrl("jimu/dijit/SymbolsInfo/"+a+".json");p(b,{handleAs:"json"}).then(d.hitch(this,function(b){this.domNode&&(b=this._createSymbolIconTable(a,
-b,"fill"),c.place(b,this.fillIconTables))}),d.hitch(this,function(a){console.error("get fill symbol failed",a)}))},_onFillSymIconItemClick:function(a){if(a=this._getAncestor(a.target||a.srcElement,function(a){return c.hasClass(a,"symbol-div-item")},5))if(g(".selected-symbol-div-item",a.parentNode.parentNode.parentNode).removeClass("selected-symbol-div-item"),c.addClass(a,"selected-symbol-div-item"),a=a.symbol)a=m.fromJson(a),a.arrowWidth=this.symbol.arrowWidth,this._initFillSettings(a),this._onFillSymbolChange()},
-_getFillSymbolBySetting:function(a){if(a&&(!this.fillOutlineWidth.validate()||this.isArrow&&!this.arrowWidth.validate()))return null;this.symbol=new t;var b=this.fillColor.getColor();b.a=this.fillAlpha.getAlpha();a=this.fillOutlineColor.getColor();var c=parseInt(this.fillOutlineWidth.get("value"),10),c=c?c:0;this.symbol.setColor(b);this.symbol.setStyle(t.STYLE_SOLID);b=new n;b.setStyle(n.STYLE_SOLID);b.setColor(a);b.setWidth(c);this.symbol.setOutline(b);a=parseInt(this.arrowWidth.get("value"),10);
-this.symbol.arrowWidth=a;this._updatePreview(this.fillSymPreview);return this.symbol},_initTextSection:function(){this._showSection("text");this._textEventBinded||(this._textEventBinded=!0,this._bindTextEvents());this._initTextSettings();this._getTextSymbolBySetting()},_bindTextEvents:function(){this.own(f(this.inputText,"change",d.hitch(this,this._onTextSymbolChange)));this.own(f(this.textColor,"change",d.hitch(this,this._onTextSymbolChange)));this.own(f(this.textFontSize,"change",d.hitch(this,this._onTextSymbolChange)))},
-_onTextSymbolChange:function(){this._invokeSymbolChangeEvent&&(this._getTextSymbolBySetting(),this._onChange(this.symbol))},_initTextSettings:function(a){a&&(this._invokeSymbolChangeEvent=!1,this.inputText.value=a.text,this.textColor.setColor(a.color),a=parseInt(a.font.size,10),this.textFontSize.set("value",a),this._invokeSymbolChangeEvent=!0)},_isTextSymbol:function(a){return a&&"esri.symbol.TextSymbol"===a.declaredClass},_updateTextPreview:function(a,b){var d=this.textColor.getColor().toHex(),f=
-parseInt(this.textFontSize.get("value"),10)+"px";c.setStyle(this.textPreview,{color:d,fontSize:f,fontFamily:b});this.textPreview.innerHTML=a},_getTextSymbolBySetting:function(a){var b=q.sanitizeHTML(this.inputText.value);if(a&&(""===b.replace(/^\s+|\s+$/g,"")||!this.textFontSize.validate()))return null;this.symbol=new I;a=this.textColor.getColor();var c=parseInt(this.textFontSize.get("value"),10),d=new J;d.setSize(c);this.symbol.setText(b);this.symbol.setColor(a);this.symbol.setFont(d);this._updateTextPreview(b,
-d.family);return this.symbol},_setTemplateNls:function(){"undefined"===typeof this.nls.damage&&(this.nls.damage="Damage");"undefined"===typeof this.nls.disasters&&(this.nls.disasters="Disasters");"undefined"===typeof this.nls.emergencyManagement&&(this.nls.emergencyManagement="Emergency Management");"undefined"===typeof this.nls.generalInfrastructure&&(this.nls.generalInfrastructure="General Infrastructure");"undefined"===typeof this.nls.localGovernment&&(this.nls.localGovernment="Local Government");
-"undefined"===typeof this.nls.numbers&&(this.nls.numbers="Numbers");"undefined"===typeof this.nls.pointsOfInterest&&(this.nls.pointsOfInterest="Points of Interest");"undefined"===typeof this.nls.stateGovernment&&(this.nls.stateGovernment="State Government")}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  'dijit/_WidgetBase',
+  'jimu/dijit/BindLabelPropsMixin',
+  'dijit/_TemplatedMixin',
+  'dijit/_WidgetsInTemplateMixin',
+  'dojo/text!./templates/SymbolChooser.html',
+  'dojo/Evented',
+  'dojo/_base/lang',
+  'dojo/_base/html',
+  'dojo/_base/array',
+  'dojo/on',
+  'dojo/sniff',
+  'dojo/query',
+  'dojo/request/xhr',
+  'dojo/Deferred',
+  'dojox/gfx',
+  'dojo/promise/all',
+  'jimu/utils',
+  'jimu/symbolUtils',
+  'jimu/portalUrlUtils',
+  'esri/symbols/jsonUtils',
+  'esri/symbols/SimpleMarkerSymbol',
+  'esri/symbols/PictureMarkerSymbol',
+  'esri/symbols/SimpleLineSymbol',
+  'esri/symbols/SimpleFillSymbol',
+  'esri/symbols/TextSymbol',
+  'esri/symbols/Font',
+  'esri/arcgis/Portal',
+  'esri/request',
+  'jimu/dijit/ImageChooser',
+  'jimu/dijit/ColorPicker',
+  'jimu/dijit/_Transparency',
+  'jimu/dijit/LoadingIndicator',
+  'jimu/dijit/formSelect',
+  'dijit/form/NumberSpinner'
+],
+function(declare, _WidgetBase, BindLabelPropsMixin, _TemplatedMixin, _WidgetsInTemplateMixin,
+  template, Evented, lang, html, array, on, has, query, xhr, Deferred, gfx, all,
+  jimuUtils, jimuSymUtils, portalUrlUtils, esriSymJsonUtils, SimpleMarkerSymbol, PictureMarkerSymbol,
+  SimpleLineSymbol, SimpleFillSymbol, TextSymbol, Font, Portal, request, ImageChooser) {
+
+  return declare([_WidgetBase, BindLabelPropsMixin, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+    templateString:template,
+    baseClass: 'jimu-symbol-chooser',
+    declaredClass: 'jimu.dijit.SymbolChooser',
+    nls: null,
+    _pointEventsBinded: false,
+    _lineEventBinded: false,
+    _fillEventBinded: false,
+    _textEventBinded: false,
+    _invokeSymbolChangeEvent: true,
+    _customPictureMarkerSymbol: null,
+
+    isArrow: false,
+
+    //options:
+    //you must set symbol or type
+    symbol: null,//optional
+    type: null,//optional, available values:marker,line,fill,text
+    DEFAULT_PORTAL_URL: "//arcgis.com/",
+    _portalLoadTimeoutInMs: 3000,
+    _isOnline: true,
+    // Do not change the order of `_localTypes`, it matches local symbol data
+    _localTypes: [
+      'basic',
+      'A-Z',
+      'arrows',
+      'business',
+      'cartographic',
+      'nationalParkService',
+      'outdoorRecreation',
+      'peoplePlaces',
+      'safetyHealth',
+      'shapes',
+      'transportation',
+      'damage',
+      'disasters',
+      'emergencyManagement',
+      'generalInfrastructure',
+      'localGovernment',
+      'numbers',
+      'pointsOfInterest',
+      'stateGovernment',
+      'FireFly'
+    ],
+
+    cropImage: false, //optional
+
+    //public methods:
+    //reset
+    //showBySymbol
+    //showByType
+    //getValidSymbol: Return a valid symbol. Return null if UI parameter is invalid.
+    //getSymbol: This method is deprecated. Pleause use getValidSymbol instead.
+
+    //events:
+    //change
+    //resize
+
+    postMixInProperties:function(){
+      this.nls = window.jimuNls.symbolChooser;
+      this._setTemplateNls();
+    },
+
+    postCreate:function(){
+      this.inherited(arguments);
+      this._initImageChooser();
+      this.own(on(document.body, 'click', lang.hitch(this, this._onBodyClicked)));
+      this._isIE8 = has('ie') === 8;
+      if(this._isIE8){
+        html.addClass(this.domNode, 'ie8');
+      }
+      if(this.symbol){
+        this.showBySymbol(this.symbol);
+      }
+      else if(this.type){
+        this.showByType(this.type);
+      }
+    },
+
+    reset: function(){
+      this.type = null;
+      this.symbol = null;
+      this._hideAllSections();
+    },
+
+    showBySymbol:function(symbol){
+      this.reset();
+
+      var declaredClass = symbol && symbol.declaredClass;
+      var isValid = declaredClass && typeof declaredClass === 'string' &&
+        declaredClass.indexOf('esri.symbol') >= 0;
+      if (!isValid) {
+        return;
+      }
+
+      this.symbol = this._cloneSymbol(symbol);
+
+      if(this.isSimpleMarkerSymbol(this.symbol) || this.isPictureMarkerSymbol(this.symbol)){
+        this.type = 'marker';
+        this._initPointSection();
+      }
+      else if(this.isSimpleLineSymbol(this.symbol)){
+        this.type = 'line';
+        this._initLineSection();
+      }
+      else if(this._isSimpleFillSymbol(this.symbol)){
+        this.type = 'fill';
+        this._initFillSection();
+      }
+      else if(this._isTextSymbol(this.symbol)){
+        this.type = 'text';
+        this._initTextSection();
+      }
+    },
+
+    showByType:function(type){
+      this.reset();
+
+      if(type === 'marker' || type === 'line' || type === 'fill' || type === 'text'){
+        this.type = type;
+      }
+      else{
+        return;
+      }
+
+      if(this.type === 'marker'){
+        this._initPointSection();
+      }
+      else if(this.type === 'line'){
+        this._initLineSection();
+      }
+      else if(this.type === 'fill'){
+        this._initFillSection();
+      }
+      else if(this.type === 'text'){
+        this._initTextSection();
+      }
+    },
+
+    getSymbol: function(){
+      return this._getSymbol(false);
+    },
+
+    getValidSymbol: function(){
+      return this._getSymbol(true);
+    },
+
+    _getSymbol:function(/*optional*/ checkValidity){
+      var symbol = null;
+
+      if(this.type === 'marker'){
+        symbol = this._getPointSymbolBySetting(checkValidity);
+      }
+      else if(this.type === 'line'){
+        symbol = this._getLineSymbolBySetting(checkValidity);
+      }
+      else if(this.type === 'fill'){
+        symbol = this._getFillSymbolBySetting(checkValidity);
+      }
+      else if(this.type === 'text'){
+        symbol = this._getTextSymbolBySetting(checkValidity);
+      }
+
+      var result = null;
+      if(symbol){
+        result = this._cloneSymbol(symbol);
+      }
+      return result;
+    },
+
+    hideColorPicker: function () {
+      var colorPickers = ["pointColor", "pointOutlineColor", "lineColor",
+        "fillColor", "fillOutlineColor", "textColor"];
+      for (var i = 0, len = colorPickers.length; i < len; i++) {
+        var colorPickerName = colorPickers[i];
+        if (this[colorPickerName]) {
+          this[colorPickerName].hideTooltipDialog();
+        }
+      }
+    },
+
+    _onBodyClicked: function(event){
+      var target = event.target || event.srcElement;
+      this._tryHideDropDownOfSelectDijit(target, this.pointSymClassSelect);
+      this._tryHideDropDownOfSelectDijit(target, this.lineStylesSelect);
+    },
+
+    _tryHideDropDownOfSelectDijit: function(target, selectDijit){
+      var d = selectDijit.domNode;
+      var d2 = selectDijit.dropDown.domNode;
+      var isClickSelectDitjit = target === d || html.isDescendant(target, d);
+      var isClickDropDown = target === d2 || html.isDescendant(target, d2);
+
+      if(!isClickSelectDitjit && !isClickDropDown){
+        selectDijit.dropDown.onCancel();
+      }
+    },
+
+    _onChange:function(newSymbol){
+      var cloneSym = this._cloneSymbol(newSymbol);
+      this.emit('change', cloneSym);
+    },
+
+    _hideAllSections: function(){
+      query('.symbol-section', this.domNode).style('display', 'none');
+    },
+
+    _showSection:function(type){
+      this._hideAllSections();
+      var s = '.' + type + '-symbol-section';
+      query(s, this.domNode).style('display', 'block');
+    },
+
+    _getAncestor:function(dom, checkFunc, maxLoop){
+      return jimuUtils.getAncestorDom(dom, checkFunc, maxLoop);
+    },
+
+    _getAbsoluteUrl:function(moduleName){
+      return window.location.protocol + "//" + window.location.host +  require.toUrl(moduleName);
+    },
+
+    _cloneSymbol:function(symbol){
+      if(!symbol){
+        return null;
+      }
+      var clone = symbol;
+      try{
+        var jsonSym = symbol.toJson();
+        clone = esriSymJsonUtils.fromJson(jsonSym);
+        if(this.type === 'fill'){
+          clone.arrowWidth = symbol.arrowWidth;
+        }
+      }
+      catch(e){
+        console.error(e);
+      }
+
+      return clone;
+    },
+
+    _createSymbolIconTable: function(fileName, jsonSyms, type) {
+      var countPerRow = 8;
+      var class0 = 'icon-table';
+      var class1 = this.type + "-icon-table";
+      var class2 = class1 + "-" + fileName;
+      var className = class0 + " " + class1 + " " + class2;
+      var table = html.toDom('<table class="' + className + '"><tbody></tbody></table>');
+      var tbody = query('tbody', table)[0];
+      var rowCount = Math.ceil(jsonSyms.length / countPerRow);
+      for (var i = 0; i < rowCount; i++) {
+        html.create('tr', {}, tbody);
+      }
+      var trs = query('tr', table);
+      array.forEach(jsonSyms, lang.hitch(this, function(jsonSym, index) {
+        var jsonSymClone = lang.clone(jsonSym);
+        var sym = esriSymJsonUtils.fromJson(jsonSym);
+        var rowIndex = Math.floor(index / countPerRow);
+        var tr = trs[rowIndex];
+        var td = html.create('td', {}, tr);
+        html.addClass(td, 'symbol-td-item');
+        var symNode = this._createSymbolNode(sym);
+        html.addClass(symNode, 'symbol-div-item');
+        var svgNode = symNode.firstChild;
+        html.addClass(svgNode, 'svg-node');
+        if (this._isIE8) {
+          if (type === 'point') {
+            if (window.isRTL) {
+              if (jsonSym.name === 'Cross' || jsonSym.name === 'X') {
+                html.setStyle(svgNode, 'right', '-20px');
+                html.setStyle(symNode, 'marginTop', '20px');
+              }
+            } else {
+              if (jsonSym.name === 'Cross' || jsonSym.name === 'X') {
+                html.setStyle(symNode, 'marginTop', '20px');
+              }
+            }
+          }
+        }
+        symNode.symbol = jsonSymClone;
+        html.place(symNode, td);
+      }));
+      return table;
+    },
+
+    _updatePreview:function(previewNode){
+      var node = previewNode;
+      var symbol = this._cloneSymbol(this.symbol);
+
+      html.empty(node);
+
+      var symbolNode = jimuSymUtils.createSymbolNode(symbol);
+      if (!symbolNode){
+        symbolNode = html.create('div');
+      }
+      html.place(symbolNode, previewNode);
+    },
+
+    _createSymbolNode:function(symbol){
+      var surfaceSize = {
+        width: 36,
+        height: 36
+      };
+      var symbolNode = jimuSymUtils.createSymbolNode(symbol, surfaceSize);
+      if (!symbolNode){
+        symbolNode = html.create('div');
+      }
+      html.setStyle(symbolNode, {
+        width: '36px',
+        height: '36px'
+      });
+      return symbolNode;
+    },
+
+    _getLineShapeDesc:function(symbol){
+      var result = null;
+      if (this.isSimpleLineSymbol(symbol) || this.isCartographicLineSymbol(symbol)) {
+        // we want a longer line
+        var shape = {
+          type: "path",
+          path: "M -90,0 L 90,0 E"
+        };
+        result = {
+          defaultShape: shape,
+          fill: null,
+          stroke: symbol.getStroke()
+        };
+      }
+      return result;
+    },
+
+    /* point section */
+    _initPointSection:function(){
+      this._showSection('point');
+      if (!this._pointEventsBinded) {
+        this._pointEventsBinded = true;
+        this._bindPointEvents();
+        this._onPointSymClassSelectChange();
+      }
+
+      if(this.isPictureMarkerSymbol(this.symbol)){
+        this._showBuildInPictureMarkerSymSettings();
+      }else if(this.isSimpleMarkerSymbol(this.symbol)){
+        this._showSimpleMarkerSymSettings();
+      }else{
+        var args = {
+          "style": "esriSMSCircle",
+          "color": [0, 0, 128, 128],
+          "name": "Circle",
+          "outline": {
+            "color": [0, 0, 128, 255],
+            "width": 1
+          },
+          "type": "esriSMS",
+          "size": 18
+        };
+        this.symbol = new SimpleMarkerSymbol(args);
+        this._showSimpleMarkerSymSettings();
+      }
+      this._initPointSettings(this.symbol);
+      this._getPointSymbolBySetting();
+    },
+
+    _bindPointEvents:function(){
+      this.own(on(this.pointIconTables, '.symbol-div-item:click', lang.hitch(this, this._onPointSymIconItemClick)));
+      this.own(on(this.pointSymClassSelect, 'change', lang.hitch(this, this._onPointSymClassSelectChange)));
+      this.own(on(this.pointSize, 'change', lang.hitch(this, this._onPointSymbolChange, false)));
+      this.own(on(this.pointColor, 'change', lang.hitch(this, this._onPointSymbolChange, false)));
+      this.own(on(this.pointAlpha, 'change', lang.hitch(this, this._onPointSymbolChange, false)));
+      this.own(on(this.pointOutlineColor, 'change', lang.hitch(this, this._onPointSymbolChange, false)));
+      this.own(on(this.pointOutlineWidth, 'change', lang.hitch(this, this._onPointSymbolChange, false)));
+    },
+
+    _onPointSymbolChange:function(checkValidity){
+      if(this._invokeSymbolChangeEvent){
+        this._getPointSymbolBySetting(checkValidity);
+        this._onChange(this.symbol);
+      }
+    },
+
+    _initPointSettings:function(symbol){
+      if(!symbol){
+        return;
+      }
+      this._invokeSymbolChangeEvent = false;
+
+      if(this.isSimpleMarkerSymbol(symbol)){
+        this.pointSize.set('value', symbol.size);
+        this.pointColor.setColor(symbol.color);
+        this.pointAlpha.setAlpha(parseFloat(symbol.color.a.toFixed(2)));
+        //this.pointAlpha.set('value',parseFloat(symbol.color.a.toFixed(2)));
+        var outlineSymbol = symbol.outline;
+        if(outlineSymbol){
+          this.pointOutlineColor.setColor(outlineSymbol.color);
+          this.pointOutlineWidth.set('value', parseFloat(outlineSymbol.width.toFixed(0)));
+        }
+      }else if(this.isPictureMarkerSymbol(symbol)){
+        this.pointSize.set('value', symbol.width);
+      }
+      this._invokeSymbolChangeEvent = true;
+    },
+
+    isSimpleMarkerSymbol: function(symbol){
+      return symbol && symbol.declaredClass === 'esri.symbol.SimpleMarkerSymbol';
+    },
+
+    isPictureMarkerSymbol: function(symbol){
+      return symbol && symbol.declaredClass === 'esri.symbol.PictureMarkerSymbol';
+    },
+
+    _isCustomImageOptionSelected: function(){
+      return this.pointSymClassSelect.get('value') === 'custom';
+    },
+
+    _onPointSymClassSelectChange:function(){
+      if(this._isCustomImageOptionSelected()){
+        this._showCustomPictureMarkerSymSettings();
+        if(this._customPictureMarkerSymbol){
+          this.symbol = this._customPictureMarkerSymbol;
+          this._onPointSymbolChange();
+        }
+      }else{
+        this._showSimpleMarkerSymSettings();
+        this._showSelectedPointSymIconTable();
+        var fileName = this.pointSymClassSelect.get('value');
+        var defName = 'def' + fileName;
+        var def = this.pointSymClassSelect[defName];
+        if (!def) {
+          this._requestPointSymJson(fileName);
+        }else{
+          var option = this.pointSymClassSelect.getOptions(fileName);
+          var label = option ? option.label : "";
+          this.pointSymClassSelect.domNode.title = label;
+        }
+      }
+    },
+
+    _hideAllPointSymIconTable: function(){
+      query('.marker-icon-table', this.pointIconTables).style('display', 'none');
+    },
+
+    _showSelectedPointSymIconTable:function(){
+      this._hideAllPointSymIconTable();
+      var fileName = this.pointSymClassSelect.get('value');
+      var tables = query('.marker-icon-table-' + fileName, this.pointIconTables);
+      if (tables.length > 0) {
+        tables.style('display', 'table');
+      }
+    },
+
+    _getLocalSymbols: function(name){
+      var fileName = name || this.pointSymClassSelect.get('value');
+      var module = "jimu/dijit/SymbolsInfo/" + fileName + ".json";
+      var url = this._getAbsoluteUrl(module);
+      return xhr(url, {
+        handleAs: 'json'
+      });
+    },
+
+    _getPortalSymbolsByType: function(fileName){
+      var typeId = fileName;
+      var def = new Deferred();
+      if(typeId){
+        // fetch symbols from portal
+        this._fetchSymbols(typeId)
+        .then(lang.hitch(this, function(symbols){
+          def.resolve(symbols);
+        }), lang.hitch(this, function(err){
+          def.reject(err);
+        }));
+      }else{
+        def.reject(null);
+      }
+      return def;
+    },
+
+    _requestPointSymJson:function(fileName){
+      var defName = 'def' + fileName;
+      var def = this.pointSymClassSelect[defName];
+      if (def) {
+        return;
+      }
+
+      this.loadingShelter.show();
+
+      if(!this._isOnline && window.isXT){
+        this._offLineGetSymbols(fileName);
+        return;
+      }
+
+      if(!this._symbolTypes){
+        // fetch symbol types from portal
+        this._initPortal()
+        .then(lang.hitch(this, this._fetchSymbolTypes))
+        .then(lang.hitch(this, function(types){
+          if(!this.domNode){
+            return;
+          }
+          // create options
+          this._clearOptions();
+          this._createOptions(types);
+          // fetch symbols from portal
+          this._handleGetPointSymbols(lang.hitch(this, this._getPortalSymbolsByType), fileName);
+        }), lang.hitch(this, function(err){
+          if(!this.domNode){
+            return;
+          }
+          if(window.isXT){
+            this._offLineGetSymbols(fileName);
+          }else{
+            this.loadingShelter.hide();
+            console.error('Fetching symbols failed', err);
+          }
+        }));
+
+      }else{
+        // fetch symbols from portal
+        this._handleGetPointSymbols(lang.hitch(this, this._getPortalSymbolsByType), fileName);
+      }
+
+    },
+
+    _offLineGetSymbols: function(fileName){
+      this._isOnline = false;
+      if(this.pointSymClassSelect.options.length === 0){
+        var localTypes = [];
+        array.forEach(this._localTypes, lang.hitch(this, function(t, i){
+          localTypes.push({
+            id: i,
+            title: this.nls[t] || t
+          });
+        }));
+        this._clearOptions();
+        this._createOptions(localTypes);
+      }
+
+      this._handleGetPointSymbols(lang.hitch(this, this._getLocalSymbols), fileName);
+    },
+
+    _clearOptions: function(){
+      if(!this.pointSymClassSelect){
+        return;
+      }
+      var options = this.pointSymClassSelect.options;
+      this.pointSymClassSelect.removeOption(options);
+    },
+
+    _createOptions: function(types){
+      if(!this.pointSymClassSelect){
+        return;
+      }
+      var template = [];
+      var optionText = '';
+      var isSelected = false;
+      if(Object.prototype.toString.call(types) === '[object Array]' && types.length > 0){
+        array.forEach(types, lang.hitch(this, function(t){
+          optionText = t.title || t.name;
+          isSelected = optionText === this.nls.basic ? true : false;
+          if( optionText && (t.id || t.id === 0) ){
+            template.push({
+              label: optionText,
+              value: t.id,
+              selected: isSelected
+            });
+          }
+        }));
+      }
+      template.push({
+        label: this.nls.customImage,
+        value: 'custom'
+      });
+
+      this.pointSymClassSelect.addOption(template);
+    },
+
+    _initPortal: function(){
+      var deferred = new Deferred();
+
+      if(this._portal){
+        deferred.resolve();
+      }else{
+        var portalUrl = portalUrlUtils.getStandardPortalUrl(window.portalUrl);
+        var portal = portalUrl ? portalUrl : this.DEFAULT_PORTAL_URL;
+        var portalInstance = new Portal.Portal(portal);
+
+        if (portalInstance.loaded) {
+          this._portal = portalInstance;
+          deferred.resolve();
+          return deferred.promise;
+        }
+
+        this.own(
+          portalInstance.on("load", lang.hitch(this, function() {
+            this._portal = portalInstance;
+            deferred.resolve();
+          }))
+        );
+
+        setTimeout(function() {
+          deferred.reject();
+        }, this._portalLoadTimeoutInMs);
+      }
+
+      return deferred;
+    },
+
+    _handleGetPointSymbols: function(getFunc, name){
+      if(!this.pointSymClassSelect){
+        return;
+      }
+
+      var fileName = name || this.pointSymClassSelect.get('value');
+      var defName = 'def' + fileName;
+      var def = getFunc(fileName);
+
+      this.pointSymClassSelect[defName] = def;
+
+      def.then(lang.hitch(this, function(jsonSyms) {
+        if(!this.domNode){
+          return;
+        }
+        this.loadingShelter.hide();
+        this._getPointSymbolsSucess(fileName, jsonSyms);
+      }), lang.hitch(this, function(error) {
+        if(!this.domNode){
+          return;
+        }
+        this.loadingShelter.hide();
+        console.error('Fetching symbols failed', error);
+      }));
+
+    },
+
+    _getPointSymbolsSucess: function(fileName, jsonSyms){
+      if(!this.domNode){
+        return;
+      }
+      var option = this.pointSymClassSelect.getOptions(fileName);
+      var label = option ? option.label : "";
+      this.pointSymClassSelect.domNode.title = label;
+      var table = this._createSymbolIconTable(fileName, jsonSyms, 'point');
+      html.place(table, this.pointIconTables);
+      this._showSelectedPointSymIconTable();
+    },
+
+    _fetchSymbols: function (id) {
+      var symbolItemTypes = [];
+      var def = new Deferred();
+
+      symbolItemTypes = this._symbolTypes.filter(function(type){
+        return type.id === id;
+      });
+
+      this._getSymbolListData(symbolItemTypes)
+      .then(lang.hitch(this, function (symbolItems) {
+        def.resolve(symbolItems);
+      }), lang.hitch(this, function(err){
+        console.warn('fetch symbols failed', err);
+        def.reject(err);
+      }));
+
+      return def;
+    },
+
+    _getSymbolListData: function (items) {
+      var xhrItems = array.filter(items, function(item) {
+        return item.dataUrl;
+      });
+
+      var itemDataPromises = array.map(xhrItems, function (item) {
+        return request({ url: item.dataUrl }).promise;
+      });
+
+      return all(itemDataPromises).then(function (data) {
+        return data[0];
+      });
+    },
+
+    _fetchSymbolTypes: function(){
+      var def = new Deferred();
+
+      if(this._symbolTypes){
+        def.resolve(this._symbolTypes);
+      }else{
+        this._getSymbolListGroupId()
+        .then(lang.hitch(this, this._getSymbolListItems))
+        .then(lang.hitch(this, function(symbolTypes){
+          this._symbolTypes = symbolTypes;
+          def.resolve(symbolTypes);
+        }), lang.hitch(this, function(err){
+          console.warn('fetch symbol types failed', err);
+          def.reject(err);
+        }));
+      }
+
+      return def;
+    },
+
+    _getSymbolListGroupId: function () {
+      var deferred = new Deferred();
+
+      if(!this._portal){
+        deferred.reject('no portal');
+      }
+
+      this._portal.queryGroups({
+        q: this._portal.symbolSetsGroupQuery
+      })
+      .then(function (groups) {
+        var firstGroup = groups.results[0];
+        deferred.resolve(firstGroup.id);
+      }, lang.hitch(this, function(err){
+        console.warn('get symbol list group id failed', err);
+        deferred.reject(err);
+      }));
+
+      return deferred;
+    },
+
+    _getSymbolListItems: function (groupId) {
+      var deferred = new Deferred(),
+          portal = this._portal,
+          query = "group:" + groupId + " AND type:\"Symbol Set\"",
+          symbolItems = [];
+
+      if(!this._portal){
+        deferred.reject('no portal');
+      }
+
+      if (gfx.renderer === "vml") {
+        query += " AND -typekeywords:\"by value\"";
+      }
+      else {
+        query += " AND (typekeywords:\"by value\" AND typekeywords:\"marker\")";
+      }
+
+      portal.queryItems({
+        q: query,
+        num: 20,
+        sortField: "title"
+      }).then(lang.hitch(this, function (items) {
+          var listItems = items.results,
+              typeKeywords,
+              title,
+              symbolItem,
+              isDefaultType;
+
+          array.forEach(listItems, function (item) {
+            typeKeywords = item.typeKeywords.join(" ");
+
+            if (typeKeywords.indexOf("marker") > -1) {
+              title = item.title;
+
+              symbolItem = {
+                name: title,
+                id: item.id,
+                title: item.title,
+                keywords: typeKeywords,
+                dataUrl: item.itemDataUrl
+              };
+
+              isDefaultType = typeKeywords.indexOf("default") > -1;
+              if (isDefaultType) {
+                symbolItem.defaultType = true;
+                symbolItems.unshift(symbolItem);
+              }
+              else {
+                symbolItems.push(symbolItem);
+              }
+
+            }
+          }, this);
+
+          if (symbolItems.length > 0) {
+            deferred.resolve(symbolItems);
+          }
+          else {
+            deferred.reject();
+          }
+        }),
+        function () {
+          deferred.reject();
+        });
+
+      return deferred;
+    },
+
+    _onPointSymIconItemClick:function(event){
+      var target = event.target || event.srcElement;
+      var symDivItem = this._getAncestor(target, function(dom){
+        return html.hasClass(dom, 'symbol-div-item');
+      }, 5);
+
+      if(!symDivItem){
+        return;
+      }
+
+      var td = symDivItem.parentNode;
+      var tr = td.parentNode;
+      var tbody = tr.parentNode;
+      query('.selected-symbol-div-item', tbody).removeClass('selected-symbol-div-item');
+      html.addClass(symDivItem, 'selected-symbol-div-item');
+
+      var jsonSym = symDivItem.symbol;
+      if(!jsonSym){
+        return;
+      }
+      this.symbol = esriSymJsonUtils.fromJson(jsonSym);
+      var oldColorTrDisplay = html.getStyle(this.pointColorTr, 'display');
+      if(this.isSimpleMarkerSymbol(this.symbol)){
+        this._showSimpleMarkerSymSettings();
+      }else{
+        this._showBuildInPictureMarkerSymSettings();
+      }
+
+      //validate point symbol since it has "Simplemarkersymbol" and "Picturemarkersymbol"
+      this._onPointSymbolChange(true);
+      var newColorTrDisplay = html.getStyle(this.pointColorTr, 'display');
+      if(oldColorTrDisplay !== newColorTrDisplay){
+        this.emit('resize');
+      }
+    },
+
+    _showSimpleMarkerSymSettings:function(){
+      html.addClass(this.pointCustomImageTr, 'hidden');
+      html.removeClass(this.pointIconTablesTr, 'hidden');
+      html.removeClass(this.pointColorTr, 'hidden');
+      html.removeClass(this.pointOpacityTr, 'hidden');
+      html.removeClass(this.pointOutlineColorTr, 'hidden');
+      html.removeClass(this.pointOulineWidthTr, 'hidden');
+    },
+
+    _showBuildInPictureMarkerSymSettings:function(){
+      html.addClass(this.pointCustomImageTr, 'hidden');
+      html.removeClass(this.pointIconTablesTr, 'hidden');
+      html.addClass(this.pointColorTr, 'hidden');
+      html.addClass(this.pointOpacityTr, 'hidden');
+      html.addClass(this.pointOutlineColorTr, 'hidden');
+      html.addClass(this.pointOulineWidthTr, 'hidden');
+    },
+
+    _showCustomPictureMarkerSymSettings: function(){
+      html.removeClass(this.pointCustomImageTr, 'hidden');
+      html.addClass(this.pointIconTablesTr, 'hidden');
+      html.addClass(this.pointColorTr, 'hidden');
+      html.addClass(this.pointOpacityTr, 'hidden');
+      html.addClass(this.pointOutlineColorTr, 'hidden');
+      html.addClass(this.pointOulineWidthTr, 'hidden');
+    },
+
+    _getPointSymbolBySetting:function(checkValidity){
+      if(!this.symbol){
+        return null;
+      }
+
+      if(checkValidity){
+        if(!this.pointSize.validate()){
+          return null;
+        }
+      }
+
+      var size = parseFloat(this.pointSize.get('value'));
+      if(this.isSimpleMarkerSymbol(this.symbol)){
+        if(checkValidity){
+          if(!this.pointOutlineWidth.validate()){
+            return null;
+          }
+        }
+        this.symbol.setSize(size);
+        var color = this.pointColor.getColor();
+        var opacity = this.pointAlpha.getAlpha(); //parseFloat(this.pointAlpha.get('value'));
+        color.a = opacity;
+        this.symbol.setColor(color);
+        var outlineColor = this.pointOutlineColor.getColor();
+        var outlineWidth = parseFloat(this.pointOutlineWidth.get('value'));
+        outlineWidth = outlineWidth ? outlineWidth : 0; //set it as 0 when outline-input is empty
+        var outlineSym = new SimpleLineSymbol();
+        outlineSym.setStyle(SimpleLineSymbol.STYLE_SOLID);
+        outlineSym.setColor(outlineColor);
+        outlineSym.setWidth(outlineWidth);
+        this.symbol.setOutline(outlineSym);
+      }
+      else if(this.isPictureMarkerSymbol(this.symbol)){
+        this.symbol.setWidth(size);
+        this.symbol.setHeight(size);
+      }
+      this._updatePreview(this.pointSymPreview);
+      return this.symbol;
+    },
+
+    _initImageChooser: function(){
+      this.imageChooser = new ImageChooser({
+        cropImage: this.cropImage,
+        customZIndex: this.customZIndex,
+        showSelfImg: false,
+        goldenWidth: 16,
+        goldenHeight: 16,
+        format: ['image/gif','image/png','image/jpeg'],
+        label: this.nls.chooseFile
+      });
+      html.addClass(this.imageChooser.domNode, 'custom-image-chooser');
+      this.own(on(this.imageChooser, 'change', lang.hitch(this, this._onImageChange)));
+      this.imageChooser.placeAt(this.customImageTd, "first");
+    },
+
+    _onImageChange: function(imageData, fileProperty){
+      this.imageNameNode.innerHTML = fileProperty.fileName;
+      imageData = imageData.replace(/^data:image\/.*;base64,/,"");
+      var size = parseFloat(this.pointSize.get('value'));
+      var args = {
+        "type" : "esriPMS",
+        "url" : null,
+        "imageData" : imageData,
+        "contentType" : "image/png",
+        "color" : null,
+        "width" : size,
+        "height" : size,
+        "angle" : 0,
+        "xoffset" : 0,
+        "yoffset" : 0
+      };
+      this.symbol =  new PictureMarkerSymbol(args);
+      this._customPictureMarkerSymbol = this.symbol;
+      this._onPointSymbolChange();
+    },
+
+    /* line section */
+    _initLineSection:function(){
+      this._showSection('line');
+      if (!this._lineEventBinded) {
+        this._lineEventBinded = true;
+        this._bindLineEvents();
+        this._requestLineSymJson('line');
+      }
+
+      this._initLineSettings(this.symbol);
+      this._getLineSymbolBySetting();
+    },
+
+    _bindLineEvents:function(){
+      this.own(
+        on(this.lineIconTables,
+          '.symbol-div-item:click',
+          lang.hitch(this, this._onLineSymIconItemClick))
+      );
+      this.own(on(this.lineColor, 'change', lang.hitch(this, this._onLineSymbolChange)));
+      this.own(on(this.lineStylesSelect, 'change', lang.hitch(this, this._onLineSymbolChange)));
+      this.own(on(this.lineAlpha, 'change', lang.hitch(this, this._onLineSymbolChange)));
+      this.own(on(this.lineWidth, 'change', lang.hitch(this, this._onLineSymbolChange)));
+    },
+
+    _onLineSymbolChange:function(){
+      if(this._invokeSymbolChangeEvent){
+        this._getLineSymbolBySetting();
+        this._onChange(this.symbol);
+      }
+    },
+
+    _initLineSettings:function(symbol){
+      if(!symbol){
+        return;
+      }
+      this._invokeSymbolChangeEvent = false;
+      this.lineColor.setColor(symbol.color);
+      this.lineAlpha.setAlpha(parseFloat(symbol.color.a.toFixed(2)));
+      //this.lineAlpha.set('value',parseFloat(symbol.color.a.toFixed(2)));
+      this.lineWidth.set('value', parseFloat(symbol.width.toFixed(0)));
+      this.lineStylesSelect.set('value', symbol.style);
+      this._invokeSymbolChangeEvent = true;
+    },
+
+    isSimpleLineSymbol: function(symbol){
+      return symbol && symbol.declaredClass === 'esri.symbol.SimpleLineSymbol';
+    },
+
+    isCartographicLineSymbol: function(symbol){
+      return symbol && symbol.declaredClass === 'esri.symbol.CartographicLineSymbol';
+    },
+
+    _requestLineSymJson:function(fileName){
+      var module = "jimu/dijit/SymbolsInfo/" + fileName + ".json";
+      var url = this._getAbsoluteUrl(module);
+      var def = xhr(url, {
+        handleAs:'json'
+      });
+      def.then(lang.hitch(this, function(jsonSyms){
+        if(!this.domNode){
+          return;
+        }
+        var table = this._createSymbolIconTable(fileName, jsonSyms, 'line');
+        html.place(table, this.lineIconTables);
+      }), lang.hitch(this, function(error){
+        console.error('get line symbol failed', error);
+      }));
+    },
+
+    _onLineSymIconItemClick:function(event){
+      var target = event.target || event.srcElement;
+      var symDivItem = this._getAncestor(target, function(dom){
+        return html.hasClass(dom, 'symbol-div-item');
+      }, 5);
+
+      if(!symDivItem){
+        return;
+      }
+
+      var td = symDivItem.parentNode;
+      var tr = td.parentNode;
+      var tbody = tr.parentNode;
+      query('.selected-symbol-div-item', tbody).removeClass('selected-symbol-div-item');
+      html.addClass(symDivItem, 'selected-symbol-div-item');
+
+      var jsonSym = symDivItem.symbol;
+      if(!jsonSym){
+        return;
+      }
+      var symbol = esriSymJsonUtils.fromJson(jsonSym);
+      this._initLineSettings(symbol);
+      this._onLineSymbolChange();
+    },
+
+    _getLineSymbolBySetting:function(checkValidity){
+      if(checkValidity){
+        if(!this.lineWidth.validate()){
+          return null;
+        }
+      }
+      this.symbol = new SimpleLineSymbol();
+      var color = this.lineColor.getColor();
+      var style = this.lineStylesSelect.get('value');
+      color.a = this.lineAlpha.getAlpha();
+      //color.a = parseFloat(this.lineAlpha.get('value'));
+      var width = parseFloat(this.lineWidth.get('value'));
+      this.symbol.setStyle(style);
+      this.symbol.setColor(color);
+      this.symbol.setWidth(width);
+      this._updatePreview(this.lineSymPreview);
+      return this.symbol;
+    },
+
+    //change fillSection type, fillSection or arrowSection
+    setFillSectionType: function(isArrow){
+      if(isArrow){ //arrow
+        html.addClass(this.fillSection, 'arrow-symbol-section');
+      }else{ //other polygons
+        html.removeClass(this.fillSection, 'arrow-symbol-section');
+        // update symbol when changing section type(fill or arrow)
+        // reset to symbol's default arrowWidth for keeping current symbol for polygon to draw
+        if(this.isArrow && !this.arrowWidth.validate()){
+          this.arrowWidth.set('value', 12);
+        }
+      }
+      this.isArrow = isArrow;
+    },
+
+    /* fill section */
+    _initFillSection:function(){
+      this.setFillSectionType(this.isArrow);
+      this._showSection('fill');
+      if(!this._fillEventBinded){
+        this._fillEventBinded = true;
+        this._bindFillEvents();
+        this._requestFillSymJson('fill');
+      }
+
+      this._initFillSettings(this.symbol);
+      this._getFillSymbolBySetting();
+    },
+
+    _bindFillEvents:function(){
+      this.own(
+        on(this.fillIconTables,
+          '.symbol-div-item:click',
+          lang.hitch(this, this._onFillSymIconItemClick))
+      );
+      this.own(on(this.fillColor, 'change', lang.hitch(this, this._onFillSymbolChange, false)));
+      this.own(on(this.fillAlpha, 'change', lang.hitch(this, this._onFillSymbolChange, false)));
+      this.own(on(this.fillOutlineColor, 'change', lang.hitch(this, this._onFillSymbolChange, false)));
+      this.own(on(this.fillOutlineWidth, 'change', lang.hitch(this, this._onFillSymbolChange, false)));
+      this.own(on(this.arrowWidth, 'change', lang.hitch(this, this._onFillSymbolChange, false)));
+    },
+
+    _onFillSymbolChange:function(checkValidity){
+      if(this._invokeSymbolChangeEvent){
+        this._getFillSymbolBySetting(checkValidity);
+        this._onChange(this.symbol);
+      }
+    },
+
+    _initFillSettings:function(symbol){
+      if(!symbol){
+        return;
+      }
+      this._invokeSymbolChangeEvent = false;
+      this.fillColor.setColor(symbol.color);
+      this.fillAlpha.setAlpha(parseFloat(symbol.color.a.toFixed(2)));
+      //this.fillAlpha.set('value',parseFloat(symbol.color.a.toFixed(2)));
+      if(symbol.outline){
+        this.fillOutlineColor.setColor(symbol.outline.color);
+        this.fillOutlineWidth.set('value', parseInt(symbol.outline.width, 10));
+      }
+      this._invokeSymbolChangeEvent = true;
+      this.arrowWidth.set('value', parseInt(symbol.arrowWidth, 10));
+    },
+
+    _isSimpleFillSymbol: function(symbol){
+      return symbol && symbol.declaredClass === 'esri.symbol.SimpleFillSymbol';
+    },
+
+    _requestFillSymJson:function(fileName){
+      var module = "jimu/dijit/SymbolsInfo/" + fileName + ".json";
+      var url = this._getAbsoluteUrl(module);
+      var def = xhr(url, {
+        handleAs: 'json'
+      });
+      def.then(lang.hitch(this, function(jsonSyms) {
+        if(!this.domNode){
+          return;
+        }
+        var table = this._createSymbolIconTable(fileName, jsonSyms, 'fill');
+        html.place(table, this.fillIconTables);
+      }), lang.hitch(this, function(error) {
+        console.error('get fill symbol failed', error);
+      }));
+    },
+
+    _onFillSymIconItemClick:function(event){
+      var target = event.target || event.srcElement;
+      var symDivItem = this._getAncestor(target, function(dom) {
+        return html.hasClass(dom, 'symbol-div-item');
+      }, 5);
+
+      if (!symDivItem) {
+        return;
+      }
+
+      var td = symDivItem.parentNode;
+      var tr = td.parentNode;
+      var tbody = tr.parentNode;
+      query('.selected-symbol-div-item', tbody).removeClass('selected-symbol-div-item');
+      html.addClass(symDivItem, 'selected-symbol-div-item');
+
+      var jsonSym = symDivItem.symbol;
+      if(!jsonSym){
+        return;
+      }
+      var symbol = esriSymJsonUtils.fromJson(jsonSym);
+
+      symbol.arrowWidth = this.symbol.arrowWidth;
+      this._initFillSettings(symbol);
+      this._onFillSymbolChange();
+    },
+
+    _getFillSymbolBySetting:function(checkValidity){
+      if(checkValidity){
+        if(!this.fillOutlineWidth.validate()){
+          return null;
+        }
+        if(this.isArrow && !this.arrowWidth.validate()){
+          return null;
+        }
+      }
+      this.symbol = new SimpleFillSymbol();
+      var color = this.fillColor.getColor();
+      color.a = this.fillAlpha.getAlpha();//parseFloat(this.fillAlpha.get('value').toFixed(2));
+      var outlineColor = this.fillOutlineColor.getColor();
+      var outlineWidth = parseInt(this.fillOutlineWidth.get('value'), 10);
+      outlineWidth = outlineWidth ? outlineWidth : 0; //set it as 0 when outline-input is empty
+      this.symbol.setColor(color);
+      this.symbol.setStyle(SimpleFillSymbol.STYLE_SOLID);
+      var outlineSym = new SimpleLineSymbol();
+      outlineSym.setStyle(SimpleLineSymbol.STYLE_SOLID);
+      outlineSym.setColor(outlineColor);
+      outlineSym.setWidth(outlineWidth);
+      this.symbol.setOutline(outlineSym);
+      var arrowWidth = parseInt(this.arrowWidth.get('value'), 10);
+      this.symbol.arrowWidth = arrowWidth;
+      this._updatePreview(this.fillSymPreview);
+      return this.symbol;
+    },
+
+
+    /* text section */
+    _initTextSection:function(){
+      this._showSection('text');
+      if(!this._textEventBinded){
+        this._textEventBinded = true;
+        this._bindTextEvents();
+      }
+
+      this._initTextSettings();
+      this._getTextSymbolBySetting();
+    },
+
+    _bindTextEvents:function(){
+      this.own(on(this.inputText, 'change', lang.hitch(this, this._onTextSymbolChange)));
+      this.own(on(this.textColor, 'change', lang.hitch(this, this._onTextSymbolChange)));
+      this.own(on(this.textFontSize, 'change', lang.hitch(this, this._onTextSymbolChange)));
+    },
+
+    _onTextSymbolChange:function(){
+      if (this._invokeSymbolChangeEvent) {
+        this._getTextSymbolBySetting();
+        this._onChange(this.symbol);
+      }
+    },
+
+    _initTextSettings:function(symbol){
+      if(!symbol){
+        return;
+      }
+      this._invokeSymbolChangeEvent = false;
+      this.inputText.value = symbol.text;
+      this.textColor.setColor(symbol.color);
+      var size = parseInt(symbol.font.size, 10);
+      this.textFontSize.set('value', size);
+      this._invokeSymbolChangeEvent = true;
+    },
+
+    _isTextSymbol: function(symbol){
+      return symbol && symbol.declaredClass === 'esri.symbol.TextSymbol';
+    },
+
+    _updateTextPreview:function(text, fontFamily){
+      var colorHex = this.textColor.getColor().toHex();
+      var size = parseInt(this.textFontSize.get('value'), 10) + 'px';
+      html.setStyle(this.textPreview, {
+        color: colorHex,
+        fontSize: size,
+        fontFamily: fontFamily
+      });
+      this.textPreview.innerHTML = text;
+    },
+
+    _getTextSymbolBySetting:function(checkValidity){
+      var text = jimuUtils.sanitizeHTML(this.inputText.value);
+      if(checkValidity){
+        if(text.replace(/^\s+|\s+$/g,"") === ''){
+          return null;
+        }
+        if(!this.textFontSize.validate()){
+          return null;
+        }
+      }
+      this.symbol = new TextSymbol();
+      var color = this.textColor.getColor();
+      var size = parseInt(this.textFontSize.get('value'), 10);
+      var font = new Font();// Default font family : Serif
+      font.setSize(size);
+      this.symbol.setText(text);
+      this.symbol.setColor(color);
+      this.symbol.setFont(font);
+      this._updateTextPreview(text, font.family);
+      return this.symbol;
+    },
+
+    _setTemplateNls: function () {
+      //TODO should be delete when nls added
+      if ("undefined" === typeof this.nls.damage) {
+        this.nls.damage = "Damage";
+      }
+      if ("undefined" === typeof this.nls.disasters) {
+        this.nls.disasters = "Disasters";
+      }
+      if ("undefined" === typeof this.nls.emergencyManagement) {
+        this.nls.emergencyManagement = "Emergency Management";
+      }
+      if ("undefined" === typeof this.nls.generalInfrastructure) {
+        this.nls.generalInfrastructure = "General Infrastructure";
+      }
+      if ("undefined" === typeof this.nls.localGovernment) {
+        this.nls.localGovernment = "Local Government";
+      }
+      if ("undefined" === typeof this.nls.numbers) {
+        this.nls.numbers = "Numbers";
+      }
+      if ("undefined" === typeof this.nls.pointsOfInterest) {
+        this.nls.pointsOfInterest = "Points of Interest";
+      }
+      if ("undefined" === typeof this.nls.stateGovernment) {
+        this.nls.stateGovernment = "State Government";
+      }
+    }
+  });
+});

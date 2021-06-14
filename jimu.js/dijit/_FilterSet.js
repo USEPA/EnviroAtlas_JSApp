@@ -1,10 +1,191 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/_FilterSet.html":'\x3cdiv\x3e\r\n\t\x3ctable class\x3d"header-table" cellspacing\x3d"0" cellpadding\x3d"0"\x3e\r\n\t\t\x3ctbody\x3e\r\n\t\t\t\x3ctr\x3e\r\n\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\x3cdiv\x3e\r\n\t\t\t\t\t\t\x3cselect data-dojo-attach-point\x3d"allAnySelect"\x3e\r\n\t\t\t\t\t\t\t\x3coption value\x3d"AND" selected\x3e${nls.matchMsgSetAll}\x3c/option\x3e\r\n\t\t\t\t\t\t\t\x3coption value\x3d"OR"\x3e${nls.matchMsgSetAny}\x3c/option\x3e\r\n\t\t\t\t\t\t\x3c/select\x3e\r\n\t\t\t\t\t\x3c/div\x3e\r\n\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3ctd class\x3d"jimu-filter-set-delete"\x3e\r\n\t\t\t\t\t\x3cdiv role\x3d"button" data-dojo-attach-point\x3d"btnDelete" aria-label\x3d"\'${nls.deleteText}\'" class\x3d"jimu-icon jimu-icon-delete" tabindex\x3d"0"\x3e\x3c/div\x3e\r\n\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3ctd class\x3d"jimu-filter-set-add"\x3e\r\n\t\t\t\t\t\x3cdiv role\x3d"button" data-dojo-attach-point\x3d"btnAdd" aria-label\x3d"\'${nls.addText}\'" class\x3d"jimu-icon jimu-icon-add" tabindex\x3d"0"\x3e\x3c/div\x3e\r\n\t\t\t\t\x3c/td\x3e\r\n\t\t\t\x3c/tr\x3e\r\n\t\t\x3c/tbody\x3e\r\n\t\x3c/table\x3e\r\n\t\x3cdiv data-dojo-attach-point\x3d"allExpsBox" class\x3d"jimu-filter-exps-box"\x3e\r\n\t\x3c/div\x3e\r\n\x3c/div\x3e'}});
-define("dojo/Evented dojo/_base/declare dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/text!./templates/_FilterSet.html dijit/registry dojo/_base/lang dojo/_base/html dojo/_base/array dojo/on dijit/a11yclick dojo/aspect dojo/query ./_SingleFilter".split(" "),function(k,l,m,n,p,q,e,b,f,d,c,g,r,h,t){return l([m,n,p,k],{templateString:q,baseClass:"jimu-filter-set",nls:null,url:null,layerInfo:null,popupFieldsInfo:[],stringFieldType:"",dateFieldType:"",numberFieldTypes:[],partsObj:null,
-OPERATORS:null,enableAskForValues:!1,isHosted:!1,valueProviderFactory:null,runtime:!1,widgetId:"",postMixInProperties:function(){this.nls=window.jimuNls.filterBuilder;this.nls.deleteText=window.jimuNls.common.deleteText;this.nls.addText=window.jimuNls.common.add;this.inherited(arguments)},postCreate:function(){this.inherited(arguments);this._initSelf()},toJson:function(){var a=h(".jimu-single-filter",this.allExpsBox),a=d.map(a,b.hitch(this,function(a){return e.byNode(a).toJson()}));return d.every(a,
-b.hitch(this,function(a){return!!a}))&&0<a.length?{logicalOperator:this.allAnySelect.value,parts:a}:null},showDelteIcon:function(){f.setStyle(this.btnDelete,"display","block")},hideDeleteIcon:function(){f.setStyle(this.btnDelete,"display","none")},_initSelf:function(){this.own(c(this.btnDelete,g,b.hitch(this,function(){this._destroySelf()})));this.own(c(this.btnAdd,g,b.hitch(this,function(){this._addSingleFilter();this.emit("change")})));if(this.partsObj){this.allAnySelect.value=this.partsObj.logicalOperator;
-var a=this.partsObj.parts||[];0===a.length?(this._addSingleFilter(),this._addSingleFilter()):1===a.length?(this._addSingleFilter(a[0]),this._addSingleFilter()):d.forEach(a,b.hitch(this,function(a){this._addSingleFilter(a)}))}else this._addSingleFilter(),this._addSingleFilter();setTimeout(b.hitch(this,function(){this.allAnySelect.focus()}),5)},_addSingleFilter:function(a){a=new t({widgetId:this.widgetId,url:this.url,layerInfo:this.layerInfo,popupFieldsInfo:this.popupFieldsInfo,stringFieldType:this.stringFieldType,
-dateFieldType:this.dateFieldType,numberFieldTypes:this.numberFieldTypes,part:a,OPERATORS:this.OPERATORS,enableAskForValues:this.enableAskForValues,isHosted:this.isHosted,valueProviderFactory:this.valueProviderFactory,isInFilterSet:!0,runtime:this.runtime});a.placeAt(this.allExpsBox);a.startup();this.own(r.after(a,"_destroySelf",b.hitch(this,function(){this._checkFilterNumbers();this.allAnySelect.focus()})));this.own(c(a,"change",b.hitch(this,function(){this.emit("change")})));this._checkFilterNumbers();
-return a},_checkFilterNumbers:function(){var a=h(".jimu-single-filter",this.allExpsBox),c=2<a.length;d.forEach(a,b.hitch(this,function(a){a=e.byNode(a);c?a.showDelteIcon():a.hideDeleteIcon()}))},_destroySelf:function(){this.destroy()}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/Evented',
+  'dojo/_base/declare',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dijit/_WidgetsInTemplateMixin',
+  'dojo/text!./templates/_FilterSet.html',
+  'dijit/registry',
+  'dojo/_base/lang',
+  'dojo/_base/html',
+  'dojo/_base/array',
+  'dojo/on',
+  "dijit/a11yclick",
+  'dojo/aspect',
+  'dojo/query',
+  './_SingleFilter'
+],
+function(Evented, declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, registry,
+  lang, html, array, on, a11yclick, aspect, query, SingleFilter) {
+
+  return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+    templateString:template,
+    baseClass: 'jimu-filter-set',
+    nls: null,
+    url: null,
+    layerInfo: null,
+    popupFieldsInfo:[],
+    stringFieldType: '',
+    dateFieldType: '',
+    numberFieldTypes: [],
+    partsObj: null,
+    OPERATORS: null,
+    enableAskForValues: false,
+    isHosted: false,
+    valueProviderFactory: null,
+    runtime: false, //optional
+    widgetId: '',
+
+    //public methods:
+    //toJson
+
+    //events:
+    //change
+
+    postMixInProperties:function(){
+      this.nls = window.jimuNls.filterBuilder;
+      this.nls.deleteText = window.jimuNls.common.deleteText;
+      this.nls.addText = window.jimuNls.common.add;
+      this.inherited(arguments);
+    },
+
+    postCreate:function(){
+      this.inherited(arguments);
+      this._initSelf();
+    },
+
+    toJson:function(){
+      var nodes = query('.jimu-single-filter', this.allExpsBox);
+      var parts = array.map(nodes, lang.hitch(this, function(node){
+        var filter = registry.byNode(node);
+        return filter.toJson();
+      }));
+      var validParts = array.every(parts, lang.hitch(this, function(part){
+        return !!part;
+      }));
+      if(validParts && parts.length > 0){
+        var result = {
+          logicalOperator: this.allAnySelect.value,
+          parts: parts
+        };
+        return result;
+      }
+      else{
+        return null;
+      }
+    },
+
+    showDelteIcon:function(){
+      html.setStyle(this.btnDelete, 'display', 'block');
+    },
+
+    hideDeleteIcon:function(){
+      html.setStyle(this.btnDelete, 'display', 'none');
+    },
+
+    _initSelf:function(){
+      //this way can't trigger aspect.after
+      // this.own(on(this.btnDelete, a11yclick, lang.hitch(this, this._destroySelf)));
+      this.own(on(this.btnDelete, a11yclick, lang.hitch(this, function(){
+        this._destroySelf();
+      })));
+      this.own(on(this.btnAdd, a11yclick, lang.hitch(this, function(){
+        // var singleFilter = this._addSingleFilter();
+        // singleFilter.domNode.scrollIntoView();
+        this._addSingleFilter();
+        this.emit('change');
+      })));
+      if(this.partsObj){
+        this.allAnySelect.value = this.partsObj.logicalOperator;
+        var parts = this.partsObj.parts || [];
+        if(parts.length === 0){
+          this._addSingleFilter();
+          this._addSingleFilter();
+        }
+        else if(parts.length === 1){
+          this._addSingleFilter(parts[0]);
+          this._addSingleFilter();
+        }
+        else{
+          array.forEach(parts, lang.hitch(this, function(part){
+            this._addSingleFilter(part);
+          }));
+        }
+      }
+      else{
+        this._addSingleFilter();
+        this._addSingleFilter();
+      }
+
+      //focus on allAnySelect instead of singleFilter's fieldSelect
+      setTimeout(lang.hitch(this, function(){
+        this.allAnySelect.focus();
+      }),5);
+    },
+
+    _addSingleFilter:function(/* optional */ part){
+      var args = {
+        widgetId: this.widgetId,
+        url: this.url,
+        layerInfo: this.layerInfo,
+        popupFieldsInfo: this.popupFieldsInfo,
+        stringFieldType: this.stringFieldType,
+        dateFieldType: this.dateFieldType,
+        numberFieldTypes: this.numberFieldTypes,
+        part:part,
+        OPERATORS: this.OPERATORS,
+        enableAskForValues: this.enableAskForValues,
+        isHosted: this.isHosted,
+        valueProviderFactory: this.valueProviderFactory,
+        isInFilterSet: true,
+        runtime: this.runtime
+      };
+      var singleFilter = new SingleFilter(args);
+      singleFilter.placeAt(this.allExpsBox);
+      singleFilter.startup();
+      this.own(aspect.after(singleFilter, '_destroySelf', lang.hitch(this, function(){
+        this._checkFilterNumbers();
+        this.allAnySelect.focus();
+      })));
+      this.own(on(singleFilter, 'change', lang.hitch(this, function(){
+        this.emit('change');
+      })));
+      this._checkFilterNumbers();
+      return singleFilter;
+    },
+
+    _checkFilterNumbers:function(){
+      var nodes = query('.jimu-single-filter', this.allExpsBox);
+      var isShowIcon = nodes.length > 2;
+      array.forEach(nodes, lang.hitch(this, function(node){
+        var filter = registry.byNode(node);
+        if(isShowIcon){
+          filter.showDelteIcon();
+        }
+        else{
+          filter.hideDeleteIcon();
+        }
+      }));
+    },
+
+    _destroySelf:function(){
+      this.destroy();
+    }
+  });
+});

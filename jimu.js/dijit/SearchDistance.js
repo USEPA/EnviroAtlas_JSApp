@@ -1,10 +1,248 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-require({cache:{"url:jimu/dijit/templates/SearchDistance.html":'\x3cdiv\x3e\r\n\t\x3cdiv data-dojo-attach-point\x3d"cbxDiv"\x3e\x3c/div\x3e\r\n\t\x3ctable style\x3d"table-layout:fixed;width:100%;"\x3e\r\n\t\t\x3ccolgroup\x3e\r\n\t\t\t\x3ccol width\x3d"auto"\x3e\x3c/col\x3e\r\n\t\t\t\x3ccol width\x3d"15px"\x3e\x3c/col\x3e\r\n\t\t\t\x3ccol width\x3d"auto"\x3e\x3c/col\x3e\r\n\t\t\x3c/colgroup\x3e\r\n\t\t\x3ctbody\x3e\r\n\t\t\t\x3ctr\x3e\r\n\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\x3cinput data-dojo-attach-point\x3d"numberTextBox" data-dojo-type\x3d"dijit/form/NumberTextBox"\r\n\t\t\t\t\t data-dojo-props\x3d\'"required":true,intermediateChanges:false,constraints:{min:0,pattern:"#####0.##########"}\'\r\n\t\t\t\t\t style\x3d"width:100%;" data-dojo-attach-event\x3d"change:_onNumberTextBoxChanged" /\x3e\r\n\t\t\t\t\x3c/td\x3e\r\n\t\t\t\t\x3ctd\x3e\x3c/td\x3e\r\n\t\t\t\t\x3ctd\x3e\r\n\t\t\t\t\t\x3cselect data-dojo-type\x3d"jimu/dijit/formSelect" data-dojo-attach-point\x3d"unitSelect"\r\n\t\t\t\t\tdata-dojo-attach-event\x3d"change:_onUnitSelectChanged" style\x3d"width:100%;"\x3e\r\n\t\t\t\t\t\t\x3coption value\x3d"MILES" selected\x3e${nls.miles}\x3c/option\x3e\r\n\t\t\t\t\t\t\x3coption value\x3d"KILOMETERS"\x3e${nls.kilometers}\x3c/option\x3e\r\n\t\t\t\t\t\t\x3coption value\x3d"FEET"\x3e${nls.feet}\x3c/option\x3e\r\n\t\t\t\t\t\t\x3coption value\x3d"METERS"\x3e${nls.meters}\x3c/option\x3e\r\n\t\t\t\t\t\t\x3coption value\x3d"YARDS"\x3e${nls.yards}\x3c/option\x3e\r\n\t\t\t\t\t\t\x3coption value\x3d"NAUTICAL_MILES"\x3e${nls.nauticalMiles}\x3c/option\x3e\r\n\t\t\t\t\t\x3c/select\x3e\r\n\t\t\t\t\x3c/td\x3e\r\n\t\t\t\x3c/tr\x3e\r\n\t\t\x3c/tbody\x3e\r\n\t\x3c/table\x3e\r\n\x3c/div\x3e'}});
-define("dojo/_base/declare dijit/_WidgetBase dijit/_TemplatedMixin dijit/_WidgetsInTemplateMixin dojo/text!./templates/SearchDistance.html dojo/Evented dojo/_base/lang jimu/utils jimu/dijit/CheckBox esri/tasks/GeometryService jimu/dijit/formSelect dijit/form/NumberTextBox".split(" "),function(f,g,h,k,l,m,d,e,n,b){return f([g,h,k,m],{baseClass:"jimu-dijit-searchdistance",templateString:l,lastMeters:0,tip:"",distance:0,unit:"",postMixInProperties:function(){this.inherited(arguments);this.nls=d.clone(window.jimuNls.units);
-this.tip||(this.tip=window.jimuNls.searchDistance.applySearchDistance)},postCreate:function(){this.inherited(arguments);this.cbx=new n({label:this.tip,onChange:d.hitch(this,this._onCbxChanged)});this.cbx.placeAt(this.cbxDiv);this.reset();this.setDistance(this.distance);this.setUnit(this.unit);this.lastMeters=this.getMeters()},enable:function(){this.cbx.check()},disable:function(){this.cbx.uncheck()},isEnabled:function(){return this.cbx.getValue()},reset:function(){this.numberTextBox.set("value",0);
-this.unitSelect.set("value","MILES")},getData:function(){return{status:this.getStatus(),isEnabled:this.isEnabled(),distance:this.getDistance(),unit:this.getUnit(),bufferUnit:this.getUnitToBuffer(),meters:this.getMeters()}},getStatus:function(){var a;this.isEnabled()?(a=this.getDistance(),a=0<a?1:0===a?0:-1):a=0;return a},getMeters:function(){var a=0,c=this.getStatus();if(0<c){var c=this.getDistance(),b=this.getUnit();"MILES"===b?a=1609.344*c:"KILOMETERS"===b?a=1E3*c:"FEET"===b?a=.3048*c:"METERS"===
-b?a=c:"YARDS"===b?a=.9144*c:"NAUTICAL_MILES"===b&&(a=1852*c);a=parseFloat(a.toFixed(3))}else 0===c?a=0:0>c&&(a=-1);return a},setDistance:function(a){"number"===typeof a&&0<=a&&this.numberTextBox.set("value",a)},setUnit:function(a){a&&"string"===typeof a&&this.unitSelect.set("value",a)},tryShowValidationError:function(){this.numberTextBox.validate()||e.showValidationErrorTipForFormDijit(this.numberTextBox)},getDistance:function(){return this.numberTextBox.validate()?this.numberTextBox.get("value"):
-(e.showValidationErrorTipForFormDijit(this.numberTextBox),-1)},getUnit:function(){return this.unitSelect.get("value")},getUnitToBuffer:function(){var a="";switch(this.unitSelect.get("value")){case "MILES":a=b.UNIT_STATUTE_MILE;break;case "KILOMETERS":a=b.UNIT_KILOMETER;break;case "FEET":a=b.UNIT_FOOT;break;case "METERS":a=b.UNIT_METER;break;case "YARDS":a=b.UNIT_INTERNATIONAL_YARD;break;case "NAUTICAL_MILES":a=b.UNIT_NAUTICAL_MILE}return a},_onCbxChanged:function(){this.cbx.getValue()?(this.numberTextBox.set("disabled",
-!1),this.unitSelect.set("disabled",!1)):(this.numberTextBox.set("disabled",!0),this.unitSelect.set("disabled",!0));this._emitEvent()},_onNumberTextBoxChanged:function(){this._emitEvent()},_onUnitSelectChanged:function(){this._emitEvent()},_emitEvent:function(){var a=this.getData();a.meters!==this.lastMeters&&(this.lastMeters=a.meters,this.emit("change",a))}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/declare',
+  'dijit/_WidgetBase',
+  'dijit/_TemplatedMixin',
+  'dijit/_WidgetsInTemplateMixin',
+  'dojo/text!./templates/SearchDistance.html',
+  'dojo/Evented',
+  'dojo/_base/lang',
+  'jimu/utils',
+  'jimu/dijit/CheckBox',
+  'esri/tasks/GeometryService',
+  'jimu/dijit/formSelect',
+  'dijit/form/NumberTextBox'
+],
+function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, Evented, lang,
+  jimuUtils, CheckBox, GeometryService) {
+
+  return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
+    baseClass: 'jimu-dijit-searchdistance',
+    templateString: template,
+    lastMeters: 0,//meters
+
+    //options:
+    tip: '',
+    distance: 0,
+    unit: '',
+
+    //methods:
+    //isEnabled
+    //reset
+    //setDistance
+    //setUnit
+    //getData
+    //getDistance
+    //getUnit
+    //getUnitToBuffer
+    //getStatus
+
+    //event:
+    //change
+
+    postMixInProperties:function(){
+      this.inherited(arguments);
+      this.nls = lang.clone(window.jimuNls.units);
+      if(!this.tip){
+        this.tip = window.jimuNls.searchDistance.applySearchDistance;
+      }
+    },
+
+    postCreate: function(){
+      this.inherited(arguments);
+      this.cbx = new CheckBox({
+        label: this.tip,
+        onChange: lang.hitch(this, this._onCbxChanged)
+      });
+      this.cbx.placeAt(this.cbxDiv);
+      this.reset();
+      this.setDistance(this.distance);
+      this.setUnit(this.unit);
+      this.lastMeters = this.getMeters();
+    },
+
+    enable: function(){
+      this.cbx.check();
+    },
+
+    disable: function(){
+      this.cbx.uncheck();
+    },
+
+    isEnabled: function(){
+      return this.cbx.getValue();
+    },
+
+    reset: function(){
+      // this.cbx.uncheck();
+      this.numberTextBox.set('value', 0);
+      this.unitSelect.set('value', "MILES");
+    },
+
+    getData: function(){
+      var data = {
+        status: this.getStatus(),
+        isEnabled: this.isEnabled(),
+        distance: this.getDistance(),
+        unit: this.getUnit(),
+        bufferUnit: this.getUnitToBuffer(),
+        meters: this.getMeters()
+      };
+      return data;
+    },
+
+    //-1 means SearchDistance is enabled with invalid distance number
+    //0 means SearchDistance is not enabled or enabled with distance 0
+    //1 means SearchDistance is enabled with valid distance number
+    getStatus: function(){
+      var status;
+      if(this.isEnabled()){
+        var distance = this.getDistance();
+        if (distance > 0) {
+          status = 1;
+        } else if (distance === 0) {
+          status = 0;
+        } else {
+          status = -1;
+        }
+      }else{
+        status = 0;
+      }
+      return status;
+    },
+
+    //if status < 0, returned value = -1
+    //if status == 0, returned value = 0
+    //if status > 0, returned value > 0
+    getMeters: function(){
+      var meters = 0;
+      var status = this.getStatus();
+      if(status > 0){
+        var distance = this.getDistance();
+        var unit = this.getUnit();
+        if(unit === 'MILES'){
+          meters = distance * 1609.344;
+        }else if(unit === 'KILOMETERS'){
+          meters = distance * 1000;
+        }else if(unit === 'FEET'){
+          meters = distance * 0.3048;
+        }else if(unit === 'METERS'){
+          meters = distance;
+        }else if(unit === 'YARDS'){
+          meters = distance * 0.9144;
+        }else if(unit === 'NAUTICAL_MILES'){
+          meters = distance * 1852;
+        }
+        meters = parseFloat(meters.toFixed(3));
+      }else if(status === 0){
+        meters = 0;
+      }else if(status < 0){
+        meters = -1;
+      }
+      return meters;
+    },
+
+    setDistance: function(distance){
+      if(typeof distance === 'number' && distance >= 0){
+        this.numberTextBox.set('value', distance);
+      }
+    },
+
+    setUnit: function(unit){
+      if(unit && typeof unit === 'string'){
+        this.unitSelect.set('value', unit);
+      }
+    },
+
+    tryShowValidationError: function(){
+      if(!this.numberTextBox.validate()){
+        jimuUtils.showValidationErrorTipForFormDijit(this.numberTextBox);
+      }
+    },
+
+    //always return a number
+    //if return -1, means user input a invalid value
+    getDistance: function(){
+      if(!this.numberTextBox.validate()){
+        jimuUtils.showValidationErrorTipForFormDijit(this.numberTextBox);
+        return -1;
+      }
+      return this.numberTextBox.get('value');
+    },
+
+    getUnit: function(){
+      return this.unitSelect.get('value');
+    },
+
+    getUnitToBuffer: function(){
+      var bufferUnit = '';
+      var unit = this.unitSelect.get('value');
+      switch(unit){
+        case 'MILES':
+          bufferUnit = GeometryService.UNIT_STATUTE_MILE;
+          break;
+        case 'KILOMETERS':
+          bufferUnit = GeometryService.UNIT_KILOMETER;
+          break;
+        case 'FEET':
+          bufferUnit = GeometryService.UNIT_FOOT;
+          break;
+        case 'METERS':
+          bufferUnit = GeometryService.UNIT_METER;
+          break;
+        case 'YARDS':
+          bufferUnit = GeometryService.UNIT_INTERNATIONAL_YARD;
+          break;
+        case 'NAUTICAL_MILES':
+          bufferUnit = GeometryService.UNIT_NAUTICAL_MILE;
+          break;
+        default:
+          break;
+      }
+      return bufferUnit;
+    },
+
+    _onCbxChanged: function(){
+      if(this.cbx.getValue()){
+        this.numberTextBox.set('disabled', false);
+        this.unitSelect.set('disabled', false);
+      }else{
+        this.numberTextBox.set('disabled', true);
+        this.unitSelect.set('disabled', true);
+      }
+      this._emitEvent();
+    },
+
+    _onNumberTextBoxChanged: function(){
+      this._emitEvent();
+    },
+
+    _onUnitSelectChanged: function(){
+      this._emitEvent();
+    },
+
+    _emitEvent: function(){
+      var data = this.getData();
+      if(data.meters !== this.lastMeters){
+        this.lastMeters = data.meters;
+        this.emit("change", data);
+      }
+    }
+
+  });
+});

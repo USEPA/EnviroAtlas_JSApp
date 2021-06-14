@@ -242,7 +242,7 @@ define(['dojo/_base/declare',
                     if (arrlayerId.length > 0) {
                         setTimeout(lang.hitch(this, function() {
                             addAddItemToMapOperational(layersReversed, arrlayerId.pop(), response);
-                        }), 1000);
+                        }), 10);
                     }
                 });
                 window.layerID_Portal_WebMap.push(l.id);
@@ -544,8 +544,8 @@ define(['dojo/_base/declare',
             var dlg = new Message({
                 message : "This will replace all layers currently added to the map. If you wish to save your current layer selection, please use the save session widget first.",
                 type : 'question',
-                buttons : [ {
-                    label : "Proceed",
+                buttons : [{
+                     label : "Proceed",
                     onClick : lang.hitch(this, function() {
                         dlg.close();
                         //console.log('ChangeWebMap :: promptUserToZoomToItem :: zooming to new extent');
@@ -555,8 +555,7 @@ define(['dojo/_base/declare',
                         }
                         this._onConfirmation(item);
                     })
-                },
-                {
+                }, {
                     label : "Cancel and save session",
                     onClick : lang.hitch(this, function() {
                         //console.log('ChangeWebMap :: promptUserToZoomToItem :: keep current extent');
@@ -594,26 +593,23 @@ define(['dojo/_base/declare',
 	                });
                 }, 3000)
             }//
+            
+            /*//copied from original widget
+            var mapConfig = {
+                    "itemId": item.id
+                };
+                // this is the official way to do this, but reloads the whole app instead of just the map
+                //MapManager.getInstance().onAppConfigChanged(this.appConfig, 'mapChange', mapConfig);
+                ConfigManager.getInstance()._onMapChanged(mapConfig);*/
 
             //get all LayerId before adding layers
 
             item.getItemData().then(function(response) {
                 //process operational layers in reverse order to match AGOL
                 layersReversed = response.operationalLayers.reverse();
-                //layersReversed = response.operationalLayers;
-                //first push Dynamic layers so that it will be added at last
-                layersReversed.forEach(function(l) {
-                    if (l.url) {
-                        if (l.id && (l.id != undefined)) {
-                            if (l.layerType == 'ArcGISMapServiceLayer' || l.layerType == 'ArcGISImageServiceLayer' || l.layerType == 'ArcGISTiledMapServiceLayer'){
-                                if (arrlayerId.indexOf(l.id) < 0) {
-                                    arrlayerId.push(l.id);
-                                }
-                            }
-                        }
-                    }
-                })
-                //then push non-Dynamic layers so that it will be added before Dynamic layers
+                
+                                
+                //first push Feature layers so that it will be added at last
                 layersReversed.forEach(function(l) {
                     if (l.url) {
                         if (l.id && (l.id != undefined)) {
@@ -625,6 +621,22 @@ define(['dojo/_base/declare',
                         }
                     }
                 });
+                
+                
+                //layersReversed = response.operationalLayers;
+                //then push Map service layers so that it will be added before Feature layers
+                layersReversed.forEach(function(l) {
+                    if (l.url) {
+                        if (l.id && (l.id != undefined)) {
+                            if (l.layerType == 'ArcGISMapServiceLayer' || l.layerType == 'ArcGISImageServiceLayer' || l.layerType == 'ArcGISTiledMapServiceLayer'){
+                                if (arrlayerId.indexOf(l.id) < 0) {
+                                    arrlayerId.push(l.id);
+                                }
+                            }
+                        }
+                    }
+                });
+
                 
                 addAddItemToMapOperational(layersReversed, arrlayerId.pop(), response);
 

@@ -95,7 +95,8 @@ define({
   },
   "addFromUrl": {
     "type": "Tips",
-    "url": "URL",
+      "url": "URL",
+      "name": "Layer Name",
     "types": {
       "ArcGIS": "ArcGIS Server web serviss",
       "WMS": "WMS OGC web serviss",

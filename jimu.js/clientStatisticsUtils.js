@@ -1,25 +1,940 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define(["dojo/_base/lang","moment/moment","./_chartHelpUtils","jimu/utils","libs/moment/twix"],function(q,l,r,n){window.makeTwix&&window.makeTwix(l);return{getClietStatisticsData:function(a){var b=a.mode;if("feature"===b)return this.getFeatureModeStatisticsData(a);if("category"===b)return this.getCategoryModeStatisticsData(a);if("count"===b)return this.getCountModeStatisticsData(a);if("field"===b)return this.getFieldModeStatisticsData(a)},sortClientStatisticsData:function(a,b,d){return this.sortStatisticsData(a,
-b.mode,b.sortOrder,b.clusterField,b.valueFields,d)},getDataForMaxLabels:function(a,b){return a&&a.length&&"number"===typeof b&&0<b&&b<a.length?a.slice(0,b):a},getFeatureModeStatisticsData:function(a){var b=a.features,d=a.clusterField,c=a.valueFields;a=void 0!==a.showNullLabelData?a.showNullLabelData:!0;var e=this.separateFeaturesWhetherFieldValueNull(d,b),b=e.notNullLabelFeatures,e=e.nullLabelFeatures,b=a?b.concat(e):b;a=[];return a=b.map(function(a){var b=a.attributes,g=b&&b[d],g=this.convertingNullOrUndefinedAsPlaceholders(g);
-a={label:g,values:[],features:[a]};a.values=c.map(function(a){return b[a]});return a}.bind(this))},getCategoryModeStatisticsData:function(a){function b(a){var b=[],f=null,p;for(p in a){f=a[p];p=this.keepFieldValueType(p,f.type,g);var h=this.calcValuesByFeaturesForCatetoryMode(c,f,d,e,m);b.push({label:p,values:h,features:f.features,unit:f.unit})}return b}var d=a.hasStatisticsed,c=a.valueFields,e=a.operation,g=a.dateConfig,h=void 0!==a.showNullLabelData?a.showNullLabelData:!0,m=a.nullValue,f=[],f=this.getCluseringObj(a.clusterField,
-a.features,g);a=f.nullLabel;f=b.call(this,f.notNullLabel);a=b.call(this,a);return f=h?f.concat(a):f},getCountModeStatisticsData:function(a){function b(a){var b=[],c=null,e;for(e in a){var c=a[e],h=this.calcValuesByFeaturesForCountMode(c,g);e=this.keepFieldValueType(e,c.type,d);b.push({label:e,values:h,features:c.features,unit:c.unit})}return b}var d=a.dateConfig,c=void 0!==a.showNullLabelData?a.showNullLabelData:!0,e=[],g=a.hasStatisticsed&&!d,e=this.getCluseringObj(a.clusterField,a.features,d);a=
-e.nullLabel;e=b.call(this,e.notNullLabel);a=b.call(this,a);return e=c?e.concat(a):e},calcValuesByFeaturesForCountMode:function(a,b){return b?a.features.map(function(a){var b=(a=a.attributes)&&a.STAT_COUNT;"undefined"===typeof b&&(b=a.stat_count);return b}.bind(this)):[a.count]},getFieldModeStatisticsData:function(a){var b=a.hasStatisticsed,d=a.features,c=a.operation,e=a.nullValue,g=[];return g=a.valueFields.map(q.hitch(this,function(a){var g=this.getValuesByValueFieldForFieldMode(a,d,b,c),g=this.calcValueByOperation(g,
-c,e);return{label:a,values:[g]}}))},getValueFromAttributes:function(a,b,d,c){if(a)return d="average"===d?"avg":d,c?(c=n.upperCaseString(b+"_"+d),c=a[c],"undefined"===typeof c&&(c=n.lowerCaseString(b+"_"+d),c=a[c])):c=a[b],c},getValuesByValueFieldForFieldMode:function(a,b,d,c){return b.map(q.hitch(this,function(b){return this.getValueFromAttributes(b.attributes,a,c,d)}))},sortStatisticsData:function(a,b,d,c,e,g){function h(a,b,d){var g;if("category"===b)d.isLabelAxis?d.isLabelAxis&&(g=a.label):d.field||
-1!==a.values.length?(d=e.indexOf(d.field),g=a.values[d]):g=a.values[0];else if("count"===b)g=a.label,g=d.isLabelAxis?g:a.values[0];else if("field"===b)g=d.isLabelAxis?a.label:a.values[0];else if("feature"===b){var f=d.field;a&&a.features&&a.features[0]&&(b=a.features[0].attributes)&&(d.isLabelAxis?g=b[c]:f?g=b[f]:a.values.length&&(g=a.values[0]))}return g}if(!d)return a;var m=d.isAsc;if(!Array.isArray(a))return a;a.sort(function(a,e){a=h(a,b,d);e=h(e,b,d);if(d.isLabelAxis&&g&&"field"!==b){var f={};
-f[c]=a;var f=n.getDisplayValueForCodedValueOrSubtype(g,c,f),k={};k[c]=e;k=n.getDisplayValueForCodedValueOrSubtype(g,c,k);f.isCodedValueOrSubtype&&k.isCodedValueOrSubtype&&(a=f.displayValue,e=k.displayValue)}"_NULL\x26UNDEFINED_"===a&&(a=Infinity);"_NULL\x26UNDEFINED_"===e&&(e=Infinity);n.isNumberOrNumberString(a)&&(a=Number(a));n.isNumberOrNumberString(e)&&(e=Number(e));f=a>e?m:!m;Infinity===a?f=m:Infinity===e&&(f=!m);k=0;a!==e&&(k=f?1:-1);return k}.bind(this));return a},convertingNullOrUndefinedAsPlaceholders:function(a){return null===
-a||void 0===a?"_NULL\x26UNDEFINED_":a},keepFieldValueType:function(a,b,d){"number"===b&&(a=Number(a));d&&"_NULL\x26UNDEFINED_"!==a&&(a=Number(a));return a},calcValuesByFeaturesForCatetoryMode:function(a,b,d,c,e){return a.map(function(a){a=this.getValuesByValueFieldForCategoryMode(a,b.features,d,c);return this.calcValueByOperation(a,c,e)}.bind(this))},getValuesByValueFieldForCategoryMode:function(a,b,d,c){return b.map(q.hitch(this,function(b){return this.getValueFromAttributes(b.attributes,a,c,d)}))},
-_isNumber:function(a){return"[object number]"===Object.prototype.toString.call(a).toLowerCase()},_getDateUnit:function(a,b){var d=b;"automatic"===b&&(b=l(a[0]).local(),a=l(a[1]).local(),a=Math.round(a.diff(b,"minute",!0)),0<=a&&1>=a?d="second":1<a&&60>=a?d="minute":60<a&&1440>=a?d="hour":1440<a&&43200>=a?d="day":43200<a&&518400>=a?d="month":518400<a&&(d="year"));return d},_getTimeRange:function(a,b){var d=a.map(q.hitch(this,function(a){return(a=a.attributes)&&a[b]})),d=d.filter(function(a){return!!a});
-a=Math.min.apply(Math,d);d=Math.max.apply(Math,d);return[a,d]},_getTimeTwixs:function(a,b,d){if(0>"year quarter month day hour minute second automatic".split(" ").indexOf(d))return console.log("Invaild data formatter: "+d),!1;a=this._getTimeRange(a,b);if(a[0]===a[1])return!1;d=this._getDateUnit(a,d);b=this.getStartTimeByUnit(a[0],d);b=l(b).local();a=l(a[1]).local();a=b.twix(a).split(1,d);b={startValue:a[a.length-1].end().valueOf(),endValue:Infinity};a.push(b);return{twixs:a,dateUnit:d}},getCluseringObj:function(a,
-b,d){var c={},e={};d?(a=this.getClusteringObjForDateType(a,b,d),c=a.notNullLabel,e=a.nullLabel):(c=this.separateFeaturesWhetherFieldValueNull(a,b),b=c.nullLabelFeatures,c=this.getClusteringObjByField(c.notNullLabelFeatures,a),e=this.getClusteringObjByField(b,a));return{notNullLabel:c,nullLabel:e}},calcValueByOperation:function(a,b,d){if(a&&1===a.length){if(!d)return a[0];if(!this._isNumber(a[0]))return 0}var c;if(0!==a.length){c=0;"max"===b?c=-Infinity:"min"===b&&(c=Infinity);a=d?a.map(function(a){this._isNumber(a)||
-(a=0);return a}.bind(this)):a.filter(function(a){return this._isNumber(a)}.bind(this));var e=0;a.forEach(q.hitch(this,function(a){e++;"average"===b||"sum"===b?c+=a:"max"===b?c=Math.max(c,a):"min"===b&&(c=Math.min(c,a))}));0<e?"average"===b&&(c/=e):c=null}else c=null;return c},getClusteringObjByField:function(a,b){var d={};a.forEach(q.hitch(this,function(a){var c=a.attributes,c=c&&c[b],g=typeof c,c=this.convertingNullOrUndefinedAsPlaceholders(c),h=null;d.hasOwnProperty(c)?(h=d[c],h.features.push(a),
-h.count++):(h={count:1,features:[a],type:g},d[c]=h)}));return d},_removeNaNDataItem:function(a){return a.filter(function(a){var b=!1;a=a.category;"number"===typeof a&&(b=isNaN(a));return!b})},separateFeaturesWhetherFieldValueNull:function(a,b){var d=[],c=[];Array.isArray(b)&&(c=b.filter(function(b){var c=b.attributes,c=c&&c[a];if(null===c||void 0===c)d.push(b);else return!0}));return{nullLabelFeatures:d,notNullLabelFeatures:c}},getStartTimeByUnit:function(a,b){return l(a).startOf(b).utc().valueOf()},
-_mosaicFieldNameWithOperatorAndUpper:function(a,b){return n.upperCaseString(a+"_"+b)},_mosaicFieldNameWithOperatorAndLower:function(a,b){return n.lowerCaseString(a+"_"+b)},getClusteringObjForDateType:function(a,b,d){function c(a,b,c){a[b]?(a=a[b],a.count+=c.count,a.features=a.features.concat(c.features)):a[b]=c}function e(a,b,c,d){b=Number(b);d=this.getStartTimeByUnit(b,d);a[d]?(a=a[d],a.count+=c.count,a.features=a.features.concat(c.features)):(c.originTime=b,a[d]=c)}function g(a,b,c){c[a[0].attributes[b]]=
-{count:1,features:a};return c}var h=this.separateFeaturesWhetherFieldValueNull(a,b),m=h.notNullLabelFeatures;b={};b=this.getClusteringObjByField(h.nullLabelFeatures,a);h={};if(1===m.length)h=g.call(this,m,a,h,d);else if(0!==m.length){var f=this._getTimeTwixs(m,a,d.minPeriod);if(f){var p={},n=f.dateUnit;f.twixs.forEach(function(b){var e="undefined"!==typeof b.startValue?b.startValue:b.start().valueOf(),g="undefined"!==typeof b.endValue?b.endValue:b.end().valueOf(),f={unit:n,count:0,features:[]};m.forEach(q.hitch(this,
-function(b){var c=b.attributes,c=c&&c[a];c>=e&&c<g&&(f.features.push(b),f.count++)}));d.isNeedFilled?c.call(this,p,e,f):0<f.count&&c.call(this,p,e,f)}.bind(this));var f={},k,l;for(k in p)p.hasOwnProperty(k)&&(l=p[k],e.call(this,f,k,l,n));for(k in f)if(f.hasOwnProperty(k)){l=f[k];var r=l.originTime;delete l.originTime;h[r]=l}}else h=g.call(this,m,a,h,d)}return{notNullLabel:h,nullLabel:b}},_mapOptions:function(a,b){"feature"===b?(b=a.labelField,delete a.labelField,a.clusterField=b,a.showNullLabelData=
-!0):"category"===b?(b=a.categoryField,delete a.categoryField,a.clusterField=b,a.showNullLabelData=!0):"count"===b?(b=a.categoryField,delete a.categoryField,a.clusterField=b):"field"===b&&(a.showNullLabelData=!0);return a},_mapDataItemForStatisticsChart:function(a,b){var d,c,e;return a.map(function(a){d=a.label;delete a.label;c=a.values;delete a.values;e=a.features;delete a.features;"feature"===b?(a.category=d,a.valueFields=c,a.dataFeatures=e):"category"===b?(a.category=d,a.valueFields=c,a.dataFeatures=
-e):"count"===b?(a.fieldValue=d,a.count=c[0],a.dataFeatures=e):"field"===b&&(a.label=d,a.value=c[0]);return a})},getFeatureModeStatisticsInfo:function(a){var b=new r({featureLayer:a.layerDefinition,popupInfo:a.popupFieldInfosObj});a=this._mapOptions(a,"feature");var d=a.clusterField,c=this.getFeatureModeStatisticsData(a),c=this.sortStatisticsData(c,"feature",a.sortOrder,d),c=this.getDataForMaxLabels(c,a.maxLabels),c=b.getBestLabelDisplay(c,d,"feature"),c=b.keepStatisticsDataBestDecimalPlace(a,c,"feature");
-return this._mapDataItemForStatisticsChart(c,"feature")},getCategoryModeStatisticsInfo:function(a){var b=new r({featureLayer:a.layerDefinition,popupInfo:a.popupFieldInfosObj});a=this._mapOptions(a,"category");var d=a.clusterField,c=this.getCategoryModeStatisticsData(a),c=this.sortStatisticsData(c,"category",a.sortOrder,null,a.valueFields),c=this._removeNaNDataItem(c),c=this.getDataForMaxLabels(c,a.maxLabels),c=b.getBestLabelDisplay(c,d,"category"),c=b.keepStatisticsDataBestDecimalPlace(a,c,"category");
-return this._mapDataItemForStatisticsChart(c,"category")},getCountModeStatisticsInfo:function(a){var b=new r({featureLayer:a.layerDefinition,popupInfo:a.popupFieldInfosObj});a=this._mapOptions(a,"count");var d=a.clusterField,c=this.getCountModeStatisticsData(a),c=this.sortStatisticsData(c,"count",a.sortOrder),c=this.getDataForMaxLabels(c,a.maxLabels),c=b.getBestLabelDisplay(c,d,"count");return this._mapDataItemForStatisticsChart(c,"count")},getFieldModeStatisticsInfo:function(a){var b=new r({featureLayer:a.layerDefinition,
-popupInfo:a.popupFieldInfosObj});a=this._mapOptions(a,"category");var d=this.getFieldModeStatisticsData(a),d=this.sortStatisticsData(d,"field",a.sortOrder),d=this.getDataForMaxLabels(d,a.maxLabels),d=b.getBestLabelDisplay(d,null,"field"),d=b.keepStatisticsDataBestDecimalPlace(a,d,"field");return this._mapDataItemForStatisticsChart(d,"field")}}});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/lang',
+  'moment/moment',
+  './_chartHelpUtils',
+  'jimu/utils',
+  'libs/moment/twix'
+], function(lang, moment, ChartHelpUtils, jimuUtils) {
+
+  if (window.makeTwix) {
+    window.makeTwix(moment);
+  }
+
+  //punlic method
+  //getClietStatisticsData
+  //  getFeatureModeStatisticsData
+  //  getCategoryModeStatisticsData
+  //  getCountModeStatisticsData
+  //  getFieldModeStatisticsData
+
+  //getCluseringObj
+  //sortClientStatisticsData
+  //getDataForMaxLabels
+
+  //convertingNullOrUndefinedAsPlaceholders
+  //separateFeaturesWhetherFieldValueNull
+  //keepFieldValueType
+  //calcValuesByFeaturesForCatetoryMode
+  //calcValuesByFeaturesForCountMode
+  //getValuesByValueFieldForFieldMode
+  //calcValueByOperation
+
+  // Deprecated, Only used for Chart Widget StatisticsChart.js
+  // getFeatureModeStatisticsInfo
+  // getCategoryModeStatisticsInfo
+  // getCountModeStatisticsInfo
+  // getFieldModeStatisticsInfo
+
+  var mo = {
+    // return {label:'', values:[2000], unit /*optional*/}
+    getClietStatisticsData: function(options) {
+      var mode = options.mode;
+      if (mode === 'feature') {
+        return this.getFeatureModeStatisticsData(options);
+      } else if (mode === 'category') {
+        return this.getCategoryModeStatisticsData(options);
+      } else if (mode === 'count') {
+        return this.getCountModeStatisticsData(options);
+      } else if (mode === 'field') {
+        return this.getFieldModeStatisticsData(options);
+      }
+    },
+
+    //sort order client statistics data
+    sortClientStatisticsData: function(data, options, layerObject) {
+      var mode = options.mode;
+      var sortOrder = options.sortOrder; //{isAsc:boolean,field:''}
+      var valueFields = options.valueFields;
+      var clusterField = options.clusterField;
+      return this.sortStatisticsData(data, mode, sortOrder, clusterField, valueFields, layerObject);
+    },
+
+    //Slice data by input number
+    getDataForMaxLabels: function(data, maxLabels) {
+      if (data && data.length && typeof maxLabels === 'number' &&
+        maxLabels > 0 && maxLabels < data.length) {
+        return data.slice(0, maxLabels);
+      } else {
+        return data;
+      }
+    },
+
+    //options: {features, clusterField, valueFields}
+    //return [{label:'a',values:[10,100,2],features:[f1]}]
+    getFeatureModeStatisticsData: function(options) {
+      var features = options.features;
+      var clusterField = options.clusterField;
+      var valueFields = options.valueFields;
+      var showNullLabelData = options.showNullLabelData !== undefined ? options.showNullLabelData : true;
+
+      var separationFeatures = this.separateFeaturesWhetherFieldValueNull(clusterField, features);
+      var notNullLabelFeatures = separationFeatures.notNullLabelFeatures;
+      var nullLabelFeatures = separationFeatures.nullLabelFeatures;
+
+      features = showNullLabelData ? notNullLabelFeatures.concat(nullLabelFeatures) : notNullLabelFeatures;
+
+      var data = [];
+
+      data = features.map(function(feature) {
+        var attributes = feature.attributes;
+        var fieldValue = attributes && attributes[clusterField];
+        fieldValue = this.convertingNullOrUndefinedAsPlaceholders(fieldValue);
+        var option = {
+          label: fieldValue,
+          values: [],
+          features: [feature]
+        };
+
+        option.values = valueFields.map(function(fieldName) {
+          return attributes[fieldName];
+        });
+        return option;
+      }.bind(this));
+
+      return data;
+    },
+
+    //options:{features, clusterField, valueFields, operation,
+    //dateConfig, /*optional, Only date time type is valid*/
+    //nullValue:boolean /*optional, for 'null' value, calcute as 0 or ignore it*/
+    //showNullLabelData:boolean /* Whether to display the data item whitch cluster field is null */ }
+
+    //return [{label:'a',values:[10,100,2]},
+    //unit/*optional, Only available if the cluster field is a datetime type*/]
+    getCategoryModeStatisticsData: function(options) {
+      //For example: valueFields[0] = hasStatisticsed ? valueFields[0] + operation:valueFields[0]
+      var hasStatisticsed = options.hasStatisticsed;
+
+      var features = options.features;
+      var clusterField = options.clusterField;
+      var valueFields = options.valueFields;
+      var operation = options.operation;
+
+      //dateConfig:{isNeedFilled:boolean,dateFormatter:''//automatic, year, month, day, hour, minute, second}
+      var dateConfig = options.dateConfig;
+
+      var showNullLabelData = options.showNullLabelData !== undefined ? options.showNullLabelData : true;
+      var useNullValueAsZero = options.nullValue; //boolean
+
+      var data = []; //[{label:'a',value:[10,100,2],...]
+
+      var cluseringObj = this.getCluseringObj(clusterField, features, dateConfig);
+      //{label:{count:number, features:[f1,f2...], type},...}
+      var notNullLabelClusteringObj = cluseringObj.notNullLabel;
+      var nullLabelClusteringObj = cluseringObj.nullLabel;
+
+      var notNullLabelClusteredData = clusterByLbabel.call(this, notNullLabelClusteringObj);
+      var nullLabelClusteredData = clusterByLbabel.call(this, nullLabelClusteringObj);
+
+      data = showNullLabelData ? notNullLabelClusteredData.concat(nullLabelClusteredData) : notNullLabelClusteredData;
+      //return [{category:'a',valueFields:[10,100,2],features:[f1,f2...]},...]
+      /*jshint -W083 */
+      function clusterByLbabel(clusteringObj) {
+        var data = [];
+        var categoryObj = null;
+        for (var clusterFieldValue in clusteringObj) {
+          categoryObj = clusteringObj[clusterFieldValue];
+          clusterFieldValue = this.keepFieldValueType(clusterFieldValue, categoryObj.type, dateConfig);
+
+          var values = this.calcValuesByFeaturesForCatetoryMode(valueFields, categoryObj,
+            hasStatisticsed, operation, useNullValueAsZero);
+
+          data.push({
+            label: clusterFieldValue,
+            values: values,
+            features: categoryObj.features,
+            unit: categoryObj.unit
+          });
+        }
+        return data;
+      }
+
+      return data;
+    },
+    //options:{features, clusterField,
+    //dateConfig, /*optional, Only date time type is valid*/
+    //showNullLabelData:boolean /* Whether to display the data item whitch cluster field is null */ }
+
+    //return [{label:'',values:count1,features:[f1,f2...]},
+    //unit/*optional, Only available if the cluster field is a datetime type*/]
+    getCountModeStatisticsData: function(options) {
+      var hasStatisticsed = options.hasStatisticsed;
+      var features = options.features;
+      var clusterField = options.clusterField;
+      //dateConfig:{isNeedFilled:boolean,dateFormatter:''//automatic, year, month, day, hour, minute, second}
+      var dateConfig = options.dateConfig;
+      var showNullLabelData = options.showNullLabelData !== undefined ? options.showNullLabelData : true;
+      var data = []; //[{fieldValue:value1,count:count1,features:[f1,f2...]}]
+      var isStatisticsed = hasStatisticsed && !dateConfig;
+
+      //{fieldValue1:{count:count1,features:[f1,f2...]},...}
+      var cluseringObj = this.getCluseringObj(clusterField, features, dateConfig);
+      var notNullLabelClusteringObj = cluseringObj.notNullLabel;
+      var nullLabelClusteringObj = cluseringObj.nullLabel;
+
+      var notNullLabelClusteredData = clusterByLbabel.call(this, notNullLabelClusteringObj);
+      var nullLabelClusteredData = clusterByLbabel.call(this, nullLabelClusteringObj);
+      data = showNullLabelData ? notNullLabelClusteredData.concat(nullLabelClusteredData) : notNullLabelClusteredData;
+      //return [{label:'a',values:[10,100,2],unit},...]
+      function clusterByLbabel(clusteringObj) {
+        var data = [];
+        var categoryObj = null;
+        for (var clusterFieldValue in clusteringObj) {
+          categoryObj = clusteringObj[clusterFieldValue]; //{count:count1,features:[f1,f2...]}
+          var values = this.calcValuesByFeaturesForCountMode(categoryObj, isStatisticsed); //STAT_COUNT
+          clusterFieldValue = this.keepFieldValueType(clusterFieldValue, categoryObj.type, dateConfig);
+
+          data.push({
+            label: clusterFieldValue,
+            values: values,
+            features: categoryObj.features,
+            unit: categoryObj.unit
+          });
+        }
+        return data;
+      }
+      return data;
+    },
+
+    calcValuesByFeaturesForCountMode: function(categoryObj, hasStatisticsed) {
+
+      var values;
+      if (hasStatisticsed) {
+        var upperValueField = 'STAT_COUNT';
+        var lowerValueField = 'stat_count';
+        var features = categoryObj.features;
+        values = features.map(function(feature) {
+          var attributes = feature.attributes;
+          var v = attributes && attributes[upperValueField];
+          if (typeof v === 'undefined') {
+            v = attributes[lowerValueField];
+          }
+          return v;
+        }.bind(this));
+      } else {
+        values = [categoryObj.count];
+      }
+      return values;
+    },
+
+    //options:{features, valueFields, operation}
+    //nullValue:boolean /*optional, for 'null' value, calcute as 0 or ignore it*/
+    //return {label:'',values: [1,2]}
+    getFieldModeStatisticsData: function(options) {
+      //For example: valueFields[0] = hasStatisticsed ? valueFields[0] + operation:valueFields[0]
+      var hasStatisticsed = options.hasStatisticsed;
+
+      var features = options.features;
+      var valueFields = options.valueFields;
+      var operation = options.operation;
+      var useNullValueAsZero = options.nullValue; //boolean
+
+      var data = [];
+
+      data = valueFields.map(lang.hitch(this, function(fieldName) {
+        var vs = this.getValuesByValueFieldForFieldMode(fieldName, features, hasStatisticsed, operation);
+        var summarizeValue = this.calcValueByOperation(vs, operation, useNullValueAsZero);
+        return {
+          label: fieldName,
+          values: [summarizeValue]
+        };
+      }));
+
+      return data;
+    },
+
+    getValueFromAttributes: function(attributes, fieldName, operation, hasStatisticsed){
+      if (!attributes) {
+        return;
+      }
+      operation = operation === 'average' ? 'avg' : operation;
+      var value;
+      if (!hasStatisticsed) {
+        value = attributes[fieldName];
+      } else {
+        var key = jimuUtils.upperCaseString(fieldName + '_' + operation);
+        value = attributes[key];
+        if (typeof value === 'undefined') {
+          key = jimuUtils.lowerCaseString(fieldName + '_' + operation);
+          value = attributes[key];
+        }
+      }
+      return value;
+    },
+
+    getValuesByValueFieldForFieldMode: function(fieldName, features, hasStatisticsed, operation) {
+      var values = features.map(lang.hitch(this, function(feature) {
+        var value = this.getValueFromAttributes(feature.attributes, fieldName, operation, hasStatisticsed);
+        return value;
+      }));
+      return values;
+    },
+
+    /*------------ Tool method -------------*/
+    //return sorted data
+    sortStatisticsData: function(data, mode, sortOrder, labelField, valueFields, layerObject) {
+      //sortOrder
+      //  isLabelAxis:boolean
+      //  isAsc:boolean
+      //  field:''
+
+      if (!sortOrder) {
+        return data;
+      }
+
+      var isAsc = sortOrder.isAsc;
+
+      function getVaildValue(obj, mode, sortOrder) {
+        var value;
+        if (mode === 'category') {
+          if (!sortOrder.isLabelAxis) {
+            if (!sortOrder.field && obj.values.length === 1) {
+              value = obj.values[0];
+            } else {
+              var index = valueFields.indexOf(sortOrder.field);
+              value = obj.values[index];
+            }
+          } else if (sortOrder.isLabelAxis) {
+            value = obj.label;
+          }
+        } else if (mode === 'count') {
+          var xValue = obj.label;
+          value = sortOrder.isLabelAxis ? xValue : obj.values[0];
+        } else if (mode === 'field') {
+          value = sortOrder.isLabelAxis ? obj.label : obj.values[0];
+        } else if (mode === 'feature') {
+          var attributes, field = sortOrder.field;
+          if (obj && obj.features && obj.features[0]) {
+            attributes = obj.features[0].attributes;
+            if (attributes) {
+              if (sortOrder.isLabelAxis) {
+                value = attributes[labelField];
+              } else {
+                if (field) {
+                  value = attributes[field];
+                } else if (obj.values.length) {
+                  value = obj.values[0];
+                }
+              }
+            }
+          }
+        }
+        return value;
+      }
+
+      if (!Array.isArray(data)) {
+        return data;
+      }
+
+      data.sort(function(a, b) {
+        var aValue = getVaildValue(a, mode, sortOrder);
+        var bValue = getVaildValue(b, mode, sortOrder);
+        if(sortOrder.isLabelAxis && layerObject && mode !== 'field') {
+          var attr1= {};
+          attr1[labelField] = aValue;
+          var res1 = jimuUtils.getDisplayValueForCodedValueOrSubtype(layerObject, labelField, attr1);
+          var attr2= {};
+          attr2[labelField] = bValue;
+          var res2 = jimuUtils.getDisplayValueForCodedValueOrSubtype(layerObject, labelField, attr2);
+          if(res1.isCodedValueOrSubtype && res2.isCodedValueOrSubtype){
+            aValue = res1.displayValue;
+            bValue = res2.displayValue;
+          }
+        }
+        if (aValue === '_NULL&UNDEFINED_') {
+          aValue = Infinity;
+        }
+        if (bValue === '_NULL&UNDEFINED_') {
+          bValue = Infinity;
+        }
+        if (jimuUtils.isNumberOrNumberString(aValue)) {
+          aValue = Number(aValue);
+        }
+        if (jimuUtils.isNumberOrNumberString(bValue)) {
+          bValue = Number(bValue);
+        }
+
+        var sortBoolean = aValue > bValue ? isAsc : !isAsc;
+
+        if (aValue === Infinity) {
+          sortBoolean = isAsc;
+        } else if (bValue === Infinity) {
+          sortBoolean = !isAsc;
+        }
+
+        var sortvalue = 0;
+        if (aValue !== bValue) {
+          sortvalue = sortBoolean ? 1 : -1;
+        }
+
+        return sortvalue;
+      }.bind(this));
+
+      return data;
+    },
+
+    convertingNullOrUndefinedAsPlaceholders: function(value) {
+      if (value === null || value === undefined) {
+        return '_NULL&UNDEFINED_';
+      }
+      return value;
+    },
+
+    keepFieldValueType: function(clusterFieldValue, type, dateConfig) {
+      if (type === 'number') {
+        clusterFieldValue = Number(clusterFieldValue);
+      }
+      if (dateConfig && clusterFieldValue !== '_NULL&UNDEFINED_') {
+        clusterFieldValue = Number(clusterFieldValue);
+      }
+      return clusterFieldValue;
+    },
+
+    calcValuesByFeaturesForCatetoryMode: function(valueFields, categoryObj, hasStatisticsed, operation, nullValue) {
+      var values = valueFields.map(function(fieldName) {
+        var vs = this.getValuesByValueFieldForCategoryMode(fieldName, categoryObj.features,
+          hasStatisticsed, operation);
+        return this.calcValueByOperation(vs, operation, nullValue);
+      }.bind(this));
+      return values;
+    },
+
+    getValuesByValueFieldForCategoryMode: function(fieldName, features, hasStatisticsed, operation) {
+      var values = features.map(lang.hitch(this, function(feature) {
+        var value = this.getValueFromAttributes(feature.attributes, fieldName, operation, hasStatisticsed);
+        return value;
+      }));
+      return values;
+    },
+
+    _isNumber: function(value) {
+      var valueType = Object.prototype.toString.call(value).toLowerCase();
+      return valueType === "[object number]";
+    },
+
+    //return year...second
+    _getDateUnit: function(range, dateFormatter) {
+      var dateUnit = dateFormatter;
+      if (dateFormatter === 'automatic') {
+        var start = moment(range[0]).local();
+        var end = moment(range[1]).local();
+        var minutes = Math.round(end.diff(start, 'minute', true));
+        if (minutes >= 0 && minutes <= 1) {
+          dateUnit = 'second';
+        } else if (minutes > 1 && minutes <= 60) {
+          dateUnit = 'minute';
+        } else if (minutes > 60 && minutes <= 60 * 24) {
+          dateUnit = 'hour';
+        } else if (minutes > 60 * 24 && minutes <= 60 * 24 * 30) {
+          dateUnit = 'day';
+        } else if (minutes > 60 * 24 * 30 && minutes <= 60 * 24 * 30 * 12) {
+          dateUnit = 'month';
+        } else if (minutes > 60 * 24 * 30 * 12) {
+          dateUnit = 'year';
+        }
+      }
+      return dateUnit;
+    },
+
+    //return [minTime, maxTime]
+    _getTimeRange: function(features, fieldName) {
+
+      var times = features.map(lang.hitch(this, function(feature) {
+        var attributes = feature.attributes;
+        return attributes && attributes[fieldName];
+      }));
+      times = times.filter(function(e) {
+        return !!e;
+      });
+
+      var minTime = Math.min.apply(Math, times);
+      var maxTime = Math.max.apply(Math, times);
+      return [minTime, maxTime];
+    },
+    //return {twixs:[], dateUnit:'year...second'}
+    _getTimeTwixs: function(features, fieldName, dateFormatter) {
+      var formats = ['year', 'quarter', 'month', 'day', 'hour', 'minute', 'second', 'automatic'];
+      if (formats.indexOf(dateFormatter) < 0) {
+        console.log('Invaild data formatter: ' + dateFormatter);
+        return false;
+      }
+      var range = this._getTimeRange(features, fieldName);
+      //all time is same
+      if (range[0] === range[1]) {
+        return false;
+      }
+      var dateUnit = this._getDateUnit(range, dateFormatter);
+      //example: dateUnit = month, range[0] = 2/8/2000 08:20:20,
+      //return startTime = 1/8/2000 00:00:00,
+      var startTime = this.getStartTimeByUnit(range[0], dateUnit);
+
+      var start = moment(startTime).local();
+      var end = moment(range[1]).local();
+
+      var tw = start.twix(end);
+      var twixs = tw.split(1, dateUnit);
+      var twixEndValue = twixs[twixs.length - 1].end().valueOf();
+      var lastTwix = {
+        startValue: twixEndValue,
+        endValue: Infinity
+      };
+      twixs.push(lastTwix);
+      return {
+        twixs: twixs,
+        dateUnit: dateUnit
+      };
+    },
+
+    //get the categories by features(for category and count mode)
+    //hashObj:{[hashlabel]:{count:0, features:[f1,f2...]}}
+    //return {notNullLabelHashObj:hashObj,nullLabelHashObj:hashObj}
+    getCluseringObj: function(clusterField, features, dateConfig) {
+
+      var notNullLabelClusteringObj = {};
+      var nullLabelClusteringObj = {};
+
+      if (dateConfig) {
+        var clusterObj = this.getClusteringObjForDateType(clusterField, features, dateConfig);
+        notNullLabelClusteringObj = clusterObj.notNullLabel;
+        nullLabelClusteringObj = clusterObj.nullLabel;
+      } else {
+        var separationFeatures = this.separateFeaturesWhetherFieldValueNull(clusterField, features);
+        var notNullLabelFeatures = separationFeatures.notNullLabelFeatures;
+        var nullLabelFeatures = separationFeatures.nullLabelFeatures;
+        notNullLabelClusteringObj = this.getClusteringObjByField(notNullLabelFeatures, clusterField);
+        nullLabelClusteringObj = this.getClusteringObjByField(nullLabelFeatures, clusterField);
+      }
+
+      return {
+        notNullLabel: notNullLabelClusteringObj,
+        nullLabel: nullLabelClusteringObj
+      };
+    },
+
+    calcValueByOperation: function(values, operation, useNullValueAsZero) {
+
+      if (values && values.length === 1) {
+        if (!useNullValueAsZero) {
+          return values[0];
+        } else if (!this._isNumber(values[0])) {
+          return 0;
+        }
+      }
+
+      var summarizeValue;
+      if (values.length !== 0) {
+        summarizeValue = 0;
+        if (operation === 'max') {
+          summarizeValue = -Infinity;
+        } else if (operation === 'min') {
+          summarizeValue = Infinity;
+        }
+        //handle null value
+        if (useNullValueAsZero) {
+          values = values.map(function(val) {
+            if (!this._isNumber(val)) {
+              val = 0;
+            }
+            return val;
+          }.bind(this));
+        } else {
+          values = values.filter(function(val) {
+            return this._isNumber(val);
+          }.bind(this));
+        }
+        //use nonNullValueCount to record how many feature values are not null for the fieldName
+        var count = 0;
+        values.forEach(lang.hitch(this, function(value) {
+          count++;
+          if (operation === 'average' || operation === 'sum') {
+            summarizeValue += value;
+          } else if (operation === 'max') {
+            summarizeValue = Math.max(summarizeValue, value);
+          } else if (operation === 'min') {
+            summarizeValue = Math.min(summarizeValue, value);
+          }
+        }));
+
+        if (count > 0) {
+          if (operation === 'average') {
+            //summarizeValue = summarizeValue / values.length;
+            summarizeValue = summarizeValue / count;
+          }
+        } else {
+          //if all values for the fieldName are null, we set summarizeValue to null, no matter
+          //what's the value of operation
+          summarizeValue = null;
+        }
+      } else {
+        summarizeValue = null;
+      }
+      return summarizeValue;
+    },
+
+    getClusteringObjByField: function(features, clusterField) {
+      var clusteringObj = {};
+      features.forEach(lang.hitch(this, function(feature) {
+        var attributes = feature.attributes;
+        var clusterFieldValue = attributes && attributes[clusterField];
+        var type = typeof clusterFieldValue;
+        clusterFieldValue = this.convertingNullOrUndefinedAsPlaceholders(clusterFieldValue);
+        var hashValue = null;
+
+        if (clusteringObj.hasOwnProperty(clusterFieldValue)) {
+          hashValue = clusteringObj[clusterFieldValue];
+          hashValue.features.push(feature);
+          hashValue.count++;
+        } else {
+          hashValue = {
+            count: 1,
+            features: [feature],
+            type: type
+          };
+          clusteringObj[clusterFieldValue] = hashValue;
+        }
+      }));
+      return clusteringObj;
+    },
+
+    _removeNaNDataItem: function(data) {
+      return data.filter(function(item) {
+        var isNaNValue = false;
+        var category = item.category;
+        if (typeof category === 'number') {
+          isNaNValue = isNaN(category);
+        }
+        return !isNaNValue;
+      });
+    },
+
+    separateFeaturesWhetherFieldValueNull: function(field, features) {
+      var nullLabelFeatures = [],
+        notNullLabelFeatures = [];
+      if (Array.isArray(features)) {
+        notNullLabelFeatures = features.filter(function(feature) {
+          var attributes = feature.attributes;
+          var fieldValue = attributes && attributes[field];
+          if (fieldValue === null || fieldValue === undefined) {
+            nullLabelFeatures.push(feature);
+          } else {
+            return true;
+          }
+        });
+      }
+      return {
+        nullLabelFeatures: nullLabelFeatures,
+        notNullLabelFeatures: notNullLabelFeatures
+      };
+    },
+
+    getStartTimeByUnit: function(timestamp, unit) {
+      return moment(timestamp).startOf(unit).utc().valueOf();
+    },
+
+    _mosaicFieldNameWithOperatorAndUpper: function(fieldname, operator) {
+      return jimuUtils.upperCaseString(fieldname + '_' + operator);
+    },
+
+    _mosaicFieldNameWithOperatorAndLower: function(fieldname, operator) {
+      return jimuUtils.lowerCaseString(fieldname + '_' + operator);
+    },
+
+    getClusteringObjForDateType: function(clusterField, features, dateConfig) {
+      var separationFeatures = this.separateFeaturesWhetherFieldValueNull(clusterField, features);
+      var notNullLabelFeatures = separationFeatures.notNullLabelFeatures;
+
+      var nullLabelFeatures = separationFeatures.nullLabelFeatures;
+      var nullLabelClusteringObj = {};
+      nullLabelClusteringObj = this.getClusteringObjByField(nullLabelFeatures, clusterField);
+      var notNullLabelClusteringObj = {};
+
+      function updateHashValue(notNullLabelHashObj, clusterFieldValue, hashValue) {
+
+        if (notNullLabelHashObj[clusterFieldValue]) {
+          var oriHashValue = notNullLabelHashObj[clusterFieldValue];
+          oriHashValue.count += hashValue.count;
+          oriHashValue.features = oriHashValue.features.concat(hashValue.features);
+        } else {
+          notNullLabelHashObj[clusterFieldValue] = hashValue;
+        }
+      }
+
+      function clusterByTimestampUnit(clusterObj, clusterFieldValue, valueObj, unit) {
+        clusterFieldValue = Number(clusterFieldValue);
+        var startTime = this.getStartTimeByUnit(clusterFieldValue, unit);
+
+        if (clusterObj[startTime]) {
+          var oriHashValue = clusterObj[startTime];
+          oriHashValue.count += valueObj.count;
+          oriHashValue.features = oriHashValue.features.concat(valueObj.features);
+        } else {
+          valueObj.originTime = clusterFieldValue;
+          clusterObj[startTime] = valueObj;
+        }
+      }
+
+      function getHashObjForOneLabelOfDateType(features, clusterField, notNullLabelHashObj /*dateConfig*/ ) {
+        var attributes = features[0].attributes;
+        var clusterFieldValue = attributes[clusterField];
+        var value = {
+          count: 1,
+          features: features
+        };
+        notNullLabelHashObj[clusterFieldValue] = value;
+
+        return notNullLabelHashObj;
+      }
+
+      if (notNullLabelFeatures.length === 1) {
+        notNullLabelClusteringObj = getHashObjForOneLabelOfDateType.call(this, notNullLabelFeatures, clusterField,
+          notNullLabelClusteringObj, dateConfig);
+      } else if (notNullLabelFeatures.length !== 0) {
+        //{twixs:[], dateUnit:'year...second'}
+        var twixInfo = this._getTimeTwixs(notNullLabelFeatures, clusterField, dateConfig.minPeriod);
+        if (!twixInfo) {
+          notNullLabelClusteringObj = getHashObjForOneLabelOfDateType.call(this, notNullLabelFeatures, clusterField,
+            notNullLabelClusteringObj, dateConfig);
+        } else {
+          var dateClusterObj = {};
+          var twixs = twixInfo.twixs;
+          var dateUnit = twixInfo.dateUnit;
+          twixs.forEach(function(twix) {
+
+            var start = typeof twix.startValue !== 'undefined' ? twix.startValue : twix.start().valueOf(),
+              end = typeof twix.endValue !== 'undefined' ? twix.endValue : twix.end().valueOf();
+            //Get a formatted localized label for chart x axis
+            // var hashLabel = this._getDateCategory(start, dateUnit);
+            var hashValue = {
+              unit: dateUnit,
+              count: 0,
+              features: []
+            };
+            notNullLabelFeatures.forEach(lang.hitch(this, function(feature) {
+              var attributes = feature.attributes;
+              var fieldValue = attributes && attributes[clusterField];
+              if (fieldValue >= start && fieldValue < end) {
+                hashValue.features.push(feature);
+                hashValue.count++;
+              }
+            }));
+            if (dateConfig.isNeedFilled) {
+              updateHashValue.call(this, dateClusterObj, start, hashValue);
+            } else {
+              if (hashValue.count > 0) {
+                updateHashValue.call(this, dateClusterObj, start, hashValue);
+              }
+            }
+          }.bind(this));
+          var cacheObj = {};
+          var label, value;
+          //Cluster again by time stamp's start time
+          for (label in dateClusterObj) {
+            if (dateClusterObj.hasOwnProperty(label)) {
+              value = dateClusterObj[label];
+              clusterByTimestampUnit.call(this, cacheObj, label, value, dateUnit);
+            }
+          }
+          //re origin time stamp
+          for (label in cacheObj) {
+            if (cacheObj.hasOwnProperty(label)) {
+              value = cacheObj[label];
+              var originTime = value.originTime;
+              delete value.originTime;
+              notNullLabelClusteringObj[originTime] = value;
+            }
+          }
+
+        }
+      }
+      return {
+        notNullLabel: notNullLabelClusteringObj,
+        nullLabel: nullLabelClusteringObj
+      };
+    },
+    /* -------- Deprecated, Only used for Chart Widget StatisticsChart.js --------*/
+
+    //In order to be compatible statistiscChart, do this map
+    _mapOptions: function(options, mode) {
+      var labelField, categoryField;
+      if (mode === 'feature') {
+        labelField = options.labelField;
+        delete options.labelField;
+        options.clusterField = labelField;
+        options.showNullLabelData = true;
+      } else if (mode === 'category') {
+        categoryField = options.categoryField;
+        delete options.categoryField;
+        options.clusterField = categoryField;
+        options.showNullLabelData = true;
+      } else if (mode === 'count') {
+        categoryField = options.categoryField;
+        delete options.categoryField;
+        options.clusterField = categoryField;
+      } else if (mode === 'field') {
+        options.showNullLabelData = true;
+      }
+      return options;
+    },
+
+    //In order to be compatible statistiscChart, do this map
+    _mapDataItemForStatisticsChart: function(data, mode) {
+      var label, values, features;
+      return data.map(function(dataItem) {
+        label = dataItem.label;
+        delete dataItem.label;
+
+        values = dataItem.values;
+        delete dataItem.values;
+
+        features = dataItem.features;
+        delete dataItem.features;
+
+        if (mode === 'feature') {
+          dataItem.category = label; //label -> category
+          dataItem.valueFields = values; //values -> valueFields
+          dataItem.dataFeatures = features; //features -> dataFeatures
+        } else if (mode === 'category') {
+          dataItem.category = label; //label -> category
+          dataItem.valueFields = values; //values -> valueFields
+          dataItem.dataFeatures = features; //features -> dataFeatures
+        } else if (mode === 'count') {
+          dataItem.fieldValue = label; //label -> fieldValue
+          dataItem.count = values[0]; //values -> count
+          dataItem.dataFeatures = features; //features -> dataFeatures
+        } else if (mode === 'field') {
+          dataItem.label = label; //label -> label
+          dataItem.value = values[0]; //values -> value
+        }
+        return dataItem;
+      });
+    },
+
+    //---feature mode---
+    //options: {layerDefinition, features, labelField, valueFields, sortOrder}
+    //return [{category:'a',valueFields:[10,100,2],dataFeatures:[f1]}]
+    getFeatureModeStatisticsInfo: function(options) {
+      var chartHelpUtils = new ChartHelpUtils({
+        featureLayer: options.layerDefinition,
+        popupInfo: options.popupFieldInfosObj
+      });
+      options = this._mapOptions(options, 'feature');
+      var clusterField = options.clusterField;
+      // get statistics data
+      var data = this.getFeatureModeStatisticsData(options);
+      //sort order
+      var sortOrder = options.sortOrder; //{isAsc:boolean,field:''}
+      data = this.sortStatisticsData(data, 'feature', sortOrder, clusterField);
+      //slice data for max labels number
+      var maxLabels = options.maxLabels; //number or undefined
+      data = this.getDataForMaxLabels(data, maxLabels);
+      //Make category value's display more friendly //-- x-Axia display --
+      data = chartHelpUtils.getBestLabelDisplay(data, clusterField, 'feature');
+      // keep best decimal places //-- y-Axia display --
+      data = chartHelpUtils.keepStatisticsDataBestDecimalPlace(options, data, 'feature');
+      return this._mapDataItemForStatisticsChart(data, 'feature');
+    },
+
+    //---category mode---
+    //options: {layerDefinition, features, categoryField, valueFields, operation, sortOrder}
+    //return [{category:'a',valueFields:[10,100,2],dataFeatures:[f1,f2...]}]
+    getCategoryModeStatisticsInfo: function(options) {
+      var chartHelpUtils = new ChartHelpUtils({
+        featureLayer: options.layerDefinition,
+        popupInfo: options.popupFieldInfosObj
+      });
+      options = this._mapOptions(options, 'category');
+      var clusterField = options.clusterField;
+      //get statistics data for category mode
+      var data = this.getCategoryModeStatisticsData(options);
+      //sort order
+      var valueFields = options.valueFields;
+      var sortOrder = options.sortOrder;
+      data = this.sortStatisticsData(data, 'category', sortOrder, null, valueFields);
+      //remove NaN data item
+      data = this._removeNaNDataItem(data);
+      //slice data
+      var maxLabels = options.maxLabels; //number or undefined
+      data = this.getDataForMaxLabels(data, maxLabels);
+      //Make category value's display more friendly //-- x-Axia display --
+      data = chartHelpUtils.getBestLabelDisplay(data, clusterField, 'category');
+      // keep best decimal places //-- y-Axia display --
+      data = chartHelpUtils.keepStatisticsDataBestDecimalPlace(options, data, 'category');
+      return this._mapDataItemForStatisticsChart(data, 'category');
+    },
+    //---count mode---
+    //options: {layerDefinition, features, categoryField, sortOrder, maxLabels ...}
+    //return [{fieldValue:'',count:count1,dataFeatures:[f1,f2...]}]
+    getCountModeStatisticsInfo: function(options) {
+      var chartHelpUtils = new ChartHelpUtils({
+        featureLayer: options.layerDefinition,
+        popupInfo: options.popupFieldInfosObj
+      });
+      options = this._mapOptions(options, 'count');
+      var clusterField = options.clusterField;
+      var data = this.getCountModeStatisticsData(options);
+      //sort order
+      var sortOrder = options.sortOrder;
+      data = this.sortStatisticsData(data, 'count', sortOrder);
+      //slice data
+      var maxLabels = options.maxLabels; //number or undefined
+      data = this.getDataForMaxLabels(data, maxLabels);
+      //Make category value's display more friendly //-- x-Axia display --
+      data = chartHelpUtils.getBestLabelDisplay(data, clusterField, 'count');
+      //Convert data[i],category to 'fieldValue'
+      return this._mapDataItemForStatisticsChart(data, 'count');
+    },
+
+    //---field mode---
+    //options: {layerDefinition, features, valueFields, operation}
+    //return {label:'',value:value2}
+    getFieldModeStatisticsInfo: function(options) {
+      var chartHelpUtils = new ChartHelpUtils({
+        featureLayer: options.layerDefinition,
+        popupInfo: options.popupFieldInfosObj
+      });
+      options = this._mapOptions(options, 'category');
+      var data = this.getFieldModeStatisticsData(options);
+      //sort order
+      var sortOrder = options.sortOrder;
+      data = this.sortStatisticsData(data, 'field', sortOrder);
+      //slice data
+      var maxLabels = options.maxLabels; //number or undefined
+      data = this.getDataForMaxLabels(data, maxLabels);
+      //Make category value's display more friendly //-- x-Axia display --
+      data = chartHelpUtils.getBestLabelDisplay(data, null, 'field');
+      // keep best decimal places //-- y-Axia display --
+      data = chartHelpUtils.keepStatisticsDataBestDecimalPlace(options, data, 'field');
+      //Convert data[i],category to 'label'
+      return this._mapDataItemForStatisticsChart(data, 'field');
+    }
+
+  };
+
+  return mo;
+});

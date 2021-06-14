@@ -1,8 +1,177 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/html dojo/_base/declare dojo/_base/lang dojo/on dojo/keys jimu/utils ./ValueProvider dijit/form/ValidationTextBox dijit/form/NumberTextBox ./DateValueSelector".split(" "),function(b,d,e,f,c,g,h,k,l,m){return d([h],{templateString:"\x3cdiv\x3e\x3c/div\x3e",_dijit:null,customId:null,postCreate:function(){this.inherited(arguments);this.customId=this.partObj.vpId;b.addClass(this.domNode,"jimu-filter-simple-value-provider");var a=null;"string"===this.shortType?(a={required:!1,trim:!0,
-intermediateChanges:!1},this.customId&&(a.id=this.customId),this._dijit=new k(a),this._dijit.startup(),this._dijit.on("keydown",function(a){(a.keyCode||a.which)===c.ENTER&&this._dijit.emit("enter")}.bind(this))):"number"===this.shortType?(a={required:!1,intermediateChanges:!1,constraints:{pattern:"#####0.##########"}},this.customId&&(a.id=this.customId),this._dijit=new l(a),this._dijit.startup(),this._dijit.on("keydown",function(a){(a.keyCode||a.which)===c.ENTER&&this._dijit.emit("enter")}.bind(this))):
-(a={runtime:this.runtime,popupInfo:this.popupInfo,_fieldInfo:this.fieldInfo},this.runtime&&(a.virtualDates=this.partObj.interactiveObj.virtualDates),this.customId&&(a.customId=this.customId,a.prompt=this.partObj.interactiveObj.prompt+" "+this.partObj.interactiveObj.hint),this._dijit=new m(a),this.own(f(this._dijit,"change",e.hitch(this,function(a){this.emit("change",a,"start")}))));!this.customId||"string"!==this.shortType&&"number"!==this.shortType||(a=b.toDom('\x3clabel for\x3d"'+this.customId+
-'" class\x3d"screen-readers-only"\x3e'+this.partObj.interactiveObj.prompt+" "+this.partObj.interactiveObj.hint+"\x3c/label\x3e"),b.place(a,this.domNode));b.setStyle(this._dijit.domNode,"width","100%");this._dijit.placeAt(this.domNode)},getDijits:function(){return[this._dijit]},setValueObject:function(a){this.isDefined(a.value)&&("date"===this.shortType?this._dijit.setValueObject(a):this._dijit.set("value",a.value))},getValueObject:function(){if(this.isValidValue())if("date"===this.shortType){var a=
-this._dijit.getValueObject();if(a&&a.value)return a.isValid=!0,a.type=this.partObj.valueObj.type,a}else return a=this._dijit.get("value"),a="number"===this.shortType?parseFloat(a):g.sanitizeHTML(a),{isValid:!0,type:this.partObj.valueObj.type,value:a};return null},tryGetValueObject:function(){return this.isValidValue()?this.getValueObject():this.isEmptyValue()?{isValid:!0,type:this.partObj.valueObj.type,value:null}:null},setRequired:function(a){this._dijit.set("required",a)}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+  'dojo/_base/html',
+  'dojo/_base/declare',
+  'dojo/_base/lang',
+  'dojo/on',
+  'dojo/keys',
+  'jimu/utils',
+  './ValueProvider',
+  'dijit/form/ValidationTextBox',
+  'dijit/form/NumberTextBox',
+  './DateValueSelector'
+],
+  function(html, declare, lang, on,
+    keys, jimuUtils, ValueProvider, ValidationTextBox, NumberTextBox, DateValueSelector) {
+
+    return declare([ValueProvider], {
+
+      templateString: '<div></div>',
+
+      _dijit: null,
+      customId: null, //optional, for screen readers
+
+      postCreate: function(){
+        this.inherited(arguments);
+        this.customId = this.partObj.vpId;
+        html.addClass(this.domNode, 'jimu-filter-simple-value-provider');
+
+        var options = null;
+        if(this.shortType === 'string'){
+          options = {
+            required: false,
+            trim: true,
+            intermediateChanges: false
+          };
+          if(this.customId){
+            options.id = this.customId;
+          }
+          this._dijit = new ValidationTextBox(options);
+
+          this._dijit.startup();
+          this._dijit.on('keydown', (function(e){
+            var code = e.keyCode || e.which;
+            if (code === keys.ENTER) {
+              this._dijit.emit('enter');
+            }
+          }).bind(this));
+        }else if(this.shortType === 'number'){
+          options = {
+            required: false,
+            intermediateChanges: false,
+            constraints: {pattern: "#####0.##########"}
+          };
+          if(this.customId){
+            options.id = this.customId;
+          }
+          this._dijit = new NumberTextBox(options);
+
+          this._dijit.startup();
+          this._dijit.on('keydown', (function(e){
+            var code = e.keyCode || e.which;
+            if (code === keys.ENTER) {
+              this._dijit.emit('enter');
+            }
+          }).bind(this));
+        }else{
+          options = {
+            runtime: this.runtime,
+            popupInfo: this.popupInfo,
+            _fieldInfo: this.fieldInfo
+          };
+          if(this.runtime){
+            options.virtualDates = this.partObj.interactiveObj.virtualDates;
+          }
+          if(this.customId){
+            options.customId = this.customId;
+            options.prompt = this.partObj.interactiveObj.prompt + ' ' + this.partObj.interactiveObj.hint;
+          }
+          this._dijit = new DateValueSelector(options);
+
+          //bind change event
+          this.own(on(this._dijit, 'change', lang.hitch(this, function(date){
+            this.emit('change', date, 'start');
+          })));
+        }
+        //use id&for to read label
+        if(this.customId && (this.shortType === 'string' || this.shortType === 'number')){
+          var labelStr = '<label for="' + this.customId + '" class="screen-readers-only">' +
+           this.partObj.interactiveObj.prompt + ' ' + this.partObj.interactiveObj.hint + '</label>';
+          var labelNode = html.toDom(labelStr);
+          html.place(labelNode, this.domNode);
+        }
+
+        html.setStyle(this._dijit.domNode, 'width', '100%');
+        this._dijit.placeAt(this.domNode);
+      },
+
+      getDijits: function(){
+        return [this._dijit];
+      },
+
+      setValueObject: function(valueObj){
+        if(this.isDefined(valueObj.value)){
+          if(this.shortType === 'date'){
+            //this._dijit is DateValueSelector
+            this._dijit.setValueObject(valueObj);
+          }else{
+            this._dijit.set('value', valueObj.value);
+          }
+        }
+      },
+
+      //return {isValid,type,value}
+      getValueObject: function(){
+        if(this.isValidValue()){
+          if(this.shortType === 'date'){
+            //this._dijit is DateValueSelector
+            var dateValueObject = this._dijit.getValueObject();
+            if(dateValueObject && dateValueObject.value){
+              dateValueObject.isValid = true;
+              dateValueObject.type = this.partObj.valueObj.type;
+              return dateValueObject;
+            }else{
+              return null;
+            }
+          }else{
+            var value = this._dijit.get('value');
+            if(this.shortType === 'number'){
+              value = parseFloat(value);
+            }else{//string
+              value = jimuUtils.sanitizeHTML(value);
+            }
+            return {
+              "isValid": true,
+              "type": this.partObj.valueObj.type,
+              "value": value
+            };
+          }
+        }
+        return null;
+      },
+
+      //return {isValid,type,value}
+      tryGetValueObject: function(){
+        if(this.isValidValue()){
+          return this.getValueObject();
+        }else if(this.isEmptyValue()){
+          return {
+            "isValid": true,
+            "type": this.partObj.valueObj.type,
+            "value": null
+          };
+        }
+        return null;
+      },
+
+      setRequired: function(required){
+        this._dijit.set("required", required);
+      }
+
+    });
+  });

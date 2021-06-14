@@ -1,14 +1,415 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dojo/_base/lang dojo/_base/array dojo/json dojo/Deferred esri/tasks/query esri/tasks/QueryTask esri/tasks/FeatureSet esri/graphic esri/SpatialReference esri/tasks/ProjectParameters esri/config esri/geometry/webMercatorUtils jimu/LayerInfos/LayerInfos ./utils ./CSVUtils ./GeojsonConverters libs/polyfills/FileSaver".split(" "),function(t,d,g,p,l,u,v,m,h,w,x,n,y,z,A,q,B){function r(a,b){10>dojo.isIE?saveTextAs(b,a,"utf-8"):(b=new Blob([b],{type:"text/plain;charset\x3dutf-8"}),
-saveAs(b,a,!0))}var k={createDataSource:function(a){return new C(a)},TYPE_TABLE:"table",TYPE_FEATURESET:"FeatureSet",FORMAT_CSV:"CSV",FORMAT_FEATURESET:"FeatureSet",FORMAT_GEOJSON:"GeoJSON"},C=t(null,{filename:void 0,format:void 0,nls:void 0,data:null,url:null,constructor:function(a){this.nls=window.jimuNls.exportTo;this.data=a.data;this.url=a.url;this.filename=a.filename},setFormat:function(a){this.format=a},download:function(){if(this.format===k.FORMAT_CSV)return this.exportCSV();if(this.format===
-k.FORMAT_FEATURESET)return this.exportFeatureCollection();if(this.format===k.FORMAT_GEOJSON)return this.exportGeoJSON()},getFeatureSet:function(){var a=new l;if(this.data)a.resolve(this.data);else if(this.url){var b=new u;b.returnGeometry=!0;b.outFields=["*"];this.queryTask=new v(this.url);this.queryTask.execute(b,d.hitch(this,function(b){a.resolve(b)}),d.hitch(this,function(){a.resolve(null)}))}else a.resolve(null);return a},findPopupInfo:function(a){if(!a||!a.features||0===a.features.length)return null;
-a=a.features[0];if(a._layer&&(a=a._layer.id,a=z.getInstanceSync().getLayerInfoById(a))){var b=a.getPopupInfo();b||(b=a.layerObject.infoTemplate&&a.layerObject.infoTemplate.info);return b}return null},findLayerDefinition:function(a){if(!a||!a.features||0===a.features.length)return null;var b=a.features[0];if(b._layer)return{geometryType:a.geometryType,fields:b._layer.fields};var c=[],b=b.attributes,e;for(e in b)b.hasOwnProperty(e)&&c.push({name:e});return{geometryType:a.geometryType,fields:c}},formatAttributes:function(a){var b=
-new l,c=this.findPopupInfo(a),e=this.findLayerDefinition(a);if(c&&e){var f=g.map(a.features,function(a){return a.attributes});q._formattedData(a.features[0]._layer,{data:f,outFields:e.fields},{formatNumber:!0,formatDate:!0,formatCodedValue:!0,popupInfo:c,richText:{}}).then(d.hitch(this,function(c){var e=c.datas;c=new m;var d=[];g.forEach(a.features,function(a,b){a=new h(a.toJson());a.attributes=e[b];d.push(a)});c.features=d;c.geometryType=a.geometryType;c.fieldAliases=a.fieldAliases;c.fields=a.fields;
-b.resolve(c)}))}else b.resolve(a);return b},exportCSV:function(){return this.getFeatureSet().then(d.hitch(this,function(a){var b=this.findPopupInfo(a),c=this.findLayerDefinition(a),e=a.features;if(c&&c.fields){var f=d.clone(c.fields);this._addXYAttribute(f,"x");this._addXYAttribute(f,"y");c.fields=f;e=[];g.forEach(a.features,d.hitch(this,function(a){a=new h(a.toJson());a.attributes=this._getAttrsWithXY(a);e.push(a)}))}return q.exportCSVByGraphics(this.filename,c,e,{formatNumber:!0,formatDate:!0,formatCodedValue:!0,
-popupInfo:b})}))},exportGeoJSON:function(){return this.getFeatureSet().then(d.hitch(this,function(a){return this.formatAttributes(a)})).then(d.hitch(this,function(a){return this._projectToWGS84(a)})).then(d.hitch(this,function(a){var b="";if(a&&a.features&&0<a.features.length){var c={type:"FeatureCollection",features:[]};g.forEach(a.features,function(a){c.features.push(B.arcgisToGeoJSON(a))});b=p.stringify(c)}return b})).then(d.hitch(this,function(a){r(this.filename+".geojson",a)}))},exportFeatureCollection:function(){return this.getFeatureSet().then(d.hitch(this,
-function(a){return this.formatAttributes(a)})).then(d.hitch(this,function(a){var b="";a&&(a=a.toJson())&&(b=p.stringify(a));return b})).then(d.hitch(this,function(a){r(this.filename+".json",a)}))},exportToPortal:function(a,b){},_projectToWGS84:function(a){var b=new l,c=this._getSpatialReference(a);if(c)if(4326===parseInt(c.wkid,10))b.resolve(a);else if(c.isWebMercator()){var c=new m,d=[];g.forEach(a.features,function(a){var b=new h(a.toJson());b.geometry=y.webMercatorToGeographic(a.geometry);d.push(b)});
-c.features=d;c.geometryType=a.geometryType;c.fieldAliases=a.fieldAliases;c.fields=a.fields;b.resolve(c)}else{c=new x;c.geometries=g.map(a.features,function(a){return a.geometry});c.outSR=new w(4326);var f=n&&n.defaults&&n.defaults.geometryService;f&&"esri.tasks.GeometryService"===f.declaredClass||(f=A.getArcGISDefaultGeometryService());f.project(c).then(function(c){var d=new m,e=[];g.forEach(a.features,function(a,b){a=new h(a.toJson());a.geometry=c[b];e.push(a)});d.features=e;d.geometryType=a.geometryType;
-d.fieldAliases=a.fieldAliases;d.fields=a.fields;b.resolve(d)},function(a){console.error(a);b.resolve([])})}else b.resolve([]);return b},_getSpatialReference:function(a){if(a.spatialReference)return a.spatialReference;var b;g.some(a.features,function(a){if(a.geometry&&a.geometry.spatialReference)return b=a.geometry.spatialReference,!0});return b},_getAttrsWithXY:function(a){var b=a.geometry;return b&&"point"===b.type?(a=d.clone(a.attributes),"x"in a?a._x=b.x:a.x=b.x,"y"in a?a._y=b.y:a.y=b.y,a):a.attributes},
-_addXYAttribute:function(a,b){var c;c=g.some(a,function(a){return a.name===b})?"_"+b:b;a.push({name:c,alias:c,format:{digitSeparator:!1,places:6},show:!0,type:"esriFieldTypeDouble"});return a}});return k});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+/*global saveAs, saveTextAs */
+define([
+  'dojo/_base/declare',
+  'dojo/_base/lang',
+  'dojo/_base/array',
+  'dojo/json',
+  'dojo/Deferred',
+  'esri/tasks/query',
+  'esri/tasks/QueryTask',
+  'esri/tasks/FeatureSet',
+  'esri/graphic',
+  'esri/SpatialReference',
+  'esri/tasks/ProjectParameters',
+  'esri/config',
+  'esri/geometry/webMercatorUtils',
+  'jimu/LayerInfos/LayerInfos',
+  './utils',
+  './CSVUtils',
+  './GeojsonConverters',
+  'libs/polyfills/FileSaver'
+  ],
+  function(declare, lang, array, JSON, Deferred, Query, QueryTask, FeatureSet, Graphic,
+  SpatialReference, ProjectParameters, esriConfig, webMercatorUtils, LayerInfos,
+  jimuUtils, CSVUtils, GeojsonConverters) {
+    /* global dojo */
+    var mo = {};
+
+    /**
+     * options should contain the following attributes:
+     * 1. type: type of the data source, can be mo.TYPE_TABLE or mo.TYPE_FEATURESET
+     * 2. filename: output file name
+     * 3. url: url of the data source if it is fetched remotely
+     * 4. data: data source if it is local.
+     * You can choose to use url or data, but not both of them.
+     */
+    mo.createDataSource = function(options){
+      return new DataSource(options);
+    };
+
+    mo.TYPE_TABLE = 'table';
+    mo.TYPE_FEATURESET = 'FeatureSet';
+    mo.FORMAT_CSV = 'CSV';
+    mo.FORMAT_FEATURESET = 'FeatureSet';
+    mo.FORMAT_GEOJSON = 'GeoJSON';
+
+    var DataSource = declare(null, {
+      filename: undefined,
+      format: undefined,
+      nls: undefined,
+      data: null,
+      url: null,
+
+      constructor: function(options){
+        this.nls = window.jimuNls.exportTo;
+        this.data = options.data;
+        this.url = options.url;
+        this.filename = options.filename;
+      },
+
+      setFormat: function(value){
+        this.format = value;
+      },
+
+      download: function() {
+        if(this.format === mo.FORMAT_CSV){
+          return this.exportCSV();
+        }else if(this.format === mo.FORMAT_FEATURESET){
+          return this.exportFeatureCollection();
+        }else if(this.format === mo.FORMAT_GEOJSON){
+          return this.exportGeoJSON();
+        }
+      },
+
+      getFeatureSet: function(){
+        var ret = new Deferred();
+
+        if(this.data){
+          ret.resolve(this.data);
+        }else if(this.url){
+          var query = new Query();
+          query.returnGeometry = true;
+          query.outFields = ['*'];
+
+          this.queryTask = new QueryTask(this.url);
+          this.queryTask.execute(query, lang.hitch(this, function(fs){
+            ret.resolve(fs);
+          }), lang.hitch(this, function(){
+            ret.resolve(null);
+          }));
+        }else{
+          ret.resolve(null);
+        }
+
+        return ret;
+      },
+
+      findPopupInfo: function(featureSet) {
+        if (!featureSet || !featureSet.features || featureSet.features.length === 0) {
+          return null;
+        }
+        var feature = featureSet.features[0];
+        var layerId;
+        var fields;
+
+        if(feature._layer) {
+          fields = feature._layer.fields;
+          layerId = feature._layer.id;
+          var layerInfos = LayerInfos.getInstanceSync();
+          var layerInfo = layerInfos.getLayerInfoById(layerId);
+          if (layerInfo) {
+            var popupInfo = layerInfo.getPopupInfo();
+            if (!popupInfo) {
+              // Try another way to get popupInfo
+              popupInfo = layerInfo.layerObject.infoTemplate && layerInfo.layerObject.infoTemplate.info;
+            }
+            return popupInfo;
+          }
+        }
+        return null;
+      },
+
+      findLayerDefinition: function(featureSet) {
+        if (!featureSet || !featureSet.features || featureSet.features.length === 0) {
+          return null;
+        }
+        var feature = featureSet.features[0];
+
+        if(feature._layer) {
+          return {
+            geometryType: featureSet.geometryType,
+            fields: feature._layer.fields
+          };
+        }
+
+        var fields = [];
+        var attributes = feature.attributes;
+        var item;
+        for (item in attributes) {
+          if(attributes.hasOwnProperty(item)){
+            fields.push({
+              name: item
+            });
+          }
+        }
+        return {
+          geometryType: featureSet.geometryType,
+          fields: fields
+        };
+      },
+
+      formatAttributes: function(featureSet) {
+        var def = new Deferred();
+        var popupInfo = this.findPopupInfo(featureSet);
+        var layerDefinition = this.findLayerDefinition(featureSet);
+        if (popupInfo && layerDefinition) {
+          var data = array.map(featureSet.features, function(feature) {
+            return feature.attributes;
+          });
+          CSVUtils._formattedData(featureSet.features[0]._layer, {
+            data: data,
+            outFields: layerDefinition.fields
+          }, {
+            formatNumber: true,
+            formatDate: true,
+            formatCodedValue: true,
+            popupInfo: popupInfo,
+            richText: {}
+          }).then(lang.hitch(this, function(result) {
+            var datas = result.datas;
+            var outFeatureset = new FeatureSet();
+            var features = [];
+            array.forEach(featureSet.features, function(feature, index) {
+              var g = new Graphic(feature.toJson());
+              g.attributes = datas[index];
+              features.push(g);
+            });
+            outFeatureset.features = features;
+            outFeatureset.geometryType = featureSet.geometryType;
+            outFeatureset.fieldAliases = featureSet.fieldAliases;
+            outFeatureset.fields = featureSet.fields;
+            def.resolve(outFeatureset);
+          }));
+        } else {
+          def.resolve(featureSet);
+        }
+        return def;
+      },
+
+      exportCSV: function() {
+        return this.getFeatureSet().then(lang.hitch(this, function(fs){
+          var popupInfo = this.findPopupInfo(fs);
+          var layerDefinition = this.findLayerDefinition(fs);
+          var features = fs.features;
+          if (layerDefinition && layerDefinition.fields) {
+            var outFields = lang.clone(layerDefinition.fields);
+            this._addXYAttribute(outFields, 'x');
+            this._addXYAttribute(outFields, 'y');
+            layerDefinition.fields = outFields;
+            features = [];
+            array.forEach(fs.features, lang.hitch(this, function(feature) {
+              var graphic = new Graphic(feature.toJson());
+              graphic.attributes = this._getAttrsWithXY(graphic);
+              features.push(graphic);
+            }));
+          }
+          return CSVUtils.exportCSVByGraphics(
+            this.filename,
+            layerDefinition,
+            features,
+            {
+              formatNumber: true,
+              formatDate: true,
+              formatCodedValue: true,
+              popupInfo: popupInfo
+            });
+        }));
+      },
+
+      exportGeoJSON: function() {
+        return this.getFeatureSet()
+        .then(lang.hitch(this, function(fs) {
+          return this.formatAttributes(fs);
+        }))
+        .then(lang.hitch(this, function(fs) {
+          return this._projectToWGS84(fs);
+        }))
+        .then(lang.hitch(this, function(featureset){
+          var str = '';
+          if(featureset && featureset.features && featureset.features.length > 0){
+            var jsonObj = {
+              type: 'FeatureCollection',
+              features: []
+            };
+            array.forEach(featureset.features, function(feature) {
+              jsonObj.features.push(GeojsonConverters.arcgisToGeoJSON(feature));
+            });
+            str = JSON.stringify(jsonObj);
+          }
+          return str;
+        }))
+        .then(lang.hitch(this, function(str){
+          download(this.filename + '.geojson', str);
+        }));
+      },
+
+      exportFeatureCollection: function() {
+        return this.getFeatureSet()
+        .then(lang.hitch(this, function(fs) {
+          return this.formatAttributes(fs);
+        }))
+        .then(lang.hitch(this, function(fs){
+          var str = '';
+          if(fs){
+            var jsonObj = fs.toJson();
+            if(jsonObj){
+              str = JSON.stringify(jsonObj);
+            }
+          }
+          return str;
+        }))
+        .then(lang.hitch(this, function(str){
+          download(this.filename + '.json', str);
+        }));
+      },
+
+      exportToPortal: function(format, itemName){
+        /*jshint unused: false*/
+      },
+
+      _projectToWGS84: function(featureSet) {
+        var ret = new Deferred();
+        var sf = this._getSpatialReference(featureSet);
+        if (!sf) {
+          ret.resolve([]);
+        } else {
+          var wkid = parseInt(sf.wkid, 10);
+
+          if (wkid === 4326) {
+            ret.resolve(featureSet);
+          } else if (sf.isWebMercator()) {
+            var outFeatureset = new FeatureSet();
+            var features = [];
+            array.forEach(featureSet.features, function(feature) {
+              var g = new Graphic(feature.toJson());
+              g.geometry = webMercatorUtils.webMercatorToGeographic(feature.geometry);
+              features.push(g);
+            });
+            outFeatureset.features = features;
+            outFeatureset.geometryType = featureSet.geometryType;
+            outFeatureset.fieldAliases = featureSet.fieldAliases;
+            outFeatureset.fields = featureSet.fields;
+            ret.resolve(outFeatureset);
+          } else {
+            var params = new ProjectParameters();
+            params.geometries = array.map(featureSet.features, function(feature) {
+              return feature.geometry;
+            });
+            params.outSR = new SpatialReference(4326);
+
+            var gs = esriConfig && esriConfig.defaults && esriConfig.defaults.geometryService;
+            var existGS = gs && gs.declaredClass === "esri.tasks.GeometryService";
+            if (!existGS) {
+              gs = jimuUtils.getArcGISDefaultGeometryService();
+            }
+
+            gs.project(params).then(function(geometries) {
+              var outFeatureset = new FeatureSet();
+              var features = [];
+              array.forEach(featureSet.features, function(feature, i) {
+                var g = new Graphic(feature.toJson());
+                g.geometry = geometries[i];
+                features.push(g);
+              });
+              outFeatureset.features = features;
+              outFeatureset.geometryType = featureSet.geometryType;
+              outFeatureset.fieldAliases = featureSet.fieldAliases;
+              outFeatureset.fields = featureSet.fields;
+              ret.resolve(outFeatureset);
+            }, function(err) {
+              console.error(err);
+              ret.resolve([]);
+            });
+          }
+        }
+        return ret;
+      },
+
+      _getSpatialReference: function(featureset) {
+        if (featureset.spatialReference) {
+          return featureset.spatialReference;
+        }
+        // Get spatial refrence from graphics
+        var sf;
+        array.some(featureset.features, function(feature) {
+          if (feature.geometry && feature.geometry.spatialReference){
+            sf = feature.geometry.spatialReference;
+            return true;
+          }
+        });
+        return sf;
+      },
+
+      _getAttrsWithXY: function(graphic) {
+        var geometry = graphic.geometry;
+        if (geometry && geometry.type === 'point') {
+          var attrs = lang.clone(graphic.attributes);
+          if ('x' in attrs) {
+            attrs._x = geometry.x;
+          } else {
+            attrs.x = geometry.x;
+          }
+
+          if ('y' in attrs) {
+            attrs._y = geometry.y;
+          } else {
+            attrs.y = geometry.y;
+          }
+          return attrs;
+        }
+
+        return graphic.attributes;
+      },
+
+      _addXYAttribute: function(outFields, fieldName) {
+        var name;
+        var exists = array.some(outFields, function(field) {
+          return field.name === fieldName;
+        });
+        if (exists) {
+          name = '_' + fieldName;
+        } else {
+          name = fieldName;
+        }
+        outFields.push({
+          name: name,
+          alias: name,
+          format: {
+            'digitSeparator': false,
+            'places': 6
+          },
+          show: true,
+          type: "esriFieldTypeDouble"
+        });
+        return outFields;
+      }
+    });
+
+    function download(filename, text) {
+      if (dojo.isIE < 10) {
+        saveTextAs(text, filename, 'utf-8');
+      }else{
+        var blob = new Blob([text], {type: 'text/plain;charset=utf-8'});
+        // Use saveAs(blob, name, true) to turn off the auto-BOM stuff
+        saveAs(blob, filename, true);
+      }
+    }
+
+    return mo;
+  });

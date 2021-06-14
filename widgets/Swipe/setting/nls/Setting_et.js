@@ -1,6 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define({"widgets/Swipe/setting/nls/strings":{styleText:"Valige rullimist\u00f6\u00f6riista stiil",vertical:"Vertikaalne riba",horizontal:"Horisontaalne riba",scope:"Pikksilm",placement:"Suund",showLeftSide:"Kuva rullitavad kihid vasakul pool",showRigthSide:"Kuva rullitavad kihid paremal pool",showUpSide:"Kuva rullitavad kihid \u00fclalpool",showDownSide:"Kuva rullitavad kihid allpool",barColor:"Riba v\u00e4rv",swipeMode:"Rullimisre\u017eiim",singleLayer:"\u00dcks kiht",MultipleLayers:"Mitu kihti",
-allowToSwipe:"Luba rullida",layer:"Kiht",swipeByDefault:"Rulli vaikimisi",defaultLayerMustBeVisible:"vaikekiht peab olema n\u00e4htav",noDefaultLayer:"Vaikimisi rullimiseks m\u00e4\u00e4rake kihid",defaultLayerHolder:"Kl\u00f5psake valimiseks",selectLayers:"Vali kihid",layerText:"Valige rullimise kaudu vaikimisi v\u00f5rreldavad kihid",spyglassText:"Valige pikksilmas vaikimisi kuvatav kiht.",layerHint:"M\u00e4rkus: Rullimine ei m\u00f5ju, kui vastav kiht on peidetud \u00fclemiste kihtide alla.",isZoom:"Suumi rullitavale kihile",
-isZooms:"Suumi rullitavatele kihtidele",layersAvailable:"Valige, milliseid kihte rullida:",_localized:{}}});

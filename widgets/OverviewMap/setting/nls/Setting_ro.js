@@ -1,5 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define({"widgets/OverviewMap/setting/nls/strings":{visible:"Afi\u015fare implicit\u0103 rezumat hart\u0103",minWidth:"L\u0103\u0163ime minim\u0103",minHeight:"\u00cen\u0103l\u0163ime minim\u0103",maxWidth:"L\u0103\u0163ime maxim\u0103",maxHeight:"\u00cen\u0103l\u0163ime maxim\u0103",minText:"Minim",maxText:"maxim",attachText:"Specifica\u0163i col\u0163ul h\u0103r\u0163ii la care se ata\u015feaz\u0103 acest widget.",expandText:"Extinde\u0163i ini\u0163ial widgetul",topLeft:"St\u00e2nga sus",topRight:"Dreapta sus",
-bottomLeft:"St\u00e2nga jos",bottomRight:"Dreapta jos",_localized:{}}});

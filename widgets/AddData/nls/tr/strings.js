@@ -95,7 +95,8 @@ define({
   },
   "addFromUrl": {
     "type": "Tür",
-    "url": "URL",
+      "url": "URL",
+      "name": "Layer Name",
     "types": {
       "ArcGIS": "ArcGIS Server Web Servisi",
       "WMS": "WMS OGC Web Servisi",

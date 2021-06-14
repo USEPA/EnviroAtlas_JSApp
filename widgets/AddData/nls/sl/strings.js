@@ -95,7 +95,8 @@ define({
   },
   "addFromUrl": {
     "type": "Tip",
-    "url": "URL",
+      "url": "URL",
+      "name": "Layer Name",
     "types": {
       "ArcGIS": "Spletna strežniška storitev ArcGIS",
       "WMS": "Spletna storitev WMS OGC",

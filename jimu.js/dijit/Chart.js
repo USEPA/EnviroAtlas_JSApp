@@ -1,12 +1,424 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define("dojo/_base/declare dijit/_WidgetBase dojo/_base/lang dojo/_base/html dojo/Evented libs/echarts/echarts jimu/utils ./_chartUtils ./_Gauge ./_ChartOptionFactory libs/echarts/light libs/echarts/dark".split(" "),function(e,f,d,g,h,k,l,m,n,p){return e([f,h],{baseClass:"jimu-dijit-chart",templateString:"\x3cdiv\x3e\x3c/div\x3e",declaredClass:"jimu.dijit.chart",config:null,postCreate:function(){this.inherited(arguments);this._initChart()},updateConfig:function(a){if(!a||!this.chart)return!1;var b=
-this.chart.getOption(),b=this.preview?null:this.getDatazoomRatio(b);this.config=a;this._specialThemeByConfig(a);var c=this._chartFactory(a);this.chart.setOption(c,!0);this._settingByGrid(a,c,b);return!0},_settingByGrid:function(a,b,c){if("gauge"===a.type)return this._resetGaugePosition(a);var d=this.chartUtils.getAxisZeroPosition();a.layout=this.chartUtils.calcDefaultLayout(a);this.chartUtils.isAxisChart(a)&&(b=this.chartUtils.settingGrid(b,a),b=this.chartUtils.settingDataZoom(b,a,d,c));b=this.chartUtils.settingChartLayout(b,
-a);this.chart.setOption(b,!1)},_resetGaugePosition:function(a){this._resetGaugeGrid(a);this._resetGaugeGraphic(a)},setConfig:function(a){if(!a)return!1;this.config=a;this._specialThemeByConfig(this.config);this.clear();var b=this._chartFactory(this.config);this.chart.setOption(b,!0);this._setAixsGrid(a,b);this._resetGaugePosition(a,b);return!0},destroy:function(){this._offEvents();this.clear();this.inherited(arguments)},_chartFactory:function(a){return this.option=this.chartOptionFactory.produceOption(a)},
-bindEvents:function(a){this.chart&&a.events&&a.events.length&&(this._offEvents(),a.events.forEach(d.hitch(this,function(a){this.chart.on(a.name,a.callback)})))},_offEvents:function(){this.config.events&&this.config.events[0]&&this.config.events.forEach(d.hitch(this,function(a){this.chart.off(a.name)}))},getDataURL:function(){if(this.chart)return this.chart.getDataURL()},clear:function(){this.chart&&this.chart.clear()},resize:function(a,b){this.chart&&(g.setStyle(this.domNode,{width:a||"100%",height:b||
-"100%"}),this.chart.resize(),this._resetGaugePosition(this.config))},getDatazoomRatio:function(a){return(a=a&&a.dataZoom&&a.dataZoom[0])?[a.start,a.end]:null},_resizeDataZoom:function(){var a=this.option,b=this.config;if(a&&b){var c=this.chartUtils.getAxisZeroPosition(),a=this.chartUtils.settingDataZoom(a,b,c);this.chart.setOption(a)}},_setAixsGrid:function(a,b){this.chartUtils.isAxisChart(a)&&(b=this.chartUtils.settingGrid(b,a),this.chart.setOption(b,!1))},_resetGaugeGraphic:function(a){"gauge"===
-a.type&&this.gauge.resetGraphic(a)},_resetGaugeGrid:function(a){"gauge"===a.type&&this.gauge.resetGrid(a)},_specialChartTheme:function(){this.chart&&(this.chart._theme.tooltip.axisPointer={type:"cross",label:{show:!0,precision:2,formatter:function(a){return"number"===typeof a.value?(a=parseFloat(a.value).toFixed(2),this.chartUtils.tryLocaleNumber(a)):a.value}.bind(this)},lineStyle:{color:"#27727B",type:"dashed"},crossStyle:{color:"#27727B"},shadowStyle:{color:"rgba(200,200,200,0.3)"}},this.chart._theme.valueAxis||
-(this.chart._theme.valueAxis={}),this.chart._theme.valueAxis.axisLabel||(this.chart._theme.valueAxis.axisLabel={}),this.chart._theme.valueAxis.axisLabel.formatter=function(a){return l.localizeNumber(a)})},_specialThemeByConfig:function(a){this._initChartTheme();a.color&&a.color[0]&&(this.chart._theme.color=a.color);this.chart._theme.tooltip.confine=!0;var b="percent"===a.stack;this.chart._theme.tooltip.formatter=function(a){return this.chartUtils.handleToolTip(a,null,!1,b)}.bind(this)},_initChartTheme:function(){this.chart&&
-(this.chart._theme||(this.chart._theme={}),this.chart._theme.tooltip||(this.chart._theme.tooltip={}),this.chart._theme.valueAxis||(this.chart._theme.valueAxis={}),this.chart._theme.valueAxis.axisLabel||(this.chart._theme.valueAxis.axisLabel={}))},_initChart:function(){this.chart=k.init(this.domNode,this.config&&this.config.theme||"light");this.chartUtils=new m({chart:this.chart});this.gauge=new n({chart:this.chart,chartUtils:this.chartUtils});this.chartOptionFactory=new p({chart:this.chart,gauge:this.gauge,
-chartUtils:this.chartUtils});this._specialChartTheme(this.config)}})});
+///////////////////////////////////////////////////////////////////////////
+// Copyright © Esri. All Rights Reserved.
+//
+// Licensed under the Apache License Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+///////////////////////////////////////////////////////////////////////////
+
+define([
+    'dojo/_base/declare',
+    'dijit/_WidgetBase',
+    'dojo/_base/lang',
+    'dojo/_base/html',
+    'dojo/Evented',
+    'libs/echarts/echarts',
+    'jimu/utils',
+    './_chartUtils',
+    './_Gauge',
+    './_ChartOptionFactory',
+    'libs/echarts/light',
+    'libs/echarts/dark'
+  ],
+  function(declare, _WidgetBase, lang, html, Evented, echarts,
+    jimuUtils, ChartUtils, Gauge, ChartOptionFactory) {
+
+    return declare([_WidgetBase, Evented], {
+      'baseClass': 'jimu-dijit-chart',
+      templateString: '<div></div>',
+      declaredClass: 'jimu.dijit.chart',
+      // constructor -> this.config, this.chartDom, this.preview: boolean
+
+      //public methods:
+      //setConfig -> update the option of this.chart.
+      //updateConfig -> update this.config's value
+      //clear -> Removes all components and charts in this.chart.
+      //resize -> Resizes chart, which should be called manually when container size changes.
+
+      //config params:
+      // "type":"bar", //"column", "line", "pie", "radar", "funnel", "gauge"
+      // "title":"string",
+      // "legend":{show:true,textStyle:{}},
+      // "xAxis":{name:'',show:true,textStyle:{},nameTextStyle:{}},
+      // yAxis: {
+      //   name: '',
+      //   show: true,
+      //   nameTextStyle: {},
+      //   format: {
+      //     type: 'int' | 'float' | 'string',
+      //     places: number,
+      //     digitSeparator: boolean
+      //   }
+      // }
+      // "dataLabel":{show:true,textStyle:{}},
+      // tooltip: {
+      //   "confine":boolean,//Whether the tooltip is limited to canvas tag,
+      //   "trigger": item | axis,
+      //   "axisPointer": {
+      //      "type": line | shadow | cross | none,
+      //      "snap" : boolean
+      //   }
+      // }
+      // "theme":"",//A registered theme name, light or dark
+      // "toolbox": ["saveAsImage", "restore", "dataView", "magicType"],
+      // "color":[],//[#fff]
+      // "backgroundColor": "#fff",
+      // "scale": true, //if stack = true,  force scale = false
+      // "dataZoom": ["slider"], //inside
+      // "dataZoomOption": {
+      //    mode: 'AUTO', // ALL
+      // }
+      // "events": [{
+      //   "name": "", //"click"、"dblclick"、"mousedown"、"mousemove"、"mouseup"、"mouseover"、"mouseout"
+      //   "callback": "function (params) {}"
+      // }],
+      // "labels": [],
+      // "series": [{}], //series:[{name,data:[number or serie obj}]
+      // /**pie*/
+      // "pieMode": "",//normal,rose
+      // "roseType":"",//radius, area
+      // "labelLine": "boolean",
+      // innerRadius:number,0-50
+      // /**bar line colmun*/
+      // "stack": 'normal','percent'
+      // /* line */
+      // area:true
+      // /**funnel*/
+      // "funnelSort": "descending",
+      // /**funnel gauge*/
+      // "min/max": {
+      //    value: number,
+      //    format:{
+      //      places: number,
+      //      digitSeparator: boolean
+      //    }
+      // },
+      // /**radar*/
+      // "radarShape": "circle", //["circle", "polygon"],
+      // "indicator": [{}], //{name,max} only for radar
+      // /**gauge*/
+      // shape:"curved" //horizontal,vertical,curved
+      // "gaugeOption": {
+      //   "columnColor":"#000",
+      //   "bgColor":"",
+      //   "valueStyle":{
+      //     textStyle:{
+      //       color:"#fff",
+      //       fontSize:20,
+      //       fontWeight:'bold',
+      //       fontStyle:'italic',
+      //       fontFamily:'Avenir Next'
+      //     },
+      //     formatter:'function'
+      //   },
+      //   "labelColor":"#000",
+      //   "targetValue:[{value, format: {
+      //      places: number,
+      //      digitSeparator: boolean
+      //   }}]",
+      //   "showDataRangeLabel":boolean,
+      //   "showTargetValueLabel":boolean,
+      // },
+      // /**advance option*/
+      // "advanceOption": {},
+      // markLine:{
+      //   data: [{
+      //     "name": "",
+      //     "label": {
+      //       "show": "boolean",
+      //       "position": "", //start, middle, end
+      //       "color": "",
+      //       "fontSize": 12
+      //     },
+      //     "lineStyle": {
+      //        "color": "",
+      //        "width": 12,
+      //        "type": "solid", //dashed, dotted
+      //     },
+      //     "x/yAxis": 1,
+      //  }]
+      //}
+      // markArea:[{
+      //   "data": [{
+      //      "name": "",
+      //      "x/yAxis": 1,
+      //      "label": {
+      //        "show": "boolean",
+      //        "position": "", //"top", "left","right","bottom",
+      //                        "inside","insideLeft","insideRight","insideTop",
+      //                        "insideBottom","insideTopLeft","insideBottomLeft",
+      //                        "insideTopRight","insideBottomRight",
+      //        "color": "",
+      //        "fontSize": 12
+      //      },
+      //      "itemStyle": {
+      //         "color": "",
+      //         "opacity": 1
+      //      },
+      //      }, {
+      //        "x/yAxis": 1,
+      //      }]
+      // }]
+
+      config: null,
+
+      postCreate: function() {
+        this.inherited(arguments);
+        this._initChart();
+      },
+
+      updateConfig: function(config) {
+        if (!config || !this.chart) {
+          return false;
+        }
+
+        var prevOption = this.chart.getOption();
+        var prevRatio = !this.preview ? this.getDatazoomRatio(prevOption) : null;
+
+        this.config = config;
+        this._specialThemeByConfig(config);
+        var option = this._chartFactory(config);
+        this.chart.setOption(option, true);
+
+        this._settingByGrid(config, option, prevRatio);
+
+        return true;
+      },
+
+      _settingByGrid: function(config, option, prevRatio) {
+        if (config.type === 'gauge') {
+          return this._resetGaugePosition(config);
+        }
+        var position = this.chartUtils.getAxisZeroPosition();
+        config.layout = this.chartUtils.calcDefaultLayout(config);
+        if (this.chartUtils.isAxisChart(config)) {
+          option = this.chartUtils.settingGrid(option, config);
+          option = this.chartUtils.settingDataZoom(option, config, position, prevRatio);
+        }
+        option = this.chartUtils.settingChartLayout(option, config);
+        this.chart.setOption(option, false);
+      },
+
+      _resetGaugePosition: function(config) {
+        this._resetGaugeGrid(config);
+        this._resetGaugeGraphic(config);
+      },
+
+      setConfig: function(config) {
+        if (!config) {
+          return false;
+        }
+
+        this.config = config;
+
+        this._specialThemeByConfig(this.config);
+        this.clear();
+        var option = this._chartFactory(this.config);
+        this.chart.setOption(option, true);
+
+        this._setAixsGrid(config, option);
+        this._resetGaugePosition(config, option);
+
+        return true;
+      },
+
+      destroy: function() {
+        this._offEvents();
+        this.clear();
+        this.inherited(arguments);
+      },
+
+      _chartFactory: function(config) {
+        this.option = this.chartOptionFactory.produceOption(config);
+        return this.option;
+      },
+
+      bindEvents: function(config) {
+        if (!this.chart || !config.events || !config.events.length) {
+          return;
+        }
+        this._offEvents();
+        config.events.forEach(lang.hitch(this, function(event) {
+          this.chart.on(event.name, event.callback);
+        }));
+
+      },
+
+      _offEvents: function() {
+        if (this.config.events && this.config.events[0]) {
+          this.config.events.forEach(lang.hitch(this, function(event) {
+            this.chart.off(event.name);
+          }));
+        }
+      },
+
+      getDataURL: function() {
+        if (!this.chart) {
+          return;
+        }
+        return this.chart.getDataURL();
+      },
+
+      clear: function() {
+        if (!this.chart) {
+          return;
+        }
+        this.chart.clear();
+      },
+
+      resize: function(width, height) {
+        if (!this.chart) {
+          return;
+        }
+
+        html.setStyle(this.domNode, {
+          width: width || '100%',
+          height: height || '100%'
+        });
+        this.chart.resize();
+        this._resetGaugePosition(this.config);
+      },
+
+      getDatazoomRatio: function(option){
+        var dataZoom = option && option.dataZoom && option.dataZoom[0]
+        var ratio = dataZoom ? [dataZoom.start, dataZoom.end] : null;
+        return ratio
+      },
+
+      _resizeDataZoom: function() {
+        var option = this.option;
+        var config = this.config;
+        if (!option || !config) {
+          return;
+        }
+        var position = this.chartUtils.getAxisZeroPosition();
+        option = this.chartUtils.settingDataZoom(option, config, position);
+        this.chart.setOption(option);
+      },
+
+      _setAixsGrid: function(config, option) {
+        if (this.chartUtils.isAxisChart(config)) {
+          option = this.chartUtils.settingGrid(option, config);
+          this.chart.setOption(option, false);
+        }
+      },
+
+      _resetGaugeGraphic: function(config) {
+        if (config.type === 'gauge') {
+          this.gauge.resetGraphic(config);
+        }
+      },
+
+      _resetGaugeGrid: function(config) {
+        if (config.type === 'gauge') {
+          this.gauge.resetGrid(config);
+        }
+      },
+
+      _specialChartTheme: function() {
+        if (!this.chart) {
+          return;
+        }
+        //_theme.axisPointer
+        this.chart._theme.tooltip.axisPointer = {
+          type: 'cross',
+          label: {
+            show: true,
+            precision: 2,
+            formatter: function(params) {
+              if (typeof params.value === 'number') {
+                var value = parseFloat(params.value).toFixed(2);
+                return this.chartUtils.tryLocaleNumber(value);
+              } else {
+                return params.value;
+              }
+            }.bind(this)
+          },
+          lineStyle: {
+            color: '#27727B',
+            type: 'dashed'
+          },
+          crossStyle: {
+            color: '#27727B'
+          },
+          shadowStyle: {
+            color: 'rgba(200,200,200,0.3)'
+          }
+        };
+        //value axis formatter
+        if (!this.chart._theme.valueAxis) {
+          this.chart._theme.valueAxis = {};
+        }
+        if (!this.chart._theme.valueAxis.axisLabel) {
+          this.chart._theme.valueAxis.axisLabel = {};
+        }
+        this.chart._theme.valueAxis.axisLabel.formatter = function(value) {
+          return jimuUtils.localizeNumber(value);
+        };
+      },
+
+      _specialThemeByConfig: function(config) {
+        this._initChartTheme();
+        //mixin color to _theme
+        if (config.color && config.color[0]) {
+          this.chart._theme.color = config.color;
+        }
+        this.chart._theme.tooltip.confine = true;
+
+        var isPercent = config.stack === 'percent';
+
+        this.chart._theme.tooltip.formatter = function(params) {
+          return this.chartUtils.handleToolTip(params, null, false, isPercent);
+        }.bind(this);
+      },
+
+      _initChartTheme: function() {
+        if (!this.chart) {
+          return;
+        }
+        if (!this.chart._theme) {
+          this.chart._theme = {};
+        }
+        if (!this.chart._theme.tooltip) {
+          this.chart._theme.tooltip = {};
+        }
+        if (!this.chart._theme.valueAxis) {
+          this.chart._theme.valueAxis = {};
+        }
+        if (!this.chart._theme.valueAxis.axisLabel) {
+          this.chart._theme.valueAxis.axisLabel = {};
+        }
+      },
+
+      _initChart: function() {
+        var theme = this.config && this.config.theme;
+        theme = theme || 'light';
+        this.chart = echarts.init(this.domNode, theme);
+
+        this.chartUtils = new ChartUtils({
+          chart: this.chart
+        });
+
+        this.gauge = new Gauge({
+          chart: this.chart,
+          chartUtils: this.chartUtils
+        });
+
+        this.chartOptionFactory = new ChartOptionFactory({
+          chart: this.chart,
+          gauge: this.gauge,
+          chartUtils: this.chartUtils
+        });
+        this._specialChartTheme(this.config);
+      }
+
+    });
+  });

@@ -1,4 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define({"widgets/Swipe/nls/strings":{_widgetLabel:"Podrsni",swipeText:" Izberite sloje, ki jih \u017eelite podrsniti",spyglassText:"Izberite sloj, ki se bo pokazal znotraj lupe",disableTips:"Kliknite za onemogo\u010danje orodja za podrsanje",enableTips:"Kliknite za omogo\u010danje orodja za podrsanje",defaultLayerHolder:"Kliknite za izbiro",selectLayers:"Izberi sloje",nItemsSelected:"izbranih slojev",showList:"prika\u017ei seznam slojev",hideList:"skrij seznam slojev",_localized:{}}});

@@ -182,7 +182,7 @@ var _config = {
             'divid':'4',
             'fields':{
                 'TOTALPOP':{'description':'Total Population', 'cumulate':true, 'digits':3},
-                'PCT_MINORITY':{'description':'Minority'},
+                'PCT_MINORITY':{'description':'People of Color'},
                 'PCT_BPOV':{'description':'Below Poverty Level'},
                 'PCT_LOWINC':{'description':'Low Income (<2x poverty level)'},
                 'PCT_AGE_LT5':{'description':'Less than age 5'},

@@ -212,10 +212,6 @@ define([
           lang.hitch(this, this._onLayerInfosIsVisibleChanged)));
 
         this.own(on(this.operLayerInfos,
-          'updated',
-          lang.hitch(this, this._onLayerInfosObjUpdated)));
-
-        this.own(on(this.operLayerInfos,
           'layerInfosReorder',
           lang.hitch(this, this._onLayerInfosReorder)));
 
@@ -236,56 +232,16 @@ define([
           lang.hitch(this, this._onLayerInfosScaleRangeChanged)));
       },
 
-      _onLayerInfosChanged: function(layerInfo, changedType) {
+      _onLayerInfosChanged: function(/*layerInfo, changedType*/) {
         //this._refresh();//Comment out this line, otherwise there will some duplicate layer names in LayerList widget
-        /*if (layerInfo){
-            if(changedType === "added") {
-              var allLayers = this.map.layerIds.concat(this.map.graphicsLayerIds);
-
-              var layerIndex = array.indexOf(allLayers, layerInfo.id);
-              var refLayerId = null;
-              var refLayerNode = null;
-              var refHrNodeNonGraphic = null;
-              for(var i = layerIndex - 1; i >= 0; i--) {
-                refLayerId = allLayers[i];
-                var layerId = parseInt(refLayerId.replace(window.layerIdPrefix, "").replace(window.layerIdTiledPrefix, "").replace(window.addedLayerIdPrefix, ""));
-                if (window.featureLyrNumber.indexOf(layerId) >= 0){
-                    refLayerNode = query("[class~='layer-tr-node-" + refLayerId + "']", this.domNode)[0];	            
-                    if(refLayerNode) {
-                      break;
-                    }
-                }
-              }
-              refHrNode = query("[class~='hrClass']", this.domNode)[0];
-              refHrNodeNonGraphic = query("[class~='hrClassNonGraphic']", this.domNode)[0];
-              var layerId = parseInt(layerInfo.id.replace(window.layerIdPrefix, "").replace(window.layerIdTiledPrefix, "").replace(window.addedLayerIdPrefix, ""));
-              if (((layerInfo.layerObject.type) && (layerInfo.layerObject.type.toUpperCase() == "FEATURE LAYER")) ||((layerInfo.layerObject.url.toUpperCase().indexOf("FEATURESERVER")&&(layerInfo.layerObject.url.toUpperCase().indexOf("ARCGIS.COM"))) )) {
-                  if(refLayerNode) {	          	
-                    this.layerListView.drawListNode(layerInfo, 0, refLayerNode, 'before');
-                  } else {
-                    this.layerListView.drawListNode(layerInfo, 0, refHrNode, 'before');
-                  }
-               } else {
-                  this.layerListView.drawListNode(layerInfo, 0, refHrNodeNonGraphic, 'before');
-               }
-
-            } else {
-              this.layerListView.destroyLayerTrNode(layerInfo);
-            }
-        }*/
+        this.layerFilter.cancelFilter();
        this.layerListView.refresh();
       },
 
-      _onTableInfosChanged: function(tableInfoArray, changedType) {
-        if(changedType === "added") {
-          array.forEach(tableInfoArray, function(tableInfo) {
-            this.layerListView.drawListNode(tableInfo, 0, this.layerListView.tableListTable);
-          }, this);
-        } else {
-          array.forEach(tableInfoArray, function(tableInfo) {
-            this.layerListView.destroyLayerTrNode(tableInfo);
-          }, this);
-        }
+      _onTableInfosChanged: function(/*tableInfoArray, changedType*/) {
+        //udpates layerFilter.isValid to false first
+        this.layerFilter.cancelFilter();
+        this.layerListView.refresh();
       },
 
       _onLayerInfosIsVisibleChanged: function(changedLayerInfos) {
@@ -305,10 +261,6 @@ define([
 
           }, this);
         }
-      },
-
-      _onLayerInfosObjUpdated: function() {
-        this._refresh();
       },
 
       _onZoomEnd: function() {
@@ -378,12 +330,12 @@ define([
           query(".legends-div.jimu-legends-div-flag img", contentDomNode).style("opacity", opacity);
         }, this);
 
-        /*if(this._denyLayerInfosOpacityResponseOneTime) {
+        if(this._denyLayerInfosOpacityResponseOneTime) {
           // denies one time
           this._denyLayerInfosOpacityResponseOneTime = false;
         } else {
           this.layerListView._hideCurrentPopupMenu();
-        }*/
+        }
       },
 
       _onLayerInfosScaleRangeChanged: function(changedLayerInfos) {

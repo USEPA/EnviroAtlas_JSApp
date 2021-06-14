@@ -1,9 +1,9 @@
+/* jscs:disable */
 /**
  * This file is referenced by the `dojoBuild` key in `package.json` and provides extra hinting specific to the Dojo
  * build system about how certain files in the package need to be handled at build time. Build profiles for the
  * application itself are stored in the `profiles` directory.
  */
-/* jshint unused:false */
 var profile = {
 	// Resource tags are functions that provide hints to the build system about the way files should be processed.
 	// Each of these functions is called once for every file in the package directory. The first argument passed to
@@ -18,17 +18,20 @@ var profile = {
 
 		// Files that should be copied as-is without being modified by the build system.
 		copyOnly: function (filename, mid) {
-			/* jshint unused:false */
-			return (/polyfills/).test(filename) || /caja-html-sanitizer-minified/.test(filename)
-			 || /goldenlayout\/goldenlayout\.js/.test(filename) || /jquery/.test(filename) ||
-			 /moment/.test(filename) || /Sortable\.js/.test(filename) || /cropperjs\.js/.test(filename);
+			return ((/polyfills/).test(filename) && !(/FileSaver\.js/).test(filename) && !(/store\.js/).test(filename)) ||
+				/goldenlayout\/goldenlayout\.js/.test(filename) || /jquery/.test(filename);
+				/*/moment/.test(filename) || /Sortable\.js/.test(filename) || /cropperjs\.js/.test(filename);*/
 		},
 
 		// Files that are AMD modules.
 		// All JavaScript in this package should be AMD modules if you are starting a new project. If you are copying
 		// any legacy scripts from an existing project, those legacy scripts should not be given the `amd` tag.
 		amd: function (filename, mid) {
-			return /echarts\/echarts\.js/.test(filename) || false;
+			return /echarts\/echarts\.js/.test(filename) || /caja-html-sanitizer-minified/.test(filename) ||
+				/moment/.test(filename) || /Sortable\.js/.test(filename) || /cropperjs\.js/.test(filename) ||
+				(/FileSaver\.js/).test(filename) || (/store\.js/).test(filename) || (/md5\.js/).test(filename) ||
+				(/usng\.js/).test(filename) ||
+				false;
 		},
 
 		// Files that should not be copied when the `mini` build flag is set to true.

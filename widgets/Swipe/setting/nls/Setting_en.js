@@ -1,6 +1,0 @@
-// All material copyright ESRI, All Rights Reserved, unless otherwise specified.
-// See http://js.arcgis.com/3.15/esri/copyright.txt and http://www.arcgis.com/apps/webappbuilder/copyright.txt for details.
-//>>built
-define({"widgets/Swipe/setting/nls/strings":{styleText:"Choose a style for the swipe tool",vertical:"Vertical bar",horizontal:"Horizontal bar",scope:"Spyglass",placement:"Direction",showLeftSide:"Display swiped layers on the left side",showRigthSide:"Display swiped layers on the right side",showUpSide:"Display swiped layers on the upper side",showDownSide:"Display swiped layers on the lower side",barColor:"Bar color",swipeMode:"Swipe mode",singleLayer:"Single layer",MultipleLayers:"Multiple Layers",
-allowToSwipe:"Allow to swipe",layer:"Layer",swipeByDefault:"Swipe by default",defaultLayerMustBeVisible:"default layer must be visible",noDefaultLayer:"Please set the layers to swipe by default",defaultLayerHolder:"Click to select",selectLayers:"Select layers",layerText:"Select the layer(s) you want to swipe by default",spyglassText:"Select the layer to appear within the spyglass by default.",layerHint:"Note: If the layer is hidden by upper layers, swipe won't have any effect.",isZoom:"Zoom to the swipe layer",
-isZooms:"Zoom to the swipe layer(s)",layersAvailable:"Choose which layers to swipe:",_localized:{}}});
