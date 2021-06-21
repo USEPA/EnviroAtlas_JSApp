@@ -983,7 +983,7 @@
                         "relativeTo": "map"
                     },
                     "placeholderIndex": 1,
-                    "id": "widgets_Gridded_Map_28",
+              "id": "widgets_GriddedMapTool_28",
                     "name": "GriddedMapTool",
                     "label": "Gridded Map Tool",
                     "version": "0.1",
