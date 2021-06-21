@@ -54,7 +54,7 @@
 			"highlight": "themes_TabTheme_widgets_SidebarController_Widget_20",
 			"title": "Filter",
 			"displayOrder": 4
-		},		
+		},
 		{
 			"widgetName": "Demographic",
 			"node": "themes_TabTheme_widgets_SidebarController_Widget_20",
@@ -230,6 +230,21 @@
 			],
 			"highlight": "dijit__WidgetBase_14",
 			"title": "Select Data Tool",
+			"displayOrder": 13
+		},
+		{
+			"widgetName": "GriddedMapTool",
+			"helpFile": "help_GriddedMapTool",
+			"node": "dijit__WidgetBase_15",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": "dijit__WidgetBase_15",
+			"title": "Gridded Map Tool",
 			"displayOrder": 13
 		},
 		{

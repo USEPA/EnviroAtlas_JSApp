@@ -64,6 +64,8 @@ define([
     'widgets/Demo/help/help_ECAT2',
     'widgets/Demo/help/help_CompareMyArea1',
     'widgets/Demo/help/help_CompareMyArea2',    
+    'widgets/Demo/help/help_GriddedMapTool1',
+    'widgets/Demo/help/help_GriddedMapTool2',
     'widgets/Demo/help/help_SaveSession1',
     'widgets/Demo/help/help_SaveSession2',      
     'widgets/Demo/help/help_NavHuc1',
@@ -97,7 +99,7 @@ define([
     portalUrlUtils, jimuUtils, help_Welcome, help_Elevation1,help_Elevation2, help_FeaturedCollections1, help_FeaturedCollections2, 
     help_Demographic1, help_Demographic2, help_EnviroAtlasDataSearch1, help_EnviroAtlasDataSearch2, help_TimesSeries1, help_TimesSeries2, 
     help_AddData1, help_AddData2, help_Select1, help_Select2, help_SelectCommunity1, help_SelectCommunity2, 
-    help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_CompareMyArea1, help_CompareMyArea2,
+      help_DrawerMapping1, help_DrawerMapping2, help_ECAT1, help_ECAT2, help_CompareMyArea1, help_CompareMyArea2, help_GriddedMapTool1, help_GriddedMapTool2,
     help_SaveSession1, help_SaveSession2, help_NavHuc1, help_NavHuc2, help_Raindrop1, help_Raindrop2, 
     help_AttributeTable1, help_AttributeTable2, help_SelectByTopic1, help_SelectByTopic2, help_DrawMeasure1, help_DrawMeasure2, 
     help_EnhancedBookmarks1, help_EnhancedBookmarks2, help_DynamicSymbology1, help_DynamicSymbology2, help_Print1, help_Print2, 
@@ -197,7 +199,8 @@ define([
     window.formatters['help_SelectCommunity1'] = help_SelectCommunity1;    
     window.formatters['help_DrawerMapping1'] = help_DrawerMapping1;
     window.formatters['help_ECAT1'] =  help_ECAT1;  
-    window.formatters['help_CompareMyArea1'] =  help_CompareMyArea1; 
+      window.formatters['help_CompareMyArea1'] = help_CompareMyArea1; 
+      window.formatters['help_GriddedMapTool1'] = help_GriddedMapTool1; 
     window.formatters['help_SaveSession1'] =  help_SaveSession1; 
     
     window.formatters['help_NavHuc1'] = help_NavHuc1;
@@ -219,7 +222,8 @@ define([
     window.formatters['help_SelectCommunity2'] = help_SelectCommunity2;    
     window.formatters['help_DrawerMapping2'] = help_DrawerMapping2;
     window.formatters['help_ECAT2'] =  help_ECAT2;
-    window.formatters['help_CompareMyArea2'] =  help_CompareMyArea2;
+      window.formatters['help_CompareMyArea2'] = help_CompareMyArea2;
+      window.formatters['help_GriddedMapTool2'] = help_GriddedMapTool2; 
     window.formatters['help_SaveSession2'] =  help_SaveSession2;
       
     window.formatters['help_NavHuc2'] = help_NavHuc2;
