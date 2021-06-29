@@ -86,7 +86,7 @@ var
 
 /////Builder server will remove this line's comment, so set isXT flag to true
 
-//isXT = true;
+isXT = true;
 
 /////////////////////////////////////
 
