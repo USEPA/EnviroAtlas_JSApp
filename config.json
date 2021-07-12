@@ -14,9 +14,6 @@
     "links": [{
             "label": "Contact Us",
             "url": "https://enviroatlas.epa.gov/enviroatlas/contactus/index.html"
-        }, {
-            "label": "Help ",
-            "url": "https://leb.epa.gov/EnviroAtlas_WAB/help.html"
         }
     ],
     "widgetOnScreen": {
@@ -354,7 +351,7 @@
                     "left": 545,
                     "top": -40,
                     "width": 370,
-                    "height": 270,
+                    "height": 320,
                     "relativeTo": "map"
                 },
                 "placeholderIndex": 1,

@@ -48,6 +48,7 @@
   color: #d9dde0;
   display: inline-block;
   text-decoration: none;
+        font-size: 16px;
 }
 .jimu-rtl .jimu-widget-header .links .link{
   margin-left: auto;
