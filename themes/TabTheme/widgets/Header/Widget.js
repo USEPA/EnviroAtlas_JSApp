@@ -64,7 +64,8 @@ define([
         this.switchableElements.logo = query('.logo', this.domNode);
         this.switchableElements.title = query('.jimu-title', this.domNode);
         this.switchableElements.links = query('.links', this.domNode);
-        this.switchableElements.subtitle = query('.jimu-subtitle', this.domNode);
+          this.switchableElements.subtitle = query('.jimu-subtitle', this.domNode);
+          this.mapSave = query('#saveIcon', this.domNode);
         this.mapTour = query('#mapTourIcon', this.domNode);
 
         this._handleTitleColorAndLogoLink(this.appConfig);
@@ -117,6 +118,12 @@ define([
             var widget = selfCommunityDisplay.appConfig.getConfigElementsByName(widgetName)[0];
             var pm = PanelManager.getInstance();
             pm.showPanel(widget);
+        });
+        on(this.mapSave, "click", function () {
+            var widgetName = 'SaveSession';
+              var widget = selfCommunityDisplay.appConfig.getConfigElementsByName(widgetName)[0];
+              var pm = PanelManager.getInstance();
+              pm.showPanel(widget);
         });
       },
 

@@ -56,9 +56,9 @@
             }, {
                 "uri": "widgets/Search/Widget",
                 "position": {
-                    "left": 45,
+            "right": 260,
                     "top": 5,
-                    "relativeTo": "map"
+            "relativeTo": "browser"
                 },
                 "version": "2.5",
                 "id": "widgets_Search_Widget_23",
@@ -291,8 +291,8 @@
                 "config": "widgets/ElevationProfile/config.json"
             }, {
                 "position": {
-                    "left": 625,
-                    "top": 5,
+            "right": 100,
+            "top": -40,
                     "width": 380,
                     "height": 410,
                     "relativeTo": "map"
@@ -310,7 +310,7 @@
                 "uri": "widgets/Select/Widget",
                 "config": "configs/Select/config_Select.json",
                 "position": {
-                    "left": 675,
+            "left": 625,
                     "top": 5,
                     "width": 380,
                     "height": 410,
@@ -319,7 +319,7 @@
                 "id": "widgets_Select_Widget_39"
             }, {
                 "position": {
-                    "left": 725,
+            "left": 675,
                     "top": 5,
                     "width": 587,
                     "height": 500,

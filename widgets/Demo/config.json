@@ -203,21 +203,6 @@
 			"displayOrder": 12
 		},
 		{
-			"widgetName": "SaveSession",
-			"helpFile": "help_SaveSession",
-			"node": "dijit__WidgetBase_13",
-			"content": [],
-			"orient": [
-				"below",
-				"below-alt",
-				"above",
-				"above-alt"
-			],
-			"highlight": "dijit__WidgetBase_13",
-			"title": "Save Session Tool",
-			"displayOrder": 21
-		},
-		{
 			"widgetName": "Select",
 			"helpFile": "help_Select",
 			"node": "dijit__WidgetBase_14",
@@ -336,7 +321,24 @@
 			"displayOrder": 19
 		},
 		{
-			"node": "linksNode",
+			"widgetName": "SaveSession",
+			"helpFile": "help_SaveSession",
+
+			"node": "saveIcon",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+
+			"highlight": "themes_TabTheme_widgets_Header_Widget_18",
+			"title": "Save Session Tool",
+			"displayOrder": 21
+		},
+		{
+			"node": "mapTourIcon",
 			"helpFile": "help_EndPage",
 			"content": [],
 			"orient": [
