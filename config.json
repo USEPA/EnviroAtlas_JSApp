@@ -90,7 +90,7 @@
                 "uri": "widgets/CommunityDisplay/Widget",
                 "position": {
                     "left": 45,
-                    "top": 45,
+            "top": 5,
                     "relativeTo": "map"
                 },
                 "version": "1.3",
