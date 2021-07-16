@@ -1,0 +1,133 @@
+<div>
+  <div data-dojo-attach-point="tabMain">
+    <div class="${baseClass} profile-tab-node" data-dojo-attach-point="tabNode1">
+      <div class="water-quality-scroll-container">
+        <!-- Introduction -->
+        <div>
+          <p class="water-quality-intro">This tool gives you the ability to extract and map selected water quality data from the Water Quality Portal (WQP). The WQP (<a href="https://www.waterqualitydata.us" target="_default">www.waterqualitydata.us</a>) is a cooperative effort sponsored by the United States Geological Survey, the Environmental Protection Agency, and the National Water Quality Monitoring Council to provide publicly available water quality data in an integrated portal.</p>
+        </div>
+        <!-- Unit Area -->
+        <div>
+          <div>
+            <p>Please select a unit area and click within the map on a focus location:</p>
+          </div>
+          <div class="unit-select-wrapper">
+            <select id="water-quality-unit-input" name="unit-input">
+              <option disabled selected value="">Select one...</option>
+              <option value="state">State</option>
+              <option value="county">County</option>
+              <option value="HUC8">HUC-8</option>
+              <option value="HUC12">HUC-12</option>
+              <option value="point">Specific Point</option>
+            </select>
+          </div>
+          <div id="water-quality-unit-details" style="display: none">
+            <div class="point-buffer">
+              <label for="water-quality-buffer">Buffer distance (miles):</label>
+              <input type="number" id="water-quality-buffer" name="buffer" min="0.5" value="5">
+            </div>
+          </div>
+        </div>
+        <!-- Site Type -->
+        <div>
+          <div class="instructional-text">
+            <p>Select a water body type:</p>
+          </div>
+          <div class="site-radios-wrapper">
+            <div>
+              <input type="radio" id="water-quality-streams" name="site" value="streams" checked>
+              <label for="water-quality-streams">Streams & Rivers</label>
+            </div>
+            <div>
+              <input type="radio" id="water-quality-lakes" name="site" value="lakes">
+              <label for="water-quality-lakes">Lakes</label>
+            </div>
+            <div>
+              <input type="radio" id="water-quality-ground" name="site" value="groundwater">
+              <label for="water-quality-ground">Ground Water</label>
+            </div>
+          </div>
+        </div>
+        <!--Sampling Variable-->
+        <div>
+          <div class="instructional-text">
+            <p>Select your variable of interest:</p>
+          </div>
+          <div class="sample-select-wrapper">
+            <select id="water-quality-sample-input" name="sample-input">
+              <option disabled selected value="">Select one...</option>
+              <optgroup label="Phosphorus">
+                <option value="Dissolved Phosphorus">Dissolved Phosphorus</option>
+                <option value="Total Phosphorus">Total Phosphorus</option>
+              </optgroup>
+              <optgroup label="Nitrogen">
+                <option value="Dissolved Nitrogen">Dissolved Nitrogen</option>
+                <option value="Total Nitrogen">Total Nitrogen</option>
+                <option value="Nitrate">Nitrate</option>
+                <option value="Nitrite">Nitrite</option>
+                <option value="Nitrate + Nitrite">Nitrate + Nitrite</option>
+              </optgroup>
+              <option value="Conductivity">Conductivity</option>
+              <option value="Discharge">Discharge</option>
+              <option value="pH">pH</option>
+              <option value="Sediment (tss)">Sediment (tss)</option>
+              <option value="Ecoli">Ecoli</option>
+              <optgroup label="Metals">
+                <option value="Dissolved Lead">Dissolved Lead</option>
+                <option value="Total Lead">Total Lead</option>
+                <option value="Dissolved Mercury">Dissolved Mercury</option>
+                <option value="Total Mercury">Total Mercury</option>
+                <option value="Dissolved Arsenic">Dissolved Arsenic</option>
+                <option value="Total Arsenic">Total Arsenic</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+        <!--Database to Analyze-->
+        <div>
+          <div class="instructional-text">
+            <p>Select a data source:</p>
+          </div>
+          <div class="database-select-wrapper">
+            <select id="water-quality-database-input" name="database-input">
+              <option disabled selected value="">Select one...</option>
+              <option value="NWIS/NARS/EMAP">NWIS, NARS, and EMAP</option>
+              <option value="State">State Datasets</option>
+              <option value="Both">All</option>
+            </select>
+          </div>
+        </div>
+        <!--Date Range-->
+        <div>
+          <div class="instructional-text">
+            <p>Select a date range:</p>
+            <p class="small-print">Note: Data are added to the Water Quality Portal intermittently; recent data may not be available yet.</p>
+          </div>
+          <div class="date-select-wrapper">
+            <input type="date" id="water-quality-dateFrom-input" name="dateFrom-input"
+            min="1970-01-01" />
+            <p>To:</p>
+            <input type="date" id="water-quality-dateTo-input" name="dateTo-input"
+            min="1970-01-01" />
+          </div>
+        </div>
+      <p id="water-quality-selection-name"></p>
+      <div class="calculate-button-wrapper">
+        <button disabled id="water-quality-calculate-button"></button>
+      </div>
+      <p id="calculation-message"></p>
+    </div>
+    <div class="${baseClass} profile-tab-node" data-dojo-attach-point="tabNode2">
+      <div id="water-quality-results-page">
+        <p id="resultsText"></p>
+        <p id="request-details" style="display: none"></p>
+        <p>
+          <label for="amount">Showing data for:</label>
+          <input type="text" id="amount" style="border: 0; color: #f6931f; font-weight: bold;" size="100"/>
+        </p>
+        <div id="date-slider"></div>
+        <div id="water-quality-legend-wrapper"></div>
+      </div>
+    </div>
+  </div>
+</div>

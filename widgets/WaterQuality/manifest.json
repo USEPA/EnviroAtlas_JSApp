@@ -1,0 +1,25 @@
+{
+  "name": "WaterQualityPortal",
+  "label": "Water Quality Portal",
+  "platform": "HTML",
+  "type": "widget",
+  "version": "0.1",
+  "wabVersion": "0.1",
+  "author": "Blue Raster",
+  "description": "EnviroAtlas Water Quality Portal Tool (EWQPT)",
+  "copyright": "2019",
+  "license": "http://www.apache.org/licenses/LICENSE-2.0",
+  "properties": {
+    "hasVersionManager": false,
+    "inPanel": true,
+    "hasLocale": true,
+    "hasStyle": true,
+    "hasConfig": true,
+    "hasUIFile": true,
+    "hasSettingPage": false,
+    "hasSettingUIFile": false,
+    "hasSettingLocale": false,
+    "hasSettingStyle": false,
+    "IsController": false
+  }
+}
