@@ -278,6 +278,7 @@ define([
         
     
     window.topicDicESB["Protected Lands"] = "PL";
+	window.topicDicESB["Soils"] = "SLS";  //New addition Aug 2021
     window.topicDicESB["Species: At-Risk and Priority"] = "SARaP";
     window.topicDicESB["Species: Other"] = "SO";
     window.topicDicESB["Water Supply, Runoff, and Flow"] = "WSRaF"; //This is newly added Mar 2017     
