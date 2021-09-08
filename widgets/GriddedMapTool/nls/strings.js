@@ -58,8 +58,8 @@ define({
         90: "Woody Wetlands",
         95: "Emergent Herbaceous Wetlands",
       },
-      /*layer: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/TO7_NLCD_Flood/ImageServer', */
-      layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/TO7_NLCD_Dasy/ImageServer', 
+      layer: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/TO7_NLCD_Flood/ImageServer', 
+      /*layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/TO7_NLCD_Dasy/ImageServer', */
       OBJECTIDS: {
         2001: 1,
         2004: 2,
