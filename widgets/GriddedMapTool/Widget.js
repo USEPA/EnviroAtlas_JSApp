@@ -1109,7 +1109,8 @@ define([
       },
 
       calculatePercentages: function(totalCount, count) {
-        return (count/totalCount * 100).toFixed(2)
+        //return (count/totalCount * 100).toFixed(2)
+        return (count/totalCount * 100)
       },
 
       _renderInputTable: function(results, area, line) {
