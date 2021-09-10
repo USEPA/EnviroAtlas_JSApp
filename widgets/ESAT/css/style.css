@@ -1,0 +1,357 @@
+.widget-esa {
+  position:relative;
+  width:100%;
+  height:100%;
+  min-width:265px;
+  min-height:279px;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+.jimu-widget-frame>.widget-esa>.jimu-tab>.control{
+  margin:-14px -14px 0 -14.7px;
+}
+
+.widget-esaInfoDiv {
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -moz-user-select:-moz-none;
+  -ms-user-select: none;
+  user-select: none;
+  color: blue;
+  float:left;
+}
+
+.widget-esa>.jimu-tab>.jimu-viewstack{
+  position: absolute !important;
+  top:45px !important;
+  left:0 !important;
+  right:0 !important;
+  bottom:0 !important;
+  height: auto;
+  margin-bottom:-14px;
+}
+
+.widget-esainfo-icon{
+  cursor: pointer;
+  display: inline-block;
+  font-size: 18px;
+  line-height: 20px;
+  background: none repeat scroll 0% 0% #518DCA;
+  color: #FFF;
+  border-radius:99px;
+  -moz-border-radius:99px;
+  -webkit-border-radius:99px;
+  font-weight:bold;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -moz-user-select:-moz-none;
+  -ms-user-select: none;
+  user-select: none;
+  float:left;
+  width:20px;
+  height:20px;
+  padding-left:7px;
+}
+
+.widget-esa .profile-tab-node{
+  position:absolute !important;
+  width:100% !important;
+  height:auto !important;
+  top:0 !important;
+  bottom:0 !important;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#esat-info {
+  margin-bottom: 10px;
+}
+
+.wrapper {
+  display: flex;
+}
+
+.options-wrapper {
+  border: 2px solid #dadada;
+  width: 100%;
+  height: 285px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.options-wrapper button {
+  height: 35px;
+  border-radius: 5px;
+  margin: 10px 10px 0 10px;
+  font-size: 13px;
+  color: white;
+  background-color: #485566;
+  border: none;
+}
+
+#esat-indices-section {
+  width: 55%;
+}
+
+#esat-indices-buttons {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+#esat-indices-buttons button:hover:not(:disabled) {
+  cursor: pointer;
+}
+
+#esat-indices-buttons button:disabled {
+  background-color: #cececece;
+}
+
+#esat-indices-buttons .selected {
+  background-color: #1974B1;
+}
+
+#esat-indices-section > .options-wrapper {
+  border-right: none;
+}
+
+#esat-layer-list > p {
+  margin: 5px 0 5px 10px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+#esat-custom-toggle:disabled {
+  cursor: not-allowed;
+}
+
+#esat-custom-toggle {
+  cursor: pointer;
+}
+
+.input-wrapper input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+}
+
+.input-wrapper input[type="checkbox"] {
+  cursor: pointer;
+}
+
+#esat-weighting-section {
+  width: 45%;
+  z-index: 3;
+}
+
+#esat-weighting-list.disabled, #esat-weighting-list.disabled input[type=range] {
+  background-color: #eaeaea;
+  cursor: default;
+}
+
+#esat-weighting-list.disabled label, #esat-weighting-list.disabled p {
+  color: #a7a7a7;
+}
+
+#esat-weighting-section .weighting-controls {
+  height: 40px;
+  border-left: 2px solid #dadada;
+  border-right: 2px solid #dadada;
+  border-bottom: 2px solid #dadada;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+
+#reset-radar:hover {
+  cursor: pointer;
+}
+
+#esat-reset-button  {
+  border: none;
+  background: none;
+  font-style: italic;
+  color: #A7D0FF;
+  font-size: 12px;
+}
+
+#esat-reset-button:hover, #esat-reset-button:active {
+  color: #4798f5;
+  cursor: pointer;
+}
+
+#esat-calculate-button {
+  background: #1775B1;
+  height: 30px;
+  width: 85px;
+  color: #ffffff;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+}
+
+#esat-calculate-button:active {
+  background-color: #115684;
+}
+
+#esat-calculate-button:disabled {
+  cursor: not-allowed;
+  background-color: #cececece;
+}
+
+#esat-close-info-button {
+  position: relative;
+  right: -90%;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  padding: 2px;
+  background: #f5f3f3;
+  border: 1px solid #e4e3e3;
+  cursor: pointer;
+}
+
+#esat-close-info-button:active {
+  background: #efebeb;
+}
+
+.weighting-option {
+  margin: 10px 10px 0 10px;
+}
+
+.weighting-option .customize-weights-tip {
+  font-size: 9px;
+    float: right;
+    margin: 1px 0 0 0;
+}
+
+.weighting-option .info-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weighting-option .info-container .info-wrapper label {
+  margin-left: 5px
+}
+
+.weighting-option .info-container .info-button {
+  cursor: pointer;
+}
+
+.weighting-option .info-container .info-button {
+  margin: 0;
+  padding: 0;
+  height: 17px;
+  width: 17px;
+  background: none;
+  border-radius: 50%;
+  color: black;
+  border: 1px solid #adaaaaca;
+  font-size: 11px;
+}
+
+.weighting-option input[type="range"] {
+  margin-top: 10px;
+  width: 100%;
+  cursor: pointer;
+}
+
+#esat-weighting-list, #esat-legend {
+  margin-top: 10px;
+  padding-bottom: 10px;
+  border-top: 2px solid #dadada;
+  overflow-y: auto;
+  flex-shrink: 1;
+}
+
+#esat-legend > #esat-legend_msg, #esat-legend > .esriLegendService .esriLegendLayerLabel, #esat-legend > .esriLegendService .esriLegendLayerLabel + .esriLegendLayer {
+  display: none;
+}
+
+#esat-legend > .esriLegendService .esriLegendServiceLabel {
+  margin-left: 5px;
+}
+
+#esat-indices-section > p, #esat-weighting-section > p {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.tab2-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.slider-info {
+  display: flex;
+}
+
+.esat-slider-value {
+  color: #969292;
+  margin-right: 5px;
+}
+
+#esat-error-message {
+  font-style: italic;
+  color: red;
+}
+
+#esat-huc-list {
+  margin: 5px auto;
+  text-align: center;
+}
+
+.huc-button {
+  margin: 5px;
+  background: none;
+  border: 1px solid #d4d4d4;
+  border-radius: 5px;
+}
+
+.huc-button img {
+  width: 8px;
+  margin-left: 5px;
+  pointer-events: none;
+}
+
+.huc-button:hover {
+  cursor: pointer;
+}
+
+.huc-button:active {
+  background-color: #f5f5f5;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.customize-warning-title {
+  text-align: center;
+}
+
+.customize-warning-body {
+  font-size: 9px;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+#weight-dist-wrapper {
+  height: 200px;
+  width: 465px;
+  position: relative;
+  top: -35px;
+  background: none;
+}
+
+#weight-dist-wrapper .highcharts-background {
+  fill: none;
+}

@@ -1,0 +1,52 @@
+<div>
+  <div data-dojo-attach-point="tabMain">
+    <div class="${baseClass} profile-tab-node" data-dojo-attach-point="tabNode1">
+      <div>
+        <div id="esat-info" style="display: none;">
+          <p>Use this section to enter some placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis lectus nulla at volutpat diam ut venenatis tellus. </p>
+        </div>
+        <div class="wrapper">
+          <div id="esat-indices-section">
+              <p>Ecosystem Services Indices</p>
+              <div class="options-wrapper">
+                <div id="esat-indices-buttons">
+                  <button id="freshwater-button">Freshwater Water Quality Production</button>
+                  <button id="terrestrial-button">
+                    Terrestrial Diversity Conservation
+                  </button>
+                </div>
+                <div id="esat-legend">
+                </div>
+              </div>
+            </div>
+            <div id="esat-weighting-section">
+              <p>Weighting Scheme</p>
+              <div class="options-wrapper">
+                <div class="weighting-option">
+                  <input id="esat-custom-toggle" type="checkbox" name="custom" value="custom" disabled>
+                  <label for="custom">Enable Custom Weights</label>
+                </div>
+                <div id="esat-weighting-list">
+                </div>
+              </div>
+              <div class="weighting-controls">
+                <button id="esat-calculate-button" disabled></button>
+                <button id="esat-reset-button"></button>
+              </div>
+            </div>
+        </div>
+        <div id="weight-dist-wrapper">
+        </div>
+      </div>
+    </div>
+    <div class="${baseClass} profile-tab-node" data-dojo-attach-point="tabNode2">
+      <div class="tab2-header">
+          <p>Select up to six HUCs on the map for comparison below:</p>
+          <button id="esat-reset-radar" hidden="true"></button>
+      </div>
+      <p id="esat-error-message"></p>
+      <div id="esat-huc-list"></div>
+      <div id="esat-radar-chart">
+    </div>
+  </div>
+</div>
