@@ -357,6 +357,22 @@
         },
         {
           "position": {
+            "left": 495,
+            "top": 5,
+            "width": 587,
+            "height": 500,
+            "relativeTo": "map"
+          },
+          "placeholderIndex": 1,
+          "id": "widgets_ESAT",
+          "name": "ESAT",
+          "label": "Ecosystem Service Analysis",
+          "version": "0.1",
+          "uri": "widgets/ESAT/Widget",
+          "config": "widgets/ESAT/config.json"
+        },
+        {
+          "position": {
             "left": 565,
             "top": -40,
             "width": 370,
