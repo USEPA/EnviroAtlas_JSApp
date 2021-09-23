@@ -58,8 +58,8 @@ define({
         90: "Woody Wetlands",
         95: "Emergent Herbaceous Wetlands",
       },
-      layer: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/TO7_NLCD_Flood/ImageServer', 
-      /*layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/TO7_NLCD_Dasy/ImageServer', */
+      /*layer: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/TO7_NLCD_Flood/ImageServer', */
+      layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/GDT_NLCD_Dasy/ImageServer',
       OBJECTIDS: {
         2001: 1,
         2004: 2,
@@ -94,20 +94,20 @@ define({
     },
     "population-floodplains": {
       /* layer: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/TO7_Pop_Flood_Roads_Padus/ImageServer', */
-	  layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/TO7_Pop/ImageServer', 
+	  layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/GDT_Pop/ImageServer', 
       lockRasterId: 2,
       layersUsed: ['Estimated Floodplains', 'Dasymetric Population']
     },
     "population-roads": {
       /* layer: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/TO7_Pop_Flood_Roads_Padus/ImageServer', */
-	  layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/TO7_Pop/ImageServer', 
+	  layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/GDT_Pop/ImageServer', 
       lockRasterId: 4,
       layersUsed: ['FAF4 Roads', 'Dasymetric Population']
     },
     populationRasterId: 10,
     padus: {
       /* layer: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/TO7_Pop_Flood_Roads_Padus/ImageServer', */
-	  layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/TO7_Pop/ImageServer', 
+	  layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/GDT_Pop/ImageServer', 
       /* polys: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/PADUS_Shapefile/MapServer/0', */
 	  polys: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/PADUS_Shapefile/MapServer/0',
       lockRasterId: 7,
