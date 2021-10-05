@@ -20897,7 +20897,7 @@
                 "sourceType": "plp"
             },
             {
-                "url": "https://landscape10.arcgis.com/arcgis/rest/services/USA_NLCD_Land_Cover_2011/ImageServer",
+                "url": "https://enviroatlas2.epa.gov/arcgis/rest/services/test_services/NLCD_2016_Land_Cover_L48_20190424/ImageServer",
                 "eaNHM": true,
                 "eaCPW": true,
                 "eaCS": true,
@@ -20917,7 +20917,7 @@
                     "Recreation, Culture, and Aesthetics - x"
                 ],
                 "eaDfsLink": "Supplemental/NationalLandCover.pdf",
-                "name": "National Land Cover Database (NLCD 2011 Conterminous US Only)",
+                "name": "National Land Cover Database (NLCD 2016 Conterminous US Only)",
                 "eaTags": [
                     "canopy",
                     "agriculture",
