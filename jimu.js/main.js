@@ -272,10 +272,7 @@ define([
     window.topicDicESB["Near-Road Environments"] = "NRE";    
     
     window.topicDicESB["Pollutant Reduction: Air"] = "PRA"; //This is newly added Mar 2017    
-    window.topicDicESB["Pollutant Reduction: Water"] = "PRW"; //This is newly added Mar 2017      
-     
-    
-        
+    window.topicDicESB["Pollutant Reduction: Water"] = "PRW"; //This is newly added Mar 2017
     
     window.topicDicESB["Protected Lands"] = "PL";
 	window.topicDicESB["Soils"] = "SLS";  //New addition Aug 2021
