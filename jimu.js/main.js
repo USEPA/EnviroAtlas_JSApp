@@ -357,7 +357,8 @@ define([
     window.frameBeClicked = 1;
     window.extentFromURL = null;
     window.eaLayerFromURL = null;
-    window.eaCommunityFromURL = null;
+      window.eaCommunityFromURL = null;
+      window.featuredCollectionFromURL = null;
     window.communityMetadataDic = {};
     window.faildedEALayerDictionary = {};
     window.faildedOutsideLayerDictionary = {};
@@ -375,7 +376,8 @@ define([
     window.hashTitleToEAID = {};
     window.hashEAIDToTitle = {};
     window.hashEAIDToNavHucStats = {};
-    window.hashEAIDToNavHucStatsUnit = {};
+      window.hashEAIDToNavHucStatsUnit = {};
+      window.itemsHashForFeatureCollection = {},
     
     window.hashGeometryTypeAddedFeatLyr = {};
     window.hashInfoTemplate = {};

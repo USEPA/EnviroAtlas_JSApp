@@ -459,6 +459,22 @@ define(['dojo/_base/declare',
                 //console.log('ChangeWebMap :: tabChanged to ', title);
 
             })));
+            if (window.featuredCollectionFromURL != null) {
+                setTimeout(lang.hitch(this, function () {
+                    if (window.featuredCollectionFromURL != null) {
+                        var FeatureCollectionItems = document.getElementsByClassName("item-info");
+                        for (ii = 0; ii < FeatureCollectionItems.length; ii++) {
+ 
+                            if (FeatureCollectionItems[ii].childNodes[0].innerText.trim() == window.itemsHashForFeatureCollection[window.featuredCollectionFromURL].item.title.trim()) {
+                                FeatureCollectionItems[ii].click();
+                            }
+
+                        }
+                    }
+
+                }), 2000);
+            }
+
         },
 
         /**
@@ -529,7 +545,35 @@ define(['dojo/_base/declare',
         // Ask for the user's confirmation before purging all layers from the layer list widget
         _onItemSelected : function(item) {
             //If there are more layers than just the default basemap
-            if (this.map.layerIds.length > 1) {
+            bNoLayersAdded = true;
+            for (var j = 0, jl = this.map.layerIds.length; j < jl; j++) {
+                currentLayer = this.map.getLayer(this.map.layerIds[j]);
+                if (currentLayer != null) {
+                    if ((currentLayer.id).indexOf(window.addedLayerIdPrefix) > -1) {
+                        bNoLayersAdded = false;
+                    }
+                    if ((currentLayer.id).indexOf(window.uploadedFeatLayerIdPrefix) > -1) {
+                        bNoLayersAdded = false;
+                    }
+                    if ((currentLayer.id).indexOf(window.createdFromSelectPrefix) > -1) {
+                        bNoLayersAdded = false;
+                    }
+                    if ((currentLayer.id).indexOf(window.layerIdTiledPrefix) > -1) {
+                        bNoLayersAdded = false;
+                    }
+                    if ((currentLayer.id).indexOf(window.layerIdPrefix) > -1) {
+                        bNoLayersAdded = false;
+                    }
+                    if ((currentLayer.id).indexOf(window.layerIdDemographPrefix) > -1) {
+                        bNoLayersAdded = false;
+                    }
+                    if ((currentLayer.id).indexOf(window.timeSeriesLayerId) > -1) {
+                        bNoLayersAdded = false;
+                    }
+                }
+            }
+            //if (this.map.layerIds.length > 1) {
+            if (bNoLayersAdded == false) {
                 this.promptUserforConfirmation(item);
                 return;
             }
