@@ -3828,7 +3828,8 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 	// this is using 'data' - the results of the REST query - NOT ArcGIS
 	//
 	downstreamNavigationSucceeded: function (data) 
-	{
+    {
+        this.divNavigationMessages.innerHTML = '';
 		var that = this;
 		
         //NProgress.done();
@@ -3966,6 +3967,8 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
             }
         }
         str = 'JSON: ' + JSON.stringify(this.results_json, null, 4);
+
+        this.divNavigationMessages.innerHTML = '';
 
         dom.byId("NavigationMessages").innerHTML = '';
         dom.byId("NavigateErrorMessage").innerHTML = '';
