@@ -2,7 +2,7 @@ define({
   root: ({
     _widgetLabel: "Demo",
     label1: "Welcome to EnviroAtlas Help",
-    label2: "Learn more about basic map functionality and features."
+        label2: "Get in-depth guidance on all of the Interactive Map features."
   }),
   "ar": 0,
   "cs": 0,
