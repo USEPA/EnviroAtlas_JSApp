@@ -313,7 +313,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
             var messageText = 'Click the map to navigate '
                 + direction.toLowerCase() + ' on the<br>Watershed Boundary Dataset Subwatersheds (HUC-12)';
 
-            var messageText2 =	'Click on only one of the highlighted HUC-12 subwatersheds to navigate '
+            var messageText2 =	'Click on the map to select only one of the highlighted HUC-12 subwatersheds to navigate '
                 + direction.toLowerCase() + '.';
 
             var messageToUse = messageText;
