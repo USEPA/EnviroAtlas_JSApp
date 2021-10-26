@@ -268,10 +268,10 @@ define([
     window.topicDicESB["Near-Road Environments"] = "NRE";    
     
     window.topicDicESB["Pollutant Reduction: Air"] = "PRA"; //This is newly added Mar 2017    
-    window.topicDicESB["Pollutant Reduction: Water"] = "PRW"; //This is newly added Mar 2017      
+    window.topicDicESB["Pollutant Reduction: Water"] = "PRW"; //This is newly added Mar 2017
     
     window.topicDicESB["Protected Lands"] = "PL";
-    window.topicDicESB["Soils"] = "SLS";  //New addition Aug 2021
+	  window.topicDicESB["Soils"] = "SLS";  //New addition Aug 2021
     window.topicDicESB["Species: At-Risk and Priority"] = "SARaP";
     window.topicDicESB["Species: Other"] = "SO";
     window.topicDicESB["Water Supply, Runoff, and Flow"] = "WSRaF"; //This is newly added Mar 2017     
@@ -284,7 +284,7 @@ define([
     window.topicDicPSI["EPA Regulated Facilities"] = "RF";
     //window.topicDicPSI["EPA NATA"] = "NATA";
     window.topicDicPSI["Impaired Waters"] = "IW";
-	window.topicDicPSI["National Air Toxics Assessment"] = "NATA";
+	  window.topicDicPSI["National Air Toxics Assessment"] = "NATA";
     window.topicDicPSI["Pollutants: Other"] = "PO";
     window.topicDicPSI["Pollutants: Nutrients"] = "PN";     
     
@@ -354,6 +354,7 @@ define([
     window.extentFromURL = null;
     window.eaLayerFromURL = null;
     window.eaCommunityFromURL = null;
+    window.featuredCollectionFromURL = null;
     window.communityMetadataDic = {};
     window.faildedEALayerDictionary = {};
     window.faildedOutsideLayerDictionary = {};
@@ -372,6 +373,7 @@ define([
     window.hashEAIDToTitle = {};
     window.hashEAIDToNavHucStats = {};
     window.hashEAIDToNavHucStatsUnit = {};
+    window.itemsHashForFeatureCollection = {},
     
     window.hashGeometryTypeAddedFeatLyr = {};
     window.hashInfoTemplate = {};

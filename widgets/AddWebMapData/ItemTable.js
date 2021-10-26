@@ -288,6 +288,7 @@ define([
                     var emptyTd = emptyTds[i];
                     itemDiv = this._createItem(ws[i]);
                     itemsHash[itemDiv.item.id] = itemDiv;
+                    window.itemsHashForFeatureCollection[itemDiv.item.id] = itemDiv;
                     html.place(itemDiv, emptyTd);
                     html.removeClass(emptyTd, 'empty');
                 }
@@ -305,6 +306,7 @@ define([
                 if (item) {
                     itemDiv = this._createItem(item);
                     itemsHash[itemDiv.item.id] = itemDiv;
+                    window.itemsHashForFeatureCollection[itemDiv.item.id] = itemDiv;
                     html.place(itemDiv, td);
                 }
 

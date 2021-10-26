@@ -344,10 +344,10 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', 'jimu/PanelManager', 'dijit/Too
                 tourDialog.set("content", helpContent);
                 
                 //end page
-                bAroundNode = false;
-                xPosition = document.getElementById("helpLink").parentNode.offsetLeft-600;//width of help popup window is 600
+                //bAroundNode = false;
+                //xPosition = document.getElementById("helpLink").parentNode.offsetLeft-600;//width of help popup window is 600
 
-                yPosition = 30;
+                //yPosition = 30;
             }
             
            

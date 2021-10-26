@@ -313,7 +313,7 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
             var messageText = 'Click the map to navigate '
                 + direction.toLowerCase() + ' on the<br>Watershed Boundary Dataset Subwatersheds (HUC-12)';
 
-            var messageText2 =	'Click on only one of the highlighted HUC-12 subwatersheds to navigate '
+            var messageText2 =	'Click on the map to select only one of the highlighted HUC-12 subwatersheds to navigate '
                 + direction.toLowerCase() + '.';
 
             var messageToUse = messageText;
@@ -3828,7 +3828,8 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
 	// this is using 'data' - the results of the REST query - NOT ArcGIS
 	//
 	downstreamNavigationSucceeded: function (data) 
-	{
+    {
+        this.divNavigationMessages.innerHTML = '';
 		var that = this;
 		
         //NProgress.done();
@@ -3966,6 +3967,8 @@ return declare([BaseWidget, _WidgetsInTemplateMixin], {
             }
         }
         str = 'JSON: ' + JSON.stringify(this.results_json, null, 4);
+
+        this.divNavigationMessages.innerHTML = '';
 
         dom.byId("NavigationMessages").innerHTML = '';
         dom.byId("NavigateErrorMessage").innerHTML = '';
