@@ -9,7 +9,7 @@ define({
 
     results: "Downloads",
 
-    searchLayer: "Click the map to navigation on the Watershed Boundary Dataset Subwatersheds (HUC12)",
+    searchLayer: "Click the map to navigate on the Watershed Boundary Dataset Subwatersheds (HUC12)",
     searchType: "Search alias",
     selectFeaturesBy: "Select features by",
 
