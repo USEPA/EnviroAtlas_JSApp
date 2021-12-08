@@ -1234,29 +1234,32 @@ destroy: function () {
 
  onOpen: function(){
      console.log('onOpen');
-     setTimeout(function () {
-         for (var key in _config.demogJSON) {
-             if (_config.demogJSON.hasOwnProperty(key)) {
-                 if (_config.demogJSON[key].service.replace("ejscreen/", "").toUpperCase() == window.demogSourceFromURL.toUpperCase() ) {
-                     selfDemographic.serviceNode.value = key;
+     if (window.demogSourceFromURL != null) {
+         setTimeout(function () {
+             for (var key in _config.demogJSON) {
+                 if (_config.demogJSON.hasOwnProperty(key)) {
+                     if (_config.demogJSON[key].service.replace("ejscreen/", "").toUpperCase() == window.demogSourceFromURL.toUpperCase()) {
+                         selfDemographic.serviceNode.value = key;
+                     }
                  }
              }
-         }
-         
-          selfDemographic._changeService();
-     }, 200);
-     setTimeout(function () {
-         selfDemographic.demogTypeNode.value = window.demogCategoryFromURL;
-         selfDemographic._changeDemog();
-     }, 400);
-     setTimeout(function () {
-         selfDemographic.demogListNode.value = window.demogVariableFromURL;
-         //document.getElementById("widgets_DemographicLayers").click();
-     }, 800);
-     setTimeout(function () {
-         //selfDemographic.demogListNode.value = window.demogVariableFromURL;
-         document.getElementById("mapDemogLayer").click();
-     }, 1000);
+
+             selfDemographic._changeService();
+         }, 200);
+         setTimeout(function () {
+             selfDemographic.demogTypeNode.value = window.demogCategoryFromURL;
+             selfDemographic._changeDemog();
+         }, 400);
+         setTimeout(function () {
+             selfDemographic.demogListNode.value = window.demogVariableFromURL;
+             //document.getElementById("widgets_DemographicLayers").click();
+         }, 800);
+         setTimeout(function () {
+             //selfDemographic.demogListNode.value = window.demogVariableFromURL;
+             document.getElementById("mapDemogLayer").click();
+         }, 1000);
+     }
+
  },
 
 // onClose: function(){
