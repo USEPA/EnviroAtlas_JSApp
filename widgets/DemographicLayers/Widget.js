@@ -480,8 +480,31 @@ _mapDemog: function (e) {
     var fielddesc = fieldobj.options[fieldobj.selectedIndex ].text;
     robj.fielddesc = fielddesc;
     robj.layervisible = true;
-    this.classbreak(robj,true);
-},
+    this.classbreak(robj, true);
+    var demogSourceForURL = "";
+    for (var key in _config.demogJSON) {
+        if (_config.demogJSON.hasOwnProperty(key)) {
+            if (selfDemographic.serviceNode.value == key) {
+                demogSourceForURL = _config.demogJSON[key].service.replace("ejscreen/","");
+            }
+        }
+    }
+
+    var urlParameter = "?demogSource=" + demogSourceForURL + "&demogCategory=" + selfDemographic.demogTypeNode.value + "&demogVariable=" + selfDemographic.demogListNode.value;//?demogSource = census2018acs & demogCategory=Housing& demogVariable=RENT_AMT_3000_3499
+    document.getElementById("urlToBeCopied").value = window.location.host + window.location.pathname + urlParameter
+
+
+ },
+      copyURL: function () {
+          navigator.clipboard.writeText(urlToBeCopied.value);
+
+          var tooltip = document.getElementById("copyURLTooltip");
+          tooltip.innerHTML = "Copied to clipboard: ";
+      },
+  outFunc:function () {
+      var tooltip = document.getElementById("copyURLTooltip");
+      tooltip.innerHTML = "Copy to clipboard";
+  },
 classbreak: function (renderobj) {
     var mapid = renderobj.mid;
     var fieldid = renderobj.fid;
@@ -1207,11 +1230,34 @@ destroy: function () {
     //this._zoomHandler.remove();
     dojo.empty(this.domNode);
     this.inherited(arguments);
-}
+},
 
-// onOpen: function(){
-//   console.log('onOpen');
-// },
+ onOpen: function(){
+     console.log('onOpen');
+     setTimeout(function () {
+         for (var key in _config.demogJSON) {
+             if (_config.demogJSON.hasOwnProperty(key)) {
+                 if (_config.demogJSON[key].service.replace("ejscreen/").toUpperCase() == window.demogSourceFromURL.toUpperCase() ) {
+                     selfDemographic.serviceNode.value = key;
+                 }
+             }
+         }
+         
+          selfDemographic._changeService();
+     }, 200);
+     setTimeout(function () {
+         selfDemographic.demogTypeNode.value = window.demogCategoryFromURL;
+         selfDemographic._changeDemog();
+     }, 400);
+     setTimeout(function () {
+         selfDemographic.demogListNode.value = window.demogVariableFromURL;
+         //document.getElementById("widgets_DemographicLayers").click();
+     }, 800);
+     setTimeout(function () {
+         //selfDemographic.demogListNode.value = window.demogVariableFromURL;
+         document.getElementById("mapDemogLayer").click();
+     }, 1000);
+ },
 
 // onClose: function(){
 //   console.log('onClose');

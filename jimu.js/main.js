@@ -359,6 +359,9 @@ define([
     window.eaLayerFromURL = null;
       window.eaCommunityFromURL = null;
       window.featuredCollectionFromURL = null;
+      window.demogSourceFromURL = null;
+      window.demogCategoryFromURL = null;
+      window.demogVariableFromURL = null;
     window.communityMetadataDic = {};
     window.faildedEALayerDictionary = {};
     window.faildedOutsideLayerDictionary = {};

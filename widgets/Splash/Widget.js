@@ -114,7 +114,7 @@ define(['dojo/_base/declare',
             this.selTab = title;
           })));
         },
-      
+
       onOpen: function() {
         if( (window.extentFromURL != null) || (window.eaLayerFromURL  != null) || (window.eaCommunityFromURL != null)) {
             this.close();
@@ -136,6 +136,14 @@ define(['dojo/_base/declare',
                 }
                 
                 //end of featured collection part
+
+              // the url includes the parameter for Demographic
+          if ((window.demogSourceFromURL != null)) {
+                  this.close();
+                  document.getElementById("widgets_DemographicLayers").click();
+              }
+
+                //end of Demographic part
 
                 if (!utils.isInConfigOrPreviewWindow()) {
                     var isFirstKey = this._getCookieKey();
