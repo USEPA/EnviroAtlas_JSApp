@@ -1237,7 +1237,7 @@ destroy: function () {
      setTimeout(function () {
          for (var key in _config.demogJSON) {
              if (_config.demogJSON.hasOwnProperty(key)) {
-                 if (_config.demogJSON[key].service.replace("ejscreen/").toUpperCase() == window.demogSourceFromURL.toUpperCase() ) {
+                 if (_config.demogJSON[key].service.replace("ejscreen/", "").toUpperCase() == window.demogSourceFromURL.toUpperCase() ) {
                      selfDemographic.serviceNode.value = key;
                  }
              }
