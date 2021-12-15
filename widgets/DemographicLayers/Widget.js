@@ -1249,15 +1249,15 @@ destroy: function () {
          setTimeout(function () {
              selfDemographic.demogTypeNode.value = window.demogCategoryFromURL;
              selfDemographic._changeDemog();
-         }, 400);
+         }, 1500);//This timeout should be a little bit longer
          setTimeout(function () {
              selfDemographic.demogListNode.value = window.demogVariableFromURL;
              //document.getElementById("widgets_DemographicLayers").click();
-         }, 800);
+         }, 2200);
          setTimeout(function () {
              //selfDemographic.demogListNode.value = window.demogVariableFromURL;
              document.getElementById("mapDemogLayer").click();
-         }, 1000);
+         }, 2600);
      }
 
  },
