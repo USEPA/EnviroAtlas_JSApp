@@ -68,9 +68,10 @@ define({
         2011: 5,
         2013: 6,
         2016: 7,
+		2019: 8,
       },
-      changeIndex: 8,
-      floodplains: 9,
+      changeIndex: 9,
+      floodplains: 10,
       colors: {
         11: "#486DA2",
         12: "#E7EFFC",
