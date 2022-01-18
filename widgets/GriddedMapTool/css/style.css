@@ -214,12 +214,12 @@
 
 .table-wrapper table th, .table-wrapper table td {
   border: 2px solid #d3d3d3;
-  height: 35px;
+  ##height: 35px;
   margin: 0;
-  padding: 0 10px;
+  padding: 3px;
 }
 
-.index-results {
+/*.index-results {
   height: 60px;
 }
 
