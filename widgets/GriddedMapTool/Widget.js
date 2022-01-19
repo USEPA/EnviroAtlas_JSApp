@@ -495,18 +495,13 @@ define([
                 }
 
                 for (let [key, value] of Object.entries(counts)) {
-                  const nlcdArea = Number((value / 100) * area).toFixed(2);
+                  const nlcdArea = Number((value / 100) * area).toFixed(2);                               
                   resultsHTML += `
                     <tr class="index-results">
                       <td class="output-table-cell attr">
                         <div class="nlcd-index">
                           <div class="nlcd-index-legend" style="background-color: ${this.nls.nlcd.colors[key]}"></div>
                           <p>${this.nls.nlcd.indices[key]}</p>
-                        </div>
-                      </td>
-                      <td class="output-table-cell val">
-                        <div class="nlcd-result">
-                            <p>${key}</p>
                         </div>
                       </td>
                       <td class="output-table-cell val">
@@ -653,15 +648,10 @@ define([
               Object.keys(changeResults).forEach(key => {
                 resultsHTML += `
                 <tr class="index-results">
-                      <td class="output-table-cell attr">
+                      <td class="output-table-cell attr" style="width:50%">
                         <div class="nlcd-index">
                           <div class="nlcd-index-legend" style="background-color: ${this.nls.nlcd.colors[key]}"></div>
                           <p>${this.nls.nlcd.indices[key]}</p>
-                        </div>
-                      </td>
-                      <td class="output-table-cell val">
-                        <div class="nlcd-result">
-                            <p>${key}</p>
                         </div>
                       </td>
                       <td class="output-table-cell val">
@@ -1181,7 +1171,7 @@ define([
             <button id="gridded-print-button" class="noprint">Print</button>
           </div>
           <table id="gridded-map-input-table">
-            <thead>
+            <thead style="border-bottom: 2px solid black">
                 <tr>
                     <th colspan="1">${inputTableHeaderCol1}</th>
                     <th colspan="1">${inputTableHeaderCol2}</th>
@@ -1222,7 +1212,7 @@ define([
         this.outputTable.innerHTML =
         `
           <table id="gridded-map-output-table">
-            <thead>
+            <thead style="border-bottom: 2px solid black">
                 <tr>
                   ${columnHeaders}
                 </tr>

@@ -213,7 +213,7 @@
 }
 
 .table-wrapper table th, .table-wrapper table td {
-  border: 2px solid #d3d3d3;
+  border-bottom: 1px solid darkgrey;
   ##height: 35px;
   margin: 0;
   padding: 3px;
