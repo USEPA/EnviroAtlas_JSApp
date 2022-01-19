@@ -1395,8 +1395,8 @@ define([
           case 'impervious-floodplains':
           case 'nlcd':
             if (!this.nlcdYear) {
-              document.getElementById('gridded-map-nlcd').innerHTML = Object.keys(this.nls.nlcd.OBJECTIDS).map(year => `<option value="${year}">${year}</option>`)
-              this.nlcdYear = Object.keys(this.nls.nlcd.OBJECTIDS)[0];
+              document.getElementById('gridded-map-nlcd').innerHTML = Object.keys(this.nls.nlcd.OBJECTIDS).sort().reverse().map(year => `<option value="${year}">${year}</option>`)
+              this.nlcdYear = Object.keys(this.nls.nlcd.OBJECTIDS).sort().reverse()[0];
             }
             this.nlcdSelector.style.display = "flex";
             this.dateSelector.style.display = "none";
