@@ -1,2 +1,4 @@
 #Ignore Backup Files
 *.bak
+scripts/specialcharreplacement.txt
+widgets/GriddedMapTool/nls/stringsjs_Griddedmaptool

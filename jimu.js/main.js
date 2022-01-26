@@ -285,12 +285,13 @@ define([
     window.topicDicESB["Wetlands and Lowlands"] = "WaL";
     
     window.topicDicPSI = {};
-    window.topicDicPSI["EPA Regulated Facilities"] = "RF";
+    //window.topicDicPSI["EPA Regulated Facilities"] = "RF"; Title replaced with sites reporting to EPA
     //window.topicDicPSI["EPA NATA"] = "NATA";
     window.topicDicPSI["Impaired Waters"] = "IW";
 	window.topicDicPSI["National Air Toxics Assessment"] = "NATA";
     window.topicDicPSI["Pollutants: Other"] = "PO";
-    window.topicDicPSI["Pollutants: Nutrients"] = "PN";     
+    window.topicDicPSI["Pollutants: Nutrients"] = "PN"; 
+    window.topicDicPSI["Sites Reporting to EPA"] = "RF";    
     
     window.topicDicPBS = {};
     window.topicDicPBS["Commuting and Walkability"] = "CaW";
