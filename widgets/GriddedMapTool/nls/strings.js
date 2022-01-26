@@ -91,7 +91,7 @@ define({
         95: "#71A4C1",
       },
       layersUsed: ['NLCD'],
-      columnHeaders: ['Land Cover Type', 'Code', 'Area (km2)', 'Percentage']
+      columnHeaders: ['Land Cover Type', 'Area (km2)', 'Percentage']
     },
     "population-floodplains": {
       /* layer: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/TO7_Pop_Flood_Roads_Padus/ImageServer', */
@@ -121,7 +121,7 @@ define({
       layersUsed: ['PADUS', 'Dasymetric Population']
     },
     "nlcd-change": {
-      columnHeaders: ['Land Cover Type', 'Code', 'Year 1 Area (km2)', 'Year 2 Area (km2)', 'Percentage']
+      columnHeaders: ['Land Cover Type', 'Year 1 Area (km2)', 'Year 2 Area (km2)', 'Percentage']
     },
     stateLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_States_Non_Generalized/FeatureServer/0',
     countyLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Counties/FeatureServer/0',

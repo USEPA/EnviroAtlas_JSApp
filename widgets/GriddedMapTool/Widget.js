@@ -495,18 +495,13 @@ define([
                 }
 
                 for (let [key, value] of Object.entries(counts)) {
-                  const nlcdArea = Number((value / 100) * area).toFixed(2);
+                  const nlcdArea = Number((value / 100) * area).toFixed(2);                               
                   resultsHTML += `
                     <tr class="index-results">
                       <td class="output-table-cell attr">
                         <div class="nlcd-index">
                           <div class="nlcd-index-legend" style="background-color: ${this.nls.nlcd.colors[key]}"></div>
                           <p>${this.nls.nlcd.indices[key]}</p>
-                        </div>
-                      </td>
-                      <td class="output-table-cell val">
-                        <div class="nlcd-result">
-                            <p>${key}</p>
                         </div>
                       </td>
                       <td class="output-table-cell val">
@@ -653,15 +648,10 @@ define([
               Object.keys(changeResults).forEach(key => {
                 resultsHTML += `
                 <tr class="index-results">
-                      <td class="output-table-cell attr">
+                      <td class="output-table-cell attr" style="width:50%">
                         <div class="nlcd-index">
                           <div class="nlcd-index-legend" style="background-color: ${this.nls.nlcd.colors[key]}"></div>
                           <p>${this.nls.nlcd.indices[key]}</p>
-                        </div>
-                      </td>
-                      <td class="output-table-cell val">
-                        <div class="nlcd-result">
-                            <p>${key}</p>
                         </div>
                       </td>
                       <td class="output-table-cell val">
@@ -1110,7 +1100,7 @@ define([
 
       calculatePercentages: function(totalCount, count) {
         //return (count/totalCount * 100).toFixed(2)
-        return (count/totalCount * 100)
+        return (count/totalCount * 100).toFixed(2);
       },
 
       _renderInputTable: function(results, area, line) {
@@ -1181,7 +1171,7 @@ define([
             <button id="gridded-print-button" class="noprint">Print</button>
           </div>
           <table id="gridded-map-input-table">
-            <thead>
+            <thead style="border-bottom: 2px solid black">
                 <tr>
                     <th colspan="1">${inputTableHeaderCol1}</th>
                     <th colspan="1">${inputTableHeaderCol2}</th>
@@ -1222,7 +1212,7 @@ define([
         this.outputTable.innerHTML =
         `
           <table id="gridded-map-output-table">
-            <thead>
+            <thead style="border-bottom: 2px solid black">
                 <tr>
                   ${columnHeaders}
                 </tr>
@@ -1405,8 +1395,8 @@ define([
           case 'impervious-floodplains':
           case 'nlcd':
             if (!this.nlcdYear) {
-              document.getElementById('gridded-map-nlcd').innerHTML = Object.keys(this.nls.nlcd.OBJECTIDS).map(year => `<option value="${year}">${year}</option>`)
-              this.nlcdYear = Object.keys(this.nls.nlcd.OBJECTIDS)[0];
+              document.getElementById('gridded-map-nlcd').innerHTML = Object.keys(this.nls.nlcd.OBJECTIDS).sort().reverse().map(year => `<option value="${year}">${year}</option>`)
+              this.nlcdYear = Object.keys(this.nls.nlcd.OBJECTIDS).sort().reverse()[0];
             }
             this.nlcdSelector.style.display = "flex";
             this.dateSelector.style.display = "none";
