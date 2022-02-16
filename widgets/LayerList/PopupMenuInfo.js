@@ -97,8 +97,16 @@ define([
                             case 'AccessWebService':
                                 if ('agoID' in layerInfoFromJson) {
                                     WebServiceURLRoot = "https://epa.maps.arcgis.com/home/item.html?id=";
-                                    //window.open(window.dataFactSheet + layerInfoFromJson['eaDfsLink']);
                                     window.open(WebServiceURLRoot + layerInfoFromJson['agoID']);
+                                }
+                                else if (layer.hasOwnProperty('url')) {
+                                    if (layer.hasOwnProperty('eaLyrNum')) {
+                                        urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
+                                    }
+                                    else {
+                                        urlInConfig = layer.url
+                                    }
+                                    window.open(urlInConfig);                                    
                                 }
                                 else {
                                     alert("Web Access Service is not available for this layer");
@@ -176,6 +184,12 @@ define([
                         }
                         if (layer.hasOwnProperty('agoID')) {
                             layerInfoFromJson['agoID'] = layer.agoID;
+                        }
+                        if (layer.hasOwnProperty('eaLyrNum')) {
+                            layerInfoFromJson['eaLyrNum'] = layer.agoID;
+                        }
+                        if (layer.hasOwnProperty('url')) {
+                            layerInfoFromJson['url'] = layer.agoID;
                         }
 	                    break;                    	                    
 	                }					                	                
