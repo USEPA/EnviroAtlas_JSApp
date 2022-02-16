@@ -93,7 +93,17 @@ define([
 		                		else {
 		                			alert("Data fact sheet is not available for this layer");	
 		                		}		                		
-		                		break;		                	                    	                        		
+                                break;
+                            case 'AccessWebService':
+                                if ('agoID' in layerInfoFromJson) {
+                                    WebServiceURLRoot = "https://epa.maps.arcgis.com/home/item.html?id=";
+                                    //window.open(window.dataFactSheet + layerInfoFromJson['eaDfsLink']);
+                                    window.open(WebServiceURLRoot + layerInfoFromJson['agoID']);
+                                }
+                                else {
+                                    alert("Web Access Service is not available for this layer");
+                                }
+                                break;
 	                	}
 	                	
 	                }
@@ -163,7 +173,10 @@ define([
 	                    }
 	                    if (layer.hasOwnProperty('eaScale')) {
 	                    	layerInfoFromJson['eaScale'] = layer.eaScale;
-	                    }
+                        }
+                        if (layer.hasOwnProperty('agoID')) {
+                            layerInfoFromJson['agoID'] = layer.agoID;
+                        }
 	                    break;                    	                    
 	                }					                	                
 	            }
@@ -198,7 +211,7 @@ define([
     			window.open(window.dataFactSheet + "Supplemental/Climate_" + climateVar2 + ".pdf");
     			return; 
     		}
-    	}
+        } 
     	layerInfoFromJson = {};
     	
         var eaID = layerId.replace(window.layerIdPrefix, "");
@@ -327,7 +340,8 @@ define([
         label: this.nls.showLabels
       }, {
         key: 'url',
-        label: this._getATagLabel()
+          //label: this._getATagLabel()
+          label: this.nls.itemDesc
       }];
     },
 
@@ -420,12 +434,12 @@ define([
         });
       }
 
-      if (!this._ATagLabelUrl) {
+      /*if (!this._ATagLabelUrl) {
         dynamicDeniedItems.push({
           'key': 'url',
           'denyType': 'disable'
         });
-      }
+      }*/
 
       // deny controlLabels
       if (!this._layerInfo.canShowLabel()) {
@@ -542,7 +556,10 @@ define([
           break;
         case 'dataFactSheet':
           this._onItemDataFactSheetClick(evt);
-          break;
+              break;
+        case 'url':
+            this._onItemAccessWebServiceClick(evt);
+            break;
         case 'metadataDownload':
           this._onItemMetadataDownloadClick(evt);
           break;    
@@ -751,7 +768,12 @@ define([
 		}
         var clickedURL = this._layerInfo.layerObject.url;        
         displayInfoOnClickAction(layerId, clickedURL, 'eaDfsLink');
-    },
+      },
+      _onItemAccessWebServiceClick: function (evt) {
+          layerId = this._layerInfo.id;
+          var clickedURL = this._layerInfo.layerObject.url;
+          displayInfoOnClickAction(layerId, clickedURL, 'AccessWebService');
+      },
     _onItemChangeSymbologyClick: function(evt) {
       layerId = this._layerInfo.id;
 	  if (layerId.indexOf(window.layerIdPrefix) > -1) {			
