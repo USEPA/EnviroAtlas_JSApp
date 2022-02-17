@@ -34,7 +34,8 @@ define([
   var mapDescriptionStr = "";
   var topLayerIndex = 300;
   var layerInfoFromJson = {};
-  var _layerType = null;
+    var _layerType = null;
+    var urlForCommunityLayers = null;
   var uncheckRelatedCheckbox = function (chkboxLayerId){
     	var chkSimpleSearch = document.getElementById(window.chkSelectableLayer + chkboxLayerId);
     	if((chkSimpleSearch != null) && (chkSimpleSearch.checked == true)){	
@@ -100,13 +101,14 @@ define([
                                     window.open(WebServiceURLRoot + layerInfoFromJson['agoID']);
                                 }
                                 else if (layer.hasOwnProperty('url')) {
-                                    if (layer.hasOwnProperty('eaLyrNum')) {
+                                    /*if (layer.hasOwnProperty('eaLyrNum')) {
                                         urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
                                     }
                                     else {
                                         urlInConfig = layer.url
                                     }
-                                    window.open(urlInConfig);                                    
+                                    window.open(urlInConfig);*/
+                                    window.open(urlForCommunityLayers);
                                 }
                                 else {
                                     alert("Web Access Service is not available for this layer");
@@ -183,13 +185,15 @@ define([
 	                    	layerInfoFromJson['eaScale'] = layer.eaScale;
                         }
                         if (layer.hasOwnProperty('agoID')) {
-                            layerInfoFromJson['agoID'] = layer.agoID;
+                            if (layer.agoID != "") {
+                                layerInfoFromJson['agoID'] = layer.agoID;
+                            }                            
                         }
                         if (layer.hasOwnProperty('eaLyrNum')) {
-                            layerInfoFromJson['eaLyrNum'] = layer.agoID;
+                            layerInfoFromJson['eaLyrNum'] = layer.eaLyrNum;
                         }
                         if (layer.hasOwnProperty('url')) {
-                            layerInfoFromJson['url'] = layer.agoID;
+                            layerInfoFromJson['url'] = layer.url;
                         }
 	                    break;                    	                    
 	                }					                	                
@@ -300,7 +304,8 @@ define([
         url = '';
         label = this.nls.itemDesc;
       }
-      this._ATagLabelUrl = url;
+        this._ATagLabelUrl = url;
+        urlForCommunityLayers = url;
       return '<a class="menu-item-description" target="_blank" href="' +
         url + '">' + label + '</a>';
     },
@@ -454,7 +459,7 @@ define([
           'denyType': 'disable'
         });
       }*/
-
+        this._getATagLabel();
       // deny controlLabels
       if (!this._layerInfo.canShowLabel()) {
         dynamicDeniedItems.push({
