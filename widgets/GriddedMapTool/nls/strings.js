@@ -41,6 +41,7 @@ define({
     },
     nlcd: {
       indices: {
+         0: "No Data",
         11: "Open Water",
         12: "Perennial Ice/Snow",
         21: "Developed - Open Space",
@@ -73,6 +74,7 @@ define({
       changeIndex: 9,
       floodplains: 10,
       colors: {
+         0: "#A9A9A9",
         11: "#486DA2",
         12: "#E7EFFC",
         21: "#E1CDCE",
@@ -126,6 +128,7 @@ define({
     stateLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_States_Non_Generalized/FeatureServer/0',
     countyLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Counties/FeatureServer/0',
     districtLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_116th_Congressional_Districts/FeatureServer/0',
+    districtVersion: '116th Congressional District',
     "huc-12Layer": 'https://enviroatlas2.epa.gov/arcgis/rest/services/test_services/allResults/MapServer/0',
     "huc-8Layer": 'https://leb.epa.gov/arcgis/rest/services/Supplemental/HUC8/MapServer/0'
   },

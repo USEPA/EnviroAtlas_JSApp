@@ -64,6 +64,7 @@
   top:0 !important;
   bottom:0 !important;
   overflow: hidden;
+  border: 1px solid lightgray;
 }
 
 .widget-gridded-map .profile-tab-node .input-step {
@@ -208,7 +209,7 @@
 }
 
 .table-wrapper table th {
-  background-color: #FEF2CC;
+  background-color: lavendar; ###FEF2CC;
   font-weight: 700;
 }
 
@@ -250,10 +251,24 @@
   align-items: center;
 }
 
-.nlcd-index > .nlcd-index-legend {
+.divergingbarchart_class {
+  background-color: red;
+}
+
+/*.nlcd-index > .nlcd-index-legend {
   margin-right: 5px;
   height: 20px;
   width: 20px;
+}*/
+
+#nlcd-index-legend {
+  margin-right: 5px;
+  height: 15px;
+  width: 15px;
+}
+
+.table-wrapper table th .nlcd_title {
+  width: 40%;
 }
 
 .nlcd-result {
