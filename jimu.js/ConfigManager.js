@@ -57,6 +57,16 @@ define([
                 if (this.urlParams.featuredcollection != undefined) {
                     window.featuredCollectionFromURL = this.urlParams.featuredcollection;
                 }
+                if (this.urlParams.demogSource != undefined) {
+                    window.demogSourceFromURL = this.urlParams.demogSource;
+                }
+                if (this.urlParams.demogCategory != undefined) {
+                    window.demogCategoryFromURL = this.urlParams.demogCategory;
+                }
+                
+                if (this.urlParams.demogVariable != undefined) {
+                    window.demogVariableFromURL = this.urlParams.demogVariable;
+                }
                 this.listenBuilderEvents();
                 this.versionManager = new AppVersionManager();
                 this.widgetManager = WidgetManager.getInstance();

@@ -34,7 +34,8 @@ define([
   var mapDescriptionStr = "";
   var topLayerIndex = 300;
   var layerInfoFromJson = {};
-  var _layerType = null;
+    var _layerType = null;
+    var urlForCommunityLayers = null;
   var uncheckRelatedCheckbox = function (chkboxLayerId){
     	var chkSimpleSearch = document.getElementById(window.chkSelectableLayer + chkboxLayerId);
     	if((chkSimpleSearch != null) && (chkSimpleSearch.checked == true)){	
@@ -93,7 +94,26 @@ define([
 		                		else {
 		                			alert("Data fact sheet is not available for this layer");	
 		                		}		                		
-		                		break;		                	                    	                        		
+                                break;
+                            case 'AccessWebService':
+                                if ('agoID' in layerInfoFromJson) {
+                                    WebServiceURLRoot = "https://epa.maps.arcgis.com/home/item.html?id=";
+                                    window.open(WebServiceURLRoot + layerInfoFromJson['agoID']);
+                                }
+                                else if (layer.hasOwnProperty('url')) {
+                                    /*if (layer.hasOwnProperty('eaLyrNum')) {
+                                        urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
+                                    }
+                                    else {
+                                        urlInConfig = layer.url
+                                    }
+                                    window.open(urlInConfig);*/
+                                    window.open(urlForCommunityLayers);
+                                }
+                                else {
+                                    alert("Web Access Service is not available for this layer");
+                                }
+                                break;
 	                	}
 	                	
 	                }
@@ -163,7 +183,18 @@ define([
 	                    }
 	                    if (layer.hasOwnProperty('eaScale')) {
 	                    	layerInfoFromJson['eaScale'] = layer.eaScale;
-	                    }
+                        }
+                        if (layer.hasOwnProperty('agoID')) {
+                            if (layer.agoID != "") {
+                                layerInfoFromJson['agoID'] = layer.agoID;
+                            }                            
+                        }
+                        if (layer.hasOwnProperty('eaLyrNum')) {
+                            layerInfoFromJson['eaLyrNum'] = layer.eaLyrNum;
+                        }
+                        if (layer.hasOwnProperty('url')) {
+                            layerInfoFromJson['url'] = layer.url;
+                        }
 	                    break;                    	                    
 	                }					                	                
 	            }
@@ -198,7 +229,7 @@ define([
     			window.open(window.dataFactSheet + "Supplemental/Climate_" + climateVar2 + ".pdf");
     			return; 
     		}
-    	}
+        } 
     	layerInfoFromJson = {};
     	
         var eaID = layerId.replace(window.layerIdPrefix, "");
@@ -273,7 +304,8 @@ define([
         url = '';
         label = this.nls.itemDesc;
       }
-      this._ATagLabelUrl = url;
+        this._ATagLabelUrl = url;
+        urlForCommunityLayers = url;
       return '<a class="menu-item-description" target="_blank" href="' +
         url + '">' + label + '</a>';
     },
@@ -327,7 +359,8 @@ define([
         label: this.nls.showLabels
       }, {
         key: 'url',
-        label: this._getATagLabel()
+          //label: this._getATagLabel()
+          label: this.nls.itemDesc
       }];
     },
 
@@ -420,13 +453,13 @@ define([
         });
       }
 
-      if (!this._ATagLabelUrl) {
+      /*if (!this._ATagLabelUrl) {
         dynamicDeniedItems.push({
           'key': 'url',
           'denyType': 'disable'
         });
-      }
-
+      }*/
+        this._getATagLabel();
       // deny controlLabels
       if (!this._layerInfo.canShowLabel()) {
         dynamicDeniedItems.push({
@@ -542,7 +575,10 @@ define([
           break;
         case 'dataFactSheet':
           this._onItemDataFactSheetClick(evt);
-          break;
+              break;
+        case 'url':
+            this._onItemAccessWebServiceClick(evt);
+            break;
         case 'metadataDownload':
           this._onItemMetadataDownloadClick(evt);
           break;    
@@ -751,7 +787,12 @@ define([
 		}
         var clickedURL = this._layerInfo.layerObject.url;        
         displayInfoOnClickAction(layerId, clickedURL, 'eaDfsLink');
-    },
+      },
+      _onItemAccessWebServiceClick: function (evt) {
+          layerId = this._layerInfo.id;
+          var clickedURL = this._layerInfo.layerObject.url;
+          displayInfoOnClickAction(layerId, clickedURL, 'AccessWebService');
+      },
     _onItemChangeSymbologyClick: function(evt) {
       layerId = this._layerInfo.id;
 	  if (layerId.indexOf(window.layerIdPrefix) > -1) {			

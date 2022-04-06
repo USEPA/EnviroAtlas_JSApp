@@ -65,9 +65,6 @@ define(['dojo/_base/declare',
     var so = declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
       templateString: template,
       declaredClass: "jimu.dijit.ShareLink",
-      //bitlyUrl: "http://api.bit.ly/v3/shorten?login=arcgisdev&apiKey=R_18b3867d45854ba98d9e0e7c20dbf6d3",
-      //bitlyUrlSSL: "https://api-ssl.bitly.com/v3/shorten?login=arcgisdev" +
-      //"&apiKey=R_18b3867d45854ba98d9e0e7c20dbf6d3",
       bitlyUrl: "https://arcg.is/prod/shorten",
       share: {
         shareEmailSubject: "",
