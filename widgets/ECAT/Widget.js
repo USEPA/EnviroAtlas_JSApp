@@ -40,7 +40,7 @@ function(declare,
 	    ) {
 
     var map;
-    var server = "https://enviroatlas2.epa.gov/";
+    var server = "https://awseatlas2.epa.gov/";
     var gpURL = server + "arcgis/rest/services/ECAT/RasterCalculate_fromAverage/GPServer/RasterAverage_from5Year";
     
     var gpComputeClimateChange = null;

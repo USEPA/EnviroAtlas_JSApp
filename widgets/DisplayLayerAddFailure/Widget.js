@@ -179,17 +179,17 @@ define([
 
 			  try{
 				var xhr = new XMLHttpRequest();
-				//xhr.open('GET', "https://enviroatlas.epa.gov/SendEmailOfFailedLayers.py?failedEALayers=" + failedEAID + "&failedOutsideLayers=" + failedOutsideLayers, true);
+				//xhr.open('GET', "https://awseatlas.epa.gov/SendEmailOfFailedLayers.py?failedEALayers=" + failedEAID + "&failedOutsideLayers=" + failedOutsideLayers, true);
 				if ((failedEAID.length > 0) && (failedOutsideLayers.length > 0)) {
-					xhr.open('GET', "https://enviroatlas.epa.gov/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedEALayers=" + failedEAID + "&failedOutsideLayers=" + failedOutsideLayers, true);
+					xhr.open('GET', "https://awseatlas.epa.gov/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedEALayers=" + failedEAID + "&failedOutsideLayers=" + failedOutsideLayers, true);
 				}
 				else if (failedEAID.length > 0) {
-					xhr.open('GET', "https://enviroatlas.epa.gov/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedEALayers=" + failedEAID, true);
+					xhr.open('GET', "https://awseatlas.epa.gov/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedEALayers=" + failedEAID, true);
 				} 
 				else if (failedOutsideLayers.length > 0) {
-					xhr.open('GET', "https://enviroatlas.epa.gov/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedOutsideLayers=" + failedOutsideLayers, true);
+					xhr.open('GET', "https://awseatlas.epa.gov/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedOutsideLayers=" + failedOutsideLayers, true);
 				} else if ( failedDemoHucLayers.length > 0 ) {
-					xhr.open('GET', "https://enviroatlas.epa.gov/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedDemoHucTimeseEcatRain=" + failedDemoHucLayers, true);
+					xhr.open('GET', "https://awseatlas.epa.gov/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedDemoHucTimeseEcatRain=" + failedDemoHucLayers, true);
 				}				
 				xhr.send();
                 disableSendButton();
