@@ -180,7 +180,17 @@ _WidgetsInTemplateMixin, template, ClearSelectionAction) {
             folderUrl: this.folderUrl,
             data: this.featureLayer
           }));
-        }
+          }
+
+          var arrayLength = this.popupMenu.menuItems.length;
+          for (var i = 0; i < arrayLength; i++) {
+              actionWidgetId = this.popupMenu.menuItems[i].action.widgetId;
+              //this.popupMenu.menuItems[6].action.widgetId = "framework";
+              if ((actionWidgetId != null) && (actionWidgetId.includes("NavHuc"))) {
+                  this.popupMenu.menuItems[i].domNode.style.display = "none";
+              }
+          }
+          
         this.popupMenu.show(position, this.nls.actionsTitle);
       }));
     },
