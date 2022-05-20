@@ -741,7 +741,7 @@ define(['dojo/_base/declare',
         		tileURL = window.hashURLtoTile[l.url];
         	}
         	else { 
-        		lebURL = l.url.replace("enviroatlas.epa.gov", "leb.epa.gov");
+        		lebURL = l.url.replace("enviroatlas.epa.gov", "awseastaging.epa.gov");
         		if(window.hashURLtoTile.hasOwnProperty(lebURL)) {
         			tileURL = window.hashURLtoTile[lebURL];                	
         		}                		

@@ -197,7 +197,7 @@ define([
     window.formatters['help_SelectCommunity1'] = help_SelectCommunity1;    
     window.formatters['help_DrawerMapping1'] = help_DrawerMapping1;
     window.formatters['help_ECAT1'] =  help_ECAT1;  
-    window.formatters['help_CompareMyArea1'] =  help_CompareMyArea1; 
+    window.formatters['help_CompareMyArea1'] = help_CompareMyArea1; 
     window.formatters['help_SaveSession1'] =  help_SaveSession1; 
     
     window.formatters['help_NavHuc1'] = help_NavHuc1;
@@ -219,7 +219,7 @@ define([
     window.formatters['help_SelectCommunity2'] = help_SelectCommunity2;    
     window.formatters['help_DrawerMapping2'] = help_DrawerMapping2;
     window.formatters['help_ECAT2'] =  help_ECAT2;
-    window.formatters['help_CompareMyArea2'] =  help_CompareMyArea2;
+    window.formatters['help_CompareMyArea2'] = help_CompareMyArea2;
     window.formatters['help_SaveSession2'] =  help_SaveSession2;
       
     window.formatters['help_NavHuc2'] = help_NavHuc2;
@@ -271,7 +271,7 @@ define([
     window.topicDicESB["Pollutant Reduction: Water"] = "PRW"; //This is newly added Mar 2017
     
     window.topicDicESB["Protected Lands"] = "PL";
-	  window.topicDicESB["Soils"] = "SLS";  //New addition Aug 2021
+	window.topicDicESB["Soils"] = "SLS";  //New addition Aug 2021
     window.topicDicESB["Species: At-Risk and Priority"] = "SARaP";
     window.topicDicESB["Species: Other"] = "SO";
     window.topicDicESB["Water Supply, Runoff, and Flow"] = "WSRaF"; //This is newly added Mar 2017     
@@ -287,7 +287,7 @@ define([
 	window.topicDicPSI["National Air Toxics Assessment"] = "NATA";
     window.topicDicPSI["Pollutants: Other"] = "PO";
     window.topicDicPSI["Pollutants: Nutrients"] = "PN"; 
-    window.topicDicPSI["Sites Reporting to EPA"] = "RF";      
+    window.topicDicPSI["Sites Reporting to EPA"] = "RF";
     
     window.topicDicPBS = {};
     window.topicDicPBS["Commuting and Walkability"] = "CaW";
