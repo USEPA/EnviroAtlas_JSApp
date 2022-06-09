@@ -227,7 +227,7 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
         "optClientRef": "CodePen"
       };
       //Point Indexing service
-      var layerUrl = "https://ofmpub.epa.gov/waters10/PointIndexing.Service";
+      var layerUrl = "https://ordspub.epa.gov/ords/waters10/PointIndexing.Service";
       var layersRequest = esriRequest({
         url: layerUrl,
         content: data,
