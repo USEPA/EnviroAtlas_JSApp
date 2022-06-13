@@ -468,7 +468,7 @@ define([
       if (ioArgs.url.indexOf("enviroatlas2.epa.gov/arcgis/rest/services/ECAT") !== -1) { //This is to test timeout of ECAT
       	ioArgs.timeout = 59000;
       } 
-      if (ioArgs.url.indexOf("ofmpub.epa.gov/waters10/PointIndexing.Service") !== -1) { //This is to test timeout of Raindrop tool
+      if (ioArgs.url.indexOf("ordspub.epa.gov/ords/waters10/PointIndexing.Service") !== -1) { //This is to test timeout of Raindrop tool
       	ioArgs.timeout = 59000;
       }            
       //use https protocol
