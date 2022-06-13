@@ -1,12 +1,12 @@
 {
 	"navigator_urlOLD": "/wbd-cgi/index.py",
     "navigator_url": "/wbd",
-    "watersgeo_huc8_mapserver": "https://leb.epa.gov/arcgis/rest/services/Other/WBD_NP21_Simplified/MapServer/2",
+    "watersgeo_huc8_mapserver": "https://aweeastaging.epa.gov/arcgis/rest/services/Other/WBD_NP21_Simplified/MapServer/2",
 	"enviroatlas_huc8_mapserver": "https://enviroatlas.epa.gov/arcgis/rest/services/Other/HydrologicUnits/MapServer/2",
 	
 	"NOTE1": "This one is too slow and times out",
 	"enviroatlas_huc12_mapserver": "https://enviroatlas.epa.gov/arcgis/rest/services/Other/HydrologicUnits/MapServer/4",
-	"watersgeo_huc12_mapserver": "https://leb.epa.gov/arcgis/rest/services/Other/WBD_NP21_Simplified/MapServer/0",
+	"watersgeo_huc12_mapserver": "https://awseastaging.epa.gov/arcgis/rest/services/Other/WBD_NP21_Simplified/MapServer/0",
 	
 	
 	"huc12_array_slice_size": 250,
