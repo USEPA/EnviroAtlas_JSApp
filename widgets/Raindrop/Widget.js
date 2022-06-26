@@ -212,7 +212,7 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
 
     _run_RaindropService: function (point){
 
-      //var service_url = 'http://ofmpub.epa.gov/waters10/PointIndexing.Service';
+      //var service_url = 'https://ordspub.epa.gov/ords/waters10/PointIndexing.Service';
       //settings for indexing service
       var data = {
         "pGeometry": "POINT(" + point.getLongitude() + " " + point.getLatitude() + ")",
