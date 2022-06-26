@@ -213,6 +213,7 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
     _run_RaindropService: function (point){
 
       //var service_url = 'https://ordspub.epa.gov/ords/waters10/PointIndexing.Service';
+	  //var staging service_url = 'https://ordsstage.epa.gov/ords/waters10/PointIndexing.Service';
       //settings for indexing service
       var data = {
         "pGeometry": "POINT(" + point.getLongitude() + " " + point.getLatitude() + ")",
@@ -227,7 +228,7 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
         "optClientRef": "CodePen"
       };
       //Point Indexing service
-      var layerUrl = "https://ordspub.epa.gov/ords/waters10/PointIndexing.Service";
+      var layerUrl = "https://ordsstage.epa.gov/ords/waters10/PointIndexing.Service";
       var layersRequest = esriRequest({
         url: layerUrl,
         content: data,
