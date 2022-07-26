@@ -269,7 +269,7 @@ define([
     window.topicDicESB["Land Cover: Near-Water"] = "LCNW";
     window.topicDicESB["Land Cover: Type"] = "LCT";
     window.topicDicESB["Landscape Pattern"] = "LP";
-	window.topicDicESB["Livestock and Poultry Production"] = "LPP"; //This is newly added July 2022
+	window.topicDicESB["Livestock and Poultry Production"] = "LS"; //This is newly added July 2022
     window.topicDicESB["Near-Road Environments"] = "NRE";    
     
     window.topicDicESB["Pollutant Reduction: Air"] = "PRA"; //This is newly added Mar 2017    
