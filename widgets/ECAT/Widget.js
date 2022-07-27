@@ -40,8 +40,12 @@ function(declare,
 	    ) {
 
     var map;
-    var server = "https://enviroatlas2.epa.gov/";
-    var gpURL = server + "arcgis/rest/services/ECAT/RasterCalculate_fromAverage/GPServer/RasterAverage_from5Year";
+    //var server = "https://enviroatlas2.epa.gov/";
+    //var server = "https://awsfossa.epa.gov/";
+    //var server = "https://awsdragonfly.epa.gov/";
+    var server = "https://awseatlas2.epa.gov/";
+    //var gpURL = server + "arcgis/rest/services/ECAT/RasterCalculate_fromAverage/GPServer/RasterAverage_from5Year";
+    var gpURL = server + "arcgis/rest/services/ECAT/RasterCalculatefromAverage/GPServer/RasterCalculate_fromAverage";
     
     var gpComputeClimateChange = null;
     var layerID = "ClimateChange";
@@ -62,8 +66,9 @@ function(declare,
         	map.infoWindow.hide();
       	}             	
 	};    
-	var downloadCSVClick = function() {
-		window.open(server + "arcgis/rest/directories/arcgisjobs/ecat/rastercalculate_fromaverage_gpserver/" + currentJobInfo.jobId + "/scratch/HUC12Statistic.csv");
+    var downloadCSVClick = function() {
+        //window.open(server + "arcgis/rest/directories/arcgisjobs/ecat/rastercalculate_fromaverage_gpserver/" + currentJobInfo.jobId + "/scratch/HUC12Statistic.csv");
+        window.open(server + "arcgis/rest/directories/arcgisjobs/ecat/rastercalculatefromaverage_gpserver/" + currentJobInfo.jobId + "/HUC12Statistic.csv");
 	};
 
     var calculateChangeClick = function() {
