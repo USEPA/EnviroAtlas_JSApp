@@ -287,7 +287,7 @@ define([
     
     window.topicDicPSI = {};
     //window.topicDicPSI["EPA Regulated Facilities"] = "RF"; Title replaced with sites reporting to EPA
-    //window.topicDicPSI["EPA NATA"] = "NATA";
+    window.topicDicPSI["Harmful algal blooms"] = "HAB";
     window.topicDicPSI["Impaired Waters"] = "IW";
 	window.topicDicPSI["National Air Toxics Assessment"] = "NATA";
     window.topicDicPSI["Pollutants: Other"] = "PO";
