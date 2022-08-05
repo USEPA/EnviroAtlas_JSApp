@@ -32,10 +32,12 @@ define([
   'esri/layers/RasterFunction',
   'esri/layers/MosaicRule',
   'esri/layers/ImageServiceParameters',
-  'esri/request'
+  'esri/request',
+  'esri/geometry/ScreenPoint', 
+  'esri/geometry/Extent'
 ],
   function (declare, BaseWidget, _WidgetsInTemplateMixin, _OnDijitClickMixin, Evented,
-    on, domClass, lang, arrayUtils, jimuUtils, TabContainer, Draw, Graphic, ScaleUtils, SimpleRenderer, SimpleFillSymbol, SimpleMarkerSymbol, SimpleLineSymbol, CartographicLineSymbol, Color, GraphicsLayer, QueryTask, Query, GeometryEngine, ArcGISImageServiceLayer, FeatureLayer, RasterFunction, MosaicRule, ImageServiceParameters, esriRequest) {
+    on, domClass, lang, arrayUtils, jimuUtils, TabContainer, Draw, Graphic, ScaleUtils, SimpleRenderer, SimpleFillSymbol, SimpleMarkerSymbol, SimpleLineSymbol, CartographicLineSymbol, Color, GraphicsLayer, QueryTask, Query, GeometryEngine, ArcGISImageServiceLayer, FeatureLayer, RasterFunction, MosaicRule, ImageServiceParameters, esriRequest, ScreenPoint, Extent) {
     return declare([BaseWidget, _WidgetsInTemplateMixin, _OnDijitClickMixin, Evented], {
 
       baseClass: 'widget-gridded-map',
@@ -313,15 +315,17 @@ define([
           }
 
           //const area = Math.round(GeometryEngine.planarArea(geo, `square-${this.pointMetric}`));
-          const area = Math.round((GeometryEngine.planarArea(geo, `square-${this.pointMetric}`)) * 10) / 10;
+          //const area = Math.round((GeometryEngine.planarArea(geo, `square-${this.pointMetric}`)) * 10) / 10;
+          //const area = Math.round((GeometryEngine.geodesicArea(geo, `square-${this.pointMetric}`)) * 10) / 10;
 
+          const pixel_size = this.nls[this.indicator].resolution;
           let compHistEndpoint = `${this.indicatorUrl}/computeStatisticsHistograms`;
 
           let compHistContent = { 
             f: 'json',
             geometryType: 'esriGeometryPolygon',
             geometry: JSON.stringify(geo),
-            pixelSize: 30,
+            pixelSize: pixel_size,
             noData: 0
           }
 
@@ -340,6 +344,7 @@ define([
               results = await this._computeHistograms(compHistEndpoint, compHistContent);
               if (results) {
                 const totalCount = results.statistics[0].count;
+                var area = totalCount * (pixel_size * pixel_size) / 1000000;
                 
                 const nlcdResults = {}
                 results.histograms[0].counts.forEach((count, index) => {
@@ -373,6 +378,53 @@ define([
               }
               
               break; 
+
+            case 'padus':
+              const padusMR = {
+                mosaicMethod: "esriMosaicLockRaster",
+                lockRasterIds: [this.nls.padus.lockRasterId]
+              }
+              compHistContent.mosaicRule = JSON.stringify(padusMR);
+              inputTableData = [] 
+              results = await this._computeHistograms(compHistEndpoint, compHistContent);
+              if (results) {
+                const totalCount = results.statistics[0].count;
+                const percentagePADUS = this.calculatePercentages(totalCount, results.histograms[0].counts[255]);
+                const areaOfPADUS = Number((percentagePADUS / 100) * area).toFixed(2);
+
+
+        
+                inputTableData.push({'attribute': 'Protected Area (km2)', 'value': areaOfPADUS});
+                inputTableData.push({'attribute': 'Percent Protected Area', 'value': percentagePADUS});
+
+                
+
+                inputTableData.push({'attribute': 'Area', 'value': area + this._getMetricString(this.pointMetric) + '2'});
+        
+                var headers = [
+                      { head: 'Protected Area results', cl: '', d: 'attribute' },
+                      { head: ' ', cl: '', d: 'value' }]
+                table = this._renderTable(headers, inputTableData)
+                
+                this.inputTable.append(table)
+
+
+                table = this._renderTable(headers, inputTableData)
+
+                $('#gridded-map-output-table-wrapper').append(table);
+
+              //   resultsHTML += `
+              //   <tr class="index-results">
+              //     <td class="output-table-cell attr">
+              //       ${'Protected Area Size'}
+              //     </td>
+              //     <td class="output-table-cell val">
+              //       ${this.formatLargeNumber(areaOfPADUS)} km2
+              //     </td>
+              //   </tr>
+              // `
+              };
+              break;
             
             case 'nlcd-change':
               const years = [this.nlcdChangeYear1, this.nlcdChangeYear2];
@@ -397,6 +449,7 @@ define([
                   yearCounts[year] = counts;
                 }
               }
+              var area = totalCount * (pixel_size * pixel_size) / 1000000;
               const changeResults = {};
               //Object.keys(yearCounts[years[0]]).forEach(key => {
               Object.keys(this.nls.nlcd.indices).forEach(key => {
@@ -439,7 +492,7 @@ define([
               { head: years[0] +' Area (km2)', cl: '', d: 'year1n' },
               { head: years[0] +' Percentage', cl: '', d: 'year1p' },
               { head: years[1] +' Area (km2)', cl: '', d: 'year2n' },
-              { head: years[1] +' Percentage', cl: '', d: 'year1p' }]
+              { head: years[1] +' Percentage', cl: '', d: 'year2p' }]
               table = this._renderTable(headers, data)
                 
               //Sort for cascading bar chart
@@ -450,7 +503,7 @@ define([
               chart = this._DivergingBarChart(data, {
               x: d => d.areaChange,
               y: d => d.name,
-              xLabel: "<- decrease - Change in area (km2) - increase ->",
+              xLabel: "&#129060; decrease - Change in area (km2) - increase &#129062;",
               marginRight: 15,
               marginLeft: 15,
               xFormat: '.2f',
@@ -467,7 +520,8 @@ define([
             default:
               break;
           }
-          
+
+                    
           this._renderResults(results, area, line);
           
          
@@ -897,6 +951,11 @@ define([
         
         inputTableData.push({'attribute': 'Analysis', 'value': this.indicatorDropdown.options[this.indicatorDropdown.selectedIndex].text});
         
+
+        inputTableData.push({'attribute': 'Source Data', 
+                             'value': '<a target= _blank" style="text-decoration:none" href="' +
+                                    this.nls[this.indicator].layersUsedURL + '">' +  
+                                   (this.nls[this.indicator].layersUsed) + '</a>'});
  
         switch(this.unitDropdownSelection) {
           case 'district':
@@ -906,7 +965,7 @@ define([
             break;
           case 'county':
             inputTableData.push({'attribute': 'Geometry Type', 'value': 'County'});
-            inputTableData.push({'attribute': 'County', 'value': results.Name + ', ' + results.STATE_NAME});
+            inputTableData.push({'attribute': 'County', 'value': results.NAME + ', ' + results.STATE_NAME});
             break;
           case 'state':
             inputTableData.push({'attribute': 'Geometry Type', 'value': 'State'});
@@ -923,12 +982,12 @@ define([
             inputTableData.push({'attribute': 'Geometry Type', 'value': 'User provided point'});
             inputTableData.push({'attribute': 'Lat/Lon', 'value': this.bufferGeometry.getCentroid().getLatitude().toFixed(4) +', '+
                                                                 this.bufferGeometry.getCentroid().getLongitude().toFixed(4)});
-            inputTableData.push({'attribute': 'Buffer Radius', 'value': this.formatLargeNumber(this.bufferRadius) + this._getMetricString(this.pointMetric)});
+            inputTableData.push({'attribute': 'Buffer Radius', 'value': this.formatLargeNumber(this.bufferRadius) + ' ' + this._getMetricString(this.pointMetric)});
             break;
           case 'line':
             inputTableData.push({'attribute': 'Geometry Type', 'value': 'User provided line'});
-            inputTableData.push({'attribute': 'Length', 'value': line});
-            inputTableData.push({'attribute': 'Buffer', 'value': this.formatLargeNumber(this.bufferRadius) + this._getMetricString(this.pointMetric)});
+            inputTableData.push({'attribute': 'Length', 'value': line + ' ' + this._getMetricString(this.pointMetric)});
+            inputTableData.push({'attribute': 'Buffer', 'value': this.formatLargeNumber(this.bufferRadius) + ' ' + this._getMetricString(this.pointMetric)});
             break;
           case 'huc-8':
             inputTableData.push({'attribute': 'Geometry Type', 'value': 'HUC-8'});
@@ -947,7 +1006,8 @@ define([
             break;
         }
         
-        inputTableData.push({'attribute': 'Area of Selection', 'value': area + this._getMetricString(this.pointMetric) + '2'});
+        const pretty_area = Math.round(area * 10) / 10;
+        inputTableData.push({'attribute': 'Area', 'value': pretty_area + ' ' + this._getMetricString(this.pointMetric) + '2'});
         
         var headers = [
               { head: 'Input Paramaters', cl: '', d: 'attribute' },
@@ -1019,7 +1079,7 @@ define([
         yPadding = 0.3, // amount of y-range to reserve to separate bars
         yDomain, // an array of (ordinal) y-values
         yRange, // [top, bottom]
-        colors //= d3.schemePiYG[3] // [negative, …, positive] colors
+        colors //= d3.schemePiYG[3] // [negative, ?, positive] colors
       } = {}) {
         // Compute values.
         const X = d3.map(data, x);
@@ -1076,7 +1136,7 @@ define([
                 .attr("y", -height + marginTop + marginBottom - 10)
                 .attr("fill", "dimgray")
                 .attr("text-anchor", "center")
-                .text(xLabel));
+                .html(xLabel));
       
         const bar = svg.append("g")
           .selectAll("rect")
@@ -1521,14 +1581,34 @@ define([
         }
 
         layer.setRenderingRule(renderingrule);
-        const extent = geometry.getExtent();
+        var extent = geometry.getExtent();
+        //this._customZoomExtent(extent);
         this.map.setExtent(extent, true)
         this.calculateButton.disabled = false;
         this.areaSelected = true;
       },
+      
+      //https://gis.stackexchange.com/questions/345474/setting-map-extent-using-offset-in-arcgis-api-for-javascript-v3-x
+      _customZoomExtent: function(extent) {
+        var hiddenMapPartTopLeft = this.map.toMap(new ScreenPoint(0, 0)),
+          hiddenMapPartBottomRight = this.map.toMap(new ScreenPoint(450, 0));//this.map.container.offsetHeight)); // Removed
+      
+
+        var dx = new Extent({
+          xmin: hiddenMapPartTopLeft.x,
+          ymin: hiddenMapPartBottomRight.y,
+          xmax: hiddenMapPartBottomRight.x,
+          ymax: hiddenMapPartTopLeft.y,
+          spatialReference: map.spatialReference
+        }).getWidth();
+      
+        extent = extent.offset(-dx, 0); //shift to right with -dx and to left with +dx
+        this.map.setExtent(extent, true)
+      },
 
       _addBufferToMap: function() {
-        this.bufferGeometry = GeometryEngine.buffer(this.geometry, this.bufferRadius, this.pointMetric, true);
+        //this.bufferGeometry = GeometryEngine.buffer(this.geometry, this.bufferRadius, this.pointMetric, true);
+        this.bufferGeometry = GeometryEngine.geodesicBuffer(this.geometry, this.bufferRadius, this.pointMetric, true);
         let bufferPoly = new SimpleFillSymbol();
         this._addGraphicToMap(bufferPoly, this.bufferGeometry, true);
       },

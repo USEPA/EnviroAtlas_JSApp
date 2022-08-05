@@ -92,7 +92,9 @@ define({
         90: "#BBD7ED",
         95: "#71A4C1",
       },
-      layersUsed: ['NLCD'],
+      layersUsed: ['National Land Cover Database'],
+      layersUsedURL: ['https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/NationalLandCover.pdf'],
+      resolution: 30,
       columnHeaders: ['Land Cover Type', 'Area (km2)', 'Percentage']
     },
     "population-floodplains": {
@@ -113,7 +115,7 @@ define({
 	  layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/GDT_Pop/ImageServer', 
       /* polys: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/PADUS_Shapefile/MapServer/0', */
 	  polys: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/PADUS_Shapefile/MapServer/0',
-      lockRasterId: 7,
+      lockRasterId: 3,
       layersUsed: ['PADUS']
     },
     "impervious-floodplains": {
@@ -123,12 +125,15 @@ define({
       layersUsed: ['PADUS', 'Dasymetric Population']
     },
     "nlcd-change": {
-      columnHeaders: ['Land Cover Type', 'Year 1 Area (km2)', 'Year 2 Area (km2)', 'Percentage']
+      columnHeaders: ['Land Cover Type', 'Year 1 Area (km2)', 'Year 2 Area (km2)', 'Percentage'],
+      layersUsed: ['National Land Cover Database'],
+      layersUsedURL: ['https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/NationalLandCover.pdf'],
+      resolution: 30
     },
     stateLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_States_Non_Generalized/FeatureServer/0',
     countyLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Counties/FeatureServer/0',
-    districtLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_116th_Congressional_Districts/FeatureServer/0',
-    districtVersion: '116th Congressional District',
+    districtLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_117th_Congressional_Districts/FeatureServer/0',
+    districtVersion: '117th Congressional District',
     "huc-12Layer": 'https://enviroatlas2.epa.gov/arcgis/rest/services/test_services/allResults/MapServer/0',
     "huc-8Layer": 'https://leb.epa.gov/arcgis/rest/services/Supplemental/HUC8/MapServer/0'
   },
