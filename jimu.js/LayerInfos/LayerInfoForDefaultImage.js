@@ -61,7 +61,7 @@ define([
       if(this.layerObject.version >= 10.2) {
         this._legendRequestServer().then(lang.hitch(this, function(response) {
           domConstruct.empty(legendsNode);
-
+            //response.layers[0].layerName: "FutureScenarios/RCP26SpringPrecip"
           array.forEach(response.layers, function(layer) {
             array.forEach(layer.legend, function(legend) {
               if (legend.label === "<all other values>") {
@@ -73,7 +73,7 @@ define([
 
               var symbolDiv = domConstruct.create("div", {
                 "class": "legend-symbol jimu-float-leading",
-                "style": "width:50px;height:50px;position:relative"
+                "style": "width:50px;height:25px;position:relative"// originally height is 50px
               }, legendDiv);
 
               var imgSrc = null;

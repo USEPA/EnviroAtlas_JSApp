@@ -269,6 +269,7 @@ define([
     window.topicDicESB["Land Cover: Near-Water"] = "LCNW";
     window.topicDicESB["Land Cover: Type"] = "LCT";
     window.topicDicESB["Landscape Pattern"] = "LP";
+	window.topicDicESB["Livestock and Poultry Production"] = "LS"; //This is newly added July 2022
     window.topicDicESB["Near-Road Environments"] = "NRE";    
     
     window.topicDicESB["Pollutant Reduction: Air"] = "PRA"; //This is newly added Mar 2017    
@@ -286,7 +287,7 @@ define([
     
     window.topicDicPSI = {};
     //window.topicDicPSI["EPA Regulated Facilities"] = "RF"; Title replaced with sites reporting to EPA
-    //window.topicDicPSI["EPA NATA"] = "NATA";
+    window.topicDicPSI["Harmful algal blooms"] = "HAB";
     window.topicDicPSI["Impaired Waters"] = "IW";
 	window.topicDicPSI["National Air Toxics Assessment"] = "NATA";
     window.topicDicPSI["Pollutants: Other"] = "PO";
@@ -468,7 +469,7 @@ define([
       if (ioArgs.url.indexOf("enviroatlas2.epa.gov/arcgis/rest/services/ECAT") !== -1) { //This is to test timeout of ECAT
       	ioArgs.timeout = 59000;
       } 
-      if (ioArgs.url.indexOf("ofmpub.epa.gov/waters10/PointIndexing.Service") !== -1) { //This is to test timeout of Raindrop tool
+      if (ioArgs.url.indexOf("ordspub.epa.gov/ords/waters10/PointIndexing.Service") !== -1) { //This is to test timeout of Raindrop tool
       	ioArgs.timeout = 59000;
       }            
       //use https protocol

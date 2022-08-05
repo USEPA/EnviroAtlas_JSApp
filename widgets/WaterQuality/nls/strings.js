@@ -126,8 +126,8 @@ define({
     //HUC8Layer: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/HUC8/MapServer/0',
     //gpService: 'https://ags108.blueraster.io/server/rest/services/EnviroAtlas/WaterQualityPointsTimeEnabled/GPServer/WaterQualityPoints',
 
-    HUC8Layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/HUC8/MapServer/0',
-    gpService: 'https://leb.epa.gov/arcgis/rest/services/Other/WaterQualityPoints/GPServer/WaterQualityPoints',
+    HUC8Layer: 'https://awseastaging.epa.gov/arcgis/rest/services/Supplemental/HUC8/MapServer/0',
+    gpService: 'https://awseastaging.epa.gov/arcgis/rest/services/Other/WaterQualityPoints/GPServer/WaterQualityPoints',
     classBreakColorsRGB: [[18, 186, 0], [134, 196, 25], [251, 206, 50], [253, 103, 25], [255, 0, 0]],
     classBreakColorsHex: ['#12BA00', '#86C419','#FBCE32', '#FD6719', '#FF0000']
   },
