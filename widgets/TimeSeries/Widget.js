@@ -95,7 +95,8 @@ define([
     var mapClickListener, pixelVal;
 
     var loading;
-    var serverURL = "https://enviroatlas2.epa.gov";
+    var serverURL = "https://awseatlas2.epa.gov";
+     // can revert to enviroatlas2 after decommisioning fossa and dragonfly
     var futureScenariosAGSbaseURL = serverURL + "/arcgis/rest/services/FutureScenarios/";
     var comment = "Climate scenarios provide likely approximations of future conditions given a set of initial assumptions and model results. The future is inherently uncertain with no guarantee that these scenarios reflect what will occur at the specified future time.";
     var timeSlider, userChosenTimeStep;
