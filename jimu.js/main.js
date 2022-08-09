@@ -458,10 +458,10 @@ define([
       if (ioArgs.url.indexOf("enviroatlas.epa.gov/arcgis/rest/services/Other/HydrologicUnits") !== -1) { //This is to test timeout of Huc Navigation
       	ioArgs.timeout = 59000;
       }
-      if (ioArgs.url.indexOf("enviroatlas2.epa.gov/arcgis/rest/services/FutureScenarios") !== -1) { //This is to test timeout of time series; currently it is not working
+      if (ioArgs.url.indexOf("awseatlas2.epa.gov/arcgis/rest/services/FutureScenarios") !== -1) { //This is to test timeout of time series; currently it is not working
       	ioArgs.timeout = 59000;
       }
-      if (ioArgs.url.indexOf("enviroatlas2.epa.gov/arcgis/rest/services/ECAT") !== -1) { //This is to test timeout of ECAT
+      if (ioArgs.url.indexOf("awseatlas2.epa.gov/arcgis/rest/services/ECAT") !== -1) { //This is to test timeout of ECAT
       	ioArgs.timeout = 59000;
       } 
       if (ioArgs.url.indexOf("ordspub.epa.gov/ords/waters10/PointIndexing.Service") !== -1) { //This is to test timeout of Raindrop tool
