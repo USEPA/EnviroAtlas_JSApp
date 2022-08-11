@@ -334,7 +334,7 @@
                 "placeholderIndex": 1,
           "id": "widgets_GriddedMapTool_28",
           "name": "GriddedMapTool",
-          "label": "Gridded Map Tool",
+          "label": "Summarize My Area",
           "version": "0.1",
           "uri": "widgets/GriddedMapTool/Widget",
           "config": "widgets/GriddedMapTool/config.json"

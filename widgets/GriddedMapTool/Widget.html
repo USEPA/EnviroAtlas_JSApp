@@ -13,9 +13,10 @@
             <option value="population-roads">Population within specified distance to roads</option>
             <option value="padus">Protected Lands (PADUS)</option>
             <option value="population-padus">Population within specified distance to PADUS</option>
-            <option value="impervious-floodplains">Impervious land cover in floodplain</option>-->
+            <option value="impervious-floodplains">Impervious land cover in floodplain</option>
+            <option value="padus">Protected Lands (PADUS)</option>-->
             <option value="nlcd">Land Cover</option>
-            <option value="nlcd-change">Land Cover Change Analysis</option>
+            <option value="nlcd-change">Land Cover Change</option>
           </select>
           <button id="gridded-map-clear-indicator-button"></button>
         </div>
@@ -73,14 +74,14 @@
           <select id="gridded-map-unit-input" name="unit-input">
             <option disabled selected value="">Select one...</option>
             <option value="county">County</option>
-            <option value="state">State</option>
+            <!--<option value="state">State</option>-->
             <option value="district">Congressional District</option>
             <option value="huc-8">HUC-8</option>
             <option value="huc-12">HUC-12</option>
             <option value="point">Draw a point</option>
             <option value="line">Draw a line</option>
             <option value="area">Draw an area</option>
-            <option value="file">Use your own shapefile</option>
+            <!--<option value="file">Use your own shapefile</option>-->
           </select>
           <button id="gridded-map-clear-button"></button>
           <div id="gridded-map-shape-file-wrapper" style="display: none">
@@ -132,10 +133,9 @@
           <img alt="https://www.epa.gov/enviroatlas" src="images/logo.png" style="height: 33px; margin-top: 7px; display:inline-block; position:relative; left:50%; transform: translate(-50%); margin-bottom:-3px"></div>
         <div style="display:block; margin:0 auto; text-align: center; font-size:18px; color:darkgray;">Summarize My Area</div>
         </div>
-      <div id="gridded-map-input-table-wrapper" class="table-wrapper">
-      </div>
-      <div id="gridded-map-output-table-wrapper" class="table-wrapper">
-      </div>
+      <div id="gridded-map-input-table-wrapper" class="table-wrapper"></div>
+      <div id="gridded-map-output-table-wrapper" class="table-wrapper"></div>
+      <div>
     </div>
   </div>
 </div>
