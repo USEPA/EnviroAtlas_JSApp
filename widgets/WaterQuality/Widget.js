@@ -5,6 +5,7 @@
 define([
   'dojo/_base/declare',
   'jimu/BaseWidget',
+  './geostats',
   'dijit/_WidgetsInTemplateMixin',
   'dijit/_OnDijitClickMixin',
   'dojo/Evented',
@@ -30,7 +31,7 @@ define([
   'esri/geometry/Point',
   'esri/InfoTemplate'
 ],
-  function (declare, BaseWidget, _WidgetsInTemplateMixin, _OnDijitClickMixin, Evented,
+    function (declare, BaseWidget, geostats, _WidgetsInTemplateMixin, _OnDijitClickMixin, Evented,
     on, lang, jimuUtils, TabContainer, Draw, Graphic, SimpleRenderer, ClassBreakRenderer, SimpleFillSymbol, SimpleMarkerSymbol, SimpleLineSymbol, Color, GraphicsLayer, QueryTask, Query, GeometryEngine, FeatureLayer, Geoprocessor, ImageParameters, Point, InfoTemplate) {
     return declare([BaseWidget, _WidgetsInTemplateMixin, _OnDijitClickMixin, Evented], {
 
