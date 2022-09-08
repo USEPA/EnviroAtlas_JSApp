@@ -9,7 +9,7 @@ define({
     customizeWarningTitle: "Please click on an Eco Region to analyze with custom weights",
     customizeWarningBody: "Warning: it is the responsibility of the user to evaluate customized outputs and data limitations. US EPA cannot guarantee the results or the appropriate use of customized indices.",
     ecoRegionBoundries: "https://services.arcgis.com/EDxZDh4HqQ1a9KvA/ArcGIS/rest/services/EnviroAtlas_staging_HUC12s/FeatureServer/0",
-    geoprocessorURL: "https://ags106.blueraster.io/server/rest/services/EPA/ApplyWeightsFL",
+    geoprocessorURL: "https://awseastaging.epa.gov/arcgis/rest/services/Other/ApplyWeightsFL",
     geoprocessorJob: "GPServer/ApplyWeightsFeatureLayer",
     geoprocessorResults: "MapServer/jobs",
     // we need to ensure these are in order from L1G1 - L1G8 for the chart to be accurate
@@ -54,7 +54,7 @@ define({
         defaultValue: 2,
         info: `The Other Chemicals Index is created using the following EnviroAtlas layers: (1) total annual sulfur deposition, (2) permitted metals discharges (lb/yr), (3) permitted priority pollutant discharges (lb/yr), and (4) permitted pathogen indicator discharges – average (colony-forming units/100 ml).`
       },
-      url: 'https://services.arcgis.com/EDxZDh4HqQ1a9KvA/ArcGIS/rest/services/EnviroAtlas_staging_HUC12s/FeatureServer/1'
+      url: 'https://awseastaging.epa.gov/arcgis/rest/services/Other/HUC12_IndexTool/MapServer/1'
     },
     // we need to ensure these are in order from L1G1 - L1G8 for the chart to be accurate (assuming the data ends up the same as above)
     "Terrestrial Diversity": {

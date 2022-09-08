@@ -681,7 +681,20 @@ define([
             }
           }
         }
-      }
+        }
+        //for (var ii = 0; ii <= query('.jimu-widget-layerList .layer-row').length; ii++) {
+
+        //}
+        if (query('.jimu-widget-layerList .layer-row')[0].innerText.indexOf(window.demographicsTitlePrefix) >= 0) {
+            query('.jimu-widget-layerList .layer-row').forEach(function (node, index) {
+                if ((index == 0) || (index == window.demographicLayerVisibleIndex + 1)) {
+                    domStyle.set(node, "display", "");
+                }
+                else {
+                    domStyle.set(node, "display", "none");
+                }
+            });
+        }
       return state;
     },
     redrawLegends: function(layerInfo) {

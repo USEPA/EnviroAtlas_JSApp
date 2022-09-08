@@ -32,10 +32,12 @@ define([
   'esri/layers/RasterFunction',
   'esri/layers/MosaicRule',
   'esri/layers/ImageServiceParameters',
-  'esri/request'
+  'esri/request',
+  'esri/geometry/ScreenPoint', 
+  'esri/geometry/Extent'
 ],
   function (declare, BaseWidget, _WidgetsInTemplateMixin, _OnDijitClickMixin, Evented,
-    on, domClass, lang, arrayUtils, jimuUtils, TabContainer, Draw, Graphic, ScaleUtils, SimpleRenderer, SimpleFillSymbol, SimpleMarkerSymbol, SimpleLineSymbol, CartographicLineSymbol, Color, GraphicsLayer, QueryTask, Query, GeometryEngine, ArcGISImageServiceLayer, FeatureLayer, RasterFunction, MosaicRule, ImageServiceParameters, esriRequest) {
+    on, domClass, lang, arrayUtils, jimuUtils, TabContainer, Draw, Graphic, ScaleUtils, SimpleRenderer, SimpleFillSymbol, SimpleMarkerSymbol, SimpleLineSymbol, CartographicLineSymbol, Color, GraphicsLayer, QueryTask, Query, GeometryEngine, ArcGISImageServiceLayer, FeatureLayer, RasterFunction, MosaicRule, ImageServiceParameters, esriRequest, ScreenPoint, Extent) {
     return declare([BaseWidget, _WidgetsInTemplateMixin, _OnDijitClickMixin, Evented], {
 
       baseClass: 'widget-gridded-map',
@@ -205,7 +207,7 @@ define([
           }
 
           if (e.target.id === 'gridded-map-indicator-input') {
-            this._clearUnitSelection();
+            //this._clearUnitSelection();
             this.indicatorDropdownSelection = e.target.value;
             switch (this.indicatorDropdownSelection) {
               case 'nlcd':
@@ -280,12 +282,15 @@ define([
           //   this._updatedBufferGraphic(); //if metric changes, we need to update the graphic on the map, if there is one
           // }
         });
+        
 
+        // Run analysis and add to output area.
         this.calculateButton.addEventListener('click', async () => {
           this.resultsLoaded = false;
           let image = '<img src="./configs/loading/images/predefined_loading_1.gif"/>';
           this.calculateButton.innerHTML = image;
-          this.errorMessage.innerHTML = "";     
+          this.errorMessage.innerHTML = "";   
+          $('#gridded-map-output-table-wrapper').empty();
           
           let geo, line;
 
@@ -309,295 +314,118 @@ define([
               break;
           }
 
-          const area = Math.round(GeometryEngine.geodesicArea(geo, `square-${this.pointMetric}`));
+          //const area = Math.round(GeometryEngine.planarArea(geo, `square-${this.pointMetric}`));
+          //const area = Math.round((GeometryEngine.planarArea(geo, `square-${this.pointMetric}`)) * 10) / 10;
+          //const area = Math.round((GeometryEngine.geodesicArea(geo, `square-${this.pointMetric}`)) * 10) / 10;
 
+          const pixel_size = this.nls[this.indicator].resolution;
           let compHistEndpoint = `${this.indicatorUrl}/computeStatisticsHistograms`;
 
           let compHistContent = { 
             f: 'json',
             geometryType: 'esriGeometryPolygon',
             geometry: JSON.stringify(geo),
-            pixelSize: 30,
+            pixelSize: pixel_size,
             noData: 0
           }
 
           let query, results;
-          let resultsHTML = '';
+          
 
           switch (this.indicator) {
-            case 'population-roads':
-              const roadsRemap = {
-                rasterFunction: 'Remap',
-                rasterFunctionArguments: {
-                  InputRanges: [1, this.bufferRadius + 1, this.bufferRadius + 1, 65535], // pairs are inclusive to exclusive. Ignore 0 because it's no data
-                  OutputValues: [1, 0],
-                  AllowUnmatched: true,
-                  Raster: `$${this.nls[this.indicator].lockRasterId}`,
-                }
-              }
-
-              const popRoadsArithmetic = {
-                rasterFunction: 'Arithmetic',
-                rasterFunctionArguments: {
-                  Raster: roadsRemap,
-                  Raster2: `$${this.nls.populationRasterId}`,
-                  Operation: 3
-                }
-              };
-
-              compHistContent.renderingRule = JSON.stringify(popRoadsArithmetic);
-              results = await this._computeHistograms(compHistEndpoint, compHistContent);
-              const popInRoads = results.statistics[0].count * results.statistics[0].mean;
-              resultsHTML += `
-                <tr class="index-results">
-                  <td class="output-table-cell attr">
-                    ${`Population within ${this.bufferRadius} meters to roads`}
-                  </td>
-                  <td class="output-table-cell val">
-                    ${popInRoads ? this.formatLargeNumber(Math.round(popInRoads)) : 0}
-                  </td>
-                </tr>
-              `;
-              break;
-            case 'padus':
-              const padusMR = {
-                mosaicMethod: "esriMosaicLockRaster",
-                lockRasterIds: [this.nls.padus.lockRasterId]
-              }
-              compHistContent.mosaicRule = JSON.stringify(padusMR);
-              results = await this._computeHistograms(compHistEndpoint, compHistContent);
-              if (results) {
-                const totalCount = results.statistics[0].count;
-                const percentagePADUS = this.calculatePercentages(totalCount, results.histograms[0].counts[1]);
-                const areaOfPADUS = Number((percentagePADUS / 100) * area).toFixed(2);
-
-                resultsHTML += `
-                <tr class="index-results">
-                  <td class="output-table-cell attr">
-                    ${'Protected Area Size'}
-                  </td>
-                  <td class="output-table-cell val">
-                    ${this.formatLargeNumber(areaOfPADUS)} km2
-                  </td>
-                </tr>
-              `
-              };
-              break;
-            case 'population-padus':
-              query = new Query;
-              query.where = '1=1';
-              query.geometry = geo;
-              query.outFields = [];
-              query.units = this.pointMetric;
-              query.returnGeometry = true;
-              results = await this.padusPolyLayer.queryFeatures(query);
-
-              // Clip our results geometry to the extent of our input geometry
-              const padusGeometry = GeometryEngine.clip(GeometryEngine.union(results.features.map(feature => feature.geometry)), geo.getExtent());
-
-              const popPadusArithmetic = {
-                rasterFunction: 'Arithmetic',
-                rasterFunctionArguments: {
-                  Raster: `$${this.nls.padus.lockRasterId}`,
-                  Raster2: `$${this.nls.populationRasterId}`,
-                  Operation: 3
-                }
-              };
-              
-              const insidePadusContent = {
-                ...compHistContent,
-                geometry: JSON.stringify(padusGeometry),
-                renderingRule: JSON.stringify(popPadusArithmetic)
-              }
-              // Calculate population inside Padus
-              const insidePadusResults = await this._computeHistograms(compHistEndpoint, insidePadusContent);
-              let totalInside, totalOutside;
-              if (insidePadusResults) {
-                totalInside = insidePadusResults.statistics[0].count * insidePadusResults.statistics[0].mean;
-              }
-              resultsHTML += `
-                <tr class="index-results">
-                  <td class="output-table-cell attr">
-                    ${`Population inside PADUS`}
-                  </td>
-                  <td class="output-table-cell val">
-                    ${totalInside ? this.formatLargeNumber(Math.round(totalInside)) : 0}
-                  </td>
-                </tr>
-              `
-
-              if (this.bufferRadius > 0) {
-                // Calculate total buffered Padus geometry
-                const bufferedPadusGeo = GeometryEngine.buffer(padusGeometry, this.bufferRadius, this.pointMetric, false);
-
-                // Calculate the geometry OUTSIDE the Padus
-                const outsidePadusGeometry = GeometryEngine.difference(bufferedPadusGeo, padusGeometry);
-
-                //Uncomment if you want to see the buffer!
-                // const padusLayer = new GraphicsLayer();
-                // const padusSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
-                //   new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT,
-                //   new Color([255,0,0]), 2),new Color([255,255,0,0.25])
-                // );
-                // padusLayer.add(new Graphic(outsidePadusGeometry, padusSymbol))
-                // this.map.addLayer(padusLayer);
-                
-                const outsidePadusMR = {
-                  mosaicMethod: "esriMosaicLockRaster",
-                  lockRasterIds: [this.nls.populationRasterId]
-                }
-
-                const outsidePadusContent = {
-                  ...compHistContent,
-                  geometry: JSON.stringify(outsidePadusGeometry),
-                  mosaicRule: JSON.stringify(outsidePadusMR)
-                }
-
-                // Calculate population within outsidePadusGeometry
-                const outsidePadusResults = await this._computeHistograms(compHistEndpoint, outsidePadusContent);
-                if (outsidePadusResults) {
-                  totalOutside = outsidePadusResults.statistics[0].count * outsidePadusResults.statistics[0].mean;
-                }
-                resultsHTML += `
-                  <tr class="index-results">
-                    <td class="output-table-cell attr">
-                      ${`Population within ${this.bufferRadius} ${this.pointMetric} to PADUS`}
-                    </td>
-                    <td class="output-table-cell val">
-                      ${totalOutside ? this.formatLargeNumber(Math.round(totalOutside)) : 'N/A'}
-                    </td>
-                  </tr>
-                `
-              }
-              break;
             case 'nlcd':
               const nlcdYearMosaicRule = {
                 mosaicMethod: "esriMosaicLockRaster",
                 lockRasterIds: [this.nls.nlcd.OBJECTIDS[this.nlcdYear]]
               }
 
+              // Get NLCD results
               compHistContent.mosaicRule = JSON.stringify(nlcdYearMosaicRule);
               results = await this._computeHistograms(compHistEndpoint, compHistContent);
               if (results) {
                 const totalCount = results.statistics[0].count;
-                const counts = {};
+                var area = totalCount * (pixel_size * pixel_size) / 1000000;
                 
+                const nlcdResults = {}
                 results.histograms[0].counts.forEach((count, index) => {
-                  if (count > 0 && !counts.hasOwnProperty(index)) {
-                    counts[index] = this.calculatePercentages(totalCount, count);
+                  if (count > 0) {
+                    nlcdResults[index] = {
+                      year1_area: this._calculateNLCDChangeArea(totalCount, count, area),
+                      year1_perc: this.calculatePercentages(totalCount, count),
+                      name: this.nls.nlcd.indices[index],
+                      legend: `<div class="nlcd-index-legend" style="width:15px; height:15px; background-color: ${this.nls.nlcd.colors[index]}"></div>`
+                    }
                   }
                 });
+                
+                data = Object.entries(nlcdResults).map(( [k, v] ) => (v));
+              
+                var headers = [
+                  { head: '', cl: 'title', d: 'legend' },
+                  { head: 'Land Cover Type', cl: 'nlcd_title', d: 'name' },
+                  { head: this.nlcdYear +' Area ('+this._getMetricString(this.pointMetric)+'2)', cl: '', d: 'year1_area' },
+                  { head: 'Percentage', cl: '', d: 'year1_perc' }]
+                table = this._renderTable(headers, data)
+                  
+                $('#gridded-map-output-table-wrapper').append(table);
       
-                if (Object.keys(counts).length > 3) {
+                if (Object.keys(nlcdResults).length > 3) {
                   domClass.add(this.tabNode2, 'overflow');
                 } else {
                   domClass.remove(this.tabNode2, 'overflow');
                 }
-
-                for (let [key, value] of Object.entries(counts)) {
-                  const nlcdArea = Number((value / 100) * area).toFixed(2);                               
-                  resultsHTML += `
-                    <tr class="index-results">
-                      <td class="output-table-cell attr">
-                        <div class="nlcd-index">
-                          <div class="nlcd-index-legend" style="background-color: ${this.nls.nlcd.colors[key]}"></div>
-                          <p>${this.nls.nlcd.indices[key]}</p>
-                        </div>
-                      </td>
-                      <td class="output-table-cell val">
-                        <div class="nlcd-result">
-                            <p>${nlcdArea}</p>
-                        </div>
-                      </td>
-                      <td class="output-table-cell val">
-                        <div class="nlcd-result">
-                          <p>${value}%</p>
-                        </div>
-                      </td>
-                    </tr>
-                  `
-                };
-              } 
+                
+              }
+              
               break; 
-            case 'population-floodplains':
-              const popFloodArithmetic = {
-                rasterFunction: 'Arithmetic',
-                rasterFunctionArguments: {
-                  Raster: `$${this.nls[this.indicator].lockRasterId}`,
-                  Raster2: `$${this.nls.populationRasterId}`,
-                  Operation: 3 
-                }
-              };
 
-              compHistContent.renderingRule = JSON.stringify(popFloodArithmetic);
-              results = await this._computeHistograms(compHistEndpoint, compHistContent);
-              const popInFloodplains = results.statistics[0].count * results.statistics[0].mean;
-              resultsHTML += `
-                <tr class="index-results">
-                  <td class="output-table-cell attr">
-                    ${'Population within Floodplains'}
-                  </td>
-                  <td class="output-table-cell val">
-                    ${popInFloodplains ? this.formatLargeNumber(Math.round(popInFloodplains)) : 0}
-                  </td>
-                </tr>
-              `;
-              break;
-            case 'impervious-floodplains':
-              const impervRF = {
-                rasterFunction: 'Remap',
-                rasterFunctionArguments: {
-                  InputRanges: [11, 11, 13, 13, 21, 21, 25, 25, 31, 31, 95, 95],
-                  OutputValues: [11, 13, 21, 25, 31, 95], 
-                  AllowUnmatched: false,
-                  Raster: `$${this.nls.nlcd.OBJECTIDS[this.nlcdYear]}`
-                }
-              };
-              const impervArithmetic = {
-                rasterFunction: 'Arithmetic',
-                rasterFunctionArguments: {
-                  Raster: impervRF,
-                  Raster2: `$${this.nls.nlcd.floodplains}`,
-                  Operation: 3
-                }
-              };
-
-              compHistContent.renderingRule = JSON.stringify(impervArithmetic);
+            case 'padus':
+              const padusMR = {
+                mosaicMethod: "esriMosaicLockRaster",
+                lockRasterIds: [this.nls.padus.lockRasterId]
+              }
+              compHistContent.mosaicRule = JSON.stringify(padusMR);
+              inputTableData = [] 
               results = await this._computeHistograms(compHistEndpoint, compHistContent);
               if (results) {
-                const imperviousValues = [13, 21, 25, 31, 95]; //11 too?
                 const totalCount = results.statistics[0].count;
-                let imperviousCount = 0;
+                const percentagePADUS = this.calculatePercentages(totalCount, results.histograms[0].counts[255]);
+                const areaOfPADUS = Number((percentagePADUS / 100) * area).toFixed(2);
 
-                results.histograms[0].counts.forEach((count, index) => {
-                  if (count > 0 && imperviousValues.includes(index)) {
-                    imperviousCount = imperviousCount + count;
-                  }
-                });
 
-                const perviousCount = totalCount - imperviousCount;
+        
+                inputTableData.push({'attribute': 'Protected Area (km2)', 'value': areaOfPADUS});
+                inputTableData.push({'attribute': 'Percent Protected Area', 'value': percentagePADUS});
 
-                resultsHTML += `
-                  <tr class="index-results">
-                    <td class="output-table-cell attr">
-                      <p></p>Pervious Landcover</p>
-                    </td>
-                    <td class="output-table-cell val">
-                      <p>${this.calculatePercentages(totalCount, perviousCount)} %</p>
-                    </td>
-                  </tr>
-                  <tr class="index-results">
-                  <td class="output-table-cell attr">
-                    <p></p>Impervious Landcover</p>
-                  </td>
-                  <td class="output-table-cell val">
-                    <p>${this.calculatePercentages(totalCount, imperviousCount)} %</p>
-                  </td>
-                </tr>
-                `
+                
+
+                inputTableData.push({'attribute': 'Area', 'value': area + this._getMetricString(this.pointMetric) + '2'});
+        
+                var headers = [
+                      { head: 'Protected Area results', cl: '', d: 'attribute' },
+                      { head: ' ', cl: '', d: 'value' }]
+                table = this._renderTable(headers, inputTableData)
+                
+                this.inputTable.append(table)
+
+
+                table = this._renderTable(headers, inputTableData)
+
+                $('#gridded-map-output-table-wrapper').append(table);
+
+              //   resultsHTML += `
+              //   <tr class="index-results">
+              //     <td class="output-table-cell attr">
+              //       ${'Protected Area Size'}
+              //     </td>
+              //     <td class="output-table-cell val">
+              //       ${this.formatLargeNumber(areaOfPADUS)} km2
+              //     </td>
+              //   </tr>
+              // `
               };
-              
               break;
+            
             case 'nlcd-change':
               const years = [this.nlcdChangeYear1, this.nlcdChangeYear2];
               const yearCounts = {};
@@ -614,74 +442,89 @@ define([
                   totalCount = results.statistics[0].count;
                   const counts = {};
                   
-                  results.histograms[0].counts.forEach((count, index) => {
-                    if (count > 0 && !counts.hasOwnProperty(index)) {
-                      counts[index] = count;
-                    }
+                  Object.keys(this.nls.nlcd.indices).forEach(key => {
+                    counts[key] = results.histograms[0].counts[key]
                   });
+                  
                   yearCounts[year] = counts;
                 }
               }
+              var area = totalCount * (pixel_size * pixel_size) / 1000000;
               const changeResults = {};
-              Object.keys(yearCounts[years[0]]).forEach(key => {
-                const oldNumber = yearCounts[years[0]][key];
-                const oldArea = this._calculateNLCDChangeArea(totalCount, oldNumber, area);
-                const newNumber = yearCounts[years[1]][key];
-                const newArea = this._calculateNLCDChangeArea(totalCount, newNumber, area);
-                let percentChanged, areaChange
-                if (oldNumber > newNumber) {
-                  const decrease = oldNumber - newNumber;
-                  percentChanged = -Math.abs(Number((decrease / oldNumber) * 100).toFixed(2));
-                  areaChange = -Math.abs(Number(oldArea - newArea).toFixed(2));
-                } else {
-                  const increase = newNumber - oldNumber;
-                  percentChanged = Number((increase / oldNumber) * 100).toFixed(2);
-                  areaChange = Number(newArea - oldArea).toFixed(2);
-                }
-                changeResults[key] = {
-                  percentChanged: percentChanged,
-                  areaChange: areaChange
+              //Object.keys(yearCounts[years[0]]).forEach(key => {
+              Object.keys(this.nls.nlcd.indices).forEach(key => {
+                if (yearCounts[years[0]][key] > 0 || yearCounts[years[1]][key] > 0) {
+                  const oldNumber = yearCounts[years[0]][key];
+                  const oldArea = this._calculateNLCDChangeArea(totalCount, oldNumber, area);
+                  const oldPercent = Number(oldNumber / totalCount * 100).toFixed(1);
+                  const newNumber = yearCounts[years[1]][key]; 
+                  const newArea = this._calculateNLCDChangeArea(totalCount, newNumber, area);
+                  const newPercent = Number(newNumber / totalCount * 100).toFixed(1);
+  
+                  const percentChanged = Number((newNumber - oldNumber) / oldNumber * 100).toFixed(2);
+                  const areaChange = Number(newArea - oldArea).toFixed(2);
+                  
+                  changeResults[key] = {
+                    year1n: oldArea,
+                    year2n: newArea,
+                    year1p: oldPercent,
+                    year2p: newPercent,
+                    percentChanged: percentChanged,
+                    areaChange: areaChange,
+                    name: this.nls.nlcd.indices[key],
+                    colors: this.nls.nlcd.colors[key],
+                    legend: `<div class="nlcd-index-legend" style="width:15px; height:15px; background-color: ${this.nls.nlcd.colors[key]}"></div>`
+                  };
                 };
               });
-
+              
               domClass.add(this.tabNode2, 'overflow');
-              Object.keys(changeResults).forEach(key => {
-                resultsHTML += `
-                <tr class="index-results">
-                      <td class="output-table-cell attr" style="width:50%">
-                        <div class="nlcd-index">
-                          <div class="nlcd-index-legend" style="background-color: ${this.nls.nlcd.colors[key]}"></div>
-                          <p>${this.nls.nlcd.indices[key]}</p>
-                        </div>
-                      </td>
-                      <td class="output-table-cell val">
-                        <div class="nlcd-result">
-                            <p>${this._calculateNLCDChangeArea(totalCount, yearCounts[years[0]][key], area)}</p>
-                        </div>
-                      </td>
-                      <td class="output-table-cell val">
-                      <div class="nlcd-result">
-                          <p>${this._calculateNLCDChangeArea(totalCount, yearCounts[years[1]][key], area)}</p>
-                      </div>
-                    </td>
-                      <td class="output-table-cell val">
-                        <div class="nlcd-result">
-                          <p>${changeResults[key].percentChanged}%</p>
-                        </div>
-                      </td>
-                    </tr>
-              `
-              })
-              this._renderChangeChart(changeResults, area, resultsHTML);
-              return;
+              
+              
+              
+              data = changeResults;
+              data = Object.entries(data).map(( [k, v] ) => (v))
+              
+              // create table
+              var headers = [
+              { head: '', cl: 'title', d: 'legend' },
+              { head: 'Land Cover Type', cl: 'nlcd_title', d: 'name' },
+              { head: years[0] +' Area (km2)', cl: '', d: 'year1n' },
+              { head: years[0] +' Percentage', cl: '', d: 'year1p' },
+              { head: years[1] +' Area (km2)', cl: '', d: 'year2n' },
+              { head: years[1] +' Percentage', cl: '', d: 'year2p' }]
+              table = this._renderTable(headers, data)
+                
+              //Sort for cascading bar chart
+              data = data.sort(function(a, b) {
+                    return d3.ascending(parseFloat(a.areaChange), parseFloat(b.areaChange));
+              });
+              // create chart   
+              chart = this._DivergingBarChart(data, {
+              x: d => d.areaChange,
+              y: d => d.name,
+              xLabel: "&#129060; decrease - Change in area (km2) - increase &#129062;",
+              marginRight: 15,
+              marginLeft: 15,
+              xFormat: '.2f',
+              colors: d => d.colors
+              });
+              
+              //chart.classList.add('divergingbarchart_class');
+              
+              // add chart then table
+              $('#gridded-map-output-table-wrapper').append(chart)
+              $('#gridded-map-output-table-wrapper').append(table)
+              
+              break;
             default:
               break;
           }
-          if (this.indicator != 'nlcd-change') {
-            this._renderResults(resultsHTML, area, line);
-          } else {
-            this.calculateButton.innerHTML = this.nls.calculate;
-          }
+
+                    
+          this._renderResults(results, area, line);
+          
+         
         });
 
         this.mapClickEvent = this.map.on('click', e => {
@@ -998,7 +841,7 @@ define([
           case 'kilometers':
             return 'km';
           case 'miles':
-            return 'm';
+            return 'mi';
           default:
             return 'km';
         }
@@ -1073,14 +916,12 @@ define([
       },
 
       _renderResults: function(results, area, line) {
-        if (this.indicator !== 'nlcd-change') {
-          this._renderInputTable(this.resultsTableHeaderData, area, line);
-        }
-        this._renderOutputTable(results, area);
+        
+        this._renderInputTable(this.resultsTableHeaderData, area, line);
         this.calculateButton.innerHTML = this.nls.calculate;
         this.resultsLoaded = true;
         this.tabContainer.selectTab(this.tabNode2); //manually switch tabs when results are ready
-        document.getElementById('gridded-print-button').addEventListener('click', () => {
+        /*document.getElementById('gridded-print-button').addEventListener('click', () => {
           var divContents = this.resultsContainer.innerHTML; 
           var a = window.open('', '', 'height=500, width=500'); 
           a.document.write('<html>'); 
@@ -1095,225 +936,247 @@ define([
           )
           a.document.close(); 
           a.print(); 
-        })
+        })*/
       },
 
       calculatePercentages: function(totalCount, count) {
         //return (count/totalCount * 100).toFixed(2)
         return (count/totalCount * 100).toFixed(2);
       },
-
+      
+      
       _renderInputTable: function(results, area, line) {
-        const inputTableHeaderCol1 = this.nls.inputTableHeaderCol1[this.unitDropdownSelection];
-        const inputTableHeaderCol2 = this.nls.inputTableHeaderCol2[this.unitDropdownSelection];
-        let inputTableBodyCol1 = '';
-        let inputTableBodyCol2 = '';
-        let attributeAreaHeader = this.nls.areaOfSelectionHeader;
+        $('#gridded-map-input-table-wrapper').empty(); 
+        inputTableData = [] 
+        
+        inputTableData.push({'attribute': 'Analysis', 'value': this.indicatorDropdown.options[this.indicatorDropdown.selectedIndex].text});
+        
 
+        inputTableData.push({'attribute': 'Source Data', 
+                             'value': '<a target= _blank" style="text-decoration:none" href="' +
+                                    this.nls[this.indicator].layersUsedURL + '">' +  
+                                   (this.nls[this.indicator].layersUsed) + '</a>'});
+ 
         switch(this.unitDropdownSelection) {
           case 'district':
-            inputTableBodyCol1 = `${results.STATE_ABBR} ${results.DISTRICTID}`;
-            inputTableBodyCol2 = `${results.NAME} - ${results.PARTY}`;
+            inputTableData.push({'attribute': 'Geometry Type', 'value': 'Congressional District'});
+            inputTableData.push({'attribute': 'District', 'value': this.nls.districtVersion + ' - ' + results.STATE_ABBR+results.DISTRICTID});
+            inputTableData.push({'attribute': 'Representative', 'value': results.NAME + ' - ' +results.PARTY});
             break;
           case 'county':
-            inputTableBodyCol1 = results.NAME;
-            inputTableBodyCol2 = results.STATE_NAME;
+            inputTableData.push({'attribute': 'Geometry Type', 'value': 'County'});
+            inputTableData.push({'attribute': 'County', 'value': results.NAME + ', ' + results.STATE_NAME});
             break;
           case 'state':
-            inputTableBodyCol1 = results.STATE_NAME;
-            inputTableBodyCol2 = this.formatLargeNumber(results.POPULATION);
+            inputTableData.push({'attribute': 'Geometry Type', 'value': 'State'});
+            inputTableData.push({'attribute': 'State', 'value': results.STATE_NAME});
             break;
           case 'area':
-            inputTableBodyCol1 = this.bufferRadius > 0 ? this.nls.inputTableHeaderCol2.buffer : this.nls.inputTableHeaderCol2.area
-            inputTableBodyCol2 = this.bufferRadius > 0 ? `${this.formatLargeNumber(this.bufferRadius)} ${this._getMetricString(this.pointMetric)}` : `${this.formatLargeNumber(area)} ${this._getMetricString(this.pointMetric)}`;
-            attributeAreaHeader = `${this.nls.areaOfSelectionHeader}${this.excludeInnerFeatureCheckbox.checked && this.bufferRadius > 0 ? " (exluding inner feature)" : ""}`;
+            inputTableData.push({'attribute': 'Geometry Type', 'value': 'User provided area'});
+            if (this.bufferRadius > 0) {
+              inputTableData.push({'attribute': 'Buffer', 'value': this.formatLargeNumber(this.bufferRadius) + this._getMetricString(this.pointMetric)});
+              inputTableData.push({'attribute': 'Area inside buffer excluded', 'value': 'True' ? this.excludeInnerFeatureCheckbox.checked : 'False'});
+            }
             break;
           case 'point':
-            inputTableBodyCol1 = `${this.nls.inputTableBodyCol1.point}`
-            inputTableBodyCol2 = `${this.formatLargeNumber(this.bufferRadius)} ${this._getMetricString(this.pointMetric)}`;
+            inputTableData.push({'attribute': 'Geometry Type', 'value': 'User provided point'});
+            inputTableData.push({'attribute': 'Lat/Lon', 'value': this.bufferGeometry.getCentroid().getLatitude().toFixed(4) +', '+
+                                                                this.bufferGeometry.getCentroid().getLongitude().toFixed(4)});
+            inputTableData.push({'attribute': 'Buffer Radius', 'value': this.formatLargeNumber(this.bufferRadius) + ' ' + this._getMetricString(this.pointMetric)});
             break;
           case 'line':
-            inputTableBodyCol1 = this.nls.inputTableBodyCol1.line
-            inputTableBodyCol2 = `${line} ${this._getMetricString(this.pointMetric)}`;
+            inputTableData.push({'attribute': 'Geometry Type', 'value': 'User provided line'});
+            inputTableData.push({'attribute': 'Length', 'value': line + ' ' + this._getMetricString(this.pointMetric)});
+            inputTableData.push({'attribute': 'Buffer', 'value': this.formatLargeNumber(this.bufferRadius) + ' ' + this._getMetricString(this.pointMetric)});
             break;
           case 'huc-8':
-            inputTableBodyCol1 = results.HUC8;
-            inputTableBodyCol2 = results.NAME;
+            inputTableData.push({'attribute': 'Geometry Type', 'value': 'HUC-8'});
+            inputTableData.push({'attribute': 'HUC-8 ID', 'value': results.HUC8});
+            inputTableData.push({'attribute': 'HUC-8 Name', 'value': results.NAME});
             break;
           case 'huc-12':
-            inputTableBodyCol1 = results.HUC_12;
-            inputTableBodyCol2 = results.HU_12_NAME;
+            inputTableData.push({'attribute': 'Geometry Type', 'value': 'HUC-12'});
+            inputTableData.push({'attribute': 'HUC-12 ID', 'value': results.HUC_12});
+            inputTableData.push({'attribute': 'HUC-12 Name', 'value': results.HU_12_NAME});
             break;
           case 'file':
-            inputTableBodyCol1 = results._layer.name;
-            inputTableBodyCol2 = this.formatLargeNumber(area);
+            inputTableData.push({'attribute': 'Layer Name', 'value': results._layer.name});
             break
           default:
             break;
         }
+        
+        const pretty_area = Math.round(area * 10) / 10;
+        inputTableData.push({'attribute': 'Area', 'value': pretty_area + ' ' + this._getMetricString(this.pointMetric) + '2'});
+        
+        var headers = [
+              { head: 'Input Paramaters', cl: '', d: 'attribute' },
+              { head: ' ', cl: '', d: 'value' }]
+        table = this._renderTable(headers, inputTableData)
+        
+        this.inputTable.append(table)
+        
+        },
+        
+      
+      _renderTable: function(headers, data) {
+      
+        var table_wrapper = d3.create('div')
+            .attr('class', 'table-wrapper');
+            
+      	var table = table_wrapper.append('table');
+      	
+          // create table header
+          table.append('thead').append('tr')
+              .selectAll('th')
+              .data(headers).enter()
+              .append('th')
+              .attr('class', d => d.cl)
+              .text(d => d.head);
+      
+          // create table body
+          table.append('tbody')
+              .selectAll('tr')
+              .data(data).enter()
+              .append('tr')
+              .selectAll('td')
+              .data(function(row, i) {
+          			cells = []
+          			for(var ii=0; ii < headers.length; ii++) {
+          				cells.push(row[headers[ii].d])
+          			}
+          			return cells;
+                      })
+              .enter()
+              .append('td')
+              .html(function(cell) {
+      			return cell
+      			});
+            
+         return table_wrapper.node();
 
-        let nlcdInfo = '';
+      },
 
-        if (this.indicator === 'nlcd') {
-          nlcdInfo = this.nlcdYear
+      
+      // Copyright 2021 Observable, Inc.
+      // Released under the ISC license.
+      // modified from: https://observablehq.com/@d3/diverging-bar-chart
+      _DivergingBarChart: function(data, {
+        x = d => d, // given d in data, returns the (quantitative) x-value
+        y = (d, i) => i, // given d in data, returns the (ordinal) y-value
+        title, // given d in data, returns the title text
+        marginTop = 30, // top margin, in pixels
+        marginRight = 40, // right margin, in pixels
+        marginBottom = 20, // bottom margin, in pixels
+        marginLeft = 40, // left margin, in pixels
+        width = 500, // outer width of chart, in pixels
+        height = 350, // the outer height of the chart, in pixels
+        xType = d3.scaleLinear, // type of x-scale
+        xDomain, // [xmin, xmax]
+        xRange = [marginLeft, width - marginRight], // [left, right]
+        xFormat, // a format specifier string for the x-axis
+        xLabel, // a label for the x-axis
+        yPadding = 0.3, // amount of y-range to reserve to separate bars
+        yDomain, // an array of (ordinal) y-values
+        yRange, // [top, bottom]
+        colors //= d3.schemePiYG[3] // [negative, ?, positive] colors
+      } = {}) {
+        // Compute values.
+        const X = d3.map(data, x);
+        const Y = d3.map(data, y);
+      
+        // Compute default domains, and unique the y-domain.
+        var minx = Math.min.apply(Math, X)
+        var maxx = Math.max.apply(Math, X)
+        if (xDomain === undefined) xDomain = [minx - ((maxx-minx)*.1), maxx + ((maxx-minx)*.1)];
+        if (yDomain === undefined) yDomain = Y;
+        yDomain = new d3.InternSet(yDomain);
+      
+        // Omit any data not present in the y-domain.
+        // Lookup the x-value for a given y-value.
+        const I = d3.range(X.length).filter(i => yDomain.has(Y[i]));
+        const YX = d3.rollup(I, ([i]) => X[i], i => Y[i]);
+      
+        // Compute the default height.
+        if (height === undefined) height = Math.ceil((yDomain.size + yPadding) * 25) + marginTop + marginBottom;
+        if (yRange === undefined) yRange = [marginTop, height - marginBottom];
+      
+        // Construct scales, axes, and formats.
+        const xScale = xType(xDomain, xRange);
+        const yScale = d3.scaleBand(yDomain, yRange).padding(yPadding);
+        const xAxis = d3.axisBottom(xScale).ticks(width / 80, xFormat);
+        const yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(6);
+        const format = xScale.tickFormat(100, xFormat);
+      
+        // Compute titles.
+        if (title === undefined) {
+          title = i => `${Y[i]}\n${format(X[i])}`;
+        } else if (title !== null) {
+          const O = d3.map(data, d => d);
+          const T = title;
+          title = i => T(O[i], i, data);
         }
-
-        let pointCenter;
-        if (this.bufferGeometry) {
-          pointCenter = this.bufferGeometry.getCentroid();
-        }
-
-
-        this.inputTable.innerHTML =
-        `
-          <div class='gridded-results-header'>
-            <p class="analysis-title">${this.indicatorDropdown.selectedOptions[0].innerHTML} ${nlcdInfo}</p>
-            <button id="gridded-print-button" class="noprint">Print</button>
-          </div>
-          <table id="gridded-map-input-table">
-            <thead style="border-bottom: 2px solid black">
-                <tr>
-                    <th colspan="1">${inputTableHeaderCol1}</th>
-                    <th colspan="1">${inputTableHeaderCol2}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                      ${this.unitDropdownSelection === 'point' ? `<p>${inputTableBodyCol1} (lat: ${pointCenter.getLatitude().toFixed(4)}, lng: ${pointCenter.getLongitude().toFixed(4)})</p>` : `${inputTableBodyCol1}`}
-                    </td>
-                    <td>${inputTableBodyCol2}</td>
-                </tr>
-                <tr>
-                  <td>${attributeAreaHeader}:</td>
-                  <td>${this.formatLargeNumber(area)} ${this._getMetricString(this.pointMetric)}2</td>
-                </tr>
-            </tbody>
-          </table>
-        `
+      
+        const svg = d3.create("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("viewBox", [0, 0, width, height])
+            .attr("style", "max-width: 100%; height: auto; height: intrinsic;display: block; margin: 0 auto; border-top:1px solid dimgray;border-bottom: 1px solid dimgray; margin-bottom: 20px;");
+      
+        svg.append("g")
+            .attr("transform", `translate(0,${height-marginBottom})`)
+      	  .attr("color", "dimgray")
+            .call(xAxis)
+            .call(g => g.select(".domain").remove())
+            .call(g => g.selectAll(".tick line").clone()
+                .attr("y2", -height + marginTop + marginBottom)
+                .attr("stroke-opacity", 0.1))
+            .call(g => g.append("text")
+                .attr("x", xScale(0))
+                .attr("y", -height + marginTop + marginBottom - 10)
+                .attr("fill", "dimgray")
+                .attr("text-anchor", "center")
+                .html(xLabel));
+      
+        const bar = svg.append("g")
+          .selectAll("rect")
+          .data(I)
+          .join("rect")
+            .attr("fill", i => data[i].colors)//function(d, i) {return data[i].color})//i => i.color) //i => colors[X[i] > 0 ? colors.length - 1 : 0])
+            .attr("x", i => Math.min(xScale(0), xScale(X[i])))
+            .attr("y", i => yScale(Y[i]))
+            .attr("width", i => Math.abs(xScale(X[i]) - xScale(0)))
+            .attr("height", yScale.bandwidth());
+      
+        if (title) bar.append("title")
+            .text(title);
+      
+        svg.append("g")
+            .attr("text-anchor", "end")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", 10)
+          .selectAll("text")
+          .data(I)
+          .join("text")
+            .attr("text-anchor", i => X[i] < 0 ? "end" : "start")
+            .attr("x", i => xScale(X[i]) + Math.sign(X[i] + 0.0000001) * 4)
+            .attr("y", i => yScale(Y[i]) + yScale.bandwidth() / 2)
+            .attr("dy", "0.35em")
+      	  .attr('fill', 'dimgray')
+            .html(i => format(X[i]) +  " km&sup2;");
+      
+        svg.append("g")
+            .attr("transform", `translate(${xScale(0)},0)`)
+            .call(yAxis)
+            .call(g => g.selectAll(".tick text")
+      				  .attr("fill", "dimgray")
+              .filter(y => YX.get(y) < 0)
+                .attr("text-anchor", "start")
+                .attr("x", 6));
+      
+        return svg.node();
       },
-
-      _renderOutputTable: function(results, area) {
-        let columnHeaders;
-        switch(this.indicator) {
-          case 'nlcd':
-          case 'nlcd-change':
-            columnHeaders = this.nls[this.indicator].columnHeaders.map(heading =>
-              `<th colspan="1">${heading}</th>`
-            ).join('')
-            break;
-          default:
-            columnHeaders = `
-              <th colspan="1">${this.nls.attributeHeader}</th>
-              <th colspan="1">${this.nls.valueHeader}</th>
-            `
-            break;
-        };
-        this.outputTable.innerHTML =
-        `
-          <table id="gridded-map-output-table">
-            <thead style="border-bottom: 2px solid black">
-                <tr>
-                  ${columnHeaders}
-                </tr>
-            </thead>
-            <tbody>
-              ${results}
-            </tbody>
-          </table>
-        `
-      },
-
-      _renderChangeChart: function(results, area, resultsHTML) {
-        resultsHTML += `
-          <button id="gridded-print-button" class="noprint">Print</button>
-          <div id="nlcd-change-chart"></div>
-        `;
-        this._renderResults(resultsHTML, area);
-        this._initChangeChart(results);
-        this.calculateButton.innerHTML = this.nls.calculate;
-        this.resultsLoaded = true;
-        this.tabContainer.selectTab(this.tabNode2); //manually switch tabs when results are ready
-      },
-
-      _initChangeChart(results) {
-        const chartContainer = document.getElementById("nlcd-change-chart");
-        const categories = [];
-        const positive = [];
-        const negative = [];
-        const colors = [];
-
-        Object.keys(results).forEach(key => {
-          categories.push(this.nls.nlcd.indices[key]);
-          colors.push(this.nls.nlcd.colors[key])
-          positive.push(parseFloat(results[key].areaChange) > 0.00 ? parseFloat(results[key].areaChange) : 0.00)
-          negative.push(parseFloat(results[key].areaChange) < 0.00 ? parseFloat(results[key].areaChange) : 0.00)
-        });
-
-        Highcharts.chart(chartContainer, {
-          chart: {
-              type: 'bar'
-          },
-          title: {
-            text: this.selectionText.innerHTML
-          },
-          subtitle: {
-            text: `${this.nlcdChangeYear1} to ${this.nlcdChangeYear2}`
-          },
-          credits: {
-            enabled: false
-          },
-          legend: {
-            enabled: false
-          },
-          exporting: {
-            enabled: true,
-            buttons: {
-              contextButton: {
-                  menuItems: ['downloadJPG', 'downloadPDF']
-              }
-            }
-          },
-          xAxis: [{
-              categories: categories,
-              reversed: false,
-              labels: {
-                  step: 1
-              },
-          }, { // mirror axis on right side
-              opposite: true,
-              reversed: false,
-              categories: categories,
-          }],
-          yAxis: {
-              title: {
-                  text: null
-              },
-              allowDecimals: true,
-              labels: {
-                  formatter: function () {
-                      return this.value + 'km2';
-                  }
-              },
-          },
-          plotOptions: {
-              series: {
-                  stacking: 'normal'
-              },
-              bar: {
-                colorByPoint: true,
-                colors,
-              }
-          },
-          series: [{
-              name: 'Loss',
-              data: negative
-          }, {
-              name: 'Gain',
-              data: positive
-          }]
-        });
-      },
+      
 
       _handleUnitSelection: function(option) {
         //reset everything if needs be
@@ -1404,12 +1267,13 @@ define([
             break;
           case 'nlcd-change': {
             if (!this.nlcdChangeYear1) {
-              document.getElementById('gridded-map-date-1').innerHTML = Object.keys(this.nls.nlcd.OBJECTIDS).map(year => `<option value="${year}">${year}</option>`)
+              //all but last year as selectable for date-1
+              document.getElementById('gridded-map-date-1').innerHTML = Object.keys(this.nls.nlcd.OBJECTIDS).slice(0, Object.keys(this.nls.nlcd.OBJECTIDS).length-1).map(year => `<option value="${year}">${year}</option>`)
               this.nlcdChangeYear1 = Object.keys(this.nls.nlcd.OBJECTIDS)[0];
             }
             if (!this.nlcdChangeYear2) {
-              document.getElementById('gridded-map-date-2').innerHTML = Object.keys(this.nls.nlcd.OBJECTIDS).map((year, index) => `<option value="${year}" ${index === 1 ? 'selected' : ''}>${year}</option>`)
-              this.nlcdChangeYear2 = Object.keys(this.nls.nlcd.OBJECTIDS)[1];
+              document.getElementById('gridded-map-date-2').innerHTML = Object.keys(this.nls.nlcd.OBJECTIDS).map((year, index) => `<option value="${year}" ${index === Object.keys(this.nls.nlcd.OBJECTIDS).length-1 ? 'selected' : ''}>${year}</option>`)
+              this.nlcdChangeYear2 = Object.keys(this.nls.nlcd.OBJECTIDS)[Object.keys(this.nls.nlcd.OBJECTIDS).length-1]
             }
             this.nlcdSelector.style.display = "none";
             this.dateSelector.style.display = "flex";
@@ -1717,14 +1581,34 @@ define([
         }
 
         layer.setRenderingRule(renderingrule);
-        const extent = geometry.getExtent();
+        var extent = geometry.getExtent();
+        //this._customZoomExtent(extent);
         this.map.setExtent(extent, true)
         this.calculateButton.disabled = false;
         this.areaSelected = true;
       },
+      
+      //https://gis.stackexchange.com/questions/345474/setting-map-extent-using-offset-in-arcgis-api-for-javascript-v3-x
+      _customZoomExtent: function(extent) {
+        var hiddenMapPartTopLeft = this.map.toMap(new ScreenPoint(0, 0)),
+          hiddenMapPartBottomRight = this.map.toMap(new ScreenPoint(450, 0));//this.map.container.offsetHeight)); // Removed
+      
+
+        var dx = new Extent({
+          xmin: hiddenMapPartTopLeft.x,
+          ymin: hiddenMapPartBottomRight.y,
+          xmax: hiddenMapPartBottomRight.x,
+          ymax: hiddenMapPartTopLeft.y,
+          spatialReference: map.spatialReference
+        }).getWidth();
+      
+        extent = extent.offset(-dx, 0); //shift to right with -dx and to left with +dx
+        this.map.setExtent(extent, true)
+      },
 
       _addBufferToMap: function() {
-        this.bufferGeometry = GeometryEngine.buffer(this.geometry, this.bufferRadius, this.pointMetric, true);
+        //this.bufferGeometry = GeometryEngine.buffer(this.geometry, this.bufferRadius, this.pointMetric, true);
+        this.bufferGeometry = GeometryEngine.geodesicBuffer(this.geometry, this.bufferRadius, this.pointMetric, true);
         let bufferPoly = new SimpleFillSymbol();
         this._addGraphicToMap(bufferPoly, this.bufferGeometry, true);
       },

@@ -176,6 +176,7 @@ define([
     window.imageLayerNumber = [];
     window.layerID_Portal_WebMap = [];
     window.demographicLayerSetting = {};
+      window.demographicLayerVisibleIndex = 3;  //0: Block Group; //1: tract; //2: County; //3: State
     window.onlineDataTobeAdded = [];
     window.onlineDataAlreadyAdded = [];
     window.onlineDataScopeDic = {};
@@ -269,6 +270,7 @@ define([
     window.topicDicESB["Land Cover: Near-Water"] = "LCNW";
     window.topicDicESB["Land Cover: Type"] = "LCT";
     window.topicDicESB["Landscape Pattern"] = "LP";
+	window.topicDicESB["Livestock and Poultry Production"] = "LS"; //This is newly added July 2022
     window.topicDicESB["Near-Road Environments"] = "NRE";    
     
     window.topicDicESB["Pollutant Reduction: Air"] = "PRA"; //This is newly added Mar 2017    
@@ -286,7 +288,7 @@ define([
     
     window.topicDicPSI = {};
     //window.topicDicPSI["EPA Regulated Facilities"] = "RF"; Title replaced with sites reporting to EPA
-    //window.topicDicPSI["EPA NATA"] = "NATA";
+    window.topicDicPSI["Harmful Algal Blooms"] = "HAB";
     window.topicDicPSI["Impaired Waters"] = "IW";
 	window.topicDicPSI["National Air Toxics Assessment"] = "NATA";
     window.topicDicPSI["Pollutants: Other"] = "PO";
@@ -339,7 +341,9 @@ define([
     window.communityDic["POR"] = "Portland, OR";
 	window.communityDic["SLMO"] = "St. Louis, MO";
 	window.communityDic["SLCUT"] = "Salt Lake City, UT";
+	window.communityDic["SDCA"] = "San Diego, CA";
     window.communityDic["SonCA"] = "Sonoma County, CA";
+	window.communityDic["TacWA"] = "Tacoma, WA";
     window.communityDic["TFL"] = "Tampa, FL";
     window.communityDic["VBWVA"] = "Virginia Beach - Williamsburg, VA";
     window.communityDic["WDC"] = "Washington, DC";
@@ -468,7 +472,7 @@ define([
       if (ioArgs.url.indexOf("enviroatlas2.epa.gov/arcgis/rest/services/ECAT") !== -1) { //This is to test timeout of ECAT
       	ioArgs.timeout = 59000;
       } 
-      if (ioArgs.url.indexOf("ofmpub.epa.gov/waters10/PointIndexing.Service") !== -1) { //This is to test timeout of Raindrop tool
+      if (ioArgs.url.indexOf("ordspub.epa.gov/ords/waters10/PointIndexing.Service") !== -1) { //This is to test timeout of Raindrop tool
       	ioArgs.timeout = 59000;
       }            
       //use https protocol
