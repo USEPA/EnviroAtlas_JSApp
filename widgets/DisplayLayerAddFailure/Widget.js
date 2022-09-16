@@ -181,15 +181,15 @@ define([
 				var xhr = new XMLHttpRequest();
 				//xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/SendEmailOfFailedLayers.py?failedEALayers=" + failedEAID + "&failedOutsideLayers=" + failedOutsideLayers, true);
 				if ((failedEAID.length > 0) && (failedOutsideLayers.length > 0)) {
-					xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedEALayers=" + failedEAID + "&failedOutsideLayers=" + failedOutsideLayers, true);
+					xhr.open('GET', "/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedEALayers=" + failedEAID + "&failedOutsideLayers=" + failedOutsideLayers, true);
 				}
 				else if (failedEAID.length > 0) {
-					xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedEALayers=" + failedEAID, true);
+					xhr.open('GET', "/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedEALayers=" + failedEAID, true);
 				} 
 				else if (failedOutsideLayers.length > 0) {
-					xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedOutsideLayers=" + failedOutsideLayers, true);
+					xhr.open('GET', "/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedOutsideLayers=" + failedOutsideLayers, true);
 				} else if ( failedDemoHucLayers.length > 0 ) {
-					xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedDemoHucTimeseEcatRain=" + failedDemoHucLayers, true);
+					xhr.open('GET', "/Email/SendEmailOfFailed_EA_OutsideLayers.py?failedDemoHucTimeseEcatRain=" + failedDemoHucLayers, true);
 				}				
 				xhr.send();
                 disableSendButton();

@@ -16,6 +16,7 @@ AllFailedOutsideURLArray = []
 AllFailedEaIDArray = []
 failedDemoHucArray = []
 htmlForEmail = ""
+stagingProd = "enviroatlas production"                                    
 #get input parameter from HTTPS request
 fs = cgi.FieldStorage()
 for key in fs.keys():
@@ -30,16 +31,15 @@ for key in fs.keys():
 print("failedEaIDArray:" + str(len(failedEaIDArray))+ "\n")
 if (len(failedEaIDArray)>0):
     AllFailedEaIDArray = [int(i) for i in failedEaIDArray]    
-    htmlForEmail = "This is the list of failed layers in EnviroAtlas: <br />"
+    htmlForEmail = "This is the list of failed layers in EnviroAtlas sent from " + stagingProd + ": <br />"
 else:
     htmlForEmail = ""
 print("AllFailedEaIDArray:" + str(len(AllFailedEaIDArray))+ "\n")
 DataInLocalLayerWidget = r"D:\Public\Data\EnviroAtlas_Public\WebProduction\interactivemap\widgets\SimpleSearchFilter\config_layer.json"
 
 EmailAddress = "Rosenbaum.Barbara@epa.gov"
-recipients = ['Rosenbaum.Barbara@epa.gov', 'Ji.Baohong@epa.gov', 'Hultgren.Torrin@epa.gov']
-#EmailAddress = "Ji.Baohong@epa.gov"
-#recipients = ['Ji.Baohong@epa.gov']
+recipients = ['Rosenbaum.Barbara@epa.gov', 'Hultgren.Torrin@epa.gov', 'Jett.Steven@epa.gov']
+
 
 def writeURLintoHTML(failedEaIDArray, InputData, html):
     data = json.load(open(InputData))
@@ -66,13 +66,13 @@ def writeDemoHucLintoHTML(failedOutsideURLArray, html):
 
 htmlForEmail = writeURLintoHTML(AllFailedEaIDArray, DataInLocalLayerWidget, htmlForEmail)
 if (len(AllFailedOutsideURLArray)>0):
-    htmlForEmail = " <br />" + htmlForEmail + " <br />" + "This is the list of failed layers outside EnviroAtlas: <br />"
+    htmlForEmail = " <br />" + htmlForEmail + " <br />" + "This is the list of failed layers outside EnviroAtlas sent from " + stagingProd + ": <br />"
     htmlForEmail = writeOutsideURLintoHTML(AllFailedOutsideURLArray, htmlForEmail)
 
 
 if (len(failedDemoHucArray)>0):
     print("\nfailedDemoHucArray is not empty:" + "\n")
-    htmlForEmail = " <br />" + htmlForEmail + " <br />" + "This is the failed layer: <br />"
+    htmlForEmail = " <br />" + htmlForEmail + " <br />" + "This is the failed layer sent from " + stagingProd + ": <br />"
     htmlForEmail = htmlForEmail + failedDemoHucArray[0] + "<br />"
     print("\nfailedDemoHucArray is not empty:" + failedDemoHucArray[0]+"\n")
     htmlForEmail = htmlForEmail + " <br />" + "error message is:" + " <br />"
@@ -85,7 +85,7 @@ msg = MIMEMultipart('alternative')
 
 msg['From'] = formataddr((str(Header('EnviroAtlas', 'utf-8')), EmailAddress))
 msg['To'] = ", ".join(recipients)
-
+msg['Subject'] = "Failed layer alert from " + stagingProd
 
 # Record the MIME types of text/html.
 msg.attach(MIMEText(htmlForEmail, 'html'))
