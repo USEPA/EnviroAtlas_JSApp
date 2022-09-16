@@ -1,3 +1,0 @@
-//>>built
-define({"widgets/Select/nls/strings":{_widgetLabel:"Seleccionar",showActions:"Exibir a\u00e7\u00f5es aplicadas a elemento(s) selecionado(s)",toggleSelectability:"Clicar para alternar possibilidade de selecionar",showSelectedFeatures:"Clique para exibir elementos selecionados",actionsTitle:"A\u00e7\u00f5es de sele\u00e7\u00e3o",turnonAll:"Tornar todas as camadas selecion\u00e1veis",turnoffAll:"Tornar todas as camadas n\u00e3o-selecion\u00e1veis",toggleSelect:"Alternar possibilidade de sele\u00e7\u00e3o para todas as camadas",
-singleSelect:"Tornar esta na \u00fanica camada selecion\u00e1vel",_localized:{}}});

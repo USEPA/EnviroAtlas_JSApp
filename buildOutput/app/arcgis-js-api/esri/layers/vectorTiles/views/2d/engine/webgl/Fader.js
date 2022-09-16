@@ -1,3 +1,0 @@
-//>>built
-define(["require","exports"],function(d,e){Object.defineProperty(e,"__esModule",{value:!0});d=function(){function c(a,b){void 0===b&&(b=250);this.duration=b;this._startTime=this._lastTime=0;this._parent=a}return c.prototype.reset=function(){this._lastTime;this._startTime=performance.now()},c.prototype.step=function(){var a=performance.now();if(0===this._lastTime)return this._lastTime=a,this._parent.requestRender(),0;var b=a-this._lastTime;this._lastTime=a;return a-this._startTime<2*this.duration&&
-this._parent.requestRender(),b/this.duration},c}();e.default=d});

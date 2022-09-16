@@ -1,2 +1,0 @@
-//>>built
-define({"esri/layers/vectorTiles/nls/common":{_localized:{}},"widgets/Search/nls/strings":{_widgetLabel:"\u641c\u7d22",searchResult:"\u641c\u7d22\u7ed3\u679c",showAllResults:"\u663e\u793a\u641c\u7d22\u7ed3\u679c ",showAll:"\u663e\u793a\u641c\u7d22\u7ed3\u679c",more:"\u66f4\u591a",untitled:"\u65e0\u6807\u9898",_localized:{}}});

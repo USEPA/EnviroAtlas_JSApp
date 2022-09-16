@@ -1,2 +1,0 @@
-//>>built
-define(["require","exports","./global","./now"],function(a,b,d,e){var f=e();a=d.requestAnimationFrame;if(!a){b=["ms","moz","webkit","o"];for(var c=0;c<b.length&&!a;++c)a=d[b[c]+"RequestAnimationFrame"];a||(a=function(a){var b=e(),c=Math.max(0,16-(b-f)),g=d.setTimeout(function(){a(e())},c);return f=b+c,g})}return a});

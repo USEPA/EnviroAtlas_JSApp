@@ -1,2 +1,0 @@
-//>>built
-define(["require","exports","../core/tsSupport/declareExtendsHelper","../core/JSONSupport"],function(e,f,c,d){return function(a){function b(){return null!==a&&a.apply(this,arguments)||this}return c(b,a),b}(d)});

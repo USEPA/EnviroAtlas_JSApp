@@ -1,3 +1,0 @@
-//>>built
-define({"widgets/Swipe/nls/strings":{_widgetLabel:"Glisare",swipeText:" Selecta\u021bi stratul/straturile tematic(e) care dori\u021bi s\u0103 fie glisate",spyglassText:"Selecta\u0163i stratul tematic care s\u0103 apar\u0103 \u00een ochean",disableTips:"Face\u0163i clic pentru a dezactiva instrumentul de glisare",enableTips:"Face\u0163i clic pentru a activa instrumentul de glisare",defaultLayerHolder:"Face\u021bi clic pentru a selecta",selectLayers:"Selecta\u021bi straturile tematice",nItemsSelected:"strat(uri) tematice selectat(e)",
-showList:"afi\u0219are list\u0103 de straturi tematice",hideList:"ascundere list\u0103 de straturi tematice",_localized:{}}});

@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/Print/setting/nls/strings":{serviceURL:"Teenuse URL",defaultTitle:"Vaikimisi pealkiri",defaultAuthor:"Vaikimisi autor",defaultCopyright:"Vaikimisi autori\u00f5igus",defaultFormat:"Vaikimisi vorming",defaultLayout:"Vaikimisi paigutus",warning:"Vale sisend",urlNotAvailable:"URL pole k\u00e4ttesaadav.",notPrintTask:"URL pole printimistoiming",advancedOption:"N\u00e4ita t\u00e4iustatud valikuid",ok:"OK",editable:"Muudetav",_localized:{}}});

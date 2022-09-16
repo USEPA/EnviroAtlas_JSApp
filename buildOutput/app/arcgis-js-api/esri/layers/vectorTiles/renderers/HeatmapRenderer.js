@@ -1,2 +1,0 @@
-//>>built
-define(["require","exports","../core/tsSupport/declareExtendsHelper","./Renderer"],function(e,f,c,d){return function(b){function a(){var a=null!==b&&b.apply(this,arguments)||this;return a.type="heatmap",a}return c(a,b),a}(d)});

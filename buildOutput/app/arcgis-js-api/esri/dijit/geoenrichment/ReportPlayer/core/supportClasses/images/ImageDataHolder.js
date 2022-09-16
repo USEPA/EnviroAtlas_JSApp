@@ -1,2 +1,0 @@
-//>>built
-define([],function(){var a={},b={};return a.putImageData=function(c,a){"string"==typeof c&&(b[c.toLowerCase()]=a)},a.getImageData=function(a){return"string"!=typeof a?null:b[a.toLowerCase()]},a});

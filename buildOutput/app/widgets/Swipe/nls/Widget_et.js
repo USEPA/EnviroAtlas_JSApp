@@ -1,3 +1,0 @@
-//>>built
-define({"widgets/Swipe/nls/strings":{_widgetLabel:"V\u00f5rdlus",swipeText:" Valige rullimise abil v\u00f5rreldavad kihid",spyglassText:"Valige pikksilmas kuvatav kiht.",disableTips:"Kl\u00f5psake v\u00f5rdleva rullimist\u00f6\u00f6riista keelamiseks.",enableTips:"Kl\u00f5psake v\u00f5rdleva rullimist\u00f6\u00f6riista lubamiseks.",defaultLayerHolder:"Kl\u00f5psake valimiseks",selectLayers:"Vali kihid",nItemsSelected:"Kiht (kihid) valitud",showList:"Kuva kihtide loend",hideList:"Peida kihtide loend",
-_localized:{}}});

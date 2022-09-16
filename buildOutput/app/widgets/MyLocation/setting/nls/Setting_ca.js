@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/MyLocation/setting/nls/strings":{timeout:"Temps d'espera",highlightLocation:"Ressalta la ubicaci\u00f3",useTracking:"Detecta canvis d'ubicaci\u00f3",warning:"Entrada incorrecta",zoomScale:"Escala de zoom",_localized:{}}});

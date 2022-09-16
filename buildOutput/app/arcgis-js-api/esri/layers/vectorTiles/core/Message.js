@@ -1,2 +1,0 @@
-//>>built
-define(["require","exports","dojo/string"],function(f,g,d){return function(){function a(e,b,c){this instanceof a&&(this.name=e,this.message=b&&d.substitute(b,c,function(a){return null==a?"":a})||"",this.details=c)}return a.prototype.toString=function(){return"["+this.name+"]: "+this.message},a}()});

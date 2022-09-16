@@ -1,2 +1,0 @@
-//>>built
-define("require exports ../core/tsSupport/declareExtendsHelper ../core/tsSupport/decorateHelper ./Accessor ./Handles ./accessorSupport/decorators".split(" "),function(h,k,e,c,f,g,b){return function(d){function a(){var a=d.call(this)||this;return a.handles=new g,a}return e(a,d),a.prototype.destroy=function(){this.handles.destroy()},c([b.property({readOnly:!0})],a.prototype,"handles",void 0),a=c([b.subclass("esri.core.HandleOwner")],a)}(b.declared(f))});

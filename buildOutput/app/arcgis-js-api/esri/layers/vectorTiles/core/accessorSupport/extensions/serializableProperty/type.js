@@ -1,2 +1,0 @@
-//>>built
-define(["require","exports"],function(c,b){Object.defineProperty(b,"__esModule",{value:!0});b.isCollection=function(a){return!!a&&!!a.prototype.declaredClass&&0===a.prototype.declaredClass.indexOf("esri.core.Collection")}});

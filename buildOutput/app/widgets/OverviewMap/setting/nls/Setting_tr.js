@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/OverviewMap/setting/nls/strings":{visible:"maksimize edici",minWidth:"Min geni\u015flik",minHeight:"Min y\u00fckseklik",maxWidth:"Maks geni\u015flik",maxHeight:"Maks y\u00fckseklik",minText:"Minimum",maxText:"maksimum",attachText:"Bu gerecin haritan\u0131n hangi k\u00f6\u015fesine ili\u015ftirilece\u011fini belirtin.",expandText:"\u0130lk olarak gereci geni\u015flet",topLeft:"Sol \u00fcst",topRight:"Sa\u011f \u00fcst",bottomLeft:"Sol alt",bottomRight:"Sa\u011f alt",_localized:{}}});

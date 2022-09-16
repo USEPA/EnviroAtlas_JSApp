@@ -1,2 +1,0 @@
-//>>built
-define(["require","exports"],function(b,c){Object.defineProperty(c,"__esModule",{value:!0});b=function(){function a(a){this._pos=0;this._buffer=a;this._i32View=new Int32Array(this._buffer);this._f32View=new Float32Array(this._buffer)}return a.prototype.readInt32=function(){return this._i32View[this._pos++]},a.prototype.readF32=function(){return this._f32View[this._pos++]},a}();c.default=b});

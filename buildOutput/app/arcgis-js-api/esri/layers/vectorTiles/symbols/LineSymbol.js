@@ -1,2 +1,0 @@
-//>>built
-define(["../core/declare","../core/screenUtils","./Symbol"],function(a,b,c){return a(c,{declaredClass:"esri.symbols.LineSymbol",properties:{color:{},type:"simple-line",width:{value:.75,cast:b.toPt,json:{write:!0}}}})});

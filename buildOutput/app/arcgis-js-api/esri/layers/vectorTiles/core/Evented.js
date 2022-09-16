@@ -1,3 +1,0 @@
-//>>built
-define(["require","exports","dojo/aspect","dojo/on"],function(l,m,h,k){function f(c,a,b,g){var d;if(Array.isArray(a)?d=a:-1<a.indexOf(",")&&(d=a.split(/\s*,\s*/)),d){var e=[];for(a=0;a<d.length;a++)e.push(f(c,d[a],b,g));return e.remove=function(){for(var a=0;a<e.length;a++)e[a].remove()},e}return g(c,a)}return function(){function c(){}return c.prototype.emit=function(a,b){if(this.hasEventListener(a))return b=b||{},b.target||(b.target=this),k.emit(this,a,b)},c.prototype.on=function(a,b){return f(this,
-a,b,function(a,c){return h.after(a,"on"+c,b,!0)})},c.prototype.hasEventListener=function(a){return a="on"+a,!(!this[a]||!this[a].after)},c}()});

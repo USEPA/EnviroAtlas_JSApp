@@ -1,2 +1,0 @@
-//>>built
-define(["require","exports","../../core/promiseUtils","../../core/Error"],function(b,a,c,d){Object.defineProperty(a,"__esModule",{value:!0});a.fetchStyle=function(a,b){return c.reject(new d("symbolstyleutils:style-url-and-name-missing","Either styleUrl or styleName is required to resolve a style"))}});

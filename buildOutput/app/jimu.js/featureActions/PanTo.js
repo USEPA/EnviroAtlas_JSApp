@@ -1,2 +1,0 @@
-//>>built
-define(["dojo/_base/declare","../BaseFeatureAction","jimu/utils"],function(b,c,d){return b(c,{name:"PanTo",iconClass:"icon-panto",isFeatureSupported:function(a){return 0<a.features.length&&a.geometryType},onExecute:function(a){d.featureAction.panTo(this.map,a.features)}})});

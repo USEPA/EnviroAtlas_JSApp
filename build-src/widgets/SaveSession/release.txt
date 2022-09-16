@@ -1,5 +1,0 @@
-v1.3.1	2/21/2016
-* do not submit the saveToFileForm if url for download is disabled
-
-v1.3.0	2/6/2016
-* initial release

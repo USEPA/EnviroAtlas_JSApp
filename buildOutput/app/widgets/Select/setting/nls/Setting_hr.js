@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/Select/setting/nls/strings":{setSelectionColor:"Postavi boju odabira",selectionMode:"Interaktivni na\u010din odabira",partiallyWithin:"Djelomi\u010dno unutar",whollyWithin:"Potpuno unutar",allowExport:"Omogu\u0107i izvoz odabranih geoobjekata",layerToSelect:"Odaberite koji su slojevi dostupni za odabir",includeRuntimeLayers:"Imajte mogu\u0107nost odabrati slojeve generirane tijekom vremena rada",_localized:{}}});

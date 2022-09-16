@@ -1,3 +1,0 @@
-//>>built
-define({"widgets/Select/nls/strings":{_widgetLabel:"Vybrat (Select)",showActions:"Zobrazit akce u vybran\u00fdch prvk\u016f",toggleSelectability:"Kliknut\u00edm p\u0159epnete podporov\u00e1n\u00ed v\u00fdb\u011bru.",showSelectedFeatures:"Kliknut\u00edm zobraz\u00edte vybran\u00e9 prvky",actionsTitle:"Akce v\u00fdb\u011bru",turnonAll:"Ozna\u010dit v\u0161echny vrstvy jako vybrateln\u00e9",turnoffAll:"Ozna\u010dit v\u0161echny vrstvy jako nevybrateln\u00e9",toggleSelect:"P\u0159epnout vybratelnost u v\u0161ech vrstev",
-singleSelect:"Ozna\u010dit jako jedinou vrstvu pro v\u00fdb\u011br",_localized:{}}});

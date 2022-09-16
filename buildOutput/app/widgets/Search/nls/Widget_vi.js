@@ -1,2 +1,0 @@
-//>>built
-define({"esri/layers/vectorTiles/nls/common":{_localized:{}},"widgets/Search/nls/strings":{_widgetLabel:"T\u00ecm ki\u1ebfm",searchResult:"K\u1ebft qu\u1ea3 t\u00ecm ki\u1ebfm",showAllResults:"Hi\u1ec3n th\u1ecb k\u1ebft qu\u1ea3 t\u00ecm ki\u1ebfm cho ",showAll:"Hi\u1ec3n th\u1ecb k\u1ebft qu\u1ea3 t\u00ecm ki\u1ebfm",more:"kh\u00e1c",untitled:"Ch\u01b0a c\u00f3 ti\u00eau \u0111\u1ec1",_localized:{}}});

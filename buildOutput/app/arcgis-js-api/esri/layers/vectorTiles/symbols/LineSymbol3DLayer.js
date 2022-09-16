@@ -1,2 +1,0 @@
-//>>built
-define(["require","exports","../core/tsSupport/declareExtendsHelper","./Symbol3DLayer"],function(d,e,c,b){!function(a){c(function(){return null!==a&&a.apply(this,arguments)||this},a)}(b);return b});

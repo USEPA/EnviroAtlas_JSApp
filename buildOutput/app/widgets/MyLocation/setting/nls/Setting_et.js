@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/MyLocation/setting/nls/strings":{timeout:"Vaheaeg",highlightLocation:"T\u00f5sta asukoht esile",useTracking:"J\u00e4lgi asukohamuutusi",warning:"Vale sisend",zoomScale:"Suumiskaala",_localized:{}}});

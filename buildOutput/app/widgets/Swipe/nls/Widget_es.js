@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/Swipe/nls/strings":{_widgetLabel:"Swipe",swipeText:" Seleccione la(s) capa(s) en las que desee la funci\u00f3n swipe",spyglassText:"Selecciona la capa que debe aparecer en la lupa",disableTips:"Haz clic para desactivar la herramienta swipe",enableTips:"Haz clic para activar la herramienta de swipe",defaultLayerHolder:"Clic para seleccionar",selectLayers:"Seleccionar capas",nItemsSelected:"capas seleccionadas",showList:"mostrar lista de capas",hideList:"ocultar lista de capas",_localized:{}}});

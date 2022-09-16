@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/Select/setting/nls/strings":{setSelectionColor:"Velg farge for utvalg",selectionMode:"Interaktiv utvalgsmodus",partiallyWithin:"Delvis innenfor",whollyWithin:"Helt innenfor",allowExport:"Tillat eksport av valgte geoobjekter",layerToSelect:"Velg hvilke lag som kan velges",includeRuntimeLayers:"Mulig \u00e5 velge lag generert i kj\u00f8retid",_localized:{}}});

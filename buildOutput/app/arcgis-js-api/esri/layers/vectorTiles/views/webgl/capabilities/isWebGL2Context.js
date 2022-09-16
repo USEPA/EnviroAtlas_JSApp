@@ -1,2 +1,0 @@
-//>>built
-define(["require","exports"],function(b,a){Object.defineProperty(a,"__esModule",{value:!0});a.default=function(a){return window.WebGL2RenderingContext&&a instanceof window.WebGL2RenderingContext}});

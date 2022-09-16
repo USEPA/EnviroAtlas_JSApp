@@ -1,3 +1,0 @@
-//>>built
-define(["require","exports"],function(c,d){Object.defineProperty(d,"__esModule",{value:!0});var g=function(){function b(a,b,e){this.data=a;this.stride=b;this.vertexCount=e}return b.decode=function(a){return new b(new Uint32Array(a.data),a.stride,a.vertexCount)},b}();d.default=g;c=function(){function b(a,b,e){this.geometryType=a;this.indexBuffer=new Uint32Array(b);this.namedBuffers=e}return b.decode=function(a){var d=a.geometryType,e=a.indexBuffer,c={},f;for(f in a.namedBuffers)c[f]=g.decode(a.namedBuffers[f]);
-return new b(d,e,c)},b}();d.VertexBuffers=c});

@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/Select/setting/nls/strings":{setSelectionColor:"M\u00e4\u00e4rit\u00e4 valinnan v\u00e4ri",selectionMode:"Vuorovaikutteinen valintatila",partiallyWithin:"Sis\u00e4ltyy osittain",whollyWithin:"Sis\u00e4ltyy kokonaan",allowExport:"Salli vienti valittuihin kohteisiin",layerToSelect:"Valitse valittavissa olevat karttatasot",includeRuntimeLayers:"Voit valita suorituksen aikana luotavat karttatasot",_localized:{}}});

@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/MyLocation/nls/strings":{_widgetLabel:"My Location",title:"Find my location",browserError:"Geolocation is not supported by this browser.",failureFinding:"Can not find your location. Please check your browser to ensure that your location is shared.",httpNotSupportError:"This widget is available only when the app is accessed through HTTPS in this browser.",_localized:{}}});

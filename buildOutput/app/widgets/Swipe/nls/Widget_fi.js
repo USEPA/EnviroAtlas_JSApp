@@ -1,3 +1,0 @@
-//>>built
-define({"widgets/Swipe/nls/strings":{_widgetLabel:"Pyyhk\u00e4ise",swipeText:" Valitse karttatasot, joissa haluat k\u00e4ytt\u00e4\u00e4 pyyhk\u00e4isy\u00e4",spyglassText:"Valitse karttataso, joka n\u00e4kyy kiikarissa",disableTips:"Poista pyyhk\u00e4isyty\u00f6kalu k\u00e4yt\u00f6st\u00e4 napsauttamalla",enableTips:"Ota pyyhk\u00e4isyty\u00f6kalu k\u00e4ytt\u00f6\u00f6n napsauttamalla",defaultLayerHolder:"Valitse napsauttamalla",selectLayers:"Valitse karttatasot",nItemsSelected:"valitut karttatasot",
-showList:"n\u00e4yt\u00e4 karttatasoluettelo",hideList:"piilota karttatasoluettelo",_localized:{}}});

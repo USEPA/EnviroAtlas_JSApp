@@ -1,2 +1,0 @@
-//>>built
-define(["require","exports","./tsSupport/extendsHelper","./tsSupport/decorateHelper","./Message"],function(a,k,g,l,h){a=function(a){function b(c,d,e){var f=a.call(this,c,d,e)||this;return f instanceof b?f:new b(c,d,e)}return g(b,a),b}(h);return a.prototype.type="warning",a});

@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/Scalebar/setting/nls/strings":{unit:"\u0110\u01a1n v\u1ecb",style:"Ki\u1ec3u",dual:"k\u00e9p",english:"ti\u1ebfng anh",metric:"h\u1ec7 m\u00e9t",ruler:"th\u01b0\u1edbc",line:"\u0111\u01b0\u1eddng",_localized:{}}});

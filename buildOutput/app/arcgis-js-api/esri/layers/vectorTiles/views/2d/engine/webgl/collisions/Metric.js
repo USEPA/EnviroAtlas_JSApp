@@ -1,3 +1,0 @@
-//>>built
-define(["require","exports","./BoundingBox"],function(c,f,g){Object.defineProperty(f,"__esModule",{value:!0});c=function(){function b(a,b,c,d,e){void 0===d&&(d=255);void 0===e&&(e=0);this.bounds=a;this.range=b;this.index=c;this.minZoom=d;this.maxZoom=e}return b.prototype.serialize=function(a){return this.bounds.serialize(a),a.writeInt32(this.range.from),a.writeInt32(this.range.count),a.writeInt32(this.index),a},b.deserialize=function(a){return new b(g.default.deserialize(a),{from:a.readInt32(),count:a.readInt32()},
-a.readInt32())},b}();f.default=c});

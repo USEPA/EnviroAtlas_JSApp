@@ -1,2 +1,0 @@
-//>>built
-define(["require","exports","../metadata"],function(e,a,b){Object.defineProperty(a,"__esModule",{value:!0});a.aliasOf=function(a){return function(c,d){b.getPropertyMetadata(c,d).aliasOf=a}}});

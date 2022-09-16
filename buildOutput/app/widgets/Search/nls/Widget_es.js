@@ -1,2 +1,0 @@
-//>>built
-define({"esri/layers/vectorTiles/nls/common":{_localized:{}},"widgets/Search/nls/strings":{_widgetLabel:"B\u00fasqueda",searchResult:"Resultado de la b\u00fasqueda",showAllResults:"Buscar resultados de ",showAll:"Mostrar resultados de",more:"m\u00e1s",untitled:"Sin T\u00edtulo",_localized:{}}});

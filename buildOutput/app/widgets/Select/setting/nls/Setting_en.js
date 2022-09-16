@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/Select/setting/nls/strings":{setSelectionColor:"Set the selection color",selectionMode:"Interactive selection mode",partiallyWithin:"Partially within",whollyWithin:"Wholly within",allowExport:"Allow to export selected features",layerToSelect:"Choose which layers are available to select",includeRuntimeLayers:"Be able to select layers generated at runtime",_localized:{}}});

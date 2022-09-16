@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/ExtentNavigate/nls/strings":{_widgetLabel:"Navigering af udstr\u00e6kning",previousExtent:"Forrige udstr\u00e6kning",nextExtent:"N\u00e6ste udstr\u00e6kning",_localized:{}}});

@@ -1,3 +1,0 @@
-//>>built
-define("dojo/_base/declare dijit/_WidgetBase dijit/_TemplatedMixin dojo/_base/lang dojo/_base/html dojo/on".split(" "),function(b,c,d,e,a,f){return b([c,d],{baseClass:"widgets-Search-setting-include-all-button",templateString:'\x3cdiv\x3e\x3cspan nowrap style\x3d"white-space:nowrap;"\x3e${nls.includeall}\x3c/span\x3e\x3cdiv class\x3d"include-arrow"\x3e\x3c/div\x3e\x3c/div\x3e',nls:null,postMixInProperties:function(){this.inherited(arguments)},postCreate:function(){this.inherited(arguments);this.own(f(this.domNode,
-"click",e.hitch(this,function(){this.onClick()})))},enable:function(){a.addClass(this.domNode,"enable")},disable:function(){a.removeClass(this.domNode,"enable")},onClick:function(){}})});

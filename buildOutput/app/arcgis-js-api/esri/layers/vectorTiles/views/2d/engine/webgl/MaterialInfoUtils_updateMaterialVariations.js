@@ -1,2 +1,0 @@
-//>>built
-define(["require","exports"],function(c,d){return function(a,b){return a.geometryType=7&b,b>>=3,a.sdf=0!=(4&b),a.vvSizeMinMaxValue=0!=(8&b),a.vvSizeScaleStops=0!=(16&b),a.vvSizeFieldStops=0!=(32&b),a.vvSizeUnitValue=0!=(64&b),a.vvColor=0!=(128&b),a.vvRotation=0!=(256&b),a.vvOpacity=0!=(512&b),a.visibility=0!=(1024&b),a.pattern=0!=(2048&b),a.heatmap=0!=(4096&b),a}});

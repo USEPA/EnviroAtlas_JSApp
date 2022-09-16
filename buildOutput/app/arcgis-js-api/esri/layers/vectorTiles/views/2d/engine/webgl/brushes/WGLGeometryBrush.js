@@ -1,3 +1,0 @@
-//>>built
-define(["require","exports","../../../../../core/tsSupport/extendsHelper","./WGLBrush","../util/iterator"],function(a,d,g,h,k){Object.defineProperty(d,"__esModule",{value:!0});a=function(b){function c(){return null!==b&&b.apply(this,arguments)||this}return g(c,b),c.prototype.draw=function(b,e){var c=this;if(e.canDisplay){var a=this.getGeometryType(),d=e.getDisplayList(b.drawPhase),f=e.getGeometry(a);f&&k.forEachIter(d.ofType(a),function(a){return c.drawGeometry(b,e,a,f)})}},c}(h.default);d.default=
-a});

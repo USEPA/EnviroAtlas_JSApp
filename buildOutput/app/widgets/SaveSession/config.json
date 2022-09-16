@@ -1,6 +1,0 @@
-{
-    "useServerToDownloadFile": false,
-    "saveToFileUrl": "",
-    "fileNameForAllSessions": "Sessions.json",
-    "fileNameTplForSession": "Sessions_${name}.json"
-}

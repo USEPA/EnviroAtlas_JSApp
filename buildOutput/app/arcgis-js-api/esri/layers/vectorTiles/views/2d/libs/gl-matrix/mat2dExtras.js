@@ -1,3 +1,0 @@
-//>>built
-define(["require","exports","./common","./mat2d","./vec2"],function(m,g,l,b,h){Object.defineProperty(g,"__esModule",{value:!0});var k=function(){var a=b.create(),c=h.create();return function(d,f,e){return b.fromTranslation(a,e),b.multiply(d,a,f),h.negate(c,e),b.translate(d,d,c),d}}();g.rotategAt=function(){var a=b.create();return function(c,d,f,e){return b.fromRotation(a,l.toRadian(f)),k(a,a,e),b.multiply(c,a,d),c}}();g.scaleAt=function(){var a=b.create();return function(c,d,f,e){return b.fromScaling(a,
-f),k(a,a,e),b.multiply(c,a,d),c}}()});

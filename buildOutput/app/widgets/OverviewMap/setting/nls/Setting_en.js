@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/OverviewMap/setting/nls/strings":{visible:"Show overview map by default",minWidth:"Min width",minHeight:"Min meight",maxWidth:"Max width",maxHeight:"Max height",minText:"Minimum",maxText:"maximum",attachText:"Specify which corner of the map to attach this widget.",expandText:"Initially expand the widget",topLeft:"Top left",topRight:"Top right",bottomLeft:"Bottom left",bottomRight:"Bottom right",_localized:{}}});

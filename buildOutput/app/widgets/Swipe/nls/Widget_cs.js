@@ -1,3 +1,0 @@
-//>>built
-define({"widgets/Swipe/nls/strings":{_widgetLabel:"P\u0159ekr\u00fdv\u00e1n\u00ed",swipeText:" Vyberte vrstvu, kterou chcete p\u0159ekr\u00fdt",spyglassText:"Vyberte vrstvu, kter\u00e1 se zobraz\u00ed v lup\u011b.",disableTips:"Kliknut\u00edm zak\u00e1\u017eete n\u00e1stroj p\u0159ekr\u00fdv\u00e1n\u00ed",enableTips:"Kliknut\u00edm povol\u00edte n\u00e1stroj p\u0159ekr\u00fdv\u00e1n\u00ed",defaultLayerHolder:"Kliknut\u00edm vyberte",selectLayers:"Vybrat vrstvy",nItemsSelected:"vrstev vybr\u00e1no",
-showList:"zobrazit seznam vrstev",hideList:"skr\u00fdt seznam vrstev",_localized:{}}});

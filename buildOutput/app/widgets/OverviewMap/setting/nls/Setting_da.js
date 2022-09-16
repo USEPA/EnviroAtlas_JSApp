@@ -1,3 +1,0 @@
-//>>built
-define({"widgets/OverviewMap/setting/nls/strings":{visible:"Vis oversigtskort som standard",minWidth:"Minimumbredde",minHeight:"Minimumh\u00f8jde",maxWidth:"Maksimumbredde",maxHeight:"Maksimumh\u00f8jde",minText:"Minimum",maxText:"maksimum",attachText:"Angiv, i hvilket hj\u00f8rne af kortet denne widget skal tilknyttes.",expandText:"Udvid f\u00f8rst widget'en",topLeft:"\u00d8verst til venstre",topRight:"\u00d8verst til h\u00f8jre",bottomLeft:"Nederst til venstre",bottomRight:"Nederst til h\u00f8jre",
-_localized:{}}});

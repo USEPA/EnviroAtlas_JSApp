@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/Print/setting/nls/strings":{serviceURL:"URL du service",defaultTitle:"Titre par d\u00e9faut",defaultAuthor:"Auteur par d\u00e9faut",defaultCopyright:"Copyright par d\u00e9faut",defaultFormat:"Format par d\u00e9faut",defaultLayout:"Mise en page par d\u00e9faut",warning:"Entr\u00e9e incorrecte",urlNotAvailable:"L'URL n'est pas disponible",notPrintTask:"L'URL n'est pas une t\u00e2che d'impression",advancedOption:"Afficher les options avanc\u00e9es",ok:"OK",editable:"Modifiable",_localized:{}}});

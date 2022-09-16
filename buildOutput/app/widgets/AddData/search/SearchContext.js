@@ -1,2 +1,0 @@
-//>>built
-define(["dojo/_base/declare","dojo/_base/lang"],function(a,b){return a(null,{allowArcGISOnline:!0,arcgisOnlinePortal:null,orgId:null,portal:null,username:null,constructor:function(a){b.mixin(this,a)}})});

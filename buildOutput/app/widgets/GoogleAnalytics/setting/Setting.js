@@ -1,3 +1,0 @@
-//>>built
-define("dojo/_base/declare dijit/_WidgetsInTemplateMixin jimu/BaseWidgetSetting dojo/_base/lang dojo/on dijit/form/Textarea".split(" "),function(a,b,c,d,e){return a([c,b],{baseClass:"my-app-setting",startup:function(){this.inherited(arguments);this.setConfig(this.config)},setConfig:function(a){this.config=a;this.codeInput.set("value",this.config.code);this.logMapEvents.setValue(this.config.logMapEvents);this.logLayerEvents.setValue(this.config.logLayerEvents)},getConfig:function(){this.config.code=
-this.codeInput.get("value");this.config.logMapEvents=this.logMapEvents.getValue();this.config.logLayerEvents=this.logLayerEvents.getValue();return this.config}})});

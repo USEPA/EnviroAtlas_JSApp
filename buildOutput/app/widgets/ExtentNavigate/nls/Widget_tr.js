@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/ExtentNavigate/nls/strings":{_widgetLabel:"Yay\u0131l\u0131mda Gezinme",previousExtent:"\u00d6nceki yay\u0131l\u0131m",nextExtent:"Sonraki yay\u0131l\u0131m",_localized:{}}});

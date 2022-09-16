@@ -1,3 +1,0 @@
-//>>built
-define(["dojo/_base/declare","dijit/_WidgetBase","dijit/_TemplatedMixin","dijit/_WidgetsInTemplateMixin"],function(a,b,c,d){return a([b,c,d],{isSearchComponent:!0,searchPane:null,template:"\x3cdiv\x3e\x3c/div\x3e",postCreate:function(){this.inherited(arguments)},appendQueryParams:function(a,b){},processResults:function(a){},getConfig:function(){return this.searchPane&&this.searchPane.wabWidget&&this.searchPane.wabWidget.config?this.searchPane.wabWidget.config:{}},getMap:function(){return this.searchPane&&
-this.searchPane.wabWidget?this.searchPane.wabWidget.map:null},search:function(){this.searchPane&&this.searchPane.search()}})});

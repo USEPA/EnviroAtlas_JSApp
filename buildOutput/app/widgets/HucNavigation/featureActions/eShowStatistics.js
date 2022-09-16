@@ -1,3 +1,0 @@
-//>>built
-define(["dojo/_base/declare","jimu/BaseFeatureAction","jimu/dijit/FieldStatistics"],function(c,d,e){return c(d,{iconClass:"icon-statistics",isFeatureSupported:function(a,b){return 1<a.features.length&&b&&0<this.getNumbericFields(b).length},onExecute:function(a,b){var c=new e;a={featureSet:a,layer:b,fieldNames:this.getNumbericFields(a).map(function(a){return a.name})};c.showContentAsPopup(a)},getNumbericFields:function(a){return a.fields.filter(function(a){return 0<["esriFieldTypeSmallInteger","esriFieldTypeInteger",
-"esriFieldTypeSingle","esriFieldTypeDouble"].indexOf(a.type)})}})});

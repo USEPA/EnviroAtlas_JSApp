@@ -1,2 +1,0 @@
-//>>built
-define([],function(){return function(g,b,c,d){var e,f=arguments.length,a=3>f?b:null===d?d=Object.getOwnPropertyDescriptor(b,c):d;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)a=Reflect.decorate(g,b,c,d);else for(var h=g.length-1;0<=h;h--)(e=g[h])&&(a=(3>f?e(a):3<f?e(b,c,a):e(b,c))||a);return 3<f&&a&&Object.defineProperty(b,c,a),a}});

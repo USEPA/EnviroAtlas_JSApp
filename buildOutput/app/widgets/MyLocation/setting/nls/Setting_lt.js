@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/MyLocation/setting/nls/strings":{timeout:"Skirto laiko pabaiga",highlightLocation:"I\u0161ry\u0161kinti viet\u0105",useTracking:"\u017di\u016br\u0117ti vietos pakeitimus",warning:"Klaidinga \u012fvestis",zoomScale:"Mastelis",_localized:{}}});

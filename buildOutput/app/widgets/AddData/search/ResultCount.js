@@ -1,4 +1,0 @@
-//>>built
-require({cache:{"url:widgets/AddData/search/templates/ResultCount.html":'\x3cdiv class\x3d"search-result-count"\x3e\r\n  \x3cspan class\x3d"search-count" data-dojo-attach-point\x3d"messageNode"\x3e\x3c/span\x3e\r\n\x3c/div\x3e'}});
-define("dojo/_base/declare dojo/number ./SearchComponent dojo/text!./templates/ResultCount.html dojo/i18n!../nls/strings ./util".split(" "),function(d,e,f,g,a,h){return d([f],{i18n:a,templateString:g,typePlural:a.search.resultCount.itemPlural,typeSingular:a.search.resultCount.itemSingular,postCreate:function(){this.inherited(arguments)},processResults:function(c){c=c.total;var a=this.typePlural;1===c&&(a=this.typeSingular);var b=this.i18n.search.resultCount.countPattern,b=b.replace("{count}",e.format(c)),
-b=b.replace("{type}",a);h.setNodeText(this.messageNode,b)}})});

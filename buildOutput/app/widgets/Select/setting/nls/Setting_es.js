@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/Select/setting/nls/strings":{setSelectionColor:"Definir el color de selecci\u00f3n",selectionMode:"Modo de selecci\u00f3n interactivo",partiallyWithin:"Parcialmente dentro",whollyWithin:"Completamente dentro",allowExport:"Permitir exportaci\u00f3n de entidades seleccionadas",layerToSelect:"Elegir qu\u00e9 capas est\u00e1n disponibles para seleccionar",includeRuntimeLayers:"Poder seleccionar capas generadas en tiempo de ejecuci\u00f3n",_localized:{}}});

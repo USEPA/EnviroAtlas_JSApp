@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/MyLocation/setting/nls/strings":{timeout:"Timeout",highlightLocation:"Markera plats",useTracking:"H\u00e5ll utkik efter plats\u00e4ndringar",warning:"Felaktiga indata",zoomScale:"Zoomningsskala",_localized:{}}});

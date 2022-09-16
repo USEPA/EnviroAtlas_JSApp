@@ -1,2 +1,0 @@
-//>>built
-define(["require","exports","../metadata"],function(b,a,c){Object.defineProperty(a,"__esModule",{value:!0});a.autoDestroy=function(){return function(a,d,b){return c.getMetadata(a).autoDestroy=!0,a[d]}}});

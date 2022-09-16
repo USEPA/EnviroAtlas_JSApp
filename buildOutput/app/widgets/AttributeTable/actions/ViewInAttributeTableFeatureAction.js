@@ -1,3 +1,0 @@
-//>>built
-define(["dojo/_base/declare","jimu/BaseFeatureAction","jimu/WidgetManager","jimu/LayerInfos/LayerInfos"],function(c,e,f,d){return c(e,{map:null,iconClass:"icon-view-in-attribute",isFeatureSupported:function(b,a){if(!b||!a)return!1;a=d.getInstanceSync().getLayerOrTableInfoById(a.id);return b.features.length&&a&&a.getSupportTableInfo().then(function(a){return a&&a.isSupportedLayer&&a.isSupportQuery})},onExecute:function(b,a){if(b&&a){var c=d.getInstanceSync().getLayerOrTableInfoById(a.id);b.displayFieldName=
-a.objectIdField;f.getInstance().triggerWidgetOpen(this.widgetId).then(function(a){a.onReceiveData(null,null,{target:"AttributeTable",layerInfo:c,featureSet:b})})}}})});

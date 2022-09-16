@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/OverviewMap/setting/nls/strings":{visible:"Prika\u017ei preglednu kartu prema zadanim postavkama",minWidth:"Min. \u0161irina",minHeight:"Min, visina",maxWidth:"Maks. \u0161irina",maxHeight:"Maks. visina",minText:"Minimum",maxText:"maksimum",attachText:"Odredite u koji kut karte \u017eelite umetnuti ovaj widget.",expandText:"Na po\u010detku pro\u0161irite widget",topLeft:"Gore lijevo",topRight:"Gore desno",bottomLeft:"Donje lijevo",bottomRight:"Donje desno",_localized:{}}});

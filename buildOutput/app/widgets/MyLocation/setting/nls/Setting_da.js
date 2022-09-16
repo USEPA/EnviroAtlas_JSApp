@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/MyLocation/setting/nls/strings":{timeout:"Timeout",highlightLocation:"Fremh\u00e6v sted",useTracking:"Se efter positions\u00e6ndringer",warning:"Forkert input",zoomScale:"Zoom-skala",_localized:{}}});

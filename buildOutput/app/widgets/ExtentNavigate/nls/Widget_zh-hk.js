@@ -1,2 +1,0 @@
-//>>built
-define({"widgets/ExtentNavigate/nls/strings":{_widgetLabel:"\u7bc4\u570d\u5c0e\u89bd",previousExtent:"\u4e0a\u4e00\u500b\u7bc4\u570d",nextExtent:"\u4e0b\u4e00\u500b\u7bc4\u570d",_localized:{}}});

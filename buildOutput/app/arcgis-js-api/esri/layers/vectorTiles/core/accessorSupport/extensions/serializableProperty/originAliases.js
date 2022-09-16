@@ -1,2 +1,0 @@
-//>>built
-define(["require","exports"],function(f,a){Object.defineProperty(a,"__esModule",{value:!0});a.process=function(b){if(b.json&&b.json.origins){var c=b.json.origins,a={"web-document":["web-scene","web-map"]},e;for(e in a)!function(d){if(c[d]){var b=c[d];a[d].forEach(function(a){c[a]=b});delete c[d]}}(e)}}});

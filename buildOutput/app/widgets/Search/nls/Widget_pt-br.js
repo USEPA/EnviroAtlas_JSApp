@@ -1,2 +1,0 @@
-//>>built
-define({"esri/layers/vectorTiles/nls/common":{_localized:{}},"widgets/Search/nls/strings":{_widgetLabel:"Pesquisar",searchResult:"Resultado de pesquisa",showAllResults:"Mostrar resultados da pesquisa para ",showAll:"Mostrar resultados da pesquisa",more:"mais",untitled:"Sem t\u00edtulo",_localized:{}}});
