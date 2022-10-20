@@ -244,7 +244,8 @@ define([
         }); 
         timeSlider.setLabels(labels);
         
-        dojo.byId("details").innerHTML = '2010'; //hardcoded start year date
+		if (document.getElementById("modelSelection").value == "Hist") { dojo.byId("details").innerHTML = '1950';} else {dojo.byId("details").innerHTML = '2010';}
+        // dojo.byId("details").innerHTML = '2010'; //hardcoded start year date
         
         timeSlider.on("time-extent-change", function(evt2) {
             var currYear = evt2.startTime.getUTCFullYear();
@@ -356,8 +357,9 @@ define([
                 return "";
             }            
         }); 
-        timeSlider.setLabels(labels);        
-        dojo.byId("details").innerHTML = '2010'; //hardcoded start year date
+        timeSlider.setLabels(labels); 
+		if (document.getElementById("modelSelection").value == "Hist") { dojo.byId("details").innerHTML = '1950';} else {dojo.byId("details").innerHTML = '2010';}
+        // dojo.byId("details").innerHTML = '2010'; //hardcoded start year date		
         
         timeSlider.on("time-extent-change", function(evt2) {
             var currYear = evt2.startTime.getUTCFullYear();
@@ -459,27 +461,27 @@ define([
 	var defineService = function () {
 	   //esri.show(loading);
 	   //if (window.timeSeriesDisclaim) {
-	       if (document.getElementById("seasonSelection").value != "" && document.getElementById("climateSelection").value != "" ) {
-	            if (document.getElementById("modelSelection").item.value == "Hist") {
-	                dojo.byId("subTitle").innerHTML = "Timeline: 1950 - 2005";
-	                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 1950 - 2005";
-	            }
-	            else {
-	                dojo.byId("subTitle").innerHTML = "Timeline: 2010 - 2099";
-	                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 2010 - 2099";
-	            }          
-	            var model = document.getElementById("modelSelection").value.replace(".", "" );
-	            var season = document.getElementById("seasonSelection").value;
-	            var climateVar = document.getElementById("climateSelection").value;
-	            userChosenTimeStep = 5;
-	            dojo.byId("frameOrSlide").innerHTML = 'slide';
-	            addSelectedImageServiceToMap(model + season + climateVar);
-	            console.log("model+ season + climateVar:" + model+ season + climateVar);
-	            //changeLegendImg();
-	        }
-	        else {
-	            alert("Choose options for Season, Metric!");
-	        }
+	   if (document.getElementById("seasonSelection").value != "" && document.getElementById("climateSelection").value != "" ) {
+			if (document.getElementById("modelSelection").value == "Hist") {
+				dojo.byId("subTitle").innerHTML = "Timeline: 1950 - 2005";
+				dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 1950 - 2005";
+			}
+			else {
+				dojo.byId("subTitle").innerHTML = "Timeline: 2010 - 2099";
+				dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 2010 - 2099";
+			}          
+			var model = document.getElementById("modelSelection").value.replace(".", "" );
+			var season = document.getElementById("seasonSelection").value;
+			var climateVar = document.getElementById("climateSelection").value;
+			userChosenTimeStep = 5;
+			dojo.byId("frameOrSlide").innerHTML = 'slide';
+			addSelectedImageServiceToMap(model + season + climateVar);
+			console.log("model+ season + climateVar:" + model+ season + climateVar);
+			//changeLegendImg();
+		}
+		else {
+			alert("Choose options for Season, Metric!");
+		}
        //}
        /*else {
 			var infobox = new Dialog({
