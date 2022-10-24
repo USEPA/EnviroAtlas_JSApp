@@ -216,8 +216,7 @@ define([
         
         var timeExtent = new TimeExtent();
         timeExtent.startTime = new Date("1/1/" +  (dojo.byId("frameYearInput").value - 1));
-
-        timeExtent.endTime = new Date("1/1/" +  (dojo.byId("frameYearInput").value + 1));
+		timeExtent.endTime = new Date("1/1/" +  (dojo.byId("frameYearInput").value + 1));
         userChosenTimeStep = 5;
 
         timeSlider.createTimeStopsByTimeInterval(timeExtent, 1, 'esriTimeUnitsYears');
@@ -376,8 +375,8 @@ define([
             var startFuture = 2006;
             var endFuture = 2099;
             if (document.getElementById("modelSelection").value == "Hist") {
-                dojo.byId("subTitle").innerHTML = "Timeline: 1950 - 2005";
-                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 1950 - 2005";
+                dojo.byId("subTitle").innerHTML = "Timeline: 1950 - 2000";  // 2005
+                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 1950 - 2000";  // 2005
                 errorMessageYearInput = "Please input a year of single frame (" + String(startHist) + "-" + String(endHist) + ")";
             }
             else {
@@ -463,8 +462,8 @@ define([
 	   //if (window.timeSeriesDisclaim) {
 	   if (document.getElementById("seasonSelection").value != "" && document.getElementById("climateSelection").value != "" ) {
 			if (document.getElementById("modelSelection").value == "Hist") {
-				dojo.byId("subTitle").innerHTML = "Timeline: 1950 - 2005";
-				dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 1950 - 2005";
+				dojo.byId("subTitle").innerHTML = "Timeline: 1950 - 2000";  //2005
+				dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 1950 - 2000";  //2005
 			}
 			else {
 				dojo.byId("subTitle").innerHTML = "Timeline: 2010 - 2099";
