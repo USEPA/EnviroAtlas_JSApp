@@ -19,7 +19,7 @@
 	}, {
 		"model":"Historic Data",
 		"title":"Historic Data",
-		"description": "These data are based on the historical experiment for each model. Data are provided for the years 1950 -2005."
+		"description": "These data are based on the historical experiment for each model. Data are provided for the years 1950-2005."
 	}],
 	"climate_variables":[{
 		"v_name":"Maximum Temperature",

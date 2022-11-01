@@ -8,14 +8,12 @@
 
 <ul>
 	<li><strong>County</strong> &ndash; select a county.</li>
-	<li><strong>State</strong> &ndash; select a state.</li>
 	<li><strong>Congressional District</strong> &ndash; select a Congressional District.</li>
 	<li><strong>HUC-8</strong> &ndash; select a HUC8 subwatershed. <em>Note: zoom in to view HUC boundaries.</em></li>
 	<li><strong>HUC-12</strong> &ndash; select a HUC12 subwatershed. <em>Note: zoom in to view HUC boundaries.</em></li>
 	<li><strong>Draw a point</strong> &ndash; click to create a point in the map and designate a buffer area around it.</li>
 	<li><strong>Draw a line</strong> &ndash; draw a line in the map and designate a buffer area around it.</li>
 	<li><strong>Draw an area</strong> &ndash; draw an area in the map. Optionally designate a buffer area around it.</li>
-	<li><strong>Use your own shapefile</strong> &ndash; upload your own shapefile.</li>
 </ul>	
 
 <p><strong>Select</strong>, <strong>Create</strong>, or <strong>Upload</strong> the focus location interactively in the map:</p>
@@ -35,21 +33,16 @@
 	<ul>
 		<li>To <strong>Draw an area</strong>, optionally set the <strong>buffer measurement units</strong> and <strong>buffer distance</strong> in the tool. Check the box to exclude inner features of the area, if desired. Click the mouse button and hold down to draw a freehand focus location area in the map. Let go of the mouse button to finish the drawing. The focus location area will appear, including the buffer if selected.</li>
 	</ul>
-	<li><strong>Upload</strong> a zipped shapefile to create a focus location area on the map:</li>
-	<ul>
-		<li>Click <strong>Choose File</strong> to navigate to a polygon-type shapefile stored on a local computer.</li>
-		<li>The uploaded geographic shape will appear in the map as the focus location.</li>
-	</ul>
 </ul>	
 
-<p>In the example below, the National Land Cover Dataset (NLCD) is selected as the <strong>national indicator</strong> from the dropdown. For this indicator, choices for <strong>NLCD Layer Year</strong> are presented in a separate dropdown. Year 2016 is selected. County is selected as the <strong>unit area</strong>, and County boundaries are displayed in the map.</p>
+<p>When selecting a national indicator, the choices are for the National Land Cover Dataset (NLCD) as "Land Cover" or as "Land Cover Change". For the "Land Cover" indicator, choices for <strong>NLCD Layer Years</strong> are presented in the boxes below this selection. The example below demonstrates when "Land Cover Change" is selected as the <strong>national indicator</strong> from the dropdown. In this example, 2001 is selected as the Time Point 1 and 2019 is selected as TimePoint 2 for displaying the results. HUC-8 is selected as the <strong>unit area</strong>, and HUC-8 boundaries are displayed in the map.</p>
 	<img style="width:530px; margin-right:5px" src='widgets/Demo/images/GriddedMapTool3.PNG'></p>
 
 
-<p>In the map, click a County to designate the <strong>focus location</strong> to analyze. The EnviroAtlas map zooms to the extent of the County, in this case Sweet Grass, Montana. The <strong>Calculate</strong> button becomes active.</p>
+<p>In the map, click a HUC-8 to designate the <strong>focus location</strong> to analyze. The EnviroAtlas map zooms to the extent of the area and highlights the boundary with a thicker black line. In this case the HUC-8 containing Salinas, California was selected. The <strong>Calculate</strong> button becomes active.</p>
 	<img style="width:530px; margin-right:5px" src='widgets/Demo/images/GriddedMapTool4.PNG'></p>
 
-<p>Click <strong>Calculate</strong>. The Gridded Map Tool extracts the statistics (Area and Percentage for each 2016 NLCD Land Cover Type) within Sweet Grass County. Statistics appear in a table in the Tool's <strong>Results</strong> tab. Scroll through or resize the Gridded Map Tool window to view values in the table.</p>
-	<img style="width:530px; margin-right:5px" src='widgets/Demo/images/GriddedMapTool5.PNG'></p>
+<p>Click <strong>Calculate</strong>. The Summarize My Area Tool extracts the appropriate statistics for the selected area (in this example, HUC-8 for Salinas, CA). If Land Cover is selected Area and Percentage for each NLCD Land Cover Type displays in the results. If Land Cover Change is selected, the change in area for each NLCD Land Cover Type is displayed. Statistics appear in a table in the Tool's <strong>Results</strong> tab. Scroll through or resize the Summarize My Area Tool window to view values in the table. Both result tables are shown below.</p>
+	<img style="width:530px; margin-right:5px" src='widgets/Demo/images/GriddedMapTool5.PNG'><img style="width:530px; margin-right:5px" src='widgets/Demo/images/GriddedMapTool6.PNG'></p>
 
 </div>
