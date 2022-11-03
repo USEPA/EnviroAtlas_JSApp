@@ -277,9 +277,6 @@ define([
         }
         
         //reset the time slider div after destroying the actual timeslider
-        
-                 
-
 
         var tsDiv = domConstruct.create("div", null, dojo.byId("timeSliderDiv"));
         
@@ -297,7 +294,9 @@ define([
         
         var timeExtent = new TimeExtent();
         timeSlider.setThumbCount(1);
+
         timeExtent = evt.layers[0].layer.timeInfo.timeExtent;
+        console.log("timeExtent",timeExtent);
 
         userChosenTimeStep = 5;
         var timeStepIntervals = [];
@@ -310,9 +309,9 @@ define([
         var dictSize = {};
         dictBBox['RCP26SpringPrecip'] = "-18252982.982271608%2C1177727.8283327678%2C-6972100.599835155%2C6793709.170499745";
         dictSize['RCP26SpringPrecip'] = "1153%2C574";
-        for(i = timeExtent.startTime.getUTCFullYear(); i <= timeExtent.endTime.getUTCFullYear(); i++ )  { 
+        for(i = timeExtent.startTime.getUTCFullYear(); i <= timeExtent.endTime.getUTCFullYear(); i++ )  {         
             if (i % userChosenTimeStep === 0 ) {
-                if (i < timeExtent.endTime.getUTCFullYear()) {
+                if (i <= timeExtent.endTime.getUTCFullYear()) {
                     timeStepIntervals.push(new Date("01/01/" + i));
                     var frameDate= new Date("01/01/" + i);
                     if( dictBBox[model + season + climateVar] !== undefined ) {
@@ -321,8 +320,7 @@ define([
                         imageCacheIndex = imageCacheIndex + 1;                        
                     } 
                 }
-            }  
-            else if (i == timeExtent.endTime.getUTCFullYear()){
+            }  else if (i == timeExtent.endTime.getUTCFullYear()){
                 timeStepIntervals.push(new Date("01/01/" + timeExtent.endTime.getUTCFullYear()));
                 var finalDate= new Date("01/01/" + timeExtent.endTime.getUTCFullYear());
                 if( dictBBox[model + season + climateVar] !== undefined ) {
@@ -331,7 +329,6 @@ define([
                 }
             }           
         }; 
-
         timeSlider.setTimeStops(timeStepIntervals);
 
         timeSlider.setThumbMovingRate(20000);
@@ -375,8 +372,8 @@ define([
             var startFuture = 2006;
             var endFuture = 2099;
             if (document.getElementById("modelSelection").value == "Hist") {
-                dojo.byId("subTitle").innerHTML = "Timeline: 1950 - 2000";  // 2005
-                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 1950 - 2000";  // 2005
+                dojo.byId("subTitle").innerHTML = "Timeline: 1950 - 2005";  // 2005
+                dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 1950 - 2005";  // 2005
                 errorMessageYearInput = "Please input a year of single frame (" + String(startHist) + "-" + String(endHist) + ")";
             }
             else {
@@ -386,6 +383,7 @@ define([
             }
             
             var yearInput = dijit.byId("frameYearInput").value;
+            console.log("yearInput",yearInput);
 
             if ((isNaN(yearInput))){
                 alert(errorMessageYearInput);
@@ -462,8 +460,8 @@ define([
 	   //if (window.timeSeriesDisclaim) {
 	   if (document.getElementById("seasonSelection").value != "" && document.getElementById("climateSelection").value != "" ) {
 			if (document.getElementById("modelSelection").value == "Hist") {
-				dojo.byId("subTitle").innerHTML = "Timeline: 1950 - 2000";  //2005
-				dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 1950 - 2000";  //2005
+				dojo.byId("subTitle").innerHTML = "Timeline: 1950 - 2005";  //2005
+				dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 1950 - 2005";  //2005
 			}
 			else {
 				dojo.byId("subTitle").innerHTML = "Timeline: 2010 - 2099";
