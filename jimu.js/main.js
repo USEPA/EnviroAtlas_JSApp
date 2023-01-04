@@ -174,6 +174,7 @@ define([
     window.imageLayerNumber = [];
     window.layerID_Portal_WebMap = [];
     window.demographicLayerSetting = {};
+      window.demographicLayerVisibleIndex = 3;  //0: Block Group; //1: tract; //2: County; //3: State
     window.onlineDataTobeAdded = [];
     window.onlineDataAlreadyAdded = [];
     window.onlineDataScopeDic = {};
@@ -265,6 +266,7 @@ define([
     window.topicDicESB["Land Cover: Near-Water"] = "LCNW";
     window.topicDicESB["Land Cover: Type"] = "LCT";
     window.topicDicESB["Landscape Pattern"] = "LP";
+	window.topicDicESB["Livestock and Poultry Production"] = "LS"; //This is newly added July 2022
     window.topicDicESB["Near-Road Environments"] = "NRE";    
     
     window.topicDicESB["Pollutant Reduction: Air"] = "PRA"; //This is newly added Mar 2017    
@@ -282,12 +284,12 @@ define([
     
     window.topicDicPSI = {};
     //window.topicDicPSI["EPA Regulated Facilities"] = "RF"; Title replaced with sites reporting to EPA
-    //window.topicDicPSI["EPA NATA"] = "NATA";
+    window.topicDicPSI["Harmful Algal Blooms"] = "HAB";
     window.topicDicPSI["Impaired Waters"] = "IW";
 	window.topicDicPSI["National Air Toxics Assessment"] = "NATA";
     window.topicDicPSI["Pollutants: Other"] = "PO";
     window.topicDicPSI["Pollutants: Nutrients"] = "PN"; 
-    window.topicDicPSI["Sites Reporting to EPA"] = "RF";
+    window.topicDicPSI["Sites Reporting to EPA"] = "RF"
     
     window.topicDicPBS = {};
     window.topicDicPBS["Commuting and Walkability"] = "CaW";

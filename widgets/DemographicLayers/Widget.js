@@ -912,6 +912,7 @@ _mapRender: function(renderobj) {
 	    }
     }
     alyrindex = _config.demogJSON[mapid].baselayers[activelayer].layeridx;
+    window.demographicLayerVisibleIndex = alyrindex;
     //end of getting renderer for all layers
     
 
