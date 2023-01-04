@@ -289,7 +289,7 @@ define([
 	window.topicDicPSI["National Air Toxics Assessment"] = "NATA";
     window.topicDicPSI["Pollutants: Other"] = "PO";
     window.topicDicPSI["Pollutants: Nutrients"] = "PN"; 
-    window.topicDicPSI["Sites Reporting to EPA"] = "RF"
+    window.topicDicPSI["Sites Reporting to EPA"] = "RF";
     
     window.topicDicPBS = {};
     window.topicDicPBS["Commuting and Walkability"] = "CaW";
