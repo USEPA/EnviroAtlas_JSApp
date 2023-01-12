@@ -157,6 +157,7 @@ define([
         this.shapeFileError = document.getElementById('gridded-map-shape-file-error');
         this.excludeInnerFeatureWrapper = document.getElementById('exlude-area-wrapper');
         this.excludeInnerFeatureCheckbox = document.getElementById('gridded-map-exlude-inner-feature');
+        this.visiblelayer = document.getElementById('visible-layer');
         this.layersUsedList = document.getElementById('layers-used');
         this.resultsContainer = document.getElementById('gridded-map-results');
       },
@@ -550,11 +551,11 @@ define([
               break;
             case 'huc-8':
               url = this.nls["huc-8Layer"];
-              outfields = ['HUC8', 'NAME'];
+              outfields = ['HUC8', 'HU_8_Name'];
               break;
             case 'huc-12':
               url = this.nls["huc-12Layer"];
-              outfields = ['HUC_12', 'HU_12_NAME'];
+              outfields = ['HUC_12', 'HU_12_Name'];
               break;
             default:
               break;
@@ -605,10 +606,10 @@ define([
                     this.selectionText.innerHTML = `${res.features[0].attributes.STATE_ABBR}: ${res.features[0].attributes.DISTRICTID}`
                     break;
                   case 'huc-8':
-                    this.selectionText.innerHTML = `${res.features[0].attributes.HUC8} (${res.features[0].attributes.NAME})`
+                    this.selectionText.innerHTML = `${res.features[0].attributes.HUC8} (${res.features[0].attributes.HU_8_Name})`
                     break;
                   case 'huc-12':
-                    this.selectionText.innerHTML = `${res.features[0].attributes.HUC_12} (${res.features[0].attributes.HU_12_NAME})`
+                    this.selectionText.innerHTML = `${res.features[0].attributes.HUC_12} (${res.features[0].attributes.HU_12_Name})`
                     break;
                   default:
                     break;
@@ -992,12 +993,12 @@ define([
           case 'huc-8':
             inputTableData.push({'attribute': 'Geometry Type', 'value': 'HUC-8'});
             inputTableData.push({'attribute': 'HUC-8 ID', 'value': results.HUC8});
-            inputTableData.push({'attribute': 'HUC-8 Name', 'value': results.NAME});
+            inputTableData.push({'attribute': 'HUC-8 Name', 'value': results.HU_8_Name});
             break;
           case 'huc-12':
             inputTableData.push({'attribute': 'Geometry Type', 'value': 'HUC-12'});
             inputTableData.push({'attribute': 'HUC-12 ID', 'value': results.HUC_12});
-            inputTableData.push({'attribute': 'HUC-12 Name', 'value': results.HU_12_NAME});
+            inputTableData.push({'attribute': 'HUC-12 Name', 'value': results.HU_12_Name});
             break;
           case 'file':
             inputTableData.push({'attribute': 'Layer Name', 'value': results._layer.name});
@@ -1285,6 +1286,11 @@ define([
       _initLayers: function(indicator) {
         const params = new ImageServiceParameters();
         params.noData = 0;
+
+        this.visiblelayer.style.display = 'none';
+        if (indicator === 'nlcd-change') {
+          this.visiblelayer.style.display = 'inline';
+        }
 
         this.indicator = indicator;
 
