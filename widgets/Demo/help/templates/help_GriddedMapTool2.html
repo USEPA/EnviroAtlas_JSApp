@@ -1,40 +1,48 @@
 <div class='helpContent2' style="overflow-y:scroll;" dojotype="dijit.layout.ContentPane">
 
-<p>In the Gridded Map Tool, select a unit area from the dropdown.</p>
+<p>In the Summarize My Area Tool, select a <strong>national indicator</strong> from the dropdown:</p>
 	<img style="width:430px; margin-right:5px" src='widgets/Demo/images/GriddedMapTool1.PNG'></p>
-<ul>
-	<li><strong>Draw an area</strong> &ndash; create a freehand drawing in the map.</li>
-	<li><strong>Congressional District</strong> &ndash; select a Congressional District.</li>
-	<li><strong>HUC-12</strong> &ndash; select a HUC12 subwatershed. <em>Note: zoom in to view HUC boundaries.</em></li>
-	<li><strong>County</strong> &ndash; select a county.</li>
-	<li><strong>Specific Point</strong> &ndash; create a buffer area around a selected point.</li>
-</ul>	
 
-<p>Select the national indicator to summarize. At this time, the 2012 National Land Cover Dataset (NLCD) is the only national indicator layer available.</p>
+<p>Select the <strong>unit area</strong> from the dropdown:</p>
 	<img style="width:430px; margin-right:5px" src='widgets/Demo/images/GriddedMapTool2.PNG'></p>
 
-<p><strong>Create</strong> or <strong>Select</strong> the unit area interactively in the map.</p>
+<ul>
+	<li><strong>County</strong> &ndash; select a county.</li>
+	<li><strong>Congressional District</strong> &ndash; select a Congressional District.</li>
+	<li><strong>HUC-8</strong> &ndash; select a HUC8 subwatershed. <em>Note: zoom in to view HUC boundaries.</em></li>
+	<li><strong>HUC-12</strong> &ndash; select a HUC12 subwatershed. <em>Note: zoom in to view HUC boundaries.</em></li>
+	<li><strong>Draw a point</strong> &ndash; click to create a point in the map and designate a buffer area around it.</li>
+	<li><strong>Draw a line</strong> &ndash; draw a line in the map and designate a buffer area around it.</li>
+	<li><strong>Draw an area</strong> &ndash; draw an area in the map. Optionally designate a buffer area around it.</li>
+</ul>	
+
+<p><strong>Select</strong>, <strong>Create</strong>, or <strong>Upload</strong> the focus location interactively in the map:</p>
 
 <ul>
-	<li><strong>Create</strong> an area of interest on the map using the <strong>Draw an area</strong> or <strong>Specific Point</strong> options:</li>
+	<li><strong>Select</strong> a focus location on the map using the <strong>County</strong>, <strong>State</strong>, <strong>Congressional District</strong>, <strong>HUC-8</strong>, or <strong>HUC-12</strong> options:</li>
 	<ul>
-		<li>To <strong>Draw an area</strong>, click the mouse button and hold down to draw the area of interest in the map. Let go of the mouse button to finish the drawing.</li>
-		<li>To use a <strong>Specific Point</strong>, enter a Buffer distance and units in the tool. Click on the desired point on the map. The analysis area is a circle, centered on the specific point, with a radius equal to the buffer distance.</li>
+		<li>Click the selected focus location from the layer in the map. Zooming in on the map may be necessary to find the appropriate location. Only one focus location may be selected.</li>
 	</ul>
-	<li><strong>Select</strong> an area of interest on the map using the <strong>Congressional District</strong>, <strong>HUC-12</strong>, or <strong>County</strong> options:</li>
+	<li><strong>Create</strong> a focus location area on the map using the <strong>Draw a point</strong>, <strong>Draw a line</strong>, or <strong>Draw an area</strong> options:</li>
 	<ul>
-		<li>Click the selected unit area from the layer in the map.</li>
+		<li>To <strong>Draw a point</strong>, first set the <strong>buffer measurement units (km or mi)</strong> and <strong>buffer distance</strong> in the tool. Then in the map, click the mouse button at the desired focus location. The focus location area will appear in the map as a circle, centered on the clicked point, with a radius equal to the buffer distance.</li>
+	</ul>
+	<ul>
+		<li>To <strong>Draw a line</strong>, first set the <strong>buffer measurement units</strong> and <strong>buffer distance</strong> in the tool. Then in the map, click the mouse button and hold down to draw a freehand line. Let go of the mouse button to finish the line. The focus location will appear as an area on the map following the linear path drawn, buffered by the buffer distance.</li>
+	</ul>
+	<ul>
+		<li>To <strong>Draw an area</strong>, optionally set the <strong>buffer measurement units</strong> and <strong>buffer distance</strong> in the tool. Check the box to exclude inner features of the area, if desired. Click the mouse button and hold down to draw a freehand focus location area in the map. Let go of the mouse button to finish the drawing. The focus location area will appear, including the buffer if selected.</li>
 	</ul>
 </ul>	
 
-<p>In the example below, a Congressional District is being selected.</p>
-	<img style="width:430px; margin-right:5px" src='widgets/Demo/images/GriddedMapTool3.PNG'></p>
+<p>When selecting a national indicator, the choices are for the National Land Cover Dataset (NLCD) as "Land Cover" or as "Land Cover Change". For the "Land Cover" indicator, choices for <strong>NLCD Layer Years</strong> are presented in the boxes below this selection. The example below demonstrates when "Land Cover Change" is selected as the <strong>national indicator</strong> from the dropdown. In this example, 2001 is selected as the Time Point 1 and 2019 is selected as TimePoint 2 for displaying the results. HUC-8 is selected as the <strong>unit area</strong>, and HUC-8 boundaries are displayed in the map.</p>
+	<img style="width:530px; margin-right:5px" src='widgets/Demo/images/GriddedMapTool3.PNG'></p>
 
 
-<p>The EnviroAtlas map shows the selected unit area with the national indicator clipped to it. To calculate national indicator statistics within the unit area, click Calculate.</p>
+<p>In the map, click a HUC-8 to designate the <strong>focus location</strong> to analyze. The EnviroAtlas map zooms to the extent of the area and highlights the boundary with a thicker black line. In this case the HUC-8 containing Salinas, California was selected. The <strong>Calculate</strong> button becomes active.</p>
 	<img style="width:530px; margin-right:5px" src='widgets/Demo/images/GriddedMapTool4.PNG'></p>
 
-<p>Review the statistics in the Gridded Map Tool's <strong>Results</strong> tab. Click <strong>View Full Legend</strong> to open the NLCD legend in a separate browser tab.</p>
-	<img style="width:430px; margin-right:5px" src='widgets/Demo/images/GriddedMapTool5.PNG'></p>
+<p>Click <strong>Calculate</strong>. The Summarize My Area Tool extracts the appropriate statistics for the selected area (in this example, HUC-8 for Salinas, CA). If Land Cover is selected Area and Percentage for each NLCD Land Cover Type displays in the results. If Land Cover Change is selected, the change in area for each NLCD Land Cover Type is displayed. Statistics appear in a table in the Tool's <strong>Results</strong> tab. Scroll through or resize the Summarize My Area Tool window to view values in the table. Both result tables are shown below.</p>
+	<img style="width:530px; margin-right:5px" src='widgets/Demo/images/GriddedMapTool5.PNG'><img style="width:530px; margin-right:5px" src='widgets/Demo/images/GriddedMapTool6.PNG'></p>
 
 </div>

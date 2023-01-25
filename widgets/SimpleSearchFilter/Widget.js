@@ -234,6 +234,9 @@ define([
 	        	if (window.hashPopup[eaID].geometrytype == "point") {
 	        		selectQuery.distance = 180;
 	        	}
+				if (window.hashPopup[eaID].geometrytype == "polyline") {
+	        		selectQuery.distance = 180;
+	        	}
 	        }
 	                   
 	        var queryTask = new QueryTask(window.hashURL[eaID]);
@@ -283,7 +286,8 @@ define([
 			                  new Color([215, 215, 215,255])
 			                );
 		               }
-					   /*if (resultFeatures[0].geometry.type == "polyline") {
+					   // uncommented polyline
+					   if (resultFeatures[0].geometry.type == "polyline") {
 							var symbol = new SimpleFillSymbol(
 			                  SimpleFillSymbol.STYLE_NULL, 
 			                  new SimpleLineSymbol(
@@ -293,7 +297,7 @@ define([
 			                  ),
 			                  new Color([215, 215, 215,255])
 			                );
-		               }	*/	       
+		               }	       
 					   if (resultFeatures[0].geometry.type == "point") {
 							var symbol = new SimpleMarkerSymbol(
 			                  SimpleMarkerSymbol.STYLE_NULL, 

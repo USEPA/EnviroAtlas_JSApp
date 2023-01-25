@@ -218,9 +218,9 @@
 			"displayOrder": 13
 		},
 		{
-			"widgetName": "LayerList",
-			"helpFile": "help_LayerList",
-			"node": "dijit__WidgetBase_20",
+			"widgetName": "GriddedMapTool",
+			"helpFile": "help_GriddedMapTool",
+			"node": "dijit__WidgetBase_15",
 			"content": [],
 			"orient": [
 				"below",
@@ -228,14 +228,29 @@
 				"above",
 				"above-alt"
 			],
-			"highlight": "dijit__WidgetBase_20",
+			"highlight": "dijit__WidgetBase_15",
+			"title": "Summarize My Area Tool",
+			"displayOrder": 13
+		},
+		{
+			"widgetName": "LayerList",
+			"helpFile": "help_LayerList",
+			"node": "dijit__WidgetBase_21",
+			"content": [],
+			"orient": [
+				"below",
+				"below-alt",
+				"above",
+				"above-alt"
+			],
+			"highlight": "dijit__WidgetBase_21",
 			"title": "Layer List Widget",
 			"displayOrder": 15
 		},
 		{
 			"widgetName": "DynamicSymbology",
 			"helpFile": "help_DynamicSymbology",
-			"node": "dijit__WidgetBase_20",
+			"node": "dijit__WidgetBase_21",
 			"content": [],
 			"orient": [
 				"below",
@@ -243,7 +258,7 @@
 				"above",
 				"above-alt"
 			],
-			"highlight": "dijit__WidgetBase_20",
+			"highlight": "dijit__WidgetBase_21",
 			"title": "Dynamic Symbology Tool",
 			"displayOrder": 14
 		},
@@ -308,6 +323,7 @@
 		{
 			"widgetName": "SaveSession",
 			"helpFile": "help_SaveSession",
+
 			"node": "saveIcon",
 			"content": [],
 			"orient": [
@@ -316,9 +332,10 @@
 				"above",
 				"above-alt"
 			],
+
 			"highlight": "themes_TabTheme_widgets_Header_Widget_18",
 			"title": "Save Session Tool",
-			"displayOrder": 20
+			"displayOrder": 21
 		},
 		{
 			"node": "mapTourIcon",
