@@ -1,0 +1,324 @@
+.widget-gridded-map {
+  position:relative;
+  width:100%;
+  height:100%;
+  min-width:265px;
+  min-height:279px;
+}
+
+.jimu-widget-frame>.widget-gridded-map>.jimu-tab>.control{
+  margin:-14px -14px 0 -14.7px;
+}
+
+.widget-gridded-mapInfoDiv {
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -moz-user-select:-moz-none;
+  -ms-user-select: none;
+  user-select: none;
+  color: blue;
+  float:left;
+}
+
+.widget-gridded-map>.jimu-tab>.jimu-viewstack{
+  position: absolute !important;
+  top:45px !important;
+  left:0 !important;
+  right:0 !important;
+  bottom:0 !important;
+  height: auto;
+  margin-bottom:-14px;
+}
+
+.widget-gridded-mapinfo-icon{
+  cursor: pointer;
+  display: inline-block;
+  font-size: 18px;
+  line-height: 20px;
+  background: none repeat scroll 0% 0% #518DCA;
+  color: #FFF;
+  border-radius:99px;
+  -moz-border-radius:99px;
+  -webkit-border-radius:99px;
+  font-weight:bold;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -moz-user-select:-moz-none;
+  -ms-user-select: none;
+  user-select: none;
+  float: left;
+  width:20px;
+  height:20px;
+  padding-left:7px;
+}
+
+.widget-gridded-map .profile-tab-node{
+  position:absolute !important;
+  width:100% !important;
+  height:auto !important;
+  top:0 !important;
+  bottom:0 !important;
+  overflow: hidden;
+  border: 1px solid lightgray;
+}
+
+.widget-gridded-map .profile-tab-node .input-step {
+  margin: 15px 0 0 0;
+  border: 1px solid grey;
+  border-radius: 5px;
+  background-color: #c8d2da;
+  padding: 10px 5px 10px 5px;
+  ##height: 80px;
+}
+
+#gridded-map-unit-details {
+  justify-content: space-between;
+  align-items: center;
+}
+
+#gridded-map-unit-input, #gridded-map-indicator-input {
+  margin: 10px 0;
+  width: 275px;
+  height: 20px;
+  border: 1px solid #505050;
+  background: #ffffff;
+}
+
+#gridded-map-date-1, #gridded-map-date-2, #gridded-map-nlcd {
+  margin: 5px 20px 0 5px;
+  width: 90px;
+  border: 1px solid #505050;
+  background: #ffffff;
+}
+
+#gridded-map-unit-input:hover, #gridded-map-indicator-input:hover, #gridded-map-date-1:hover, #gridded-map-date-2:hover, #gridded-map-nlcd:hover {
+  cursor: pointer;
+}
+
+#gridded-map-shape-file-wrapper {
+  margin-top: 10px;
+}
+
+#gridded-map-shape-file-error {
+  color: #dc1c1c;
+}
+
+#gridded-map-shape-file-error.black-text {
+  color: #3d3d3d;
+}
+
+#gridded-map-clear-button, #gridded-map-clear-unit-button, #gridded-map-clear-indicator-button {
+  background: none;
+  border: none;
+  color: #5b7da9;
+  text-decoration: underline;
+}
+
+#gridded-map-clear-unit-button:hover, #gridded-map-clear-indicator-button:hover {
+  cursor: pointer;
+}
+
+#gridded-map-error {
+  text-align: center;
+    color: #dc1c1c;
+}
+
+#gridded-map-clear-unit-button:active, #gridded-map-clear-indicator-button:active {
+  color: #485566;
+}
+
+.point-controls, .point-controls > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.point-controls label, .point-buffer label, #exlude-area-checkbox label {
+  margin: 0 5px;
+}
+
+.point-buffer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#gridded-map-buffer {
+  width: 100px;
+  height: 20px;
+}
+
+#gridded-map-selection-name {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 15px;
+  height: 22px;
+}
+
+.calculate-button-wrapper {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#gridded-map-calculate-button {
+  height: 35px;
+  width: 275px;
+  border: none;
+  background-color: #485566;
+  border-radius: 5px;
+  font-size: 12px;
+  color: #ffffff;
+  font-weight: 100;
+}
+
+#gridded-map-feet:hover, #gridded-map-mile:hover, #gridded-map-kilometer:hover {
+  cursor: pointer;
+}
+
+#gridded-map-calculate-button:disabled {
+  background-color: #D9DDE0;
+  cursor: not-allowed;
+}
+
+#gridded-map-calculate-button:active {
+  background-color: #5b7da9;
+}
+
+#gridded-map-calculate-button:hover:not(:disabled) {
+  cursor: pointer;
+}
+
+.table-wrapper {
+  max-width: 515px;
+  margin: 0 auto;
+}
+
+.table-wrapper table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+.table-wrapper table th {
+  background-color: lavendar; ###FEF2CC;
+  font-weight: 700;
+}
+
+.table-wrapper table th, .table-wrapper table td {
+  border-bottom: 1px solid darkgrey;
+  ##height: 35px;
+  margin: 0;
+  padding: 3px;
+}
+
+/*.index-results {
+  height: 60px;
+}
+
+/* .output-table-cell.attr > p {
+  margin-bottom: 5px;
+}
+
+.output-table-cell.val > p {
+  margin-bottom: 10px;
+} */
+
+.output-table-cell.val > a {
+  color: #13679F;
+}
+
+.output-table-cell.val > a:visited {
+  color: #6620ad;
+}
+
+.output-table-cell.attr > .legend {
+  height: 20px;
+  width: 190px;
+  border: 1px solid #979797;
+}
+
+.nlcd-index {
+  display: flex;
+  align-items: center;
+}
+
+.divergingbarchart_class {
+  background-color: red;
+}
+
+/*.nlcd-index > .nlcd-index-legend {
+  margin-right: 5px;
+  height: 20px;
+  width: 20px;
+}*/
+
+#nlcd-index-legend {
+  margin-right: 5px;
+  height: 15px;
+  width: 15px;
+}
+
+.table-wrapper table th .nlcd_title {
+  width: 40%;
+}
+
+.nlcd-result {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nlcd-result > .nlcd-result-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 140px;
+}
+
+.nlcd-result > p {
+  margin-right: 5px;
+}
+
+.nlcd-result > a {
+  width: 60px;
+}
+
+.table-wrapper table tr:nth-of-type(1n) {
+  background-color: #F9F9F9;
+}
+
+.table-wrapper table tr:nth-of-type(2n) {
+  background-color: #F0F0F0;
+}
+
+.esat-tab-disabled {
+  cursor: not-allowed !important;
+}
+
+.overflow {
+  overflow: hidden !important;
+  overflow-y: auto !important;
+}
+
+.analysis-title {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.layers-used-wrapper {
+  margin-top: 20px;
+}
+
+.gridded-results-header {
+  display: flex;
+  justify-content: space-between;
+}
