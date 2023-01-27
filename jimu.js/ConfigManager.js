@@ -57,13 +57,17 @@ define([
                 if (this.urlParams.featuredcollection != undefined) {
                     window.featuredCollectionFromURL = this.urlParams.featuredcollection;
                 }
+                // Climate URL Params
+                if (this.urlParams.climateTimeSeries != undefined) {
+                    window.climateTimeSeriesFromURL = this.urlParams.climateTimeSeries;
+                }
+                // Demographic URL Params
                 if (this.urlParams.demogSource != undefined) {
                     window.demogSourceFromURL = this.urlParams.demogSource;
                 }
                 if (this.urlParams.demogCategory != undefined) {
                     window.demogCategoryFromURL = this.urlParams.demogCategory;
                 }
-                
                 if (this.urlParams.demogVariable != undefined) {
                     window.demogVariableFromURL = this.urlParams.demogVariable;
                 }

@@ -454,7 +454,7 @@ define([
 
             // fire item selected event
             this.emit('item-selected', itemDiv.item);
-            //console.log("ItemTable :: _onItemsTableClicked :: item selected", itemDiv.item);        
+            //console.log("ItemTable :: _onItemsTableClicked :: item selected", itemDiv.item);
             
         },
 

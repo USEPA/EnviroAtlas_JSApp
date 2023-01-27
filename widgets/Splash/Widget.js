@@ -116,55 +116,67 @@ define(['dojo/_base/declare',
         },
 
       onOpen: function() {
-        if( (window.extentFromURL != null) || (window.eaLayerFromURL  != null) || (window.eaCommunityFromURL != null)) {
-            this.close();
+        console.log('Splash is open.')
+        if ((window.extentFromURL != null) || (window.eaLayerFromURL  != null) || (window.eaCommunityFromURL != null)) {
+          this.close();
+          console.log('Splash is closed.')
         }
-                // the url includes the parameter for featured collection
-                if ((window.featuredCollectionFromURL != null)) {
-                    this.close();
-                    this.openWidgetById('widgets_AddWebMapData');
 
-                    
-                    var wm = WidgetManager.getInstance();
-                    widget = wm.getWidgetById('themes_TabTheme_widgets_SidebarController_Widget_20');
-                    for (var i = 0; i < widget.tabs.length; i++) {
-                        var tab = widget.tabs[i];
-                        if (tab.config.id == "widgets_AddWebMapData") {
-                            widget.selectTab(i);
-                        }
-                    }
-                }
-                
-                //end of featured collection part
+        // the url includes the parameter for climate Time Series         
+        if ((window.climateTimeSeriesFromURL != null)) {
+          this.close();
+          console.log('Splash is closed 2.')
+          document.getElementById("widgets_TimeSeries_Widget").click();
+        }
 
-              // the url includes the parameter for Demographic
-          if ((window.demogSourceFromURL != null)) {
-                  this.close();
-                  document.getElementById("widgets_DemographicLayers").click();
-              }
+        // the url includes the parameter for featured collection
+        if ((window.featuredCollectionFromURL != null)) {
+          this.close();
+          console.log('Splash is closed 3.')
+          this.openWidgetById('widgets_AddWebMapData');
+          
+          var wm = WidgetManager.getInstance();
+          widget = wm.getWidgetById('themes_TabTheme_widgets_SidebarController_Widget_20');
+          for (var i = 0; i < widget.tabs.length; i++) {
+            var tab = widget.tabs[i];
+            if (tab.config.id == "widgets_AddWebMapData") {
+              widget.selectTab(i);
+            }
+          }
+        }
+        //end of featured collection part
 
-                //end of Demographic part
-
-                if (!utils.isInConfigOrPreviewWindow()) {
-                    var isFirstKey = this._getCookieKey();
-                    var isfirst = cookie(isFirstKey);
-                    if (esriLang.isDefined(isfirst) && isfirst.toString() === 'false') {
-                        this.close();
-                    }
-                }
-                // if (true === this._requireConfirm) {
-                //   //checkbox
-                //   this.confirmCheck.focus();
-                // } else if ((false === this._requireConfirm && false === this._showOption) ||
-                //   (false === this._requireConfirm && true === this._showOption)) {
-                //   this.okNode.focus();
-                // }
-                if (!this._requireConfirm && !this._showOption) {
-                    this.okNode.focus();
-                } else {
-                    this.confirmCheck.focus();
-                }
-
+        // the url includes the parameter for Demographic
+        if ((window.demogSourceFromURL != null)) {
+          this.close();
+          console.log('Splash is closed 4.')
+          document.getElementById("widgets_DemographicLayers").click();
+        }
+        //end of Demographic part
+        
+        if (!utils.isInConfigOrPreviewWindow()) {
+          var isFirstKey = this._getCookieKey();
+          var isfirst = cookie(isFirstKey);
+          if (esriLang.isDefined(isfirst) && isfirst.toString() === 'false') {
+            this.close();
+            console.log('Splash is closed 5.')
+          }
+        }
+        
+        // if (true === this._requireConfirm) {
+        //   //checkbox
+        //   this.confirmCheck.focus();
+        // } else if ((false === this._requireConfirm && false === this._showOption) ||
+        //   (false === this._requireConfirm && true === this._showOption)) {
+        //   this.okNode.focus();
+        // }
+        
+        if (!this._requireConfirm && !this._showOption) {
+          this.okNode.focus();
+        } else {
+          this.confirmCheck.focus();
+        }
+        
         this._eventShow();
       },
 

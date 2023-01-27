@@ -1235,6 +1235,7 @@ destroy: function () {
 
  onOpen: function(){
      console.log('onOpen');
+     // If there's a demographic url param in the app url (https://enviroatlas.epa.gov/enviroatlas/interactivemap/?demogSource=census2018acs&demogCategory=Geography&demogVariable=AREALAND)
      if (window.demogSourceFromURL != null) {
          setTimeout(function () {
              for (var key in _config.demogJSON) {

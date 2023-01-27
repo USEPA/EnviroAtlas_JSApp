@@ -364,6 +364,8 @@ define([
     window.eaLayerFromURL = null;
       window.eaCommunityFromURL = null;
       window.featuredCollectionFromURL = null;
+      // Climate URL Param
+      window.climateTimeSeriesFromURL = null;
       window.demogSourceFromURL = null;
       window.demogCategoryFromURL = null;
       window.demogVariableFromURL = null;
@@ -386,7 +388,7 @@ define([
     window.hashEAIDToNavHucStats = {};
       window.hashEAIDToNavHucStatsUnit = {};
       window.itemsHashForFeatureCollection = {},
-    
+
     window.hashGeometryTypeAddedFeatLyr = {};
     window.hashInfoTemplate = {};
 	window.hashRenderer = {};

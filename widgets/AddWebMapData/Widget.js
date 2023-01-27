@@ -459,12 +459,15 @@ define(['dojo/_base/declare',
                 //console.log('ChangeWebMap :: tabChanged to ', title);
 
             })));
+            // If there's a feature collection url param in the app url (https://awseastaging.epa.gov/Enviroatlas_WAB/?featuredcollection=641cc21b65e842e5b6d232092948a74c)
             if (window.featuredCollectionFromURL != null) {
                 setTimeout(lang.hitch(this, function () {
                     if (window.featuredCollectionFromURL != null) {
+                        // Collect all the item-info elements
                         var FeatureCollectionItems = document.getElementsByClassName("item-info");
+                        // When ii is equal to the length of the string, the condition becomes false and the loop terminates
                         for (ii = 0; ii < FeatureCollectionItems.length; ii++) {
- 
+                            // Click to open the pane for the item that matches the feature collection url param
                             if (FeatureCollectionItems[ii].childNodes[0].innerText.trim() == window.itemsHashForFeatureCollection[window.featuredCollectionFromURL].item.title.trim()) {
                                 FeatureCollectionItems[ii].click();
                             }
@@ -651,7 +654,6 @@ define(['dojo/_base/declare',
             item.getItemData().then(function(response) {
                 //process operational layers in reverse order to match AGOL
                 layersReversed = response.operationalLayers.reverse();
-                
                                 
                 //first push Feature layers so that it will be added at last
                 layersReversed.forEach(function(l) {
@@ -693,7 +695,6 @@ define(['dojo/_base/declare',
                     layersReversed = response.operationalLayers.reverse();
                     layersReversed.forEach(function(l) {
                         if (l.url) {
-
                         } else {
                             if (l.featureCollection) {
                                 console.log("Web Map Layers:: FeatureCollection");

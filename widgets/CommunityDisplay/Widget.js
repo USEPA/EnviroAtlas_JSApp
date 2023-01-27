@@ -88,7 +88,8 @@ define([
             }	
         });
       },
-      
+     
+    /*  
     onOpen: function(){
       console.log('onOpen');
     },
@@ -103,6 +104,8 @@ define([
     onMaximize: function(){
       console.log('onMaximize');
     }
+    */
+   
     });
     return clazz;
   });
