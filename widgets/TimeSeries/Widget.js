@@ -473,7 +473,7 @@ define([
 			userChosenTimeStep = 5;
 			dojo.byId("frameOrSlide").innerHTML = 'slide';
 			addSelectedImageServiceToMap(model + season + climateVar);
-			// console.log("model+ season + climateVar:" + model+ season + climateVar);
+			//      .log("model+ season + climateVar:" + model+ season + climateVar);
 			//changeLegendImg();
 		}
 		else {
@@ -590,11 +590,11 @@ define([
 
     var clearMetadataTab = function() {
         dojo.byId("layerMetadata").innerHTML = "";
-    }
+    };
         
     var setMetadataTab = function(imgServiceDesc) {
         dojo.byId("layerMetadata").innerHTML = imgServiceDesc;
-    }
+    };
 
 	var executeIdentifyTask = function (event) {
         //console.log("Executing Ident Task");
@@ -644,18 +644,31 @@ define([
             });
     };
 
-    // Add data if the url != null, Reject if the url is null
-    // Promise has 3 states:
-    // - Pending    | hasn't settled to a value yet
-    // - Fulfilled  
-    // - Rejection
-    let addDataFromURL = new Promise((resolve, reject) => {
-        if (window.climateTimeSeriesFromURL != null) {
-            resolve()
+    var dataFromURL = () => {
+        // Split the url parameter by underscores into 3 parts
+        var timeseriesparam = window.climateTimeSeriesFromURL.split('_');
+        selfTimeSeries.climateSelectionNode.value = timeseriesparam[2];
+        selfTimeSeries.seasonSelectionNode.value = timeseriesparam[1];
+        // Add a '.' between the digits in timeseriesparam[0], which is the modelSelectionNode value
+        if (stringHasNumber(timeseriesparam[0])) {
+            var modelSelectionStr = timeseriesparam[0];
+            var modelSelectionStrResult = modelSelectionStr.slice(0, -1) + "." + modelSelectionStr.slice(-1);
+            selfTimeSeries.modelSelectionNode.value = modelSelectionStrResult;
         } else {
-            reject("No climate data to add.")
+            selfTimeSeries.modelSelectionNode.value = timeseriesparam[0];
+        };
+        // Click to add the data that matches the climateTimeSeries url param
+        document.getElementById("loadServiceBtn").click();
+    }
+
+    // Add data if the url != null, Reject if the url is null
+    var addDataFromURL = new Promise((resolve, reject) => {
+        if (window.climateTimeSeriesFromURL != null) {
+            resolve(console.log('Climate data to add.'))
+        } else {
+            reject(console.log('No climate data to add.'))
         }
-    })
+    });
 
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
 
@@ -786,24 +799,11 @@ define([
 
 	        onOpen: () => {
                 // console.log('onOpen');
-                // If there's a climateTimeSeries url param in the app url (https://enviroatlas.epa.gov/enviroatlas/interactivemap/?climateTimeSeries=RCP45_Fall_PET)
-                if (window.climateTimeSeriesFromURL != null) {
-                    // Split the url parameter by underscores into 3 parts
-                    var timeseriesparam = window.climateTimeSeriesFromURL.split('_');
-                    selfTimeSeries.climateSelectionNode.value = timeseriesparam[2];
-                    selfTimeSeries.seasonSelectionNode.value = timeseriesparam[1];
-                    // Add a '.' between the digits in timeseriesparam[0], which is the modelSelectionNode value
-                    if (stringHasNumber(timeseriesparam[0])) {
-                        var modelSelectionStr = timeseriesparam[0];
-                        var modelSelectionStrResult = modelSelectionStr.slice(0, -1) + "." + modelSelectionStr.slice(-1);
-                        selfTimeSeries.modelSelectionNode.value = modelSelectionStrResult;
-                    } else {
-                        selfTimeSeries.modelSelectionNode.value = timeseriesparam[0];
-                    };
-                    // Click to add the data that matches the climateTimeSeries url param
-                    document.getElementById("loadServiceBtn").click();
-                } else {
-                };
+                // If there's a climateTimeSeries url param in the app url, then add climate data from the url params
+                addDataFromURL.then(dataFromURL)
+                .catch(e => {
+                    console.log(e);
+                });
 	        },            
         });
     return clazz;

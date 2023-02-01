@@ -36,6 +36,7 @@ define(['dojo/_base/declare',
   ],
   function(declare, lang, html, on, keys, query, cookie, _WidgetsInTemplateMixin, BaseWidget, topic,
            CheckBox, utils, esriLang, LoadingShelter, Deferred, EditorXssFilter, TabContainer, WidgetManager, PanelManager) {
+
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
       baseClass: 'jimu-widget-splash',
       _hasContent: null,
@@ -123,11 +124,27 @@ define(['dojo/_base/declare',
         }
 
         // the url includes the parameter for climate Time Series         
-        if ((window.climateTimeSeriesFromURL != null)) {
+        var skipSplashOpenTimeSeries = () => {
           this.close();
-          console.log('Splash is closed 2.')
-          document.getElementById("widgets_TimeSeries_Widget").click();
+          console.log('Splash is closed.');
+          setTimeout(function(){
+            document.getElementById("widgets_TimeSeries_Widget").click();
+          }, 1000);
         }
+    
+        // Add data if the url != null, Reject if the url is null
+        var dataFromURLParam = new Promise((resolve, reject) => {
+          if (window.climateTimeSeriesFromURL != null) {
+              resolve('Skip splash')
+          } else {
+              reject(console.log('Do not skip splash'))
+          }
+        });
+
+        dataFromURLParam.then(skipSplashOpenTimeSeries)
+        .catch(e => {
+            console.log(e);
+        });
 
         // the url includes the parameter for featured collection
         if ((window.featuredCollectionFromURL != null)) {
@@ -159,7 +176,6 @@ define(['dojo/_base/declare',
           var isfirst = cookie(isFirstKey);
           if (esriLang.isDefined(isfirst) && isfirst.toString() === 'false') {
             this.close();
-            console.log('Splash is closed 5.')
           }
         }
         
@@ -545,6 +561,7 @@ define(['dojo/_base/declare',
             }
         }
       },   
+
       close: function() {
         this._isClosed = true;
         this._eventHide();
