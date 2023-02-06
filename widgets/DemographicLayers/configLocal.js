@@ -3,14 +3,14 @@ define(
     function() {
      var _config = {"demogJSON": {
        
-        "ejdemog": { "title": "2014-2018 ACS", "tiptext": "2014-2018 ACS", "dynamic": false, "type": "agsdemog", "layerurl": "https://ejscreen.epa.gov/ArcGIS/rest/services/", "service": "ejscreen/census2018acs", "lookupindex": 4,
-            "description": "2014-2018 ACS demographics are a set of variables derived based on a subset of 2014-2018 American Community Survey data.",
+        "ejdemog": { "title": "2016-2020 ACS", "tiptext": "2016-2020 ACS", "dynamic": false, "type": "agsdemog", "layerurl": "https://ejscreen.epa.gov/ArcGIS/rest/services/", "service": "ejscreen/census2020acs", "lookupindex": 4,
+            "description": "2016-2020 ACS demographics are a set of variables derived based on a subset of 2016-2020 American Community Survey data.",
             "process": false,"transparency": "0.5", "identify": "yes", "filter": "yes","defaultCategory": "Population","defaultfield":"POP_DEN",
             "baselayers": {
-                "bg": { "minlevel": 10, "maxlevel": 20,"renderobj":{}, "layeridx": 0, "level": "2014-2018 ACS (Blockgroup)","headerfields": { "STCNTRBG": "Blockgroup ID", "STUSAB": "State", "TOTALPOP": "Total Population"} }
-                , "tr": { "minlevel": 8, "maxlevel": 10,"renderobj":{}, "layeridx": 1, "level": "2014-2018 ACS (Tract)", "headerfields": { "STCNTR": "Tract ID", "STUSAB": "State", "TOTALPOP": "Total Population"} }
-                , "cnty": { "minlevel": 4, "maxlevel": 8,"renderobj":{}, "layeridx": 2, "level": "2014-2018 ACS (County)", "headerfields": { "CNTYNAME":"County Name","STUSAB":"State", "STCN": "County FIPS", "TOTALPOP": "Total Population"} }
-                , "st": { "minlevel": 0, "maxlevel": 4,"renderobj":{}, "layeridx": 3, "level": "2014-2018 ACS (State)", "headerfields": { "STATE_NAME": "State", "TOTALPOP": "Total Population"} }
+                "bg": { "minlevel": 10, "maxlevel": 20,"renderobj":{}, "layeridx": 0, "level": "2016-2020 ACS (Blockgroup)","headerfields": { "STCNTRBG": "Blockgroup ID", "STUSAB": "State", "TOTALPOP": "Total Population"} }
+                , "tr": { "minlevel": 8, "maxlevel": 10,"renderobj":{}, "layeridx": 1, "level": "2016-2020 ACS (Tract)", "headerfields": { "STCNTR": "Tract ID", "STUSAB": "State", "TOTALPOP": "Total Population"} }
+                , "cnty": { "minlevel": 4, "maxlevel": 8,"renderobj":{}, "layeridx": 2, "level": "2016-2020 ACS (County)", "headerfields": { "CNTYNAME":"County Name","STUSAB":"State", "STCN": "County FIPS", "TOTALPOP": "Total Population"} }
+                , "st": { "minlevel": 0, "maxlevel": 4,"renderobj":{}, "layeridx": 3, "level": "2016-2020 ACS (State)", "headerfields": { "STATE_NAME": "State", "TOTALPOP": "Total Population"} }
             },
             "dynamiclayers": {}
         }

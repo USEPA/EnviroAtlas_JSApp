@@ -477,7 +477,6 @@ define([
 			//changeLegendImg();
 		}
 		else {
-			alert("Choose options for Season, Metric!");
 		}
        //}
        /*else {

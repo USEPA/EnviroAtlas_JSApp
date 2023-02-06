@@ -103,12 +103,13 @@ define([
         html.addClass(this.layerFilter.searchButton, 'firstFocusNode');
       },
 
-	  _onOpenLegendBtnClick: function() {
+	    _onOpenLegendBtnClick: function() {
         var widgetName = 'Legend';
         var widgets = this.appConfig.getConfigElementsByName(widgetName);
         var pm = PanelManager.getInstance();
         pm.showPanel(widgets[0]);     
       },
+      
       destroy: function() {
         this._clearLayers();
         this.inherited(arguments);
@@ -161,7 +162,7 @@ define([
 
       showLayers: function() {
         // summary:
-        //    create a LayerListView module used to draw layers list in browser.
+        // create a LayerListView module used to draw layers list in browser.
         this.layerListView = new LayerListView({
           operLayerInfos: this.operLayerInfos,
           layerListWidget: this,
@@ -176,8 +177,8 @@ define([
 
       _clearLayers: function() {
         // summary:
-        //   clear layer list
-        //domConstruct.empty(this.layerListTable);
+        // clear layer list
+        // domConstruct.empty(this.layerListTable);
         if (this.layerListView && this.layerListView.destroyRecursive) {
           this.layerListView.destroyRecursive();
         }
