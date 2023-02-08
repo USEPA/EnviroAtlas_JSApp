@@ -459,7 +459,7 @@ define(['dojo/_base/declare',
                 //console.log('ChangeWebMap :: tabChanged to ', title);
 
             })));
-            // If there's a feature collection url param in the app url (https://awseastaging.epa.gov/Enviroatlas_WAB/?featuredcollection=641cc21b65e842e5b6d232092948a74c)
+            // If there's a feature collection url param in the app url (https://enviroatlas.epa.gov/enviroatlas/interactivemap/?featuredcollection=641cc21b65e842e5b6d232092948a74c)
             if (window.featuredCollectionFromURL != null) {
                 setTimeout(lang.hitch(this, function () {
                     if (window.featuredCollectionFromURL != null) {
