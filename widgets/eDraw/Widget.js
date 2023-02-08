@@ -1052,6 +1052,14 @@ function(
                     return false;
                 }
 
+                // if need reprojection and projection module not yet loaded, wait
+                if(!projection.isLoaded() && json.features[0]["geometry"]["spatialReference"] && json.features[0]["geometry"]["spatialReference"]["wkid"] != this.map.spatialReference.wkid){
+                  projection.load().then(lang.hitch(this, function(){
+                    this.importJsonContent(json, nameField, descriptionField);
+                  }));
+                  return;
+                }
+
                 if (!nameField) {
                     var g = json.features[0];
                     var fields_possible = ["name", "title", "label"];
@@ -1137,8 +1145,19 @@ function(
 
                 //Add graphics
                 for (var i = 0, nb = graphics.length; i < nb; i++) {
-                    if (graphics[i])
-                        this.drawBox.drawLayer.add(graphics[i]);
+                    if (graphics[i]){
+
+                      // Check geometry projection and reproject if necessary
+                      var geom = graphics[i].geometry;
+                      if(geom.spatialReference.wkid != this.map.spatialReference.wkid){
+                        graphics[i].setGeometry(projection.project(geom, this.map.spatialReference));
+                      }
+
+                      // Add this graphic
+                      this.drawBox.drawLayer.add(graphics[i]);
+
+                    }
+
                 }
 
                 //Show list
@@ -1166,6 +1185,26 @@ function(
             if (!drawing_json) {
                 this.showMessage(this.nls.importWarningNoExport0Draw, 'warning');
                 return false;
+            }
+
+            // Complete json -> must be a valid ESRI json
+            drawing_json["fields"] = [
+              {
+                "name" : "objectid",
+                "alias" : "objectid",
+                "type" : "esriFieldTypeOID"
+              }, {
+                "name" : "name",
+                "alias" : "name",
+                "type" : "esriFieldTypeString"
+              }, {
+                "name" : "description",
+                "alias" : "description",
+                "type" : "esriFieldTypeString"
+              }
+            ];
+            for(var i=0, nb=drawing_json["features"].length; i<nb ; i++){
+              drawing_json["features"][i]["attributes"]["objectid"] = i + 1;
             }
 
             //We could use FeatureSet (which is required) but this workaround keeps symbols !
@@ -1493,11 +1532,11 @@ function(
             };
 
             if (isPolygon) {
-                result.area = (wkid == 4326 || wkid == 3857) ? geometryEngine.geodesicArea(geometry, areaUnit) : geometryEngine.planarArea(geometry, areaUnit);
+                result.area = (wkid == 4326 || wkid == 3857 || wkid == 102100) ? geometryEngine.geodesicArea(geometry, areaUnit) : geometryEngine.planarArea(geometry, areaUnit);
                 var polyline = this._getPolylineOfPolygon(geometry);
-                result.length = (wkid == 4326 || wkid == 3857) ? geometryEngine.geodesicLength(polyline, lengthUnit) : geometryEngine.planarLength(polyline, lengthUnit);
+                result.length = (wkid == 4326 || wkid == 3857 || wkid == 102100) ? geometryEngine.geodesicLength(polyline, lengthUnit) : geometryEngine.planarLength(polyline, lengthUnit);
             } else {
-                result.length = (wkid == 4326 || wkid == 3857) ? geometryEngine.geodesicLength(geometry, lengthUnit) : geometryEngine.planarLength(geometry, lengthUnit);
+                result.length = (wkid == 4326 || wkid == 3857 || wkid == 102100) ? geometryEngine.geodesicLength(geometry, lengthUnit) : geometryEngine.planarLength(geometry, lengthUnit);
             }
 
             return result;
@@ -1507,7 +1546,6 @@ function(
         _getPolylineOfPolygon: function(polygon) {
             var polyline = new Polyline(polygon.spatialReference);
             var points = polygon.rings[0];
-            points = points.slice(0, points.length - 1);
             polyline.addPath(points);
             return polyline;
         },
@@ -1786,12 +1824,18 @@ function(
         },
 
         _getTxtGraphic:function(point, text, bottomAlignment){
-            var a = Font.STYLE_ITALIC;
-            var b = Font.VARIANT_NORMAL;
-            var c = Font.WEIGHT_BOLD;
-            var symbolFont = new Font("16px", a, b, c, "Courier");
-            var fontColor = new Color([0, 0, 0, 1]);
-            var textSymbol = new TextSymbol(text, symbolFont, fontColor);
+            if(this.config.defaultSymbols && this.config.defaultSymbols.MeasureSymbol){
+                var textSymbol = new TextSymbol(this.config.defaultSymbols.MeasureSymbol);
+                textSymbol.setText(text);
+            }
+            else{
+                var a = Font.STYLE_ITALIC;
+                var b = Font.VARIANT_NORMAL;
+                var c = Font.WEIGHT_BOLD;
+                var symbolFont = new Font("16px", a, b, c, "Courier");
+                var fontColor = new Color([0, 0, 0, 1]);
+                var textSymbol = new TextSymbol(text, symbolFont, fontColor);
+            }
 
             if (bottomAlignment) {
                 textSymbol.setVerticalAlignment('bottom');
@@ -1981,23 +2025,23 @@ function(
                               geometry: mergedGeom
                             }
                         });
-                        console.log("showShadowMeasureOnDraw -> merge previous and current part", mergedGeom);
+                        // console.log("showShadowMeasureOnDraw -> merge previous and current part", mergedGeom);
                     }
                     else{
                       this.showShadowMeasure({
                           graphic: this.drawBox.drawToolBar._graphic.clone()
                       });
-                      console.log("showShadowMeasureOnDraw -> allready drawn", this.drawBox.drawToolBar._graphic.geometry);
+                      // console.log("showShadowMeasureOnDraw -> allready drawn", this.drawBox.drawToolBar._graphic.geometry);
                     }
                 }
                 else if(this.drawBox.drawToolBar._tGraphic && this.drawBox.drawToolBar._tGraphic.geometry){
                     this.showShadowMeasure({
                         graphic: this.drawBox.drawToolBar._tGraphic.clone()
                     });
-                    console.log("showShadowMeasureOnDraw -> only current part", this.drawBox.drawToolBar._tGraphic.geometry);
+                    // console.log("showShadowMeasureOnDraw -> only current part", this.drawBox.drawToolBar._tGraphic.geometry);
                 }
                 else{
-                  console.log("No geom INFO", this.drawBox.drawToolBar);
+                  // console.log("No geom INFO", this.drawBox.drawToolBar);
                 }
                 return result;
             });

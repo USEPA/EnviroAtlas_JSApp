@@ -58,30 +58,29 @@ function(declare, BaseWidget, WidgetManager, PanelManager, on, dom, domConstruct
     },
 
     onOpen: function(){
-      var self = this;
-      
-      console.log('onOpen');
+      var self = this;      
+      // console.log('onOpen');
     },
 
     onClose: function(){
-      console.log('onClose');
+      // console.log('onClose');
     },
 
     onMinimize: function(){
-      console.log('onMinimize');
+      // console.log('onMinimize');
     },
 
     onMaximize: function(){
-      console.log('onMaximize');
+      // console.log('onMaximize');
     },
 
     onSignIn: function(credential){
       /* jshint unused:false*/
-      console.log('onSignIn');
+      // console.log('onSignIn');
     },
 
     onSignOut: function(){
-      console.log('onSignOut');
+      // console.log('onSignOut');
     }
   });
 });
