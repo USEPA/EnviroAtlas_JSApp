@@ -5318,7 +5318,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
 			  newlink.setAttribute('style', 'width:100%;background-color: #9aadbb; margin-top:20px');
 			  newlink.setAttribute('id', 'helpContent2TriggerButton');
 
-			  var clickAction = "window.open(window.location.href + 'help.html'+ '#'+ window.widgetNameInDemo);return false;";			  
+			  var clickAction = "window.open(location.protocol + '//' + location.host + location.pathname + 'help.html'+ '#'+ window.widgetNameInDemo);return false;";			  
 			  newlink.setAttribute('onclick', clickAction);
     		
     		
