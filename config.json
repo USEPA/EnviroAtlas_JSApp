@@ -712,13 +712,13 @@
     "httpProxy": {
         "useProxy": true,
         "alwaysUseProxy": false,
-        "url": "https://map11.epa.gov/gpoproxy/proxy.ashx",
+        "url": "https://enviroatlas.epa.gov/enviroatlas/proxy/proxy.ashx?",
         "rules": [{
                 "urlPrefix": "https://landscape10.arcgis.com",
-                "proxyUrl": "https://map11.epa.gov/gpoproxy/proxy.ashx"
+                "proxyUrl": "https://enviroatlas.epa.gov/enviroatlas/proxy/proxy.ashx?"
             }, {
                 "urlPrefix": "https://landscape11.arcgis.com",
-                "proxyUrl": "https://map11.epa.gov/gpoproxy/proxy.ashx"
+                "proxyUrl": "https://enviroatlas.epa.gov/enviroatlas/proxy/proxy.ashx?"
             }
         ]
     },
