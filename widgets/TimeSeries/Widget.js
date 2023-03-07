@@ -96,13 +96,11 @@ define([
 
     var loading;
     var serverURL = "https://awseatlas2.epa.gov";
-     // can revert to enviroatlas2 after decommisioning fossa and dragonfly
     var futureScenariosAGSbaseURL = serverURL + "/arcgis/rest/services/FutureScenarios/";
     var comment = "Climate scenarios provide likely approximations of future conditions given a set of initial assumptions and model results. The future is inherently uncertain with no guarantee that these scenarios reflect what will occur at the specified future time.";
     var timeSlider, userChosenTimeStep;
     var navToolbar;
     var selfTimeSeries;
-
 
     var widthSelect = "310px";
     var showLayerListWidget = function () {
@@ -111,8 +109,12 @@ define([
         var pm = PanelManager.getInstance();
         pm.showPanel(widgets[0]);
     }
-    var updateSelectablePBSLayersArea = function () {
 
+    var stringHasNumber = function hasNumber(myString) {
+        return /\d/.test(myString);
+    }
+
+    var updateSelectablePBSLayersArea = function () {
         if (navigator.userAgent.indexOf("Chrome") >= 0) {
             document.getElementById('tablePBSLayersArea').style.height = "calc(100% - 140px)";
         } else if (navigator.userAgent.indexOf("Firefox") >= 0) {
@@ -133,6 +135,7 @@ define([
         
         ]
     });
+
     var climateVarStore = new Memory({
     idProperty: "climateMem",
     data: [
@@ -155,24 +158,25 @@ define([
         {id:"Annual", name:"Annual", value:"Annual"}
         ]
     });   
+
     var clickFrameYear = function(){
         console.log("frmeYearinput is clicked!");
-        if(dojo.byId("frameYearInput").value=='Or, select specific year to display'){
+        if (dojo.byId("frameYearInput").value=='Or, select specific year to display'){
             dojo.byId("frameYearInput").value=''; 
             dojo.byId("frameYearInput").style.color='#000';
-            }
+        }
     };
+
     var blurFrameYear = function(){
-        if(dojo.byId("frameYearInput").value==''){
+        if (dojo.byId("frameYearInput").value==''){
            dojo.byId("frameYearInput"). value='Or, select specific year to display'; 
            dojo.byId("frameYearInput").style.color='#555';
         }
-    };     
+    };
+
     var mapLoading = function () {
         //esri.show(loading);
-        
-        if (timeSlider)
-        {
+        if (timeSlider){
             //layer is loading, set rate temoporarily very high (20 sec), pausing the slider
             timeSlider.setThumbMovingRate(20000);
         }
@@ -180,31 +184,28 @@ define([
 
     var mapFinishedLoading = function(evt) {
         map.showZoomSlider();
-        if (timeSlider)
-        {
+        if (timeSlider){
             timeSlider.setThumbMovingRate(600); 
         }
     };
+
     var makeSliderAndLegendOneFrame = function(evt) {
         if (dojo.byId("frameOrSlide").innerHTML == 'slide') {
             return '';
         }
-        
         //If this isn't the first layer the user has selected, destroy the old time slider and make a new one
         if (dijit.byId('timeSliderDijOneFrame')) {
             dijit.byId('timeSliderDijOneFrame').destroy();
-
         }
         if (dijit.byId('timeSliderDij')) {
             dijit.byId('timeSliderDij').destroy();
-
         }
                 
         //reset the time slider div after destroying the actual timeslider
         var tsDiv = domConstruct.create("div", null, dojo.byId("timeSliderDivOneFrame"));        
         timeSlider = new TimeSlider({
-          style: "width:100%;",
-          id: "timeSliderDijOneFrame"
+            style: "width:100%;",
+            id: "timeSliderDijOneFrame"
         }, tsDiv);
        
  		/*selfTimeSeries.frameNode = html.create('div', {}, selfTimeSeries.frameNodeContainer);
@@ -244,16 +245,19 @@ define([
         }); 
         timeSlider.setLabels(labels);
         
-		if (document.getElementById("modelSelection").value == "Hist") { dojo.byId("details").innerHTML = '1950';} else {dojo.byId("details").innerHTML = '2010';}
+		if (document.getElementById("modelSelection").value == "Hist") {
+            dojo.byId("details").innerHTML = '1950';
+        } else {
+            dojo.byId("details").innerHTML = '2010';
+        }
         // dojo.byId("details").innerHTML = '2010'; //hardcoded start year date
         
         timeSlider.on("time-extent-change", function(evt2) {
             var currYear = evt2.startTime.getUTCFullYear();
             dojo.byId("details").innerHTML = currYear;
         });
-        
-
     };
+
     var makeSliderAndLegend = function(evt) {
     	if ((evt.layers[0].error != undefined) && (evt.layers[0].error != "")) {
     		window.failedDemoHucTimeseEcatRain["Time Series URL: " + futureScenariosAGSbaseURL] = evt.layers[0].error;
@@ -297,7 +301,6 @@ define([
         timeSlider.setThumbCount(1);
 
         timeExtent = evt.layers[0].layer.timeInfo.timeExtent;
-        console.log("timeExtent",timeExtent);
 
         userChosenTimeStep = 5;
         var timeStepIntervals = [];
@@ -412,27 +415,23 @@ define([
             console.log("model+ season + climateVar:" + model+ season + climateVar);
             addOneFrameServiceToMap(model+ season + climateVar);
             //changeLegendImg();
-            console.log("model+ season + climateVar:" + model+ season + climateVar);
-
         }
         else {
             alert("Choose options for Metric and Season!");
         }            
-
     };
+
     var addOneFrameServiceToMap = function(serviceParams) {
         removeFrameFromMap();
         
         //build the REST endpoint URL for the user-selected dropdown selections
         var selectedImageService = futureScenariosAGSbaseURL + serviceParams + "/ImageServer";
-        console.log("Selected ImageService URL: " + selectedImageService);
         
         var params = new ImageServiceParameters();
 
         var imageServiceLayer = new ArcGISImageServiceLayer(selectedImageService,{imageServiceParameters: params});
         imageServiceLayer.id = window.timeSeriesLayerId;
         imageServiceLayer.setOpacity(0.6);
-
         
         map.addLayers([imageServiceLayer]);
         
@@ -474,11 +473,10 @@ define([
 			userChosenTimeStep = 5;
 			dojo.byId("frameOrSlide").innerHTML = 'slide';
 			addSelectedImageServiceToMap(model + season + climateVar);
-			console.log("model+ season + climateVar:" + model+ season + climateVar);
+			//      .log("model+ season + climateVar:" + model+ season + climateVar);
 			//changeLegendImg();
 		}
 		else {
-			alert("Choose options for Season, Metric!");
 		}
        //}
        /*else {
@@ -486,7 +484,6 @@ define([
     		title: "EnviroAtlas Time Series Disclaimer",
     		style: 'width: 400px'
     		});
-
 
     		var nationalDiv = dojo.create('div', {
 				'innerHTML': "The original climate projections used in these maps were developed by the NASA Ames Research Center using the NASA Earth Exchange, and are distributed as the NEX-DCP30 dataset. Climate scenarios provide likely approximations of future conditions given a set of initial assumptions. The future is inherently uncertain and the USEPA cannot guarantee that these scenarios reflect what will occur at the specified future time. <BR><BR> \
@@ -504,12 +501,10 @@ define([
 			    document.getElementById("loadServiceBtn").click();
 			});
 
-
-
 			infobox.show();
-       		
        }*/
     };
+
 	var addSelectedImageServiceToMap = function(serviceParams) {
         removeDataFromMap();
         
@@ -517,7 +512,6 @@ define([
         var selectedImageService = futureScenariosAGSbaseURL + serviceParams + "/ImageServer";
         
         var params = new ImageServiceParameters();
-
         var modelValue = document.getElementById("modelSelection").value;
         var season = document.getElementById("seasonSelection").value;
         //var climateId = document.getElementById("climateSelection").value;
@@ -527,7 +521,7 @@ define([
         imageServiceLayer.name = "TimeSeries_" + modelValue + "_" + season + "_" + climateVar;
         imageServiceLayer.title = "TimeSeries_" + modelValue + "_" + season + "_" + climateVar;
         imageServiceLayer.setOpacity(0.6);
-
+        // window.climateTimeSeriesFromURL = imageServiceLayer.url
         
         map.addLayers([imageServiceLayer]);
         
@@ -536,7 +530,6 @@ define([
         
         imageServiceLayer.on("load", function(){
             //var modelId = dijit.byId("modelSelection").item.id;
-
 	        var unit = "";
             if ((climateVar == "TempMax") ||(climateVar == "TempMin")) {
             	unit = "Degrees F";                
@@ -547,13 +540,12 @@ define([
 	        setMetadataTab(modelValue + ", " + season + " <br/>" + climateVar + " (" + unit + ")<br/><hr>" + comment);           
 	        showLayerListWidget();       
         });
-
     };
 
     var removeFrameFromMap = function () {
 
         if (map.getLayer(window.timeSeriesLayerId)) {
-            console.log(map.getLayer(window.timeSeriesLayerId));
+            // console.log(map.getLayer(window.timeSeriesLayerId));
             map.removeLayer(map.getLayer(window.timeSeriesLayerId));
             clearMetadataTab();
             //clearLegendTab();
@@ -567,16 +559,16 @@ define([
             console.log('destroyed time slider');
         }
         //esri.hide(loading); 
-        
     };
+
     var removeDataFromMap = function() {
         /*var myNode = document.getElementById("table_container");
         while (myNode.firstChild) {
             myNode.removeChild(myNode.firstChild);
         }*/     
-        console.log("remove data from map");
+        // console.log("remove data from map");
         if (map.getLayer(window.timeSeriesLayerId)) {
-            console.log(map.getLayer(window.timeSeriesLayerId));
+            // console.log(map.getLayer(window.timeSeriesLayerId));
             map.removeLayer(map.getLayer(window.timeSeriesLayerId));
             clearMetadataTab();
             //clearLegendTab();
@@ -593,31 +585,34 @@ define([
             console.log('destroyed time slider');
         }       
         //esri.hide(loading); 
-    };    
+    };
+
     var clearMetadataTab = function() {
         dojo.byId("layerMetadata").innerHTML = "";
-    }    
+    };
+        
     var setMetadataTab = function(imgServiceDesc) {
         dojo.byId("layerMetadata").innerHTML = imgServiceDesc;
-    }
+    };
+
 	var executeIdentifyTask = function (event) {
         //console.log("Executing Ident Task");
         var currentLayer = map.getLayer(window.timeSeriesLayerId);
         if ((currentLayer==undefined) || (currentLayer.visible == false)){
         	return;
         }
+
         identifyTask = new ImageServiceIdentifyTask(currentLayer.url);
-        
         identifyParams = new ImageServiceIdentifyParameters();
         identifyParams.returnGeometry = true;
         identifyParams.geometry = event.mapPoint;
+
         if (dojo.byId("frameOrSlide").innerHTML == 'frame') {
             var timeExtent = new TimeExtent();
             timeExtent.startTime = new Date("12/31/" +  (dojo.byId("frameYearInput").value));
             timeExtent.endTime = new Date("12/31/" +  (dojo.byId("frameYearInput").value));  
             identifyParams.timeExtent = timeExtent;          
-        }
-        else {
+        } else { 
             identifyParams.timeExtent = map.timeExtent;
         }
         
@@ -628,7 +623,8 @@ define([
                 } else if ((climateValue == "Precip") ||(climateValue == "PET")) {
                 	dojo.byId("identResult").innerHTML = "Inches per season or year: " + String(pixelVal);                
                 }               
-        });        
+        });
+
         var deferred = identifyTask
             .execute(identifyParams)
             .addCallback(function (response) {
@@ -642,15 +638,36 @@ define([
                 	dojo.byId("identResult").innerHTML = "Inches per season or year: " + String(pixelVal);                
                 	map.infoWindow.setTitle("Inches per season or year");                	
                 } 
-
                 map.infoWindow.setContent(String(pixelVal));
                 map.infoWindow.show(event.mapPoint);
-                
-
-                        
             });
     };
 
+    var dataFromURL = () => {
+        // Split the url parameter by underscores into 3 parts
+        var timeseriesparam = window.climateTimeSeriesFromURL.split('_');
+        selfTimeSeries.climateSelectionNode.value = timeseriesparam[2];
+        selfTimeSeries.seasonSelectionNode.value = timeseriesparam[1];
+        // Add a '.' between the digits in timeseriesparam[0], which is the modelSelectionNode value
+        if (stringHasNumber(timeseriesparam[0])) {
+            var modelSelectionStr = timeseriesparam[0];
+            var modelSelectionStrResult = modelSelectionStr.slice(0, -1) + "." + modelSelectionStr.slice(-1);
+            selfTimeSeries.modelSelectionNode.value = modelSelectionStrResult;
+        } else {
+            selfTimeSeries.modelSelectionNode.value = timeseriesparam[0];
+        };
+        // Click to add the data that matches the climateTimeSeries url param
+        document.getElementById("loadServiceBtn").click();
+    }
+
+    // Add data if the url != null, Reject if the url is null
+    var addDataFromURL = new Promise((resolve, reject) => {
+        if (window.climateTimeSeriesFromURL != null) {
+            resolve(console.log('Climate data to add.'))
+        } else {
+            reject(console.log('No climate data to add.'))
+        }
+    });
 
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
 
@@ -665,7 +682,6 @@ define([
 		        map.on("layers-add-result", makeSliderAndLegend);
 		        map.on("layers-add-result", makeSliderAndLegendOneFrame);       
 		        dojo.byId('titleAndSliderOneFrame').style.display = 'none';
-                  	
 
 			    var frameYear = new TextBox({
 			        id: "frameYearInput",
@@ -677,11 +693,11 @@ define([
 			        //click: clickFrameYear,
 			        //onblur: blurFrameYear
 			    }, "frameYearInput").startup();   
+
 			    var addOneFrameButton = new Button({
 			        id: "loadOneFrameBtn",
 			        name: "loadOneFrameButton",
 			        disabled: false
-			
 			    }, "loadOneFrameBtn").startup();    
 			    
 			    var addDataButton = new Button({
@@ -695,6 +711,7 @@ define([
 			        name: "clearLayerButton",
 			        disabled: false
 			    }, "removeServiceBtn").startup();  
+
 			    //loading = dojo.byId("loadingTimeSeriesLayer");//dojo.byId("loadingOverlay");
 			    //esri.hide(loading);
 			    registry.byId("loadServiceBtn").on("click", defineService);		
@@ -703,7 +720,6 @@ define([
 			    registry.byId("frameYearInput").on("click", clickFrameYear);
     			registry.byId("frameYearInput").on("blur", blurFrameYear);		
 
-                
     			// Scenario dialog box
                 var scenario_info = this.config.scenarios;
 				document.getElementById("modelSelectionHelp").onclick = function (e) {
@@ -726,7 +742,8 @@ define([
 							'innerHTML': scenario_text
 						}, infobox.containerNode);
 						infobox.show()
-				}; //end of modelSelectionHelp click event
+				}; 
+                //end of modelSelectionHelp click event
 				
                 // Cliamte Variable dialog box
                 var climate_info = this.config.climate_variables;
@@ -750,7 +767,8 @@ define([
                         'innerHTML': variable_text
                         }, infobox.containerNode);
                         infobox.show()
-                }; //end of climateSelectionHelp click event 
+                }; 
+                //end of climateSelectionHelp click event 
 					
 				// Season dialog box
                 var season_info = this.config.seasons;
@@ -774,12 +792,17 @@ define([
 						'innerHTML': season_text
 						}, infobox.containerNode);
 						infobox.show()
-				}; //end of seasonSelectionHelp click event		
-				
-													    				                     
+				}; 
+                //end of seasonSelectionHelp click event											    				                     
             },
-	        onOpen: function () {
-		    
+
+	        onOpen: () => {
+                // console.log('onOpen');
+                // If there's a climateTimeSeries url param in the app url, then add climate data from the url params
+                addDataFromURL.then(dataFromURL)
+                .catch(e => {
+                    console.log(e);
+                });
 	        },            
         });
     return clazz;

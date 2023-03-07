@@ -41,7 +41,6 @@ function(declare,
 
     var map;
     var server = "https://awseatlas2.epa.gov/";
-	 //can revert to enivroatlas2.epa.gov after deommissioning of fossa and dragonfly
     var gpURL = server + "arcgis/rest/services/ECAT/RasterCalculatefromAverage/GPServer/RasterCalculate_fromAverage";
     
     var gpComputeClimateChange = null;
@@ -63,6 +62,7 @@ function(declare,
         	map.infoWindow.hide();
       	}             	
 	};    
+	// https://awseatlas2.epa.gov/arcgis/rest/directories/arcgisjobs/ecat/rastercalculatefromaverage_gpserver/j205dfdde66ef47158eea270fb28b689e/HUC12Statistic.csv
 	var downloadCSVClick = function() {
 		window.open(server + "arcgis/rest/directories/arcgisjobs/ecat/rastercalculatefromaverage_gpserver/" + currentJobInfo.jobId + "/HUC12Statistic.csv");
 	};

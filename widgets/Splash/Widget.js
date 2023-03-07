@@ -36,6 +36,7 @@ define(['dojo/_base/declare',
   ],
   function(declare, lang, html, on, keys, query, cookie, _WidgetsInTemplateMixin, BaseWidget, topic,
            CheckBox, utils, esriLang, LoadingShelter, Deferred, EditorXssFilter, TabContainer, WidgetManager, PanelManager) {
+
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
       baseClass: 'jimu-widget-splash',
       _hasContent: null,
@@ -116,55 +117,82 @@ define(['dojo/_base/declare',
         },
 
       onOpen: function() {
-        if( (window.extentFromURL != null) || (window.eaLayerFromURL  != null) || (window.eaCommunityFromURL != null)) {
-            this.close();
+        console.log('Splash is open.')
+        if ((window.extentFromURL != null) || (window.eaLayerFromURL  != null) || (window.eaCommunityFromURL != null)) {
+          this.close();
+          console.log('Splash is closed.')
         }
-                // the url includes the parameter for featured collection
-                if ((window.featuredCollectionFromURL != null)) {
-                    this.close();
-                    this.openWidgetById('widgets_AddWebMapData');
 
-                    
-                    var wm = WidgetManager.getInstance();
-                    widget = wm.getWidgetById('themes_TabTheme_widgets_SidebarController_Widget_20');
-                    for (var i = 0; i < widget.tabs.length; i++) {
-                        var tab = widget.tabs[i];
-                        if (tab.config.id == "widgets_AddWebMapData") {
-                            widget.selectTab(i);
-                        }
-                    }
-                }
-                
-                //end of featured collection part
+        // the url includes the parameter for climate Time Series         
+        var skipSplashOpenTimeSeries = () => {
+          this.close();
+          console.log('Splash is closed.');
+          setTimeout(function(){
+            document.getElementById("widgets_TimeSeries_Widget").click();
+          }, 1000);
+        }
+    
+        // Add data if the url != null, Reject if the url is null
+        var dataFromURLParam = new Promise((resolve, reject) => {
+          if (window.climateTimeSeriesFromURL != null) {
+              resolve('Skip splash')
+          } else {
+              reject(console.log('Do not skip splash'))
+          }
+        });
 
-              // the url includes the parameter for Demographic
-          if ((window.demogSourceFromURL != null)) {
-                  this.close();
-                  document.getElementById("widgets_DemographicLayers").click();
-              }
+        dataFromURLParam.then(skipSplashOpenTimeSeries)
+        .catch(e => {
+            console.log(e);
+        });
 
-                //end of Demographic part
+        // the url includes the parameter for featured collection
+        if ((window.featuredCollectionFromURL != null)) {
+          this.close();
+          console.log('Splash is closed 3.')
+          this.openWidgetById('widgets_AddWebMapData');
+          
+          var wm = WidgetManager.getInstance();
+          widget = wm.getWidgetById('themes_TabTheme_widgets_SidebarController_Widget_20');
+          for (var i = 0; i < widget.tabs.length; i++) {
+            var tab = widget.tabs[i];
+            if (tab.config.id == "widgets_AddWebMapData") {
+              widget.selectTab(i);
+            }
+          }
+        }
+        //end of featured collection part
 
-                if (!utils.isInConfigOrPreviewWindow()) {
-                    var isFirstKey = this._getCookieKey();
-                    var isfirst = cookie(isFirstKey);
-                    if (esriLang.isDefined(isfirst) && isfirst.toString() === 'false') {
-                        this.close();
-                    }
-                }
-                // if (true === this._requireConfirm) {
-                //   //checkbox
-                //   this.confirmCheck.focus();
-                // } else if ((false === this._requireConfirm && false === this._showOption) ||
-                //   (false === this._requireConfirm && true === this._showOption)) {
-                //   this.okNode.focus();
-                // }
-                if (!this._requireConfirm && !this._showOption) {
-                    this.okNode.focus();
-                } else {
-                    this.confirmCheck.focus();
-                }
-
+        // the url includes the parameter for Demographic
+        if ((window.demogSourceFromURL != null)) {
+          this.close();
+          console.log('Splash is closed 4.')
+          document.getElementById("widgets_DemographicLayers").click();
+        }
+        //end of Demographic part
+        
+        if (!utils.isInConfigOrPreviewWindow()) {
+          var isFirstKey = this._getCookieKey();
+          var isfirst = cookie(isFirstKey);
+          if (esriLang.isDefined(isfirst) && isfirst.toString() === 'false') {
+            this.close();
+          }
+        }
+        
+        // if (true === this._requireConfirm) {
+        //   //checkbox
+        //   this.confirmCheck.focus();
+        // } else if ((false === this._requireConfirm && false === this._showOption) ||
+        //   (false === this._requireConfirm && true === this._showOption)) {
+        //   this.okNode.focus();
+        // }
+        
+        if (!this._requireConfirm && !this._showOption) {
+          this.okNode.focus();
+        } else {
+          this.confirmCheck.focus();
+        }
+        
         this._eventShow();
       },
 
@@ -533,6 +561,7 @@ define(['dojo/_base/declare',
             }
         }
       },   
+
       close: function() {
         this._isClosed = true;
         this._eventHide();

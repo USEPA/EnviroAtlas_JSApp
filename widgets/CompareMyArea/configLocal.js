@@ -6,7 +6,7 @@ function() {
     //var natamapservice = "https://gis8.saic.com/arcgis/rest/services/NATA/NATA/MapServer";    //error for tract 
     var watershedmapservice = "https://enviroatlas.epa.gov/arcgis/rest/services/Other/CMA_Landscape/MapServer";
     //var watershedmapservice = "https://gis8.saic.com/arcgis/rest/services/NATA/watershed/MapServer";//error for watershed
-    var demogmapservice = "https://geopub.epa.gov/arcgis/rest/services/ejscreen/census2018acs/MapServer";
+    var demogmapservice = "https://geopub.epa.gov/arcgis/rest/services/ejscreen/census2020acs/MapServer";
     //var printservice = //"https://gis8.saic.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
     var printservice = "https://map23.epa.gov/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
     //var printservice = //"https://enviroatlas.epa.gov/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";

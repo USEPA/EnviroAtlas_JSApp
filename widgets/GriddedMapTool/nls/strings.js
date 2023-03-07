@@ -59,7 +59,7 @@ define({
         90: "Woody Wetlands",
         95: "Emergent Herbaceous Wetlands",
       },
-      layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/GDT_NLCD_Dasy/ImageServer',
+      layer: 'https://enviroatlas.epa.gov/arcgis/rest/services/Rasters/SMA_NLCD_ll/ImageServer',
       OBJECTIDS: {
         2001: 1,
         2004: 2,
@@ -97,19 +97,19 @@ define({
       columnHeaders: ['Land Cover Type', 'Area (km2)', 'Percentage']
     },
     "population-floodplains": {
-	  layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/GDT_Pop/ImageServer', 
+	  layer: 'https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/GDT_Pop/ImageServer', 
       lockRasterId: 2,
       layersUsed: ['Estimated Floodplains', 'Dasymetric Population']
     },
     "population-roads": {
-	  layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/GDT_Pop/ImageServer', 
+	  layer: 'https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/GDT_Pop/ImageServer', 
       lockRasterId: 4,
       layersUsed: ['FAF4 Roads', 'Dasymetric Population']
     },
     populationRasterId: 10,
     padus: {
-	  layer: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/GDT_Pop/ImageServer', 
-	  polys: 'https://leb.epa.gov/arcgis/rest/services/Supplemental/PADUS_Shapefile/MapServer/0',
+	  layer: 'https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/GDT_Pop/ImageServer', 
+	  polys: 'https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/PADUS/MapServer/0',
       lockRasterId: 3,
       layersUsed: ['PADUS']
     },
