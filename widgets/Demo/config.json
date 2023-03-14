@@ -230,7 +230,7 @@
 			],
 			"highlight": "dijit__WidgetBase_15",
 			"title": "Summarize My Area Tool",
-			"displayOrder": 13
+			"displayOrder": 14
 		},
 		{
 			"widgetName": "LayerList",
@@ -245,7 +245,7 @@
 			],
 			"highlight": "dijit__WidgetBase_21",
 			"title": "Layer List Widget",
-			"displayOrder": 15
+			"displayOrder": 16
 		},
 		{
 			"widgetName": "DynamicSymbology",
@@ -260,7 +260,7 @@
 			],
 			"highlight": "dijit__WidgetBase_21",
 			"title": "Dynamic Symbology Tool",
-			"displayOrder": 14
+			"displayOrder": 15
 		},
 		{
 			"widgetName": "AttributeTable",
@@ -273,7 +273,7 @@
 			],
 			"highlight": "widgets_AttributeTable_Widget_30",
 			"title": "Attribute Table",
-			"displayOrder": 16
+			"displayOrder": 17
 		},
 		{
 			"widgetName": "DrawMeasure",
@@ -288,7 +288,7 @@
 			],
 			"highlight": "dijit__WidgetBase_2",
 			"title": "Draw and Measure Tool",
-			"displayOrder": 17
+			"displayOrder": 18
 		},
 		{
 			"widgetName": "Print",
@@ -303,7 +303,7 @@
 			],
 			"highlight": "dijit__WidgetBase_2",
 			"title": "Print",
-			"displayOrder": 18
+			"displayOrder": 19
 		},
 		{
 			"widgetName": "eBookmark",
@@ -318,7 +318,7 @@
 			],
 			"highlight": "dijit__WidgetBase_2",
 			"title": "Bookmark Tool",
-			"displayOrder": 19
+			"displayOrder": 21
 		},
 		{
 			"widgetName": "SaveSession",
@@ -335,7 +335,7 @@
 
 			"highlight": "themes_TabTheme_widgets_Header_Widget_18",
 			"title": "Save Session Tool",
-			"displayOrder": 21
+			"displayOrder": 22
 		},
 		{
 			"node": "mapTourIcon",

@@ -362,7 +362,9 @@ define([
     window.eaLayerFromURL = null;
     window.eaCommunityFromURL = null;
     window.featuredCollectionFromURL = null;
-    window.demogSourceFromURL = null;
+      // Climate URL Param
+      window.climateTimeSeriesFromURL = null;
+      window.demogSourceFromURL = null;
     window.demogCategoryFromURL = null;
     window.demogVariableFromURL = null;
     window.communityMetadataDic = {};

@@ -324,6 +324,24 @@
                 },
                 "id": "widgets_Select_Widget_39"
             }, {
+                "position": {
+                "left": 395,
+                    "top": 5,
+                    "width": 587,
+                    "height": 550,
+                    "relativeTo": "map"
+                },
+                "placeholderIndex": 1,
+          "id": "widgets_GriddedMapTool_28",
+          "name": "GriddedMapTool",
+          "label": "Summarize My Area",
+          "version": "0.1",
+          "uri": "widgets/GriddedMapTool/Widget",
+          "config": "widgets/GriddedMapTool/config.json"
+        },
+
+
+        {
           "position": {
             "left": 565,
             "top": -40,
@@ -978,6 +996,21 @@
                         "relativeTo": "map"
                     },
                     "id": "widgets_Select_Widget_39"
+                }, {
+                    "position": {
+                        "left": 695,
+                        "top": -50,
+                        "width": 587,
+                        "height": 500,
+                        "relativeTo": "map"
+                    },
+                    "placeholderIndex": 1,
+              "id": "widgets_GriddedMapTool_28",
+                    "name": "GriddedMapTool",
+                    "label": "Gridded Map Tool",
+                    "version": "0.1",
+                    "uri": "widgets/GriddedMapTool/Widget",
+                    "config": "widgets/GriddedMapTool/config.json"
                 }, {
                     "position": {
                         "left": 565,
