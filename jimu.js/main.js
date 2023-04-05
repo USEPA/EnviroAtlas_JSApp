@@ -291,6 +291,7 @@ define([
     window.topicDicPSI["Harmful Algal Blooms"] = "HAB";
     window.topicDicPSI["Impaired Waters"] = "IW";
 	window.topicDicPSI["National Air Toxics Assessment"] = "NATA";
+	window.topicDicPSI["Pollutants: Air"] = "PA";
     window.topicDicPSI["Pollutants: Other"] = "PO";
     window.topicDicPSI["Pollutants: Nutrients"] = "PN"; 
     window.topicDicPSI["Sites Reporting to EPA"] = "RF";
