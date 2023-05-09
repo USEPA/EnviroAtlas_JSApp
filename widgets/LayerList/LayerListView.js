@@ -681,20 +681,24 @@ define([
             }
           }
         }
+      }
+      // adding from url adds to the top of the list, this query looks for the specific demographic layer node 
+      // to hide, regardless of index position
+      var subid = layerInfo.subId;
+      var demogclass = ".layer-tr-node-" + subid;
+      for (let i = 0; i < 4; i++) {
+        let sublayerclass = demogclass + '_' + i;
+        let visiblesublayer = demogclass + '_' + window.demographicLayerVisibleIndex;
+        if(query(sublayerclass)) {
+          query(sublayerclass).forEach(function(node, index) {
+            if (node.classList[2] === visiblesublayer.substring(1)) {
+              domStyle.set(node, "display", "");
+            } else {
+              domStyle.set(node, "display", "none");
+            }
+          });
         }
-        //for (var ii = 0; ii <= query('.jimu-widget-layerList .layer-row').length; ii++) {
-
-        //}
-        if (query('.jimu-widget-layerList .layer-row')[0].innerText.indexOf(window.demographicsTitlePrefix) >= 0) {
-            query('.jimu-widget-layerList .layer-row').forEach(function (node, index) {
-                if ((index == 0) || (index == window.demographicLayerVisibleIndex + 1)) {
-                    domStyle.set(node, "display", "");
-                }
-                else {
-                    domStyle.set(node, "display", "none");
-                }
-            });
-        }
+      }
       return state;
     },
     redrawLegends: function(layerInfo) {

@@ -176,7 +176,7 @@ define([
     window.imageLayerNumber = [];
     window.layerID_Portal_WebMap = [];
     window.demographicLayerSetting = {};
-      window.demographicLayerVisibleIndex = 3;  //0: Block Group; //1: tract; //2: County; //3: State
+      window.demographicLayerVisibleIndex = 2;  //0: Block Group; //1: tract; //2: County; //3: State
     window.onlineDataTobeAdded = [];
     window.onlineDataAlreadyAdded = [];
     window.onlineDataScopeDic = {};
