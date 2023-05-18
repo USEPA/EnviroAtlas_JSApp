@@ -257,6 +257,12 @@ define([
             }
           }
         })
+
+        this.excludeInnerFeatureCheckbox.addEventListener('change', e => {
+          if (this.drawLayer.graphics.length > 0) {
+            this._updatedBufferGraphic(); //if metric changes, we need to update the graphic on the map, if there is one
+          }
+        });
         
         this.bufferInput.addEventListener('input', e => {
           this.bufferRadius = e.target.valueAsNumber;
@@ -1615,6 +1621,9 @@ define([
       _addBufferToMap: function() {
         //this.bufferGeometry = GeometryEngine.buffer(this.geometry, this.bufferRadius, this.pointMetric, true);
         this.bufferGeometry = GeometryEngine.geodesicBuffer(this.geometry, this.bufferRadius, this.pointMetric, true);
+        if (this.excludeInnerFeatureCheckbox.checked && this.bufferRadius > 0) {
+          this.bufferGeometry = GeometryEngine.difference(this.bufferGeometry, this.geometry)
+        }
         let bufferPoly = new SimpleFillSymbol();
         this._addGraphicToMap(bufferPoly, this.bufferGeometry, true);
       },
