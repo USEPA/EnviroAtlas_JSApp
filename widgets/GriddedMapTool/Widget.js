@@ -264,8 +264,12 @@ define([
           }
         });
         
+
+
         this.bufferInput.addEventListener('input', e => {
+
           this.bufferRadius = e.target.valueAsNumber;
+          
           if (this.bufferRadius == 0) {
             return;
           }
@@ -543,28 +547,16 @@ define([
           let outfields;
           
           switch (this.unitDropdownSelection) {
-            case 'state':
-              url = this.nls.stateLayer;
-              outfields = ['STATE_NAME', 'POPULATION'];
+            case 'point':
+            case 'area':
+            case 'line':
               break;
-            case 'county':
-              url = this.nls.countyLayer;
-              outfields = ['STATE_NAME', 'NAME'];
-              break;
-            case 'district':
-              url = this.nls.districtLayer;
-              outfields = ['DISTRICTID', 'NAME', 'PARTY', 'STATE_ABBR'];
-              break;
-            case 'huc-8':
-              url = this.nls["huc-8Layer"];
-              outfields = ['HUC8', 'HU_8_Name'];
-              break;
-            case 'huc-12':
-              url = this.nls["huc-12Layer"];
-              outfields = ['HUC_12', 'HU_12_Name'];
-              break;
+
             default:
+              url = this.nls.sum_units[`${this.unitDropdownSelection}Layer`].url;
+              outfields = this.nls.sum_units[`${this.unitDropdownSelection}Layer`].outfields;
               break;
+              
           }
   
           //re-activate the draw tool if needs be
@@ -601,25 +593,14 @@ define([
                   symbol.style = 'none';
                   this._addGraphicToMap(symbol, this.geometry);
                 }
-                switch (this.unitDropdownSelection) {
-                  case 'state':
-                    this.selectionText.innerHTML = res.features[0].attributes.STATE_NAME;
-                    break;
-                  case 'county':
-                    this.selectionText.innerHTML = `${res.features[0].attributes.NAME}, ${res.features[0].attributes.STATE_NAME}`
-                    break;
-                  case 'district':
-                    this.selectionText.innerHTML = `${res.features[0].attributes.STATE_ABBR}: ${res.features[0].attributes.DISTRICTID}`
-                    break;
-                  case 'huc-8':
-                    this.selectionText.innerHTML = `${res.features[0].attributes.HUC8} (${res.features[0].attributes.HU_8_Name})`
-                    break;
-                  case 'huc-12':
-                    this.selectionText.innerHTML = `${res.features[0].attributes.HUC_12} (${res.features[0].attributes.HU_12_Name})`
-                    break;
-                  default:
-                    break;
-                }
+                
+                results = res.features[0].attributes
+                sum_label = this.nls.sum_units[this.unitDropdownSelection + 'Layer'].label;
+                
+                if (sum_label.includes('results.')) {
+                  this.selectionText.innerHTML = Function("return " + sum_label)();
+                } 
+                
               }
             });
           } else if (this.unitDropdownSelection === 'file') {
@@ -665,9 +646,9 @@ define([
         }
 
         if (this.unitDropdownSelection == 'point') {
-          this.bufferInput.value = 0.5
+          this.bufferInput.value = 1
           this.pointMetric = 'kilometers';
-          this.bufferRadius = 0.5;
+          this.bufferRadius = 1;
         }
 
         if (this.unitDropdownSelection == 'file') {
@@ -743,8 +724,8 @@ define([
         this.calculateButton.innerHTML = this.nls.calculate;
         this._resetResultsTabHTML();
         this.errorMessage.innerHTML = "";
-        if (this.unitDropdownSelection && this.unitDropdownSelection.includes('huc') && !this.geometryLayer.isVisibleAtScale(this.map.getScale())) {
-          this.selectionText.innerHTML = this.nls.hucServiceMsg;
+        if (this.unitDropdownSelection && !this.geometryLayer.isVisibleAtScale(this.map.getScale())) {
+          this.selectionText.innerHTML = this.nls.zoomServiceMsg;
         } else {
           this.selectionText.innerHTML = "";
         }
@@ -965,19 +946,7 @@ define([
                                    (this.nls[this.indicator].layersUsed) + '</a>'});
  
         switch(this.unitDropdownSelection) {
-          case 'district':
-            inputTableData.push({'attribute': 'Geometry Type', 'value': 'Congressional District'});
-            inputTableData.push({'attribute': 'District', 'value': this.nls.districtVersion + ' - ' + results.STATE_ABBR+results.DISTRICTID});
-            inputTableData.push({'attribute': 'Representative', 'value': results.NAME + ' - ' +results.PARTY});
-            break;
-          case 'county':
-            inputTableData.push({'attribute': 'Geometry Type', 'value': 'County'});
-            inputTableData.push({'attribute': 'County', 'value': results.NAME + ', ' + results.STATE_NAME});
-            break;
-          case 'state':
-            inputTableData.push({'attribute': 'Geometry Type', 'value': 'State'});
-            inputTableData.push({'attribute': 'State', 'value': results.STATE_NAME});
-            break;
+        
           case 'area':
             inputTableData.push({'attribute': 'Geometry Type', 'value': 'User provided area'});
             if (this.bufferRadius > 0) {
@@ -996,20 +965,21 @@ define([
             inputTableData.push({'attribute': 'Length', 'value': line + ' ' + this._getMetricString(this.pointMetric)});
             inputTableData.push({'attribute': 'Buffer', 'value': this.formatLargeNumber(this.bufferRadius) + ' ' + this._getMetricString(this.pointMetric)});
             break;
-          case 'huc-8':
-            inputTableData.push({'attribute': 'Geometry Type', 'value': 'HUC-8'});
-            inputTableData.push({'attribute': 'HUC-8 ID', 'value': results.HUC8});
-            inputTableData.push({'attribute': 'HUC-8 Name', 'value': results.HU_8_Name});
-            break;
-          case 'huc-12':
-            inputTableData.push({'attribute': 'Geometry Type', 'value': 'HUC-12'});
-            inputTableData.push({'attribute': 'HUC-12 ID', 'value': results.HUC_12});
-            inputTableData.push({'attribute': 'HUC-12 Name', 'value': results.HU_12_Name});
-            break;
           case 'file':
             inputTableData.push({'attribute': 'Layer Name', 'value': results._layer.name});
             break
+          
           default:
+            inputTableFields = this.nls.sum_units[this.unitDropdownSelection + 'Layer'].outdesc;
+            for (const k in inputTableFields) {
+              v = inputTableFields[k];
+              if (v.includes('results.')) {
+                value = Function("return " + inputTableFields[k])();
+              } else {
+                value = inputTableFields[k];
+              }
+              inputTableData.push({'attribute': k, 'value': value})
+            }
             break;
         }
         
@@ -1197,6 +1167,10 @@ define([
           this.map.removeLayer(this.geometryLayer);
         }
 
+        //if (this.indicatorLayer) {
+        //  this.indicatorLayer.setRenderingRule(null);
+        //}
+
         this.unitDetails.style.display = "none";
         this.excludeInnerFeatureWrapper.style.display = "none";
 
@@ -1204,43 +1178,14 @@ define([
           this._resetDrawTool();
         }
 
+
+
         switch(option) {
-          case 'state':
-          case 'county':
-          case 'district':
-          case 'huc-8':
-          case 'huc-12':
-            const url = this.nls[`${option}Layer`];
-            this.geometryLayer = new FeatureLayer(url, {
-              opacity: 0.5,
-              id: `${option}Layer`
-            });
-            if (option.includes('huc')) {
-              this.geometryLayer.setMinScale(2311163);
-              this.geometryLayer.on('scale-visibility-change', (e) => {
-                if (this.selectionText.innerHTML === this.nls.hucServiceMsg && this.geometryLayer.isVisibleAtScale(this.map.getScale())) {
-                  this.selectionText.innerHTML = "";
-                } else if (this.selectionText.innerHTML === "" && !this.geometryLayer.isVisibleAtScale(this.map.getScale())) {
-                  this.selectionText.innerHTML = this.nls.hucServiceMsg;
-                }
-              });
-              if (!this.geometryLayer.isVisibleAtScale(this.map.getScale())) {
-                this.selectionText.innerHTML = this.nls.hucServiceMsg;
-              }
-            }
-            const symbol = new SimpleLineSymbol(
-              SimpleLineSymbol.STYLE_SOLID,
-              new Color([0,0,0]),
-              1
-            );
-            const renderer = new SimpleRenderer(symbol);
-            this.geometryLayer.setRenderer(renderer);
-            this.map.addLayer(this.geometryLayer);
-            break;
+
           case 'point':
           case 'area':
           case 'line':  {
-            this.bufferRadius = option === 'area' ? 0 : 0.5;
+            this.bufferRadius = option === 'area' ? 0 : 0.25;
             this.unitDetails.style.display = "flex";
             this.bufferInput.value = this.bufferRadius;
             this.bufferInput.min = this.bufferRadius;
@@ -1250,11 +1195,42 @@ define([
             this._initDrawTool(option)
             break;
           }
+          
           case 'file': {
             this.shapeFileDiv.style.display = 'flex';
             break;
           }
-          default:
+
+          default: 
+
+            const unitMinScale = this.nls.sum_units[`${option}Layer`].minScale;
+            const url = this.nls.sum_units[`${option}Layer`].url;
+
+            this.geometryLayer = new FeatureLayer(url, {
+                  opacity: 0.5,
+                  id: `${option}Layer`
+                });
+            this.geometryLayer.setMinScale(unitMinScale);
+            
+            this.geometryLayer.on('scale-visibility-change', (e) => {
+            if (this.selectionText.innerHTML === this.nls.zoomServiceMsg && this.geometryLayer.isVisibleAtScale(this.map.getScale())) {
+              this.selectionText.innerHTML = "";
+            } else if (this.selectionText.innerHTML === "" && !this.geometryLayer.isVisibleAtScale(this.map.getScale())) {
+              this.selectionText.innerHTML = this.nls.zoomServiceMsg;
+            }
+            });
+            if (!this.geometryLayer.isVisibleAtScale(this.map.getScale())) {
+              this.selectionText.innerHTML = this.nls.zoomServiceMsg;
+              }
+            
+            const symbol = new SimpleLineSymbol(
+              SimpleLineSymbol.STYLE_SOLID,
+              new Color([0,0,0]),
+              1
+            );
+            const renderer = new SimpleRenderer(symbol);
+            this.geometryLayer.setRenderer(renderer);
+            this.map.addLayer(this.geometryLayer);
             break;
         }
 
@@ -1453,7 +1429,7 @@ define([
           if (this.unitDropdownSelection == 'point' || this.unitDropdownSelection == 'line') {
             this._addBufferToMap();
           } else if (this.unitDropdownSelection == 'area') {
-            const minArea = Math.PI * (0.5 * 0.5);
+            const minArea = 0.045; //Math.PI * (0.5 * 0.5);
             const maxArea = 660000;
             const actualArea = GeometryEngine.geodesicArea(this.geometry, 'square-kilometers');
             if (actualArea < minArea) {
