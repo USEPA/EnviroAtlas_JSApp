@@ -81,8 +81,9 @@
             <option value="county">County</option>
             <!--<option value="state">State</option>-->
             <option value="district">Congressional District</option>
-            <option value="huc-8">HUC-8</option>
-            <option value="huc-12">HUC-12</option>
+            <option value="blockgroup">Census Block Group</option>
+            <option value="huc-8">Subbasin (HUC-8)</option>
+            <option value="huc-12">Subwatershed (HUC-12)</option>
             <option value="point">Draw a point</option>
             <option value="line">Draw a line</option>
             <option value="area">Draw an area</option>
@@ -110,7 +111,7 @@
           </div>-->
           <div class="point-buffer">
             <label for="gridded-map-buffer">Buffer distance (km)</label>
-            <input type="number" id="gridded-map-buffer" name="buffer" min="0.0" value="0.5">
+            <input type="number" id="gridded-map-buffer" name="buffer" min="0.0" value="1">
           </div>
           <div id="exlude-area-wrapper" style="display: none">
             <label for="gridded-map-buffer">Exclude Inner Feature:</label>
