@@ -309,8 +309,8 @@ createCategory: function (key) {
                         layerJson[colname].tr_max = trmax;
                         layerJson[colname].cnty_min = cntymin;
                         layerJson[colname].cnty_max = cntymax;
-                        layerJson[colname].st_min = stmin - .01;
-                        layerJson[colname].st_max = stmax + .01;
+                        layerJson[colname].st_min = stmin;
+                        layerJson[colname].st_max = stmax;
 
                         if (typeof featset.features[m].attributes["BLK_MIN"] != 'undefined') {
                             var blkmin = featset.features[m].attributes["BLK_MIN"];
