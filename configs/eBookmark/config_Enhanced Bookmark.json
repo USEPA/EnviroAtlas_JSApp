@@ -328,6 +328,18 @@
             }
           }
         },
+		{
+          "name": "San Diego, CA",
+          "extent": {
+            "xmin": -13124146.551576994,
+            "ymin": 3820609.503986517,
+            "xmax": -12947577.016238168,
+            "ymax": 3964616.865275844,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
         {
           "name": "Sonoma County, CA",
           "extent": {
@@ -335,6 +347,18 @@
             "xmin": -13752086.000,
             "ymax": 4700626.000,
             "ymin": 4589780.000,
+            "spatialReference": {
+              "wkid": 102100
+            }
+          }
+        },
+		{
+          "name": "Tacoma, WA",
+          "extent": {
+            "xmin": -13700148.594701368,
+            "ymin": 5889683.562312871,
+            "xmax": -13523579.059362542,
+            "ymax": 6046685.218410684,
             "spatialReference": {
               "wkid": 102100
             }
