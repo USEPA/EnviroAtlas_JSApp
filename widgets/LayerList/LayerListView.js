@@ -686,17 +686,19 @@ define([
       // to hide, regardless of index position
       var subid = layerInfo.subId;
       var demogclass = ".layer-tr-node-" + subid;
-      for (let i = 0; i < 4; i++) {
-        let sublayerclass = demogclass + '_' + i;
-        let visiblesublayer = demogclass + '_' + window.demographicLayerVisibleIndex;
-        if(query(sublayerclass)) {
-          query(sublayerclass).forEach(function(node, index) {
-            if (node.classList[2] === visiblesublayer.substring(1)) {
-              domStyle.set(node, "display", "");
-            } else {
-              domStyle.set(node, "display", "none");
-            }
-          });
+      if (subid.slice(0,8) === 'eaLyrDEM') {
+        for (let i = 0; i < 4; i++) {
+          let sublayerclass = demogclass + '_' + i;
+          let visiblesublayer = demogclass + '_' + window.demographicLayerVisibleIndex;
+          if(query(sublayerclass)) {
+            query(sublayerclass).forEach(function(node, index) {
+              if (node.classList[2] === visiblesublayer.substring(1)) {
+                domStyle.set(node, "display", "");
+              } else {
+                domStyle.set(node, "display", "none");
+              }
+            });
+          }
         }
       }
       return state;
