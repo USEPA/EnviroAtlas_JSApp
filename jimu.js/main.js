@@ -342,7 +342,9 @@ define([
     window.communityDic["POR"] = "Portland, OR";
 	window.communityDic["SLMO"] = "St. Louis, MO";
 	window.communityDic["SLCUT"] = "Salt Lake City, UT";
+	window.communityDic["SDCA"] = "San Diego, CA";
     window.communityDic["SonCA"] = "Sonoma County, CA";
+	window.communityDic["TacWA"] = "Tacoma, WA";
     window.communityDic["TFL"] = "Tampa, FL";
     window.communityDic["VBWVA"] = "Virginia Beach - Williamsburg, VA";
     window.communityDic["WDC"] = "Washington, DC";

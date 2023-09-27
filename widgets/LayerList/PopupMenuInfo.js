@@ -246,14 +246,15 @@ define([
         if (((layerId.indexOf(window.layerIdPrefix)) >= 0)||(bFeaturedCollection == true)) {
 			arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");
 			getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, eaID, actionType);
-        }     
-        else if (eaID==window.timeSeriesLayerId) {
-    		var climateVar = document.getElementById("climateSelection").value;
-        	metaDataIDFromVariable = window.timeSeriesMetadata[climateVar];
-        	metaDataID = window.nationalMetadataDic[metaDataIDFromVariable];
-            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");	       	
-        }   
-        else {
+        } else if (eaID==window.timeSeriesLayerId) {
+          var climateVar = document.getElementById("climateSelection").value;
+          metaDataIDFromVariable = window.timeSeriesMetadata[climateVar];
+          metaDataID = window.nationalMetadataDic[metaDataIDFromVariable];
+           window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");	       	
+        } // open demographics url if added from Demographic Layers widget
+          else if (layerId.includes('ejdemog') || layerId.includes('census2010') || layerId.includes('census2000') || layerId.includes('census2k')) {
+          window.open('https://www.epa.gov/ejscreen/ejscreen-map-descriptions');
+        } else {
         	arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");  	
         	getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, clickedURL, actionType);
         }    	

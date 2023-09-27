@@ -68,6 +68,8 @@ function(declare,
 	};
 
     var calculateChangeClick = function() {
+		var startTime = performance.now();
+		console.log(startTime);
     	esri.show(dom.byId("loadingWrap2"));
     	document.getElementById("ECATgpFail").style.display = 'none';
     	var scenarioSelection = document.getElementById("scenario");
@@ -121,7 +123,8 @@ function(declare,
 		//gpComputeClimateChange.setUpdateDelay(7000);
 
 		gpComputeClimateChange.submitJob(gpParams, onTaskComplete, onTaskStatus, onTaskFailure);
-			 
+		var endTime = performance.now();
+		console.log("calculateChangeClick took: ", endTime - startTime);
     };
     var onTaskComplete = function(jobInfo) {
     	document.getElementById("ECATgpFail").style.display = "none";
@@ -147,35 +150,32 @@ function(declare,
         esri.hide(dom.byId("loadingWrap2"));
 	};
     var doIdentify = function(event) {
-            map.graphics.clear();
-            var dPixelValue = 0;
-            identifyParams = new IdentifyParameters();
-            identifyParams.tolerance = 3;
-            identifyParams.returnGeometry = true;
-            identifyParams.layerOption = IdentifyParameters.LAYER_OPTION_ALL;
-            identifyParams.width = map.width;
-            identifyParams.height = map.height;            
-            identifyParams.geometry = event.mapPoint;
-            identifyParams.mapExtent = map.extent;
-    		lyr = map.getLayer(window.addedLayerIdPrefix + layerID);
-			if(lyr){
-				if (lyr.visible) {
-	            identifyTask.execute(identifyParams, function (idResults) {
-		            	if (window.widthOfInfoWindow == 0 ) {
-	                		window.widthOfInfoWindow = map.infoWindow.width;
-	                		window.heightOfInfoWindow = map.infoWindow.height;
-	                	}
-			
-					map.infoWindow.resize(140, 120);            
-            		map.infoWindow.setTitle("Identify Results");
-            		dPixelValue = parseFloat(idResults[0].feature.attributes['Pixel Value']);
-            		map.infoWindow.setContent(dPixelValue.toString());
-
-			        map.infoWindow.show(event.screenPoint, map.getInfoWindowAnchor(event.screenPoint));
+        map.graphics.clear();
+        var dPixelValue = 0;
+        identifyParams = new IdentifyParameters();
+        identifyParams.tolerance = 3;
+        identifyParams.returnGeometry = true;
+        identifyParams.layerOption = IdentifyParameters.LAYER_OPTION_ALL;
+        identifyParams.width = map.width;
+        identifyParams.height = map.height;            
+        identifyParams.geometry = event.mapPoint;
+        identifyParams.mapExtent = map.extent;
+		lyr = map.getLayer(window.addedLayerIdPrefix + layerID);
+		if(lyr){
+			if (lyr.visible) {
+            identifyTask.execute(identifyParams, function (idResults) {
+		        if (window.widthOfInfoWindow == 0 ) {
+	        		window.widthOfInfoWindow = map.infoWindow.width;
+            		window.heightOfInfoWindow = map.infoWindow.height;
+				}
+				map.infoWindow.resize(140, 120);            
+        		map.infoWindow.setTitle("Identify Results");
+        		dPixelValue = parseFloat(idResults[0].feature.attributes['Pixel Value']);
+        		map.infoWindow.setContent(dPixelValue.toString());
+				map.infoWindow.show(event.screenPoint, map.getInfoWindowAnchor(event.screenPoint));
 	            });
-	           }
-            }
-
+	        }
+        }
     };
 
 	// Event handler for onStatusUpdate event

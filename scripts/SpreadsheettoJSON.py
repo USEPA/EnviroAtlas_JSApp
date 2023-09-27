@@ -46,9 +46,9 @@ def main(_argv):
     mapTable = open(mapTablePath)
     mapTableReader = csv.DictReader(mapTable,delimiter=',')
     mapDictionary = dict([(row['jsonElem'], row['Column']) for row in mapTableReader])
-    
+
     # Create a dictionary of field titles to column letters
-    fieldsToColumns = dict([(cell.value, cell.column) for cell in inputWorksheet[1]])
+    fieldsToColumns = dict([(cell.value, cell.column_letter) for cell in inputWorksheet[1]])
 
     # Map the dictionary of csv titles to columns letters via the intermediate dictionary
     key = dict([(key, fieldsToColumns[mapDictionary[key]]) for key in mapDictionary.keys()])
@@ -63,19 +63,19 @@ def main(_argv):
     fullJSON = {"layers": {"layer": []}}
 
     for rowID in rowsToKeep:
-        name = inputWorksheet[key["name"]+rowID].value
+        name = inputWorksheet[key["name"] + rowID].value
         layerJSON = {"opacity": 0.6,
                     "visible": False}
-        if (inputWorksheet[key["serviceType"]+rowID].value == "feature"):
-            layerJSON["type"] ="FEATURE"
+        if inputWorksheet[key["serviceType"] + rowID].value == "feature":
+            layerJSON["type"] = "FEATURE"
             layerJSON["autorefresh"] = 0
             layerJSON["mode"] = "ondemand"
         else:
-            if (inputWorksheet[key["serviceType"]+rowID].value == "dynamic" or inputWorksheet[key["serviceType"]+rowID].value == "image"):
+            if inputWorksheet[key["serviceType"] + rowID].value == "dynamic" or inputWorksheet[key["serviceType"] + rowID].value == "image":
                 layerJSON["type"] = "DYNAMIC"
-            if (inputWorksheet[key["serviceType"]+rowID].value == "tile"):
+            if inputWorksheet[key["serviceType"] + rowID].value == "tile":
                 layerJSON["type"] = "TILED"
-            if (inputWorksheet[key["serviceType"]+rowID].value == "image"):
+            if inputWorksheet[key["serviceType"] + rowID].value == "image":
                 layerJSON["type"] = "IMAGE"
             ### code for reading in saved json files with layer/popup definitions.
             #with open(rootpath + inputWorksheet.cell(key["popupDefinition"]+rowID).value) as json_data:
