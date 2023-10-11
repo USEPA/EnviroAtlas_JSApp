@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////
 // Copyright © 2014 Esri. All Rights Reserved.
 //
 // Licensed under the Apache License Version 2.0 (the "License");
@@ -234,11 +234,12 @@ define([
 	        	if (window.hashPopup[eaID].geometrytype == "point") {
 	        		selectQuery.distance = 180;
 	        	}
-				if (window.hashPopup[eaID].geometrytype == "polyline") {
+			if (window.hashPopup[eaID].geometrytype == "polyline") {
 	        		selectQuery.distance = 180;
 	        	}
-	        }
-	                   
+	        } else {
+			selectQuery.distance = 500;
+			}     
 	        var queryTask = new QueryTask(window.hashURL[eaID]);
 	        popupField = window.hashPopup[eaID].fieldInfos[0]["fieldName"];
 	        var bIsTextFormat = false;
