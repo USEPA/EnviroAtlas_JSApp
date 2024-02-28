@@ -82,8 +82,9 @@ if (len(failedDemoHucArray)>0):
     htmlForEmail = htmlForEmail + failedDemoHucArray[0] + "<br />"
     printEscaped("\nfailedDemoHucArray is not empty:" + failedDemoHucArray[0]+"\n")
     htmlForEmail = htmlForEmail + " <br />" + "error message is:" + " <br />"
-    printEscaped("\nfailedDemoHucArray is not empty:" + failedDemoHucArray[1]+"\n")
-    htmlForEmail = htmlForEmail + failedDemoHucArray[1]
+    if (len(failedDemoHucArray)>1):
+        printEscaped("\nfailedDemoHucArray is not empty:" + failedDemoHucArray[1]+"\n")
+        htmlForEmail = htmlForEmail + failedDemoHucArray[1]
 
 
 msg = MIMEMultipart('alternative')
