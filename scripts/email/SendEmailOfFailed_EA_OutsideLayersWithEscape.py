@@ -44,7 +44,7 @@ recipients = ['Rosenbaum.Barbara@epa.gov', 'Hultgren.Torrin@epa.gov', 'Jett.Stev
 
 def printEscaped(value):
     #replae angle brackets with &lt; and &gt;
-    print(string.replace("<","&lt;").replace(">","&gt;"))
+    print(value.replace("<","&lt;").replace(">","&gt;"))
     
 def writeURLintoHTML(failedEaIDArray, InputData, html):
     data = json.load(open(InputData))
