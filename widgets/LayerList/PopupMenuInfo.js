@@ -252,7 +252,7 @@ define([
           metaDataID = window.nationalMetadataDic[metaDataIDFromVariable];
            window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");	       	
         } // open demographics url if added from Demographic Layers widget
-          else if (layerId.includes('ejdemog') || layerId.includes('census2010') || layerId.includes('census2000')) {
+          else if (layerId.includes('ejdemog') || layerId.includes('census2010') || layerId.includes('census2000') || layerId.includes('census2k')) {
           window.open('https://www.epa.gov/ejscreen/ejscreen-map-descriptions');
         } else {
         	arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");  	

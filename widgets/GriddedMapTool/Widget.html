@@ -1,7 +1,7 @@
 <div>
   <div data-dojo-attach-point="tabMain">
     <div class="${baseClass} profile-tab-node" data-dojo-attach-point="tabNode1">
-      <p style="font-size: 14px; text-align:center; padding: 3px 0px 3px;">The EnviroAtlas <i>Summarize My Area</i> allows users to calculate summary statistics for select indicators using a custom geography.</p>
+      <p style="font-size: 14px; text-align:center; padding: 3px 0px 0px;">The EnviroAtlas <i>Summarize My Area</i> allows users to calculate summary statistics for select indicators using a custom geography.</p>
       <div class="input-step">
         <div>
            <p style="font-size:15px">1. Select an indicator</p>
@@ -81,14 +81,15 @@
             <option value="county">County</option>
             <!--<option value="state">State</option>-->
             <option value="district">Congressional District</option>
-            <option value="huc-8">HUC-8</option>
-            <option value="huc-12">HUC-12</option>
+            <option value="blockgroup">Census Block Group</option>
+            <option value="huc-8">Subbasin (HUC-8)</option>
+            <option value="huc-12">Subwatershed (HUC-12)</option>
             <option value="point">Draw a point</option>
             <option value="line">Draw a line</option>
             <option value="area">Draw an area</option>
             <!--<option value="file">Use your own shapefile</option>-->
           </select>
-          <button id="gridded-map-clear-button"></button>
+          <!-- <button id="gridded-map-clear-button"></button> -->
           <div id="gridded-map-shape-file-wrapper" style="display: none">
             <form enctype="multipart/form-data" method="post" id="gridded-map-upload-form">
               <input id="gridded-map-shape-file-upload" type="file" name="file" />
@@ -110,7 +111,7 @@
           </div>-->
           <div class="point-buffer">
             <label for="gridded-map-buffer">Buffer distance (km)</label>
-            <input type="number" id="gridded-map-buffer" name="buffer" min="0.0" value="0.5">
+            <input type="number" id="gridded-map-buffer" name="buffer" min="0.0" value="1">
           </div>
           <div id="exlude-area-wrapper" style="display: none">
             <label for="gridded-map-buffer">Exclude Inner Feature:</label>
