@@ -216,6 +216,7 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
 	  //var staging service_url = 'https://api.epa.gov/waters/v1/pointindexing?api_key=zXhLdLJEzIyZZ8KKjml1nvKg2sGT7RTWVUI3tWet&pgeometry=POINT%28-83.38745055283775%2033.94669558441081%29';
       //settings for indexing service
       var data = {
+		"api_key": "zXhLdLJEzIyZZ8KKjml1nvKg2sGT7RTWVUI3tWet",
         "pgeometry": "SRID=4326;POINT(" + point.getLongitude() + " " + point.getLatitude() + ")",
         //"pgeometryMod": "WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84",
         "ppointindexingmethod": "RAINDROP",
@@ -225,7 +226,7 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
         "preturnflowlinegeomflag": "FALSE",
       };
       //Point Indexing service
-      var layerUrl = "https://api.epa.gov/waters/v1/pointindexing?api_key=zXhLdLJEzIyZZ8KKjml1nvKg2sGT7RTWVUI3tWet";
+      var layerUrl = "https://api.epa.gov/waters/v1/pointindexing?";
       var layersRequest = esriRequest({
         url: layerUrl,
         content: data,
