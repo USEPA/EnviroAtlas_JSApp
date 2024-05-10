@@ -230,7 +230,7 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
         url: layerUrl,
         content: data,
         handleAs: "json",
-        callbackParamName: "callback"
+        //callbackParamName: "callback"
       });
       layersRequest.then(
           function(response) {
