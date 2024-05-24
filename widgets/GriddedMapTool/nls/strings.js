@@ -10,7 +10,7 @@ define({
     sizeError: "The area you have selected is too large, please try again with a smaller selection.",
     tooSmallError: "The area you have selected is too small, please try again with a larger selection.",
     genericError: "Something went wrong, please re-select an area on the map to try again",
-    hucServiceMsg: "Zoom in to see HUC boundaries",
+    zoomServiceMsg: "Zoom in to see summary unit features",
     inputTableHeaderCol1: {
       area: "Draw Type",
       point: "Draw Type",
@@ -124,6 +124,78 @@ define({
       layersUsed: ['National Land Cover Database'],
       layersUsedURL: ['https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/NationalLandCover.pdf'],
       resolution: 30
+    },
+    sum_units: {
+      "stateLayer": {
+        "url": 'https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_States_Non_Generalized/FeatureServer/0',
+        "minScale": '300000000',
+        "name": 'State',
+        "label": 'results.STATE_NAME',
+        "outfields": ['STATE_NAME', 'POPULATION'],
+        "outdesc": {
+          'Geometry Type': 'US State',
+          'State': 'results.STATE_NAME'
+        }
+      },
+      "countyLayer": {
+        "url": 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Counties/FeatureServer/0',
+        "minScale": '300000000',
+        "name": "County",
+        "label": "results.NAME + ', ' + results.STATE_NAME",
+        "outfields": ['STATE_NAME', 'NAME'],
+        "outdesc": {
+          'Geometry Type': 'US County',
+          'County': "results.NAME + ', ' + results.STATE_NAME"
+        }
+      },
+      "blockgroupLayer": {
+        "url": 'https://ejscreen.epa.gov/arcgis/rest/services/ejscreen/census2020acs/MapServer/0',
+        "minScale": '2000000',
+        "name": "Blockgroup X",
+        "label": "'Census Block Group: ' + results.STCNTRBG",
+        "outfields": ['STCNTRBG', 'COUNTY', 'STATE', 'TOTALPOP'],
+        "outdesc": {
+          'Geometry Type': '2020 US Census Block Groups',
+          'Block Group ID': "results.STCNTRBG",
+          '2020 ACS Population': "results.TOTALPOP"
+        }
+      },
+      "districtLayer": {
+        "url": 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_118th_Congressional_Districts/FeatureServer/0',
+        "minScale": "300000000",
+        "name": "118th Congressional Districts",
+        "label": "'Congressional District ' + results.STATE_ABBR + results.DISTRICTID",
+        "outfields": ['DISTRICTID', 'NAME', 'PARTY', 'STATE_ABBR'],
+        "outdesc": {
+          'Geometry Type': '118th US Congressional Districts',
+          'District': 'results.STATE_ABBR+results.DISTRICTID',
+          'Representative': "results.NAME + ' - ' +results.PARTY"
+        }
+      },
+      "huc-12Layer": {
+        "url": 'https://enviroatlas.epa.gov/arcgis/rest/services/Other/HydrologicUnits/MapServer/4',
+        "minScale": "2000000",
+        "name": "HUC-12",
+        "label": "results.HU_12_Name + ' (' + results.HUC_12 + ')'",
+        "outfields": ['HUC_12', 'HU_12_Name'],
+        "outdesc": {
+          'Geometry Type': 'Sub-watershed (HUC-12)',
+          'HUC-12 ID': "results.HUC_12",
+          'HUC-12 Name': "results.HU_12_Name"
+        }
+      },
+      "huc-8Layer": {
+        "url": 'https://enviroatlas.epa.gov/arcgis/rest/services/Other/HydrologicUnits/MapServer/2',
+        "minScale": "2000000",
+        "name": "HUC-8",
+        "label": "results.HU_8_Name + ' (' + results.HUC8 + ')'",
+        "outfields": ['HUC8', 'HU_8_Name'],
+        "outdesc": {
+          'Geometry Type': 'Subbasin (HUC-8)',
+          'HUC-8 ID': "results.HUC8",
+          'HUC-8 Name': "results.HU_8_Name"
+        }
+      }
     },
     stateLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_States_Non_Generalized/FeatureServer/0',
     countyLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Counties/FeatureServer/0',
