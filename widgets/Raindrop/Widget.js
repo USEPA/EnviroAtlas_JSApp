@@ -37,14 +37,8 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
 
 
   return declare([BaseWidget], {
-    // DemoWidget code goes here
-
-    //please note that this property is be set by the framework when widget is loaded.
-    //templateString: template,
-
     baseClass: 'jimu-widget-demo',
     drawTool: null,
-
 
     postCreate: function() {
       this.inherited(arguments);
@@ -56,7 +50,6 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
     startup: function() {
       this.inherited(arguments);
       //this.mapIdNode.innerHTML = 'map id:' + this.map.id;
-
 
       RaindropTool = this;
       curMap = this.map;
@@ -114,7 +107,7 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
           document.getElementById("maxDistLbl").innerHTML = value.toFixed(2);
           maxD = value;
         }
-          }, "sliderMaxDist").startup();
+      }, "sliderMaxDist").startup();
 
       var snapDistance = new HorizontalSlider({
         value: snapD,
@@ -128,7 +121,6 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
           snapD = value;
         }
       }, "sliderSnapDist").startup();
-
 
       //Events
       on(this.clear, "click", function(){
@@ -146,10 +138,10 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
 
         //toggle map onclick event
         if(typeof onMapClick != 'undefined'){
-		  window.toggleOnRainDrop = false;
-		  RaindropTool.publishData({
-				message : "mapClickForPopup"
-		  });  
+		      window.toggleOnRainDrop = false;
+		      RaindropTool.publishData({
+				    message : "mapClickForPopup"
+		      });  
           dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#485566'});
           dojo.byId('selectPoint').innerHTML = 'Activate Tool';
           RaindropTool.drawTool.deactivate();
@@ -159,7 +151,7 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
           onMapClick = undefined;
           //Remove border to button
           domClass.remove(dojo.byId('selectPoint'), 'rainDropButtonSelected');
-        }else{
+        } else {
           //Add border to button
           domClass.add(dojo.byId('selectPoint'), 'rainDropButtonSelected');
           dojo.byId('selectPoint').innerHTML = 'Select Point(s)';
@@ -173,9 +165,10 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
           }          
 
        	  window.toggleOnRainDrop = true;
-		  RaindropTool.publishData({
-				message : "mapClickForPopup"
-		  });        	  
+          RaindropTool.publishData({
+            message : "mapClickForPopup"
+          });
+
           //dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#596d87'});
           dojo.style(dojo.byId('selectPoint'),{backgroundColor: '#93A2B7'});
           //add map click event
@@ -184,13 +177,13 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
             var point = evt.mapPoint;
             //symbology for point
             var pointSymbol = new SimpleMarkerSymbol().setStyle(
-                SimpleMarkerSymbol.STYLE_circle, 5).setColor(
+              SimpleMarkerSymbol.STYLE_circle, 5).setColor(
                 new Color([255, 0, 0, 0.5])
-            );
-            //add graphic
+              );
+            //add graphic as raindrop click
             var graphic = new Graphic(point, pointSymbol);
             curMap.graphics.add(graphic);
-
+            // Run the point indexing service
             RaindropTool._run_RaindropService(point);
           });
         }
@@ -216,33 +209,37 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
 	  //var staging service_url = 'https://api.epa.gov/waters/v1/pointindexing?api_key=zXhLdLJEzIyZZ8KKjml1nvKg2sGT7RTWVUI3tWet&pgeometry=POINT%28-83.38745055283775%2033.94669558441081%29';
       //settings for indexing service
       var data = {
-		"api_key": "zXhLdLJEzIyZZ8KKjml1nvKg2sGT7RTWVUI3tWet",
-        "pgeometry": "SRID=4326;POINT(" + point.getLongitude() + " " + point.getLatitude() + ")",
+		    api_key: "zXhLdLJEzIyZZ8KKjml1nvKg2sGT7RTWVUI3tWet",
+        pgeometry: "SRID=4326;POINT(" + point.getLongitude() + " " + point.getLatitude() + ")",
         //"pgeometryMod": "WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84",
-        "ppointindexingmethod": "RAINDROP",
-        "ppointindexingraindropdist": maxD, //Max Distance
-        "ppointindexingmaxdist": snapD,   //Max Snap Dist
-        "poutputpathflag": "TRUE",
-        "preturnflowlinegeomflag": "FALSE",
+        ppointindexingmethod: "RAINDROP",
+        ppointindexingraindropdist: maxD, //Max Distance
+        ppointindexingmaxdist: snapD,   //Max Snap Dist
+        poutputpathflag: "TRUE",
+        preturnflowlinegeomflag: "FALSE",
       };
+
       //Point Indexing service
-      var layerUrl = "https://api.epa.gov/waters/v1/pointindexing?";
+      var layerUrl = "https://api.epa.gov/waters/v1/pointindexing";
+
       var layersRequest = esriRequest({
         url: layerUrl,
         content: data,
         handleAs: "json",
         //callbackParamName: "callback"
       });
+
       layersRequest.then(
-          function(response) {
-            if(response['output'] != null){
-              //Line Symbology
-              var lineSymbol = new SimpleLineSymbol(
-                  SimpleLineSymbol.STYLE_SHORTDASHDOTDOT,
-                  curColor,
-                  lineTh
-              );
-              // console.log("JSON: ",  dojoJson.toJson(response, true));
+        function(response) {
+          if(response['output'] != null){
+            //Line Symbology
+            var lineSymbol = new SimpleLineSymbol(
+              SimpleLineSymbol.STYLE_SHORTDASHDOTDOT,
+              curColor,
+              lineTh
+            );
+              
+            console.log("JSON: ",  dojoJson.toJson(response, true));
               //add polyline to map
               var polyline = new Polyline(response['output']['indexing_path']['coordinates']);
 
