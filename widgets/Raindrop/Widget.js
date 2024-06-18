@@ -204,9 +204,8 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
     },
 
     _run_RaindropService: function (point){
+      esriConfig.defaults.io.corsEnabledServers.push('https://api.epa.gov');
 
-      //var service_url = 'https://api.epa.gov/waters/v1/pointindexing?pgeometry=POINT%28-83.38745055283775%2033.94669558441081%29&api_key=zXhLdLJEzIyZZ8KKjml1nvKg2sGT7RTWVUI3tWet';
-	  //var staging service_url = 'https://api.epa.gov/waters/v1/pointindexing?api_key=zXhLdLJEzIyZZ8KKjml1nvKg2sGT7RTWVUI3tWet&pgeometry=POINT%28-83.38745055283775%2033.94669558441081%29';
       //settings for indexing service
       var data = {
 		    api_key: "zXhLdLJEzIyZZ8KKjml1nvKg2sGT7RTWVUI3tWet",
