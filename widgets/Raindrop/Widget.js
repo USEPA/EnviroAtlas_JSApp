@@ -211,29 +211,30 @@ function(declare, BaseWidget, on, lang, utils, PanelManager, esriRequest, dojoJs
     },
 
     _run_RaindropService: function (point){
+      esriConfig.defaults.io.corsEnabledServers.push('https://api.epa.gov');
 
-      //var service_url = 'https://ordspub.epa.gov/ords/waters10/PointIndexing.Service';
       //settings for indexing service
       var data = {
-        "pGeometry": "POINT(" + point.getLongitude() + " " + point.getLatitude() + ")",
-        "pGeometryMod": "WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84",
-        "pPointIndexingMethod": "RAINDROP",
-        "pPointIndexingRaindropDist": maxD, //Max Distance
-        "pPointIndexingMaxDist": snapD,   //Max Snap Dist
-        "pOutputPathFlag": "TRUE",
-        "pReturnFlowlineGeomFlag": "FALSE",
-        "optOutCS": "SRSNAME=urn:ogc:def:crs:OGC::CRS84",
-        "optOutPrettyPrint": 0,
-        "optClientRef": "CodePen"
+        api_key: "zXhLdLJEzIyZZ8KKjml1nvKg2sGT7RTWVUI3tWet",
+        pgeometry: "SRID=4326;POINT(" + point.getLongitude() + " " + point.getLatitude() + ")",
+        //"pgeometryMod": "WKT,SRSNAME=urn:ogc:def:crs:OGC::CRS84",
+        ppointindexingmethod: "RAINDROP",
+        ppointindexingraindropdist: maxD, //Max Distance
+        ppointindexingmaxdist: snapD,   //Max Snap Dist
+        poutputpathflag: "TRUE",
+        preturnflowlinegeomflag: "FALSE",
       };
+
       //Point Indexing service
-      var layerUrl = "https://ordspub.epa.gov/ords/waters10/PointIndexing.Service";
+      var layerUrl = "https://api.epa.gov/waters/v1/pointindexing";
+
       var layersRequest = esriRequest({
         url: layerUrl,
         content: data,
         handleAs: "json",
-        callbackParamName: "callback"
+        //callbackParamName: "callback"
       });
+      
       layersRequest.then(
           function(response) {
             if(response['output'] != null){
