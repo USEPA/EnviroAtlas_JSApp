@@ -10,7 +10,7 @@
     "appId": "1EMBh2U8U1dvqVh5",
     "title": "EnviroAtlas",
     "subtitle": "",
-    "logo": "images/logo.png",
+    "logo": "images/logos.png",
     "logoLink": "https://www.epa.gov/enviroatlas",
     "geometryService": "https://utility.arcgisonline.com/arcgis/rest/services/Geometry/GeometryServer",
     "links": [
