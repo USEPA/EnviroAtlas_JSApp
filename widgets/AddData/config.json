@@ -11,7 +11,7 @@
     },
     "Curated": {
       "allow": true,
-      "label": "EnviroAtlas Suggested Content",
+      "label": "EnviroAtlas Picks",
       "filter": "group:6ff29ebf559b405caee1e15fc69209aa"
     },
     "ArcGISOnline": {
