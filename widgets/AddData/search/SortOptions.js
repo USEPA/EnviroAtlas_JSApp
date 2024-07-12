@@ -28,7 +28,7 @@ define(["dojo/_base/declare",
       i18n: i18n,
       templateString: template,
 
-      sortField: null,
+      sortField: "title",
       sortOrder: null,
 
       postCreate: function() {
