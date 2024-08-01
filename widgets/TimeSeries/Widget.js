@@ -712,6 +712,18 @@ define([
 			        disabled: false
 			    }, "removeServiceBtn").startup();  
 
+                var addDataButtonOCONUS = new Button({
+			        id: "loadServiceBtnOCONUS",
+			        name: "loadServiceButton",
+			        disabled: false
+			    }, "loadServiceBtnOCONUS").startup();
+                
+			    var clearLayerButtonOCONUS = new Button({
+			        id: "removeServiceBtnOCONUS",
+			        name: "clearLayerButton",
+			        disabled: false
+			    }, "removeServiceBtnOCONUS").startup();  
+
 			    //loading = dojo.byId("loadingTimeSeriesLayer");//dojo.byId("loadingOverlay");
 			    //esri.hide(loading);
 			    registry.byId("loadServiceBtn").on("click", defineService);		
@@ -773,6 +785,29 @@ define([
 				// Season dialog box
                 var season_info = this.config.seasons;
 				document.getElementById("seasonSelectionHelp").onclick = function (e) {
+					var infobox = new Dialog({
+							title: "Seasons",
+							style: 'width: 300px'
+						});
+
+                    season_text = '';
+
+                    for (i=0; i<season_info.length; i++) {
+                        season_text += "<h2 style='margin-top:0px'>" + season_info[i].s_name + "</h2>";
+                        season_text += "<p>" + season_info[i].description + "</p>";
+                        if (i < season_info.length-1) {
+                            season_text += "<hr style='margin-top:10px'>";
+                        };
+                    };
+
+					var infoDiv = dojo.create('div', {
+						'innerHTML': season_text
+						}, infobox.containerNode);
+						infobox.show()
+				}; 
+
+                var season_info = this.config.seasons;
+				document.getElementById("seasonSelectionHelpOCONUS").onclick = function (e) {
 					var infobox = new Dialog({
 							title: "Seasons",
 							style: 'width: 300px'
