@@ -1,4 +1,7 @@
 # EnviroAtlas
+
+[<img src="https://enviroatlas.epa.gov/enviroatlas/interactivemap/images/logo.png"     title="EnviroAtlas" width=400 >](https://www.epa.gov/enviroatlas)
+
 A Repository for the EnviroAtlas application
 
 EnviroAtlas is a public application. Information can be found at https://www.epa.gov/enviroatlas.
