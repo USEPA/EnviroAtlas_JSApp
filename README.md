@@ -4,7 +4,13 @@
 
 A Repository for the EnviroAtlas application
 
-EnviroAtlas is a public application. Information can be found at [EnviroAtlas Homepage](https://www.epa.gov/enviroatlas) or view the [EnviroAtlas Help](https://enviroatlas.epa.gov/enviroatlas/interactivemap/help.html).
+EnviroAtlas is a public application. 
+
+Helpful information can be found at [EnviroAtlas Homepage](https://www.epa.gov/enviroatlas) or view the [EnviroAtlas Help](https://enviroatlas.epa.gov/enviroatlas/interactivemap/help.html).
+
+
+## Branches
+Please note, branches are under development and have not been fully QA/QC'ed.
 
 
 ## License
