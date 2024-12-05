@@ -53,5 +53,51 @@
 	}, {
 		"s_name":"Annual",
 		"description":"January through December of the same calendar year"
+	}],
+	"OCONUS":[{
+		"text":"Choose a state or territory Outside of the Contiguous U.S. (OCONUS): Alaska, Hawaii, Puerto Rico, U.S. Virgin Islands, American Samoa, Guam, and the Commonwealth of the Northern Mariana Islands."
+	}],
+	"OCONUS_scenarios":[{
+		"model":"",
+		"description":"Shared Socioeconomic Pathways (SSPs) reflect global trends in human activities and changes in radiative forcing that result from changes in atmospheric greenhouse gases (GHGs) and aerosol concentrations. In the SSP labels (like SSP1-2.6), the first number refers to a defined socioeconomic pathway (trends in population, policy, and economic growth), and the second refers to an increase in radiative forcing (W/m2) relative to pre-industrial (1850–1900) average (PIA)."				
+	}, {
+		"model":"SSP1-2.6",
+		"description": "SSP1 (“Sustainability”) assumes widespread global climate change mitigation policies, clean energy technologies, and natural environment conservancy. This scenario assumes very low GHG concentration levels and reflects the international climate policy goal of limiting global warming below 3.6°F (2.0°C) at 2100 compared to PIA."
+	}, {
+		"model":"SSP2-4.5",
+		"description":"SSP2 (“Middle of the Road”) assumes moderate global climate mitigation and adaptation and a slow progress in climate protection measures. This scenario is a medium pathway of future GHG concentrations. Global temperatures increase by 4.9±1.3°F (2.7±0.7°C) at 2100 compared to PIA."
+	}, {
+		"model":"SSP3-7.0",
+		"description":"SSP3 (“Regional Rivalry”) assumes high challenges to mitigation and adaptation. Here, nationalism drives policy, and regional and local take precedence over global issues. Global temperatures increase by 6.5±1.6°F (3.6±0.9°C) at 2100 compared to PIA."
+	}, {
+		"model":"SSP5-8.5",
+		"description": "SSP5 (“Fossil-fueled Development”) reflects high challenges to mitigation and low challenges to adaptation. It is characterized by steadily increasing GHG concentrations. It represents the upper boundary of the range of scenarios. Global temperatures increase by 7.9±2.2°F (4.4±1.2°C) at 2100 compared to PIA."
+	}],
+	"oconus_climate_variables":[{
+		"description":"All variables are presented as a median, minimum, and maximum of the NEX-GDDP Global Climate Model ensemble."
+	},{
+		"name":"Change in Maximum Temperature",
+		"description":"Change in average maximum temperature in degrees Fahrenheit for the season or annually.",
+		"factsheet":"https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_Temp_NEXGDDP_OCONUS.pdf"
+	}, {
+		"name":"Change in Minimum Temperature",
+		"description":"Change in average minimum temperature in degrees Fahrenheit for the season or annually.",
+		"factsheet":"https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_Temp_NEXGDDP_OCONUS.pdf"
+	}, { 
+		"name":"Change in Precipitation",
+		"description":"Change in total precipitation in inches or as fraction for the season or annually.",
+		"factsheet":"https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_Precip_NEXGDDP_OCONUS.pdf"
+	}, {
+		"name":"Change in Potential Evapotranspiration",
+		"description":"Change in total potential evapotranspiration in inches or as fraction for the season or annually (in or fraction).",
+		"factsheet":"https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/Supplemental/Climate_PET_NEXGDDP_OCONUS.pdf"		
+	}],
+	"Period":[{
+		"text":"Climate change variables were computed using 30-year periods: recent history (1976–2005), near-term future (2025–2054), mid-century (2045–2074), and end-of-century (2070–2099). Climate change variables are expressed as change between different periods:",
+		"list1":"recent history (1976–2005) to near-term future (2025–2054)",
+		"list2":"recent history (1976–2005) to mid-century (2045–2074)",
+		"list3":"recent history (1976–2005) to end-of-century (2070–2099)",
+		"list4":"near-term future (2025–2054) to mid-century (2045–2074)",
+		"list5":"near-term future (2025–2054) to end-of-century (2070–2099)"
 	}]
 }

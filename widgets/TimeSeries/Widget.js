@@ -747,7 +747,6 @@ define([
                         if (i < scenario_info.length-1) {
                             scenario_text += "<hr style='margin-top:10px'>";
                         };
-                        //scenario_text += "<BR>";
                     };
 
 					var infoDiv = dojo.create('div', {
@@ -757,7 +756,7 @@ define([
 				}; 
                 //end of modelSelectionHelp click event
 				
-                // Cliamte Variable dialog box
+                // Climate Variable dialog box
                 var climate_info = this.config.climate_variables;
 				document.getElementById("climateSelectionHelp").onclick = function (e) {
                     var infobox = new Dialog({
@@ -805,6 +804,76 @@ define([
 						}, infobox.containerNode);
 						infobox.show()
 				}; 
+                //end of seasonSelectionHelp click event
+
+                var oconus_info = this.config.OCONUS;
+				document.getElementById("domainSelectionHelpOCONUS").onclick = function (e) {
+					var infobox = new Dialog({
+							title: "Outside CONUS",
+							style: 'width: 300px'
+						});
+
+                    oconus_text = "<p>" + oconus_info[0].text + "</p>";;
+
+					var infoDiv = dojo.create('div', {
+						'innerHTML': oconus_text
+						}, infobox.containerNode);
+						infobox.show()
+				}; 
+                //end of domainSelectionHelpOCONUS click event
+
+    			// OCONUS Scenario dialog box
+                var oconus_scenario_info = this.config.OCONUS_scenarios;
+				document.getElementById("modelSelectionHelpOCONUS").onclick = function (e) {
+					var infobox = new Dialog({
+							title: "Outside CONUS Scenarios",
+							style: 'width: 500px'
+						});
+
+                    oconus_scenario_text = '';
+                    for (i=0; i<oconus_scenario_info.length; i++) {
+                        oconus_scenario_text += "<h2 style='margin-top:0px'>" + oconus_scenario_info[i].model + "</h2>";
+                        oconus_scenario_text += "<p>" + oconus_scenario_info[i].description + "</p>";
+                        if (i < oconus_scenario_info.length-1) {
+                            oconus_scenario_text += "<hr style='margin-top:10px'>";
+                        };
+                    };
+
+					var infoDiv = dojo.create('div', {
+							'innerHTML': oconus_scenario_text
+						}, infobox.containerNode);
+						infobox.show()
+				}; 
+                //end of modelSelectionHelpOCONUS click event
+
+                // OCONUS Climate Variable dialog box
+                var oconus_climate_info = this.config.oconus_climate_variables;
+				document.getElementById("climateSelectionHelpOCONUS").onclick = function (e) {
+                    var infobox = new Dialog({
+                        title: "Outside CONUS Climate Variables",
+                        style: 'width: 300px'
+                    });
+
+                    oconus_variable_text = '';
+                    for (i=0; i<oconus_climate_info.length; i++) {
+                        if (oconus_climate_info[i].name) {
+                            oconus_variable_text += "<h2 style='margin-top:0px'>" + oconus_climate_info[i].name + "</h2>";
+                        }
+                        oconus_variable_text += "<p>" + oconus_climate_info[i].description + "</p>";
+                        if (oconus_climate_info[i].factsheet) {
+                            oconus_variable_text += "<br><a href='" + oconus_climate_info[i].factsheet + "' target='_blank' class='factsheetLink'>Fact Sheet</a>";
+                        }
+                        if (i < oconus_climate_info.length-1) {
+                            oconus_variable_text += "<hr style='margin-top:10px'>";
+                        };
+                    };
+
+                    var infoDiv = dojo.create('div', {
+                        'innerHTML': oconus_variable_text
+                        }, infobox.containerNode);
+                        infobox.show()
+                }; 
+                //end of climateSelectionHelpOCONUS click event 
 
                 var season_info = this.config.seasons;
 				document.getElementById("seasonSelectionHelpOCONUS").onclick = function (e) {
@@ -828,7 +897,30 @@ define([
 						}, infobox.containerNode);
 						infobox.show()
 				}; 
-                //end of seasonSelectionHelp click event											    				                     
+                //end of seasonSelectionHelpOCONUS click event
+
+                // OCONUS Period dialog box
+                var oconus_period_info = this.config.Period;
+				document.getElementById("periodSelectionHelpOCONUS").onclick = function (e) {
+					var infobox = new Dialog({
+							title: "Outside CONUS Period",
+							style: 'width: 300px'
+						});
+
+                    oconus_period_text = "<p>" + oconus_period_info[0].text + "</p><br>";
+                    oconus_period_text += "<li>" + oconus_period_info[0].list1 + "</li>";
+                    oconus_period_text += "<li>" + oconus_period_info[0].list2 + "</li>";
+                    oconus_period_text += "<li>" + oconus_period_info[0].list3 + "</li>";
+                    oconus_period_text += "<li>" + oconus_period_info[0].list4 + "</li>";
+                    oconus_period_text += "<li>" + oconus_period_info[0].list5 + "</li>";
+
+					var infoDiv = dojo.create('div', {
+						'innerHTML': oconus_period_text
+						}, infobox.containerNode);
+						infobox.show()
+				}; 
+                //end of periodSelectionHelpOCONUS click event
+
             },
 
 	        onOpen: () => {
