@@ -48,7 +48,7 @@ def main(_argv):
     mapDictionary = dict([(row['jsonElem'], row['Column']) for row in mapTableReader])
     
     # Create a dictionary of field titles to column letters
-    fieldsToColumns = dict([(cell.value, cell.column) for cell in inputWorksheet[1]])
+    fieldsToColumns = dict([(cell.value, cell.column_letter) for cell in inputWorksheet[1]])
 
     # Map the dictionary of csv titles to columns letters via the intermediate dictionary
     key = dict([(key, fieldsToColumns[mapDictionary[key]]) for key in mapDictionary.keys()])
@@ -92,17 +92,15 @@ def main(_argv):
             except:
                 print("This layer had invalid JSON for the popup: " + name)
                 print(popupTxt)
-        # stringList = ["eaID","eaScale","eaDescription","eaTopic","IsSubLayer","SubLayerNames","SubLayerIds","UniqueTag","HUBsearch",]
-        stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL","numDecimal","IsSubLayer","sourceType","cacheLevelNat","categoryTab","drawSelectLayer","DownloadSource","agoID","UniqueTag","HUBsearch","ViewName"]
+        stringList = ["eaID","eaScale","eaDescription","eaDfsLink","eaLyrNum","eaMetadata","eaTopic","tileLink","tileURL","IsSubLayer","sourceType","cacheLevelNat","categoryTab"]
         for elem in stringList:
             cell = inputWorksheet[key[elem]+rowID]
-            if cell.value != None:
+            if cell.value != None and cell.value != '':
                 cellValue = cell.value
                 if cellValue == 'x':
                     cellValue = True
                 layerJSON[elem] = cellValue
-        arrayList = [("eaTags",","),("eaBCSDD",";"),("SubLayerNames", ","), ("SubLayerIds", ";"), ("areaGeog",","), ("hucNavStats",","), ("hucNavStatsUnits",","),("TagHubText",",")]
-        # arrayList = [("SubLayerNames", ","), ("SubLayerIds", ";")]
+        arrayList = [("eaTags",","),("eaBCSDD",";"),("SubLayerNames", ","), ("SubLayerIds", ";"), ("areaGeog",",")]
         for elem,separator in arrayList:
              if inputWorksheet[key[elem]+rowID].value:
                 fullString = inputWorksheet[key[elem]+rowID].value
