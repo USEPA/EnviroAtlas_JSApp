@@ -11,7 +11,7 @@ Torrin Hultgren, October 2015
 import sys, json, csv, openpyxl
 
 # This is the spreadsheet that contains all the content
-rootpath = r"c:\\inetpub\EnviroAtlas\scripts\\"
+rootpath = r"C:\inetpub\wwwroot\EnviroAtlas\scripts\\"
 inputSpreadsheet = rootpath + r"EAWAB4JSON.xlsx"
 # Just in case there are rows to ignore at the top - header is row 1
 startingRow = 2
@@ -46,9 +46,9 @@ def main(_argv):
     mapTable = open(mapTablePath)
     mapTableReader = csv.DictReader(mapTable,delimiter=',')
     mapDictionary = dict([(row['jsonElem'], row['Column']) for row in mapTableReader])
-    
+
     # Create a dictionary of field titles to column letters
-    fieldsToColumns = dict([(cell.value, cell.column) for cell in inputWorksheet[1]])
+    fieldsToColumns = dict([(cell.value, cell.column_letter) for cell in inputWorksheet[1]])
 
     # Map the dictionary of csv titles to columns letters via the intermediate dictionary
     key = dict([(key, fieldsToColumns[mapDictionary[key]]) for key in mapDictionary.keys()])
@@ -63,19 +63,19 @@ def main(_argv):
     fullJSON = {"layers": {"layer": []}}
 
     for rowID in rowsToKeep:
-        name = inputWorksheet[key["name"]+rowID].value
+        name = inputWorksheet[key["name"] + rowID].value
         layerJSON = {"opacity": 0.6,
                     "visible": False}
-        if (inputWorksheet[key["serviceType"]+rowID].value == "feature"):
-            layerJSON["type"] ="FEATURE"
+        if inputWorksheet[key["serviceType"] + rowID].value == "feature":
+            layerJSON["type"] = "FEATURE"
             layerJSON["autorefresh"] = 0
             layerJSON["mode"] = "ondemand"
         else:
-            if (inputWorksheet[key["serviceType"]+rowID].value == "dynamic" or inputWorksheet[key["serviceType"]+rowID].value == "image"):
+            if inputWorksheet[key["serviceType"] + rowID].value == "dynamic" or inputWorksheet[key["serviceType"] + rowID].value == "image":
                 layerJSON["type"] = "DYNAMIC"
-            if (inputWorksheet[key["serviceType"]+rowID].value == "tile"):
+            if inputWorksheet[key["serviceType"] + rowID].value == "tile":
                 layerJSON["type"] = "TILED"
-            if (inputWorksheet[key["serviceType"]+rowID].value == "image"):
+            if inputWorksheet[key["serviceType"] + rowID].value == "image":
                 layerJSON["type"] = "IMAGE"
             ### code for reading in saved json files with layer/popup definitions.
             #with open(rootpath + inputWorksheet.cell(key["popupDefinition"]+rowID).value) as json_data:
@@ -92,8 +92,7 @@ def main(_argv):
             except:
                 print("This layer had invalid JSON for the popup: " + name)
                 print(popupTxt)
-        # stringList = ["eaID","eaScale","eaDescription","eaTopic","IsSubLayer","SubLayerNames","SubLayerIds","UniqueTag","HUBsearch",]
-        stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL","numDecimal","IsSubLayer","sourceType","cacheLevelNat","categoryTab","drawSelectLayer","DownloadSource","agoID","UniqueTag","HUBsearch","ViewName"]
+        stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL","numDecimal","IsSubLayer","SubLayerNames","SubLayerIds","sourceType","cacheLevelNat","categoryTab","drawSelectLayer","DownloadSource","agoID"]
         for elem in stringList:
             cell = inputWorksheet[key[elem]+rowID]
             if cell.value != None:
@@ -101,8 +100,7 @@ def main(_argv):
                 if cellValue == 'x':
                     cellValue = True
                 layerJSON[elem] = cellValue
-        arrayList = [("eaTags",","),("eaBCSDD",";"),("SubLayerNames", ","), ("SubLayerIds", ";"), ("areaGeog",","), ("hucNavStats",","), ("hucNavStatsUnits",","),("TagHubText",",")]
-        # arrayList = [("SubLayerNames", ","), ("SubLayerIds", ";")]
+        arrayList = [("eaTags",","),("eaBCSDD",";"),("SubLayerNames", ","), ("SubLayerIds", ";"), ("areaGeog",","), ("hucNavStats",","), ("hucNavStatsUnits",",")]
         for elem,separator in arrayList:
              if inputWorksheet[key[elem]+rowID].value:
                 fullString = inputWorksheet[key[elem]+rowID].value
