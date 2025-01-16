@@ -92,7 +92,7 @@ def main(_argv):
             except:
                 print("This layer had invalid JSON for the popup: " + name)
                 print(popupTxt)
-        stringList = ["eaID","eaScale","eaDescription","eaDfsLink","eaLyrNum","eaMetadata","eaTopic","tileLink","tileURL","IsSubLayer","sourceType","cacheLevelNat","categoryTab"]
+        stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL","numDecimal","IsSubLayer","sourceType","cacheLevelNat","categoryTab","drawSelectLayer","DownloadSource","agoID","UniqueTag","HUBsearch","ViewName"]
         for elem in stringList:
             cell = inputWorksheet[key[elem]+rowID]
             if cell.value != None and cell.value != '':
@@ -100,7 +100,7 @@ def main(_argv):
                 if cellValue == 'x':
                     cellValue = True
                 layerJSON[elem] = cellValue
-        arrayList = [("eaTags",","),("eaBCSDD",";"),("SubLayerNames", ","), ("SubLayerIds", ";"), ("areaGeog",",")]
+        arrayList = [("eaTags",","),("eaBCSDD",";"),("SubLayerNames", ","), ("SubLayerIds", ";"), ("areaGeog",","), ("hucNavStats",","), ("hucNavStatsUnits",",")]
         for elem,separator in arrayList:
              if inputWorksheet[key[elem]+rowID].value:
                 fullString = inputWorksheet[key[elem]+rowID].value
