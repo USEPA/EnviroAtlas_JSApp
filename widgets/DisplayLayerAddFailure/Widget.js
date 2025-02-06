@@ -44,7 +44,6 @@ define([
 		ContentPane,
 		TooltipDialog
 	) {
-
 		var map;
 		var self;
 		var failedEAID;
@@ -68,9 +67,6 @@ define([
 				hr.style.display = 'none';
 				var butEmail = document.getElementById('eMailOption');
 				butEmail.style.display = 'none';
-
-
-
 			} else {
 				comment.innerHTML = "The following web service(s) failed to load at this time and may be unavailable for this session.";
 			}
@@ -100,7 +96,6 @@ define([
 				}
 				failedEAID = failedEAID.substring(0, failedEAID.length - 1);
 			}
-
 			if (Object.keys(window.faildedOutsideLayerDictionary).length > 0) {
 				enableSendButton();
 				var hr = document.getElementById('hrFailedOutsideLayers');
@@ -126,7 +121,7 @@ define([
 				failedOutsideLayers = failedOutsideLayers.substring(0, failedOutsideLayers.length - 3);
 			}
 			if (Object.keys(window.failedDemoHucTimeseEcatRain).length > 0) {
-				enableSendButton();
+				disableSendButton();
 				var hr = document.getElementById('hrDemoHucTimeseEcatRain');
 				hr.style.display = '';
 				var commentFaileOursideLayer = document.getElementById("failedDemoHucTimeseEcatRainComment");
@@ -164,6 +159,7 @@ define([
 			$("#sendButton").hide();
 			$("#message").show();
 		};
+
 		var enableSendButton = function () {
 			//$("#sendButton").prop('disabled',false);
 			$("#sendButton").show();
@@ -171,12 +167,9 @@ define([
 		};
 
 		var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
-
 			//name: 'DisplayLayerAddFailure',
 			baseClass: 'jimu-widget-displaylayeraddfailure',
 			sendEmail: function () {
-
-
 				try {
 					var xhr = new XMLHttpRequest();
 					//xhr.open('GET', "https://v18ovhrttf760.aa.ad.epa.gov/SendEmailOfFailedLayers.py?failedEALayers=" + failedEAID + "&failedOutsideLayers=" + failedOutsideLayers, true);
@@ -197,19 +190,18 @@ define([
 				catch (error) {
 					console.log(error);
 				}
-
 			},
+
 			onReceiveData: function (name, widgetId, data, historyData) {
 				updateFailedListOfLayers();
 			},
-			startup: function () {
 
+			startup: function () {
 				this.inherited(arguments);
 				map = this.map;
 				self = this;
 				updateFailedListOfLayers();
 			},
-
 		});
 
 		return clazz;
