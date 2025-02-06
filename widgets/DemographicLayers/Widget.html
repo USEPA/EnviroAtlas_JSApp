@@ -1,5 +1,4 @@
 <div style="height:100%;overflow-y: hidden; background-color: #ece9eb">
-    <!-- <div id="titleBarTimeSeries2" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Climate Scenarios', open: true"> -->
     <div
         style="width:100%; background-color:#b3b3b3; font-size:16px; padding-left:4px; border-bottom: 1px solid rgb(150,150,150)">
         U.S. Census Data
@@ -15,12 +14,10 @@
         </style>
         <div data-dojo-attach-point="levelDiv"
             style="margin: 4px 4px 4px 4px;border: none;background-color: #ece9eb;display:none">&nbsp;</div>
-
         <form data-dojo-attach-point="renderform" style="background-color: #ece9eb;height:100%;">
             <input type="hidden" name="startcolor" value="" />
             <input type="hidden" name="endcolor" value="" />
             <table>
-
                 <tr>
                     <td>
                         Source:
@@ -55,12 +52,10 @@
                         </select>
                     </td>
                 </tr>
-                <!-- line space -->
                 <tr>
                     <td style='height:12px;'></td>
                 </tr>
                 <tr>
-
                     <td colspan="2" align="center">
                         <input type="radio" name="rendertype" value="polygon" checked id="RendeAsPolygon"
                             data-dojo-attach-event="onchange:_changeRendertype">&nbsp;Choropleth Map&nbsp;&nbsp;
@@ -105,7 +100,6 @@
                         </select>
                     </td>
                 </tr>
-
                 <tr>
                     <td data-dojo-attach-point="colormarkertd">
                         Colors:
@@ -166,7 +160,6 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-
                                     <div dojoType="dijit.form.HorizontalSlider" data-dojo-attach-point="demogsliderNode"
                                         id="demogslider" value="0.2" maximum="1" minimum="0" pageIncrement="100"
                                         showButtons="false" intermediateChanges="true" slideDuration="500"
@@ -206,7 +199,6 @@
                         <div style="white-space: -moz-pre-wrap; position: relative; left: 40px;top:1px; width:20px;height: 16px;"
                             data-dojo-attach-point="color1" data-dojo-type="jimu/dijit/ColorPicker"
                             data-dojo-props='color:[192,192,192,255]'></div>
-
                     </td>
                 </tr>
                 <tr>
@@ -215,14 +207,8 @@
                             data-dojo-attach-event="onclick:_mapDemog"
                             style="font-family: 'Avenir Light', Verdana, Geneva, sans-serif; margin-top:5px">Add to
                             Map</button>
-
-
                     </td>
-
                 </tr>
-
-
-                <!-- <tr><td data-dojo-attach-point="descdiv" colspan="2" style="background-color: rgb(240, 248, 254); border: 1px solid #cccccc; font-family: Verdana; font-size: 90%; font-weight: normal;"></td></tr> -->
             </table>
             <br />
             <table>
@@ -249,7 +235,10 @@
                 census block groups, counties) and will update based on your extent within the map.
             </p>
         </div>
-
-
+        <div style='border-top: 1px solid black; margin-top:15px; padding-top:10px;'>
+            <p style='color: red; font-weight: bold; font-size: 16px;'>
+                Note: The data for this section of EnviroAtlas are unavailable until further notice.
+            </p>
+        </div>
     </div>
 </div>
