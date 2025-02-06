@@ -24,7 +24,6 @@ define(['dojo/_base/declare',
     'esri/layers/ImageParameters',
     'jimu/PanelManager',
     'dijit/form/HorizontalSlider',
-
     "./configLocal",
     'jimu/dijit/ColorPicker'],
     function (declare,
@@ -184,9 +183,8 @@ define(['dojo/_base/declare',
                     }, infobox.containerNode);
                     infobox.show()
                 };
-
-
             },
+
             postCreate: function () {
                 this._zoomHandler = on(this.map, "zoom-end", lang.hitch(this, this._adjustToState));
 
@@ -198,6 +196,7 @@ define(['dojo/_base/declare',
                 this.drawPalette(this.classNumNode.value, this.currentk, this.reverseStatus);
 
             },
+
             _adjustToState: function () {
                 var wobj = this;
 
@@ -219,7 +218,6 @@ define(['dojo/_base/declare',
                         }
                     }
                 });
-
             },
 
             createCategory: function (key) {
@@ -230,8 +228,6 @@ define(['dojo/_base/declare',
                 var wobj = this;
                 wobj.dtype = key;
                 var dgObj = _config.demogJSON[key];
-
-
 
                 if (dgObj.process) {
                     wobj.createCatList(key);
@@ -281,8 +277,6 @@ define(['dojo/_base/declare',
                                     layerJson[colname].bg_min = bgmin;
                                     layerJson[colname].bg_max = bgmax;
 
-
-
                                     if (typeof catJson[tablename] == 'undefined') {
                                         catJson[tablename] = [];
                                         tableJson[tablename] = tabledesc;
@@ -292,7 +286,6 @@ define(['dojo/_base/declare',
                                     var cat = dojo.trim(featset.features[m].attributes["CATEGORY"]);
                                     var colname = dojo.trim(featset.features[m].attributes["FIELD_NAME"]);
                                     var desc = dojo.trim(featset.features[m].attributes["DESCRIPTION"]);
-
                                     var bgmin = featset.features[m].attributes["BG_MIN"];
                                     var bgmax = featset.features[m].attributes["BG_MAX"];
                                     var trmin = featset.features[m].attributes["TR_MIN"];
@@ -322,11 +315,9 @@ define(['dojo/_base/declare',
 
                                     if (typeof catJson[cat] == 'undefined') {
                                         catJson[cat] = [];
-
                                     }
                                     catJson[cat].push(colname);
                                 }
-
                             }
 
                             _config.demogJSON[key].category = catJson;
@@ -335,29 +326,26 @@ define(['dojo/_base/declare',
                             dgObj.process = true;
                             wobj.createCatList(key);
                             //wobj.setDefaultListIndex(dgObj.defaultCategoryIndex); 
-
                         }
                         wobj.addBtn.disabled = false;
-
                     }
 
                     function queryTaskError(e) {
-
                         window.failedDemoHucTimeseEcatRain["Demographic URL: " + lookuptableurl] = e;
-
                         var widgetName = 'DisplayLayerAddFailure';
                         var widgets = selfSimpleSearchFilter.appConfig.getConfigElementsByName(widgetName);
                         var pm = PanelManager.getInstance();
-                        pm.showPanel(widgets[0]);
+                        //pm.showPanel(widgets[0]);
                     }
-
                 }
             },
+
             setDefaultListIndex: function (defaultIndex) {
                 //set default demog category to Population and update sublist, default for each group set in config object
                 this.demogTypeNode.selectedIndex = defaultIndex;
                 this._changeDemog();
             },
+            
             createCatList: function (key) {
                 //console.log("create cat list");
                 this.demogTypeNode.options.length = 0;
@@ -372,6 +360,7 @@ define(['dojo/_base/declare',
                 if (this.catType == "") this.catType = this.demogTypeNode.options[0].value;
                 this.createColList(key);
             },
+
             createColList: function (key) {
                 //console.log(" create col list");
                 this.demogListNode.options.length = 0;
@@ -385,7 +374,6 @@ define(['dojo/_base/declare',
                     if (fieldname == this.dfield) option.selected = true;
                     this.demogListNode.options[m] = option;
                     m = m + 1;
-
                 }
                 var fkey = this.demogListNode.value;
                 this.dfield = fkey;
@@ -393,8 +381,6 @@ define(['dojo/_base/declare',
                 robj.method = this.classTypeNode.value;
                 robj.classes = this.classNumNode.value;
                 this.renderobj = robj;
-
-
             },
 
             _reverseColor: function () {
@@ -402,14 +388,16 @@ define(['dojo/_base/declare',
                 else this.reverseStatus = true;
                 this.drawPalette(this.classNumNode.value, this.currentk, this.reverseStatus);
             },
+
             _changeCat: function () {
                 this.drawPalette(this.classNumNode.value, this.currentk, this.reverseStatus);
             },
+
             _changeService: function () {
                 var theme = this.serviceNode.value;
-
                 this.createCategory(theme);
             },
+
             _changeDemog: function () {
                 //console.log("change demog");
                 this.currentk = 0;
@@ -418,6 +406,7 @@ define(['dojo/_base/declare',
                 var dmtype = this.dtype;
                 this.createColList(dmtype);
             },
+            
             _changeField: function () {
                 this.currentk = 0;
                 this.dfield = this.demogListNode.value;
@@ -428,6 +417,7 @@ define(['dojo/_base/declare',
                 this.renderobj = robj;
 
             },
+            
             _changeRendertype: function (e) {
                 var rtype = e.target.value;
                 if (rtype == "polygon") {
@@ -442,10 +432,10 @@ define(['dojo/_base/declare',
                     this.colormarkertd.innerHTML = "Marker:"
                 }
             },
+            
             _mapDemog: function (e) {
                 this.addspining(e);
                 var frm = this.renderform;
-
                 var mapid = this.dtype;
                 var fieldid = this.demogListNode.value;
                 var dmethod = this.classTypeNode.value;
@@ -466,11 +456,8 @@ define(['dojo/_base/declare',
                 }
                 robj.mid = mapid;
                 robj.fid = fieldid;
-
                 robj.linecolor = this.color1.getColor();
                 robj.linewidth = parseInt(this.bWidthNode.value);
-
-
                 robj.opcvalue = 1 - this.demogsliderNode.value;
 
                 var svcobj = this.serviceNode;
@@ -492,19 +479,20 @@ define(['dojo/_base/declare',
 
                 var urlParameter = "?demogSource=" + demogSourceForURL + "&demogCategory=" + selfDemographic.demogTypeNode.value + "&demogVariable=" + selfDemographic.demogListNode.value;//?demogSource = census2018acs & demogCategory=Housing& demogVariable=RENT_AMT_3000_3499
                 document.getElementById("urlToBeCopied").value = window.location.host + window.location.pathname + urlParameter
-
-
             },
+
             copyURL: function () {
                 navigator.clipboard.writeText(urlToBeCopied.value);
 
                 var tooltip = document.getElementById("copyURLTooltip");
                 tooltip.innerHTML = "Copied to clipboard: ";
             },
+
             outFunc: function () {
                 var tooltip = document.getElementById("copyURLTooltip");
                 tooltip.innerHTML = "Copy to clipboard";
             },
+
             classbreak: function (renderobj) {
                 var mapid = renderobj.mid;
                 var fieldid = renderobj.fid;
@@ -519,10 +507,9 @@ define(['dojo/_base/declare',
                     this._genRender(renderobj);
                     //this._mapRender(renderobj);
                 }
-
             },
+            
             _getRenderer: function (currentLayer, optionsArray, renderobj) {
-
                 var fielddesc = renderobj.fielddesc;
                 var svcdesc = renderobj.svcdesc;
                 var opcvalue = renderobj.opcvalue;
@@ -532,12 +519,8 @@ define(['dojo/_base/declare',
                 //console.log(mapid + "; " + fieldid + "; " + renderobj.rendertype)
                 var activelayer = this.getActiveLayer(mapid, fieldid);
                 var headerfields = _config.demogJSON[mapid].baselayers[activelayer].headerfields;
-
                 renderobj.actlayer = activelayer;
-
-
                 var renderuniquekey = fieldid + "_" + renderobj.method + "_" + renderobj.classes;
-
                 var linewidth = renderobj.linewidth;
                 var linecolor = renderobj.linecolor;
                 var mycolors = this.generateColors(renderobj.classes, renderobj.fromcolor, renderobj.tocolor);
@@ -564,14 +547,12 @@ define(['dojo/_base/declare',
                     classDef.baseSymbol = bsymbol;
                     classDef.colorRamp = colorRamp;
                 }
-
                 var minfield = currentLayer + "_min";
                 var maxfield = currentLayer + "_max";
                 var layerminvalue = null;
                 var layermaxvalue = null;
                 if (_config.demogJSON[mapid].dynamiclayers[fieldid][minfield]) layerminvalue = _config.demogJSON[mapid].dynamiclayers[fieldid][minfield];
                 if (_config.demogJSON[mapid].dynamiclayers[fieldid][maxfield]) layermaxvalue = _config.demogJSON[mapid].dynamiclayers[fieldid][maxfield];
-
                 if ((layerminvalue == null) && (layermaxvalue == null)) {
                     if (currentLayer == "blk") {
                         currentLayer = "bg";
@@ -584,15 +565,13 @@ define(['dojo/_base/declare',
                     var maxfield = currentLayer + "_max";
                     layerminvalue = _config.demogJSON[mapid].dynamiclayers[fieldid][minfield];
                     layermaxvalue = _config.demogJSON[mapid].dynamiclayers[fieldid][maxfield];
-
                 }
                 //this.levelDiv.innerHTML = _config.demogJSON[mapid].baselayers[activelayer].level;
                 var params = new esri.tasks.GenerateRendererParameters();
                 params.classificationDefinition = classDef;
                 var dataUrl = _config.demogJSON[mapid].layerurl + _config.demogJSON[mapid].service + "/MapServer";
                 var alyrindex = _config.demogJSON[mapid].baselayers[currentLayer].layeridx;
-
-
+                
                 var generateRenderer = new esri.tasks.GenerateRendererTask(dataUrl + "/" + alyrindex);
 
                 generateRenderer.execute(params, function (renderer) {
@@ -612,16 +591,12 @@ define(['dojo/_base/declare',
                         renderobj.renderer = renderer;
                         drawingOptions.renderer = renderer;
                         optionsArray[alyrindex] = drawingOptions;
-
-
                     } else {
                         var pntrenderer = new ClassBreaksRenderer();
                         pntrenderer.attributeField = renderer.attributeField;
-
                         //----------------------
                         // Fill symbol
                         //----------------------
-
                         // (1) Define a FILL symbol used to draw county polygons.
                         var fillSymbol = new SimpleFillSymbol();
                         fillSymbol.setColor(new Color([0, 0, 0, 0]));
@@ -631,14 +606,12 @@ define(['dojo/_base/declare',
                         pntrenderer.backgroundFillSymbol = fillSymbol;
                         pntrenderer.valueExpressionTitle = fielddesc;
                         var pntcolor = renderobj.circlecolor;
-
                         var minsize = Number(renderobj.circlemins);
                         var maxsize = Number(renderobj.circlemaxs);
                         var sinterval = (maxsize - minsize) / (Number(renderobj.classes) - 1);
                         for (var m = 0; m < renderer.infos.length; m++) {
                             var markerSymbol = new SimpleMarkerSymbol();
                             markerSymbol.setColor(new Color(pntcolor));
-
                             markerSymbol.outline.setColor(new Color(linecolor));
                             markerSymbol.outline.setWidth(linewidth);
                             var s = parseInt(minsize + m * sinterval);
@@ -650,16 +623,14 @@ define(['dojo/_base/declare',
                                 label: renderer.infos[m].label,
                                 symbol: markerSymbol
                             });
-
                         }
                         drawingOptions.renderer = pntrenderer;
                         optionsArray[alyrindex] = drawingOptions;
                     }
                 });
-
                 //end of setting optionsArray	
-
             },
+
             _genRender: function (renderobj) {
                 var wobj = this;
                 var fielddesc = renderobj.fielddesc;
@@ -673,7 +644,6 @@ define(['dojo/_base/declare',
                 var headerfields = _config.demogJSON[mapid].baselayers[activelayer].headerfields;
 
                 renderobj.actlayer = activelayer;
-
 
                 var renderuniquekey = fieldid + "_" + renderobj.method + "_" + renderobj.classes;
 
@@ -704,17 +674,12 @@ define(['dojo/_base/declare',
                     classDef.colorRamp = colorRamp;
                 }
                 //arrayLayer = ["bg", "cnty", "st", "tr"];
-
-
-
-
                 var minfield = activelayer + "_min";
                 var maxfield = activelayer + "_max";
                 var layerminvalue = null;
                 var layermaxvalue = null;
                 if (_config.demogJSON[mapid].dynamiclayers[fieldid][minfield]) layerminvalue = _config.demogJSON[mapid].dynamiclayers[fieldid][minfield];
                 if (_config.demogJSON[mapid].dynamiclayers[fieldid][maxfield]) layermaxvalue = _config.demogJSON[mapid].dynamiclayers[fieldid][maxfield];
-
                 if ((layerminvalue == null) && (layermaxvalue == null)) {
                     if (activelayer == "blk") {
                         activelayer = "bg";
@@ -738,11 +703,6 @@ define(['dojo/_base/declare',
                 for (var currentLayer in blayers) {
                     wobj._getRenderer(currentLayer, optionsArray, renderobj);
                 }
-
-
-
-
-
                 //end of setting optionsArray
                 var alyrindex = _config.demogJSON[mapid].baselayers[activelayer].layeridx;
                 var layeridstr = window.layerIdDemographPrefix + mapid + fieldid + "_map";
@@ -770,16 +730,13 @@ define(['dojo/_base/declare',
                     window.demographicLayerSetting[layeridstr]["demogListNode"] = selfDemographic.demogListNode.value;       //It is variable such as: 10th Grade    
                     //radio button
                     window.demographicLayerSetting[layeridstr]["rendertype"] = selfDemographic.rendertype;  //It is polygon or point
-
                     window.demographicLayerSetting[layeridstr]["classTypeNode"] = selfDemographic.classTypeNode.value;       //It is Method such as: Quantile
                     window.demographicLayerSetting[layeridstr]["classNumNode"] = selfDemographic.classNumNode.value;         //It is Breaks such as: 1, 2,..., 5       
-
                     //for polygon only
                     if (window.demographicLayerSetting[layeridstr]["rendertype"] == "polygon") {
                         window.demographicLayerSetting[layeridstr]["currentk"] = selfDemographic.currentk; 						// It is the Color break Selection; it determines the color scheme index starting from 0; end with 11
                         window.demographicLayerSetting[layeridstr]["reverseStatus"] = selfDemographic.reverseStatus;				// It is true or false;  it is called in this.drawPalette
                     }
-
                     //for point only
                     if (window.demographicLayerSetting[layeridstr]["rendertype"] == "point") {
                         window.demographicLayerSetting[layeridstr]["colorpnt"] = selfDemographic.colorpnt.picker.value;
@@ -787,8 +744,6 @@ define(['dojo/_base/declare',
                         window.demographicLayerSetting[layeridstr]["minsizeNode"] = selfDemographic.minsizeNode.value;
                         window.demographicLayerSetting[layeridstr]["maxsizeNode"] = selfDemographic.maxsizeNode.value;
                     }
-
-
                     window.demographicLayerSetting[layeridstr]["demogsliderNode"] = selfDemographic.demogsliderNode.value;
                     window.demographicLayerSetting[layeridstr]["bWidthNode"] = selfDemographic.bWidthNode.value;
 
@@ -826,14 +781,10 @@ define(['dojo/_base/declare',
                         layerdef[alyrindex] = renderobj.whereclause;
                         dmlayer.setLayerDefinitions(layerdef);
                     }
-
-
                     wobj.removespining();
                 }), 6000);
-
-
-
             },
+
             _mapRender: function (renderobj) {
                 var fielddesc = renderobj.fielddesc;
                 var svcdesc = renderobj.svcdesc;
@@ -851,7 +802,6 @@ define(['dojo/_base/declare',
                 var orgrender = null;
                 var linewidth = renderobj.linewidth;
                 var linecolor = renderobj.linecolor;
-
                 var optionsArray = [];
                 //var layeridstr = mapid + fieldid + "_map";
                 var layeridstr = window.layerIdDemographPrefix + mapid + fieldid + "_map";
@@ -867,7 +817,6 @@ define(['dojo/_base/declare',
                             orgrender.infos[m].symbol.setColor(mycolors[m]);
                             orgrender.infos[m].symbol.outline.setColor(new Color(linecolor));
                             orgrender.infos[m].symbol.outline.setWidth(linewidth);
-
                         }
                         renderobj.renderer = orgrender;
                         var drawingOptions = new esri.layers.LayerDrawingOptions();
@@ -880,18 +829,15 @@ define(['dojo/_base/declare',
                         fillSymbol.setColor(new Color([0, 0, 0, 0]));
                         fillSymbol.outline.setColor(new Color([133, 133, 133, .5]));
                         fillSymbol.outline.setWidth(0);
-
                         pntrenderer.backgroundFillSymbol = fillSymbol;
                         pntrenderer.valueExpressionTitle = fielddesc;
                         var pntcolor = renderobj.circlecolor;
-
                         var minsize = Number(renderobj.circlemins);
                         var maxsize = Number(renderobj.circlemaxs);
                         var sinterval = (maxsize - minsize) / (Number(renderobj.classes) - 1);
                         for (var m = 0; m < orgrender.infos.length; m++) {
                             var markerSymbol = new SimpleMarkerSymbol();
                             markerSymbol.setColor(new Color(pntcolor));
-
                             markerSymbol.outline.setColor(new Color(linecolor));
                             markerSymbol.outline.setWidth(linewidth);
                             var s = parseInt(minsize + m * sinterval);
@@ -903,7 +849,6 @@ define(['dojo/_base/declare',
                                 label: orgrender.infos[m].label,
                                 symbol: markerSymbol
                             });
-
                         }
                         renderobj.renderer = pntrenderer;
                         var drawingOptions = new esri.layers.LayerDrawingOptions();
@@ -914,7 +859,6 @@ define(['dojo/_base/declare',
                 alyrindex = _config.demogJSON[mapid].baselayers[activelayer].layeridx;
                 window.demographicLayerVisibleIndex = alyrindex;
                 //end of getting renderer for all layers
-
 
                 if (this.map.getLayer(layeridstr)) {
                     var dmlayer = this.map.getLayer(layeridstr);
@@ -967,8 +911,8 @@ define(['dojo/_base/declare',
                 }
                 this.removespining();
             },
-            showloading: function (key) {
 
+            showloading: function (key) {
                 var loaddivid = "loadingdiv_" + key;
                 var cx = (this.map.width / 2) - 50;
                 var cy = this.map.height / 2;
@@ -980,7 +924,6 @@ define(['dojo/_base/declare',
                     var dummy = document.createElement("div");
                     dummy.id = loaddivid;
                     dummy.style.position = "absolute";
-
                     dummy.style.left = (cx) + "px";
                     dummy.style.top = (cy) + "px";
                     dummy.innerHTML = "Loading Demographic layer... Please wait.";
@@ -990,12 +933,12 @@ define(['dojo/_base/declare',
                     dummy.style.fontSize = "14pt";
                     dummy.style.color = "Red";
                     document.body.appendChild(dummy);
-
                 }
                 //console.log("start update: " + key + "; cx: " + cx + ", cy: " + cy);
                 this.map.disableMapNavigation();
                 this.map.hideZoomSlider();
             },
+
             hideloading: function (key) {
                 //console.log("end update: " + key);
                 var loaddivid = "loadingdiv_" + key;
@@ -1006,38 +949,30 @@ define(['dojo/_base/declare',
                 this.map.enableMapNavigation();
                 this.map.showZoomSlider();
             },
+
             addspining: function (event) {
                 var x;
                 var y;
-
                 if (event.x != undefined && event.y != undefined) {
-
                     x = event.clientX;
                     y = event.clientY;
-
-                }
-                else // Firefox method to get the position
+                } else // Firefox method to get the position
                 {
                     x = event.clientX + document.body.scrollLeft +
                         document.documentElement.scrollLeft;
                     y = event.clientY + document.body.scrollTop +
                         document.documentElement.scrollTop;
-
                 }
-
-
                 if (document.getElementById("spindiv")) {
                     var dummy = document.getElementById("spindiv");
                     dummy.style.position = "absolute";
                     dummy.style.left = (x) + "px";
                     dummy.style.top = (y) + "px";
                     dummy.style.display = "block";
-
                 } else {
                     var dummy = document.createElement("div");
                     dummy.id = "spindiv";
                     dummy.style.position = "absolute";
-
                     dummy.style.left = (x) + "px";
                     dummy.style.top = (y) + "px";
                     dummy.innerHTML = "<img src='" + this.folderUrl + "images/hourglas.gif' alt='loading...' />";
@@ -1046,16 +981,17 @@ define(['dojo/_base/declare',
                     document.body.appendChild(dummy);
                 }
             },
+
             removespining: function () {
                 if (document.getElementById("spindiv")) {
                     var dummy = document.getElementById("spindiv");
                     document.body.removeChild(dummy);
                 }
             },
+
             getActiveLayer: function (mid, fldid) {
                 var zlevel = this.map.getLevel();
                 var actlayer = "bg";
-
                 var blayers = _config.demogJSON[mid].baselayers;
                 for (var b in blayers) {
                     var minl = blayers[b].minlevel;
@@ -1063,11 +999,8 @@ define(['dojo/_base/declare',
                     var lindex = blayers[b].layeridx;
                     if ((zlevel < maxl) && (zlevel >= minl)) {
                         actlayer = b;
-
                     }
                 }
-
-
                 return actlayer;
             },
 
@@ -1079,6 +1012,7 @@ define(['dojo/_base/declare',
                 }
                 return false;
             },
+
             generateColors: function (steps, scolor, ecolor) {
                 var stepFactor = 1 / (steps - 1);
                 var newcolors = [];
@@ -1092,17 +1026,16 @@ define(['dojo/_base/declare',
                     var curcolor = new Color([r, g, b]);
                     //var curcolor = this.rgb2hex(r,g,b);
                     newcolors.push(curcolor);
-
                 }
-
                 return newcolors;
             },
+
             rgb2hex: function (red, green, blue) {
                 var rgb = blue | (green << 8) | (red << 16);
                 return '#' + (0x1000000 + rgb).toString(16).slice(1)
             },
-            tablePalette: function (count, scolor, ecolor) {
 
+            tablePalette: function (count, scolor, ecolor) {
                 var pctvalue = 100 / (count + 1);
                 var divwidth = 32 * (count + 1);
                 var c1 = new Color(scolor);
@@ -1113,7 +1046,6 @@ define(['dojo/_base/declare',
                 var colorcol = '';
                 colorcol += '<table cellpadding="0" cellspacing="0" style="width: ' + divwidth + 'px; height: 12px;">';
                 colorcol += '<tr>';
-
                 for (var i = 0; i <= count; i++) {
                     var r = c1.r + deltaR * i;
                     var g = c1.g + deltaG * i;
@@ -1122,17 +1054,15 @@ define(['dojo/_base/declare',
                     //var color = new Color([r,g,b,255]);
                     //console.log(color)
                 }
-
                 colorcol += '</tr>';
                 colorcol += '</table>';
-
                 return colorcol;
             },
+
             drawPalette: function (catnum, ck, reverse) {
                 //console.log("draw palette" + catnum);
                 var selectorOwner = this.selector;
                 var rect = selectorOwner.getBoundingClientRect();
-
                 var tp = rect.bottom;
                 var lt = rect.left;
                 // var tp = selectorOwner.offset().top + (selectorOwner.outerHeight());
@@ -1151,10 +1081,7 @@ define(['dojo/_base/declare',
                 }
                 var colorstep = parseInt(catnum) - 1;
                 var tbobj = dojo.create("table");
-
                 document.getElementById("colorlist").appendChild(tbobj);
-
-
                 var trobj;
                 for (var k = 0; k < this.colorThemes.length; k++) {
                     var cobj = this.colorThemes[k];
@@ -1164,7 +1091,6 @@ define(['dojo/_base/declare',
                         scolor = cobj.endcolor;
                         ecolor = cobj.startcolor;
                     }
-
                     if ((k % 2) == 0) {
                         trobj = dojo.create("tr");
                         tbobj.appendChild(trobj);
@@ -1181,29 +1107,26 @@ define(['dojo/_base/declare',
                         innerHTML: str
                     });
                     trobj.appendChild(tdobj);
-
                     if (k == ck) {
                         //tdobj.style.borderColor = "cyan";
                         this.selectcolor.innerHTML = str;
                         this.renderform.startcolor.value = scolor;
                         this.renderform.endcolor.value = ecolor;
-
                     }
                 }
-
                 //console.log(document.getElementById("colorlist").innerHTML);
             },
+
             _changeSelector: function (e) {
                 var selectorOwner = this.selectcolor;
                 var rect = selectorOwner.getBoundingClientRect();
-
                 var tp = rect.bottom;
                 var lt = rect.left;
                 $("#colorlist").css("top", parseInt(tp) + "px");
                 $("#colorlist").css("left", parseInt(lt) + "px");
-
                 $("#colorlist").slideToggle("slow");
             },
+
             changecontent: function (dobj, currentindex) {
                 //console.log("currentindex: " + currentindex)
                 var cobj = this.colorThemes[currentindex];
@@ -1219,14 +1142,16 @@ define(['dojo/_base/declare',
                 this.currentk = currentindex;
                 this.renderform.startcolor.value = scolor;
                 this.renderform.endcolor.value = ecolor;
-
             },
+
             highlight: function (dobj) {
                 dobj.style.backgroundColor = "cyan";
             },
+
             clearhighlight: function (dobj) {
                 dobj.style.backgroundColor = "transparent";
             },
+
             destroy: function () {
                 //this._zoomHandler.remove();
                 dojo.empty(this.domNode);
@@ -1245,7 +1170,6 @@ define(['dojo/_base/declare',
                                 }
                             }
                         }
-
                         selfDemographic._changeService();
                     }, 200);
                     setTimeout(function () {
@@ -1261,39 +1185,6 @@ define(['dojo/_base/declare',
                         document.getElementById("mapDemogLayer").click();
                     }, 2600);
                 }
-
             },
-
-            // onClose: function(){
-            //   console.log('onClose');
-            // },
-
-            // onMinimize: function(){
-            //   console.log('onMinimize');
-            // },
-
-            // onMaximize: function(){
-            //   console.log('onMaximize');
-            // },
-
-            // onSignIn: function(credential){
-            //   /* jshint unused:false*/
-            //   console.log('onSignIn');
-            // },
-
-            // onSignOut: function(){
-            //   console.log('onSignOut');
-            // }
-
-            // onPositionChange: function(){
-            //   console.log('onPositionChange');
-            // },
-
-            // resize: function(){
-            //   console.log('resize');
-            // }
-
-            //methods to communication between widgets:
-
         });
     });
