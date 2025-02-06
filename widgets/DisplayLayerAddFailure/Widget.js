@@ -122,7 +122,7 @@ define([
 				failedOutsideLayers = failedOutsideLayers.substring(0, failedOutsideLayers.length - 3);
 			}
 			if (Object.keys(window.failedDemoHucTimeseEcatRain).length > 0) {
-				disableSendButton();
+				$("#sendButton").hide();
 				var hr = document.getElementById('hrDemoHucTimeseEcatRain');
 				hr.style.display = '';
 				var commentFaileOursideLayer = document.getElementById("failedDemoHucTimeseEcatRainComment");
