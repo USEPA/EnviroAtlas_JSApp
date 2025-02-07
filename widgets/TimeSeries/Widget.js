@@ -101,8 +101,8 @@ define([
         var timeSlider, userChosenTimeStep;
         var navToolbar;
         var selfTimeSeries;
-
         var widthSelect = "310px";
+
         var showLayerListWidget = function () {
             var widgetName = 'LayerList';
             var widgets = selfTimeSeries.appConfig.getConfigElementsByName(widgetName);
@@ -132,7 +132,6 @@ define([
                 { id: "RCP6.0 (Peak Emissions Year 2080)", name: "RCP6.0", value: "RCP6.0" },
                 { id: "RCP8.5 (Peak Emissions After 2100)", name: "RCP8.5", value: "RCP8.5" },
                 { id: "Historic Data", name: "Hist", value: "Hist" }
-
             ]
         });
 
@@ -275,12 +274,10 @@ define([
             //If this isn't the first layer the user has selected, destroy the old time slider and make a new one
             if (dijit.byId('timeSliderDijOneFrame')) {
                 dijit.byId('timeSliderDijOneFrame').destroy();
-
             }
             if (dijit.byId('timeSliderDij')) {
                 dijit.byId('timeSliderDij').destroy();
             }
-
             //reset the time slider div after destroying the actual timeslider
 
             var tsDiv = domConstruct.create("div", null, dojo.byId("timeSliderDiv"));
@@ -334,7 +331,6 @@ define([
                 }
             };
             timeSlider.setTimeStops(timeStepIntervals);
-
             timeSlider.setThumbMovingRate(20000);
             timeSlider.singleThumbAsTimeInstant(true);
             timeSlider.startup();
@@ -352,8 +348,7 @@ define([
                     }
                 } else if (timeStop.getUTCFullYear() == timeExtent.endTime.getUTCFullYear()) {
                     return timeStop.getUTCFullYear();
-                }
-                else {
+                } else {
                     return "";
                 }
             });
@@ -369,7 +364,6 @@ define([
         };
         var defineOneFrameService = function () {
             //esri.show(loading);        
-
             if (document.getElementById("seasonSelection").value != "" && document.getElementById("climateSelection").value != "") {
                 var startHist = 1950;
                 var endHist = 2005;
@@ -379,8 +373,7 @@ define([
                     dojo.byId("subTitle").innerHTML = "Timeline: 1950 - 2005";  // 2005
                     dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 1950 - 2005";  // 2005
                     errorMessageYearInput = "Please input a year of single frame (" + String(startHist) + "-" + String(endHist) + ")";
-                }
-                else {
+                } else {
                     dojo.byId("subTitle").innerHTML = "Timeline: 2010 - 2099";
                     dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 2010 - 2099";
                     errorMessageYearInput = "Please input a year of single frame (" + String(startFuture) + "-" + String(endFuture) + ")";
@@ -392,16 +385,14 @@ define([
                 if ((isNaN(yearInput))) {
                     alert(errorMessageYearInput);
                     return;
-                }
-                else {
+                } else {
                     numYearInput = parseFloat(yearInput);
                     if (dijit.byId("modelSelection").item.value == "Hist") {
                         if ((numYearInput < startHist) || (numYearInput > endHist)) {
                             alert(errorMessageYearInput);
                             return;
                         }
-                    }
-                    else {
+                    } else {
                         if ((numYearInput < startFuture) || (numYearInput > endFuture)) {
                             alert(errorMessageYearInput);
                             return;
@@ -415,15 +406,13 @@ define([
                 console.log("model+ season + climateVar:" + model + season + climateVar);
                 addOneFrameServiceToMap(model + season + climateVar);
                 //changeLegendImg();
-            }
-            else {
+            } else {
                 alert("Choose options for Metric and Season!");
             }
         };
 
         var addOneFrameServiceToMap = function (serviceParams) {
             removeFrameFromMap();
-
             //build the REST endpoint URL for the user-selected dropdown selections
             var selectedImageService = futureScenariosAGSbaseURL + serviceParams + "/ImageServer";
 
@@ -455,6 +444,7 @@ define([
             });
 
         };
+
         var defineService = function () {
             //esri.show(loading);
             //if (window.timeSeriesDisclaim) {
@@ -462,8 +452,7 @@ define([
                 if (document.getElementById("modelSelection").value == "Hist") {
                     dojo.byId("subTitle").innerHTML = "Timeline: 1950 - 2005";  //2005
                     dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 1950 - 2005";  //2005
-                }
-                else {
+                } else {
                     dojo.byId("subTitle").innerHTML = "Timeline: 2010 - 2099";
                     dojo.byId("subTitleOneFrame").innerHTML = "Timeline: 2010 - 2099";
                 }
@@ -473,25 +462,17 @@ define([
                 userChosenTimeStep = 5;
                 dojo.byId("frameOrSlide").innerHTML = 'slide';
                 addSelectedImageServiceToMap(model + season + climateVar);
-                //      .log("model+ season + climateVar:" + model+ season + climateVar);
                 //changeLegendImg();
-            }
-            else {
-            }
-            //}
-            /*else {
+            }/*else {
                  var infobox = new Dialog({
                  title: "EnviroAtlas Time Series Disclaimer",
                  style: 'width: 400px'
                  });
-     
                  var nationalDiv = dojo.create('div', {
                      'innerHTML': "The original climate projections used in these maps were developed by the NASA Ames Research Center using the NASA Earth Exchange, and are distributed as the NEX-DCP30 dataset. Climate scenarios provide likely approximations of future conditions given a set of initial assumptions. The future is inherently uncertain and the USEPA cannot guarantee that these scenarios reflect what will occur at the specified future time. <BR><BR> \
                                   While every attempt has been made to provide the best information possible, no warranty, expressed or implied, is made by the USEPA regarding the accuracy of the derived projections for general or scientific purposes, nor shall the act of distribution constitute any such warranty. The USEPA shall not be held liable for improper or incorrect use of the information described and/or contained herein."
                  }, infobox.containerNode);
-     
                  dojo.create('hr', {'style': 'margin-top: 10px'}, infobox.containerNode);
-     
                  var button4 = new Button({ label:"Accept"});
                  button4.startup();
                  button4.placeAt(infobox.containerNode);
@@ -500,14 +481,12 @@ define([
                      infobox.hide();
                      document.getElementById("loadServiceBtn").click();
                  });
-     
                  infobox.show();
             }*/
         };
 
         var addSelectedImageServiceToMap = function (serviceParams) {
             removeDataFromMap();
-
             //build the REST endpoint URL for the user-selected dropdown selections
             var selectedImageService = futureScenariosAGSbaseURL + serviceParams + "/ImageServer";
 
@@ -543,7 +522,6 @@ define([
         };
 
         var removeFrameFromMap = function () {
-
             if (map.getLayer(window.timeSeriesLayerId)) {
                 // console.log(map.getLayer(window.timeSeriesLayerId));
                 map.removeLayer(map.getLayer(window.timeSeriesLayerId));
@@ -924,7 +902,6 @@ define([
             },
 
             onOpen: () => {
-                // console.log('onOpen');
                 // If there's a climateTimeSeries url param in the app url, then add climate data from the url params
                 addDataFromURL.then(dataFromURL)
                     .catch(e => {
