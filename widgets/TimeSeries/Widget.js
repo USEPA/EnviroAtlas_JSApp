@@ -625,8 +625,17 @@ define([
             }
         });
 
+        var buildOCONUSfield = () => {
+            // Need to build the field name from selections
+            // Assume symbolizing by Median, "ME"
+            return ("ME" + dojo.byId("seasonSelectionOCONUS").value + dojo.byId("climateSelectionOCONUS").value + dojo.byId("periodSelectionOCONUS").value)
+        }
+
         var loadOCONUS = () => {
-            console.log("Load OCONUS")
+            console.log("Load OCONUS");
+            // Get selections
+            let fieldname = buildOCONUSfield();
+            console.log(fieldname)
         }
 
         var removeOCONUS = () => {
