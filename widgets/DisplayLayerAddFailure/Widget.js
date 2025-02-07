@@ -44,6 +44,7 @@ define([
 		ContentPane,
 		TooltipDialog
 	) {
+
 		var map;
 		var self;
 		var failedEAID;
@@ -121,7 +122,6 @@ define([
 				failedOutsideLayers = failedOutsideLayers.substring(0, failedOutsideLayers.length - 3);
 			}
 			if (Object.keys(window.failedDemoHucTimeseEcatRain).length > 0) {
-				disableSendButton();
 				var hr = document.getElementById('hrDemoHucTimeseEcatRain');
 				hr.style.display = '';
 				var commentFaileOursideLayer = document.getElementById("failedDemoHucTimeseEcatRainComment");
@@ -159,7 +159,6 @@ define([
 			$("#sendButton").hide();
 			$("#message").show();
 		};
-
 		var enableSendButton = function () {
 			//$("#sendButton").prop('disabled',false);
 			$("#sendButton").show();
