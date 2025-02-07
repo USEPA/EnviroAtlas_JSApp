@@ -1,5 +1,4 @@
 <div style="height:100%;overflow-y: hidden; background-color: #ece9eb">
-    <!-- <div id="titleBarTimeSeries2" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Climate Scenarios', open: true"> -->
     <div
         style="width:100%; background-color:#b3b3b3; font-size:16px; padding-left:4px; border-bottom: 1px solid rgb(150,150,150)">
         U.S. Census Data
@@ -15,7 +14,6 @@
         </style>
         <div data-dojo-attach-point="levelDiv"
             style="margin: 4px 4px 4px 4px;border: none;background-color: #ece9eb;display:none">&nbsp;</div>
-
         <form data-dojo-attach-point="renderform" style="background-color: #ece9eb;height:100%;">
             <input type="hidden" name="startcolor" value="" />
             <input type="hidden" name="endcolor" value="" />
@@ -211,7 +209,6 @@
                             Map</button>
                     </td>
                 </tr>
-                <!-- <tr><td data-dojo-attach-point="descdiv" colspan="2" style="background-color: rgb(240, 248, 254); border: 1px solid #cccccc; font-family: Verdana; font-size: 90%; font-weight: normal;"></td></tr> -->
             </table>
             <br />
             <table>
@@ -232,9 +229,13 @@
                 </tr>
             </table>
         </form>
+        <div style='border-top: 1px solid black; margin-top:15px; padding-top:10px;'>
+            <p style='color: red; font-weight: bold; font-size: 16px;'>
+                Note: The data for this section of EnviroAtlas are unavailable until further notice.
+            </p>
+        </div>
         <div id='DemoDisclaimer' style='border-top: 1px solid black; margin-top:15px; padding-top:10px'>
-            <p>Note: These data were sourced by <a href='https://www.epa.gov/ejscreen/download-ejscreen-data'
-                    target='_blank'>EPA</a> from the U.S. Census Bureau. Data is available at multiple scales (e.g.,
+            <p>Note: These data were sourced by EPA from the U.S. Census Bureau. Data is available at multiple scales (e.g.,
                 census block groups, counties) and will update based on your extent within the map.
             </p>
         </div>
