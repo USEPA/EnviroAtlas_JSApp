@@ -625,6 +625,14 @@ define([
             }
         });
 
+        var loadOCONUS = () => {
+            console.log("Load OCONUS")
+        }
+
+        var removeOCONUS = () => {
+            console.log("Remove OCONUS")
+        }
+
         var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
 
             baseClass: 'jimu-widget-timeseries',
@@ -650,35 +658,21 @@ define([
                     //onblur: blurFrameYear
                 }, "frameYearInput").startup();
 
-                var addOneFrameButton = new Button({
-                    id: "loadOneFrameBtn",
-                    name: "loadOneFrameButton",
-                    disabled: false
-                }, "loadOneFrameBtn").startup();
+                uiButtons = [
+                    "loadOneFrameBtn", 
+                    "loadServiceBtn", 
+                    "removeServiceBtn", 
+                    "loadServiceBtnOCONUS", 
+                    "removeServiceBtnOCONUS"
+                ]; 
 
-                var addDataButton = new Button({
-                    id: "loadServiceBtn",
-                    name: "loadServiceButton",
-                    disabled: false
-                }, "loadServiceBtn").startup();
-
-                var clearLayerButton = new Button({
-                    id: "removeServiceBtn",
-                    name: "clearLayerButton",
-                    disabled: false
-                }, "removeServiceBtn").startup();
-
-                var addDataButtonOCONUS = new Button({
-                    id: "loadServiceBtnOCONUS",
-                    name: "loadServiceButton",
-                    disabled: false
-                }, "loadServiceBtnOCONUS").startup();
-
-                var clearLayerButtonOCONUS = new Button({
-                    id: "removeServiceBtnOCONUS",
-                    name: "clearLayerButton",
-                    disabled: false
-                }, "removeServiceBtnOCONUS").startup();
+                uiButtons.forEach(b => {
+                    new Button({
+                        id: b,
+                        name: b,
+                        disabled: false
+                    }, b).startup();
+                });
 
                 //loading = dojo.byId("loadingTimeSeriesLayer");//dojo.byId("loadingOverlay");
                 //esri.hide(loading);
@@ -687,6 +681,8 @@ define([
                 registry.byId("removeServiceBtn").on("click", removeDataFromMap);
                 registry.byId("frameYearInput").on("click", clickFrameYear);
                 registry.byId("frameYearInput").on("blur", blurFrameYear);
+                registry.byId("loadServiceBtnOCONUS").on("click", loadOCONUS);
+                registry.byId("removeServiceBtnOCONUS").on("click", removeOCONUS);
 
                 // Scenario dialog box
                 var scenario_info = this.config.scenarios;
