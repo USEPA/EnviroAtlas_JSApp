@@ -17,36 +17,35 @@
 define([
     'dojo/_base/declare',
     'dijit/_WidgetsInTemplateMixin',
-    "dojo/Deferred",
-    'dojo/_base/html',
+    //'dojo/_base/html',
     'jimu/BaseWidget',
     'dijit/Dialog',
-    'jimu/WidgetManager',
+    //'jimu/WidgetManager',
     'jimu/PanelManager',
-    'jimu/utils',
-    'esri/dijit/Legend',
+    //'jimu/utils',
+    //'esri/dijit/Legend',
     'esri/dijit/TimeSlider',
     'esri/TimeExtent',
     'esri/layers/ArcGISImageServiceLayer',
     'esri/layers/ImageServiceParameters',
     'esri/tasks/ImageServiceIdentifyParameters',
-    'esri/layers/RasterFunction',
+    //'esri/layers/RasterFunction',
     'esri/tasks/ImageServiceIdentifyTask',
-    'esri/tasks/ImageServiceIdentifyResult',
-    'esri/dijit/Popup',
-    'esri/symbols/SimpleFillSymbol',
-    'esri/symbols/SimpleLineSymbol',
-    'esri/Color',
+    //'esri/tasks/ImageServiceIdentifyResult',
+    //'esri/dijit/Popup',
+    //'esri/symbols/SimpleFillSymbol',
+    //'esri/symbols/SimpleLineSymbol',
+    //'esri/Color',
     'dojo/_base/array',
-    'dojo/parser',
+    //'dojo/parser',
     'dijit/registry',
-    'esri/dijit/PopupTemplate',
-    'esri/geometry/Extent',
-    'dijit/layout/ContentPane',
-    'dijit/TooltipDialog',
-    'esri/InfoTemplate',
-    'dojo/store/Memory',
-    'dijit/form/Select',
+    //'esri/dijit/PopupTemplate',
+    //'esri/geometry/Extent',
+    //'dijit/layout/ContentPane',
+    //'dijit/TooltipDialog',
+    //'esri/InfoTemplate',
+    //'dojo/store/Memory',
+    //'dijit/form/Select',
     'dijit/form/TextBox',
     'dijit/form/Button',
     'dojo/dom-construct',
@@ -55,51 +54,50 @@ define([
     function (
         declare,
         _WidgetsInTemplateMixin,
-        Deferred,
-        html,
+        //html,
         BaseWidget,
         Dialog,
-        WidgetManager,
+        //WidgetManager,
         PanelManager,
-        jimuUtils,
-        Legend,
+        //jimuUtils,
+        //Legend,
         TimeSlider,
         TimeExtent,
         ArcGISImageServiceLayer,
         ImageServiceParameters,
         ImageServiceIdentifyParameters,
-        RasterFunction,
+        //RasterFunction,
         ImageServiceIdentifyTask,
-        ImageServiceIdentifyResult,
-        Popup,
-        SimpleFillSymbol,
-        SimpleLineSymbol,
-        Color,
+        //ImageServiceIdentifyResult,
+        //Popup,
+        //SimpleFillSymbol,
+        //SimpleLineSymbol,
+        //Color,
         arrayUtils,
-        parser,
+        //parser,
         registry,
-        PopupTemplate,
-        Extent,
-        ContentPane,
-        TooltipDialog,
-        InfoTemplate,
-        Memory,
-        Select,
+        //PopupTemplate,
+        //Extent,
+        //ContentPane,
+        //TooltipDialog,
+        //InfoTemplate,
+        //Memory,
+        //Select,
         TextBox,
         Button,
         domConstruct) {
 
-        var arrLayers = null;
+        //var arrLayers = null;
         var map = null;
         var map, identifyTask, identifyParams;
-        var mapClickListener, pixelVal;
+        //var mapClickListener, pixelVal;
 
-        var loading;
+        //var loading;
         var serverURL = "https://awseastaging.epa.gov";
         var futureScenariosAGSbaseURL = serverURL + "/arcgis/rest/services/FutureScenarios/";
         var comment = "Climate scenarios provide likely approximations of future conditions given a set of initial assumptions and model results. The future is inherently uncertain with no guarantee that these scenarios reflect what will occur at the specified future time.";
         var timeSlider, userChosenTimeStep;
-        var navToolbar;
+        //var navToolbar;
         var selfTimeSeries;
         var widthSelect = "310px";
 
@@ -114,49 +112,49 @@ define([
             return /\d/.test(myString);
         }
 
-        var updateSelectablePBSLayersArea = function () {
-            if (navigator.userAgent.indexOf("Chrome") >= 0) {
-                document.getElementById('tablePBSLayersArea').style.height = "calc(100% - 140px)";
-            } else if (navigator.userAgent.indexOf("Firefox") >= 0) {
-                document.getElementById('tablePBSLayersArea').style.height = "calc(100% - 140px)";
-            } else {
-                document.getElementById('tablePBSLayersArea').style.height = "calc(100% - 140px)";
-            }
-        };
+        // var updateSelectablePBSLayersArea = function () {
+        //     if (navigator.userAgent.indexOf("Chrome") >= 0) {
+        //         document.getElementById('tablePBSLayersArea').style.height = "calc(100% - 140px)";
+        //     } else if (navigator.userAgent.indexOf("Firefox") >= 0) {
+        //         document.getElementById('tablePBSLayersArea').style.height = "calc(100% - 140px)";
+        //     } else {
+        //         document.getElementById('tablePBSLayersArea').style.height = "calc(100% - 140px)";
+        //     }
+        // };
 
-        var climateModelsStore = new Memory({
-            idProperty: "climateModelsMem",
-            data: [
-                { id: "RCP2.6 (Peak Emissions Year 2020)", name: "RCP2.6", value: "RCP2.6" },
-                { id: "RCP4.5 (Peak Emissions Year 2040)", name: "RCP4.5", value: "RCP4.5" },
-                { id: "RCP6.0 (Peak Emissions Year 2080)", name: "RCP6.0", value: "RCP6.0" },
-                { id: "RCP8.5 (Peak Emissions After 2100)", name: "RCP8.5", value: "RCP8.5" },
-                { id: "Historic Data", name: "Hist", value: "Hist" }
-            ]
-        });
+        // var climateModelsStore = new Memory({
+        //     idProperty: "climateModelsMem",
+        //     data: [
+        //         { id: "RCP2.6 (Peak Emissions Year 2020)", name: "RCP2.6", value: "RCP2.6" },
+        //         { id: "RCP4.5 (Peak Emissions Year 2040)", name: "RCP4.5", value: "RCP4.5" },
+        //         { id: "RCP6.0 (Peak Emissions Year 2080)", name: "RCP6.0", value: "RCP6.0" },
+        //         { id: "RCP8.5 (Peak Emissions After 2100)", name: "RCP8.5", value: "RCP8.5" },
+        //         { id: "Historic Data", name: "Hist", value: "Hist" }
+        //     ]
+        // });
 
-        var climateVarStore = new Memory({
-            idProperty: "climateMem",
-            data: [
-                { id: "Precipitation", name: "Precip", value: "Precip" },
-                { id: "Maximum Temperature", name: "TempMax", value: "TempMax" }, //comma is removed because of shut off of services
-                { id: "Minimum Temperature", name: "TempMin", value: "TempMin" },//This is commented out because of shut off of services
-                { id: "Evapotranspiration", name: "PET", value: "PET" }  //This is commented out because of shut off of services
-                //{id:"Evapotranspiration (NA)", name:"Evap", value:"Evap"}
-            ]
-        });
+        // var climateVarStore = new Memory({
+        //     idProperty: "climateMem",
+        //     data: [
+        //         { id: "Precipitation", name: "Precip", value: "Precip" },
+        //         { id: "Maximum Temperature", name: "TempMax", value: "TempMax" }, //comma is removed because of shut off of services
+        //         { id: "Minimum Temperature", name: "TempMin", value: "TempMin" },//This is commented out because of shut off of services
+        //         { id: "Evapotranspiration", name: "PET", value: "PET" }  //This is commented out because of shut off of services
+        //         //{id:"Evapotranspiration (NA)", name:"Evap", value:"Evap"}
+        //     ]
+        // });
 
-        var seasonStore = new Memory({
-            idProperty: "seasonMem",
-            data: [
-                //{id:"Autumn", name:"Autumn", value:"Autumn"},
-                { id: "Spring", name: "Spring", value: "Spring" },
-                { id: "Summer", name: "Summer", value: "Summer" },
-                { id: "Fall", name: "Fall", value: "Fall" },
-                { id: "Winter", name: "Winter", value: "Winter" },
-                { id: "Annual", name: "Annual", value: "Annual" }
-            ]
-        });
+        // var seasonStore = new Memory({
+        //     idProperty: "seasonMem",
+        //     data: [
+        //         //{id:"Autumn", name:"Autumn", value:"Autumn"},
+        //         { id: "Spring", name: "Spring", value: "Spring" },
+        //         { id: "Summer", name: "Summer", value: "Summer" },
+        //         { id: "Fall", name: "Fall", value: "Fall" },
+        //         { id: "Winter", name: "Winter", value: "Winter" },
+        //         { id: "Annual", name: "Annual", value: "Annual" }
+        //     ]
+        // });
 
         var clickFrameYear = function () {
             console.log("frmeYearinput is clicked!");
@@ -447,7 +445,6 @@ define([
 
         var defineService = function () {
             //esri.show(loading);
-            //if (window.timeSeriesDisclaim) {
             if (document.getElementById("seasonSelection").value != "" && document.getElementById("climateSelection").value != "") {
                 if (document.getElementById("modelSelection").value == "Hist") {
                     dojo.byId("subTitle").innerHTML = "Timeline: 1950 - 2005";  //2005
@@ -463,26 +460,7 @@ define([
                 dojo.byId("frameOrSlide").innerHTML = 'slide';
                 addSelectedImageServiceToMap(model + season + climateVar);
                 //changeLegendImg();
-            }/*else {
-                 var infobox = new Dialog({
-                 title: "EnviroAtlas Time Series Disclaimer",
-                 style: 'width: 400px'
-                 });
-                 var nationalDiv = dojo.create('div', {
-                     'innerHTML': "The original climate projections used in these maps were developed by the NASA Ames Research Center using the NASA Earth Exchange, and are distributed as the NEX-DCP30 dataset. Climate scenarios provide likely approximations of future conditions given a set of initial assumptions. The future is inherently uncertain and the USEPA cannot guarantee that these scenarios reflect what will occur at the specified future time. <BR><BR> \
-                                  While every attempt has been made to provide the best information possible, no warranty, expressed or implied, is made by the USEPA regarding the accuracy of the derived projections for general or scientific purposes, nor shall the act of distribution constitute any such warranty. The USEPA shall not be held liable for improper or incorrect use of the information described and/or contained herein."
-                 }, infobox.containerNode);
-                 dojo.create('hr', {'style': 'margin-top: 10px'}, infobox.containerNode);
-                 var button4 = new Button({ label:"Accept"});
-                 button4.startup();
-                 button4.placeAt(infobox.containerNode);
-                 button4.on("click", function(event) {
-                     window.timeSeriesDisclaim = true;
-                     infobox.hide();
-                     document.getElementById("loadServiceBtn").click();
-                 });
-                 infobox.show();
-            }*/
+            }
         };
 
         var addSelectedImageServiceToMap = function (serviceParams) {
