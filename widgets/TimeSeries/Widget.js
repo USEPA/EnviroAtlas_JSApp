@@ -15,89 +15,53 @@
 ///////////////////////////////////////////////////////////////////////////
 
 define([
+    'esri/layers/FeatureLayer',
+    'esri/geometry/Extent',
     'dojo/_base/declare',
     'dijit/_WidgetsInTemplateMixin',
-    //'dojo/_base/html',
     'jimu/BaseWidget',
     'dijit/Dialog',
-    //'jimu/WidgetManager',
     'jimu/PanelManager',
-    //'jimu/utils',
-    //'esri/dijit/Legend',
     'esri/dijit/TimeSlider',
     'esri/TimeExtent',
     'esri/layers/ArcGISImageServiceLayer',
     'esri/layers/ImageServiceParameters',
     'esri/tasks/ImageServiceIdentifyParameters',
-    //'esri/layers/RasterFunction',
     'esri/tasks/ImageServiceIdentifyTask',
-    //'esri/tasks/ImageServiceIdentifyResult',
-    //'esri/dijit/Popup',
-    //'esri/symbols/SimpleFillSymbol',
-    //'esri/symbols/SimpleLineSymbol',
-    //'esri/Color',
     'dojo/_base/array',
-    //'dojo/parser',
     'dijit/registry',
-    //'esri/dijit/PopupTemplate',
-    //'esri/geometry/Extent',
-    //'dijit/layout/ContentPane',
-    //'dijit/TooltipDialog',
-    //'esri/InfoTemplate',
-    //'dojo/store/Memory',
-    //'dijit/form/Select',
     'dijit/form/TextBox',
     'dijit/form/Button',
     'dojo/dom-construct',
-    'dijit/TitlePane'
+    'dijit/TitlePane',
 ],
     function (
+        FeatureLayer,
+        Extent,
         declare,
         _WidgetsInTemplateMixin,
-        //html,
         BaseWidget,
         Dialog,
-        //WidgetManager,
         PanelManager,
-        //jimuUtils,
-        //Legend,
         TimeSlider,
         TimeExtent,
         ArcGISImageServiceLayer,
         ImageServiceParameters,
         ImageServiceIdentifyParameters,
-        //RasterFunction,
         ImageServiceIdentifyTask,
-        //ImageServiceIdentifyResult,
-        //Popup,
-        //SimpleFillSymbol,
-        //SimpleLineSymbol,
-        //Color,
         arrayUtils,
-        //parser,
         registry,
-        //PopupTemplate,
-        //Extent,
-        //ContentPane,
-        //TooltipDialog,
-        //InfoTemplate,
-        //Memory,
-        //Select,
         TextBox,
         Button,
-        domConstruct) {
-
-        //var arrLayers = null;
+        domConstruct
+    ) {
         var map = null;
         var map, identifyTask, identifyParams;
-        //var mapClickListener, pixelVal;
 
-        //var loading;
         var serverURL = "https://awseastaging.epa.gov";
         var futureScenariosAGSbaseURL = serverURL + "/arcgis/rest/services/FutureScenarios/";
         var comment = "Climate scenarios provide likely approximations of future conditions given a set of initial assumptions and model results. The future is inherently uncertain with no guarantee that these scenarios reflect what will occur at the specified future time.";
         var timeSlider, userChosenTimeStep;
-        //var navToolbar;
         var selfTimeSeries;
         var widthSelect = "310px";
 
@@ -111,50 +75,6 @@ define([
         var stringHasNumber = function hasNumber(myString) {
             return /\d/.test(myString);
         }
-
-        // var updateSelectablePBSLayersArea = function () {
-        //     if (navigator.userAgent.indexOf("Chrome") >= 0) {
-        //         document.getElementById('tablePBSLayersArea').style.height = "calc(100% - 140px)";
-        //     } else if (navigator.userAgent.indexOf("Firefox") >= 0) {
-        //         document.getElementById('tablePBSLayersArea').style.height = "calc(100% - 140px)";
-        //     } else {
-        //         document.getElementById('tablePBSLayersArea').style.height = "calc(100% - 140px)";
-        //     }
-        // };
-
-        // var climateModelsStore = new Memory({
-        //     idProperty: "climateModelsMem",
-        //     data: [
-        //         { id: "RCP2.6 (Peak Emissions Year 2020)", name: "RCP2.6", value: "RCP2.6" },
-        //         { id: "RCP4.5 (Peak Emissions Year 2040)", name: "RCP4.5", value: "RCP4.5" },
-        //         { id: "RCP6.0 (Peak Emissions Year 2080)", name: "RCP6.0", value: "RCP6.0" },
-        //         { id: "RCP8.5 (Peak Emissions After 2100)", name: "RCP8.5", value: "RCP8.5" },
-        //         { id: "Historic Data", name: "Hist", value: "Hist" }
-        //     ]
-        // });
-
-        // var climateVarStore = new Memory({
-        //     idProperty: "climateMem",
-        //     data: [
-        //         { id: "Precipitation", name: "Precip", value: "Precip" },
-        //         { id: "Maximum Temperature", name: "TempMax", value: "TempMax" }, //comma is removed because of shut off of services
-        //         { id: "Minimum Temperature", name: "TempMin", value: "TempMin" },//This is commented out because of shut off of services
-        //         { id: "Evapotranspiration", name: "PET", value: "PET" }  //This is commented out because of shut off of services
-        //         //{id:"Evapotranspiration (NA)", name:"Evap", value:"Evap"}
-        //     ]
-        // });
-
-        // var seasonStore = new Memory({
-        //     idProperty: "seasonMem",
-        //     data: [
-        //         //{id:"Autumn", name:"Autumn", value:"Autumn"},
-        //         { id: "Spring", name: "Spring", value: "Spring" },
-        //         { id: "Summer", name: "Summer", value: "Summer" },
-        //         { id: "Fall", name: "Fall", value: "Fall" },
-        //         { id: "Winter", name: "Winter", value: "Winter" },
-        //         { id: "Annual", name: "Annual", value: "Annual" }
-        //     ]
-        // });
 
         var clickFrameYear = function () {
             console.log("frmeYearinput is clicked!");
@@ -172,7 +92,6 @@ define([
         };
 
         var mapLoading = function () {
-            //esri.show(loading);
             if (timeSlider) {
                 //layer is loading, set rate temoporarily very high (20 sec), pausing the slider
                 timeSlider.setThumbMovingRate(20000);
@@ -204,12 +123,6 @@ define([
                 style: "width:100%;",
                 id: "timeSliderDijOneFrame"
             }, tsDiv);
-
-            /*selfTimeSeries.frameNode = html.create('div', {}, selfTimeSeries.frameNodeContainer);
-        timeSlider = new TimeSlider({
-          style: "width:100%;",
-          id: "timeSliderDijOneFrame"
-        }, selfTimeSeries.frameNode);*/
 
             map.setTimeSlider(timeSlider);
 
@@ -284,11 +197,6 @@ define([
                 style: "width:100%;",
                 id: "timeSliderDij"
             }, tsDiv);
-            /*selfTimeSeries.sliderNode = html.create('div', {}, selfTimeSeries.sliderNodeContainer);
-            timeSlider = new TimeSlider({
-              style: "width:100%;",
-              id: "timeSliderDij"
-            }, selfTimeSeries.sliderNode);*/
 
             map.setTimeSlider(timeSlider);
 
@@ -482,6 +390,8 @@ define([
 
             map.addLayers([imageServiceLayer]);
 
+            console.log(map);
+
             //Turn on Identify capability after the layer is added to the map
             mapClickListener = map.on("click", executeIdentifyTask);
 
@@ -625,30 +535,13 @@ define([
             }
         });
 
-        var buildOCONUSfield = () => {
-            // Need to build the field name from selections
-            // Assume symbolizing by Median, "ME"
-            return ("ME" + dojo.byId("seasonSelectionOCONUS").value + dojo.byId("climateSelectionOCONUS").value + dojo.byId("periodSelectionOCONUS").value)
-        }
-
-        var loadOCONUS = () => {
-            console.log("Load OCONUS");
-            // Get selections
-            let fieldname = buildOCONUSfield();
-            console.log(fieldname)
-        }
-
-        var removeOCONUS = () => {
-            console.log("Remove OCONUS")
-        }
-
-        var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
-
+        return declare([BaseWidget, _WidgetsInTemplateMixin], {
             baseClass: 'jimu-widget-timeseries',
+            oLayer: null,
+
             startup: function () {
                 this.inherited(arguments);
                 map = this.map;
-
                 selfTimeSeries = this;
                 map.on("update-start", mapLoading);
                 map.on("update-end", mapFinishedLoading);
@@ -668,12 +561,12 @@ define([
                 }, "frameYearInput").startup();
 
                 uiButtons = [
-                    "loadOneFrameBtn", 
-                    "loadServiceBtn", 
-                    "removeServiceBtn", 
-                    "loadServiceBtnOCONUS", 
+                    "loadOneFrameBtn",
+                    "loadServiceBtn",
+                    "removeServiceBtn",
+                    "loadServiceBtnOCONUS",
                     "removeServiceBtnOCONUS"
-                ]; 
+                ];
 
                 uiButtons.forEach(b => {
                     new Button({
@@ -685,13 +578,9 @@ define([
 
                 //loading = dojo.byId("loadingTimeSeriesLayer");//dojo.byId("loadingOverlay");
                 //esri.hide(loading);
-                registry.byId("loadServiceBtn").on("click", defineService);
                 registry.byId("loadOneFrameBtn").on("click", defineOneFrameService);
-                registry.byId("removeServiceBtn").on("click", removeDataFromMap);
                 registry.byId("frameYearInput").on("click", clickFrameYear);
                 registry.byId("frameYearInput").on("blur", blurFrameYear);
-                registry.byId("loadServiceBtnOCONUS").on("click", loadOCONUS);
-                registry.byId("removeServiceBtnOCONUS").on("click", removeOCONUS);
 
                 // Scenario dialog box
                 var scenario_info = this.config.scenarios;
@@ -881,7 +770,8 @@ define([
                     infobox.show()
                 };
                 //end of periodSelectionHelpOCONUS click event
-
+                this._initDOMRefs();
+                this._initListeners();
             },
 
             onOpen: () => {
@@ -891,6 +781,76 @@ define([
                         console.log(e);
                     });
             },
+
+            _initDOMRefs: function () {
+                this.loadOCONUS = document.getElementById('loadServiceBtnOCONUS');
+                this.removeOCONUS = document.getElementById('removeServiceBtnOCONUS');
+                this.loadCONUS = document.getElementById('loadServiceBtn');
+                this.removeCONUS = document.getElementById('removeServiceBtn');
+                this.frameYearInput = document.getElementById('frameYearInput');
+            },
+
+            _initListeners: function () {
+                this.loadCONUS.addEventListener('click', () => {
+                    defineService();
+                });
+
+                this.removeCONUS.addEventListener('click', () => {
+                    removeDataFromMap();
+                });
+
+                this.loadOCONUS.addEventListener('click', () => {
+                    console.log('do something please');
+                    this._loadOCONUS();
+                });
+
+                this.removeOCONUS.addEventListener('click', () => {
+                    this._removeOCONUS();
+                });
+            },
+
+            _zoomToOCONUSArea: (area) => {
+                if (area == "Alaska") {
+                    var nExtent = Extent({
+                        "xmax": -15876210.00,
+                        "xmin": -19061453.32,
+                        "ymax": 12511315.00,
+                        "ymin": 6923265.00,
+                        "spatialReference": {
+                            "wkid": 102100
+                        }
+                    });
+                    return nExtent
+                }
+            },
+
+            _loadOCONUS: function () {
+                console.log("Load OCONUS");
+                var domain = dojo.byId("domainSelectionOCONUS").value;
+                console.log(domain);
+                var scenario = dojo.byId("modelSelectionOCONUS").value;
+                console.log(scenario);
+                var extObj = this._zoomToOCONUSArea(domain)
+                map.setExtent(extObj);
+    
+                // Get selections
+                var fieldname = this._buildOCONUSfield();
+                console.log(fieldname)
+                oconusUrl = 'https://services.arcgis.com/cJ9YHowT8TU7DUyn/ArcGIS/rest/services/RCRA_Handlers/FeatureServer/3';
+                console.log(oconusUrl);
+                this.oLayer = new FeatureLayer(oconusUrl);
+                map.addLayer(this.oLayer);
+            },
+
+            _buildOCONUSfield: () => {
+                // Need to build the field name from selections
+                // Assume symbolizing by Median, "ME"
+                return ("ME" + dojo.byId("seasonSelectionOCONUS").value + dojo.byId("climateSelectionOCONUS").value + dojo.byId("periodSelectionOCONUS").value)
+            },
+
+            _removeOCONUS: () => {
+                console.log("Remove OCONUS");
+                //map.removeLayer(this.oLayer);
+            },
         });
-        return clazz;
     });
