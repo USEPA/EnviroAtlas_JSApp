@@ -15,15 +15,13 @@
 ///////////////////////////////////////////////////////////////////////////
 
 define([
-    'dojo/on',
     'dojo/_base/declare',
-    'dojo/_base/lang',
     'dojo/_base/html',
     'jimu/BaseWidget',
     'esri/toolbars/navigation',
     'esri/geometry/Extent'
   ],
-  function(on, declare, lang, html, BaseWidget, Navigation, Extent) {
+  function(declare, html, BaseWidget, Navigation, Extent) {
     var clazz = declare([BaseWidget], {
       name: 'HawaiiAlaskaConusRico',
       navToolbar: null,
@@ -46,8 +44,8 @@ define([
         this.btnAlaska.title = this.nls.Alaska;
         this.btnConus.title = this.nls.Conus;
         this.btnPRVI.title = this.nls.PRVI;
-
       },
+
       _onHawaiiClicked: function() {
         for (var i = 0; i <this.config.bookmarks[0].items.length; i++ ){
           var currentItem = this.config.bookmarks[0].items[i];
@@ -58,6 +56,7 @@ define([
           }
         }          
       },
+
       _onAlaskaClicked: function() {
         for (var i = 0; i <this.config.bookmarks[0].items.length; i++ ){
           var currentItem = this.config.bookmarks[0].items[i];
@@ -65,10 +64,10 @@ define([
             var nExtent = Extent(currentItem.extent);
             this.map.setExtent(nExtent);
             document.getElementById("areaGeographyAlaska").click();
-            
           }
         }          
       },
+      
       _onConusClicked: function() {
         for (var i = 0; i <this.config.bookmarks[0].items.length; i++ ){
           var currentItem = this.config.bookmarks[0].items[i];
@@ -79,6 +78,7 @@ define([
           }
         }          
       },
+      
       _onPRVIClicked: function() {
         for (var i = 0; i <this.config.bookmarks[0].items.length; i++ ){
           var currentItem = this.config.bookmarks[0].items[i];
@@ -89,11 +89,12 @@ define([
           }
         }          
       },
+
       setPosition: function(position){
         this.inherited(arguments);
         if(typeof position.height === 'number' && position.height <= 30){
           this.setOrientation(false);
-        }else{
+        } else {
           this.setOrientation(true);
         }
       },
@@ -101,24 +102,18 @@ define([
       setOrientation: function(isVertical){
         html.removeClass(this.domNode, this._horizontalClass);
         html.removeClass(this.domNode, this._verticalClass);
-
-
-
         /*html.removeClass(this.btnNext, this._floatClass);
         html.removeClass(this.btnNext, this._cornerBottom);
         html.removeClass(this.btnNext, this._cornerTrailing);*/
-
         if(isVertical){
           html.addClass(this.domNode, this._verticalClass);
-
           //html.addClass(this.btnNext, this._cornerBottom);
-        }else{
+        } else {
           //html.addClass(this.domNode, this._horizontalClass);
           //html.addClass(this.btnNext, this._floatClass);
           //html.addClass(this.btnNext, this._cornerTrailing);
         }
       }
-
     });
     return clazz;
   });
