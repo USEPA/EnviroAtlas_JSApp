@@ -809,19 +809,8 @@ define([
                 });
             },
 
-            _zoomToOCONUSArea: (area) => {
-                if (area == "Alaska") {
-                    var nExtent = Extent({
-                        "xmax": -15876210.00,
-                        "xmin": -19061453.32,
-                        "ymax": 12511315.00,
-                        "ymin": 6923265.00,
-                        "spatialReference": {
-                            "wkid": 102100
-                        }
-                    });
-                    return nExtent
-                }
+            _zoomToOCONUSArea: (a) => {
+                return Extent(selfTimeSeries.config.extents[0][a]);
             },
 
             _loadOCONUS: function () {
@@ -836,7 +825,7 @@ define([
                 // Get selections
                 var fieldname = this._buildOCONUSfield();
                 console.log(fieldname)
-                oconusUrl = 'https://services.arcgis.com/cJ9YHowT8TU7DUyn/ArcGIS/rest/services/RCRA_Handlers/FeatureServer/3';
+                oconusUrl = 'https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/NEXGDDP_ssp126/FeatureServer/0';
                 console.log(oconusUrl);
                 this.oLayer = new FeatureLayer(oconusUrl);
                 map.addLayer(this.oLayer);

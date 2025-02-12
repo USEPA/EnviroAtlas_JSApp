@@ -94,10 +94,57 @@
 	}],
 	"Period":[{
 		"text":"Climate change variables were computed using 30-year periods: recent history (1976–2005), near-term future (2025–2054), mid-century (2045–2074), and end-of-century (2070–2099). Climate change variables are expressed as change between different periods:",
-		"list1":"recent history (1976–2005) to near-term future (2025–2054)",
-		"list2":"recent history (1976–2005) to mid-century (2045–2074)",
-		"list3":"recent history (1976–2005) to end-of-century (2070–2099)",
-		"list4":"near-term future (2025–2054) to mid-century (2045–2074)",
-		"list5":"near-term future (2025–2054) to end-of-century (2070–2099)"
+		"list1":"recent history (1976-2005) to near-term future (2025-2054)",
+		"list2":"recent history (1976-2005) to mid-century (2045-2074)",
+		"list3":"recent history (1976-2005) to end-of-century (2070-2099)",
+		"list4":"near-term future (2025-2054) to mid-century (2045-2074)",
+		"list5":"near-term future (2025-2054) to end-of-century (2070-2099)"
+	}],
+	"extents":[{
+		"AK": {
+			"xmax": -15876210.00,
+			"xmin": -19061453.32,
+			"ymax": 12511315.00,
+			"ymin": 6923265.00,
+			"spatialReference": {
+				"wkid": 102100
+			}
+		},
+		"HI": {
+			"xmax": -17232996.353700,
+			"xmin": -17838620.597500,
+			"ymax": 2539458.216500,
+			"ymin": 2144428.125600,
+			"spatialReference": {
+				"wkid": 102100
+			}
+		},
+		"PRVI": {
+			"xmax": -7067363.955800,
+			"xmin": -7564321.223000,
+			"ymax": 2098168.552400,
+			"ymin": 1999395.310000,
+			"spatialReference": {
+				"wkid": 102100
+			}
+		},
+		"AS": {
+			"xmax": -18844510.286599636,
+			"xmin": -19163997.22517633,
+			"ymax": -1444391.585028562,
+			"ymin": -1774134.0808157807,
+			"spatialReference": {
+				"wkid": 102100
+			}
+		},
+		"GUMP": {
+			"xmax": 16446175.757969558,
+			"xmin": 16004237.379520258,
+			"ymax": 1941068.6854367177,
+			"ymin": 1383028.389935526,
+			"spatialReference": {
+				"wkid": 102100
+			}
+		}
 	}]
 }
