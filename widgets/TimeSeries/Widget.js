@@ -541,7 +541,7 @@ define([
             baseClass: 'jimu-widget-timeseries',
             oLayer: null,
 
-            startup: () => {
+            startup: function () {
                 this.inherited(arguments);
                 map = this.map;
                 selfTimeSeries = this;
@@ -784,7 +784,7 @@ define([
                     });
             },
 
-            _initDOMRefs: () => {
+            _initDOMRefs: function () {
                 this.loadOCONUS = document.getElementById('loadServiceBtnOCONUS');
                 this.removeOCONUS = document.getElementById('removeServiceBtnOCONUS');
                 this.loadCONUS = document.getElementById('loadServiceBtn');
@@ -792,7 +792,7 @@ define([
                 this.frameYearInput = document.getElementById('frameYearInput');
             },
 
-            _initListeners: () => {
+            _initListeners: function () {
                 this.loadCONUS.addEventListener('click', () => {
                     defineService();
                 });
@@ -815,7 +815,7 @@ define([
                 return Extent(selfTimeSeries.config.extents[0][a]);
             },
 
-            _loadOCONUS: () => {
+            _loadOCONUS: function () {
                 // Get selections
                 var domain = dojo.byId("domainSelectionOCONUS").value;
                 console.log(domain);
@@ -828,7 +828,8 @@ define([
                 console.log(oconusUrl);
                 this.oLayer = new FeatureLayer(oconusUrl);
                 this.oLayer.setDefinitionExpression("domain = '" + `${domain}` + "'");
-                this.oLayer.setInfoTemplate(_buildOconusPopupJson(fieldname))
+                var popup = new InfoTemplate(_buildOconusPopupJson(fieldname));
+                this.oLayer.setInfoTemplate(popup);
                 map.addLayer(this.oLayer);
             },
 
