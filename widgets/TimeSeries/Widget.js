@@ -814,20 +814,18 @@ define([
             },
 
             _loadOCONUS: function () {
-                console.log("Load OCONUS");
+                // Get selections
                 var domain = dojo.byId("domainSelectionOCONUS").value;
                 console.log(domain);
                 var scenario = dojo.byId("modelSelectionOCONUS").value;
                 console.log(scenario);
-                var extObj = this._zoomToOCONUSArea(domain)
-                map.setExtent(extObj);
-    
-                // Get selections
+                map.setExtent(this._zoomToOCONUSArea(domain));  
                 var fieldname = this._buildOCONUSfield();
                 console.log(fieldname)
-                oconusUrl = 'https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/NEXGDDP_ssp126/FeatureServer/0';
+                oconusUrl = `https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/NEXGDDP_${scenario}/FeatureServer/0`;
                 console.log(oconusUrl);
                 this.oLayer = new FeatureLayer(oconusUrl);
+                this.oLayer.setDefinitionExpression("domain = '" + `${domain}` + "'");
                 map.addLayer(this.oLayer);
             },
 
