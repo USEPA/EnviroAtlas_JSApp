@@ -17,6 +17,7 @@
 define([
     'esri/layers/FeatureLayer',
     'esri/geometry/Extent',
+    'esri/InfoTemplate',
     'dojo/_base/declare',
     'dijit/_WidgetsInTemplateMixin',
     'jimu/BaseWidget',
@@ -38,6 +39,7 @@ define([
     function (
         FeatureLayer,
         Extent,
+        InfoTemplate,
         declare,
         _WidgetsInTemplateMixin,
         BaseWidget,
@@ -539,7 +541,7 @@ define([
             baseClass: 'jimu-widget-timeseries',
             oLayer: null,
 
-            startup: function () {
+            startup: () => {
                 this.inherited(arguments);
                 map = this.map;
                 selfTimeSeries = this;
@@ -782,7 +784,7 @@ define([
                     });
             },
 
-            _initDOMRefs: function () {
+            _initDOMRefs: () => {
                 this.loadOCONUS = document.getElementById('loadServiceBtnOCONUS');
                 this.removeOCONUS = document.getElementById('removeServiceBtnOCONUS');
                 this.loadCONUS = document.getElementById('loadServiceBtn');
@@ -790,7 +792,7 @@ define([
                 this.frameYearInput = document.getElementById('frameYearInput');
             },
 
-            _initListeners: function () {
+            _initListeners: () => {
                 this.loadCONUS.addEventListener('click', () => {
                     defineService();
                 });
@@ -813,23 +815,34 @@ define([
                 return Extent(selfTimeSeries.config.extents[0][a]);
             },
 
-            _loadOCONUS: function () {
+            _loadOCONUS: () => {
                 // Get selections
                 var domain = dojo.byId("domainSelectionOCONUS").value;
                 console.log(domain);
                 var scenario = dojo.byId("modelSelectionOCONUS").value;
                 console.log(scenario);
                 map.setExtent(this._zoomToOCONUSArea(domain));  
-                var fieldname = this._buildOCONUSfield();
+                var fieldname = this._buildOconusField();
                 console.log(fieldname)
                 oconusUrl = `https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/NEXGDDP_${scenario}/FeatureServer/0`;
                 console.log(oconusUrl);
                 this.oLayer = new FeatureLayer(oconusUrl);
                 this.oLayer.setDefinitionExpression("domain = '" + `${domain}` + "'");
+                this.oLayer.setInfoTemplate(_buildOconusPopupJson(fieldname))
                 map.addLayer(this.oLayer);
             },
 
-            _buildOCONUSfield: () => {
+            _buildOconusPopupJson: (field) => {
+                console.log(field);
+                var oTable = "<table><tr><td>Ensemble Minimum of Changes</td><td></td></tr><tr><td>Ensemble Median of Changes</td><td></td></tr><tr><td>Ensemble Maximum of Changes</td><td></td></tr></table>"
+                var json = {
+                    title: "${HUC_12}",
+                    content: oTable
+                };
+                return json
+            },
+
+            _buildOconusField: () => {
                 // Need to build the field name from selections
                 // Assume symbolizing by Median, "ME"
                 return ("ME" + dojo.byId("seasonSelectionOCONUS").value + dojo.byId("climateSelectionOCONUS").value + dojo.byId("periodSelectionOCONUS").value)
