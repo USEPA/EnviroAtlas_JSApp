@@ -18,6 +18,13 @@ define([
     'esri/layers/FeatureLayer',
     'esri/geometry/Extent',
     'esri/InfoTemplate',
+	"esri/tasks/AlgorithmicColorRamp",
+    "esri/tasks/GenerateRendererParameters", 
+	"esri/tasks/GenerateRendererTask",
+    "esri/layers/LayerDrawingOptions",
+	'esri/symbols/SimpleFillSymbol',
+    'esri/tasks/ClassBreaksDefinition',
+    'esri/Color',
     'dojo/_base/declare',
     'dijit/_WidgetsInTemplateMixin',
     'jimu/BaseWidget',
@@ -40,6 +47,13 @@ define([
         FeatureLayer,
         Extent,
         InfoTemplate,
+		AlgorithmicColorRamp,
+        GenerateRendererParameters, 
+		GenerateRendererTask,
+        LayerDrawingOptions,
+		SimpleFillSymbol,
+        ClassBreaksDefinition,
+        Color,
         declare,
         _WidgetsInTemplateMixin,
         BaseWidget,
@@ -815,7 +829,7 @@ define([
                 return Extent(selfTimeSeries.config.extents[0][a]);
             },
 
-            _loadOCONUS: function () {
+            _loadOCONUS: function () {			
                 // Get selections
                 var domain = dojo.byId("domainSelectionOCONUS").value;
                 console.log(domain);
@@ -826,13 +840,55 @@ define([
                 console.log(fieldname)
                 oconusUrl = `https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/NEXGDDP_${scenario}/FeatureServer/0`;
                 console.log(oconusUrl);
-                this.oLayer = new FeatureLayer(oconusUrl);
+				oLayerId = domain + scenario + fieldname;
+                this.oLayer = new FeatureLayer(oconusUrl, {visible: false, opacity: 0.6, id: oLayerId});
                 this.oLayer.setDefinitionExpression("domain = '" + `${domain}` + "'");
-                var popup = new InfoTemplate(_buildOconusPopupJson(fieldname));
+                var popup = new InfoTemplate();
                 this.oLayer.setInfoTemplate(popup);
                 map.addLayer(this.oLayer);
+				var clim = dojo.byId("climateSelectionOCONUS").value
+				if (clim == 'miTF' || clim == 'mxTF') {
+					this._classBreaks(fieldname, oconusUrl, "#0000FF", "#eb1809");
+				}
+				if (clim == 'PRfr' || clim == 'PRin') {
+					this._classBreaks(fieldname, oconusUrl, "#b9e2ed", "#0a11f0");
+				}
+				if (clim == 'PEfr' || clim == 'PEin') {
+					this._classBreaks(fieldname, oconusUrl, "#ffffcc", "#eb1809");
+				}
             },
 
+			_classBreaks: function (field, oconusUrl, c1, c2) {
+				var classDef = new ClassBreaksDefinition();
+				classDef.classificationField = field;
+				classDef.classificationMethod = "natural-breaks"; // always natural breaks
+				classDef.breakCount = 5; // always five classes
+
+				var colorRamp = new AlgorithmicColorRamp();
+				colorRamp.fromColor = new Color.fromHex(c1);
+				colorRamp.toColor = new Color.fromHex(c2);
+				colorRamp.algorithm = "hsv"; // options are:  "cie-lab", "hsv", "lab-lch"
+
+				classDef.baseSymbol = new SimpleFillSymbol("solid", null, null);
+				classDef.colorRamp = colorRamp;
+
+				var params = new GenerateRendererParameters();
+				params.classificationDefinition = classDef;
+				var generateRenderer = new GenerateRendererTask(oconusUrl);
+				generateRenderer.execute(params, this._applyRenderer, this._errorHandler);
+			},
+			
+			_applyRenderer: function (renderer) {
+				var fieldname = "ME" + dojo.byId("seasonSelectionOCONUS").value + dojo.byId("climateSelectionOCONUS").value + dojo.byId("periodSelectionOCONUS").value;
+				oLayerId = dojo.byId("domainSelectionOCONUS").value + dojo.byId("modelSelectionOCONUS").value + fieldname;
+			    map.getLayer(oLayerId).setRenderer(renderer);
+			    map.getLayer(oLayerId).show();
+			},
+			
+			_errorHandler: function (error) {
+                console.log("error: ", JSON.stringify(error));
+ 			},
+			
             _buildOconusPopupJson: (field) => {
                 console.log(field);
                 var oTable = "<table><tr><td>Ensemble Minimum of Changes</td><td></td></tr><tr><td>Ensemble Median of Changes</td><td></td></tr><tr><td>Ensemble Maximum of Changes</td><td></td></tr></table>"
