@@ -1,30 +1,30 @@
 Column,jsonElem
-eaID,eaID
-eaScale,eaScale
-name,name
-eaDescription,eaDescription
-fieldName,fieldName
-eaMetric,eaMetric
-URL,url
-eaDfsLink,eaDfsLink
-eaLyrNum,eaLyrNum
-eaMetadata,eaMetadata
-eaBC,eaBC
-eaCA,eaCA
-eaCPW,eaCPW
-eaCS,eaCS
-eaFFM,eaFFM
-eaNHM,eaNHM
-eaRCA,eaRCA
-eaPBS,eaPBS
-eaTags,eaTags
-eaBCSDD,eaBCSDD
-eaTopic,eaTopic
+sort,eaID
+Scale/community list,eaScale
+Layer Name,name
+Description,eaDescription
+Attribute,fieldName
+metric/foundational/boundary/landcover/demographics,eaMetric
+Service layer REST URL,url
+DataFactSheet,eaDfsLink
+service layer number only,eaLyrNum
+metadataLookup,eaMetadata
+Biodiversity Conservation,eaBC
+Clean Air,eaCA
+Clean and Plentiful Water,eaCPW
+Climate Stabilization,eaCS
+"Food, Fuel, and Materials",eaFFM
+Natural Hazard Mitigation,eaNHM
+"Recreation, Culture, and Aesthetics",eaRCA
+People and Built Spaces,eaPBS
+"Tags (words not in title, description, or subcategory)",eaTags
+BC/SDD,eaBCSDD
+Topic,eaTopic
 tileLink,tileLink
 tileURL,tileURL
 serviceType,serviceType
-popupDefinition,popupDefinition
-numDecimal,numDecimal
+popupJSON,popupDefinition
+decimals,numDecimal
 IsSubLayer,IsSubLayer
 SubLayerNames,SubLayerNames
 SubLayerIds,SubLayerIds
