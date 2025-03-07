@@ -831,31 +831,34 @@ define([
 
             _loadOCONUS: function () {			
                 // Get selections
-                var domain = dojo.byId("domainSelectionOCONUS").value;
-                console.log(domain);
+                var domainElem = dojo.byId("domainSelectionOCONUS");
+				var domain = domainElem.value;
+				var domainText = domainElem.options[domainElem.selectedIndex].text
                 var scenario = dojo.byId("modelSelectionOCONUS").value;
-                console.log(scenario);
                 map.setExtent(this._zoomToOCONUSArea(domain));  
                 var fieldname = this._buildOconusField();
-                console.log(fieldname)
                 oconusUrl = `https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/NEXGDDP_${scenario}/FeatureServer/0`;
-                console.log(oconusUrl);
 				oLayerId = domain + scenario + fieldname;
-                this.oLayer = new FeatureLayer(oconusUrl, {visible: false, opacity: 0.6, id: oLayerId});
+                this.oLayer = new FeatureLayer(oconusUrl, {visible: false, opacity: 0.6});
+				var oconusSelections = this._buildOconusId();
+				this.oLayer.id = oLayerId;
+				this.oLayer.name = domainText + ', ' +  scenario + ', ' + oconusSelections;
+				this.oLayer.title = domainText + ', ' +  scenario + ', ' + oconusSelections;
                 this.oLayer.setDefinitionExpression("domain = '" + `${domain}` + "'");
-                var popup = new InfoTemplate();
-                this.oLayer.setInfoTemplate(popup);
+                //var popup = new InfoTemplate();
+                //this.oLayer.setInfoTemplate(popup);
                 map.addLayer(this.oLayer);
 				var clim = dojo.byId("climateSelectionOCONUS").value
 				if (clim == 'miTF' || clim == 'mxTF') {
 					this._classBreaks(fieldname, oconusUrl, "#0000FF", "#eb1809");
-				}
+				};
 				if (clim == 'PRfr' || clim == 'PRin') {
 					this._classBreaks(fieldname, oconusUrl, "#b9e2ed", "#0a11f0");
-				}
+				};
 				if (clim == 'PEfr' || clim == 'PEin') {
 					this._classBreaks(fieldname, oconusUrl, "#ffffcc", "#eb1809");
-				}
+				};
+				showLayerListWidget();
             },
 
 			_classBreaks: function (field, oconusUrl, c1, c2) {
@@ -898,6 +901,13 @@ define([
                 };
                 return json
             },
+
+			_buildOconusId: () => {
+				var season = dojo.byId("seasonSelectionOCONUS");			
+				var clim = dojo.byId("climateSelectionOCONUS");
+				var period = dojo.byId("periodSelectionOCONUS");
+				return ('Median ' + season.options[season.selectedIndex].text + ' ' + clim.options[clim.selectedIndex].text + ', ' + period.options[period.selectedIndex].text)
+			},
 
             _buildOconusField: () => {
                 // Need to build the field name from selections
