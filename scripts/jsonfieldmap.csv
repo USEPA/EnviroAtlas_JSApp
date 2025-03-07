@@ -37,3 +37,6 @@ areaGeog,areaGeog
 hucNavStats,hucNavStats
 hucNavStatsUnits,hucNavStatsUnits
 agoID,agoID
+UniqueTag,UniqueTag
+HUBsearch,HUBsearch
+ViewName,ViewName

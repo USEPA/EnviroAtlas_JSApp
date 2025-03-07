@@ -85,17 +85,21 @@ def main(_argv):
         layerJSON["url"] = inputWorksheet[key["url"]+rowID].value
         # Convert the plain text popupJSON into Python Dictionary for loading
         popupTxt = inputWorksheet[key["popupDefinition"]+rowID].value
-        if popupTxt != None:
+        if popupTxt != None and popupTxt != '':
             try:
                 popupDefinition = json.loads(popupTxt)
                 layerJSON.update(popupDefinition)
             except:
                 print("This layer had invalid JSON for the popup: " + name)
                 print(popupTxt)
+<<<<<<< HEAD
+        stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL","numDecimal","IsSubLayer","sourceType","cacheLevelNat","categoryTab","drawSelectLayer","DownloadSource","agoID","UniqueTag","HUBsearch","ViewName"]
+=======
         stringList = ["eaID","eaScale","eaDescription","eaMetric","eaDfsLink","eaLyrNum","eaMetadata","eaBC","eaCA","eaCPW","eaCS","eaFFM","eaNHM","eaRCA","eaPBS","eaTopic","tileLink","tileURL","numDecimal","IsSubLayer","SubLayerNames","SubLayerIds","sourceType","cacheLevelNat","categoryTab","drawSelectLayer","DownloadSource","agoID"]
+>>>>>>> staging
         for elem in stringList:
             cell = inputWorksheet[key[elem]+rowID]
-            if cell.value != None:
+            if cell.value != None and cell.value != '':
                 cellValue = cell.value
                 if cellValue == 'x':
                     cellValue = True
