@@ -17,22 +17,22 @@
 define([
     'dojo/_base/declare',
     'dijit/_WidgetsInTemplateMixin',
-    "dojo/Deferred",
+    //"dojo/Deferred",
     'dojo/_base/lang',
     'dojo/_base/array',
     'jimu/BaseWidget',
     'dijit/Dialog',
-    'esri/symbols/jsonUtils',
+    //'esri/symbols/jsonUtils',
      'jimu/WidgetManager',
      'jimu/PanelManager',
      'jimu/utils',
      'esri/geometry/Extent',
-     'jimu/LayerInfos/LayerInfos',
+     //'jimu/LayerInfos/LayerInfos',
      'esri/layers/ArcGISDynamicMapServiceLayer',
     'esri/layers/ArcGISTiledMapServiceLayer',
     'esri/layers/ArcGISImageServiceLayer',
     'esri/layers/WMSLayer',
-    'esri/layers/WMSLayerInfo',
+    //'esri/layers/WMSLayerInfo',
     'esri/layers/FeatureLayer',
     'esri/layers/WebTiledLayer',
     'esri/layers/ImageParameters',
@@ -41,50 +41,49 @@ define([
 	 'esri/symbols/SimpleLineSymbol',
 	 'esri/symbols/SimpleFillSymbol',
 	 'esri/symbols/SimpleMarkerSymbol',
-	 'jimu/shared/utils',
+	 //'jimu/shared/utils',
 	 'jimu/utils',
 	 'esri/lang',
 	 'esri/dijit/PopupTemplate',
-	 'esri/renderers/SimpleRenderer',
+	 //'esri/renderers/SimpleRenderer',
 	 'esri/tasks/QueryTask',
      'esri/tasks/query',
-	 'esri/graphic',
+	 //'esri/graphic',
 	 'esri/Color',
 	 'esri/renderers/ClassBreaksRenderer',  
 	 'jimu/PanelManager',
 	 'dojo/_base/connect',
-	 'dojo/_base/html',
-    'dijit/layout/AccordionContainer', 
-    'dijit/layout/ContentPane',
-    'dijit/layout/TabContainer',
-    'dijit/form/TextBox',
-    'dojox/grid/DataGrid',
-    'dojo/data/ItemFileWriteStore',
-    'dijit/form/DropDownButton',
-    'dijit/TooltipDialog',
-    'dijit/form/TextBox',
-    'dijit/TitlePane'
-    
+	 //'dojo/_base/html',
+    // 'dijit/layout/AccordionContainer', 
+    // 'dijit/layout/ContentPane',
+    // 'dijit/layout/TabContainer',
+    // 'dijit/form/TextBox',
+    // 'dojox/grid/DataGrid',
+    // 'dojo/data/ItemFileWriteStore',
+    // 'dijit/form/DropDownButton',
+    // 'dijit/TooltipDialog',
+    // 'dijit/form/TextBox',
+    // 'dijit/TitlePane'    
   ],
   function(
     declare,
     _WidgetsInTemplateMixin,
-    Deferred,
+    //Deferred,
     lang,
     array,
     BaseWidget,
     Dialog,
-    esriSymJsonUtils,
+    //esriSymJsonUtils,
     WidgetManager,
     PanelManager,
     jimuUtils,
     Extent,
-    LayerInfos,
+    //LayerInfos,
     ArcGISDynamicMapServiceLayer,
     ArcGISTiledMapServiceLayer,
     ArcGISImageServiceLayer,
     WMSLayer,
-    WMSLayerInfo,
+    //WMSLayerInfo,
     FeatureLayer,
     WebTiledLayer,
     ImageParameters,
@@ -93,19 +92,20 @@ define([
     SimpleLineSymbol,
     SimpleFillSymbol,
     SimpleMarkerSymbol,
-    sharedUtils,
+    //sharedUtils,
     utils,
     esriLang,
     PopupTemplate,
-    SimpleRenderer,
+    //SimpleRenderer,
     QueryTask,
     query,
-    graphic,
+    //graphic,
     Color,
     ClassBreaksRenderer,
     PanelManager,
     connect,
-    html) {
+    //html
+	) {
     	var singleLayerToBeAddedRemoved = "";
     	var bNoTopicSelected = false;
     	var communitySelected = "";
@@ -144,7 +144,6 @@ define([
 		var selectableLayerArray = [];
 		var dicTopicSelected = {};
 		hiderows = {};
-		
 		
 		var hashFactsheetLink = {};
 		var hashLayerNameLink = {};
@@ -201,12 +200,9 @@ define([
 			var currentLayerSelectable = false;
 			for (var key in topicDictionary) {
 		        var chkboxId = window.chkTopicPrefix + topicDictionary[key];
-
 		        var checkbox = document.getElementById(chkboxId);	
 		        if (checkbox != null) {	
-
 		        	if(checkbox.checked == true){
-        		
 				        dicTopicSelected[topicDictionary[key]]  = true;    	
 				        numTopicSelected = numTopicSelected + 1;
 			        } else {
@@ -216,7 +212,6 @@ define([
 			}
 
 			if ((dicTopicSelected[topicDictionary[currentTopic]] == true) || (numTopicSelected ==0)){
-
 				currentLayerSelectable = true;				
 			}			
 	    	return currentLayerSelectable;
@@ -238,7 +233,7 @@ define([
 	        		selectQuery.distance = 180;
 	        	}
 	        } else {
-			selectQuery.distance = 500;
+				selectQuery.distance = 500;
 			}     
 	        var queryTask = new QueryTask(window.hashURL[eaID]);
 	        popupField = window.hashPopup[eaID].fieldInfos[0]["fieldName"];
@@ -273,7 +268,6 @@ define([
 	        queryTask.execute(selectQuery, function (features) {
 	        	if (window.hashPopup[eaID] != undefined) {
 					//Performance enhancer - assign featureSet array to a single variable.
-					
 					if (features.features.length >=1){
 						var resultFeatures = features.features;
 						if (resultFeatures[0].geometry.type == "polygon") {
@@ -366,10 +360,8 @@ define([
 
 					if 	(arrLayersForPopup.length > 0){
 	        			addSingleFeatureForPopup(arrLayersForPopup.pop(),clickEvt);
-	        		}
-	        		else {
+	        		} else {
 						if (selfSimpleSearchFilter.map.infoWindow.features != null){
-							
 							//test if current infoWindow resulted from  the previous click							
 							bInfoWindowUpdated = false;
 							bAllDynamic = true;
@@ -467,8 +459,7 @@ define([
 								    		var eaID = window.hashFeaturedCollectionToEAID[window.layerID_Portal_WebMap[j]];
 								    		if ((lyr.visibleAtMapScale == true) && (lyr.visible == true) && (window.featureLyrNumber[i] == eaID)){
 		    									bVisibleFL = true;
-								    		}
-							 	  
+								    		}							 	  
 							          	}          	
 							        }  							
 									
@@ -523,38 +514,28 @@ define([
 			    	} else {
 			    		document.getElementById('tableSelectableLayersArea').style.height = "calc(100% - 125px)";
 			    	}		    	
-	
-			    }		
-			
+			    }				
 		}
 		
         var loadWidgetHelpInfo = function(callback){   
-        
-            var xobj = new XMLHttpRequest();
-        
-            xobj.overrideMimeType("application/json");
-        
+            var xobj = new XMLHttpRequest(); 
+            xobj.overrideMimeType("application/json");   
             xobj.open('GET', 'widgets/Demo/config.json', true); 
-        
             xobj.onreadystatechange = function () {
-              if (xobj.readyState == 4 && xobj.status == "200") {
-                    callback(xobj.responseText);
-                  }
+            	if (xobj.readyState == 4 && xobj.status == "200") {
+                	callback(xobj.responseText);
+                }
             };
             xobj.send(null);  
         };   		
 		var loadBookmarkHomeExtent = function(callback){   
-		
 		    var xobj = new XMLHttpRequest();
-		
 		    xobj.overrideMimeType("application/json");
-		
 		    xobj.open('GET', 'configs/eBookmark/config_Enhanced Bookmark.json', true); 
-		
 		    xobj.onreadystatechange = function () {
-		      if (xobj.readyState == 4 && xobj.status == "200") {
-		            callback(xobj.responseText);
-		          }
+				if (xobj.readyState == 4 && xobj.status == "200") {
+					callback(xobj.responseText);
+				}
 		    };
 		    xobj.send(null);  
 		}; 	
@@ -582,8 +563,7 @@ define([
         		}
         		if 	(arrLayersToChangeSynbology.length > 0){
         			updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
-        		}
-        		else if (arrFeatureCollectionsToChangeSynbology.length > 0) {
+        		} else if (arrFeatureCollectionsToChangeSynbology.length > 0) {
         			updateSingleFeatureCollectionLayer(arrFeatureCollectionsToChangeSynbology.pop());
         		}          		
         		
@@ -595,8 +575,7 @@ define([
         		lyrTobeUpdated.redraw();
         		if 	(arrLayersToChangeSynbology.length > 0){
         			updateSingleCommunityLayer(arrLayersToChangeSynbology.pop());
-        		}	
-        		else if (arrFeatureCollectionsToChangeSynbology.length > 0) {
+        		} else if (arrFeatureCollectionsToChangeSynbology.length > 0) {
         			updateSingleFeatureCollectionLayer(arrFeatureCollectionsToChangeSynbology.pop());
         		}                		
 			})						
@@ -634,51 +613,41 @@ define([
 		//var nationalTopicList = [];
 		var communityTopicList = [];
 		var loadJSON = function(callback){   
-	
 	        var xobj = new XMLHttpRequest();
-	
 	        xobj.overrideMimeType("application/json");
-
             xobj.open('GET', 'widgets/SimpleSearchFilter/config_layer.json', true); 
-    
             xobj.onreadystatechange = function () {
-              if (xobj.readyState == 4 && xobj.status == "200") {
-	                callback(xobj.responseText);
-	              }
+				if (xobj.readyState == 4 && xobj.status == "200") {
+					callback(xobj.responseText);
+				}
 	        };
 	        xobj.send(null);  
 	    };    	
-		  var loadCommunityJSON = function(callback){   
-	
+		  
+		var loadCommunityJSON = function(callback){   
 	        var xobj = new XMLHttpRequest();
-	
 	        xobj.overrideMimeType("application/json");
-
 	        xobj.open('GET', 'widgets/SimpleSearchFilter/communitymetadata.json', true); 
-	
 	        xobj.onreadystatechange = function () {
-              if (xobj.readyState == 4 && xobj.status == "200") {
+              	if (xobj.readyState == 4 && xobj.status == "200") {
 	                callback(xobj.responseText);
-	              }
+	            }
 	        };
 	        xobj.send(null);  
 	    }; 	    
 	    
 		var loadNationalMetadataJSON = function(callback){   
-	
 	        var xobj = new XMLHttpRequest();
-	
 	        xobj.overrideMimeType("application/json");
-
 	        xobj.open('GET', 'widgets/SimpleSearchFilter/nationalmetadata.json', true); 
-	
 	        xobj.onreadystatechange = function () {
                 if (xobj.readyState == 4 && xobj.status == "200") {
 	                callback(xobj.responseText);
 	            }
 	        };
 	        xobj.send(null);  
-	    };		    
+	    };		
+
 	    var _onSelectAllLayers = function() {
 			for (var key in chkIdDictionary) {
 			  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
@@ -687,6 +656,7 @@ define([
 			  }
 			}
 	   };
+
 	    var _onUnselectAllLayers = function() {
 			for (var key in chkIdDictionary) {
 			  if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
@@ -712,41 +682,33 @@ define([
 
 	   		// eaCategories have a - in them.
 	   		if (eaCategory.split('-').length > 1) {
-
 				for (var key in window.categoryDic) {
-
 					bc_img = document.createElement('div');
 					bc_img.title  = key;
 									
 					if (eaCategory.indexOf(key) !=-1) {
 						bc_img.setAttribute("class",window.categoryDic[key] + ' icon_style');
-					}
-					else {
+					} else {
 						bc_img.setAttribute("class",window.categoryDic[key] + "_bw icon_style");
 					}
-					
 					indexImage = indexImage + 1;
 					BC_Div.appendChild(bc_img);
-				
-				
 				}
 				bc_and_scale_space='20px'
 			}
 
 			scale_img = document.createElement('div');
 			scale_img.style.marginLeft = bc_and_scale_space;
-			
 
 			if (scale == "NATIONAL") {
-					scale_img.title = "National Dataset";
-				} else {
-					scale_img.title = "Community Dataset";
-				}
+				scale_img.title = "National Dataset";
+			} else {
+				scale_img.title = "Community Dataset";
+			}
 			scale_img.setAttribute("class", scale + ' icon_style');
 			BC_Div.appendChild(scale_img);
 
 			datatype_img = document.createElement('div');
-			
 
 			if (type == 'huc12') {
 				datatype_img.title = "Data summarized by 12 digit HUCs";
@@ -765,7 +727,6 @@ define([
 
 			// Add popup dialog box for Benefit 
 			BC_Div.onclick = function () {
-				
 				$.getJSON("./widgets/Demo/config_for_BC_help.json", function(json) {
 						// read from tour stop 4 content
 						helpContent = json['tour'][0]['content'].join("")
@@ -775,7 +736,7 @@ define([
 		        		style: 'width: 450px',
 		        		onHide: function() {
 		        			bc_description.destroy()
-		        			}
+		        		}
 		        		});
 
 						// doesn't work in IE but is B/W and legible
@@ -789,11 +750,9 @@ define([
 	    				bc_description.show();
 					});
 				} // end onclick
-
 		   }
  	   
     var	_addSelectableLayerSorted = function(items){	  
-
 	    var arrEAIDMatchingCurrentFeaturedCollection = [];
     	for (i in window.layerID_Portal_WebMap) {	        
     		lyr = selfSimpleSearchFilter.map.getLayer(window.layerID_Portal_WebMap[i]);
@@ -813,16 +772,12 @@ define([
 		var eaIDFilteredList = [];
 		
 		$("#tableLyrNameDescrTag").dataTable().$('td',{"filter":"applied"}).each( function (value, index) {
-
 			var currentCellText = $(this).text();
 			if (!isNaN(currentCellText)){
 				eaIDFilteredList.push(currentCellText);
 			}			
 		}); 
-		
-
 		//alert(selfSimpleSearchFilter.domNode.parentNode.clientHeight);
-
 
 		var tableOfRelationship = document.getElementById("tableSelectableLayersArea");
 
@@ -835,7 +790,6 @@ define([
         dojo.destroy('hrSeperatorPSI');
         dojo.destroy('hrSeperatorPBS');
         dojo.destroy('hrSeperatorBNF');	
-        	
 		
 		dojo.destroy("button_widgets_DemographicLayers");
 		dojo.destroy("button_widgets_TimeSeries_Widget");
@@ -934,7 +888,6 @@ define([
                            selfSearchInAddData.searchTextBox.value = document.getElementById('searchFilterText').value;
                            selfSearchInAddData.searchButton.click();//test with "mountain"
                         }), 1000); 
-                        
             })
         }
         var numOfSelectableLayers = 0;
@@ -995,7 +948,6 @@ define([
 
 			// Search should use both national and community
 			if ((document.getElementById('searchFilterText').value != '')&&(document.getElementById('searchFilterText').value.trim().length >=2)){
-
 				chkNationalScale = true;
 				chkCommunityScale = true;
 				var collapseChk = document.getElementById("collapseIcons");
@@ -1018,12 +970,9 @@ define([
 			if (((chkNationalScale == false) && (chkCommunityScale == false)) || (arrCategoryForAllScale.indexOf(categoryTab) >= 0)) {
 				bSelectedByNationalOrCommunity = true;
 			}
-
 			if (SubLayerIds.length == 0) {
 				totalNumOfLayers = totalNumOfLayers + 1;
 			}				
-
-
 			if (bSelectedByNationalOrCommunity) {
 				if (bSelectedByTopics(eaTopic, categoryTab)) {
 				    //since there is no button for "Virgin Islands", it will be represented by "Puerto Rico"
@@ -1036,30 +985,24 @@ define([
                     for(var i = 0; i < selectedAreaGeog.length; i++){
                         if(selectedAreaGeog[i].checked){
                             selectedAreaGeog_value = selectedAreaGeog[i].value;                           
-                            
                             //console.log(selectedAreaGeog_value);
                         }
                     }
                     if(layerAreaGeogList.indexOf(selectedAreaGeog_value) >= 0) {
                         currentLayerSelectable = true;
-                    }
-									
+                    }			
 				}
 			}// end of if (bSelectedByNationalOrCommunity)
 
 			//if searchFilterText is not empty then search all EnviroAtalas data
             if ((document.getElementById('searchFilterText').value != '')&&(document.getElementById('searchFilterText').value.trim().length >=2)){
-
                 currentLayerSelectable = true;
             }
-            
 			if (currentLayerSelectable && (eaIDFilteredList.indexOf(eaID) >= 0) && (parseInt(eaID) >= 0)) {//add the current item as selectable layers
-		
 				var bLayerSelected = false;
 				if ((window.allLayerNumber.indexOf(eaID)) == -1) {      	
                 	window.allLayerNumber.push(eaID);
-                }
-                else {
+                } else {
 		    		lyr = selfSimpleSearchFilter.map.getLayer(window.layerIdPrefix + eaID);
 					if(lyr){
 			    		bLayerSelected = true;
@@ -1080,7 +1023,6 @@ define([
 					
 					if (categoryTab == "ESB") {
 					    //document.getElementById("hrESB").style.display = '';
-
 						var topicHeader = dojo.create('div', {
 		    				'id': eaTopic,
 		    				'class': 'topicHeader topicHeader'+categoryTab,
@@ -1136,8 +1078,7 @@ define([
 		    			}, layerAreaBNF);			    		
 					}
 				}
-				//Finsih add header for each topic	
-
+				//Finish add header for each topic	
 				var buttonInfoId = "but" + eaID;
     			hashFactsheetLink[buttonInfoId] = eaDfsLink;
 	        	hashLayerNameLink[buttonInfoId] = layerName;
@@ -1145,11 +1086,8 @@ define([
 	        	hashSubLayers[buttonInfoId] = SubLayerIds;
 	        	hashSubTopicforI[buttonInfoId] = SubLayerNames;
 
-
-				//If not a subLayer create a new Row
-				
+				//If not a subLayer create a new Row				
 				if (!IsSubLayer) {
-					
 					if (categoryTab == "ESB") {
 						var mainDiv = dojo.create('div', {
 							'class': 'layerDiv'
@@ -1181,9 +1119,6 @@ define([
                         }
 					}
 
-
-
-
 					var topicRow = dojo.create('div', {
 						"style" : "display:inline-block; width:100%"
 						//"style": ""
@@ -1195,7 +1130,6 @@ define([
 	    			}, topicRow);
 
 	    			if (!SubLayerIds.length) {
-
 		    			chkboxId = window.chkSelectableLayer + eaID;
 		    			var checkbox = dojo.create('input', {
 		    				"type": "checkbox",
@@ -1211,9 +1145,7 @@ define([
 		    			Checkbox_div.innerHTML = '_&nbsp';
 		    			Checkbox_div.style.textAlign = 'right';
 		    			Checkbox_div.style.color = 'gray';
-
 		    		}
-
 
 	    			var iButton = dojo.create('input', {
 	    				"type": "button",
@@ -1222,9 +1154,7 @@ define([
 						"checked": bLayerSelected,
 						"class": "i-button",
 						"style": "float: right",
-						onclick: function(e) {
-
-							
+						onclick: function(e) {							
 							var infobox = new Dialog({
 			        		title: hashLayerNameLink[this.id],
 			        		style: 'width: 300px'
@@ -1257,7 +1187,6 @@ define([
 			        				if (i < subLayers.length -1) {
 			        					var line = dojo.create('hr', {'style': 'margin-top: 10px'}, infobox.containerNode);
 			        				}
-
 			        			}
 			        		} else {
 			        			var infoDiv = dojo.create('div', {
@@ -1279,14 +1208,11 @@ define([
 						}
 					}, topicRow);
 
-
 	    			var topicName = dojo.create('div', {
 	    				"innerHTML": layerName,
 		        		"style" : "font-weight: 500; display: table-cell; font-size:13px",
 		        		"title" :eaDescription
 	    			}, topicRow);
-	    			
-	    		
 
 		    		if (SubLayerIds.length) {
 		    			numOfSelectableLayers--;
@@ -1318,7 +1244,6 @@ define([
 			    				'class': 'checkbox_cell'
 			    			}, subtopicBoxAndText);
 
-
 		    				chkboxId = window.chkSelectableLayer + SubLayerIds[i];
 
 		    				var checkbox = dojo.create('input', {
@@ -1340,19 +1265,16 @@ define([
 		    				chkIdDictionary[chkboxId] = SubLayerNames[i] + layerName;
 		    			}
 					}
-
 					if (!(document.getElementById("hideIcons").checked)) {
 						add_bc_icons(mainDiv, eaScale, sourceType);
 					} 
 				}// end of if (!IsSubLayer) 
-				
 			}//end of if (currentLayerSelectable)
 		});	
 		var tableOfWidgets = document.getElementById("tableSelectableWidgetsArea");
 		if (tableOfWidgets.style.display == "") {
 		    var heightOfSelectableLayersArea = selfSimpleSearchFilter.domNode.parentNode.clientHeight-160;
-		}
-		else {
+		} else {
 		    var heightOfSelectableLayersArea = selfSimpleSearchFilter.domNode.parentNode.clientHeight-100;
 		}
 		
@@ -1361,9 +1283,7 @@ define([
 		document.getElementById("tableSelectableLayersArea").style.width = widthOfSelectableLayersArea +'px';
 		
 			dojo.byId("numOfLayers").value = " " + String(numOfSelectableLayers) + " of " + String(totalNumOfLayers) + " Maps";
-
 		for (var key in chkIdDictionary) {
-		
 	  		if ((chkIdDictionary.hasOwnProperty(key)) && (document.getElementById(key)!=null) ){
 	  			document.getElementById(key).addEventListener('change', function() {
 					if (this.checked){
@@ -1377,11 +1297,8 @@ define([
 						} else {
 							document.getElementById('butAddSingleLayer').click();
 						}
-
-					}
-					else {
+					} else {
 						eaID = this.getAttribute("id").replace(window.chkSelectableLayer, "");
-						
 						if (arrEAIDMatchingCurrentFeaturedCollection.indexOf(eaID) >= 0){//if thi check box is corresponding to a Featured Collection layer
 					    	for (iPortal in window.layerID_Portal_WebMap) {	  
 					    		var eaIDofPortal = window.hashFeaturedCollectionToEAID[window.layerID_Portal_WebMap[iPortal]];  
@@ -1405,18 +1322,14 @@ define([
 								       		selfSimpleSearchFilter.map.removeLayer(lyrTiled);
 								      	} 	
 								      	break;				 	  
-						          	}  								}
-								
- 					    			
-   
-       	
+						          	}  								
+								}
 					        }  							
 						} else {
 							singleLayerToBeAddedRemoved = "r" + "," + eaID;
 							//singleLayerToBeAddedRemoved = "r" + "," + this.getAttribute("id").replace(window.chkSelectableLayer, "");
 							document.getElementById('butAddSingleLayer').click();							
 						}
-
 					}				
 	    		});
 	  		}
@@ -1444,15 +1357,12 @@ define([
 		var chkCommunityScale = document.getElementById("chkCommunity");
 
 		if ((document.getElementById('searchFilterText').value != '')&&(document.getElementById('searchFilterText').value.trim().length >=2)){
-
 			//chkNationalScale.className ="cmn-toggle cmn-toggle-round-flat-grayedout";
 			chkNationalScale.disabled = true;
-			//document.getElementById("chkNational_label").className = 'topicTitleGray';
-			
+			//document.getElementById("chkNational_label").className = 'topicTitleGray';		
 			//chkCommunityScale.className ="cmn-toggle cmn-toggle-round-flat-grayedout";
 			chkCommunityScale.disabled = true;
-			//document.getElementById("chkCommunity_label").className = 'topicTitleGray';
-			
+			//document.getElementById("chkCommunity_label").className = 'topicTitleGray';			
 			var usingSearchBox = true;
 		} else {
 			//chkNationalScale.className ="cmn-toggle cmn-toggle-round-flat";
@@ -1465,9 +1375,7 @@ define([
 		}
 				
 	    for (var key in topicDictionary) {
-	    	var bCurrentTopicDisabled = true;
-	    	
-	    	
+	    	var bCurrentTopicDisabled = true;	    	
 			if((chkNationalScale.checked) && (window.nationalTopicList.indexOf(key) >= 0)) {
 				bCurrentTopicDisabled = false;
 			}
@@ -1483,10 +1391,8 @@ define([
 			
 	        var chkboxId = window.chkTopicPrefix + topicDictionary[key];
 	        var checkbox = document.getElementById(chkboxId);			
-
 	        //var title = document.getElementById(chkboxId + '_label');
 	        //var title = document.getElementById(chkboxId);
-
 	       if (bCurrentTopicDisabled || usingSearchBox) {
 		        //checkbox.className ="cmn-toggle cmn-toggle-round-flat-grayedout";
 		        checkbox.nextSibling.style.color= "#b3b3b3";
@@ -1494,13 +1400,10 @@ define([
 		        //title.className = 'topicTitleGray';    
 		        checkbox.disabled = true;	
 	       } else {
-		        //checkbox.className ="cmn-toggle cmn-toggle-round-flat";	
-		                  
+		        //checkbox.className ="cmn-toggle cmn-toggle-round-flat";	             
                 var checkboxClearAll = document.getElementById("chkClearAll");  
-                if (checkboxClearAll.checked == true){
-                    
-                    checkbox.checked = false;
-                                   
+                if (checkboxClearAll.checked == true){     
+                    checkbox.checked = false;                   
                 } 
                 checkbox.nextSibling.style.color= "#000000";
 	            checkbox.addEventListener("click", _updateSelectableLayer); 
@@ -1526,7 +1429,6 @@ define([
 	}
 	
 	var	_updateSelectableLayer = function(){	
-		
 		layerDataStore.fetch({
 			//Sort by alphabetically Topic, then by Name
 				sort: [{attribute: 'eaTopic', descending: false},
@@ -1567,7 +1469,6 @@ define([
         }
     }
     var showDisplayLayerAddFailureWidget = function(layerName) {
-
         var widgetName = 'DisplayLayerAddFailure';
         var widgets = selfSimpleSearchFilter.appConfig.getConfigElementsByName(widgetName);
         var pm = PanelManager.getInstance();
@@ -1617,7 +1518,6 @@ define([
             }
             selfSimpleSearchFilter.map.addLayer(communityLocationLayer);
         }
-
     }
 	   var _addSelectedLayers = function(layersTobeAdded, selectedLayerNum) {
         var index,
@@ -1631,15 +1531,7 @@ define([
                     var bNeedToBeAdded = true;
                     var lLayer;
                     var lOptions = {};
-                    if (layer.hasOwnProperty('opacity')) {
-                        lOptions.opacity = layer.opacity;
-                        // 1.0 has no transparency; 0.0 is 100% transparent
-                    }
-                    /*if (layer.hasOwnProperty('visible') && !layer.visible) {
-                        lOptions.visible = false;
-                    } else {
-                        lOptions.visible = true;
-                    }*/
+                    lOptions.opacity = 0.6;
                     lOptions.visible = true;
                     if (layer.name) {
                         lOptions.id = layer.name;
@@ -1693,7 +1585,6 @@ define([
 
                         if (layer.hasOwnProperty('autorefresh')) {
                             lLayer.refreshInterval = layer.autorefresh;
-
                         }
                         if (layer.disableclientcaching) {
                             lLayer.setDisableClientCaching(true);
@@ -1726,7 +1617,6 @@ define([
                             if (lOptions.maxScale) {
                                 evt.layer.setMaxScale(lOptions.maxScale)
                             }
-
 
                             if (!lOptions.hasOwnProperty('hidelayers')) {
                                 lOptions.hidelayers = []
@@ -1934,7 +1824,6 @@ define([
                         if (layer.hasOwnProperty('showLabels')) {
                             lOptions.showLabels = true;
                         }
-
                         if (bPopup) {
                             if (layer.hasOwnProperty('eaLyrNum')) {
                                 lLayer = new FeatureLayer(layer.url + "/" + layer.eaLyrNum.toString(), lOptions);
@@ -1942,7 +1831,6 @@ define([
                             } else {
                                 lLayer = new FeatureLayer(layer.url, lOptions);
                             }
-
                         }
 
                         if (bNeedToBeAdded) {
@@ -1962,8 +1850,7 @@ define([
                                     if (lyrTiled) {
                                         lyrTiled.setOpacity(layer.opacity);
                                     }
-                                }
-                                else{
+                                } else {
                                     lOptions.id = window.layerIdTiledPrefix + layer.eaID.toString();
                                     var tileLayerForFeature = new ArcGISTiledMapServiceLayer(layer.tileURL, lOptions);
                                     //tileLayerForFeature.setMaxScale(2000000);
@@ -1977,7 +1864,6 @@ define([
 
 			                        });*/
                                     this._viewerMap.addLayer(tileLayerForFeature);
-                                    
                                 }
                             } else if (layer.eaScale == "COMMUNITY") {
                                 loadSymbologyConfig(function(response) {
@@ -1999,13 +1885,10 @@ define([
 
                         var popupConfig = jimuUtils.getPopups(layer);
                         lLayer.setInfoTemplates(popupConfig);
-
                     } else if (layer.type.toUpperCase() === "WMS") {          
-
                         lLayer = new WMSLayer(layer.url, {
                             format: "png",
                         });
-
                     } 
                     //All layer types:
                     if (bNeedToBeAdded) {
@@ -2049,22 +1932,17 @@ define([
                                     popupsTemplate[0] = {
                                         infoTemplate : locationTemplate
                                     };
-        
                                     popupsTemplate[1] = null;
                                     evt.layer._titleForLegend = window.communityLayerTitle;
                                     evt.layer.title = window.communityLayerTitle;
                                     evt.layer.noservicename = true;
                                     evt.layer.setInfoTemplates(popupsTemplate);       
-                                    
-                                
-                                
                                 }, 1000)                      
                             }
                             else if (window.nationalLayerNumber.includes(currentEAID)){
                             	setTimeout(function () {
 	    							jimuUtils.adjustMapExtent(selfSimpleSearchFilter.map);   			    
                             	}, 50) 
-                            	
                             }
                         });
 
@@ -2113,16 +1991,14 @@ define([
                 if (window.nationalLayerNumber.includes(currentEAID) || (bNationalFeaturedCollection == true)){
                 	setTimeout(function () {
 						jimuUtils.adjustMapExtent(selfSimpleSearchFilter.map);   			    
-                	}, 10) 
-                            	
-                 }
+                	}, 10)              	
+                }
             }
             lyrTiled = this._viewerMap.getLayer(window.layerIdTiledPrefix + stringArray[i]);
             if (lyrTiled) {
                 this._viewerMap.removeLayer(lyrTiled);
             }
         }
-
     };
     //end of code copied from LocalLayer widget
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
@@ -2140,7 +2016,6 @@ define([
                 commnunityWholeName = window.communityDic[window.communitySelected];
                 extentForCommunity = window.communityExtentDic[window.communityDic[window.communitySelected]];
                 nExtent = Extent(extentForCommunity);
-
             }
             this.map.setExtent(nExtent);
             this.map.infoWindow.hide();
@@ -2185,6 +2060,7 @@ define([
 	        	window.filterForSelectOpened = false;				
 			}); 
     },	
+
     displayDragButton: function() {		
         	indexImage = 0;
     		var tableOfRelationship = document.getElementById('dragFilter');
@@ -2238,29 +2114,21 @@ define([
 
             //checkbox.id = chkboxId;
             //checkbox.className ="cmn-toggle cmn-toggle-round-flat";
-            newCheckboxCell.appendChild(checkbox); 
-        
-
-            
+            newCheckboxCell.appendChild(checkbox);  
             checkbox.addEventListener('click', function() {
                 /*evt.stopPropagation();
 		        if (evt.type === "touchstart") {
 		          evt.preventDefault();
-		        }*/
-		        
+		        }*/    
 		        window.PanelId = "SelectByTopic";    
-		
 		        utils.startTour();
             });            			
-       
     },	
-    displayResizeButton: function() {
-		
-        	indexImage = 0;
 
+    displayResizeButton: function() {
+        	indexImage = 0;
     		var tableOfRelationship = document.getElementById('resizeForFilter');
     		var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0];
-
 	    	newRow = tableRef.insertRow(tableRef.rows.length);
 			var newCheckboxCell  = newRow.insertCell(0);
            	var checkbox = document.createElement('input');
@@ -2268,10 +2136,9 @@ define([
 			checkbox.id = chkboxId;
 			checkbox.className ="jimu-widget-filterforselect-move";
 	        newCheckboxCell.appendChild(checkbox);    
-
     },
+
     displayCategorySelection: function(categoryTab) {
-		
         indexImage = 0;
 	    var categoCount = 1;
 	    var newRow;
@@ -2325,12 +2192,10 @@ define([
 			label.innerHTML = keys[i];
 			newCheckboxCell.appendChild(label);
 
-
 			checkbox.addEventListener('click', function() {
 			    var checkboxClearAll = document.getElementById("chkClearAll"); 
 			    checkboxClearAll.checked = false;
-				_updateSelectableLayer();
-				
+				_updateSelectableLayer();		
 			});
 			/// add category title:
            	/*var newTitleCell  = newRow.insertCell(1);
@@ -2341,10 +2206,7 @@ define([
 			var title = document.createElement('label');
 			title.innerHTML = keys[i];    
 			newTitleCell.appendChild(title); */
-	    	
 	    }
-
-
         /* Commenting out Supply/demand/driver choices.
 		document.getElementById("Supply").onclick = function() {
 		    _updateSelectableLayer();
@@ -2366,8 +2228,6 @@ define([
             collapseSelectableLayer();
         };
 		layersToBeAdded = "a";
-	    
-
     },
 	displayGeographySelection: function() {
         var tableOfRelationship = document.getElementById('geographyTable');
@@ -2509,10 +2369,9 @@ define([
         document.getElementById(buttonInfoId).onclick = function(e) {
    			document.getElementById('butOpenSelectCommunityWidget').click();
 	    };   	*/	  		
-
 	},
-      startup: function() {
 
+    startup: function() {
         this.inherited(arguments);
         loadBookmarkExtent(function(response) {
                 var bookmarkClassified = JSON.parse(response);
@@ -2540,7 +2399,6 @@ define([
                             if (maxYCombinedExtent < currentExtent.ymax) {
                                 maxYCombinedExtent = currentExtent.ymax;
                             }
-
                         }
                     }
                 }
@@ -2556,14 +2414,9 @@ define([
 		this.displayDragButton();
 		this.displayCloseButton();
 		var testConfig =  this.config_layer;
-	
-
-
-    
 		selfSimpleSearchFilter = this;     
 		 	
         loadWidgetHelpInfo(function(response){
-        
             var demoConfig = JSON.parse(response);
             window.helpTour = demoConfig.tour;
         }); 	
@@ -2580,7 +2433,6 @@ define([
         			if (window.extentFromURL == null){
         			    selfSimpleSearchFilter.map.setExtent(nExtent);
         			}
-       		
 	        	}
 	        }
 	    }); 
@@ -2588,9 +2440,6 @@ define([
             var tableOfRelationship = document.getElementById('tableLyrNameDescrTag');
             var tableRef = tableOfRelationship.getElementsByTagName('tbody')[0]; 
             for (ii = 0; ii<selfSimpleSearchFilter.config.WidgetTags.length; ++ii){                     
-           
-                
-                
                 widgetName = selfSimpleSearchFilter.config.WidgetTags[ii].name;
                 widgetID = selfSimpleSearchFilter.config.WidgetTags[ii].id;
                 fakeEAID = (-ii-1).toString();
@@ -2621,9 +2470,7 @@ define([
                 newCell  = newRow.insertCell(3);
                 newCell.appendChild(document.createTextNode(widgetTagsWhole));
                 newRow.appendChild(newCell);    
-                
             }
-           
             
             localLayerConfig = JSON.parse(response);
             var arrLayers = localLayerConfig.layers.layer;
@@ -2637,56 +2484,45 @@ define([
                 if(layer.hasOwnProperty('eaID')) {
                 	eaID = layer.eaID.toString();
                 	if (eaID.trim() != "") {
-
 	                    if(layer.hasOwnProperty('eaLyrNum')){
 	                        eaLyrNum = layer.eaLyrNum.toString();
-	                    }
-	                    else {
+	                    } else {
 	                    	eaLyrNum = "";
 	                    }
-
 	                    if(layer.hasOwnProperty('IsSubLayer')){
 	                        IsSubLayer = layer.IsSubLayer;
-	                    }
-	                    else {
+	                    } else {
 	                    	IsSubLayer = "";
 	                    }
-
 	                    if(layer.hasOwnProperty('sourceType')){
 	                    	sourceType = layer.sourceType;
-	                    }
-	                    else {
+	                    } else {
 	                    	sourceType = "";
 	                    }
 	                    if(layer.hasOwnProperty('categoryTab')){
 	                    	categoryTab = layer.categoryTab;
-	                    }
-	                    else {
+	                    } else {
 	                    	categoryTab = "";
 	                    }			                        
 			            layerName = "";          
 	                	if(layer.hasOwnProperty('name') ){	                		
 		                	if ((layer.name != null)){
 		                    	layerName = layer.name.toString();
-	                    }
+	                    	}
 	                    }
 	                	if(layer.hasOwnProperty('eaDescription')){
 	                    	eaDescription = layer.eaDescription.toString();
-	                    }
-	                    else {
+	                    } else {
 	                    	eaDescription = "";
 	                    }
 	                    if(layer.hasOwnProperty('eaDfsLink')){
 	                    	eaDfsLink = layer.eaDfsLink.toString();
-	                    }
-	                    else {
+	                    } else {
 	                    	eaDfsLink = "";
 	                    }
-
 	                    if(layer.hasOwnProperty('eaMetadata')){
 	                    	eaMetadata = layer.eaMetadata.toString();
-	                    }
-	                    else {
+	                    } else {
 	                    	eaMetadata = "";
 	                    }
 	                    var bNavHucStatsDefined = false;
@@ -2698,11 +2534,9 @@ define([
 	                    }
 	                    if(layer.hasOwnProperty(window.NavHucStatsUnit)){
 	                    	window.hashEAIDToNavHucStatsUnit[layer.eaID] = layer[window.NavHucStatsUnit];
-	                    }
-	                    	                    
+	                    }               
 	                    if(layer.hasOwnProperty('url')&&(layer.url!=null)){
 	                    	eaURL1 = layer.url.toString();
-	                    	
 	                    	if(layer.hasOwnProperty('eaLyrNum')){
 	                    		eaURL = eaURL1 + "/" + layer.eaLyrNum.toString();
 	                    		window.hashURL[layer.eaID.toString()] = eaURL; 
@@ -2711,8 +2545,7 @@ define([
 	                    			window.hashIDtoCacheLevelNat[layer.eaID] = layer.cacheLevelNat;	                    			
 	                    		}	                    		
 	                    		if(layer.hasOwnProperty('tileLink') && layer.tileLink.toString() == "yes"){
-	                    			window.hashURLtoTile[eaURL] = layer.tileURL.toString();
-	                    			
+	                    			window.hashURLtoTile[eaURL] = layer.tileURL.toString();	
 	                    		}	                    		
 	                    	}
 	                    	if (layer.popup) {
@@ -2728,17 +2561,13 @@ define([
 	                                    }
 	                                } 
 	                            } 
-
 	                        }
-	                    }	
-	                    
-	                                       
+	                    }		                    	                                       
 	                    if(layer.hasOwnProperty('eaTopic')){
 	                    	eaTopic = layer.eaTopic.toString();
 	                    	//console.log("eaID:" + eaID + ", eaTopic: " + eaTopic);
 	                    	window.hashTopic[eaID]  = eaTopic;
-	                    }
-	                    else {
+	                    } else {
 	                    	eaTopic = "";
 	                    }	                    
 	                    if(layer.hasOwnProperty('eaScale')){
@@ -2748,8 +2577,7 @@ define([
 	                    			window.nationalTopicList.push(eaTopic);
 	                    			if ((bNavHucStatsDefined == true) && (window.nationalFeatureTopicList.indexOf(eaTopic)) < 0) {
 	                    				window.nationalFeatureTopicList.push(eaTopic);
-	                    			}
-	                    			
+	                    			}	
 	                    		}	                    		
 	                    	}
 	                    	if (eaScale == "COMMUNITY") {
@@ -2758,8 +2586,7 @@ define([
 	                    		}	                    		
 	                    	}	          
 	                    	window.hashScale[eaID]  = eaScale;          	
-	                    }
-	                    else {
+	                    } else {
 	                    	eaScale = "";
 	                    }		                        
 					    var eaCategoryWhole =  "";
@@ -2769,7 +2596,6 @@ define([
 					    	}
 					    }
 					    eaCategoryWhole = eaCategoryWhole.substring(0, eaCategoryWhole.length - 1);
-					    
 					    var eaTagsWhole =  "";
 					    if(layer.hasOwnProperty('eaTags')){
 					    	for (tagsIndex = 0, lenTags = layer.eaTags.length; tagsIndex < lenTags; ++tagsIndex) {
@@ -2797,8 +2623,6 @@ define([
 					    	}
 					    }
 					    SubLayerIds = SubLayerIds.substring(0, SubLayerIds.length - 1);
-
-
 					    eaTagsWhole = eaTagsWhole.substring(0, eaTagsWhole.length - 1);			
 					    areaGeogWhole = areaGeogWhole.substring(0, areaGeogWhole.length - 1);    
 					    console.log("areaGeogWhole:"+areaGeogWhole);
@@ -2826,12 +2650,9 @@ define([
 							newCell.appendChild(document.createTextNode(eaTagsWhole));
 							newRow.appendChild(newCell);					
 						}//end of if (eaScale	!= "")
-					
 						//end of adding of the table for use of search text
-			    
 				    }// end of if (eaID.trim() != "")
                 }// end of if(layer.hasOwnProperty('eaID'))                	
-
             }// end of for (index = 0, len = arrLayers.length; index < len; ++index) 
 
             $('#tableLyrNameDescrTag').DataTable( {
@@ -2858,7 +2679,6 @@ define([
         });// end of loadJSON(function(response)
         loadCommunityJSON(function(response){
         	var community = JSON.parse(response);
-
             for (index = 0, len = community.length; index < len; ++index) {
             	currentMetadataCommunityIndex = community[index];
             	singleCommunityMetadataDic = {};
@@ -2870,14 +2690,12 @@ define([
 	        			singleCommunityMetadataDic[window.strAllCommunity] = currentMetadataCommunityIndex[window.strAllCommunity];
 	        		}            		
             	}
-
             	window.communityMetadataDic[currentMetadataCommunityIndex.MetaID_Community] = singleCommunityMetadataDic;
             }
         }); // end of loadCommunityJSON(function(response)
         
         loadNationalMetadataJSON(function(response){
         	var national = JSON.parse(response);
-
             for (index = 0, len = national.length; index < len; ++index) {
             	currentMetadataNationalIndex = national[index];
 				for (var key in currentMetadataNationalIndex) {
@@ -2888,7 +2706,8 @@ define([
             }
         }); // end of loadNationalMetadataJSON(function(response)
         setClickEventForPopup();
-    },               
+    },
+
     onOpen: function(){						
        document.onkeydown = function(evt) {
             evt.stopPropagation();
@@ -2905,15 +2724,11 @@ define([
             for(var i = 0; i < selectedAreaGeog.length; i++){                        
                     selectedAreaGeog[i].onclick = function() {
                         _updateSelectableLayer(); 
-                    };
-                                             
+                    };                                            
             }
-
-	
         }), 2000);
         
         if (window.eaCommunityFromURL != null){
-
             setTimeout(lang.hitch(this, function() {       
                 var pm = PanelManager.getInstance();        
                 var widgetName = 'SelectCommunity';
@@ -2933,23 +2748,15 @@ define([
         }       
         
         if (window.eaLayerFromURL != null){
-            setTimeout(lang.hitch(this, function() {
-                
+            setTimeout(lang.hitch(this, function() {  
                     var layerId= window.eaLayerFromURL.split("_")[1];//eaId
                     var checkIdForLayer = window.chkSelectableLayer + layerId;
                     if ((chkIdDictionary.hasOwnProperty(checkIdForLayer)) && (document.getElementById(checkIdForLayer)!=null) ){
                         document.getElementById(checkIdForLayer).click();     
                     }
-                
             }), 3000);
         }
-        
-
-
-
-
     },
-
                     
 	    _onSingleLayerClick: function() {
 	        if (singleLayerToBeAddedRemoved.substring(0, 2) == "a,") {
@@ -2957,11 +2764,9 @@ define([
 	        } else if (singleLayerToBeAddedRemoved.substring(0, 2) == "r,") {
 	            _removeSelectedLayers(singleLayerToBeAddedRemoved.substring(2));
 	        }
-	        
-
 		},
-	    _onViewActiveLayersClick: function() {
 
+	    _onViewActiveLayersClick: function() {
 			this.openWidgetById('widgets_SelectCommunity_29');
 			var wm = WidgetManager.getInstance();
 			widget = wm.getWidgetById('widgets_SelectCommunity_29');
@@ -2970,11 +2775,13 @@ define([
 				pm.showPanel(widget);  
 			}    
 	    },	
+
         initClickEventForPopup: function() {
         	if ((window.toggleOnHucNavigation == false) && (window.toggleOnRainDrop == false) && (window.toggleOnCMA == false) && (window.toggleOnElevation == false)) {
             	setClickEventForPopup();
             }
         },
+
     _onAddLayersClick: function() {
         layersToBeAdded = "a";
 		for (var key in chkIdDictionary) {
@@ -2999,8 +2806,8 @@ define([
 		        message: ""
 		    });
      },
-     _onButFilterInSimpleSearchClick: function () {
 
+    _onButFilterInSimpleSearchClick: function () {
      	var widgetManager;
         var filterForSelectWidgetEle = this.appConfig.getConfigElementsByName("FilterForSelect")[0];
         widgetManager = WidgetManager.getInstance();
@@ -3016,19 +2823,16 @@ define([
         	if (window.filterForSelectFirstCreated == true) {
         		widgetManager.closeWidget(filterForSelectWidgetEle.id);
         		window.filterForSelectFirstCreated = false;
-        		
         	}
         	widgetManager.openWidget(filterForSelectWidgetEle.id);
         	document.getElementById("titleForFilter").style.display = ""; 
         	document.getElementById("resizeForFilterArea").style.display = "";
         	document.getElementById("closeFilterArea").style.display = "";
         	window.filterForSelectOpened = true;
-        }
-        
+        }    
+    },
 
-     },
-     _onUpdateCommunityLayers: function() {
-
+    _onUpdateCommunityLayers: function() {
      	arrLayersToChangeSynbology = [];
      	arrFeatureCollectionsToChangeSynbology = [];
 	    var lyr;
@@ -3050,11 +2854,9 @@ define([
         } else if (arrFeatureCollectionsToChangeSynbology.length > 0){
       		updateSingleFeatureCollectionLayer(arrFeatureCollectionsToChangeSynbology.pop());
         }
-      
      },
 
      formatValue : function (value, key, data){
-
      	pow10 = Math.pow(10, numDecimalDigit);
      	return parseFloat(Math.round(value * pow10) / pow10).toFixed(numDecimalDigit);
      },
