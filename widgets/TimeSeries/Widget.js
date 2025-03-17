@@ -18,6 +18,9 @@ define([
     'esri/layers/FeatureLayer',
     'esri/geometry/Extent',
     'esri/InfoTemplate',
+    'esri/symbols/SimpleLineSymbol',
+    "esri/symbols/SimpleFillSymbol",
+    "esri/renderers/ClassBreaksRenderer",
 	"esri/tasks/AlgorithmicColorRamp",
     "esri/tasks/GenerateRendererParameters", 
 	"esri/tasks/GenerateRendererTask",
@@ -47,6 +50,9 @@ define([
         FeatureLayer,
         Extent,
         InfoTemplate,
+        SimpleLineSymbol,
+        SimpleFillSymbol,
+        ClassBreaksRenderer,
 		AlgorithmicColorRamp,
         GenerateRendererParameters, 
 		GenerateRendererTask,
@@ -581,7 +587,6 @@ define([
                     "loadServiceBtn",
                     "removeServiceBtn",
                     "loadServiceBtnOCONUS",
-                    "removeServiceBtnOCONUS"
                 ];
 
                 uiButtons.forEach(b => {
@@ -800,7 +805,6 @@ define([
 
             _initDOMRefs: function () {
                 this.loadOCONUS = document.getElementById('loadServiceBtnOCONUS');
-                this.removeOCONUS = document.getElementById('removeServiceBtnOCONUS');
                 this.loadCONUS = document.getElementById('loadServiceBtn');
                 this.removeCONUS = document.getElementById('removeServiceBtn');
                 this.frameYearInput = document.getElementById('frameYearInput');
@@ -818,10 +822,6 @@ define([
                 this.loadOCONUS.addEventListener('click', () => {
                     console.log('do something please');
                     this._loadOCONUS();
-                });
-
-                this.removeOCONUS.addEventListener('click', () => {
-                    this._removeOCONUS();
                 });
             },
 
@@ -848,37 +848,117 @@ define([
                 //var popup = new InfoTemplate();
                 //this.oLayer.setInfoTemplate(popup);
                 map.addLayer(this.oLayer);
-				var clim = dojo.byId("climateSelectionOCONUS").value
-				if (clim == 'miTF' || clim == 'mxTF') {
-					this._classBreaks(fieldname, oconusUrl, "#0000FF", "#eb1809");
-				};
-				if (clim == 'PRfr' || clim == 'PRin') {
-					this._classBreaks(fieldname, oconusUrl, "#b9e2ed", "#0a11f0");
-				};
-				if (clim == 'PEfr' || clim == 'PEin') {
-					this._classBreaks(fieldname, oconusUrl, "#ffffcc", "#eb1809");
-				};
+				var clim = dojo.byId("climateSelectionOCONUS").value;
+				this._classBreaks(fieldname, clim);
 				showLayerListWidget();
             },
 
-			_classBreaks: function (field, oconusUrl, c1, c2) {
-				var classDef = new ClassBreaksDefinition();
-				classDef.classificationField = field;
-				classDef.classificationMethod = "natural-breaks"; // always natural breaks
-				classDef.breakCount = 5; // always five classes
+			_classBreaks: function (field, clim) {
+                var symbol = new SimpleFillSymbol();
+                var sls = new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([0,0,0], 0.6), 0.5);
+                symbol.setColor(new Color([150, 150, 150, 0.6])).setOutline(sls);
+                var renderer = new ClassBreaksRenderer(symbol, field);
+                switch (clim) {
+                    case "miTF":
+                    case "mxTF":
+                        renderer.addBreak(-40.5, -40, new SimpleFillSymbol().setColor(new Color([0, 0, 0, 0.6])).setOutline(sls));
+                        renderer.addBreak(-39.9, -30, new SimpleFillSymbol().setColor(new Color([54, 75, 154, 0.6])).setOutline(sls));
+                        renderer.addBreak(-29.9, -20, new SimpleFillSymbol().setColor(new Color([61, 92, 164, 0.6])).setOutline(sls));
+                        renderer.addBreak(-19.9, -10, new SimpleFillSymbol().setColor(new Color([68, 110, 175, 0.6])).setOutline(sls));
+                        renderer.addBreak(-9.9, -7, new SimpleFillSymbol().setColor(new Color([78, 127, 185, 0.6])).setOutline(sls));
+                        renderer.addBreak(-6.9, -5, new SimpleFillSymbol().setColor(new Color([104, 159, 201, 0.6])).setOutline(sls));
+                        renderer.addBreak(-4.9, -4, new SimpleFillSymbol().setColor(new Color([119, 174, 209, 0.6])).setOutline(sls));
+                        renderer.addBreak(-3.9, -3, new SimpleFillSymbol().setColor(new Color([134, 187, 216, 0.6])).setOutline(sls));
+                        renderer.addBreak(-2.9, -2, new SimpleFillSymbol().setColor(new Color([165, 210, 229, 0.6])).setOutline(sls));
+                        renderer.addBreak(-1.9, -1, new SimpleFillSymbol().setColor(new Color([181, 220, 234, 0.6])).setOutline(sls));
+                        renderer.addBreak(-0.9, -0.5, new SimpleFillSymbol().setColor(new Color([196, 228, 236, 0.6])).setOutline(sls));
+                        renderer.addBreak(-0.4, 0.0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
+                        renderer.addBreak(0.1, 0.5, new SimpleFillSymbol().setColor(new Color([237, 232, 191, 0.6])).setOutline(sls));
+                        renderer.addBreak(0.6, 1.0, new SimpleFillSymbol().setColor(new Color([252, 219, 143, 0.6])).setOutline(sls));
+                        renderer.addBreak(1.1, 2.0, new SimpleFillSymbol().setColor(new Color([253, 192, 114, 0.6])).setOutline(sls));
+                        renderer.addBreak(2.1, 3.0, new SimpleFillSymbol().setColor(new Color([250, 157, 91, 0.6])).setOutline(sls));
+                        renderer.addBreak(3.1, 4.0, new SimpleFillSymbol().setColor(new Color([242, 116, 70, 0.6])).setOutline(sls));
+                        renderer.addBreak(4.1, 5.0, new SimpleFillSymbol().setColor(new Color([233, 92, 59, 0.6])).setOutline(sls));
+                        renderer.addBreak(5.1, 10.0, new SimpleFillSymbol().setColor(new Color([223, 68, 48, 0.6])).setOutline(sls));
+                        renderer.addBreak(10.1, 20.0, new SimpleFillSymbol().setColor(new Color([206, 45, 43, 0.6])).setOutline(sls));
+                        renderer.addBreak(20.1, 30.0, new SimpleFillSymbol().setColor(new Color([185, 22, 40, 0.6])).setOutline(sls));
+                        renderer.addBreak(30.1, 40.0, new SimpleFillSymbol().setColor(new Color([165, 0, 38, 0.6])).setOutline(sls));
+                        renderer.addBreak(40.1, 23603.8, new SimpleFillSymbol().setColor(new Color([0, 0, 0, 0.6])).setOutline(sls));
+                    case "PRfr":
+                    case "PEfr":
+                        renderer.addBreak(-30, -25, new SimpleFillSymbol().setColor(new Color([102, 37, 6, 0.6])).setOutline(sls));
+                        renderer.addBreak(-24.9, -1, new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
+                        renderer.addBreak(-0.99, -0.8, new SimpleFillSymbol().setColor(new Color([196, 72, 2, 0.6])).setOutline(sls));
+                        renderer.addBreak(-0.79, -0.6, new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls));
+                        renderer.addBreak(-0.59, -0.4, new SimpleFillSymbol().setColor(new Color([251, 166, 52, 0.6])).setOutline(sls));
+                        renderer.addBreak(-0.39, -0.3, new SimpleFillSymbol().setColor(new Color([253, 192, 76, 0.6])).setOutline(sls));
+                        renderer.addBreak(-0.29, -0.2, new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls));
+                        renderer.addBreak(-0.19, -0.1, new SimpleFillSymbol().setColor(new Color([254, 242, 178, 0.6])).setOutline(sls));
+                        renderer.addBreak(-0.09, 0.0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
+                        renderer.addBreak(0.01, 0.1, new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
+                        renderer.addBreak(0.11, 0.2, new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
+                        renderer.addBreak(0.21, 0.3, new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
+                        renderer.addBreak(0.31, 0.4, new SimpleFillSymbol().setColor(new Color([0, 42, 164, 0.6])).setOutline(sls));
+                        renderer.addBreak(0.41, 0.6, new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
+                        renderer.addBreak(0.61, 0.8, new SimpleFillSymbol().setColor(new Color([238, 216, 234, 0.6])).setOutline(sls));
+                        renderer.addBreak(0.81, 1.0, new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
+                        renderer.addBreak(1.1, 25, new SimpleFillSymbol().setColor(new Color([102, 25, 138, 0.6])).setOutline(sls)); 
+                    case "PRin":
+                        renderer.addBreak(-110, -70, new SimpleFillSymbol().setColor(new Color([102, 37, 6, 0.6])).setOutline(sls));
+                        renderer.addBreak(-69.9, -50, new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
+                        renderer.addBreak(-49.9, -40, new SimpleFillSymbol().setColor(new Color([196, 72, 2, 0.6])).setOutline(sls));
+                        renderer.addBreak(-39.9, -30, new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls));
+                        renderer.addBreak(-29.9, -20, new SimpleFillSymbol().setColor(new Color([251, 166, 52, 0.6])).setOutline(sls));
+                        renderer.addBreak(-19.9, -10, new SimpleFillSymbol().setColor(new Color([253, 192, 76, 0.6])).setOutline(sls));
+                        renderer.addBreak(-9.9, -5, new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls));
+                        renderer.addBreak(-4.9, -1, new SimpleFillSymbol().setColor(new Color([254, 242, 178, 0.6])).setOutline(sls));
+                        renderer.addBreak(-0.9, 0.0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
+                        renderer.addBreak(0.1, 1, new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
+                        renderer.addBreak(1.1, 5, new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
+                        renderer.addBreak(5.1, 10, new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
+                        renderer.addBreak(10.1, 20, new SimpleFillSymbol().setColor(new Color([0, 42, 164, 0.6])).setOutline(sls));
+                        renderer.addBreak(20.1, 30, new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
+                        renderer.addBreak(30.1, 40, new SimpleFillSymbol().setColor(new Color([238, 216, 234, 0.6])).setOutline(sls));
+                        renderer.addBreak(40.1, 50, new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
+                        renderer.addBreak(50.1, 110, new SimpleFillSymbol().setColor(new Color([102, 25, 138, 0.6])).setOutline(sls)); 
+                    case "PEin":
+                        renderer.addBreak(-10, -5, new SimpleFillSymbol().setColor(new Color([102, 37, 6, 0.6])).setOutline(sls));
+                        renderer.addBreak(-4.9, -4, new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
+                        renderer.addBreak(-3.9, -3.5, new SimpleFillSymbol().setColor(new Color([196, 72, 2, 0.6])).setOutline(sls));
+                        renderer.addBreak(-3.4, -3, new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls));
+                        renderer.addBreak(-2.9, -2.5, new SimpleFillSymbol().setColor(new Color([251, 166, 52, 0.6])).setOutline(sls));
+                        renderer.addBreak(-2.4, -2, new SimpleFillSymbol().setColor(new Color([253, 192, 76, 0.6])).setOutline(sls));
+                        renderer.addBreak(-1.9, -1.5, new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls));
+                        renderer.addBreak(-1.4, -0.5, new SimpleFillSymbol().setColor(new Color([254, 242, 178, 0.6])).setOutline(sls));
+                        renderer.addBreak(-0.4, 0.0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
+                        renderer.addBreak(0.1, 0.5, new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
+                        renderer.addBreak(0.51, 1, new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
+                        renderer.addBreak(1.1, 2, new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
+                        renderer.addBreak(2.1, 3, new SimpleFillSymbol().setColor(new Color([0, 42, 164, 0.6])).setOutline(sls));
+                        renderer.addBreak(3.1, 4, new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
+                        renderer.addBreak(4.1, 5, new SimpleFillSymbol().setColor(new Color([238, 216, 234, 0.6])).setOutline(sls));
+                        renderer.addBreak(5.1, 10, new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
+                        renderer.addBreak(10.1, 20, new SimpleFillSymbol().setColor(new Color([102, 25, 138, 0.6])).setOutline(sls));    
+                }
+                // var classDef = new ClassBreaksDefinition();
+				// classDef.classificationField = field;
+				// classDef.classificationMethod = "natural-breaks"; // always natural breaks
+				// classDef.breakCount = 5; // always five classes
 
-				var colorRamp = new AlgorithmicColorRamp();
-				colorRamp.fromColor = new Color.fromHex(c1);
-				colorRamp.toColor = new Color.fromHex(c2);
-				colorRamp.algorithm = "hsv"; // options are:  "cie-lab", "hsv", "lab-lch"
+				// var colorRamp = new AlgorithmicColorRamp();
+				// colorRamp.fromColor = new Color.fromHex(c1);
+				// colorRamp.toColor = new Color.fromHex(c2);
+				// colorRamp.algorithm = "hsv"; // options are:  "cie-lab", "hsv", "lab-lch"
 
-				classDef.baseSymbol = new SimpleFillSymbol("solid", null, null);
-				classDef.colorRamp = colorRamp;
+				// classDef.baseSymbol = new SimpleFillSymbol("solid", null, null);
+				// classDef.colorRamp = colorRamp;
 
-				var params = new GenerateRendererParameters();
-				params.classificationDefinition = classDef;
-				var generateRenderer = new GenerateRendererTask(oconusUrl);
-				generateRenderer.execute(params, this._applyRenderer, this._errorHandler);
+				// var params = new GenerateRendererParameters();
+				// params.classificationDefinition = classDef;
+				// var generateRenderer = new GenerateRendererTask(oconusUrl);
+				// generateRenderer.execute(params, this._applyRenderer, this._errorHandler);
+                console.log(renderer);
+                this._applyRenderer(renderer);
 			},
 			
 			_applyRenderer: function (renderer) {
@@ -913,11 +993,6 @@ define([
                 // Need to build the field name from selections
                 // Assume symbolizing by Median, "ME"
                 return ("ME" + dojo.byId("seasonSelectionOCONUS").value + dojo.byId("climateSelectionOCONUS").value + dojo.byId("periodSelectionOCONUS").value)
-            },
-
-            _removeOCONUS: () => {
-                console.log("Remove OCONUS");
-                //map.removeLayer(this.oLayer);
             },
         });
     });
