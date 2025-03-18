@@ -855,7 +855,7 @@ define([
 
 			_classBreaks: function (field, clim) {
                 var symbol = new SimpleFillSymbol();
-                var sls = new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([0,0,0], 0.6), 0.5);
+                var sls = new SimpleLineSymbol(SimpleLineSymbol.STYLE_NULL);
                 symbol.setColor(new Color([150, 150, 150, 0.6])).setOutline(sls);
                 var renderer = new ClassBreaksRenderer(symbol, field);
                 switch (clim) {
