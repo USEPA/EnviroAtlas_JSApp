@@ -17,88 +17,104 @@ AllFailedOutsideURLArray = []
 AllFailedEaIDArray = []
 failedDemoHucArray = []
 htmlForEmail = ""
-stagingProd = socket.gethostname()
-#get input parameter from HTTPS request
-fs = cgi.FieldStorage()
-for key in fs.keys():
-    if key == "failedEALayers":
-        print("paramfailedEaIDArray:" + fs[key].value + "\n")
-        failedEaIDArray = fs[key].value.split(',')
-    if key == "failedOutsideLayers":
-        AllFailedOutsideURLArray = fs[key].value.split(",,,")
-    if key == "failedDemoHucTimeseEcatRain":
-        failedDemoHucArray = fs[key].value.split(",,,")
-    
-print("failedEaIDArray:" + str(len(failedEaIDArray))+ "\n")
-if (len(failedEaIDArray)>0):
-    AllFailedEaIDArray = [int(i) for i in failedEaIDArray]    
-    htmlForEmail = "This is the list of failed layers in EnviroAtlas sent from " + stagingProd + ": <br />"
-else:
-    htmlForEmail = ""
-print("AllFailedEaIDArray:" + str(len(AllFailedEaIDArray))+ "\n")
-basePath = os.path.realpath(r'.')
-#DataInLocalLayerWidget = r"D:\Public\Data\CodeRepository\EnviroAtlas_WAB\widgets\SimpleSearchFilter\config_layer.json"
-DataInLocalLayerWidget = os.path.join(basePath,r"..\..\widgets\SimpleSearchFilter\config_layer.json")
-EmailAddress = "Rosenbaum.Barbara@epa.gov"
-recipients = ['Rosenbaum.Barbara@epa.gov', 'Hultgren.Torrin@epa.gov', 'Jett.Steven@epa.gov']
+response_object = {}
 
-def writeURLintoHTML(failedEaIDArray, InputData, html):
-    data = json.load(open(InputData))
-    #pprint(data["layers"]["layer"][0])
-    for eachLayer in data["layers"]["layer"]:
-        if (eachLayer["eaID"] in failedEaIDArray):
-            if (eachLayer["type"] == "DYNAMIC"):
-                html = html+ eachLayer["url"] + " <br />"
-            else:
-                html = html+ eachLayer["url"] + "/" + str(eachLayer["eaLyrNum"]) + " <br />"
-    return html
+try:
+    referer = os.environ["HTTP_REFERER"]
+    #response_object["referer"] = referer
+    if referer == 'https://enviroatlas.epa.gov/enviroatlas/interactivemap/':
+        stagingProd = socket.gethostname()
+        #get input parameter from HTTPS request
+        fs = cgi.FieldStorage()
+        for key in fs.keys():
+            if key == "failedEALayers":
+                print("paramfailedEaIDArray:" + fs[key].value + "\n")
+                failedEaIDArray = fs[key].value.split(',')
+            if key == "failedOutsideLayers":
+                AllFailedOutsideURLArray = fs[key].value.split(",,,")
+            if key == "failedDemoHucTimeseEcatRain":
+                failedDemoHucArray = fs[key].value.split(",,,")
+            
+        print("failedEaIDArray:" + str(len(failedEaIDArray))+ "\n")
+        if (len(failedEaIDArray)>0):
+            AllFailedEaIDArray = [int(i) for i in failedEaIDArray]    
+            htmlForEmail = "This is the list of failed layers in EnviroAtlas sent from " + stagingProd + ": <br />"
+        else:
+            htmlForEmail = ""
+        print("AllFailedEaIDArray:" + str(len(AllFailedEaIDArray))+ "\n")
+        basePath = os.path.realpath(r'.')
+        #DataInLocalLayerWidget = r"D:\Public\Data\CodeRepository\EnviroAtlas_WAB\widgets\SimpleSearchFilter\config_layer.json"
+        DataInLocalLayerWidget = os.path.join(basePath,r"..\..\widgets\SimpleSearchFilter\config_layer.json")
+        EmailAddress = "Rosenbaum.Barbara@epa.gov"
+        recipients = ['Rosenbaum.Barbara@epa.gov', 'Hultgren.Torrin@epa.gov', 'Jett.Steven@epa.gov', 'Lombardi.Thera@epa.gov']
 
-def writeOutsideURLintoHTML(failedOutsideURLArray, html):
-    for eachOutsideURL in failedOutsideURLArray:
-        html = html+ eachOutsideURL + " <br />" 
-    return html
+        def printEscaped(value):
+            #replae angle brackets with &lt; and &gt;
+            print(value.replace("<","&lt;").replace(">","&gt;"))
+            
+        def writeURLintoHTML(failedEaIDArray, InputData, html):
+            data = json.load(open(InputData))
+            #pprint(data["layers"]["layer"][0])
+            for eachLayer in data["layers"]["layer"]:
+                if (eachLayer["eaID"] in failedEaIDArray):
+                    if (eachLayer["type"] == "DYNAMIC"):
+                        html = html+ eachLayer["url"] + " <br />"
+                    else:
+                        html = html+ eachLayer["url"] + "/" + str(eachLayer["eaLyrNum"]) + " <br />"
+            return html
 
-def writeDemoHucLintoHTML(failedOutsideURLArray, html):
-    print("\nwriteDemoHucLintoHTML:" + "\n")
-    for eachOutsideURL in failedOutsideURLArray:
-        print("\nwriteDemoHucLintoHTML:" + eachOutsideURL+ "\n")
-        html = html+ eachOutsideURL + " <br />" 
-    return html
+        def writeOutsideURLintoHTML(failedOutsideURLArray, html):
+            for eachOutsideURL in failedOutsideURLArray:
+                html = html+ eachOutsideURL + " <br />" 
+            return html
 
-htmlForEmail = writeURLintoHTML(AllFailedEaIDArray, DataInLocalLayerWidget, htmlForEmail)
+        def writeDemoHucLintoHTML(failedOutsideURLArray, html):
+            print("\nwriteDemoHucLintoHTML:" + "\n")
+            for eachOutsideURL in failedOutsideURLArray:
+                printEscaped("\nwriteDemoHucLintoHTML:" + eachOutsideURL+ "\n")
+                html = html+ eachOutsideURL + " <br />" 
+            return html
 
-if (len(AllFailedOutsideURLArray)>0):
-    htmlForEmail = " <br />" + htmlForEmail + " <br />" + "This is the list of failed layers outside EnviroAtlas sent from " + stagingProd + ": <br />"
-    htmlForEmail = writeOutsideURLintoHTML(AllFailedOutsideURLArray, htmlForEmail)
+        htmlForEmail = writeURLintoHTML(AllFailedEaIDArray, DataInLocalLayerWidget, htmlForEmail)
 
-
-if (len(failedDemoHucArray)>0):
-    print("\nfailedDemoHucArray is not empty:" + "\n")
-    htmlForEmail = " <br />" + htmlForEmail + " <br />" + "This is the failed layer sent from " + stagingProd + ": <br />"
-    htmlForEmail = htmlForEmail + failedDemoHucArray[0] + "<br />"
-    print("\nfailedDemoHucArray is not empty:" + failedDemoHucArray[0]+"\n")
-    htmlForEmail = htmlForEmail + " <br />" + "error message is:" + " <br />"
-    print("\nfailedDemoHucArray is not empty:" + failedDemoHucArray[1]+"\n")
-    htmlForEmail = htmlForEmail + failedDemoHucArray[1]
-
-
-msg = MIMEMultipart('alternative')
+        if (len(AllFailedOutsideURLArray)>0):
+            htmlForEmail = " <br />" + htmlForEmail + " <br />" + "This is the list of failed layers outside EnviroAtlas sent from " + stagingProd + ": <br />"
+            htmlForEmail = writeOutsideURLintoHTML(AllFailedOutsideURLArray, htmlForEmail)
 
 
-msg['From'] = formataddr((str(Header('EnviroAtlas', 'utf-8')), EmailAddress))
-msg['To'] = ", ".join(recipients)
-msg['Subject'] = "Failed layer alert from " + stagingProd
+        if (len(failedDemoHucArray)>0):
+            print("\nfailedDemoHucArray is not empty:" + "\n")
+            htmlForEmail = " <br />" + htmlForEmail + " <br />" + "This is the failed layer sent from " + stagingProd + ": <br />"
+            htmlForEmail = htmlForEmail + failedDemoHucArray[0] + "<br />"
+            printEscaped("\nfailedDemoHucArray is not empty:" + failedDemoHucArray[0]+"\n")
+            htmlForEmail = htmlForEmail + " <br />" + "error message is:" + " <br />"
+            if (len(failedDemoHucArray)>1):
+                printEscaped("\nfailedDemoHucArray is not empty:" + failedDemoHucArray[1]+"\n")
+                htmlForEmail = htmlForEmail + failedDemoHucArray[1]
 
-# Record the MIME types of text/html.
-msg.attach(MIMEText(htmlForEmail, 'html'))
+        msg = MIMEMultipart('alternative')
+        msg['From'] = formataddr((str(Header('EnviroAtlas', 'utf-8')), EmailAddress))
+        msg['To'] = ", ".join(recipients)
+        msg['Subject'] = "Failed layer alert from " + stagingProd
 
-# Send the message via local SMTP server.
-s = smtplib.SMTP('smtp.rtpnc.epa.gov')
+        # Record the MIME types of text/html.
+        msg.attach(MIMEText(htmlForEmail, 'html'))
 
-# sendmail function takes 3 arguments: sender's address, recipient's address
-# and message to send - here it is sent as one string.
-s.sendmail(EmailAddress, recipients, msg.as_string())
-s.quit()
-                
+        # Send the message via local SMTP server.
+        s = smtplib.SMTP('smtp.rtpnc.epa.gov')
+
+        # sendmail function takes 3 arguments: sender's address, recipient's address
+        # and message to send - here it is sent as one string.
+        s.sendmail(EmailAddress, recipients, msg.as_string())
+        response_object["status"] = "success"
+        print(json.dumps(response_object))
+        s.quit()
+    else:
+        raise Exception("Unauthorized submission")
+
+except Exception as e:
+    response_object["status"] = "failure"
+    response_object["message"] = str(e)
+    print(json.dumps(response_object))
 
 
