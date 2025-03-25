@@ -16,8 +16,11 @@
 
 define([
     'esri/layers/FeatureLayer',
+	"esri/graphic",
     'esri/geometry/Extent',
     'esri/InfoTemplate',
+	'esri/tasks/query',
+	'esri/tasks/QueryTask',
     'esri/symbols/SimpleLineSymbol',
     "esri/symbols/SimpleFillSymbol",
     "esri/renderers/ClassBreaksRenderer",
@@ -48,8 +51,11 @@ define([
 ],
     function (
         FeatureLayer,
+		Graphic,
         Extent,
         InfoTemplate,
+		Query,
+		QueryTask,
         SimpleLineSymbol,
         SimpleFillSymbol,
         ClassBreaksRenderer,
@@ -820,7 +826,6 @@ define([
                 });
 
                 this.loadOCONUS.addEventListener('click', () => {
-                    console.log('do something please');
                     this._loadOCONUS();
                 });
             },
@@ -845,12 +850,18 @@ define([
 				this.oLayer.name = domainText + ', ' +  scenario + ', ' + oconusSelections;
 				this.oLayer.title = domainText + ', ' +  scenario + ', ' + oconusSelections;
                 this.oLayer.setDefinitionExpression("domain = '" + `${domain}` + "'");
-                //var popup = new InfoTemplate();
-                //this.oLayer.setInfoTemplate(popup);
                 map.addLayer(this.oLayer);
+				map.on("click", e => {
+					//TODO: remove highlights
+					console.log(map.infoWindow);
+					map.graphics.clear();
+					this._executeQueryTask(e, oLayerId, oconusUrl, domain, fieldname);
+				});
+
 				var clim = dojo.byId("climateSelectionOCONUS").value;
 				this._classBreaks(fieldname, clim);
 				showLayerListWidget();
+
             },
 
 			_classBreaks: function (field, clim) {
@@ -859,7 +870,9 @@ define([
                 symbol.setColor(new Color([150, 150, 150, 0.6])).setOutline(sls);
                 var renderer = new ClassBreaksRenderer(symbol, field);
                 switch (clim) {
-                    case "miTF":
+                    case "miTF": 
+					// compare the min and max of to domain, then whichever is largest number, the other side of break is max/min 
+					// then apply equal breaks
                     case "mxTF":
                         renderer.addBreak(-40.5, -40, new SimpleFillSymbol().setColor(new Color([0, 0, 0, 0.6])).setOutline(sls));
                         renderer.addBreak(-39.9, -30, new SimpleFillSymbol().setColor(new Color([54, 75, 154, 0.6])).setOutline(sls));
@@ -957,7 +970,6 @@ define([
 				// params.classificationDefinition = classDef;
 				// var generateRenderer = new GenerateRendererTask(oconusUrl);
 				// generateRenderer.execute(params, this._applyRenderer, this._errorHandler);
-                console.log(renderer);
                 this._applyRenderer(renderer);
 			},
 			
@@ -972,14 +984,49 @@ define([
                 console.log("error: ", JSON.stringify(error));
  			},
 			
-            _buildOconusPopupJson: (field) => {
-                console.log(field);
-                var oTable = "<table><tr><td>Ensemble Minimum of Changes</td><td></td></tr><tr><td>Ensemble Median of Changes</td><td></td></tr><tr><td>Ensemble Maximum of Changes</td><td></td></tr></table>"
+			_executeQueryTask: function(evt, layerId, url, domain, fieldname) {
+				console.log(evt);
+				console.log(oLayerId);
+				var res;
+				var domain = domain;
+				var field = fieldname;
+				var queryTask = new QueryTask(url);
+				var query = new Query();
+				query.geometry = evt.mapPoint;
+				query.returnGeometry = true;
+				query.where = "domain = '" + `${domain}` + "'";
+				query.outFields = ["HUC_12", ("MI" + field.substring(2)), field, ("MX" + field.substring(2))];
+				queryTask.execute(query).then(results => {
+					console.log(results)
+					if (results.features.length >= 1) {
+						//map.infoWindow.setFeatures(results.features);
+						map.infoWindow.resize("300px");
+						map.infoWindow.setTitle("test");
+						map.infoWindow.setContent(this._buildOconusPopupJson(results.features[0].attributes['HUC_12']));
+						map.infoWindow.show(evt.screenPoint);
+					}
+
+					var highlightSymbol = new SimpleFillSymbol(
+						SimpleFillSymbol.STYLE_SOLID,
+						new SimpleLineSymbol(
+							SimpleLineSymbol.STYLE_SOLID,
+							new Color([0,255,255]), 1
+						),
+						new Color([125,125,125,0.1])
+					);
+					var highlightGraphic = new Graphic(results.features[0].geometry, highlightSymbol);
+					map.graphics.add(highlightGraphic);					
+				});
+			},
+			
+            _buildOconusPopupJson: (huc12, min, mean, max) => {
+                //console.log(field);
+                var oTable = `<table><tr><td>HUC 12</td><td>${huc12}</td></tr><tr><td>Ensemble Minimum of Changes</td><td></td></tr><tr><td>Ensemble Median of Changes</td><td></td></tr><tr><td>Ensemble Maximum of Changes</td><td></td></tr></table>`
                 var json = {
-                    title: "${HUC_12}",
+                    title: huc12,
                     content: oTable
                 };
-                return json
+                return oTable
             },
 
 			_buildOconusId: () => {
