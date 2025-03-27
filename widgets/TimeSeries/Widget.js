@@ -16,18 +16,18 @@
 
 define([
     'esri/layers/FeatureLayer',
-	"esri/graphic",
+	'esri/graphic',
     'esri/geometry/Extent',
     'esri/InfoTemplate',
 	'esri/tasks/query',
 	'esri/tasks/QueryTask',
     'esri/symbols/SimpleLineSymbol',
-    "esri/symbols/SimpleFillSymbol",
-    "esri/renderers/ClassBreaksRenderer",
-	"esri/tasks/AlgorithmicColorRamp",
-    "esri/tasks/GenerateRendererParameters", 
-	"esri/tasks/GenerateRendererTask",
-    "esri/layers/LayerDrawingOptions",
+    'esri/symbols/SimpleFillSymbol',
+    'esri/renderers/ClassBreaksRenderer',
+	'esri/tasks/AlgorithmicColorRamp',
+    'esri/tasks/GenerateRendererParameters', 
+	'esri/tasks/GenerateRendererTask',
+    'esri/layers/LayerDrawingOptions',
 	'esri/symbols/SimpleFillSymbol',
     'esri/tasks/ClassBreaksDefinition',
     'esri/Color',
@@ -411,14 +411,12 @@ define([
             var climateVar = document.getElementById("climateSelection").value;
             var imageServiceLayer = new ArcGISImageServiceLayer(selectedImageService, { imageServiceParameters: params });
             imageServiceLayer.id = window.timeSeriesLayerId;
-            imageServiceLayer.name = "TimeSeries_" + modelValue + "_" + season + "_" + climateVar;
-            imageServiceLayer.title = "TimeSeries_" + modelValue + "_" + season + "_" + climateVar;
+            imageServiceLayer.name = "Time Series: " + modelValue + ", " + season + ", " + climateVar;
+            imageServiceLayer.title = "Time Series: " + modelValue + ", " + season + ", " + climateVar;
             imageServiceLayer.setOpacity(0.6);
             // window.climateTimeSeriesFromURL = imageServiceLayer.url
 
             map.addLayers([imageServiceLayer]);
-
-            console.log(map);
 
             //Turn on Identify capability after the layer is added to the map
             mapClickListener = map.on("click", executeIdentifyTask);
@@ -847,15 +845,15 @@ define([
                 this.oLayer = new FeatureLayer(oconusUrl, {visible: false, opacity: 0.6});
 				var oconusSelections = this._buildOconusId();
 				this.oLayer.id = oLayerId;
-				this.oLayer.name = domainText + ', ' +  scenario + ', ' + oconusSelections;
-				this.oLayer.title = domainText + ', ' +  scenario + ', ' + oconusSelections;
+				this.oLayer.name = domainText + ', ' + scenario + ', ' + oconusSelections;
+				this.oLayer.title = domainText + ', ' + scenario + ', ' + oconusSelections;
+				var popupTitle = scenario + ', ' + oconusSelections;
                 this.oLayer.setDefinitionExpression("domain = '" + `${domain}` + "'");
                 map.addLayer(this.oLayer);
 				map.on("click", e => {
 					//TODO: remove highlights
-					console.log(map.infoWindow);
 					map.graphics.clear();
-					this._executeQueryTask(e, oLayerId, oconusUrl, domain, fieldname);
+					this._executeQueryTask(e, oconusUrl, domain, fieldname, popupTitle);
 				});
 
 				var clim = dojo.byId("climateSelectionOCONUS").value;
@@ -984,25 +982,25 @@ define([
                 console.log("error: ", JSON.stringify(error));
  			},
 			
-			_executeQueryTask: function(evt, layerId, url, domain, fieldname) {
-				console.log(evt);
-				console.log(oLayerId);
-				var res;
+			_executeQueryTask: function(evt, url, domain, fieldname, popupTitle) {
 				var domain = domain;
 				var field = fieldname;
+				var minfield = "MI" + field.substring(2);
+				var maxfield = "MX" + field.substring(2);
 				var queryTask = new QueryTask(url);
 				var query = new Query();
 				query.geometry = evt.mapPoint;
 				query.returnGeometry = true;
 				query.where = "domain = '" + `${domain}` + "'";
-				query.outFields = ["HUC_12", ("MI" + field.substring(2)), field, ("MX" + field.substring(2))];
+				query.outFields = ["HUC_12", minfield, field, maxfield];
 				queryTask.execute(query).then(results => {
-					console.log(results)
 					if (results.features.length >= 1) {
-						//map.infoWindow.setFeatures(results.features);
-						map.infoWindow.resize("300px");
-						map.infoWindow.setTitle("test");
-						map.infoWindow.setContent(this._buildOconusPopupJson(results.features[0].attributes['HUC_12']));
+						map.infoWindow.resize("315px");
+						map.infoWindow.setTitle(popupTitle);
+						map.infoWindow.setContent(this._buildOconusPopupJson(results.features[0].attributes['HUC_12'],
+																			 results.features[0].attributes[minfield],
+																			 results.features[0].attributes[field],
+																			 results.features[0].attributes[maxfield]));
 						map.infoWindow.show(evt.screenPoint);
 					}
 
@@ -1020,8 +1018,7 @@ define([
 			},
 			
             _buildOconusPopupJson: (huc12, min, mean, max) => {
-                //console.log(field);
-                var oTable = `<table><tr><td>HUC 12</td><td>${huc12}</td></tr><tr><td>Ensemble Minimum of Changes</td><td></td></tr><tr><td>Ensemble Median of Changes</td><td></td></tr><tr><td>Ensemble Maximum of Changes</td><td></td></tr></table>`
+                var oTable = `<table id='Oconus'><tr id='Oconus'><td>HUC 12</td><td>${huc12}</td></tr><tr id='Oconus'><td>Ensemble Minimum of Changes</td><td>${min}</td></tr><tr id='Oconus'><td>Ensemble Median of Changes</td><td>${mean}</td></tr><tr id='Oconus'><td>Ensemble Maximum of Changes</td><td>${max}</td></tr></table>`
                 var json = {
                     title: huc12,
                     content: oTable
@@ -1038,7 +1035,6 @@ define([
 
             _buildOconusField: () => {
                 // Need to build the field name from selections
-                // Assume symbolizing by Median, "ME"
                 return ("ME" + dojo.byId("seasonSelectionOCONUS").value + dojo.byId("climateSelectionOCONUS").value + dojo.byId("periodSelectionOCONUS").value)
             },
         });
