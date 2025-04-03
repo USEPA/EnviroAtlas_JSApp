@@ -21,6 +21,7 @@ define([
     'esri/InfoTemplate',
 	'esri/tasks/query',
 	'esri/tasks/QueryTask',
+    'esri/tasks/StatisticDefinition',
     'esri/symbols/SimpleLineSymbol',
     'esri/symbols/SimpleFillSymbol',
     'esri/renderers/ClassBreaksRenderer',
@@ -56,6 +57,7 @@ define([
         InfoTemplate,
 		Query,
 		QueryTask,
+        StatisticDefinition,
         SimpleLineSymbol,
         SimpleFillSymbol,
         ClassBreaksRenderer,
@@ -836,7 +838,7 @@ define([
                 // Get selections
                 var domainElem = dojo.byId("domainSelectionOCONUS");
 				var domain = domainElem.value;
-				var domainText = domainElem.options[domainElem.selectedIndex].text
+				var domainText = domainElem.options[domainElem.selectedIndex].text;
                 var scenario = dojo.byId("modelSelectionOCONUS").value;
                 map.setExtent(this._zoomToOCONUSArea(domain));  
                 var fieldname = this._buildOconusField();
@@ -855,102 +857,126 @@ define([
 					map.graphics.clear();
 					this._executeQueryTask(e, oconusUrl, domain, fieldname, popupTitle);
 				});
-
-				var clim = dojo.byId("climateSelectionOCONUS").value;
-				this._classBreaks(fieldname, clim);
+                //TODO: query outStatistics of the symbology field
+                var dataMinQueryTask = new QueryTask(oconusUrl);
+                var dataMinQuery = new Query();
+                var statMinDef = new StatisticDefinition();
+                statMinDef.statisticType = "min";
+                statMinDef.onStatisticField = fieldname;
+                statMinDef.outStatisticFieldName = "minValue";
+                dataMinQuery.returnGeometry = false;
+                dataMinQuery.where = "domain = '" + `${domain}` + "'";
+                dataMinQuery.outStatistics = [ statMinDef ];
+                dataMinQueryTask.execute(dataMinQuery).then(resultsMn => {
+                    this.minVal = Math.ceil(resultsMn.features[0].attributes.minValue);
+                    var dataMaxQueryTask = new QueryTask(oconusUrl);
+                    var dataMaxQuery = new Query();
+                    var statDef = new StatisticDefinition();
+                    statDef.statisticType = "max";
+                    statDef.onStatisticField = fieldname;
+                    statDef.outStatisticFieldName = "maxValue";
+                    dataMaxQuery.returnGeometry = false;
+                    dataMaxQuery.where = "domain = '" + `${domain}` + "'";
+                    dataMaxQuery.outStatistics = [ statDef ];
+                    return dataMaxQueryTask.execute(dataMaxQuery)
+                }).then(resultsMx => {
+                    this.maxVal = Math.ceil(resultsMx.features[0].attributes.maxValue);
+                }).then(() => {
+                    var clim = dojo.byId("climateSelectionOCONUS").value;
+                    this._classBreaks(fieldname, clim);
+                });
 				showLayerListWidget();
+            },
 
+            _largestAbsVal: function (num1, num2) {
+                return Math.max(Math.abs(num1), Math.abs(num2))
             },
 
 			_classBreaks: function (field, clim) {
+                console.log(this.maxVal, this.minVal);
+                var largestVal = this._largestAbsVal(this.maxVal, this.minVal);
+                var smallestVal = (-1*largestVal);
+                var breakDiff = Number((largestVal / 3).toFixed(2));
                 var symbol = new SimpleFillSymbol();
                 var sls = new SimpleLineSymbol(SimpleLineSymbol.STYLE_NULL);
                 symbol.setColor(new Color([150, 150, 150, 0.6])).setOutline(sls);
                 var renderer = new ClassBreaksRenderer(symbol, field);
-                switch (clim) {
-                    case "miTF": 
+                if (clim == "miTF" || clim == "mxTF") {
 					// compare the min and max of to domain, then whichever is largest number, the other side of break is max/min 
 					// then apply equal breaks
-                    case "mxTF":
-                        renderer.addBreak(-40.5, -40, new SimpleFillSymbol().setColor(new Color([0, 0, 0, 0.6])).setOutline(sls));
-                        renderer.addBreak(-39.9, -30, new SimpleFillSymbol().setColor(new Color([54, 75, 154, 0.6])).setOutline(sls));
-                        renderer.addBreak(-29.9, -20, new SimpleFillSymbol().setColor(new Color([61, 92, 164, 0.6])).setOutline(sls));
-                        renderer.addBreak(-19.9, -10, new SimpleFillSymbol().setColor(new Color([68, 110, 175, 0.6])).setOutline(sls));
-                        renderer.addBreak(-9.9, -7, new SimpleFillSymbol().setColor(new Color([78, 127, 185, 0.6])).setOutline(sls));
-                        renderer.addBreak(-6.9, -5, new SimpleFillSymbol().setColor(new Color([104, 159, 201, 0.6])).setOutline(sls));
-                        renderer.addBreak(-4.9, -4, new SimpleFillSymbol().setColor(new Color([119, 174, 209, 0.6])).setOutline(sls));
-                        renderer.addBreak(-3.9, -3, new SimpleFillSymbol().setColor(new Color([134, 187, 216, 0.6])).setOutline(sls));
-                        renderer.addBreak(-2.9, -2, new SimpleFillSymbol().setColor(new Color([165, 210, 229, 0.6])).setOutline(sls));
-                        renderer.addBreak(-1.9, -1, new SimpleFillSymbol().setColor(new Color([181, 220, 234, 0.6])).setOutline(sls));
-                        renderer.addBreak(-0.9, -0.5, new SimpleFillSymbol().setColor(new Color([196, 228, 236, 0.6])).setOutline(sls));
-                        renderer.addBreak(-0.4, 0.0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
-                        renderer.addBreak(0.1, 0.5, new SimpleFillSymbol().setColor(new Color([237, 232, 191, 0.6])).setOutline(sls));
-                        renderer.addBreak(0.6, 1.0, new SimpleFillSymbol().setColor(new Color([252, 219, 143, 0.6])).setOutline(sls));
-                        renderer.addBreak(1.1, 2.0, new SimpleFillSymbol().setColor(new Color([253, 192, 114, 0.6])).setOutline(sls));
-                        renderer.addBreak(2.1, 3.0, new SimpleFillSymbol().setColor(new Color([250, 157, 91, 0.6])).setOutline(sls));
-                        renderer.addBreak(3.1, 4.0, new SimpleFillSymbol().setColor(new Color([242, 116, 70, 0.6])).setOutline(sls));
-                        renderer.addBreak(4.1, 5.0, new SimpleFillSymbol().setColor(new Color([233, 92, 59, 0.6])).setOutline(sls));
-                        renderer.addBreak(5.1, 10.0, new SimpleFillSymbol().setColor(new Color([223, 68, 48, 0.6])).setOutline(sls));
-                        renderer.addBreak(10.1, 20.0, new SimpleFillSymbol().setColor(new Color([206, 45, 43, 0.6])).setOutline(sls));
-                        renderer.addBreak(20.1, 30.0, new SimpleFillSymbol().setColor(new Color([185, 22, 40, 0.6])).setOutline(sls));
-                        renderer.addBreak(30.1, 40.0, new SimpleFillSymbol().setColor(new Color([165, 0, 38, 0.6])).setOutline(sls));
-                        renderer.addBreak(40.1, 23603.8, new SimpleFillSymbol().setColor(new Color([0, 0, 0, 0.6])).setOutline(sls));
-                    case "PRfr":
-                    case "PEfr":
-                        renderer.addBreak(-30, -25, new SimpleFillSymbol().setColor(new Color([102, 37, 6, 0.6])).setOutline(sls));
-                        renderer.addBreak(-24.9, -1, new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
-                        renderer.addBreak(-0.99, -0.8, new SimpleFillSymbol().setColor(new Color([196, 72, 2, 0.6])).setOutline(sls));
-                        renderer.addBreak(-0.79, -0.6, new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls));
-                        renderer.addBreak(-0.59, -0.4, new SimpleFillSymbol().setColor(new Color([251, 166, 52, 0.6])).setOutline(sls));
-                        renderer.addBreak(-0.39, -0.3, new SimpleFillSymbol().setColor(new Color([253, 192, 76, 0.6])).setOutline(sls));
-                        renderer.addBreak(-0.29, -0.2, new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls));
-                        renderer.addBreak(-0.19, -0.1, new SimpleFillSymbol().setColor(new Color([254, 242, 178, 0.6])).setOutline(sls));
-                        renderer.addBreak(-0.09, 0.0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
-                        renderer.addBreak(0.01, 0.1, new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
-                        renderer.addBreak(0.11, 0.2, new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
-                        renderer.addBreak(0.21, 0.3, new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
-                        renderer.addBreak(0.31, 0.4, new SimpleFillSymbol().setColor(new Color([0, 42, 164, 0.6])).setOutline(sls));
-                        renderer.addBreak(0.41, 0.6, new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
-                        renderer.addBreak(0.61, 0.8, new SimpleFillSymbol().setColor(new Color([238, 216, 234, 0.6])).setOutline(sls));
-                        renderer.addBreak(0.81, 1.0, new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
-                        renderer.addBreak(1.1, 25, new SimpleFillSymbol().setColor(new Color([102, 25, 138, 0.6])).setOutline(sls)); 
-                    case "PRin":
-                        renderer.addBreak(-110, -70, new SimpleFillSymbol().setColor(new Color([102, 37, 6, 0.6])).setOutline(sls));
-                        renderer.addBreak(-69.9, -50, new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
-                        renderer.addBreak(-49.9, -40, new SimpleFillSymbol().setColor(new Color([196, 72, 2, 0.6])).setOutline(sls));
-                        renderer.addBreak(-39.9, -30, new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls));
-                        renderer.addBreak(-29.9, -20, new SimpleFillSymbol().setColor(new Color([251, 166, 52, 0.6])).setOutline(sls));
-                        renderer.addBreak(-19.9, -10, new SimpleFillSymbol().setColor(new Color([253, 192, 76, 0.6])).setOutline(sls));
-                        renderer.addBreak(-9.9, -5, new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls));
-                        renderer.addBreak(-4.9, -1, new SimpleFillSymbol().setColor(new Color([254, 242, 178, 0.6])).setOutline(sls));
-                        renderer.addBreak(-0.9, 0.0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
-                        renderer.addBreak(0.1, 1, new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
-                        renderer.addBreak(1.1, 5, new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
-                        renderer.addBreak(5.1, 10, new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
-                        renderer.addBreak(10.1, 20, new SimpleFillSymbol().setColor(new Color([0, 42, 164, 0.6])).setOutline(sls));
-                        renderer.addBreak(20.1, 30, new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
-                        renderer.addBreak(30.1, 40, new SimpleFillSymbol().setColor(new Color([238, 216, 234, 0.6])).setOutline(sls));
-                        renderer.addBreak(40.1, 50, new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
-                        renderer.addBreak(50.1, 110, new SimpleFillSymbol().setColor(new Color([102, 25, 138, 0.6])).setOutline(sls)); 
-                    case "PEin":
-                        renderer.addBreak(-10, -5, new SimpleFillSymbol().setColor(new Color([102, 37, 6, 0.6])).setOutline(sls));
-                        renderer.addBreak(-4.9, -4, new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
-                        renderer.addBreak(-3.9, -3.5, new SimpleFillSymbol().setColor(new Color([196, 72, 2, 0.6])).setOutline(sls));
-                        renderer.addBreak(-3.4, -3, new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls));
-                        renderer.addBreak(-2.9, -2.5, new SimpleFillSymbol().setColor(new Color([251, 166, 52, 0.6])).setOutline(sls));
-                        renderer.addBreak(-2.4, -2, new SimpleFillSymbol().setColor(new Color([253, 192, 76, 0.6])).setOutline(sls));
-                        renderer.addBreak(-1.9, -1.5, new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls));
-                        renderer.addBreak(-1.4, -0.5, new SimpleFillSymbol().setColor(new Color([254, 242, 178, 0.6])).setOutline(sls));
-                        renderer.addBreak(-0.4, 0.0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
-                        renderer.addBreak(0.1, 0.5, new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
-                        renderer.addBreak(0.51, 1, new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
-                        renderer.addBreak(1.1, 2, new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
-                        renderer.addBreak(2.1, 3, new SimpleFillSymbol().setColor(new Color([0, 42, 164, 0.6])).setOutline(sls));
-                        renderer.addBreak(3.1, 4, new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
-                        renderer.addBreak(4.1, 5, new SimpleFillSymbol().setColor(new Color([238, 216, 234, 0.6])).setOutline(sls));
-                        renderer.addBreak(5.1, 10, new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
-                        renderer.addBreak(10.1, 20, new SimpleFillSymbol().setColor(new Color([102, 25, 138, 0.6])).setOutline(sls));    
+                        renderer.addBreak((smallestVal), (smallestVal+breakDiff), new SimpleFillSymbol().setColor(new Color([61, 92, 164, 0.6])).setOutline(sls));
+                        renderer.addBreak((smallestVal+breakDiff), (smallestVal+(2*breakDiff)), new SimpleFillSymbol().setColor(new Color([104, 159, 201, 0.6])).setOutline(sls));
+                        renderer.addBreak((smallestVal+(2*breakDiff)), (smallestVal+(3*breakDiff)), new SimpleFillSymbol().setColor(new Color([165, 210, 229, 0.6])).setOutline(sls));
+                        renderer.addBreak((smallestVal+(3*breakDiff)), (largestVal-(3*breakDiff)), new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
+                        renderer.addBreak((largestVal-(3*breakDiff)), (largestVal-(2*breakDiff)), new SimpleFillSymbol().setColor(new Color([253, 192, 114, 0.6])).setOutline(sls));
+                        renderer.addBreak((largestVal-(2*breakDiff)), (largestVal-breakDiff), new SimpleFillSymbol().setColor(new Color([233, 92, 59, 0.6])).setOutline(sls));
+                        renderer.addBreak((largestVal-breakDiff), largestVal, new SimpleFillSymbol().setColor(new Color([185, 22, 40, 0.6])).setOutline(sls));
                 }
+                if (clim == "PRfr" || clim == "PEfr") {
+                    
+                }
+                if (clim == "PRin") {
+
+                }
+                if (clim == "PEin") {
+
+                }
+                // case "PRfr":
+                //     case "PEfr":
+                //         renderer.addBreak(-30, -25, new SimpleFillSymbol().setColor(new Color([102, 37, 6, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-24.9, -1, new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-0.99, -0.8, new SimpleFillSymbol().setColor(new Color([196, 72, 2, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-0.79, -0.6, new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-0.59, -0.4, new SimpleFillSymbol().setColor(new Color([251, 166, 52, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-0.39, -0.3, new SimpleFillSymbol().setColor(new Color([253, 192, 76, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-0.29, -0.2, new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-0.19, -0.1, new SimpleFillSymbol().setColor(new Color([254, 242, 178, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-0.09, 0.0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
+                //         renderer.addBreak(0.01, 0.1, new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
+                //         renderer.addBreak(0.11, 0.2, new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
+                //         renderer.addBreak(0.21, 0.3, new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
+                //         renderer.addBreak(0.31, 0.4, new SimpleFillSymbol().setColor(new Color([0, 42, 164, 0.6])).setOutline(sls));
+                //         renderer.addBreak(0.41, 0.6, new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
+                //         renderer.addBreak(0.61, 0.8, new SimpleFillSymbol().setColor(new Color([238, 216, 234, 0.6])).setOutline(sls));
+                //         renderer.addBreak(0.81, 1.0, new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
+                //         renderer.addBreak(1.1, 25, new SimpleFillSymbol().setColor(new Color([102, 25, 138, 0.6])).setOutline(sls)); 
+                //     case "PRin":
+                //         renderer.addBreak(-110, -70, new SimpleFillSymbol().setColor(new Color([102, 37, 6, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-69.9, -50, new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-49.9, -40, new SimpleFillSymbol().setColor(new Color([196, 72, 2, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-39.9, -30, new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-29.9, -20, new SimpleFillSymbol().setColor(new Color([251, 166, 52, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-19.9, -10, new SimpleFillSymbol().setColor(new Color([253, 192, 76, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-9.9, -5, new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-4.9, -1, new SimpleFillSymbol().setColor(new Color([254, 242, 178, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-0.9, 0.0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
+                //         renderer.addBreak(0.1, 1, new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
+                //         renderer.addBreak(1.1, 5, new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
+                //         renderer.addBreak(5.1, 10, new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
+                //         renderer.addBreak(10.1, 20, new SimpleFillSymbol().setColor(new Color([0, 42, 164, 0.6])).setOutline(sls));
+                //         renderer.addBreak(20.1, 30, new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
+                //         renderer.addBreak(30.1, 40, new SimpleFillSymbol().setColor(new Color([238, 216, 234, 0.6])).setOutline(sls));
+                //         renderer.addBreak(40.1, 50, new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
+                //         renderer.addBreak(50.1, 110, new SimpleFillSymbol().setColor(new Color([102, 25, 138, 0.6])).setOutline(sls)); 
+                //     case "PEin":
+                //         renderer.addBreak(-10, -5, new SimpleFillSymbol().setColor(new Color([102, 37, 6, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-4.9, -4, new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-3.9, -3.5, new SimpleFillSymbol().setColor(new Color([196, 72, 2, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-3.4, -3, new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-2.9, -2.5, new SimpleFillSymbol().setColor(new Color([251, 166, 52, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-2.4, -2, new SimpleFillSymbol().setColor(new Color([253, 192, 76, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-1.9, -1.5, new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-1.4, -0.5, new SimpleFillSymbol().setColor(new Color([254, 242, 178, 0.6])).setOutline(sls));
+                //         renderer.addBreak(-0.4, 0.0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
+                //         renderer.addBreak(0.1, 0.5, new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
+                //         renderer.addBreak(0.51, 1, new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
+                //         renderer.addBreak(1.1, 2, new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
+                //         renderer.addBreak(2.1, 3, new SimpleFillSymbol().setColor(new Color([0, 42, 164, 0.6])).setOutline(sls));
+                //         renderer.addBreak(3.1, 4, new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
+                //         renderer.addBreak(4.1, 5, new SimpleFillSymbol().setColor(new Color([238, 216, 234, 0.6])).setOutline(sls));
+                //         renderer.addBreak(5.1, 10, new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
+                //         renderer.addBreak(10.1, 20, new SimpleFillSymbol().setColor(new Color([102, 25, 138, 0.6])).setOutline(sls));    
+                // }
                 // var classDef = new ClassBreaksDefinition();
 				// classDef.classificationField = field;
 				// classDef.classificationMethod = "natural-breaks"; // always natural breaks
@@ -1019,10 +1045,6 @@ define([
 			
             _buildOconusPopupJson: (huc12, min, mean, max) => {
                 var oTable = `<table id='Oconus'><tr id='Oconus'><td>HUC 12</td><td>${huc12}</td></tr><tr id='Oconus'><td>Ensemble Minimum of Changes</td><td>${min}</td></tr><tr id='Oconus'><td>Ensemble Median of Changes</td><td>${mean}</td></tr><tr id='Oconus'><td>Ensemble Maximum of Changes</td><td>${max}</td></tr></table>`
-                var json = {
-                    title: huc12,
-                    content: oTable
-                };
                 return oTable
             },
 
