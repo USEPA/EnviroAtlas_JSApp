@@ -894,33 +894,59 @@ define([
 
 			_classBreaks: function (field, clim) {
                 console.log(this.maxVal, this.minVal);
-                var largestVal = this._largestAbsVal(this.maxVal, this.minVal);
-                var smallestVal = (-1*largestVal);
-                var breakDiff = Number((largestVal / 3).toFixed(2));
                 var symbol = new SimpleFillSymbol();
                 var sls = new SimpleLineSymbol(SimpleLineSymbol.STYLE_NULL);
                 symbol.setColor(new Color([150, 150, 150, 0.6])).setOutline(sls);
                 var renderer = new ClassBreaksRenderer(symbol, field);
-                if (clim == "miTF" || clim == "mxTF") {
-					// compare the min and max of to domain, then whichever is largest number, the other side of break is max/min 
-					// then apply equal breaks
-                        renderer.addBreak((smallestVal), (smallestVal+breakDiff), new SimpleFillSymbol().setColor(new Color([61, 92, 164, 0.6])).setOutline(sls));
-                        renderer.addBreak((smallestVal+breakDiff), (smallestVal+(2*breakDiff)), new SimpleFillSymbol().setColor(new Color([104, 159, 201, 0.6])).setOutline(sls));
-                        renderer.addBreak((smallestVal+(2*breakDiff)), (smallestVal+(3*breakDiff)), new SimpleFillSymbol().setColor(new Color([165, 210, 229, 0.6])).setOutline(sls));
-                        renderer.addBreak((smallestVal+(3*breakDiff)), (largestVal-(3*breakDiff)), new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
-                        renderer.addBreak((largestVal-(3*breakDiff)), (largestVal-(2*breakDiff)), new SimpleFillSymbol().setColor(new Color([253, 192, 114, 0.6])).setOutline(sls));
-                        renderer.addBreak((largestVal-(2*breakDiff)), (largestVal-breakDiff), new SimpleFillSymbol().setColor(new Color([233, 92, 59, 0.6])).setOutline(sls));
-                        renderer.addBreak((largestVal-breakDiff), largestVal, new SimpleFillSymbol().setColor(new Color([185, 22, 40, 0.6])).setOutline(sls));
-                }
-                if (clim == "PRfr" || clim == "PEfr") {
-                    
-                }
-                if (clim == "PRin") {
+                // if there are negative values, create 9 value diverging color classification 
+                if (this.minVal < 0) {
+                    var largestVal = this._largestAbsVal(this.maxVal, this.minVal);
+                    var smallestVal = (-1*largestVal);
+                    var postiveBreakDiff = Number((largestVal / 5).toFixed(2));
+                    var negativeBreakDiff = Number((largestVal / 3).toFixed(2));
+                    if (clim == "miTF" || clim == "mxTF") {
+                        // compare the min and max of to domain, then whichever is largest number, the other side of break is max/min 
+                        // then apply equal breaks
+                            // negative classes
+                            renderer.addBreak(Number((smallestVal).toFixed(1)), Number((smallestVal+negativeBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([61, 92, 164, 0.6])).setOutline(sls));
+                            renderer.addBreak(Number((smallestVal+negativeBreakDiff).toFixed(1)), Number((smallestVal+(2*negativeBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([104, 159, 201, 0.6])).setOutline(sls));
+                            renderer.addBreak(Number((smallestVal+(2*negativeBreakDiff)).toFixed(1)), 0, new SimpleFillSymbol().setColor(new Color([165, 210, 229, 0.6])).setOutline(sls));
+                            // this straddles zero
+                            renderer.addBreak(0, 0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
+                            // postive classes
+                            renderer.addBreak(0, Number((largestVal-(4*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([252, 219, 143, 0.6])).setOutline(sls));
+                            renderer.addBreak(Number((largestVal-(4*postiveBreakDiff)).toFixed(1)), Number((largestVal-(3*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([250, 157, 91, 0.6])).setOutline(sls));
+                            renderer.addBreak(Number((largestVal-(3*postiveBreakDiff)).toFixed(1)), Number((largestVal-(2*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([233, 92, 59, 0.6])).setOutline(sls));
+                            renderer.addBreak(Number((largestVal-(2*postiveBreakDiff)).toFixed(1)), Number((largestVal-postiveBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([206, 45, 43, 0.6])).setOutline(sls));
+                            renderer.addBreak(Number((largestVal-postiveBreakDiff).toFixed(1)), Number(largestVal.toFixed(1)), new SimpleFillSymbol().setColor(new Color([165, 0, 38, 0.6])).setOutline(sls));
+                    }
+                    if (clim == "PRfr" || clim == "PEfr") {
+                        
+                    }
+                    if (clim == "PRin") {
 
-                }
-                if (clim == "PEin") {
+                    }
+                    if (clim == "PEin") {
 
+                    }
+                } else {
+                    var largestVal = this.maxVal;
+                    var smallestVal = -1;
+                    var postiveBreakDiff = Number((largestVal / 5).toFixed(2));
+                    if (clim == "miTF" || clim == "mxTF") {
+                        // negative classes
+                        renderer.addBreak(Number((smallestVal).toFixed(1)), 0, new SimpleFillSymbol().setColor(new Color([61, 92, 164, 0.6])).setOutline(sls));
+                        // this straddles zero
+                        renderer.addBreak(0, 0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
+                        // postive classes
+                        renderer.addBreak(0, Number((largestVal-(4*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([252, 219, 143, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal-(4*postiveBreakDiff)).toFixed(1)), Number((largestVal-(3*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([250, 157, 91, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal-(3*postiveBreakDiff)).toFixed(1)), Number((largestVal-(2*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([233, 92, 59, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal-(2*postiveBreakDiff)).toFixed(1)), Number((largestVal-postiveBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([206, 45, 43, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal-postiveBreakDiff).toFixed(1)), Number(largestVal.toFixed(1)), new SimpleFillSymbol().setColor(new Color([165, 0, 38, 0.6])).setOutline(sls));
+                    }
                 }
+                console.log(renderer)
                 // case "PRfr":
                 //     case "PEfr":
                 //         renderer.addBreak(-30, -25, new SimpleFillSymbol().setColor(new Color([102, 37, 6, 0.6])).setOutline(sls));
