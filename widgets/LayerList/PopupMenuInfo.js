@@ -30,7 +30,6 @@ define([
 
 ], function (declare, array, lang, Deferred, all, portalUrlUtils, WidgetManager, esriLang, NlsStrings, jimuUtils, PanelManager,
   Dialog) {
-  var mapDescriptionStr = "";
   var topLayerIndex = 300;
   var layerInfoFromJson = {};
   var _layerType = null;
@@ -63,8 +62,7 @@ define([
                   });
                   mapDescription.show();
                   mapDescription.set("content", layerInfoFromJson['eaDescription']);
-                }
-                else {
+                } else {
                   alert("Map description is not available for this layer");
                 }
                 break;
@@ -81,16 +79,14 @@ define([
                       window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
                     }
                   }
-                }
-                else {
+                } else {
                   alert("Metadata is not available for this layer");
                 }
                 break;
               case 'eaDfsLink':
                 if ('eaDfsLink' in layerInfoFromJson) {
                   window.open(window.dataFactSheet + layerInfoFromJson['eaDfsLink']);
-                }
-                else {
+                } else {
                   alert("Data fact sheet is not available for this layer");
                 }
                 break;
@@ -98,8 +94,7 @@ define([
                 if ('agoID' in layerInfoFromJson) {
                   WebServiceURLRoot = "https://epa.maps.arcgis.com/home/item.html?id=";
                   window.open(WebServiceURLRoot + layerInfoFromJson['agoID']);
-                }
-                else if (layer.hasOwnProperty('url')) {
+                } else if (layer.hasOwnProperty('url')) {
                   /*if (layer.hasOwnProperty('eaLyrNum')) {
                       urlInConfig = layer.url + "/" + layer.eaLyrNum.toString();
                   }
@@ -108,8 +103,7 @@ define([
                   }
                   window.open(urlInConfig);*/
                   window.open(urlForCommunityLayers);
-                }
-                else {
+                } else {
                   alert("Web Access Service is not available for this layer");
                 }
                 break;
@@ -140,10 +134,9 @@ define([
       }
       xobj.send(null);
     }
-
   };
+
   var getInfoWithEaID = function (response, layerId_url) {
-    var resultLayerInfoFromJson = {};
     var localLayerConfig = JSON.parse(response);
     var urlInConfig = "";
     var resultFound = false;
@@ -162,13 +155,11 @@ define([
             urlInConfig = layer.url;
           }
         }
-
         if ((urlInConfig != null) && (urlInConfig != "")) {
           if (urlInConfig.substr(urlInConfig.length - 1) == "/") {
             urlInConfig = urlInConfig.substr(0, urlInConfig.length - 2);
           }
         }
-
         if ((layerId_url === layer.eaID.toString()) || (layerId_url == urlInConfig)) {
           resultFound = true;
           if (layer.hasOwnProperty('eaDescription')) {
@@ -199,8 +190,8 @@ define([
       }
     }
     return resultFound;
-
   };
+
   var displayInfoOnClickAction = function (layerId, clickedURL, actionType) {
     if (actionType == "eaDescription") {
       if (layerId == "added_ClimateChange") {
@@ -220,8 +211,7 @@ define([
         mapDescription.set("content", "This map depicts historical or forecasted time series data for the selected climate variable (max temp, min temp, precipitation, potential evapotranspiration) based on the selected RCP scenario (2.6, 4.0, 6.5 8.5) and the selected season.");
         return;
       }
-    }
-    else if (actionType == "eaDfsLink") {
+    } else if (actionType == "eaDfsLink") {
       if (layerId == window.timeSeriesLayerId) {
         var climateVar = document.getElementById("climateSelection").value;
         var climateVar2 = climateVar.replace("Max", "").replace("Min", "");
@@ -250,9 +240,40 @@ define([
       metaDataIDFromVariable = window.timeSeriesMetadata[climateVar];
       metaDataID = window.nationalMetadataDic[metaDataIDFromVariable];
       window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
-    } // open demographics url if added from Demographic Layers widget
-    else if (layerId.includes('ejdemog') || layerId.includes('census2010') || layerId.includes('census2000') || layerId.includes('census2k')) {
-      window.open('https://www.epa.gov/ejscreen/ejscreen-map-descriptions');
+    } else if (layerId.includes('NEXGDDP')) {
+      this.uuid_dict = {
+        'ALASKAmxTF': 'E5F1ED1B-0E6D-47FF-B0B8-81E8BD43F128',
+        'ALASKAmiTF': '9DECABBF-91B1-4292-9209-230A710CBE0D',
+        'ALASKAPEin': 'D13E2709-0C2C-4A44-970A-5C2EA134BE96',
+        'ALASKAPRin': 'C082EDA9-ABBB-4A67-B60C-DFE91E6A8B44',
+        'AMSAMmxTF': 'C4D3E527-AC96-479F-9C36-E0D4E178C1CE',
+        'AMSAMmiTF': 'C1CB5278-7075-4F68-AAE9-9CF7A04A0FF5',
+        'AMSAMPEfr': 'D7BCF050-BAA9-4F4F-9FA8-F9ABD719F427',
+        'AMSAMPEin': '18DD98F6-4117-4CB2-8D04-EA02DE24A4EF',
+        'AMSAMPRfr': '86418595-DE19-4A8E-9C9E-6BA21CD1DED6',
+        'AMSAMPRin': '1BC4A5E5-E89F-457D-A6E8-150D4F571B0C',
+        'GUAMmxTF': '273A0A5F-D066-43FE-82E7-CA24706D77CB',
+        'GUAMmiTF': '44684C99-B962-42FC-BCE8-75E2075CAE24',
+        'GUAMPEfr': '6F2EFDB2-484D-430E-BA5E-3D12631EC522',
+        'GUAMPEin': '4AAD4039-682D-428B-924F-2427C92EAA74',
+        'GUAMPRfr': 'DDC5FE60-145B-47F3-B62E-EEA6DF1AB3F2',
+        'GUAMPRin': '42AF2E97-798F-4FEB-8245-2B0C56A71E3F',
+        'HAWAIImxTF': '5463B6E9-6A96-415F-A07A-A7D39021D4F8',
+        'HAWAIImiTF': '0F22BCAC-6B69-4662-B7CB-750158101656',
+        'HAWAIIPEfr': '6F22E835-3C1A-4AA3-AC3C-C9357BFF52D8',
+        'HAWAIIPEin': 'A07B3E96-9C01-4C2C-AC8E-277035A8F5DD',
+        'HAWAIIPRfr': '9D27384C-898E-4A13-9771-D2E1E12D9917',
+        'HAWAIIPRin': '04CED7E5-F8B6-46D9-B2E1-74C085B1BB95',
+        'VIPRmxTF': 'A7E0F77A-F55C-4956-99EA-890ECA980F55',
+        'VIPRmiTF': '195D4CCC-A388-4B2F-83BB-3C9930AB597A',
+        'VIPRPEfr': 'B671ED0C-C534-4849-A823-17A6C659A82D',
+        'VIPRPEin': 'FFEB0DA4-AF9A-46E9-AB23-11082A746AD2',
+        'VIPRPRfr': '86A30EC6-FEFC-42F9-AD5C-3DB8A60A6BDD',
+        'VIPRPRin': '2529A139-D0F3-4389-9E5E-D0D73DB43E73',
+      };
+      this.selectionKey = dojo.byId("domainSelectionOCONUS").value + dojo.byId("climateSelectionOCONUS").value;
+      this.uuid = this.uuid_dict[this.selectionKey];
+      window.open(`https://edg.epa.gov/geoplatform.gov/${this.uuid}`);
     } else {
       arrXmlPath.push("widgets/SimpleSearchFilter/config_layer.json");
       getInfoFromJsonWithEaID(getInfoWithEaID, arrXmlPath, clickedURL, actionType);
@@ -262,7 +283,6 @@ define([
   var clazz = declare([], {
 
     _candidateMenuItems: null,
-    //_deniedItems: null,
     _displayItems: null,
     _layerInfo: null,
     _layerType: null,
@@ -281,7 +301,6 @@ define([
     _getATagLabel: function () {
       var url;
       var label;
-      var itemLayerId = this._layerInfo.isItemLayer && this._layerInfo.isItemLayer();
       var layerUrl = this._layerInfo.getUrl();
       var basicItemInfo = this._layerInfo.isItemLayer();
       if (basicItemInfo) {
@@ -554,9 +573,7 @@ define([
       }), function () {
         defRet.resolve(dynamicDeniedItems);
       });
-
       return defRet;
-
     },
 
     getDisplayItems: function () {
@@ -632,7 +649,6 @@ define([
     },
     _onMoveToTopClick: function (evt) {
       /*jshint unused: false*/
-
       lyr = this._layerInfo.map.getLayer(this._layerInfo.id);
       if (window.topLayerID != "") {
         var topLayerChkbox = document.getElementById(window.layerTitlePrefix + window.topLayerID);
@@ -697,12 +713,10 @@ define([
         }
         if ((isDynamicLayer == true) || (isTiledLayer == true) || (isImageLayer == true) || (isDemographicLayer == true)) {
           document.getElementById("map_" + this._layerInfo.id).style.zIndex = "1";
-        }
-        else {
+        } else {
           //this._layerInfo.map.reorderLayer(lyr,this._layerInfo.map.layerIds.length);
           this._layerInfo.map.reorderLayer(lyr, topLayerIndex);
         }
-
       }
       lyrTiled = this._layerInfo.map.getLayer(window.layerIdTiledPrefix + this._layerInfo.id.replace(window.layerIdPrefix, "")); //bji need to be modified to accomodate tile.
       if (lyrTiled) {
@@ -743,7 +757,6 @@ define([
           this.layerListWidget.appConfig.getConfigElementsByName("AttributeTable")[0];
         if (this._isSupportedByAT(attributeTableWidgetEle, allSupportTableInfo)) {
           widgetManager = WidgetManager.getInstance();
-
           array.forEach(allSupportTableInfo, function (supportTableInfo) {
             if (supportTableInfo.isSupportedLayer) {
               widgetManager.triggerWidgetOpen(attributeTableWidgetEle.id)
@@ -758,7 +771,6 @@ define([
                 }));
             }
           }, this);
-
         }
       }));
     },
@@ -767,13 +779,12 @@ define([
       layerId = this._layerInfo.id;
       var clickedURL = this._layerInfo.layerObject.url;
       displayInfoOnClickAction(layerId, clickedURL, 'eaDescription');
-
     },
+
     _onItemDataFactSheetClick: function (evt) {
       layerId = this._layerInfo.id;
       if (layerId == window.addedLayerIdPrefix + "ClimateChange") {
         var layerTitle = this._layerInfo.title;
-
         if (layerTitle.indexOf("Temp") >= 0) {
           window.open(window.dataFactSheet + "Supplemental/Climate_" + "Temp" + ".pdf");
           return;
@@ -788,11 +799,13 @@ define([
       var clickedURL = this._layerInfo.layerObject.url;
       displayInfoOnClickAction(layerId, clickedURL, 'eaDfsLink');
     },
+
     _onItemAccessWebServiceClick: function (evt) {
       layerId = this._layerInfo.id;
       var clickedURL = this._layerInfo.layerObject.url;
       displayInfoOnClickAction(layerId, clickedURL, 'AccessWebService');
     },
+
     _onItemChangeSymbologyClick: function (evt) {
       layerId = this._layerInfo.id;
       if (layerId.indexOf(window.layerIdPrefix) > -1) {
@@ -817,12 +830,12 @@ define([
       //console.log(widgets);
       console.log('Open Dynamic Symbology');
     },
+
     _onItemMetadataDownloadClick: function (evt) {
       layerId = this._layerInfo.id;
       if (layerId == window.addedLayerIdPrefix + "ClimateChange") {
         var layerTitle = this._layerInfo.title;
         var climateVariable = "";
-
         if (layerTitle.indexOf("TempMax") >= 0) {
           climateVariable = "TempMax";
         } else if (layerTitle.indexOf("TempMin") >= 0) {
@@ -839,13 +852,9 @@ define([
       }
       var clickedURL = this._layerInfo.layerObject.url;
       displayInfoOnClickAction(layerId, clickedURL, 'eaMetadata');
-
-
     },
     _onItemRemoveClick: function (evt) {
       layerId = this._layerInfo.id;
-
-
       lyr = this._layerInfo.map.getLayer(layerId);
       if (lyr) {
         this._layerInfo.map.removeLayer(lyr);
@@ -876,14 +885,11 @@ define([
           if (indexID > -1) {
             window.featureLyrNumber.splice(indexID, 1);
           }
-
-
           lyrTiled = this._layerInfo.map.getLayer(window.layerIdTiledPrefix + eaID);
           if (lyrTiled) {
             this._layerInfo.map.removeLayer(lyrTiled);
           }
         }
-
       }
 
       lyrTiled = this._layerInfo.map.getLayer(layerId.replace(window.layerIdPrefix, window.layerIdTiledPrefix));
@@ -894,9 +900,8 @@ define([
         }
         this._layerInfo.map.removeLayer(lyrTiled);
       }
-
-
     },
+
     _onTransparencyChanged: function (evt) {
       this.layerListWidget._denyLayerInfosOpacityResponseOneTime = true;
       this._layerInfo.setOpacity(1 - evt.extraData.newTransValue);
@@ -1109,7 +1114,6 @@ define([
     }));
     return retDef;
   };
-
 
   return clazz;
 });

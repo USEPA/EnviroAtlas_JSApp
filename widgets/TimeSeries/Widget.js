@@ -843,7 +843,7 @@ define([
                 map.setExtent(this._zoomToOCONUSArea(domain));  
                 var fieldname = this._buildOconusField();
                 oconusUrl = `https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/NEXGDDP_${scenario}/FeatureServer/0`;
-				oLayerId = domain + scenario + fieldname;
+				oLayerId = "NEXGDDP" + domain + scenario + fieldname;
                 this.oLayer = new FeatureLayer(oconusUrl, {visible: false, opacity: 0.6});
 				var oconusSelections = this._buildOconusId();
 				this.oLayer.id = oLayerId;
@@ -1047,7 +1047,7 @@ define([
 			
 			_applyRenderer: function (renderer) {
 				var fieldname = "ME" + dojo.byId("seasonSelectionOCONUS").value + dojo.byId("climateSelectionOCONUS").value + dojo.byId("periodSelectionOCONUS").value;
-				oLayerId = dojo.byId("domainSelectionOCONUS").value + dojo.byId("modelSelectionOCONUS").value + fieldname;
+				oLayerId = "NEXGDDP" + dojo.byId("domainSelectionOCONUS").value + dojo.byId("modelSelectionOCONUS").value + fieldname;
 			    map.getLayer(oLayerId).setRenderer(renderer);
 			    map.getLayer(oLayerId).show();
 			},
