@@ -16,20 +16,20 @@
 
 define([
     'esri/layers/FeatureLayer',
-	'esri/graphic',
+    'esri/graphic',
     'esri/geometry/Extent',
     'esri/InfoTemplate',
-	'esri/tasks/query',
-	'esri/tasks/QueryTask',
+    'esri/tasks/query',
+    'esri/tasks/QueryTask',
     'esri/tasks/StatisticDefinition',
     'esri/symbols/SimpleLineSymbol',
     'esri/symbols/SimpleFillSymbol',
     'esri/renderers/ClassBreaksRenderer',
-	'esri/tasks/AlgorithmicColorRamp',
-    'esri/tasks/GenerateRendererParameters', 
-	'esri/tasks/GenerateRendererTask',
+    'esri/tasks/AlgorithmicColorRamp',
+    'esri/tasks/GenerateRendererParameters',
+    'esri/tasks/GenerateRendererTask',
     'esri/layers/LayerDrawingOptions',
-	'esri/symbols/SimpleFillSymbol',
+    'esri/symbols/SimpleFillSymbol',
     'esri/tasks/ClassBreaksDefinition',
     'esri/Color',
     'dojo/_base/declare',
@@ -52,20 +52,20 @@ define([
 ],
     function (
         FeatureLayer,
-		Graphic,
+        Graphic,
         Extent,
         InfoTemplate,
-		Query,
-		QueryTask,
+        Query,
+        QueryTask,
         StatisticDefinition,
         SimpleLineSymbol,
         SimpleFillSymbol,
         ClassBreaksRenderer,
-		AlgorithmicColorRamp,
-        GenerateRendererParameters, 
-		GenerateRendererTask,
+        AlgorithmicColorRamp,
+        GenerateRendererParameters,
+        GenerateRendererTask,
         LayerDrawingOptions,
-		SimpleFillSymbol,
+        SimpleFillSymbol,
         ClassBreaksDefinition,
         Color,
         declare,
@@ -834,29 +834,29 @@ define([
                 return Extent(selfTimeSeries.config.extents[0][a]);
             },
 
-            _loadOCONUS: function () {			
+            _loadOCONUS: function () {
                 // Get selections
                 var domainElem = dojo.byId("domainSelectionOCONUS");
-				var domain = domainElem.value;
-				var domainText = domainElem.options[domainElem.selectedIndex].text;
+                var domain = domainElem.value;
+                var domainText = domainElem.options[domainElem.selectedIndex].text;
                 var scenario = dojo.byId("modelSelectionOCONUS").value;
-                map.setExtent(this._zoomToOCONUSArea(domain));  
+                map.setExtent(this._zoomToOCONUSArea(domain));
                 var fieldname = this._buildOconusField();
                 oconusUrl = `https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/NEXGDDP_${scenario}/FeatureServer/0`;
-				oLayerId = "NEXGDDP" + domain + scenario + fieldname;
-                this.oLayer = new FeatureLayer(oconusUrl, {visible: false, opacity: 0.6});
-				var oconusSelections = this._buildOconusId();
-				this.oLayer.id = oLayerId;
-				this.oLayer.name = domainText + ', ' + scenario + ', ' + oconusSelections;
-				this.oLayer.title = domainText + ', ' + scenario + ', ' + oconusSelections;
-				var popupTitle = scenario + ', ' + oconusSelections;
+                oLayerId = "NEXGDDP" + domain + scenario + fieldname;
+                this.oLayer = new FeatureLayer(oconusUrl, { visible: false, opacity: 0.6 });
+                var oconusSelections = this._buildOconusId();
+                this.oLayer.id = oLayerId;
+                this.oLayer.name = domainText + ', ' + scenario + ', ' + oconusSelections;
+                this.oLayer.title = domainText + ', ' + scenario + ', ' + oconusSelections;
+                var popupTitle = scenario + ', ' + oconusSelections;
                 this.oLayer.setDefinitionExpression("domain = '" + `${domain}` + "' AND " + `${fieldname}` + " IS NOT NULL");
                 map.addLayer(this.oLayer);
-				map.on("click", e => {
-					//TODO: remove highlights
-					map.graphics.clear();
-					this._executeQueryTask(e, oconusUrl, domain, fieldname, popupTitle);
-				});
+                map.on("click", e => {
+                    //TODO: remove highlights
+                    map.graphics.clear();
+                    this._executeQueryTask(e, oconusUrl, domain, fieldname, popupTitle);
+                });
                 //TODO: query outStatistics of the symbology field
                 var dataMinQueryTask = new QueryTask(oconusUrl);
                 var dataMinQuery = new Query();
@@ -866,7 +866,7 @@ define([
                 statMinDef.outStatisticFieldName = "minValue";
                 dataMinQuery.returnGeometry = false;
                 dataMinQuery.where = "domain = '" + `${domain}` + "'";
-                dataMinQuery.outStatistics = [ statMinDef ];
+                dataMinQuery.outStatistics = [statMinDef];
                 dataMinQueryTask.execute(dataMinQuery).then(resultsMn => {
                     //TODO: don't want to round yet, in case the value is a fraction.
                     this.minVal = Math.floor(resultsMn.features[0].attributes.minValue);
@@ -878,7 +878,7 @@ define([
                     statDef.outStatisticFieldName = "maxValue";
                     dataMaxQuery.returnGeometry = false;
                     dataMaxQuery.where = "domain = '" + `${domain}` + "'";
-                    dataMaxQuery.outStatistics = [ statDef ];
+                    dataMaxQuery.outStatistics = [statDef];
                     return dataMaxQueryTask.execute(dataMaxQuery)
                 }).then(resultsMx => {
                     //TODO: don't want to round yet, in case the value is a fraction.
@@ -887,14 +887,14 @@ define([
                     var clim = dojo.byId("climateSelectionOCONUS").value;
                     this._classBreaks(fieldname, clim);
                 });
-				showLayerListWidget();
+                showLayerListWidget();
             },
 
             _largestAbsVal: function (num1, num2) {
                 return Math.max(Math.abs(num1), Math.abs(num2))
             },
 
-			_classBreaks: function (field, clim) {
+            _classBreaks: function (field, clim) {
                 console.log(this.maxVal, this.minVal);
                 var symbol = new SimpleFillSymbol();
                 var sls = new SimpleLineSymbol(SimpleLineSymbol.STYLE_NULL);
@@ -903,38 +903,38 @@ define([
                 // if there are negative values, create 9 value diverging color classification 
                 if (this.minVal < 0) {
                     var largestVal = this._largestAbsVal(this.maxVal, this.minVal);
-                    var smallestVal = (-1*largestVal);
+                    var smallestVal = (-1 * largestVal);
                     var postiveBreakDiff = Number((largestVal / 5).toFixed(2));
                     var negativeBreakDiff = Number((largestVal / 3).toFixed(2));
                     if (clim == "miTF" || clim == "mxTF") {
                         // compare the min and max of to domain, then whichever is largest number, the other side of break is max/min 
                         // then apply equal breaks
-                            // negative classes
-                            renderer.addBreak(Number((smallestVal).toFixed(1)), Number((smallestVal+negativeBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([61, 92, 164, 0.6])).setOutline(sls));
-                            renderer.addBreak(Number((smallestVal+negativeBreakDiff).toFixed(1)), Number((smallestVal+(2*negativeBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([104, 159, 201, 0.6])).setOutline(sls));
-                            renderer.addBreak(Number((smallestVal+(2*negativeBreakDiff)).toFixed(1)), 0, new SimpleFillSymbol().setColor(new Color([165, 210, 229, 0.6])).setOutline(sls));
-                            // this straddles zero
-                            renderer.addBreak(0, 0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
-                            // postive classes
-                            renderer.addBreak(0, Number((largestVal-(4*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([252, 219, 143, 0.6])).setOutline(sls));
-                            renderer.addBreak(Number((largestVal-(4*postiveBreakDiff)).toFixed(1)), Number((largestVal-(3*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([250, 157, 91, 0.6])).setOutline(sls));
-                            renderer.addBreak(Number((largestVal-(3*postiveBreakDiff)).toFixed(1)), Number((largestVal-(2*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([233, 92, 59, 0.6])).setOutline(sls));
-                            renderer.addBreak(Number((largestVal-(2*postiveBreakDiff)).toFixed(1)), Number((largestVal-postiveBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([206, 45, 43, 0.6])).setOutline(sls));
-                            renderer.addBreak(Number((largestVal-postiveBreakDiff).toFixed(1)), Number(largestVal.toFixed(1)), new SimpleFillSymbol().setColor(new Color([165, 0, 38, 0.6])).setOutline(sls));
-                    }
-                    if (clim == "PRin" || clim == "PEin" ) {
                         // negative classes
-                        renderer.addBreak(Number((smallestVal).toFixed(1)), Number((smallestVal+negativeBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((smallestVal+negativeBreakDiff).toFixed(1)), Number((smallestVal+(2*negativeBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((smallestVal+(2*negativeBreakDiff)).toFixed(1)), 0, new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((smallestVal).toFixed(1)), Number((smallestVal + negativeBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([61, 92, 164, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((smallestVal + negativeBreakDiff).toFixed(1)), Number((smallestVal + (2 * negativeBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([104, 159, 201, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((smallestVal + (2 * negativeBreakDiff)).toFixed(1)), 0, new SimpleFillSymbol().setColor(new Color([165, 210, 229, 0.6])).setOutline(sls));
                         // this straddles zero
                         renderer.addBreak(0, 0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
                         // postive classes
-                        renderer.addBreak(0, Number((largestVal-(4*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal-(4*postiveBreakDiff)).toFixed(1)), Number((largestVal-(3*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal-(3*postiveBreakDiff)).toFixed(1)), Number((largestVal-(2*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal-(2*postiveBreakDiff)).toFixed(1)), Number((largestVal-postiveBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal-postiveBreakDiff).toFixed(1)), Number(largestVal.toFixed(1)), new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
+                        renderer.addBreak(0, Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([252, 219, 143, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([250, 157, 91, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (2 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([233, 92, 59, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (2 * postiveBreakDiff)).toFixed(1)), Number((largestVal - postiveBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([206, 45, 43, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - postiveBreakDiff).toFixed(1)), Number(largestVal.toFixed(1)), new SimpleFillSymbol().setColor(new Color([165, 0, 38, 0.6])).setOutline(sls));
+                    }
+                    if (clim == "PRin" || clim == "PEin") {
+                        // negative classes
+                        renderer.addBreak(Number((smallestVal).toFixed(1)), Number((smallestVal + negativeBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((smallestVal + negativeBreakDiff).toFixed(1)), Number((smallestVal + (2 * negativeBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((smallestVal + (2 * negativeBreakDiff)).toFixed(1)), 0, new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls));
+                        // this straddles zero
+                        renderer.addBreak(0, 0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
+                        // postive classes
+                        renderer.addBreak(0, Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (2 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (2 * postiveBreakDiff)).toFixed(1)), Number((largestVal - postiveBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - postiveBreakDiff).toFixed(1)), Number(largestVal.toFixed(1)), new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
                     }
                     if (clim == "PRfr" || clim == "PEfr") {
 
@@ -949,23 +949,23 @@ define([
                         // this straddles zero
                         renderer.addBreak(0, 0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
                         // postive classes
-                        renderer.addBreak(0, Number((largestVal-(4*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([252, 219, 143, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal-(4*postiveBreakDiff)).toFixed(1)), Number((largestVal-(3*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([250, 157, 91, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal-(3*postiveBreakDiff)).toFixed(1)), Number((largestVal-(2*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([233, 92, 59, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal-(2*postiveBreakDiff)).toFixed(1)), Number((largestVal-postiveBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([206, 45, 43, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal-postiveBreakDiff).toFixed(1)), Number(largestVal.toFixed(1)), new SimpleFillSymbol().setColor(new Color([165, 0, 38, 0.6])).setOutline(sls));
+                        renderer.addBreak(0, Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([252, 219, 143, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([250, 157, 91, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (2 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([233, 92, 59, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (2 * postiveBreakDiff)).toFixed(1)), Number((largestVal - postiveBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([206, 45, 43, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - postiveBreakDiff).toFixed(1)), Number(largestVal.toFixed(1)), new SimpleFillSymbol().setColor(new Color([165, 0, 38, 0.6])).setOutline(sls));
                     }
-                    if (clim == "PRin" || clim == "PEin" ) {
+                    if (clim == "PRin" || clim == "PEin") {
                         // negative classes
                         renderer.addBreak(Number((smallestVal).toFixed(1)), 0, new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
                         // this straddles zero
                         renderer.addBreak(0, 0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
                         // postive classes
-                        renderer.addBreak(0, Number((largestVal-(4*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal-(4*postiveBreakDiff)).toFixed(1)), Number((largestVal-(3*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal-(3*postiveBreakDiff)).toFixed(1)), Number((largestVal-(2*postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal-(2*postiveBreakDiff)).toFixed(1)), Number((largestVal-postiveBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal-postiveBreakDiff).toFixed(1)), Number(largestVal.toFixed(1)), new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
+                        renderer.addBreak(0, Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (2 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (2 * postiveBreakDiff)).toFixed(1)), Number((largestVal - postiveBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - postiveBreakDiff).toFixed(1)), Number(largestVal.toFixed(1)), new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
                     }
                 }
                 console.log(renderer)
@@ -1026,82 +1026,82 @@ define([
                 //         renderer.addBreak(10.1, 20, new SimpleFillSymbol().setColor(new Color([102, 25, 138, 0.6])).setOutline(sls));    
                 // }
                 // var classDef = new ClassBreaksDefinition();
-				// classDef.classificationField = field;
-				// classDef.classificationMethod = "natural-breaks"; // always natural breaks
-				// classDef.breakCount = 5; // always five classes
+                // classDef.classificationField = field;
+                // classDef.classificationMethod = "natural-breaks"; // always natural breaks
+                // classDef.breakCount = 5; // always five classes
 
-				// var colorRamp = new AlgorithmicColorRamp();
-				// colorRamp.fromColor = new Color.fromHex(c1);
-				// colorRamp.toColor = new Color.fromHex(c2);
-				// colorRamp.algorithm = "hsv"; // options are:  "cie-lab", "hsv", "lab-lch"
+                // var colorRamp = new AlgorithmicColorRamp();
+                // colorRamp.fromColor = new Color.fromHex(c1);
+                // colorRamp.toColor = new Color.fromHex(c2);
+                // colorRamp.algorithm = "hsv"; // options are:  "cie-lab", "hsv", "lab-lch"
 
-				// classDef.baseSymbol = new SimpleFillSymbol("solid", null, null);
-				// classDef.colorRamp = colorRamp;
+                // classDef.baseSymbol = new SimpleFillSymbol("solid", null, null);
+                // classDef.colorRamp = colorRamp;
 
-				// var params = new GenerateRendererParameters();
-				// params.classificationDefinition = classDef;
-				// var generateRenderer = new GenerateRendererTask(oconusUrl);
-				// generateRenderer.execute(params, this._applyRenderer, this._errorHandler);
+                // var params = new GenerateRendererParameters();
+                // params.classificationDefinition = classDef;
+                // var generateRenderer = new GenerateRendererTask(oconusUrl);
+                // generateRenderer.execute(params, this._applyRenderer, this._errorHandler);
                 this._applyRenderer(renderer);
-			},
-			
-			_applyRenderer: function (renderer) {
-				var fieldname = "ME" + dojo.byId("seasonSelectionOCONUS").value + dojo.byId("climateSelectionOCONUS").value + dojo.byId("periodSelectionOCONUS").value;
-				oLayerId = "NEXGDDP" + dojo.byId("domainSelectionOCONUS").value + dojo.byId("modelSelectionOCONUS").value + fieldname;
-			    map.getLayer(oLayerId).setRenderer(renderer);
-			    map.getLayer(oLayerId).show();
-			},
-			
-			_errorHandler: function (error) {
+            },
+
+            _applyRenderer: function (renderer) {
+                var fieldname = "ME" + dojo.byId("seasonSelectionOCONUS").value + dojo.byId("climateSelectionOCONUS").value + dojo.byId("periodSelectionOCONUS").value;
+                oLayerId = "NEXGDDP" + dojo.byId("domainSelectionOCONUS").value + dojo.byId("modelSelectionOCONUS").value + fieldname;
+                map.getLayer(oLayerId).setRenderer(renderer);
+                map.getLayer(oLayerId).show();
+            },
+
+            _errorHandler: function (error) {
                 console.log("error: ", JSON.stringify(error));
- 			},
-			
-			_executeQueryTask: function(evt, url, domain, fieldname, popupTitle) {
-				var domain = domain;
-				var field = fieldname;
-				var minfield = "MI" + field.substring(2);
-				var maxfield = "MX" + field.substring(2);
-				var queryTask = new QueryTask(url);
-				var query = new Query();
-				query.geometry = evt.mapPoint;
-				query.returnGeometry = true;
-				query.where = "domain = '" + `${domain}` + "'";
-				query.outFields = ["HUC_12", minfield, field, maxfield];
-				queryTask.execute(query).then(results => {
-					if (results.features.length >= 1) {
-						map.infoWindow.resize("315px");
-						map.infoWindow.setTitle(popupTitle);
-						map.infoWindow.setContent(this._buildOconusPopupJson(results.features[0].attributes['HUC_12'],
-																			 Number((results.features[0].attributes[minfield]).toFixed(1)),
-																			 Number((results.features[0].attributes[field]).toFixed(1)),
-																			 Number((results.features[0].attributes[maxfield]).toFixed(1))));
-						map.infoWindow.show(evt.screenPoint);
+            },
+
+            _executeQueryTask: function (evt, url, domain, fieldname, popupTitle) {
+                var domain = domain;
+                var field = fieldname;
+                var minfield = "MI" + field.substring(2);
+                var maxfield = "MX" + field.substring(2);
+                var queryTask = new QueryTask(url);
+                var query = new Query();
+                query.geometry = evt.mapPoint;
+                query.returnGeometry = true;
+                query.where = "domain = '" + `${domain}` + "'";
+                query.outFields = ["HUC_12", minfield, field, maxfield];
+                queryTask.execute(query).then(results => {
+                    if (results.features.length >= 1) {
+                        map.infoWindow.resize("315px");
+                        map.infoWindow.setTitle(popupTitle);
+                        map.infoWindow.setContent(this._buildOconusPopupJson(results.features[0].attributes['HUC_12'],
+                            Number((results.features[0].attributes[minfield]).toFixed(1)),
+                            Number((results.features[0].attributes[field]).toFixed(1)),
+                            Number((results.features[0].attributes[maxfield]).toFixed(1))));
+                        map.infoWindow.show(evt.screenPoint);
 
                         var highlightSymbol = new SimpleFillSymbol(
                             SimpleFillSymbol.STYLE_SOLID,
                             new SimpleLineSymbol(
                                 SimpleLineSymbol.STYLE_SOLID,
-                                new Color([0,255,255]), 1
+                                new Color([0, 255, 255]), 1
                             ),
-                            new Color([125,125,125,0.1])
+                            new Color([125, 125, 125, 0.1])
                         );
                         var highlightGraphic = new Graphic(results.features[0].geometry, highlightSymbol);
-                        map.graphics.add(highlightGraphic);			
-					}	
-				});
-			},
-			
+                        map.graphics.add(highlightGraphic);
+                    }
+                });
+            },
+
             _buildOconusPopupJson: (huc12, min, mean, max) => {
                 var oTable = `<table id='Oconus'><tr id='Oconus'><td>HUC 12</td><td>${huc12}</td></tr><tr id='Oconus'><td>Ensemble Minimum of Changes</td><td>${min}</td></tr><tr id='Oconus'><td>Ensemble Median of Changes</td><td>${mean}</td></tr><tr id='Oconus'><td>Ensemble Maximum of Changes</td><td>${max}</td></tr></table>`
                 return oTable
             },
 
-			_buildOconusId: () => {
-				var season = dojo.byId("seasonSelectionOCONUS");			
-				var clim = dojo.byId("climateSelectionOCONUS");
-				var period = dojo.byId("periodSelectionOCONUS");
-				return ('Median ' + season.options[season.selectedIndex].text + ' ' + clim.options[clim.selectedIndex].text + ', ' + period.options[period.selectedIndex].text)
-			},
+            _buildOconusId: () => {
+                var season = dojo.byId("seasonSelectionOCONUS");
+                var clim = dojo.byId("climateSelectionOCONUS");
+                var period = dojo.byId("periodSelectionOCONUS");
+                return ('Median ' + season.options[season.selectedIndex].text + ' ' + clim.options[clim.selectedIndex].text + ', ' + period.options[period.selectedIndex].text)
+            },
 
             _buildOconusField: () => {
                 // Need to build the field name from selections
