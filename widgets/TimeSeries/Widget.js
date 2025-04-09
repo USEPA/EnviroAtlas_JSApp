@@ -869,7 +869,7 @@ define([
                 dataMinQuery.outStatistics = [statMinDef];
                 dataMinQueryTask.execute(dataMinQuery).then(resultsMn => {
                     //TODO: don't want to round yet, in case the value is a fraction.
-                    this.minVal = Math.floor(resultsMn.features[0].attributes.minValue);
+                    this.minVal = resultsMn.features[0].attributes.minValue;
                     var dataMaxQueryTask = new QueryTask(oconusUrl);
                     var dataMaxQuery = new Query();
                     var statDef = new StatisticDefinition();
@@ -882,7 +882,7 @@ define([
                     return dataMaxQueryTask.execute(dataMaxQuery)
                 }).then(resultsMx => {
                     //TODO: don't want to round yet, in case the value is a fraction.
-                    this.maxVal = Math.ceil(resultsMx.features[0].attributes.maxValue);
+                    this.maxVal = resultsMx.features[0].attributes.maxValue;
                 }).then(() => {
                     var clim = dojo.byId("climateSelectionOCONUS").value;
                     this._classBreaks(fieldname, clim);
@@ -902,20 +902,38 @@ define([
                 var renderer = new ClassBreaksRenderer(symbol, field);
                 // if there are negative values, create 9 value diverging color classification 
                 if (this.minVal < 0) {
-                    var largestVal = this._largestAbsVal(this.maxVal, this.minVal);
-                    var smallestVal = (-1 * largestVal);
-                    var postiveBreakDiff = Number((largestVal / 5).toFixed(2));
-                    var negativeBreakDiff = Number((largestVal / 3).toFixed(2));
+                    if (clim == "PRfr" || clim == "PEfr") {
+                        // compare the min and max of to domain, then whichever is largest number, the other side of break is max/min (9 total classes)
+                        var largestVal = this._largestAbsVal(this.maxVal, this.minVal); // don't round fractions until the end
+                        var smallestVal = (-1 * largestVal);
+                        var postiveBreakDiff = (largestVal / 5);
+                        var negativeBreakDiff = (largestVal / 3);
+                        // negative (3 classes)
+                        renderer.addBreak(Number((smallestVal).toFixed(3)), Number((smallestVal + negativeBreakDiff).toFixed(3)), new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((smallestVal + negativeBreakDiff).toFixed(3)), Number((smallestVal + (2 * negativeBreakDiff)).toFixed(3)), new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((smallestVal + (2 * negativeBreakDiff)).toFixed(3)), 0, new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls));
+                        // zero
+                        renderer.addBreak(0, 0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
+                        // postive (5 classes)
+                        renderer.addBreak(0, Number((largestVal - (4 * postiveBreakDiff)).toFixed(3)), new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (4 * postiveBreakDiff)).toFixed(3)), Number((largestVal - (3 * postiveBreakDiff)).toFixed(3)), new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (3 * postiveBreakDiff)).toFixed(3)), Number((largestVal - (2 * postiveBreakDiff)).toFixed(3)), new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (2 * postiveBreakDiff)).toFixed(3)), Number((largestVal - postiveBreakDiff).toFixed(3)), new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - postiveBreakDiff).toFixed(3)), Number(largestVal.toFixed(3)), new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
+                    }
                     if (clim == "miTF" || clim == "mxTF") {
-                        // compare the min and max of to domain, then whichever is largest number, the other side of break is max/min 
-                        // then apply equal breaks
-                        // negative classes
+                        // compare the min and max of to domain, then whichever is largest number, the other side of break is max/min (9 total classes)
+                        var largestVal = this._largestAbsVal(Math.ceil(this.maxVal), Math.floor(this.minVal));
+                        var smallestVal = (-1 * largestVal);
+                        var postiveBreakDiff = (largestVal / 5);
+                        var negativeBreakDiff = (largestVal / 3);
+                        // negative (3 classes)
                         renderer.addBreak(Number((smallestVal).toFixed(1)), Number((smallestVal + negativeBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([61, 92, 164, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((smallestVal + negativeBreakDiff).toFixed(1)), Number((smallestVal + (2 * negativeBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([104, 159, 201, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((smallestVal + (2 * negativeBreakDiff)).toFixed(1)), 0, new SimpleFillSymbol().setColor(new Color([165, 210, 229, 0.6])).setOutline(sls));
-                        // this straddles zero
+                        // zero (1 class)
                         renderer.addBreak(0, 0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
-                        // postive classes
+                        // postive (5 classes)
                         renderer.addBreak(0, Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([252, 219, 143, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([250, 157, 91, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (2 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([233, 92, 59, 0.6])).setOutline(sls));
@@ -923,32 +941,51 @@ define([
                         renderer.addBreak(Number((largestVal - postiveBreakDiff).toFixed(1)), Number(largestVal.toFixed(1)), new SimpleFillSymbol().setColor(new Color([165, 0, 38, 0.6])).setOutline(sls));
                     }
                     if (clim == "PRin" || clim == "PEin") {
-                        // negative classes
+                        // compare the min and max of to domain, then whichever is largest number, the other side of break is max/min (9 total classes)
+                        var largestVal = this._largestAbsVal(Math.ceil(this.maxVal), Math.floor(this.minVal));
+                        var smallestVal = (-1 * largestVal);
+                        var postiveBreakDiff = (largestVal / 5);
+                        var negativeBreakDiff = (largestVal / 3);
+                        // negative (3 classes)
                         renderer.addBreak(Number((smallestVal).toFixed(1)), Number((smallestVal + negativeBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((smallestVal + negativeBreakDiff).toFixed(1)), Number((smallestVal + (2 * negativeBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((smallestVal + (2 * negativeBreakDiff)).toFixed(1)), 0, new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls));
-                        // this straddles zero
+                        // zero
                         renderer.addBreak(0, 0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
-                        // postive classes
+                        // postive (5 classes)
                         renderer.addBreak(0, Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (2 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((largestVal - (2 * postiveBreakDiff)).toFixed(1)), Number((largestVal - postiveBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((largestVal - postiveBreakDiff).toFixed(1)), Number(largestVal.toFixed(1)), new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
                     }
+                } else { // when the max value is greater than or equal to 0
                     if (clim == "PRfr" || clim == "PEfr") {
-
-                    }
-                } else {
-                    var largestVal = this.maxVal;
-                    var smallestVal = -1;
-                    var postiveBreakDiff = Number((largestVal / 5).toFixed(2));
-                    if (clim == "miTF" || clim == "mxTF") {
-                        // negative classes
-                        renderer.addBreak(Number((smallestVal).toFixed(1)), 0, new SimpleFillSymbol().setColor(new Color([61, 92, 164, 0.6])).setOutline(sls));
-                        // this straddles zero
+                        // max is the largest number, the min is -1 (7 total classes)
+                        var largestVal = this.maxVal; // don't round fractions until the end
+                        var smallestVal = -1;
+                        var postiveBreakDiff = (largestVal / 5);
+                        // negative (1 class)
+                        renderer.addBreak(Number((smallestVal).toFixed(3)), 0, new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
+                        // zero (1 class)
                         renderer.addBreak(0, 0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
-                        // postive classes
+                        // postive (5 classes)
+                        renderer.addBreak(0, Number((largestVal - (4 * postiveBreakDiff)).toFixed(3)), new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (4 * postiveBreakDiff)).toFixed(3)), Number((largestVal - (3 * postiveBreakDiff)).toFixed(3)), new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (3 * postiveBreakDiff)).toFixed(3)), Number((largestVal - (2 * postiveBreakDiff)).toFixed(3)), new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - (2 * postiveBreakDiff)).toFixed(3)), Number((largestVal - postiveBreakDiff).toFixed(3)), new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
+                        renderer.addBreak(Number((largestVal - postiveBreakDiff).toFixed(3)), Number(largestVal.toFixed(3)), new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
+                    }
+                    if (clim == "miTF" || clim == "mxTF") {
+                        // max is the largest number, the min is -1 (7 total classes)
+                        var largestVal = Math.ceil(this.maxVal);
+                        var smallestVal = -1;
+                        var postiveBreakDiff = (largestVal / 5);
+                        // negative (1 class)
+                        renderer.addBreak(Number((smallestVal).toFixed(1)), 0, new SimpleFillSymbol().setColor(new Color([61, 92, 164, 0.6])).setOutline(sls));
+                        // zero (1 class)
+                        renderer.addBreak(0, 0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
+                        // postive (5 classes)
                         renderer.addBreak(0, Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([252, 219, 143, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([250, 157, 91, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (2 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([233, 92, 59, 0.6])).setOutline(sls));
@@ -956,92 +993,22 @@ define([
                         renderer.addBreak(Number((largestVal - postiveBreakDiff).toFixed(1)), Number(largestVal.toFixed(1)), new SimpleFillSymbol().setColor(new Color([165, 0, 38, 0.6])).setOutline(sls));
                     }
                     if (clim == "PRin" || clim == "PEin") {
-                        // negative classes
+                        // max is the largest number, the min is -1 (7 total classes)
+                        var largestVal = Math.ceil(this.maxVal);
+                        var smallestVal = -1;
+                        var postiveBreakDiff = (largestVal / 5);
+                        // negative (1 class)
                         renderer.addBreak(Number((smallestVal).toFixed(1)), 0, new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
-                        // this straddles zero
+                        // zero (1 class)
                         renderer.addBreak(0, 0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
-                        // postive classes
+                        // postive (5 classes)
                         renderer.addBreak(0, Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (2 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((largestVal - (2 * postiveBreakDiff)).toFixed(1)), Number((largestVal - postiveBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((largestVal - postiveBreakDiff).toFixed(1)), Number(largestVal.toFixed(1)), new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
                     }
-                }
-                console.log(renderer)
-                // case "PRfr":
-                //     case "PEfr":
-                //         renderer.addBreak(-30, -25, new SimpleFillSymbol().setColor(new Color([102, 37, 6, 0.6])).setOutline(sls)); dRK red
-                //         renderer.addBreak(-24.9, -1, new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-0.99, -0.8, new SimpleFillSymbol().setColor(new Color([196, 72, 2, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-0.79, -0.6, new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-0.59, -0.4, new SimpleFillSymbol().setColor(new Color([251, 166, 52, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-0.39, -0.3, new SimpleFillSymbol().setColor(new Color([253, 192, 76, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-0.29, -0.2, new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-0.19, -0.1, new SimpleFillSymbol().setColor(new Color([254, 242, 178, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-0.09, 0.0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
-                //         renderer.addBreak(0.01, 0.1, new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
-                //         renderer.addBreak(0.11, 0.2, new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
-                //         renderer.addBreak(0.21, 0.3, new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
-                //         renderer.addBreak(0.31, 0.4, new SimpleFillSymbol().setColor(new Color([0, 42, 164, 0.6])).setOutline(sls));
-                //         renderer.addBreak(0.41, 0.6, new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
-                //         renderer.addBreak(0.61, 0.8, new SimpleFillSymbol().setColor(new Color([238, 216, 234, 0.6])).setOutline(sls));
-                //         renderer.addBreak(0.81, 1.0, new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
-                //         renderer.addBreak(1.1, 25, new SimpleFillSymbol().setColor(new Color([102, 25, 138, 0.6])).setOutline(sls)); 
-                //     case "PRin":
-                //         renderer.addBreak(-110, -70, new SimpleFillSymbol().setColor(new Color([102, 37, 6, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-69.9, -50, new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-49.9, -40, new SimpleFillSymbol().setColor(new Color([196, 72, 2, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-39.9, -30, new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-29.9, -20, new SimpleFillSymbol().setColor(new Color([251, 166, 52, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-19.9, -10, new SimpleFillSymbol().setColor(new Color([253, 192, 76, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-9.9, -5, new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-4.9, -1, new SimpleFillSymbol().setColor(new Color([254, 242, 178, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-0.9, 0.0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
-                //         renderer.addBreak(0.1, 1, new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
-                //         renderer.addBreak(1.1, 5, new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
-                //         renderer.addBreak(5.1, 10, new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
-                //         renderer.addBreak(10.1, 20, new SimpleFillSymbol().setColor(new Color([0, 42, 164, 0.6])).setOutline(sls));
-                //         renderer.addBreak(20.1, 30, new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
-                //         renderer.addBreak(30.1, 40, new SimpleFillSymbol().setColor(new Color([238, 216, 234, 0.6])).setOutline(sls));
-                //         renderer.addBreak(40.1, 50, new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
-                //         renderer.addBreak(50.1, 110, new SimpleFillSymbol().setColor(new Color([102, 25, 138, 0.6])).setOutline(sls)); 
-                //     case "PEin":
-                //         renderer.addBreak(-10, -5, new SimpleFillSymbol().setColor(new Color([102, 37, 6, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-4.9, -4, new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-3.9, -3.5, new SimpleFillSymbol().setColor(new Color([196, 72, 2, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-3.4, -3, new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-2.9, -2.5, new SimpleFillSymbol().setColor(new Color([251, 166, 52, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-2.4, -2, new SimpleFillSymbol().setColor(new Color([253, 192, 76, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-1.9, -1.5, new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-1.4, -0.5, new SimpleFillSymbol().setColor(new Color([254, 242, 178, 0.6])).setOutline(sls));
-                //         renderer.addBreak(-0.4, 0.0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
-                //         renderer.addBreak(0.1, 0.5, new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
-                //         renderer.addBreak(0.51, 1, new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
-                //         renderer.addBreak(1.1, 2, new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
-                //         renderer.addBreak(2.1, 3, new SimpleFillSymbol().setColor(new Color([0, 42, 164, 0.6])).setOutline(sls));
-                //         renderer.addBreak(3.1, 4, new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
-                //         renderer.addBreak(4.1, 5, new SimpleFillSymbol().setColor(new Color([238, 216, 234, 0.6])).setOutline(sls));
-                //         renderer.addBreak(5.1, 10, new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
-                //         renderer.addBreak(10.1, 20, new SimpleFillSymbol().setColor(new Color([102, 25, 138, 0.6])).setOutline(sls));    
-                // }
-                // var classDef = new ClassBreaksDefinition();
-                // classDef.classificationField = field;
-                // classDef.classificationMethod = "natural-breaks"; // always natural breaks
-                // classDef.breakCount = 5; // always five classes
-
-                // var colorRamp = new AlgorithmicColorRamp();
-                // colorRamp.fromColor = new Color.fromHex(c1);
-                // colorRamp.toColor = new Color.fromHex(c2);
-                // colorRamp.algorithm = "hsv"; // options are:  "cie-lab", "hsv", "lab-lch"
-
-                // classDef.baseSymbol = new SimpleFillSymbol("solid", null, null);
-                // classDef.colorRamp = colorRamp;
-
-                // var params = new GenerateRendererParameters();
-                // params.classificationDefinition = classDef;
-                // var generateRenderer = new GenerateRendererTask(oconusUrl);
-                // generateRenderer.execute(params, this._applyRenderer, this._errorHandler);
+                };
                 this._applyRenderer(renderer);
             },
 
