@@ -909,17 +909,62 @@ define([
                         var postiveBreakDiff = (largestVal / 5);
                         var negativeBreakDiff = (largestVal / 3);
                         // negative (3 classes)
-                        renderer.addBreak(Number((smallestVal).toFixed(3)), Number((smallestVal + negativeBreakDiff).toFixed(3)), new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((smallestVal + negativeBreakDiff).toFixed(3)), Number((smallestVal + (2 * negativeBreakDiff)).toFixed(3)), new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((smallestVal + (2 * negativeBreakDiff)).toFixed(3)), 0, new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls));
+                        renderer.addBreak({
+                            minValue: Number((smallestVal).toFixed(3)),
+                            maxValue: Number((smallestVal + negativeBreakDiff).toFixed(3)),
+                            symbol: new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls),
+                            label: Number((smallestVal * 100).toFixed(1)) + ' - ' + Number(((smallestVal + negativeBreakDiff) * 100).toFixed(1)) + '%'
+                        });
+                        renderer.addBreak({
+                            minValue: Number((smallestVal + negativeBreakDiff).toFixed(3)),
+                            maxValue: Number((smallestVal + (2 * negativeBreakDiff)).toFixed(3)),
+                            symbol: new SimpleFillSymbol().setColor(new Color([218, 92, 10, 0.6])).setOutline(sls),
+                            label: Number(((smallestVal + negativeBreakDiff) * 100).toFixed(1)) + ' - ' + Number(((smallestVal + (2 * negativeBreakDiff)) * 100).toFixed(1)) + '%'
+                        });
+                        renderer.addBreak({
+                            minValue: Number((smallestVal + (2 * negativeBreakDiff)).toFixed(3)),
+                            maxValue: 0,
+                            symbol: new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls),
+                            label: Number(((smallestVal + (2 * negativeBreakDiff)) * 100).toFixed(1)) + ' - ' + 0 + '%'
+                        });
                         // zero
-                        renderer.addBreak(0, 0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
+                        renderer.addBreak({
+                            minValue: 0,
+                            maxValue: 0,
+                            symbol: new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls),
+                            label: '0%'
+                        });
                         // postive (5 classes)
-                        renderer.addBreak(0, Number((largestVal - (4 * postiveBreakDiff)).toFixed(3)), new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal - (4 * postiveBreakDiff)).toFixed(3)), Number((largestVal - (3 * postiveBreakDiff)).toFixed(3)), new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal - (3 * postiveBreakDiff)).toFixed(3)), Number((largestVal - (2 * postiveBreakDiff)).toFixed(3)), new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal - (2 * postiveBreakDiff)).toFixed(3)), Number((largestVal - postiveBreakDiff).toFixed(3)), new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal - postiveBreakDiff).toFixed(3)), Number(largestVal.toFixed(3)), new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
+                        renderer.addBreak({
+                            minValue: 0,
+                            maxValue: Number((largestVal - (4 * postiveBreakDiff)).toFixed(3)),
+                            symbol: new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls),
+                            label: '0 - ' + Number(((largestVal - (4 * postiveBreakDiff)) * 100).toFixed(1)) + '%'
+                        });
+                        renderer.addBreak({
+                            minValue: Number((largestVal - (4 * postiveBreakDiff)).toFixed(3)),
+                            maxValue: Number((largestVal - (3 * postiveBreakDiff)).toFixed(3)),
+                            symbol: new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls),
+                            label: Number(((largestVal - (4 * postiveBreakDiff)) * 100).toFixed(1)) + ' - ' + Number(((largestVal - (3 * postiveBreakDiff)) * 100).toFixed(1)) + '%'
+                        });
+                        renderer.addBreak({
+                            minValue: Number((largestVal - (3 * postiveBreakDiff)).toFixed(3)),
+                            maxValue: Number((largestVal - (2 * postiveBreakDiff)).toFixed(3)),
+                            symbol: new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls),
+                            label: Number(((largestVal - (3 * postiveBreakDiff)) * 100).toFixed(1)) + ' - ' + Number(((largestVal - (2 * postiveBreakDiff)) * 100).toFixed(1)) + '%'
+                        });
+                        renderer.addBreak({
+                            minValue: Number((largestVal - (2 * postiveBreakDiff)).toFixed(3)),
+                            maxValue: Number((largestVal - postiveBreakDiff).toFixed(3)),
+                            symbol: new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls),
+                            label: Number(((largestVal - (2 * postiveBreakDiff)) * 100).toFixed(1)) + ' - ' + Number(((largestVal - postiveBreakDiff) * 100).toFixed(1)) + '%'
+                        });
+                        renderer.addBreak({
+                            minValue: Number((largestVal - postiveBreakDiff).toFixed(3)),
+                            maxValue: Number(largestVal.toFixed(3)),
+                            symbol: new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls),
+                            label: Number(((largestVal - postiveBreakDiff) * 100).toFixed(1)) + ' - ' + Number((largestVal * 100).toFixed(1)) + '%'
+                        });
                     }
                     if (clim == "miTF" || clim == "mxTF") {
                         // compare the min and max of to domain, then whichever is largest number, the other side of break is max/min (9 total classes)
@@ -966,15 +1011,50 @@ define([
                         var smallestVal = -1;
                         var postiveBreakDiff = (largestVal / 5);
                         // negative (1 class)
-                        renderer.addBreak(Number((smallestVal).toFixed(3)), 0, new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
+                        renderer.addBreak({
+                            minValue: Number((smallestVal).toFixed(3)),
+                            maxValue: 0,
+                            symbol: new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls),
+                            label: Number((smallestVal * 100).toFixed(1)) + ' - 0%'
+                        });
                         // zero (1 class)
-                        renderer.addBreak(0, 0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
+                        renderer.addBreak({
+                            minValue: 0,
+                            maxValue: 0,
+                            symbol: new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls),
+                            label: '0%'
+                        });
                         // postive (5 classes)
-                        renderer.addBreak(0, Number((largestVal - (4 * postiveBreakDiff)).toFixed(3)), new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal - (4 * postiveBreakDiff)).toFixed(3)), Number((largestVal - (3 * postiveBreakDiff)).toFixed(3)), new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal - (3 * postiveBreakDiff)).toFixed(3)), Number((largestVal - (2 * postiveBreakDiff)).toFixed(3)), new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal - (2 * postiveBreakDiff)).toFixed(3)), Number((largestVal - postiveBreakDiff).toFixed(3)), new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
-                        renderer.addBreak(Number((largestVal - postiveBreakDiff).toFixed(3)), Number(largestVal.toFixed(3)), new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
+                        renderer.addBreak({
+                            minValue: 0,
+                            maxValue: Number((largestVal - (4 * postiveBreakDiff)).toFixed(3)),
+                            symbol: new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls),
+                            label: '0 - ' + Number(((largestVal - (4 * postiveBreakDiff)) * 100).toFixed(1)) + '%'
+                        });
+                        renderer.addBreak({
+                            minValue: Number((largestVal - (4 * postiveBreakDiff)).toFixed(3)),
+                            maxValue: Number((largestVal - (3 * postiveBreakDiff)).toFixed(3)),
+                            symbol: new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls),
+                            label: Number(((largestVal - (4 * postiveBreakDiff)) * 100).toFixed(1)) + ' - ' + Number(((largestVal - (3 * postiveBreakDiff)) * 100).toFixed(1)) + '%'
+                        });
+                        renderer.addBreak({
+                            minValue: Number((largestVal - (3 * postiveBreakDiff)).toFixed(3)),
+                            maxValue: Number((largestVal - (2 * postiveBreakDiff)).toFixed(3)),
+                            symbol: new SimpleFillSymbol().setColor(new Color([0, 127, 216, 0.6])).setOutline(sls),
+                            label: Number(((largestVal - (3 * postiveBreakDiff)) * 100).toFixed(1)) + ' - ' + Number(((largestVal - (2 * postiveBreakDiff)) * 100).toFixed(1)) + '%'
+                        });
+                        renderer.addBreak({
+                            minValue: Number((largestVal - (2 * postiveBreakDiff)).toFixed(3)),
+                            maxValue: Number((largestVal - postiveBreakDiff).toFixed(3)),
+                            symbol: new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls),
+                            label: Number(((largestVal - (2 * postiveBreakDiff)) * 100).toFixed(1)) + ' - ' + Number(((largestVal - postiveBreakDiff) * 100).toFixed(1)) + '%'
+                        });
+                        renderer.addBreak({
+                            minValue: Number((largestVal - postiveBreakDiff).toFixed(3)),
+                            maxValue: Number(largestVal.toFixed(3)),
+                            symbol: new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls),
+                            label: Number(((largestVal - postiveBreakDiff) * 100).toFixed(1)) + ' - ' + Number((largestVal * 100).toFixed(1)) + '%'
+                        });
                     }
                     if (clim == "miTF" || clim == "mxTF") {
                         // max is the largest number, the min is -1 (7 total classes)
@@ -1034,28 +1114,53 @@ define([
                 query.returnGeometry = true;
                 query.where = "domain = '" + `${domain}` + "'";
                 query.outFields = ["HUC_12", minfield, field, maxfield];
-                queryTask.execute(query).then(results => {
-                    if (results.features.length >= 1) {
-                        map.infoWindow.resize("315px");
-                        map.infoWindow.setTitle(popupTitle);
-                        map.infoWindow.setContent(this._buildOconusPopupJson(results.features[0].attributes['HUC_12'],
-                            Number((results.features[0].attributes[minfield]).toFixed(1)),
-                            Number((results.features[0].attributes[field]).toFixed(1)),
-                            Number((results.features[0].attributes[maxfield]).toFixed(1))));
-                        map.infoWindow.show(evt.screenPoint);
+                if (fieldname.includes("PRfr") || fieldname.includes("PEfr")) {
+                    queryTask.execute(query).then(results => {
+                        if (results.features.length >= 1) {
+                            map.infoWindow.resize("315px");
+                            map.infoWindow.setTitle(popupTitle);
+                            map.infoWindow.setContent(this._buildOconusPopupJson(results.features[0].attributes['HUC_12'],
+                                Number(((results.features[0].attributes[minfield]) * 100).toFixed(1)) + '%',
+                                Number(((results.features[0].attributes[field]) * 100).toFixed(1)) + '%',
+                                Number(((results.features[0].attributes[maxfield]) * 100).toFixed(1)) + '%'));
+                            map.infoWindow.show(evt.screenPoint);
 
-                        var highlightSymbol = new SimpleFillSymbol(
-                            SimpleFillSymbol.STYLE_SOLID,
-                            new SimpleLineSymbol(
-                                SimpleLineSymbol.STYLE_SOLID,
-                                new Color([0, 255, 255]), 1
-                            ),
-                            new Color([125, 125, 125, 0.1])
-                        );
-                        var highlightGraphic = new Graphic(results.features[0].geometry, highlightSymbol);
-                        map.graphics.add(highlightGraphic);
-                    }
-                });
+                            var highlightSymbol = new SimpleFillSymbol(
+                                SimpleFillSymbol.STYLE_SOLID,
+                                new SimpleLineSymbol(
+                                    SimpleLineSymbol.STYLE_SOLID,
+                                    new Color([0, 255, 255]), 1
+                                ),
+                                new Color([125, 125, 125, 0.1])
+                            );
+                            var highlightGraphic = new Graphic(results.features[0].geometry, highlightSymbol);
+                            map.graphics.add(highlightGraphic);
+                        }
+                    });
+                } else {
+                    queryTask.execute(query).then(results => {
+                        if (results.features.length >= 1) {
+                            map.infoWindow.resize("315px");
+                            map.infoWindow.setTitle(popupTitle);
+                            map.infoWindow.setContent(this._buildOconusPopupJson(results.features[0].attributes['HUC_12'],
+                                Number((results.features[0].attributes[minfield]).toFixed(1)),
+                                Number((results.features[0].attributes[field]).toFixed(1)),
+                                Number((results.features[0].attributes[maxfield]).toFixed(1))));
+                            map.infoWindow.show(evt.screenPoint);
+
+                            var highlightSymbol = new SimpleFillSymbol(
+                                SimpleFillSymbol.STYLE_SOLID,
+                                new SimpleLineSymbol(
+                                    SimpleLineSymbol.STYLE_SOLID,
+                                    new Color([0, 255, 255]), 1
+                                ),
+                                new Color([125, 125, 125, 0.1])
+                            );
+                            var highlightGraphic = new Graphic(results.features[0].geometry, highlightSymbol);
+                            map.graphics.add(highlightGraphic);
+                        }
+                    });
+                }
             },
 
             _buildOconusPopupJson: (huc12, min, mean, max) => {
