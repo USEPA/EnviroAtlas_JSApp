@@ -163,7 +163,7 @@ define([
     window.bLayerListWidgetStarted = false;
     window.dataFactSheet = "https://enviroatlas.epa.gov/enviroatlas/DataFactSheets/pdf/";
     //window.matadata = "https://edg.epa.gov/metadata/catalog/search/resource/details.page?uuid=%7BBDF514A6-05A8-400D-BF3D-030645461334%7D";
-	window.matadata = "https://edg.epa.gov/metadata/catalog/search/resource/details.page";//?uuid=%7BBDF514A6-05A8-400D-BF3D-030645461334%7D";
+	window.matadata = "https://edg.epa.gov/geoplatform.gov/";//?uuid=%7BBDF514A6-05A8-400D-BF3D-030645461334%7D";
     
     window.bFirstLoadFilterWidget = true;
     window.cmaMapPoint = null;
@@ -462,22 +462,6 @@ define([
       if (ioArgs.content && ioArgs.content.printFlag) { // printTask
         ioArgs.timeout = 300000;
       }
-      if (ioArgs.url.indexOf("ejscreen.epa.gov") !== -1) { 
-      	ioArgs.timeout = 59000;//100  is to test whether we can display error message when Ejsceen service is slow;  59000 is default
-      }
-      
-      if (ioArgs.url.indexOf("enviroatlas.epa.gov/arcgis/rest/services/Other/HydrologicUnits") !== -1) { //This is to test timeout of Huc Navigation
-      	ioArgs.timeout = 59000;
-      }
-      if (ioArgs.url.indexOf("enviroatlas2.epa.gov/arcgis/rest/services/FutureScenarios") !== -1) { //This is to test timeout of time series; currently it is not working
-      	ioArgs.timeout = 59000;
-      }
-      if (ioArgs.url.indexOf("enviroatlas2.epa.gov/arcgis/rest/services/ECAT") !== -1) { //This is to test timeout of ECAT
-      	ioArgs.timeout = 59000;
-      } 
-      if (ioArgs.url.indexOf("ordspub.epa.gov/ords/waters10/PointIndexing.Service") !== -1) { //This is to test timeout of Raindrop tool
-      	ioArgs.timeout = 59000;
-      }            
       //use https protocol
       if (parentHttps) {
         ioArgs.url = ioArgs.url.replace(patt, '//');

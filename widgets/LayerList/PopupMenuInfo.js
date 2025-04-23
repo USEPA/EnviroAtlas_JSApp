@@ -70,13 +70,13 @@ define([
                 if ('eaMetadata' in layerInfoFromJson) {
                   if (('eaScale' in layerInfoFromJson) && (layerInfoFromJson['eaScale'] == "NATIONAL")) {
                     metaDataID = window.nationalMetadataDic[layerInfoFromJson['eaMetadata']];
-                    window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
+                    window.open(window.matadata + metaDataID);
                   } else {
                     if (window.communitySelected == window.strAllCommunity) {
                       window.open(window.communityMetadataDic[layerInfoFromJson['eaMetadata']][window.communitySelected]);
                     } else {
                       metaDataID = window.communityMetadataDic[layerInfoFromJson['eaMetadata']][window.communitySelected];
-                      window.open(window.matadata + "?uuid=%7B" + metaDataID + "%7D");
+                      window.open(window.matadata + metaDataID);
                     }
                   }
                 } else {
