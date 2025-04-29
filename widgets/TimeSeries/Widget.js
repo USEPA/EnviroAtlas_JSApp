@@ -814,6 +814,8 @@ define([
                 this.loadCONUS = document.getElementById('loadServiceBtn');
                 this.removeCONUS = document.getElementById('removeServiceBtn');
                 this.frameYearInput = document.getElementById('frameYearInput');
+                this.climVarOCONUS = document.getElementById('climateSelectionOCONUS');
+                this.domainOCONUS = document.getElementById('domainSelectionOCONUS');
             },
 
             _initListeners: function () {
@@ -828,6 +830,16 @@ define([
                 this.loadOCONUS.addEventListener('click', () => {
                     this._loadOCONUS();
                 });
+                
+                this.domainOCONUS.addEventListener('change', () => {
+                    if (this.domainOCONUS.value == 'ALASKA') {
+                        this.climVarOCONUS[1].setAttribute('hidden', '');
+                        this.climVarOCONUS[3].setAttribute('hidden', '')
+                    } else {
+                        this.climVarOCONUS[1].removeAttribute('hidden');
+                        this.climVarOCONUS[3].removeAttribute('hidden');
+                    }
+                })
             },
 
             _zoomToOCONUSArea: (a) => {
@@ -836,9 +848,8 @@ define([
 
             _loadOCONUS: function () {
                 // Get selections
-                var domainElem = dojo.byId("domainSelectionOCONUS");
-                var domain = domainElem.value;
-                var domainText = domainElem.options[domainElem.selectedIndex].text;
+                var domain = this.domainOCONUS.value;
+                var domainText = this.domainOCONUS.options[this.domainOCONUS.selectedIndex].text;
                 var scenario = dojo.byId("modelSelectionOCONUS").value;
                 map.setExtent(this._zoomToOCONUSArea(domain));
                 var fieldname = this._buildOconusField();
@@ -884,7 +895,7 @@ define([
                     //TODO: don't want to round yet, in case the value is a fraction.
                     this.maxVal = resultsMx.features[0].attributes.maxValue;
                 }).then(() => {
-                    var clim = dojo.byId("climateSelectionOCONUS").value;
+                    var clim = this.climVarOCONUS.value;
                     this._classBreaks(fieldname, clim);
                 });
                 showLayerListWidget();
@@ -1093,8 +1104,8 @@ define([
             },
 
             _applyRenderer: function (renderer) {
-                var fieldname = "ME" + dojo.byId("seasonSelectionOCONUS").value + dojo.byId("climateSelectionOCONUS").value + dojo.byId("periodSelectionOCONUS").value;
-                oLayerId = "NEXGDDP" + dojo.byId("domainSelectionOCONUS").value + dojo.byId("modelSelectionOCONUS").value + fieldname;
+                var fieldname = "ME" + dojo.byId("seasonSelectionOCONUS").value + this.climVarOCONUS.value + dojo.byId("periodSelectionOCONUS").value;
+                oLayerId = "NEXGDDP" + this.domainOCONUS.value + dojo.byId("modelSelectionOCONUS").value + fieldname;
                 map.getLayer(oLayerId).setRenderer(renderer);
                 map.getLayer(oLayerId).show();
             },
