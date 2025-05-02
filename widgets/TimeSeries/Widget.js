@@ -1026,7 +1026,7 @@ define([
                             minValue: Number((smallestVal).toFixed(3)),
                             maxValue: 0,
                             symbol: new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls),
-                            label: Number((smallestVal * 100).toFixed(1)) + ' - 0%'
+                            label: '<0%'
                         });
                         // zero (1 class)
                         renderer.addBreak({
@@ -1073,9 +1073,19 @@ define([
                         var smallestVal = -1;
                         var postiveBreakDiff = (largestVal / 5);
                         // negative (1 class)
-                        renderer.addBreak(Number((smallestVal).toFixed(1)), 0, new SimpleFillSymbol().setColor(new Color([61, 92, 164, 0.6])).setOutline(sls));
+                        renderer.addBreak({
+                            minValue: Number((smallestVal).toFixed(1)),
+                            maxValue: 0,
+                            symbol: new SimpleFillSymbol().setColor(new Color([61, 92, 164, 0.6])).setOutline(sls),
+                            label: '<0'
+                        });
                         // zero (1 class)
-                        renderer.addBreak(0, 0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
+                        renderer.addBreak({
+                            minValue: 0,
+                            maxValue: 0,
+                            symbol: new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls),
+                            label: '0'
+                        });
                         // postive (5 classes)
                         renderer.addBreak(0, Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([252, 219, 143, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([250, 157, 91, 0.6])).setOutline(sls));
@@ -1088,10 +1098,20 @@ define([
                         var largestVal = Math.ceil(this.maxVal);
                         var smallestVal = -1;
                         var postiveBreakDiff = (largestVal / 5);
-                        // negative (1 class)
-                        renderer.addBreak(Number((smallestVal).toFixed(1)), 0, new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls));
+                        // negative (1 class) TODO: add label
+                        renderer.addBreak({
+                            minValue: Number((smallestVal).toFixed(1)),
+                            maxValue: 0,
+                            symbol: new SimpleFillSymbol().setColor(new Color([133, 46, 4, 0.6])).setOutline(sls),
+                            label: '<0'
+                        });
                         // zero (1 class)
-                        renderer.addBreak(0, 0, new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls));
+                        renderer.addBreak({
+                            minValue: 0,
+                            maxValue: 0,
+                            symbol: new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls),
+                            label: '0'
+                        });
                         // postive (5 classes)
                         renderer.addBreak(0, Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([185, 231, 248, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((largestVal - (4 * postiveBreakDiff)).toFixed(1)), Number((largestVal - (3 * postiveBreakDiff)).toFixed(1)), new SimpleFillSymbol().setColor(new Color([79, 280, 252, 0.6])).setOutline(sls));
