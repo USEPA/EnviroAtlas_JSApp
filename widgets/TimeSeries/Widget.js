@@ -912,7 +912,7 @@ define([
                 symbol.setColor(new Color([150, 150, 150, 0.6])).setOutline(sls);
                 var renderer = new ClassBreaksRenderer(symbol, field);
                 // if there are negative values, create 9 value diverging color classification 
-                if (this.minVal < 0) {
+                if (this.minVal < 0 && this.maxVal > 0) {
                     if (clim == "PRfr" || clim == "PEfr") {
                         // compare the min and max of to domain, then whichever is largest number, the other side of break is max/min (9 total classes)
                         var largestVal = this._largestAbsVal(this.maxVal, this.minVal); // don't round fractions until the end
@@ -938,7 +938,7 @@ define([
                             symbol: new SimpleFillSymbol().setColor(new Color([254, 230, 151, 0.6])).setOutline(sls),
                             label: Number(((smallestVal + (2 * negativeBreakDiff)) * 100).toFixed(1)) + ' - <' + 0 + '%'
                         });
-                        // zero
+                        // zero (1 class)
                         renderer.addBreak({
                             minValue: 0,
                             maxValue: 0.001,
@@ -1027,7 +1027,7 @@ define([
                             minValue: 0,
                             maxValue: 0.001,
                             symbol: new SimpleFillSymbol().setColor(new Color([128, 128, 128, 0.6])).setOutline(sls),
-                            label: '0%'
+                            label: '0'
                         });
                         // positive (5 classes)
                         renderer.addBreak({
@@ -1041,7 +1041,7 @@ define([
                         renderer.addBreak(Number((largestVal - (2 * positiveBreakDiff)).toFixed(1)), Number((largestVal - positiveBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((largestVal - positiveBreakDiff).toFixed(1)), Number(largestVal.toFixed(1)), new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
                     }
-                } else { // when the max value is greater than or equal to 0
+                } else if (this.minVal > 0 && this.maxVal > 0) { // when the max value is greater than or equal to 0
                     if (clim == "PRfr" || clim == "PEfr") {
                         // max is the largest number, the min is -1 (7 total classes)
                         var largestVal = this.maxVal; // don't round fractions until the end
@@ -1144,7 +1144,6 @@ define([
                             label: '0'
                         });
                         // positive (5 classes)
-                        //TODO: greater than zero label
                         renderer.addBreak({
                             minValue: 0.001,
                             maxValue: Number((largestVal - (4 * positiveBreakDiff)).toFixed(1)),
@@ -1156,6 +1155,8 @@ define([
                         renderer.addBreak(Number((largestVal - (2 * positiveBreakDiff)).toFixed(1)), Number((largestVal - positiveBreakDiff).toFixed(1)), new SimpleFillSymbol().setColor(new Color([0, 0, 139, 0.6])).setOutline(sls));
                         renderer.addBreak(Number((largestVal - positiveBreakDiff).toFixed(1)), Number(largestVal.toFixed(1)), new SimpleFillSymbol().setColor(new Color([175, 21, 137, 0.6])).setOutline(sls));
                     }
+                } else {
+                    console.log('all negative!')
                 };
                 this._applyRenderer(renderer);
             },
