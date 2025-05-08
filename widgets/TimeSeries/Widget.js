@@ -990,7 +990,7 @@ define([
                             minValue: Number((smallestVal + (2 * negativeBreakDiff)).toFixed(1)),
                             maxValue: -0.001,
                             symbol: new SimpleFillSymbol().setColor(new Color([165, 210, 229, 0.6])).setOutline(sls),
-                            label: Number((smallestVal + (2 * negativeBreakDiff)).toFixed(1)) + ' - <' + 0
+                            label: '<0 - ' + Number((smallestVal + (2 * negativeBreakDiff)).toFixed(1))
                         });
                         // zero (1 class)
                         renderer.addBreak({
