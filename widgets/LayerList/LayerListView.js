@@ -26,20 +26,18 @@ define([
   'dijit/focus',
   'dojo/query',
   'jimu/dijit/CheckBox',
-  'jimu/PanelManager',
   'jimu/dijit/DropMenu',
   'jimu/dijit/LoadingShelter',
   './PopupMenu',
   'dijit/_TemplatedMixin',
   'jimu/utils',
   'dojo/text!./LayerListView.html',
-  'dojo/dom-attr',
   'dojo/dom-class',
   'dojo/dom-style',
   './NlsStrings'
 ], function(_WidgetBase, declare, lang, array, html, domConstruct, on, keys, focusUtil, query,
-  CheckBox, PanelManager, DropMenu, LoadingShelter, PopupMenu, _TemplatedMixin, jimuUtils, template,
-  domAttr, domClass, domStyle, NlsStrings) {
+  CheckBox, DropMenu, LoadingShelter, PopupMenu, _TemplatedMixin, jimuUtils, template,
+  domClass, domStyle, NlsStrings) {
   	var received = "";
 
   return declare([_WidgetBase, _TemplatedMixin], {
@@ -91,8 +89,7 @@ define([
         if (((layerInfo.layerObject.type) && (layerInfo.layerObject.type.toUpperCase() == "FEATURE LAYER")) ||((layerInfo.layerObject.url != null)&&(layerInfo.layerObject.url.toUpperCase().indexOf("FEATURESERVER"))&&(layerInfo.layerObject.url.toUpperCase().indexOf("ARCGIS.COM")))) {
 
         	this.drawListNode(layerInfo, 0, refHrNode,'before');
-        }
-        else {
+        } else {
 
         	this.drawListNode(layerInfo, 0, refHrNodeNonGraphic,'before');
         }
@@ -308,8 +305,6 @@ define([
       var grayedTitleClass = '';
       try {
       	var eaID = layerInfo.id.replace(window.layerIdPrefix, "");
-
-
       	//use ((indexID >= 0) && (bTileOnMap == true)) to check if tileLayer corresponding to Featured Collection exist.
         if ((!layerInfo.isInScale())&&(window.hashIDtoTileURL[eaID] == null)&&((indexID >= 0) && (bTileOnMap == true))) {
           grayedTitleClass = 'grayed-title';
@@ -463,8 +458,6 @@ define([
           layerTrNode,
           imageShowLegendDiv)));
       this._storeLayerNodeEventHandle(rootLayerInfo, handle[0]);
-
-
 
       //if(layerInfo.isRootLayer() || layerInfo.isTable) {
       this._layerDomNodeStorage[layerInfo.getObjectId()].layerTrNode = layerTrNode;
@@ -680,6 +673,16 @@ define([
               layerInfo.drawLegends(legendsNode, this.layerListWidget.appConfig.portalUrl);
             }
           }
+          // drop "others" from legend for OCONUS data layers"
+          if (layerInfo.id.includes('NEXGDDP')) {
+            query(".esriLegendLayer", subNode).forEach(function(node) {
+              columns = node.getElementsByTagName('td');
+              // "others" label has 3 columns in the table
+              if (columns.length === 3) {
+                domStyle.set(node, "display", "none");
+              } 
+            })
+          }
         }
       }
       // adding from url adds to the top of the list, this query looks for the specific demographic layer node 
@@ -732,17 +735,16 @@ define([
 	    layerId = layerInfo.id;
 	    if (layerId.indexOf(window.layerIdPrefix) >= 0) {
 	        eaId = layerId.replace(window.layerIdPrefix, "");                     	
-	    } 
-	    else {
+	    } else {
 	    	eaIDFromFeaturedCollection = window.hashFeaturedCollectionToEAID[layerId];
 	    	if (((eaIDFromFeaturedCollection != null) && (eaIDFromFeaturedCollection != undefined))) {
 	    		eaId = eaIDFromFeaturedCollection;
 				var bNationalFeaturedCollection = false;
 			    var eaIDinFeatureCollection = window.hashFeaturedCollectionToEAID[layerId];
 			    if (((eaIDinFeatureCollection !=null) && (eaIDinFeatureCollection !=undefined))) {
-			          if ((window.hashScale[eaIDinFeatureCollection]== 'NATIONAL')){
-			          		bNationalFeaturedCollection = true;
-			          };
+			      if ((window.hashScale[eaIDinFeatureCollection]== 'NATIONAL')){
+			        bNationalFeaturedCollection = true;
+			      };
 			    }	    		
 	    	}
 	    }
@@ -764,7 +766,6 @@ define([
 		if (window.nationalLayerNumber.includes(eaId) || (bNationalFeaturedCollection == true)){//check if it is national layer. If yes, then set warning sign by triggering extent-change event
 			jimuUtils.adjustMapExtent(layerInfo.map);   			                            	
         } 
-        
         layerInfo.setTopLayerVisible(ckSelect.checked);
       }
       evt.stopPropagation();
@@ -1123,9 +1124,6 @@ define([
       }
     },
 
-
-
-    
     turnAllRootLayers: function(isOnOrOff) {
       var layerInfoArray = this.operLayerInfos.getLayerInfoArray();
       array.forEach(layerInfoArray, function(layerInfo) {
@@ -1140,7 +1138,6 @@ define([
 			window.allLayersTurnedOn[eaId] = isOnOrOff;
 			lyrTiled = layerInfo.map.getLayer(window.layerIdTiledPrefix + eaId);   
 			if (isOnOrOff) {
-
 			    if(lyrTiled){
 			    	if (window.hashRenderer[eaId] == null) {
 			       	  	lyrTiled.setVisibility(true);//set tile visible only when user not set the dynamic symbology
@@ -1193,7 +1190,6 @@ define([
     foldOrUnfoldAllLayers: function(isFold) {
       var layerInfoArray = [];
       var rootLayerInfoArray = [];
-
       this.operationsDropMenuLoading.show();
       this.operLayerInfos.traversal(lang.hitch(this, function(layerInfo) {
         if(!this.isLayerHiddenInWidget(layerInfo)) {
@@ -1247,7 +1243,6 @@ define([
         //this.domNode.removeChild(this.supports508Node);
       }
     },
-
 
     _onSearchButtonKey: function(e) {
       if(e.keyCode === keys.TAB && e.shiftKey) {
