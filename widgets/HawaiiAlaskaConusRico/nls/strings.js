@@ -5,6 +5,8 @@ define({
     Alaska: "Alaska - filters data and zooms",
     Conus: "Continental US",
     PRVI: "Puerto Rico/Virgin Islands - filters data and zooms",
+    AmericanSamoa: "American Samoa - filters data and zooms",
+    Guam: "Guam & Northern Mariana Islands - filters data and zooms"
   }),
   "ar": 1,
   "bs": 1,

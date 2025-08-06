@@ -36,7 +36,6 @@ define([
       _cornerTrailing: 'jimu-corner-trailing',
 
       moveTopOnActive: false,
-
       postCreate: function(){
         this.inherited(arguments);
         this.navToolbar = new Navigation(this.map);
@@ -44,6 +43,8 @@ define([
         this.btnAlaska.title = this.nls.Alaska;
         this.btnConus.title = this.nls.Conus;
         this.btnPRVI.title = this.nls.PRVI;
+        this.btnAmericanSamoa.title = this.nls.AmericanSamoa;
+        this.btnGuam.title = this.nls.Guam;
       },
 
       _onHawaiiClicked: function() {
@@ -86,6 +87,28 @@ define([
             var nExtent = Extent(currentItem.extent);
             this.map.setExtent(nExtent);
             document.getElementById("areaGeographyPR").click();
+          }
+        }          
+      },
+
+      _onGuamClicked: function() {
+        for (var i = 0; i <this.config.bookmarks[0].items.length; i++ ){
+          var currentItem = this.config.bookmarks[0].items[i];
+          if (currentItem.name === "Guam"){
+            var nExtent = Extent(currentItem.extent);
+            this.map.setExtent(nExtent);
+            document.getElementById("areaGeographyGuam").click();
+          }
+        }          
+      },
+
+      _onAmericanSamoaClicked: function() {
+        for (var i = 0; i <this.config.bookmarks[0].items.length; i++ ){
+          var currentItem = this.config.bookmarks[0].items[i];
+          if (currentItem.name === "AmericanSamoa"){
+            var nExtent = Extent(currentItem.extent);
+            this.map.setExtent(nExtent);
+            document.getElementById("areaGeographyAmericanSamoa").click();
           }
         }          
       },

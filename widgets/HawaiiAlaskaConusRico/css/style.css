@@ -81,3 +81,21 @@
   background-size: contain;
   cursor: pointer;
 }
+.Guam {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background: url('../images/Guam.png') center no-repeat;
+  background-size: contain;
+  cursor: pointer;
+  opacity: 0.85
+}
+.AmericanSamoa {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background: url('../images/AmericanSamoa.png') center no-repeat;
+  background-size: contain;
+  cursor: pointer;
+  opacity: 0.85
+}
