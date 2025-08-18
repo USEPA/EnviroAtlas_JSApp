@@ -11,9 +11,9 @@
 .cpw_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/water.png');}
 .cpw {background: rgb(116, 204, 209) url('../images/ES_Icons/water.png');}
 
-/* climate stabilization */
+/* climate stabilization
 .clim_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/clim.png');}
-.clim {background: rgb(249, 159, 31) url('../images/ES_Icons/clim.png');}
+.clim {background: rgb(249, 159, 31) url('../images/ES_Icons/clim.png');} */
 
 /* food, fuel, and materials */
 .ffm_bw {background: rgb(188, 188, 188) url('../images/ES_Icons/food.png');}
