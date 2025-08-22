@@ -136,13 +136,13 @@ define({
                      'State': 'results.STATE_NAME'}
       },
       "countyLayer" : {
-        "url": 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Counties/FeatureServer/0',
+        "url": 'https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_Counties_and_States_with_PR/FeatureServer/0',
         "minScale": '300000000',
         "name": "County",
-        "label": "results.NAME + ', ' + results.STATE_NAME",
-        "outfields" : ['STATE_NAME', 'NAME'],
+        "label": "results.CountyName + ', ' + results.STATE_NAME",
+        "outfields" : ['STATE_NAME', 'CountyName'],
         "outdesc" : {'Geometry Type': 'US County',
-                     'County' : "results.NAME + ', ' + results.STATE_NAME"}
+                     'County' : "results.CountyName + ', ' + results.STATE_NAME"}
       },
       "blockgroupLayer": {
         "url": 'https://ejscreen.epa.gov/arcgis/rest/services/ejscreen/census2020acs/MapServer/0',
@@ -189,7 +189,7 @@ define({
       }
     },
     stateLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_States_Non_Generalized/FeatureServer/0',
-    countyLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Counties/FeatureServer/0',
+    countyLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_Counties_and_States_with_PR/FeatureServer/0'',
     blockgroupLayer: 'https://ejscreen.epa.gov/arcgis/rest/services/ejscreen/census2020acs/MapServer/0',
     districtLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_118th_Congressional_Districts/FeatureServer/0',
     districtVersion: '118th Congressional District',
