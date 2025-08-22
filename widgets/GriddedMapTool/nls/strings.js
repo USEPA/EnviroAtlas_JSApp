@@ -41,7 +41,7 @@ define({
     },
     nlcd: {
       indices: {
-         0: "No Data",
+        0: "No Data",
         11: "Open Water",
         12: "Perennial Ice/Snow",
         21: "Developed - Open Space",
@@ -68,12 +68,12 @@ define({
         2011: 5,
         2013: 6,
         2016: 7,
-		    2019: 8,
+        2019: 8,
       },
       changeIndex: 9,
       floodplains: 10,
       colors: {
-         0: "#A9A9A9",
+        0: "#A9A9A9",
         11: "#486DA2",
         12: "#E7EFFC",
         21: "#E1CDCE",
@@ -97,19 +97,19 @@ define({
       columnHeaders: ['Land Cover Type', 'Area (km2)', 'Percentage']
     },
     "population-floodplains": {
-	  layer: 'https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/GDT_Pop/ImageServer', 
+      layer: 'https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/GDT_Pop/ImageServer',
       lockRasterId: 2,
       layersUsed: ['Estimated Floodplains', 'Dasymetric Population']
     },
     "population-roads": {
-	  layer: 'https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/GDT_Pop/ImageServer', 
+      layer: 'https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/GDT_Pop/ImageServer',
       lockRasterId: 4,
       layersUsed: ['FAF4 Roads', 'Dasymetric Population']
     },
     populationRasterId: 10,
     padus: {
-	  layer: 'https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/GDT_Pop/ImageServer', 
-	  polys: 'https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/PADUS/MapServer/0',
+      layer: 'https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/GDT_Pop/ImageServer',
+      polys: 'https://enviroatlas.epa.gov/arcgis/rest/services/Supplemental/PADUS/MapServer/0',
       lockRasterId: 3,
       layersUsed: ['PADUS']
     },
@@ -138,14 +138,14 @@ define({
         }
       },
       "countyLayer": {
-        "url": 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Counties/FeatureServer/0',
+        "url": 'https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_Counties_and_States_with_PR/FeatureServer/0',
         "minScale": '300000000',
         "name": "County",
-        "label": "results.NAME + ', ' + results.STATE_NAME",
-        "outfields": ['STATE_NAME', 'NAME'],
+        "label": "results.CountyName + ', ' + results.STATE_NAME",
+        "outfields": ['STATE_NAME', 'CountyName'],
         "outdesc": {
           'Geometry Type': 'US County',
-          'County': "results.NAME + ', ' + results.STATE_NAME"
+          'County': "results.CountyName + ', ' + results.STATE_NAME"
         }
       },
       "blockgroupLayer": {
@@ -198,10 +198,12 @@ define({
       }
     },
     stateLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_States_Non_Generalized/FeatureServer/0',
-    countyLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Counties/FeatureServer/0',
+    countyLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_Counties_and_States_with_PR/FeatureServer/0',
+    blockgroupLayer: 'https://ejscreen.epa.gov/arcgis/rest/services/ejscreen/census2020acs/MapServer/0',
     districtLayer: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_118th_Congressional_Districts/FeatureServer/0',
     districtVersion: '118th Congressional District',
     "huc-12Layer": 'https://enviroatlas.epa.gov/arcgis/rest/services/Other/HydrologicUnits/MapServer/4',
     "huc-8Layer": 'https://enviroatlas.epa.gov/arcgis/rest/services/Other/HydrologicUnits/MapServer/2'
   },
+
 });
