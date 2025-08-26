@@ -241,7 +241,7 @@ define([
     window.categoryDic = {};
     window.categoryDic["Clean Air"] = "cair";
     window.categoryDic["Clean and Plentiful Water"] = "cpw";
-    // window.categoryDic["Climate Stabilization"] = "clim";
+    window.categoryDic["Climate Stabilization"] = "clim";
     window.categoryDic["Natural Hazard Mitigation"] = "nhm";
     window.categoryDic["Recreation, Culture, and Aesthetics"] = "rca";
     window.categoryDic["Food, Fuel, and Materials"] ="ffm";
