@@ -7725,7 +7725,13 @@
                 },
                 "DownloadSource": "https://gapanalysis.usgs.gov/padus/data/",
                 "areaGeog": [
-                    "CONUS"
+                    "CONUS",
+                    "Alaska",
+                    "Hawaii",
+                    "Puerto Rico",
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -7851,7 +7857,13 @@
                 },
                 "DownloadSource": "https://gapanalysis.usgs.gov/padus/data/",
                 "areaGeog": [
-                    "CONUS"
+                    "CONUS",
+                    "Alaska",
+                    "Hawaii",
+                    "Puerto Rico",
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -19990,7 +20002,9 @@
                     "Alaska",
                     "Hawaii",
                     "Puerto Rico",
-                    "Virgin Islands"
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -20240,7 +20254,9 @@
                     "Alaska",
                     "Hawaii",
                     "Puerto Rico",
-                    "Virgin Islands"
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -20490,7 +20506,9 @@
                     "Alaska",
                     "Hawaii",
                     "Puerto Rico",
-                    "Virgin Islands"
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -20740,7 +20758,9 @@
                     "Alaska",
                     "Hawaii",
                     "Puerto Rico",
-                    "Virgin Islands"
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -20990,7 +21010,9 @@
                     "Alaska",
                     "Hawaii",
                     "Puerto Rico",
-                    "Virgin Islands"
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -21240,7 +21262,9 @@
                     "Alaska",
                     "Hawaii",
                     "Puerto Rico",
-                    "Virgin Islands"
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -21490,7 +21514,9 @@
                     "Alaska",
                     "Hawaii",
                     "Puerto Rico",
-                    "Virgin Islands"
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -21740,7 +21766,9 @@
                     "Alaska",
                     "Hawaii",
                     "Puerto Rico",
-                    "Virgin Islands"
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -21990,7 +22018,9 @@
                     "Alaska",
                     "Hawaii",
                     "Puerto Rico",
-                    "Virgin Islands"
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -22240,7 +22270,9 @@
                     "Alaska",
                     "Hawaii",
                     "Puerto Rico",
-                    "Virgin Islands"
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -22490,7 +22522,9 @@
                     "Alaska",
                     "Hawaii",
                     "Puerto Rico",
-                    "Virgin Islands"
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -22740,7 +22774,9 @@
                     "Alaska",
                     "Hawaii",
                     "Puerto Rico",
-                    "Virgin Islands"
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -22990,7 +23026,9 @@
                     "Alaska",
                     "Hawaii",
                     "Puerto Rico",
-                    "Virgin Islands"
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -23240,7 +23278,9 @@
                     "Alaska",
                     "Hawaii",
                     "Puerto Rico",
-                    "Virgin Islands"
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -23490,7 +23530,9 @@
                     "Alaska",
                     "Hawaii",
                     "Puerto Rico",
-                    "Virgin Islands"
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -23898,7 +23940,9 @@
                     "CONUS",
                     "Alaska",
                     "Hawaii",
-                    "Puerto Rico"
+                    "Puerto Rico",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -23942,7 +23986,9 @@
                     "Alaska",
                     "Hawaii",
                     "Puerto Rico",
-                    "Virgin Islands"
+                    "Virgin Islands",
+                    "Guam",
+                    "AmericanSamoa"
                 ]
             },
             {
@@ -51917,7 +51963,7 @@
                             "label": "Percent potential wetland areas on cropland",
                             "format": {
                                 "digitSeparator": true,
-                                "places": 3
+                                "places": 1
                             },
                             "visible": "true"
                         }
@@ -51966,7 +52012,7 @@
             {
                 "eaID": 453,
                 "name": "Soil loss (tonnes per hectare) [grid] - Land cover (2011) ",
-                "eaDescription": "This map depicts the average annual soil loss in metric tonnes per hectare under 2011 land use/land cover.",
+                "eaDescription": "This map depicts the average annual soil loss in metric tonnes per hectare under 2011 land use/land cover scenario.",
                 "eaDfsLink": "Supplemental/MissingFactSheet.pdf",
                 "eaMetadata": "N133",
                 "url": "https://enviroatlas.epa.gov/arcgis/rest/services/Rasters/SoilLoss_ExistingLandCover/ImageServer",
