@@ -1486,39 +1486,6 @@ define([
         return "<b>" + window.communityDic[commName] + "</b><br /><button id = 'testButton2' dojoType='dijit.form.Button' onclick='selfSimpleSearchFilter.selectCurrentCommunity() '>Select this community</button>";
     };
 
-    var addCommunityBoundaries = function() {
-        var lyrBoundaryPoint = this._viewerMap.getLayer(window.idCommuBoundaryPoint);
-        if (lyrBoundaryPoint == null) {
-            var popupsTemplate = {}
-            var locationTemplate = new InfoTemplate();
-            locationTemplate.setTitle("EnviroAtlas Community Location");
-            locationTemplate.setContent(getTextContent);
-            var boundaryTemplate = new InfoTemplate();
-            boundaryTemplate.setTitle("EnviroAtlas Community Boundary");
-            boundaryTemplate.setContent(getTextContent);
-            popupsTemplate[0] = {
-                infoTemplate : locationTemplate
-            };
-            //popupsTemplate[1] = {
-            //  infoTemplate : boundaryTemplate
-            //};
-            popupsTemplate[1] = null;
-            var communityLocationLayer = new ArcGISDynamicMapServiceLayer(communityBoundaryLayer);
-            communityLocationLayer._titleForLegend = window.communityLayerTitle;
-            communityLocationLayer.title = window.communityLayerTitle;
-            communityLocationLayer.noservicename = true;
-            communityLocationLayer.setInfoTemplates(popupsTemplate);
-
-            communityLocationLayer.id = window.layerIdPrefix + communityBoundaryLayerID;
-            window.dynamicLayerNumber.push(communityBoundaryLayerID);
-            window.idCommuBoundaryPoint = communityLocationLayer.id;
-            chkboxId = window.chkSelectableLayer + communityBoundaryLayerID;
-            if (dojo.byId(chkboxId)) {
-                dojo.byId(chkboxId).checked = true;
-            }
-            selfSimpleSearchFilter.map.addLayer(communityLocationLayer);
-        }
-    }
 	   var _addSelectedLayers = function(layersTobeAdded, selectedLayerNum) {
         var index,
             len;
@@ -2856,10 +2823,15 @@ define([
         }
      },
 
-     formatValue : function (value, key, data){
-     	pow10 = Math.pow(10, numDecimalDigit);
-     	return parseFloat(Math.round(value * pow10) / pow10).toFixed(numDecimalDigit);
+     formatValue : function (value){
+		if (value == null) {
+			return 'No data'
+		} else {
+			pow10 = Math.pow(10, numDecimalDigit);
+     		return parseFloat(Math.round(value * pow10) / pow10).toFixed(numDecimalDigit);
+		}
      },
+
      formatURL : function (value, key, data){
      	var resultURL = "<a href=\"" + value + "\" target=\"_blank\">" + "<div>"+ value + "</div>" +"</a>";
      	return resultURL;

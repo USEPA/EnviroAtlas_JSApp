@@ -15414,202 +15414,172 @@
                 "eaLyrNum": 0,
                 "tileLink": "yes",
                 "tileURL": "https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/Candidate_Ecological_Restoration_Areas_Tiles/MapServer",
-                "type": "DYNAMIC",
-                "layers": [
-                    {
-                        "id": 0,
-                        "popup": {
-                            "showAttachments": false,
-                            "fieldInfos": [
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "OBJECTID",
-                                    "visible": false,
-                                    "label": "OBJECTID"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "Shape",
-                                    "visible": false,
-                                    "label": "Shape"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "CERA_NumNtwrk",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "label": "Number of connected areas"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "CERA_NtwrkSz",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "label": "Total hectares of connected area (excluding the potential restored area)"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "CERA_Net1",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "label": "Hectares of largest connected area"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "CERA_Net2",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "label": "Hectares of second largest connected area"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "CERA_pNet",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "label": "Contribution of the second largest vegetated region to the combined vegetated area"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "CERA_RdL",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "label": "Road length (m)"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "CERA_RdL5",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "label": "Light duty road length (m)"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "CERA_StrL",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "label": "Stream length (m)"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "CERA_L303d",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "label": "Impaired stream length (m)"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "CERA_CEC05",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "label": "Mean cation exchange capacity (meq / 100g soil),0-5 cm depth"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "CERA_CEC0520",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "label": "Mean cation exchange capacity (meq / 100g soil),5-20 cm depth"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "CERA_pPRW",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "label": "Percent potentially restorable wetland"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "CERA_pIslet",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "label": "Percent islet (small vegetated areas not surrounded by similar land cover)"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "CERA_pUrban",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "label": "Percent urban"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "CERA_pWater",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "label": "Percent water"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "CERA_pBarren",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "label": "Percent barren"
-                                },
-                                {
-                                    "isEditable": false,
-                                    "fieldName": "CERA_Area",
-                                    "visible": true,
-                                    "format": {
-                                        "digitSeparator": true,
-                                        "places": 2
-                                    },
-                                    "label": "Potential restored area in square meters"
-                                }
-                            ],
-                            "title": "Candidate Ecological Restoration Areas: {OBJECTID}",
-                            "description": null,
-                            "mediaInfos": []
+                "type": "FEATURE",
+                "popup": {
+                    "fieldInfos": [
+                        {
+                            "fieldName": "OBJECTID",
+                            "label": "OBJECTID",
+                            "visible": true
+                        },
+                        {
+                            "fieldName": "CERA_NumNtwrk",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            },
+                            "label": "Number of connected areas",
+                            "visible": true
+                        },
+                        {
+                            "fieldName": "CERA_NtwrkSz",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            },
+                            "label": "Total hectares of connected area (excluding the potential restored area)",
+                            "visible": true
+                        },
+                        {
+                            "fieldName": "CERA_Net1",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            },
+                            "label": "Hectares of largest connected area",
+                            "visible": true
+                        },
+                        {
+                            "fieldName": "CERA_Net2",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            },
+                            "label": "Hectares of second largest connected area",
+                            "visible": true
+                        },
+                        {
+                            "fieldName": "CERA_pNet",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            },
+                            "label": "Contribution of the second largest vegetated region to the combined vegetated area",
+                            "visible": true
+                        },
+                        {
+                            "fieldName": "CERA_RdL",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            },
+                            "label": "Road length (m)",
+                            "visible": true
+                        },
+                        {
+                            "fieldName": "CERA_RdL5",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            },
+                            "label": "Light duty road length (m)",
+                            "visible": true
+                        },
+                        {
+                            "fieldName": "CERA_StrL",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            },
+                            "label": "Stream length (m)",
+                            "visible": true
+                        },
+                        {
+                            "fieldName": "CERA_L303d",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            },
+                            "label": "Impaired stream length (m)",
+                            "visible": true
+                        },
+                        {
+                            "fieldName": "CERA_CEC05",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            },
+                            "label": "Mean cation exchange capacity (meq / 100g soil), 0-5 cm depth",
+                            "visible": true
+                        },
+                        {
+                            "fieldName": "CERA_CEC0520",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            },
+                            "label": "Mean cation exchange capacity (meq / 100g soil), 5-20 cm depth",
+                            "visible": true
+                        },
+                        {
+                            "fieldName": "CERA_pPRW",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            },
+                            "label": "Percent potentially restorable wetland",
+                            "visible": true
+                        },
+                        {
+                            "fieldName": "CERA_pIslet",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            },
+                            "label": "Percent islet (small vegetated areas not surrounded by similar land cover)",
+                            "visible": true
+                        },
+                        {
+                            "fieldName": "CERA_pUrban",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            },
+                            "label": "Percent urban",
+                            "visible": true
+                        },
+                        {
+                            "fieldName": "CERA_pWater",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            },
+                            "label": "Percent water",
+                            "visible": true
+                        },
+                        {
+                            "fieldName": "CERA_pBarren",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            },
+                            "label": "Percent barren",
+                            "visible": true
+                        },
+                        {
+                            "fieldName": "CERA_Area",
+                            "format": {
+                                "digitSeparator": true,
+                                "places": 2
+                            },
+                            "label": "Potential restored area in square meters",
+                            "visible": true
                         }
-                    }
-                ],
+                    ],
+                    "showAttachments": false,
+                    "title": "Candidate Ecological Restoration Areas: {OBJECTID}",
+                    "type": "fields"
+                },
                 "DownloadSource": "ftp://newftp.epa.gov/epadatacommons/ORD/EnviroAtlas/CERA_sites_gdb.zip",
                 "areaGeog": [
                     "CONUS"
@@ -32872,7 +32842,7 @@
             {
                 "eaID": 105,
                 "name": "Annual sulfur dry deposition (kg/ha)",
-                "eaDescription": "This map estimates the annual dry deposition of sulfur within each subwatershed (12-digit HUC) in kilograms per hectare for 2017. Dry deposition occurs when particles or gases attach to surfaces such as dust or smoke and fall to the earth's surface.",
+                "eaDescription": "This map estimates the annual dry deposition of sulfur within each subwatershed (12-digit HUC) in kilograms per hectare for 2017. Dry deposition occurs when particles or gases attach to surfaces such as dust or smoke and fall to the earth's surface",
                 "eaDfsLink": "ESN/Annualsulfurdrydeposition.pdf",
                 "eaMetadata": "N004",
                 "url": "https://services.arcgis.com/cJ9YHowT8TU7DUyn/arcgis/rest/services/Annual_sulfur_deposition_kgha_dry/FeatureServer",
